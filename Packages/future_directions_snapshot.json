@@ -2168,7 +2168,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "499e80a3",
     "description": "## NET-67 — limited-memory axis, round 20 (paper 152, ResearchOutput/exp_net67_sub20.py, /tmp/net67.log)\n\n**Verdict name: SCALE-HALVES-THE-CONTEXT-INCREMENT.**\n\n### Result\nTwo-point addendum (Qwen2.5-1.5B, ctx=2048; baseline drift-assert passed exactly 0.5132):\n\n| k | 14 | 18 |\n|---|---|---|\n| retained | 0.9757 ✗ (~2 SE) | **0.9811 ✓** |\n\n- **P1 CONFIRMED**: the knee is 18 — NET-66's coarse read of 20 was one fine point high.\n- **P2 REFUTED** accordingly.\n\n### The refined law\nComplete measured picture: 0.5B {16, 20, 24} — starts at 16, +4 keys per context doubling. 1.5B {16, 16, 18} — starts at 16, +2 keys per doubling (first increment 0, second +2). **Scale compresses both the level and the increments of the attention-budget curve.** The one-octave reading (NET-66) was a coarse-grid approximation; increment-halving is the finer truth. Deployment: a 20-key budget covers BOTH models to 2048 with margin.\n\n### All 8 barriers\n(a) clean — two horns pre-stated incl. the refuted P2; (b) clean; (c) confronted — two-point addendum stated; (d) clean; (e) deterministic drift-assert; (f) clean — ALL_DONE_NET67; (g) fair — same bar; (h) DIRECT.\n\n### Next\nIncrements at 4096; domain-jump corpora; 7B cell (does halving extend?).\n\nNow 67 network experiments. Assessment v67. Paper 152.\n",
     "domain_bridges": [],
     "domains": [
@@ -2180,7 +2180,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.076165+00:00",
     "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT — 1.5B knee at 2048 is 18 not 20; both models start at 16 keys, scale halves the +per-doubling increment (+4 -> +2)"
   },
@@ -2316,25 +2316,6 @@
     "status": "available",
     "timestamp": "2026-08-22T18:51:45.087483+00:00",
     "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "0c164125",
-    "description": "## NET-73 — limited-memory axis, round 26 (paper 158, ResearchOutput/exp_net73_tpw.py, /tmp/net73.log)\n\n**Verdict name: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT.**\n\n### Result\nTokens-per-word across 5 domains (Qwen's own BPE, 5000-word samples) correlated with known knees:\n\n| domain | TPW | k\\*@512 | expected from TPW |\n|---|---|---|---|\n| code | **1.950** | **12** | should be HIGHEST ✗ |\n| prose-de | 1.885 | 20 | second-highest ✓ |\n| prose-fr | 1.246 | **>32** | should be near-English ✗ |\n| math | 1.214 | 16 | near-English ✓ |\n| prose-en | 1.173 | 16 | lowest ✓ |\n\nSpearman ρ = **−0.40** (wrong sign); linear fit R² = **0.004**.\n\n- **P1 REFUTED**: rank correlation is negative, not ≥0.9.\n- **P2 REFUTED**: R² is zero, not ≥0.8.\n- **P3 CONFIRMED decisively**: TPW is insufficient — the mechanism is NOT tokenization density.\n\nFrench extended grid: k\\*(fr@512) ≤ 32 (the knee exists, just far above the original ceiling).\n\n### The law\nThe strongest counterexample kills the tokenization hypothesis: code has 1.66× English's TPW yet needs FEWER keys; French has ~1.07× English's TPW yet needs ≥2× more keys. The domain mechanism is NOT surface-level token counting — it is the RELATIONAL/SEMANTIC structure of attention patterns within each domain. NET-58/69 already bound those explanations as relational, not intrinsic to key identity.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean — first mechanism-test for the domain shift; (c) confronted — 5 domains, 5000-word samples, one tokenizer stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET73; (g) fair; (h) DIRECT.\n\n### Next\nAttention-pattern structural analysis (what IS the domain mechanism?); sub-32 French @1024; 0.5B @4096; 7B cell.\n\nNow 73 network experiments. Assessment v73. Paper 158.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3729",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T19:36:57.211750+00:00",
-    "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*) = -0.40, R2 = 0.004; code highest TPW lowest knee, French near-English TPW highest knee"
   },
   {
     "ambition_level": "grand_challenge",
@@ -5179,7 +5160,7 @@
     "title": "Close Proofs: The 'Only Bad Primes' Conjecture is False (elliptic curve denominators"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle 52846ceb (Q=0.820) proved 242 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Two `ℕ`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k ≤ N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vanderm",
@@ -5189,32 +5170,13 @@
     ],
     "id": "sorry_fill_52846ceb_e464f342",
     "lineage_refs": [],
-    "priority_score": 0.85,
+    "priority_score": 0.9,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "52846ceb",
     "status": "available",
     "timestamp": "2026-08-20T07:06:54.107020+00:00",
     "title": "Close Proofs: Power-sum inversion"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle 57212186 (Q=0.900) proved 621 theorems in NumberTheory but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)—originally introduced in the InstructGPT / PPO alignment framewor",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "sorry_fill_57212186_61d0ebf2",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "57212186",
-    "status": "available",
-    "timestamp": "2026-08-19T15:46:43.011405+00:00",
-    "title": "Close Proofs: reinforcement learning"
   },
   {
     "ambition_level": "extension",
@@ -15230,6 +15192,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Pythagorean.DigitAutocorrelation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The alternating witness has lag-1 autocorrelation 0 and lag-2 autocorrelation 1 while sharing any prescribed prefix. We conjecture that the set of achievable autocorrelation profiles of irrational numbers equals the set of profiles of periodic words, transported by a lacunary perturbation that is invisible to densities.\n\nA function A from positive lags to {0,1} is the autocorrelation profile of an irrational number with prescribed decimal prefix if and only if it is the profile of some periodic word.\n\nFormalise the profile of a periodic word combinatorially, then transport it with Pyth.card_exceptional_le, which already bounds the exceptional sets uniformly in the lag.\n\nAutocorrelation laws of real constants are combinatorial shadows of periodic words, never arithmetic facts.\n\nSome profile is realisable only by rationals, which would give the first arithmetic obstruction of this kind.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3814",
+    "lineage_refs": [],
+    "priority_score": 0.7112142857142858,
+    "proof_strategy": "Write digits as periodic base plus lacunary bump; agreements and disagreements coincide with those of the base except on O(log M) positions.",
+    "research_mode": "team",
+    "source_exp_id": "50edc087",
+    "status": "available",
+    "timestamp": "2026-08-23T07:48:07.547340+00:00",
+    "title": "Autocorrelation Profile Realisation Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Probability.MarkovExponentBounds",
       "Probability.MarkovAperiodicSpectrum",
       "Probability.MarkovPrimitivity"
@@ -15575,6 +15559,29 @@
     "status": "available",
     "timestamp": "2026-08-23T04:04:39.474265+00:00",
     "title": "Fractional-Cover Value of the Disagreement Hypergraph"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Pythagorean.PrefixIndeterminacy",
+      "Pythagorean.DigitStatistics"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We realise nonzero-digit densities 0 and 1 over an arbitrary prefix. The conjecture is that the whole rational simplex of digit frequency vectors is realisable by irrational numbers sharing any prescribed finite prefix, so that the empirical frequency vector of a prefix constrains nothing at all.\n\nFor every x >= 0, every n, and every rational probability vector (p_0,...,p_9), there is an irrational y with the same first n decimal digits as x and digit-c frequency exactly p_c for each c.\n\nSplice a periodic block pattern realising the frequencies onto Pyth.graft, perturb at the lacunary positions via Pyth.ofDigits_add, then prove frequencies by a block-counting argument.\n\nDigit frequency measurement on any finite prefix is provably devoid of information about the number.\n\nSome frequency vectors are unreachable under prefix constraints, revealing an unexpected arithmetic obstruction.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3813",
+    "lineage_refs": [],
+    "priority_score": 0.7103684210526316,
+    "proof_strategy": "Blocks of length L with prescribed digit multiplicities give frequencies exactly p_c; lacunary bumps break periodicity without moving frequencies since they occupy O(log M) positions.",
+    "research_mode": "team",
+    "source_exp_id": "50edc087",
+    "status": "available",
+    "timestamp": "2026-08-23T07:48:07.070263+00:00",
+    "title": "Prescribed Digit Frequency Vectors Over Any Prefix"
   },
   {
     "ambition_level": "extension",
@@ -17606,6 +17613,27 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Pythagorean.DigitPeriodicityDichotomy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The dichotomy theorem gives non-eventual-periodicity of the decimal expansion of sqrt 2 abstractly. We conjecture an effective form: any claimed eventual period p starting at position n is refuted at an index bounded polynomially in p and in the denominators controlled by the irrationality measure 2 of sqrt 2.\n\nThere is an explicit constant C such that for all n and p >= 1 there is i <= C * p * 10^(n) with digit(i+p+n) != digit(i+n) for sqrt 2.\n\nQuantify the pigeonhole in Pyth.digits_eventually_periodic_of_not_irrational and combine with a quantitative irrationality measure for sqrt 2; sanity-check against the first 10^4 digits.\n\nAperiodicity of a quadratic irrational becomes a finite, checkable statement at every scale.\n\nThe orbit of frac(10^k sqrt 2) would return to near-repetition faster than approximation theory allows, contradicting the standard measure of irrationality.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_3816",
+    "lineage_refs": [],
+    "priority_score": 0.6713870967741937,
+    "proof_strategy": "Periodicity from index n with period p implies a rational approximation of denominator dividing 10^n (10^p - 1); compare with the quadratic irrationality bound to get a contradiction with an explicit constant.",
+    "research_mode": "team",
+    "source_exp_id": "50edc087",
+    "status": "available",
+    "timestamp": "2026-08-23T07:48:08.505012+00:00",
+    "title": "Effective Aperiodicity Bound for the Pythagorean Constant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Probability.FactorLocalETDoubling",
       "Catalog.Probability.FactorLocalETKantorovich",
       "Catalog.Probability.FactorLocalETPowerMean"
@@ -19215,6 +19243,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Pythagorean.PrefixIndeterminacy",
+      "Pythagorean.PrefixApproximation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A property determined by finitely many digits should be unable to separate any asymptotic behaviour. We conjecture that every prefix-measurable property containing a point contains rationals, non-normal irrationals, and continuum many of each, so that asymptotic digit laws are never prefix-measurable.\n\nIf P is a set of reals such that every x in P has an n with the whole n-digit cylinder of x contained in P, then P contains a rational, an irrational with nonzero-digit density 0, an irrational with nonzero-digit density 1, and uncountably many elements.\n\nInstantiate Pyth.prefix_determines_no_digit_law and Pyth.not_countable_prefix_class at the cylinder witnessing membership.\n\nA clean impossibility theorem: no experiment reading finitely many digits can decide any asymptotic digit law.\n\nThe cylinder topology would carry more arithmetic information than expected, contradicting the graft construction.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3815",
+    "lineage_refs": [],
+    "priority_score": 0.5931481481481482,
+    "proof_strategy": "Direct: the cylinder given by prefix-measurability already contains all grafted witnesses.",
+    "research_mode": "team",
+    "source_exp_id": "50edc087",
+    "status": "available",
+    "timestamp": "2026-08-23T07:48:08.026859+00:00",
+    "title": "Collapse of Prefix-Measurable Properties"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Geometry.PythagoreanHydra.HydraDepth",
       "Catalog.Shared.BerggrenTrees.Parent_hyp_lt"
     ],
@@ -19964,6 +20012,29 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.NET73MajorizationDuality",
+      "Applications.NET73ConcentrationSpectrum"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The knee curve is a complete invariant of the attention capture curve (proved in NET73MajorizationDuality). Conjecture that the same information is carried by the Rényi entropy spectrum of the attention mass vector, so that knee dominance between domains is equivalent to domination of all Rényi entropies. This would upgrade the one-sided collision bound to an exact characterisation.\n\nFor sorted attention mass vectors p, q with total mass 1, the knee curves satisfy k*_p(tau) <= k*_q(tau) for all tau in (0,1) if and only if H_alpha(p) <= H_alpha(q) for all alpha >= 1.\n\nFormalise Renyi entropies over the MassVector structure and prove both implications; the forward direction follows from Schur concavity, the converse from a majorization-recovery argument on capture curves.\n\nThe knee is exactly an entropy functional, giving a closed-form predictor of KV budget from attention statistics.\n\nThere exist domains with identical Renyi spectra but different knees, showing the knee sees strictly more than entropy.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3817",
+    "lineage_refs": [],
+    "priority_score": 0.5638197894319682,
+    "proof_strategy": "Use kneeDominates_iff_majorizes to reduce to majorization, then apply Schur-concavity of Renyi entropies and the Hardy-Littlewood-Polya characterisation of majorization by doubly stochastic maps.",
+    "research_mode": "team",
+    "source_exp_id": "0c164125",
+    "status": "available",
+    "timestamp": "2026-08-23T07:48:26.747415+00:00",
+    "title": "Rényi Spectrum Determination of the Knee Curve"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The present formalization\n   proves the chain-complex dimension theorem over any field.  Realizing every\n   binary CSS chain complex by a *simplicial complex with its standard incidence\n   maps* is a substantially stronger representability claim and should not be\n   conflated with merely viewing matrices as abstract differentials.  Determine\n   necessary and sufficient representability conditions, or produce a minimal\n   counterexample.",
@@ -20311,6 +20382,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Applications.NET73MajorizationDuality",
+      "Applications.NET73TokenizationDensity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The French knee is only bounded below (k* > 32). Using the majorization duality, a censored knee constrains the capture curve to a half-space. Conjecture that French is uniformly dominated by German prose in capture, i.e. the ordering is not a late crossing but a global one.\n\nThe French capture curve lies pointwise below the German one, so k*(fr, tau) >= k*(de, tau) for every tolerance tau in (0,1), not only at the measured tolerance.\n\nMeasure the knee at two further tolerances; formally, verify KneeDominates de fr and derive CaptureMajorizes de fr via kneeDominates_iff_majorizes.\n\nDomain hardness is a total order on these five domains, and one tolerance suffices to rank them.\n\nCapture curves cross, so the domain ranking is tolerance-dependent and no single knee number characterises a domain.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3819",
+    "lineage_refs": [],
+    "priority_score": 0.5633481507492952,
+    "proof_strategy": "Instantiate majorizes_of_kneeDominates with the measured pairs and use monotonicity of the capture curve to interpolate between measured tolerances.",
+    "research_mode": "team",
+    "source_exp_id": "0c164125",
+    "status": "available",
+    "timestamp": "2026-08-23T07:48:27.706061+00:00",
+    "title": "Censored-Knee Dichotomy for French Prose"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Combinatorics.TraceBatteryCapacity",
       "Combinatorics.DialThresholdSharpness"
     ],
@@ -20578,6 +20672,28 @@
     "status": "available",
     "timestamp": "2026-08-22T18:49:51.432457+00:00",
     "title": "Adaptive Battery Non-Advantage"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.NET73KneeDecoupling"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Doubling the context should not double the knee if attention capture is concave in the number of retained keys. Formalise concave capture curves and prove a Karamata-style comparison bounding the knee at doubled context by twice the knee at base context, with equality exactly for uniform attention.\n\nIf cum is concave with cum 0 = 0, then k*(tau) at context 2n is at most twice k*(tau) at context n, with equality iff the attention mass is uniform on its support.\n\nAdd a concavity field to AttentionProfile, prove the doubling bound by induction on increments, and check the equality case against the uniform profile.\n\nKV budgets scale sublinearly with context, so long-context serving costs grow slower than context length.\n\nConcavity is not the right regularity for attention capture, and the 512 -> 1024 knee data must be explained by a shape change instead.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3818",
+    "lineage_refs": [],
+    "priority_score": 0.5629688434489444,
+    "proof_strategy": "Decreasing increments give cum(2k) <= 2 cum(k); apply this at k = k*(tau) and use kneeAt_le.",
+    "research_mode": "team",
+    "source_exp_id": "0c164125",
+    "status": "available",
+    "timestamp": "2026-08-23T07:48:27.233108+00:00",
+    "title": "Sublinear Knee Growth under Context Doubling"
   },
   {
     "ambition_level": "extension",
@@ -20861,6 +20977,29 @@
     "status": "available",
     "timestamp": "2026-08-22T13:02:24.230057+00:00",
     "title": "Completeness of Inflation and Reflection"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.NET73ConcentrationSpectrum",
+      "Applications.NET73TokenizationDensity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "On the geometric family the knee is exactly characterised by r^k <= 1 - tau, so one fitted decay rate per domain predicts the whole knee curve. Conjecture that fitting r to attention logs recovers the predictive power that tokens-per-word failed to provide.\n\nFitting a geometric capture curve per domain yields knee predictions with rank correlation at least 0.9 against the measured knees, in contrast to the -0.40 obtained from tokens-per-word.\n\nEstimate r per domain from attention mass logs, compute predicted knees via kneeAt_geometric_le_iff, and re-run the Spearman and R-squared statistics formalised in NET73TokenizationDensity.\n\nThe domain shift has a one-parameter explanation on the decay axis, replacing the refuted tokenization hypothesis.\n\nAttention capture is not geometric, and the knee requires the full capture curve rather than any one-parameter summary.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3821",
+    "lineage_refs": [],
+    "priority_score": 0.5621880038111128,
+    "proof_strategy": "Use kneeAt_geometric_le_iff to convert fitted rates into predicted knees, then reuse the spearman and rsq definitions to state and check the new correlation claim.",
+    "research_mode": "team",
+    "source_exp_id": "0c164125",
+    "status": "available",
+    "timestamp": "2026-08-23T07:48:28.654834+00:00",
+    "title": "Decay-Rate Regression as the Replacement Predictor"
   },
   {
     "ambition_level": "extension",
@@ -32049,6 +32188,27 @@
     "status": "available",
     "timestamp": "2026-08-22T21:36:39.137532+00:00",
     "title": "Exact Rate-Leakage Curve for Bit-Flip Channels"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.NET73MajorizationDuality"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The knee of a mixed corpus is sandwiched between its component knees. Conjecture the stronger statement that it is monotone in the mixing weight, so the knee budget of a corpus is a monotone interpolation between its ingredients and can be tuned continuously.\n\nFor fixed profiles P and Q and fixed tolerance, the map lam |-> k*(mix lam P Q)(tau) is monotone in lam.\n\nProve monotonicity of the mixture capture curve in lam when one profile majorizes the other, and exhibit a counterexample when the curves cross.\n\nCorpus KV budget can be interpolated from component budgets, giving a design rule for data mixtures.\n\nMixing is genuinely non-monotone, so corpus composition must be tested empirically rather than interpolated.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3820",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Differentiate the mixture capture curve in lam: it is affine, so monotone in lam pointwise iff P.cum - Q.cum has constant sign; combine with kneeAt_mono_profile and produce a crossing counterexample otherwise.",
+    "research_mode": "team",
+    "source_exp_id": "0c164125",
+    "status": "available",
+    "timestamp": "2026-08-23T07:48:28.170921+00:00",
+    "title": "Monotone Mixture Calculus for Corpus Design"
   },
   {
     "ambition_level": "extension",
@@ -50187,23 +50347,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "50edc087",
-    "description": "A significant finite-prefix statistic would be empirical evidence about that prefix, not a theorem about π, e, or √2. Irrationality only rules out eventually periodic decimal expansions; it does not imply normality or a particular autocorrelation law.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1818",
-    "lineage_refs": [],
-    "priority_score": 0.403,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "9f14a31b",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:20.478004+00:00",
-    "title": "Do not infer infinite-digit laws from finite prefixes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Extend the root/fixed-point first-moment theorem to\nfactorial moments: count ordered tuples of distinct roots and compare them with ordered\ntuples of distinct fixed points. This should recover Poisson(1)-type moment identities\nin the stable range.",
     "domain_bridges": [],
@@ -55178,7 +55321,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4caf1d72",
     "description": "Strengthen `escape_norm_growth` to prove divergence after crossing a standard escape radius, yielding a formally specified escape-time test.",
     "domain_bridges": [],
     "domains": [],
@@ -55188,7 +55331,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0ebc2749",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:43.417182+00:00",
     "title": "Escape criterion iteration"
   },

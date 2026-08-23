@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "63cef724",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Möbius arithmetic, twist rings, and graded number theory\n\nThis cycle tested the \"Möbius integers\" conjecture literally, refuted five of its\nclaims, and relocated its surviving in",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-21T19:38:14",
-      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
-    },
-    {
       "cycle_id": "018e116a",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — bounding distinguishing experiments\n\nDerived from the verified results in `Catalog/Pythagorean/DistinguishingWordBound.lean`,\n`DistinguishingWordMoore.lean`, `DistinguishingWordS",
@@ -499,19 +489,19 @@
       "theorem_count": 129,
       "timestamp": "2026-08-23T07:48:19",
       "title": "Do not infer infinite-digit laws from finite prefixes"
+    },
+    {
+      "cycle_id": "0c164125",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — NET-73 and the limited-memory axis\n\nThree research cycles were run and formalised:\n\n1. **Refutation.** Tokens-per-word explains none of the domain shift: on the\n   four uncensore",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-08-23T07:48:35",
+      "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*) = -0.40, R2 = 0.00"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "603eb18a",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — carry chains, state, and length generalisation\n\nDerived from the theorems in `Catalog/NumberTheory/CarryChainStatefulCell.lean` and\n`Catalog/NumberTheory/CarryChainDepthBound.lea",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-15T22:46:22",
-      "title": "NET-24: A Stateful Carry Cell Unlocks Length-General Carry — The Wall Was the Answer Function (first"
-    },
     {
       "cycle_id": "f0c2b697",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 129,
       "timestamp": "2026-08-23T07:48:19",
       "title": "Do not infer infinite-digit laws from finite prefixes"
+    },
+    {
+      "cycle_id": "0c164125",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — NET-73 and the limited-memory axis\n\nThree research cycles were run and formalised:\n\n1. **Refutation.** Tokens-per-word explains none of the domain shift: on the\n   four uncensore",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-08-23T07:48:35",
+      "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*) = -0.40, R2 = 0.00"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "113c03c3",
-      "domain": "Cryptography",
-      "name": "sum_ge_triangular",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "113c03c3",
-      "domain": "Cryptography",
-      "name": "schedule_sum_lower_bound",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a4769f7a",
-      "domain": "Bridges",
-      "name": "catalog",
-      "quality": 0.9
-    },
     {
       "cycle_id": "a4769f7a",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "altSeq_le",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "0c164125",
+      "domain": "Applications",
+      "name": "cumMass_mono",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "0c164125",
+      "domain": "Applications",
+      "name": "cumMass_N",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "0c164125",
+      "domain": "Applications",
+      "name": "cumMass_le_one",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-23T07:48:19",
+  "last_updated": "2026-08-23T07:48:35",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6bc62e41",
-        "quality": 0.88,
-        "theorems": 70,
-        "title": "Both sides of the identity are already available as Lean theorems"
-      },
-      {
         "cycle_id": "52846ceb",
         "quality": 0.82,
         "theorems": 242,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 56,
         "title": "P2 (from K)"
+      },
+      {
+        "cycle_id": "0c164125",
+        "quality": 0.78,
+        "theorems": 88,
+        "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*"
       }
     ],
     "Bridges": [
