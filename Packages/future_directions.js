@@ -1764,16 +1764,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-68 #1 \u2014 TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "36abab9e",
     "description": "## NET-78 \u2014 limited-memory axis, round 29 (paper 162, ResearchOutput/exp_net78_0p5b4096.py, /tmp/net78.log)\n\n**Verdict name: THE-INCREMENT-ACCELERATES-AT-4096.**\n\n### Result\nThe 0.5B at ctx=4096 (6 held-out windows; gate exact):\n\n| k | 16 | 20 | 24 | 28 | 32 | 40 |\n|---|---|---|---|---|---|---|\n| retained | 0.959 \u2717 | 0.969 \u2717 | 0.975 \u2717 | 0.977 \u2717 | 0.979 \u2717 | **0.984 \u2713** |\n\n**k\\*(4096) = 40.** The increment from 2048 to 4096 is **+16** \u2014 a 4\u00d7 ACCELERATION over the +4/doubling that held through three previous doublings.\n\n- **P1 REFUTED**: k\\* \u2260 28 (the +4 increment does NOT continue).\n- **P2 REFUTED**: k\\* > 24 (no saturation).\n- **P3 CONFIRMED dramatically**: k\\* = 40 > 28.\n\n### The complete 0.5B chain\n{16, 20, 24, **40**} at {512, 1024, 2048, 4096}: increments +4, +4, **+16**.\n\n### The phase transition\nAttention budgets are context-stable for the first ~2000 tokens then become sharply more expensive. The linear-increment law that held through three doublings BREAKS at the fourth. This is the first evidence of a PHASE TRANSITION in context-sensitivity.\n\n### Deployment consequence\nA 24-key cache that works perfectly at ctx=2048 will FAIL at ctx=4096. Budget tables need a nonlinear term beyond 2048.\n\n### All 8 barriers\n(a) clean; (b) clean \u2014 first 4096 cell in-programme; (c) confronted \u2014 6 windows and grid gap stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET78; (g) fair; (h) DIRECT.\n\n### Next\nFine grid between 32 and 40; 1.5B @4096 (does the shift delay apply here?); domain-jump @4096; 7B quantized-offload cell.\n\nNow 78 network experiments. Assessment v78. Paper 162.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3743",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.049470+00:00",
     "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 \u2014 knee jumps to k*=40 (increment +16/doubling vs prior +4); linear increment law breaks after three doublings; phase transition in context-sensitivity"
   },
@@ -3781,22 +3782,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "seed_042",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Category-Theoretic Neural Architectures"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
     "domains": [
       "Logic",
@@ -4246,17 +4231,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae7def7f",
     "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts \u2014 enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
     "domains": [
       "Novelty",
       "Physics"
     ],
     "id": "seed_406",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
@@ -11057,6 +11043,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The cut rank of a codebook is provably not submodular, while Shannon entropy always is. Formalising submodularity of the cut entropy would separate the two invariants sharply and explain why the entropic Singleton bound dominates the counting one.\n\ncutEntropy C S + cutEntropy C T \u2265 cutEntropy C (S \u222a T) + cutEntropy C (S \u2229 T) for every finite codebook and all cuts.\n\nProve it in Lean from a conditional grouping inequality; cross-check numerically against the 24 rank-violating codebooks on three bits.\n\nThe entropy profile is a polymatroid and the counting profile is a strictly coarser shadow of it.\n\nMarginals of uniform code distributions would violate a basic information inequality, which would indicate an error in the fibre model.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3866",
+    "priority_score": 0.7110769230769232,
+    "research_mode": "team",
+    "source_exp_id": "6f1d7e50",
+    "status": "available",
+    "timestamp": "2026-08-23T17:35:45.995795+00:00",
+    "title": "Entropy Submodularity versus Rank Non-Submodularity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The map S \u21a6 surfaceOf S is uniformly definable and sends the finiteness of S to the triangulability of a surface. Every \u03a0\u2082 arithmetic statement of the form 'infinitely many n satisfy P' therefore has an exactly equivalent geometric form, and the base theory needed for the equivalence can be measured.\n\nFor every arithmetic predicate P, surfaceOf {n | P n} is transfinite-dimensional iff {n | P n} is infinite, provably in a weak base theory.\n\nFormalise the equivalence for a general decidable predicate and inspect the axioms used by the resulting bridge theorems.\n\nA uniform dictionary translating \u03a0\u2082 number theory into fractal geometry, with the twin prime instance already formalised.\n\nThe translation needs strength beyond the base theory, which would itself be a striking reverse-mathematical fact.",
     "domains": [
       "Geometry",
@@ -14700,6 +14701,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Numerically the entanglement profile of an MDS code state is the tent min(|S|, n-|S|, k) log q rather than the classical staircase. Proving the tent formula would make the code state a discrete Ryu-Takayanagi geometry whose minimal surface is the smaller side of the cut.\n\nFor an MDS code with 2 \u2264 q, entanglementEntropy (codeState C S) = min(|S|, n - |S|, k) * log q for every cut S.\n\nCompute the reduced density matrix in the regime d \u2264 |S| \u2264 n - 1 and show it is maximally mixed on q^min(|S|,|S\u1d9c|) levels; verify small cases with exact rational linear algebra.\n\nMDS code states are exactly the discrete holographic states with a two-sided RT formula, strengthening the tensor-network / quantum-error-correction dictionary.\n\nSome MDS code state has a non-flat spectrum across a middle cut, which would give a new invariant separating MDS codes of equal parameters.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_3867",
+    "priority_score": 0.5635033219176204,
+    "research_mode": "team",
+    "source_exp_id": "6f1d7e50",
+    "status": "available",
+    "timestamp": "2026-08-23T17:35:46.503915+00:00",
+    "title": "Holographic Tent Profile for MDS Code States"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Our harmonic theorem computes the informed player's value at the uniform prior. We conjecture that the uniform prior is the exact minimiser of that value over all priors on arrangements, so maximal uncertainty is the adversary's optimum. The value functional is a sum of expected posterior maxima and should be Schur-convex.\n\nFor every prior P on the u! arrangements, the optimal feedback value V(P) under unit scoring satisfies V(P) >= V(uniform) = H_u, with equality iff P is uniform; and V is Schur-convex in P.\n\nCompute V(P) by dynamic programming over posteriors for u <= 5 on a grid of priors, including all priors supported on two arrangements, and test the majorization order.\n\nThe 'no edge from uncertainty' slogan upgrades to a variational principle: uniform shuffling is the unique worst case for any predictor.\n\nSome structured prior is harder to predict than the uniform one, which would identify a new class of adversarial shuffles.",
     "domains": [
       "Algebra",
@@ -15960,6 +15976,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that replacing the fixed exponential base by a schedule that itself\ndepends on the level, `V (k+1) = A_k (V k) \u00b7 V k` with `A_k` the `k`-th Ackermann level, should\npush the representation length from `log*` down to `\u03b1`, the inverse Ackermann function, and the\ncharacterization theorem predicts exactly when. **Why now?** The characterization\n`bigO_logStar_iff_tower_le` is stated purely in terms of the weight sequence, so the same proof\nskeleton transfers verbatim once `\u03b1` and its inverse-pair with the Ackermann hierarchy are\nformalised.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_3864",
+    "priority_score": 0.5573684210526315,
+    "research_mode": "team",
+    "source_exp_id": "43ad4483",
+    "status": "available",
+    "timestamp": "2026-08-23T17:35:25.659873+00:00",
+    "title": "Inverse-Ackermann analogue: two-parameter schedules"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For max-affine expressions with affine leaves in general position in dimension `n`, the codimension-two singular strata of the decision complex are bounded by the number of intersecting `(n+1)`-subsets of active leaves, rather than by a product of pair counts across network layers.\n\nThe key insight is that singularities arise from simultaneous affine ties in the realized upper envelope, not merely from pairs of neurons in an architecture. **Why now?** The width-one obstruction rules out the unguarded layerwise pair-product formula and points to active-set incidence as the correct combinatorial invariant.",
     "domains": [
       "Combinatorics",
@@ -16452,6 +16483,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:29:47.782026+00:00",
     "title": "C2. The logarithmic defect is a genuine second-order invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that `V r k` is the number of microstates covered after `k`\nrenormalisation steps with block-growth law `r`, so the threshold says that a coarse-graining\nscheme reaches system size `n` in `O(log* n)` steps exactly when its block growth is at least\nexponential \u2014 a sharp separation between \"exponentially blocking\" and \"polynomially blocking\"\nhierarchies. **Why now?** The formal statement is schedule-agnostic\n(`radix_growth_threshold`), so instantiating it with block-growth laws of concrete hierarchical\nmodels (Migdal\u2013Kadanoff style decimations, hierarchical lattices) requires only checking\nmonotonicity and one growth bound.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Fixed-Height Tower Barrier for Quasi-Polynomial Radix Schedules\",\n    \"domain\": \"Computation\",\n    \"description\": \"The master transfer lemma needs only that log* of the weights grows sublinearly in the level index. This suggests that every schedule whose weights remain inside an iterated exponential of bounded height \u2014 quasi-polynomial schedules included \u2014 fails to give O(log* n) radix height. The conjecture converts a growth-rate question into a bounded arithmetic estimate on Nat.log.\",\n    \"conjecture\": \"If r is monotone, r \u2265 2 and r x \u2264 2 ^ (Nat.log 2 x) ^ C for all large x, then for every c and N there is n \u2265 N with c * (logStar n + 1) < radixHeight r n.\",\n    \"test\": \"Prove V r k \u2264 expIter 3 (M + E * k) for suitable M, E and apply not_bigO_of_iterated_exponential_bound in Catalog/Physics/RadixGrowthThreshold.lean.\",\n    \"if_true\": \"The slow side of the threshold covers everything below genuine exponential growth, so the dichotomy becomes exhaustive on all natural schedule families.\",\n    \"if_false\": \"There is an intermediate regime with O(log* n) height but sub-exponential radices, which would refute the intrinsic characterization's intuition and force a finer scale than the tower.\",\n    \"proof_strategy\": \"Iterate the recursion twice to get log log V r (k+1) \u2264 C \u00b7 log log V r k + O(1), conclude a triple-exponential bound in k, then feed it to the fixed-height transfer theorem.\",\n    \"catalog_references\": [\"Physics.RadixGrowthThreshold\"]\n  },\n  {\n    \"title\": \"Exact Additive Constant for the Pure Tower Schedule\",\n    \"domain\": \"Computation\",\n    \"description\": \"For the exponential schedule the proved bounds are logStar n \u2264 2 * radixHeight and radixHeight \u2264 logStar n + 1. The factor two comes from a single crude doubling step. The conjecture is that the truth is an exact additive constant.\",\n    \"conjecture\": \"For expSchedule x = max 2 (2 ^ x) there is a constant c\u2080 \u2264 2 with logStar n \u2264 radixHeight expSchedule n + c\u2080 for all n.\",\n    \"test\": \"Strengthen V_le_tower_two_mul to V r k \u2264 tower (k + c\u2080) and rerun the logStar_tower argument; check numerically against the table in ComputationalEvidence.md.\",\n    \"if_true\": \"radixHeight for exponential schedules equals log* up to an additive constant, making it a faithful implementation of the iterated logarith",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_3865",
+    "priority_score": 0.5568749999999999,
+    "research_mode": "team",
+    "source_exp_id": "43ad4483",
+    "status": "available",
+    "timestamp": "2026-08-23T17:35:26.336914+00:00",
+    "title": "Physical reading: coarse-graining depth of hierarchical systems"
   },
   {
     "consumed_by_exp_id": "",
@@ -34852,6 +34898,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the additive constant in `radixHeight r n \u2264 x\u2080 + log* n + 1` and the\nfactor `2` in `log* n \u2264 2 \u00b7 radixHeight r n` come from two different sloppy steps (the threshold\nshift and the `2 ^ v \u00b7 v \u2264 2 ^ (2 ^ v)` doubling), and a careful analysis should give\n`radixHeight r n = log* n + O(1)` on the nose for `r x = 2 ^ x`. **Why now?** All the\ningredients (`tower_le_V`, `V_le_tower_two_mul`, `logStar_tower`, `lt_tower_logStar`) are proved;\nwhat is missing is a tower-with-offset comparison, not new mathematics.",
+    "domains": [],
+    "id": "fd_3863",
+    "priority_score": 0.4381538461538461,
+    "research_mode": "team",
+    "source_exp_id": "43ad4483",
+    "status": "available",
+    "timestamp": "2026-08-23T17:35:25.173587+00:00",
+    "title": "Exact constants in the exponential regime"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Generalize the finite-support argument from `\u211d` to\n   suitable linearly ordered additive groups admitting finite suprema.",
     "domains": [
       "Algebra"
@@ -36495,19 +36553,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T08:57:30.952481+00:00",
     "title": "Conformality is a hierarchy, not a single obstruction.*"
-  },
-  {
-    "consumed_by_exp_id": "43ad4483",
-    "description": "For generalized weights `V\u2080 = 1` and `V\u2096\u208a\u2081 = r(V\u2096)V\u2096`, assume `r` is monotone and `r(x) \u2265 2`.  The least `k` with `n < V\u2096` is `O(log* n)` if `r(x) \u2265 2^x` for all sufficiently large `x`; it is not `O(log* n)` when `r(x) \u2264 x^C` for some fixed `C` and all sufficiently large `x`.",
-    "domains": [],
-    "id": "fd_2551",
-    "phase": "A",
-    "priority_score": 0.4104509803921569,
-    "research_mode": "team",
-    "source_exp_id": "e3956c60",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:48.391048+00:00",
-    "title": "A radix-growth threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -41391,19 +41436,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:02.542073+00:00",
     "title": "Empirical DNA claims"
-  },
-  {
-    "consumed_by_exp_id": "6f1d7e50",
-    "description": "Introduce finite tensor-network cut data and prove a\n   finite cut-wise Singleton inequality before investigating equality with entropy.",
-    "domains": [],
-    "id": "fd_2432",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "c612ec41",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:11.053522+00:00",
-    "title": "Cut-indexed defects"
   },
   {
     "consumed_by_exp_id": "",

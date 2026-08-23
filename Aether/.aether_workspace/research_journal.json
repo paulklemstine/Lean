@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a7626bf4",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this thread, whose verified (`sorry`-free,\ncompiling) output is:\n\n* `Catalog/Physics/GradedTransitivityComplex.lean` — passage",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 77,
-      "timestamp": "2026-08-22T04:50:15",
-      "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
-    },
-    {
       "cycle_id": "71e110b3",
       "domain": "Novelty",
       "key_insight": "# Future Directions — fair schedules under arbitrary positive rate profiles\n\nThis cycle established, in machine-checked Lean 4 (files\n`Catalog/Novelty/FairSchedulePrefixBatches.lean`, `FairScheduleOpt",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-23T17:35:38",
       "title": "A radix-growth threshold"
+    },
+    {
+      "cycle_id": "6f1d7e50",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Cut-indexed defects\n\nThis cycle introduced finite tensor-network **cut data** (`CutData n q`), proved\nthe **cut-wise Singleton inequality** in three progressively sharper forms\n(",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 91,
+      "timestamp": "2026-08-23T17:35:52",
+      "title": "Cut-indexed defects"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3b29df87",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions: Weil pairings, torsion structure and pairing-based signatures\n\nDerived from what survived, and from what broke, in this cycle.  Each conjecture is\nfalsifiable inside the framework",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 110,
-      "timestamp": "2026-08-16T11:35:10",
-      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-    },
     {
       "cycle_id": "ade8206b",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-23T17:35:38",
       "title": "A radix-growth threshold"
+    },
+    {
+      "cycle_id": "6f1d7e50",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Cut-indexed defects\n\nThis cycle introduced finite tensor-network **cut data** (`CutData n q`), proved\nthe **cut-wise Singleton inequality** in three progressively sharper forms\n(",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 91,
+      "timestamp": "2026-08-23T17:35:52",
+      "title": "Cut-indexed defects"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9b10b60b",
-      "domain": "Geometry",
-      "name": "sequentialChain_eq",
-      "quality": 0.79
-    },
     {
       "cycle_id": "9b10b60b",
       "domain": "Geometry",
@@ -2803,9 +2797,15 @@
       "domain": "Physics",
       "name": "tower_zero",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "6f1d7e50",
+      "domain": "Novelty",
+      "name": "sum_negMulLog_le_group",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-23T17:35:38",
+  "last_updated": "2026-08-23T17:35:52",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "367abe49",
-        "quality": 0.85,
-        "theorems": 61,
-        "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
-      },
-      {
         "cycle_id": "75105c60",
         "quality": 0.82,
         "theorems": 111,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 75,
         "title": "Escape criterion iteration"
+      },
+      {
+        "cycle_id": "6f1d7e50",
+        "quality": 0.82,
+        "theorems": 91,
+        "title": "Cut-indexed defects"
       }
     ],
     "NumberTheory": [
