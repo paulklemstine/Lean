@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fe1191f5",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Random Walks on the Berggren Tree\n\n## What this cycle settled\n\n* The boundary **is** a Cantor set, and the harmonic measure of the `(p₁,p₂,p₃)`-walk **is**\n  the Bernoulli produc",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 251,
-      "timestamp": "2026-08-21T10:47:42",
-      "title": "Harmonic Measure on the Berggren Tree Boundary — Random Walks and the 3-adic Cantor Set"
-    },
-    {
       "cycle_id": "b5bb3340",
       "domain": "Shared",
       "key_insight": "# Future Directions — Berggren Groupoid, Braiding, and Quantum Computation\n\n## What this cycle settled\n\nThe moonshot (\"the Berggren groupoid realizes universal topological quantum computation\")\nis **f",
@@ -499,19 +489,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-22T23:36:27",
       "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` where `Ω` is the who"
+    },
+    {
+      "cycle_id": "aa2d71a2",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — UNIFORM-DIAL thread (round 43 #2)\n\nThis cycle established, formally and in full generality, why the per-N yield dial is\ndraw-regime invariant: the dial is a *pairwise* functional",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-23T03:16:48",
+      "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper 162)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a9efa47b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Power-Sum GCD Factoring and Carmichael Periodicity\n\nDerived from what survived (and what broke) in the formalisation pass; every item is\nstated so that it can be refuted by a sin",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-15T11:41:08",
-      "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
-    },
     {
       "cycle_id": "aeab7c87",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-22T23:36:27",
       "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` where `Ω` is the who"
+    },
+    {
+      "cycle_id": "aa2d71a2",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — UNIFORM-DIAL thread (round 43 #2)\n\nThis cycle established, formally and in full generality, why the per-N yield dial is\ndraw-regime invariant: the dial is a *pairwise* functional",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-23T03:16:48",
+      "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper 162)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6f0c0f57",
-      "domain": "Applications",
-      "name": "H_marginal_left_le",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "6f0c0f57",
-      "domain": "Applications",
-      "name": "H_marginal_right_le",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "6f0c0f57",
-      "domain": "Applications",
-      "name": "MI_le_left",
-      "quality": 0.85
-    },
     {
       "cycle_id": "08e16c4e",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "shtarkov_insert_sub_le_singleton",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "aa2d71a2",
+      "domain": "Combinatorics",
+      "name": "wcov_comm",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "aa2d71a2",
+      "domain": "Combinatorics",
+      "name": "wcov_eq_raw",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "aa2d71a2",
+      "domain": "Combinatorics",
+      "name": "wcov_eq_half_double_sum",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-08-22T23:36:27",
+  "last_updated": "2026-08-23T03:16:49",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "299127cc",
-        "quality": 0.82,
-        "theorems": 59,
-        "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy clo"
-      },
-      {
         "cycle_id": "60572a3f",
         "quality": 0.85,
         "theorems": 75,
@@ -3265,6 +3259,12 @@
         "quality": 0.86,
         "theorems": 101,
         "title": "Filtration lemma"
+      },
+      {
+        "cycle_id": "aa2d71a2",
+        "quality": 0.74,
+        "theorems": 56,
+        "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper "
       }
     ],
     "Computation": [
