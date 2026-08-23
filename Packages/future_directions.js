@@ -1571,21 +1571,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
   },
   {
-    "consumed_by_exp_id": "3d2c810c",
-    "description": "## NET-68 \u2014 limited-memory axis, round 21 (paper 153, ResearchOutput/exp_net68_domainjump.py, /tmp/net68.log)\n\n**Verdict name: CODE-NEEDS-FEWER-KEYS.**\n\n### Result\nDomain jump to Python source (10 CPython stdlib files; gate exact; identical harness/bar):\n\n| ctx | code k\\* | prose k\\* | code full acc | shift |\n|---|---|---|---|---|\n| 512 | **12** | 16 | 0.6296 | \u22124 keys |\n| 1024 | **16** | 20 | 0.6520 | \u22124 keys |\n\nCode sweeps @512: 4: 0.930 \u2717, 8: 0.969 \u2717, **12: 0.981 \u2713**, 16: 0.987, 20: 0.988, 24: 0.989.\n@1024: 8: 0.960 \u2717, 12: 0.976 \u2717, **16: 0.981 \u2713**, 20: 0.986, 24: 0.987.\n\n- **P1 CONFIRMED**: knees transfer within one fine step.\n- **P2 CONFIRMED**: exactly one fine-grid step (\u22124 keys) below prose at BOTH contexts \u2014 structure preserved.\n- **P3 REFUTED**.\n\n### The parameterized budget law\nk\\*(domain, context) = base(domain) + increment(scale) \u00d7 doublings(context), with base(prose)=16, base(code)=12, increments set by scale (NET-67). THIRD independent confirmation that accuracy level and knee position are independent quantities: code is EASIER to predict yet needs FEWER keys. Deployment: size KV by the largest-base domain present in mixed workloads.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) clean; (c) confronted \u2014 limits: ONE code language, single-repo source, 24 windows stated; (d) clean per-corpus held-out splits; (e) deterministic; (f) clean \u2014 ALL_DONE_NET68; (g) fair \u2014 byte-identical harness except text; (h) DIRECT.\n\n### Next\nMath/non-English domains; increments at 4096; probe+recency hybrid on code; 7B quantized-offload cell.\n\nNow 68 network experiments. Assessment v68. Paper 153.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3709",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T18:51:45.072811+00:00",
-    "title": "NET-68: CODE-NEEDS-FEWER-KEYS \u2014 domain jump to Python shifts the knee chain down one fine step ({12,16} vs {16,20}); budget law now domain-parameterized"
-  },
-  {
     "consumed_by_exp_id": "499e80a3",
     "description": "## NET-67 \u2014 limited-memory axis, round 20 (paper 152, ResearchOutput/exp_net67_sub20.py, /tmp/net67.log)\n\n**Verdict name: SCALE-HALVES-THE-CONTEXT-INCREMENT.**\n\n### Result\nTwo-point addendum (Qwen2.5-1.5B, ctx=2048; baseline drift-assert passed exactly 0.5132):\n\n| k | 14 | 18 |\n|---|---|---|\n| retained | 0.9757 \u2717 (~2 SE) | **0.9811 \u2713** |\n\n- **P1 CONFIRMED**: the knee is 18 \u2014 NET-66's coarse read of 20 was one fine point high.\n- **P2 REFUTED** accordingly.\n\n### The refined law\nComplete measured picture: 0.5B {16, 20, 24} \u2014 starts at 16, +4 keys per context doubling. 1.5B {16, 16, 18} \u2014 starts at 16, +2 keys per doubling (first increment 0, second +2). **Scale compresses both the level and the increments of the attention-budget curve.** The one-octave reading (NET-66) was a coarse-grid approximation; increment-halving is the finer truth. Deployment: a 20-key budget covers BOTH models to 2048 with margin.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean; (c) confronted \u2014 two-point addendum stated; (d) clean; (e) deterministic drift-assert; (f) clean \u2014 ALL_DONE_NET67; (g) fair \u2014 same bar; (h) DIRECT.\n\n### Next\nIncrements at 4096; domain-jump corpora; 7B cell (does halving extend?).\n\nNow 67 network experiments. Assessment v67. Paper 152.\n",
     "domains": [
@@ -1631,16 +1616,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-65: SIXTEEN-IS-REAL \u2014 all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scale flattens the context response: {16,20,24}@0.5B vs flat {16,16}@1.5B"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "147eac16",
     "description": "Round-58 #1, cron iteration (exp 528). The zero-fit dial tested on uniform draws at bitlen 52.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-52**: Spearman(T, rate) = **0.698** / **0.697** / **0.720** across three seeds; all inside [0.55, 0.85]; pooled advantage over count +0.070 CI [0.046, 0.093].\n\nThe zero-fit dial survives uniform draws at bitlen 52 \u2014 its deployment envelope now covers balanced and uniform draws through bitlen 52.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp528_t_dial_unif_52.py + exp528_result.json, seeds 20261120\u201322.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3714",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.081062+00:00",
     "title": "FACT round-58 #1 \u2014 TDIAL-U52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
   },
@@ -3769,48 +3755,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 8993bd64 (Q=0.810) proved 81 theorems in Shared but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably h",
-    "domains": [
-      "Shared"
-    ],
-    "id": "sorry_fill_8993bd64_584612e0",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "8993bd64",
-    "status": "available",
-    "timestamp": "2026-08-17T10:49:07.357501+00:00",
-    "title": "Close Proofs: Compression Research B6: Compression \u2194 one-way functions (the cryptogr"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 9cc9a6e9 (Q=0.820) proved 42 theorems in Algebra but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Paper (factor3):** [ResearchOutput/NewMathematics/28_Spectral_FreeWitness.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/28_Spectral_FreeWitness.md)\n\n---\n\n# The",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "sorry_fill_9cc9a6e9_003ee23a",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "9cc9a6e9",
-    "status": "available",
-    "timestamp": "2026-08-14T06:50:30.237689+00:00",
-    "title": "Close Proofs: The Spectral Free-Witness: Heat-Kernel Order Recovery"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle c94236ec (Q=0.920) proved 226 theorems in Novelty but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: ## SPLIT-COUNT-LAW (round-20 #2, experiment 409, assessment v185, paper 74)\n\n**The complete symmetric fork channel is the split-count, and it beats the OR cap.** Papers 71\u201373 characterized the OR proj",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_c94236ec_720c159b",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "c94236ec",
-    "status": "available",
-    "timestamp": "2026-08-15T03:13:13.753208+00:00",
-    "title": "Close Proofs: SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-coun"
   },
   {
     "consumed_by_exp_id": "",
@@ -11767,6 +11711,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any continuous map into the carrier the nullity fibre is clopen, which is exactly the algebraic shadow of a branch that an attacker can observe. We conjecture that the guarded fragment coincides with the branch-free circuits, so that the guard is a constant-time discipline in disguise.\n\nIn a division-tolerant arithmetic circuit model, a circuit's value map is continuous into the transreal carrier iff no execution reaches an exceptional constructor on a boundary input; every unguarded circuit has an input pair separated by a single constructor observation.\n\nDefine a circuit model whose gates are the TExpr constructors, define an observation as the constructor tag of the output, and prove the separation statement using Transreal.isOpen_preimage_null.\n\nThe guarded transfer principle becomes a formal constant-time criterion for division-tolerant arithmetic.\n\nConstructor observability is strictly coarser than continuity, and leakage needs a finer invariant than topology.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3835",
+    "priority_score": 0.7100588235294119,
+    "research_mode": "team",
+    "source_exp_id": "04d3a29d",
+    "status": "available",
+    "timestamp": "2026-08-23T11:35:57.168711+00:00",
+    "title": "Nullity Fibres as Side-Channel Observables"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For graphs of maximum degree at most three the non-backtracking trace sequence should determine the number of cycles of each length. The proved value at n = 3 (six times the number of triangles) is the first case, and the girth criterion pins the first nonzero index. This would make the Hashimoto trace a strictly finer invariant than the adjacency spectrum on this class.\n\nIf G and G' have maximum degree at most three and trace(B_G^n) = trace(B_{G'}^n) for all n, then G and G' have the same number of cycles of every length.\n\nCompute the trace sequences of adjacency-cospectral subcubic pairs and compare cycle counts; formally, set up the triangular system relating trace(B^n) to cycle counts of length at most n and prove its unipotence by induction on n.\n\nThe non-backtracking trace sequence is a cycle-spectrum invariant, strictly refining the adjacency spectrum on subcubic graphs.\n\nA cospectral subcubic pair with equal non-backtracking traces but different cycle counts exists, bounding how much combinatorial data the Hashimoto matrix retains.",
     "domains": [
       "Combinatorics",
@@ -11916,6 +11875,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T07:46:18.653098+00:00",
     "title": "Bounded-Cluster Modal Completeness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The pole trichotomy is local; expressions are finite. We conjecture that continuity of transEval is equivalent to a finite conjunction of local sign conditions at the zeros of the denominator subexpressions, giving a decision procedure for continuity of the whole expression algebra.\n\nFor e : TExpr \u211d with continuous atoms, Continuous (transEval e) holds iff at every zero x\u2080 of every denominator subexpression the numerator is nonzero and both the numerator and the denominator have constant sign on a punctured neighbourhood of x\u2080.\n\nExtend the induction in Transfer.lean with the three regimes of PoleTransfer.lean as the base cases, and test the resulting criterion against x/x, 1/x, 1/x\u00b2, x/(x\u00b2) and (1/x) + (-1/x).\n\nGuardedness can be replaced by a strictly weaker, decidable side condition, enlarging the conservative fragment.\n\nContinuity of compound expressions depends on cancellation between infinities, and no purely local criterion exists.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_3834",
+    "priority_score": 0.7097889908256881,
+    "research_mode": "team",
+    "source_exp_id": "04d3a29d",
+    "status": "available",
+    "timestamp": "2026-08-23T11:35:56.707594+00:00",
+    "title": "Syntactic Decision Procedure for Transreal Continuity"
   },
   {
     "consumed_by_exp_id": "",
@@ -12456,6 +12430,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T03:16:35.594756+00:00",
     "title": "Distribution-Free Confidence Radius for the Dial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Exhaustive rational sampling found associativity of total transreal multiplication unbroken while distributivity broke at once. We conjecture associativity holds and is best proved through the extended sign homomorphism into a four-element absorbing monoid, avoiding a 64-case analysis.\n\nTotal transreal multiplication is associative and commutative with unit fin 1, and the map sending fin x to its sign, \u00b1\u221e to \u00b1, and null to an absorbing element is a monoid homomorphism that detects associativity.\n\nDefine the sign monoid, prove the homomorphism property, and reduce associativity to associativity of the sign monoid together with associativity on the finite fragment.\n\nThe carrier is a commutative monoid under both operations, isolating distributivity as the unique algebraic casualty of totality.\n\nA sampling-invisible associativity failure exists, which would also invalidate the monoid reading of the guarded fragment.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_3837",
+    "priority_score": 0.7084545454545456,
+    "research_mode": "team",
+    "source_exp_id": "04d3a29d",
+    "status": "available",
+    "timestamp": "2026-08-23T11:35:58.142618+00:00",
+    "title": "Sign-Homomorphism Proof of Transreal Associativity"
   },
   {
     "consumed_by_exp_id": "",
@@ -13872,6 +13861,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Celestial Density of the Berggren Boundary"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Extend the exact equational transfer to an order transfer. With the natural partial order in which nullity is incomparable, guarded expressions should preserve and reflect inequalities and have connected image, yielding an intermediate value theorem whose only failure mode is a jump through nullity.\n\nFor guarded e\u2081 e\u2082, (\u2200x, transEval e\u2081 x \u2264 transEval e\u2082 x) \u2194 (\u2200x, realEval e\u2081 x \u2264 realEval e\u2082 x); moreover the image of a connected domain under a guarded expression is connected, and the image of an unguarded expression is disconnected exactly when it meets null.\n\nDefine the partial order on Transreal, prove the finite fragment is an order embedding, and derive the connectivity statements from the clopen nullity fibre.\n\nGenuinely analytic theorems, not only identities, transfer through the finite fragment.\n\nThe transfer principle is intrinsically equational and the exceptional constructors obstruct order-theoretic reasoning.",
+    "domains": [],
+    "id": "fd_3836",
+    "priority_score": 0.5933870967741937,
+    "research_mode": "team",
+    "source_exp_id": "04d3a29d",
+    "status": "available",
+    "timestamp": "2026-08-23T11:35:57.656963+00:00",
+    "title": "Order Transfer and the Transreal Intermediate Value Theorem"
+  },
+  {
     "consumed_by_exp_id": "242b27e9",
     "description": "Finite-key BB84 analyses subtract O(sqrt(n)) statistical corrections from the asymptotic rate. Since the certificate lemmas already deliver explicit rational lower bounds for r at rational Q, a machine-checked finite-key statement of the form 'measured QBER at most 0.11002786 implies extractable length at least n r(Q) - O(sqrt n)' is within reach.\n\nFor every rational Q below the certified threshold there is an explicit rational rho(Q) > 0 and constant C with extractable key length at least n rho(Q) - C sqrt(n log(1/eps)).\n\nCombine secureKeyRate_gt_of_cert_pade with the leftover-hash bound already in the catalog and instantiate at Q = 11/100.\n\nEnd-to-end machine-checked QKD parameter tables, with no floating point anywhere in the chain.\n\nThe statistical corrections dominate at realistic n, showing the asymptotic threshold is the wrong figure of merit for deployment.",
     "domains": [],
@@ -14147,6 +14148,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T19:38:08.791559+00:00",
     "title": "Rank Threshold for Nowhere-Vanishing Twisted Sections"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The four-constructor carrier was topologised by fiat as EReal \u2294 {\u03a6}. We conjecture that this is forced: any compact Hausdorff topology making the finite fragment an open copy of the line and nullity isolated is that one. The approach is an ends argument for the real line inside a two-point remainder compactification.\n\nIf t is a compact Hausdorff topology on Transreal such that fin is an open embedding and {null} is open, then t equals the topology induced by the bijection Transreal \u2243 EReal \u2295 Unit.\n\nFormalise the end compactification of \u211d, show any compactification with two-point remainder of a two-ended locally compact space is the end compactification, then apply it to the complement of {null}.\n\nAll sharpness theorems about the division boundary become topology-canonical rather than model-dependent.\n\nThere is an exotic compact Hausdorff transreal topology; the guard's necessity would have to be re-examined in it.",
+    "domains": [],
+    "id": "fd_3833",
+    "priority_score": 0.5910526315789475,
+    "research_mode": "team",
+    "source_exp_id": "04d3a29d",
+    "status": "available",
+    "timestamp": "2026-08-23T11:35:56.215025+00:00",
+    "title": "Uniqueness of the Two-Point Transreal Compactification"
   },
   {
     "consumed_by_exp_id": "",
@@ -26063,6 +26076,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that a knee reading converts directly into a lower bound on the\nheaviest key's mass, so $\\mathrm{base}(\\text{domain})$ should be exactly the reciprocal of\nthe domain's asymptotic top-key mass \u2014 a *shape* invariant that can be measured without any\ndownstream task.\n\n**Why now?** The attention-profile calculus already supports the inequality in one\ndirection, and the uniform profile shows it is tight; what is missing is a matching upper\nbound for realistic, heavy-tailed profiles.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_3839",
+    "priority_score": 0.5172222222222222,
+    "research_mode": "team",
+    "source_exp_id": "3d2c810c",
+    "status": "available",
+    "timestamp": "2026-08-23T11:36:17.602640+00:00",
+    "title": "D2. The base is a concentration invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** If a finite graph contains a complete graph on `t` vertices as a minor, then its chromatic counting function vanishes at every nonnegative palette size below `t`. Conversely, determine natural minor-closed graph classes on which this vanishing pattern forces a complete `t`-minor.\n\nThe key insight is that Hadwiger-type structure can be phrased as an interval of forced zeros rather than only as a lower bound on a chromatic number.\n\n**Why now?** The exact minimal-positive-value characterization isolates the zero interval that must be controlled, while deletion\u2013contraction offers a natural mechanism for tracking it through graph reductions.",
     "domains": [
       "Combinatorics"
@@ -34732,19 +34759,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Invariant-measure theorem with sharp exceptional set"
   },
   {
-    "consumed_by_exp_id": "04d3a29d",
-    "description": "**Conjecture.** Every theorem built from continuous real functions using finite composition, addition, multiplication, and division by a nowhere-zero denominator transfers through the finite transreal fragment, while any unguarded extension allowing a denominator to reach zero generally fails to preserve continuity into a natural Hausdorff topology on the four-constructor carrier.\n\nThe key insight is that finite arithmetic and nonzero division are exactly conservative, whereas division at zero jumps to an exceptional constructor. **Why now?** Continuity of the exponential has already transferred through the real shadow, and the division boundary supplies a sharp candidate for the necessary guard.",
-    "domains": [],
-    "id": "fd_2164",
-    "phase": "A",
-    "priority_score": 0.43765217391304345,
-    "research_mode": "team",
-    "source_exp_id": "a9bce66e",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:22:54.890283+00:00",
-    "title": "Guarded transfer principle for real analysis"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "**Conjecture.** For fixed positive integers `d` and `Q`, only finitely many primitive Selberg-class functions have degree `d` and conductor at most `Q`.\n\nThe key insight is that a countable universe need not have finite conductor slices; finiteness requires an additional arithmetic rigidity or compactness principle.\n\n**Why now?** Fixed-modulus Dirichlet characters provide a complete degree-one model in which the corresponding analytic family is both faithful and finite, giving a concrete base case for testing higher-degree analogues.",
     "domains": [],
@@ -36262,14 +36276,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Freiman's `3k-4` theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "620a1130",
     "description": "Autocorrelation at sequence lag 12 compares digit positions twelve time steps apart; it does not measure a twelve-semitone interval. To study musical intervals, use the distribution of `|d\u1d62 - d\u2c7c|` (or pitch classes modulo 12) for a clearly specified pair of positions.",
     "domains": [],
     "id": "fd_1816",
+    "phase": "A",
     "priority_score": 0.4110350877192982,
     "research_mode": "team",
     "source_exp_id": "9f14a31b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:20.081786+00:00",
     "title": "Separate temporal and pitch lags"
   },
@@ -36369,6 +36384,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:01.582437+00:00",
     "title": "Scoping is preserved by capture-avoiding substitution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the additive law and the decay-rescaling law are *not*\nalternative fits of the same curve \u2014 they are the linear and the ceiling-of-a-quotient\nbranches of one two-parameter family, and the branches are numerically indistinguishable\nexactly while the admissible exponent window\n$\\bigcap_d \\big((P_d-1)/C_d,\\; P_d/(C_d-1)\\big)$ stays non-empty; that window is empty\nfrom $d = 3$ on.\n\n**Why now?** The impossibility of any rescaling model fitting both the context-512 cell\nand a 24-reading at context 4096 is already proved, so the experiment is fully\npre-registered: a 4096 code reading of $24$ kills the multiplicative mechanism, and any\nreading $\\le 23$ kills the additive law. No further theory is required to run it.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3838",
+    "priority_score": 0.4085469023223419,
+    "research_mode": "team",
+    "source_exp_id": "3d2c810c",
+    "status": "available",
+    "timestamp": "2026-08-23T11:36:17.158605+00:00",
+    "title": "D1. Additive base, multiplicative decay: the 4096 decision"
   },
   {
     "consumed_by_exp_id": "",

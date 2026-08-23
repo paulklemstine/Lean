@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "85ca8e3d",
-      "domain": "Computation",
-      "key_insight": "# Future directions — the degree-monoid invariant of transition systems\n\nThis cycle turned the informal \"realisation problem\" for the degree monoid into proved\nmathematics, in `Catalog/Computation/`:",
-      "quality_score": 0.86,
-      "sorry_count": 4,
-      "theorem_count": 58,
-      "timestamp": "2026-08-21T22:42:28",
-      "title": "The invariant is now defined and proven to be a submonoid"
-    },
-    {
       "cycle_id": "1632a2eb",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nDerived from the two verified files of this cycle:\n\n* `Catalog/Combinatorics/CodiscreteMagmaBicategory.lean` — every pointed magma `M` (no axioms)\n  yields a one-object bicategory",
@@ -499,19 +489,19 @@
       "theorem_count": 104,
       "timestamp": "2026-08-23T11:36:10",
       "title": "Guarded transfer principle for real analysis"
+    },
+    {
+      "cycle_id": "3d2c810c",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThree things are now established. The measured code knees — 12 keys at context 512 and 16\nat context 1024 — follow from exactly two bracketing readings each. The code/prose gap of",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 91,
+      "timestamp": "2026-08-23T11:36:25",
+      "title": "NET-68: CODE-NEEDS-FEWER-KEYS — domain jump to Python shifts the knee chain down one fine step ({12,"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dc071269",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-30's formalisation\n\nThe four Lean files in `Catalog/NumberTheory/` prove: (i) the \"1-redundant but\nblock-dependent\" signature forces `k ≥ 2` for *any* statistic; (ii) i",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-16T01:57:40",
-      "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; NET-29's ∝-quality l"
-    },
     {
       "cycle_id": "e67b8bbc",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 104,
       "timestamp": "2026-08-23T11:36:10",
       "title": "Guarded transfer principle for real analysis"
+    },
+    {
+      "cycle_id": "3d2c810c",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThree things are now established. The measured code knees — 12 keys at context 512 and 16\nat context 1024 — follow from exactly two bracketing readings each. The code/prose gap of",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 91,
+      "timestamp": "2026-08-23T11:36:25",
+      "title": "NET-68: CODE-NEEDS-FEWER-KEYS — domain jump to Python shifts the knee chain down one fine step ({12,"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3fdce232",
-      "domain": "Computation",
-      "name": "Scheme",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "22ca7429",
-      "domain": "Geometry",
-      "name": "is",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "22ca7429",
-      "domain": "Geometry",
-      "name": "sum_sq_normalised_indicator",
-      "quality": 0.86
-    },
     {
       "cycle_id": "22ca7429",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "pinf_mul_fin_eq",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "3d2c810c",
+      "domain": "Applications",
+      "name": "eval_ext_of_two_points",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3d2c810c",
+      "domain": "Applications",
+      "name": "tr_inc",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3d2c810c",
+      "domain": "Applications",
+      "name": "tr_eval",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-23T11:36:10",
+  "last_updated": "2026-08-23T11:36:25",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "52846ceb",
-        "quality": 0.82,
-        "theorems": 242,
-        "title": "Power-sum inversion"
-      },
-      {
         "cycle_id": "69ffd40e",
         "quality": 0.86,
         "theorems": 127,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 88,
         "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*"
+      },
+      {
+        "cycle_id": "3d2c810c",
+        "quality": 0.82,
+        "theorems": 91,
+        "title": "NET-68: CODE-NEEDS-FEWER-KEYS — domain jump to Python shifts the knee chain down"
       }
     ],
     "Bridges": [
