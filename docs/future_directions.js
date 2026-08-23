@@ -1751,16 +1751,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 \u2014 knee jumps to k*=40 (increment +16/doubling vs prior +4); linear increment law breaks after three doublings; phase transition in context-sensitivity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97a7afe4",
     "description": "Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.\n\nThe dial's signal degrades toward the floor on a gradual path.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp535_t_dial_unif_84.py + exp535_result.json, seeds 20261190\u201392.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3744",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.051034+00:00",
     "title": "FACT round-67 #1 \u2014 TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
   },
@@ -2778,6 +2779,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 3a849502 (Q=0.820), which proved 107 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The breakdown theorem is formalised and the two measured normalised distributions\nare encoded (`isMedian_ratios16`, `isMedian_ratios8`); the only missing ingredient is the\nsharpness half, which is a finite computation on the measured triples.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_3a849502_79dfca61",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "3a849502",
+    "status": "available",
+    "timestamp": "2026-08-23T20:40:20.718788+00:00",
+    "title": "Deepening: The breakdown theorem is formalised and the two measured normalised distribution"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domains": [
       "NumberTheory"
@@ -3751,22 +3766,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
-    "domains": [
-      "Geometry",
-      "Computation",
-      "NumberTheory"
-    ],
-    "id": "seed_093",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -10865,6 +10864,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Robustness has two finite-sample axioms: resisting explosion (breakdown) and reproducing an uncontaminated majority (exact fit). The conjecture is that for equivariant estimators the exact-fit point never exceeds the breakdown number, with equality for every order statistic. The approach reuses the general predicate-count transfer lemma with an equality predicate in place of an order predicate.\n\nFor every translation-equivariant T and non-empty xs, exactFitPoint T xs <= breakdownNumber T xs, and for T = orderStat j both equal min(j+1, n-j).\n\nDefine exactFitPoint via IsLeast {k | exists a k-contamination on which T differs from the majority value} and prove the order-statistic case; then search for a gap by testing piecewise-defined equivariant estimators on ratios8.\n\nThe two classical robustness axioms are formally comparable and coincide on the whole order-statistic family.\n\nA gap exhibits an estimator that resists explosion but misreports a clean majority, separating the axioms at finite sample size.",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "fd_3885",
+    "priority_score": 0.7116363636363637,
+    "research_mode": "team",
+    "source_exp_id": "3a849502",
+    "status": "available",
+    "timestamp": "2026-08-23T20:40:08.750931+00:00",
+    "title": "Exact-Fit Point versus Breakdown Point"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The feedback recursion proved here gives the harmonic value H_u for a deck of distinct cards. For a deck with repeated card types we conjecture that stagewise fair odds still give value zero, and that under unit scoring the greedy 'call a most-frequent remaining type' strategy is optimal with an explicit stagewise value. This covers real card counting, where suits repeat.\n\nFor a deck given by a multiset of multiplicities r_1,...,r_m, the stagewise-fair-odds value is 0 for every admissible strategy, and the greedy strategy maximises the unit-scoring value, whose value is the expected sum over stages of (max remaining multiplicity)/(cards remaining).\n\nGeneralise expScore from Finset alpha to a multiset state, reprove expScore_step, and check optimality by exhaustive dynamic programming for all multiplicity vectors with total size at most 7.\n\nCard counting with repeated ranks is fully solved at the level of exact expectations, and the fair-odds invariance is confirmed to be independent of deck composition.\n\nGreedy is not optimal, which would mean that deliberately naming a rarer type buys information worth more than the immediate hit probability.",
     "domains": [
       "Algebra",
@@ -11749,6 +11763,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T08:48:25.079274+00:00",
     "title": "Boolean Readout Spectrum of a Cubic Field"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The median-of-medians selection algorithm is conjectured to have breakdown number exactly ceil(b/2)*ceil(s/2) on n = b*s points, asymptotically n/4. Since the universal equivariant ceiling is n/2, the algorithm pays a factor-two robustness tax intrinsic to its two-layer structure. The approach applies the proved single-layer robustness and sharpness results independently within blocks and then across blocks.\n\nFor n = b*s, the breakdown number of the median-of-block-medians estimator equals ceil(b/2) * ceil(s/2).\n\nDefine blockMedian in Lean over List (List Q), prove the lower bound by two nested applications of median_robust_quant_le and the upper bound by contaminating ceil(s/2) entries in each of ceil(b/2) blocks; sanity check with #eval on 16 = 4*4.\n\nThe first formal proof that a widely used selection algorithm is strictly less robust than the statistic it approximates.\n\nEither the tax is smaller (some blocks can be shared) or larger (block interactions compound), and the failure pinpoints how corruption budgets combine across composition layers.",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_3884",
+    "priority_score": 0.7099565217391305,
+    "research_mode": "team",
+    "source_exp_id": "3a849502",
+    "status": "available",
+    "timestamp": "2026-08-23T20:40:08.280722+00:00",
+    "title": "Block-Median Robustness Tax"
   },
   {
     "consumed_by_exp_id": "",
@@ -12703,6 +12732,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T13:47:23.091311+00:00",
     "title": "Quantile Cover Cost for Multilingual Workloads"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The equivariance shear only uses two corruption patterns, a prefix and a suffix, which together cover all coordinates precisely when 2k >= n. This suggests the real hypothesis behind the breakdown ceiling is a covering condition on the admissible corruption patterns rather than a cardinality bound. The conjecture replaces k-subsets by an arbitrary downward-closed set system and predicts the ceiling from its covering number.\n\nLet S be a downward-closed family of subsets of {0,...,n-1} of admissible corruption supports. Every translation-equivariant estimator is unbounded under S-contamination if and only if some two members of S cover {0,...,n-1}.\n\nFormalise S-contamination as diffSupport xs ys in S, re-prove breakdown_ceiling_unbounded from the covering hypothesis, and instantiate S as (i) all k-subsets, recovering 2k >= n, and (ii) contiguous blocks of length k, where the covering threshold differs.\n\nThe ceiling extends verbatim to structured adversaries such as sensor dropouts and block corruption, with no new analysis.\n\nBoundedness under structured contamination is not covering-determined, which would mean equivariance interacts with the combinatorics of the support family in a way the shear cannot see.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3886",
+    "priority_score": 0.6716111111111113,
+    "research_mode": "team",
+    "source_exp_id": "3a849502",
+    "status": "available",
+    "timestamp": "2026-08-23T20:40:09.229735+00:00",
+    "title": "Covering-Number Ceiling for Structured Contamination"
   },
   {
     "consumed_by_exp_id": "",
@@ -14483,6 +14526,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every L-estimator (weighted average of order statistics) should have breakdown number equal to the tent profile min(j+1, n-j) evaluated at the extreme support points of its weight vector. The approach lifts the two count-based sandwich lemmas from single order statistics to finite convex combinations. It matters because it would compute the breakdown numbers of the trimmed mean, Winsorised mean and trimean as instances of one theorem.\n\nFor weights w on {0,...,n-1} with nonnegative entries summing to 1, the breakdown number of xs \\mapsto \\sum_j w_j \\cdot orderStat j xs equals min(jmin+1, n-jmax) where jmin and jmax are the smallest and largest indices with w_j > 0.\n\nFormalise trimmedMean alpha as an L-estimator in Lean and prove IsLeast {k | not EstBounded ...} = min(jmin+1, n-jmax); first check the alpha-trimmed mean on ratios16 for alpha = 1/8, 1/4, 3/8 by #eval on the profile formula.\n\nA single theorem yields the breakdown numbers of the whole classical L-estimator family, and shows no L-estimator beats the median.\n\nThere is an L-estimator whose interior weights create extra robustness, which would contradict the support-functional picture and force a genuinely new mechanism.",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3882",
+    "priority_score": 0.5641830391006109,
+    "research_mode": "team",
+    "source_exp_id": "3a849502",
+    "status": "available",
+    "timestamp": "2026-08-23T20:40:07.330494+00:00",
+    "title": "Concave Breakdown Profiles for L-Estimators"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Everything is proved for groupoids.  Transporting across\n   the fundamental-groupoid functor to genuine aspherical spaces requires the equivalence\n   between homotopy classes of maps of aspherical spaces and of their fundamental\n   groupoids, which is not in Mathlib and remains the main missing ingredient for a\n   statement such as \"degree classifies self-maps of the topological circle\".",
     "domains": [
       "Geometry",
@@ -14915,6 +14973,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T08:49:48.158662+00:00",
     "title": "Dominance Order Monotonicity of Tie Attenuation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The breakdown threshold of the median was shown to coincide with the unique-decoding radius of the two-point translation code. The conjecture is that this is an instance of a general duality: for any group acting coordinatewise, the equivariant breakdown ceiling is half the minimum Hamming distance of the orbit. This bridges robust statistics and coding theory at the level of definitions, not analogy.\n\nFor a group G acting coordinatewise on Q^n and a G-equivariant estimator T, the breakdown number of T at xs is at most ceil(d_G(xs)/2) where d_G(xs) is the minimum Hamming distance from xs to a distinct orbit point.\n\nInstantiate G as the scaling group acting on a positive sample and formalise the resulting ceiling for the MAD; compare against the known MAD breakdown point 1/2 and against a deliberately sparse orbit where the bound should bite earlier.\n\nBreakdown points of all equivariant estimators become computable from an orbit geometry, and dispersion estimators get their first formal ceilings.\n\nThe translation case is special, which would isolate exactly which property of translations (full-support displacement) drives the ceiling.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3883",
+    "priority_score": 0.5633481507492952,
+    "research_mode": "team",
+    "source_exp_id": "3a849502",
+    "status": "available",
+    "timestamp": "2026-08-23T20:40:07.809740+00:00",
+    "title": "Minimum-Distance Duality for Group-Equivariant Estimators"
   },
   {
     "consumed_by_exp_id": "",
@@ -34212,14 +34285,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Adaptive logistic-map shadowing beyond the global factor four"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0a79113",
     "description": "**Conjecture.** There is an explicit family of polynomial-size propositional certificates whose shortest paths to normal form under any fixed finite local, conclusion-preserving refinement basis have superpolynomial length.\n\nThe key insight is that a small final certificate need not imply a short route to it; local simplification can be obstructed by globally distributed redundancies.\n\n**Why now?** The distinction between well-foundedness and quantitative normalization time is exposed by the audited cost model. Candidate families can be built from repeated substitution, shared lemmas, and forced commuting conversions, giving concrete lower-bound instances.",
     "domains": [],
     "id": "fd_1909",
+    "phase": "A",
     "priority_score": 0.4392222222222222,
     "research_mode": "team",
     "source_exp_id": "21c08839",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:44.931663+00:00",
     "title": "Superpolynomial refinement distance for propositional certificates"
   },
@@ -38035,19 +38109,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T03:58:32.532017+00:00",
     "title": "All the ingredients are formalised and sorry-free here: the factor group lemma"
-  },
-  {
-    "consumed_by_exp_id": "3a849502",
-    "description": "The breakdown theorem is formalised and the two measured normalised distributions\nare encoded (`isMedian_ratios16`, `isMedian_ratios8`); the only missing ingredient is the\nsharpness half, which is a finite computation on the measured triples.",
-    "domains": [],
-    "id": "fd_1493",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "6ba84571",
-    "status": "in_progress",
-    "timestamp": "2026-08-18T05:45:46.093221+00:00",
-    "title": "The breakdown theorem is formalised and the two measured normalised distributions"
   },
   {
     "consumed_by_exp_id": "",
