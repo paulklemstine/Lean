@@ -1025,21 +1025,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-40 #2 \u2014 ET-HINTS-THEORY: the crossing law \u2014 width can never substitute for reliability (paper 146)"
   },
   {
-    "consumed_by_exp_id": "9b10b60b",
-    "description": "Round-42 #1, cron iteration (exp 487, assessment v264). Paper 154's deferred ECM arm.\n\n**ECM-LITE-BIRTHDAY-SCALING**: sequential multiples j=3..B1=50 over random curves (explicitly NOT lcm-based true ECM) find 1200/1200 at k=16 and 1163/1200 at k=20 (3.1% censoring); across-k slope = **0.48 per log\u2082p** \u2014 birthday-bound scaling exactly as the lite structure predicts. H1's [0.6, 0.8] refuted FOR THE LITE VARIANT; true lcm-based ECM deferred.\n\nThe unified plane now holds FOUR methods on one population: td **0.84** / rho **0.52** / Fermat **0.50** / ECM-lite **0.48**.\n\nLedger: v1 instant-degenerate bug (j=2 running point equals base \u2192 zero denominator \u2192 every curve dead); fixed with explicit doubling.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp487_ecm_only.py + exp487_result.json, seed 20260921.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3604",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:00:59.863573+00:00",
-    "title": "FACT round-42 #1 \u2014 ECM-COMPLETION: the lite variant scales like rho (paper 155)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-41 #4, cron iteration (exp 485, assessment v262). The gating replication papers 150\u2013152 needed.\n\n**LIFT-DOES-NOT-REPLICATE**: across 5 fully independent populations (1200 Ns \u00d7 240 values each), mean \u0394R\u00b2(ph13) = **+0.0008 \u00b1 0.0053** (zero within noise); mean \u0394R\u00b2(pair coincidences) = **+0.0030 \u00b1 0.0119**; pair-vs-phase indistinguishable (+0.0022 \u00b1 0.0160); no baseline correlation (r = 0.06/0.09).\n\nThe +0.03 readings of exps 482r/484 were population luck (base R\u00b2 itself spans 0.56\u20130.62 across the same seeds). Papers 150/151/152 resolve fully: singleton phases, high-prime phases, AND pair coincidences all add ~nothing beyond the footprint dial. The split-ceiling excess remains unexplained by every tested encoding \u2014 possibly intrinsic to the dial family's same-window realized-divisibility information.\n\n**The footprint dial of paper 145 stands as the final form**: rate(N) \u2248 \u03b2\u2080 + \u03b2\u2081\u00b7w(N) + \u03b2\u2082\u00b7d(N), ~200 Euler tests per candidate, R\u00b2 \u2248 0.59 at u=2.5.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp485_multiseed_phase.py + exp485_result.json, seeds 20260910\u201314.",
     "domains": [
@@ -1488,21 +1473,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
   },
   {
-    "consumed_by_exp_id": "a303e67d",
-    "description": "## NET-61 \u2014 limited-memory axis, round 14 (paper 146, ResearchOutput/exp_net61_hybrid.py, /tmp/net61.log)\n\n**Verdict name: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP.**\n\n### Result\nHybrid eviction score = z(accumulated usage) + \u03bb\u00b7z(static probe score), Qwen2.5-0.5B ctx=1024 (gate exact 1.0000; probes train-side):\n\n| B | \u03bb | retained |\n|---|---|---|\n| 64 | **0.0** | **0.9384** |\n| 64 | 0.25 | 0.9383 |\n| 64 | 1.0 | 0.9365 |\n| 64 | 4.0 | 0.9344 |\n| 32 | 1.0 | 0.9189 |\n| 128 | 1.0 | 0.9544 |\n\n- **P1 REFUTED**: no \u03bb > 0 beats \u03bb = 0 \u2014 the response is monotonically DECREASING in probe weight.\n- **P2 CONFIRMED**: \u03bb = 0 is optimal.\n- **P3 CONFIRMED**: best hybrid trails oracle@64 by 5.7 points.\n\nConsistency anchor: the \u03bb=0 arm reproduces NET-56's hybrid to FOUR DECIMALS (0.9384).\n\n### The law\nWith NET-56 (accumulation), NET-58 (content alone), and now content-additive hybrids, every cheap eviction-signal family is bounded \u22655.7 pts below oracle at matched budget: **the policy gap is robust to accumulation, recency, content, and their linear combinations.** Remaining routes are structural (usage-tracking quality, learned online predictors at scale \u2014 themselves bounded by NET-58's weak-probe ceiling) or accepting oracle-only claims as upper bounds.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P1; (b) confronted \u2014 score-combination hybrids exist in H2O variants; NEW = the measured monotone-degradation law + four-family bounding of the gap; (c) confronted \u2014 one model/context, linear probes, fixed recency window; (d) clean \u2014 train-side probes; (e) deterministic, \u03bb-grid pre-stated; (f) clean \u2014 ALL_DONE_NET61; (g) fair \u2014 identical harness/budgets/windows as NET-56/58; (h) DIRECT.\n\n### Next\nSub-16 addendum @1024 (running next); domain-jump corpora; 1.5B tail map; 7B quantized-offload cell.\n\nNow 61 network experiments. Assessment v61. Paper 146.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3695",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T17:37:32.032369+00:00",
-    "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP \u2014 hybrid z(acc)+lambda*z(probe) monotonically worse with probe weight; all four cheap signal families bounded >=5.7pts below oracle"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-56 #1, cron iteration (exp 526, assessment v291). The previously-unmeasured intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-48**: Spearman(T, rate) = **0.7192/0.7202/0.7198** across 3 seeds on uniform draws at exact bitlen 48; T beats count by +0.098 to +0.145 everywhere; mean relation rate 12.5% (unstarved regime).\n\nCELL CLOSED: the zero-fit dial holds at the intersection of bitlen-scaling and regime-invariance.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp526_t_dial_bitlen.py + exp526_result.json, seeds 20261110\u201312.",
     "domains": [
@@ -1601,7 +1571,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
   },
   {
-    "consumed_by_exp_id": "096608bb",
+    "consumed_by_exp_id": "3d2c810c",
     "description": "## NET-68 \u2014 limited-memory axis, round 21 (paper 153, ResearchOutput/exp_net68_domainjump.py, /tmp/net68.log)\n\n**Verdict name: CODE-NEEDS-FEWER-KEYS.**\n\n### Result\nDomain jump to Python source (10 CPython stdlib files; gate exact; identical harness/bar):\n\n| ctx | code k\\* | prose k\\* | code full acc | shift |\n|---|---|---|---|---|\n| 512 | **12** | 16 | 0.6296 | \u22124 keys |\n| 1024 | **16** | 20 | 0.6520 | \u22124 keys |\n\nCode sweeps @512: 4: 0.930 \u2717, 8: 0.969 \u2717, **12: 0.981 \u2713**, 16: 0.987, 20: 0.988, 24: 0.989.\n@1024: 8: 0.960 \u2717, 12: 0.976 \u2717, **16: 0.981 \u2713**, 20: 0.986, 24: 0.987.\n\n- **P1 CONFIRMED**: knees transfer within one fine step.\n- **P2 CONFIRMED**: exactly one fine-grid step (\u22124 keys) below prose at BOTH contexts \u2014 structure preserved.\n- **P3 REFUTED**.\n\n### The parameterized budget law\nk\\*(domain, context) = base(domain) + increment(scale) \u00d7 doublings(context), with base(prose)=16, base(code)=12, increments set by scale (NET-67). THIRD independent confirmation that accuracy level and knee position are independent quantities: code is EASIER to predict yet needs FEWER keys. Deployment: size KV by the largest-base domain present in mixed workloads.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) clean; (c) confronted \u2014 limits: ONE code language, single-repo source, 24 windows stated; (d) clean per-corpus held-out splits; (e) deterministic; (f) clean \u2014 ALL_DONE_NET68; (g) fair \u2014 byte-identical harness except text; (h) DIRECT.\n\n### Next\nMath/non-English domains; increments at 4096; probe+recency hybrid on code; 7B quantized-offload cell.\n\nNow 68 network experiments. Assessment v68. Paper 153.\n",
     "domains": [
       "Novelty"
@@ -3800,20 +3770,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 5ac3c62c (Q=0.752), which proved 39 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\nThe formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable library\n`Shared/SolomonZeta/`) now contains, all machine-checked and free of `sorry`:\n\n* the effective coefficient formula\n  `#Aut(X) \u00b7 #{N \u2264 M : M/N \u2245 X} = \u03a3_{Y \u2264 X} \u03bc(Y, X) \u00b7 #Hom(M, Y)`\n  (`autCard_",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_5ac3c62c_8786f230",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "5ac3c62c",
-    "status": "available",
-    "timestamp": "2026-08-11T19:33:16.073298+00:00",
-    "title": "Deepening: The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
     "domains": [
       "Algebra"
@@ -3828,27 +3784,12 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "seed_309",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 11c9ff9f (Q=0.860) proved 90 theorems in Logic but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For `k \u2264 |X|` the orbit count splits\n    along patterns, `#(X^k/G) = \u03a3_P m_P` (`sum_patternMultiplicity`), with `m_P \u2265 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-tr",
     "domains": [
       "Logic"
     ],
     "id": "sorry_fill_11c9ff9f_c1dbe19e",
-    "priority_score": 0.85,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "11c9ff9f",
     "status": "available",
@@ -3862,7 +3803,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "sorry_fill_18b02a30_1da19413",
-    "priority_score": 0.85,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "18b02a30",
     "status": "available",
@@ -3876,7 +3817,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "sorry_fill_286b3a0e_55141f77",
-    "priority_score": 0.85,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
     "status": "available",
@@ -9481,7 +9422,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grokking: Phase Transitions in Learning"
   },
   {
-    "consumed_by_exp_id": "575b8a0a",
+    "consumed_by_exp_id": "",
     "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domains": [
       "Novelty",
@@ -9489,11 +9430,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_259",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
@@ -11333,6 +11273,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The trace formula turns the return sequence walkCount S n 1 into the moment sequence of the adjacency spectrum. For abelian G that spectrum is the multiset of character sums over S, so reconstructing S becomes a Fourier-uniqueness question. The non-abelian case is expected to fail, with a small explicit counterexample.\n\nFor finite abelian G, two inversion-closed connection sets with equal return sequences are related by an automorphism of G; for non-abelian G this fails for some group of order at most 16.\n\nCompute return sequences for all inversion-closed subsets of small abelian groups and search for collisions; formalise the abelian direction using the discrete Fourier transform.\n\nThe identity column of a census determines the connection set up to symmetry, so censuses are a faithful fingerprint for abelian Cayley graphs.\n\nThere are cospectral non-isomorphic circulant graphs whose spectra coincide as multisets, recovering classical circulant cospectrality inside this framework.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3807",
+    "priority_score": 0.7113333333333334,
+    "research_mode": "team",
+    "source_exp_id": "347a400e",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:54.146431+00:00",
+    "title": "Moment Reconstruction of Abelian Connection Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Census equivalence provably preserves being an involution. The conjecture is that this is one instance of a general descent principle for functorial group-theoretic invariants, and that these invariants are jointly complete for the relation. This would give a decision procedure for census equivalence that avoids searching Aut(G).\n\nEvery invariant of group elements that is preserved by inversion and by all automorphisms in Aut(G,S) is constant on census-equivalence classes, and the family of such invariants separates distinct classes.\n\nFormalise a general descent lemma parameterised by an invariant, instantiate it at orderOf and at derived-series membership, and test completeness computationally on groups of order \u2264 16.\n\nCensus equivalence becomes decidable by evaluating a finite list of invariants, replacing an automorphism search.\n\nThere are census-inequivalent elements agreeing on all definable invariants, which would be an interesting rigidity failure.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_3809",
+    "priority_score": 0.7113333333333334,
+    "research_mode": "team",
+    "source_exp_id": "347a400e",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:55.164654+00:00",
+    "title": "Definable Invariants of Census Equivalence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Return dominance says the identity maximises the census at even lengths. The conjecture is a quantitative strengthening: the gap between the identity and any other element grows monotonically in the even length. The odd-length behaviour is genuinely different, as a D3 counterexample at length three shows.\n\nFor inversion-closed S, the sequence n \u21a6 walkCount S (2n) 1 \u2212 walkCount S (2n) g is nondecreasing for every g.\n\nVerify by direct computation on dihedral and cyclic groups up to order 12 and lengths up to 12, then attempt a proof by iterated Cauchy\u2013Schwarz on the convolution identity walkCount_add.\n\nThe census admits a Lyapunov-type monotone quantity, giving mixing-time estimates for random walks on Cayley graphs directly from counting data.\n\nEven-length return dominance is not a monotone phenomenon and the \u2113\u00b2-decay of the walk is not uniform in the target element.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3808",
+    "priority_score": 0.7113050847457628,
+    "research_mode": "team",
+    "source_exp_id": "347a400e",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:54.652575+00:00",
+    "title": "Monotone Even-Length Return Deficit"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 8 made the primitivity threshold effective in the reflexive cases: card - 1 for a lazy frame (sharp) and 2*(card - 1) from a single self-loop. The remaining case is loopless aperiodicity, where the conjecture is Wielandt's bound n^2 - 2n + 2. The approach bounds the approach and exit legs by the diameter principle and the residual cost by the conductor of the cycle monoid.\n\nFor a finite irreducible KFrame F with n = card F.W >= 2 and an aperiodic world, iterR F k u v holds for all u, v and all k >= n^2 - 2n + 2; the Wielandt digraph on n vertices attains this exponent.\n\nProve by excision of closed paths that the cycle monoid at an aperiodic world is generated by simple cycle lengths at most n with gcd 1, prove a quadratic conductor bound for numerical semigroups with generators at most n, then absorb the two legs bounded by exists_iterR_lt_card; check sharpness by computing powers of the Wielandt digraph for n = 3, 4, 5.\n\nexists_uniform_primitive_of_aperiodic becomes fully effective and the modal path calculus reproves Wielandt's classical matrix bound.\n\nSome frame exceeds the classical exponent, which would locate an error in the identification of matrix-power positivity with iterR, i.e. in stepPow_pos_iff.",
     "domains": [
       "Algebra",
@@ -11345,6 +11330,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T13:02:00.488573+00:00",
     "title": "Wielandt Exponent for Aperiodic Modal Primitivity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "When the connection set is a union of conjugacy classes the adjacency operator is central in the group algebra, so its powers are class sums. The conjecture is that in this regime no census coincidences beyond the forced ones occur. This would identify exactly when the orbit bound card_census_image_le is sharp.\n\nIf S is closed under conjugation and inversion, then walkCount S n g = walkCount S n h for all n implies that g and h are census-equivalent.\n\nFormalise the class-sum expansion of adj S in the group algebra and compare with character-theoretic separation; check computationally on all normal connection sets in groups of order \u2264 24.\n\ncard_census_image_le is an equality for normal Cayley graphs, giving an exact orbit count.\n\nEven central connection sets admit hidden symmetry, sharpening the \u2124/8 phenomenon.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3806",
+    "priority_score": 0.7110769230769232,
+    "research_mode": "team",
+    "source_exp_id": "347a400e",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:53.663333+00:00",
+    "title": "Census Completeness for Normal Cayley Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -11390,6 +11390,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T13:59:19.339046+00:00",
     "title": "Quadruple Causal Cone in (3,1) Signature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Any stage-one elliptic-curve computation using t point operations forms multiples at most 2^t, so it can only detect base points of order at most 2^{t+1}. Conjecture: this converts into a per-curve success probability at most c\u00b72^{2t}/p, making every fixed-t curve budget essentially linear in p. The doubling ladder should be extremal.\n\nFor every addition chain of length t and every prime p, the probability that a uniformly random curve over F_p with a uniformly random base point is detected by that chain is at most c\u00b72^{2t}/p for an absolute constant c.\n\nFormalize the reach bound (done: addChain_le_two_pow) and the order bound (done: detected_order_le_two_mul_max), then bound the number of points of order at most 2^{t+1} in a cyclic group (done: card_lowOrder_le_sq) and average over group orders in the Hasse interval.\n\nNo reordering or reshuffling of stage-one multiples can produce sub-linear curve budgets without growing t like log p; the lite arm's exponent 1 is structural.\n\nThere exists a short chain with anomalously large detection mass, which would be a genuinely new stage-one design.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3797",
+    "priority_score": 0.7106415094339623,
+    "research_mode": "team",
+    "source_exp_id": "9b10b60b",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:12.219891+00:00",
+    "title": "Smoothness-Free Addition-Chain Barrier"
   },
   {
     "consumed_by_exp_id": "",
@@ -11855,6 +11870,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T23:36:06.325898+00:00",
     "title": "Spurious Sidelobe Energy as a Smoothness Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The factor-B lower bound uses that a deterministic rule tells the adversary exactly which page to request next. A randomised rule breaks that coupling. The classical expectation is that the achievable ratio drops from B to logarithmic in B, which would identify randomisation, not signal quality, as the first real escape route.\n\nThere is a randomised eviction rule whose expected fault count on any stream over B+1 items is O(log B) times the offline optimum, while every deterministic rule is a factor B away.\n\nExtend the Serves model with a probability measure over schedules and prove an expected-cost upper bound for the marking rule against the same offline bound offline_cost_bound.\n\nRandomised eviction is provably outside the four-family bound and becomes the priority arm.\n\nThe gap is information-theoretic rather than adversarial, and only lookahead or larger budget can help.",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_3804",
+    "priority_score": 0.7100588235294119,
+    "research_mode": "team",
+    "source_exp_id": "a303e67d",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:38.240823+00:00",
+    "title": "Randomisation Against the Adaptive Eviction Adversary"
   },
   {
     "consumed_by_exp_id": "",
@@ -12874,6 +12904,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "cheap_signal_le_oracle bounds every cheap signal by the oracle but gives no size. The exchange kernel localises all lost value in the symmetric difference between the kept set and the oracle set, suggesting the gap equals a sum over score-versus-utility inversions crossing the budget boundary.\n\nFor any score s with kept set S and oracle set O at budget B, retained v O - retained v S = sum over the matched pairs of O\\S and S\\O of the utility differences, and this equals the total weight of boundary inversions of s against v.\n\nState the matched-pair decomposition in Lean using a sorted pairing of O\\S with S\\O and prove equality, then evaluate the statistic on the measured retention tables.\n\nThe 5.7-point gap becomes a measurable inversion count, turning a policy comparison into a signal-quality statistic.\n\nGap size depends on more than pairwise inversions, so per-slot signal diagnostics cannot predict policy loss.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3802",
+    "priority_score": 0.6712142857142859,
+    "research_mode": "team",
+    "source_exp_id": "a303e67d",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:37.265614+00:00",
+    "title": "Inversion Formula for the Oracle Gap"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Invisible vectors obey two independent extremal bounds: at least K+1 nodes, and total mass at least 2K. Their extremisers differ (binomial vectors versus PTE pairs), suggesting a quantitative trade-off between narrow support and small mass.\n\nThere is c > 0 such that every nonzero window-K invisible vector satisfies (number of nonzero nodes) * log(mass) >= c K^2; in particular minimal-support vectors have mass at least 2^{cK}.\n\nProve the special case: a window-K invisible vector supported on exactly K+1 nodes has mass at least 2^K, using the divided-difference rigidity already formalised in InvisibleWeightsRigidity.\n\nThe two extremal problems of the catalog are unified by a single inequality and the binomial basis becomes provably optimal in the narrow-support regime.\n\nThere exist narrow, light invisible vectors, which would immediately improve the growth base via the convolution engine.",
     "domains": [
       "Combinatorics"
@@ -12913,6 +12957,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:51:05.976839+00:00",
     "title": "Square-Root Depth Profile of the Berggren Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Monotone degradation was derived purely from the single-crossing property of linear families. A combiner that violates single crossing should be able to improve on both pure arms, so the negative NET-61 result is about the additive parametrisation rather than about content signals as such.\n\nThere exist a, p, v and a combiner f monotone in each argument such that the top-B set of f(a,p) strictly beats the top-B set of a + lambda*p for every lambda >= 0.\n\nSearch small instances for such an f; then formalise one witness in Lean with a forced-kept-set argument like topSet_eq_initial_of_strictAnti.\n\nThe refutation of P1 is a statement about additive scoring, and nonlinear gating becomes the natural next experimental arm.\n\nAny monotone combiner is trapped on the same trade-off path, strengthening the law to all monotone score combinations.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3803",
+    "priority_score": 0.6702972972972975,
+    "research_mode": "team",
+    "source_exp_id": "a303e67d",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:37.763046+00:00",
+    "title": "Single-Crossing Barrier for Nonlinear Combiners"
   },
   {
     "consumed_by_exp_id": "",
@@ -13056,6 +13114,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T14:38:37.609482+00:00",
     "title": "Second-Order Ratio Law for the Dickman Leading Term"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A one-parameter additive score family visits few distinct top-B sets. Each unordered pair of slots crosses at most once as the weight grows, and only kept/evicted pairs can change the set, so the sweep should visit at most B(n-B)+1 distinct kept sets. This bounds the number of genuinely distinct policies any lambda-grid can test.\n\nFor scores a + lambda*p on n slots with budget B, the number of distinct sets S admitting IsTopSet (hybrid a p lambda) B S for some lambda >= 0 is at most B*(n-B)+1.\n\nFormalise the breakpoint set {(a i - a j)/(p j - p i)} and show the kept set is constant between consecutive breakpoints, then count boundary pairs; test numerically by dense sweeps for n <= 9.\n\nAny lambda-grid finer than B(n-B) points is provably redundant, bounding the cost of every future sweep experiment.\n\nAdditive families are richer than the crossing picture suggests, and grid design must be instance-dependent.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_3801",
+    "priority_score": 0.6699696969696971,
+    "research_mode": "team",
+    "source_exp_id": "a303e67d",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:36.774621+00:00",
+    "title": "Boundary-Pair Bound for Additive Sweep Complexity"
   },
   {
     "consumed_by_exp_id": "",
@@ -13889,6 +13961,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Budget monotonicity is proved; the missing quantitative law is concavity, i.e. that oracle retention gains are the sorted utilities and hence diminishing. This converts a fixed policy gap into an equivalent multiplicative budget, making 'x points below oracle' comparable across budgets.\n\nWith nonnegative utilities the oracle retention f(B) satisfies f(B+1) - f(B) >= f(B+2) - f(B+1) for all B < n, and f(B+1) - f(B) equals the (B+1)-st largest utility.\n\nProve that oracle value at budget B equals the sum of the B largest utilities by iterating the exchange kernel, then read off increments; test against the measured 32/64/128 retention rows.\n\nThe policy gap can be quoted as an equivalent budget multiplier, a scale-free way to compare cheap policies.\n\nRetention gains are not governed by the utility order statistics, so per-budget measurement cannot be extrapolated.",
+    "domains": [],
+    "id": "fd_3805",
+    "priority_score": 0.5929166666666668,
+    "research_mode": "team",
+    "source_exp_id": "a303e67d",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:38.789608+00:00",
+    "title": "Concavity of Oracle Retention in the Budget"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The quantity varr(addPart f)/varr f is an exact, computable property of a target that upper-bounds what any degree-1 encoding can ever achieve. Sorting a catalogue of number-theoretic targets by this statistic predicts, before any model is fitted, which ones a phase dial can move at all.\n\nAcross a catalogue of root-position targets, the measured out-of-sample degree-1 R^2 never exceeds the computed ceiling, and targets with ceiling below 0.05 never show a reproducible positive gain.\n\nCompute rowMean/colMean/addPart for each target on the population grid and compare the ceiling with the measured cross-window R^2.\n\nEncoding rounds can be scheduled by a cheap deterministic statistic instead of by search.\n\nMeasured gains above the computed ceiling would indicate that the fitted family is not degree-1 after all, localising a specification error.",
     "domains": [],
     "id": "fd_3739",
@@ -14198,6 +14282,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Because the x-coordinate detector is invariant under the elliptic involution, the detected orders are the divisors of the sumset J+J together with the difference set J-J of the visited multiple set J. Conjecture: the sequential run is far from optimal and a Sidon-complement construction detects many more orders at equal cost.\n\nThe advantage already proved at k = 4 (the set {1,2,4,8} detects orders 9, 10 and 12 that {1,2,3,4} misses) persists and grows: the ratio of detected-order counts between the best J of size k and the sequential set tends to infinity with k.\n\nExhaustive or randomized search over J for small k, then a Lean certificate for the winning set using the divisibility characterization xEq_iff_dvd.\n\nA cheap redesign of stage one improves the constant of every lite-style method.\n\nThe sequential run is combinatorially optimal for involution detectors, a satisfying rigidity statement.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_3799",
+    "priority_score": 0.5645632198978766,
+    "research_mode": "team",
+    "source_exp_id": "9b10b60b",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:13.353320+00:00",
+    "title": "Involution-Optimal Visiting Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The G\u00f6del-universe conjecture is not asserted here: a closed\n   timelike curve is geometric, whereas self-consistency requires an additional dynamical law.\n   A faithful future treatment should first formalize a Lorentzian spacetime, timelike curves,\n   G\u00f6del's metric, and a matter evolution relation. It should then state consistency relative to\n   that evolution law rather than infer it from geometric closure alone.",
     "domains": [
       "Geometry",
@@ -14210,6 +14309,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:01.175111+00:00",
     "title": "Lorentzian geometry boundary"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The per-curve success probability of ECM-lite is a divisor-mass average over the Hasse interval rather than a birthday probability. We conjecture the average density of points of order at most B is asymptotically (sum over d<=B of phi(d)/d)/p, i.e. about 0.61B/p.\n\nAs p tends to infinity with B fixed, the average over random curves E/F_p of #{P in E : ord(P) <= B}/|E| equals (1/p)\u00b7sum_{d<=B} phi(d)/d \u00b7 (1 + O(p^{-1/2})).\n\nCompare against the measured medians in ComputationalEvidence.md; formalize the fixed-group exact count (done: card_lowOrder_eq_sum_totient) and combine with an equidistribution input for |E| in the Hasse interval.\n\nThe ECM-lite budget constant is pinned to 1/(0.61B), completing the quantitative model of the lite arm.\n\nGroup orders in the Hasse interval are biased in their small divisors in a way that matters for stage one.",
+    "domains": [
+      "Computation",
+      "NumberTheory"
+    ],
+    "id": "fd_3798",
+    "priority_score": 0.5644109268644291,
+    "research_mode": "team",
+    "source_exp_id": "9b10b60b",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:12.779639+00:00",
+    "title": "Hasse-Interval Divisor Mass for Low-Order Points"
   },
   {
     "consumed_by_exp_id": "",
@@ -14480,6 +14594,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T04:04:40.374184+00:00",
     "title": "Dose-Response Curve of the Novelty Floor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "True ECM replaces the window [1,B] by the divisor-closed set of B-smooth integers, whose density is governed by Dickman's rho. We conjecture that the two arms have equal curve budget exactly when B is of order log^2 p, and that below that threshold the lite arm is exponentially worse.\n\nThere are absolute constants c1 < c2 with: for B <= c1 log^2 p the true-ECM budget is smaller than the lite budget by a factor tending to infinity, and for B >= c2 log^2 p the two agree up to constants.\n\nRun the still-deferred lcm-based arm on the same population and fit both budgets; formally, compare the truncated totient count with the count of smooth divisors of the group order.\n\nThe deferred ECM arm of paper 154 gets a sharp quantitative statement rather than a measured slope.\n\nSmooth-order density in the Hasse interval behaves unlike the Dickman heuristic at these sizes, itself a notable finding.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3800",
+    "priority_score": 0.5634281608829629,
+    "research_mode": "team",
+    "source_exp_id": "9b10b60b",
+    "status": "available",
+    "timestamp": "2026-08-23T05:46:13.835709+00:00",
+    "title": "Crossover Bound Between Lite and lcm-Based ECM"
   },
   {
     "consumed_by_exp_id": "",
@@ -34454,14 +34583,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Invariant-measure theorem with sharp exceptional set"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04d3a29d",
     "description": "**Conjecture.** Every theorem built from continuous real functions using finite composition, addition, multiplication, and division by a nowhere-zero denominator transfers through the finite transreal fragment, while any unguarded extension allowing a denominator to reach zero generally fails to preserve continuity into a natural Hausdorff topology on the four-constructor carrier.\n\nThe key insight is that finite arithmetic and nonzero division are exactly conservative, whereas division at zero jumps to an exceptional constructor. **Why now?** Continuity of the exponential has already transferred through the real shadow, and the division boundary supplies a sharp candidate for the necessary guard.",
     "domains": [],
     "id": "fd_2164",
+    "phase": "A",
     "priority_score": 0.43765217391304345,
     "research_mode": "team",
     "source_exp_id": "a9bce66e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:54.890283+00:00",
     "title": "Guarded transfer principle for real analysis"
   },
@@ -41785,19 +41915,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:22.519532+00:00",
     "title": "Define equivalences of causal structures and prove invariance of `Phi` under equivalence."
-  },
-  {
-    "consumed_by_exp_id": "347a400e",
-    "description": "prove that this function is a *class function up to inversion*, i.e. invariant under\n  `g \u21a6 g\u207b\u00b9` (using `x \u21a6 x\u207b\u00b9` on the connection set) and under automorphisms of `G`\n  preserving `S`; this would explain the orbit structure visible in the census;",
-    "domains": [],
-    "id": "fd_2847",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "3652ac9b",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:26:29.023814+00:00",
-    "title": "prove that this function is a *class function up to inversion*, i.e."
   },
   {
     "consumed_by_exp_id": "",

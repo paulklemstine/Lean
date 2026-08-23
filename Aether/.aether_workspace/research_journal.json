@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "df44f621",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThis cycle turned the exact ensemble dichotomy of `Probability.WignerAllOrderParity`\ninto a self-contained combinatorial theory of *even closed walks*, and used it to push\nthe exa",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-08-21T18:56:28",
-      "title": "The exact ensemble dichotomy"
-    },
-    {
       "cycle_id": "d588a53d",
       "domain": "Geometry",
       "key_insight": "# Future directions — after the Pythagorean Hydra\n\n## What this cycle established\n\nThe moonshot hypothesis was that the Berggren tree of primitive Pythagorean triples\ncarries a Kirby–Paris-style indep",
@@ -499,19 +489,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-23T05:46:46",
       "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP — hybrid z(acc)+lambda*z(probe) monotonically worse "
+    },
+    {
+      "cycle_id": "347a400e",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Cayley Census Invariance\n\nThis cycle established that the Cayley walk census\n`walkCount S n g = #{(s₁,…,s_n) ∈ Sⁿ : s₁⋯s_n = g}` is a *class function up to\ninversion*: invariant",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-08-23T05:47:00",
+      "title": "prove that this function is a *class function up to inversion*, i.e."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ac45a9d9",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — \"only bad primes\" thread (after cycles 6–7)\n\nCycle 6 proved that a good prime cannot avoid an orbit: for every `N`, every prime `ℓ ≥ 5`\nwith `ℓ ∤ N` and every rational point `P`",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 41,
-      "timestamp": "2026-08-15T17:43:29",
-      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-    },
     {
       "cycle_id": "67cbe98c",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-23T05:46:46",
       "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP — hybrid z(acc)+lambda*z(probe) monotonically worse "
+    },
+    {
+      "cycle_id": "347a400e",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Cayley Census Invariance\n\nThis cycle established that the Cayley walk census\n`walkCount S n g = #{(s₁,…,s_n) ∈ Sⁿ : s₁⋯s_n = g}` is a *class function up to\ninversion*: invariant",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-08-23T05:47:00",
+      "title": "prove that this function is a *class function up to inversion*, i.e."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c08b5555",
-      "domain": "Shared",
-      "name": "on",
-      "quality": 0.93
-    },
-    {
-      "cycle_id": "c08b5555",
-      "domain": "Shared",
-      "name": "states",
-      "quality": 0.93
-    },
-    {
-      "cycle_id": "c08b5555",
-      "domain": "Shared",
-      "name": "sum_range_card_le",
-      "quality": 0.93
-    },
     {
       "cycle_id": "ba827ea4",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "cache_after_miss",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "347a400e",
+      "domain": "MachineLearning",
+      "name": "walkCount_mul_pos",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "347a400e",
+      "domain": "MachineLearning",
+      "name": "mem_reachableSubgroup",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "347a400e",
+      "domain": "MachineLearning",
+      "name": "mem_closure_of_walkCount_pos",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-23T05:46:46",
+  "last_updated": "2026-08-23T05:47:00",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "7ee9f549",
-        "quality": 0.78,
-        "theorems": 78,
-        "title": "Compression Research B5: PRNG-generated real-world data — detection and seed rec"
-      },
-      {
         "cycle_id": "7199d5c0",
         "quality": 0.82,
         "theorems": 84,
@@ -3575,6 +3569,12 @@
         "quality": 0.89,
         "theorems": 171,
         "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (p"
+      },
+      {
+        "cycle_id": "347a400e",
+        "quality": 0.82,
+        "theorems": 75,
+        "title": "prove that this function is a *class function up to inversion*, i.e."
       }
     ],
     "Novelty": [
