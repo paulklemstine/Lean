@@ -1646,16 +1646,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT \u2014 corpus-B fine knee at 2048 is also 24; the {16,20,24} chain replicates exactly across both corpora at all three contexts"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "198a9f40",
     "description": "## NET-63 \u2014 limited-memory axis, round 16 (paper 148, ResearchOutput/exp_net63_fine2048.py, /tmp/net63.log)\n\n**Verdict name: THE-2048-KNEE-IS-TWENTY-FOUR.**\n\n### Result\nFine sweep at ctx=2048 on corpus-A (gate exact; 12 windows):\n\n| k | 20 | 24 | 28 | 32 |\n|---|---|---|---|---|\n| retained | 0.9793 \u2717 | **0.9835 \u2713** | 0.9854 \u2713 | 0.9885 \u2713 |\n\n- **P1 REFUTED**: the knee is 24, not 28 \u2014 no fine point between 24 and 32 is the first pass.\n- **P2 CONFIRMED**: {16, 20, 24} strictly monotone on fine grids across all three contexts.\n- **P3 PARTIAL**: k=24's margin (+0.35 pts) is 7\u00d7 healthier than the original razor read; but k=28 passes, so 24 has close company.\n\n### Consequences\nThe deployment table's final entry is confirmed: **0.5B needs {16, 20, 24} keys at {512, 1024, 2048}** \u2014 strictly monotone, all inside the ~30-key budget. Corpus-B's coarse-grid 32 is isolated as a shard-or-window-count question that no longer threatens the chain. Quantization note: smooth bracketing at 2048 vs ON-grid landing at 1024 \u2014 grid behavior is context-dependent.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted \u2014 12 windows stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET63; (g) fair; (h) DIRECT.\n\n### Next\nCorpus-B fine sweep @2048; domain-jump corpora; 1.5B fine grids; 7B cell.\n\nNow 63 network experiments. Assessment v63. Paper 148.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3716",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.084247+00:00",
     "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR \u2014 fine grid confirms k*(2048)=24 with healthy margins; 0.5B chain {16,20,24} strictly monotone across all contexts"
   },
@@ -1686,21 +1687,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T18:51:45.087483+00:00",
     "title": "FACT round-57 #1 \u2014 TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
-  },
-  {
-    "consumed_by_exp_id": "e4ce2d9a",
-    "description": "## NET-71 \u2014 limited-memory axis, round 24 (paper 156, ResearchOutput/exp_net71_nonenglish.py, /tmp/net71.log)\n\n**Verdict name: THE-TOKENIZER-TAX-IS-FOUR-KEYS.**\n\n### Result\nDomain jump to German prose (Goethe + classic; gate exact):\n\n| ctx | German k\\* | EN prose k\\* | shift |\n|---|---|---|---|\n| 512 | **20** | 16 | +4 keys |\n| 1024 | **24** | 20 | +4 keys |\n\nGerman sweeps @512: 4: 0.883 \u2717, 8: 0.953 \u2717, 12: 0.969 \u2717, 16: 0.976 \u2717 (~1.5 SE), **20: 0.983 \u2713**, 24: 0.988. @1024: 8: 0.926 \u2717, 12: 0.956 \u2717, 16: 0.968 \u2717, 20: 0.975 \u2717, **24: 0.982 \u2713**.\n\n- **P1 CONFIRMED**: exactly +4 keys at BOTH contexts \u2014 one fine-grid step up, mirroring code's \u22124 down.\n- **P2/P3 REFUTED**: the shift is a full step, not intermediate or zero.\n\n### The four-domain deployment table\nbase(code)=12, base(prose-EN)=16, base(math)=16, base(prose-DE)=20; +4/doubling increment UNIVERSAL across all domains and scales (scale-halving from NET-67 applies per-domain). Tokenizer-tax mechanism: German compounds pack more content per word \u2192 more positions needed per idea. Deployment: multilingual workloads need the highest-base budget; a 24-key cache covers ALL four domains to ctx=1024.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first non-English leg; (c) confronted \u2014 German only, two classics stated; (d) clean per-corpus split; (e) deterministic; (f) clean \u2014 ALL_DONE_NET71; (g) fair \u2014 only text changed; (h) DIRECT.\n\n### Next\nMore languages; modern LaTeX; increments at 4096; 7B quantized-offload cell.\n\nNow 71 network experiments. Assessment v71. Paper 156.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3732",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T19:36:57.214749+00:00",
-    "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS \u2014 German prose shifts knees up exactly one fine step ({20,24} vs {16,20}); four-domain deployment table complete"
   },
   {
     "consumed_by_exp_id": "86b92df3",
@@ -3773,36 +3759,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension \u2265 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "fd_0665",
-    "priority_score": 0.84,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697779+00:00",
-    "title": "Kakeya Conjecture: Known Cases and Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "id": "fd_0679",
-    "priority_score": 0.84,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697819+00:00",
-    "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -11008,6 +10964,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The calibrated model predBase rho = 4*ceil(4*rho) turns the measured bases into disjoint density intervals for code, English and German. The conjecture is that tokenizer statistics measured directly on the corpora land in those intervals, and that a language above density 3/2 must need at least 28 keys. This tests the mechanism without training any model.\n\nMeasured relative token densities satisfy rho_code in (1/2,3/4], rho_EN in (3/4,1], rho_DE in (1,5/4], and any corpus with rho > 3/2 has base at least 28 keys at ctx 512.\n\nCompute tokens-per-aligned-sentence ratios on the four corpora and compare with Catalog.NET71.net71_density_intervals; run one sweep for a high-density agglutinative language and compare with high_density_forces_seven_steps.\n\nThe tokenizer tax becomes predictable from corpus statistics alone, so cache budgets for a new language can be set before any sweep is run.\n\nThe base is not a function of token density, and the four-domain ordering must be explained by attention structure rather than by tokenisation.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_3848",
+    "priority_score": 0.7114126984126985,
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:22.614653+00:00",
+    "title": "Corpus-Only Falsification of the Density Mechanism"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The trace formula turns the return sequence walkCount S n 1 into the moment sequence of the adjacency spectrum. For abelian G that spectrum is the multiset of character sums over S, so reconstructing S becomes a Fourier-uniqueness question. The non-abelian case is expected to fail, with a small explicit counterexample.\n\nFor finite abelian G, two inversion-closed connection sets with equal return sequences are related by an automorphism of G; for non-abelian G this fails for some group of order at most 16.\n\nCompute return sequences for all inversion-closed subsets of small abelian groups and search for collisions; formalise the abelian direction using the discrete Fourier transform.\n\nThe identity column of a census determines the connection set up to symmetry, so censuses are a faithful fingerprint for abelian Cayley graphs.\n\nThere are cospectral non-isomorphic circulant graphs whose spectra coincide as multisets, recovering classical circulant cospectrality inside this framework.",
     "domains": [
       "Algebra",
@@ -12730,6 +12701,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The cost of a heterogeneous workload was proved to be the join of its cells, attained at one cell, monotone and submodular; cycle 3 added the quota budget, its adjunction, its agreement with the cover cost at full quota, and the concrete 7-of-8 saving on the round-24 workload. The conjecture is that the quota cost remains submodular below full coverage, giving greedy-optimal multilingual budgets.\n\nFor every quota m, the least cache serving at least m cells of a finite workload equals 12 + 4 times the m-th smallest rank sum, and this cost function is submodular in the workload.\n\nStarting from Catalog.NET71.quotaCost (already proved to agree with coverCost at m = card), attempt the submodularity inequality for general m by the interlacing inequalities for order statistics of a union.\n\nMultilingual deployments can trade a measured fraction of cells for a strictly smaller cache, with a certificate for the chosen budget.\n\nPartial coverage is genuinely combinatorial, and cache sizing under service-level targets is not solvable greedily.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3849",
+    "priority_score": 0.6716486486486488,
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:23.091311+00:00",
+    "title": "Quantile Cover Cost for Multilingual Workloads"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The dichotomy theorem gives non-eventual-periodicity of the decimal expansion of sqrt 2 abstractly. We conjecture an effective form: any claimed eventual period p starting at position n is refuted at an index bounded polynomially in p and in the denominators controlled by the irrationality measure 2 of sqrt 2.\n\nThere is an explicit constant C such that for all n and p >= 1 there is i <= C * p * 10^(n) with digit(i+p+n) != digit(i+n) for sqrt 2.\n\nQuantify the pigeonhole in Pyth.digits_eventually_periodic_of_not_irrational and combine with a quantitative irrationality measure for sqrt 2; sanity-check against the first 10^4 digits.\n\nAperiodicity of a quadratic irrational becomes a finite, checkable statement at every scale.\n\nThe orbit of frac(10^k sqrt 2) would return to near-repetition faster than approximation theory allows, contradicting the standard measure of irrationality.",
     "domains": [
       "MachineLearning"
@@ -13860,6 +13845,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The reported +4 shift is compatible with any true tax in the open interval (0,8). The conjecture is that some language realises a true tax that is not a multiple of the grid step, invisible at step 4 and visible at step 2. This separates the horn P1 (full step) from P2 (intermediate) at the level of the unquantised knees rather than the reported ones.\n\nThere is a corpus whose unquantised knee at ctx 512 differs from English by a value in (0,4) union (4,8), while its step-4 reading differs by exactly 4.\n\nRe-run the English and candidate sweeps on a step-2 grid; formally, instantiate Catalog.NET71.true_knee_bracket at step 2 and check whether the two bracketing intervals still overlap.\n\nGrid-quantised knee claims must always be reported as intervals, and the 'one full step' language of rounds 21-24 is a resolution artefact.\n\nDomain shifts are genuinely quantised at 4 keys, which is strong evidence for a discrete mechanism (positions per idea) rather than a continuous density effect.",
+    "domains": [],
+    "id": "fd_3847",
+    "priority_score": 0.5933870967741937,
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:22.133160+00:00",
+    "title": "Sub-Step Tokenizer Tax Below the Grid Resolution"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved two-sided law brackets the break-even block size between C\u00b2ln(1/\u03b5)/(44\u03b4\u00b2) and C\u00b2ln(1/\u03b5)/(9\u03b4\u00b2) with \u03b4 = Q*\u2212Q. Both constants are lossy because each replaces the entropy derivative log((1\u2212Q*)/Q*) by a rational bound valid on a whole interval. Evaluating the derivative at the certified enclosure of Q* should collapse the ratio to 1 + O(10\u207b\u2074), upgrading the \u0398-bracket to a certified asymptotic constant.\n\nFor Q in [1/10, Q*), n*(Q) = C\u00b2ln(1/\u03b5)/(K\u00b2\u03b4\u00b2)\u00b7(1 + O(\u03b4)) with K = 2log\u2082((1\u2212Q*)/Q*) rational to four decimals, and the certified upper and lower constants differ by less than 1 %.\n\nRe-run breakeven_ge_of_gap and breakeven_le_of_gap with the Lipschitz constants instantiated on [Q, Q*] using the enclosure Q* \u2208 (0.1100, 0.1101) rather than on [1/10, 1/5]; check numerically against the direct computation n* \u2248 1.25\u00b710\u00b9\u00b9 at Q = 11 %.\n\nA closed-form deployment rule with a certified constant, not merely a scaling law.\n\nThe remaining slack is intrinsic to the \u221an accounting rather than to the entropy estimate, which would localize the loss in the AEP correction term.",
     "domains": [],
     "id": "fd_3843",
@@ -13941,6 +13938,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T20:41:07.127382+00:00",
     "title": "Degree-1 Ceiling as a Pre-Fit Target Sorter"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every domain measured so far pays 4 extra keys per context doubling. The conjecture is that a long-range-structured corpus breaks this, and that the failure is observable as a crossover of budget laws rather than as a small deviation, at which point the mixed-workload envelope leaves the class of budget laws entirely.\n\nThere is a corpus whose increment differs from 4; for any such corpus no exchange law relates it to the ladder, and the envelope of it with German prose is not a budget law.\n\nMeasure one long-range corpus (LaTeX with cross-references) at ctx 512, 1024 and 2048; formally, check the hypotheses of Catalog.NET71.exchange_fails_of_inc_ne and of NET68's envelope_not_a_law against the fitted increments.\n\nDeployment tables become genuinely two-dimensional: no single base-plus-increment law can size a mixed workload, and the crossover context must be computed per pair of domains.\n\nThe universal increment survives its sharpest test, promoting it from a fitted regularity to a candidate scale law of the architecture.",
+    "domains": [],
+    "id": "fd_3850",
+    "priority_score": 0.5925000000000001,
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:23.570240+00:00",
+    "title": "Increment Anomaly and the Breakdown of the Envelope Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -14364,6 +14373,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T07:02:29.202829+00:00",
     "title": "Schur-Concavity of the Product-Mass Exponent on the Simplex"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The measured four-domain table collapses to one affine function of (domain rank + context doublings). The conjecture is that the depth axis supplies a third rung of the same kind, so the budget is affine in a three-term sum. The approach is to adjoin a second exchange law to the rigidity theorem already proved and test it at one new cell.\n\nThere is a constant step s and a rung function on layer counts such that budget(domain, doublings, layers) = 12 + s*(rank(domain) + doublings + layerRung(layers)) for every measured cell.\n\nProve the three-variable form of Catalog.NET71.diagonal_rigidity from two exchange laws plus one constant increment, then measure the German cell at half depth and ctx 512 and compare with the predicted value.\n\nCache sizing for any (domain, context, depth) configuration reduces to reading one integer, and deployment tables become one-dimensional in all three knobs.\n\nThe exchange law is axis-specific, so the domain/scale collapse is a coincidence of two axes and the table must be stored, not computed.",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3846",
+    "priority_score": 0.5639726200852386,
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:21.643926+00:00",
+    "title": "Three-Axis Rank-Sum Collapse for Attention Budgets"
   },
   {
     "consumed_by_exp_id": "",
@@ -36757,14 +36781,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "No-hypercomputation corollaries"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05978b53",
     "description": "**Conjecture.** `sup_{[0,1]\u00b2} |prodGate h x y \u2212 x y| = h\u00b2/3 + O(h\u2074)`, attained at\nthe corner `(1,1)`; more generally the polarisation branches' quartic errors\ncancel to leading order, so the sharp constant is `((x+y)\u2074 \u2212 (x\u2212y)\u2074)/24` in\nabsolute value rather than the sum `((x+y)\u2074 + (x\u2212y)\u2074)/24` proved here.",
     "domains": [],
     "id": "fd_1769",
+    "phase": "A",
     "priority_score": 0.4041538461538462,
     "research_mode": "team",
     "source_exp_id": "42f28947",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T23:41:39.606480+00:00",
     "title": "Conjecture. `sup_{[0,1]\u00b2} |prodGate h x y \u2212 x y| = h\u00b2/3 + O(h\u2074)`, attained at"
   },

@@ -2225,7 +2225,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "198a9f40",
     "description": "## NET-63 — limited-memory axis, round 16 (paper 148, ResearchOutput/exp_net63_fine2048.py, /tmp/net63.log)\n\n**Verdict name: THE-2048-KNEE-IS-TWENTY-FOUR.**\n\n### Result\nFine sweep at ctx=2048 on corpus-A (gate exact; 12 windows):\n\n| k | 20 | 24 | 28 | 32 |\n|---|---|---|---|---|\n| retained | 0.9793 ✗ | **0.9835 ✓** | 0.9854 ✓ | 0.9885 ✓ |\n\n- **P1 REFUTED**: the knee is 24, not 28 — no fine point between 24 and 32 is the first pass.\n- **P2 CONFIRMED**: {16, 20, 24} strictly monotone on fine grids across all three contexts.\n- **P3 PARTIAL**: k=24's margin (+0.35 pts) is 7× healthier than the original razor read; but k=28 passes, so 24 has close company.\n\n### Consequences\nThe deployment table's final entry is confirmed: **0.5B needs {16, 20, 24} keys at {512, 1024, 2048}** — strictly monotone, all inside the ~30-key budget. Corpus-B's coarse-grid 32 is isolated as a shard-or-window-count question that no longer threatens the chain. Quantization note: smooth bracketing at 2048 vs ON-grid landing at 1024 — grid behavior is context-dependent.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted — 12 windows stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET63; (g) fair; (h) DIRECT.\n\n### Next\nCorpus-B fine sweep @2048; domain-jump corpora; 1.5B fine grids; 7B cell.\n\nNow 63 network experiments. Assessment v63. Paper 148.\n",
     "domain_bridges": [],
     "domains": [
@@ -2237,7 +2237,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.084247+00:00",
     "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healthy margins; 0.5B chain {16,20,24} strictly monotone across all contexts"
   },
@@ -2278,25 +2278,6 @@
     "status": "available",
     "timestamp": "2026-08-22T18:51:45.087483+00:00",
     "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e4ce2d9a",
-    "description": "## NET-71 — limited-memory axis, round 24 (paper 156, ResearchOutput/exp_net71_nonenglish.py, /tmp/net71.log)\n\n**Verdict name: THE-TOKENIZER-TAX-IS-FOUR-KEYS.**\n\n### Result\nDomain jump to German prose (Goethe + classic; gate exact):\n\n| ctx | German k\\* | EN prose k\\* | shift |\n|---|---|---|---|\n| 512 | **20** | 16 | +4 keys |\n| 1024 | **24** | 20 | +4 keys |\n\nGerman sweeps @512: 4: 0.883 ✗, 8: 0.953 ✗, 12: 0.969 ✗, 16: 0.976 ✗ (~1.5 SE), **20: 0.983 ✓**, 24: 0.988. @1024: 8: 0.926 ✗, 12: 0.956 ✗, 16: 0.968 ✗, 20: 0.975 ✗, **24: 0.982 ✓**.\n\n- **P1 CONFIRMED**: exactly +4 keys at BOTH contexts — one fine-grid step up, mirroring code's −4 down.\n- **P2/P3 REFUTED**: the shift is a full step, not intermediate or zero.\n\n### The four-domain deployment table\nbase(code)=12, base(prose-EN)=16, base(math)=16, base(prose-DE)=20; +4/doubling increment UNIVERSAL across all domains and scales (scale-halving from NET-67 applies per-domain). Tokenizer-tax mechanism: German compounds pack more content per word → more positions needed per idea. Deployment: multilingual workloads need the highest-base budget; a 24-key cache covers ALL four domains to ctx=1024.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean — first non-English leg; (c) confronted — German only, two classics stated; (d) clean per-corpus split; (e) deterministic; (f) clean — ALL_DONE_NET71; (g) fair — only text changed; (h) DIRECT.\n\n### Next\nMore languages; modern LaTeX; increments at 4096; 7B quantized-offload cell.\n\nNow 71 network experiments. Assessment v71. Paper 156.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3732",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T19:36:57.214749+00:00",
-    "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly one fine step ({20,24} vs {16,20}); four-domain deployment table complete"
   },
   {
     "ambition_level": "grand_challenge",
@@ -5105,46 +5086,6 @@
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension ≥ 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "fd_0665",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697779+00:00",
-    "title": "Kakeya Conjecture: Known Cases and Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "id": "fd_0679",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697819+00:00",
-    "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
   {
     "ambition_level": "extension",
@@ -14838,6 +14779,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Logic.NET71TokenizerTax",
+      "Catalog.Logic.NET71FourDomainDeployment"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The calibrated model predBase rho = 4*ceil(4*rho) turns the measured bases into disjoint density intervals for code, English and German. The conjecture is that tokenizer statistics measured directly on the corpora land in those intervals, and that a language above density 3/2 must need at least 28 keys. This tests the mechanism without training any model.\n\nMeasured relative token densities satisfy rho_code in (1/2,3/4], rho_EN in (3/4,1], rho_DE in (1,5/4], and any corpus with rho > 3/2 has base at least 28 keys at ctx 512.\n\nCompute tokens-per-aligned-sentence ratios on the four corpora and compare with Catalog.NET71.net71_density_intervals; run one sweep for a high-density agglutinative language and compare with high_density_forces_seven_steps.\n\nThe tokenizer tax becomes predictable from corpus statistics alone, so cache budgets for a new language can be set before any sweep is run.\n\nThe base is not a function of token density, and the four-domain ordering must be explained by attention structure rather than by tokenisation.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_3848",
+    "lineage_refs": [],
+    "priority_score": 0.7114126984126985,
+    "proof_strategy": "Formalise the density-to-budget map as the grid closure of a linear functional (predBase_eq_gridUp), invert it on each measured base (predBase_eq_iff), and derive the threshold prediction from monotonicity of the ceiling.",
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:22.614653+00:00",
+    "title": "Corpus-Only Falsification of the Density Mechanism"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MachineLearning.CayleyCensusMoments"
     ],
     "consumed_by_exp_id": "",
@@ -17442,6 +17406,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Logic.NET71DiagonalRigidity",
+      "Catalog.Logic.KneeMedianLaw",
+      "Catalog.Logic.KneeQuotaScaling"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The cost of a heterogeneous workload was proved to be the join of its cells, attained at one cell, monotone and submodular; cycle 3 added the quota budget, its adjunction, its agreement with the cover cost at full quota, and the concrete 7-of-8 saving on the round-24 workload. The conjecture is that the quota cost remains submodular below full coverage, giving greedy-optimal multilingual budgets.\n\nFor every quota m, the least cache serving at least m cells of a finite workload equals 12 + 4 times the m-th smallest rank sum, and this cost function is submodular in the workload.\n\nStarting from Catalog.NET71.quotaCost (already proved to agree with coverCost at m = card), attempt the submodularity inequality for general m by the interlacing inequalities for order statistics of a union.\n\nMultilingual deployments can trade a measured fraction of cells for a strictly smaller cache, with a certificate for the chosen budget.\n\nPartial coverage is genuinely combinatorial, and cache sizing under service-level targets is not solvable greedily.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3849",
+    "lineage_refs": [],
+    "priority_score": 0.6716486486486488,
+    "proof_strategy": "Transport the seed-ensemble quota machinery of Logic.KneeMedianLaw to the workload index set, using that both are order statistics of a finite family in a linear order; submodularity should follow from the interlacing inequalities for order statistics of a union.",
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:23.091311+00:00",
+    "title": "Quantile Cover Cost for Multilingual Workloads"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Pythagorean.DigitPeriodicityDichotomy"
     ],
     "consumed_by_exp_id": "",
@@ -19163,6 +19150,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Logic.NET71TokenizerTax",
+      "Catalog.Applications.NET68DomainJumpBudgetLaw"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The reported +4 shift is compatible with any true tax in the open interval (0,8). The conjecture is that some language realises a true tax that is not a multiple of the grid step, invisible at step 4 and visible at step 2. This separates the horn P1 (full step) from P2 (intermediate) at the level of the unquantised knees rather than the reported ones.\n\nThere is a corpus whose unquantised knee at ctx 512 differs from English by a value in (0,4) union (4,8), while its step-4 reading differs by exactly 4.\n\nRe-run the English and candidate sweeps on a step-2 grid; formally, instantiate Catalog.NET71.true_knee_bracket at step 2 and check whether the two bracketing intervals still overlap.\n\nGrid-quantised knee claims must always be reported as intervals, and the 'one full step' language of rounds 21-24 is a resolution artefact.\n\nDomain shifts are genuinely quantised at 4 keys, which is strong evidence for a discrete mechanism (positions per idea) rather than a continuous density effect.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3847",
+    "lineage_refs": [],
+    "priority_score": 0.5933870967741937,
+    "proof_strategy": "Generalise gridUp_le_iff and true_knee_bracket to arbitrary step s, derive the interval (s*(j-1), s*j], and show the step-2 and step-4 brackets of the same corpus intersect in at most one point unless the true shift is a multiple of 4.",
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:22.133160+00:00",
+    "title": "Sub-Step Tokenizer Tax Below the Grid Resolution"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Applications.BB84BreakevenTwoSided",
       "Applications.BB84FiniteKeyThresholdGap",
       "Cryptography.BB84.ThresholdEnclosure"
@@ -19298,6 +19305,27 @@
     "status": "available",
     "timestamp": "2026-08-22T20:41:07.127382+00:00",
     "title": "Degree-1 Ceiling as a Pre-Fit Target Sorter"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Logic.NET71DiagonalRigidity",
+      "Catalog.Applications.NET68BudgetTorsor",
+      "Catalog.Applications.NET68DomainJumpBudgetLaw"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every domain measured so far pays 4 extra keys per context doubling. The conjecture is that a long-range-structured corpus breaks this, and that the failure is observable as a crossover of budget laws rather than as a small deviation, at which point the mixed-workload envelope leaves the class of budget laws entirely.\n\nThere is a corpus whose increment differs from 4; for any such corpus no exchange law relates it to the ladder, and the envelope of it with German prose is not a budget law.\n\nMeasure one long-range corpus (LaTeX with cross-references) at ctx 512, 1024 and 2048; formally, check the hypotheses of Catalog.NET71.exchange_fails_of_inc_ne and of NET68's envelope_not_a_law against the fitted increments.\n\nDeployment tables become genuinely two-dimensional: no single base-plus-increment law can size a mixed workload, and the crossover context must be computed per pair of domains.\n\nThe universal increment survives its sharpest test, promoting it from a fitted regularity to a candidate scale law of the architecture.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3850",
+    "lineage_refs": [],
+    "priority_score": 0.5925000000000001,
+    "proof_strategy": "Fit each corpus law from two contexts by ext_of_two_points, compare increments, and apply crossover_of_inc_lt to locate the context at which the sign of the shift changes; the envelope failure then follows from NET-68's envelope_not_a_law.",
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:23.570240+00:00",
+    "title": "Increment Anomaly and the Breakdown of the Envelope Law"
   },
   {
     "ambition_level": "extension",
@@ -19960,6 +19988,30 @@
     "status": "available",
     "timestamp": "2026-08-23T07:02:29.202829+00:00",
     "title": "Schur-Concavity of the Product-Mass Exponent on the Simplex"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Logic.NET71DiagonalRigidity",
+      "Catalog.Logic.NET71FourDomainDeployment",
+      "Catalog.Applications.NET68DomainJumpBudgetLaw"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The measured four-domain table collapses to one affine function of (domain rank + context doublings). The conjecture is that the depth axis supplies a third rung of the same kind, so the budget is affine in a three-term sum. The approach is to adjoin a second exchange law to the rigidity theorem already proved and test it at one new cell.\n\nThere is a constant step s and a rung function on layer counts such that budget(domain, doublings, layers) = 12 + s*(rank(domain) + doublings + layerRung(layers)) for every measured cell.\n\nProve the three-variable form of Catalog.NET71.diagonal_rigidity from two exchange laws plus one constant increment, then measure the German cell at half depth and ctx 512 and compare with the predicted value.\n\nCache sizing for any (domain, context, depth) configuration reduces to reading one integer, and deployment tables become one-dimensional in all three knobs.\n\nThe exchange law is axis-specific, so the domain/scale collapse is a coincidence of two axes and the table must be stored, not computed.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3846",
+    "lineage_refs": [],
+    "priority_score": 0.5639726200852386,
+    "proof_strategy": "Iterate the induction of diagonal_rigidity: fix one axis, obtain affinity along the other by the constant-increment hypothesis, then transport along each exchange law; independence of the axioms is inherited from exchange_without_affine and increment_without_exchange.",
+    "research_mode": "team",
+    "source_exp_id": "e4ce2d9a",
+    "status": "available",
+    "timestamp": "2026-08-23T13:47:21.643926+00:00",
+    "title": "Three-Axis Rank-Sum Collapse for Attention Budgets"
   },
   {
     "ambition_level": "extension",
@@ -50373,7 +50425,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05978b53",
     "description": "**Conjecture.** `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at\nthe corner `(1,1)`; more generally the polarisation branches' quartic errors\ncancel to leading order, so the sharp constant is `((x+y)⁴ − (x−y)⁴)/24` in\nabsolute value rather than the sum `((x+y)⁴ + (x−y)⁴)/24` proved here.",
     "domain_bridges": [],
     "domains": [],
@@ -50383,7 +50435,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "42f28947",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T23:41:39.606480+00:00",
     "title": "Conjecture. `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at"
   },

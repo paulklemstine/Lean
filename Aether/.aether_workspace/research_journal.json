@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1210c28a",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: clique sums as a gluing calculus for graph invariants\n\nThe cycle reported here formalised clique sums (`IsCliqueSum`, `IsWeakCliqueSum`) and\nestablished:\n\n* an independent set mee",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 81,
-      "timestamp": "2026-08-22T01:07:40",
-      "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`α(G) ≥ α₁ + α₂"
-    },
-    {
       "cycle_id": "7f454a93",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Berggren Tree Box Counting\n\nDerived from the verified results in\n\n* `Catalog/NumberTheory/CoprimePairDensity.lean`\n* `Catalog/NumberTheory/BerggrenTreeCompleteness.lean`\n* `Catal",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-23T13:03:36",
       "title": "Finite-Key Bounds on a Certified Asymptotic Core"
+    },
+    {
+      "cycle_id": "e4ce2d9a",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-71 (THE-TOKENIZER-TAX-IS-FOUR-KEYS)\n\nRound 24 closed the domain axis with a fourth corpus (German prose) and produced, in\nLean, four sorry-free files:\n\n* `Catalog/Logic",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 115,
+      "timestamp": "2026-08-23T13:47:36",
+      "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly one fine step ({20,24}"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8ed04a73",
-      "domain": "Probability",
-      "key_insight": "# Future directions — bold, testable conjectures from the NET-36 formalisation\n\nThe five Lean files in `Catalog/Probability/` establish:\n\n* `AttentionConcentration.lean` — an assumption-free Cauchy–Sc",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-08-16T04:50:50",
-      "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere — k*=d·ctx/32 Holds at Every Measured (de"
-    },
     {
       "cycle_id": "2a357c10",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-23T13:03:36",
       "title": "Finite-Key Bounds on a Certified Asymptotic Core"
+    },
+    {
+      "cycle_id": "e4ce2d9a",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-71 (THE-TOKENIZER-TAX-IS-FOUR-KEYS)\n\nRound 24 closed the domain axis with a fourth corpus (German prose) and produced, in\nLean, four sorry-free files:\n\n* `Catalog/Logic",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 115,
+      "timestamp": "2026-08-23T13:47:36",
+      "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly one fine step ({20,24}"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f49038d4",
-      "domain": "Cryptography",
-      "name": "envelope_singleton",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "f49038d4",
-      "domain": "Cryptography",
-      "name": "shtarkov_singleton",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "f49038d4",
-      "domain": "Cryptography",
-      "name": "shtarkov_insert_sub_le_singleton",
-      "quality": 0.8
-    },
     {
       "cycle_id": "aa2d71a2",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "binEntropy_lipschitz_lower",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "e4ce2d9a",
+      "domain": "Logic",
+      "name": "with",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e4ce2d9a",
+      "domain": "Logic",
+      "name": "kneeIdx_stable_of_margins",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e4ce2d9a",
+      "domain": "Logic",
+      "name": "exists_perturbation_lowering_knee",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-23T13:03:36",
+  "last_updated": "2026-08-23T13:47:36",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "615053e5",
-        "quality": 0.83,
-        "theorems": 128,
-        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-      },
-      {
         "cycle_id": "11c9ff9f",
         "quality": 0.86,
         "theorems": 90,
@@ -3513,6 +3507,12 @@
         "quality": 0.79,
         "theorems": 63,
         "title": "FACT round-41 #2 — HIGH-PHASE: the linear phase route is closed at both prime ra"
+      },
+      {
+        "cycle_id": "e4ce2d9a",
+        "quality": 0.78,
+        "theorems": 115,
+        "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly on"
       }
     ],
     "MachineLearning": [

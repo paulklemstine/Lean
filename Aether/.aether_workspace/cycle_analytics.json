@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-23T13:03:42.461681+00:00",
+  "last_updated": "2026-08-23T13:47:39.273237+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -65303,6 +65303,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-23T13:03:42.139838+00:00",
       "title": "Finite-Key Bounds on a Certified Asymptotic Core"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Logic",
+      "duration_seconds": 2581.4044196605682,
+      "end_time": 1787492801.811466,
+      "files_integrated": 4,
+      "job_id": "e4ce2d9a",
+      "outcome_quality": 0.78,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787490220.4070463,
+      "strategy_count": 0,
+      "theorem_count": 115,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 101,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-23T13:47:38.983077+00:00",
+      "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS \u2014 German prose shifts knees up exactly one fine step ({20,24}"
     }
   ]
 }
