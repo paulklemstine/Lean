@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "75105c60",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Berggren Causal Set\n\n## Where this cycle ended up\n\nThe moonshot hypothesis (\"the Berggren tree of primitive Pythagorean triples is a discrete\nmodel of `2+1`-dimensional Minko",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 111,
-      "timestamp": "2026-08-21T13:59:28",
-      "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
-    },
-    {
       "cycle_id": "ec6993b5",
       "domain": "Shared",
       "key_insight": "# Future directions: from the two bracketing degrees to a general peak calculus\n\nThis cycle closed the missing ingredient identified in the assignment: strict\nunimodality and the *existence* of a brac",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-23T03:17:01",
       "title": "P2 (from K)"
+    },
+    {
+      "cycle_id": "78e6d19a",
+      "domain": "Probability",
+      "key_insight": "# Future directions from the NET-54 formalisation\n\nThe thread has produced ten compiling, `sorry`-free files in `Catalog/Probability/`:\n\n* `TailTransplantGeometry.lean` — agreement geometry and the bo",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 145,
+      "timestamp": "2026-08-23T04:04:53",
+      "title": "NET-54: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE — bulk layers transplant between fine-tunes at zero "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "032d68e5",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\nDerived from the verified results in\n\n* `Catalog/Bridges/MordellDenominatorBadPrimes.lean` — the `n = 2` layer: mechanism theorem\n  `prime_dvd_den_dblX_iff`, reduction/torsion bri",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 92,
-      "timestamp": "2026-08-15T13:06:49",
-      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-    },
     {
       "cycle_id": "43f9870f",
       "domain": "Combinatorics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-23T03:17:01",
       "title": "P2 (from K)"
+    },
+    {
+      "cycle_id": "78e6d19a",
+      "domain": "Probability",
+      "key_insight": "# Future directions from the NET-54 formalisation\n\nThe thread has produced ten compiling, `sorry`-free files in `Catalog/Probability/`:\n\n* `TailTransplantGeometry.lean` — agreement geometry and the bo",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 145,
+      "timestamp": "2026-08-23T04:04:53",
+      "title": "NET-54: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE — bulk layers transplant between fine-tunes at zero "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0f0bd7f8",
-      "domain": "Probability",
-      "name": "mem_of_consecutive",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "0f0bd7f8",
-      "domain": "Probability",
-      "name": "exists_consecutive_of_aperiodic",
-      "quality": 0.9
-    },
     {
       "cycle_id": "bb070ee4",
       "domain": "Algebra",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "is",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "78e6d19a",
+      "domain": "Probability",
+      "name": "balanced_sharing_attained",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "78e6d19a",
+      "domain": "Probability",
+      "name": "balanced_sharing_min_optimal",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-08-23T03:17:01",
+  "last_updated": "2026-08-23T04:04:53",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "8ed04a73",
-        "quality": 0.85,
-        "theorems": 78,
-        "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere — k*=d·ctx/32 Holds a"
-      },
-      {
         "cycle_id": "37827e5f",
         "quality": 0.85,
         "theorems": 21,
@@ -3823,6 +3817,12 @@
         "quality": 0.9,
         "theorems": 152,
         "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
+      },
+      {
+        "cycle_id": "78e6d19a",
+        "quality": 0.9,
+        "theorems": 145,
+        "title": "NET-54: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE — bulk layers transplant between"
       }
     ],
     "Pythagorean": [

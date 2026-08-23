@@ -871,21 +871,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
   },
   {
-    "consumed_by_exp_id": "78e6d19a",
-    "description": "## NET-54 \u2014 limited-memory axis, round 6 (paper 139, /tmp/exp_net54_tailswap.py, /tmp/net54.log)\n\n**Verdict name: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE.**\n\n### Result\nCausal layer transplants between Qwen2.5-0.5B **base** and **Instruct** (12 held-out windows @ctx=512; cross-parent prediction-agreement baseline 0.8327):\n\n| arm | \u0394CE vs host | agree w/ base | agree w/ instruct |\n|---|---|---|---|\n| base\u2190inst **L22/23** | +0.4652 | 0.5845 | 0.5443 |\n| base\u2190inst L10/11 | **+0.0043** | 0.9635 | 0.8385 |\n| inst\u2190base **L22/23** | +0.5455 | 0.5887 | 0.6289 |\n| inst\u2190base L10/11 | **\u22120.0164** | 0.8459 | 0.9495 |\n\n- **P1 REFUTED \u2014 the discovery**: tail swaps do NOT pull the hybrid toward the donor; they break agreement with BOTH parents (host-side agreement falls far below the cross-parent baseline). The tail carries no portable identity \u2014 it is entangled with upstream statistics.\n- **P2 CONFIRMED**: directions asymmetric (+0.465 vs +0.546), as NET-51's mid-stack hump predicts.\n- **P3 CONFIRMED**: worst hybrid within +0.55 nats \u2014 functional, but neither parent.\n\n### The convergence\nThree independent measurements on the same two layers: NET-50 (only far-from-tropical region), NET-51 (only high decision-divergence region), NET-54 (only non-transplantable region). And the bulk result is equally practical: **L10/11 transplant at literally zero measured cost \u2014 one direction slightly improves Instruct.**\n\n### Practical\nThe sharing boundary for multi-finetune serving on small VRAM is now causally established: share everything except the last two layers; re-run the tail per model; do not approximate or borrow it.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted one; (b) confronted \u2014 layer-amputation literature exists; NEW = fine-tune-pair portability asymmetry with matched architecture and the both-parents-collapse signature; (c) confronted \u2014 real pretrained pair; limits: ONE pair, 12 windows, ctx=512, fp16, single-pair granularity; (d) clean \u2014 no training involved; (e) deterministic forwards, restore-by-construction before each arm; (f) clean \u2014 chunked CE identical to harness semantics, ALL_DONE_NET54; (g) fair \u2014 matched-width bulk controls, both directions; (h) DIRECT.\n\n### Next\nDose-response (one-layer and three-layer swaps); swap+recalibration (entanglement depth); 1.5B pair; does a compensated 4-bit tail stay personal? (GPTQ link).\n\nNow 54 network experiments. Assessment v54. Paper 139.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3575",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T04:50:57.568658+00:00",
-    "title": "NET-54: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE \u2014 bulk layers transplant between fine-tunes at zero cost, tail L22/23 breaks agreement with BOTH parents; sharing boundary causally established"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-39 #6, cron iteration (exp 476, assessment v253). Full-scale validation of paper 142's predictor.\n\n**PER-N-PREDICTOR-REPLICATED**: base effect at all three scales (r = 0.497\u20130.521 u=2.5); H1 confirmed (R\u00b2=0.3041/slope 1.128 test at u=2.5); **transfer shape PERFECT \u2014 transfer R\u00b2 equals target-scale corr\u00b2 (0.2719 vs 0.2717)**; slopes in-band 4/4 cells. Weighted feature NULL (+0.009). Floor attribution: residual 1.31\u00d7 floor at u=2.5 (real structure remains), 1.05\u00d7 at u=3.5 (noise-bound).\n\nAdopted form: rate(N) \u2248 \u22120.0035 + 0.01156\u00b7QR(\u2264100) from ~20 Euler tests \u2014 a validated per-N sieve-yield dial for QS calibration. Barriers 5/8 intact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp476_per_n_predictor_full.py + exp476_result.json, seed 20260827.",
     "domains": [
@@ -1804,16 +1789,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID \u2014 no grid point reaches the bar on French prose (knee >24 @512, >32 @1024); domain shifts are NOT \u00b14 fine-steps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ef4aed2",
     "description": "Round-65 #1, cron iteration (exp 533). The highest-bitlen uniform measurement.\n\n**U76-DIAL-CONFIRMED**: Spearman(T, rate) = **0.593** / **0.618** / **0.612** across three seeds on uniform draws at bitlen 76; pooled **0.608** CI [0.588, 0.631]. All inside [0.55, 0.85]; T beats count by +0.073 CI [0.045, 0.097].\n\nThe zero-fit dial extends to bitlen 76 on uniform draws with the band intact \u2014 flat within noise from bitlen 72.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp533_t_dial_unif_76.py + exp533_result.json, seeds 20261170\u201372.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3731",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T19:36:57.213783+00:00",
     "title": "FACT round-65 #1 \u2014 TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
   },
@@ -3884,38 +3870,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself \u2014 the halting problem IS self-awareness). Show: the 'strangeness' of the loop (how many levels of self-reference) correlates with the degree of consciousness. Conjecture: the minimum loop length for consciousness is 3 (system -> model-of-system -> model-of-model -> back to system). Explore: can Lean's metaprogramming (tactic state inspecting itself) be a form of mathematical consciousness?",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "MachineLearning"
-    ],
-    "id": "seed_403",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
-    "domains": [
-      "Novelty",
-      "Physics",
-      "Geometry"
-    ],
-    "id": "seed_407",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -11620,6 +11574,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Rigidity pins extremal shared-serving families as hubs, but does not evaluate a general family. Conjecture: the best simultaneous agreement of one shared model with a family equals 1 - nu/2, where nu is the fractional cover value of the pairwise-disagreement hypergraph. The approach is LP duality against the two nonnegative defects of the saturation identity.\n\nFor any family A_1..A_k, max over H of min over i of agr(H, A_i) equals 1 - nu/2 with nu the value of the fractional cover LP of the hypergraph whose hyperedges are the pairwise disagreement sets.\n\nFormalise the LP and its dual, and check the equality on the hub family (where nu = 2/k) and on random families evaluated numerically.\n\nServing capacity of an arbitrary family becomes computable from a hypergraph statistic before any weights are shared.\n\nExtremal geometry is richer than covering designs and the capacity needs a second parameter beyond nu.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_3789",
+    "priority_score": 0.7103684210526316,
+    "research_mode": "team",
+    "source_exp_id": "78e6d19a",
+    "status": "available",
+    "timestamp": "2026-08-23T04:04:39.474265+00:00",
+    "title": "Fractional-Cover Value of the Disagreement Hypergraph"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three links at an event have Minkowski lengths 4(c-b)^2, 4(a-b)^2, 4(c-a)^2. The multiset of link lengths at depth k is therefore an exactly computable invariant. The conjecture pins its minimum.\n\nFor every k the minimum of the link lengths over all events of depth k equals 4, and it is attained exactly at the events of the pure middle (Pell) spine and their A-children.\n\nCompute the spectrum to depth 6, then prove the lower bound 4 by showing that each of |c-b|, |a-b|, |c-a| is a positive integer, and characterise equality by solving c-b = 1, a-b = \u00b11, c-a = 1 inside the tree.\n\nA complete description of the shortest scales of the discrete geometry, the analogue of a lattice spacing, together with the exact locus where it is attained.\n\nSome deeper branch achieves a smaller separation, which would contradict integrality, so the failure mode is a proof that the attaining locus is larger than the spine.",
     "domains": [
       "Algebra",
@@ -13929,16 +13898,29 @@ window.FUTURE_DIRECTIONS = [
     "title": "Celestial Density of the Berggren Boundary"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "242b27e9",
     "description": "Finite-key BB84 analyses subtract O(sqrt(n)) statistical corrections from the asymptotic rate. Since the certificate lemmas already deliver explicit rational lower bounds for r at rational Q, a machine-checked finite-key statement of the form 'measured QBER at most 0.11002786 implies extractable length at least n r(Q) - O(sqrt n)' is within reach.\n\nFor every rational Q below the certified threshold there is an explicit rational rho(Q) > 0 and constant C with extractable key length at least n rho(Q) - C sqrt(n log(1/eps)).\n\nCombine secureKeyRate_gt_of_cert_pade with the leftover-hash bound already in the catalog and instantiate at Q = 11/100.\n\nEnd-to-end machine-checked QKD parameter tables, with no floating point anywhere in the chain.\n\nThe statistical corrections dominate at realistic n, showing the asymptotic threshold is the wrong figure of merit for deployment.",
     "domains": [],
     "id": "fd_3435",
+    "phase": "A",
     "priority_score": 0.5932142857142858,
     "research_mode": "team",
     "source_exp_id": "f87f1170",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T17:45:45.843761+00:00",
     "title": "Finite-Key Bounds on a Certified Asymptotic Core"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Two candidate predictors of transplant damage exist in the catalog: a norm-based upper bound and a margin-based certificate. Conjecture: the margin-uncertified fraction predicts damage, and Lipschitz/norm distance between the two copies of a block does not.\n\nAcross layer blocks, the measured post-transplant disagreement correlates with the margin-uncertified fraction and is not monotone in the block's weight-space distance.\n\nCompute both predictors per block and compare against measured disagreement, using net54_margin_failure_fraction as the certified lower bound.\n\nPortability becomes predictable from a cheap forward-pass statistic, with no transplant needed.\n\nNorm-based bounds remain the operative predictor and the margin route is only a sufficient condition.",
+    "domains": [],
+    "id": "fd_3792",
+    "priority_score": 0.5931651376146789,
+    "research_mode": "team",
+    "source_exp_id": "78e6d19a",
+    "status": "available",
+    "timestamp": "2026-08-23T04:04:40.807255+00:00",
+    "title": "Margin Scarcity as the Portability Predictor"
   },
   {
     "consumed_by_exp_id": "",
@@ -14458,6 +14440,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The capacity curve (1 + sqrt(1 + 4k(k-1)beta))/(2k) is now proved to be the exact extremal serving value, attained only by hub families. Conjecture: measured multi-adapter degradation tracks it, and the gap to the curve measures the family's distance from hub geometry.\n\nFor a family of k fine-tunes with pairwise agreement beta, the best achievable mean agreement is at most (1 + sqrt(1 + 4k(k-1)beta))/(2k), tends to sqrt(beta) as k grows, and at beta = 0.8327 no family of twelve fine-tunes attains it.\n\nMeasure pairwise agreement of a family of adapters, then measure the best shared model's mean agreement as k grows, and compare with meanAgree_le_capacityCurve, capacityCurve_tendsto_sqrt and net54_no_saturating_family_of_twelve.\n\nServing capacity is a measurable, certified quantity with a design rule for how many fine-tunes to co-locate.\n\nReal families sit far inside the extremal curve, and the gap itself becomes the object of study.",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_3793",
+    "priority_score": 0.5635033219176204,
+    "research_mode": "team",
+    "source_exp_id": "78e6d19a",
+    "status": "available",
+    "timestamp": "2026-08-23T04:04:41.254076+00:00",
+    "title": "Serving-Capacity Curve in the Wild"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "*[settled in cycle 4: the abelian half is proved, the identification with the one-parameter subgroup is false \u2014 see below]*  The centralizer of a\n   non-identity element of `ScalingMap` is abelian, and equals the image of the\n   one-parameter subgroup through it precisely when its exponent is not `1`;\n   for exponent `1` (pure dilations `y \u21a6 c y`) it is the full dilation\n   subgroup.  *The key insight is* that the infinitesimal statement proved in\n   cycle 3 (centralizer of a field is the line it spans) should integrate to the\n   group level, the exceptional case being the one where the flow has no fixed\n   point in `(0, \u221e)`.  *Why now?*  `EMLScalingGroupDuality` already has the\n   group law, the trivial-centre theorem and the classification of involutions,\n   so the computation is a finite case analysis on `(coeff, expo)`.",
     "domains": [
       "Algebra",
@@ -14485,6 +14482,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:27:41.356055+00:00",
     "title": "(NC6 \u2014 the trace obstruction is the only obstruction.)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The both-parents-collapse floor is a computable functional of a layer transplant. Conjecture: for tail swaps it rises with the number of swapped layers and saturates at two layers, while for bulk swaps it stays negative (vacuous) at every width. This separates entanglement depth from perturbation magnitude.\n\nFor k-layer swaps at the tail boundary the floor beta - min(agr(H,A), agr(H,B)) is nondecreasing in k and within 10% of its k=2 value already at k=2, whereas for bulk swaps it remains negative for all k below the boundary.\n\nRun one-, two- and three-layer swaps in both directions and evaluate the floor with Catalog.Probability.TailTransplantGeometry.novelFrac_ge_baseline_sub_agree.\n\nThe sharing boundary is a sharp two-layer interface, and serving systems can share all but two layers with a certificate.\n\nEntanglement is graded, and the boundary must be chosen per model rather than fixed at two layers.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_3791",
+    "priority_score": 0.5634281608829629,
+    "research_mode": "team",
+    "source_exp_id": "78e6d19a",
+    "status": "available",
+    "timestamp": "2026-08-23T04:04:40.374184+00:00",
+    "title": "Dose-Response Curve of the Novelty Floor"
   },
   {
     "consumed_by_exp_id": "",
@@ -14830,6 +14842,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T14:38:38.475935+00:00",
     "title": "Effective Admissible-Half Relation Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extremal serving values are exactly the quantised pairs: beta = c(c-1)/(k(k-1)) and M = c/k for an integer c, necessary by saturation_quantised and sufficient by the complete c-design of quantised_values_are_exactly_realised. Conjecture: the bound degrades continuously in the distance delta from beta to that finite set, giving a strictly better bound than the capacity curve for generic budgets such as the measured 0.8327.\n\nIf dist(beta, {c(c-1)/(k(k-1)) : c <= k}) = delta > 0 then every shared model satisfies M <= capacityCurve k beta - f(delta, k) with f(delta,k) of order delta/(k(1-beta)).\n\nRelax the constancy of matchCount in saturation_quantised to a near-constancy estimate and track the resulting Cauchy-Schwarz defect quantitatively.\n\nGeneric families obey a strictly sharper serving bound, and the sharpening is computable from beta alone.\n\nThe curve is asymptotically attained even at non-quantised budgets, and quantisation is a measure-zero phenomenon.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3790",
+    "priority_score": 0.5626013895017294,
+    "research_mode": "team",
+    "source_exp_id": "78e6d19a",
+    "status": "available",
+    "timestamp": "2026-08-23T04:04:39.927976+00:00",
+    "title": "Quantisation Gap Below the Capacity Curve"
   },
   {
     "consumed_by_exp_id": "",
@@ -35780,15 +35807,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness"
   },
   {
-    "consumed_by_exp_id": "00e7268d",
+    "consumed_by_exp_id": "",
     "description": "All the surrounding infrastructure now exists in this development (primitive root\n`om`, character `ez`, Leibniz expansion, cyclotomic minimal polynomial); the one missing\ningredient is the Schur-polynomial specialisation `s_\u03bb(1,\u2026,1) = \u220f_{j<k}(t_k\u2212t_j)/(k\u2212j)`, which\nMathlib does not yet contain and which is a self-contained, reusable addition.",
     "domains": [],
     "id": "fd_1465",
-    "phase": "A",
     "priority_score": 0.41600000000000004,
     "research_mode": "team",
     "source_exp_id": "33519cdb",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T23:36:54.988368+00:00",
     "title": "All the surrounding infrastructure now exists in this development (primitive root"
   },

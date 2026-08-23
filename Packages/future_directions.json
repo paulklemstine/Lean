@@ -56693,7 +56693,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Replace pairs of rationals by finite lexicographic towers `ℚ^(k+1)`. Successively projecting away the last coordinate yields a filtration of observations, and an event first becomes visible precisely at the earliest coordinate where its mass is nonzero. Every normalized nonnegative finite measure therefore determines a hierarchy of real-valued shadow measures.\n\nThe key insight is that the first-coordinate standard part proved here is the first stage of a general valuation-like filtration, not an isolated construction.\n\n**Why now?** The two-coordinate model already exhibits exact normalization, finite additivity, and collapse to a Dirac measure; finite towers provide a concrete setting in which higher-order infinitesimal visibility can be tested.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -60809,7 +60809,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Under any regenerative random-permutation model with finite mean cycle-block length, the prime ratio converges almost surely to one; under heavy-tailed block laws of infinite mean, convergence exhibits a sharp tail-index transition.\n\nThe key insight is that finite cycles cause only local index displacement, while heavy-tailed blocks can create infinitely many macroscopic jumps.\n\n**Why now?** The million-prime experiment disproves naive finite-uniform typicality and shows that a meaningful density question must begin by specifying a coherent infinite probability model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation",
         "NumberTheory"
@@ -75980,7 +75980,7 @@
       "depth_estimate": 3,
       "description": "Add independent Pauli noise, syndrome distributions, decoders, and logical failure probability. Prove threshold statements only after fixing a concrete growing family and decoder.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Logic"
@@ -86688,7 +86688,7 @@
       "depth_estimate": 3,
       "description": "Under the scale from Conjecture 2, the number of weights at least `τ` is within a constant factor of its expectation with probability at least `1-N^{-2}`. Since the conditional active indicators are independent given the query, this reduces to a concrete binomial concentration bound once the cap probability is fixed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation"
       ],
@@ -87285,7 +87285,7 @@
       "depth_estimate": 3,
       "description": "formulate probabilistic shell deficits and derive high-probability crossing-window bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation"
       ],
@@ -90513,7 +90513,7 @@
       "depth_estimate": 3,
       "description": "Put the uniform probability measure on finite\n   books and restate the counting theorem as\n   `P[K_U(b) < L-c] ≤ 2^{-c}` (up to the conventional strict/non-strict boundary).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation"
       ],
@@ -95749,7 +95749,7 @@
       "depth_estimate": 3,
       "description": "The existing population result models the variance law algebraically. A deeper\nformalization would define independent random neural responses, prove the\nvariance of their average, and derive concentration or confidence-interval\nbounds. Extensions could cover heterogeneous variances, correlated neurons,\nand optimal weighted decoding.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Computation"
@@ -100185,7 +100185,7 @@
       "depth_estimate": 3,
       "description": "> For every `n`, `d` and every `A ⊆ 𝔽₂ⁿ`, the odd-intersection probability in the **flat**\n> model equals `oddProb n (d+1) A · 2^{n(d+1)} / #{independent (d+1)-tuples}` up to a factor\n> `1 + O(2^{d-n})`; consequently every bound proved here transfers verbatim to `d`-flats.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation"
       ],
@@ -121325,14 +121325,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Cryptography.BB84.PrivacyAmplification",
         "Cryptography.BB84.ThresholdPadeDigits"
       ],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "242b27e9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -121342,7 +121342,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_3435",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-23T04:06:01.190312+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -121357,7 +121357,7 @@
       "source": "",
       "source_exp_id": "f87f1170",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/f87f1170",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-21T17:45:45.843761+00:00",
       "title": "Finite-Key Bounds on a Certified Asymptotic Core"
@@ -133696,11 +133696,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0ef4aed2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -133712,7 +133712,7 @@
       ],
       "github_issue": 311,
       "id": "fd_3731",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-23T04:05:53.505688+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -133727,7 +133727,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-22T19:36:57.213783+00:00",
       "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
@@ -145507,7 +145507,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f2707534 (Q=0.920), which proved 115 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves Talagrand's concentration inequality for functions on product probability spaces with the weighted Hamming metric, giving exponential bounds on large deviations of 1-Lipschitz functionals of independent random variables.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Probability"
       ],
@@ -161464,14 +161464,14 @@
       "parent_direction": "",
       "priority_score": 0.85,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Ill-defined: 'consciousness' has no mathematical definition, so the central claims ('any Turing-complete system can be conscious', 'minimum loop length is 3', 'degree of consciousness correlates with strangeness') are not formalizable propositions. The only precise content (a system containing an inspectable representation of its own state) reduces to Kleene's recursion theorem / Goedel diagonalization, which is standard and already well covered; the rest is metaphor, not mathematics.",
+      "pruned_at": "2026-08-23T04:04:54Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
@@ -161630,14 +161630,14 @@
       "parent_direction": "",
       "priority_score": 0.85,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Mathematically vacuous as stated: in general relativity ANY smooth Lorentzian metric 'solves' the Einstein equations by defining T = (1/8pi)(Ric - (R/2)g), so 'prove the Alcubierre metric is a valid solution' is trivially true by definition and carries no content. The remaining claims are imprecise: 'effective FTL without local FTL' and 'strangeness/energy scaling E ~ M v c' are heuristic and dimensionally unspecified, and the quoted line element is malformed (the (dx - v_s f dt)^2 term is written as a dt^2 term). Moreover Mathlib lacks curvature/Einstein-tensor infrastructure, so the actionable part would be re-deriving basic pseudo-Riemannian geometry rather than the advertised result.",
+      "pruned_at": "2026-08-23T04:04:54Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
