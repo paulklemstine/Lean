@@ -1749,16 +1749,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL \u2014 1.5B knee at 4096 is 56 (every point 16-44 fails); acceleration amplifies with scale (19x vs 4x); size relationship INVERTS past phase transition"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fdd722d7",
     "description": "Round-68 #1, cron iteration (exp 536). The first band-miss in the uniform-ladder series.\n\n**DRIFT-INCONCLUSIVE**: pooled Spearman(T, rate) = **0.534** CI [0.509, 0.555] \u2014 below 0.55 for the first time; only 1/3 seeds above floor; CI straddles the wall.\n\nH2 PASS: T beats count by +0.059 CI [0.032, 0.083].\n\nLadder: 0.78 (44) \u2192 ~0.81 (52) \u2192 ~0.69 (56) \u2192 ~0.65 (64) \u2192 ~0.61 (68) \u2192 ~0.61 (72) \u2192 ~0.61 (76) \u2192 ~0.57 (80) \u2192 ~0.56 (84) \u2192 **~0.53 (88)**. The erosion continues.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp536_t_dial_unif_88.py + exp536_result.json + LEDGER.md, seeds 20261200\u201302.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3742",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.047984+00:00",
     "title": "FACT round-68 #1 \u2014 TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
   },
@@ -2115,20 +2116,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T09:49:34.716388+00:00",
     "title": "Deepening: The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f099f0f6 (Q=0.850), which proved 64 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: `\u03a3_{g\u2208G} |X^g|^k = |G| \u00b7 #(X^k/G)` for every `k`\n   (`sum_fixedPoints_pow_eq_orbits_mul_card`); `k = 1` is Burnside, `k = 2` is the rank of the\n   permutation action.",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_f099f0f6_84ed3327",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "f099f0f6",
-    "status": "available",
-    "timestamp": "2026-08-23T15:37:33.084029+00:00",
-    "title": "Deepening: Moment hierarchy"
   },
   {
     "consumed_by_exp_id": "",
@@ -12745,6 +12732,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The sharp estimate |G(z) - log\u2016z\u2016| \u2264 2/\u2016z\u2016 proved in this cycle says the potential has no additive normalisation constant at infinity. Identifying G_M with the equilibrium potential of M would then give logarithmic capacity exactly 1, a classical fact with no formal proof.\n\nG_M is the Green's function of the complement of M with pole at infinity and Robin constant 0; hence cap(M) = 1.\n\nProve harmonicity of G_M on the complement of M (from local uniform convergence of harmonic truncations), boundary vanishing, and apply the uniqueness of the Green's function.\n\nFirst formal computation of a nontrivial logarithmic capacity of a fractal set, and a benchmark for formal potential theory.\n\nWould mean the truncations fail to be harmonic in the required uniform sense, isolating exactly where potential theory needs new formal infrastructure.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3862",
+    "priority_score": 0.6713870967741937,
+    "research_mode": "team",
+    "source_exp_id": "4caf1d72",
+    "status": "available",
+    "timestamp": "2026-08-23T16:44:17.367993+00:00",
+    "title": "Unit Logarithmic Capacity of the Mandelbrot Set"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The cross-channel discrepancy of a population decouples into the oscillation of a single per-level functional over the window box, turning the sharp-constant question into a one-dimensional extremal problem. Cycle 4 solved it for the exponent pair (1, 1/2) via the Kantorovich inequality, obtaining log2((4+3*sqrt2)/8) and matching it to within 5% by an explicit two-point population. The conjecture extrapolates the exponent dependence found numerically.\n\nFor pointwise costs a*p^s and c*p^t on a window of spread 2^sigma, max |t*slope_s - s*slope_t| = (ln2/8)*s*t*|s-t|*sigma^2/Dk to leading order, attained by a two-atom population whose x^t-mean equals the harmonic mean of the window endpoints.\n\nExtend the doubling-ray result (s = 2t, already proved with constant log2((1+2^t)^2/(4*2^t))) to a general power-mean version between exponents t < s, compute the oscillation of the per-level functional in closed form, and compare with the grid search (coefficient 0.0862 +- 0.0002 at sigma = 1 versus ln2/8 = 0.08664).\n\nEvery multi-channel benchmark gets an exact internal-consistency tolerance, and the (0.84, 0.52) refutation generalises to arbitrary cost exponents.\n\nThe oscillation is not governed by the two-atom endpoint configuration and the sharp constant depends on more than the window spread.",
     "domains": [
       "Combinatorics"
@@ -12885,6 +12886,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Generalise the entire chain of estimates from z\u00b2+c to z^d+c. Every step used only \u2016z^d+c\u2016 \u2265 \u2016z\u2016^d - \u2016c\u2016 and \u2016c\u2016 \u2264 \u2016z\u2016, so the escape radius becomes max(2,\u2016c\u2016)^{1/(d-1)} and the potential satisfies G(f z) = d G(z). This yields compactness of all multibrot sets in one refactor.\n\nFor f(z) = z^d + c with d \u2265 2, an orbit escapes iff it ever exceeds R_d(c) = max(2^{1/(d-1)}, \u2016c\u2016^{1/(d-1)}); the escape rate exists, satisfies G(f z) = d\u00b7G(z), and the degree-d multibrot set is compact.\n\nParametrise the five core lemmas (growth, invariance, distortion, summability, functional equation) by d and re-run the proofs; test sharpness numerically for d = 3,4,5.\n\nOne formal development covers the whole multibrot family, including the sharp radius, which is the standard but rarely formalised statement.\n\nWould isolate a genuinely quadratic step (most likely the sharpness witness c = -2) that has no degree-d analogue.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3861",
+    "priority_score": 0.6709166666666668,
+    "research_mode": "team",
+    "source_exp_id": "4caf1d72",
+    "status": "available",
+    "timestamp": "2026-08-23T16:44:16.948747+00:00",
+    "title": "Degree-d Multibrot Escape Radius and Potential"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three Berggren generators split into one parabolic and two hyperbolic directions, which makes the ternary tree exponentially unbalanced. The maximal depth reachable inside a hypotenuse box should be governed purely by the parabolic spine and hence grow like sqrt(H), while a typical node sits at logarithmic depth. This quantifies how far the tree is from a balanced ternary tree.\n\nThe maximal Berggren word length among triples with hypotenuse at most H satisfies D(H) = (1/2 + o(1)) * sqrt(H), while the average depth is Theta(log H).\n\nProve that a word containing k non-parabolic letters has hypotenuse at least 5^k, deduce k = O(log H), and combine with the closed form 4(j+1)^2+1 for parabolic runs; compare with the measured D(10^5) = 222.\n\nThe tree has a canonical thin spine, giving a seed-independent sqrt(H) lower bound for any single-orbit count and an explicit height function for enumeration algorithms.\n\nMixed words would have to beat pure parabolic runs, contradicting the multiplicative growth of the hyperbolic generators.",
     "domains": [
       "Computation"
@@ -13008,6 +13023,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T04:50:21.766327+00:00",
     "title": "Arithmetic Criterion for Nested-Floor Schedulability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Turn the formal escape-time test into a machine-checked renderer: each dyadic box whose N-th iterate is certified outside the disk of radius 2 by interval arithmetic is provably disjoint from M, and such boxes exhaust the complement. Soundness is already a theorem; exhaustion follows from the nested intersection representation of M.\n\nM = \u22c2_N (complement of the union of dyadic boxes certified escaping at time N), and each certified box is disjoint from M.\n\nImplement complex interval arithmetic in Lean, prove the enclosure lemma for z \u21a6 z\u00b2+c, and combine with Mandelbrot_eq_iInter and tendsto_atTop_of_exists_escape.\n\nProduces the first fully verified Mandelbrot renderer whose 'outside' pixels are theorems, and a certified exhaustion of the complement.\n\nFailure could only come from the exhaustion half, indicating boxes touching the boundary need a different (measure-theoretic) treatment.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3860",
+    "priority_score": 0.6700588235294119,
+    "research_mode": "team",
+    "source_exp_id": "4caf1d72",
+    "status": "available",
+    "timestamp": "2026-08-23T16:44:16.437022+00:00",
+    "title": "Certified Escape-Time Rendering of the Mandelbrot Complement"
   },
   {
     "consumed_by_exp_id": "",
@@ -13501,6 +13530,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T03:16:56.259268+00:00",
     "title": "Exact Central Order via Exponential Substitution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct the B\u00f6ttcher conjugacy on the escaping region of the quadratic family as the complex refinement of the escape rate already formalised. The modulus of the B\u00f6ttcher map is exp of the Green's function, so the convergence proof reuses the telescoping estimate log_distortion verbatim on complex logarithms. This upgrades a real-valued potential to a conformal conjugacy with z \u21a6 z\u00b2.\n\nFor \u2016z\u2016 > max(2,\u2016c\u2016) the limit \u03c6_c(z) = lim (z_n)^{2^{-n}} (suitable branch) exists, is holomorphic and injective, satisfies \u03c6_c(f_c z) = \u03c6_c(z)^2 and |\u03c6_c(z)| = exp(G_c(z)).\n\nFormalise the complex telescoping series 2^{-n} Log z_n with a fixed branch, prove Cauchy convergence using the bound |Log(z_{n+1}/z_n^2)| \u2264 3/\u2016z_n\u2016, then derive holomorphy from uniform convergence (Morera/Weierstrass in Mathlib).\n\nGives a formal conformal chart on the exterior of every filled Julia set, hence formal external rays and the standard route to connectivity of the Mandelbrot set.\n\nWould indicate the branch bookkeeping genuinely obstructs a global chart, forcing a purely local (germ-level) formalisation.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3858",
+    "priority_score": 0.6691538461538463,
+    "research_mode": "team",
+    "source_exp_id": "4caf1d72",
+    "status": "available",
+    "timestamp": "2026-08-23T16:44:15.601987+00:00",
+    "title": "B\u00f6ttcher Coordinate for the Escaping Region"
   },
   {
     "consumed_by_exp_id": "",
@@ -14939,6 +14982,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:28:41.029005+00:00",
     "title": "Invisible targets classified for abelian groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Upgrade the proved continuity of G_M on {\u2016c\u2016 > 2} to a Lipschitz estimate with an explicit constant on each region {\u2016c\u2016 \u2265 R}, R > 2. The uniform 2^{-n} truncation bound reduces this to differentiating the finite polynomial c \u21a6 z_{n+2}(c). The result would be the first quantitative formal control of the exterior geometry of the Mandelbrot set.\n\nFor every R > 2 there is K_R with |G_M(c) - G_M(c')| \u2264 K_R \u2016c - c'\u2016 for all \u2016c\u2016,\u2016c'\u2016 \u2265 R, and |G_M(c) - log\u2016c\u2016| \u2264 C/\u2016c\u2016.\n\nCombine abs_potentialSeq_sub_le (error 2^{-n}) with a derivative bound for the polynomial c \u21a6 critOrbit c (n+2) on the region, then optimise n \u2248 log\u2082(1/\u2016c-c'\u2016).\n\nYields effective bounds on the harmonic measure and a certified numerical algorithm for G_M with rigorous error bars.\n\nWould reveal that the doubly exponential growth of derivatives defeats the truncation trade-off, pointing to H\u00f6lder rather than Lipschitz behaviour.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_3859",
+    "priority_score": 0.5630738302910058,
+    "research_mode": "team",
+    "source_exp_id": "4caf1d72",
+    "status": "available",
+    "timestamp": "2026-08-23T16:44:16.022851+00:00",
+    "title": "Explicit Lipschitz Modulus for the Douady\u2013Hubbard Potential"
   },
   {
     "consumed_by_exp_id": "",
@@ -34930,14 +34988,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C4 \u2014 Training-time success and eval-time sufficiency have different knees"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5ea225e",
     "description": "**Conjecture.** A third seed at `ctx = 1024` reports a knee `k*` with\n`k* / 8 \u2208 (12, 14]` \u2014 i.e. `k* \u2208 {112, 128}` on a step-16 grid \u2014 rather than `96`.\nEquivalently, the seed-2 `ctx = 1024` cell, not the `ctx = 2048` cell, is the outlier of\n`KneeAmplitude.seed2_no_common_amplitude`.\n\n*The key insight is* that the two seed-2 rungs are **not** two instances of one drifting\nconstant: their amplitude windows `(8, 12]` and `(12, 14]` are disjoint, so exactly one of\nthem can be generated by a multiplicative law, and the round's \"systematic\" reading is\nprovably unavailable. The conflict is a two-point obstruction, and one more measurement at\nthe *earlier* rung resolves which point is anomalous.\n\n*Why now?* The obstruction is already proved (`seed2_no_common_amplitude`) and each rung\nis separately explainable (`seed2_each_rung_explainable`), so the experiment is a genuine\nfork with two live branches rather than a confirmation run.\n\n---",
     "domains": [],
     "id": "fd_3357",
+    "phase": "A",
     "priority_score": 0.43745454545454543,
     "research_mode": "team",
     "source_exp_id": "4f1ff831",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:29:45.695298+00:00",
     "title": "C1. The amplitude-conflict conjecture (highest value)"
   },
@@ -40576,19 +40635,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:21:37.719452+00:00",
     "title": "Formalize all 256 rule tables from rule numbers and prove that rule-number decoding is a bijection with `LocalRule`."
-  },
-  {
-    "consumed_by_exp_id": "4caf1d72",
-    "description": "Strengthen `escape_norm_growth` to prove divergence after crossing a standard escape radius, yielding a formally specified escape-time test.",
-    "domains": [],
-    "id": "fd_1903",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "0ebc2749",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:43.417182+00:00",
-    "title": "Escape criterion iteration"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5f0e4f5e",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nDerived from this cycle's results on the mass (`ℓ¹`) theory of weight vectors that are\ninvisible to a truncated power-sum window.  What was settled this cycle:\n\n* the exact mass l",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 114,
-      "timestamp": "2026-08-22T03:08:06",
-      "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
-    },
-    {
       "cycle_id": "16cb59c0",
       "domain": "Algebra",
       "key_insight": "# Future directions: the non-backtracking trace after the counting theorem\n\nThe formal development proves `trace(Bⁿ) = #{rooted closed non-backtracking walks of\nlength n}` in three equivalent shapes (",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-23T15:37:32",
       "title": "Moment hierarchy"
+    },
+    {
+      "cycle_id": "4caf1d72",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Escape Criterion Iteration (Novelty thread)\n\n## What this cycle established\n\nStarting from `Catalog/Novelty/MandelbrotQuadraticEscape.lean` (which proved divergence of the\n*criti",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-08-23T16:44:29",
+      "title": "Escape criterion iteration"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6e253e5d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Tropical EML learning theory (next cycle)\n\nDerived from what survived and what failed in this cycle. Formalized this cycle:\nthe tropical/ReLU dictionary in one variable (`isTropR",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 109,
-      "timestamp": "2026-08-16T09:43:07",
-      "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
-    },
     {
       "cycle_id": "8fa1e5a5",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-23T15:37:32",
       "title": "Moment hierarchy"
+    },
+    {
+      "cycle_id": "4caf1d72",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Escape Criterion Iteration (Novelty thread)\n\n## What this cycle established\n\nStarting from `Catalog/Novelty/MandelbrotQuadraticEscape.lean` (which proved divergence of the\n*criti",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-08-23T16:44:29",
+      "title": "Escape criterion iteration"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "78e6d19a",
-      "domain": "Probability",
-      "name": "balanced_sharing_attained",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "78e6d19a",
-      "domain": "Probability",
-      "name": "balanced_sharing_min_optimal",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "d221a4de",
-      "domain": "Probability",
-      "name": "le_mean",
-      "quality": 0.88
-    },
     {
       "cycle_id": "d221a4de",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "mem_fixedBy_prod",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "4caf1d72",
+      "domain": "Novelty",
+      "name": "rather",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "4caf1d72",
+      "domain": "Novelty",
+      "name": "orbit_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "4caf1d72",
+      "domain": "Novelty",
+      "name": "orbit_succ",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-23T15:37:32",
+  "last_updated": "2026-08-23T16:44:29",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "84bf9824",
-        "quality": 0.85,
-        "theorems": 93,
-        "title": "reinforcement learning"
-      },
-      {
         "cycle_id": "367abe49",
         "quality": 0.85,
         "theorems": 61,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 72,
         "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID — no grid point reaches the bar on Fren"
+      },
+      {
+        "cycle_id": "4caf1d72",
+        "quality": 0.82,
+        "theorems": 75,
+        "title": "Escape criterion iteration"
       }
     ],
     "NumberTheory": [
