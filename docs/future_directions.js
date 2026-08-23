@@ -1766,16 +1766,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-67 #1 \u2014 TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c293906f",
     "description": "## NET-76 \u2014 limited-memory axis, round 28 (paper 161, ResearchOutput/exp_net76_frenchext512.py, /tmp/net76.log)\n\n**Verdict name: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE.**\n\n### Result\nExtended grid on French prose @ctx=512 (gate exact):\n\n| k | 24 | 28 | 32 | 36 | 44 |\n|---|---|---|---|---|---|\n| retained | 0.9716 \u2717 | 0.9772 \u2717 | **0.9813 \u2713** | 0.9848 \u2713 | 0.9879 \u2713 |\n\n**k\\*(fr@512) = 32**, completing the French chain {32, 40} with +8/doubling.\n\n### The complete five-domain \u00d7 two-context table\n\n| domain | factor | k\\*@512 | k\\*@1024 | increment/doubling |\n|---|---|---|---|---|\n| code | ~0.75\u00d7 | 12 | 12 | +0 |\n| prose-EN | 1.0\u00d7 | 16 | 20 | +4 |\n| math | ~1.0\u00d7 | 16 | 20 | +4 |\n| prose-DE | ~1.25\u00d7 | 20 | 24 | +4 |\n| **prose-FR** | **~2.0\u00d7** | **32** | **40** | **+8** |\n\nEach domain's ENTIRE budget curve scales by a single multiplicative factor applied to English prose's {16, 20}. One number per domain replaces a full grid measurement for any new domain within its family.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. P2 confirmed; (b) clean; (c) confronted \u2014 five domains, two contexts, 0.5B only stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET76; (g) fair; (h) DIRECT.\n\n### Next\n4096 increments; more languages/domains; 7B scale test.\n\nNow 76 network experiments. Assessment v76. Paper 161.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3745",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.052527+00:00",
     "title": "NET-76: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE \u2014 complete 5-domain \u00d7 2-context table: each domain's entire budget curve scales by one multiplicative factor (code 0.75x to FR 2.0x)"
   },
@@ -2776,20 +2777,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 3a849502 (Q=0.820), which proved 107 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The breakdown theorem is formalised and the two measured normalised distributions\nare encoded (`isMedian_ratios16`, `isMedian_ratios8`); the only missing ingredient is the\nsharpness half, which is a finite computation on the measured triples.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_3a849502_79dfca61",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "3a849502",
-    "status": "available",
-    "timestamp": "2026-08-23T20:40:20.718788+00:00",
-    "title": "Deepening: The breakdown theorem is formalised and the two measured normalised distribution"
   },
   {
     "consumed_by_exp_id": "",
@@ -41493,14 +41480,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Toric grids"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d24e8d5b",
     "description": "Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.",
     "domains": [],
     "id": "fd_2307",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3d25b5ad",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:34.380840+00:00",
     "title": "Biequivalence versus equality"
   },
