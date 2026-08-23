@@ -2056,5 +2056,6 @@
   "4caf1d72": "escape_criterion_iteration.json",
   "43ad4483": "a_radix_growth_threshold.json",
   "6f1d7e50": "cut_indexed_defects.json",
-  "86b92df3": "net_70_math_reads_as_prose__mathematical_text_leav.json"
+  "86b92df3": "net_70_math_reads_as_prose__mathematical_text_leav.json",
+  "620a1130": "separate_temporal_and_pitch_lags.json"
 }
