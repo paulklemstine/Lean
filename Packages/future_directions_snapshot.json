@@ -1484,25 +1484,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "aa2d71a2",
-    "description": "Round-43 #2, cron iteration (exp 493, assessment v271). Paper 154's noted follow-up.\n\n**DIAL-IS-DRAW-INVARIANT**: the per-N yield dial shows no variance-share dilution under genuinely unbalanced draws — augmented R² = 0.5202 uniform vs 0.5251 balanced (identical within noise); Spearman(w, rate) = 0.666 vs 0.696; footprint weighting beats plain count by +0.16/+0.18 in both regimes. H2's dilution refuted in the good direction.\n\nThe QS triage form holds for realistic key-shape mix. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp492_uniform_dial.py + exp492_result.json, seed 20260924.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3613",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:46:53.277507+00:00",
-    "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper 162)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Round-43 #1, cron iteration (exp 491-full, assessment v270). Paper 160's refuted guess becomes exact law, verified to n=655360 at deviations ≤3e-6 (mpmath dps=50).\n\n**EXACT-CONSTANT-LAWS**:\n- **g·n² → log₂e − 1 = 0.442695** — no log factor at all\n- **X·n² → 2log₂e = 2.885390**\n- **A·n²/log₂n → 1 exactly**\n- **(Is−A)·n² → 2log₂e**\n- hence **X/g → 2log₂e/(log₂e−1) = 6.51778**\n\nThe author's own pre-data scratch prediction (X/g→2, same as paper 160's H3) was refuted by its own exact table; corrected constants derived post-hoc, confirmed out-of-sample, labeled post-hoc.\n\nAlso: all four channels collapse at n=2 (g=A=0.311278 = the OR cap; Is=X=1); A/X sign flip exactly in (7,8); MC tie n=17 z=−0.10.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp491_full_table.py + exp491_full_result.json + table.csv + ledger.md.",
     "domain_bridges": [],
@@ -1959,7 +1940,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "46700442",
+    "consumed_by_exp_id": "",
     "description": "## NET-55 — limited-memory axis, round 8 (paper 140, ResearchOutput/exp_net55_1p5b_knee.py committed pre-run, /tmp/net55.log)\n\n**Verdict name: THE-KNEE-IS-SIZE-INVARIANT.**\n\n### Result\nQwen2.5-1.5B (3× the parameters of the 0.5B, d=28 vs 24) on identical protocol (held-out wikitext, 24 windows/cell, bf16-storage/fp32-compute harness):\n\n| ctx | full acc | k\\* | 0.5B comparison |\n|---|---|---|---|\n| 512 | 0.4680 | **16** | identical (0.5B: 16) |\n| 1024 | 0.5004 | **16** | HALF (0.5B: 32; grid floor — could be lower) |\n\n- **P1 REFUTED decisively**: knees did not grow with 3× parameters — they came in below the pre-registered floor ([24,48]@512, [32,96]@1024) at both contexts.\n- **P2 honestly UNMEASURED**: the crash-recovery harness rewrite dropped the per-layer stats block; the 1.5B tail map stays open.\n- **P3 CONFIRMED with a stronger reading**: ratio = 1.0 — not just sub-linear, FLAT.\n\nSweeps: 512 — 8: 0.9727 ✗, **16: 0.9896 ✓**, 24: 0.9915, 32: 0.9969, 48: 0.9993, 64: 0.9988. 1024 — **16: 0.9806 ✓**, 24: 0.9867, 32: 0.9881, 48: 0.9928, 64: 0.9927, 96: 0.9954, 128: 0.9974.\n\n### The emerging law\nReal-model lossless attention budget across everything measured: {16, 32, 24} @0.5B and {16, 16} @1.5B — a ~30-key budget covers every real model at every context, while the toy law predicted 384–1344 for these cells. The knee is set by the concentration structure of trained attention, not model capacity. **Deployment reading: the KV working-set budget does NOT scale with model size** — at larger models the binding constraint is weights (NET-52's quantization table), not cache.\n\n### Engineering record\nQwen2.5-1.5B's own fp16 forward NaNs on real text (verified pre-wrapper — bf16 storage mandatory on pre-bf16 GPUs); CPU-fp32 reference SIGILLs on this host; gate = HF-bf16-GPU reference captured pre-floatify with ΔCE 0.0054 as the binding check and argmax-agreement 0.89 documented as near-tie flips across the 152k vocab.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. the refuted one; (b) clean — size-transfer of sparsity knees not a measured law in Catalog or literature; (c) confronted — 3× scale jump measured; limits: two size points, grid floor at 16, one corpus, SE ≈ 0.3%, P2 unmeasured; (d) clean — held-out last 10%; (e) deterministic evals, gate calibration documented; (f) clean — finite-reference assert, ALL_DONE_NET55; (g) fair — same 0.98 bar as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-16 addendum at 1024; 1.5B tail map (P2); 7B quantized-offload cell; oracle-to-policy eviction gap; corpus robustness.\n\nNow 55 network experiments. Assessment v55. Paper 140.\n",
     "domain_bridges": [],
     "domains": [
@@ -1971,7 +1952,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T15:36:32.739868+00:00",
     "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT — Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-half the 0.5B knees; tripling parameters did not raise the lossless attention budget by one key"
   },
@@ -2434,7 +2415,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "258afb8b",
     "description": "## NET-72 — limited-memory axis, round 25 (paper 157, ResearchOutput/exp_net72_french.py, /tmp/net72.log)\n\n**Verdict name: THE-FRENCH-KNEE-EXCEEDS-THE-GRID.**\n\n### Result\nDomain jump to French prose (gate exact; one Gutenberg source, second 404'd — honest limit):\n\n| ctx | best grid point | retained | verdict |\n|---|---|---|---|\n| 512 | 24 | **0.9648 ✗** | knee > 24 |\n| 1024 | 32 | **0.9680 ✗** | knee > 32 |\n\nFull acc: 0.584/0.591 (higher than prose's 0.446/0.461).\n\n- **ALL THREE HORNS REFUTED**: the domain shift exceeds +8 keys, far past every pre-stated bracket.\n- The accuracy/knee decoupling now has BOTH SIGNS: code easier AND fewer keys; math harder AND equal; French easier AND MORE keys.\n\n### The law\nThe domain-shift law is NOT a simple ±4 fine-step: language families differ by whole grid ranges. The four-domain table was complete for its four domains but does not interpolate to unseen languages. Mechanism hypothesis: the tax is TOKENIZATION-mediated (Qwen's tokenizer spends more tokens per French word, diluting each token's attention contribution) — testable via tokens-per-word measurement.\n\n### All 8 barriers\n(a) clean; (b) clean — first beyond-grid result; (c) confronted — one source, sub-knee ceiling stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET72; (g) fair — only text changed; (h) DIRECT — multilingual serving cannot interpolate budgets.\n\n### Next\nTokens-per-word mechanism test; extended grid {48, 64}; more languages; 7B cell.\n\nNow 72 network experiments. Assessment v72. Paper 157.\n",
     "domain_bridges": [],
     "domains": [
@@ -2446,7 +2427,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T19:36:57.212812+00:00",
     "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID — no grid point reaches the bar on French prose (knee >24 @512, >32 @1024); domain shifts are NOT ±4 fine-steps"
   },
@@ -5274,47 +5255,6 @@
     "status": "available",
     "timestamp": "",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map from SO(4) that has no fixed point? Conjecture: every closed 3-manifold embeds in R^4.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "seed_395",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize biological computation: a 'wetware' computation is a dynamical system on a neural manifold that computes a function f: X -> Y. Prove: wetware can simulate Turing machines (neural nets are Turing-complete). Show: the energy cost of a wetware computation is Theta(n * log(n)) where n is the number of neurons — better than silicon's Theta(n^2). Conjecture: there exist functions computable by wetware (using continuous dynamics) that are NOT computable by Turing machines — the 'super-Turing' wetware hypothesis.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "seed_398",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
   },
   {
     "ambition_level": "extension",
@@ -16012,6 +15952,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Combinatorics.UniformDialDrawInvariance",
+      "Combinatorics.UniformDialRegimeHomotopy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The draw-weighted dial is the quadratic form p ↦ ½ pᵀ D p with D_ij = (x_i − x_j)(y_i − y_j). All regime dependence is spectral. Determining the inertia of D turns 'can an unbalanced draw flip the dial?' into an eigenvalue comparison.\n\nFor a comonotone population with pairwise distinct footprints, D has exactly one positive eigenvalue, and the flip threshold for the conditioning number satisfies κ_crit² = |λ_max| / |λ_min^-| up to a factor |ι|.\n\nFormalize D as a Matrix ι ι ℝ, prove Hermitian, and relate ½ pᵀ D p to Catalog.UniformDial.wcov via wcov_eq_half_double_sum; then bound the Rayleigh quotient on the simplex.\n\nThe triage rule becomes computable from a single eigenvalue pair rather than from all pair masses.\n\nThe budget bound ε²C − M²Δ is the sharp regime-free criterion and no spectral shortcut exists.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_3780",
+    "lineage_refs": [],
+    "priority_score": 0.7101698113207547,
+    "proof_strategy": "Write D = x yᵀ + y xᵀ − (x∘y) 1ᵀ − 1 (x∘y)ᵀ, a rank-≤4 perturbation of zero; compute inertia from the 4-dimensional Gram matrix of {x, y, x∘y, 1}.",
+    "research_mode": "team",
+    "source_exp_id": "aa2d71a2",
+    "status": "available",
+    "timestamp": "2026-08-23T03:16:34.218033+00:00",
+    "title": "Discordance Spectrum of the Pairwise Dial Form"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.MarkoffTransfer.UniquenessAndNonlinearity",
       "Cryptography.BerggrenSpectral.LorentzAndTree"
     ],
@@ -16960,6 +16923,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Combinatorics.UniformDialRegimeHomotopy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Measure unbalancedness by majorization instead of ℓ¹ distance. For comonotone populations whose pair matrix is monotone in the key order, concentrating draw mass should decrease the dial monotonically, giving an order-theoretic form of the no-dilution claim.\n\nIf p ≺ q (q majorizes p) and the population is comonotone with D monotone in the key order, then wcov q x y ≤ wcov p x y, with equality iff p and q agree on the concordant support.\n\nState via Mathlib's majorization/doubly stochastic API: q = p ∘ (doubly stochastic matrix) and prove the induced inequality for the quadratic form.\n\nUniform draws maximize the dial, which upgrades draw-invariance to an extremal principle.\n\nRegime comparisons genuinely require metric, not order-theoretic, control.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3781",
+    "lineage_refs": [],
+    "priority_score": 0.7094285714285715,
+    "proof_strategy": "Birkhoff decomposition of the doubly stochastic map into transpositions plus a two-key exchange lemma for the quadratic form.",
+    "research_mode": "team",
+    "source_exp_id": "aa2d71a2",
+    "status": "available",
+    "timestamp": "2026-08-23T03:16:34.721082+00:00",
+    "title": "Majorization Monotonicity of the Yield Dial"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.NumberTheory.QuantL1TuranBridge",
       "Catalog.NumberTheory.TuranMantel"
     ],
@@ -17251,6 +17236,28 @@
     "status": "available",
     "timestamp": "2026-08-22T18:49:51.009514+00:00",
     "title": "Discrepancy-Perturbed Dial Law"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Combinatorics.UniformDialDrawInvariance"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved Lipschitz bound |Cov_p − Cov_q| ≤ (range x)(range y)‖p − q‖₁ converts sampling error into ℓ¹ error of the empirical regime, yielding a confidence radius that does not depend on the population beyond its ranges.\n\nWith n i.i.d. draws from a regime on |ι| keys, |Cov_empirical − Cov_p| ≤ (range x)(range y)·√(2|ι|/n) with probability at least 1 − 2e^{−|ι|}.\n\nCombine Catalog.UniformDial.wcov_stability_tv with a finite-alphabet ℓ¹ concentration inequality formalized over Finset ι.\n\nCross-regime 'identical within noise' claims become certified rather than empirical.\n\nThe ℓ¹ route is too lossy and a variance-based bound on the pair form is needed instead.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3783",
+    "lineage_refs": [],
+    "priority_score": 0.7084545454545456,
+    "proof_strategy": "Bounded differences for the empirical ℓ¹ error plus the deterministic Lipschitz bound already proved.",
+    "research_mode": "team",
+    "source_exp_id": "aa2d71a2",
+    "status": "available",
+    "timestamp": "2026-08-23T03:16:35.594756+00:00",
+    "title": "Distribution-Free Confidence Radius for the Dial"
   },
   {
     "ambition_level": "extension",
@@ -18619,6 +18626,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Applications.WeilDualitySign.AnalyticBridge",
+      "Catalog.Applications.BSD.FunctionalEquation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 4 proves the analytic order of vanishing of the completed function Lambda_E at the central point agrees with the central multiplicity m_+ modulo 2. Conjecture that the two are equal on the nose, because the substitution T = exp(-sL) is a local biholomorphism.\n\nFor a duality eigensystem over the complex numbers with Q not equal to 1 and exp L = Q, analyticOrderAt (completedL E L) 1 = m_+.\n\nTransport the algebraic factorisation P(T) = (1 - QT)^{m_+} G(T), G(Q^{-1}) nonzero, through T = exp(-sL) and compute analyticOrderAt of the resulting product.\n\nThe analytic rank of the model L-function is computed exactly by a finite eigenvalue count, upgrading a parity statement to an equality.\n\nThe exponential substitution creates or destroys vanishing, revealing a subtlety in the dictionary between polynomial and analytic orders.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3787",
+    "lineage_refs": [],
+    "priority_score": 0.6691538461538463,
+    "proof_strategy": "Show 1 - Q exp(-sL) has a simple zero at s = 1 (derivative L*Q not zero), then use multiplicativity of analyticOrderAt over finite products.",
+    "research_mode": "team",
+    "source_exp_id": "bc20ce21",
+    "status": "available",
+    "timestamp": "2026-08-23T03:16:56.259268+00:00",
+    "title": "Exact Central Order via Exponential Substitution"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Computation.DegreeMonoidRealisation",
       "Computation.DegreeMonoidStructure"
     ],
@@ -19435,6 +19464,45 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Combinatorics.UniformDialRegimeHomotopy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Quantify how far a population is from comonotone by the least ℓ¹ perturbation of the rates that removes all discordant pairs, and relate it two-sidedly to the discordance mass that governs the triage rule.\n\nIf δ is the least ℓ¹ perturbation of y making (x, y + δ) comonotone, then δ² ≤ Δ ≤ 2·δ·range(x).\n\nFormalize the repair distance as an infimum over rearrangement-compatible perturbations and prove both inequalities against Catalog.UniformDial.discordanceMass.\n\nThe QS triage rule can be stated with a single interpretable population parameter.\n\nDiscordance mass carries information not visible to any ℓ¹ repair, and pairwise data is irreducible.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3784",
+    "lineage_refs": [],
+    "priority_score": 0.5915517241379311,
+    "proof_strategy": "Upper bound by explicitly repairing with the monotone rearrangement of y; lower bound by summing the discordant pair deficits along an inversion-minimizing chain.",
+    "research_mode": "team",
+    "source_exp_id": "aa2d71a2",
+    "status": "available",
+    "timestamp": "2026-08-23T03:16:36.030753+00:00",
+    "title": "Comonotone Repair Distance"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Applications.WeilDualitySign.EigenvalueModel",
+      "Catalog.Applications.WeilDualitySign.Witnesses"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved converse says the conclusion of the mission conjecture holds exactly when the number of -Q fixed points is even. Conjecture that the invisible part of the eigenvalue data is generated by moves that add or delete a pair of -Q fixed points, giving a complete classification of eigensystems up to the sign invariant.\n\nTwo duality eigensystems of the same degree and weight have equal sign if and only if they differ by twists, permutations, and finitely many insertions or deletions of a pair of -Q fixed points.\n\nFormalise the move relation as an inductive relation on eigensystems and prove sign invariance plus completeness in degrees at most 4 by exhaustive case analysis.\n\nA complete normal form for duality eigensystems modulo the sign, i.e. a classification of what the functional equation can and cannot see.\n\nThere are sign-equivalent systems not related by the moves, hence a finer invariant beyond the fixed-point parity.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3788",
+    "lineage_refs": [],
+    "priority_score": 0.5915517241379311,
+    "proof_strategy": "Sign invariance is immediate from prod_alpha_eq_sign_mul_pow; completeness proceeds by induction on the number of duality 2-cycles, normalising each pair by a twist.",
+    "research_mode": "team",
+    "source_exp_id": "bc20ce21",
+    "status": "available",
+    "timestamp": "2026-08-23T03:16:56.741583+00:00",
+    "title": "Kernel of the Sign Invariant and Double-Minus Moves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.MarkoffTransfer.SpineObstruction",
       "Cryptography.MarkoffTransfer.BerggrenMarkoffTransfer"
     ],
@@ -19528,6 +19596,25 @@
     "status": "available",
     "timestamp": "2026-08-22T07:00:24.941866+00:00",
     "title": "Which-Factor Wall as a Cross-Population Invariant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Combinatorics.UniformDialYieldRegression"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Each added regressor improves the weighted fit by ⟨r,z⟩²/‖z‖². Summing these gains over arbitrary footprint-derived regressors should saturate at a population invariant determined by the concordant and discordant pair masses, explaining why augmented R² is stable across regimes.\n\nFor rank-encoded dials, sup over finite regressor families of the augmented R² equals 1 − Δ/(C + Δ).\n\nDefine the family of monotone re-encodings of the footprint, use augment_gain_eq iteratively, and bound the total gain with wcov_budget.\n\nThe augmented R² ceiling is a regime-free population statistic, fully explaining the uniform-vs-balanced agreement.\n\nAugmented R² depends on the regressor list in an essential way and cross-regime comparisons need the list fixed.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3782",
+    "lineage_refs": [],
+    "priority_score": 0.5903125000000001,
+    "proof_strategy": "Gram–Schmidt in the p-weighted inner product; upper bound by Cauchy–Schwarz plus the concordance budget, lower bound by an explicit rank-encoding family.",
+    "research_mode": "team",
+    "source_exp_id": "aa2d71a2",
+    "status": "available",
+    "timestamp": "2026-08-23T03:16:35.160749+00:00",
+    "title": "Augmentation Saturation Plateau"
   },
   {
     "ambition_level": "extension",
@@ -19967,6 +20054,29 @@
     "status": "available",
     "timestamp": "2026-08-22T13:02:22.266734+00:00",
     "title": "Bang Bound via Plane Lattice Sections"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Applications.WeilDualitySign.EigenvalueModel",
+      "Catalog.Applications.WeilDualitySign.Structure"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend the single-block duality eigensystem to a graded family H^0..H^{2n} in which duality pairs degree i with degree 2n-i. Conjecture that the global zeta functional equation has exponent the Euler characteristic and sign carried entirely by the middle block. This would explain why root numbers of varieties are middle-cohomology invariants.\n\nFor a graded duality system, Z(1/(q^n T)) = ± q^{n·chi/2} T^chi Z(T) with chi = sum (-1)^i b_i, and the sign equals (-1)^{m_+ of the middle block}.\n\nFormalise a GradedDualSystem structure (blocks plus pairing between i and 2n-i), prove block-wise telescoping using rootSign_directSum, and derive the global equation.\n\nThe root sign of a variety is a middle-cohomology invariant, provable in the eigenvalue model without any geometry.\n\nOff-middle blocks contribute signs, which would identify a new invariant beyond the fixed-point count.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_3785",
+    "lineage_refs": [],
+    "priority_score": 0.5633481507492952,
+    "proof_strategy": "Pair blocks i and 2n-i into fixed-point-free duality eigensystems; apply the cycle-1 pairing lemma to each pair (no fixed points, hence sign +1) and the cycle-1 sign law to the middle block.",
+    "research_mode": "team",
+    "source_exp_id": "bc20ce21",
+    "status": "available",
+    "timestamp": "2026-08-23T03:16:55.300175+00:00",
+    "title": "Graded Poincaré Duality and the Global Zeta Sign"
   },
   {
     "ambition_level": "extension",
@@ -20624,6 +20734,29 @@
     "status": "available",
     "timestamp": "2026-08-21T23:38:48.481699+00:00",
     "title": "Integral Sublattice and Failure of Divisibility"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Applications.WeilDualitySign.Structure",
+      "Catalog.Applications.WeilDualitySign.CentralParity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved sign law shows epsilon depends only on the fixed-point data of the duality involution, which is the hallmark of a Lefschetz-type invariant. Conjecture that epsilon factors through the Burnside ring of the acting group, making it a mod-2 Euler characteristic of the fixed-point set.\n\nFor a finite group G acting on the index set through duality-compatible permutations, E -> epsilon(E) is additive on direct sums, invariant under twists, and factors through the augmentation A(G) -> Z/2 given by the mod-2 Euler characteristic of fixed-point sets.\n\nFormalise G-equivariant duality eigensystems, verify additivity and twist invariance (already proved for the trivial group), and construct the map to Z/2.\n\nRoot signs become equivariant-topological invariants, opening a transfer of Lefschetz machinery into functional-equation signs.\n\nThe sign carries strictly more information than the fixed-point set of the group action, isolating a genuinely arithmetic residue.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3786",
+    "lineage_refs": [],
+    "priority_score": 0.5617311038372732,
+    "proof_strategy": "Use rootSign_directSum and rootSign_twist as the two Burnside axioms; compute epsilon on transitive G-sets and check the induction formula.",
+    "research_mode": "team",
+    "source_exp_id": "bc20ce21",
+    "status": "available",
+    "timestamp": "2026-08-23T03:16:55.825551+00:00",
+    "title": "Burnside-Ring Factorisation of the Root Sign"
   },
   {
     "ambition_level": "extension",
@@ -48209,23 +48342,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "bc20ce21",
-    "description": "In the eigenvalue model, add the hypothesis that the duality permutation\n   `σ` is an involution with no fixed point carrying `α = −q^{n/2}`; conjecture that this\n   alone forces `∏ α_i = q^m`, hence `ε = (−1)^d`.  The cycle-4 witnesses show the fixed\n   point `α = +q^{n/2}` is exactly what flips the sign at `d = 1`.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_2963",
-    "lineage_refs": [],
-    "priority_score": 0.4250701754385965,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "786dcda9",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:27:11.537626+00:00",
-    "title": "P2 (from K)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Enumerate small finite unital magmas and classify their associativity defects. For the present infinite example, the relevant small calculation is already kernel-checked in `left_bracketing_value` and `right_bracketing_value`, so a separate empirical evidence stage would add no confidence to the proved claim.",
     "domain_bridges": [],
@@ -50353,7 +50469,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9068f5f1",
+    "consumed_by_exp_id": "",
     "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
     "domain_bridges": [],
     "domains": [],
@@ -50363,7 +50479,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:05.239324+00:00",
     "title": "Kernel patterns"
   },
@@ -54752,7 +54868,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7797dc46",
     "description": "**Known versus unresolved cards.** If `d` cards are predicted with certainty and `u` cards are fair guesses, expected payoff is exactly `d`; uncertainty itself supplies no positive edge.",
     "domain_bridges": [],
     "domains": [],
@@ -54762,7 +54878,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "717f7483",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:34.905074+00:00",
     "title": "Known versus unresolved cards."
   },

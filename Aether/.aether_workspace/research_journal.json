@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b5bb3340",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Berggren Groupoid, Braiding, and Quantum Computation\n\n## What this cycle settled\n\nThe moonshot (\"the Berggren groupoid realizes universal topological quantum computation\")\nis **f",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 169,
-      "timestamp": "2026-08-21T13:59:12",
-      "title": "Topological Quantum Computation from the Berggren Groupoid — Anyonic Braiding on the Tree Boundary"
-    },
-    {
       "cycle_id": "75105c60",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Berggren Causal Set\n\n## Where this cycle ended up\n\nThe moonshot hypothesis (\"the Berggren tree of primitive Pythagorean triples is a discrete\nmodel of `2+1`-dimensional Minko",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-23T03:16:48",
       "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper 162)"
+    },
+    {
+      "cycle_id": "bc20ce21",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — after the eigenvalue-model sign law\n\nFour research cycles produced, in `Catalog/Applications/WeilDualitySign/`:\n\n* **Cycle 1** (`EigenvalueModel.lean`) — the exact sign law\n  `∏",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-23T03:17:01",
+      "title": "P2 (from K)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "aeab7c87",
-      "domain": "Applications",
-      "key_insight": "# Future directions: denominators of rational points on Mordell curves\n\nDerived from cycles 3–9\n(`Catalog/Applications/MordellDenominator{Squares,Filtration,Orbits,LocalLaw}.lean`,\n`Catalog/Applicatio",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 60,
-      "timestamp": "2026-08-15T11:41:24",
-      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-    },
     {
       "cycle_id": "032d68e5",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-23T03:16:48",
       "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper 162)"
+    },
+    {
+      "cycle_id": "bc20ce21",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — after the eigenvalue-model sign law\n\nFour research cycles produced, in `Catalog/Applications/WeilDualitySign/`:\n\n* **Cycle 1** (`EigenvalueModel.lean`) — the exact sign law\n  `∏",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-23T03:17:01",
+      "title": "P2 (from K)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "08e16c4e",
-      "domain": "NumberTheory",
-      "name": "boxSide_pos",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "08e16c4e",
-      "domain": "NumberTheory",
-      "name": "boxSide_le_one",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "08e16c4e",
-      "domain": "NumberTheory",
-      "name": "slab_apply",
-      "quality": 0.85
-    },
     {
       "cycle_id": "0f0bd7f8",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "wcov_eq_half_double_sum",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "bc20ce21",
+      "domain": "Applications",
+      "name": "Cycles",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "bc20ce21",
+      "domain": "Applications",
+      "name": "yields",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "bc20ce21",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-23T03:16:49",
+  "last_updated": "2026-08-23T03:17:01",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "af68ac83",
-        "quality": 0.87,
-        "theorems": 55,
-        "title": "~~`minimal_near_miss_size`~~ — RESOLVED in cycle 3: among all near-miss pairs at"
-      },
-      {
         "cycle_id": "6bc62e41",
         "quality": 0.88,
         "theorems": 70,
@@ -3141,6 +3135,12 @@
         "quality": 0.85,
         "theorems": 148,
         "title": "FACT round-32 #3 — CYCLIC-CUBIC-TYPE-CHANNEL: two types, full pinning (paper 122"
+      },
+      {
+        "cycle_id": "bc20ce21",
+        "quality": 0.82,
+        "theorems": 56,
+        "title": "P2 (from K)"
       }
     ],
     "Bridges": [

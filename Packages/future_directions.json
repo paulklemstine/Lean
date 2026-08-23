@@ -54360,7 +54360,7 @@
       "depth_estimate": 3,
       "description": "Fix `W ≥ 1` and consider EML layers all of whose read-out weights\nand inner weights are bounded in absolute value by `W`. Then approximating `x²`\non `[0,1]` to accuracy `ε` requires width `k ≥ c · ε^{-1/2} / log W`, and this is\nattained; consequently the constant-width phenomenon proved in\n`eml_width_two_universal` is *exactly* a statement about weight magnitude, and\nunder a polynomial weight budget EML and ReLU are separated by only a\n`log`-factor rather than by a polynomial.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -54517,7 +54517,7 @@
       "depth_estimate": 3,
       "description": "On `[0,1]^n`, depth-2 EML networks of width `w` achieve\n(i) `O((w)^{-1/n})` uniformly over the `1`-Lipschitz class, and\n(ii) `O((w)^{-2/n})` over the class of functions with bounded second derivatives —\nand (i) is optimal, so the mission's conjectured exponent `-2/n` is *false* for\nthe Lipschitz class and *true* for the `C²` class.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -54557,7 +54557,7 @@
       "depth_estimate": 3,
       "description": "The one-dimensional dichotomy is proved and the transfer principle\n`emlDepth2_dominates_relu` is stated for an arbitrary domain `S ⊆ ℝ`; upgrading\nit to `ℝⁿ` needs only a vector-valued `Neuron`, not new estimates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -54597,7 +54597,7 @@
       "depth_estimate": 3,
       "description": "Let `f` be `L`-Lipschitz on `[0,1]ⁿ`. Building a partition of\nunity from `n`-fold products of one-dimensional bumps, each product realised by\na tree of `n − 1` EML multiplication gates (`prodGate`), yields a network of\ndepth `O(log n)` and width `w` with uniform error `O(L (w)^{-1/n}) + O(h²)`, and\nfor `C²` targets the exponent improves to `O((w d)^{-2/n})` — exactly the rate\nof the mission statement, but with the second-order term coming from the gate\nrather than from the partition.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Applications"
@@ -58600,11 +58600,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7797dc46",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -58614,7 +58614,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_1869",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-23T03:18:22.977698+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -58629,7 +58629,7 @@
       "source": "",
       "source_exp_id": "717f7483",
       "source_path": "resplit_migration",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-21T06:21:34.905074+00:00",
       "title": "Known versus unresolved cards."
@@ -69776,7 +69776,7 @@
       "depth_estimate": 3,
       "description": "Study monotone provability/closure operators on complete lattices. Ordinary Knaster–Tarski fixed points should be kept conceptually distinct from the diagonal fixed point `G ↔ ¬Prov(G)` formalized here.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography",
         "Applications"
@@ -92792,7 +92792,7 @@
       "depth_estimate": 3,
       "description": "Define a typed EML syntax carrying both depth and width, prove closure of its semantics under composition, and establish upper and lower approximation bounds for each fixed depth.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications",
         "MachineLearning"
@@ -92873,7 +92873,7 @@
       "depth_estimate": 3,
       "description": "Combine explicit polynomial approximation bounds with EML realizations of polynomials to derive rates for regularity classes, such as `C^k`, Hölder, and Sobolev functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications",
         "MachineLearning"
@@ -92914,7 +92914,7 @@
       "depth_estimate": 3,
       "description": "Instantiate the continuous-linear-observable connector using integration against finite regular Borel measures, yielding a moment-determination theorem: agreement on the EML coordinate algebra implies equality of measures.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Applications"
@@ -93077,7 +93077,7 @@
       "depth_estimate": 3,
       "description": "“Uniquely determines it” needs a precise semantic quotient and domain. Point\nvalues are too weak, and raw syntax has identities such as commutativity,\nassociativity, and exp/log cancellation on suitable eventual domains. Promising\nformal statements are:\n\n- expansion uniqueness for **eventual germs at `+∞`**;\n- injectivity only after quotienting EML syntax by eventual equality;\n- a restricted positive-domain language where logarithms have controlled domains;\n- a normalization theorem assigning canonical transseries to a syntactic fragment.\n\nThe first substantial target is the polynomial–Laurent fragment, followed by a\nsingle logarithmic level, then one exponential level. At each stage, define an\nexpansion map, prove preservation of addition and multiplication, and prove that\nits kernel is exactly eventual semantic equality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -94949,7 +94949,7 @@
       "depth_estimate": 3,
       "description": "No `EMLExpr` denotes `Real.sin` on\n   all of `ℝ` (and likewise for `Real.cos`).  A proof route is to formalize the\n   one-variable consequence of o-minimality of the real exponential field:\n   the zero set of an exp-log term is a finite union of points and intervals,\n   whereas the zeros of sine form an infinite discrete set.  A single explicit\n   expression whose evaluation equals sine everywhere would falsify this.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications",
         "Algebra"
@@ -105466,7 +105466,7 @@
       "depth_estimate": 3,
       "description": "In every\n   finite-dimensional real representation `ρ` of `EMLGen` of dimension `n`,\n   `(ρ T)^n = 0` — established here for `n = 2`\n   (`rep_dim_two_shift_isNilpotent`, via Cayley–Hamilton) and conjectured in\n   general; the shift\n   ideal acts by nilpotent operators, so the only irreducible finite-dimensional\n   representations are the one-dimensional characters `g ↦ c · g.scale`.\n   *The key insight is* that `rep_shift_trace_pow_eq_zero` already gives every\n   power sum `p_k = tr(B^k) = 0`, and in characteristic zero Newton's identities\n   convert vanishing power sums into `charpoly B = X^n`, which is nilpotency.\n   *Why now?*  The power sums are formal; the missing ingredient is the Newton\n   identity bridge between `Matrix.trace (B ^ k)` and\n   `Matrix.charpoly`, for which Mathlib has both the symmetric-function API and\n   `LinearMap.isNilpotent_iff_charpoly`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Applications"
@@ -105507,7 +105507,7 @@
       "depth_estimate": 3,
       "description": "The centralizer of\n   `emlField g` inside the `C¹` vector fields on `(0, ∞)` is one-dimensional\n   when `g.scale ≠ 0` and infinite-dimensional when `g.scale = 0`.\n   *The key insight is* that the centralizer equation is the same singular first\n   order ODE treated in cycle 2, but with eigenvalue `0` instead of `-1`, so the\n   glueing lemma `const_of_deriv_eq_zero_punctured` applies verbatim and the\n   dichotomy is exactly the presence or absence of the singular point.\n   *Why now?*  Both halves reduce to lemmas already proved here; only the\n   dimension count of the solution space remains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Applications"
@@ -105548,7 +105548,7 @@
       "depth_estimate": 3,
       "description": "In every finite-dimensional real representation `ρ` of `EMLGen` of dimension\n   `n`, the image `ρ (shiftIdeal)` is simultaneously strictly triangularizable,\n   and `ρ D` is conjugate to a matrix whose diagonal blocks are those of a\n   semisimple operator with integer eigenvalue *differences*; equivalently\n   `V = ⨁_{j} V_j` with `ρ T : V_j → V_{j+1}`.\n   *The key insight is* that cycle 3 gives nilpotency of `ρ T` for free, and\n   nilpotency plus the eigenvector relation `⁅ρ D, ρ T⁆ = ρ T` is exactly the\n   hypothesis of the weight decomposition for the generalized eigenspaces of\n   `ad (ρ D)`.  *Why now?*  The missing analytic input (nilpotency) is a\n   theorem, and Mathlib has generalized eigenspace decompositions for\n   endomorphisms of finite-dimensional spaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Applications"
@@ -105589,7 +105589,7 @@
       "depth_estimate": 3,
       "description": "*[settled in cycle 4: the abelian half is proved, the identification with the one-parameter subgroup is false — see below]*  The centralizer of a\n   non-identity element of `ScalingMap` is abelian, and equals the image of the\n   one-parameter subgroup through it precisely when its exponent is not `1`;\n   for exponent `1` (pure dilations `y ↦ c y`) it is the full dilation\n   subgroup.  *The key insight is* that the infinitesimal statement proved in\n   cycle 3 (centralizer of a field is the line it spans) should integrate to the\n   group level, the exceptional case being the one where the flow has no fixed\n   point in `(0, ∞)`.  *Why now?*  `EMLScalingGroupDuality` already has the\n   group law, the trivial-centre theorem and the classification of involutions,\n   so the computation is a finite case analysis on `(coeff, expo)`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Applications"
@@ -105630,7 +105630,7 @@
       "depth_estimate": 3,
       "description": "A finite\n   -dimensional real Lie algebra `L` admits a surjection onto `EMLGen` if and\n   only if `L` is not perfect and its derived algebra contains an\n   `ad`-eigenvector of nonzero eigenvalue.  *The key insight is* that\n   `scaleChar` is the universal map to an abelian algebra (cycle 2) and\n   `isNilpotent_of_lie_eq_self` (cycle 3) says the eigenvector is nilpotent in\n   every representation, so the obstruction is intrinsic and not\n   representation-dependent.  *Why now?*  Both halves are already formalized as\n   standalone theorems; only the assembly into an iff remains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Applications"
@@ -117084,7 +117084,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** The image of `EMLTS.emlGermHom` is a Hardy field, and it is *maximal*\namong Hardy fields whose elements have transseries expansions of exponential depth `≤ 2`:\nany germ that is comparable to every EML germ and is closed under differentiation already\nlies in the image. Falsifiable form: exhibit a germ (say a solution of\n`y' = y² − x` on `(1,∞)`) that is comparable to all EML germs, has depth-`≤2` asymptotics,\nand is not an EML germ.\n\n**The key insight is** that the two Hardy-field axioms are now theorems rather than\nhypotheses — `EMLTS.eventually_strictMono_or_strictAnti_or_const` (no oscillation) and\n`EMLTS.tendsto_EMLFun_limit` (limits exist) — so maximality becomes a purely\nmodel-theoretic saturation question about the value group `Rank`, not an analytic one.\n\n**Why now?** The germ embedding `EMLTS.emlGermHom_injective` and the compatibility of the\nformal and analytic derivatives (`EMLTS.hasDerivAt_EMLFun`) make the image a *differential*\nsubring of the germ ring; verifying the field axiom needs only\n`EMLTS.eventually_ne_zero`, which is proved. So the statement \"the EML germs form a\nHardy field\" is within one short file, and maximality is the first genuinely open step.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Applications"
@@ -133694,11 +133694,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "258afb8b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -133710,7 +133710,7 @@
       ],
       "github_issue": 312,
       "id": "fd_3730",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-23T03:18:15.646068+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -133725,7 +133725,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-22T19:36:57.212812+00:00",
       "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID — no grid point reaches the bar on French prose (knee >24 @512, >32 @1024); domain shifts are NOT ±4 fine-steps"
@@ -160950,14 +160950,14 @@
       "parent_direction": "",
       "priority_score": 0.85,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Mixture of trivial and false/ill-posed goals: the volume (pi^2/2) r^4 of the 4-ball and the Hopf fibration structure on S^3 are already standard (measure of the Euclidean ball and the quaternionic S^1-action are essentially available), while the stated conjecture 'every closed 3-manifold embeds in R^4' is false (e.g. RP^3, and more generally any closed 3-manifold with nonzero Z/2 obstruction, does not embed smoothly in R^4). The remaining item, 'rotation through the fourth dimension as a smooth map from SO(4) with no fixed point', is not a well-formed mathematical statement (no specified domain, action, or notion of fixed point).",
+      "pruned_at": "2026-08-23T03:17:03Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
@@ -161075,14 +161075,14 @@
       "parent_direction": "",
       "priority_score": 0.85,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Ill-defined throughout: 'wetware computation is a dynamical system on a neural manifold that computes f: X -> Y' gives no precise model of computation, so none of the claims are formalizable as stated. The energy claims Theta(n log n) vs silicon Theta(n^2) have no defined cost model and are physical, not mathematical, assertions. The 'super-Turing' conjecture is either trivially true under real-number-valued analog models (Turing-uncomputable reals can be hard-wired as parameters, cf. Siegelmann's analog recurrent nets) or vacuous, and the only precise item, Turing-completeness of recurrent neural nets, is a known classical result, hence redundant.",
+      "pruned_at": "2026-08-23T03:17:03Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
@@ -162329,7 +162329,7 @@
       "depth_estimate": 3,
       "description": "Cycle 52846ceb (Q=0.820) proved 242 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Two `ℕ`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k ≤ N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vanderm",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],
