@@ -1040,21 +1040,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-42 #1 \u2014 ECM-COMPLETION: the lite variant scales like rho (paper 155)"
   },
   {
-    "consumed_by_exp_id": "d221a4de",
-    "description": "Round-41 #5, cron iteration (exp 486, assessment v263). Paper 132's residual item (2), first measurement.\n\n**UNIFIED-SLOPES-MEASURED** (honest partial \u2014 within-k fits confounded, ECM deferred): on ONE population (1500 balanced semiprimes per k \u2208 {16,20,24}), across-k scaling of E[T] per log\u2082p:\n- trial division **0.84** (near-linear; balanced draws compress vs paper 89's 1.09 uniform)\n- Pollard \u03c1 **0.52** \u2014 the birthday bound, replicating paper 89's 0.523\n- Fermat **0.50** \u2014 gap-locality re-confirmed\n\nWithin-k \u03b1 fits confounded and not cited; the negative Fermat slopes ARE the gap-locality signature appearing directly. ECM deferred.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp486_factor_local_et.py + exp486_result.json, seed 20260920.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3605",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:00:59.864906+00:00",
-    "title": "FACT round-41 #5 \u2014 FACTOR-LOCAL-ET: unified across-k scaling on one population (paper 154)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-41 #4, cron iteration (exp 485, assessment v262). The gating replication papers 150\u2013152 needed.\n\n**LIFT-DOES-NOT-REPLICATE**: across 5 fully independent populations (1200 Ns \u00d7 240 values each), mean \u0394R\u00b2(ph13) = **+0.0008 \u00b1 0.0053** (zero within noise); mean \u0394R\u00b2(pair coincidences) = **+0.0030 \u00b1 0.0119**; pair-vs-phase indistinguishable (+0.0022 \u00b1 0.0160); no baseline correlation (r = 0.06/0.09).\n\nThe +0.03 readings of exps 482r/484 were population luck (base R\u00b2 itself spans 0.56\u20130.62 across the same seeds). Papers 150/151/152 resolve fully: singleton phases, high-prime phases, AND pair coincidences all add ~nothing beyond the footprint dial. The split-ceiling excess remains unexplained by every tested encoding \u2014 possibly intrinsic to the dial family's same-window realized-divisibility information.\n\n**The footprint dial of paper 145 stands as the final form**: rate(N) \u2248 \u03b2\u2080 + \u03b2\u2081\u00b7w(N) + \u03b2\u2082\u00b7d(N), ~200 Euler tests per candidate, R\u00b2 \u2248 0.59 at u=2.5.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp485_multiseed_phase.py + exp485_result.json, seeds 20260910\u201314.",
     "domains": [
@@ -1518,17 +1503,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP \u2014 hybrid z(acc)+lambda*z(probe) monotonically worse with probe weight; all four cheap signal families bounded >=5.7pts below oracle"
   },
   {
-    "consumed_by_exp_id": "beab348d",
+    "consumed_by_exp_id": "",
     "description": "Round-56 #1, cron iteration (exp 526, assessment v291). The previously-unmeasured intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-48**: Spearman(T, rate) = **0.7192/0.7202/0.7198** across 3 seeds on uniform draws at exact bitlen 48; T beats count by +0.098 to +0.145 everywhere; mean relation rate 12.5% (unstarved regime).\n\nCELL CLOSED: the zero-fit dial holds at the intersection of bitlen-scaling and regime-invariance.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp526_t_dial_bitlen.py + exp526_result.json, seeds 20261110\u201312.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3696",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T17:37:32.034003+00:00",
     "title": "FACT round-56 #1 \u2014 TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
   },
@@ -1804,16 +1788,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-65 #1 \u2014 TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4ce2d9a",
     "description": "## NET-71 \u2014 limited-memory axis, round 24 (paper 156, ResearchOutput/exp_net71_nonenglish.py, /tmp/net71.log)\n\n**Verdict name: THE-TOKENIZER-TAX-IS-FOUR-KEYS.**\n\n### Result\nDomain jump to German prose (Goethe + classic; gate exact):\n\n| ctx | German k\\* | EN prose k\\* | shift |\n|---|---|---|---|\n| 512 | **20** | 16 | +4 keys |\n| 1024 | **24** | 20 | +4 keys |\n\nGerman sweeps @512: 4: 0.883 \u2717, 8: 0.953 \u2717, 12: 0.969 \u2717, 16: 0.976 \u2717 (~1.5 SE), **20: 0.983 \u2713**, 24: 0.988. @1024: 8: 0.926 \u2717, 12: 0.956 \u2717, 16: 0.968 \u2717, 20: 0.975 \u2717, **24: 0.982 \u2713**.\n\n- **P1 CONFIRMED**: exactly +4 keys at BOTH contexts \u2014 one fine-grid step up, mirroring code's \u22124 down.\n- **P2/P3 REFUTED**: the shift is a full step, not intermediate or zero.\n\n### The four-domain deployment table\nbase(code)=12, base(prose-EN)=16, base(math)=16, base(prose-DE)=20; +4/doubling increment UNIVERSAL across all domains and scales (scale-halving from NET-67 applies per-domain). Tokenizer-tax mechanism: German compounds pack more content per word \u2192 more positions needed per idea. Deployment: multilingual workloads need the highest-base budget; a 24-key cache covers ALL four domains to ctx=1024.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first non-English leg; (c) confronted \u2014 German only, two classics stated; (d) clean per-corpus split; (e) deterministic; (f) clean \u2014 ALL_DONE_NET71; (g) fair \u2014 only text changed; (h) DIRECT.\n\n### Next\nMore languages; modern LaTeX; increments at 4096; 7B quantized-offload cell.\n\nNow 71 network experiments. Assessment v71. Paper 156.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3732",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T19:36:57.214749+00:00",
     "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS \u2014 German prose shifts knees up exactly one fine step ({20,24} vs {16,20}); four-domain deployment table complete"
   },
@@ -3855,52 +3840,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "seed_374",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Penrose-Hameroff Orch OR hypothesis: consciousness arises from quantum coherence in microtubules. Define: a 'conscious event' is the collapse of a superposition in a microtubule, with timing ~500 ms (the gamma synchrony). Prove: the Penrose objective reduction (OR) threshold is E ~ h/(t * sqrt(N)) where N is the number of tubulins. Show: for N ~ 10^11 tubulins, the coherence time is ~10^-33 s \u2014 too short for room temperature. Conjecture: if quantum consciousness exists, it requires a warm-coherent mechanism not yet formalized. Explore: formalize 'non-computable consciousness' \u2014 does the brain compute beyond Turing?",
-    "domains": [
-      "Novelty",
-      "Physics",
-      "MachineLearning"
-    ],
-    "id": "seed_409",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "seed_413",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
   },
   {
     "consumed_by_exp_id": "",
@@ -12921,6 +12860,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The cross-channel discrepancy of a population decouples into the oscillation of a single per-level functional over the window box, turning the sharp-constant question into a one-dimensional extremal problem. Cycle 4 solved it for the exponent pair (1, 1/2) via the Kantorovich inequality, obtaining log2((4+3*sqrt2)/8) and matching it to within 5% by an explicit two-point population. The conjecture extrapolates the exponent dependence found numerically.\n\nFor pointwise costs a*p^s and c*p^t on a window of spread 2^sigma, max |t*slope_s - s*slope_t| = (ln2/8)*s*t*|s-t|*sigma^2/Dk to leading order, attained by a two-atom population whose x^t-mean equals the harmonic mean of the window endpoints.\n\nExtend the doubling-ray result (s = 2t, already proved with constant log2((1+2^t)^2/(4*2^t))) to a general power-mean version between exponents t < s, compute the oscillation of the per-level functional in closed form, and compare with the grid search (coefficient 0.0862 +- 0.0002 at sigma = 1 versus ln2/8 = 0.08664).\n\nEvery multi-channel benchmark gets an exact internal-consistency tolerance, and the (0.84, 0.52) refutation generalises to arbitrary cost exponents.\n\nThe oscillation is not governed by the two-atom endpoint configuration and the sharp constant depends on more than the window spread.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3794",
+    "priority_score": 0.6712758620689657,
+    "research_mode": "team",
+    "source_exp_id": "d221a4de",
+    "status": "available",
+    "timestamp": "2026-08-23T04:53:22.433536+00:00",
+    "title": "Cubic Law for the Sharp Power-Mean Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Invisible vectors obey two independent extremal bounds: at least K+1 nodes, and total mass at least 2K. Their extremisers differ (binomial vectors versus PTE pairs), suggesting a quantitative trade-off between narrow support and small mass.\n\nThere is c > 0 such that every nonzero window-K invisible vector satisfies (number of nonzero nodes) * log(mass) >= c K^2; in particular minimal-support vectors have mass at least 2^{cK}.\n\nProve the special case: a window-K invisible vector supported on exactly K+1 nodes has mass at least 2^K, using the divided-difference rigidity already formalised in InvisibleWeightsRigidity.\n\nThe two extremal problems of the catalog are unified by a single inequality and the binomial basis becomes provably optimal in the narrow-support regime.\n\nThere exist narrow, light invisible vectors, which would immediately improve the growth base via the convolution engine.",
     "domains": [
       "Combinatorics"
@@ -14290,6 +14243,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 7 proved that every channel's slope deficit is the same functional of one population: s - slope_s = log2(M_s(16)/M_s(24))/Dk for the shape moments M_s(k) = mean (p_k/2^k)^s. The reported slopes are therefore two samples of a single drift function D(s), at s = 1 (trial division) and s = 1/2 (Pollard rho). A pure rescaling of the shape would make D linear, so the shape of D reads off how the sampler's normalised dispersion moves with k.\n\nFor the round-41 balanced-semiprime sampler the drift function D(s) = log2(M_s(16)/M_s(24))/8 is strictly convex with a zero in (1/2, 1); equivalently D(s)/s is strictly increasing on (0, 1], so D is not linear and the normalised log-dispersion Var(log u_k) increases with k.\n\nCompute M_s(k) for s on a grid in (0, 2] from the seed-20260920 draws, form D(s), and check convexity and the sign change; formally, prove in Lean that D is linear if and only if the normalised populations are proportional, starting from the proved identity shape_drift_identity.\n\nThe trial and rho deficits are explained by a single dispersion drift of the sampler, and the across-k table must report the whole drift curve rather than one slope per channel.\n\nThe two deficits cannot come from one population under pointwise power costs, so at least one reported slope is a fitting artefact rather than a measurement.",
+    "domains": [
+      "Geometry",
+      "NumberTheory"
+    ],
+    "id": "fd_3796",
+    "priority_score": 0.563924223711703,
+    "research_mode": "team",
+    "source_exp_id": "d221a4de",
+    "status": "available",
+    "timestamp": "2026-08-23T04:53:23.384021+00:00",
+    "title": "Drift Spectrum of the Shape Moments"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Theta(H) count proved here traces back to the fact that Euclid's parametrisation of Pythagorean triples uses two integer parameters of size sqrt(H). The same template should give Theta(H^{k/2}) for any Diophantine family with a k-parameter homogeneous quadratic parametrisation, in particular Theta(H^2) for primitive Pythagorean quadruples. This turns a counting theorem into a general exponent principle.\n\nFor a primitive family parametrised bijectively by k coprime integer parameters via forms of degree 2, the number of members inside the box [1,H]^d is Theta(H^{k/2}); for Pythagorean quadruples k = 4 and the count is Theta(H^2).\n\nFormalize the quadruple parametrisation (a,b,c,d) from four parameters, redo the injection into a parameter box, and instantiate the CoprimePairDensity argument in four variables.\n\nA single reusable counting template covers triples, quadruples and higher Lorentz trees, and the vanishing-density statement generalises to all dimensions.\n\nCoprimality or parity conditions in dimension four are not of product type, so the parameter box is not filled with positive density and the exponent drops.",
     "domains": [
       "NumberTheory",
@@ -14407,6 +14375,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T13:02:23.732172+00:00",
     "title": "Residue Criterion for Flat Ternary Frames"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved converse to slope identifiability shows two exponents differing by 2*sigma/Dk admit admissible populations with identical two-point slopes. It applies only to two-level designs; with m levels inside the same span an adversary must satisfy more constraints with the same window slack. Quantifying the gain turns experiment design into an optimisation problem.\n\nFor a least-squares slope fit over m equally spaced levels in a window of spread 2^sigma, exponents alpha1 < alpha2 are indistinguishable iff alpha2 - alpha1 <= c_m * sigma/Dk with c_m decreasing to 0; no finite m removes within-k confounding (Dk < 1), but m = 5 at Dk = 8 separates 0.84 from 1.\n\nGeneralise slope_band_attained to m endpoint-saturating levels, compute the least-squares slope of the adversarial curve in closed form, and extract c_m.\n\nRound-42 can be designed to a stated resolution by choosing m and Dk, instead of reporting confounded within-k fits.\n\nExtra levels inside a fixed span buy nothing, and only widening the bit range can resolve exponents.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3795",
+    "priority_score": 0.5636407592381372,
+    "research_mode": "team",
+    "source_exp_id": "d221a4de",
+    "status": "available",
+    "timestamp": "2026-08-23T04:53:22.901770+00:00",
+    "title": "Multi-Level Estimators Past the Two-Point Confounding Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -33757,14 +33740,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complementation as a free involution"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b8859dfd",
     "description": "**Conjecture.** For every fixed wolf count `k`, the information-free village win probabilities have two distinct asymptotic expansions according to the parity of the initial population, with a common leading limit but different first-order corrections.\n\nThe key insight is that daytime and nighttime villager losses occur in pairs after a miss, preserving a parity trace until absorption. **Why now?** Exact values from seven through twenty players show a stable even/odd oscillation that the proposed single quadratic scaling cannot capture.",
     "domains": [],
     "id": "fd_1959",
+    "phase": "A",
     "priority_score": 0.4390588235294117,
     "research_mode": "team",
     "source_exp_id": "c83ba873",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:57.945539+00:00",
     "title": "Parity-corrected asymptotics for the information-free game"
   },
@@ -35002,15 +34986,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sparse corpora never approach the binomial ceiling.*"
   },
   {
-    "consumed_by_exp_id": "19fbfbe4",
+    "consumed_by_exp_id": "",
     "description": "**C4 (reward hacking is a covariance) \u2014 PROVED at first order.**\n  `RLHF.audit_gap_first_order`: `|\ud835\udd3c_{\u03c0_\u03b2}f \u2212 \ud835\udd3c_p f \u2212 Cov_p(r,f)/\u03b2| \u2264 24 (R/\u03b2)\u00b2 \u03c3_p(f)`\n  for `|r| \u2264 R \u2264 \u03b2`, hence `RLHF.audit_gap_of_uncorrelated`: statistics uncorrelated\n  with the reward move only at order `\u03b2\u207b\u00b2`.  The *sharp threshold* half of C4 (a phase\n  transition in `\u03b2_c`) is still open and is restated as N2 below.",
     "domains": [],
     "id": "fd_1686",
-    "phase": "A",
     "priority_score": 0.4300588235294117,
     "research_mode": "team",
     "source_exp_id": "84bf9824",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T07:57:24.524777+00:00",
     "title": "C4 (reward hacking is a covariance) \u2014 PROVED at first order.*"
   },
