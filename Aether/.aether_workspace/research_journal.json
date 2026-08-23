@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d7470f1b",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Clock-and-Switch Worlds\n\nDerived from the cycle recorded in `Catalog/Combinatorics/CWorldFiltration.lean`,\n`…Sharpness.lean`, `…SwitchlessChains.lean`, `…ClosureProperties.lean`,",
-      "quality_score": 0.86,
-      "sorry_count": 1,
-      "theorem_count": 101,
-      "timestamp": "2026-08-22T07:46:29",
-      "title": "Filtration lemma"
-    },
-    {
       "cycle_id": "9d22f1f1",
       "domain": "Physics",
       "key_insight": "# FUTURE DIRECTIONS — after THREE-FIELDS-ONE-ANSWER (paper 114)\n\nWhat this cycle established (all `sorry`-free, in `Catalog/Physics/S3TypeChannel*.lean`):\n\n* the **character channel law** `S3Channel.I",
@@ -499,19 +489,19 @@
       "theorem_count": 51,
       "timestamp": "2026-08-23T22:39:22",
       "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scal"
+    },
+    {
+      "cycle_id": "c38d70d3",
+      "domain": "Probability",
+      "key_insight": "# Future directions — NET-64 knee axis (after six research cycles)\n\nCycle 1 established the grid-artifact calculus (a sweep reports the *ceiling of\nthe true knee in its grid*), the margin-based replic",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 141,
+      "timestamp": "2026-08-23T23:36:49",
+      "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT — corpus-B fine knee at 2048 is also 24; the {"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b3704634",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/Geometry/Teichmuller/`:\n\n* `LinearQC.lean` — the algebra of quasiconformal dilatations of real",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 884,
-      "timestamp": "2026-08-16T19:33:55",
-      "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
-    },
     {
       "cycle_id": "81aa12f0",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 51,
       "timestamp": "2026-08-23T22:39:22",
       "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scal"
+    },
+    {
+      "cycle_id": "c38d70d3",
+      "domain": "Probability",
+      "key_insight": "# Future directions — NET-64 knee axis (after six research cycles)\n\nCycle 1 established the grid-artifact calculus (a sweep reports the *ceiling of\nthe true knee in its grid*), the margin-based replic",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 141,
+      "timestamp": "2026-08-23T23:36:49",
+      "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT — corpus-B fine knee at 2048 is also 24; the {"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0c164125",
-      "domain": "Applications",
-      "name": "cumMass_mono",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "0c164125",
-      "domain": "Applications",
-      "name": "cumMass_N",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "0c164125",
-      "domain": "Applications",
-      "name": "cumMass_le_one",
-      "quality": 0.78
-    },
     {
       "cycle_id": "3eae19ad",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "here",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "c38d70d3",
+      "domain": "Probability",
+      "name": "localises_iff_asym",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "c38d70d3",
+      "domain": "Probability",
+      "name": "twoSided_iff_asym",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "c38d70d3",
+      "domain": "Probability",
+      "name": "asym_capacity_upper",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-23T22:39:22",
+  "last_updated": "2026-08-23T23:36:49",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "97b1c345",
-        "quality": 0.92,
-        "theorems": 255,
-        "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
-      },
-      {
         "cycle_id": "0cf95d8d",
         "quality": 0.88,
         "theorems": 101,
@@ -3823,6 +3817,12 @@
         "quality": 0.88,
         "theorems": 89,
         "title": "FACT round-41 #5 — FACTOR-LOCAL-ET: unified across-k scaling on one population ("
+      },
+      {
+        "cycle_id": "c38d70d3",
+        "quality": 0.85,
+        "theorems": 141,
+        "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT — corpus-B fine knee at 20"
       }
     ],
     "Pythagorean": [

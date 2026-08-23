@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-23T22:39:25.824311+00:00",
+  "last_updated": "2026-08-23T23:36:55.205550+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -65776,6 +65776,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-23T22:39:25.507951+00:00",
       "title": "NET-65: SIXTEEN-IS-REAL \u2014 all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scal"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 3394.9556736946106,
+      "end_time": 1787528137.372985,
+      "files_integrated": 4,
+      "job_id": "c38d70d3",
+      "outcome_quality": 0.85,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.85,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5575,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.85,
+        "novelty": 0.85,
+        "proof_depth": 0.85,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787524742.4173112,
+      "strategy_count": 0,
+      "theorem_count": 141,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 118,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-23T23:36:54.926984+00:00",
+      "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT \u2014 corpus-B fine knee at 2048 is also 24; the {"
     }
   ]
 }

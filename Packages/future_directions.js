@@ -1488,16 +1488,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-56 #1 \u2014 TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c27d6f0",
     "description": "## NET-60 \u2014 limited-memory axis, round 13 (paper 145, ResearchOutput/exp_net60_pairs.py, /tmp/net60.log)\n\n**Verdict name: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR.**\n\n### Result\nSix pair/triple ablations at k=16/layer (Qwen2.5-0.5B, ctx=512), each cost compared to the sum of its members' NET-59 solo costs:\n\n| arm | layers | retained | cost | \u03a3solo | class |\n|---|---|---|---|---|---|\n| **tail_22_23** | 22,23 | 0.9958 | **0.42 pts** | **0.06** | **SUPER 7\u00d7** |\n| bulk_12_15 | 12,15 | 0.9940 | 0.60 | 0.79 | sub |\n| front_0_1 | 0,1 | 0.9975 | 0.25 | 0.25 | \u2248additive |\n| mid_10_11 | 10,11 | 0.9960 | 0.40 | 0.28 | super 1.4\u00d7 |\n| cross_22_12 | 22,12 | 0.9941 | 0.59 | 0.60 | sub |\n| **triple_21_22_23** | 21,22,23 | 0.9924 | **0.76** | **0.19** | **SUPER 4\u00d7** |\n\n- **P1 CONFIRMED**: the tail pair is simultaneously the cheapest by solo sum and disproportionately costly jointly \u2014 7\u00d7 super-additive.\n- **P2 REFUTED**: three of six arms are super-additive.\n- **P3 CONFIRMED**: the tail triple compounds at 4\u00d7 and is the most costly arm.\n\n### The law\nThe last two layers function as a COORDINATED UNIT \u2014 co-adapted during pretraining; sparsifying either alone is absorbed, degrading both removes a joint capability no other pair exhibits. This causal signature matches the four correlational markers (NET-50 far-from-tropical, crystallization loss, NET-51 decision divergence, NET-54 unportability). **Prescription: treat the tail as ONE unit for bits/budgets \u2014 never differentiate between its members.**\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P2; (b) clean \u2014 pairwise super-additivity maps for pretrained LLM attention not previously measured; (c) confronted \u2014 one context/model, k=16 granularity, five chosen pairs stated; (d) clean \u2014 held-out, no training; (e) deterministic, solo sums inherited from the committed NET-59 profile; (f) clean \u2014 ALL_DONE_NET60; (g) fair \u2014 identical budgets across arms; (h) DIRECT.\n\n### Next\n1.5B replication; deeper-tail units on larger models; probe+recency hybrid (NET-58 follow-up); domain-jump corpora.\n\nNow 60 network experiments. Assessment v60. Paper 145.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3697",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T17:37:32.035503+00:00",
     "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR \u2014 L22+L23 solo costs sum to 0.06pts but joint pruning costs 0.42pts (7x super-additive); the last two layers are one coordinated unit"
   },
@@ -1602,21 +1603,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING \u2014 1.5B chain breaks at 2048 ({16,16,20}); broken curve equals the 0.5B shifted one octave (1.5B@2048 = 0.5B@1024 = 20)"
   },
   {
-    "consumed_by_exp_id": "c38d70d3",
-    "description": "## NET-64 \u2014 limited-memory axis, round 17 (paper 149, ResearchOutput/exp_net64_fine2048B.py, /tmp/net64.log)\n\n**Verdict name: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT.**\n\n### Result\nCorpus-B fine sweep at ctx=2048 (gate exact):\n\n| k | 20 | 24 | 28 | 32 |\n|---|---|---|---|---|\n| retained | 0.9790 \u2717 | **0.9832 \u2713** | 0.9853 \u2713 | 0.9862 \u2713 |\n\n**k\\*(2048) = 24 \u2014 IDENTICAL to corpus-A's fine knee.**\n\n- **P1 REFUTED**: no shard-level difference at long context \u2014 the fine knees match.\n- **P2 CONFIRMED**: corpus-B's coarse-grid 32 was a grid artifact.\n- **P3 REFUTED**: nothing \"between\".\n\n### The completed chain\nThe full 0.5B fine-grid chain **{16, 20, 24} at {512, 1024, 2048} now replicates EXACTLY across two disjoint wikitext shards at every cell** \u2014 every entry of the deployment table is dual-corpus-confirmed. Baseline note: corpus-B acc 0.4946 vs A's 0.4760 (shard-2 text is easier) yet identical knees \u2014 accuracy level and knee position are independent.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean; (c) confronted \u2014 12 windows stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET63 marker (reused harness); (g) fair \u2014 byte-identical harness except corpus path; (h) DIRECT.\n\n### Next\nDomain-jump corpora (code/math); 1.5B fine grids; 7B quantized-offload cell.\n\nNow 64 network experiments. Assessment v64. Paper 149.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3715",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T18:51:45.082625+00:00",
-    "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT \u2014 corpus-B fine knee at 2048 is also 24; the {16,20,24} chain replicates exactly across both corpora at all three contexts"
-  },
-  {
     "consumed_by_exp_id": "198a9f40",
     "description": "## NET-63 \u2014 limited-memory axis, round 16 (paper 148, ResearchOutput/exp_net63_fine2048.py, /tmp/net63.log)\n\n**Verdict name: THE-2048-KNEE-IS-TWENTY-FOUR.**\n\n### Result\nFine sweep at ctx=2048 on corpus-A (gate exact; 12 windows):\n\n| k | 20 | 24 | 28 | 32 |\n|---|---|---|---|---|\n| retained | 0.9793 \u2717 | **0.9835 \u2713** | 0.9854 \u2713 | 0.9885 \u2713 |\n\n- **P1 REFUTED**: the knee is 24, not 28 \u2014 no fine point between 24 and 32 is the first pass.\n- **P2 CONFIRMED**: {16, 20, 24} strictly monotone on fine grids across all three contexts.\n- **P3 PARTIAL**: k=24's margin (+0.35 pts) is 7\u00d7 healthier than the original razor read; but k=28 passes, so 24 has close company.\n\n### Consequences\nThe deployment table's final entry is confirmed: **0.5B needs {16, 20, 24} keys at {512, 1024, 2048}** \u2014 strictly monotone, all inside the ~30-key budget. Corpus-B's coarse-grid 32 is isolated as a shard-or-window-count question that no longer threatens the chain. Quantization note: smooth bracketing at 2048 vs ON-grid landing at 1024 \u2014 grid behavior is context-dependent.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted \u2014 12 windows stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET63; (g) fair; (h) DIRECT.\n\n### Next\nCorpus-B fine sweep @2048; domain-jump corpora; 1.5B fine grids; 7B cell.\n\nNow 63 network experiments. Assessment v63. Paper 148.\n",
     "domains": [
@@ -1692,17 +1678,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL \u2014 probes recover only R2=0.32 on code too; probe-only loses to accumulation by 12pts; hybrid non-degrading (+0.3)"
   },
   {
-    "consumed_by_exp_id": "df24b765",
+    "consumed_by_exp_id": "",
     "description": "## NET-79 \u2014 limited-memory axis, round 30 (paper 163, ResearchOutput/exp_net79_1p5b4096.py, /tmp/net79.log)\n\n**Verdict name: THE-ACCELERATION-IS-UNIVERSAL.**\n\n### Result\nThe 1.5B's first ctx=4096 cell (fine grid; gate identical to NET-55/65/66):\n\n| k | 16 | 20 | 24 | 28 | 36 | 44 | 56 |\n|---|---|---|---|---|---|---|---|\n| retained | 0.960 \u2717 | 0.966 \u2717 | 0.972 \u2717 | 0.974 \u2717 | 0.977 \u2717 | 0.980 \u2717 | **0.985 \u2713** |\n\n**k\\*(1.5B@4096) = 56.**\n\n- **P1 REFUTED**: the shift does not delay the acceleration.\n- **P2 CONFIRMED dramatically**: the acceleration hits all scales \u2014 56 \u2265 48.\n- **P3 REFUTED**: no intermediate landing.\n\n### The complete two-scale \u00d7 four-context table\n\n| scale | @512 | @1024 | @2048 | @4096 | increments |\n|---|---|---|---|---|---|\n| 0.5B | 16 | 20 | 24 | **40** | +4, +4, **+16** |\n| 1.5B | 16 | 16 | 18 | **56** | 0, +2, **+38** |\n\nThe increments tell the story: the 0.5B accelerates from +4 to +16 (4\u00d7), while the 1.5B accelerates from +2 to +38 (**19\u00d7**). Scale doesn't just fail to delay the acceleration \u2014 it AMPLIFIES it. At short contexts the 1.5B needs fewer or equal keys; at 4096 it needs MORE (56 vs 40). The size relationship INVERTS past the phase transition.\n\n### Deployment consequence\nFor agentic workloads: bigger models are more memory-efficient per key at \u22642048 context but LESS efficient at \u22654096. Budget tables must include both scale AND context as independent parameters with a non-monotone interaction.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 1.5B 4096 cell; (c) confronted \u2014 limits: 2 windows (VRAM-bound), bf16 numerics, one corpus stated; (d) clean; (e) deterministic baseline-replicating (0.4937); (f) clean \u2014 ALL_DONE_NET79; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nFine grid between 44 and 56; crossover localization; domain-jump @4096; 7B quantized-offload cell.\n\nNow 79 network experiments. Assessment v79. Paper 163.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3741",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T20:41:46.046363+00:00",
     "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL \u2014 1.5B knee at 4096 is 56 (every point 16-44 fails); acceleration amplifies with scale (19x vs 4x); size relationship INVERTS past phase transition"
   },
@@ -3739,23 +3724,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Ihara zeta function of a finite graph G is zeta_G(u) = prod_{[C]} (1 - u^{|C|})^{-1} where the product is over prime cycles (closed walks that are not powers of shorter walks). For a (q+1)-regular graph, zeta_G(u) = (1-u^2)^{-(n-1)(q-1)/2} * det(I - A*u + (q-1)*u^2*I)^{-1} where A is the adjacency matrix. This is the graph analog of the Riemann zeta function. Conjecture: The Riemann hypothesis holds for zeta_G if and only if G is a Ramanujan graph (all non-trivial eigenvalues of the adjacency matrix satisfy |lambda| <= 2*sqrt(q)). This is a theorem of Ihara, but the deeper conjecture is: the zeta function of a Ramanujan graph encodes the same spectral information as the Riemann zeta function restricted to the critical strip. Specifically, if zeta_G satisfies RH, then the 'prime cycles' of G are distributed like the primes in Z, and the 'explicit formula' for zeta_G (analogous to the explicit formula for the Riemann zeta) relates the cycle counts to the eigenvalues of A. Test: compute zeta_G for 10 Ramanujan graphs (paley graphs, lubotzky-phillips-sarnak graphs) and verify the Riemann hypothesis. Compare the 'prime cycle counting function' with the prime counting function pi(x). Impact: graphs have zeta functions, Ramanujan graphs satisfy RH, and the prime cycles in a graph are distributed like the primes in Z.",
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Algebra",
-      "Computation"
-    ],
-    "id": "seed_152",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "The Zeta Function of a Graph: Number Theory on Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -12524,6 +12492,32 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723). with terms 36,180,252,392,396,468,612,684,828,1044,1116,1176,1260,1332,1476,1548,1692,1908,1960,1980,2124,2196,. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_3895",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:307958",
+    "status": "available",
+    "timestamp": "2026-08-23T23:38:07.784475+00:00",
+    "title": "OEIS sequence: Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723)."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Stack polyominoes with square core. with terms 1,1,0,0,1,2,3,4,5,7,9,13,17,24,31,42,54,71,90,117,147,188,236,298,371,466,576,716,882,1088,1331,1633. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [],
+    "id": "fd_3896",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:188674",
+    "status": "available",
+    "timestamp": "2026-08-23T23:38:07.786000+00:00",
+    "title": "OEIS sequence: Stack polyominoes with square core."
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domains": [
       "NumberTheory"
@@ -14197,6 +14191,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "All capacity results so far assume an exactly known retention gate. If the gate is known only to lie in an interval, the knee becomes an interval too and the sweep must serve its whole length. The conjecture is that gate uncertainty enters the design theory through the same scalar as tolerance.\n\nWith gate uncertainty [tau-, tau+] inducing a knee spread factor kappa >= 1, the exact s-point capacity is geoSum (a*b/kappa) s, so gate uncertainty and tolerance are interchangeable currencies.\n\nDefine kneeInterval A tau- tau+, prove monotonicity of the knee in the gate, and rerun the cycle-6 peeling induction with the interval-serving condition.\n\nThe whole deployment cost model collapses to one scalar combining tolerance and gate uncertainty.\n\nGate uncertainty is a genuinely second dimension of experiment design and must be reported alongside the sweep grid.",
+    "domains": [],
+    "id": "fd_3894",
+    "priority_score": 0.5917741935483872,
+    "research_mode": "team",
+    "source_exp_id": "c38d70d3",
+    "status": "available",
+    "timestamp": "2026-08-23T23:36:35.459804+00:00",
+    "title": "Capacity of Gate-Uncertain Sweeps"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The entropy destroyed by a narrow chained frame is the mass-weighted average of log of fiber size, and for pj = a*M+b the fiber profile is an explicit arithmetic object. Computing it yields an exact worst-case loss for each frame triple (A,B,M), replacing the crude log2(max fiber) ceiling. This makes pre-registration of an encoding's information budget possible.\n\nFor M <= B and A >= 1 the fiber of the label n under (a,b) |-> M*a+b has size #{a < A : 0 <= n - M*a < B}, and the uniform-population entropy loss equals log2(A*B) - H of the induced label distribution, a rational-weight expression in A, B, M with maximum value log2(ceil(B/M)) attained at the central labels.\n\nFormalise the fiber-size formula in Lean on top of ChainedLabelWidth.chain_image_eq_range, then combine with LabelCollapseCeiling.D_le_mass_mul_logb_card and D_uniform_fiber to prove the exact loss identity; validate numerically over a grid of (A,B,M).\n\nEvery chained frame gets an a-priori information budget, so audits become a table lookup rather than a re-run.\n\nThe loss depends on more than the fiber profile, which would indicate an error in the deficit decomposition and force a re-examination of H_sub_H_push.",
     "domains": [],
     "id": "fd_3596",
@@ -14617,6 +14623,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 6 proved that the exact s-point capacity of a sweep with tolerance a below and b above is geoSum (a*b) s, so only the product matters. Deployment ratios are rarely integers, so the question is whether the product law survives rational tolerances, where the peeling step acquires a floor.\n\nFor rational a, b >= 1 the exact s-point capacity is the integer part of the geometric sum in the single variable a*b, with extremal grid given by the same offset recursion rounded down; in particular capacity is still a function of the product alone.\n\nRestate AsymLocalises over the rationals, redo the peeling induction with Nat.floor, and either prove the floor-geometric formula or exhibit an accumulating-rounding counterexample at a = b = 3/2.\n\nThe one-dimensional cost model for sweeps extends to realistic (non-integer) memory-headroom ratios.\n\nRounding accumulates across sweep points and the capacity depends on a and b separately, making asymmetric designs strictly preferable.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3893",
+    "priority_score": 0.5637633384699494,
+    "research_mode": "team",
+    "source_exp_id": "c38d70d3",
+    "status": "available",
+    "timestamp": "2026-08-23T23:36:35.015856+00:00",
+    "title": "Product Law Beyond Integer Tolerances"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The present formalization\n   proves the chain-complex dimension theorem over any field.  Realizing every\n   binary CSS chain complex by a *simplicial complex with its standard incidence\n   maps* is a substantially stronger representability claim and should not be\n   conflated with merely viewing matrices as abstract differentials.  Determine\n   necessary and sufficient representability conditions, or produce a minimal\n   counterexample.",
     "domains": [
       "Algebra",
@@ -14749,6 +14770,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T19:35:42.932448+00:00",
     "title": "One-Sided Envelope for Odd-Class Mass"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A sweep sees a curve only through the ceiling of its knee in the grid. This direction upgrades that pointwise factorisation to a statement about equivalence relations: the poset of grids under refinement should embed isomorphically into the poset of indistinguishability relations on retention curves.\n\nFor grids G subset H, the relation 'same H-reading at every gate' refines 'same G-reading at every gate', strictly whenever H\\G contains a realisable knee; the map G -> (~_G) is an order isomorphism onto its image.\n\nDefine ~_G in Lean, prove monotonicity and strictness using the step-curve witnesses of grid_reading_underdetermines_knee.\n\nExperiment design becomes a lattice problem with a canonical minimal experiment for each distinguishability requirement.\n\nDistinct grids can be experimentally equivalent, which itself sharpens the design question.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3890",
+    "priority_score": 0.5635740617149453,
+    "research_mode": "team",
+    "source_exp_id": "c38d70d3",
+    "status": "available",
+    "timestamp": "2026-08-23T23:36:33.688003+00:00",
+    "title": "Grid Refinement Lattice of Distinguishable Sweeps"
   },
   {
     "consumed_by_exp_id": "",
@@ -14974,6 +15010,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T13:02:24.713482+00:00",
     "title": "Positive Density of Flat Ternary Radicals"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The deterministic replication law says eps-close curves with margins above eps have equal knees, and the sharpness theorem shows no bound holds without margins. The probabilistic version should give the agreement probability in terms of the ratio of measured margin to sweep noise.\n\nFor sub-Gaussian per-budget noise of scale sigma around a common curve with gate margins at least m, the two knees agree with probability at least 1 - 2 exp(-m^2/(2 sigma^2)).\n\nFormalise sub-Gaussian noise on the retention curve and combine a union bound over the two critical budgets with the deterministic replication law.\n\nReplication experiments can be powered in advance: the measured margins decide whether an agreement is informative.\n\nKnee agreement is dominated by correlated rather than independent noise, and joint models are needed.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_3891",
+    "priority_score": 0.5632628066067162,
+    "research_mode": "team",
+    "source_exp_id": "c38d70d3",
+    "status": "available",
+    "timestamp": "2026-08-23T23:36:34.129312+00:00",
+    "title": "Probabilistic Replication Bound at Measured Margins"
   },
   {
     "consumed_by_exp_id": "",
@@ -15274,6 +15325,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:22:20.305851+00:00",
     "title": "Formalize CSS distance, not only graph girth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Characterise the attention-profile families whose retention knee grows as a*log2(ctx)+b. The trichotomy theorem shows Zipf tails give an almost linear knee and fixed geometric tails a constant knee, so the measured law forces a geometric tail whose rate drifts with the context. The conjecture pins the class exactly, up to uniform constants.\n\nA profile family on n keys has knee a*log2 n + b at gate tau for all n iff its tail mass beyond k is within a uniform constant factor of (1-tau)*2^{-(k-b)/a}.\n\nDefine driftGeomCurve in Lean, prove its knee equals a*Nat.log 2 n + b, then prove the converse bound on tail mass for any family with that knee law.\n\nThe deployment table becomes a two-parameter mechanistic model (slope = tail rate, intercept = tokenisation) rather than a lookup table.\n\nKnee laws are not determined by tail mass alone and a finer invariant (e.g. block structure of the profile) is required.",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3889",
+    "priority_score": 0.5626907701915925,
+    "research_mode": "team",
+    "source_exp_id": "c38d70d3",
+    "status": "available",
+    "timestamp": "2026-08-23T23:36:33.246742+00:00",
+    "title": "Drifting-Geometric Tail Class for Logarithmic Knee Laws"
   },
   {
     "consumed_by_exp_id": "",
@@ -23809,6 +23875,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T13:03:29.331855+00:00",
     "title": "Geometric Convergence of Iterated Root Certificates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Under a mass-preserving r-fold token split the knee scales multiplicatively, so in log-context coordinates the slope of the knee law should be invariant and only the intercept should shift by log2 r. This makes any new domain a one-parameter falsifiable test.\n\nFor a geometric-tail family, knee(tokenSplit r p, tau) = knee(p, tau) + Nat.log 2 r + O(1), hence the log-law slope is domain-invariant and the intercept shifts by log2 of the tokens-per-word ratio.\n\nProve the shift identity for the drifting-geometric family and compare against a code/math corpus sweep at three contexts.\n\nDeployment tables for new domains are predicted from a single tokenisation statistic.\n\nDomain shifts alter the tail shape itself, and slope must be re-measured per domain.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3892",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c38d70d3",
+    "status": "available",
+    "timestamp": "2026-08-23T23:36:34.565023+00:00",
+    "title": "Tokenisation Intercept Shift with Invariant Log-Slope"
   },
   {
     "consumed_by_exp_id": "",
@@ -35228,15 +35308,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "C4 \u2014 Training-time success and eval-time sufficiency have different knees"
   },
   {
-    "consumed_by_exp_id": "d5ea225e",
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** A third seed at `ctx = 1024` reports a knee `k*` with\n`k* / 8 \u2208 (12, 14]` \u2014 i.e. `k* \u2208 {112, 128}` on a step-16 grid \u2014 rather than `96`.\nEquivalently, the seed-2 `ctx = 1024` cell, not the `ctx = 2048` cell, is the outlier of\n`KneeAmplitude.seed2_no_common_amplitude`.\n\n*The key insight is* that the two seed-2 rungs are **not** two instances of one drifting\nconstant: their amplitude windows `(8, 12]` and `(12, 14]` are disjoint, so exactly one of\nthem can be generated by a multiplicative law, and the round's \"systematic\" reading is\nprovably unavailable. The conflict is a two-point obstruction, and one more measurement at\nthe *earlier* rung resolves which point is anomalous.\n\n*Why now?* The obstruction is already proved (`seed2_no_common_amplitude`) and each rung\nis separately explainable (`seed2_each_rung_explainable`), so the experiment is a genuine\nfork with two live branches rather than a confirmation run.\n\n---",
     "domains": [],
     "id": "fd_3357",
-    "phase": "A",
     "priority_score": 0.43745454545454543,
     "research_mode": "team",
     "source_exp_id": "4f1ff831",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:29:45.695298+00:00",
     "title": "C1. The amplitude-conflict conjecture (highest value)"
   },
@@ -41837,14 +41916,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "McKay\u2013Thompson series are modular functions, normally of weight zero."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fdd9261c",
     "description": "Define Laurent q-series with the standard `q\u207b\u00b9 + O(q)` normalization and formalize the pole\n   order of finite products. This will make the normalization obstruction precise.",
     "domains": [],
     "id": "fd_2570",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "09a3e4f4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:55.865505+00:00",
     "title": "Define Laurent q-series with the standard `q\u207b\u00b9 + O(q)` normalization and formalize the pole\n   order of finite products."
   },
