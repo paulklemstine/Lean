@@ -1616,21 +1616,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-65: SIXTEEN-IS-REAL \u2014 all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scale flattens the context response: {16,20,24}@0.5B vs flat {16,16}@1.5B"
   },
   {
-    "consumed_by_exp_id": "147eac16",
-    "description": "Round-58 #1, cron iteration (exp 528). The zero-fit dial tested on uniform draws at bitlen 52.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-52**: Spearman(T, rate) = **0.698** / **0.697** / **0.720** across three seeds; all inside [0.55, 0.85]; pooled advantage over count +0.070 CI [0.046, 0.093].\n\nThe zero-fit dial survives uniform draws at bitlen 52 \u2014 its deployment envelope now covers balanced and uniform draws through bitlen 52.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp528_t_dial_unif_52.py + exp528_result.json, seeds 20261120\u201322.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3714",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T18:51:45.081062+00:00",
-    "title": "FACT round-58 #1 \u2014 TDIAL-U52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
-  },
-  {
     "consumed_by_exp_id": "c38d70d3",
     "description": "## NET-64 \u2014 limited-memory axis, round 17 (paper 149, ResearchOutput/exp_net64_fine2048B.py, /tmp/net64.log)\n\n**Verdict name: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT.**\n\n### Result\nCorpus-B fine sweep at ctx=2048 (gate exact):\n\n| k | 20 | 24 | 28 | 32 |\n|---|---|---|---|---|\n| retained | 0.9790 \u2717 | **0.9832 \u2713** | 0.9853 \u2713 | 0.9862 \u2713 |\n\n**k\\*(2048) = 24 \u2014 IDENTICAL to corpus-A's fine knee.**\n\n- **P1 REFUTED**: no shard-level difference at long context \u2014 the fine knees match.\n- **P2 CONFIRMED**: corpus-B's coarse-grid 32 was a grid artifact.\n- **P3 REFUTED**: nothing \"between\".\n\n### The completed chain\nThe full 0.5B fine-grid chain **{16, 20, 24} at {512, 1024, 2048} now replicates EXACTLY across two disjoint wikitext shards at every cell** \u2014 every entry of the deployment table is dual-corpus-confirmed. Baseline note: corpus-B acc 0.4946 vs A's 0.4760 (shard-2 text is easier) yet identical knees \u2014 accuracy level and knee position are independent.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean; (c) confronted \u2014 12 windows stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET63 marker (reused harness); (g) fair \u2014 byte-identical harness except corpus path; (h) DIRECT.\n\n### Next\nDomain-jump corpora (code/math); 1.5B fine grids; 7B quantized-offload cell.\n\nNow 64 network experiments. Assessment v64. Paper 149.\n",
     "domains": [
@@ -1676,16 +1661,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now strictly monotone {16,20,24}; size-invariance sharpens; 2048 corpus-B reading was a coarse-grid artifact"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9f4b7d2b",
     "description": "Round-57 #1, cron iteration (exp 527). The zero-fit dial tested on uniform draws at exact bitlen 48.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-48B**: Spearman(T, rate) = **0.7291/0.7286/0.7087** across three seeds; all inside [0.55, 0.85]; pooled advantage +0.134 CI [0.113, 0.158].\n\nThe dial survives uniform draws at bitlen 48.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp527_t_dial_unif_48.py + exp527_result.json, seeds 20261110\u201312.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3718",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.087483+00:00",
     "title": "FACT round-57 #1 \u2014 TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
   },
@@ -2789,20 +2775,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 620a1130 (Q=0.820), which proved 111 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Autocorrelation at sequence lag 12 compares digit positions twelve time steps apart; it does not measure a twelve-semitone interval. To study musical intervals, use the distribution of `|d\u1d62 - d\u2c7c|` (or pitch classes modulo 12) for a clearly specified pair of positions.",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_620a1130_b97b87a3",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "620a1130",
-    "status": "available",
-    "timestamp": "2026-08-23T18:49:53.243282+00:00",
-    "title": "Deepening: Separate temporal and pitch lags"
   },
   {
     "consumed_by_exp_id": "",
@@ -10998,6 +10970,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This cycle brackets the envelope Lipschitz constant in [2.96, 4.1]: a conservation-aware displacement lemma gives the upper bound and two explicit 52-bit profiles give the lower witness. Conjecture that the sharp constant is exactly 3, attained by transferring mass out of a dominant tie class.\n\nFor profiles of equal length and mass on n points, |rho^2(L) - rho^2(L')| <= 3 tau + O(tau^2 + 1/n), and 3 is attained in the limit by a dominant-block transfer; the proved bracket is [2.96, 4.1].\n\nReplace the square-sum bound by the profile-dependent weight sum, optimise under mass conservation and the l1 budget, and compare with the explicit dominant-block family already formalised.\n\nThe deployment envelope tightens by a further 27 percent and becomes optimal, pinning every robustness claim in the dial series to a sharp constant.\n\nThe worst case spreads over many blocks, meaning envelope robustness degrades with resolution and must be stated K-dependently.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_3880",
+    "priority_score": 0.7113050847457628,
+    "research_mode": "team",
+    "source_exp_id": "147eac16",
+    "status": "available",
+    "timestamp": "2026-08-23T19:35:42.443466+00:00",
+    "title": "Sharp Three-Lipschitz Envelope Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The alternating witness has lag-1 autocorrelation 0 and lag-2 autocorrelation 1 while sharing any prescribed prefix. We conjecture that the set of achievable autocorrelation profiles of irrational numbers equals the set of profiles of periodic words, transported by a lacunary perturbation that is invisible to densities.\n\nA function A from positive lags to {0,1} is the autocorrelation profile of an irrational number with prescribed decimal prefix if and only if it is the profile of some periodic word.\n\nFormalise the profile of a periodic word combinatorially, then transport it with Pyth.card_exceptional_le, which already bounds the exceptional sets uniformly in the lag.\n\nAutocorrelation laws of real constants are combinatorial shadows of periodic words, never arithmetic facts.\n\nSome profile is realisable only by rationals, which would give the first arithmetic obstruction of this kind.",
     "domains": [
       "Algebra",
@@ -13959,6 +13946,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "With both ceilings known, define a statistic's efficiency as reading^2 divided by its tie ceiling. At bitlen 52 the dial has efficiency 0.58 and the count baseline 0.41. Conjecture that this efficiency gap lower-bounds the extra mutual information the 2-adic valuation carries about the response, via a Fano-type inequality for rank correlations.\n\nFor any response Y and statistics T, C on the same sample, eff(T) - eff(C) <= c * (I(T;Y) - I(C;Y)) for an absolute constant c, where eff denotes squared Spearman reading divided by tie ceiling.\n\nFormalise efficiency in the existing tie-profile framework, prove the data-processing direction first (C a function of T implies eff(C) <= eff(T)), and calibrate c on the recorded bitlen-52 pair.\n\nThe dial's advantage becomes a certified information statement rather than a correlational one, and the validation band acquires an information-theoretic meaning.\n\nRank efficiency and mutual information are not comparable, so dial advantages must be reported strictly as rank statistics.",
+    "domains": [],
+    "id": "fd_3879",
+    "priority_score": 0.593360655737705,
+    "research_mode": "team",
+    "source_exp_id": "147eac16",
+    "status": "available",
+    "timestamp": "2026-08-23T19:35:41.958035+00:00",
+    "title": "Efficiency Gap as an Information Lower Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved two-sided law brackets the break-even block size between C\u00b2ln(1/\u03b5)/(44\u03b4\u00b2) and C\u00b2ln(1/\u03b5)/(9\u03b4\u00b2) with \u03b4 = Q*\u2212Q. Both constants are lossy because each replaces the entropy derivative log((1\u2212Q*)/Q*) by a rational bound valid on a whole interval. Evaluating the derivative at the certified enclosure of Q* should collapse the ratio to 1 + O(10\u207b\u2074), upgrading the \u0398-bracket to a certified asymptotic constant.\n\nFor Q in [1/10, Q*), n*(Q) = C\u00b2ln(1/\u03b5)/(K\u00b2\u03b4\u00b2)\u00b7(1 + O(\u03b4)) with K = 2log\u2082((1\u2212Q*)/Q*) rational to four decimals, and the certified upper and lower constants differ by less than 1 %.\n\nRe-run breakeven_ge_of_gap and breakeven_le_of_gap with the Lipschitz constants instantiated on [Q, Q*] using the enclosure Q* \u2208 (0.1100, 0.1101) rather than on [1/10, 1/5]; check numerically against the direct computation n* \u2248 1.25\u00b710\u00b9\u00b9 at Q = 11 %.\n\nA closed-form deployment rule with a certified constant, not merely a scaling law.\n\nThe remaining slack is intrinsic to the \u221an accounting rather than to the entropy estimate, which would localize the loss in the AEP correction term.",
     "domains": [],
     "id": "fd_3843",
@@ -13968,6 +13967,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T13:03:30.361893+00:00",
     "title": "Unit Constant Ratio for the Break-Even Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Hamming-weight tie ceiling equals 1 - (F(b) - 2^b)/(8^b - 2^b) with F the Franel numbers. Using the P-recursive relation (n+1)^2 F(n+1) = (7n^2+7n+2) F(n) + 8 n^2 F(n-1), derive the exact asymptotic ceiling 1 - c/b + O(b^-2). This upgrades the proved sandwich [0.9747, 0.9996] at bitlen 52 to an exact constant.\n\nFor the binomial tie profile on 2^b points, rho^2_count = 1 - (sqrt(3)/(2*pi))/b + O(b^-2), and the exact value is 1 - (F(b)-2^b)/(8^b-2^b).\n\nFormalise the Franel recursion in Lean, prove the exact identity via the tie-attenuation law, then bound F(b)/8^b between explicit rational sequences derived from the recursion.\n\nThe count baseline's ceiling becomes a closed-form benchmark at every bitlen, making dial-versus-count comparisons exact rather than sandwiched.\n\nThe Franel normalisation is not asymptotically smooth, which would indicate an arithmetic obstruction in the cube sum and force ceiling comparisons to stay interval-valued.",
+    "domains": [],
+    "id": "fd_3877",
+    "priority_score": 0.5932142857142858,
+    "research_mode": "team",
+    "source_exp_id": "147eac16",
+    "status": "available",
+    "timestamp": "2026-08-23T19:35:40.977355+00:00",
+    "title": "Franel Exact Ceiling Law for the Count Baseline"
   },
   {
     "consumed_by_exp_id": "",
@@ -14712,6 +14723,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the trailing-zero statistic, a draw law is summarised by the mass alpha of the odd class and the geometric tail it induces. Conjecture a closed one-parameter ceiling formula in alpha that is strictly decreasing, so that uniform draws (alpha = 1/2) are the worst case and every less odd-heavy law sits above the 6/7 ceiling: the deployment envelope is one-sided.\n\nFor the alpha-geometric 2-adic profile, rho^2(alpha) = 1 - alpha^3/(1 - (1-alpha)^3) exactly, this is strictly decreasing on (0,1), and rho^2(1/2) = 6/7.\n\nGeneralise dyadicBlocks to alpha-geometric profiles with rational alpha, evaluate the tie correction as a geometric series, and differentiate the closed form.\n\nThe bitlen-52 envelope claim extends from a 1 percent total-variation ball to the entire half-space alpha <= 1/2 of draw laws.\n\nSome non-uniform draw law is more tie-attenuated than the uniform one, which would identify a concrete adversarial sampling regime for the dial.",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3881",
+    "priority_score": 0.5635740617149453,
+    "research_mode": "team",
+    "source_exp_id": "147eac16",
+    "status": "available",
+    "timestamp": "2026-08-23T19:35:42.932448+00:00",
+    "title": "One-Sided Envelope for Odd-Class Mass"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The cyclic which-factor wall proved this cycle shows that a transitive shift fixing the public data forces exactly zero leakage. For a product of k primes with distinct splitting types the labelling should be a free S_k-torsor on the generic stratum, so the swap-invariant public data leaks nothing and every decoder succeeds with probability 1/k!.\n\nOn the stratum where all k splitting types are distinct, I(labelling ; (type multiset, N mod f)) = 0 and every decoder is correct on exactly a 1/k! fraction.\n\nInstantiate mutInfo_eq_zero_of_shift with the generators of a free S_k action on k-tuples of exponents, or generalize its hypotheses from one shift to a finite group acting freely.\n\nA sharp, dimension-free statement about factor-identification leakage for multi-prime RSA moduli.\n\nSome stratum admits partial identification, an exploitable structural leak worth quantifying.",
     "domains": [
       "NumberTheory",
@@ -15339,6 +15365,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:29:36.462499+00:00",
     "title": "Tightness of the empirical spectral distribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that every tie ceiling is governed by a single functional of the limiting block-mass profile, namely rho^2 -> 1 - ||alpha||_3^3. The dyadic profile gives 1/7 and the binomial profile gives 0, recovering both laws proved this cycle. Extremising the functional under a resolution constraint should reproduce the resolution law and the dominant-block laws as the two endpoints.\n\nIf the block-mass profile m_j/n converges to alpha in l^3, then the tie ceiling converges to 1 - sum_j alpha_j^3; moreover min ||alpha||_3^3 = 1/K^2 over K-block profiles and max = alpha_max^3 + o(1).\n\nFormalise the l^3 limit statement for profiles given by a summable weight sequence, then verify it against the dyadic (geometric) and binomial profiles already in the catalog.\n\nOne theorem subsumes the resolution law, the dominant-block laws and the p-adic ceiling law, with sharp constants.\n\nCeilings depend on more than the third moment of the mass profile, indicating that finite-n corrections are not uniformly controlled.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3878",
+    "priority_score": 0.5620679886106111,
+    "research_mode": "team",
+    "source_exp_id": "147eac16",
+    "status": "available",
+    "timestamp": "2026-08-23T19:35:41.468392+00:00",
+    "title": "Cubic Shape Functional for Rank-Tie Ceilings"
   },
   {
     "consumed_by_exp_id": "",
@@ -37551,14 +37592,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "877cfd32",
     "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
     "domains": [],
     "id": "fd_1431",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:05.239324+00:00",
     "title": "Kernel patterns"
   },

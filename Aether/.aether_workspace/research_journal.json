@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "77469890",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — after \"the character captures exactly one bit\"\n\nThe cycle closed the target claim and then generalised past it: the one bit is `log₂ 2`, and the\ntheorem is `I(Frobenius class ; χ",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-22T05:43:26",
-      "title": "FACT round-31 #2 — INDEPENDENT-VERIFICATION: the character captures exactly one bit (paper 109)"
-    },
-    {
       "cycle_id": "0e0f4ea6",
       "domain": "Applications",
       "key_insight": "# Future directions — from the round-29 joint-label reconciliation\n\n## What this cycle established\n\nFour Lean files in `Catalog/Applications/`:\n\n* `ChainedLabelWidth.lean` — the arithmetic of `pj = a·",
@@ -499,19 +489,19 @@
       "theorem_count": 111,
       "timestamp": "2026-08-23T18:49:52",
       "title": "Separate temporal and pitch lags"
+    },
+    {
+      "cycle_id": "147eac16",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after TDIAL-U52 (round-58 #1, exp 528)\n\nThree Lean files were added this cycle, all `sorry`-free:\n\n* `Catalog/MachineLearning/ZeroFitDialUnif52.lean` — the tie geometry of the **",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-23T19:35:56",
+      "title": "FACT round-58 #1 — TDIAL-U52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "be4e28d2",
-      "domain": "Shared",
-      "key_insight": "# Future Directions (thread th_16c8d9ad, cycle 1)\n\nThis cycle settled three of the five inherited conjectures in sharp form: the\nalmost-Hopf-fibre stability conjecture (true, but with the wrong expone",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-16T13:45:45",
-      "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
-    },
     {
       "cycle_id": "25d882e7",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 111,
       "timestamp": "2026-08-23T18:49:52",
       "title": "Separate temporal and pitch lags"
+    },
+    {
+      "cycle_id": "147eac16",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after TDIAL-U52 (round-58 #1, exp 528)\n\nThree Lean files were added this cycle, all `sorry`-free:\n\n* `Catalog/MachineLearning/ZeroFitDialUnif52.lean` — the tie geometry of the **",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-23T19:35:56",
+      "title": "FACT round-58 #1 — TDIAL-U52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "347a400e",
-      "domain": "MachineLearning",
-      "name": "mem_closure_of_walkCount_pos",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "cd05a1fd",
-      "domain": "Novelty",
-      "name": "of",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "cd05a1fd",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.72
-    },
     {
       "cycle_id": "cd05a1fd",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "intervalEnergy_eq_second_moment",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "147eac16",
+      "domain": "MachineLearning",
+      "name": "le_sum_of_mem",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "147eac16",
+      "domain": "MachineLearning",
+      "name": "tieCorr_ge_of_mem",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "147eac16",
+      "domain": "MachineLearning",
+      "name": "dominant_block_upper",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-23T18:49:52",
+  "last_updated": "2026-08-23T19:35:56",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "33519cdb",
-        "quality": 0.78,
-        "theorems": 70,
-        "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
-      },
-      {
         "cycle_id": "13fee392",
         "quality": 0.82,
         "theorems": 97,
@@ -3575,6 +3569,12 @@
         "quality": 0.85,
         "theorems": 95,
         "title": "Known versus unresolved cards."
+      },
+      {
+        "cycle_id": "147eac16",
+        "quality": 0.84,
+        "theorems": 79,
+        "title": "FACT round-58 #1 — TDIAL-U52: the dial survives uniform draws at bitlen 52 (pape"
       }
     ],
     "Novelty": [
