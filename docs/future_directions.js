@@ -1719,16 +1719,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-63 #1 \u2014 TDIAL-U72: the zero-fit dial holds at bitlen 72 with count parity (paper 185)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33808f71",
     "description": "## NET-69 \u2014 limited-memory axis, round 22 (paper 154, ResearchOutput/exp_net69_probe_code.py, /tmp/net69.log)\n\n**Verdict name: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL.**\n\n### Result\nNET-58/61 methodology on Python source (the strongest candidate for content-based importance):\n\n| arm | retained @B=64 |\n|---|---|\n| accumulated-HH | 0.9340 |\n| probe-only | **0.8149** |\n| hybrid \u03bb=1 | 0.9371 |\n\nProbe R\u00b2 on code: mean **0.3185** (min 0.1225, max 0.5921) vs prose mean 0.329.\n\n- **P1 REFUTED decisively**: R\u00b2 identical to prose; probe-only LOSES by 12 pts.\n- **P2 CONFIRMED**: both clauses hold (R\u00b2 \u2264 0.45, probe \u2264 accumulated).\n- **P3 CONFIRMED**: hybrid +0.3 pts on code \u2014 non-degrading, contrasting prose's monotone harm.\n\n### The law\nImportance is relational in structured domains too: even where identifiers repeat and syntax is rigid, a key's vector carries almost no information about its future reception. The domain difference is in the interaction term only (content neutral on code vs harmful on prose). With NET-68: the code-domain picture is complete \u2014 fewer keys needed (12/16), content useless for choosing them, recency+accumulation still the deployable pair.\n\n### All 8 barriers\n(a) clean; (b) clean \u2014 first cross-domain probe comparison; (c) confronted \u2014 one language/repo stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET69; (g) fair \u2014 identical methodology/budgets as NET-58/61; (h) DIRECT.\n\n### Next\nMath/non-English domains; learned online predictors; increments at 4096; 7B cell.\n\nNow 69 network experiments. Assessment v69. Paper 154.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3735",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T19:36:57.217605+00:00",
     "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL \u2014 probes recover only R2=0.32 on code too; probe-only loses to accumulation by 12pts; hybrid non-degrading (+0.3)"
   },
@@ -3391,6 +3392,22 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cram\u00e9r-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
+    "domains": [
+      "Geometry",
+      "Probability",
+      "Bridges"
+    ],
+    "id": "fd_0695",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697848+00:00",
+    "title": "Information Geometry: Fisher Metric on Statistical Models"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -3759,37 +3776,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cram\u00e9r-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
-    "domains": [
-      "Geometry",
-      "Probability",
-      "Bridges"
-    ],
-    "id": "fd_0695",
-    "priority_score": 0.84,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697848+00:00",
-    "title": "Information Geometry: Fisher Metric on Statistical Models"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
-    "domains": [
-      "Analysis",
-      "Algebra"
-    ],
-    "id": "seed_030",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Invariant Subspace Problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -35328,14 +35314,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sparse corpora never approach the binomial ceiling.*"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2292d7e8",
     "description": "**C4 (reward hacking is a covariance) \u2014 PROVED at first order.**\n  `RLHF.audit_gap_first_order`: `|\ud835\udd3c_{\u03c0_\u03b2}f \u2212 \ud835\udd3c_p f \u2212 Cov_p(r,f)/\u03b2| \u2264 24 (R/\u03b2)\u00b2 \u03c3_p(f)`\n  for `|r| \u2264 R \u2264 \u03b2`, hence `RLHF.audit_gap_of_uncorrelated`: statistics uncorrelated\n  with the reward move only at order `\u03b2\u207b\u00b2`.  The *sharp threshold* half of C4 (a phase\n  transition in `\u03b2_c`) is still open and is restated as N2 below.",
     "domains": [],
     "id": "fd_1686",
+    "phase": "A",
     "priority_score": 0.4300588235294117,
     "research_mode": "team",
     "source_exp_id": "84bf9824",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T07:57:24.524777+00:00",
     "title": "C4 (reward hacking is a covariance) \u2014 PROVED at first order.*"
   },
