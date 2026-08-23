@@ -970,17 +970,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
   },
   {
-    "consumed_by_exp_id": "ac59ff27",
+    "consumed_by_exp_id": "",
     "description": "Round-41 #1, cron iteration (exp 482, assessment v259). Paper 147's named follow-up.\n\n**PHASE-SUBTHRESHOLD-LIFT / H3-FAIL**: root-position phases mod {3,5,7,11,13} (cos/sin + QR-indicator, extended to 29) add only +0.008/+0.004 out-of-sample R\u00b2 over the footprint dial (CIs span 0; phase-only WORSE than baseline at \u22120.077). **H2 CONFIRMED**: cross-window phase gain goes significantly negative \u2014 window-locality supported as the mechanism behind paper 147's split-ceiling excess. H3 refuted (R\u00b2 = 0.608 < 0.70).\n\nThe split-ceiling excess remains unexplained by any tested feature class \u2014 candidates narrow to higher-prime phase patterns or same-window leakage of realized-divisibility features (base dial drops 0.60 \u2192 0.40 cross-window).\n\nProvenance note: the agent's L0 audit voided the coordinator's inline quick attempt (cross-window arm trained and tested on the same half; wrong offset definition; encoding collision) \u2014 its clean reimplementation is authoritative.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp482_phase_features.py + exp482_result.json, seed 20260901.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3591",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T05:43:53.954629+00:00",
     "title": "FACT round-41 #1 \u2014 PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
   },
@@ -1226,17 +1225,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-43 #3 \u2014 COINCIDENCE-DEPTH: the pair features measure anti-coincidence (paper 163)"
   },
   {
-    "consumed_by_exp_id": "a35d92d0",
+    "consumed_by_exp_id": "",
     "description": "Round-45 #2, cron iteration (exp 501, assessment v277). Paper 167's driver question answered.\n\n**NEITHER** \u2014 both pre-stated hypotheses fail; the truth is intermediate. Four-cell design (window {240, 960} \u00d7 u {2.5, 3.5}, 8 populations):\n- \u0394(240) = **+0.1073** [0.0973, 0.1148] \u2014 reproduces paper 167 on fresh seeds\n- \u0394(960) = **+0.0636** [0.0597, 0.0680]\n- D = **+0.0437** [0.0346, 0.0533] \u2014 excludes zero and the \u00b10.03 band\n\n**H1 FAIL**: 4\u00d7 values recover only 41% of the drop, not 'most'. **H2 FAIL**: not 'none' either. Reading: mostly intrinsic threshold reweighting, with a real ~41% minority from per-N rank resolution (the u=3.5 gain came from finer rate granularity \u2014 smooth mass per offset unchanged).\n\nNamed follow-up: decouple B from vmed (hold the strip bound fixed across u). Caveat: nested windows conflate sample size with bound growth.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp501_u_harden.py + exp501_result.json, seeds 20260970\u201377.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3633",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T09:43:33.956778+00:00",
     "title": "FACT round-45 #2 \u2014 U-HARDEN: the u-sensitivity is mostly intrinsic, partly resolution (paper 168)"
   },
@@ -1353,17 +1351,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-46 #1 \u2014 MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
   },
   {
-    "consumed_by_exp_id": "abf27a46",
+    "consumed_by_exp_id": "",
     "description": "Round-49 #1, cron iteration (exp 511, assessment v284). Paper 175's bitlen-stability pushed to its limit.\n\n**T-DIAL-56-PARTIAL**: Spearman(T, rate) = **0.405** at bitlen 56 \u2014 BELOW the [0.55, 0.85] band. The dial DEGRADES because the smooth rate drops to **0.89%** (starved; 194/1200 Ns with ZERO hits). T still beats count by +0.093 (CI [0.042, 0.146]).\n\nThe bitlen-stability has a PRACTICAL FLOOR near bitlen ~54, beyond which the starved regime destroys rank resolution.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp511_t_dial_56.py + exp511_result.json, seed 20261030.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3662",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T13:02:58.897389+00:00",
     "title": "FACT round-49 #1 \u2014 T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
   },
@@ -1793,16 +1790,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-57 #1 \u2014 TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c164125",
     "description": "## NET-73 \u2014 limited-memory axis, round 26 (paper 158, ResearchOutput/exp_net73_tpw.py, /tmp/net73.log)\n\n**Verdict name: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT.**\n\n### Result\nTokens-per-word across 5 domains (Qwen's own BPE, 5000-word samples) correlated with known knees:\n\n| domain | TPW | k\\*@512 | expected from TPW |\n|---|---|---|---|\n| code | **1.950** | **12** | should be HIGHEST \u2717 |\n| prose-de | 1.885 | 20 | second-highest \u2713 |\n| prose-fr | 1.246 | **>32** | should be near-English \u2717 |\n| math | 1.214 | 16 | near-English \u2713 |\n| prose-en | 1.173 | 16 | lowest \u2713 |\n\nSpearman \u03c1 = **\u22120.40** (wrong sign); linear fit R\u00b2 = **0.004**.\n\n- **P1 REFUTED**: rank correlation is negative, not \u22650.9.\n- **P2 REFUTED**: R\u00b2 is zero, not \u22650.8.\n- **P3 CONFIRMED decisively**: TPW is insufficient \u2014 the mechanism is NOT tokenization density.\n\nFrench extended grid: k\\*(fr@512) \u2264 32 (the knee exists, just far above the original ceiling).\n\n### The law\nThe strongest counterexample kills the tokenization hypothesis: code has 1.66\u00d7 English's TPW yet needs FEWER keys; French has ~1.07\u00d7 English's TPW yet needs \u22652\u00d7 more keys. The domain mechanism is NOT surface-level token counting \u2014 it is the RELATIONAL/SEMANTIC structure of attention patterns within each domain. NET-58/69 already bound those explanations as relational, not intrinsic to key identity.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first mechanism-test for the domain shift; (c) confronted \u2014 5 domains, 5000-word samples, one tokenizer stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET73; (g) fair; (h) DIRECT.\n\n### Next\nAttention-pattern structural analysis (what IS the domain mechanism?); sub-32 French @1024; 0.5B @4096; 7B cell.\n\nNow 73 network experiments. Assessment v73. Paper 158.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3729",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T19:36:57.211750+00:00",
     "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT \u2014 Spearman(TPW,k*) = -0.40, R2 = 0.004; code highest TPW lowest knee, French near-English TPW highest knee"
   },
@@ -2169,6 +2167,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T23:36:49.796512+00:00",
     "title": "FACT round-69 #2 \u2014 TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, limited-memory axis iteration 65 (mixing-ratio sweep resolving NET-89's open cell).\n\n**Claim:** All three pre-registered shapes REFUTED. The knee is not linear in mixing ratio (P1\u2717), not a dip below the pure domains (P2\u2717), not monotone in prose fraction (P3\u2717). The balanced 50/50 mixture needs {16, 20} keys at ctx {512, 1024} while BOTH pure endpoints AND both asymmetric mixtures sit at {12, 16} \u2014 symmetric mixing pays a +4-key (+25\u201333%) premium at both contexts. Double tax: 50/50 also has the lowest full accuracy of any arm (0.441/0.467 vs code 0.611/0.651).\n\n| ratio | knee@512 | knee@1024 |\n|---|---|---|\n| pure code | 12 | 16 |\n| 25/75 | 12 | 16 |\n| **50/50** | **16** | **20** |\n| 75/25 | 16 | 16 |\n| pure prose | 12 | 16 |\n\n**Mechanism reading:** at the balanced point every code-block query attends into prose-keys and vice versa \u2014 cross-domain query-key interactions are maximized and inflate the required key count; minority blocks (25%) are rare enough that majority structure dominates the budget.\n\n**Honest limits:** fresh endpoint reads \u2014 code replicates NET-68 exactly ({12,16}), prose one grid step low ({12,16} vs {16,20}, \u00b11-step knee fuzz on razor-thin curves); NET-89 vs NET-90 mixed-knee jitter at 512 (12\u219216) across independent corpus draws reveals construction-draw variance in mixed budgets larger than pure-domain replication. One model (0.5B), one pair, one block size, two contexts.\n\n**Practical:** balanced agentic code+prose workloads are underestimated by pure-corpus budget tables by a grid step per context level plus draw variance.\n\nGate exact (retained \u2265 0.98\u00b7full), 12 held-out windows, oracle top-k, Qwen2.5-0.5B fp32. Script ResearchOutput/exp_net90_mixratio.py; paper ResearchOutput/NetworkMathematics/90_TheSymmetricMixtureBump.md.\n\nOpen: other domain pairs; block-size sensitivity; 1.5B mixed; bump \u00d7 4096-acceleration interaction; the 7B cell.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3779",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-23T02:01:14.895568+00:00",
+    "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pure domains \u2014 the mixing-ratio response is a bump, not a line/dip/ramp"
   },
   {
     "consumed_by_exp_id": "",
@@ -3875,48 +3887,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the Risch algorithm for deciding if the integral of an EML function is an EML function. Prove the Risch theorem: integration in finite terms is decidable for EML functions. Implement the key steps: logarithmic part, exponential part, and algebraic part. Prove that the algorithm terminates in polynomial time for rational functions.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "seed_372",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "EML Integration in Finite Terms: The Risch Algorithm"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
       "Computation"
     ],
     "id": "seed_374",
-    "priority_score": 0.85,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
     "timestamp": "",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "seed_383",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
     "consumed_by_exp_id": "",
@@ -9952,7 +9934,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "consumed_by_exp_id": "24924fba",
+    "consumed_by_exp_id": "",
     "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
     "domains": [
       "Novelty",
@@ -9960,11 +9942,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_157",
-    "phase": "A",
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
@@ -36468,14 +36449,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantitative recurrence obstruction"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50edc087",
     "description": "A significant finite-prefix statistic would be empirical evidence about that prefix, not a theorem about \u03c0, e, or \u221a2. Irrationality only rules out eventually periodic decimal expansions; it does not imply normality or a particular autocorrelation law.",
     "domains": [],
     "id": "fd_1818",
+    "phase": "A",
     "priority_score": 0.403,
     "research_mode": "team",
     "source_exp_id": "9f14a31b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:20.478004+00:00",
     "title": "Do not infer infinite-digit laws from finite prefixes"
   },
@@ -36983,15 +36965,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The seven measured fields in the experiment already span prime and"
   },
   {
-    "consumed_by_exp_id": "7b6bc4ee",
+    "consumed_by_exp_id": "",
     "description": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the\none-codeword converse); the general case needs only the Hamming ball counting\nlemma over `List Bool` of bounded length.",
     "domains": [],
     "id": "fd_1450",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "f262016d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T18:57:33.687836+00:00",
     "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
   },
@@ -40267,15 +40248,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Partial orders"
   },
   {
-    "consumed_by_exp_id": "8d0007de",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rectangularly windowed tone equals a sinc-type expression, with value `2T` at resonance. This would quantify peak width and sidelobes rather than merely prove the peak center.",
     "domains": [],
     "id": "fd_2014",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "f2f32f44",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:22:14.312638+00:00",
     "title": "Exact off-resonance window formula"
   },
