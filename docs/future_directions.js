@@ -1773,16 +1773,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS \u2014 German prose shifts knees up exactly one fine step ({20,24} vs {16,20}); four-domain deployment table complete"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86b92df3",
     "description": "## NET-70 \u2014 limited-memory axis, round 23 (paper 155, ResearchOutput/exp_net70_mathdomain.py, /tmp/net70.log)\n\n**Verdict name: MATH-READS-AS-PROSE.**\n\n### Result\nDomain jump to mathematical text (Hardy + Hilbert, Gutenberg; gate exact):\n\n| ctx | math k\\* | prose k\\* | math full acc | prose full acc |\n|---|---|---|---|---|\n| 512 | **16** | 16 | 0.3262 | 0.4460 |\n| 1024 | **20** | 20 | 0.3418 | 0.4612 |\n\nMath sweeps @512: 4: 0.907 \u2717, 8: 0.959 \u2717, 12: 0.979 \u2717 (~1 SE), **16: 0.987 \u2713**, 20: 0.989, 24: 0.988. @1024: 8: 0.952 \u2717, 12: 0.965 \u2717, 16: 0.978 \u2717 (~1.5 SE), **20: 0.983 \u2713**, 24+: pass.\n\n- **P1 REFUTED**: math does NOT need more keys despite long-range symbolic references.\n- **P2 CONFIRMED trivially**: the chain is exactly prose's.\n- **P3 CONFIRMED**: knees match EXACTLY at both contexts despite a 12-point accuracy gap.\n\n### The three-domain deployment table\nbase(prose) = 16, base(code) = 12, base(math) = 16; increments set by scale (NET-67); shape preserved everywhere. THIRD+STRONGEST confirmation that prediction difficulty and attention-sparsity structure are independent: math is much harder to predict yet needs identical budgets. Deployment: prose+math workloads share one entry; only code shifts.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean; (c) confronted \u2014 limits: classic-mathematics prose only (no modern LaTeX notation), one corpus mix, 24 windows stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET70; (g) fair \u2014 byte-identical harness except text; (h) DIRECT.\n\n### Next\nModern LaTeX/math notation; non-English domains; increments at 4096; 7B cell.\n\nNow 70 network experiments. Assessment v70. Paper 155.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3733",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T19:36:57.215710+00:00",
     "title": "NET-70: MATH-READS-AS-PROSE \u2014 mathematical text leaves knees exactly at prose values ({16,20}) despite 12-pt lower accuracy; three-domain table complete (prose=16, code=12, math=16)"
   },
@@ -3812,40 +3813,12 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 286b3a0e (Q=0.890) proved 145 theorems in Bridges but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory a",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "sorry_fill_286b3a0e_55141f77",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "286b3a0e",
-    "status": "available",
-    "timestamp": "2026-08-17T13:54:12.663412+00:00",
-    "title": "Close Proofs: `Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 2a357c10 (Q=0.840) proved 104 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: ## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 \u2014 k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive s",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "sorry_fill_2a357c10_d12453d5",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "2a357c10",
-    "status": "available",
-    "timestamp": "2026-08-16T07:46:03.940869+00:00",
-    "title": "Close Proofs: NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY a"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 43f9870f (Q=0.840) proved 77 theorems in Combinatorics but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexam",
     "domains": [
       "Combinatorics"
     ],
     "id": "sorry_fill_43f9870f_2be28bbc",
-    "priority_score": 0.85,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "43f9870f",
     "status": "available",
@@ -14033,6 +14006,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Beyond qualitative concavity, the midpoint defect of sigma should be pinned between two constant multiples of (s-t)^2 (1+s+t)^{-5/3}. The exponent 5/3 is dictated by the second derivative sigma'' = -6 (27t-1)^{-5/3} up to constants, so the conjecture asserts that the naive scaling is the true one uniformly on the physical range.\n\nThere exist 0 < c1 <= c2 such that for all s,t >= 1/27, c1 (s-t)^2 (1+s+t)^{-5/3} <= sigma((s+t)/2) - (sigma s + sigma t)/2 <= c2 (s-t)^2 (1+s+t)^{-5/3}.\n\nDifferentiate lagrangeExponent twice using HasDerivAt.rpow_const on top of lagrangeExponent_hasDerivAt, then apply the Taylor remainder bound on the segment [s,t] and check the endpoint scaling numerically on a grid first.\n\nConcavity upgrades to a quantitative modulus, which is what any application (rate-of-convergence for averaging schemes) actually needs.\n\nThe defect degenerates near the threshold t = 1/27 where sigma'' blows up, so no uniform two-sided modulus exists and the estimate must be stated on [1/27 + delta, infinity).",
+    "domains": [],
+    "id": "fd_3812",
+    "priority_score": 0.591969696969697,
+    "research_mode": "team",
+    "source_exp_id": "cd05a1fd",
+    "status": "available",
+    "timestamp": "2026-08-23T07:02:29.656805+00:00",
+    "title": "Five-Thirds Modulus of Strong Concavity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Only the sign-flip involution and the identity x^2 = 1 were used to prove the ensemble dichotomy. Replacing the second by a general even moment sequence should turn the indicator of an even walk into a product of moments over edge multiplicities.\n\nFor independent symmetric entries with moments mu_j, E[tr W^L] = sum over closed L-walks of the product over edges of mu_(multiplicity).\n\nRefactor prod_entry_flipEdge_family and prod_entry_eq_one_of_even to carry a weight, then re-derive the counting theorems with the weight specialised to mu_j = 1.\n\nAll the counting results of this cycle apply verbatim to arbitrary symmetric sign-invariant ensembles, giving universality of the moment formulas.\n\nThe Rademacher case is special and the involution argument does not survive weighting, isolating exactly where independence is needed.",
     "domains": [],
     "id": "fd_3442",
@@ -14354,6 +14339,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:51.351710+00:00",
     "title": "Topological realisation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The threshold 1/27 is the AM-GM maximum of the product of a three-point probability vector, so the concavity boundary coincides with the entropy maximiser. The conjecture is that this is a general phenomenon: on the k-simplex, the functional p -> sigma_k(prod p) is strictly Schur-concave, so its level sets are majorisation classes and the uniform distribution is its unique maximiser.\n\nFor p in the k-simplex, sigma_k(prod_i p_i) <= 1/k with equality iff p is uniform, and p majorises q implies sigma_k(prod p) <= sigma_k(prod q).\n\nFormalise the k = 3 Schur-concavity first (a two-variable transfer/Robin Hood step with the third coordinate fixed), then use Finset induction and Mathlib's weighted AM-GM for the general bound.\n\nThe concavity guard 1/27 is revealed as an entropy-theoretic quantity, bridging convex analysis and majorisation theory, and gives a monotone growth-rate functional on the simplex.\n\nSchur-concavity fails near the boundary where the product vanishes and sigma is in its convex regime, which would localise the bridge to the interior of the simplex.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3811",
+    "priority_score": 0.5639726200852386,
+    "research_mode": "team",
+    "source_exp_id": "cd05a1fd",
+    "status": "available",
+    "timestamp": "2026-08-23T07:02:29.202829+00:00",
+    "title": "Schur-Concavity of the Product-Mass Exponent on the Simplex"
   },
   {
     "consumed_by_exp_id": "",
@@ -15119,6 +15119,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T03:16:55.825551+00:00",
     "title": "Burnside-Ring Factorisation of the Root Sign"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any strictly monotone real cubic p, the inverse branch should be concave exactly above the image of p's inflection point. Since that image is a polynomial expression in the coefficients, the curvature threshold becomes an algebraic invariant of the cubic, computable without any analysis. This turns a question about convex geometry into one about coefficient loci.\n\nLet p y = y^3 + a y^2 + b y + c be strictly monotone on R and y* = -a/3. Then ConcaveOn R (Ici t0) (p^{-1}) iff t0 >= p(y*), where p(y*) = c - a b/3 + 2 a^3/27.\n\nState it in Lean for p given by its coefficients with hypothesis 3b >= a^2 (monotonicity), reduce to the depressed cubic by the Tschirnhaus shift, and reuse the transport argument of lagrangeExponent_concaveOn.\n\nThe constant 1/27 of this cycle is exhibited as p(y*) for the normalisation a = -1, b = 1/3, c = 0, and every catalog cubic acquires a computable concavity threshold.\n\nMonotonicity of a cubic does not suffice to make its inverse curvature-monotone, forcing an extra nondegeneracy hypothesis such as a perfect-square derivative.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3810",
+    "priority_score": 0.5614990276600849,
+    "research_mode": "team",
+    "source_exp_id": "cd05a1fd",
+    "status": "available",
+    "timestamp": "2026-08-23T07:02:28.744714+00:00",
+    "title": "Inflection-Image Threshold for General Real Cubics"
   },
   {
     "consumed_by_exp_id": "",
@@ -36528,14 +36543,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C5.  Unimodality and log-concavity of the Gaussian row"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa13d4d2",
     "description": "Two `\u2115`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k \u2264 N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vandermonde system over `\u211a` with the nodes `0, 1, \u2026, N`.",
     "domains": [],
     "id": "fd_1433",
+    "phase": "A",
     "priority_score": 0.4043921568627451,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:05.695599+00:00",
     "title": "Power-sum inversion"
   },
@@ -42023,19 +42039,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:27:27.855159+00:00",
     "title": "CoxeterLength.lean"
-  },
-  {
-    "consumed_by_exp_id": "cd05a1fd",
-    "description": "**Concavity (old sub-conjecture 1).** `lagrangeExponent_concaveOn`: `\u03c3` is concave on\n  `[1/27, \u221e)` (with the midpoint form `lagrangeExponent_midpoint_concave`), so averaging\n  two mass distributions never decreases the growth rate.",
-    "domains": [],
-    "id": "fd_3015",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "76abd1f0",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:27:30.857767+00:00",
-    "title": "Concavity (old sub-conjecture 1)."
   },
   {
     "consumed_by_exp_id": "",

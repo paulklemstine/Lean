@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-23T05:47:08.176546+00:00",
+  "last_updated": "2026-08-23T07:02:49.866447+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -64873,6 +64873,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-23T05:47:07.892560+00:00",
       "title": "prove that this function is a *class function up to inversion*, i.e."
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Novelty",
+      "duration_seconds": 4470.219655752182,
+      "end_time": 1787468496.1179123,
+      "files_integrated": 4,
+      "job_id": "cd05a1fd",
+      "outcome_quality": 0.72,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787464025.8982565,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-23T07:02:49.574609+00:00",
+      "title": "Concavity (old sub-conjecture 1)."
     }
   ]
 }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d588a53d",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — after the Pythagorean Hydra\n\n## What this cycle established\n\nThe moonshot hypothesis was that the Berggren tree of primitive Pythagorean triples\ncarries a Kirby–Paris-style indep",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 135,
-      "timestamp": "2026-08-21T18:56:44",
-      "title": "The Pythagorean Hydra — Natural Independence for the Berggren Tree"
-    },
-    {
       "cycle_id": "532d78bc",
       "domain": "Novelty",
       "key_insight": "# Future Directions — RH for the Berggren tree (Phase A, cycle v19c)\n\n## What this cycle established\n\nFormalised, `sorry`-free, in `Catalog/Novelty/`:\n\n1. **Core** (`BerggrenTreeZetaCore.lean`) — the",
@@ -499,19 +489,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-23T05:47:00",
       "title": "prove that this function is a *class function up to inversion*, i.e."
+    },
+    {
+      "cycle_id": "cd05a1fd",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — the Lagrange exponent programme\n\nThis cycle settled the old sub-conjecture 1 (`lagrangeExponent_concaveOn`) and, more than\nthat, pinned the threshold `1/27` down exactly: `σ` is",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-08-23T07:02:41",
+      "title": "Concavity (old sub-conjecture 1)."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "67cbe98c",
-      "domain": "Applications",
-      "key_insight": "# Future directions — Mordell denominators, cycle 6\n\nCycles 1–5 refuted the \"only bad primes\" conjecture for `E_N : y² = x³ + N` and identified the\nmechanism (a prime divides `den x(nP)` exactly when",
-      "quality_score": 0.55,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-08-15T18:55:39",
-      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-    },
     {
       "cycle_id": "79242ce3",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-23T05:47:00",
       "title": "prove that this function is a *class function up to inversion*, i.e."
+    },
+    {
+      "cycle_id": "cd05a1fd",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — the Lagrange exponent programme\n\nThis cycle settled the old sub-conjecture 1 (`lagrangeExponent_concaveOn`) and, more than\nthat, pinned the threshold `1/27` down exactly: `σ` is",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-08-23T07:02:41",
+      "title": "Concavity (old sub-conjecture 1)."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ba827ea4",
-      "domain": "Cryptography",
-      "name": "not_injective_of_kernel",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "ba827ea4",
-      "domain": "Cryptography",
-      "name": "not_cycleBijective_of_kernel",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "ba827ea4",
-      "domain": "Cryptography",
-      "name": "kernelInj1",
-      "quality": 0.88
-    },
     {
       "cycle_id": "43b197e4",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "mem_closure_of_walkCount_pos",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "cd05a1fd",
+      "domain": "Novelty",
+      "name": "of",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "cd05a1fd",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "cd05a1fd",
+      "domain": "Novelty",
+      "name": "lagrangeExponent_concaveOn",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-23T05:47:00",
+  "last_updated": "2026-08-23T07:02:41",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cf8480d3",
-        "quality": 0.85,
-        "theorems": 32,
-        "title": "Rigidity"
-      },
-      {
         "cycle_id": "5297c534",
         "quality": 0.86,
         "theorems": 49,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 55,
         "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL — base-vs-Instruct keys near-"
+      },
+      {
+        "cycle_id": "cd05a1fd",
+        "quality": 0.72,
+        "theorems": 9,
+        "title": "Concavity (old sub-conjecture 1)."
       }
     ],
     "NumberTheory": [
