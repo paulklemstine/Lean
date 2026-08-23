@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f87f1170",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — certified thresholds in quantum cryptography\n\nDerived from the four research cycles in `Catalog/Cryptography/BB84/`\n(`ThresholdEnclosure`, `ThresholdNewtonRefinement`, `Threshold",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-08-21T17:45:59",
-      "title": "Sharper threshold certification"
-    },
-    {
       "cycle_id": "df44f621",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nThis cycle turned the exact ensemble dichotomy of `Probability.WignerAllOrderParity`\ninto a self-contained combinatorial theory of *even closed walks*, and used it to push\nthe exa",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-08-23T05:46:28",
       "title": "FACT round-42 #1 — ECM-COMPLETION: the lite variant scales like rho (paper 155)"
+    },
+    {
+      "cycle_id": "a303e67d",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — from the NET-61 additive-hybrid eviction cycle\n\n## What this cycle established\n\nTwo Lean files, no `sorry`, no non-standard axioms.\n\n*Static selection* (`Catalog/Combinatorics/Hy",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-23T05:46:46",
+      "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP — hybrid z(acc)+lambda*z(probe) monotonically worse "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3ce74e62",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Power-Sum GCD Factoring & Carmichael Periodicity\n\nDerived from the Stage-3 analysis and Stage-4 critique of the results now proved in\n`Catalog/Geometry/PowerSum*.lean`. Each conj",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-15T16:48:51",
-      "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
-    },
     {
       "cycle_id": "ac45a9d9",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 46,
       "timestamp": "2026-08-23T05:46:28",
       "title": "FACT round-42 #1 — ECM-COMPLETION: the lite variant scales like rho (paper 155)"
+    },
+    {
+      "cycle_id": "a303e67d",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — from the NET-61 additive-hybrid eviction cycle\n\n## What this cycle established\n\nTwo Lean files, no `sorry`, no non-standard axioms.\n\n*Static selection* (`Catalog/Combinatorics/Hy",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-23T05:46:46",
+      "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP — hybrid z(acc)+lambda*z(probe) monotonically worse "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a1194bd0",
-      "domain": "Shared",
-      "name": "rhoTwo_lt_one",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "a1194bd0",
-      "domain": "Shared",
-      "name": "rhoTwo_pos",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "a1194bd0",
-      "domain": "Shared",
-      "name": "one_lt_dickmanLead",
-      "quality": 0.78
-    },
     {
       "cycle_id": "c08b5555",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "doublingChain_eq",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "a303e67d",
+      "domain": "Combinatorics",
+      "name": "serves_of_take",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a303e67d",
+      "domain": "Combinatorics",
+      "name": "card_insert_erase",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a303e67d",
+      "domain": "Combinatorics",
+      "name": "cache_after_miss",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-23T05:46:28",
+  "last_updated": "2026-08-23T05:46:46",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "60572a3f",
-        "quality": 0.85,
-        "theorems": 75,
-        "title": "The Bell defect, counted exactly"
-      },
-      {
         "cycle_id": "7299371d",
         "quality": 0.78,
         "theorems": 59,
@@ -3265,6 +3259,12 @@
         "quality": 0.74,
         "theorems": 56,
         "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper "
+      },
+      {
+        "cycle_id": "a303e67d",
+        "quality": 0.78,
+        "theorems": 48,
+        "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP — hybrid z(acc)+lambda*z(probe) "
       }
     ],
     "Computation": [
