@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "58852b38",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — the probabilistic method as finite counting\n\n## What the thread has established\n\nEleven Lean 4 files in `Catalog/Bridges/`, all compiling with zero `sorry` and using only the\naxi",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 157,
-      "timestamp": "2026-08-21T16:51:52",
-      "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
-    },
-    {
       "cycle_id": "f87f1170",
       "domain": "Cryptography",
       "key_insight": "# Future directions — certified thresholds in quantum cryptography\n\nDerived from the four research cycles in `Catalog/Cryptography/BB84/`\n(`ThresholdEnclosure`, `ThresholdNewtonRefinement`, `Threshold",
@@ -499,19 +489,19 @@
       "theorem_count": 89,
       "timestamp": "2026-08-23T04:53:36",
       "title": "FACT round-41 #5 — FACTOR-LOCAL-ET: unified across-k scaling on one population (paper 154)"
+    },
+    {
+      "cycle_id": "9b10b60b",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — after the ECM-lite window and scaling cycle\n\nTwo Lean files were produced and fully proved:\n\n* `Catalog/Geometry/ECMLiteBirthdayScaling.lean` — the exact detection window of\n  th",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-08-23T05:46:28",
+      "title": "FACT round-42 #1 — ECM-COMPLETION: the lite variant scales like rho (paper 155)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "299127cc",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — GENERIC-RECOVERY, next cycle\n\nThree cycles of the loop produced: (I) the master bound and the exact fibre\ncount of generic hints, (II) sharpness, an average-case strengthening an",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-15T14:47:41",
-      "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
-    },
     {
       "cycle_id": "3ce74e62",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 89,
       "timestamp": "2026-08-23T04:53:36",
       "title": "FACT round-41 #5 — FACTOR-LOCAL-ET: unified across-k scaling on one population (paper 154)"
+    },
+    {
+      "cycle_id": "9b10b60b",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — after the ECM-lite window and scaling cycle\n\nTwo Lean files were produced and fully proved:\n\n* `Catalog/Geometry/ECMLiteBirthdayScaling.lean` — the exact detection window of\n  th",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-08-23T05:46:28",
+      "title": "FACT round-42 #1 — ECM-COMPLETION: the lite variant scales like rho (paper 155)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c99dba13",
-      "domain": "Algebra",
-      "name": "of",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "c99dba13",
-      "domain": "Algebra",
-      "name": "l1Dist_nonneg",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "c99dba13",
-      "domain": "Algebra",
-      "name": "l1Dist_comm",
-      "quality": 0.85
-    },
     {
       "cycle_id": "a1194bd0",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "mean_sqrt_sq_le_mean",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "9b10b60b",
+      "domain": "Geometry",
+      "name": "addChain_le_two_pow",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "9b10b60b",
+      "domain": "Geometry",
+      "name": "sequentialChain_eq",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "9b10b60b",
+      "domain": "Geometry",
+      "name": "doublingChain_eq",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-23T04:53:36",
+  "last_updated": "2026-08-23T05:46:28",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "2ce26220",
-        "quality": 0.82,
-        "theorems": 77,
-        "title": "Derived from the current cycle's findings on Hardy–Ramanujan taxicab numbers."
-      },
-      {
         "cycle_id": "be7c0bd7",
         "quality": 0.82,
         "theorems": 84,
@@ -3451,6 +3445,12 @@
         "quality": 0.86,
         "theorems": 62,
         "title": "Rigidity gap for shallow product coins"
+      },
+      {
+        "cycle_id": "9b10b60b",
+        "quality": 0.79,
+        "theorems": 46,
+        "title": "FACT round-42 #1 — ECM-COMPLETION: the lite variant scales like rho (paper 155)"
       }
     ],
     "Logic": [
