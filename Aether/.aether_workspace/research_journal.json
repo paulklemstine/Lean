@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8828af22",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — after the linear phase route closed at both prime ranges\n\n## What this cycle established (formally, 0 sorries)\n\nThe empirical thread reported that singleton root-position phases",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-22T20:41:20",
-      "title": "FACT round-41 #2 — HIGH-PHASE: the linear phase route is closed at both prime ranges (paper 151)"
-    },
-    {
       "cycle_id": "6cdc8533",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — after NET-51 (THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL)\n\n## What survived this cycle\n\n1. **The dissociation is a theorem, not an anomaly.** `cosine_near_one_decision_flip`\n   s",
@@ -499,19 +489,19 @@
       "theorem_count": 188,
       "timestamp": "2026-08-24T13:14:21",
       "title": "FACT round-68 #1 — TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
+    },
+    {
+      "cycle_id": "6f277833",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — after C3 (the even/odd dichotomy of the one-bit cap)\n\n## What this cycle settled\n\nWorking with the catalogue channel\n`Ipair n = I( {T(p), T(q)} ; (p+q) mod n )`, `T(a) = n / gcd(",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-24T13:14:33",
+      "title": "C3. The even/odd dichotomy of the one-bit cap"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "615053e5",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Tangled Hierarchies That Reference Their Own Soundness\n\nDerived from the five research cycles now formalised in\n`Catalog/Logic/ProvabilityLogic/{TangledSoundness, SoundnessTopolo",
-      "quality_score": 0.83,
-      "sorry_count": 5,
-      "theorem_count": 128,
-      "timestamp": "2026-08-17T09:57:56",
-      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-    },
     {
       "cycle_id": "8993bd64",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 188,
       "timestamp": "2026-08-24T13:14:21",
       "title": "FACT round-68 #1 — TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
+    },
+    {
+      "cycle_id": "6f277833",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — after C3 (the even/odd dichotomy of the one-bit cap)\n\n## What this cycle settled\n\nWorking with the catalogue channel\n`Ipair n = I( {T(p), T(q)} ; (p+q) mod n )`, `T(a) = n / gcd(",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-24T13:14:33",
+      "title": "C3. The even/odd dichotomy of the one-bit cap"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "147eac16",
-      "domain": "MachineLearning",
-      "name": "dominant_block_upper",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "3a849502",
-      "domain": "Computation",
-      "name": "for",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3a849502",
-      "domain": "Computation",
-      "name": "below",
-      "quality": 0.82
-    },
     {
       "cycle_id": "3a849502",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "chan_length",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "6f277833",
+      "domain": "Tropical",
+      "name": "uEnt_ge_of_fiber_card_le",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "6f277833",
+      "domain": "Tropical",
+      "name": "uEnt_le_of_fiber_card_ge",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "6f277833",
+      "domain": "Tropical",
+      "name": "uEnt_le_logb_card_of_mapsTo",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-24T13:14:21",
+  "last_updated": "2026-08-24T13:14:33",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "13788cf3",
-        "quality": 0.85,
-        "theorems": 470,
-        "title": "Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-"
-      },
-      {
         "cycle_id": "43e7ffcb",
         "quality": 0.72697,
         "theorems": 37,
@@ -4009,6 +4003,12 @@
         "quality": 0.82,
         "theorems": 107,
         "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR — L22+L23 solo costs sum to 0.06pts"
+      },
+      {
+        "cycle_id": "6f277833",
+        "quality": 0.83,
+        "theorems": 63,
+        "title": "C3. The even/odd dichotomy of the one-bit cap"
       }
     ]
   }

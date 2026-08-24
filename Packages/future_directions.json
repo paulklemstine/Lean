@@ -52680,7 +52680,7 @@
       "depth_estimate": 3,
       "description": "Consider the map `a ↦ (tropOrder F_a, c(0), c(1), c(2), …)`.  Then the\ntropical component is constant on all admissible `a` (proved: `tropOrder_etaQuotientProd`),\nand moreover **no** nonconstant function of the coefficient sequence is tropically\nadditive: if `Ψ : (ℕ → ℤ) → Tropical ℕ∞` factors through `a ↦ F_a` and satisfies\n`Ψ(a + a′) = Ψ(a) ⊗ Ψ(a′)`, then `Ψ` is constant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Tropical"
       ],
@@ -55127,7 +55127,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every finite hyperreal probability vector with finite logarithmic rates, the support surviving standard-part observation equals the zero-level argmax set of its Maslov-dequantized tropical weights, after normalization by the largest rate.\n\nThe key insight is that standard part detects appreciable scale, while tropicalization records the leading asymptotic scale; both should select precisely those coordinates that are not exponentially suppressed.\n\n**Why now?** The reservoir theorem proves this equivalence for a Dirac-shaped penalty model and identifies the observable-dependent dominance condition that a general formulation must preserve.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Computation"
@@ -55168,7 +55168,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Given a finite infinitesimal probability model and a tropical penalty vector, there is a sharp oscillation threshold for observables below which ordinary standard-part expectation and tropical maximization select the same exposed face of the outcome simplex. Beyond that threshold, every disagreement pattern compatible with the supports can occur.\n\nThe key insight is that the inequality `f(i) + M_i ≤ f(r)` is not merely sufficient: its boundary should form the normal fan separating stable support agreement from visible-outcome escape.\n\n**Why now?** The finite reservoir bridge supplies one complete cone of this fan and shows explicitly why unconditional agreement is false.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Tropical"
@@ -56400,7 +56400,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: For an `r`-component hash formed from `r` independent min-plus linear forms on `k` real coordinates, every message has an unbounded collision ray whenever `k > r`.\n\nThe key insight is that each component needs only one unchanged minimizing coordinate; after choosing at most `r` such witnesses, any remaining coordinate can be increased without changing any output component.\n\nWhy now? The two-key theorem proves the first nontrivial case and supplies the exact update lemma needed for an induction over an arbitrary finite key family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -56440,7 +56440,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: For generic `r`-key data with `k > r`, every nonempty fiber is a finite polyhedral complex whose maximal cells have dimension at least `k-r`, with equality on a dense set of attainable outputs.\n\nThe key insight is that a tropical fiber is cut out by ordinary linear inequalities together with a disjunction of active-coordinate equalities, while simultaneous keys intersect these unions in a controlled polyhedral arrangement.\n\nWhy now? Exact single-key fiber certificates and deterministic collision directions identify both the cells and their recession directions, reducing the conjecture to a finite active-set analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -56481,7 +56481,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: There exist bounded-depth tropical circuits with coordinate mixing and a discrete message alphabet for which finding collisions is average-case hard under a standard combinatorial assumption, whereas every fixed number of uncoupled min-plus linear forms remains collision-rich.\n\nThe key insight is that adding independent linear keys does not create diffusion: security requires nonlinear reuse and coupling of coordinates, not merely more coordinatewise minima.\n\nWhy now? The universal two-key collision theorem gives a rigorous obstruction that candidate constructions must escape and suggests a precise design test: every input coordinate must influence active witnesses through multiple coupled layers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Tropical",
         "Combinatorics"
@@ -62089,7 +62089,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonempty digest fiber has a polyhedral cell whose recession cone has dimension exactly `k-r`, and this lower bound is sharp on a dense open set of keys and messages.\n\nThe key insight is that each output component can constrain one independently active coordinate, while all remaining coordinate directions can escape without changing any minimum. **Why now?** The universal collision-ray theorem establishes the first nonzero recession direction for every fiber; the next test is whether the entire expected `k-r`-dimensional cone can be constructed and whether genericity makes the bound exact.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -62129,7 +62129,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Let each tropical hash component have a set of active minimizing coordinates at a message. The fiber contains a coordinate cone of dimension at least `d` if and only if the union of these active sets admits a transversal whose complement has cardinality at least `d`.\n\nThe key insight is that collision directions are governed not merely by the number of outputs, but by the combinatorics of which coordinates can certify their minima. **Why now?** Selecting one minimizer per component proved one escaping direction; replacing this selection by a system-of-distinct-representatives analysis should expose the full local fiber geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -62170,7 +62170,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For messages in `{0,1,…,B}^k` and integer keys, every `r`-component min-plus digest with `r < k` has a collision whenever `B` exceeds an explicit key-spread parameter, and this dependence on the spread is asymptotically optimal.\n\nThe key insight is that the real collision ray survives in a bounded alphabet exactly until it reaches the boundary, so security is controlled by slack at unused coordinates rather than by tropical nonlinearity. **Why now?** The unrestricted theorem identifies the unique obstruction introduced by bounded messages: an unused coordinate may have no legal positive increment.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -62210,7 +62210,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Tropical preimage search is polynomial-time for nonce families described by difference constraints, but becomes NP-complete when the nonce language permits arbitrary binary linear constraints, even for a fixed number of digest components.\n\nThe key insight is that each tropical output condition is a union of linear regions indexed by active coordinates; tractability depends on whether the nonce language preserves shortest-path structure or can encode disjunctive choices. **Why now?** Unrestricted inversion and collision construction are explicit, so any computational hardness must arise from the geometry of the admissible nonce family rather than from the min-plus hash itself.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Geometry"
@@ -65324,7 +65324,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** On every compact domain where a max-affine classifier has no critical value in a band of width `d log(2)/β` around zero, its tropical decision set and log-sum-exp decision set are ambient isotopic.\n\nThe key insight is that uniform value control preserves labels outside a narrow band, while a critical-value exclusion should upgrade label stability to topological stability. **Why now?** A sharp depth-dependent error bound is available; the remaining test is geometric transversality within the explicit uncertainty band.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -67096,7 +67096,7 @@
       "depth_estimate": 3,
       "description": "Define binary exponentiation and prove that it computes `positivePower`, with an explicit count of min-plus products.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -67373,7 +67373,7 @@
       "depth_estimate": 3,
       "description": "Associate to each motif its first-occurrence and recurrence positions, and combine these by min-plus convolution. Conjecture that the lower envelope of these recurrence profiles determines the exact first aligned collision time and admits a stable extension to approximate matches under Hamming penalties.\n\nThe key insight is that first collision is a minimum over motif-specific return times, naturally placing the statistic in min-plus geometry, while fiber multiplicity records higher-order breakpoints. **Why now?** Exact finite-alphabet collision and multiplicity laws provide boundary conditions for a tropical model that can be falsified on both synthetic and genomic sequences.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Geometry"
@@ -73421,7 +73421,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For coherent theories, two reflective axiom additions over the same base theory are equivalent over the base if and only if their induced idempotent monads are isomorphic as monads.\n\nThe key insight is that an idempotent monad should retain the closure operation imposed by the new axioms while forgetting accidental syntax.\n\n**Why now?** Reflective mutations already compose and canonically induce monads, so the conjecture reduces classification of semantic changes to a comparison internal to one model category.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Logic"
@@ -76617,7 +76617,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-preserving map from a finite tropical projective space to the tropical line is a finite minimum of coordinate projections. Moreover, the irredundant set of coordinates occurring in this representation is unique.\n\nThe key insight is that preservation of tropical addition should convert the aggregator into a semimodule homomorphism, while projective normalization removes the common additive ambiguity.\n\n**Why now?** The binary minimum example proves that weak tropical axioms extend strictly beyond dictatorship, and a complete representation theorem would identify the entire surviving class rather than one isolated counterexample.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Tropical"
@@ -76658,7 +76658,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every finite electorate, a normalized tropical aggregator has an ultrafilter of dependence sets if and only if its unique irredundant tropical support has cardinality one.\n\nThe key insight is that the dependence sets of a minimum of several coordinates form the principal filter generated by its support; this filter is an ultrafilter precisely when that support is a singleton.\n\n**Why now?** The current results establish both endpoints—singleton support gives dictatorship, while two-coordinate support gives a non-dictatorial weak aggregator—so the conjecture asks for the structural equivalence interpolating between them.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -76698,7 +76698,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Let a family of positive linear aggregators be conjugated by logarithmic dequantization and converge locally uniformly to a tropical aggregator. If the classical dependence systems are eventually ultrafilters, then the limiting tropical support is a singleton; conversely, every tropical projection arises from such a stable family.\n\nThe key insight is that logarithmic sum-exp converges to tropical maximum, but ultrafilter-valued dependence should prevent two coefficients from surviving at the same exponential scale.\n\n**Why now?** This supplies a precise, testable meaning for a “classical limit,” which cannot be asserted until the deformation, topology of convergence, and dependence semantics are fixed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -76738,7 +76738,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** The projectivized domain of a finite min-plus aggregator admits a canonical polyhedral complex whose cells are labeled by decisive support coalitions, and adjacency of top-dimensional cells is governed by single-voter exchanges in the support matroid.\n\nThe key insight is that equality loci between tropical monomials are polyhedral walls, so changes in the coalition attaining the social score should be encoded by a normal fan with combinatorial exchange laws.\n\n**Why now?** Concavity of min-plus expressions is already available, and the next step is to connect this analytic structure to coalition combinatorics and matroid geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics",
         "Tropical"
@@ -76779,7 +76779,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For an electorate of size `n`, every anonymous normalized tropical aggregator whose irredundant support has size `k` must violate strong coalition independence on at least a proportion `1 - 1 / binomial(n,k)` of the orbit of its minimal dependence set; this bound is sharp for the minimum over all `k`-subsets averaged in tropical projective space.\n\nThe key insight is that anonymity spreads any minimal decisive support across its full permutation orbit, whereas an ultrafilter can select only one principal generator.\n\n**Why now?** The qualitative incompatibility between anonymity and singleton dictatorship suggests a measurable defect theory, and finite permutation orbits provide an explicit arena in which sharp bounds can be sought.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -81514,7 +81514,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture:** the two-sided maximisers (equivalences) between carriers form a\ngroupoid under composition, whose isotropy at a single carrier is its\nautomorphism group; in the self-finite case this recovers the symmetric group,\nand the one-sided maximisers form its associated monoid of split idempotents.\n\n*The key insight is* that composition preserves perfection and Copycat is a\ntwo-sided unit, so maximisers are already closed under the operations that define\na groupoid — only invertibility of each two-sided maximiser remains, which is\nexactly the extracted equivalence. *Why now?* The unit laws and composition\nclosure are proved, so the algebraic structure is one invertibility lemma away.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Tropical"
@@ -89053,7 +89053,7 @@
       "depth_estimate": 3,
       "description": "Prove idempotence of `tropicalConvexHull` and package\n   it with the already established monotonicity and extensivity results as a\n   closure operator.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -89094,7 +89094,7 @@
       "depth_estimate": 3,
       "description": "Relate the normalized finite-family hull\n   `TropicalConvexity.tropicalConvexHull` to\n   `TropicalHelly.tropConvHull`, whose weights currently have no normalization\n   condition. This should make the convexity theorem and Carathéodory theorem\n   directly reusable through one interface.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -89135,7 +89135,7 @@
       "depth_estimate": 3,
       "description": "Prove equivalences between normalized max-plus,\n   min-plus, and projective formulations of tropical convexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -90121,7 +90121,7 @@
       "depth_estimate": 3,
       "description": "The exact connective constant of the square lattice is not known. The proposed value `(2 + √2) / 2` is ruled out in `Catalog/Tropical/SAW/ConnectiveConstant.lean`, since it is strictly below the proved lower bound `2`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical",
         "Cryptography"
@@ -90523,7 +90523,7 @@
       "depth_estimate": 3,
       "description": "Develop an appropriate notion of local idempotent semiring and prove that stalks of the localized structure sheaf are local.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Algebra"
@@ -90646,7 +90646,7 @@
       "depth_estimate": 3,
       "description": "The product/union theorem in `Tropical.CornerLocusProduct` remains valid when the ordered additive group is weakened to a cancellative ordered additive commutative monoid, provided both finite term families attain minima everywhere.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Tropical"
@@ -92706,7 +92706,7 @@
       "depth_estimate": 3,
       "description": "There is a tropical S-pair construction on finite polynomial families such that a family is a Gröbner basis on a finite divisor-closed test set exactly when every S-pair whose support lies in that test set reduces to zero.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -95716,7 +95716,7 @@
       "depth_estimate": 3,
       "description": "The `d + 1` support bound for normalized max-plus tropical convex hulls yields a separation certificate of size at most `d + 1` for a point outside a finitely generated tropical convex set, and this certificate implies the general tropical Helly bound in Conjecture 1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -96189,44 +96189,6 @@
       "thread_id": "",
       "timestamp": "2026-08-21T06:26:30.621713+00:00",
       "title": "prove *soundness* — every DP value is realised by some labelling;"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "eb2ba545",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "prove *completeness* — every labelling is dominated by some DP run;",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [],
-      "github_issue": 0,
-      "id": "fd_2852",
-      "last_attempt_time": "2026-08-22T01:11:04.469828+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.85,
-      "parent_direction": "",
-      "priority_score": 0.4,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "1d44d635",
-      "source_path": "resplit_migration",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "2026-08-21T06:26:30.870721+00:00",
-      "title": "prove *completeness* — every labelling is dominated by some DP run;"
     },
     {
       "ambition_level": "extension",
@@ -97494,7 +97456,7 @@
       "depth_estimate": 3,
       "description": "Prove that\n   `(x,y) ↦ x ⊕_b y` is convex but not strictly convex, being affine along the\n   diagonal `x = y` (`lse_self` already gives the diagonal restriction exactly);\n   the tropical limit `max` is convex and affine on each of two half-planes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -97535,7 +97497,7 @@
       "depth_estimate": 3,
       "description": "Endow `ℝ` with the\n   `b`-deformed operations `(⊕_b, +)` as a genuine `Semiring` instance\n   transported along `x ↦ e^{bx}` from `ℝ_{>0}`, and formalize the statement\n   that these semirings converge (in the sense of Gromov–Hausdorff or of\n   pointwise convergence of structure maps) to `Tropical ℝ`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Algebra"
@@ -97576,7 +97538,7 @@
       "depth_estimate": 3,
       "description": "A ReLU network computes a\n   tropical rational function; the `b`-smoothed network computes a\n   log-sum-exp expression. Quantifying the uniform distance between a smoothed\n   network of depth `d` and its tropical limit (an `O(d · log(width)/b)` bound)\n   would extend the bridge theorem from one neuron to a whole architecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Bridges"
@@ -98804,7 +98766,7 @@
       "depth_estimate": 3,
       "description": "Every `f : TRⁿ → TR` satisfying `TropIIA` and `TropPareto` is *separable*:\nthere are maps `g₁,…,gₙ : TR → TR`, each monotone with `gᵢ(⊤) = ⊤`, such that\n`f x = ⨁ᵢ gᵢ(xᵢ)` and `⨁ᵢ gᵢ(c) = c` for every `c`.  Moreover `f` is diagonally\nidempotent iff every `gᵢ` satisfies `gᵢ(c ⊙ c) = gᵢ(c) ⊙ gᵢ(c)`, and tropically linear iff\nevery `gᵢ` is a translation `c ↦ aᵢ ⊙ c`.\n\nEvidence: `distortedRule = x₀ ⊕ φ(x₁)` of `TropicalSocialChoiceNonlinear.lean` has exactly\nthis shape with `g₀ = id`, `g₁ = φ`, and `profile_decomposition` shows that any additive\nrule is determined by its values on the scaled unit profiles `c ⊙ eᵢ`, i.e. by the `n`\nfunctions `gᵢ(c) = f (c ⊙ eᵢ)`.  The open content is that no further compatibility is\nforced between the `gᵢ`.\n\nFalsifiable: an additive unanimous rule (necessarily on `n ≥ 2` voters) that disagrees with\n`x ↦ ⨁ᵢ f (xᵢ ⊙ eᵢ)` at some profile.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -98844,7 +98806,7 @@
       "depth_estimate": 3,
       "description": "Add to `TropIIA + TropPareto + TropDiagIdem` either (i) homogeneity under all rational\nscalings, `f (q ⊙ x) = q ⊙ f x` for `q ∈ ℚ`, or (ii) continuity of `f` in the order\ntopology.  Then `f` is a coalition rule.\n\nEvidence: the refutation `not_oligarchy_of_tropIIA_tropDiagIdem` uses the distortion\n`φ(r) = 2r` for `r ≥ 0` and `r/2` for `r < 0`, which is continuous but only\n*doubling*-homogeneous; conversely, `isTropLinear_of_tropIIA_constScale` shows that full\nscalar homogeneity forces linearity, and then `oligarchy_iff` applies.\n\nFalsifiable: a continuous (respectively rationally homogeneous) additive unanimous\ndiagonally idempotent rule differing from every `tropCoalition s`.  Version (ii) would fall\nto a continuous variant of `φ` that is doubling-homogeneous yet non-linear; version (i)\nrequires a `φ` homogeneous for every rational scalar but not additive.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Tropical"
@@ -98885,7 +98847,7 @@
       "depth_estimate": 3,
       "description": "For a nontrivial commutative semiring `S` the following are equivalent: (a) `S` has no zero\ndivisors; (b) for every `n`, the additive, multiplicative, unanimous maps `Sⁿ → S` are\nexactly the `n` projections.\n\nEvidence: (a) ⟹ (b) is proved (`semiring_arrow_iff`), and (b) fails for the product\nsemirings `R × R'` (`exists_nondictatorial_of_zero_divisors`), which are exactly the\n\"decomposable\" zero-divisor examples.  The open content is that *every* semiring with a\nzero divisor `st = 0`, `s,t ≠ 0`, admits a non-dictatorial rule — the natural candidate\nbeing `x ↦ s ⊙ x₀ ⊕ t ⊙ x₁` after normalising `s ⊕ t = 1`.\n\nFalsifiable: a commutative semiring containing a zero divisor for which every additive,\nmultiplicative, unanimous `f : S² → S` is a projection (e.g. `ℤ/4ℤ`, where `2·2 = 0` but\n`2` cannot be completed to a unanimous pair, is the first place to look).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Tropical"
@@ -98964,7 +98926,7 @@
       "depth_estimate": 3,
       "description": "Let `f = tropForm a` be unanimous with `a k = 1` and let\n`c = min { untrop (a j) : j ≠ k, a j ≠ 0 }` be the smallest finite handicap among the other\nvoters (finite exactly when `f` is not a dictatorship).  Then the classical-IIA violation\ncan be realised with cost perturbations of size `Θ(c)`: two profiles agreeing in all\nindividual rankings, differing in a single voter's reported costs by at most `c + ε`, whose\nsocial rankings disagree — and no perturbation of size below `c` suffices.\n\nEvidence: `nondictatorial_violates_classical_IIA` constructs a violation with a\nperturbation of size `100 + c`, hence `O(c)`; the lower bound is the open part and would\nsay that the handicap `c` measures exactly how much cardinal information the rule consumes.\n\nFalsifiable: a unanimous non-dictatorial tropical linear rule whose ordinal violations all\nrequire perturbations `ω(c)`, or one admitting a violation with perturbation `< c`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Tropical"
@@ -104538,7 +104500,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Let `f : ℝ → ℝ` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k → ℝ` and `p q : ℝ`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r ≤ k` needs no convexity, no differentiability, and no\nsign pattern — only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -104579,7 +104541,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For the separable box update `boxStep lo hi η` on `d` coordinates with\n`s := #{i : lo i < hi i}` nondegenerate coordinates, the total ReLU width required to\nimplement one simultaneous step (as a map `ℝᵈ → ℝᵈ` built from scalar units with\narbitrary affine skips) is exactly `2d + 2s`.\n\n*The key insight is* that separability makes the curvature test coordinatewise\n(`sep_minimizes_iff_coordinatewise` is the loss-side shadow of the same phenomenon), so\nthe widths add: each degenerate coordinate contributes the point-case width `2` and\neach nondegenerate coordinate the segment-case width `4`.\n\n*Why now?*  `box_minimizes_iff_mem_box` and `box_descent_reaches_minimizer` show the\n`d`-dimensional dynamics factor exactly through the `d` scalar ones, and the scalar\nwidths `2` and `4` are now theorems, so the only missing ingredient is a\n`d`-dimensional counting argument.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -104620,7 +104582,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For every `0 ≤ ε < η` and every perturbed trajectory\n(`|uₙ₊₁ − tropicalFlow m η uₙ| ≤ ε`), the limit superior of `|uₙ − m|` is at most `ε`,\nand `ε` is attained: `sup over trajectories of limsup |uₙ − m| = ε`.  Moreover the\n*loss* excess satisfies `limsup (L(uₙ) − L(m)) = n_samples · ε` for a sample whose\nmedian has full one-sided multiplicity.\n\n*The key insight is* that the clipped update is an exact contraction to the minimizer\nin one step from distance `≤ η`, so the perturbation cannot accumulate: the only\nsurviving error is the last one, which is why `perturbed_distance_bound` needs `max ε`\nand not `max 0`, and why `perturbed_ball_bound_sharp` saturates the bound.\n\n*Why now?*  The finite-`n` bound and its sharpness are proved; the remaining step is to\nturn them into an exact asymptotic radius and to transfer it through the proved\n`l1Loss_lipschitz` bound to the loss.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -104660,7 +104622,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Replace the tropical `L¹` loss by the pinball loss\n`Lτ(θ) = Σᵢ ρ_τ(θ − xᵢ)` with `ρ_τ(z) = max (τ z) ((τ − 1) z)` for `τ ∈ (0,1)`.  Then\nthe minimizer set is the closed interval of `τ`-quantiles of the sample, and the\nassociated clipped update reaches it in `⌈dist/η⌉` steps, with ReLU width `2` when the\nquantile is unique and `4` when it is an interval.\n\n*The key insight is* that all proofs in this cycle used only two facts about the loss:\na *block-counting* identity (`l1Loss_growth_right/left`) and the piecewise-linear\nstructure of the update; both survive verbatim with the block sizes weighted by `τ`\nand `1 − τ`, which merely changes the growth slopes from `1` and `2` to `τ` and\n`min τ (1−τ)`-type constants.\n\n*Why now?*  The counting mechanism has been isolated into two reusable lemmas that\nalready take the split index `j` as a parameter, so the quantile case is a\nre-instantiation rather than a new proof.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Logic"
@@ -104701,7 +104663,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For a tropical affine model with *shared* parameters across\ncoordinates, the `L¹` empirical risk is a tropical polynomial in the parameters and its\nminimizer set is a bounded tropical polytope (a finite union of alcoved polyhedra);\nclipped subgradient descent with a fixed step reaches this set in finitely many steps\nfor every positive step size, again with a projection-invariance conservation law.\n\n*The key insight is* that `projIcc`-invariance (`intervalStep_proj`) is what made\nfinite termination possible in the separable case: the projection onto the minimizer set\nis a conserved quantity of the flow, and the same conservation should hold for the\nmetric projection onto any polyhedral minimizer set of a piecewise-linear convex risk.\n\n*Why now?*  This cycle establishes the conservation law and finite termination for\npoints, segments and boxes — exactly the alcoved polytopes of dimension `0` and `1` and\ntheir products — so the general polyhedral statement is the first genuinely new case.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -105025,7 +104987,7 @@
       "depth_estimate": 3,
       "description": "the **tropical Helly theorem with Helly number `d`** for tropical cones in\n  `ℝ^d` (`tropical_helly`, `tropical_helly_iff`) and its **sharpness**\n  (`tropical_helly_number_sharp`);",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -105065,7 +105027,7 @@
       "depth_estimate": 3,
       "description": "the **Helly number `d + 1` for tropically convex subsets of `ℝ^d`**\n  (`tropConvex_helly`) and its sharpness (`tropConvex_helly_number_sharp`),\n  which **settles the previous cycle's conjecture**: it is true for every\n  `d ≥ 1` (`tropicalHellyConjecture_holds`) with a strictly better constant than\n  the conjectured `2 * d`, and false for `d = 0`\n  (`tropicalHellyConjecture_zero`);",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -106679,7 +106641,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** The optimal constant in `ρ_k ≤ C·r^k` is\n`r = exp(−D(θ‖½))` with `θ = log 2 / log 3` and\n`D(θ‖½) = θ log 2θ + (1−θ) log 2(1−θ) ≈ 0.0347`, i.e. `r ≈ 0.9659`; moreover\n`ρ_k ≍ k^{-1/2} r^k`.\n\n**The key insight is** that the Chernoff step proved here used the *convenient*\ntilt `x = 2`, chosen because it keeps every inequality inside `ℕ` (the rate then\ncomes out as `(243/256)^{1/5} ≈ 0.98963`); the *optimal* tilt is\n`x* = θ/(1−θ) ≈ 1.71`, and it can only be exploited once real exponents\n(`Real.rpow`) are allowed into the argument.\n\n**Why now?** The exact generating function `∑_{n<2^k} x^{s_k(n)} = (1+x)^k` is\nalready a theorem for every `x` in every commutative semiring, in particular for\nreal `x`; only the optimisation `min_x (1+x)/x^θ` remains, which is a\none-variable calculus problem well inside Mathlib's reach.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Tropical"
@@ -106921,7 +106883,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For coefficient vectors `c₁, c₂` on a finite ground set `E`, the\n*stable* intersection `H(c₁) ∩_st H(c₂)`, defined as the set of limits\n`lim_{t → 0} (H(c₁) ∩ H(c₂ + t·v))` along a generic perturbation direction `v`,\nsatisfies the vector elimination axiom, even though the set-theoretic\nintersection does not (`intersection_not_satisfiesElimination`).\n\n*The key insight is* that the failure exhibited in this cycle is caused by a\nnon-transverse coincidence of two tropical minima, and perturbing one hyperplane\ndestroys precisely that coincidence while leaving the elimination witnesses\nconstructed in `tropVanishing_elimination` intact.\n\n*Why now?*  The formal framework (`IsTropicalLinearSpace`, the explicit witness\nconstruction, and a verified counterexample delimiting the truth) is in place, so\nthe conjecture is a statement about one extra limit operation rather than about\nan untested definition.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Logic"
@@ -107085,7 +107047,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  A subsemimodule `I` of the tropical polynomial semiring that\nsatisfies the degreewise elimination axiom and whose degree-`d` matroid is\nuniform of corank one for all `d` is precisely the vanishing ideal of a single\npoint of `ℚ^σ`.\n\n*The key insight is* that corank one in each degree pins down one linear\nfunctional per degree, and the multiplicativity proved in\n`vanishesAt_mul_left` forces those functionals to be compatible across degrees,\nhence to come from a single evaluation.\n\n*Why now?*  The forward direction is fully proved in this cycle\n(`truncation_isCircuit_iff` plus `vanishingIdeal`), so only the converse — a\nrigidity statement about compatible corank-one systems — remains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Tropical"
@@ -114715,7 +114677,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For a finite decoder-state set `M`, delta cost `dlt` and a periodic stream\nof residual costs, the limit `optCost(n)/n` exists and equals the minimum cycle mean of the\nassociated min-plus cost matrix (its tropical eigenvalue), and the optimal protocol is\neventually periodic with that cycle.\n\n*The key insight is* that `CompressionDelta.tropical_pow_mulVec_eq_optCost` already\nidentifies `optCost` with a tropical matrix power, so the asymptotic bits-per-message is\nby definition the growth rate of tropical powers — the min-plus analogue of the spectral\nradius, which for min-plus matrices is the minimum cycle mean.\n\n*Why now?*  Both special cases are proved: coherent streams give cycle mean `r`\n(`tendsto_amortized_rate`), block-alternating streams give `r + min(2D,L)/(2L)`\n(`tendsto_block_rate`).  A general Karp-style theorem would subsume both and give a\ncomputable design rule for adaptation schedules.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Physics"
@@ -115308,7 +115270,7 @@
       "depth_estimate": 3,
       "description": "*True but hard*: multivariate tropical rational calculus. The pairwise-sum product\n  rule `tmax_add_tmax` generalizes verbatim, but the median/sharpness argument does not:\n  in `ℝ^d` the `L¹` minimizer is a coordinatewise median only for separable losses.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -121662,7 +121624,7 @@
       "depth_estimate": 3,
       "description": "The chamber complex of a min-plus aggregator has a complete dual graph and a binomial f-vector. We conjecture these two invariants characterize exactly the fans arising this way, namely normal fans of simplices. The approach is to reconstruct the weights from the fan using the rigidity theorem and then verify the resulting aggregator induces the fan.\n\nA complete polyhedral fan in R^n / R.1 is the chamber complex of some min-plus aggregator iff it is the normal fan of a simplex, iff its dual graph is complete and its f-vector is (choose n (d+1)).\n\nFormalize the fan of a min-plus aggregator as a Mathlib polyhedral object and prove both implications; test small cases (n = 2, 3) by enumerating complete fans with complete dual graph.\n\nGives a purely combinatorial recognition principle for tropical-linear social welfare functionals.\n\nExotic fans with complete dual graph exist, and the exchange law would need extra data (e.g. wall multiplicities) to pin the geometry down.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Tropical"
@@ -121836,7 +121798,7 @@
       "depth_estimate": 3,
       "description": "Functional rigidity proved here says a min-plus linear form with all monomials essential is determined by the function it defines. The natural generalization replaces linear monomials by arbitrary affine ones, and characterizes essentiality cell-theoretically.\n\nFor tropical polynomials p, q with affine monomials, p = q as functions iff their essential monomials (those labelling a top-dimensional cell) coincide; and every monomial of p labelling a top cell is essential.\n\nGeneralize tropAgg to monomials x -> <a i, x> + delta i, redo tropAgg_spike with directional spikes, and prove support and coefficient recovery.\n\nA verified tropical Nullstellensatz for the min-plus semiring in the affine case, usable as infrastructure for tropical geometry in Lean.\n\nRedundant monomials can be invisible yet label cells, meaning essentiality is not cell-detectable and the linear case is special.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Geometry"
@@ -132512,7 +132474,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.82,
       "parent_direction": "",
       "priority_score": 1000.0,
       "proof_strategy": "",
@@ -132523,7 +132485,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-08-22T20:41:46.046363+00:00",
       "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-44 fails); acceleration amplifies with scale (19x vs 4x); size relationship INVERTS past phase transition"
@@ -132824,7 +132786,7 @@
       "depth_estimate": 3,
       "description": "The Maslov gap and the top-1 margin bound each other two-sidedly. Conjecture that for random score vectors the gap concentrates, producing a sharp threshold at margin ~ log n separating tropical (max-like) from diffuse (soft) layers.\n\nFor x with i.i.d. sub-Gaussian coordinates and top-1 margin m, the Maslov gap concentrates around log(1 + (n-1) E e^{-m}) with fluctuations O(1/sqrt n), so the tropical/diffuse boundary is a sharp threshold in m at log n.\n\nProve concentration for the Gaussian case in Lean using the two-sided bounds maslovGap_le_of_margin and margin_le_of_maslovGap, then check numerically against measured per-layer gap medians.\n\nCrystallization is a property of the margin distribution, not of the trained weights, and can be predicted before training.\n\nThe tail's large Maslov gap reflects weight structure and must be explained by the learned attention geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Geometry"
@@ -132911,7 +132873,7 @@
       "depth_estimate": 3,
       "description": "Quantization noise enters the decision certificate exactly like a fine-tune delta. Allocating bits inversely to the per-layer margin should therefore be optimal for preserving decisions at fixed total memory.\n\nUnder a fixed total bit budget, the allocation minimizing the number of flipped top-1 decisions satisfies bits_k = c - log2(margin_k) + O(1), so the near-tropical core can be quantized strictly harder than the diffuse tail.\n\nFormalize the optimization with the perturbation-to-margin certificate; validate by quantizing a real stack layerwise and counting decision flips.\n\nA principled, measurable rule for mixed-precision serving of transformer stacks.\n\nDecision flips are dominated by error accumulation across layers rather than per-layer margins, pushing the analysis to the depth budget of C1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Tropical",
         "MachineLearning"
@@ -138131,7 +138093,7 @@
       "depth_estimate": 3,
       "description": "The inverse theorem realizes any prescribed interval histogram at a single lag. The next question is joint control at two lags. We conjecture free joint realizability for coprime lags and a tropical obstruction otherwise.\n\nFor coprime k, l >= 1 and admissible histograms N_k, N_l of equal mass there is a decimal melody realizing both simultaneously; for l = 2k the support of N_l is forced into [0, 2 max supp N_k].\n\nExtend the interleave construction to a Chinese-remainder indexing of positions and prove the counting lemma for the product window; derive the obstruction from maxInterval_add_le.\n\nNo pair of lag statistics can certify structure in a digit expansion, closing the methodological question raised by lag-12 claims.\n\nThere is a genuine multi-lag invariant of digit melodies, which would be the first real statistic in this family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory",
         "Tropical"
@@ -138174,7 +138136,7 @@
       "depth_estimate": 3,
       "description": "The interval matrix of a melody window is idempotent in the min-plus matrix semiring, hence equal to its own Kleene star. We conjecture a full tropical Perron-Frobenius description: eigenvalue zero, eigenspace spanned by the columns, and a transposition-invariance classification of melodies with equal eigenspaces.\n\nFor every window, the tropical eigenvalue of the interval matrix is the tropical unit, its eigenspace is the tropical span of its columns, and two windows share an eigenspace iff their digit multisets agree up to a common additive shift.\n\nFormalize tropical eigenvectors for Matrix (Fin n) (Fin n) (Tropical (WithTop N)) and prove A * v = v for columns v of A using intervalMatrix_idempotent.\n\nMelody windows acquire a canonical tropical invariant, independent of any temporal lag statistic.\n\nIdempotency is not enough to pin down the eigenspace and additional metric hypotheses on the digit alphabet are needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Tropical",
         "Algebra"
@@ -142466,7 +142428,7 @@
       "depth_estimate": 3,
       "description": "Every monotone convex budget law equals the max-plus polynomial of its own tangents, so its phase transitions are exactly the corners of a tropical curve. The conjecture is that the number of corners counts attention regimes, giving a geometric invariant of a model's context behaviour.\n\nA knee law with r phase transitions is a max-plus polynomial with exactly r+1 non-redundant monomials, and r is bounded by the number of distinct attention regimes of the model; for the 0.5B model r = 1 up to ctx = 4096.\n\nMeasure ctx = 8192 and 16384 for the 0.5B model; fit the tangent envelope and count non-redundant monomials, comparing with kneeRamp_two_monomials which proves the current count is 2.\n\nBudget tables acquire a geometric normal form: a small list of slopes and corners, one per attention regime, replacing per-context tables.\n\nConvexity fails at some octave (increments decrease), which would refute the convex-fit family used for all current lower bounds and force a non-convex model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Algebra"
@@ -143196,7 +143158,7 @@
       "depth_estimate": 3,
       "description": "The proved limit sup_k Ipair(2^k) = 4/3 identifies four thirds of a bit as the exact two-adic saturation level of the type-pair channel. The conjecture is that Ipair is the tropicalisation of a multiplicative height on the lattice of cyclic quotients, with local weights q^{-2} coming from the fibre geometry of the sum map on a product of type classes, so the maximum over orders with at most m primary parts has an explicit closed form.\n\nsup { Ipair n : omega(n) <= m } = 4/3 + sum over the first m-1 odd primes q of Ipair(q) q^2/(q^2-1), attained only in the limit along towers.\n\nProve the supremum statement for m = 1 and m = 2 from the primary law of Direction 1 plus CRT additivity, then verify the value numerically for m <= 5 by brute force over highly composite n.\n\nIpair is a genuine tropical height and its extremal values are computable, giving a canonical ordering of cyclic orders by information content.\n\nThe supremum is not additive across primary parts, indicating a hidden interaction term between primary components that CRT additivity does not see.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -143222,6 +143184,47 @@
       "thread_id": "",
       "timestamp": "2026-08-24T13:14:28.470377+00:00",
       "title": "Four-Thirds Saturation as a Local Tropical Height"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Everything sharp here is proved for exactly geometric profiles.  **The key insight is**\nthat the rearrangement inequality behind `retained_geomProfile_antitone_ratio` only uses\nlog-convexity of `i ↦ w i`, so the whole monotone-in-ratio theory should extend to\nlog-convex profiles with a \"ratio\" replaced by a majorization order.  **Why now?** The\nproof is already a pure cross-term comparison and never differentiates.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Exact Crossover Equation for Gap-Plus-Floor Profiles\",\n    \"domain\": \"MachineLearning\",\n    \"description\": \"The proved crossover bound (K+1)M/(tau c) overshoots the observed crossover by about 10%. Replacing the band estimate with the exact retained-mass formula for a mixture profile r^i + eps should yield an exact crossover context, expressible in closed form in r, eps and tau. This would turn a phase-transition location into a computable deployment parameter.\",\n    \"conjecture\": \"For w i = r^i + eps with 0 < r < 1 and eps > 0, and any profile v with context-free budget K at gate tau, the least context n at which k*(v,n,tau) < k*(w,n,tau) equals the least n with (1 - r^{K+1})/(1-r) + (K+1) eps < tau ((1-r^n)/(1-r) + n eps).\",\n    \"test\": \"Formalise the exact retained mass of the mixture profile (a geometric sum plus a linear term) and prove both directions of the least-context characterisation; check numerically against the witnesses profGap / profFloor.\",\n    \"if_true\": \"Crossover contexts become computable from three profile parameters, replacing the current one-sided bound.\",\n    \"if_false\": \"The crossover is not determined by the head/floor split alone, which would point to a genuine dependence on the intermediate decay shape.\",\n    \"proof_strategy\": \"Add a closed form for headMass of the mixture, then reuse knee_bracket to pin the least n by a pass/fail pair at n and n-1.\",\n    \"catalog_references\": [\"Pythagorean.NET79CrossoverLocalization\", \"Pythagorean.NET79ScaleContextSurface\", \"Shared.AttentionBudgetKnee\"]\n  },\n  {\n    \"title\": \"Angular Defect Law for Pythagorean Budget Gaps\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"Along the near-isosceles branch the short/long budget gap closes to zero. The conjecture is that the gap of a triple is controlled by how far its angle sits from pi/4, monotonically in that defect, so that branches of the Berggren tree moving away from the isosceles direction have unbounded gaps.\",\n    \"conjecture\": \"There is a monotone function G with gap(a,b,c) = k*(b/c) - k*(a/c) bounded above and below by G(|a/c - 1/sqrt 2|) at any fixed gate and sufficiently large context.\",\n    \"test\": \"Prove monotonicity of the gap under the Berggren generators using kstar_geomProfile_mono_ratio, then compute gaps along all three children of (3,4,5) for the first six levels.\",\n    \"if_true\": \"The Pythagorean budget gap becomes a geometric invariant of the triple rather than an arithmetic accident.\",\n    \"if_false\": \"Quantisation of the knee dominates the geometry",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "MachineLearning"
+      ],
+      "github_issue": 0,
+      "id": "fd_3996",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4388030050797809,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "f45042dc",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/f45042dc",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T13:14:39.397637+00:00",
+      "title": "From geometric profiles to arbitrary decay"
     },
     {
       "ambition_level": "extension",
@@ -170553,28 +170556,27 @@
     "Computation": 1,
     "Geometry": 2,
     "Logic": 1,
-    "Novelty": 50.0,
+    "Novelty": 51.0,
     "NumberTheory": 2,
     "SetTheory": 1
   },
   "recent_theme_keywords": {
     "**0.52**": 2,
     "**0.84**": 2,
-    "**conjecture.**": 1,
     "**domain**": 9.0,
     "**hypothesis": 2,
     "**hypothesis**": 5.0,
     "**test**": 9.0,
-    "**verdict": 23,
+    "**verdict": 24,
     "0.0001": 2,
     "3-adic": 2,
-    "`i_pair`": 1,
+    "acceleration": 1,
     "acting": 2,
     "algebraic": 2.0,
     "already": 13,
-    "assessment": 23,
+    "assessment": 24,
     "a²+b²−c²": 3,
-    "barriers": 9,
+    "barriers": 10,
     "becomes": 4,
     "berggren": 9.0,
     "boundary": 8,
@@ -170587,7 +170589,6 @@
     "conjecture": 18.0,
     "connecting": 5.0,
     "correct**": 2,
-    "dichotomy": 1,
     "e.g": 5.0,
     "elementary": 2,
     "embedding": 3,
@@ -170595,7 +170596,7 @@
     "events": 2,
     "exactly": 30.0,
     "existing": 5.0,
-    "experiments": 23,
+    "experiments": 24,
     "explicit": 6,
     "exponent": 5.0,
     "false**": 9.0,
@@ -170603,6 +170604,7 @@
     "formal": 3,
     "formalize": 12.0,
     "formalized": 8,
+    "four-context": 1,
     "general": 3,
     "geometry": 6.0,
     "groupoid": 4,
@@ -170614,7 +170616,8 @@
     "i(joint": 2,
     "iteration": 9,
     "itself": 9.0,
-    "limited-memory": 7,
+    "limited-memory": 8,
+    "limits": 1,
     "log(1+√2": 4.0,
     "lorentz": 5.0,
     "lorentz-preserving": 5.0,
@@ -170628,7 +170631,7 @@
     "now**": 9.0,
     "number": 12.0,
     "opening": 2,
-    "paper": 38,
+    "paper": 39,
     "positive": 6,
     "precise": 5,
     "preserving": 4,
@@ -170640,7 +170643,7 @@
     "questions": 2.0,
     "reduces": 3,
     "residue": 3,
-    "result": 19,
+    "result": 20,
     "round-32": 2,
     "semiprime": 3,
     "silver": 4.0,
