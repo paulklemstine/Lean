@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ae01533d",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE_DIRECTIONS — NET-52 formal layer (round-to-nearest arithmetic)\n\n## What this cycle established\n\nFive self-contained Lean files in `Catalog/NumberTheory/` turn the NET-52 measurements into\nthe",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 131,
-      "timestamp": "2026-08-22T19:36:34",
-      "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0"
-    },
-    {
       "cycle_id": "8828af22",
       "domain": "Logic",
       "key_insight": "# Future Directions — after the linear phase route closed at both prime ranges\n\n## What this cycle established (formally, 0 sorries)\n\nThe empirical thread reported that singleton root-position phases",
@@ -499,19 +489,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-24T11:45:21",
       "title": "FACT round-69 #1 — TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
+    },
+    {
+      "cycle_id": "c96b94a8",
+      "domain": "Pythagorean",
+      "key_insight": "# FUTURE_DIRECTIONS — TDIAL-U88 (FACT round-68 #1, exp 536)\n\nFour research cycles were run on the round-68 finding: the uniform ladder of the zero-fit dial\nmisses the `0.55` band for the first time at",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 188,
+      "timestamp": "2026-08-24T13:14:21",
+      "title": "FACT round-68 #1 — TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "525aecde",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures arising from the formal development in\n`Catalog/Shared/FourierFiniteAbelian.lean`, `FourierSubgroupDuality.lean`, `FourierCyclic.lean`,\n`FourierAdditi",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-17T09:01:45",
-      "title": "Fourier Analysis on Finite Groups"
-    },
     {
       "cycle_id": "615053e5",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-24T11:45:21",
       "title": "FACT round-69 #1 — TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
+    },
+    {
+      "cycle_id": "c96b94a8",
+      "domain": "Pythagorean",
+      "key_insight": "# FUTURE_DIRECTIONS — TDIAL-U88 (FACT round-68 #1, exp 536)\n\nFour research cycles were run on the round-68 finding: the uniform ladder of the zero-fit dial\nmisses the `0.55` band for the first time at",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 188,
+      "timestamp": "2026-08-24T13:14:21",
+      "title": "FACT round-68 #1 — TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "620a1130",
-      "domain": "Tropical",
-      "name": "intervalEnergy_eq_second_moment",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "147eac16",
-      "domain": "MachineLearning",
-      "name": "le_sum_of_mem",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "147eac16",
-      "domain": "MachineLearning",
-      "name": "tieCorr_ge_of_mem",
-      "quality": 0.84
-    },
     {
       "cycle_id": "147eac16",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "cappedBlocks_two_le",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "c96b94a8",
+      "domain": "Pythagorean",
+      "name": "digitsQ_succ",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "c96b94a8",
+      "domain": "Pythagorean",
+      "name": "digitsQ_length",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "c96b94a8",
+      "domain": "Pythagorean",
+      "name": "chan_length",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-24T11:45:21",
+  "last_updated": "2026-08-24T13:14:21",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "16c8a71d",
-        "quality": 0.82,
-        "theorems": 21,
-        "title": "Aggregate dichotomy"
-      },
-      {
         "cycle_id": "24a12580",
         "quality": 0.82,
         "theorems": 118,
@@ -3885,6 +3879,12 @@
         "quality": 0.83,
         "theorems": 93,
         "title": "FACT round-56 #1 — TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 unif"
+      },
+      {
+        "cycle_id": "c96b94a8",
+        "quality": 0.78,
+        "theorems": 188,
+        "title": "FACT round-68 #1 — TDIAL-U88: the dial drops below the floor at bitlen 88 (paper"
       }
     ],
     "Shared": [
