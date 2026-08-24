@@ -1971,16 +1971,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-72 #5 \u2014 MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-slow (alpha=1.007); guidance null (paper 205)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4aeadf94",
     "description": "Round-72 #4, exp 554. **U120-FLOOR-LOWER**: pooled Spearman(T, rate) = **0.43636** CI [0.38815, 0.48113] \u2014 the U116 rebound fully retraced and overshot (step \u22120.0483); the +0.0226 was noise around a continuing decline. Ladder: 0.5739 \u2192 .5436 \u2192 .5005 \u2192 .4880 \u2192 .4621 \u2192 (.4847) \u2192 0.4364. Seed spread widened to 0.082. T beats count +0.0752 (point PASS; paired-CI caveat disclosed). Rate mean flat.\n\nLedger: window convention resolved pre-data; exact two-part q-decomposition past 2^66; all 36k values re-verified vs full Pollard-rho (0 mismatches); wall 41.9 min vs budget DISCLOSED.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp554_t_dial_unif_120.py + exp554_result.json + log.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3927",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T04:10:59.497816+00:00",
     "title": "FACT round-72 #4 \u2014 TDIAL-U120: rebound was noise, fade continues below the hypothesized floor (paper 204)"
   },
@@ -3107,20 +3108,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:59.281523+00:00",
     "title": "Existential-Risk-Optimization: Absolute Bounds on AI Alignment Failure Probabilities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 7934932a (Q=0.840), which proved 87 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove the standard factor-`1/2` total-variation\n   characterization as a supremum over events, yielding tight Boolean\n   distinguishing bounds rather than the deliberately simple `\u2113\u00b9` upper bound.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_7934932a_cd338cd5",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "7934932a",
-    "status": "available",
-    "timestamp": "2026-08-24T14:04:05.191402+00:00",
-    "title": "Deepening: Sharper normalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -42899,14 +42886,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hamming schemes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eef05184",
     "description": "Study greedy avoidance of `a i \u2212 a j` (differences)\n   rather than sums; relate the resulting Sidon-like sets to `B_h` sets.",
     "domains": [],
     "id": "fd_2506",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "b648d8e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:34.454244+00:00",
     "title": "Weighted / signed sums"
   },
