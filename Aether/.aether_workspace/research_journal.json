@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9b10b60b",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — after the ECM-lite window and scaling cycle\n\nTwo Lean files were produced and fully proved:\n\n* `Catalog/Geometry/ECMLiteBirthdayScaling.lean` — the exact detection window of\n  th",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-08-23T05:46:28",
-      "title": "FACT round-42 #1 — ECM-COMPLETION: the lite variant scales like rho (paper 155)"
-    },
-    {
       "cycle_id": "a303e67d",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — from the NET-61 additive-hybrid eviction cycle\n\n## What this cycle established\n\nTwo Lean files, no `sorry`, no non-standard axioms.\n\n*Static selection* (`Catalog/Combinatorics/Hy",
@@ -499,19 +489,19 @@
       "theorem_count": 61,
       "timestamp": "2026-08-24T19:46:15",
       "title": "The Category Theory of Jokes: Universal Properties of Humor"
+    },
+    {
+      "cycle_id": "2a9ba724",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — after \"per-tag reflection depths are freely realizable\"\n\n## What this cycle settled\n\nThe conjecture, read literally (the theory `S` ranges over the common refinement of\n`capC` an",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 98,
+      "timestamp": "2026-08-24T20:49:57",
+      "title": "Per-tag reflection depths are freely realizable"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "97b1c345",
-      "domain": "Probability",
-      "key_insight": "# Future directions — seed-ensemble rung theory\n\n## Where the thread stands\n\nAn earlier cycle built the general-$n$ theory of the rung distribution function\n$R_n(m,p)$ — the binomial upper tail that a",
-      "quality_score": 0.92,
-      "sorry_count": 0,
-      "theorem_count": 255,
-      "timestamp": "2026-08-17T20:44:43",
-      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
-    },
     {
       "cycle_id": "2e6124e7",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 61,
       "timestamp": "2026-08-24T19:46:15",
       "title": "The Category Theory of Jokes: Universal Properties of Humor"
+    },
+    {
+      "cycle_id": "2a9ba724",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — after \"per-tag reflection depths are freely realizable\"\n\n## What this cycle settled\n\nThe conjecture, read literally (the theory `S` ranges over the common refinement of\n`capC` an",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 98,
+      "timestamp": "2026-08-24T20:49:57",
+      "title": "Per-tag reflection depths are freely realizable"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9f4b7d2b",
-      "domain": "Novelty",
-      "name": "alignedBlock_eq_image",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "9f4b7d2b",
-      "domain": "Novelty",
-      "name": "card_alignedBlock",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "9f4b7d2b",
-      "domain": "Novelty",
-      "name": "alignedCap_eq_singleton",
-      "quality": 0.84
-    },
     {
       "cycle_id": "33808f71",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "berg_children_diff",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "2a9ba724",
+      "domain": "NumberTheory",
+      "name": "satF_bot",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "2a9ba724",
+      "domain": "NumberTheory",
+      "name": "satF_atom",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "2a9ba724",
+      "domain": "NumberTheory",
+      "name": "satF_imp",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-08-24T19:46:15",
+  "last_updated": "2026-08-24T20:49:57",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "17d131fb",
-        "quality": 0.78,
-        "theorems": 85,
-        "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo "
-      },
-      {
         "cycle_id": "5c70a18c",
         "quality": 0.86,
         "theorems": 281,
@@ -3699,6 +3693,12 @@
         "quality": 0.87,
         "theorems": 79,
         "title": "Exact off-resonance window formula"
+      },
+      {
+        "cycle_id": "2a9ba724",
+        "quality": 0.8,
+        "theorems": 98,
+        "title": "Per-tag reflection depths are freely realizable"
       }
     ],
     "Physics": [
