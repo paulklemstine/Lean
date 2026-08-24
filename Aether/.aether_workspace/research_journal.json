@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e82f11a2",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — rigidity and stability of the universality price\n\nThis cycle closed the equality analysis of the two sharp bounds `1 ≤ Cₛ ≤ #Θ`\nfor the Shtarkov sum of a finite source class, of",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-22T08:48:50",
-      "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
-    },
-    {
       "cycle_id": "175408d6",
       "domain": "Geometry",
       "key_insight": "# Future directions — \"which marginals feed the Bonferroni machinery\" (cycle v19c)\n\n## What this cycle established\n\nThe assignment observed that the Bonferroni machinery of\n`Catalog/Geometry/AlmostLos",
@@ -499,19 +489,19 @@
       "theorem_count": 94,
       "timestamp": "2026-08-24T01:59:21",
       "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healthy margins; 0.5B cha"
+    },
+    {
+      "cycle_id": "58176b8d",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — parity geometry of the zero-fit dial (round-63 #1, exp 532)\n\nTwo Lean files were added in this cycle:\n\n* `Catalog/Algebra/ZeroFitDialU72Parity.lean` — Gram positivity for three r",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-08-24T01:59:38",
+      "title": "FACT round-63 #1 — TDIAL-U72: the zero-fit dial holds at bitlen 72 with count parity (paper 185)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4f1ff831",
-      "domain": "Logic",
-      "key_insight": "# Future directions — bold, falsifiable conjectures from the NET-46 cycle\n\nEach conjecture below is stated so that a single further run, or a single further Lean\ndevelopment, decides it. All are deriv",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 99,
-      "timestamp": "2026-08-16T21:34:53",
-      "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16×-CONTEXT — k*=224 at (d=4, ctx=2048, seed=2), the"
-    },
     {
       "cycle_id": "7a819734",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 94,
       "timestamp": "2026-08-24T01:59:21",
       "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healthy margins; 0.5B cha"
+    },
+    {
+      "cycle_id": "58176b8d",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — parity geometry of the zero-fit dial (round-63 #1, exp 532)\n\nTwo Lean files were added in this cycle:\n\n* `Catalog/Algebra/ZeroFitDialU72Parity.lean` — Gram positivity for three r",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-08-24T01:59:38",
+      "title": "FACT round-63 #1 — TDIAL-U72: the zero-fit dial holds at bitlen 72 with count parity (paper 185)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0ef4aed2",
-      "domain": "Novelty",
-      "name": "nested_ge_one_sided",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0ef4aed2",
-      "domain": "Novelty",
-      "name": "u76_not_explained_by_response_ties",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b8859dfd",
-      "domain": "Physics",
-      "name": "surv_eq_wallis_mul",
-      "quality": 0.86
-    },
     {
       "cycle_id": "b8859dfd",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "knee_ge_gate_sq_div_energy",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "58176b8d",
+      "domain": "Algebra",
+      "name": "dot_sum_left",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "58176b8d",
+      "domain": "Algebra",
+      "name": "dot_sum_sum",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "58176b8d",
+      "domain": "Algebra",
+      "name": "bessel_ineq",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T01:59:21",
+  "last_updated": "2026-08-24T01:59:38",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "50be6807",
-        "quality": 0.82,
-        "theorems": 171,
-        "title": "A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) ex"
-      },
-      {
         "cycle_id": "12195e06",
         "quality": 0.72,
         "theorems": 7,
@@ -3079,6 +3073,12 @@
         "quality": 0.8,
         "theorems": 91,
         "title": "Smooth windows"
+      },
+      {
+        "cycle_id": "58176b8d",
+        "quality": 0.82,
+        "theorems": 60,
+        "title": "FACT round-63 #1 — TDIAL-U72: the zero-fit dial holds at bitlen 72 with count pa"
       }
     ],
     "Applications": [
