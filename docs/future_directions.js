@@ -2000,16 +2000,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #2 \u2014 ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; skip-flip wins deployment (paper 207)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40fe72ea",
     "description": "Round-73 #1, exp 560. **PORTFOLIO-RHO-UNIVERSAL+H3-FAIL.** Oracle winner shares: \u03c1 58.0%, p\u22121@256 34.5%, PM1@1024 4.5%, Fermat 2.8%, TD 0.17% \u2014 flat across bitlen AND balance quintiles; the organizing axis is p\u22121 powersmoothness, an **N-INVISIBLE channel** (self-hint closure replicated in a scheduling frame). Scheduling: static regret 3.117 vs oracle; dial rule tuned itself to do-nothing (\u0394=0.000); ML rule significantly WORSE (4.683). Median regret 1.000 for all strategies \u2014 the fat tail lives in the smoothness-carried minority no N-only dial reaches. Named next cell: PAID smoothness probes (short-capped p\u22121 as observation).\n\nLedger: eliminations need dominance-in-distribution arguments (mean-vs-constant H3 refuted by TD variance-tail + PM1_1024 share); sampler-dependence scope note (wide ranges dilute the Fermat channel vs paper 137's balanced-bet design).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp560_portfolio.py + exp560_result.json + per-N CSVs, seed 20260827.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3939",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T05:03:28.427083+00:00",
     "title": "FACT round-73 #1 \u2014 PORTFOLIO: no universal winner, no dial edge; regret tail is N-invisible (paper 206)"
   },
@@ -2376,6 +2377,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T15:58:32.186714+00:00",
     "title": "FACT round-79 #1 \u2014 PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED \u2014 H1 scale-shift REFUTED (no QR window past 400; B*=400 confirms papers-136/139 location), 1/\u2113-weighted dial is the law (48% D-red, saturates by 400, corr .999) \u2014 paper-226 SECONDARIES erratum-grade (reciprocity-flip dial-form artifacts, flip 100%-on-condition), its PRIMARY null stands"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-80 #2, exp 580, paper 230. Pure re-analysis of exp578_positions.npz (9594 hits); terciles by per-N hit count poor<=64/mid 64-80/rich>=80 (42/42/44). Pre-registered H1 refuted: family A no fire (KS dies at Bonferroni; per-decile min raw p=0.425), family B no fire decisively (LRT chi2=51.31/49 p=0.383, perm p=0.34, 0/49 Wald bins); control A clean (min p_adj=0.235). LEDGER FLAG: control family B fired spuriously (LRT p=0.0215, perm p=0.012) \u2014 occupancy regression fragile on dense size-matched controls (quasi-separation, ORs clipped at e^\u00b130); H0 stands without family B but design-B unreliable for control arms. Post-hoc descriptive only: poor-Ns' hits at larger mean_u (rich-minus-poor -0.0205 [-0.0337,-0.0075], SIGN FLIPS under matching +0.012 CI straddles 0) \u2014 motive for a powered follow-up, NOT a map claim. JOINT CONSEQUENCE with round-80 #1 (#377)/paper 229: paper-228's positional layer is now law-complete (harmonic profile + mid-window excess hump) and does NOT couple to between-N rate variance \u2014 the ~39-61% unexplained overdispersion is not carried by profile-shape heterogeneity across terciles; the carrier affects how many smooth values j^2-N produces per N, not where along j they land. Files: ResearchOutput/scripts/2026-08-24-round74/exp580_{positional_rate_link.py,result.json,findings.md}; paper ResearchOutput/NewMathematics/230_PositionalRateLink.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4024",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T16:57:03.773190+00:00",
+    "title": "FACT round-80 #2 \u2014 POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS \u2014 hit-rich vs hit-poor positional profiles indistinguishable at registered bars (interaction LRT \u03c7\u00b2=51.31/df49 p=0.383, perm p=0.34; pooled rich-poor KS D=0.0462 raw p=0.0038 FAILS Bonferroni p_adj=0.049); edge-decile excess replicates universally 0.229/0.245/0.230 across terciles; control-arm family-B fired spuriously on dense size-matched controls (perm p=0.012, quasi-separation) \u2014 design flagged fragile; paper-228 positional and rate entries remain SEPARATE layers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-80 #1, exp 579, paper 229. Pure re-analysis of exp578_positions.npz (128 bitlen-96 semiprimes seed 20260828, 9594 hits); no new physics. Pre-registered V1/V2 rules fired cleanly: V1 power-law winner (Akaike w 0.9866, cluster bootstrap over Ns 2000 reps seed 20260831); V2 residual R=T/M PEAKED \u2014 mixture-Dickman absorbs nearly all raw decline (M falls 3.64x vs T 3.25x), concave mid-window excess \u00b120%, small-j wall region OVER-predicts ~20%; baseline fragility gate passes all three offset-r brackets; control flat. Ledger: smoke bootstrap-broadcast bug fixed pre-full (FULL clean 10.2 s); ship-order/partial-completion check NEGATIVE (no such field in JSON, completion evidenced by boot_fits_ok=2000 x4). Joint consequence with round-80 #2 (#378): positional entry now law-complete (papers 228/229), layers SEPARATE. Files: ResearchOutput/scripts/2026-08-24-round74/exp579_{profile_form.py,result.json,findings.md}; paper ResearchOutput/NewMathematics/229_ProfileForm.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4025",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T16:57:03.774720+00:00",
+    "title": "FACT round-80 #1 \u2014 PROFILE-FORM (exp 579): positional layer gets a LAW \u2014 small-j hit profile = POWER LAW T(x)\u22480.0295\u00b7(1+x)^\u22121.104 (b boot95 [0.991,1.218], Akaike weight 0.987; \u0394AICc exp +9.2 / logistic +11.5 degenerate / linear +16.9) \u2014 harmonic decline whose bulk IS the Dickman gradient; beyond-Dickman residual PEAKED not monotone: \u00b120% concave mid-window hump max 1.23 @ x\u22480.67 between end deficits 0.80/0.90 (quadratic dAICc 50.5, c-CI [\u22120.62,\u22120.14], vertex 0.59 interior), invariant across all three r-brackets; paper-228 follow-up (a) closed"
   },
   {
     "consumed_by_exp_id": "",
@@ -3122,20 +3151,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:59.281523+00:00",
     "title": "Existential-Risk-Optimization: Absolute Bounds on AI Alignment Failure Probabilities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a331ba56 (Q=0.840), which proved 117 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture: for every framed puzzle not isomorphic to its global tab\u2013blank complement, complementation acts freely on the disjoint union of the two assembly spaces, forcing their combined cardinality to be even.\n\nThe key insight is that simultaneous Boolean negation and literal-polarity reversal is ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_a331ba56_7b207344",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "a331ba56",
-    "status": "available",
-    "timestamp": "2026-08-24T15:58:01.590613+00:00",
-    "title": "Deepening: Complementation as a free involution"
   },
   {
     "consumed_by_exp_id": "",
@@ -42396,14 +42411,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalize the Bass determinant identity connecting the Hashimoto determinant to the adjacency and degree matrices."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "175a3cd0",
     "description": "Prove the exact count of squarefree monic\npolynomials over `F_q`, isolating discriminant-zero polynomials as the error term in\nfactorization-type equidistribution.",
     "domains": [],
     "id": "fd_1983",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "2170ccdf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:05.848240+00:00",
     "title": "Squarefree polynomial statistics"
   },
