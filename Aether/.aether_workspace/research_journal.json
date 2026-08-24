@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9d22f1f1",
-      "domain": "Physics",
-      "key_insight": "# FUTURE DIRECTIONS — after THREE-FIELDS-ONE-ANSWER (paper 114)\n\nWhat this cycle established (all `sorry`-free, in `Catalog/Physics/S3TypeChannel*.lean`):\n\n* the **character channel law** `S3Channel.I",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 108,
-      "timestamp": "2026-08-22T08:48:37",
-      "title": "FACT round-32 #3 — UNIVERSAL-S3-EXTENDED: three fields, one answer (paper 114)"
-    },
-    {
       "cycle_id": "e82f11a2",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — rigidity and stability of the universality price\n\nThis cycle closed the equality analysis of the two sharp bounds `1 ≤ Cₛ ≤ #Θ`\nfor the Shtarkov sum of a finite source class, of",
@@ -499,19 +489,19 @@
       "theorem_count": 141,
       "timestamp": "2026-08-23T23:36:49",
       "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT — corpus-B fine knee at 2048 is also 24; the {"
+    },
+    {
+      "cycle_id": "198a9f40",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — the geometry of retention knees\n\n## What survived, what failed\n\n**Survived.** Every order-theoretic statement about the knee: monotonicity in the\ngate, the fail/pass certificate,",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-08-24T01:59:21",
+      "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healthy margins; 0.5B cha"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "81aa12f0",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by this cycle of work on emergent geometry\nfrom entanglement. Each is stated so that it can be decided by a proof or by an\nexplicit counterex",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 135,
-      "timestamp": "2026-08-16T19:34:06",
-      "title": "Emergent Spacetime from Quantum Entanglement"
-    },
     {
       "cycle_id": "4f1ff831",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 141,
       "timestamp": "2026-08-23T23:36:49",
       "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT — corpus-B fine knee at 2048 is also 24; the {"
+    },
+    {
+      "cycle_id": "198a9f40",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — the geometry of retention knees\n\n## What survived, what failed\n\n**Survived.** Every order-theoretic statement about the knee: monotonicity in the\ngate, the fail/pass certificate,",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-08-24T01:59:21",
+      "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healthy margins; 0.5B cha"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3eae19ad",
-      "domain": "Novelty",
-      "name": "wsum_eq",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "3eae19ad",
-      "domain": "Novelty",
-      "name": "spBlock_eq",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "3eae19ad",
-      "domain": "Novelty",
-      "name": "spNest_eq_ssR_coarse",
-      "quality": 0.85
-    },
     {
       "cycle_id": "0ef4aed2",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "asym_capacity_upper",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "198a9f40",
+      "domain": "Bridges",
+      "name": "energy_mono",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "198a9f40",
+      "domain": "Bridges",
+      "name": "sq_gate_le_card_mul_energy",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "198a9f40",
+      "domain": "Bridges",
+      "name": "knee_ge_gate_sq_div_energy",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-23T23:36:49",
+  "last_updated": "2026-08-24T01:59:21",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "286b3a0e",
-        "quality": 0.89,
-        "theorems": 145,
-        "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
-      },
-      {
         "cycle_id": "9aa1e8d1",
         "quality": 0.86,
         "theorems": 93,
@@ -3203,6 +3197,12 @@
         "quality": 0.9,
         "theorems": 194,
         "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conduc"
+      },
+      {
+        "cycle_id": "198a9f40",
+        "quality": 0.84,
+        "theorems": 94,
+        "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healt"
       }
     ],
     "Combinatorics": [

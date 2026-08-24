@@ -54296,7 +54296,7 @@
       "depth_estimate": 3,
       "description": "The bridge from fixed-point counts to generating functions is\nalready in place (Mathlib's\n`MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group` plus the polynomial\nclassification `gen_poly_iff_eventually_polynomial` proved here), so what\nremains is a purely group-theoretic estimate — a genuinely reachable\ncross-domain theorem (group actions × enumerative combinatorics × formal power\nseries).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Bridges",
         "Algebra"
@@ -56957,7 +56957,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** A depth-varying residual system `x ↦ x + g_n(x)` with certified constants `L_n` admits a pseudo-orbit bound governed by products of `(1+L_n)`, and under a summability or averaged contraction condition this bound becomes uniform in depth.\n\nThe key insight is that residual robustness and numerical shadowing are instances of the same nonautonomous error recurrence, but varying layers permit stability mechanisms invisible in a single worst-case constant.\n\n**Why now?** The autonomous residual bridge identifies the common calculus; the next test is whether layerwise structure can convert a geometric finite-depth estimate into a uniform guarantee.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Bridges"
@@ -58080,7 +58080,7 @@
       "depth_estimate": 3,
       "description": "Formalize the equality between degree and normalized polytope volume, and the equality between lattice-point counts in dilates and dimensions of spaces of sections (Ehrhart/Hilbert correspondence).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Bridges",
         "Geometry"
@@ -59518,7 +59518,7 @@
       "depth_estimate": 3,
       "description": "Prove distinct fundamental\n   discriminants yield distinct primitive quadratic Dirichlet characters, and conversely\n   classify primitive quadratic characters by fundamental discriminants. This is the precise\n   finite-order degree-one correspondence relevant to quadratic fields.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -60326,7 +60326,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: deciding whether a finite multiset of non-rotatable square pieces with flat, tab, and blank edges tiles a prescribed rectangle is NP-complete, even when each non-flat edge carries one of only finitely many colors and every valid tiling has a fixed outer frame.\n\nThe key insight is that the assignment-level bijection should survive replacement of the abstract clause predicate by planar wire, crossover, fan-out, and clause gadgets whose unused interfaces are forced by the frame.\n\nWhy now? The exact witness correspondence isolates the sole missing burden: a polynomial-size geometric realization that introduces neither spurious assemblies nor lost satisfying assignments.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Bridges"
@@ -61241,7 +61241,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Under a pairwise log-linear likelihood model for voting histories, the posterior over role assignments is an Ising model conditioned on fixed total wolf number; Bayesian role complementation acts as spin flip, while vote correlations become couplings whose sign predicts coalition polarization.\n\nThe key insight is that the centered one-player posterior already transforms exactly as an Ising spin, and pairwise log likelihoods naturally become quadratic spin interactions. **Why now?** The one-site symmetry bridge is established, so the next falsifiable step is to derive and test the full constrained Gibbs representation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -62646,7 +62646,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** A scale-uniform fractal uncertainty exponent for Fourier restrictions to families of Radon slices implies a nontrivial incidence bound for product-structured tube families.\n\nThe key insight is that simultaneous localization in position and slice frequency constrains how many directions can share the same spatial concentration. **Why now?** The qualitative continuation mechanism clarifies what must be strengthened, while the Radon exception identifies incidence geometry as the necessary replacement for holomorphic rigidity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Bridges"
@@ -62810,7 +62810,7 @@
       "depth_estimate": 3,
       "description": "Construct datasets whose overlap nerve is not flag and quantify the failure of pairwise consistency to detect incompatible triple overlaps. Conjecture that the minimal order of compatibility checks needed for exact recovery equals one plus the largest dimension of a minimal nonface of the nerve.\n\n**The key insight is...** pairwise overlap information reconstructs every higher face precisely in the flag case, making minimal nonfaces the natural certificates of undetected incompatibility.\n\n**Why now?** The flag-nerve bridge supplies an exact boundary between graph-based consistency methods and genuinely higher-order methods.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -64799,7 +64799,7 @@
       "depth_estimate": 3,
       "description": "Conway-style generalized Collatz maps can encode universal computation. Their undecidability does not transfer automatically to the fixed `3n+1` map. Formalizing the precise boundary would be a useful cross-domain result.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -66366,7 +66366,7 @@
       "depth_estimate": 3,
       "description": "For composable functors between finite skeletal categories, define object loss from the uniform distribution on source objects and conditional loss relative to the intermediate image. Conjecturally, the loss of the composite is the first loss plus the expected loss of the second stage precisely when the intermediate fibers satisfy a conditional-uniformity law.\n\nThe key insight is that the proved finite chain rule should admit a relative version analogous to conditional entropy, but composition requires weighting each intermediate object by its actual pushforward probability.\n\nWhy now? The separation of output entropy from expected logarithmic fiber size isolates the two terms that a compositional theorem must track and reveals exactly where naive additivity can fail.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -66448,7 +66448,7 @@
       "depth_estimate": 3,
       "description": "For finite categories equipped with probability distributions on objects and conditional distributions on hom-sets, conjecture that information loss splits into an object-identification term and a morphism-identification term. Vanishing total loss should characterize functors that are injective on supported objects and faithful on supported hom-sets.\n\nThe key insight is that object injectivity and categorical faithfulness are independent, so a genuine categorical entropy must carry at least two components rather than forcing one scalar object statistic to detect both.\n\nWhy now? The zero-loss theorem settles the object component completely and thereby supplies a precise baseline against which a morphism-sensitive extension can be tested.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -66489,7 +66489,7 @@
       "depth_estimate": 3,
       "description": "For essentially small categories whose sets of isomorphism classes carry probability measures, conjecture a measurable chain rule for functors with countable or standard Borel fibers. Infinite information loss should occur exactly when the conditional fiber entropy diverges on a set of positive output measure, rather than merely when one infinite fiber exists.\n\nThe key insight is that infinity is a property of a weighted conditional expectation, not a consequence of cardinality alone.\n\nWhy now? Finite uniform fibers exhibit the logarithmic law exactly, while the failure of unweighted counting on large categories pinpoints the measure-theoretic hypotheses needed for an infinite extension.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -66530,7 +66530,7 @@
       "depth_estimate": 3,
       "description": "Fix finite source size `n`, attained-image size `m`, and maximum fiber size `r`. Conjecture that object entropy is minimized by making fibers as unequal as the constraint permits and maximized by fibers whose sizes differ by at most one; the inequalities should be strict except for permutations of the fiber-size profile.\n\nThe key insight is that object entropy depends only on the normalized partition of the source into fibers, turning functorial information loss into a discrete majorization problem.\n\nWhy now? The uniform-fiber theorem identifies the maximally symmetric equality case, and the chain rule converts every entropy extremum into a dual extremum for expected logarithmic fiber size.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -68451,7 +68451,7 @@
       "depth_estimate": 3,
       "description": "Given finite metric spaces related by a correspondence of distortion at most `2δ`, conjecture that their Rips filtrations admit a natural `2δ` simplicial interleaving that descends functorially to persistent homology in every degree. Establish sharpness by constructing finite spaces for which no smaller uniform translation works. **The key insight is...** indexwise matching is only a special case; correspondences are the correct bridge from perturbation geometry to Gromov–Hausdorff stability. **Why now?** The matched-sample theorem already identifies the sharp triangle-inequality mechanism, so the remaining issue is compatibility with nonfunctional correspondences.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Bridges"
@@ -68960,44 +68960,6 @@
       "thread_id": "",
       "timestamp": "2026-08-21T06:22:52.417774+00:00",
       "title": "Quantitative Copycat stability"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "11e84a32",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "**Conjecture.** An external interpretation is recoverable from structural truth exactly when it is constant on automorphism orbits and definable in the invariant language; for finite models, orbit constancy alone is sufficient after adding bounded counting modalities.\n\nThe key insight is that the meaning-collision example fails precisely because the interpretation does not factor through structural equivalence, suggesting orbit descent as the necessary condition and definability as the sufficient one.\n\n**Why now?** The collision theorem provides the negative half of a classification problem, while finite orbit decompositions offer a direct route to testing the proposed converse.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [],
-      "github_issue": 0,
-      "id": "fd_2155",
-      "last_attempt_time": "2026-08-21T21:41:15.540243+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.87,
-      "parent_direction": "",
-      "priority_score": 0.43887499999999996,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "198023c0",
-      "source_path": "resplit_migration",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "2026-08-21T06:22:52.636952+00:00",
-      "title": "Definability boundary for external interpretations"
     },
     {
       "ambition_level": "extension",
@@ -69692,7 +69654,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every position from which the attacker forces mate, the accessibility rank of its legal-play relation equals its minimax ordinal game value after the standard winner/loser normalization.\n\nThe key insight is that accessibility recursion and ordinal minimax recursion are two presentations of the same well-founded strategy tree, but alternating choices require a carefully polarized rank transformation.\n\n**Why now?** The present escape theorem identifies the complementary non-well-founded case by an explicit infinite chain, while the abstract hierarchy supplies nontrivial well-founded test cases.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Bridges",
         "Logic"
@@ -70365,7 +70327,7 @@
       "depth_estimate": 3,
       "description": "The proved universal property can be lifted from the concrete category of monoids to a statement about coequalizers or regular epimorphisms in categories of algebraic structures. This would make “forgetting is quotienting” functorial and allow compatibility results for products and further quotients.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -70805,7 +70767,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** After enriching positions with whose turn it is, the complement of the stabilized cops' attractor is the unique kernel of the well-founded game obtained by ranking all winning positions and restricting moves to strictly decreasing rank.\n\nThe key insight is that backward attractors describe winning positions while kernels describe losing positions, and a capture-rank orientation removes cyclic play from the winning subgame. **Why now?** The two theories now coexist with compatible relational formulations, so the proposed bridge can be tested first on paths, cycles, trees, and complete graphs before seeking a general proof.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -70966,7 +70928,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** In a precisely specified choiceless set theory with dependent choice and a strong regularity principle, universal Lebesgue measurability is equivalent to a determinacy-style statement for a definable class of infinite games, but it is independent of the bare negation of Choice.\n\nThe key insight is that measurability arises from regularity or determinacy structure, not from the logical negation of a selection principle by itself. The correct bridge should therefore factor through games rather than proceed directly from anti-Choice.\n\n**Why now?** Separating relation-level anti-axioms from extra semantic structure prevents the common invalid inference from “Choice fails” to “every set is measurable” and gives a falsifiable route to a guarded replacement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Logic",
         "Bridges"
@@ -71007,7 +70969,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** In a directed reflexive-transitive multiverse of relational set universes, the modal persistence profile of anti-Extensionality is determined by whether forcing maps preserve the kernel of the membership-observation map; kernel-preserving extensions validate necessity of anti-Extensionality, while kernel-separating extensions make it merely possible.\n\nThe key insight is that the observation kernel converts a foundational anti-axiom into algebraic data whose behavior under world extension can be tracked by modal frame semantics.\n\n**Why now?** Membership codes already admit a direct representation as Boolean worlds, providing a concrete bridge between relational set semantics and modal forcing frames.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -71442,7 +71404,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every finite group `G`, there is a representation-ring-valued negative Euler characteristic whose stabilization by a real `G`-representation `V` is multiplication by the determinant character of `V`; the antipodal suspension law is the `G = ℤ/2` sign-representation case.\n\nThe key insight is that ordinary parity is the determinant character of a one-dimensional sign representation, suggesting that integer dimension should be replaced by the real representation ring.\n\n**Why now?** The established bridge between parity-character pro-towers and exact antipodal suspension identifies both sides of the proposed equivariant generalization in the first nontrivial group.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -72160,7 +72122,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For finite complementary-attack frameworks, the maximal faces of the conflict-free complex determine all total consistent belief states, while the face poset together with revision orientation determines the atom partition into complementary pairs up to relabeling.\n\nThe key insight is that topology alone records compatibility, whereas oriented revision records which incompatibilities arise from paired signs of the same atom.\n\n**Why now?** The current bridge identifies consistent states with conflict-free faces, but also shows that semantics and finitary topology are distinct; adding dynamics may recover the semantic information forgotten by downward closure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -72362,7 +72324,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a finite network of interacting polynomial causal loops, a weighted product metric yields unique global consistency whenever the nonnegative matrix of componentwise Lipschitz influences has spectral radius below one. Conversely, linear networks with spectral radius at least one admit parameters exhibiting either nonuniqueness or instability.\n\nThe key insight is that network consistency should be governed by spectral gain around all feedback cycles, not by the largest local coupling in isolation. **Why now?** The one-loop theorem supplies the scalar base case, and causal networks provide a falsifiable bridge between fixed-point theory, matrix analysis, and polynomial dynamics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics",
         "Bridges"
@@ -73570,7 +73532,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every interpretation between essentially algebraic theories whose model functor is accessible and preserves finite limits factors, up to natural isomorphism, as a reflective localization, followed by the free functor of a finitary monad, followed by a Morita equivalence.\n\nThe key insight is that the three factors isolate distinct semantic changes: discarding models, freely closing models under new operations, and changing presentation without changing model theory.\n\n**Why now?** The compositional calculus of mutations and reflective quotients identifies the endpoint adjunction of any proposed factorization, making uniqueness and obstruction questions precise.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -73652,7 +73614,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** A mutation is induced by a Morita equivalence if and only if both its unit and counit are natural isomorphisms; moreover, in locally presentable model categories it suffices to test these maps on a small dense subcategory of finitely presentable models.\n\nThe key insight is that reversibility is controlled by local comparison maps, while density should propagate those local isomorphisms to all models.\n\n**Why now?** The equivalence-to-bidirectional-mutation construction establishes one direction and isolates density as the substantive bridge needed for a practical criterion.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -75170,7 +75132,7 @@
       "depth_estimate": 3,
       "description": "Suppose an inverse system of coefficient rings admits compatible Bernoulli-type exponential series at every stage. Under suitable completeness hypotheses, the stagewise series should assemble uniquely into a series over the inverse-limit ring, and coefficient extraction should commute with every projection.\n\nThe key insight is that an all-index numerical identity and an inverse-limit universal property can interact only through continuity of coefficientwise operations.\n\nWhy now? The present results establish both packages separately and identify the precise missing bridge: compatible coefficient rings and a topology supporting infinite series.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -76566,7 +76528,7 @@
       "depth_estimate": 3,
       "description": "For a concrete arithmetized theory with a fixed prefix-free syntax, conjecture explicit upper and lower bounds on the shortest fixed-point sentence in terms of the description length of its provability predicate. Test whether bounded recodings preserve these bounds up to additive constants.\n\nThe key insight is that semantic incompleteness yields existence but no numerical threshold; quantitative diagonalization must account for the cost of quotation, substitution, and the provability predicate.\n\nWhy now? The abstract boundary is clear: counting laws and fixed-point laws are presently separate, so coding-cost estimates are the necessary bridge between them.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Logic",
         "Bridges"
@@ -79124,7 +79086,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** There is a terminating, confluent finite-state rewrite system that converts every Zeckendorf representation into a finite base-`φ` expansion with digits `0` and `1`, no adjacent ones, and bounded negative support; its output is canonical among expansions satisfying a fixed endpoint convention.\n\nThe key insight is that both systems normalize by the same local relation, `011 ↔ 100`, but Zeckendorf indices and phinary exponents impose different boundary conditions.\n\n**Why now?** Uniqueness of nonconsecutive Fibonacci sums and the golden-ratio carry law are established independently, making confluence and endpoint control the remaining testable bridge.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -79287,7 +79249,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every countable dependency relation that is well-founded and has finite predecessor sets admits a rank into the natural numbers that strictly decreases along dependency edges; without finite branching, ordinal-valued ranks are necessary and sufficient.\n\nThe key insight is that absence of cycles is weaker than the existence of a numerical level assignment, while finite branching may bridge that gap by bounding the height below each node.\n\n**Why now?** The finite-cycle obstruction isolates rank descent as the mechanism behind untangled hierarchies, making the precise boundary between natural and transfinite ranks directly testable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Bridges",
         "Logic"
@@ -79448,7 +79410,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every well-founded dependency network, the least ordinal rank strictly decreasing along edges is invariant under edge subdivision and nonincreasing under semantics-preserving quotient maps; moreover, it exactly measures the minimum hierarchy height required to eliminate all apparent cycles.\n\nThe key insight is that untangling may be quantified by ordinal height rather than treated as a binary property, linking dependency analysis to termination complexity.\n\n**Why now?** Natural-valued ranks already prohibit every finite cycle, and the next testable step is to determine whether least ordinal ranks behave functorially under standard transformations of dependency networks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -83416,7 +83378,7 @@
       "depth_estimate": 3,
       "description": "Mirror the development with\n   *expanding* monotone updates and `OrderHom.lfp`, modeling saturation-style\n   algorithms (adding candidates until closure). The dual bridge\n   `lfp = ↑(closure kernel)` should follow the same pattern.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -84175,7 +84137,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** The map sending a fundamental discriminant `D` to the quadratic field\n`ℚ(√D)` is a bijection onto the set of quadratic fields; hence the count `608` equals the\nnumber of quadratic fields `ℚ(√d)` whose discriminant has absolute value at most `1000`.\n\n*The key insight is* that a quadratic field is determined by its discriminant, and every\nfundamental discriminant arises from exactly one field, so counting discriminants counts\nfields with no double-counting.\n\n*Why now?* The discriminant side of this bijection is now enumerated and certified; only the\nfield-theoretic uniqueness statement remains, making the correspondence a concrete finite\ntarget rather than an asymptotic one.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -85959,7 +85921,7 @@
       "depth_estimate": 3,
       "description": "Construct the canonical quotient homomorphism from the idèle class group of `K` onto `Cl(𝒪_K)`, identify its kernel with the subgroup generated by archimedean components and local unit groups, and prove that pullback identifies ideal-class characters exactly with idèle-class characters trivial on that kernel.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -91544,7 +91506,7 @@
       "depth_estimate": 3,
       "description": "Prove that every finite `K₅`-minor-free graph can be reduced, using clique-sums, to planar graphs and the Wagner graph, and derive `FourColorTheorem → HadwigerFive`. Together with `wagner_forward`, this yields the substantive Wagner equivalence rather than only the logical contrapositive formulation proved here.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -93156,7 +93118,7 @@
       "depth_estimate": 3,
       "description": "For finite free coordinate modules, transpose defines a functor from the opposite matrix category. The composition law is proved explicitly. The file also proves the corresponding composition-reversal theorem for Mathlib's actual circle-valued `PontryaginDual.map`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -94744,7 +94706,7 @@
       "depth_estimate": 3,
       "description": "The current dimension theorem treats activity as the range of a linear map from\nbehavioral coordinates. A nonlinear version should formalize a smooth map from\na `d`-dimensional behavioral manifold into neural state space and prove that an\nimmersed image has dimension at most `d`. Rank bounds on the derivative are a\nnatural first bridge.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Bridges"
@@ -94942,7 +94904,7 @@
       "depth_estimate": 3,
       "description": "Formalize barycenters, covariance operators, and isotropic position. This is the standard bridge from geometric sections to analytic information about a normalized measure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Bridges"
@@ -95884,7 +95846,7 @@
       "depth_estimate": 3,
       "description": "Given a continuous functor between\n   subcanonical sites, prove that the induced pullback on sheaves carries represented sheaves to\n   the represented sheaves of the image objects exactly when the functor preserves covering\n   families and the relevant finite limits.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -96289,7 +96251,7 @@
       "depth_estimate": 3,
       "description": "The isomorphism `Ext¹(ℤ/k, Y) ≅ Y/kY` is natural in `Y`: for every morphism `f : Y ⟶ Y'` of\n`ℤ`-modules the induced square, with vertical maps the isomorphisms and horizontal maps\n`Ext¹(ℤ/k, f)` and the map induced by `f` on the quotients, commutes.\n\n*Status.* The isomorphism itself is a theorem: `extOneZModEquiv` gives `Y ⧸ kY ≃+ Ext¹(ℤ/k, Y)`\nfor every `k ≠ 0`, built from the explicit surjection `y ↦ extClass ∘ (1 ↦ y)`\n(`extOneHom_surjective`) whose kernel is exactly `kY` (`ker_extOneHom`). What is not formalised is\nfunctoriality of this description in `Y`. Falsified by a morphism `f` for which the square fails\nto commute.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -96412,7 +96374,7 @@
       "depth_estimate": 3,
       "description": "For all `ℤ`-modules `G`, `H` and all `n`, the two left-derived functors of the tensor product\nagree: `Tor(ModuleCat ℤ) n ≅ Tor'(ModuleCat ℤ) n`, and in particular\n`Tor₁(G, H) ≅ Tor₁(H, G)`.\n\n*Status.* Mathlib defines both `Tor` (derived in the second variable) and `Tor'` (derived in the\nfirst) but does not prove them isomorphic. Our computation gives strong evidence in the cyclic\ncase: `Tor₁(G, ℤ/k) ≅ G[k]` (`torOneZModIso`), which for `G = ℤ/m` has order `gcd(k, m)`,\nsymmetric in `k` and `m`; and `Torₙ₊₂(G, ℤ/k) = 0` (`isZero_Tor_two_le_zmod`) matches the\nvanishing of `Tor'ₙ₊₂` predicted by the same resolution used in the other variable. Falsified by\na pair `G`, `H` and a degree `n` with `Torₙ(G, H) ≇ Tor'ₙ(G, H)`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -96494,7 +96456,7 @@
       "depth_estimate": 3,
       "description": "Original conjecture: `∀ a, psi a < Om`. This is **false** for the unrestricted hull:\n`Bridges.OrdinalCollapsing.not_forall_psi_lt_Om`. For `a < b` the ordinal `psi a` *is* a\ngenerator at stage `b`, whereas `psi b ∉ Gen (gens b)`; so `psi a ≠ psi b`, and with\n`psi_mono` this upgrades to `psi_strictMono`, hence `a ≤ psi a` (`self_le_psi`) and\n`Om ≤ psi Om`. The exact form of the failure is now known: `psi c < Ω` *does* hold for\nevery countable `c` (`psi_lt_Om`), and the first value at or above `Ω` is\n`psi Ω = ε_{Ω+1}`.\n\n> **C1′.** Let `psi'` be the *restricted* Madore collapse, defined by\n> `gens' a = {0, Ω} ∪ {psi' c | c < a ∧ c ∈ Gen (gens' a)}`. Then `psi' a < Ω` for every\n> `a`, `psi'` is non-decreasing, and `psi' (ε_{Ω+1})` is the Bachmann–Howard ordinal.\n> Falsifiable by exhibiting `a` with `psi' a ≥ Ω`. Formalising `psi'` requires a\n> simultaneous recursion between the hull and the function, which is the main technical\n> obstacle; the results proved here for `psi` (`psi_zero`, monotonicity, the bridge\n> theorems) should transfer, since the two functions agree at `0` and the chain\n> `ε₀ = psi 0 < psi (Ω^ω)` uses only generators of the form `psi c` with `c` explicitly\n> in the hull.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Bridges",
         "Logic"
@@ -96535,7 +96497,7 @@
       "depth_estimate": 3,
       "description": "> **C6.** *(Collapsing is exactly the loss of one epsilon number.)* For the unrestricted\n> hull, `range psi = ε '' {a | a ≠ Ω}` is now a theorem (`range_psi`). Conjecture: for\n> the restricted collapse of C1′, `range psi' = {ε_a | a < Ω} ∪ {ψ'-values below Ω}` is\n> instead a set of order type `Ω` cofinal in `Ω`, and `psi'` is *not* injective.\n> Falsifiable by proving `psi'` injective, or by exhibiting a value of `psi'` at or\n> above `Ω`.\n\n> **C7.** *(Notation systems.)* The term system `OTerm` modulo `Step` (equivalently, its\n> normal forms) with the induced order is order-isomorphic to a *proper initial segment*\n> of `Iio (psi (ε_{Ω+1}))`, not to all of it: the missing ordinals are exactly those\n> whose `Ω`-CNF needs a value `psi a` with `a` not itself denoted by a term. Falsifiable\n> by producing a surjection of term values onto `Iio (psi (ε_{Ω+1}))`.\n\n> **C8.** *(Sharpness of the PA bridge.)* The `ψ`-free fragment of the term system and\n> the `PA` notation system have the same values:\n> `{t.val | t : OTerm, t.Simple} = {o.repr | o : ONote, o.NF}`, and `ofONote` maps every\n> `NF` notation to a `Simple` term. Value preservation and order reflection are already\n> proved (`val_ofONote`, `ofONote_val_lt_iff`, `strictMono_ofONote`), and the left-hand\n> side is `Iio ε₀` (`simple_val_range`), so the conjecture is equivalent to: every\n> ordinal below `ε₀` is `o.repr` for some `NF` notation `o`. Falsifiable by an ordinal\n> `< ε₀` outside the image of `ONote.repr`, or by an `NF` notation whose `ofONote`\n> translation is not `Simple`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Bridges",
         "Logic"
@@ -96614,7 +96576,7 @@
       "depth_estimate": 3,
       "description": "**C1 (functoriality of the classification).**  `inducedHom_id` shows the identity functor\n  induces the identity homomorphism, `inducedHom_comp_conj` shows the homomorphism induced by\n  a composite is conjugate to the composite of the induced homomorphisms, and\n  `toConjClass_comp` upgrades this to an exact identity of conjugacy classes.  So the\n  classification bijection is compatible with composition; what remains open is the full\n  2-categorical (bicategorical) statement, recorded as N1 below.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -98146,7 +98108,7 @@
       "depth_estimate": 3,
       "description": "A ReLU network computes a\n   tropical rational function; the `b`-smoothed network computes a\n   log-sum-exp expression. Quantifying the uniform distance between a smoothed\n   network of depth `d` and its tropical limit (an `O(d · log(width)/b)` bound)\n   would extend the bridge theorem from one neuron to a whole architecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Bridges"
@@ -99818,7 +99780,7 @@
       "depth_estimate": 3,
       "description": "The bridge says the branch parameters `(σ,ε)` live in a\n   two-dimensional space and take only three values. A quantitative separation\n   result — e.g. a margin bound showing the three branch outputs are separated\n   by at least `min(log 2 − E, …)` — would turn the range-partition theorem into\n   a robustness statement for a trained neuron reading noisy energies.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -100975,7 +100937,7 @@
       "depth_estimate": 3,
       "description": "(Sub-conjecture 3 of the previous cycle, \"bridges\n   versus finite sides\", is now *proved*: see `bridge_dichotomy`.)  The natural next step is\n   the size-3 analogue: if a cubic graph has a finite vertex set `S` with\n   `(cutEdges G S).ncard = 3` and `S.card > 1`, is `S` contractible without affecting\n   Berge–Fulkerson?  In the finite theory this reduction to cyclically 4-edge-connected graphs\n   is standard; `cutEdges_finite_and_handshake` supplies the parity bookkeeping, and the only\n   genuinely infinite ingredient is that contraction of a finite side preserves local\n   finiteness and cubicity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -101016,7 +100978,7 @@
       "depth_estimate": 3,
       "description": "Also resolved: the `Tor`-theoretic half of the old Conjecture 4.  Mathlib derives `Tor`\nin the *second* variable and does not relate it to flatness; using the δ-functor\nstructure in the *first* variable, `Catalog.Bridges.flat_iff_isZero_Tor_one` now proves\nboth directions of `Module.Flat R N ↔ ∀ M, IsZero (Tor 1 M N)`, together with\n`isZero_Tor_succ_of_flat_left` (flat modules are `Tor`-acyclic in the underived\nvariable).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges",
         "Algebra"
@@ -104663,7 +104625,7 @@
       "depth_estimate": 3,
       "description": "**Statement.** Every solution of `C(n,k) = C(n-1,k+1)` with `1 ≤ k ≤ n-2` is a member\nof the Fibonacci family, i.e. `n = F(2i+4) F(2i+5)` and `k = F(2i+2) F(2i+5)` for\nsome `i ≥ 0`.  Equivalently: with `m = n - k`, the integer `(5m-1)(m-1)` is a perfect\nsquare iff `m = F(2i+3) F(2i+5)` (or `m ∈ {1,2}`).\n\n**Status here.** `Singmaster.choose_cross` proves the combinatorics-to-arithmetic\ndirection and `Singmaster.fib_cross` proves that the Fibonacci pairs are solutions.\nThe converse (completeness) is open in this development.\n\n**The key insight is** that `5m^2 - 6m + 1 = \\square` is, after the substitution\n`x = 10m - 6`, the Pell equation `x^2 - 5y^2 = 16`, whose solution semigroup is\ngenerated by the fundamental unit `(9 + 4\\sqrt5)` of `ℤ[\\sqrt5]`; Fibonacci numbers\nenter exactly because that unit is `φ^6`.\n\n**Why now?** This is a genuine algebra/combinatorics bridge: it converts a statement\nabout binomial coefficients into a statement about the unit group of a real quadratic\norder, and Mathlib already has `Zsqrtd`, Pell equations and the Fibonacci API used in\n`cassini_odd`.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -112173,7 +112135,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Let `L/ℚ` be Galois with group `G`, let `N ⊴ G` with `G/N` cyclic\nof order `m`, and let `F = [Frob ∈ N]`.  Then `F` is pinned by the character of\nconductor `f(G/N)` and `I(p mod f ; F) = H(1/m)` exactly; conversely, if a fork\nof rate `1/m` attains `I = H(1/m)` for some modulus, its defining set is a union\nof fibres of a cyclic quotient of order `m`.\n\n*The key insight is* that the entropy value `H(1/m)` is not a coincidence of the\ncubic case: it is the entropy of the uniform distribution on the fibres of\n`G ↠ G^ab ↠ C_m`, and the trichotomy theorem already forces saturation to be\nequivalent to determinism, so only the *rate* survives as an invariant.\n*Why now?* Both halves are now formal objects: `info_eq_top_iff` supplies the\nconverse direction abstractly, and `factorsThroughAb_iff` supplies the group\nside; only the Artin/Chebotarev bridge remains to be axiomatised or imported.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -116273,7 +116235,7 @@
       "depth_estimate": 3,
       "description": "New in this cycle:\n   `WignerBridge.frac_large_eigenvalues_le` is a deterministic Markov inequality for\n   the ESD of any real symmetric matrix, and\n   `RademacherWigner.expect_frac_large_eigenvalues_le` turns the uniform moment bound\n   into `E[#{i : |λᵢ|/√N ≥ t}/N] ≤ (k+1)^(2k)/t^(2k)`, independent of `N`. Hence\n   `RademacherWigner.esd_tight`: for every `ε > 0` there is a threshold `t` (one may\n   take `t = 2/√ε`) with expected mass at most `ε` outside `[−t, t]` **in every\n   dimension**. This is precisely the compactness hypothesis of Conjecture 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics",
         "Bridges"
@@ -117895,7 +117857,7 @@
       "depth_estimate": 3,
       "description": "**Statement.** There are no indices `a < b < c < d` with\n`antiFib b - antiFib a = antiFib c - antiFib b = antiFib d - antiFib c`.\n\n**The key insight is** that `8·antiFib n = (2n-1)² + 7`, so a four-term progression of\nanti-Fibonacci numbers is *exactly* a four-term progression of odd squares — and by\nFermat's right-triangle theorem no four distinct squares are in arithmetic progression.\nThe proved bridge `antiFib_AP_iff_pythagoreanTriple` already reduces the three-term case\nto Pythagorean triples; the four-term case should reduce to `x⁴ - y⁴ = z²`.\n\n**Why now?** Mathlib already contains the descent infrastructure for the quartic Fermat\nequation (`not_fermat_42`, the `Fermat42.Minimal` machinery) and the full classification\nof Pythagorean triples, so the missing step is the passage from `a⁴ + b⁴ ≠ c²` to\n`a⁴ - b⁴ ≠ c²`, a single extra descent that is now within formalisation reach.\n\n**Falsifiable:** a brute-force scan over `a < b < c < d ≤ 10⁵` either produces a\ncounterexample or supports the conjecture; the scan is cheap because of the proved\n`O(1)` membership test `isAntiFibValue`.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -123484,7 +123446,7 @@
       "depth_estimate": 3,
       "description": "Every set map between pointed magmas induces a pseudofunctor of codiscrete bicategories, and round trips are invisible to 2-cells. This suggests that the construction is a genuine 2-categorical left adjoint lifting Mathlib's adjunction between objects of a category and codiscrete categories.\n\nM |-> MagmaBicat M extends to a 2-functor from pointed sets to bicategories that is adjoint to taking the 1-cells of the unique object, and it is an equivalence onto one-object bicategories with codiscrete hom-categories.\n\nBuild the unit and counit in Lean using mapPseudofunctor, verify the triangle identities up to invertible modifications, and compare with CategoryTheory.Codiscrete.adj.\n\nThe codiscrete construction is characterised universally, so coherence-by-codiscreteness is not an ad hoc trick but a right/left adjoint phenomenon.\n\nCoherence data cannot be produced adjointly at the bicategorical level, indicating that pseudofunctoriality on all set maps is an accident of thinness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -124075,7 +124037,7 @@
       "depth_estimate": 3,
       "description": "Witness B shows chi(G) = max(chi_1, chi_2) fails precisely when the edges of the glueing clique are split between the sides, so each side needs fewer than k colours. We conjecture the failure is controlled by a defect d measuring how far K is from being a clique on the worse side, giving a two-sided estimate for weak clique sums. This interpolates between the weak and genuine settings.\n\nFor a weak clique sum with defect d = |K| - max(omega_1(K), omega_2(K)), one has max(chi_1, chi_2) <= chi(G) <= max(chi_1, chi_2) + d.\n\nEnumerate all weak clique sums on at most six vertices, record chi(G) - max(chi_1, chi_2) against d, then formalise the upper bound by extending the colour permutation to a partial matching on the split part.\n\nA quantitative bridge covering both the proved chi = max theorem (d = 0) and the Witness B failure (d = 1).\n\nThe data would reveal a second parameter, presumably the interaction pattern of the split edges, needed to control colouring of weak sums.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Bridges"
@@ -129505,7 +129467,7 @@
       "depth_estimate": 3,
       "description": "No modal axiom set should define primitivity, nor bound the uniform primitivity exponent. Cycle 8 supplies, for each N, a frame whose exponent is exactly N, so the classes to be separated are now explicitly populated. This draws a sharp boundary around what correspondence theory expresses about mixing.\n\nFor every set Gamma of modal formulas and every natural N, Gamma defines neither the class of primitive support frames nor the class whose uniform primitivity exponent is at most N.\n\nFor each N take the nearest-neighbour chain on N+1 states, whose exponent is exactly N by nbrChain_exponent_eq, and collapse it by a surjective bounded morphism onto a lazy frame of smaller exponent; apply Valid_of_boundedMorphism_surjective.\n\nMixing is beyond modal axiomatisation, extending the limitative results from irreflexivity to quantitative dynamics.\n\nA modal scheme forcing primitivity would be a positive correspondence result and a proof-theoretic certificate of mixing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Logic",
         "Bridges"
@@ -132790,7 +132752,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.82,
       "parent_direction": "",
       "priority_score": 1000.0,
       "proof_strategy": "",
@@ -132801,7 +132763,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-08-22T19:36:57.216675+00:00",
       "title": "FACT round-63 #1 — TDIAL-U72: the zero-fit dial holds at bitlen 72 with count parity (paper 185)"
@@ -135951,7 +135913,7 @@
       "depth_estimate": 3,
       "description": "Census equivalence provably preserves being an involution. The conjecture is that this is one instance of a general descent principle for functorial group-theoretic invariants, and that these invariants are jointly complete for the relation. This would give a decision procedure for census equivalence that avoids searching Aut(G).\n\nEvery invariant of group elements that is preserved by inversion and by all automorphisms in Aut(G,S) is constant on census-equivalence classes, and the family of such invariants separates distinct classes.\n\nFormalise a general descent lemma parameterised by an invariant, instantiate it at orderOf and at derived-series membership, and test completeness computationally on groups of order ≤ 16.\n\nCensus equivalence becomes decidable by evaluating a finite list of invariants, replacing an automorphism search.\n\nThere are census-inequivalent elements agreeing on all definable invariants, which would be an interesting rigidity failure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -139783,6 +139745,177 @@
       "thread_id": "",
       "timestamp": "2026-08-24T01:59:07.236528+00:00",
       "title": "A tail-exponent measurement protocol"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Algebra.ZeroFitDialParityCapacity",
+        "Algebra.ZeroFitDialU72Parity"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Extends the decorrelated capacity law k·rho^2 <= 1 to families with pairwise correlation at most gamma, giving rho^2 <= (1 + (k-1)gamma)/k. The approach diagonalises the equicorrelated Gram matrix (1-gamma)I + gamma J and applies the same residual-norm argument used for Bessel's inequality. It matters because real baselines are never exactly decorrelated, so the usable budget is the gamma-version.\n\nIf k statistics have pairwise correlations at most gamma >= 0 and each correlates at least rho >= 0 with a shared response, then k*rho^2 <= 1 + (k-1)*gamma*rho^2, i.e. rho^2 <= (1+(k-1)gamma)/k.\n\nFormalise the eigenvalue decomposition of (1-gamma)I + gamma J over Fin k and repeat the residual expansion of bessel_ineq with a non-orthonormal Gram matrix; check sharpness with the equicorrelated explicit family generalising parity_capacity_realizable.\n\nEvery recorded multi-baseline dial reading becomes a measurable lower bound on the mutual correlation of the baselines.\n\nThe Gram budget is not the binding constraint for correlated families and the parity phenomenon is specific to exact decorrelation.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_3900",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.591875,
+      "proof_strategy": "Write the Gram matrix as (1-gamma)I + gamma J, bound its inverse quadratic form from below by (1-gamma)^{-1}, then apply the projection inequality 0 <= ||w - P w||^2 exactly as in bessel_ineq.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "58176b8d",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/58176b8d",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T01:59:28.610894+00:00",
+      "title": "Parity Capacity Staircase for Rank Dials"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Novelty.ZeroFitDialU64",
+        "Algebra.ZeroFitDialParityCapacity"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Combines the tie-attenuation ceiling of the dyadic profile with the parity threshold: two decorrelated tied statistics should obey a threshold equal to the geometric mean of their tie ceilings times 1/sqrt(2). This is the first bound in the thread that the recorded 0.605 would come close to.\n\nFor decorrelated statistics with tie profiles L1, L2 and shared response, the common reading satisfies rho^2 <= (spearmanSq L1 + spearmanSq L2)/2; for the dyadic dial this gives rho <= sqrt(6/7)*sqrt(2)/2 ≈ 0.655.\n\nCompose the midrank collapse identity sp_eq_ssR with bessel_corr, then evaluate at dyadicBlocks 72 and the binomial profile of the count baseline.\n\nThe recorded 0.605 sits within 8% of a proved ceiling, making the dial a near-extremal configuration.\n\nTie attenuation and Gram attenuation interact non-multiplicatively and a genuinely two-dimensional analysis is required.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_3901",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5638197894319682,
+      "proof_strategy": "Realise each tied statistic's centred midrank vector as an orthogonal projection of the response ranking; apply Bessel to the two projections and bound each projected norm by its tie ceiling.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "58176b8d",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/58176b8d",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T01:59:29.130554+00:00",
+      "title": "Tie-Gram Interference Threshold"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Algebra.ZeroFitDialU72Parity",
+        "MachineLearning.ZeroFitDialUnif52"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Turns the parity threshold into a prediction about where the count advantage must vanish. Under decorrelation the advantage obeys alpha >= rho - sqrt(1-rho^2), which is positive exactly when rho > 1/sqrt(2), so the advantage cannot disappear before the dial crosses that value.\n\nFor every bitlen b with dial rho(b) > sqrt(2)/2 and decorrelated baselines, the count advantage satisfies alpha(b) >= rho(b) - sqrt(1 - rho(b)^2) > 0; interpolating the recorded readings places the crossing near bitlen 56.\n\nProve the inequality from corr_lower_bound with c <= 0, then instantiate at the recorded readings for bitlens 44, 52, 64, 72 and check the sign pattern of alpha.\n\nThe reported decay of the advantage from +0.07 to below +0.05 is forced, not incidental, and pins the crossing bitlen.\n\nThe two statistics are measurably correlated, which is itself a new arithmetic fact about the 2-adic valuation versus popcount.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_3902",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5931481481481482,
+      "proof_strategy": "Substitute b = rho - alpha into the Gram inequality with c <= 0 and solve the resulting quadratic in alpha.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "58176b8d",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/58176b8d",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T01:59:29.665171+00:00",
+      "title": "Crossing Bitlen of the Count Advantage"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Novelty.ZeroFitDialU64",
+        "MachineLearning.ZeroFitDialUnif52",
+        "Algebra.ZeroFitDialParityCapacity"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Asks for genuinely arithmetic witnesses of the capacity law: families of statistics on b-bit integers (2-adic valuation, popcount residues, digit sums modulo distinct primes) that are asymptotically pairwise decorrelated. Combined with the capacity law they cap any dial built from k such statistics at 1/sqrt(k).\n\nFor every k there is a family of k arithmetic statistics on {0,...,2^b-1} whose pairwise Spearman correlations tend to 0 as b -> infinity; consequently their common reading against any response is at most 1/sqrt(k) + o(1).\n\nCompute the pairwise rank correlations of the 2-adic valuation and popcount profiles exactly at small b, and formalise the limit via equidistribution of digits modulo independent moduli.\n\nDial engineering has an information-theoretic ceiling: adding decorrelated baselines strictly lowers the attainable common reading.\n\nArithmetic statistics on binary expansions are inherently correlated, which would itself explain the persistent count advantage.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_3903",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5625453372046967,
+      "proof_strategy": "Express each statistic as a sum of digit functions, compute covariances by independence of digits under the uniform law, and bound the rank-vs-value discrepancy by the tie profile.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "58176b8d",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/58176b8d",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T01:59:30.162763+00:00",
+      "title": "Orthogonal Arithmetic Statistic Families"
     },
     {
       "ambition_level": "extension",
@@ -166994,12 +167127,13 @@
     "Computation": 1,
     "Geometry": 2,
     "Logic": 1,
-    "Novelty": 40.0,
+    "Novelty": 41.0,
     "NumberTheory": 2,
     "SetTheory": 1
   },
   "recent_theme_keywords": {
     "**0.52**": 2,
+    "**0.606**": 1,
     "**0.84**": 2,
     "**domain**": 9.0,
     "**hypothesis": 2,
@@ -167007,13 +167141,14 @@
     "**test**": 9.0,
     "**verdict": 18,
     "0.0001": 2,
+    "20261160–62": 1,
     "3-adic": 2,
     "acting": 2,
     "algebraic": 2.0,
     "already": 13,
     "assessment": 17,
     "a²+b²−c²": 3,
-    "barriers": 3,
+    "barriers": 4,
     "becomes": 4,
     "berggren": 9.0,
     "boundary": 8,
@@ -167025,7 +167160,6 @@
     "concrete": 5,
     "conjecture": 17.0,
     "connecting": 5.0,
-    "consequences": 1,
     "correct**": 2,
     "e.g": 5.0,
     "elementary": 2,
@@ -167048,27 +167182,27 @@
     "groups": 3.0,
     "growth": 8.0,
     "here": 2,
-    "holds": 2,
+    "holds": 3,
     "hyperbolic": 6.0,
     "i(joint": 2,
-    "iteration": 4,
+    "intact": 1,
+    "iteration": 5,
     "itself": 8.0,
     "limited-memory": 2,
     "log(1+√2": 4.0,
     "lorentz": 5.0,
     "lorentz-preserving": 5.0,
-    "margins": 1,
     "matrices": 3.0,
     "metric": 5.0,
     "model": 2,
     "modular": 2,
-    "monotone": 1,
+    "monotone": 2,
     "moonshot)**": 4,
     "moves": 3.0,
     "now**": 9.0,
     "number": 11.0,
     "opening": 2,
-    "paper": 28,
+    "paper": 29,
     "positive": 6,
     "precise": 4,
     "preserving": 4,
@@ -167097,8 +167231,7 @@
     "unified": 2,
     "vanishingly": 3,
     "well-defined": 3.0,
-    "while": 3,
-    "|---|---|---|---|---|": 1
+    "while": 3
   },
   "selection_log": [
     "famous_subtask",
