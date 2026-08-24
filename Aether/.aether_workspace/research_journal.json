@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bb070ee4",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\nThe cycle started from the one-parameter theorem `PMFrame.headCoeff_pmFrame_ge_neg_one` and the\ntwo-parameter (Migotti) theorem of `Catalog/Shared/PMFrameTwoParameter.lean`, and p",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 140,
-      "timestamp": "2026-08-22T13:02:30",
-      "title": "The one-parameter case is already a theorem here"
-    },
-    {
       "cycle_id": "c99dba13",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Fisher–Rao length bounds\n\nThis cycle turned the former *Conjecture 5* (\"the `L¹` bound integrates to a\nFisher–Rao length bound\") into the theorem\n`FisherRao.l1_le_fisherRao_lengt",
@@ -499,19 +489,19 @@
       "theorem_count": 81,
       "timestamp": "2026-08-24T05:02:44",
       "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
+    },
+    {
+      "cycle_id": "33808f71",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — NET-69 round 22 (selection-theoretic layer)\n\n## What this cycle established\n\nThree Lean files in `Catalog/Novelty/`:\n\n* `ProbeRetentionLimits.lean` — the exchange inequality for",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-24T05:02:59",
+      "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL — probes recover only R2=0.32 on code too; probe-only l"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6a0dc5c0",
-      "domain": "Logic",
-      "key_insight": "# Future directions — bold, falsifiable conjectures from the NET-45 cycle\n\nEach conjecture is stated so that a single computation, run, or Lean development decides\nit. Formal counterparts of the defin",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-17T01:55:59",
-      "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=2048, s1) = d·ctx/32 E"
-    },
     {
       "cycle_id": "665c1eea",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 81,
       "timestamp": "2026-08-24T05:02:44",
       "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
+    },
+    {
+      "cycle_id": "33808f71",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — NET-69 round 22 (selection-theoretic layer)\n\n## What this cycle established\n\nThree Lean files in `Catalog/Novelty/`:\n\n* `ProbeRetentionLimits.lean` — the exchange inequality for",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-24T05:02:59",
+      "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL — probes recover only R2=0.32 on code too; probe-only l"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e4ce2d9a",
-      "domain": "Logic",
-      "name": "with",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e4ce2d9a",
-      "domain": "Logic",
-      "name": "kneeIdx_stable_of_margins",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e4ce2d9a",
-      "domain": "Logic",
-      "name": "exists_perturbation_lowering_knee",
-      "quality": 0.78
-    },
     {
       "cycle_id": "7797dc46",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "alignedCap_eq_singleton",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "33808f71",
+      "domain": "Novelty",
+      "name": "hybrid_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "33808f71",
+      "domain": "Novelty",
+      "name": "isTopSet_hybrid_iff",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "33808f71",
+      "domain": "Novelty",
+      "name": "hybrid_isTopSet_of_margin",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-24T05:02:44",
+  "last_updated": "2026-08-24T05:02:59",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "71e110b3",
-        "quality": 0.82,
-        "theorems": 77,
-        "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-"
-      },
-      {
         "cycle_id": "6cdc8533",
         "quality": 0.78,
         "theorems": 55,
@@ -3637,6 +3631,12 @@
         "quality": 0.84,
         "theorems": 81,
         "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitle"
+      },
+      {
+        "cycle_id": "33808f71",
+        "quality": 0.78,
+        "theorems": 61,
+        "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL — probes recover only R2=0.32 on co"
       }
     ],
     "NumberTheory": [

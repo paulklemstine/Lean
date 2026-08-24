@@ -1601,36 +1601,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now strictly monotone {16,20,24}; size-invariance sharpens; 2048 corpus-B reading was a coarse-grid artifact"
   },
   {
-    "consumed_by_exp_id": "9f4b7d2b",
-    "description": "Round-57 #1, cron iteration (exp 527). The zero-fit dial tested on uniform draws at exact bitlen 48.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-48B**: Spearman(T, rate) = **0.7291/0.7286/0.7087** across three seeds; all inside [0.55, 0.85]; pooled advantage +0.134 CI [0.113, 0.158].\n\nThe dial survives uniform draws at bitlen 48.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp527_t_dial_unif_48.py + exp527_result.json, seeds 20261110\u201312.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3718",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T18:51:45.087483+00:00",
-    "title": "FACT round-57 #1 \u2014 TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
-  },
-  {
-    "consumed_by_exp_id": "33808f71",
-    "description": "## NET-69 \u2014 limited-memory axis, round 22 (paper 154, ResearchOutput/exp_net69_probe_code.py, /tmp/net69.log)\n\n**Verdict name: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL.**\n\n### Result\nNET-58/61 methodology on Python source (the strongest candidate for content-based importance):\n\n| arm | retained @B=64 |\n|---|---|\n| accumulated-HH | 0.9340 |\n| probe-only | **0.8149** |\n| hybrid \u03bb=1 | 0.9371 |\n\nProbe R\u00b2 on code: mean **0.3185** (min 0.1225, max 0.5921) vs prose mean 0.329.\n\n- **P1 REFUTED decisively**: R\u00b2 identical to prose; probe-only LOSES by 12 pts.\n- **P2 CONFIRMED**: both clauses hold (R\u00b2 \u2264 0.45, probe \u2264 accumulated).\n- **P3 CONFIRMED**: hybrid +0.3 pts on code \u2014 non-degrading, contrasting prose's monotone harm.\n\n### The law\nImportance is relational in structured domains too: even where identifiers repeat and syntax is rigid, a key's vector carries almost no information about its future reception. The domain difference is in the interaction term only (content neutral on code vs harmful on prose). With NET-68: the code-domain picture is complete \u2014 fewer keys needed (12/16), content useless for choosing them, recency+accumulation still the deployable pair.\n\n### All 8 barriers\n(a) clean; (b) clean \u2014 first cross-domain probe comparison; (c) confronted \u2014 one language/repo stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET69; (g) fair \u2014 identical methodology/budgets as NET-58/61; (h) DIRECT.\n\n### Next\nMath/non-English domains; learned online predictors; increments at 4096; 7B cell.\n\nNow 69 network experiments. Assessment v69. Paper 154.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3735",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T19:36:57.217605+00:00",
-    "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL \u2014 probes recover only R2=0.32 on code too; probe-only loses to accumulation by 12pts; hybrid non-degrading (+0.3)"
-  },
-  {
     "consumed_by_exp_id": "f45042dc",
     "description": "## NET-79 \u2014 limited-memory axis, round 30 (paper 163, ResearchOutput/exp_net79_1p5b4096.py, /tmp/net79.log)\n\n**Verdict name: THE-ACCELERATION-IS-UNIVERSAL.**\n\n### Result\nThe 1.5B's first ctx=4096 cell (fine grid; gate identical to NET-55/65/66):\n\n| k | 16 | 20 | 24 | 28 | 36 | 44 | 56 |\n|---|---|---|---|---|---|---|---|\n| retained | 0.960 \u2717 | 0.966 \u2717 | 0.972 \u2717 | 0.974 \u2717 | 0.977 \u2717 | 0.980 \u2717 | **0.985 \u2713** |\n\n**k\\*(1.5B@4096) = 56.**\n\n- **P1 REFUTED**: the shift does not delay the acceleration.\n- **P2 CONFIRMED dramatically**: the acceleration hits all scales \u2014 56 \u2265 48.\n- **P3 REFUTED**: no intermediate landing.\n\n### The complete two-scale \u00d7 four-context table\n\n| scale | @512 | @1024 | @2048 | @4096 | increments |\n|---|---|---|---|---|---|\n| 0.5B | 16 | 20 | 24 | **40** | +4, +4, **+16** |\n| 1.5B | 16 | 16 | 18 | **56** | 0, +2, **+38** |\n\nThe increments tell the story: the 0.5B accelerates from +4 to +16 (4\u00d7), while the 1.5B accelerates from +2 to +38 (**19\u00d7**). Scale doesn't just fail to delay the acceleration \u2014 it AMPLIFIES it. At short contexts the 1.5B needs fewer or equal keys; at 4096 it needs MORE (56 vs 40). The size relationship INVERTS past the phase transition.\n\n### Deployment consequence\nFor agentic workloads: bigger models are more memory-efficient per key at \u22642048 context but LESS efficient at \u22654096. Budget tables must include both scale AND context as independent parameters with a non-monotone interaction.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 1.5B 4096 cell; (c) confronted \u2014 limits: 2 windows (VRAM-bound), bf16 numerics, one corpus stated; (d) clean; (e) deterministic baseline-replicating (0.4937); (f) clean \u2014 ALL_DONE_NET79; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nFine grid between 44 and 56; crossover localization; domain-jump @4096; 7B quantized-offload cell.\n\nNow 79 network experiments. Assessment v79. Paper 163.\n",
     "domains": [
@@ -1747,16 +1717,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59651b5d",
     "description": "Round-69 #1, cron iteration (exp 538, PARTIAL \u2014 2/3 seeds before agent death). The highest-bitlen uniform measurement.\n\n**AT-THE-FLOOR**: Spearman(T, rate) = **0.563** / **0.556** across two completed seeds on uniform draws at bitlen 92 \u2014 both essentially AT the 0.55 floor (margins +0.006 and \u22120.001).\n\nThe dial's signal has eroded to its minimum, confirming the gradual erosion trend from paper 189.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp538_t_dial_unif_92.py + exp538_result.json, seeds 20261210\u201311 (third seed not measured).",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3757",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T21:37:22.153031+00:00",
     "title": "FACT round-69 #1 \u2014 TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
   },
@@ -2126,6 +2097,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Round-73 #2, exp 559. **ADAPT-NULL-EQUALIZER / SKIP-FLIP-WINS.** The QR(\u2264100) dial's calibration confirmed in fixed-FB regime (Spearman 0.739 vs oracle-dial 0.778; FB100 0.835; mechanism exact: (N|p)=\u22121 primes divide zero x\u00b2\u2212N values). But sieve-length \u221d 1/rate LOSES (\u221217.6% \u2014 floor clip load-bearing, unclipped \u2212146.7%); rate-concentrator +8.6%; realized oracle bound +74.8% = unclaimed headroom. Deployment flip works: \u03b8=q20 skips 28.3% of work at 89.5% retention (+28.9% throughput); hard tail 40/400 unreachable \u2192 deferral is the instrument, not deeper sieving. End-to-end PASS (20/20 factored, 1350 relations independently reverified).\n\nConstants-layer result under the standing asymptotic-goal directive. Repro: ResearchOutput/scripts/2026-08-21-resume/exp559_adaptive_qs.py + exp559_result.json.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3938",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T05:03:28.425620+00:00",
+    "title": "FACT round-73 #2 \u2014 ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; skip-flip wins deployment (paper 207)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-73 #1, exp 560. **PORTFOLIO-RHO-UNIVERSAL+H3-FAIL.** Oracle winner shares: \u03c1 58.0%, p\u22121@256 34.5%, PM1@1024 4.5%, Fermat 2.8%, TD 0.17% \u2014 flat across bitlen AND balance quintiles; the organizing axis is p\u22121 powersmoothness, an **N-INVISIBLE channel** (self-hint closure replicated in a scheduling frame). Scheduling: static regret 3.117 vs oracle; dial rule tuned itself to do-nothing (\u0394=0.000); ML rule significantly WORSE (4.683). Median regret 1.000 for all strategies \u2014 the fat tail lives in the smoothness-carried minority no N-only dial reaches. Named next cell: PAID smoothness probes (short-capped p\u22121 as observation).\n\nLedger: eliminations need dominance-in-distribution arguments (mean-vs-constant H3 refuted by TD variance-tail + PM1_1024 share); sampler-dependence scope note (wide ranges dilute the Fermat channel vs paper 137's balanced-bet design).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp560_portfolio.py + exp560_result.json + per-N CSVs, seed 20260827.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3939",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T05:03:28.427083+00:00",
+    "title": "FACT round-73 #1 \u2014 PORTFOLIO: no universal winner, no dial edge; regret tail is N-invisible (paper 206)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -2183,6 +2182,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 05978b53 (Q=0.890), which proved 95 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** `sup_{[0,1]\u00b2} |prodGate h x y \u2212 x y| = h\u00b2/3 + O(h\u2074)`, attained at\nthe corner `(1,1)`; more generally the polarisation branches' quartic errors\ncancel to leading order, so the sharp constant is `((x+y)\u2074 \u2212 (x\u2212y)\u2074)/24` in\nabsolute value rather than the sum `((x+y)\u2074 + (x\u2212y)\u2074)/24` proved ",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_05978b53_fbead962",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "05978b53",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:28.127468+00:00",
+    "title": "Deepening: Conjecture. `sup_{[0,1]\u00b2} |prodGate h x y \u2212 x y| = h\u00b2/3 + O(h\u2074)`, attained at"
   },
   {
     "consumed_by_exp_id": "",
@@ -2897,20 +2910,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 2292d7e8 (Q=0.820), which proved 70 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **C4 (reward hacking is a covariance) \u2014 PROVED at first order.**\n  `RLHF.audit_gap_first_order`: `|\ud835\udd3c_{\u03c0_\u03b2}f \u2212 \ud835\udd3c_p f \u2212 Cov_p(r,f)/\u03b2| \u2264 24 (R/\u03b2)\u00b2 \u03c3_p(f)`\n  for `|r| \u2264 R \u2264 \u03b2`, hence `RLHF.audit_gap_of_uncorrelated`: statistics uncorrelated\n  with the reward move only at order `\u03b2\u207b\u00b2`.  The *sharp thresho",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_2292d7e8_1fe02a78",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "2292d7e8",
-    "status": "available",
-    "timestamp": "2026-08-24T04:10:35.874855+00:00",
-    "title": "Deepening: C4 (reward hacking is a covariance) \u2014 PROVED at first order.*"
   },
   {
     "consumed_by_exp_id": "",
@@ -12856,6 +12855,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Static probes have a fixed error vector, whereas accumulated heavy-hitter statistics observe realised attention and so have an error that decays with the observation window. Modelling the error as eps(t) and re-running the transfer argument should show that accumulation dominates any static score after a finite window.\n\nIf a score's sup-error satisfies eps(t) <= C/t while a static probe's error is bounded below by a positive constant, then beyond an explicit t0 the accumulated arm's guaranteed retention strictly exceeds the static arm's worst case at the same budget.\n\nState a time-indexed version of retained_ge_of_isTopSet_sup and combine with the sharpness instance, which certifies that the static worst case is attained.\n\nThe deployable pair recency+accumulation is justified by a theorem, not only by measurement.\n\nStatic content information retains a role at short windows, and the crossover point becomes the object of study.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_3937",
+    "priority_score": 0.6715714285714287,
+    "research_mode": "team",
+    "source_exp_id": "33808f71",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:53.067868+00:00",
+    "title": "Shrinking-Error Advantage of Accumulating Predictors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Unison lags of an infinite digit melody are closed under gcd. On a finite window of length n this fails below the Fine-Wilf threshold p + q - gcd(p,q). We conjecture the sharp finite-window statement and its extremal examples for digit alphabets.\n\nIf a window of n consecutive digits has periods p and q and n >= p + q - gcd(p,q), then it has period gcd(p,q); for n = p + q - gcd(p,q) - 1 there is a decimal counterexample.\n\nState periodicity relative to a window in Lean and adapt IsPeriod.sub with index-range side conditions; construct the extremal words explicitly for small p, q and verify by decide.\n\nEmpirical periodicity claims about finite digit samples acquire an exact sample-size threshold.\n\nFinite-window periodicity is strictly weaker than expected and needs a different invariant, e.g. the windowed lag spectrum.",
     "domains": [
       "Combinatorics"
@@ -12923,6 +12936,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T16:44:17.367993+00:00",
     "title": "Unit Logarithmic Capacity of the Mandelbrot Set"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The hybrid arm is non-degrading precisely while the mixing weight stays below the ratio of the accumulated score's separation margin to the probe's oscillation. Measuring that ratio in both domains should predict the observed code-neutral versus prose-harmful asymmetry with no new modelling assumptions.\n\nFor each domain there is a threshold lambda* = gamma / D (gamma the accumulated margin at budget B, D the probe oscillation) such that the hybrid retains exactly the accumulated mass for all lambda <= lambda*, and the measured lambda* on code exceeds 1 while on prose it is below 1.\n\nThe first clause is hybrid_isTopSet_of_margin, already proved; the second is an empirical measurement of gamma and D on the existing traces at B = 64.\n\nHybrid safety becomes a one-number deployment check computable from the accumulated statistic alone.\n\nNon-degradation on code is not a margin effect and must come from correlation between probe and accumulated scores.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3936",
+    "priority_score": 0.6713870967741937,
+    "research_mode": "team",
+    "source_exp_id": "33808f71",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:52.578113+00:00",
+    "title": "Margin-to-Oscillation Ratio as Hybrid Interaction Predictor"
   },
   {
     "consumed_by_exp_id": "",
@@ -13105,6 +13132,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:51:05.976839+00:00",
     "title": "Square-Root Depth Profile of the Berggren Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Windows of 2^s consecutive integers all carry the same trailing-zero tie profile, whatever their placement (proved in cycle 4). For a sample size L that is not a power of two the block counts become floor or ceiling of L/2^(k+1) depending on the window position, so the ceiling should wobble by Theta(1/L) in a way governed by the binary expansion of L.\n\nFor any A and L the k-th block of [A, A+L) has size floor(L/2^(k+1)) or that plus one, and the resulting ceiling equals 6/7 + f(L)/L + O(1/L^2) where f is a bounded nowhere-differentiable function of the binary expansion of L, with f identically zero exactly on powers of two.\n\nExtend card_Ico_modEq with a floor correction term, evaluate the exact rational ceiling for all L up to 2^16 and all residues of A, and plot the normalised deviation L*(ceiling - 6/7).\n\nSample size, not just scale, becomes a tunable knob of the dial, and power-of-two sample sizes are exactly the stationary points.\n\nThe ceiling depends on L smoothly, and translation invariance extends to all sample sizes.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3933",
+    "priority_score": 0.6705409836065576,
+    "research_mode": "team",
+    "source_exp_id": "9f4b7d2b",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:37.395785+00:00",
+    "title": "Fractal Ceiling Wobble for Non-Dyadic Sample Sizes"
   },
   {
     "consumed_by_exp_id": "",
@@ -14164,6 +14205,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Retention loss of a score-driven evictor should be controlled by the true-importance mass lying within the score's error of the budget cut-off, not by the global R^2. The approach refines the transfer theorem by splitting keys into a safe core (margin exceeds twice the error) and a boundary band. It matters because it replaces a domain-universal statistic that provably cannot explain the measurements by one that can.\n\nMeasured band mass (total importance of keys within 2*eps of the budget cut-off) at B = 64 differs between code and prose even though the probe R^2 values agree to within 0.011, and the band mass upper-bounds the observed arm gap in both domains.\n\nThe inequality is now proved as retention_gap_le_band_mass; what remains is to measure band mass on the NET-69 code and prose traces at B = 64 and check that it tracks the measured 11.91-point gap and separates the two domains.\n\nThe probe deficit becomes predictable from the tie structure of the key population, and the code/prose difference should show up in band mass rather than in R^2.\n\nRetention loss depends on global rather than local structure, and the search for a sufficient statistic must move to rank correlations.",
+    "domains": [],
+    "id": "fd_3935",
+    "priority_score": 0.593360655737705,
+    "research_mode": "team",
+    "source_exp_id": "33808f71",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:52.086765+00:00",
+    "title": "Band Mass as the Domain-Discriminating Retention Statistic"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved two-sided law brackets the break-even block size between C\u00b2ln(1/\u03b5)/(44\u03b4\u00b2) and C\u00b2ln(1/\u03b5)/(9\u03b4\u00b2) with \u03b4 = Q*\u2212Q. Both constants are lossy because each replaces the entropy derivative log((1\u2212Q*)/Q*) by a rational bound valid on a whole interval. Evaluating the derivative at the certified enclosure of Q* should collapse the ratio to 1 + O(10\u207b\u2074), upgrading the \u0398-bracket to a certified asymptotic constant.\n\nFor Q in [1/10, Q*), n*(Q) = C\u00b2ln(1/\u03b5)/(K\u00b2\u03b4\u00b2)\u00b7(1 + O(\u03b4)) with K = 2log\u2082((1\u2212Q*)/Q*) rational to four decimals, and the certified upper and lower constants differ by less than 1 %.\n\nRe-run breakeven_ge_of_gap and breakeven_le_of_gap with the Lipschitz constants instantiated on [Q, Q*] using the enclosure Q* \u2208 (0.1100, 0.1101) rather than on [1/10, 1/5]; check numerically against the direct computation n* \u2248 1.25\u00b710\u00b9\u00b9 at Q = 11 %.\n\nA closed-form deployment rule with a certified constant, not merely a scaling law.\n\nThe remaining slack is intrinsic to the \u221an accounting rather than to the entropy estimate, which would localize the loss in the AEP correction term.",
     "domains": [],
     "id": "fd_3843",
@@ -14233,6 +14286,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T09:44:08.770735+00:00",
     "title": "Uniform Bitlen Saturation for Valuation Statistics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved estimate franel(2m+1)*(3m+1) <= 8^(2m+1) is off by a factor of about 2.7 from the true asymptotics franel(n) ~ 2*sqrt(3)*8^n/(3*pi*n). Sharpening it would make the inversion threshold provable uniformly in parity with no finite case check.\n\nFor all n >= 1, 2*franel(n)*n <= 8^n, with the constant 2 asymptotically optimal up to sqrt(3)/pi.\n\nInduction on n using the Franel recurrence (n+1)^2 F(n+1) = (7n^2+7n+2) F(n) + 8 n^2 F(n-1), verified numerically for n <= 40 by exact evaluation.\n\nOne clean estimate replaces both parity cases and the small-bitlen checks in the threshold theorem.\n\nThe crude max-times-total bound is essentially the only elementary route, and thresholds must stay case-split.",
+    "domains": [],
+    "id": "fd_3932",
+    "priority_score": 0.5930392156862746,
+    "research_mode": "team",
+    "source_exp_id": "9f4b7d2b",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:36.888610+00:00",
+    "title": "Sharp Constant for Odd Franel Cube Sums"
   },
   {
     "consumed_by_exp_id": "",
@@ -14389,6 +14454,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T01:59:28.610894+00:00",
     "title": "Parity Capacity Staircase for Rank Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Measured Spearman correlation of a tied statistic factorises into a tie-ceiling factor, now known in closed form, and a response factor. Since the ceiling is flat to O(4^-b) across bitlens, the entire recorded bitlen decline must sit in the response factor. Formalising a truncated-response model makes that factor computable and refutable.\n\nIf the response resolves only the first t tie blocks of a profile L then rho^2 = 1 - 12*sum_{j>t}(m_j^3-m_j)/(n^3-n); for the dyadic profile at bitlen b this equals 1 - (8^{b-t}-1)/(7*(8^b-1)) approximately, and matching the recorded values 0.78/0.72/0.65/0.61 forces t to be constant in b.\n\nFormalise partial-resolution profiles in Lean over the existing spearmanSq framework and evaluate the closed form at b = 44, 48, 52, 64, 76 against the recorded dial values.\n\nThe dial's bitlen dependence is fully explained by a fixed-resolution response, and the dial becomes predictable at any bitlen.\n\nThe response is bitlen-dependent, and the dial measures an interaction rather than a property of the statistic.",
+    "domains": [],
+    "id": "fd_3930",
+    "priority_score": 0.591875,
+    "research_mode": "team",
+    "source_exp_id": "9f4b7d2b",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:35.924846+00:00",
+    "title": "Response-Side Attenuation Factorisation of the Zero-Fit Dial"
   },
   {
     "consumed_by_exp_id": "",
@@ -14995,6 +15072,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The dyadic dial is the p = 2 case of a p-adic family whose ceiling tends to 3p/(p^2+p+1). The count baseline generalises to the p-ary multinomial row. The inversion threshold b >= 3 proved for p = 2 should become a threshold B(p) growing like log p.\n\nFor every prime p there is B(p) = Theta(log p) such that the p-ary count profile has strictly larger tie ceiling than padicBlocks p b exactly when b >= B(p), and B(2) = 3.\n\nProve a multinomial analogue of the Franel bound and rerun the cube-sum comparison; check small p and b by exact rational evaluation.\n\nThe dial's tie disadvantage against counting baselines is a universal arithmetic phenomenon, not a binary accident.\n\nSome prime inverts the ordering, isolating p = 2 as structurally special.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3931",
+    "priority_score": 0.5636407592381372,
+    "research_mode": "team",
+    "source_exp_id": "9f4b7d2b",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:36.410763+00:00",
+    "title": "p-Adic Inversion Threshold Function"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Curvature saturates at 1 as soon as the pool has more models than the alphabet has messages, so nontrivial curvature lives only below the capacity threshold |Omega| <= |X|. The conjecture is a matching construction: for every kappa in [0,1] and every pool size below the threshold there is a pool of probability mass functions realising exactly that curvature.\n\nFor all n <= |X| and all kappa in [0,1] there exists a pool Omega of n probability mass functions on X with curvature exactly kappa, and no such pool exists when n > |X|.\n\nThe impossibility half is the proved theorem curvature_eq_one_of_card_lt and the case n = 2 of the realisation half is the proved theorem exists_pool_curvature_eq; formalise the remaining sizes by an explicit family interpolating between disjointly supported models (kappa = 0) and duplicated models (kappa = 1).\n\nCurvature becomes a complete invariant of pool geometry below the capacity threshold, and low-curvature library design is exactly a coding problem.\n\nSome curvature values are unreachable, revealing a hidden quantisation of the achievable marginal ratios.",
     "domains": [
       "Geometry",
@@ -15082,6 +15174,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T17:35:46.503915+00:00",
     "title": "Holographic Tent Profile for MDS Code States"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Comparing tie ceilings at fixed mass is comparing cube sums in reverse order, and cube sum is Schur-convex. Inversion should therefore follow from a majorisation statement: the geometric profile majorises the binomial profile once both have at least four blocks.\n\nFor every b >= 3 the dyadic profile majorises the binomial profile of the same mass 2^b in the dominance order, and consequently every Schur-convex functional, not just the cube sum, separates the two dials.\n\nVerify dominance by partial sums of sorted profiles for b <= 20 exactly, then prove the general partial-sum inequality by induction on the number of leading blocks.\n\nA single order-theoretic fact replaces all analytic estimates and extends automatically to every Schur-convex tie functional.\n\nCube sums separate the profiles for a reason special to the exponent three, which itself demands explanation.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_3934",
+    "priority_score": 0.5635033219176204,
+    "research_mode": "team",
+    "source_exp_id": "9f4b7d2b",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:37.889796+00:00",
+    "title": "Majorisation Criterion for Tie Ceilings"
   },
   {
     "consumed_by_exp_id": "",
@@ -34827,14 +34934,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Confluence of audited certificate refinement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a331ba56",
     "description": "Conjecture: for every framed puzzle not isomorphic to its global tab\u2013blank complement, complementation acts freely on the disjoint union of the two assembly spaces, forcing their combined cardinality to be even.\n\nThe key insight is that simultaneous Boolean negation and literal-polarity reversal is an order-two transport of complete solution spaces, not merely a preservation of solvability.\n\nWhy now? Solvability invariance has been established, while the exact boundary between free orbits and self-dual fixed configurations is now explicit and testable.",
     "domains": [],
     "id": "fd_1938",
+    "phase": "A",
     "priority_score": 0.4390588235294117,
     "research_mode": "team",
     "source_exp_id": "154045db",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:52.095620+00:00",
     "title": "Complementation as a free involution"
   },
@@ -35007,15 +35115,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "C3. The `log K` warm-up delay is unavoidable *on average*, not just in the worst case"
   },
   {
-    "consumed_by_exp_id": "5e49148f",
+    "consumed_by_exp_id": "",
     "description": "**Statement.** Call a layer `\u03b4`-equivariant if its weight matrix is within `\u03b4` (entrywise) of\nthe hyperoctahedral-equivariant subspace. Then every `\u03b4`-equivariant injective ReLU layer on\n`\u211d\u00b9\u00b9` has frame lower constant `\u03b1 = O(\u03b4\u00b2)`; equivalently, approximate hypercube symmetry\nforces an approximate information bottleneck with an explicit modulus.\n\n**The key insight is** that `hyperoctahedral_rigidity` shows the equivariant subspace is\n`1`-dimensional (scalars), so an equivariant-plus-perturbation layer is a scalar map plus a\n`\u03b4`-small operator, and the scalar part contributes nothing to distinguishing percepts after\nrectification along the flipped coordinates.\n\n**Why now?** The exact rigidity statement (dimension `1` versus `121`) is now proved, which\nturns the qualitative \"symmetry destroys 11-dimensional processing\" slogan into a perturbation\nquestion with a well-posed constant.\n\n**Falsifier.** A family of `\u03b4`-equivariant injective layers with frame constant bounded below\nindependently of `\u03b4`.\n\n---",
     "domains": [],
     "id": "fd_3387",
-    "phase": "A",
     "priority_score": 0.4390588235294117,
     "research_mode": "team",
     "source_exp_id": "094ca37a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:29:56.864203+00:00",
     "title": "Conjecture D \u2014 symmetry/losslessness incompatibility is quantitative"
   },
@@ -37565,19 +37672,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:23:52.518388+00:00",
     "title": "No-hypercomputation corollaries"
-  },
-  {
-    "consumed_by_exp_id": "05978b53",
-    "description": "**Conjecture.** `sup_{[0,1]\u00b2} |prodGate h x y \u2212 x y| = h\u00b2/3 + O(h\u2074)`, attained at\nthe corner `(1,1)`; more generally the polarisation branches' quartic errors\ncancel to leading order, so the sharp constant is `((x+y)\u2074 \u2212 (x\u2212y)\u2074)/24` in\nabsolute value rather than the sum `((x+y)\u2074 + (x\u2212y)\u2074)/24` proved here.",
-    "domains": [],
-    "id": "fd_1769",
-    "phase": "A",
-    "priority_score": 0.4041538461538462,
-    "research_mode": "team",
-    "source_exp_id": "42f28947",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T23:41:39.606480+00:00",
-    "title": "Conjecture. `sup_{[0,1]\u00b2} |prodGate h x y \u2212 x y| = h\u00b2/3 + O(h\u2074)`, attained at"
   },
   {
     "consumed_by_exp_id": "",
@@ -43140,5 +43234,17 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T01:59:06.773599+00:00",
     "title": "Larger model cells (1.5B fine grids, the 7B cell)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "\u00a710 proves\n   `sup_{[0,1]\u00b2}|error| = (exp(2h) + exp(\u22122h) \u2212 2 \u2212 4h\u00b2)/(4h\u00b2)` for *every*\n   `h > 0`, with the maximum genuinely attained at `(1,1)`.",
+    "domains": [],
+    "id": "fd_3929",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "05978b53",
+    "status": "available",
+    "timestamp": "2026-08-24T05:02:16.615719+00:00",
+    "title": "The `O(h\u2074)` in the conjecture is removable"
   }
 ];
