@@ -2100,16 +2100,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-75 #2 \u2014 COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry \u2014 low-B1 success sits far above the collision floor (65.0%/62.5% vs 16.47%, cross-bitlen z p=0.82); hits fire near step ZERO at high B1 (median 0.09\u20130.10, final-20% tail 0/55, binom p\u22480.004) \u2014 paper-159 amendment-candidate REJECTED as stated; new early-fire trace law added"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f160cc7",
     "description": "Exp 572 \u00b7 paper 217 \u00b7 assessment v324 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp572_ma1_signed.py \u00b7 seed 572 \u00b7 wall 6.96 s.\n\n**Question.** Paper 213/exp566 closed the MAGNITUDE route of MA-1 effectivity (|L(1,\u03c7)| does not predict |AP deviations|, R\u00b2=0.019) but preserved the SIGNED route: do signs of character-twisted prime-count deviations align with signs predicted by computable character data? A yes would be the first computable handle on AP-deviation structure.\n\n**Key structural disclosure** (post-smoke, pre-full-data): L(1,\u03c7)>0 for EVERY real non-principal \u03c7 (class-number formula) \u21d2 sign(w)\u2261+1 identically (n_cells_w_negative=0 at full scale), so registered criterion C1 reduces exactly to Pr[c_\u03c7>0] and could only fire if prime twists were majority-positive. Working identity asserted exact (<1e-9): c_\u03c7 = \u03a3_a d_a\u00b7\u03c7(a) = \u03a3_{p\u2264x} \u03c7(p); the uniform-li theory term vanishes identically by orthogonality, so signed L(1,\u03c7) is the only computable x-independent theory weight.\n\n**Design.** x=2\u00b2\u2076 full (\u03c0(x)=3,957,809); 287 moduli (squarefree [3,300] \u222a primes [307,997]); 491 real-char cells; 86,882 unit classes; machinery verbatim from exp566 (class-number exact D<0 |D|\u2264400, truncated-L otherwise, median rel err 1.8e-5); CP95 intervals + within-modulus d-shuffle null (2000 draws \u2014 MEANINGFUL here unlike exp566 since sign(c) is not permutation-invariant in a).\n\n**Result H0 \u2014 both criteria fail, both levels.** Cell agreement 15.07% over 491 cells (74 agree), CP95 [0.1202, 0.1855], circular-sum z=\u221252.72 (C2 needs >3). Class level 48.74% over 86,882 classes, CP95 [0.4841, 0.4907], permutation z=\u22127.74 \u2014 significantly BELOW chance (mild anti-alignment). Breakdowns all CIs wholly below 50%: prime-modulus quadratics 26.9% (167), product chars \u03c9\u22652 8.95% (324), exact-L 12.8% (226), truncated-L 17.0% (265), drop-|w|<1e-3 robustness unchanged.\n\n**Named byproduct** (labeled exploratory, not pre-registered): prime twists NEGATIVE in 84.7% of cells (CP95 [0.8123, 0.8779]; smoke x=2\u00b2\u00b2 read 91.7%) \u2014 the universal Chebyshev/Rubinstein\u2013Sarnak low bias, independently confirmed inside the lab's own AP-deviation machinery at x=2\u00b2\u2076. Deviation signs are one-directional across moduli and zero-driven, NOT carried by any computable L-value \u2014 precisely why no L-based predictor can track them.\n\n**Ledger.** (1) m=6 orthogonality assert exposed the raw-primitive-twist \u00b11 correction for primes p|m, p\u2224cond(\u03c7) (max corr 3, 0 sign flips induced \u2014 disclosed, not corrected); (2) class-z scale mix-up fixed (\u2212310 \u2192 single-scale \u22127.74); (3) exp566's 'within-modulus shuffle vacuous' caveat verified NOT to transfer here.\n\n**Barrier framing.** Closes barrier-map residual 'MA-1 effectivity' as a named question: no computable criterion via quadratic-character structure on either route (magnitude paper 213, sign here) at toy scale; the averaging identity's effective scope remains non-computable from N; consistent with barriers 4/5. No breakthrough.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3960",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T09:06:21.851457+00:00",
     "title": "FACT round-75 #1 \u2014 MA1-SIGNED: signed route of MA-1 effectivity dies at both registered criteria (cell agreement 15.07%, CS_z=-52.7; class 48.74% below chance z=-7.74) \u2014 MA-1 computable-effectivity program CLOSED on both routes; Chebyshev/Rubinstein\u2013Sarnak negative skew 84.7% confirmed as named byproduct"
   },
@@ -2476,6 +2477,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T20:50:39.560667+00:00",
     "title": "FACT round-83 #2 \u2014 WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED \u2014 dial weight exponent alpha_hat=0.5 not 1 (single-peaked R2 curve .32/.50/.62/.58/.47/.30, dR2=+0.151>=bar; boot CI [0.5,0.5] excludes 1 decisively 492/500); ERRATUM-GRADE SUPERSESSION of paper 227's adopted 1/l covariate -> 1/sqrt(l) lab-wide (+31% relative dial power on identical data)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-85 #1 \u00b7 exp 589 [FINAL RESOLUTION, findings rev 2026-08-24b] \u00b7 pure reanalysis of exp581_regen_positions.npz (9594 pooled hits / 128 Ns / 512k controls; wall_s 45.16) \u00b7 paper 240 \u00b7 supersedes the H0-MIXED letter of paper 239 (issue #387), which stands preserved as audit record of the intermediate analysis state.\n\nRESOLUTION (H1a-INCLUSION-ARTIFACT):\n1. MECHANICAL FORCING: D1 hit mass by v-band <80:0 / 80\u201389:85 / 90\u201395:1469 / >=96:0 \u2014 100% of first-decile hits have bitlen(v)<96, mechanically forced (D1 \u21d2 delta<0.2s \u21d2 v<0.44\u00b7s^2+o(s^2)<2^95 provable under window j in [isqrt(N)+1, 3\u00b7isqrt(N)]).\n2. SIZE-MATCHED BANDS ERASE THE EXCESS: within-band D1 rate ratios rr_d1 = 1.000 (80\u201389), 1.097 (90\u201395); band-referenced total excess +129.66 vs flat-null +604.76 (rr_d1 vs flat 1.637) \u2192 ~4/5 of the spike is band COMPOSITION, not decile-1 rate elevation. Controls clean (per-N D1-share z mean \u22120.223 sd 0.945 absmax 2.53).\n3. KEPT-FIT 'PERSISTENCE' DECOMPOSES ENTIRELY: kept fit (v>=2^95) w_edge .0403 [.0301,.0525] \u0394AICc 49.78 is carried entirely by bitlen[96,98) at the truncation boundary (\u0394AICc 5.94 \u2014 BELOW the registered bar of 6; no bootstrap CI disclosed) while bitlen>=98 has NO edge component (\u0394AICc \u22120.40) \u2192 truncation-boundary Dickman size gradient, NOT positional structure.\n\nERRATUM to paper 239: title claim ('kernel SURVIVES at reduced strength'), \u00a74 split reading ('half genuine small-|v| structure beyond Dickman prediction'), and \u00a75 consequences 1\u20132 are RETRACTED as truncation-boundary gradient. PRESERVED from 239: mechanical-degeneracy finding (strengthened \u2014 now load-bearing), regeneration verification, controls-clean, ledger disclosures, and the H0-MIXED verdict letter as audit record. No registered bar changed post hoc \u2014 resolution applies the REGISTERED \u0394AICc >= 6 bar to matched-v strata.\n\nMAP STATEMENT (arc closure papers 228\u2192239\u2192240): NO positional kernel component survives \u2014 the profile is fully accounted by magnitude + tiny-v window geometry.\n\nWHAT SURVIVES: overdispersion itself real (+605 named-origin, not deleted); positional layer independent (papers 228\u2013230 untouched); rate-layer question open.\n\nLINEAGE DISCIPLINE end-to-end: exp581 sha256 byte-exact quartet upstream with both self-caught fixes disclosed in-chain (run-1 COMPARATOR bug; run-2 LN-dict KeyError 350983 fixed via arbitrary-edge ln cache); exp589 downstream re-verification = 128x2 EXACT isqrt\u2192(jlo,jhi) matches + containment of every stored j (pop_hash 06931068f8f3ca9b recomputed, no external copy readable \u2014 disclosed).\n\nLEDGER CATCHES: degenerate exclusion clause (pre-registered mechanical note fired); kept-fit anchor adaptation registered pre-run; own two-component Poisson fitter nb=50 not paper-238 b_edge parametrization; capped first-4000 controls; POST-HOC labeling of all resolution diagnostics; subfits no bootstrap CI; wall-time drift noted (paper 239 quoted 42.34 s, artifacts record 45.16 s).\n\nBarrier framing: closure INSIDE the positional layer's shape description \u2014 residue cap 4/3, position 5.19x, external-hint laws, quantum frontier, four-class rate-residual closure all untouched; both surviving mechanisms scale-carrying (exact-arithmetic inclusion bound grows with scale). Paper 238's .2346 provenance flag still travels forward until reconciled against the paper-228 ledger.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4054",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T21:45:33.977842+00:00",
+    "title": "FACT round-85 #1 \u2014 SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper 239 \u2014 paper 238's left-edge spike is tiny-v composition ENTIRELY (100% of D1 hits bitlen(v)<96 by window geometry; rr_d1 1.000/1.097 size-matched; kept-fit persistence = truncation-boundary gradient [96,98) dAICc 5.94 sub-bar, >=98 -0.40); NO positional kernel component survives"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## exp589 SPIKE-ORIGIN \u2014 round-84 #2 \u00b7 paper 239 \u00b7 assessment v345 \u2192 v346 \u00b7 count 576 \u2192 577\n\nResolves paper 238's spike-origin follow-up: is the left-edge spike (b_edge \u2265 ~10.6, 8.6% mass in the first decile) carried by TINY-v hits? Pure reanalysis of `exp581_regen_positions.npz`; Ns regenerated verbatim exp578 recipe, seed 20260828; lineage = 128\u00d72 EXACT isqrt\u2192(jlo,jhi) matches + containment of every stored j; pop_hash 06931068f8f3ca9b recomputed with no external copy readable to compare (disclosed); wall 42.34 s.\n\n### Verdict: H0-MIXED \u2014 the spike splits into two quantitatively named parts\nThe registered fraction clause and refit clause DISAGREE; both reported honestly. Neither registered arm fires (H1a false, H1b false).\n\n### Pre-registered mechanical note FIRED \u2014 the exclusion clause is degenerate\nD1 \u21d2 delta = j\u2212s < 0.2s+1 \u21d2 v = j\u00b2\u2212N \u2264 0.44\u00b7s\u00b2 + o(s\u00b2) < 2^95 provably (window j \u2208 [s+1, 3s], s = isqrt(N), N 96-bit). EVERY first-decile hit has bitlen(v) \u2264 95: band table shows ZERO D1 hits among the 7221 full-size hits and zero among 426525 full-size controls. So \"exclude v < 96-bit\" removes 100% of the D1 mass BY GEOMETRY (fraction_removed_primary = 1.000, flat-secondary 2.21) \u2014 that clause cannot discriminate H1a from H1b; per the pre-run adaptation, the verdict rode on the REFIT clause.\n\n### Refit clause (the informative one)\nTwo-component Poisson bin fit (nb=50 equal-width u-bins per exp582 anchor, control-shape bulk exposure, half-Gaussian edge), cluster-over-Ns bootstrap 2000, seed 20260902:\n- ALL hits (n=9594): **w_edge = .0794** [.0702,.0908], **\u0394AICc = 374.77**\n- KEPT (v \u2265 2^95, n=7221): **w_edge = .0403** [.0301,.0525], **\u0394AICc = 49.78**\n\nKept CI EXCLUDES zero \u2192 an edge component PERSISTS among full-size hits at the kept population's own left edge u\u2080 = .110 (kept support starts at u \u2248 .114 where v crosses 2^95; anchor adaptation registered pre-run). Split reading: ~half the spike weight is tiny-v INCLUSION ARTIFACT (sub-2^95 hits, v as small as ~2\u221aN \u2248 2^50, vastly smoother than full-size draws); ~half GENUINE elevated small-|v| smoothness beyond Dickman prediction.\n\nBand corroboration: hit mass by band <80 = 0, 80\u201389 = .0089, 90\u201395 = .2385, \u226596 = .7527; within-band D1 fractions 1.000/.642/**0.000** (RR vs window 1.097 in 90\u201395). Controls clean: per-N D1-share z mean \u22120.223 sd 0.945 absmax 2.53 over 128 Ns.\n\n### Consequence\nPaper 238's kernel SURVIVES at reduced strength on legitimate full-size hits (.0794 \u2192 .0403, both decisive \u0394AICc) \u2014 nothing overturned, interpretation CORRECTED: the quoted 8.6% spike conflates two objects. Any future positional-shape model needs BOTH the kernel AND a bitlen(v)-band stratification at the left edge \u2014 the spike is not one object. The tiny-v mechanism is exact arithmetic at every scale, so the inclusion channel is a falsifiable constraint for downstream models.\n\n### Ledger catches (all disclosed)\n(1) Degenerate exclusion clause \u2014 pre-registered mechanical note fired exactly as deduced. (2) Kept-fit edge anchor adapted to kept-left-edge u\u2080=.110 instead of 0 \u2014 registered pre-run (support truncation; without it no exposed edge to test). (3) Own fitter (nb=50 Poisson bin fit), NOT paper-238's b_edge parametrization \u2014 amplitudes not numerically comparable across papers; comparisons internal to this experiment. (4) Controls = capped first-4000 non-hit j per N (position-uniform reference), not the paper-238 construction. (5) pop_hash recomputed without an external copy to compare \u2014 lineage rests on exact jlo/jhi reproduction. Smoke preceded full run; no commits during run; only exp589_* touched.\n\n### Barrier validation\nNo breakthrough claimed \u2014 reanalysis INSIDE the positional layer (papers 228\u2013230, 238). Residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, paper 237's four-class closure untouched. Paper 238's erratum-grade .2346 provenance flag still travels forward until reconciled against the paper-228 ledger.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp589_spike_origin.py`, `exp589_smoke.log`, `exp589_run.log`, `exp589_result.json`, `exp589_findings.md`. Paper: `ResearchOutput/NewMathematics/239_SpikeOrigin.md`.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4055",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T21:45:33.979668+00:00",
+    "title": "FACT round-84 #2 \u2014 SPIKE-ORIGIN (exp 589): H0-MIXED \u2014 paper 238's left-edge spike DECOMPOSES into ~half tiny-v inclusion artifact + half GENUINE small-|v| structure persisting among full-size v\u22652^95 hits (w_edge .0794 \u2192 .0403 kept-CI-excludes-0); exclusion clause PROVABLY DEGENERATE (D1 \u21d2 v<2^95 by arithmetic); kernel SURVIVES at reduced strength"
   },
   {
     "consumed_by_exp_id": "",
@@ -4153,20 +4182,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 2a9ba724 (Q=0.800), which proved 98 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.**  Let `d, r : \u2115 \u2192 \u2115` be height and reflection-depth vectors with\n`r i \u2264 min N (d i)` for every tag `i`.  Then there is a consistent GL theory `S`\n(a tag-sensitive model with a valuation, i.e. the common refinement of `capC` and\n`valSys`) such that for every tag `i`\n\n* `Provable S (\u25a1_i",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_2a9ba724_e5bb790a",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "2a9ba724",
-    "status": "available",
-    "timestamp": "2026-08-24T20:49:57.398967+00:00",
-    "title": "Deepening: Per-tag reflection depths are freely realizable"
   },
   {
     "consumed_by_exp_id": "",
@@ -14705,14 +14720,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sub-Step Tokenizer Tax Below the Grid Resolution"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1101bcb2",
     "description": "With both ceilings known, define a statistic's efficiency as reading^2 divided by its tie ceiling. At bitlen 52 the dial has efficiency 0.58 and the count baseline 0.41. Conjecture that this efficiency gap lower-bounds the extra mutual information the 2-adic valuation carries about the response, via a Fano-type inequality for rank correlations.\n\nFor any response Y and statistics T, C on the same sample, eff(T) - eff(C) <= c * (I(T;Y) - I(C;Y)) for an absolute constant c, where eff denotes squared Spearman reading divided by tie ceiling.\n\nFormalise efficiency in the existing tie-profile framework, prove the data-processing direction first (C a function of T implies eff(C) <= eff(T)), and calibrate c on the recorded bitlen-52 pair.\n\nThe dial's advantage becomes a certified information statement rather than a correlational one, and the validation band acquires an information-theoretic meaning.\n\nRank efficiency and mutual information are not comparable, so dial advantages must be reported strictly as rank statistics.",
     "domains": [],
     "id": "fd_3879",
+    "phase": "A",
     "priority_score": 0.593360655737705,
     "research_mode": "team",
     "source_exp_id": "147eac16",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T19:35:41.958035+00:00",
     "title": "Efficiency Gap as an Information Lower Bound"
   },
