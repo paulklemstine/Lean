@@ -1,132 +1,321 @@
-# Computational Evidence — NET-63 retention knee (round 16, ctx = 2048)
+# The Retention Knee: a guided tour
 
-All numbers below were computed exactly over `ℚ` with `#eval` in the project's
-Lean toolchain (no floating point), and every claim that is used in a theorem is
-re-proved in Lean (`Catalog/Bridges/AttentionKneeGeometry.lean`,
-`Catalog/Bridges/AttentionKneeEntropyBound.lean`).
+*How many keys do you actually have to keep?*
 
-## 1. The reported fine grid
+---
 
-| k | 20 | 24 | 28 | 32 |
-|---|----|----|----|----|
-| retained | 0.9793 | 0.9835 | 0.9854 | 0.9885 |
-| pass at gate 0.98 | ✗ | ✓ | ✓ | ✓ |
+## 0. A number on a slide
 
-Deficit at 20: `0.98 − 0.9793 = 0.0007`.
-Margin at 24: `0.9835 − 0.98 = 0.0035 = 5 × 0.0007`.
+Somewhere in an engineering document there is a small table: at context length
+$512$, keep $16$ keys; at $1024$, keep $20$; at $2048$, keep $24$. Underneath, a
+footnote: *"retains $98\%$ of attention mass."* Tables like this decide what runs
+on your phone.
 
-Formalised: `net63_first_pass_is_24`, `net63_margin_ratio`, and the sharp
-bracket `20 < k* ≤ 24` (`net63_knee_bracket`).
+This page unpacks that number. By the end you will know exactly what such a table
+proves, what it merely predicts, and what it quietly assumes — and you will have
+discovered the central dichotomy yourself, by dragging a slider.
 
-## 2. Counterexample hunt: is the row a top-`k` mass curve?
+Here is the whole vocabulary. An **attention row** is a list of nonnegative
+weights $w_0, w_1, w_2, \dots$ summing to $1$: how much one position attends to
+each earlier one. Sort it heaviest-first and define
 
-Block increments over the equal-width blocks of 4 keys:
+$$M(k) \;=\; \sum_{i<k} w_i \qquad\text{(the mass retained by the top } k \text{ keys)},$$
 
-```
-(20→24) = 0.0042      (24→28) = 0.0019      (28→32) = 0.0031
-```
+$$k^*(g) \;=\; \min\{k : M(k) \ge g\} \qquad\text{(the \textbf{retention knee} at gate } g).$$
 
-For a **sorted** weight row the block increments must be non-increasing
-(each block takes strictly smaller weights than the previous one), and this is
-preserved by averaging over windows. The measured sequence
-`0.0042, 0.0019, 0.0031` **increases** at the last step, so the row is not the
-window-average of top-`k` masses of sorted attention rows.
+That is it. Everything below is about the single number $k^*(g)$.
 
-This is a genuine counterexample to the implicit modelling assumption, not to
-the knee reading itself: the knee `24` uses only monotonicity, which the data
-does satisfy. Formalised as `net63_fine2048_not_window_averaged_topk`.
+<details>
+<summary><strong>Why should attention rows be lopsided at all?</strong> (background)</summary>
 
-Likely explanations (untested here): the 12 windows are not the same across the
-grid points (`k`-dependent window sets), rounding to 4 decimals (the needed
-correction is ≥ 0.0012, i.e. 12 units in the last place — so rounding alone is
-**not** enough), or a `k`-dependent gate/eviction rule.
+Attention weights are produced by a softmax over query–key inner products. A
+softmax exponentiates, so modest differences in score become large differences in
+weight, and a handful of positions typically dominate. That empirical lopsidedness
+is what makes a small key budget viable in the first place; the mathematics below
+never assumes it, but it is why the question is interesting. Background on the
+mechanism: [attention and the transformer architecture](https://en.wikipedia.org/wiki/Attention_(machine_learning)).
+</details>
 
-## 3. Grid effects, exactly
+---
 
-Dyadic profile `w i = 2^{-(i+1)}`, so `mass k = 1 − 2^{-k}`:
+## 1. Play first, theory second
 
-```
-k       : 0     1     2     3      4      5      6      7
-mass k  : 0    1/2   3/4   7/8   15/16  31/32  63/64  127/128
-```
+Before any theorem, get the objects into your hands. In the explorer below, pick a
+row family, set a gate, and set the spacing of the sweep grid — the set of key
+counts an experiment actually tests.
 
-First `k` with `mass k ≥ 0.98` is `k = 6` (`63/64 = 0.984375`; `31/32 = 0.96875`
-fails). A power-of-two sweep `{2,4,8,16}` reports `8` — a 33% over-provision;
-adding the single point `6` recovers the truth. Formalised as
-`knee_geometricProfile` and `geometric_coarse_grid_overestimates`, with the
-general mechanism as `gridKnee_refine` (refining a grid can only lower the
-reported knee) and `knee_le_gridKnee` (a sweep never under-reports).
+Three things to try, in order:
 
-## 4. Entropy floor implied by the reading
+1. **Geometric decay, spacing 1.** Watch the retention curve cross the gate; the
+   crossing point is the knee. Nothing subtle yet.
+2. **Now widen the spacing to 8.** The *reported* knee jumps up, but never by a
+   full grid step. This is the entire story of "the knee moved when we refined the
+   grid."
+3. **Switch to spike + plateau and push $m$ up.** Watch the red "floor" marker
+   refuse to move while the true knee marches right. Remember that feeling — it is
+   the punchline of the last section.
 
-Cauchy–Schwarz gives `g² ≤ k · E_k` for the energy (collision probability)
-`E_k = ∑_{i<k} w_i²`. With `g = 0.98` and a measured knee of `24`:
+{{interactive_demo:0}}
 
-```
-E_24 ≥ 0.98² / 24 = 2401/60000 = 0.0400166…  > 0.04
-```
+---
 
-i.e. Rényi-2 entropy `H₂ ≤ log₂(1/0.0400166) ≈ 4.643` bits. This is a
-falsifiable prediction about the measured attention rows: a row flatter than
-4.65 bits of collision entropy cannot have a 24-key knee at gate 0.98.
-Formalised as `net63_energy_lower_bound`, attained exactly by the 24-key plateau
-profile (`net63_energy_bound_attained`), so the constant cannot be improved.
+## 2. What a measurement actually proves
 
-## 5. OEIS
+Suppose a sweep reports these four numbers at context $2048$, gate $g = 0.98$:
 
-No integer sequence arises here; the deployment chain `16, 20, 24` is a
-three-term arithmetic progression with difference 4 and is far too short to
-warrant an OEIS lookup. (`{16,20,24}` matches, e.g., A008586 `4n` shifted, which
-carries no information about the experiment.) No lookup was performed.
+| keys $k$ | 20 | 24 | 28 | 32 |
+|---|---|---|---|---|
+| retained | $0.9793$ | $0.9835$ | $0.9854$ | $0.9885$ |
 
-## 6. Cycle 3: the knee-to-floor ratio on geometric rows
+The headline is "the knee is $24$." The honest statement is a **bracket**.
 
-Counterexample hunt for the conjecture "the ratio (true knee)/(ℓ² floor) grows
-without bound as `a → 1⁻`" on the geometric row `w i = (1-a) aⁱ` at gate
-`g = 0.98`.  Here the true knee is the least `N` with `aᴺ ≤ 1 - g = 0.02`, and
-the floor is `g²/E(a) = 0.9604 (1+a)/(1-a)`.
+> **Bracketing Theorem.** If the weights are nonnegative and $M(a) < g \le M(b)$,
+> then $a < k^*(g) \le b$.
 
-| a       | true knee | floor `g²/E` | ratio  |
-|---------|-----------|--------------|--------|
-| 0.5     | 6         | 2.8812       | 2.0825 |
-| 0.9     | 38        | 18.2476      | 2.0825 |
-| 0.99    | 390       | 191.1196     | 2.0406 |
-| 0.999   | 3911      | 1919.8396    | 2.0371 |
-| 0.9999  | 39119     | 19207.0396   | 2.0367 |
+Applied here: $20 < k^*(0.98) \le 24$. Nobody measured $21, 22, 23$, and nothing
+in the data distinguishes them.
 
-The ratio does **not** diverge; it settles at `log 50 / (2·0.98²) = 2.03666…`.
-This exploratory floating-point table is *not* itself a verified computation —
-it is what prompted the proof.  The verified statements are
-`geoRow_flatness_ratio_bounded` (ratio `≤ (1 + log(1/(1-g)))/g²`, uniformly in
-`a`), `net63_flatness_constant_lt_six` (that constant is `< 6` at `g = 0.98`;
-its exact value is `(1 + log 50)/0.9604 = 5.1146…`) and `dyadic_knee_and_floor`
-(the `a = 1/2` row of the table, with `E = 1/3` and knee exactly `6`, proved in
-Lean).  The observed limit `2.0367` is recorded as conjecture C7.
+<details>
+<summary><strong>Proof (two lines)</strong></summary>
 
-## 7. Cycle 4: the spike-plus-plateau family
+Nonnegative weights make $M$ nondecreasing. If $k^*(g) \le a$ then
+$g \le M(k^*(g)) \le M(a)$, contradicting $M(a) < g$; so $a < k^*(g)$. And $b$
+passes the gate, so by minimality $k^*(g) \le b$. $\blacksquare$
+</details>
 
-Counterexample hunt for "the knee-to-floor ratio is bounded for every sorted
-row".  The candidate family is `spikeRow m`: one key of weight `1/2` followed by
-`2m` keys of weight `1/(4m)`.  All entries below are exact rationals obtained
-from the closed forms that are *proved in Lean* (`mass_spikeRow`,
-`energy_spikeRow`, `spikeRow_knee`), at gate `g = 3/4`:
+The same monotonicity gives the **fail/pass certificate** that a sweep really
+produces: if $M(k-1) < g \le M(k)$ then $k^*(g) = k$ exactly. That is the shape of
+every honest knee measurement.
 
-| m    | knee `k*` | energy `E = 1/4 + 1/(8m)` | floor `g²/E` | ratio `k*/floor` |
-|------|-----------|---------------------------|--------------|------------------|
-| 1    | 2         | 3/8      = 0.375          | 1.5          | 1.33             |
-| 4    | 5         | 9/32     = 0.28125        | 2.0          | 2.5              |
-| 25   | 26        | 51/200   = 0.255          | 2.2059       | 11.79            |
-| 250  | 251       | 501/2000 = 0.2505         | 2.2455       | 111.78           |
-| 2500 | 2501      | 0.25005                   | 2.2495       | 1111.78          |
+---
 
-The energy is trapped in `[1/4, 3/8]` — the spike alone contributes `1/4` — so
-the Cauchy–Schwarz floor never exceeds `9/4 = 2.25` keys, while the knee is
-`m + 1`.  The ratio therefore grows linearly in `m`, in sharp contrast with the
-geometric table of §6 where it settles at `2.0367`.
+## 3. The grid is not the row
 
-The table is arithmetic bookkeeping; the verified statements are
-`spikeRow_knee` (knee `= m+1` exactly), `energy_spikeRow_le` together with
-`spikeRow_energy_ge_quarter` (`1/4 ≤ E ≤ 1/4 + 1/(8m)`), `spikeRow_floor_le`
-(floor `≤ 9/4`), `heavyTail_floor_ratio_unbounded` (the ratio exceeds any `R`)
-and `entropy_floor_tightness_dichotomy` (bounded on geometric rows, unbounded
-here), all proved in `Catalog/Bridges/AttentionKneeHeavyTail.lean`.
+A sweep never reports $k^*$; it reports the least *tested* value that passes,
+$k^*_G(g) = \min\{k \in G : M(k) \ge g\}$. Four facts govern the gap.
+
+- **No under-reporting:** $k^*(g) \le k^*_G(g)$, always.
+- **Refinement only lowers the report:** $G \subseteq G' \Rightarrow k^*_{G'}(g) \le k^*_G(g)$.
+- **On-grid landing is exact:** if $k^*(g) \in G$, the sweep returns it exactly.
+- **Spacing bound:** on an arithmetic grid of spacing $s$ starting at or below the
+  knee, $k^*(g) \le k^*_G(g) < k^*(g) + s$.
+
+So a coarse sweep saying $28$ and a fine sweep saying $24$ are *not in conflict*.
+No experiment was wrong; the grid was.
+
+<details>
+<summary><strong>Proof of the spacing bound</strong></summary>
+
+Pick $j$ with $k^*(g) - a \le sj < (k^*(g)-a) + s$ — ceiling division. Then
+$a + sj$ is a grid point at least $k^*(g)$, so it passes the gate by monotonicity,
+whence $k^*_G(g) \le a+sj < k^*(g)+s$. The lower bound is no-under-reporting. $\blacksquare$
+</details>
+
+A concrete case is worth more than the general statement. The dyadic row
+$w_i = 2^{-(i+1)}$ has $M(k) = 1-2^{-k}$, so at gate $0.98$ its true knee is $6$
+($M(5) = 0.96875$, $M(6) = 0.984375$). Sweep it on $\{2,4,8,16\}$ and you report
+$8$: a $33\%$ over-provision on a noiseless profile. Add the point $6$ and the
+truth reappears.
+
+{{visualization:0}}
+
+Here is the procedure that produces a report *with* its bracket, plus the optional
+bisection that recovers the exact knee inside it:
+
+{{algorithm:1}}
+
+<details>
+<summary><strong>The simpler primitive underneath: the exact knee with its certificate</strong></summary>
+
+{{algorithm:0}}
+</details>
+
+---
+
+## 4. Why the deployment chain must climb
+
+The three table entries $16 < 20 < 24$ look like a coincidence. They are forced.
+Say a profile $w$ **majorizes** $v$ if $M_v(k) \le M_w(k)$ for every $k$ — that is
+the precise sense in which "$v$ is more spread out". Lengthening the context
+spreads attention.
+
+> **Majorization Theorem.** If $M_v(k) \le M_w(k)$ for all $k$, then
+> $k^*_w(g) \le k^*_v(g)$: the flatter profile needs at least as many keys, at
+> every gate.
+>
+> **Strict version.** If the longer-context profile *still fails* the gate at the
+> shorter context's knee, its knee is strictly larger.
+
+Chain that at $512 \to 1024 \to 2048$ and strict monotonicity of the budget chain
+follows from one qualitative fact plus the certificates a sweep already produces.
+And the chain is realizable: the plateau profile spreading mass $g$ over exactly
+$K$ keys is a genuine sorted row with knee exactly $K$, so $16, 20, 24$ are not
+vacuous.
+
+<details>
+<summary><strong>A bonus for multi-head models</strong></summary>
+
+Retained mass is linear in the profile, so for any blend
+$\lambda u + (1-\lambda) v$ of two heads,
+$$k^*_{\lambda u + (1-\lambda)v}(g) \;\le\; \max\{k^*_u(g),\,k^*_v(g)\}.$$
+Budget for the hardest head and every mixture is covered — per-head budgets
+aggregate by a maximum, not a sum. The proof is one line: both $u$ and $v$ pass
+the gate at $K = \max\{k^*_u, k^*_v\}$, and a convex combination of two numbers
+$\ge g$ is $\ge g$.
+</details>
+
+---
+
+## 5. An audit you can run on someone else's table
+
+Now a genuinely negative result, and a satisfying one, because it needs no access
+to raw data.
+
+If rows are **sorted**, the retention curve is **discretely concave**: equal-width
+blocks of keys contribute less and less as you move right,
+$$M(k'+d) - M(k') \;\le\; M(k+d) - M(k) \qquad (k \le k').$$
+The reason is immediate — the later block consists of keys each no heavier than
+the corresponding earlier ones. And averaging over evaluation windows preserves
+concavity, since an average of concave curves is concave.
+
+Now check the reported row. Block $24 \to 28$ adds $0.0019$; the *later* block
+$28 \to 32$ adds $0.0031$. The increments go **up**.
+
+> **Obstruction.** Those four numbers cannot be the window-averaged top-$k$ masses
+> of sorted attention rows, for any number of windows.
+
+Crucially, this does **not** falsify the knee: the bracket used only monotonicity.
+What it kills is *extrapolation* — interpolating a knee at a finer gate, or
+projecting one model's budget from another's curve. Run the audit yourself, and
+compare with rows that pass it:
+
+{{interactive_demo:1}}
+
+---
+
+## 6. A floor, and its name is entropy
+
+Everything so far certifies that $k$ keys *suffice*. What forces you to keep at
+least a certain number? For that you need to know how flat the row is, and the
+right notion of flatness is the **attention energy**
+$$E(k) \;=\; \sum_{i<k} w_i^2,$$
+the collision probability of the distribution — equivalently $2^{-H_2}$ where
+$H_2$ is the [Rényi-2 (collision) entropy](https://en.wikipedia.org/wiki/R%C3%A9nyi_entropy).
+
+Cauchy–Schwarz does the rest: $\left(\sum_{i<k}w_i\right)^2 \le k\sum_{i<k}w_i^2$,
+so passing the gate with $k$ keys forces $g^2 \le k\,E(k)$, and therefore
+
+$$\boxed{\;k^*(g) \;\ge\; \frac{g^2}{E}\;}$$
+
+whenever the row's energy never exceeds $E$.
+
+<details>
+<summary><strong>Read it backwards — this is the interesting direction</strong></summary>
+
+If a sweep *certifies* $k^*(g) \le K$, then monotonicity gives $g \le M(K)$, so
+the same inequality yields $E(K) \ge g^2/K$: **a measured knee caps the entropy of
+the row.** For the table above — gate $0.98$, knee at most $24$ —
+$$E(24) \;\ge\; \frac{0.9604}{24} \;=\; 0.04001\overline{6} \;>\; 0.04,
+\qquad\text{i.e.}\qquad H_2 \;<\; \log_2 25 \;\approx\; 4.64 \text{ bits}.$$
+This is a falsifiable prediction about data the experiment never reported. A row
+flatter than $4.64$ bits of collision entropy cannot have a knee of $24$ at gate
+$0.98$.
+
+And the constant is optimal: the plateau spreading mass $0.98$ over exactly $24$
+keys has knee exactly $24$ and energy exactly $0.98^2/24$. The floor is attained.
+</details>
+
+Pair the floor with a decay hypothesis and the knee is trapped from both sides: if
+$E(k) \le E$ and the un-retained tail obeys $1 - M(k) \le Cr^k$, then any $N$ with
+$Cr^N \le 1-g$ gives
+$$\frac{g^2}{E} \;\le\; k^*(g) \;\le\; N.$$
+A free corollary is a consistency test — any reported (gate, energy, tail) triple
+must satisfy $g^2/E \le N$, whatever the sweep printed. Here is the whole
+procedure, fit included:
+
+{{algorithm:2}}
+
+---
+
+## 7. The dichotomy: when does entropy actually predict the budget?
+
+A lower bound is only useful if it is close. So how lossy is $g^2/E$?
+
+**On exponentially decaying rows, barely lossy at all.** For $w_i = (1-a)a^i$
+everything is closed-form: $M(k) = 1-a^k$, so the knee is at most
+$1 + \log\frac{1}{1-g}/(1-a)$, and the energy is exactly $E(a) = \frac{1-a}{1+a}$,
+so the floor is $g^2(1+a)/(1-a)$. Both blow up like $1/(1-a)$ as the row flattens
+— and the blow-ups cancel:
+
+> **Flatness bound.** For every geometric row and every gate,
+> $$k^*(g) \;\le\; \frac{1 + \log\frac{1}{1-g}}{g^2}\cdot\frac{g^2}{E(a)}.$$
+> The constant depends on the **gate alone** — at $g = 0.98$ it is
+> $(1+\log 50)/0.9604 \approx 5.11 < 6$.
+
+So the natural conjecture that the ratio diverges as $a \to 1^-$ is *false*.
+
+<details>
+<summary><strong>Proof of the flatness bound</strong></summary>
+
+Write $L = \log\frac1{1-g} \ge 0$. The right-hand side is $(1+L)(1+a)/(1-a)$, so
+after multiplying through by $1-a>0$ it suffices that
+$(1-a) + L \le (1+L)(1+a) = 1 + a + L + La$, i.e. $-a \le a + La$ — true for
+$a \in (0,1)$, $L \ge 0$. Combine with the logarithmic ceiling, which itself
+follows from $\log a \le a-1$: taking $N = \lceil L/(1-a)\rceil$ gives
+$N(-\log a) \ge N(1-a) \ge L$, hence $a^N \le 1-g$. $\blacksquare$
+</details>
+
+**On rows with a spike over a long shelf, arbitrarily lossy.** Take one key of
+weight $\tfrac12$, then $2m$ keys of weight $\tfrac1{4m}$ — a perfectly honest
+sorted probability row. At gate $\tfrac34$:
+
+- the knee is exactly $m+1$ (retention is $\tfrac12 + \tfrac{k-1}{4m}$ on the shelf);
+- the energy is pinned in $\left[\tfrac14,\ \tfrac14 + \tfrac1{8m}\right]$, because
+  the spike alone contributes $\tfrac14$ — so $H_2$ never exceeds $2$ bits, however
+  long the shelf;
+- hence the floor never exceeds $(3/4)^2/(1/4) = 9/4$ keys.
+
+Let $m \to \infty$ and the ratio (truth)/(floor) diverges at a *fixed* gate.
+
+> **Tightness dichotomy.** Bounded knee-to-floor ratio on the whole geometric
+> family; unbounded on the spike-plus-plateau family, at the same gate.
+> **Exponential decay, not sortedness, is what makes the entropy floor
+> informative.**
+
+{{visualization:1}}
+
+Go back to the explorer in §1 and re-run experiment 3 with this in mind: the red
+floor marker sticking while the knee walks away is exactly the unbounded-loss
+theorem happening in front of you.
+
+---
+
+## 8. Run every number yourself
+
+Everything above — the bracket, the grid guarantees, the realized chain, the
+concavity audit, the entropy prediction and its sharpness, both halves of the
+dichotomy, the sandwich and the consistency test — is reproduced here, with a
+runtime assertion behind every printed claim:
+
+{{demo:0}}
+
+---
+
+## 9. What the number means now
+
+The table entry "$24$ keys at context $2048$" has become four separate things:
+
+- an **honest bracket** $20 < k^* \le 24$, whose width is the grid spacing and no
+  smaller;
+- a **forced chain** $16 < 20 < 24$, because longer contexts spread mass and each
+  still failed at the previous budget;
+- a **prediction** that the underlying rows carry collision entropy below
+  $\log_2 25 \approx 4.64$ bits — testable, and not yet tested;
+- a **warning** that those four numbers cannot come from window-averaged sorted
+  rows, so no concave extrapolation from them is licensed.
+
+And the durable lesson is the dichotomy. It is tempting to summarize an attention
+row by one scalar and read the memory budget off it. On exponentially decaying
+rows that works, to within a factor of about five at a $98\%$ gate. On a row with
+one spike and a long shelf it fails by an unbounded factor. Entropy bounds the
+budget from below, decay bounds it from above, and neither alone is the answer.
