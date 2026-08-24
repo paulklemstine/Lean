@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "50edc087",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What survived: the\nwhole grafting programme — digit recovery (`Pyth.digits_ofDigits`), lacunary irrationalit",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 129,
-      "timestamp": "2026-08-23T07:48:19",
-      "title": "Do not infer infinite-digit laws from finite prefixes"
-    },
-    {
       "cycle_id": "0c164125",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — NET-73 and the limited-memory axis\n\nThree research cycles were run and formalised:\n\n1. **Refutation.** Tokens-per-word explains none of the domain shift: on the\n   four uncensore",
@@ -499,19 +489,19 @@
       "theorem_count": 153,
       "timestamp": "2026-08-24T23:36:39",
       "title": "FACT round-71 #1 — TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exact v2(p+q) mechanism"
+    },
+    {
+      "cycle_id": "ed1b07dd",
+      "domain": "Computation",
+      "key_insight": "# FUTURE DIRECTIONS — E3 thread, after four cycles\n\n## What this cycle settled\n\nThe conjecture was: *the median held-out logit margin is the same at `d = 4, 8,\n16` to within `±10 %`, and equals `128·L",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-24T23:36:54",
+      "title": "E3.  The margin does not"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0cf95d8d",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\nDerived from the results in `Catalog/Probability/PowerSumSharpness.lean`,\n`Catalog/Probability/PowerSumNewtonThreshold.lean`,\n`Catalog/Probability/PowerSumMinimalCollision.lean`,",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-18T01:51:35",
-      "title": "Sharpness"
-    },
     {
       "cycle_id": "11c9ff9f",
       "domain": "Logic",
@@ -2501,21 +2491,19 @@
       "theorem_count": 153,
       "timestamp": "2026-08-24T23:36:39",
       "title": "FACT round-71 #1 — TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exact v2(p+q) mechanism"
+    },
+    {
+      "cycle_id": "ed1b07dd",
+      "domain": "Computation",
+      "key_insight": "# FUTURE DIRECTIONS — E3 thread, after four cycles\n\n## What this cycle settled\n\nThe conjecture was: *the median held-out logit margin is the same at `d = 4, 8,\n16` to within `±10 %`, and equals `128·L",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-24T23:36:54",
+      "title": "E3.  The margin does not"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3be10ac1",
-      "domain": "Pythagorean",
-      "name": "geomBlocks_sum",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "3be10ac1",
-      "domain": "Pythagorean",
-      "name": "geomBlocks_zero",
-      "quality": 0.83
-    },
     {
       "cycle_id": "3be10ac1",
       "domain": "Pythagorean",
@@ -2803,9 +2791,21 @@
       "domain": "Probability",
       "name": "bigW_ge",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "ed1b07dd",
+      "domain": "Computation",
+      "name": "margin_pinned_of_knee",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "ed1b07dd",
+      "domain": "Computation",
+      "name": "margin_pinned_of_knee_32",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-24T23:36:39",
+  "last_updated": "2026-08-24T23:36:54",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "c798c801",
-        "quality": 0.82,
-        "theorems": 110,
-        "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-      },
-      {
         "cycle_id": "921a0e7b",
         "quality": 0.83,
         "theorems": 105,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 70,
         "title": "C4 (reward hacking is a covariance) — PROVED at first order.*"
+      },
+      {
+        "cycle_id": "ed1b07dd",
+        "quality": 0.79,
+        "theorems": 63,
+        "title": "E3.  The margin does not"
       }
     ],
     "Cryptography": [
