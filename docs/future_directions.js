@@ -1732,16 +1732,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-69 #1 \u2014 TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a3cbf41f",
     "description": "## NET-87 \u2014 limited-memory axis, round 31 (paper 168, ResearchOutput/exp_net87_code4096.py, /tmp/net87.log)\n\n**Verdict name: CODE-AT-4096-IS-PROTECTED.**\n\n### Result\nCode knee at ctx=4096: **k\\* = 32** (k=28 fails ~0.976, k=32 passes 0.986). Complete code chain: {12 @512, 16 @1024, 32 @4096}.\n\n- **P2 CONFIRMED**: the acceleration hits code (32 > extrapolated \u226424).\n- But code IS relatively protected: 32 < prose's 40 at the same context.\n\n### The narrowing domain factor\ncode/prose ratio \u22480.75 at short contexts \u2192 \u22480.80 at 4096 \u2014 the gap NARROWS as the phase transition dominates over structural differences.\n\nBaseline acc 0.677 remarkably high for source code at 4096 tokens \u2014 code's predictability persists even at extreme context lengths.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted; (d) clean; (e) deterministic; (f) clean; (g) fair; (h) DIRECT.\n\n### Next\nFine grid 24\u201332 for code; domain-jump @4096 for math/German/French; 7B cell.\n\nNow 88 network experiments. Assessment v88. Paper 168.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3758",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T22:39:30.328368+00:00",
     "title": "NET-87: CODE-AT-4096-IS-PROTECTED \u2014 code knee @4096 is 32 vs prose 40; domain factor narrows at long context"
   },
@@ -2125,6 +2126,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 67 (first KV-cache quantization cell).\n\n**Setup:** Qwen2.5-7B-Instruct Q4_K_M entirely on CPU (llama-perplexity, threads=8, ctx=2048), held-out wikitext slice ~62K tokens, arms via --cache-type-k/--cache-type-v.\n\n| arm | PPL | dPPL vs control |\n|---|---|---|\n| K f16 / V f16 | 7.1093 | \u2014 |\n| K q8_0 / V f16 | 7.0924 | -0.238% |\n| K f16 / V q8_0 | 7.1160 | +0.094% |\n| K q8_0 / V q8_0 | 7.1162 | +0.097% |\n| **K q4_0 / V q4_0** | **2,714.6042** | **+38,084%** |\n\n**Scorecard:** P1 CONFIRMED (all q8_0 arms within \u00b10.25% of control \u2014 8-bit cache is free); P2 CONFIRMED with the largest margin in program history (predicted >5%, measured +38,000% \u2014 total collapse, perplexity 380x control); P3 honestly UNRESOLVED BY DESIGN (no measurable K-vs-V asymmetry at the 8-bit floor; no single-sided 4-bit arms in grid).\n\n**Laws:** (1) THE KV CLIFF IS A WALL \u2014 between 8 and 4 bits there is NO usable operating point: raw per-tensor q4_0 multiplies a small key error through every softmax boundary of every layer (direction matches NET-52 interface fragility and NET-83 selection amplification; the magnitude is new). (2) 8-BIT CACHE IS FREE \u2014 full-width q8_0 halves the KV buffer at +0.10% worst-case PPL; measured +16-26% pass-time tax means the trade is memory-vs-speed, never memory-vs-quality.\n\n**Honest limits:** single slice; point estimates without per-arm SEs; q4_1/iq4_nl block-scaled variants untested (does block-scaling rescue 4-bit? \u2014 immediate follow-up); one model/context/box; cliff position vs context length untested.\n\nScript ResearchOutput/exp_net92_kvquant.sh; paper ResearchOutput/NetworkMathematics/92_TheKVCliff.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3940",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T05:55:13.535981+00:00",
+    "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates the model (PPL 7.11 -> 2714.6, +38000%) \u2014 the KV precision axis has no usable middle at ctx 2048"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -2182,20 +2197,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 05978b53 (Q=0.890), which proved 95 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** `sup_{[0,1]\u00b2} |prodGate h x y \u2212 x y| = h\u00b2/3 + O(h\u2074)`, attained at\nthe corner `(1,1)`; more generally the polarisation branches' quartic errors\ncancel to leading order, so the sharp constant is `((x+y)\u2074 \u2212 (x\u2212y)\u2074)/24` in\nabsolute value rather than the sum `((x+y)\u2074 + (x\u2212y)\u2074)/24` proved ",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_05978b53_fbead962",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "05978b53",
-    "status": "available",
-    "timestamp": "2026-08-24T05:02:28.127468+00:00",
-    "title": "Deepening: Conjecture. `sup_{[0,1]\u00b2} |prodGate h x y \u2212 x y| = h\u00b2/3 + O(h\u2074)`, attained at"
   },
   {
     "consumed_by_exp_id": "",
@@ -35905,14 +35906,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "the tropical Helly theorem with Helly number `d`"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed1b07dd",
     "description": "**Conjecture.**  The median held-out logit margin is the same at `d = 4, 8, 16`\n(same context, same tokeniser) to within `\u00b110 %`, and equals `128\u00b7L\u00b7B\u00b7A`.  This\nis the opposite of the naive expectation that a deeper stack has a\nproportionally smaller usable margin: within the mechanism, the linear growth of\n`k*` is produced entirely by error accumulation over layers, so a measured ratio\n`m(16)/m(4) \u2248 1/4` would *refute* the mechanism rather than confirm it.\n\n*The key insight is* that `amplitude_forced_by_depth_linear_knee` removes the\namplitude as a `d`-dependent explanation and\n`margin_forced_by_depth_linear_knee` then pins the margin to a value with no `d`\nin it, so the depth leg becomes a *statement about margins*\n(`margin_depth_independent`) that is testable without any truncation sweep at\nall.\n\n*Why now?*  The three depths are trained and checkpointed at two seeds each, the\nmargin is a single forward pass on the held-out split, and E1 and E3 share that\none measurement: E1 fixes the constant at one cell, E3 predicts its depth\nscaling.",
     "domains": [],
     "id": "fd_3321",
+    "phase": "A",
     "priority_score": 0.43574999999999997,
     "research_mode": "team",
     "source_exp_id": "8ed04a73",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:29:29.379644+00:00",
     "title": "E3.  The margin does not"
   },
