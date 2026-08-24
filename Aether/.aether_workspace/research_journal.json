@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ccf34fd5",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Smooth Windows (Phase A v19c)\n\nThis cycle replaced the rectangular window of\n`Algebra.ReciprocalZeroHarmonics.WindowDichotomy` by a Gaussian/Schwartz window and proved the\nmodula",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-08-22T23:36:16",
-      "title": "Smooth windows"
-    },
-    {
       "cycle_id": "f49038d4",
       "domain": "Cryptography",
       "key_insight": "# Future directions — curvature of universal-compression model pools\n\nThis cycle introduced the curvature `κ = 1 − min_{j∈Ω}(C(Ω) − C(Ω∖{j}))/C({j})`\nof a candidate pool for the Shtarkov-sum price fun",
@@ -499,19 +489,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-24T15:57:28",
       "title": "FACT round-68 #3 — TDIAL-U64B: fresh-seed replication confirms the dial at bitlen 64 (paper 190)"
+    },
+    {
+      "cycle_id": "99ec0ece",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Computational Complexity of Recipes\n\nDerived from three research cycles on the query (\"tasting\") model of recipe complexity in\n`Catalog/Novelty/KitchenQueryComplexity.lean`,\n`Cat",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-08-24T15:57:45",
+      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2ce26220",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — taxicab / cabtaxi cycle 1\n\nThis cycle proved, with zero `sorry`s (files `Catalog/Geometry/TaxicabCubicReps.lean`,\n`TaxicabCabtaxi.lean`, `TaxicabRationalTransfer.lean`, `TaxicabW",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 77,
-      "timestamp": "2026-08-17T13:54:22",
-      "title": "Derived from the current cycle's findings on Hardy–Ramanujan taxicab numbers."
-    },
     {
       "cycle_id": "c798c801",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-24T15:57:28",
       "title": "FACT round-68 #3 — TDIAL-U64B: fresh-seed replication confirms the dial at bitlen 64 (paper 190)"
+    },
+    {
+      "cycle_id": "99ec0ece",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Computational Complexity of Recipes\n\nDerived from three research cycles on the query (\"tasting\") model of recipe complexity in\n`Catalog/Novelty/KitchenQueryComplexity.lean`,\n`Cat",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-08-24T15:57:45",
+      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "198a9f40",
-      "domain": "Bridges",
-      "name": "sq_gate_le_card_mul_energy",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "198a9f40",
-      "domain": "Bridges",
-      "name": "knee_ge_gate_sq_div_energy",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "58176b8d",
-      "domain": "Algebra",
-      "name": "dot_sum_left",
-      "quality": 0.82
-    },
     {
       "cycle_id": "58176b8d",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "tvD",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "99ec0ece",
+      "domain": "Novelty",
+      "name": "only",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "99ec0ece",
+      "domain": "Novelty",
+      "name": "queryList_depth",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "99ec0ece",
+      "domain": "Novelty",
+      "name": "queryList_eval",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T15:57:28",
+  "last_updated": "2026-08-24T15:57:45",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cd05a1fd",
-        "quality": 0.72,
-        "theorems": 9,
-        "title": "Concavity (old sub-conjecture 1)."
-      },
-      {
         "cycle_id": "3eae19ad",
         "quality": 0.85,
         "theorems": 86,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 81,
         "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 — knee jumps to k*=40 (increment +16/d"
+      },
+      {
+        "cycle_id": "99ec0ece",
+        "quality": 0.82,
+        "theorems": 100,
+        "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
       }
     ],
     "NumberTheory": [
