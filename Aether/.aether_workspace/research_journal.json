@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "347a400e",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Cayley Census Invariance\n\nThis cycle established that the Cayley walk census\n`walkCount S n g = #{(s₁,…,s_n) ∈ Sⁿ : s₁⋯s_n = g}` is a *class function up to\ninversion*: invariant",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-08-23T05:47:00",
-      "title": "prove that this function is a *class function up to inversion*, i.e."
-    },
-    {
       "cycle_id": "cd05a1fd",
       "domain": "Novelty",
       "key_insight": "# Future Directions — the Lagrange exponent programme\n\nThis cycle settled the old sub-conjecture 1 (`lagrangeExponent_concaveOn`) and, more than\nthat, pinned the threshold `1/27` down exactly: `σ` is",
@@ -499,19 +489,19 @@
       "theorem_count": 88,
       "timestamp": "2026-08-24T20:50:14",
       "title": "FACT round-70 #4 — DEPTH-DECAY: the magnitude channel sees only the first steps (paper 195)"
+    },
+    {
+      "cycle_id": "886e75dc",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — after the magnitude-mirror seal (round 70, #6)\n\nThree cycles of the loop produced: (1) the structural identity that kills the\nenergy-ascent sensors, (2) an exact *characterisatio",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-24T22:45:54",
+      "title": "FACT round-70 #6 — MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all re"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "921a0e7b",
-      "domain": "Computation",
-      "key_insight": "# Future directions: conservativity of tangled hierarchies\n\nThe Lean development in `Catalog/Computation/TangledHierarchy*.lean` establishes:\n\n* **Conservativity criterion**: a tangle is conservative",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 105,
-      "timestamp": "2026-08-17T22:41:18",
-      "title": "It would upgrade \"the cost of internal soundness is one loop\""
-    },
     {
       "cycle_id": "33519cdb",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 88,
       "timestamp": "2026-08-24T20:50:14",
       "title": "FACT round-70 #4 — DEPTH-DECAY: the magnitude channel sees only the first steps (paper 195)"
+    },
+    {
+      "cycle_id": "886e75dc",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — after the magnitude-mirror seal (round 70, #6)\n\nThree cycles of the loop produced: (1) the structural identity that kills the\nenergy-ascent sensors, (2) an exact *characterisatio",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-24T22:45:54",
+      "title": "FACT round-70 #6 — MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all re"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fdd9261c",
-      "domain": "NumberTheory",
-      "name": "constantCoeff_subst_of_constantCoeff_one",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fdd9261c",
-      "domain": "NumberTheory",
-      "name": "binomialSeries_pow",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fdd9261c",
-      "domain": "NumberTheory",
-      "name": "exists_pow_eq_of_constantCoeff_one",
-      "quality": 0.82
-    },
     {
       "cycle_id": "6c27d6f0",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "three_dvd_qOf",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "886e75dc",
+      "domain": "Combinatorics",
+      "name": "windowPoint_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "886e75dc",
+      "domain": "Combinatorics",
+      "name": "energy_eq_zero_iff",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "886e75dc",
+      "domain": "Combinatorics",
+      "name": "energy_anchor_nonpos",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T20:50:14",
+  "last_updated": "2026-08-24T22:45:54",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "a985d45a",
-        "quality": 0.82,
-        "theorems": 101,
-        "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
-      },
-      {
         "cycle_id": "39c3166e",
         "quality": 0.74,
         "theorems": 65,
@@ -3265,6 +3259,12 @@
         "quality": 0.78,
         "theorems": 101,
         "title": "NET-70: MATH-READS-AS-PROSE — mathematical text leaves knees exactly at prose va"
+      },
+      {
+        "cycle_id": "886e75dc",
+        "quality": 0.82,
+        "theorems": 64,
+        "title": "FACT round-70 #6 — MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree s"
       }
     ],
     "Computation": [

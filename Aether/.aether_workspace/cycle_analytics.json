@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-24T20:50:17.885698+00:00",
+  "last_updated": "2026-08-24T22:45:57.496659+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -66980,6 +66980,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-24T20:50:17.611220+00:00",
       "title": "FACT round-70 #4 \u2014 DEPTH-DECAY: the magnitude channel sees only the first steps (paper 195)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Combinatorics",
+      "duration_seconds": 3574.9218673706055,
+      "end_time": 1787611490.8723176,
+      "files_integrated": 4,
+      "job_id": "886e75dc",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787607915.9504502,
+      "strategy_count": 0,
+      "theorem_count": 64,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 56,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-24T22:45:57.202516+00:00",
+      "title": "FACT round-70 #6 \u2014 MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all re"
     }
   ]
 }
