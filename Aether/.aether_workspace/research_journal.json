@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bc20ce21",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — after the eigenvalue-model sign law\n\nFour research cycles produced, in `Catalog/Applications/WeilDualitySign/`:\n\n* **Cycle 1** (`EigenvalueModel.lean`) — the exact sign law\n  `∏",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-23T03:17:01",
-      "title": "P2 (from K)"
-    },
-    {
       "cycle_id": "78e6d19a",
       "domain": "Probability",
       "key_insight": "# Future directions from the NET-54 formalisation\n\nThe thread has produced ten compiling, `sorry`-free files in `Catalog/Probability/`:\n\n* `TailTransplantGeometry.lean` — agreement geometry and the bo",
@@ -499,19 +489,19 @@
       "theorem_count": 79,
       "timestamp": "2026-08-24T17:48:11",
       "title": "Exact off-resonance window formula"
+    },
+    {
+      "cycle_id": "a3cbf41f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThree strands of theory were developed in this cycle:\n\n* **The narrowing law.** The bracket that a fail/pass pair licenses; protection\n  as head dominance of retention curves; the",
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "theorem_count": 51,
+      "timestamp": "2026-08-24T17:48:26",
+      "title": "NET-87: CODE-AT-4096-IS-PROTECTED — code knee @4096 is 32 vs prose 40; domain factor narrows at long"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e46e79a5",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — after the OR-COLLAPSE-LAW (paper 72)\n\nWhat is now formally settled (file `Catalog/Applications/OrCollapseLaw.lean`,\n0 sorries, only the standard axioms):\n\n* the exact law `I(N mo",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-17T16:46:23",
-      "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) -"
-    },
     {
       "cycle_id": "f262016d",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 79,
       "timestamp": "2026-08-24T17:48:11",
       "title": "Exact off-resonance window formula"
+    },
+    {
+      "cycle_id": "a3cbf41f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThree strands of theory were developed in this cycle:\n\n* **The narrowing law.** The bracket that a fail/pass pair licenses; protection\n  as head dominance of retention curves; the",
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "theorem_count": 51,
+      "timestamp": "2026-08-24T17:48:26",
+      "title": "NET-87: CODE-AT-4096-IS-PROTECTED — code knee @4096 is 32 vs prose 40; domain factor narrows at long"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2292d7e8",
-      "domain": "Computation",
-      "name": "mean_sub",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "2292d7e8",
-      "domain": "Computation",
-      "name": "variance_nonneg",
-      "quality": 0.82
-    },
     {
       "cycle_id": "05978b53",
       "domain": "Bridges",
@@ -2803,9 +2791,21 @@
       "domain": "NumberTheory",
       "name": "sincR_neg",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "a3cbf41f",
+      "domain": "Novelty",
+      "name": "net87_code_knee_bracket",
+      "quality": 0.81
+    },
+    {
+      "cycle_id": "a3cbf41f",
+      "domain": "Novelty",
+      "name": "net87_fine_grid_needed",
+      "quality": 0.81
     }
   ],
-  "last_updated": "2026-08-24T17:48:11",
+  "last_updated": "2026-08-24T17:48:26",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0ef4aed2",
-        "quality": 0.82,
-        "theorems": 67,
-        "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
-      },
-      {
         "cycle_id": "258afb8b",
         "quality": 0.78,
         "theorems": 72,
@@ -3637,6 +3631,12 @@
         "quality": 0.84,
         "theorems": 117,
         "title": "Complementation as a free involution"
+      },
+      {
+        "cycle_id": "a3cbf41f",
+        "quality": 0.81,
+        "theorems": 51,
+        "title": "NET-87: CODE-AT-4096-IS-PROTECTED — code knee @4096 is 32 vs prose 40; domain fa"
       }
     ],
     "NumberTheory": [
