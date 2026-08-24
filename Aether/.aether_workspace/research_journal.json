@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6cdc8533",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-51 (THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL)\n\n## What survived this cycle\n\n1. **The dissociation is a theorem, not an anomaly.** `cosine_near_one_decision_flip`\n   s",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-22T21:36:32",
-      "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL — base-vs-Instruct keys near-identical everywhere"
-    },
-    {
       "cycle_id": "3fdce232",
       "domain": "Computation",
       "key_insight": "# Future directions — information reconciliation, transcripts, and leakage\n\nThe formalised core (in `Catalog/Computation/InformationReconciliation*.lean`)\nestablishes, for binary keys `Key n = Fin n →",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-24T13:14:33",
       "title": "C3. The even/odd dichotomy of the one-bit cap"
+    },
+    {
+      "cycle_id": "f45042dc",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions from the NET-79 Pythagorean knee round\n\nFive files were added under `Catalog/Pythagorean/`, all compiling with zero `sorry`s:\n\n* `NET79GeometricRatioKnee.lean` — retained mass is a",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-08-24T13:14:47",
+      "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-44 fails); accelerat"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8993bd64",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Compression ⇋ One-Way Functions (after Phase B / M8)\n\nThe three new files prove, in a resource-abstract but fully formal model, that\n\n* compression is capped unconditionally by t",
-      "quality_score": 0.81,
-      "sorry_count": 4,
-      "theorem_count": 81,
-      "timestamp": "2026-08-17T10:49:06",
-      "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
-    },
     {
       "cycle_id": "c8991a0a",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-24T13:14:33",
       "title": "C3. The even/odd dichotomy of the one-bit cap"
+    },
+    {
+      "cycle_id": "f45042dc",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions from the NET-79 Pythagorean knee round\n\nFive files were added under `Catalog/Pythagorean/`, all compiling with zero `sorry`s:\n\n* `NET79GeometricRatioKnee.lean` — retained mass is a",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-08-24T13:14:47",
+      "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-44 fails); accelerat"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3a849502",
-      "domain": "Computation",
-      "name": "diffCount_nil_left",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4be48a30",
-      "domain": "Shared",
-      "name": "here",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "c38d70d3",
-      "domain": "Probability",
-      "name": "localises_iff_asym",
-      "quality": 0.85
-    },
     {
       "cycle_id": "c38d70d3",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "uEnt_le_logb_card_of_mapsTo",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "f45042dc",
+      "domain": "Pythagorean",
+      "name": "is",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f45042dc",
+      "domain": "Pythagorean",
+      "name": "crossover_context_bound",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f45042dc",
+      "domain": "Pythagorean",
+      "name": "crossover_bound_profGap_profFloor",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T13:14:33",
+  "last_updated": "2026-08-24T13:14:47",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "24a12580",
-        "quality": 0.82,
-        "theorems": 118,
-        "title": "Compression Research B5: PRNG-generated real-world data — detection and seed rec"
-      },
-      {
         "cycle_id": "fbb9718e",
         "quality": 0.82,
         "theorems": 278,
@@ -3885,6 +3879,12 @@
         "quality": 0.78,
         "theorems": 188,
         "title": "FACT round-68 #1 — TDIAL-U88: the dial drops below the floor at bitlen 88 (paper"
+      },
+      {
+        "cycle_id": "f45042dc",
+        "quality": 0.82,
+        "theorems": 86,
+        "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-"
       }
     ],
     "Shared": [

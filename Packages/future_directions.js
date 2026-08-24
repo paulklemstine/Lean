@@ -1571,36 +1571,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now strictly monotone {16,20,24}; size-invariance sharpens; 2048 corpus-B reading was a coarse-grid artifact"
   },
   {
-    "consumed_by_exp_id": "f45042dc",
-    "description": "## NET-79 \u2014 limited-memory axis, round 30 (paper 163, ResearchOutput/exp_net79_1p5b4096.py, /tmp/net79.log)\n\n**Verdict name: THE-ACCELERATION-IS-UNIVERSAL.**\n\n### Result\nThe 1.5B's first ctx=4096 cell (fine grid; gate identical to NET-55/65/66):\n\n| k | 16 | 20 | 24 | 28 | 36 | 44 | 56 |\n|---|---|---|---|---|---|---|---|\n| retained | 0.960 \u2717 | 0.966 \u2717 | 0.972 \u2717 | 0.974 \u2717 | 0.977 \u2717 | 0.980 \u2717 | **0.985 \u2713** |\n\n**k\\*(1.5B@4096) = 56.**\n\n- **P1 REFUTED**: the shift does not delay the acceleration.\n- **P2 CONFIRMED dramatically**: the acceleration hits all scales \u2014 56 \u2265 48.\n- **P3 REFUTED**: no intermediate landing.\n\n### The complete two-scale \u00d7 four-context table\n\n| scale | @512 | @1024 | @2048 | @4096 | increments |\n|---|---|---|---|---|---|\n| 0.5B | 16 | 20 | 24 | **40** | +4, +4, **+16** |\n| 1.5B | 16 | 16 | 18 | **56** | 0, +2, **+38** |\n\nThe increments tell the story: the 0.5B accelerates from +4 to +16 (4\u00d7), while the 1.5B accelerates from +2 to +38 (**19\u00d7**). Scale doesn't just fail to delay the acceleration \u2014 it AMPLIFIES it. At short contexts the 1.5B needs fewer or equal keys; at 4096 it needs MORE (56 vs 40). The size relationship INVERTS past the phase transition.\n\n### Deployment consequence\nFor agentic workloads: bigger models are more memory-efficient per key at \u22642048 context but LESS efficient at \u22654096. Budget tables must include both scale AND context as independent parameters with a non-monotone interaction.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 1.5B 4096 cell; (c) confronted \u2014 limits: 2 windows (VRAM-bound), bf16 numerics, one corpus stated; (d) clean; (e) deterministic baseline-replicating (0.4937); (f) clean \u2014 ALL_DONE_NET79; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nFine grid between 44 and 56; crossover localization; domain-jump @4096; 7B quantized-offload cell.\n\nNow 79 network experiments. Assessment v79. Paper 163.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3741",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T20:41:46.046363+00:00",
-    "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL \u2014 1.5B knee at 4096 is 56 (every point 16-44 fails); acceleration amplifies with scale (19x vs 4x); size relationship INVERTS past phase transition"
-  },
-  {
-    "consumed_by_exp_id": "c96b94a8",
-    "description": "Round-68 #1, cron iteration (exp 536). The first band-miss in the uniform-ladder series.\n\n**DRIFT-INCONCLUSIVE**: pooled Spearman(T, rate) = **0.534** CI [0.509, 0.555] \u2014 below 0.55 for the first time; only 1/3 seeds above floor; CI straddles the wall.\n\nH2 PASS: T beats count by +0.059 CI [0.032, 0.083].\n\nLadder: 0.78 (44) \u2192 ~0.81 (52) \u2192 ~0.69 (56) \u2192 ~0.65 (64) \u2192 ~0.61 (68) \u2192 ~0.61 (72) \u2192 ~0.61 (76) \u2192 ~0.57 (80) \u2192 ~0.56 (84) \u2192 **~0.53 (88)**. The erosion continues.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp536_t_dial_unif_88.py + exp536_result.json + LEDGER.md, seeds 20261200\u201302.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3742",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T20:41:46.047984+00:00",
-    "title": "FACT round-68 #1 \u2014 TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.\n\nThe dial's signal degrades toward the floor on a gradual path.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp535_t_dial_unif_84.py + exp535_result.json, seeds 20261190\u201392.",
     "domains": [
@@ -1929,16 +1899,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-70 #1 \u2014 TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f1db4c70",
     "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 66 (first round of the user-directed CPU pivot; doubles as the hardware-stability canary after the 2026-08-23 memory-fault fixes).\n\n**Claim:** Qwen2.5-7B-Instruct Q4_K_M executed entirely on CPU (llama.cpp, i9-9900K, threads=8, 5.79 tok/s greedy baseline) with same-family drafts:\n\n| config | prose speedup | prose accept | code speedup | code accept |\n|---|---|---|---|---|\n| 0.5B d=2 | 1.254x | 63.9% | 1.352x | 71.6% |\n| 0.5B d=4 | 1.416x | 47.7% | 1.616x | 63.0% |\n| 0.5B d=8 | **0.979x LOSS** | 30.9% | **1.661x BEST** | 56.0% |\n| 1.5B d=2 | 1.016x | 63.2% | 1.195x | 83.4% |\n| 1.5B d=4 | 1.153x | 51.9% | 1.395x | 74.8% |\n| 1.5B d=8 | 0.982x LOSS | 44.9% | 1.354x | 60.3% |\n\n**Scorecard:** P2 CONFIRMED dramatically (>1.05x predicted; up to 1.661x measured); P4 CONFIRMED (+17.8 pts code>prose acceptance, growing +14/+19/+20 with depth); P1 razor-thin REFUTED (47.72% vs >=50% horn); P3 REFUTED as stated \u2014 NO crossover: the 11.8%-of-target-cost 0.5B draft beats the 23.4%-cost 1.5B in ALL SIX head-to-heads even where 1.5B accepts more (code d=8: accept 60.3 vs 56.0 but speedup 1.354x vs 1.661x).\n\n**Laws:** (1) DRAFT-COST DOMINANCE ON CPU \u2014 acceptance advantages do not survive a 2x per-token cost disadvantage when proposal is sequential but verification amortizes; GPU folklore does not transfer. (2) OPTIMAL DEPTH IS DOMAIN-PARAMETERIZED \u2014 prose acceptance halves per doubling past d=2 and d=8 becomes a net loss; code decays gracefully and keeps paying through d=8; a static depth setting forfeits 25%+ throughput. (3) Practical: +66% free serving throughput from a 0.6GB side model; prescription = small q8_0 draft, d=8 for code, d=4 for prose.\n\n**Hardware note:** this round doubled as the stability canary after fixing the box's memory subsystem (XMP off + BIOS v1.F0 after uncorrected-MCE hard crashes) \u2014 ~55 minutes of sustained full-CPU llama.cpp load completed with zero incidents; the identical load profile hard-crashed the box three times pre-fix.\n\n**Honest limits:** one model family, one box, greedy sampling, ~500-token prompts, 12 configs x 8 runs; overall drafted-token acceptance (not per-position curves); absolute tok/s specific to post-fix JEDEC state (ratios within-round only). Catalog scan: no prior speculative-decoding/KV-quant work locally or in alethean index.\n\nScript ResearchOutput/exp_net91_specdec.py; paper ResearchOutput/NetworkMathematics/91_TheCheapDraftWins.md.\n\nOpen: per-position acceptance maps (why prose collapses past d=4); domain-adaptive draft depth; KV-cache quantization ladder on the same 7B; weight-quant floor transfer; knee-law transfer to 7B.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3917",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T03:18:15.573191+00:00",
     "title": "NET-91 THE-CHEAP-DRAFT-WINS-AND-CODE-DRAFTS-DEEP: speculative decoding of a 7B LLM entirely on CPU pays up to 1.66x \u2014 smaller draft wins every cell (cost dominance), optimal depth is domain-parameterized (code deep, prose collapses past d=4 into a net loss)"
   },
@@ -2291,6 +2262,76 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T11:45:45.217604+00:00",
     "title": "FACT round-76 #1 \u2014 GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' \u2014 extremal order = population mass-sort (window-ascending beats descending 1.58x\u00b10.03 n=2400; sign-flip crossover E[\u221ar]=1.1716); master inequality S \u2264 (4/3)\u00b7T1-cap/\u039b zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) \u2192 keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078\u00d7 vs 1.08\u00d7); L7-a measure deployed generator tilt named next"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 71.\n\n**Design:** fine depth sweep {1..8} x {prose,code} on the NET-91-winning 0.5B draft targeting the CPU 7B; per-position survival s_i extracted via s_d = d*m(d) - (d-1)*m(d-1) from cumulative acceptance.\n\n**Scorecard:** P3 CONFIRMED CLEANLY \u2014 argmax_d [sum s_i/(1+0.118d)] reproduces NET-91's measured optima EXACTLY (prose 4, code 8): micro-mechanism to macro-throughput closed end-to-end. P1 directionally supported (prose survival collapses by position ~5: s5=0.119 < s1/2=0.335). P2 REFUTED AS MEASURED \u2014 and the honest root cause identified: differencing doubles aggregate noise; n=4 prompts/cell yields impossible values (three positions s_i>1, one negative). The robust deliverable: the optimal-depth argmax is INSENSITIVE to that jitter.\n\n**Lesson recorded:** per-position acceptance needs direct instrumentation (verbose logging / custom harness), not numerical differentiation of small-n aggregates.\n\nSetup identical to NET-91 (llama-speculative, greedy seed 42, ctx<=1024, threads=8). Script ResearchOutput/exp_net96_survival.py.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3997",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T13:15:17.260104+00:00",
+    "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measured speculation optima exactly (prose d=4, code d=8); per-position differencing at n=4 prompts under-resolved (lesson: instrument directly)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## GAP-L8 CLOSED \u2014 k-TAXONOMY (round-77 #2, paper 224, theory deliverable)\n\nCloses draft items L8 + O5 of paper 219's roadmap (\"pin exp563's k\\* definition ... paper must name which\"). No new physics run; definitional/taxonomy result.\n\n### Three definitions\n1. **k_pin = \u2308log\u2082W\u2309** \u2014 gain-saturation point: marginal gain exactly zero, support fully pinned. Paper 212's \"k\\*=\u2308log\u2082W\u2309\" retro-reads as this. NEVER an optimum.\n2. **k_opt^cost = argmin_k[k+(W/2^k+1)/2]** \u2014 T2 census total-cost stop. Dyadic W \u21d2 tie set {log\u2082W\u22122, log\u2082W\u22121}, V\\*=log\u2082W+\u00bd EXACT (W=2..4096); continuous location log\u2082W\u22121.5288.\n3. **k_opt^econ(T\u2080,c_q) = log\u2082((T\u2080\u22121)\u00b7ln2/c_q)** \u2014 net-economics optimum, queries paid c_q against the MEASURED baseline T\u2080.\n\n### Exact identity\nE(k;T\u2080,1)=1+k+(T\u2080\u22121)/2^k \u2261 V(k; W=2(T\u2080\u22121))+\u00bd pointwise \u21d2 **k_opt^econ(T\u2080,1) == k_opt^cost(2(T\u2080\u22121))** (identical argmin sets AND locations). Factor-2 bookkeeping: T2 prices residual at half remaining support, exp563 charges full expected scan anchored at measured T\u0304\u2080. Unconverted same-number inputs differ by EXACTLY +1.000 query \u2014 paper 219's \"+~1\" note confirmed at exactly +1.\n\n### Numerical verification (`gapL8_check.py`, <2 s, ALL PASS)\n- Census offsets {\u22122,\u22121} rel log\u2082W, dyadic V\\*=log\u2082W+\u00bd exact for all dyadic W \u2264 4096.\n- Identity max abs error < 1e-9; naive same-anchor shift exactly +1 on discrete argmin sets.\n- exp563 stored rows reproduce: balanced T\u0304\u2080=1072.425 \u2192 pred 9.536549 (=recorded), argmin 10 (=recorded); unbalanced T\u0304\u2080=286205.89 \u2192 pred 17.597922 (=recorded), argmin 18 (=recorded). Matched-anchor census gives same unique {10}/{18}.\n- Pin never coincides with either optimum: gap \u2208 {1,2} for every W \u2264 4096.\n\n### Verdicts on coincidence\nOnly (k_opt^cost, k_opt^econ) ever coincide \u2014 after anchor conversion. k_pin NEVER coincides with either; conflating them overstates the work-optimal budget (exp563 balanced: 20 vs 10).\n\n### Naming rule adopted\nBare \"k\\*\" BANNED in future papers; must expand to k_pin / k_opt^cost (with W) / k_opt^econ(T\u2080,c_q) (with anchor and price). Draft T2 already complies.\n\n### Verification scope (disclosed)\nDefinitional result; verification = own check script ALL PASS + exact reproduction of previously-recorded exp563/T2-census values from stored rows (cross-validates against the existing record). NO separate adversarial verifier run \u2014 scope judgment, disclosed.\n\n### Ledger\nPapers-only bump: count UNCHANGED at 564. Assessment v330 \u2192 v331. Paper `ResearchOutput/NewMathematics/224_KTaxonomy.md`; artifacts `ResearchOutput/scripts/2026-08-24-round74/gapL8_k_taxonomy.md`, `gapL8_check.py`. Barrier framing: bookkeeping hygiene serving barrier-8 audit trail; residue cap 4/3 untouched; no breakthrough claimed.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3998",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T13:15:17.261963+00:00",
+    "title": "FACT round-77 #2 \u2014 K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and never conflated \u2014 exact identity econ \u2261 census under W \u2194 2(T\u2080\u22121), +1.000 resolves paper 219's +~1 note"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Verdict: H1 REFUTED DECISIVELY / MIXED-PARTIAL by literal rules.** Paper 221's named follow-up L7-a (measure the real generator tilt of deployed populations) is CLOSED; the \u039b-channel scope question is settled ADVERSARIALLY.\n\n**Setup:** 4 pools \u00d7 n=600, b=15, fixed seed 20260824, exact-uniform sieve-index prime sampling, touch-count costs verbatim from verifyL7_sim.py, 8-batch bootstrap SEs.\n\n**Per-pool results:**\n\n| pool | window | z_mean [CI95] | win_asc/desc S \u00b1 SE | in_win |\n|---|---|---|---|---|\n| HARD_BAL (control) | canonical | 0.4114 [0.3887,0.4341] | 1.5896 \u00b1 0.0538 | 1.000 |\n| RSA_INDEP (deployed-style) | canonical | 0.6356 [0.6150,0.6562] | 0.5578 \u00b1 0.0217 | 1.000 |\n| RATIO4 | adapted r_max=4.5 | 0.0558 [0.0530,0.0586] | 17.345 \u00b1 0.4654 | 0.000 canon |\n| UNIFORM_WIDE | adapted r_max=8.0 | 0.5979 [0.5765,0.6194] | 0.5505 \u00b1 0.0230 | 0.582 canon |\n\n**Three-way control replication:** HARD_BAL z=0.4114 matches analytic 0.414 AND independent verifier BAL_prime 0.4095\u20130.4148 / S=1.5785\u00b10.029 at shifted bitlen b=11\u219215 (measured S=1.5896\u00b10.0538). Machinery sound.\n\n**The inversion:** on independent same-bitlen primes the within-window divisor mass is TOP-heavy \u2014 ratio concentration near 1 (effective median r\u22481.25) pushes min(p,q) HIGH into (\u221a(N/2),\u221aN]. Window-ascending is always well-defined there (in_win=1.000 vs paper-137's 21.6% undefined) yet LOSES ~44% to sqrt-descending. Tilt-only predictor (1\u2212z)/z tracks measured S on all honest windows.\n\n**Consequence (plain):** \u039b-dominance is CONFINED TO ARTIFICIAL HARD-BALANCE POOLS; real generator classes tilt ADVERSARially. No deployable reorder-class gain without ENFORCED q<2p balance at key-generation time \u2014 no deployed generator enforces it. Paper-221 caveat upgraded from \"tilt unmeasured\" to \"tilt adversarial off-balance\" \u2014 final word. Scoped reorder-class fact, no speed prescription.\n\n**Caveats:** RATIO4's 17x = narrow-stratum pinning artifact (needs N-invisible declared-support knowledge), not deployable. b=15 lab scale, scale-free transfer assumed (Mertens/Dickman) not verified; real deployed filters only narrow the ratio band further (worsen the tilt).\n\n**Ledger catches disclosed:** findings.md filename pre-existed \u2192 exp575_findings.md written instead; descriptive sign readout added post-smoke with pre-registered decision rules unmodified (in JSON honest_notes); sieve-index sampling replaced randprime rejection loop (identical in law).\n\n**Barrier validation:** factor-local/scan-order frontier row; completes L7-a; reorder-class map now has measured scope boundaries end-to-end; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 223 \u00b7 assessment v329\u2192v330 \u00b7 count 563\u2192564 \u00b7 artifacts ResearchOutput/scripts/2026-08-24-round74/exp575_*",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3999",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T13:15:17.263405+00:00",
+    "title": "FACT round-77 #1 \u2014 GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY \u2014 RSA-style pools read z=0.6356 [0.6150,0.6562] TOP-HEAVY and window-ascending LOSES ~44% (S=0.5578\u00b10.0217); \u039b-dominance CONFINED to artificial hard-balance pools; paper-221 L7-a CLOSED"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 70 (weight-quant floor-transfer cell).\n\n| rung | bpw | PPL | dPPL vs fp16 (6.9825) |\n|---|---|---|---|\n| fp16 | 16 | 6.9825 | \u2014 |\n| q8_0 | ~8.5 | 6.9781 | -0.063% |\n| q6_k | ~6.6 | 7.0006 | +0.259% |\n| q5_k_m | ~5.5 | 7.0427 | +0.862% |\n| q4_k_m | ~4.8 | 7.1093 | +1.816% |\n| q3_k_m | ~3.9 | 7.2758 | +4.201% |\n| q2_k | ~2.6 | 8.1105 | **+16.155%** |\n\n**Scorecard:** P1 CONFIRMED (q6_k inside \u00b10.5%); P2 REFUTED BY A HAIR (+4.20% vs the stated [+5%,+30%] band \u2014 scale+calibration rescues more than predicted; 'erased' <2% also refuted); P3 REFUTED DECISIVELY (+16.2% << +50% \u2014 2.6bpw is degraded but usable).\n\n**The law:** THE WEIGHT FLOOR IS NOT A PROPERTY OF BIT-WIDTH \u2014 it is a property of (quantizer quality \u00d7 scale). NET-52's toy RTN floor (<6 bits undeployable) dissolves into a gentle convex curve at 14x scale with calibration-aware k-quants. The contrast with the cache axis is total: weights quantize smoothly (no cliff anywhere through 2.6bpw) while cache KEYS fall off a wall between 8 and 5 bits (NET-92/93). Selection interfaces carry precision requirements; content containers do not.\n\n**Cross-round determinism:** the q4_k_m arm reproduced NET-92's control PPL 7.1093 EXACTLY \u2014 same model file, same slice, days apart.\n\n**Practical:** full CPU serving stack = q4_k_m weights (+1.8%) + K8/V4 cache (+0.14%) + speculation (+66% throughput, NET-91) \u2248 one-eighth naive memory for ~18% aggregate quality-equivalent cost.\n\n**Honest limits:** single slice/family; llama.cpp calibrations only \u2014 the toy-vs-scale comparison crosses quantizer quality AND scale simultaneously (confound documented, separation open as RTN-vs-kquant-at-fixed-scale); q8_0's \u22120.06% treated as within-noise; per-arm SEs not captured.\n\nSetup: llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice. Script ResearchOutput/exp_net94_weightquant.py; paper ResearchOutput/NetworkMathematics/95_TheWeightFloorCollapsed.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4000",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T13:15:17.264782+00:00",
+    "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q2_k just +16.2%) \u2014 the toy sub-6-bit floor was quantizer-quality x scale, not a bit-width law; weights curve smoothly where cache keys cliff"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Paper 222 \u00b7 assessment v329 \u00b7 experiment count 562\u2192563 (max id 572).\n\n**Verdict: RANDOMNESS-EXTENDED / GATE REJECTED** \u2014 the twice-gated sub-1 candidate deviation from papers 214\u2192216\u2192220 is DEAD.\n\n**The arbiter run** (seed 20260825, the only leg uncontaminated by the shared 20260824 stream): band-9 bitlen-96, 128 Ns \u00d7 600k = 76.8M pairs, wall 5296.9 s.\n\n- cut_1e5 PRIMARY: cand 2598 vs ctrl 2252 => r = **1.1536**, cluster-boot CI95 [1.0540, 1.2611] (independent 4000-rep rebootstrap from persisted raw counts; stored in-run [1.0541, 1.2686]) \u2014 excludes 1 UPWARD\n- cut_1e6: 40617/38594 => r = **1.0524** [1.0051, 1.1016]\n\n**Sign flip:** pilot 0.9468 / G1 0.988 / B 0.9623 at cut 1e6 \u2014 all seed 20260824, all deficit; the clean seed reads surplus +5% to +15%. Directional instability across seeds \u21d2 no stable deviation. Gate G1 fails by sign, stronger than by magnitude; the corrected pilot\u00d7B joint exclusion collapses into one seed-family's fluctuation. The surplus itself is NOT banked (symmetric skepticism): single seed, inside the envelope.\n\n**Audit trail** (both alarms resolved):\n1. Coordinator false alarm: :.5f terminal formatting collapsed 3.38e-05 to \"0.00003\", manufacturing an out-of-CI appearance; raw counts recompute exactly \u2014 display artifact only.\n2. Independent bootstrap from raw counts reproduces stored CI to 3 decimals.\n3. Cluster structure honest: top candidate-N clusters carry 600/561/540 hits vs control-max 359 \u2014 genuine per-N overdispersion behind \u00b15\u201315% single-run CI widths; no single ~77M-pair run can resolve a few-percent deviation.\n\n**Synthesis:** papers 130/209/214/216 randomness line extends through u\u224811 with a MEASURED per-run fluctuation envelope. Named follow-up condition (only if reopened): \u22653 truly distinct seeds pooled inverse-variance (\u03c3_joint\u22480.02 achievable), burden includes explaining the sign flip between seed families.\n\nLedger: pkill self-match killed first c-launch (relaunch clean); seed parameterization born-clean in reused script; JSON within-run verdict_name kept as honest snapshot, recorded verdict governs.\n\nBarrier framing: scale-smoothness frontier u\u22656\u201314 \u2014 null STRENGTHENS the map with quantified resolution floors; no breach, no method, no constant shaved. Complete honesty arc closed: bank (214) \u2192 downgrade (216) \u2192 letter-of-rule null + independence audit (220) \u2192 clean sign-flip rejection (222).",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4001",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T13:15:17.266147+00:00",
+    "title": "FACT round-76 #2 \u2014 U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip \u2014 fresh seed 20260825 reads r=1.1536 SURPLUS where the 20260824 family read deficit; randomness stands through u\u224811 with a measured \u00b15\u201315% single-run fluctuation envelope"
   },
   {
     "consumed_by_exp_id": "",
@@ -4041,22 +4082,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Bridges"
-    ],
-    "id": "seed_286",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
   {
     "consumed_by_exp_id": "",
@@ -12105,6 +12130,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The effective channel pool of the zero-fit dial ladder, measured by the reciprocal excess 1/rho^2 - 1, is fitted to within 0.027 by a quadratic law with a positive floor, but the residuals drift monotonically with bitlen. We conjecture a genuine change of growth exponent from 2 to 3 above some b0 between 96 and 160. Deciding this fixes the asymptotic shape of the erosion and hence every extrapolated band prediction.\n\nThere exists b0 in [96,160] such that e(b) = 1/rho^2(b) - 1 satisfies: e(b)/b^2 is strictly increasing for b > b0, and e(b) = Theta(b^3).\n\nRun the uniform ladder at bitlens 96, 112, 128, 160 with the existing exp536 harness and three seeds each; fit e(b) = kappa*b^g + c and test g = 2 against g > 2 by likelihood ratio. Formalize the discriminating inequality in Lean as an exact rational comparison, as in quadratic_retrodiction.\n\nThe dial's usable range is bounded: the band floor is crossed permanently and the ladder cannot be rescued by larger samples, only by changing the statistic.\n\nThe quadratic-with-floor law extends, and the crossing bitlen of 84.4 is the permanent boundary; extrapolation to cryptographic bit widths becomes reliable.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_3987",
+    "priority_score": 0.7097391304347827,
+    "research_mode": "team",
+    "source_exp_id": "c96b94a8",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:05.781871+00:00",
+    "title": "Cubic Pool Transition Above Bitlen 128"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Mode-convergence statements (binomial to Poisson, Poisson to normal) should be continuity statements for the map \u03b8 \u21a6 (\u2308\u03b8\u2309\u208a - 1, \u230a\u03b8\u230b\u208a). The conjecture is that brackets stabilise along any family of threshold windows whose thresholds converge to a non-integer, and genuinely oscillate when the limit is an integer.\n\nFor threshold windows with \u03b8_j \u2192 \u03b8: if \u03b8 \u2209 \u2115 then eventually firstArgmax = lastArgmax = \u230a\u03b8\u230b\u208a; if \u03b8 \u2208 \u2115 both \u230a\u03b8\u230b\u208a - 1 and \u230a\u03b8\u230b\u208a occur as brackets for infinitely many j in a suitable family.\n\nProve eventual constancy of Nat.floor and Nat.ceil near a non-integer, apply to \u03b8_n = lam + lam/n, and construct an oscillating family for integral \u03b8.\n\nExplains uniformly why approximation theorems transfer modes, with explicit thresholds for 'eventually'.\n\nBracket transfer requires more than threshold convergence, e.g. uniform control of the criteria.",
     "domains": [
       "Algebra",
@@ -14218,7 +14258,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S2 (`\u2113\u00b9` weight is the right invariant)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed2d0af8",
     "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
     "domains": [
       "Novelty",
@@ -14226,10 +14266,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_164",
+    "phase": "A",
     "priority_score": 0.62,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Category Theory of Jokes: Universal Properties of Humor"
   },
@@ -14540,6 +14581,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 4 proved that any quadratic-pool law matching the 44- and 88-rungs must carry a strictly positive constant c. We conjecture c is a property of the rank-correlation estimator at a given sample size, not of the sampled population, and that it scales as 1/N. This would identify the floor as finite-sample attenuation and remove it from the structural model.\n\nFor ladders on uniform integers, Pythagorean even legs, and Pell spines run with the same sample size N and tie handling, the fitted floors agree within their confidence intervals, and c(N) * N is constant in N.\n\nRefit c on each ladder family; rerun one rung at N/4 and 4N and compare c*N. In Lean, state the invariance as a two-sided rational bound on the ratio of fitted floors and discharge it by norm_num once the numbers are recorded.\n\nThe structural model becomes the floorless quadratic pool, and the odds-law falsification at the 84-rung must be revisited as an artefact of sample size.\n\nThe floor is population-dependent and encodes a genuine non-channel source of correlation, which is a new object to characterise.",
+    "domains": [],
+    "id": "fd_3988",
+    "priority_score": 0.592872340425532,
+    "research_mode": "team",
+    "source_exp_id": "c96b94a8",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:06.165808+00:00",
+    "title": "Estimator-Side Universality of the Forced Noise Floor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The quantity varr(addPart f)/varr f is an exact, computable property of a target that upper-bounds what any degree-1 encoding can ever achieve. Sorting a catalogue of number-theoretic targets by this statistic predicts, before any model is fitted, which ones a phase dial can move at all.\n\nAcross a catalogue of root-position targets, the measured out-of-sample degree-1 R^2 never exceeds the computed ceiling, and targets with ceiling below 0.05 never show a reproducible positive gain.\n\nCompute rowMean/colMean/addPart for each target on the population grid and compare the ceiling with the measured cross-window R^2.\n\nEncoding rounds can be scheduled by a cheap deterministic statistic instead of by search.\n\nMeasured gains above the computed ceiling would indicate that the fitted family is not degree-1 after all, localising a specification error.",
     "domains": [],
     "id": "fd_3739",
@@ -14573,6 +14626,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T13:47:23.570240+00:00",
     "title": "Increment Anomaly and the Breakdown of the Envelope Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The trailing-zero tie profile of the even legs 2mn of the Euclid family with odd generator m is literally the dyadic profile, proved in pythLeg_profile_eq_dyadic. Since the product law factorises the dial into a tie factor and a channel factor, the two ladders can differ only in the channel factor. We conjecture they coincide rung by rung within seed noise, including the first band miss at bitlen 88.\n\nFor every odd generator m and every recorded bitlen b, the Pythagorean even-leg ladder value rho_pyth(b) satisfies |rho_pyth(b) - rho_unif(b)| < 0.03, and rho_pyth(88) < 0.55 < rho_pyth(84).\n\nSubstitute the sampler n -> 2mn into the exp536 harness for m = 3, 5, 2^k+1 and rerun all ten rungs with the same seeds. Formalize the transfer of the tie factor in Lean (already done) and the band-miss consequence as an exact inequality on the recorded values.\n\nThe erosion is arithmetic-free: it depends only on bit width, so the dial can be calibrated once and reused across arithmetic families.\n\nThe channel factor is sensitive to arithmetic structure, isolating a Pythagorean-specific channel that the uniform ladder cannot see, and giving a new invariant of the Euclid family.",
+    "domains": [],
+    "id": "fd_3991",
+    "priority_score": 0.5925000000000001,
+    "research_mode": "team",
+    "source_exp_id": "c96b94a8",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:07.302079+00:00",
+    "title": "Pythagorean Even-Leg Ladder Coincidence"
   },
   {
     "consumed_by_exp_id": "",
@@ -14669,6 +14734,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T07:02:29.656805+00:00",
     "title": "Five-Thirds Modulus of Strong Concavity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The dilution law is characterised by additivity of the reciprocal excess, proved in dilution_unique. The additivity defect of a recorded ladder is therefore a parameter-free residual: zero for every independent-channel model, and measurable directly from existing rungs. We conjecture it is strictly positive with bilinear growth and separates competing laws more sharply than any fitted goodness-of-fit statistic.\n\nDelta(b,b') = e(b+b'-1) - e(b) - e(b') + e(1) is strictly positive for all recorded rung pairs and satisfies Delta(b,b') = Theta(b*b').\n\nCompute all 45 defect pairs from the ten recorded rungs; bootstrap CIs from the three seeds. Formalize positivity of a representative set of defects in Lean as exact rational inequalities, in the style of quadratic_retrodiction.\n\nModel selection for correlation ladders can be done without fitting, by testing a functional equation, which removes fit degrees of freedom from every band decision.\n\nThe channel picture is inadequate and the erosion must be modelled by a mechanism with interaction terms, contradicting the exact factorisation proved in product_law_factorised.",
+    "domains": [],
+    "id": "fd_3989",
+    "priority_score": 0.591923076923077,
+    "research_mode": "team",
+    "source_exp_id": "c96b94a8",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:06.543354+00:00",
+    "title": "Additivity Defect as a Parameter-Free Model Selector"
   },
   {
     "consumed_by_exp_id": "",
@@ -15071,6 +15148,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The exact two-primary law Ipair(2^k) = (4/3)(1 - 4^{-k}) proved in this cycle is conjectured to be the q = 2 case of a uniform geometric law Ipair(q^k) = Ipair(q)(1 - q^{-2k})/(1 - q^{-2}) for every prime q. The approach is to close the class-wise fibre sandwich for odd q by showing the product residue covers exactly one coset of q^{v+1} Z on each type class. This would upgrade the current one-sided envelope into an equality and make the whole channel explicitly computable from its prime values.\n\nFor every prime q and every k >= 1, Ipair (q^k) = Ipair q * (1 - q^{-2k}) / (1 - q^{-2}).\n\nFormalise the counting lemma card {s < q^k : s = r mod q^{v+1}} generalised to unions of q-1 progressions, then reuse Ipair_ge_Wsum and Wsum_prime_pow_closed exactly as in Catalog/Tropical/OneBitCapTwoPower.lean. Numerically pre-check for q in {3,5,7}, k <= 4 against brute force.\n\nIpair becomes a completely explicit multiplicative invariant, immediately giving the Euler product of Direction 3 and the sharp odd threshold of Direction 2.\n\nThe fibre sandwich is genuinely lossy for odd q, and the true odd law must involve a second-order correction depending on the residue structure of the units modulo q^k.",
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_3992",
+    "priority_score": 0.564062659849956,
+    "research_mode": "team",
+    "source_exp_id": "6f277833",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:27.184190+00:00",
+    "title": "Geometric Self-Similarity of Primary Type-Pair Towers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Everything is proved for groupoids.  Transporting across\n   the fundamental-groupoid functor to genuine aspherical spaces requires the equivalence\n   between homotopy classes of maps of aspherical spaces and of their fundamental\n   groupoids, which is not in Mathlib and remains the main missing ingredient for a\n   statement such as \"degree classifies self-maps of the topological circle\".",
     "domains": [
       "Geometry",
@@ -15176,6 +15268,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Because Ipair is additive over coprime factorisations, n -> 2^{Ipair n} is multiplicative, so its Dirichlet series should factor as an Euler product whose local factors are explicit once the primary law is known. The q = 2 factor is already fully determined by the closed form proved in this cycle. This bridges an information-theoretic invariant with analytic number theory.\n\nD(s) = sum_{n>=1} 2^{Ipair n} n^{-s} equals prod_q ( sum_{k>=0} 2^{Ipair(q^k)} q^{-ks} ) for Re s > 1, with a simple pole at s = 1.\n\nFormalise multiplicativity of n -> 2^{Ipair n} from Ipair_mul_of_coprime, then apply the Mathlib machinery for Euler products of multiplicative arithmetic functions; bound the local factor at q = 2 using Ipair_two_pow_lt_four_thirds.\n\nThe distribution of cap-breaking orders becomes accessible to Tauberian methods, giving Direction 4 for free.\n\nThe series diverges at s = 1 faster than a simple pole, which would mean the average of 2^{Ipair n} grows and the cap is broken on a set of positive logarithmic weight.",
+    "domains": [
+      "NumberTheory",
+      "Bridges"
+    ],
+    "id": "fd_3994",
+    "priority_score": 0.5638558012525664,
+    "research_mode": "team",
+    "source_exp_id": "6f277833",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:27.941024+00:00",
+    "title": "Euler Product for the Exponentiated Type-Pair Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved chord bound says the Euclidean chord of the square-root embedding is at most half the Fisher\u2013Rao length. The conjecture upgrades chord to arc: twice the Bhattacharyya angle is at most the length. This would identify the Fisher\u2013Rao distance on the simplex with the spherical distance of the square-root embedding, completing the classical picture inside a formal library.\n\nFor every C\u00b9 curve of strictly positive probability vectors on [a,b], 2\u00b7arccos(\u2211\u1d62 \u221a(p_a i \u00b7 p_b i)) \u2264 fisherRaoLength p v a b.\n\nFormalize by partitioning [a,b], applying sqrt_chord_le_half_fisherRao_length on each piece, converting chords to angles via 2\u00b7arcsin(chord/2), and passing to the limit with additivity (fisherRaoLength_add).\n\nThe Fisher\u2013Rao geodesic distance formula becomes available formally, and every divergence bounded by the angle inherits a length bound.\n\nSome curve would beat the spherical geodesic, contradicting the isometry of the square-root embedding; a failure would have to come from a defect in the length functional's definition.",
     "domains": [
       "Combinatorics",
@@ -15263,6 +15370,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T09:05:41.991768+00:00",
     "title": "Extremal Tie Spectra for the Dial Ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "C3 fails on the odd side, but only barely: the supremum of the odd primary contributions is about 1.0655, and its partial sums over increasing odd primes first exceed 1 at the eighth odd prime q = 23. The conjecture is that this is sharp, so an odd cyclic order can break the one-bit cap only if it has at least eight distinct prime factors. This converts the failed dichotomy into a precise combinatorial threshold.\n\nIf n is odd and Ipair n > 1 then omega(n) >= 8; and there exists an odd n with omega(n) = 8 and Ipair n > 1.\n\nStrengthen Ipair_odd_le_omega to a weighted bound sum over p in primeFactors n of G(p), prove G is decreasing, verify the eight smallest odd primes numerically inside Lean with explicit logarithm bounds, and bound the tail sum for q > 23 by a Mertens-type estimate.\n\nThe even/odd dichotomy is replaced by a clean quantitative statement: evenness OR at least eight odd primary components.\n\nEither an odd cap breaker with omega <= 7 exists (contradicting the numerics), or the supremum G(q) is not attained in the limit k -> infinity, indicating the primary law is not geometric.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_3993",
+    "priority_score": 0.5637438372285248,
+    "research_mode": "team",
+    "source_exp_id": "6f277833",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:27.567457+00:00",
+    "title": "Eighth-Prime Threshold for Odd Cap Breakers"
   },
   {
     "consumed_by_exp_id": "",
@@ -15668,6 +15790,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T20:40:07.809740+00:00",
     "title": "Minimum-Distance Duality for Group-Equivariant Estimators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved limit sup_k Ipair(2^k) = 4/3 identifies four thirds of a bit as the exact two-adic saturation level of the type-pair channel. The conjecture is that Ipair is the tropicalisation of a multiplicative height on the lattice of cyclic quotients, with local weights q^{-2} coming from the fibre geometry of the sum map on a product of type classes, so the maximum over orders with at most m primary parts has an explicit closed form.\n\nsup { Ipair n : omega(n) <= m } = 4/3 + sum over the first m-1 odd primes q of Ipair(q) q^2/(q^2-1), attained only in the limit along towers.\n\nProve the supremum statement for m = 1 and m = 2 from the primary law of Direction 1 plus CRT additivity, then verify the value numerically for m <= 5 by brute force over highly composite n.\n\nIpair is a genuine tropical height and its extremal values are computable, giving a canonical ordering of cyclic orders by information content.\n\nThe supremum is not additive across primary parts, indicating a hidden interaction term between primary components that CRT additivity does not see.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3995",
+    "priority_score": 0.5633481507492952,
+    "research_mode": "team",
+    "source_exp_id": "6f277833",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:28.470377+00:00",
+    "title": "Four-Thirds Saturation as a Local Tropical Height"
   },
   {
     "consumed_by_exp_id": "",
@@ -16223,6 +16360,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T19:35:41.468392+00:00",
     "title": "Cubic Shape Functional for Rank-Tie Ceilings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The pooled inverse-bitlen law crosses the exact 2-adic tie ceiling at bitlen 31, proved as a sharp threshold in inverse_law_respects_tie_ceiling. We conjecture this crossing is a physical regime boundary of the dial: ceiling-limited and flat below it, dilution-limited and decaying above it, with a non-analytic kink at the crossing.\n\nIn the infinite-sample limit, rho^2(b) = min(spearmanSq(dyadicBlocks b), C/b), so rho^2 is constant to within 10^-26 for b <= 30, strictly decreasing for b >= 31, and non-differentiable at the crossing.\n\nRun the ladder at bitlens 16, 24, 28, 32, 36 with large N; test flatness below 31 and slope -C/b^2 above it, and test for a kink by fitting one-sided slopes. In Lean, the two exact curves and their unique crossing are already available, so the statement to formalize is the min-form identity at each tested rung.\n\nThe dial has an exactly located operating window, and every ladder below bitlen 31 measures the tie ceiling rather than the statistic of interest.\n\nThe two limiting mechanisms blend smoothly, implying an interaction term that product_law_factorised excludes for the finite-sample model, and hence a genuinely new effect.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3990",
+    "priority_score": 0.5619399723967428,
+    "research_mode": "team",
+    "source_exp_id": "c96b94a8",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:06.922549+00:00",
+    "title": "Tie-Ceiling Crossover Kink at Bitlen 31"
   },
   {
     "consumed_by_exp_id": "",
@@ -35842,6 +35994,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Everything sharp here is proved for exactly geometric profiles.  **The key insight is**\nthat the rearrangement inequality behind `retained_geomProfile_antitone_ratio` only uses\nlog-convexity of `i \u21a6 w i`, so the whole monotone-in-ratio theory should extend to\nlog-convex profiles with a \"ratio\" replaced by a majorization order.  **Why now?** The\nproof is already a pure cross-term comparison and never differentiates.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Exact Crossover Equation for Gap-Plus-Floor Profiles\",\n    \"domain\": \"MachineLearning\",\n    \"description\": \"The proved crossover bound (K+1)M/(tau c) overshoots the observed crossover by about 10%. Replacing the band estimate with the exact retained-mass formula for a mixture profile r^i + eps should yield an exact crossover context, expressible in closed form in r, eps and tau. This would turn a phase-transition location into a computable deployment parameter.\",\n    \"conjecture\": \"For w i = r^i + eps with 0 < r < 1 and eps > 0, and any profile v with context-free budget K at gate tau, the least context n at which k*(v,n,tau) < k*(w,n,tau) equals the least n with (1 - r^{K+1})/(1-r) + (K+1) eps < tau ((1-r^n)/(1-r) + n eps).\",\n    \"test\": \"Formalise the exact retained mass of the mixture profile (a geometric sum plus a linear term) and prove both directions of the least-context characterisation; check numerically against the witnesses profGap / profFloor.\",\n    \"if_true\": \"Crossover contexts become computable from three profile parameters, replacing the current one-sided bound.\",\n    \"if_false\": \"The crossover is not determined by the head/floor split alone, which would point to a genuine dependence on the intermediate decay shape.\",\n    \"proof_strategy\": \"Add a closed form for headMass of the mixture, then reuse knee_bracket to pin the least n by a pass/fail pair at n and n-1.\",\n    \"catalog_references\": [\"Pythagorean.NET79CrossoverLocalization\", \"Pythagorean.NET79ScaleContextSurface\", \"Shared.AttentionBudgetKnee\"]\n  },\n  {\n    \"title\": \"Angular Defect Law for Pythagorean Budget Gaps\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"Along the near-isosceles branch the short/long budget gap closes to zero. The conjecture is that the gap of a triple is controlled by how far its angle sits from pi/4, monotonically in that defect, so that branches of the Berggren tree moving away from the isosceles direction have unbounded gaps.\",\n    \"conjecture\": \"There is a monotone function G with gap(a,b,c) = k*(b/c) - k*(a/c) bounded above and below by G(|a/c - 1/sqrt 2|) at any fixed gate and sufficiently large context.\",\n    \"test\": \"Prove monotonicity of the gap under the Berggren generators using kstar_geomProfile_mono_ratio, then compute gaps along all three children of (3,4,5) for the first six levels.\",\n    \"if_true\": \"The Pythagorean budget gap becomes a geometric invariant of the triple rather than an arithmetic accident.\",\n    \"if_false\": \"Quantisation of the knee dominates the geometry",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3996",
+    "priority_score": 0.4388030050797809,
+    "research_mode": "team",
+    "source_exp_id": "f45042dc",
+    "status": "available",
+    "timestamp": "2026-08-24T13:14:39.397637+00:00",
+    "title": "From geometric profiles to arbitrary decay"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proved this cycle in the form\n   `\u03b2\u00b7(KL(q*_r\u2016q*_s) + KL(q*_s\u2016q*_r)) \u2264 2K` (`ptx_optimum_stability`). Open: whether the sharp\n   constant is `K` rather than `2K`, and whether the quadratic improvement\n   `\u03b2\u00b2\u00b7KL \u2264 2K\u00b2` (via a Pinsker step) holds \u2014 Pinsker's inequality is not currently available in\n   the imported library, so this needs to be built first.",
     "domains": [],
     "id": "fd_1661",
@@ -36139,19 +36306,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T13:11:10.806523+00:00",
     "title": "Conjecture D (phase transition in \u03b3 for the audit-detectability of the mix-in)"
-  },
-  {
-    "consumed_by_exp_id": "6f277833",
-    "description": "**Conjecture.** `I_pair(n) > 1` if and only if `n` is even (`n \u2265 2`), and\n`I_pair(n) < 1` for every odd `n \u2265 3`; equivalently the cap is broken exactly when the\ncyclic order admits the quadratic (`C\u2082`) quotient.\n\n*Status:* proved for `n \u2208 {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,20}`; verified for `n \u2264 40`.\n\n**The key insight is** that `C\u2082` is the unique quotient whose type pair *is* the norm\nclass (the split-count fork saturating exactly 1 bit), so by C1 an even order carries\n`1 + I_pair(odd part) \u2265 1` bits while an odd order carries only the strictly sub-critical\n`I_pair` of its odd factors.\n\n**Why now?** C3 follows from C1 plus the single inequality `I_pair(odd) < 1`, which is\nitself a statement about the two-state Frobenius law `P(T = 1) = 1/n` and should follow\nfrom a concavity estimate on `x \u21a6 x log x`.",
-    "domains": [],
-    "id": "fd_3249",
-    "phase": "A",
-    "priority_score": 0.4378333333333333,
-    "research_mode": "team",
-    "source_exp_id": "1b55f202",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:28:57.107616+00:00",
-    "title": "C3. The even/odd dichotomy of the one-bit cap"
   },
   {
     "consumed_by_exp_id": "",

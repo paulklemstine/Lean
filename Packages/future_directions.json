@@ -43563,7 +43563,7 @@
       "depth_estimate": 3,
       "description": "The case `m = 3`, `F = x² + y² - z²` is fully proved\n(`PythagoreanKernel.pyth_kernel_spectrum`: defect exactly one, the obstruction being that `2`\nis not a square, with the dimension-dependence isolated in `constant_legs_dim_two_three_four`),\nand the Fermat family shows the defect is *not* constant along a family\n(`FermatKernel.spectrum_card_iff_flt`), so the invariant is nontrivial and computable in\nexamples.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean"
       ],
@@ -64607,7 +64607,7 @@
       "depth_estimate": 3,
       "description": "Define a formula `C_PA` representing `∀ n > 0, ∃ k, T^[k](n) = 1`, and prove adequacy between formula satisfaction in the standard model and `CollatzConjecture`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -75340,7 +75340,7 @@
       "depth_estimate": 3,
       "description": "connect that abstract theorem to a formalized Riemann zeta zero-counting theorem;",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -82718,7 +82718,7 @@
       "depth_estimate": 3,
       "description": "The odd-leg triples here are the \"consecutive\n   leg–hypotenuse\" family. Investigate whether a modified greedy rule enumerates\n   other primitive-triple families (e.g. consecutive-leg triples via Pell).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [],
       "github_issue": 0,
       "id": "fd_2507",
@@ -97213,7 +97213,7 @@
       "depth_estimate": 3,
       "description": "`r(D) − r(K − D) = deg D + 1 − g`.  With\n   `Reduced.lean`, `ReducedUnique.lean` and `Dhar.lean` the reduced-divisor calculus\n   is complete, so the missing ingredient is the combinatorics of acyclic\n   orientations with a unique source: the non-special divisors of degree `g − 1` are\n   exactly the classes `ν_σ`, and reversing `σ` realises `D ↦ K − D`.  This is what\n   makes the half-canonical degree self-dual and hence the natural place to test the\n   Brill–Noether conjecture: at `deg D = g − 1` Riemann's inequality gives nothing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -100489,7 +100489,7 @@
       "depth_estimate": 3,
       "description": "**C1 (`K_Schur ≤ 2·C_opt` for every family) — REFUTED, and not just for the constant `2`.**\n  `AsaiLargeSieve.schur_row_gap_unbounded` (in `AsaiSchurGap.lean`) shows that for *every*\n  constant `K` there is a family whose Gram matrix is Hermitian positive semidefinite — a\n  rank-one family `v = (1, ε, …, ε)` with `ε = 1/m` and `m³` copies of `ε`, i.e. a single\n  form — with an admissible large sieve constant `C = 1 + m` (`largeSieve_rankOne`) and Schur\n  row `1 + m²` (`schur_row_rankOne`).  So `K_Schur / C_opt` is unbounded, and positivity of\n  the Gram matrix alone gives no constant-factor comparison.  The case `K = 2` is recorded as\n  `schur_row_not_le_two_mul_largeSieve`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -101043,7 +101043,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For the true zeta ordinates, the limit `lim_{T→∞} Σ_{0<γ≤T} 1/(1/4+γ²)` proved to\nexist in `Convergence.lean` (under the ordinate bound calibrated numerically to `a ≈ 9.79`)\nequals `1 + γ_E/2 − log(2√π)`, and the truncation error satisfies the two-sided bound\n`c₁ log T / T ≤ Σ_{γ > T} 1/(1/4+γ²) ≤ c₂ log T / T` with `c₁, c₂ → 1/2π`.\n\n*The key insight is* that the conjugate-paired series is a **positive** series, so Abel summation\nagainst the counting function `N(T)` converts the Riemann–von Mangoldt asymptotic directly into a\ntwo-sided tail estimate, with no cancellation to control.\n\n*Why now?* `tail_bound_of_separated` already gives a one-sided `1/(a²N)` bound from a telescoping\nargument, and the numerics in `ComputationalEvidence.md` show the true decay is `log T/T`; the\nonly missing ingredient is a formalised Abel-summation lemma against a counting function.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -105876,7 +105876,7 @@
       "depth_estimate": 3,
       "description": "Let `σ(n)` be the stopping time of `n` under `T_3` and define the *orbit\ntransform* `G ω N = Σ_{n≤N} e(ω σ(n)/log n)`.  Then `G ω N / N` converges for\nevery `ω` to the characteristic function of the limiting distribution of\n`σ(n)/log n`, and the Collatz conjecture restricted to `[1,N]` is *equivalent*\nto `σ` being everywhere finite, i.e. to `G` being well defined — whereas no\nstatement about `F a ω N` has this property (by Conjecture 3 / the proved\nblindness theorem).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -110035,7 +110035,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every node satisfies `d_P(m,n) ≤ 2·log₂(m) + O(1)`; combined with the\nproved lower bound `m ≤ 2^(d+1)` this makes Price depth `Θ(log m)`, and hence\n`d_P = Θ(log N)` at the `N`-node, matching the observed `≈ 1.4·log₂(p+q)`.\n\n*The key insight is* that the Price parent halves `m` when `m` is even and halves `n`\nwhen `m` is odd, and the parity of `m` cannot stay odd twice in a row along a descent\nonce one tracks `(m mod 2, n mod 4)`: a two-step potential `Φ = log₂(m·n)` decreases by\nat least `1` per two steps. *Why now?* `price_parent` is formalised with all four cases\nexplicit, so the potential argument is a direct induction; this would upgrade\n`price_level_gt_fermat` from \"level width beats Fermat\" to a *complete* cost model of the\nPrice tree.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -110116,7 +110116,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Up to relabelling, the only triples of integer linear maps that act as a\nternary tree on the node set `{1 ≤ n < m, gcd = 1, m+n odd}` with root `(2,1)` are the\nBerggren triple (determinants `±1`) and the Price triple (determinants `±2`), and no\ntriple of determinant `|det| ≥ 3` exists.\n\n*The key insight is* that determinant `d` forces the gcd of an image pair to divide `d`,\nwhich together with the parity condition (`a+c` and `b+d` odd, proved to be necessary)\nleaves only finitely many candidate matrices with entries bounded by the growth of `m`.\n*Why now?* An exhaustive search over `|entries| ≤ 3` already returns exactly the six\nknown generators, so the classification is within reach of a finite case analysis in\nLean.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [],
       "github_issue": 0,
       "id": "fd_3199",
@@ -119598,7 +119598,7 @@
       "depth_estimate": 3,
       "description": "The thresholds of BB84, the six-state protocol and their higher-dimensional analogues are zeros of Q-linear combinations of logarithms of rationals. The conjecture is that all are transcendental with unbounded continued-fraction partial quotients, and that each textbook percentage is a low-order convergent, as is verified here for 11/100 and p*.\n\nEvery QKD one-way threshold of the form 1 - a H_2(Q) - b H(f(Q)) = 0 with rational a,b is transcendental, and its convergents include the conventional percentage quoted in the literature.\n\nFormalize the six-state rate function, run the certificate scheme at denominators 100 and 10000, and compare the convergents of the resulting enclosure with 12.6 percent.\n\nA uniform explanation of why textbook QKD percentages are so short: they are convergents, hence optimal rational summaries.\n\nSome protocol has a badly approximable threshold, which would itself be a striking arithmetic phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -120063,7 +120063,7 @@
       "depth_estimate": 3,
       "description": "Allowing n regrown heads at move n (the Kirby-Paris convention) keeps termination — proved here via Dershowitz-Manna — but destroys the elementary bound. The conjecture is that the greedy strategy then takes ackermannian time, placing the game exactly at level F_omega of the fast-growing hierarchy: not primitive recursive, yet still provably terminating in PA.\n\nThe greedy stage-dependent Berggren battle from a single head of depth d has length at least A(d), the diagonal Ackermann function, and at most F_omega(c) for an explicit c.\n\nDefine the stage-indexed game StepsToStage and prove length >= A(d) by induction on d, matching the known analysis of flat hydras.\n\nA precise placement of a Pythagorean game at the Ackermann barrier: the first non-primitive-recursive phenomenon on the Berggren tree.\n\nThe stage dependence is absorbed by the potential, showing the game remains elementary and that branching alone can never leave the elementary class.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [],
       "github_issue": 0,
       "id": "fd_3444",
@@ -120433,7 +120433,7 @@
       "depth_estimate": 3,
       "description": "The Berggren tree carries two gradings, depth and hypotenuse height. The two-variable series Z(u,s) = Σ_w u^{|w|} c(w)^{-s} interpolates between the purely silver generating function (1-3u)^{-1} at s = 0 and the arithmetic tree zeta of abscissa 1 at u = 1. Understanding its abscissa curve s₀(u) explains exactly how the silver exponent degenerates into the arithmetic one.\n\nFor 0 < u < 1 the series Z(u,s) = Σ_w u^{|w|} c(w)^{-s} converges precisely for s > s₀(u), where s₀(u) = log(3u)/(2 log(1+√2)) for u ≥ 1/3 and s₀(u) < 0 for u < 1/3; s₀ is continuous, piecewise real-analytic, and non-smooth exactly at u = 1/3.\n\nFormalize Z(u,s) as a summable family over List (Fin 3); prove convergence for s > s₀(u) using hyp_le_silver_pow and 3^d words per depth, and divergence at s₀(u) using the Mspine_silver_growth lower bound and depth_slice_lower.\n\nThe silver exponent and the arithmetic abscissa 1 become two points of one analytic curve, giving a precise sense in which the tree's spectral data controls its zeta function.\n\nThe two gradings are analytically independent, showing the silver spectral data has no influence whatever on the height-graded zeta.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -120566,7 +120566,7 @@
       "depth_estimate": 3,
       "description": "The depth-graded silver zeta (1 − 3ε^{-2s})^{-1} is an Ihara-type zeta of a 3-regular tree with edge length 2 log(1+√2). Its pole set, now an exact theorem, should be the spectrum of a self-adjoint transfer operator attached to the Berggren substitution, giving a fully explicit Hilbert–Pólya model.\n\nThere is a self-adjoint operator T on L²(ℝ/(π/log(1+√2))ℤ) whose spectrum equals {Im s : 1 − 3ε^{-2s} = 0}, unitarily equivalent to the transfer operator of the substitution w ↦ {Lw, Mw, Rw} acting on ℤ[√2]-scaled functions.\n\nConstruct T explicitly as multiplication after Fourier transform, formalize the unitary equivalence, and prove the spectrum coincides with the pole set proved in silver_denom_eq_zero_iff.\n\nThe Berggren critical line becomes an operator spectrum, an exactly solvable Hilbert–Pólya model in which the mechanism is completely transparent.\n\nThe arithmetic pole set of the silver zeta is not of spectral origin, delimiting how far the Hilbert–Pólya heuristic reaches for tree zetas.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -120611,7 +120611,7 @@
       "depth_estimate": 3,
       "description": "The silver abscissa failed for the full tree only because two of the three Berggren generators produce polynomially growing spines. Restricting to a subtree generated by hyperbolic words should restore the naive exponent log(branching)/log(spectral radius), turning the refuted conjecture into a true theorem with an explicit boundary.\n\nFor the subtree generated by two Berggren words that are hyperbolic as elements of SL₂(ℤ), the node zeta Σ c(w)^{-s} has abscissa exactly log 2 / log λ, with λ the smaller spectral radius, and the series diverges at the abscissa.\n\nThe sandwich version is already formalized for the MM/MR subtree (abscissa inside [0.196, 0.757]); the remaining test is to replace the crude per-block bounds by an invariant-cone argument giving matching exponential rates, and deduce a single abscissa.\n\nThe silver-abscissa conjecture is true after removing the parabolic directions, so the refutation is sharp and the boundary between silver and arithmetic behaviour is exactly the presence of parabolic generators.\n\nEven purely hyperbolic subtrees inherit arithmetic abscissae, meaning the height grading is never controlled by spectral radii alone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -121401,7 +121401,7 @@
       "depth_estimate": 3,
       "description": "Every primitive word in the Berggren alphabet is a hyperbolic isometry of the Lorentz lattice with a real quadratic multiplier field determined by its trace. The conjecture is that the periodic geodesic of each word is an orbit of the unit group of the corresponding quadratic order, generalizing the proved statement that the all-B spine is the odd unit group of Z[sqrt 2]. This would give a complete arithmetic dictionary between words and real quadratic orders.\n\nFor a primitive word w in {A,B,C} with Lorentz trace t_w > 2, there is a coordinate map zeta_w on the axis of w intertwining w with multiplication by the fundamental totally positive unit of the order Z[(t_w + sqrt(t_w^2-4))/2], and the nodes of the axis are exactly the elements of one unit orbit.\n\nFormalize the intertwining for the words AB, BC, ABB and check the trace-to-discriminant correspondence numerically to depth 8; then prove the general statement by the same two-step scheme used for B (intertwining identity plus admissibility invariant).\n\nThe Berggren tree becomes a uniform model for real quadratic units: one geodesic per order, indexed by words.\n\nSome words have multiplier fields that are not realized by unit orbits, isolating an obstruction coming from non-maximal orders or from imprimitive traces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -121579,7 +121579,7 @@
       "depth_estimate": 3,
       "description": "The proved identity N(zeta v) = -(a-b)^2 turns the leg defect of a Pythagorean triple into a norm condition in Z[sqrt 2]. Classifying triples with fixed defect k therefore becomes the classification of elements of norm -k^2 modulo units, a finite class-group computation for each k.\n\nFor each k >= 1 the set of primitive Pythagorean triples with |a - b| = k is a finite union of unit orbits in Z[sqrt 2], the number of orbits being determined by the factorization of k in Z[sqrt 2]; for k = 1 there is exactly one orbit, the B-spine.\n\nFormalize the orbit correspondence and verify the predicted orbit counts for k = 1, 7, 17, 23 against an exhaustive tree search to depth 8.\n\nGives a complete arithmetic classification of near-isoceles Pythagorean triples in terms of ideal classes of Z[sqrt 2].\n\nSome defects admit triples outside any unit orbit, showing that the silver coordinate loses information away from the light cone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -122003,7 +122003,7 @@
       "depth_estimate": 3,
       "description": "The unconditional bound q > 2/3 is proved for every Berggren node. The conjecture is that 2/3 is exactly the infimum, approached along the near-isoceles Pell branch. The approach is to produce infinitely many nodes whose abc-product is squarefree, or has radical (abc)^{1-o(1)}.\n\ninf over Berggren tree nodes of q = 2/3, and the infimum is not attained; along the B-spine, q_n = 2/3 + O(1/log c_n) for infinitely many n.\n\nFormalize a squarefree-values result for the quadratic forms giving the near-isoceles legs, then combine with BerggrenABC.two_thirds_lt_quality and the growth law bHyp_bounds.\n\nThe lower edge of the abc quality spectrum is exactly computed for an infinite family, the first such result.\n\nRadicals of near-isoceles Pythagorean legs are systematically deficient, itself a striking arithmetic phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra"
       ],
@@ -123756,7 +123756,7 @@
       "depth_estimate": 3,
       "description": "The proved Theta(H) bounds leave a factor-100 gap to the experimentally observed density 0.1592 ~ 1/(2*pi). The Euclid bijection reduces the count to visible lattice points of opposite parity in a quarter disc, where a Moebius-weighted Gauss circle argument should produce the exact constant with a square-root error term. Settling it converts a qualitative Theta into a sharp asymptotic law for the Berggren tree.\n\n#bergBox(H) = H/(2*pi) + O(sqrt(H) * log H); in particular #bergBox(H)/H tends to 1/(2*pi).\n\nFormalize the Moebius sieve on the coprimality condition in BerggrenBoxCounting.pairBox, combine with a quarter-disc lattice point estimate, and check the constant numerically against the tables in ComputationalEvidence.md.\n\nThe Theta(H) theorem upgrades to an exact asymptotic with an effective error term, and the primitive-Pythagorean-triple counting function inherits the same sharp constant.\n\nThe visible-point heuristic fails for the opposite-parity subfamily, indicating a parity obstruction invisible to the sieve and forcing a different Euler factor.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Pythagorean",
         "Cryptography"
@@ -123888,7 +123888,7 @@
       "depth_estimate": 3,
       "description": "The Theta(H) count proved here traces back to the fact that Euclid's parametrisation of Pythagorean triples uses two integer parameters of size sqrt(H). The same template should give Theta(H^{k/2}) for any Diophantine family with a k-parameter homogeneous quadratic parametrisation, in particular Theta(H^2) for primitive Pythagorean quadruples. This turns a counting theorem into a general exponent principle.\n\nFor a primitive family parametrised bijectively by k coprime integer parameters via forms of degree 2, the number of members inside the box [1,H]^d is Theta(H^{k/2}); for Pythagorean quadruples k = 4 and the count is Theta(H^2).\n\nFormalize the quadruple parametrisation (a,b,c,d) from four parameters, redo the injection into a parameter box, and instantiate the CoprimePairDensity argument in four variables.\n\nA single reusable counting template covers triples, quadruples and higher Lorentz trees, and the vanishing-density statement generalises to all dimensions.\n\nCoprimality or parity conditions in dimension four are not of product type, so the parameter box is not filled with positive density and the exponent drops.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory",
         "Pythagorean"
@@ -124771,7 +124771,7 @@
       "depth_estimate": 3,
       "description": "The generating function of the proved trace counts should equal minus the logarithm of det(I - uB), and for regular graphs factor through the Ihara polynomial. The counting theorem reduces the identity to a bijection between cyclic non-backtracking words and multisets of primitive cycles.\n\nFor every finite simple graph, sum_{n>=1} trace(B^n) u^n / n = -log det(I - uB), and for (q+1)-regular graphs det(I - uB) = (1-u^2)^{|E|-|V|} det(I - uA + q u^2 I).\n\nUse the proved rotation stability of nbCycles to define the rotation action, prove that each orbit is generated by a primitive cyclic word, and compare coefficientwise with the power-sum expansion of the determinant.\n\nA fully formal Ihara zeta function with its Euler product becomes available over Mathlib.\n\nSome rotation orbits fail to be free, indicating that the primitive-cycle decomposition needs a stabiliser correction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean",
         "Combinatorics"
@@ -125148,7 +125148,7 @@
       "depth_estimate": 3,
       "description": "Additivity of the zeta-regularised residue under disjoint unions of graded G-sets is now a theorem. The conjecture is that the whole principal part is a ring-level invariant: the product grading of two graded G-sets is a Cauchy product of partition functions, so the Laurent moments of a product should be an explicit convolution of the moments of the factors. This would turn the residue into a homomorphism out of a Grothendieck ring rather than merely an additive invariant.\n\nFor eventually polynomial grade counts with polynomials P and Q, the product grading has grade counts eventually polynomial with polynomial R determined by the Cauchy product, and the Laurent moment vector of R is the convolution of the moment vectors of P and Q; in particular the residue of the product is a bilinear expression in the moments of the factors.\n\nFormalise the product grading of graded G-sets, compute its transitivity counts, and compare circleIntegral_polyZeta_moment applied to the product with the conjectured convolution of laurentMoment vectors.\n\nThe map from graded G-sets to principal parts at q = 1 becomes a homomorphism of rings, giving a genuine K-theoretic invariant of graded actions.\n\nThe Cauchy product mixes the entire part into the principal part, showing that the residue is additive but not multiplicative and locating the obstruction in the tail correction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -125281,7 +125281,7 @@
       "depth_estimate": 3,
       "description": "Ehrhart-style reciprocity at the single pole q = 1 is now a theorem: polyZeta P at q inverse is minus the generating function of the negative grades. The conjecture is that the law is equivariant for the root-of-unity twist, so that for a quasi-polynomial grade count the inversion q to q inverse permutes the poles by negating the Fourier index while reflecting each section polynomial.\n\nFor a grade count that is eventually quasi-polynomial mod m with sections P_j, the continued partition function satisfies Z(q inverse) = -q times the continued partition function of the grade count with sections given by the reflected polynomials P_j(-X-1) read in reversed Fourier order; in particular the principal part at the pole zeta^k is carried to the principal part at zeta^{-k}.\n\nCombine polyZeta_inv_eq_comp with circleIntegral_twistPolyZeta: check that the twist q to w q commutes with inversion up to w to w inverse, then sum over the Fourier sections as in circleIntegral_multiPolyZeta.\n\nThe singularity divisor of a quasi-polynomial graded G-set carries an explicit involution, giving a duality between grade counts and their reflections that refines the residue calculus.\n\nInversion mixes the principal parts at different roots of unity, which would show that reciprocity is a phenomenon of the single pole at q = 1 and not of the divisor as a whole.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -128555,7 +128555,7 @@
       "depth_estimate": 3,
       "description": "The map S ↦ surfaceOf S is uniformly definable and sends the finiteness of S to the triangulability of a surface. Every Π₂ arithmetic statement of the form 'infinitely many n satisfy P' therefore has an exactly equivalent geometric form, and the base theory needed for the equivalence can be measured.\n\nFor every arithmetic predicate P, surfaceOf {n | P n} is transfinite-dimensional iff {n | P n} is infinite, provably in a weak base theory.\n\nFormalise the equivalence for a general decidable predicate and inspect the axioms used by the resulting bridge theorems.\n\nA uniform dictionary translating Π₂ number theory into fractal geometry, with the twin prime instance already formalised.\n\nThe translation needs strength beyond the base theory, which would itself be a striking reverse-mathematical fact.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -129410,7 +129410,7 @@
       "depth_estimate": 3,
       "description": "The discrete bound by sums of Bhattacharyya angles is now proved. The remaining question is calibration: do those sums converge to the Fisher-Rao length as the partition mesh tends to zero? A positive answer identifies the Fisher-Rao length functional with the length structure of the spherical metric of the square-root embedding, and implies the geodesic lower bound.\n\nFor a C¹ curve of strictly positive probability vectors on [a,b], the sums ∑ₖ 2·arccos BC(p_{t_k}, p_{t_{k+1}}) over partitions converge to fisherRaoLength p v a b as the mesh tends to 0.\n\nEstablish the local expansion 2 arccos BC(p_s, p_t) = ∫_s^t speed + O((t−s)³) using the chord bound and the exact two-point evaluation, then sum over a partition and pass to the limit.\n\nThe Fisher-Rao length becomes the intrinsic length of the spherical metric, and the geodesic lower bound 2 arccos BC ≤ length follows immediately.\n\nThe integral functional would not be the induced length of the Bhattacharyya angle metric, indicating that the definition of fisherRaoLength needs a different normalisation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -129536,7 +129536,7 @@
       "depth_estimate": 3,
       "description": "High-precision computation shows the leading term L(u) = exp(-u(ln u + ln ln u - 1)) overshoots the Dickman function by a factor that grows with u (12.5 at u=2, 31 at u=14.75, 602 at u=40), so the leading term is only ever accurate in the exponent. The conjecture pins down the growth of that ratio.\n\nL(u)/rho(u) = (1+o(1)) * sqrt(2*pi*u) * exp(u*(ln ln u - 1)/ln u) * C(u) with C(u) slowly varying and bounded between 1 and 4 for 10 <= u <= 100.\n\nExtend the interval power-series computation of rho to u = 200 at 200-digit precision and fit ln(L/rho) - ln(sqrt(2 pi u)) - u(ln ln u - 1)/ln u; formalise the proved base case rho(u) = 1 - ln u on (1,2].\n\nGives a usable finite-u correction factor for smoothness estimates in sieve parameter selection, replacing the leading term.\n\nThe ratio has a genuinely different shape, indicating the saddle-point expansion of rho needs a further term at reachable u.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean"
       ],
@@ -129579,7 +129579,7 @@
       "depth_estimate": 3,
       "description": "Since the average hit count of any sieve map is pinned to |domain|/|targets|, no single-prime measurement can separate the x^2-N pool from a random pool. Any real deviation must live in the joint law of admissibility and hit patterns across two or more primes at fixed N. This turns a vague randomness question into a sharp two-prime independence statement.\n\nFor fixed N and distinct odd primes p, q not dividing N, the events 'p divides x^2-N' and 'q divides x^2-N' are exactly independent for x uniform mod pq, and hence the smooth-density model factorises exactly over the factor base.\n\nProve the CRT product formula for the joint hit count mod pq, then measure higher-order (three-prime, prime-power) correlations empirically against the proved two-prime baseline.\n\nThe Dickman-style independence heuristic for the sieve is exact at the level of the factor base, and the only remaining error is the finite-x correction.\n\nA measurable cross-prime correlation exists, which is the first genuine non-randomness of the relation pool and would change sieve yield predictions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -129623,7 +129623,7 @@
       "depth_estimate": 3,
       "description": "The formal end-to-end result here needs only |A|+1 smooth relations, where A is the set of admissible primes. Combining it with an effective density statement for quadratic residues among the primes up to B would convert the folklore factor-2 saving of the quadratic sieve into a theorem with an explicit error term.\n\nFor every non-square N and every B >= B0(N), |A(N,B)| = pi(B)/2 + O(sqrt(B) log(B|N|) / log B), hence pi(B)/2 + O(...) + 1 smooth relations provably suffice to produce a congruence of squares.\n\nFormalise the character-sum count of primes p <= B with (N|p) = 1 under GRH or via Chebotarev with an effective error, then plug into qs_congruence_of_squares.\n\nA fully proved relation-count bound for the quadratic sieve, halving the classical unconditional requirement.\n\nThe admissible set is not equidistributed for some N, which would itself be a striking arithmetic phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory",
         "Pythagorean"
@@ -130442,7 +130442,7 @@
       "depth_estimate": 3,
       "description": "The Hensel step proved for odd primes breaks at p = 2, where the derivative 2x is not invertible. For odd N the congruence x² ≡ N mod 2^k is solvable only when N ≡ 1 mod 8, and then has four roots for every k ≥ 3. Conjecture: the even prime therefore contributes a footprint 4/2^k, twice the odd density, and the yield dial needs a separate N mod 8 term.\n\nFor odd N and k ≥ 3, hitCount N (2^k) = 4 if N ≡ 1 (mod 8) (the vanishing case N ≢ 1 mod 8 is already proved as hitCount_two_pow_eq_zero); consequently the mean footprint of the even part of the factor base is 4·Σ_{3≤k} 2^{-k} on the residue class 1 mod 8 and 0 elsewhere.\n\nAdapt the lifting bijection of hitCount_pow_succ, replacing the unique-lift step by the two-lift step forced by the non-invertible derivative; check the counts by decide for 2^3, 2^4, 2^5 and N = 1, 9, 17, 3.\n\nThe dial gains an exactly computed, arithmetically distinct N mod 8 feature, a candidate explanation for a further slice of the residual.\n\nThe even prime's contribution is not a pure residue-class effect, which would make the 2-part of the sieve genuinely different from its odd part.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory",
         "Pythagorean"
@@ -130529,7 +130529,7 @@
       "depth_estimate": 3,
       "description": "The footprint weight is the exact first cumulant of the number of factor-base divisors of a sieve value. Conjecture: with the exact variance of D1, a concentration inequality forces the true relation yield to be monotone in the dial up to an explicit error term, converting the empirical regression into a proved inequality.\n\nThere is an explicit ε(B, window) such that if qrWeight N₁ B − qrWeight N₂ B > ε then the expected number of factor-base hits per location for N₁ exceeds that for N₂.\n\nProve the mean identity per window (already available) and add a Chebyshev bound from the variance law; check numerically on random N with B = 100.\n\nThe dial acquires a proof-backed operational meaning for sieve calibration, not just a regression score.\n\nThe mapping from footprint to smoothness probability is non-monotone, indicating higher cumulants dominate at practical window sizes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -130893,7 +130893,7 @@
       "depth_estimate": 3,
       "description": "The universal cap is 4/3 for single-pass scans and r for full reveals with r symbols. We conjecture a monotone one-parameter family of caps indexed by the fraction s of rejected classes the algorithm may skip for free, interpolating the two. This would say precisely how much of a sieve's advantage comes from skipping rather than from filtering.\n\nFor skip fraction s ∈ [0,1] the maximal speedup of an r-block dial is C(r,s) = 1 / min_θ Σ_i θ_i (θ_i + (1-s)(θ_1 + … + θ_{i-1})), which is continuous and increasing in s, with C(r,0) = 2r/(r+1) and C(r,1) = r.\n\nDefine the s-cost in Lean as a Finset sum, prove the closed form by the same doubling identity used for prefixCost, and minimize by Cauchy–Schwarz; verify exhaustively on rational density grids for r = 2,3,4 and s ∈ {0, 1/4, 1/2, 3/4, 1}.\n\nAny claimed congruence speedup can be classified by its skip budget, and the 4/3-versus-2-versus-r confusion disappears.\n\nSkipping interacts with density in a non-monotone way, which would itself be a new phenomenon worth isolating.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -131673,7 +131673,7 @@
       "depth_estimate": 3,
       "description": "This cycle proved that typeEntropy q is rational exactly at the prime q = 2. Combined with CRT additivity and the prime-power saturation law, the natural completion is that the type entropy of degree m is rational precisely when m is a power of two, the dyadic tower being the unique source of rational values.\n\nFor every m >= 1, typeEntropy m is rational if and only if m is a power of 2 (in which case it equals 2 - 2^{1-e} for m = 2^e).\n\nWrite typeEntropy m through typeEntropy_mul_of_coprime and typeEntropy_prime_pow_eq as a rational combination of log2 p and log2 (p-1) over p | m, then apply irrational_log_combination after proving that no cancellation between distinct primes can occur.\n\nA complete rationality classification of the cyclic splitting-type entropy, with the dyadic tower isolated as the only rational family.\n\nThere is a multiplicative coincidence between the numbers p and p-1 for distinct primes, itself a strong Diophantine statement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory",
         "Pythagorean"
@@ -134306,7 +134306,7 @@
       "depth_estimate": 3,
       "description": "Extend the single-block duality eigensystem to a graded family H^0..H^{2n} in which duality pairs degree i with degree 2n-i. Conjecture that the global zeta functional equation has exponent the Euler characteristic and sign carried entirely by the middle block. This would explain why root numbers of varieties are middle-cohomology invariants.\n\nFor a graded duality system, Z(1/(q^n T)) = ± q^{n·chi/2} T^chi Z(T) with chi = sum (-1)^i b_i, and the sign equals (-1)^{m_+ of the middle block}.\n\nFormalise a GradedDualSystem structure (blocks plus pairing between i and 2n-i), prove block-wise telescoping using rootSign_directSum, and derive the global equation.\n\nThe root sign of a variety is a middle-cohomology invariant, provable in the eigenvalue model without any geometry.\n\nOff-middle blocks contribute signs, which would identify a new invariant beyond the fixed-point count.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -135641,7 +135641,7 @@
       "depth_estimate": 3,
       "description": "The dichotomy theorem gives non-eventual-periodicity of the decimal expansion of sqrt 2 abstractly. We conjecture an effective form: any claimed eventual period p starting at position n is refuted at an index bounded polynomially in p and in the denominators controlled by the irrationality measure 2 of sqrt 2.\n\nThere is an explicit constant C such that for all n and p >= 1 there is i <= C * p * 10^(n) with digit(i+p+n) != digit(i+n) for sqrt 2.\n\nQuantify the pigeonhole in Pyth.digits_eventually_periodic_of_not_irrational and combine with a quantitative irrationality measure for sqrt 2; sanity-check against the first 10^4 digits.\n\nAperiodicity of a quadratic irrational becomes a finite, checkable statement at every scale.\n\nThe orbit of frac(10^k sqrt 2) would return to near-repetition faster than approximation theory allows, contradicting the standard measure of irrationality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning"
       ],
@@ -138993,7 +138993,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723). with terms 36,180,252,392,396,468,612,684,828,1044,1116,1176,1260,1332,1476,1548,1692,1908,1960,1980,2124,2196,. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean"
       ],
@@ -139872,11 +139872,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f1db4c70",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -139888,7 +139888,7 @@
       ],
       "github_issue": 345,
       "id": "fd_3917",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-24T13:16:15.986943+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -139903,7 +139903,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-24T03:18:15.573191+00:00",
       "title": "NET-91 THE-CHEAP-DRAFT-WINS-AND-CODE-DRAFTS-DEEP: speculative decoding of a 7B LLM entirely on CPU pays up to 1.66x — smaller draft wins every cell (cost dominance), optimal depth is domain-parameterized (code deep, prose collapses past d=4 into a net loss)"
@@ -140002,7 +140002,7 @@
       "depth_estimate": 3,
       "description": "Consolidation of papers 192–198 (issues #335–#341, exps 545–553).\n\n**THE TWO-TREE CLOSURE.** The energy-ascent question — can a magnitude spectrum computed from N climb the Berggren/Price trees toward the semiprime's node? — is answered NO, sealed at FOUR strengths: (1) residue dials blind (paper 81 replicated); (2) Gauss-sum magnitudes PROVEN residue dials (N mod 720720); (3) bracket/sign-count sensors structurally constant (MI=0.000000 exactly, identities proven); (4) spectral summaries RETRACTED to magnitude mirrors of |N| (exact null given log-N deciles). Only a factor-derived oracle bound remains (I peaks 0.4798 bits @ B≈22758), unrealized by every tested probe.\n\nExact laws banked: Price two-adic law (letter₀=A ⟺ N≡1 mod 4; letter₁=A ⟺ N mod 8 ∈{1,3}; bijection with N mod 8; v₂(p+q)-capped mechanism; provable death at position 2); ascent economics (restart E=h·α^(−h); branching base pinned at 3 ∀α<1; win-vs-Fermat needs α*≥0.85 & c≤3000); sequential hints COMPOUND where the class-hint master law saturates — new taxonomy entry. Corrections: dP slope 1.211 not 1.4; dB/Fermat anticorrelation stratum-dependent.\n\nMethod laws banked lab-wide: row-shuffle nulls are WRONG for deterministic functions of N (condition on magnitude instead); derivation-first validation; smoke-run checks as mechanism detectors.\n\nWhat would reopen it: a probe class none of the four sealed kinds, non-monotone in |N|, delivering per-step accuracy above α*≈0.85 at cost ≤3000 visit-equivalents. The geometry contains up to 0.48 bits of positional content; nothing cheap reads it.\n\nFull document: ResearchOutput/NewMathematics/199_TwoTreeClosure_Synthesis.md.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty"
       ],
@@ -142979,7 +142979,7 @@
       "depth_estimate": 3,
       "description": "The trailing-zero tie profile of the even legs 2mn of the Euclid family with odd generator m is literally the dyadic profile, proved in pythLeg_profile_eq_dyadic. Since the product law factorises the dial into a tie factor and a channel factor, the two ladders can differ only in the channel factor. We conjecture they coincide rung by rung within seed noise, including the first band miss at bitlen 88.\n\nFor every odd generator m and every recorded bitlen b, the Pythagorean even-leg ladder value rho_pyth(b) satisfies |rho_pyth(b) - rho_unif(b)| < 0.03, and rho_pyth(88) < 0.55 < rho_pyth(84).\n\nSubstitute the sampler n -> 2mn into the exp536 harness for m = 3, 5, 2^k+1 and rerun all ten rungs with the same seeds. Formalize the transfer of the tie factor in Lean (already done) and the band-miss consequence as an exact inequality on the recorded values.\n\nThe erosion is arithmetic-free: it depends only on bit width, so the dial can be calibrated once and reused across arithmetic families.\n\nThe channel factor is sensitive to arithmetic structure, isolating a Pythagorean-specific channel that the uniform ladder cannot see, and giving a new invariant of the Euclid family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [],
       "github_issue": 0,
       "id": "fd_3991",
@@ -143225,6 +143225,206 @@
       "thread_id": "",
       "timestamp": "2026-08-24T13:14:39.397637+00:00",
       "title": "From geometric profiles to arbitrary decay"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 71.\n\n**Design:** fine depth sweep {1..8} x {prose,code} on the NET-91-winning 0.5B draft targeting the CPU 7B; per-position survival s_i extracted via s_d = d*m(d) - (d-1)*m(d-1) from cumulative acceptance.\n\n**Scorecard:** P3 CONFIRMED CLEANLY — argmax_d [sum s_i/(1+0.118d)] reproduces NET-91's measured optima EXACTLY (prose 4, code 8): micro-mechanism to macro-throughput closed end-to-end. P1 directionally supported (prose survival collapses by position ~5: s5=0.119 < s1/2=0.335). P2 REFUTED AS MEASURED — and the honest root cause identified: differencing doubles aggregate noise; n=4 prompts/cell yields impossible values (three positions s_i>1, one negative). The robust deliverable: the optimal-depth argmax is INSENSITIVE to that jitter.\n\n**Lesson recorded:** per-position acceptance needs direct instrumentation (verbose logging / custom harness), not numerical differentiation of small-n aggregates.\n\nSetup identical to NET-91 (llama-speculative, greedy seed 42, ctx<=1024, threads=8). Script ResearchOutput/exp_net96_survival.py.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 372,
+      "id": "fd_3997",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 1000.0,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "github_injection",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T13:15:17.260104+00:00",
+      "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measured speculation optima exactly (prose d=4, code d=8); per-position differencing at n=4 prompts under-resolved (lesson: instrument directly)"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "## GAP-L8 CLOSED — k-TAXONOMY (round-77 #2, paper 224, theory deliverable)\n\nCloses draft items L8 + O5 of paper 219's roadmap (\"pin exp563's k\\* definition ... paper must name which\"). No new physics run; definitional/taxonomy result.\n\n### Three definitions\n1. **k_pin = ⌈log₂W⌉** — gain-saturation point: marginal gain exactly zero, support fully pinned. Paper 212's \"k\\*=⌈log₂W⌉\" retro-reads as this. NEVER an optimum.\n2. **k_opt^cost = argmin_k[k+(W/2^k+1)/2]** — T2 census total-cost stop. Dyadic W ⇒ tie set {log₂W−2, log₂W−1}, V\\*=log₂W+½ EXACT (W=2..4096); continuous location log₂W−1.5288.\n3. **k_opt^econ(T₀,c_q) = log₂((T₀−1)·ln2/c_q)** — net-economics optimum, queries paid c_q against the MEASURED baseline T₀.\n\n### Exact identity\nE(k;T₀,1)=1+k+(T₀−1)/2^k ≡ V(k; W=2(T₀−1))+½ pointwise ⇒ **k_opt^econ(T₀,1) == k_opt^cost(2(T₀−1))** (identical argmin sets AND locations). Factor-2 bookkeeping: T2 prices residual at half remaining support, exp563 charges full expected scan anchored at measured T̄₀. Unconverted same-number inputs differ by EXACTLY +1.000 query — paper 219's \"+~1\" note confirmed at exactly +1.\n\n### Numerical verification (`gapL8_check.py`, <2 s, ALL PASS)\n- Census offsets {−2,−1} rel log₂W, dyadic V\\*=log₂W+½ exact for all dyadic W ≤ 4096.\n- Identity max abs error < 1e-9; naive same-anchor shift exactly +1 on discrete argmin sets.\n- exp563 stored rows reproduce: balanced T̄₀=1072.425 → pred 9.536549 (=recorded), argmin 10 (=recorded); unbalanced T̄₀=286205.89 → pred 17.597922 (=recorded), argmin 18 (=recorded). Matched-anchor census gives same unique {10}/{18}.\n- Pin never coincides with either optimum: gap ∈ {1,2} for every W ≤ 4096.\n\n### Verdicts on coincidence\nOnly (k_opt^cost, k_opt^econ) ever coincide — after anchor conversion. k_pin NEVER coincides with either; conflating them overstates the work-optimal budget (exp563 balanced: 20 vs 10).\n\n### Naming rule adopted\nBare \"k\\*\" BANNED in future papers; must expand to k_pin / k_opt^cost (with W) / k_opt^econ(T₀,c_q) (with anchor and price). Draft T2 already complies.\n\n### Verification scope (disclosed)\nDefinitional result; verification = own check script ALL PASS + exact reproduction of previously-recorded exp563/T2-census values from stored rows (cross-validates against the existing record). NO separate adversarial verifier run — scope judgment, disclosed.\n\n### Ledger\nPapers-only bump: count UNCHANGED at 564. Assessment v330 → v331. Paper `ResearchOutput/NewMathematics/224_KTaxonomy.md`; artifacts `ResearchOutput/scripts/2026-08-24-round74/gapL8_k_taxonomy.md`, `gapL8_check.py`. Barrier framing: bookkeeping hygiene serving barrier-8 audit trail; residue cap 4/3 untouched; no breakthrough claimed.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 371,
+      "id": "fd_3998",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 1000.0,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "github_injection",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T13:15:17.261963+00:00",
+      "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and never conflated — exact identity econ ≡ census under W ↔ 2(T₀−1), +1.000 resolves paper 219's +~1 note"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "**Verdict: H1 REFUTED DECISIVELY / MIXED-PARTIAL by literal rules.** Paper 221's named follow-up L7-a (measure the real generator tilt of deployed populations) is CLOSED; the Λ-channel scope question is settled ADVERSARIALLY.\n\n**Setup:** 4 pools × n=600, b=15, fixed seed 20260824, exact-uniform sieve-index prime sampling, touch-count costs verbatim from verifyL7_sim.py, 8-batch bootstrap SEs.\n\n**Per-pool results:**\n\n| pool | window | z_mean [CI95] | win_asc/desc S ± SE | in_win |\n|---|---|---|---|---|\n| HARD_BAL (control) | canonical | 0.4114 [0.3887,0.4341] | 1.5896 ± 0.0538 | 1.000 |\n| RSA_INDEP (deployed-style) | canonical | 0.6356 [0.6150,0.6562] | 0.5578 ± 0.0217 | 1.000 |\n| RATIO4 | adapted r_max=4.5 | 0.0558 [0.0530,0.0586] | 17.345 ± 0.4654 | 0.000 canon |\n| UNIFORM_WIDE | adapted r_max=8.0 | 0.5979 [0.5765,0.6194] | 0.5505 ± 0.0230 | 0.582 canon |\n\n**Three-way control replication:** HARD_BAL z=0.4114 matches analytic 0.414 AND independent verifier BAL_prime 0.4095–0.4148 / S=1.5785±0.029 at shifted bitlen b=11→15 (measured S=1.5896±0.0538). Machinery sound.\n\n**The inversion:** on independent same-bitlen primes the within-window divisor mass is TOP-heavy — ratio concentration near 1 (effective median r≈1.25) pushes min(p,q) HIGH into (√(N/2),√N]. Window-ascending is always well-defined there (in_win=1.000 vs paper-137's 21.6% undefined) yet LOSES ~44% to sqrt-descending. Tilt-only predictor (1−z)/z tracks measured S on all honest windows.\n\n**Consequence (plain):** Λ-dominance is CONFINED TO ARTIFICIAL HARD-BALANCE POOLS; real generator classes tilt ADVERSARially. No deployable reorder-class gain without ENFORCED q<2p balance at key-generation time — no deployed generator enforces it. Paper-221 caveat upgraded from \"tilt unmeasured\" to \"tilt adversarial off-balance\" — final word. Scoped reorder-class fact, no speed prescription.\n\n**Caveats:** RATIO4's 17x = narrow-stratum pinning artifact (needs N-invisible declared-support knowledge), not deployable. b=15 lab scale, scale-free transfer assumed (Mertens/Dickman) not verified; real deployed filters only narrow the ratio band further (worsen the tilt).\n\n**Ledger catches disclosed:** findings.md filename pre-existed → exp575_findings.md written instead; descriptive sign readout added post-smoke with pre-registered decision rules unmodified (in JSON honest_notes); sieve-index sampling replaced randprime rejection loop (identical in law).\n\n**Barrier validation:** factor-local/scan-order frontier row; completes L7-a; reorder-class map now has measured scope boundaries end-to-end; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 223 · assessment v329→v330 · count 563→564 · artifacts ResearchOutput/scripts/2026-08-24-round74/exp575_*",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 370,
+      "id": "fd_3999",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 1000.0,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "github_injection",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T13:15:17.263405+00:00",
+      "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style pools read z=0.6356 [0.6150,0.6562] TOP-HEAVY and window-ascending LOSES ~44% (S=0.5578±0.0217); Λ-dominance CONFINED to artificial hard-balance pools; paper-221 L7-a CLOSED"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 70 (weight-quant floor-transfer cell).\n\n| rung | bpw | PPL | dPPL vs fp16 (6.9825) |\n|---|---|---|---|\n| fp16 | 16 | 6.9825 | — |\n| q8_0 | ~8.5 | 6.9781 | -0.063% |\n| q6_k | ~6.6 | 7.0006 | +0.259% |\n| q5_k_m | ~5.5 | 7.0427 | +0.862% |\n| q4_k_m | ~4.8 | 7.1093 | +1.816% |\n| q3_k_m | ~3.9 | 7.2758 | +4.201% |\n| q2_k | ~2.6 | 8.1105 | **+16.155%** |\n\n**Scorecard:** P1 CONFIRMED (q6_k inside ±0.5%); P2 REFUTED BY A HAIR (+4.20% vs the stated [+5%,+30%] band — scale+calibration rescues more than predicted; 'erased' <2% also refuted); P3 REFUTED DECISIVELY (+16.2% << +50% — 2.6bpw is degraded but usable).\n\n**The law:** THE WEIGHT FLOOR IS NOT A PROPERTY OF BIT-WIDTH — it is a property of (quantizer quality × scale). NET-52's toy RTN floor (<6 bits undeployable) dissolves into a gentle convex curve at 14x scale with calibration-aware k-quants. The contrast with the cache axis is total: weights quantize smoothly (no cliff anywhere through 2.6bpw) while cache KEYS fall off a wall between 8 and 5 bits (NET-92/93). Selection interfaces carry precision requirements; content containers do not.\n\n**Cross-round determinism:** the q4_k_m arm reproduced NET-92's control PPL 7.1093 EXACTLY — same model file, same slice, days apart.\n\n**Practical:** full CPU serving stack = q4_k_m weights (+1.8%) + K8/V4 cache (+0.14%) + speculation (+66% throughput, NET-91) ≈ one-eighth naive memory for ~18% aggregate quality-equivalent cost.\n\n**Honest limits:** single slice/family; llama.cpp calibrations only — the toy-vs-scale comparison crosses quantizer quality AND scale simultaneously (confound documented, separation open as RTN-vs-kquant-at-fixed-scale); q8_0's −0.06% treated as within-noise; per-arm SEs not captured.\n\nSetup: llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice. Script ResearchOutput/exp_net94_weightquant.py; paper ResearchOutput/NetworkMathematics/95_TheWeightFloorCollapsed.md.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 369,
+      "id": "fd_4000",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 1000.0,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "github_injection",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T13:15:17.264782+00:00",
+      "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q2_k just +16.2%) — the toy sub-6-bit floor was quantizer-quality x scale, not a bit-width law; weights curve smoothly where cache keys cliff"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Paper 222 · assessment v329 · experiment count 562→563 (max id 572).\n\n**Verdict: RANDOMNESS-EXTENDED / GATE REJECTED** — the twice-gated sub-1 candidate deviation from papers 214→216→220 is DEAD.\n\n**The arbiter run** (seed 20260825, the only leg uncontaminated by the shared 20260824 stream): band-9 bitlen-96, 128 Ns × 600k = 76.8M pairs, wall 5296.9 s.\n\n- cut_1e5 PRIMARY: cand 2598 vs ctrl 2252 => r = **1.1536**, cluster-boot CI95 [1.0540, 1.2611] (independent 4000-rep rebootstrap from persisted raw counts; stored in-run [1.0541, 1.2686]) — excludes 1 UPWARD\n- cut_1e6: 40617/38594 => r = **1.0524** [1.0051, 1.1016]\n\n**Sign flip:** pilot 0.9468 / G1 0.988 / B 0.9623 at cut 1e6 — all seed 20260824, all deficit; the clean seed reads surplus +5% to +15%. Directional instability across seeds ⇒ no stable deviation. Gate G1 fails by sign, stronger than by magnitude; the corrected pilot×B joint exclusion collapses into one seed-family's fluctuation. The surplus itself is NOT banked (symmetric skepticism): single seed, inside the envelope.\n\n**Audit trail** (both alarms resolved):\n1. Coordinator false alarm: :.5f terminal formatting collapsed 3.38e-05 to \"0.00003\", manufacturing an out-of-CI appearance; raw counts recompute exactly — display artifact only.\n2. Independent bootstrap from raw counts reproduces stored CI to 3 decimals.\n3. Cluster structure honest: top candidate-N clusters carry 600/561/540 hits vs control-max 359 — genuine per-N overdispersion behind ±5–15% single-run CI widths; no single ~77M-pair run can resolve a few-percent deviation.\n\n**Synthesis:** papers 130/209/214/216 randomness line extends through u≈11 with a MEASURED per-run fluctuation envelope. Named follow-up condition (only if reopened): ≥3 truly distinct seeds pooled inverse-variance (σ_joint≈0.02 achievable), burden includes explaining the sign flip between seed families.\n\nLedger: pkill self-match killed first c-launch (relaunch clean); seed parameterization born-clean in reused script; JSON within-run verdict_name kept as honest snapshot, recorded verdict governs.\n\nBarrier framing: scale-smoothness frontier u≥6–14 — null STRENGTHENS the map with quantified resolution floors; no breach, no method, no constant shaved. Complete honesty arc closed: bank (214) → downgrade (216) → letter-of-rule null + independence audit (220) → clean sign-flip rejection (222).",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 368,
+      "id": "fd_4001",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 1000.0,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "github_injection",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-24T13:15:17.266147+00:00",
+      "title": "FACT round-76 #2 — U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip — fresh seed 20260825 reads r=1.1536 SURPLUS where the 20260824 family read deficit; randomness stands through u≈11 with a measured ±5–15% single-run fluctuation envelope"
     },
     {
       "ambition_level": "extension",
@@ -160612,11 +160812,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ed2d0af8",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -160630,7 +160830,7 @@
       ],
       "github_issue": 0,
       "id": "seed_164",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-24T13:16:22.574393+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -160645,7 +160845,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "The Category Theory of Jokes: Universal Properties of Humor"
@@ -165057,14 +165257,14 @@
       "parent_direction": "",
       "priority_score": 0.84,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Ill-defined: 'subjective experience', 'qualia' and 'experientially void' have no mathematical definition, so the claimed theorem (every functional-conscious system admits a zombie twin) has no truth conditions; the asserted 'isomorphism' with Goedel's incompleteness gap is a metaphor, not a statement about formal systems, and any Lean rendering would either be vacuous or a trivial restatement that a functional specification does not determine an unconstrained extra predicate.",
+      "pruned_at": "2026-08-24T13:14:48Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Zombies and Qualia: Mathematics of Subjective Experience"
