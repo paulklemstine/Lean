@@ -2000,16 +2000,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates the model (PPL 7.11 -> 2714.6, +38000%) \u2014 the KV precision axis has no usable middle at ctx 2048"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5fa27c02",
     "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 68 (the NET-92 rescue/discriminator cell).\n\n| arm | PPL | dPPL vs control |\n|---|---|---|\n| K q4_1 / V q4_1 | 3,158.07 | +44,322% |\n| K iq4_nl / V iq4_nl | 1,627.35 | +22,790% |\n| **K q4_0 / V f16** | **2,537.80** | **+35,597%** |\n| **K f16 / V q4_0** | **7.1211** | **+0.166%** |\n\n**Scorecard:** P1 REFUTED decisively (block scale+offset does not rescue \u2014 q4_1 marginally WORSE than raw q4_0); P2 CONFIRMED BEYOND ALL PREDICTION (predicted >=5x K-vs-V asymmetry; measured ~214,000x damage ratio); P3 technically true but meaningless (iq4_nl ranks best among three collapsed formats).\n\n**The law:** THE ENTIRE KV CLIFF LIVES IN THE KEYS. Values tolerate raw 4-bit quantization free; keys cannot survive 4 bits in ANY tested representation. Mechanism: keys feed every softmax selection boundary and amplify through layers (NET-83 path); value errors perturb only retrieved content \u2014 linear, local, benign.\n\n**Deployment consequence:** split the cache budget by role \u2014 keys >=8 bits, values accept 4. Given K8/V16 (+0.09%) and K16/V4 (+0.17%) are both individually free, a combined K8/V4 (~6 average bits) should be quality-free; direct confirmation is the immediate follow-up.\n\n**Honest limits:** three collapsed key formats triangulate but share one implementation family inside llama.cpp (fundamentality not proven); single slice/model/context; K8/V4 combined cell untested; per-arm SEs not captured.\n\nSetup identical to NET-92 (llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice). Script ResearchOutput/exp_net93_kvrescue.py; paper ResearchOutput/NetworkMathematics/93_KeysOwnTheCliff.md.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3947",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T07:22:53.229455+00:00",
     "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES alone are free (+0.17%) \u2014 a four-order-of-magnitude asymmetry; no block-scaling format rescues keys"
   },
@@ -2379,6 +2380,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Completes paper 231's named probe (bin-width permutation x u-grid shift on the mid-window hump in R=T/M). 30-cell grid = 6 widths {10,20,33,50,66,100} x 5 circular shifts {-0.25..+0.25} (task said 15; named sets multiply to 30 \u2014 disclosed, full product run). Anchor (nb=50,sh=0) reproduces paper 231 exactly: raw_max 1.22636 vs 1.2227 (diff .004), bins 2..49 <=.005 (edge diff = center-vs-integrated M convention only). DATA: raw-max hump present 30/30 cells (range 1.0706\u20131.2960, never below noise ceiling); ABSOLUTE vertex SHIFT-INVARIANT \u2014 label vx drifts by construction but vx+sh pins 0.6482\u20130.6492 across all five shifts at nb=100 (rigid transport; erratic precondition unmet at far fraction 3.45%, vanish precondition unmet 0/30 below 1.03); sole erratic item one degenerate nb=33 quadratic fit (vertex off 0.19 while argmax bin center sits 0.01 from median). CONTROLS: three cells breach the nb-agnostic 1.02 bar at amp 1.0215\u20131.0305 \u2014 exactly the measured multinomial extreme-value ceiling z +3.05/\u22123.45 two-sided (widths 50/66/100 only), inside the nb-aware ceiling 1.05; hence the mechanical registered precedence chain outputs ARTIFACT-CONTAMINATED \u2014 RETAINED VERBATIM in the JSON as an audit record, NEVER the headline: its leak semantics falsified by persistence + rigid transport. H1 failed AS OPERATIONALIZED: fitted-peak amp >=1.10 in only 7/30 local-quadratic fits (estimator-stricter-than-phenomenon, same gap class as exp581's ~1.03-vs-1.05; marginals amp 7 / vx 5 / sig 21 / raw>=1.10 22; 0/30 survive all three bars vs 80% required). VERDICT MIXED-INCONCLUSIVE: STABLE GEOMETRIC WINDOW FEATURE at u*\u22480.65 \u2014 polynomial/window-geometry channel stays OPEN; what failed is ONE operationalization of hump significance. NAMED FOLLOW-UP: binning-independent shape test (nonparametric density-regression or wavelet-free curvature test with analytic SEs). LEDGER: two PRE-GRID smoke-caught amendments disclosed (treatment M := exp579 mixture-Dickman after fake bin0 edge peak R=1.49; control denominator := uniform sampling null after manufactured control shape amp 1.3611); reporting-addendum timing disclosed, no registered bar changed; deterministic re-run 6.1 s post-reconciliation; cluster bootstrap 2000 reps seed 20260901 (single seed noted). Pure reanalysis of hash-verified exp581_regen_positions.npz + exp579 M curve; no sampling/factoring. Barrier framing: prevents a wrong closure of the geometry channel from either a mechanical-string headline or an unprobed sole-survivor assumption; residue cap untouched; no breakthrough claimed. Paper 232, assessment v338\u2192v339, count 570\u2192571.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4036",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T19:01:09.723130+00:00",
+    "title": "FACT round-82 #1 \u2014 BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE \u2014 STABLE GEOMETRIC WINDOW FEATURE at u*\u22480.65; paper 232"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-81 #1 \u00b7 exp 581 \u00b7 paper 231 \u00b7 closes paper-229's named residual question (what carries the \u00b120% concave mid-window hump in R=T/M?).\n\n**Verdict**: MIXED-INCONCLUSIVE by pre-registration letter (zero families fired: fitted-peak boot95 p2.5 must exceed 1.05, achieved 1.0094\u20131.0275 despite raw max 1.2227 @bin33); bars kept verbatim, no post-hoc rule change.\n\n**Regeneration pass (first-class result)**: pipeline re-executed from recorded seeds; canonical-int64 sha256 55729f1c99c0b5d2 regenerated == stored npz; hits byte-exact 9594/9594 across all 128 Ns; FULL capped control arrays + grids byte-exact; lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 reproduced pairwise-disjoint; master hash 06931068f8f3ca9b matched. All numbers below ran on verified-identical data.\n\n**Structural one-sidedness**:\n- Observed LPF masses [0, 0, 0.0007, 0.9993] (counts [0,0,7,9587]) vs mixture-Dickman prediction [0,0,0.0013,0.9987] \u2014 99.93% of hits in ONE band (>1e4): any single-band carrier story dies ARITHMETICALLY (only one eligible stratum at LOW_MASS_MIN=200). Mass reallocation negligible (6e-4 gap).\n- Inside the band: dominant-band-only c=-0.299 vertex 0.590; descriptive LPF terciles (cuts 350983/671941, ~3196 hits each, medians 198k/511k/831k) c=-0.18/-0.25/-0.44 \u2014 concave in ALL THREE.\n- k100 terciles (cuts {2,3}): t1 concave (c=-0.13, vx .41); t2/t3 mildly convex but amplitude \u00b12% vs pooled +4.8% \u2014 combo conditioning does not absorb the excess.\n- Controls clean everywhere (pooled c=-0.105 CI straddles 0, peak fit 1.005).\n- Anchors PASS: R_first .8371 vs .8007\u00b1.08; R_peak 1.2227@bin33 vs 1.2257@bin33 EXACT; R_last .8935 vs .8957; pooled vertex 0.5901 vs exp579's independent 0.5896.\n\n**Consequence**: the hump lives INSIDE every resolvable stratum at a stable vertex \u2014 not completing-prime size, not small-prime combination structure, not Dickman band-mass reallocation. Sole surviving registered channel: **H0 window/polynomial geometry of j\u00b2\u2212N itself interacting with v-sizes**. Named next probe (pre-stated): direct j-grid/v-size sensitivity analysis \u2014 bin-width permutation, u-grid shift \u2014 to close H0 affirmatively or watch it fragment.\n\n**Ledger catches (both disclosed)**: run-1 G1 \"failure\" = comparator bug (paired slices compared vs stored full arrays; hits were ALWAYS byte-exact per run-1 log evidence); run-2 KeyError 350983 = LN-dict lookup on an observed sub-band edge \u2192 arbitrary-edge ln cache + resume-from-persisted-regen (16.5 s completion; sampling never re-run after its single persisted 953 s pass). Smoke also caught a factorer early-exit bug pre-full; Dickman table refined to h=1/8192 (err 3.07e-05).\n\nDeviations disclosed: k100-tercile baseline = pooled positional profile (per-tercile Dickman needs Buchstab machinery, out of scope); sub-band split DESCRIPTIVE ONLY, never verdict-bearing; single seed/bitlen inherited from exp578.\n\nBarrier framing: structural (not power-limited) elimination prevents a wrong turn on paper-228's opened frontier; residue cap untouched; no complexity claim; no breakthrough claimed. Completes paper-229's characterization thread 228\u2192229\u2192231.\n\nFiles: ResearchOutput/scripts/2026-08-24-round74/exp581_* ; paper ResearchOutput/NewMathematics/231_HumpMechanism.md",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4037",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T19:01:09.724421+00:00",
+    "title": "FACT round-81 #1 \u2014 HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE \u2014 no decomposition family met the HUMP bars (pooled fitted-peak boot95-lo 1.0094 vs bar 1.05; raw max still bin 33), but composition carriers die arithmetically: observed LPF masses [0,0,.0007,.9993] \u2014 99.93% of hits share ONE band (>1e4) so H1a single-band-carrier is impossible; inside it concavity replicates in ALL THREE descriptive LPF terciles (c=-0.18/-0.25/-0.44), pooled vertex x=0.5901 == exp579's independent 0.5896 (raw max bin33 exact); k100 conditioning does NOT remove the excess (t2/t3 flat \u00b12% vs pooled +4.8%); controls clean everywhere; sole-survivor channel = H0 window/polynomial geometry of j\u00b2\u2212N itself; named probe: direct j-grid/v-size sensitivity (bin-width permutation, u-grid shift); REGENERATION PASS sha256 55729f1c99c0b5d2 byte-exact 9594/9594 hits + full controls + grids + lineage quartet + master hash"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -2436,20 +2465,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 194ffa72 (Q=0.870), which proved 79 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the rectangularly windowed tone equals a sinc-type expression, with value `2T` at resonance. This would quantify peak width and sidelobes rather than merely prove the peak center.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_194ffa72_a494f2e2",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "194ffa72",
-    "status": "available",
-    "timestamp": "2026-08-24T17:48:11.639619+00:00",
-    "title": "Deepening: Exact off-resonance window formula"
   },
   {
     "consumed_by_exp_id": "",
@@ -36107,14 +36122,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact classification of the repaired trajectory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bea30473",
     "description": "*\"A softmax layer with `N` keys has uniform error `\u2265 c/N` on the identity.\"* \u2014 **False.**\n   `SoftmaxResolution.no_universal_softmax_resolution_bound`. The construction is explicit: the\n   logit gap `log((x+\u03b5)/(1+\u03b5\u2212x))` makes the two-key head compute `(x+\u03b5)/(1+2\u03b5)`. The\n   pigeonhole invariant behind the hard bound (`finitely many realizable outputs`) simply has\n   no soft analogue: softmax weights move continuously and the realizable set is an interval.",
     "domains": [],
     "id": "fd_2955",
+    "phase": "A",
     "priority_score": 0.4390588235294117,
     "research_mode": "team",
     "source_exp_id": "d6f1fad6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:27:08.434369+00:00",
     "title": "\"A softmax layer with `N` keys has uniform error `\u2265 c/N` on the identity.\"* \u2014 False."
   },
