@@ -1627,21 +1627,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
   },
   {
-    "consumed_by_exp_id": "a3cbf41f",
-    "description": "## NET-87 \u2014 limited-memory axis, round 31 (paper 168, ResearchOutput/exp_net87_code4096.py, /tmp/net87.log)\n\n**Verdict name: CODE-AT-4096-IS-PROTECTED.**\n\n### Result\nCode knee at ctx=4096: **k\\* = 32** (k=28 fails ~0.976, k=32 passes 0.986). Complete code chain: {12 @512, 16 @1024, 32 @4096}.\n\n- **P2 CONFIRMED**: the acceleration hits code (32 > extrapolated \u226424).\n- But code IS relatively protected: 32 < prose's 40 at the same context.\n\n### The narrowing domain factor\ncode/prose ratio \u22480.75 at short contexts \u2192 \u22480.80 at 4096 \u2014 the gap NARROWS as the phase transition dominates over structural differences.\n\nBaseline acc 0.677 remarkably high for source code at 4096 tokens \u2014 code's predictability persists even at extreme context lengths.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted; (d) clean; (e) deterministic; (f) clean; (g) fair; (h) DIRECT.\n\n### Next\nFine grid 24\u201332 for code; domain-jump @4096 for math/German/French; 7B cell.\n\nNow 88 network experiments. Assessment v88. Paper 168.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3758",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T22:39:30.328368+00:00",
-    "title": "NET-87: CODE-AT-4096-IS-PROTECTED \u2014 code knee @4096 is 32 vs prose 40; domain factor narrows at long context"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-68 #2, cron iteration (exp 541). Quantifying the fade's progression.\n\n**FADE-CONTINUES**: pooled Spearman(T, rate) = **0.500** CI [0.456, 0.545] at bitlen 104; per-seed 0.493/0.499/0.509 \u2014 all below 0.55 for the first time; fade is MONOTONE and NEAR-LINEAR (\u22120.030 then \u22120.043 per 4-bit step). T advantage WIDENS (+0.126 vs count) because count degrades faster.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp541_t_dial_unif_104.py + exp541_result.json, seeds 20261210\u201312.",
     "domains": [
@@ -1810,21 +1795,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-24T02:00:10.713412+00:00",
     "title": "FACT round-70 #6 \u2014 MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all realized probes (paper 197, errata to 193/195)"
-  },
-  {
-    "consumed_by_exp_id": "d4951edd",
-    "description": "Round-70 #5, exp 548.\n\n**PRICE-2ADIC-LETTERS-GAUSS-IS-RESIDUE-DIAL.**\n\nConstruction validated BEFORE measurement: brute-force 792 triples c\u22645000 vs Price-tree BFS \u2014 792 nodes, 0 duplicates/missing (uniqueness+completeness PASS); derived pair maps A:(m,n)\u2192(m+n,2n), B:(2m,m\u2212n), C:(2m,m+n) cross-checked on literature matrices; the brief's hinted matrix REFUTED pre-use ((3,4,5)\u2192(6,6,14)).\n\n**dP law corrected**: slope on log\u2082(p+q) = **1.211 CI95 [1.120,1.301] \u2014 the circulating 1.4 constant is OUTSIDE the CI**; dP mean 24.52 sd 2.65 range [16,34]; R\u00b2=0.255. Contrast quantified: two population nodes take 4566/7230 Berggren steps vs dP\u226434.\n\n**The discovery**: Price letters at positions 0\u20131 are MASSIVELY determined by N mod 4/8/16 (**|z| up to 1303**) while mod 2 is vacuous (N odd) \u2014 the halving alphabet lives exactly where Berggren's 3-adic seal doesn't look. Berggren b\u2081 stays blind (worst z=+4.57 FAILED fresh-seed replication \u00d73 \u2192 seed fluctuation). Placement: these are RESIDUE dials \u2014 symmetric, factor-blind by standing laws; both trees sealed, each at its own adic place.\n\n**GAUSS-DIAL-PROOF**: numeric Gauss sums = closed forms on ALL 7625 (a,b,M) cells; any |G|-magnitude feature \u2261 pure function of N mod 720720 \u2192 residue dial, already sealed; on the standard lab range literally CONSTANT (I=0 bits where residues carry H=1.000 on p\u2261q mod 4).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp548_price_gauss.py + exp548_result.json + run.log.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3907",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T02:00:10.715222+00:00",
-    "title": "FACT round-70 #5 \u2014 PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adics; Gauss magnitudes proven residue dials (paper 196)"
   },
   {
     "consumed_by_exp_id": "969a5dc4",
@@ -2015,16 +1985,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #1 \u2014 PORTFOLIO: no universal winner, no dial edge; regret tail is N-invisible (paper 206)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0117d7a0",
     "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 67 (first KV-cache quantization cell).\n\n**Setup:** Qwen2.5-7B-Instruct Q4_K_M entirely on CPU (llama-perplexity, threads=8, ctx=2048), held-out wikitext slice ~62K tokens, arms via --cache-type-k/--cache-type-v.\n\n| arm | PPL | dPPL vs control |\n|---|---|---|\n| K f16 / V f16 | 7.1093 | \u2014 |\n| K q8_0 / V f16 | 7.0924 | -0.238% |\n| K f16 / V q8_0 | 7.1160 | +0.094% |\n| K q8_0 / V q8_0 | 7.1162 | +0.097% |\n| **K q4_0 / V q4_0** | **2,714.6042** | **+38,084%** |\n\n**Scorecard:** P1 CONFIRMED (all q8_0 arms within \u00b10.25% of control \u2014 8-bit cache is free); P2 CONFIRMED with the largest margin in program history (predicted >5%, measured +38,000% \u2014 total collapse, perplexity 380x control); P3 honestly UNRESOLVED BY DESIGN (no measurable K-vs-V asymmetry at the 8-bit floor; no single-sided 4-bit arms in grid).\n\n**Laws:** (1) THE KV CLIFF IS A WALL \u2014 between 8 and 4 bits there is NO usable operating point: raw per-tensor q4_0 multiplies a small key error through every softmax boundary of every layer (direction matches NET-52 interface fragility and NET-83 selection amplification; the magnitude is new). (2) 8-BIT CACHE IS FREE \u2014 full-width q8_0 halves the KV buffer at +0.10% worst-case PPL; measured +16-26% pass-time tax means the trade is memory-vs-speed, never memory-vs-quality.\n\n**Honest limits:** single slice; point estimates without per-arm SEs; q4_1/iq4_nl block-scaled variants untested (does block-scaling rescue 4-bit? \u2014 immediate follow-up); one model/context/box; cliff position vs context length untested.\n\nScript ResearchOutput/exp_net92_kvquant.sh; paper ResearchOutput/NetworkMathematics/92_TheKVCliff.md.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3940",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T05:55:13.535981+00:00",
     "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates the model (PPL 7.11 -> 2714.6, +38000%) \u2014 the KV precision axis has no usable middle at ctx 2048"
   },
@@ -2465,6 +2436,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 194ffa72 (Q=0.870), which proved 79 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the rectangularly windowed tone equals a sinc-type expression, with value `2T` at resonance. This would quantify peak width and sidelobes rather than merely prove the peak center.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_194ffa72_a494f2e2",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "194ffa72",
+    "status": "available",
+    "timestamp": "2026-08-24T17:48:11.639619+00:00",
+    "title": "Deepening: Exact off-resonance window formula"
   },
   {
     "consumed_by_exp_id": "",
@@ -4156,21 +4141,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that a Markov basis for a log-linear model on contingency tables connects all fibers of the model. Formalize the Fundamental Theorem of Markov Bases and compute explicit Markov bases for the no-three-way interaction model.",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "seed_323",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
   },
   {
     "consumed_by_exp_id": "",
@@ -11286,6 +11256,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Peak height 2T and sidelobe decay 2/|omega| are the two halves of a time-bandwidth statement. The conjecture is that no window supported on [-T,T] with unit sup-norm can simultaneously beat the rectangular peak and its sidelobe decay by more than bounded factors.\n\nIf w is supported in [-T,T] with |w| <= 1 then |w-hat(0)| <= 2T and the integral of |w-hat|^2 is at most 4 pi T, with equality in both iff w is the rectangular window almost everywhere.\n\nProve the two inequalities from the triangle inequality and Plancherel, then characterize the equality case via strict convexity of the L2 norm on the unit ball of L-infinity.\n\nThe rectangular window is the unique extremizer, so the sinc law is the universal model for windowed resonance.\n\nSome window beats the rectangle in both peak and energy, contradicting Plancherel; more likely the equality case is non-unique, revealing a family of extremal windows.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4030",
+    "priority_score": 0.7112352941176472,
+    "research_mode": "team",
+    "source_exp_id": "194ffa72",
+    "status": "available",
+    "timestamp": "2026-08-24T17:47:59.846243+00:00",
+    "title": "Window Uncertainty Principle Beyond the Rectangle"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The alternating witness has lag-1 autocorrelation 0 and lag-2 autocorrelation 1 while sharing any prescribed prefix. We conjecture that the set of achievable autocorrelation profiles of irrational numbers equals the set of profiles of periodic words, transported by a lacunary perturbation that is invisible to densities.\n\nA function A from positive lags to {0,1} is the autocorrelation profile of an irrational number with prescribed decimal prefix if and only if it is the profile of some periodic word.\n\nFormalise the profile of a periodic word combinatorially, then transport it with Pyth.card_exceptional_le, which already bounds the exceptional sets uniformly in the lag.\n\nAutocorrelation laws of real constants are combinatorial shadows of periodic words, never arithmetic facts.\n\nSome profile is realisable only by rationals, which would give the first arithmetic obstruction of this kind.",
     "domains": [
       "Algebra",
@@ -11358,6 +11343,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T15:57:55.445855+00:00",
     "title": "Bounded-Description Density of Self-Dual Framed Puzzles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Depth is squeezed between log_3(m+n) - 1 and (m+n-3)/2, both tight only on extremal words. The conjecture asks for the typical constant, testing the reported slope 1.211 against the circulating 1.4.\n\nFor nodes drawn uniformly from those with m+n <= X, depth / log_2 X converges to a constant c with c in [1.12, 1.31]; in particular c is not 1.4.\n\nEnumerate nodes with m+n <= X for growing X, regress depth on log_2 X, and formalise a two-sided bound of the form a log_2 X <= depth <= b log_2 X on an explicit density-one subfamily.\n\nThe corrected dP law gets a proof-backed constant and the 1.4 folklore value is formally excluded.\n\nDepth is not concentrated and the dP law must be restated as a distributional, not a pointwise, statement.",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_4035",
+    "priority_score": 0.7110392156862746,
+    "research_mode": "team",
+    "source_exp_id": "d4951edd",
+    "status": "available",
+    "timestamp": "2026-08-24T17:48:36.128128+00:00",
+    "title": "Exact Constant in the Price Depth Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -13261,6 +13261,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The classical bound ||S_N(alpha)|| <= 1/(2||alpha||) proved here is precisely the kernel estimate feeding the Erdos-Turan inequality. Formalizing that inequality would convert the file's qualitative Weyl cancellation into a quantitative discrepancy bound for the sequence {n alpha}.\n\nFor every alpha and every H >= 1, the discrepancy of {n alpha : n < N} satisfies D_N <= C(1/H + (1/N) sum_{h <= H} 1/(h ||h alpha||)) with an absolute constant C.\n\nFormalize the Erdos-Turan inequality via Selberg polynomials built from the Fejer kernel, then substitute the proved bound norm_weylSum_le_intDist.\n\nExplicit equidistribution rates for badly approximable alpha follow, e.g. D_N << (log N)^2/N for quadratic irrationals.\n\nThe constant structure of Erdos-Turan would need revision, which would be a major surprise.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4029",
+    "priority_score": 0.6713870967741937,
+    "research_mode": "team",
+    "source_exp_id": "194ffa72",
+    "status": "available",
+    "timestamp": "2026-08-24T17:47:59.370569+00:00",
+    "title": "Erdos-Turan Discrepancy From the Proved Weyl Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The cross-channel discrepancy of a population decouples into the oscillation of a single per-level functional over the window box, turning the sharp-constant question into a one-dimensional extremal problem. Cycle 4 solved it for the exponent pair (1, 1/2) via the Kantorovich inequality, obtaining log2((4+3*sqrt2)/8) and matching it to within 5% by an explicit two-point population. The conjecture extrapolates the exponent dependence found numerically.\n\nFor pointwise costs a*p^s and c*p^t on a window of spread 2^sigma, max |t*slope_s - s*slope_t| = (ln2/8)*s*t*|s-t|*sigma^2/Dk to leading order, attained by a two-atom population whose x^t-mean equals the harmonic mean of the window endpoints.\n\nExtend the doubling-ray result (s = 2t, already proved with constant log2((1+2^t)^2/(4*2^t))) to a general power-mean version between exponents t < s, compute the oscillation of the per-level functional in closed form, and compare with the grid search (coefficient 0.0862 +- 0.0002 at sigma = 1 versus ln2/8 = 0.08664).\n\nEvery multi-channel benchmark gets an exact internal-consistency tolerance, and the (0.84, 0.52) refutation generalises to arbitrary cost exponents.\n\nThe oscillation is not governed by the two-atom endpoint configuration and the sharp constant depends on more than the window spread.",
     "domains": [
       "Combinatorics"
@@ -13328,6 +13342,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T04:10:23.422300+00:00",
     "title": "KL Exchange Rate for Audit Failure"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Nonnegativity, unit mass over one period and uniform-in-N concentration off the integers are all proved for the triangular kernel arising as ||S_N||^2. These are exactly the approximate-identity axioms, so Fejer summation of Fourier series should follow with no further harmonic analysis.\n\nFor every continuous 1-periodic f, the Fejer means (f * K_N)/N converge to f uniformly, where K_N(alpha) = 2 sum_{d<N} (N-d) cos(2 pi d alpha) - N.\n\nFormalize the abstract approximate-identity convolution lemma and instantiate it with fejer_nonneg, fejer_kernel_mass and fejer_kernel_concentration.\n\nA formal nonnegative approximate identity and Cesaro convergence of Fourier series become available on top of the proved identity.\n\nThe normalization or the concentration rate is off, which the proved Dirichlet formula would immediately localize.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4028",
+    "priority_score": 0.6712142857142859,
+    "research_mode": "team",
+    "source_exp_id": "194ffa72",
+    "status": "available",
+    "timestamp": "2026-08-24T17:47:58.901594+00:00",
+    "title": "Cesaro Convergence From the Triangular Kernel"
   },
   {
     "consumed_by_exp_id": "",
@@ -13412,6 +13440,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T15:37:27.153959+00:00",
     "title": "Double-Coset Rank of Coset Actions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact limit ||S_N(1/(2N))||/N -> 2/pi is proved, so the Jordan bound is asymptotically optimal at the lobe edge. What remains is that the edge is the actual minimizer over the whole main lobe, a monotonicity statement for the Dirichlet ratio. Together the two give a complete description of the Weyl sum on its main lobe.\n\nFor every N and every 0 <= a < b <= 1/(2N), |sin(pi N b)|/(N |sin(pi b)|) < |sin(pi N a)|/(N |sin(pi a)|); consequently min over |alpha| <= 1/(2N) of ||S_N(alpha)||/N equals ||S_N(1/(2N))||/N and tends to 2/pi.\n\nDifferentiate the logarithm of the ratio to get pi N cot(pi N alpha) - pi cot(pi alpha) and prove it is negative on the main lobe; then combine with norm_weylSum_endpoint_ratio_tendsto.\n\nnorm_weylSum_ge_jordan is optimal in the strongest sense: the constant 2/pi and the extremal frequency are both identified.\n\nAn interior critical point of the Dirichlet ratio exists inside the main lobe, which would be a genuinely new feature of the kernel.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4027",
+    "priority_score": 0.6710000000000002,
+    "research_mode": "team",
+    "source_exp_id": "194ffa72",
+    "status": "available",
+    "timestamp": "2026-08-24T17:47:58.433365+00:00",
+    "title": "Main-Lobe Edge as the Dirichlet Minimizer"
   },
   {
     "consumed_by_exp_id": "",
@@ -14896,6 +14938,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The sign structure of G(x) = sin x (2 - cos x) - x is proved: a single crossing xc in [2.1, 2.2) separates unresolved from resolved two-tone responses. Certifying further digits is now purely a matter of rigorous evaluation of G at rational points, since uniqueness of the crossing is already a theorem. This would give the rectangular-window resolution limit as an explicit certified constant.\n\nThe unique root of sin x (2 - cos x) = x in (0, pi) satisfies 2.1391821737 < x* < 2.1391821738, hence the critical time-bandwidth product satisfies 4.2783643474 < (Delta T)_crit < 4.2783643476.\n\nCombine exists_rayleigh_critical_scale with Taylor-remainder bounds for sin and cos at rational arguments to evaluate G at 2.1391821737 and 2.1391821738 with certified error.\n\nThe Rayleigh criterion for a rectangular aperture acquires an explicit certified constant, refining rayleigh_threshold_exact.\n\nThe numeric value quoted in the optics literature is wrong, which would be a surprising failure of a textbook constant.",
+    "domains": [],
+    "id": "fd_4026",
+    "priority_score": 0.5920588235294119,
+    "research_mode": "team",
+    "source_exp_id": "194ffa72",
+    "status": "available",
+    "timestamp": "2026-08-24T17:47:57.933196+00:00",
+    "title": "Certified Digits for the Rayleigh Resolution Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Beyond qualitative concavity, the midpoint defect of sigma should be pinned between two constant multiples of (s-t)^2 (1+s+t)^{-5/3}. The exponent 5/3 is dictated by the second derivative sigma'' = -6 (27t-1)^{-5/3} up to constants, so the conjecture asserts that the naive scaling is the true one uniformly on the physical range.\n\nThere exist 0 < c1 <= c2 such that for all s,t >= 1/27, c1 (s-t)^2 (1+s+t)^{-5/3} <= sigma((s+t)/2) - (sigma s + sigma t)/2 <= c2 (s-t)^2 (1+s+t)^{-5/3}.\n\nDifferentiate lagrangeExponent twice using HasDerivAt.rpow_const on top of lagrangeExponent_hasDerivAt, then apply the Taylor remainder bound on the segment [s,t] and check the endpoint scaling numerically on a grid first.\n\nConcavity upgrades to a quantitative modulus, which is what any application (rate-of-convergence for averaging schemes) actually needs.\n\nThe defect degenerates near the threshold t = 1/27 where sigma'' blows up, so no uniform two-sided modulus exists and the estimate must be stated on [1/27 + delta, infinity).",
     "domains": [],
     "id": "fd_3812",
@@ -16048,6 +16102,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T14:03:49.948380+00:00",
     "title": "Exact Hellinger Amplification Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The trailing A-run of a Price address equals the 2-adic valuation of the smaller Euclid parameter, so run statistics are valuation statistics. The conjecture pins the limiting distribution of runs over triples ordered by hypotenuse.\n\nThe proportion of primitive triples with hypotenuse at most X whose Price address ends in exactly r letters A tends to 2^{-(r+1)} as X tends to infinity.\n\nCount runs for all primitive triples with c <= 10^7 and compare with the geometric law; formalise the finite-range version as an explicit inequality.\n\nTerminal-run statistics of Pythagorean trees become an exactly solvable model, transferable to other valuation-driven trees.\n\nOrdering by hypotenuse biases the valuation, revealing a correlation between the archimedean size and the 2-adic depth.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4033",
+    "priority_score": 0.5633481507492952,
+    "research_mode": "team",
+    "source_exp_id": "d4951edd",
+    "status": "available",
+    "timestamp": "2026-08-24T17:48:35.174972+00:00",
+    "title": "Valuation Spectrum of Terminal Runs"
   },
   {
     "consumed_by_exp_id": "",
@@ -25217,6 +25286,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T15:57:53.554468+00:00",
     "title": "Minimal Clause Realisations of Complement-Stable Assembly Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Price letters are readable mod 4 and mod 8 and unreadable deeper; Berggren letters are provably unreadable 2-adically at any depth. The conjecture is the exact mirror statement at the prime 3, making the two trees complementary seals.\n\nThe last Berggren letter is a function of the triple's residues modulo 3 and modulo 9, and for every k there exist two Berggren children of different letters whose triples agree modulo 2^k (already proved) while no such pair exists modulo 3.\n\nFormalise a Berggren letterOf on actGen and prove the mod-3 classification; reuse the counterexample construction of Price2Adic.berg_twoAdic_blind for the negative half.\n\nA clean placement theorem: each ternary Pythagorean tree is sealed at exactly one adic place.\n\nThe Berggren alphabet is not a residue dial at all, and the placement claim must be weakened to Price only.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4032",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d4951edd",
+    "status": "available",
+    "timestamp": "2026-08-24T17:48:34.640337+00:00",
+    "title": "Adic Complementarity of Ternary Pythagorean Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Gauss-sum magnitudes are constant across residue classes and hence buy a speedup of exactly one. The open question is whether the argument (phase) of the Gauss sum, which does vary, can approach the universal 4/3 scan cap.\n\nFor every quantisation of the argument of the quadratic Gauss sum into t bits, the induced residue dial has density bounded away from 1/2 uniformly in t, so the speedup it buys is bounded strictly below 4/3.\n\nCompute the argument distribution of twisted Gauss sums over ZMod p for many primes; formalise the density bound and feed it to ResidueDial.speedup_strictMonoOn.\n\nCharacter-sum cryptanalysis provably cannot reach the scan cap, extending the zero-bit magnitude theorem to the full complex value.\n\nThere is a phase-based dial at the cap, and the magnitude/phase split becomes the sharp boundary of the barrier.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4034",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d4951edd",
+    "status": "available",
+    "timestamp": "2026-08-24T17:48:35.654510+00:00",
+    "title": "Argument-Phase Gauss Dial Below the Four-Thirds Cap"
   },
   {
     "consumed_by_exp_id": "",
@@ -35775,14 +35872,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "A concrete relativized jump realizes every abstract level"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "22848dce",
     "description": "**Conjecture.** Families of binary phylogenetic trees can be encoded as error-correcting codes in quartet-signature space so that large pairwise distance prevents a common quartet, yielding an exponential lower bound for the least leaf number forcing a common quartet. The optimal exponential rate equals a packing rate in a constrained ternary code.\n\nThe key insight is that each four-leaf set admits three resolved quartet types, while consistency among overlapping quartets imposes code constraints analogous to local parity checks.\n\n**Why now?** The common-agreement predicate supplies an exact equality notion for restrictions. This makes it possible to formulate avoidance as distance in a finite signature space and to compare probabilistic tree constructions with coding-theoretic bounds.",
     "domains": [],
     "id": "fd_2316",
+    "phase": "A",
     "priority_score": 0.4392222222222222,
     "research_mode": "team",
     "source_exp_id": "2607.18044v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:36.916354+00:00",
     "title": "Exponential lower bound via quartet codes"
   },
@@ -42436,19 +42534,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Partial orders"
   },
   {
-    "consumed_by_exp_id": "194ffa72",
-    "description": "Prove that the rectangularly windowed tone equals a sinc-type expression, with value `2T` at resonance. This would quantify peak width and sidelobes rather than merely prove the peak center.",
-    "domains": [],
-    "id": "fd_2014",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "f2f32f44",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:22:14.312638+00:00",
-    "title": "Exact off-resonance window formula"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For `D(t)=\u2211 n\u2208S, a\u2099 exp(-it log n)`, prove that its windowed transform is the corresponding finite sum of shifted sinc kernels. This is the rigorous finite analogue of the proposed spectrogram.",
     "domains": [],
@@ -44159,5 +44244,17 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:02:16.615719+00:00",
     "title": "The `O(h\u2074)` in the conjecture is removable"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Failed \u2014 needs a different definition.** \"The ratio narrows, therefore the\n  domains converge\" is not a theorem: two laws share the same two measured\n  ratios while having limits $5/6$ and $1$. The right observable is the *gap*,\n  not the ratio.",
+    "domains": [],
+    "id": "fd_4031",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a3cbf41f",
+    "status": "available",
+    "timestamp": "2026-08-24T17:48:19.120689+00:00",
+    "title": "Failed \u2014 needs a different definition."
   }
 ];

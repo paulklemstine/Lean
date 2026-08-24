@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "78e6d19a",
-      "domain": "Probability",
-      "key_insight": "# Future directions from the NET-54 formalisation\n\nThe thread has produced ten compiling, `sorry`-free files in `Catalog/Probability/`:\n\n* `TailTransplantGeometry.lean` — agreement geometry and the bo",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 145,
-      "timestamp": "2026-08-23T04:04:53",
-      "title": "NET-54: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE — bulk layers transplant between fine-tunes at zero "
-    },
-    {
       "cycle_id": "d221a4de",
       "domain": "Probability",
       "key_insight": "# FUTURE DIRECTIONS — FACTOR-LOCAL-ET, after cycles 1–7\n\n## What survived this cycle\n\n1. **Slope identifiability** (`PowerBand.abs_logSlope_sub_le`).  Multiplicative\n   model error enters a two-point",
@@ -499,19 +489,19 @@
       "theorem_count": 51,
       "timestamp": "2026-08-24T17:48:26",
       "title": "NET-87: CODE-AT-4096-IS-PROTECTED — code knee @4096 is 32 vs prose 40; domain factor narrows at long"
+    },
+    {
+      "cycle_id": "d4951edd",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — the adic anatomy of Pythagorean trees\n\nDerived from the results proved in `Catalog/Cryptography/Price2Adic/`:\n`Tree.lean` (uniqueness, completeness, depth squeeze), `Letters.lean",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-08-24T17:48:45",
+      "title": "FACT round-70 #5 — PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adics; Gauss magnitudes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f262016d",
-      "domain": "Applications",
-      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from the verified results in `Catalog/Applications/AlmostLossless/`\n(cycle 1: converse + explicit scheme + comple",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-17T18:57:47",
-      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-    },
     {
       "cycle_id": "7199d5c0",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 51,
       "timestamp": "2026-08-24T17:48:26",
       "title": "NET-87: CODE-AT-4096-IS-PROTECTED — code knee @4096 is 32 vs prose 40; domain factor narrows at long"
+    },
+    {
+      "cycle_id": "d4951edd",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — the adic anatomy of Pythagorean trees\n\nDerived from the results proved in `Catalog/Cryptography/Price2Adic/`:\n`Tree.lean` (uniqueness, completeness, depth squeeze), `Letters.lean",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-08-24T17:48:45",
+      "title": "FACT round-70 #5 — PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adics; Gauss magnitudes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "05978b53",
-      "domain": "Bridges",
-      "name": "sqLayer_eval_zero",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "05978b53",
-      "domain": "Bridges",
-      "name": "prodGate_zero_left",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "05978b53",
-      "domain": "Bridges",
-      "name": "prodGate_zero_right",
-      "quality": 0.89
-    },
     {
       "cycle_id": "9f4b7d2b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "net87_fine_grid_needed",
       "quality": 0.81
+    },
+    {
+      "cycle_id": "d4951edd",
+      "domain": "Cryptography",
+      "name": "below",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d4951edd",
+      "domain": "Cryptography",
+      "name": "ValidZ",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d4951edd",
+      "domain": "Cryptography",
+      "name": "berg_children_diff",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T17:48:26",
+  "last_updated": "2026-08-24T17:48:45",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "507d1ef0",
-        "quality": 0.83,
-        "theorems": 54,
-        "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-      },
-      {
         "cycle_id": "f46e1405",
         "quality": 0.86,
         "theorems": 66,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 104,
         "title": "Guarded transfer principle for real analysis"
+      },
+      {
+        "cycle_id": "d4951edd",
+        "quality": 0.82,
+        "theorems": 85,
+        "title": "FACT round-70 #5 — PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adi"
       }
     ],
     "Geometry": [
