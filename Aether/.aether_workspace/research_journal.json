@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a4769f7a",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — cyclic cubic conductor 13 and the subfield channel\n\n## What is now proved (all `sorry`-free, in `Catalog/Bridges/`)\n\nCycles 1–2:\n\n* the **periodic transfer / uniform-cover** inva",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 194,
-      "timestamp": "2026-08-22T19:36:20",
-      "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)"
-    },
-    {
       "cycle_id": "ae01533d",
       "domain": "NumberTheory",
       "key_insight": "# FUTURE_DIRECTIONS — NET-52 formal layer (round-to-nearest arithmetic)\n\n## What this cycle established\n\nFive self-contained Lean files in `Catalog/NumberTheory/` turn the NET-52 measurements into\nthe",
@@ -499,19 +489,19 @@
       "theorem_count": 81,
       "timestamp": "2026-08-24T10:55:10",
       "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 — knee jumps to k*=40 (increment +16/doubling vs prior +4)"
+    },
+    {
+      "cycle_id": "59651b5d",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after TDIAL-U92 (round-69 #1, exp 538)\n\nTwo cycles of the loop were run in this session.\n\n**Cycle 1** (`Catalog/MachineLearning/ZeroFitDialFloor92.lean`) asked what could produce",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-24T11:45:21",
+      "title": "FACT round-69 #1 — TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "507d1ef0",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nBold, falsifiable conjectures produced by this research cycle, each stated so that it can be\nsettled (proved or refuted) by a further formalisation effort. All of them build on th",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 54,
-      "timestamp": "2026-08-17T07:17:22",
-      "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-    },
     {
       "cycle_id": "525aecde",
       "domain": "Shared",
@@ -2501,21 +2491,19 @@
       "theorem_count": 81,
       "timestamp": "2026-08-24T10:55:10",
       "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 — knee jumps to k*=40 (increment +16/doubling vs prior +4)"
+    },
+    {
+      "cycle_id": "59651b5d",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after TDIAL-U92 (round-69 #1, exp 538)\n\nTwo cycles of the loop were run in this session.\n\n**Cycle 1** (`Catalog/MachineLearning/ZeroFitDialFloor92.lean`) asked what could produce",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-24T11:45:21",
+      "title": "FACT round-69 #1 — TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "620a1130",
-      "domain": "Tropical",
-      "name": "sq_sub_cast",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "620a1130",
-      "domain": "Tropical",
-      "name": "intervalEnergy_eq_sum_sq",
-      "quality": 0.82
-    },
     {
       "cycle_id": "620a1130",
       "domain": "Tropical",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "kneeCubic_feasible",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "59651b5d",
+      "domain": "MachineLearning",
+      "name": "cappedBlocks_sum",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "59651b5d",
+      "domain": "MachineLearning",
+      "name": "cappedBlocks_two_le",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-24T10:55:10",
+  "last_updated": "2026-08-24T11:45:21",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "13fee392",
-        "quality": 0.82,
-        "theorems": 97,
-        "title": "The Bonferroni machinery"
-      },
-      {
         "cycle_id": "8a3962f5",
         "quality": 0.86,
         "theorems": 120,
@@ -3575,6 +3569,12 @@
         "quality": 0.84,
         "theorems": 79,
         "title": "FACT round-58 #1 — TDIAL-U52: the dial survives uniform draws at bitlen 52 (pape"
+      },
+      {
+        "cycle_id": "59651b5d",
+        "quality": 0.79,
+        "theorems": 62,
+        "title": "FACT round-69 #1 — TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190"
       }
     ],
     "Novelty": [

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-24T10:55:16.499656+00:00",
+  "last_updated": "2026-08-24T11:45:27.543838+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -66378,6 +66378,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-24T10:55:16.116136+00:00",
       "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 \u2014 knee jumps to k*=40 (increment +16/doubling vs prior +4)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "MachineLearning",
+      "duration_seconds": 2939.1593856811523,
+      "end_time": 1787571853.8399653,
+      "files_integrated": 4,
+      "job_id": "59651b5d",
+      "outcome_quality": 0.79,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.79,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5305,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.79,
+        "novelty": 0.79,
+        "proof_depth": 0.79,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787568914.6805797,
+      "strategy_count": 0,
+      "theorem_count": 62,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 51,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-24T11:45:27.193308+00:00",
+      "title": "FACT round-69 #1 \u2014 TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
     }
   ]
 }

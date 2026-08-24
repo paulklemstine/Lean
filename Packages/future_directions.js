@@ -1657,21 +1657,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
   },
   {
-    "consumed_by_exp_id": "59651b5d",
-    "description": "Round-69 #1, cron iteration (exp 538, PARTIAL \u2014 2/3 seeds before agent death). The highest-bitlen uniform measurement.\n\n**AT-THE-FLOOR**: Spearman(T, rate) = **0.563** / **0.556** across two completed seeds on uniform draws at bitlen 92 \u2014 both essentially AT the 0.55 floor (margins +0.006 and \u22120.001).\n\nThe dial's signal has eroded to its minimum, confirming the gradual erosion trend from paper 189.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp538_t_dial_unif_92.py + exp538_result.json, seeds 20261210\u201311 (third seed not measured).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3757",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T21:37:22.153031+00:00",
-    "title": "FACT round-69 #1 \u2014 TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
-  },
-  {
     "consumed_by_exp_id": "a3cbf41f",
     "description": "## NET-87 \u2014 limited-memory axis, round 31 (paper 168, ResearchOutput/exp_net87_code4096.py, /tmp/net87.log)\n\n**Verdict name: CODE-AT-4096-IS-PROTECTED.**\n\n### Result\nCode knee at ctx=4096: **k\\* = 32** (k=28 fails ~0.976, k=32 passes 0.986). Complete code chain: {12 @512, 16 @1024, 32 @4096}.\n\n- **P2 CONFIRMED**: the acceleration hits code (32 > extrapolated \u226424).\n- But code IS relatively protected: 32 < prose's 40 at the same context.\n\n### The narrowing domain factor\ncode/prose ratio \u22480.75 at short contexts \u2192 \u22480.80 at 4096 \u2014 the gap NARROWS as the phase transition dominates over structural differences.\n\nBaseline acc 0.677 remarkably high for source code at 4096 tokens \u2014 code's predictability persists even at extreme context lengths.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted; (d) clean; (e) deterministic; (f) clean; (g) fair; (h) DIRECT.\n\n### Next\nFine grid 24\u201332 for code; domain-jump @4096 for math/German/French; 7B cell.\n\nNow 88 network experiments. Assessment v88. Paper 168.\n",
     "domains": [
@@ -1887,16 +1872,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-70 #5 \u2014 PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adics; Gauss magnitudes proven residue dials (paper 196)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "969a5dc4",
     "description": "Round-70 #4, exp 550 (coordinator inline reanalysis of the exp546 channel). Does the paper-193 magnitude channel persist along the descent? **DEPTH-DECAY-TO-NULL-BY-T5.**\n\nUnconditional MI(feature ; b_t) decays ~2\u00d7 every two levels: .184/.143/.094/.078/.054/.040/.032/.019 at t=1..8 (z +114\u2026+9). The honest conditional test (shuffle WITHIN path-prefix groups) gives true per-step information: **b\u2082 z=+32.3 (real), b\u2083 z=+6.7 (marginal), b\u2084 z=+2.7 (edge), b\u2085 z=+0.2 (NULL)**. Depth itself visible: MI(feature; dB)=0.111 z=+20.\n\nMechanism coherence: a fixed W-probe window resolves d\u2248n/(2\u03c1) to O(W) \u2014 it reads the coarse Gauss-map digits of \u03c1; the first 2\u20133 letters ARE those digits; deeper letters are finer digits no fixed-budget window can see.\n\n**Round synthesis (papers 193\u2013195):** energy-ascent closed at three strengths \u2014 channel EXISTS (position family), priced BELOW breakeven (\u03b1*\u22650.85 vs exact Fermat), and DEPTH-LIMITED (dies by depth 4\u20135). The Pythagorean tree stays factoring-sealed in practice: an N-computable window sensor reads the first few ratio digits and nothing more; the full path string again costs the scan.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp550_depthdecay.py + exp550_depthdecay.json (population reused from exp546_data.npz, seed 20260823 \u2014 disclosed).",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3908",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T02:00:10.716872+00:00",
     "title": "FACT round-70 #4 \u2014 DEPTH-DECAY: the magnitude channel sees only the first steps (paper 195)"
   },
@@ -2291,6 +2277,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T10:55:32.772786+00:00",
     "title": "FACT round-75 #4 \u2014 BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of the barrier-4 converse recorded as DRAFT-WITH-CAVEATS \u2014 certified-silence law S_A=1/[\u03bcP+(1\u2212P)(1\u2212\u03bc)] supersedes drafted fire-or-silent form (14 algebra failures caught by independent verification); T2 saturation V=log\u2082W+\u00bd exact on dyadic W\u2208[2,4096]; Conjecture D factors S(R\u2218F)=S(R)\u00b7S(F) with sup_F=4/3 \u2014 residue cap 4/3 governs COST-class actions while position works the SET-class tail: 5.19\u00d7>4/3 is class-crossing not cap-breaking; zero arithmetic errors in recheck; named GAPs L4/L7/L8 are the next work"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-76 #1 THEORY deliverable (no new experiment id; papers-only bump convention as in paper 219: experiment count unchanged at 562, max id 572; papers -> 221; assessment v327 -> v328).\n\nFalsification + replacement of GAP-L7 from paper 219's lemma ledger.\n\n**Action space formalized**: REORDER-class policy Pi emits enumeration a_k = f(k,N) of I(N) with uniformity (one computable f for all N), test-blindness (order commits ex ante; comparison queries only at T2 pricing), polylog overhead charging. N-independent orders satisfy all three \u2014 the corner L7-as-drafted missed. Clause 3 unrestricted is vacuous; under polylog it needs a sublinear-time factoring separation (L7-e, likely permanent).\n\n**Failure 1 \u2014 prior-shape channel Lambda**: static-order optimality is mass-sorting by divisor-mass; whether that sort is sqrt-descending is a POPULATION property. Hard-balanced generators (q<2p): bottom-heavy tilt z=0.4095\u20130.4148 vs analytic 0.414; window-ascending beats descending **1.58x\u00b10.03** (BAL_prime 1.5785\u00b10.029, BAL_intsnap 1.6114\u00b10.033, n=2400 each; analytic two-stage 0.138v/0.219v=1.587). The attempt's quoted 1.71\u20131.91 was its own n=150 sampling inflation \u2014 its ANALYTIC prediction 1.59 was right all along. Sign-flip law: crossover **E[\u221ar]=2/(1+1/\u221a2)=1.1716**; narrow bands top-heavy z=0.6466, descending extremal (Lambda=1.0 argmin win_desc, win_asc S=0.5682); P137 pool z=0.5588 between.\n\n**Failure 2 \u2014 interaction term**: sigma\u2218delta factorization definitional/vacuous (singleton blocks); coupled residue orders gain only off-MLR as prior-shape leakage.\n\n**Corrected master inequality L7'**: S(Pi) <= (4/3)\u00b7min(1/mu_eff, 2^k_bits)/Lambda(pop), mu_eff structural keep-fraction. **ZERO violations** across all policy arms x four pools (BAL_prime/BAL_intsnap n=2400, BAL_narrow n=1600, P137 n=500; verifier recomputed incl. hybrid filter x reorder stress arm). Wheel calibration hits the T1 protocol-A law exactly: mu=phi(30)/30=4/15 => predicted 30/phi(30)=3.750, measured 3.7331\u20133.7496 (headline 3.741 vs 3.750), gap 0.25\u20130.31%. CAVEAT load-bearing: pure-permutation cells satisfy the cap tautologically at mu_booked=1; hybrid window+wheel reaches S=4.06 on P137 vs a 1.77 cap if mu booked 1 \u2014 structural mu extraction (L7-d) makes the cap non-vacuous.\n\n**Witness corrections (ledger items)**: Jacobi witness RETRACTED \u2014 (N|x)=0 identically at x=p since N\u22610 mod p (100% draws, jacobi_p_is_zero=1.0; promoted share among coprime 0.5036/0.5015 fair coin): algebraic degeneracy measuring 'p divides N', not prior shape. Replaced by **keyed-vs-fixed mod-3 control**: N-keyed vs fixed-key promotion statistically identical (S 0.6366/0.6537 BAL_prime, 0.684/0.660 P137), hit-enrichment \u22481/2 BOTH arms \u2014 residue couplings carry ZERO information; apparent gains are prior-shape leakage on non-MLR marginals only (factor-blind law replicated with proper control; strengthens papers 130/136). exp570 early-fire transfer bounded honestly: early-fire is an ECM completion law, TD has none \u2014 what transfers is front-loading => head-domination, NOT sqrt-descending dominance without the centering axiom (surrogate K=4096: front-at-\u221aN desc 948 < aligned 1493 < naive 3149; front-at-low-end flips; ladder-aligned \u2248 descending S=0.990, ladder-naive collapses 0.27).\n\n**Paper 137 REFINED not contradicted**: verifier replicated descending winning on 137's own pool \u2014 trunc_asc S=0.9278 i.e. asc/desc=1.078x vs recorded 1.08x; window policy UNDEFINED on 21.6% of draws (win_asc_miss_frac=0.216). Lambda-dominance ONLY under hard q<2p balance; deployable gains require verifying the deployed generator enforces balance first (policy undefined otherwise).\n\n**Status**: L7' PROVEN-SKETCH (zero-violation finite audit + classical analytic core). Ranked lemmas: **L7-a HIGHEST VALUE next step (hours): measure the DEPLOYED generator's r-law and restate L7' with measured Lambda_lab** (without it Lambda is unmeasured and the MLR premise unchecked); L7-b exchange theorem write-out; L7-c master-inequality proof from touch-floor accounting; L7-d structural mu_eff/k_bits extraction (load-bearing NOW); L7-e unconditional factor-blindness of polylog-computable f (open, likely permanent \u2014 adopt hardness-relative or oracle-relativize).\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/ \u2014 gapL7_extremality.md (post-revision), gapL7_check.py/.json (author first pass n=150/pop, seed 20260824, 0.99 s), verifyL7_sim.py/verifyL7_sim_out.json (independent verification set, re-derived from scratch, no code reuse, distinct seeds; n=2400/2400/1600/500 four pools), verifyL7_unif.py (uniform proxy cross-check: asc ~2.13 outright, win_asc undefined on most draws). Paper: ResearchOutput/NewMathematics/221_L7Falsification.md.\n\nNo breakthrough claimed: falsification-and-replacement inside the barrier map; barrier-4 positional stratum gains a measurable sign-flipping channel, residue cap 4/3 untouched.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3986",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T11:45:45.217604+00:00",
+    "title": "FACT round-76 #1 \u2014 GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' \u2014 extremal order = population mass-sort (window-ascending beats descending 1.58x\u00b10.03 n=2400; sign-flip crossover E[\u221ar]=1.1716); master inequality S \u2264 (4/3)\u00b7T1-cap/\u039b zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) \u2192 keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078\u00d7 vs 1.08\u00d7); L7-a measure deployed generator tilt named next"
   },
   {
     "consumed_by_exp_id": "",
@@ -4041,21 +4041,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "seed_280",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
     "consumed_by_exp_id": "",
@@ -13007,6 +12992,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The corruption budget gives |A| >= (1-rho)n/6 from a crude per-coordinate bound. Block reversals realise a reading rho with displacement of order (1-rho)n/2, so the sharp constant is bracketed between 1/6 and 1/2. Pinning it converts the budget from a lower bound into a certificate.\n\nThe optimal constant c with |A| >= c(1-rho)n for every rank mechanism achieving reading rho satisfies 1/6 <= c <= 1/2, and the extremal mechanism is a contiguous block reversal.\n\nCompute sumSqD exactly for the reversal of the top m ranks, optimise m for a target rho, and compare with reading_corruption_budget.\n\nMeasured readings translate into two-sided quantitative statements about the underlying mechanism, not just lower bounds.\n\nSome non-reversal mechanism beats block reversal, revealing a richer extremal structure for Spearman perturbations.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3985",
+    "priority_score": 0.6714848484848487,
+    "research_mode": "team",
+    "source_exp_id": "59651b5d",
+    "status": "available",
+    "timestamp": "2026-08-24T11:45:08.014439+00:00",
+    "title": "Sharp Constant in the Rank-Displacement Certificate"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Unison lags of an infinite digit melody are closed under gcd. On a finite window of length n this fails below the Fine-Wilf threshold p + q - gcd(p,q). We conjecture the sharp finite-window statement and its extremal examples for digit alphabets.\n\nIf a window of n consecutive digits has periods p and q and n >= p + q - gcd(p,q), then it has period gcd(p,q); for n = p + q - gcd(p,q) - 1 there is a decimal counterexample.\n\nState periodicity relative to a window in Lean and adapt IsPeriod.sub with index-range side conditions; construct the extremal words explicitly for small p, q and verify by decide.\n\nEmpirical periodicity claims about finite digit samples acquire an exact sample-size threshold.\n\nFinite-window periodicity is strictly weaker than expected and needs a different invariant, e.g. the windowed lag spectrum.",
     "domains": [
       "Combinatorics"
@@ -13525,6 +13524,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T17:45:45.027281+00:00",
     "title": "Diophantine Genericity of QKD Threshold Spectra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The forced displacement of the dial is now proved to equal 3/28 - 31/(10b) under the fitted law, hence to saturate at 10.7 percent and to cross the floor budget 3/40 exactly at bitlen 97. What remains open is whether the actual mechanism attains this lower bound up to a constant, which would make the observed dial a near-extremal rank perturbation.\n\nThe displaced fraction |A|/n of the recorded exp-538 rank vectors is bounded above by C times reqFrac (rhoModel b) for an absolute constant C and every measured bitlen b.\n\nInstrument the exp-538 script to emit rank vectors, compute the displaced set exactly, and compare |A|/n against reqFrac rho for bitlens 44 to 92.\n\nThe erosion mechanism is near-extremal: it moves few observations very far, a checkable fingerprint that identifies the mechanism class.\n\nThe mechanism is diffuse and the crude per-coordinate bound is far from tight, so a second-moment refinement of the budget is needed.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3983",
+    "priority_score": 0.6698750000000001,
+    "research_mode": "team",
+    "source_exp_id": "59651b5d",
+    "status": "available",
+    "timestamp": "2026-08-24T11:45:07.118344+00:00",
+    "title": "Attainability of the Saturated Displacement Budget"
   },
   {
     "consumed_by_exp_id": "",
@@ -14680,6 +14693,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:02:35.924846+00:00",
     "title": "Response-Side Attenuation Factorisation of the Zero-Fit Dial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The dial's effective base \u2014 the base p whose p-adic tie ceiling matches the observed rho-squared \u2014 drifted from 7 at bitlen 76 to 8 at bitlen 92. The conjecture is that this drift decelerates and saturates strictly between 22 and 23, the value forced by the hyperbolic erosion law's asymptote 5/14. This turns a soft decay statement into a bounded, sharply falsifiable one.\n\nThere is p_infty in (22,23) such that the effective base p(b) of the uniform dial satisfies p(b) -> p_infty, and p(b) <= 23 for every bitlen b >= 1.\n\nDefine effBaseOf as the least p with rho^2 <= padicLimit p, prove it antitone in rho, and prove effBaseOf (rhoModel b) <= 23 for all b together with convergence.\n\nThe dial degrades to a fixed finite-resolution valuation dial rather than to noise, so the measurement remains informative at every bitlen.\n\nThe effective base grows without bound, the reading tends to 0, and the hyperbolic fit must be replaced by a faster-decaying law.",
+    "domains": [],
+    "id": "fd_3982",
+    "priority_score": 0.591875,
+    "research_mode": "team",
+    "source_exp_id": "59651b5d",
+    "status": "available",
+    "timestamp": "2026-08-24T11:45:06.663933+00:00",
+    "title": "Effective-Base Linearity Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -24740,6 +24765,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T10:54:53.570378+00:00",
     "title": "Feasibility Ceiling as a Selection Principle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Spearman tie ceiling is an affine function of the cube sum of the tie profile, and the cube sum is strictly convex. Hence the ceiling should be strictly concave along mass-preserving mixtures of profiles: a dial run on a mixture of two draw laws resolves strictly better than the average of the two pure dials. This upgrades the existing total-variation Lipschitz envelope to a shape statement.\n\nFor profiles L, L' of equal length and equal mass and t in (0,1), spearmanSq (tL + (1-t)L') > t spearmanSq L + (1-t) spearmanSq L'.\n\nProve coordinatewise strict convexity of cubeSum and transport through spearmanSq_eq; verify numerically on dyadicBlocks 8 against binomBlocks 8.\n\nMixed deployment envelopes are automatically safer than their worst pure component, removing the constant from the envelope bounds.\n\nMixtures can under-resolve, and envelope claims must continue to carry the explicit Lipschitz constant.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3984",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "59651b5d",
+    "status": "available",
+    "timestamp": "2026-08-24T11:45:07.568661+00:00",
+    "title": "Strict Concavity of the Tie Ceiling Along Mixtures"
   },
   {
     "consumed_by_exp_id": "",
@@ -43314,14 +43353,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "monotonic improvement of the resulting guarantee as descriptions become shorter."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "569bc76d",
     "description": "Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
     "domains": [],
     "id": "fd_2804",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "2acb9b42",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:13.533810+00:00",
     "title": "Ellipsoids"
   },
