@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "aa2d71a2",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — UNIFORM-DIAL thread (round 43 #2)\n\nThis cycle established, formally and in full generality, why the per-N yield dial is\ndraw-regime invariant: the dial is a *pairwise* functional",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-23T03:16:48",
-      "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper 162)"
-    },
-    {
       "cycle_id": "bc20ce21",
       "domain": "Applications",
       "key_insight": "# Future Directions — after the eigenvalue-model sign law\n\nFour research cycles produced, in `Catalog/Applications/WeilDualitySign/`:\n\n* **Cycle 1** (`EigenvalueModel.lean`) — the exact sign law\n  `∏",
@@ -499,19 +489,19 @@
       "theorem_count": 117,
       "timestamp": "2026-08-24T15:58:01",
       "title": "Complementation as a free involution"
+    },
+    {
+      "cycle_id": "194ffa72",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — from the exact off-resonance window formula\n\nAll results referenced below live in `Catalog/NumberTheory/OffResonanceWindow.lean`,\nwhich compiles with **zero `sorry`** and only th",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-24T17:48:11",
+      "title": "Exact off-resonance window formula"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7ee9f549",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — PRNG-generated data: detection and seed recovery (B5)\n\nDerived from the verified results in `Catalog/MachineLearning/`:\n`PRNGSeedRecoveryLFSR.lean`, `PRNGBerlekampMassey.lean`,\n`",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-08-17T16:46:11",
-      "title": "Compression Research B5: PRNG-generated real-world data — detection and seed recovery"
-    },
     {
       "cycle_id": "e46e79a5",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 117,
       "timestamp": "2026-08-24T15:58:01",
       "title": "Complementation as a free involution"
+    },
+    {
+      "cycle_id": "194ffa72",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — from the exact off-resonance window formula\n\nAll results referenced below live in `Catalog/NumberTheory/OffResonanceWindow.lean`,\nwhich compiles with **zero `sorry`** and only th",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-24T17:48:11",
+      "title": "Exact off-resonance window formula"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "499e80a3",
-      "domain": "Novelty",
-      "name": "kneeLarge_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "499e80a3",
-      "domain": "Novelty",
-      "name": "kneeSmall_data",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "2292d7e8",
-      "domain": "Computation",
-      "name": "IsPosDist",
-      "quality": 0.82
-    },
     {
       "cycle_id": "2292d7e8",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "assemblySet_puzzleOfSet",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "194ffa72",
+      "domain": "NumberTheory",
+      "name": "sincR_zero",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "194ffa72",
+      "domain": "NumberTheory",
+      "name": "sincR_of_ne",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "194ffa72",
+      "domain": "NumberTheory",
+      "name": "sincR_neg",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-24T15:58:01",
+  "last_updated": "2026-08-24T17:48:11",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "94e7c481",
-        "quality": 0.78,
-        "theorems": 56,
-        "title": "Beal's Conjecture"
-      },
-      {
         "cycle_id": "17d131fb",
         "quality": 0.78,
         "theorems": 85,
@@ -3699,6 +3693,12 @@
         "quality": 0.82,
         "theorems": 63,
         "title": "Define Laurent q-series with the standard `q⁻¹ + O(q)` normalization and formali"
+      },
+      {
+        "cycle_id": "194ffa72",
+        "quality": 0.87,
+        "theorems": 79,
+        "title": "Exact off-resonance window formula"
       }
     ],
     "Physics": [
