@@ -2015,16 +2015,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES alone are free (+0.17%) \u2014 a four-order-of-magnitude asymmetry; no block-scaling format rescues keys"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b39e5830",
     "description": "**FACT round-74 #4 \u00b7 exp 566 \u00b7 paper 213 \u00b7 seed 566 \u00b7 walls 9.3 s + 247.7 s**\n\nAttacks the barrier-map residual item **MA-1 effectivity**: is there a COMPUTABLE per-modulus criterion for when the MA-1 averaging assumption (which-factor blindness as identity, papers 93/102/132) is realized? If AP-deviation magnitude were governed by quadratic-character L-values, one would exist. Pre-registered carrier: D(m) = max_a |\u03c0(x;m,a) \u2212 E|/\u221aE on P(m) = \u03a3|L(1,\u03c7)| over nontrivial real characters mod m; H1 R\u00b2 > 0.8 \u21d2 criterion armed; H0 R\u00b2 < 0.5 \u21d2 honest negative.\n\n**Pre-registered verdict rules evaluated verbatim \u2192 NULL-HONEST-NEGATIVE at TWO scales.**\n\n**(1) Registered stage A (x = 2^26 full, no shrinkage).** \u03c0(x) = 3,957,809, 287 moduli (squarefree [3,300] \u222a primes [307,997]), wall 9.3 s: log D ~ \u22120.0767\u00b7log P, slope CI95 (\u22120.136, \u22120.015), **R\u00b2 = 0.0187** [bootstrap 0.0007\u20130.065] \u2014 slope slightly NEGATIVE, opposite the effectivity story. Partial R\u00b2 controlling log \u03c6(m) = **0.0008** \u21d2 residual association purely a \u03c6(m) size effect. Secondary chi\u00b2 readout agrees (R\u00b2 = 0.025). Control cross-modulus pairing permutation (2000 draws) collapses to null (mean 0.0033 / max 0.0435); disclosed spec deviation: literal within-modulus count permutation is VACUOUS for max/\u03c7\u00b2 readouts (permutation-invariant).\n\n**(2) Final scaled artifact B (x = 2^28, \u03c0 = 14,630,843, 2489 moduli dense 2..1500 + primes beyond, wall 247.7 s).** Primary per-m carrier **R\u00b2 = 0.0785 \u2192 NULL**; cell-level secondary y ~ log(1/L), 1902 discriminant cells: R\u00b2 = 0.00052, theory-signed slope B = \u22120.034 [\u22120.101, +0.033] \u2014 not even positive. Baseline size control: OBS ~ log m alone explains **R\u00b2 = 0.790** \u2014 deviation magnitude is modulus-size-dominated; character-L mass adds nothing after size.\n\n**(3) Verification.** Exact class-number path validated: L(1, \u03c7\u208b\u2083) = \u03c0/(3\u221a3) exact (h(\u22123)=1, w=6); truncated series calibrated on 226 overlap discriminants, median rel err 1.8e-5; final-run truncation quality real-share median 8.7e-4, worst rel err 8.2e-2.\n\n> **SCOPING CAVEAT (prominent):** the registered readout D(m) is **SIGN-BLIND** and the predictor uses |L(1,\u03c7)| magnitudes \u2014 this bounds the MAGNITUDE route only. Signed character-alignment analysis is the required follow-up BEFORE killing the L-value route.\n\n**Barrier framing:** H0 here does NOT weaken the barrier program \u2014 it honestly bounds one computable-criterion route at toy scale. MA-1 stays axiomatic at practical scale; \"MA-1 effectivity\" stays an OPEN gap item.\n\nLedger catches, all disclosed: off-by-one corrupted non-exact L-values caught by spot check (\u03c7\u2085 gave 0.127 vs true 0.430), fixed + rerun before any recorded fit; smoke control gate failed at n = 29 (resolved at scale where the null collapses cleanly); Mertens gate FAIL per its own pre-stated rule (slope 0.9277 [0.9234, 0.9320], R\u00b2 = 0.9894 \u2014 near-proportional just outside the strict band; implied K\u0304 = \u22120.216 within theory bound |K| \u2264 0.756); scale-reconciliation disclosure (findings/digest describe stage A while canonical exp566_result.json holds the verdict-identical stage-B rerun that overwrote it mid-session; extended-rerun script variant not separately preserved); coordination disclosure \u2014 a parallel duplicate agent (coordinator double-dispatch after a stall) left an orphaned draft exp566_ma1_effectivity_alt_agentB.py with NO results attached; recorded artifact set solely from the completing agent, orphan left in place.\n\nPaper: ResearchOutput/NewMathematics/213_Ma1EffectivitySweep.md.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3948",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T07:22:53.231013+00:00",
     "title": "FACT round-74 #4 \u2014 MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-deviation effectivity at toy scale (clean H0 honest negative at two scales: R\u00b2=0.0187 registered x=2^26 / R\u00b2=0.0785 scaled x=2^28 vs 0.8/0.5 bars; deviation field modulus-size-dominated, baseline OBS~log m R\u00b2=0.79) \u2014 MA-1 stays axiomatic, SIGN-BLIND scope disclosed"
   },
@@ -2405,6 +2406,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T19:01:09.724421+00:00",
     "title": "FACT round-81 #1 \u2014 HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE \u2014 no decomposition family met the HUMP bars (pooled fitted-peak boot95-lo 1.0094 vs bar 1.05; raw max still bin 33), but composition carriers die arithmetically: observed LPF masses [0,0,.0007,.9993] \u2014 99.93% of hits share ONE band (>1e4) so H1a single-band-carrier is impossible; inside it concavity replicates in ALL THREE descriptive LPF terciles (c=-0.18/-0.25/-0.44), pooled vertex x=0.5901 == exp579's independent 0.5896 (raw max bin33 exact); k100 conditioning does NOT remove the excess (t2/t3 flat \u00b12% vs pooled +4.8%); controls clean everywhere; sole-survivor channel = H0 window/polynomial geometry of j\u00b2\u2212N itself; named probe: direct j-grid/v-size sensitivity (bin-width permutation, u-grid shift); REGENERATION PASS sha256 55729f1c99c0b5d2 byte-exact 9594/9594 hits + full controls + grids + lineage quartet + master hash"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Round-83 #1 \u00b7 SYNTHESIS-R73-80 \u00b7 Paper 234 \u00b7 papers-only (count unchanged at 572) \u00b7 assessment v340 \u2192 v341\n\nConsolidation synthesis of recorded papers 208\u2013233 (rounds 73\u201380 plus flight-recorded 81\u201382). Read-only; no compute; no new experiment id.\n\n### Five closures confirmed\n| # | Closure | Load-bearing numbers |\n|---|---|---|\n| C1 | Berggren triplet-tree ALL faces incl. realizability | oracle peak 0.4798 bits @B=22758 bit-exact yet unrealized; N-only policy \u22640.50% of within-strata core; orbit max\\|z\\|=2.29/48 cells |\n| C2 | MA-1 computable-effectivity, both routes | magnitude R\u00b2=0.019 / 0.0785 far under bars; sign 15.07% [0.120,0.186] z=\u22127.74; Chebyshev 84.7% negative-twist byproduct |\n| C3 | u\u224810 deviation gate REJECTION | fresh seed r=1.1536 [1.0540,1.2611] UPWARD vs the 20260824 family's 0.95\u20130.99 deficit \u2192 \u00b15\u201315% measured single-run envelope; multi-seed pooling mandatory henceforth |\n| C4 | Positional converse roadmap EMPTY | S \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^k_bits/(\u039b\u00b7\u0398)) PROVEN via majorization chain; EC_A MC err 0.23% |\n| C5 | Canonical covariate fixed | 1/\u2113-weighted product dial saturates by \u2113=400: W400 .4731/48.1% vs W1e6 .4786/48.5%, corr=0.999 |\n\n### Two record corrections (mechanisms named)\n- **Paper 159's destruction-wall sentence REJECTED** (papers 215+218): zero dead outcomes/600 trials; success persists at B1/p=1.05 exactly where 159 records infinite-E[T]. Replaced by early-fire trace law + subdominant collision floor (65.0%/62.5% vs baseline 16.5%, z p=0.82) + structural identity B1 \u2265 Hasse-max \u27f9 order \\| lcm(1..B1).\n- **Paper 226 SECONDARIES retracted** as reciprocity-flip dial-form artifacts (flip 100% iff \u2113\u22613 mod 4 AND N\u22613 mod 4, 2680/2680); primary S_indiv null NOT retracted (fresh-seed true null R\u00b2=.0019). **Paper 229 RESIDUAL-PEAKED-MID-WINDOW retracted** as baseline-curvature leakage; power-law headline T\u22480.0295\u00b7(1+x)^\u22121.104 STANDS AND IS STRENGTHENED.\n\n### Three new laws entering the map\n1. Early-fire trace law (hit position ~ step ZERO; median index 0.09\u20130.10; final-tail 0/55 binom p\u22480.004).\n2. \u039b prior-shape channel WITH measured scope boundaries: hard-balance ascending 1.58\u00d7\u00b10.03 but deployed RSA pools top-heavy (z=0.6356) where ascending LOSES ~44% \u2014 no deployable gain without enforced q<2p at keygen; paper 137 refined not contradicted.\n3. Harmonic-weight dial saturation: primes informative \u221d1/\u2113; equal-weight counting manufactures apparent window movement.\n\n### Contradiction scan (headline value)\n7 same-quantity pairs checked \u2192 **4 clean, 2 resolved each covering BOTH readings**:\n- 227-saturation-vs-226-\u226414%: dial-form difference (unweighted null vs 1/\u2113-weighted product).\n- 232-u*\u22480.65-vs-229-.67: numerically confirmed agreement then resolved as **AGREEMENT-ABOUT-A-GHOST** \u2014 229/231/232 share ONE M_pred construction so the baseline-curvature leakage is CORRELATED across all three; stability across shifts/bins was stability of the artifact.\n\n**+ 1 UNRESOLVED MINOR TENSION carried forward**: power-law bulk exponent \u22121.10 vs a STEEPER-THAN-HARMONIC LEFT EDGE (edge frac .2346 implied \u2248.22, z=10.08 stratified; first decile .162 implied \u2248.14; peak/end 2.54 [2.24,2.80] implied \u22482.10). Named open refinement: harmonic bulk \u00d7 steeper-edge kernel.\n\nBookkeeping ledger items (not verdict conflicts): D-red identity mismatch GLM-deviance vs Var-ratio conventions (226/227/230); 230 control-arm-B spurious fire (perm p=0.012, quasi-separation) flagged fragile.\n\n### Open items ranked by asymptotic-class value\n1. **Rate-layer N-covariate** \u2014 sole survivor on the live thread; \u226586% of u\u224810 overdispersion is N-structure beyond QR; pure-reanalysis infra exists.\n2. Formal converse sketches beyond the residue-dial stratum (positional witnesses, Siegel-ineffectivity).\n3. Larger-p ECM tracing (early-fire transfer past bitlen-32; cheap hygiene).\nMid-window excess DISSOLVED (revival only as baseline-mis-specification claim); shape confirmation closed by 233.\n\nBarrier framing: consolidation that prevents synthesizing around a contradiction \u2014 caught the correlated-artifact chain 229/231/232 that would otherwise have read as robust triangulation; corrections sealed WITH mechanisms; one quantitative residue named honestly rather than smoothed over. Residue cap 4/3 untouched; no breakthrough claimed.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4042",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T19:46:36.813358+00:00",
+    "title": "FACT round-83 #1 \u2014 SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION \u2014 five closures confirmed (Berggren all-faces, MA-1 both routes, u~10 gate rejection = +-5-15% envelope, converse roadmap EMPTY master inequality proven, canonical 1/l dial saturates by 400 corr .999); two record corrections mechanism-named (paper-159 wall rejected by early-fire trace law; 226-secondaries reciprocity-flip artifact + 229 residual baseline leakage \u2014 power law STANDS strengthened); three new laws (early-fire trace; Lambda prior-shape channel WITH scope boundaries: hard-balance 1.58x does NOT deploy, RSA pools ascending LOSES ~44%; harmonic-weight saturation); CONTRADICTION SCAN 7 pairs -> 4 clean + 2 resolved covering both readings (226-vs-227 dial-form difference; 232-vs-229 agreement-about-a-ghost via shared M_pred) + 1 UNRESOLVED MINOR TENSION carried forward: bulk exponent -1.10 vs steeper-than-harmonic LEFT EDGE (.2346/.162/2.54) \u2014 named refinement harmonic-bulk x steeper-edge kernel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "exp 583 \u00b7 round-82 #2 \u00b7 paper 233 \u00b7 assessment v339\u2192v340 \u00b7 count 571\u2192572.\n\n**VERDICT: H0_CHANNEL_CLOSES** (registered rule) with the decisive decomposition. Paper 232's named follow-up (binning-independent shape test): pure reanalysis of exp581_regen_positions.npz (128 strata, hits 9594 / controls 512000, windows [jlo,jhi] jhi/jlo=3). ZERO binning: raw hit-indicator stratum-conditional case-control logistic, 128 profiled intercepts; free natural cubic spline df5 (knots .25/.5/.75) vs LINEAR-x; LRT on full design + permutation calibration (within-stratum label shuffles B=400, capped 200-ctl/stratum design); bootstrap 150 reps.\n\nResults:\n- Free-vs-linear LRT stat=100.574 df=3, asym p=1.17e-21; permutation 0/400 exceedances => p\u22640.0025 floor at B=400 (registered <0.001 unmeetable at this B; direction strongly confirms real non-linear structure)\n- BUT interior max x*=0.020 CI[0.020,0.020] \u2014 pinned LEFT EDGE in all 150 reps; [0.4,0.8] bar FAILS\n- Peak/end rate-ratio 2.54 CI[2.243,2.798] \u2014 steep small-x decline, exactly Dickman-type, not a hump\n- Control arm null (perm p=0.856; big-design asym p=0.035 marginal, passes via perm criterion)\n- Deciles strictly declining [1554\u2026694]; the +1.6% blip near u*\u22480.55\u20130.65 is exp582's vertex ghost \u2014 baseline-relative ripple, not a mode\n\n**ERRATUM-GRADE CORRECTION TO RECORDED PAPER 229**: RESIDUAL-PEAKED-MID-WINDOW retracted as BASELINE-CURVATURE LEAKAGE \u2014 the mid-window excess lived in the mixture-Dickman denominator's own curvature, not in position shape. Paper 229's POWER-LAW headline T(x)\u22480.0295\u00b7(1+x)^\u22121.104 STANDS and is STRENGTHENED (re-found binning-free). Any revival must be a baseline-mis-specification claim, never a positional mode. Absolute-shape channel CLOSES; sole remaining open item on this thread = rate-layer N-covariate.\n\nCoordinator fuse disclosure: minimal skeleton under ~15-min fuse \u2014 monotone-I-spline/isotonic and Dickman-offset legs SKIPPED (documented in skipped_legs), H1's beats-monotone clause UNTESTED; two run legs suffice for the registered comparison since the location clause fails independently.\n\nLedger: x-convention verified pre-script from ctl linear-uniformity; perm/boot on capped designs with observed stats from full design (disclosed); design-matrix scale surprise (obs rows 521,594; control rows 1,024,000) handled within budget; wall 273.4 s; seeds P/B/S 20260902/03/04.\n\nBarrier framing: scale-smoothness mechanism frontier \u2014 clean closure preventing both a wrong positional-mode hunt and a wrong closure of the true power law; residue cap untouched.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4043",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T19:46:36.815634+00:00",
+    "title": "FACT round-82 #2 \u2014 SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES \u2014 LRT stat=100.6 df=3 p=1.17e-21 perm 0/400: real non-linearity but STEEP MONOTONE DECLINE; PAPER-229 ERRATUM: peaked residual = baseline leakage, power law stands"
   },
   {
     "consumed_by_exp_id": "",
@@ -4156,21 +4185,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "seed_330",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
     "consumed_by_exp_id": "",
@@ -9256,7 +9270,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "977c2c41",
     "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
     "domains": [
       "Novelty",
@@ -9264,10 +9278,11 @@ window.FUTURE_DIRECTIONS = [
       "Topology"
     ],
     "id": "seed_269",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
   },
@@ -14474,23 +14489,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "S2 (`\u2113\u00b9` weight is the right invariant)"
   },
   {
-    "consumed_by_exp_id": "ed2d0af8",
-    "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Speculative"
-    ],
-    "id": "seed_164",
-    "phase": "A",
-    "priority_score": 0.62,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "The Category Theory of Jokes: Universal Properties of Humor"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "**Conjecture.** For messages in `{0,1,\u2026,B}^k` and integer keys, every `r`-component min-plus digest with `r < k` has a collision whenever `B` exceeds an explicit key-spread parameter, and this dependence on the spread is asymptotically optimal.\n\nThe key insight is that the real collision ray survives in a bounded alphabet exactly until it reaches the boundary, so security is controlled by slack at unused coordinates rather than by tropical nonlinearity. **Why now?** The unrestricted theorem identifies the unique obstruction introduced by bounded messages: an unused coordinate may have no legal positive increment.",
     "domains": [
@@ -16897,6 +16895,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:58.606300+00:00",
     "title": "Learnability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`no_binaryProduct_of_disjoint` shows products fail precisely when setups share no\nreading. Conjecture: the failure is classified by a `\u010cech`-style obstruction \u2014 the\ncategory of setups over a fixed universe has all limits iff the nerve of the covering\nfamily is connected, and the number of connected components of that nerve equals the\nnumber of distinct \"incompatible interpretive frames\" of the joke.\n\n**The key insight is** that the existence of a limit is a *connectivity* statement\nabout the intersection pattern of the setups, so limit-failure is a combinatorial\ninvariant (a nerve) rather than a categorical accident.\n**Why now?** The nonexistence proof given here already runs through\n`prod.fst`/`prod.snd` and disjointness; upgrading disjointness to nerve-connectivity is\na finite combinatorial induction.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4040",
+    "priority_score": 0.5579999999999999,
+    "research_mode": "team",
+    "source_exp_id": "ed2d0af8",
+    "status": "available",
+    "timestamp": "2026-08-24T19:46:03.767592+00:00",
+    "title": "Colimit Obstruction Class for Setup Categories"
   },
   {
     "consumed_by_exp_id": "",
@@ -35595,6 +35608,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "`le_obj_of_isTerminal` shows a real-valued functor cannot distinguish terminal objects\nfrom maximal ones (`exists_maximal_humor_not_terminal`). Conjecture: no functor to any\n*thin* category detects terminality, but a functor to a non-thin category\n(e.g. the automorphism-recording functor to `Type`) does: an object `X` in a preorder-\nenriched joke category is terminal iff the representable `Hom(\u2212, X)` is constant with\nsingleton values, and this is *not* expressible as the maximum of any order-valued\ninvariant.\n\n**The key insight is** that terminality is a statement about hom-*sets* being\nsingletons, while any real-valued invariant only sees the existence of morphisms, so a\nstrict separation theorem should exist.\n**Why now?** The counterexample here is explicit and minimal (`{0,1} \u228a {0,1/2,1}`),\nand the hull quotient of this cycle (`maximal_humor_iff_hullTop`) already shows the\nseparation is exactly the non-injectivity of a functor, which makes it a ready-made\ntest case for the general separation statement.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Wundt Threshold for Submodular Valuations\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"The empirical inverted-U between surprise and funniness is conjectured to be a theorem about concave transforms of submodular valuations rather than a psychological fact. A concave increasing rating applied to a submodular surprise valuation should monovary on a down-set and antivary above a unique crossover. This converts an empirical regularity into an order-theoretic one.\",\n    \"conjecture\": \"If V is a submodular monotone valuation on a finite lattice of setups and R = phi(V) with phi concave and increasing, then there is a threshold t such that R monovaries with V on {V <= t} and antivaries on {V >= t}, and the empirical covariance of V and R is nonnegative iff the sample mass below t exceeds an explicit weighted fraction.\",\n    \"test\": \"Formalise with Mathlib's MonovaryOn/AntivaryOn and Chebyshev's sum inequality; verify on the 100-joke suite of JokeSurpriseStability with the rating models tabulated in ComputationalEvidence.md.\",\n    \"if_true\": \"The programme's correlation claim becomes a theorem with an explicit validity range, and the Wundt curve is derived rather than assumed.\",\n    \"if_false\": \"Correlation remains a purely empirical parameter of the rating data, and no categorical statement can predict its sign.\",\n    \"proof_strategy\": \"Split the sample at the maximiser of phi(V); apply MonovaryOn.sum_mul_sum_le_card_mul_sum on each branch and combine the two Chebyshev bounds with the concavity inequality for phi.\",\n    \"catalog_references\": [\"Applications.JokeSurpriseStability\", \"Applications.JokeColimitUniversality\"]\n  },\n  {\n    \"title\": \"Hausdorff Rigidity of the Diameter Functional\",\n    \"domain\": \"Geometry\",\n    \"description\": \"The 2-Lipschitz bound for diameter under Hausdorff distance is proved here in arbitrary pseudometric spaces. The conjecture is that 2 is optimal in every ge",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_4041",
+    "priority_score": 0.4411652090261621,
+    "research_mode": "team",
+    "source_exp_id": "ed2d0af8",
+    "status": "available",
+    "timestamp": "2026-08-24T19:46:04.442713+00:00",
+    "title": "Terminality Detectors Beyond Real-Valued Functors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Combining `entropy_sub_area_law_tendsto` (no `log A`\n   in the unconstrained count) with `singlet_entropy_defect_le_sharp` (`\u2264 log A + O(1)`), the\n   whole logarithmic correction is the projection defect: `\u03bb\u00b72n - log Z(2n) - (1/2) log n`\n   is bounded.  This isolates Conjecture 1 into a single local-central-limit statement about\n   the profile `M \u21a6 D(A,M)`.",
     "domains": [],
     "id": "fd_2973",
@@ -35619,6 +35647,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T03:17:39.681240+00:00",
     "title": "Divergence of Multi-Model Serving Budgets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`HumorScale.eq_scale_mul` shows the invariant has a single degree of freedom on a\none-dimensional interpretive axis. Conjecture: on an `n`-dimensional axis of readings,\nthe analogous axioms (translation invariance, additivity under convex concatenation,\nmonotonicity) admit an `n`-parameter family \u2014 the intrinsic volumes \u2014 and surprise is\nthe *first* intrinsic volume (mean width) rather than the diameter.\n\n**The key insight is** that Hadwiger's theorem is the multidimensional replacement for\nthe monotone Cauchy equation, so the \"why this formula\" question has a different answer\nin each dimension, and the diameter model of the catalog is a strictly\none-dimensional coincidence.\n**Why now?** The one-dimensional uniqueness theorem is complete and its proof isolates\nexactly the three axioms that must be transported; the `n = 2` case is finite-\ndimensional convex geometry and is within reach without full Hadwiger.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_4039",
+    "priority_score": 0.4408645648875318,
+    "research_mode": "team",
+    "source_exp_id": "ed2d0af8",
+    "status": "available",
+    "timestamp": "2026-08-24T19:46:03.253111+00:00",
+    "title": "Multidimensional Surprise and Non-Uniqueness of the Scale"
   },
   {
     "consumed_by_exp_id": "",
@@ -35660,6 +35703,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T10:41:05.526322+00:00",
     "title": "Direction 5 \u2014 Finite-Population Separator as a Geometric Mean"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Computationally (see `ComputationalEvidence.md`) the humor/rating correlation is\n`+0.97` below a surprise threshold and `\u22120.97` above it, with a global correlation of\nonly `+0.04`. The conjecture is that this threshold is not a psychological accident but\nthe point where the submodular valuation stops being *supermodular on the diagonal*: a\nrating functional `R` that is a concave increasing transform of a submodular valuation\nnecessarily monovaries with the valuation on a down-set and antivaries on its\ncomplement, and the crossover is the unique maximiser of `R`.\n\n**The key insight is** that an inverted-U rating curve is exactly what a *concave*\nutility applied to a *submodular* surprise valuation must look like, so the empirical\nWundt curve is a theorem about concavity, not a fact about people.\n**Why now?** Both halves are now formalised: submodularity is proved here, and\nChebyshev monovariance machinery is in Mathlib, so the crossover statement can be\nattacked directly.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_4038",
+    "priority_score": 0.44029492336170584,
+    "research_mode": "team",
+    "source_exp_id": "ed2d0af8",
+    "status": "available",
+    "timestamp": "2026-08-24T19:46:02.639253+00:00",
+    "title": "Wundt Threshold for Submodular Valuations"
   },
   {
     "consumed_by_exp_id": "",

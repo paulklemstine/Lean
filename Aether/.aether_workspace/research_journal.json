@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d221a4de",
-      "domain": "Probability",
-      "key_insight": "# FUTURE DIRECTIONS — FACTOR-LOCAL-ET, after cycles 1–7\n\n## What survived this cycle\n\n1. **Slope identifiability** (`PowerBand.abs_logSlope_sub_le`).  Multiplicative\n   model error enters a two-point",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 89,
-      "timestamp": "2026-08-23T04:53:36",
-      "title": "FACT round-41 #5 — FACTOR-LOCAL-ET: unified across-k scaling on one population (paper 154)"
-    },
-    {
       "cycle_id": "9b10b60b",
       "domain": "Geometry",
       "key_insight": "# Future directions — after the ECM-lite window and scaling cycle\n\nTwo Lean files were produced and fully proved:\n\n* `Catalog/Geometry/ECMLiteBirthdayScaling.lean` — the exact detection window of\n  th",
@@ -499,19 +489,19 @@
       "theorem_count": 85,
       "timestamp": "2026-08-24T17:48:45",
       "title": "FACT round-70 #5 — PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adics; Gauss magnitudes"
+    },
+    {
+      "cycle_id": "ed2d0af8",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Universal Properties of Humor (v19c thread)\n\nThis cycle established, sorry-free, in `Catalog/Applications/`:\n\n* **surprise is an exactly submodular valuation** on the refinement",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-24T19:46:15",
+      "title": "The Category Theory of Jokes: Universal Properties of Humor"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7199d5c0",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nFormal results of this cycle: `Catalog/MachineLearning/UniversalRedundancy/`\n(`Core`, `Types`, `Markov`, `Capacity`, `Bernoulli`, `Se",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-17T19:42:56",
-      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
-    },
     {
       "cycle_id": "97b1c345",
       "domain": "Probability",
@@ -2501,6 +2491,16 @@
       "theorem_count": 85,
       "timestamp": "2026-08-24T17:48:45",
       "title": "FACT round-70 #5 — PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adics; Gauss magnitudes"
+    },
+    {
+      "cycle_id": "ed2d0af8",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Universal Properties of Humor (v19c thread)\n\nThis cycle established, sorry-free, in `Catalog/Applications/`:\n\n* **surprise is an exactly submodular valuation** on the refinement",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-24T19:46:15",
+      "title": "The Category Theory of Jokes: Universal Properties of Humor"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T17:48:45",
+  "last_updated": "2026-08-24T19:46:15",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "4494e9cb",
-        "quality": 0.664175,
-        "theorems": 26,
-        "title": "Rigidity gap for shallow product coins"
-      },
-      {
         "cycle_id": "42f28947",
         "quality": 0.85,
         "theorems": 68,
@@ -3141,6 +3135,12 @@
         "quality": 0.85,
         "theorems": 55,
         "title": "Finite-Key Bounds on a Certified Asymptotic Core"
+      },
+      {
+        "cycle_id": "ed2d0af8",
+        "quality": 0.78,
+        "theorems": 61,
+        "title": "The Category Theory of Jokes: Universal Properties of Humor"
       }
     ],
     "Bridges": [
