@@ -1630,21 +1630,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-67 #1 \u2014 TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
   },
   {
-    "consumed_by_exp_id": "c293906f",
-    "description": "## NET-76 \u2014 limited-memory axis, round 28 (paper 161, ResearchOutput/exp_net76_frenchext512.py, /tmp/net76.log)\n\n**Verdict name: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE.**\n\n### Result\nExtended grid on French prose @ctx=512 (gate exact):\n\n| k | 24 | 28 | 32 | 36 | 44 |\n|---|---|---|---|---|---|\n| retained | 0.9716 \u2717 | 0.9772 \u2717 | **0.9813 \u2713** | 0.9848 \u2713 | 0.9879 \u2713 |\n\n**k\\*(fr@512) = 32**, completing the French chain {32, 40} with +8/doubling.\n\n### The complete five-domain \u00d7 two-context table\n\n| domain | factor | k\\*@512 | k\\*@1024 | increment/doubling |\n|---|---|---|---|---|\n| code | ~0.75\u00d7 | 12 | 12 | +0 |\n| prose-EN | 1.0\u00d7 | 16 | 20 | +4 |\n| math | ~1.0\u00d7 | 16 | 20 | +4 |\n| prose-DE | ~1.25\u00d7 | 20 | 24 | +4 |\n| **prose-FR** | **~2.0\u00d7** | **32** | **40** | **+8** |\n\nEach domain's ENTIRE budget curve scales by a single multiplicative factor applied to English prose's {16, 20}. One number per domain replaces a full grid measurement for any new domain within its family.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. P2 confirmed; (b) clean; (c) confronted \u2014 five domains, two contexts, 0.5B only stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET76; (g) fair; (h) DIRECT.\n\n### Next\n4096 increments; more languages/domains; 7B scale test.\n\nNow 76 network experiments. Assessment v76. Paper 161.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3745",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T20:41:46.052527+00:00",
-    "title": "NET-76: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE \u2014 complete 5-domain \u00d7 2-context table: each domain's entire budget curve scales by one multiplicative factor (code 0.75x to FR 2.0x)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "## NET-75 \u2014 limited-memory axis, round 27 (paper 160, ResearchOutput/exp_net75_frenchext.py, /tmp/net75.log)\n\n**Verdict name: THE-FRENCH-KNEE-IS-FORTY.**\n\n### Result\nExtended grid on French prose (corpus-B; gate exact):\n\n| k | 36 | 40 | 48 | 56 | 64 |\n|---|---|---|---|---|---|\n| retained | 0.9795 \u2717 | **0.9830 \u2713** | 0.9855 \u2713 | 0.9896 \u2713 | 0.9916 \u2713 |\n\n**k\\*(fr@1024) = 40 \u2014 exactly DOUBLE English prose's 20 at the same context.**\n\n- **P1 CONFIRMED**: the knee exists within the extended grid.\n- **P2 REFUTED**: it is 40, not the predicted ~28\u201332.\n\n### The five-domain table @1024\ncode=12, EN-prose=20, math=20, DE-prose=24, FR-prose=40. The tokenizer-tax is a domain-dependent MULTIPLIER (German +4, French \u00d72), not a fixed +4 step. The +4/doubling increment appears domain-universal. Combined with NET-73's TPW refutation: the mechanism is in HOW attention patterns are structured within each language, not how many tokens are used.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean \u2014 first beyond-coarse-grid French measurement; (c) confronted \u2014 one source/context stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET75; (g) fair \u2014 byte-identical harness; (h) DIRECT.\n\n### Next\nFrench @512 extended grid; increments at 4096; more languages; 7B quantized-offload cell.\n\nNow 75 network experiments. Assessment v75. Paper 160.\n",
     "domains": [
@@ -1887,16 +1872,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-71 #1 \u2014 TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exact v2(p+q) mechanism (paper 198)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "886e75dc",
     "description": "Round-70 #6, exps 549 + 551. A correction round \u2014 the loop's self-check caught its own signal.\n\n**ENERGY-ASCENT-ARTIFACT.** exp549's smoke-run pipeline check refuted papers 193/195's mechanism: E(a)=a\u00b2\u2212N crosses zero between j=0 and j=1 of ANY isqrt-anchored window (zero at \u221aN), NOT at j=d \u2014 the event at a=m is the Fermat square-HIT. Structural identities (20/20 blocks): sign-count/bracket sensors are CONSTANT across N \u2014 **MI(hits;b\u2081)=0.000000 exactly**.\n\nThen exp551 delivered the kill shot on the realized 'channel': plain **log N carries IDENTICAL MI to the spectral feature** (0.1836 vs 0.1836, within-fine-(n,m)-cell 0.0629 both), and conditioning on log-N deciles collapses the feature to **exactly 0.0000 bits** (z=0.0, sd 0). The realized spectral summaries are deterministic monotone mirrors of N's own magnitude \u2014 information already contained in knowing N. Papers 193/195 now carry appended errata.\n\nWhat survives: the factor-derived ORACLE positional bound (I(1{d\u2264B};b\u2081) peaks **0.4798 @ B\u224822758**, B*=10420 for \u226590%; d median 215782) \u2014 real geometry, unrealized by any tested probe; exp547's cost laws unaffected (stipulated oracles); exp548 independent.\n\n**Round synthesis REVERSED in the seals' favor** \u2014 the Pythagorean tree stands sealed against every realized probe class: residues (paper 81), Gauss magnitudes (= residue dials, paper 196), bracket sensors (structural, this paper), spectral summaries (= magnitude mirrors, exact null given |N|).\n\nMethod lesson recorded: row-shuffle permutation nulls are the WRONG null for deterministic functions of N \u2014 any fine monotone function of N inherits scale stratification and flags z\u226b3; correct controls condition on magnitude or test transfer beyond knowing N.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp549_window_frontier.py + exp549_result.json + exp549_data.npz; exp551_magnitude_mirror.py + exp551_magnitude_mirror.json.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3906",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T02:00:10.713412+00:00",
     "title": "FACT round-70 #6 \u2014 MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all realized probes (paper 197, errata to 193/195)"
   },
@@ -3068,6 +3054,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 93d08ac5 (Q=0.820), which proved 30 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For `d \u2265 1`, `N \u2265 2`, the thickness of the outermost equal-volume\nshell of `B(0,R) \u2286 \u211d^d` satisfies\n`R/(d(N\u22121)) \u00b7 (1 \u2212 1/N) \u2264 R \u2212 R(1 \u2212 1/N)^{1/d} \u2264 R/(d(N\u22121))`,\nso the upper bound `shell_thickness_le` proved here is tight up to the factor\n`1 \u2212 1/N`, and the whole shell decomposition converges, afte",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_93d08ac5_1c550c1a",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "93d08ac5",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:36.976273+00:00",
+    "title": "Deepening: For `d \u2265 1`, `N \u2265 2`, the thickness of the outermost equal-volume"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domains": [
       "NumberTheory"
@@ -4041,22 +4041,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_272",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
     "consumed_by_exp_id": "",
@@ -14325,6 +14309,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every entry and every increment of the reported table is a multiple of four. If the sweep grid has spacing g, the reported knee is the grid ceiling of the true knee, and increments are forced into g\u00b7\u2115. This would show that much of the table's apparent structure is an artefact of the measurement design.\n\nIf a sweep grid is g\u00b7\u2115 then every reported doubling increment lies in g\u00b7\u2115, and the reported factor of a domain differs from its true factor by at most g/k*.\n\nCombine gridKnee from Combinatorics.KneeInvariance with the dilation bracket and prove both statements.\n\nThe '+0 / +4 / +8' pattern carries less information than claimed, and finer grids are required for factor claims.\n\nThe quantisation is a property of the model, not of the sweep, and is itself the interesting phenomenon.",
+    "domains": [],
+    "id": "fd_3968",
+    "priority_score": 0.593529411764706,
+    "research_mode": "team",
+    "source_exp_id": "c293906f",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:05.708220+00:00",
+    "title": "Grid-Spacing Origin of the Four-Fold Quantisation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The celestial map sending an event to (a/c, b/c) is injective into the rational points of the unit circle, and the Pell spine converges to the irrational direction sqrt(2)/2. The conjecture is that the closure of the image is the whole open first-quadrant arc, so the conformal boundary of the causal set is all of null infinity in that sector.\n\nThe set { (a/c, b/c) : (a,b,c) a primitive Pythagorean triple with a,b,c > 0 } is dense in the open arc { (x,y) : x,y > 0, x^2+y^2 = 1 }.\n\nFormalise Berggren's completeness theorem (every primitive triple is a node of the tree, via descent using the parent map already formalised), then derive density from the Euclid parametrisation and density of the rationals.\n\nThe boundary of the Berggren causal set is exactly the celestial arc: a fully formalised discrete model of null infinity for the 2+1 null cone.\n\nThe image omits an arc, which would contradict the classical Euclid parametrisation and hence indicate an error in the descent, so the informative outcome is the completeness theorem itself.",
     "domains": [],
     "id": "fd_3408",
@@ -14409,6 +14405,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The proved rate is 0 \u2264 R\u039b - d\u00b7thickness \u2264 R\u039b\u00b2/(d+\u039b). Numerics indicate the true gap is R\u039b\u00b2/(2d) + O(1/d\u00b2), so the constant can be halved. Establishing the exact second-order term would make the bound asymptotically optimal at both orders.\n\nd\u00b7(R - shellRadius R d N 1) = R\u039b - R\u039b\u00b2/(2d) + O(1/d\u00b2) with \u039b = log(N/(N-1)).\n\nReplace 1+u \u2264 e^u by 1+u+u\u00b2/2 \u2264 e^u (valid for u \u2264 0) in neg_log_sub_mul_one_sub_rpow_inv_le and track the cubic remainder.\n\nA complete asymptotic expansion of equal-volume peelings, with both the leading constant and the first correction proved optimal.\n\nThe correction term is not \u039b\u00b2/2, indicating that the rescaling by d is not the natural one at second order.",
+    "domains": [],
+    "id": "fd_3973",
+    "priority_score": 0.5932142857142858,
+    "research_mode": "team",
+    "source_exp_id": "93d08ac5",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:30.226235+00:00",
+    "title": "Second-Order Expansion of the Rescaled Shell Thickness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two candidate predictors of transplant damage exist in the catalog: a norm-based upper bound and a margin-based certificate. Conjecture: the margin-uncertified fraction predicts damage, and Lipschitz/norm distance between the two copies of a block does not.\n\nAcross layer blocks, the measured post-transplant disagreement correlates with the margin-uncertified fraction and is not monotone in the block's weight-space distance.\n\nCompute both predictors per block and compare against measured disagreement, using net54_margin_failure_fraction as the certified lower bound.\n\nPortability becomes predictable from a cheap forward-pass statistic, with no transplant needed.\n\nNorm-based bounds remain the operative predictor and the margin route is only a sufficient condition.",
     "domains": [],
     "id": "fd_3792",
@@ -14454,6 +14462,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T09:44:08.770735+00:00",
     "title": "Uniform Bitlen Saturation for Valuation Statistics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Fix a thickness budget \u03b4. Only the innermost shells of an equal-volume peeling can violate it, and the sandwich for general k quantifies exactly when. The conjecture is that the number of shells thicker than \u03b4 is O(d log(R/\u03b4)) while the number of thinner ones grows exponentially in d.\n\nFor fixed \u03b4 \u2208 (0,R), #{k < N : shellRadius R d N k - shellRadius R d N (k+1) > \u03b4} = O(d log(R/\u03b4)) uniformly in N, and the maximal N with all shells of thickness \u2264 \u03b4 grows like (1-\u03b4/R)^{-d}.\n\nCombine shell_depth_sandwich with the dichotomy to bound the index range where the thickness exceeds \u03b4, then count.\n\nA sharp structural description of equal-volume peelings: exponentially many skins plus boundedly many thick layers.\n\nThe thick layers are more numerous than expected, which would contradict the observed collapse onto the boundary sphere.",
+    "domains": [],
+    "id": "fd_3974",
+    "priority_score": 0.5930769230769232,
+    "research_mode": "team",
+    "source_exp_id": "93d08ac5",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:30.736330+00:00",
+    "title": "Thin-Shell Counting under a Thickness Budget"
   },
   {
     "consumed_by_exp_id": "",
@@ -15144,6 +15164,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T01:59:29.130554+00:00",
     "title": "Tie-Gram Interference Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The optimal constant log(N/(N-1))/d for the outer shell of an equal-volume peeling should depend only on the dimension and the number of shells, not on the body, as long as the peeling is by dilates. For peelings by parallel bodies the constant should strictly increase unless the body is a ball, giving a new rigidity characterisation of the ball.\n\nFor a convex body K with 0 in its interior, the dilate peeling has outer gauge-thickness exactly 1-(1-1/N)^{1/d}; among all peelings by parallel bodies the ball uniquely minimises the outer thickness at fixed volume fractions.\n\nProve the dilate case from Measure.addHaar_smul, then attempt the rigidity case for K + \u03b5B using Brunn-Minkowski.\n\nThe concentration bound proved here is a statement about homogeneity alone, and the ball is characterised by extremal peeling geometry.\n\nSome non-ball body peels more efficiently, exposing a new extremal problem in convex geometry.",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_3971",
+    "priority_score": 0.5638197894319682,
+    "research_mode": "team",
+    "source_exp_id": "93d08ac5",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:29.219757+00:00",
+    "title": "Gauge-Invariance of the Optimal Peeling Constant for Convex Bodies"
   },
   {
     "consumed_by_exp_id": "",
@@ -16044,6 +16079,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T13:02:24.230057+00:00",
     "title": "Completeness of Inflation and Reflection"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For X uniform on the unit ball of R^d, the rescaled boundary distance d(1-|X|) should converge in distribution to Exp(1) with an explicit O(1/d) Kolmogorov rate. All tail probabilities are already computed as (1-u/d)^d; what remains is to phrase them as a statement about the pushforward measure and to make the error uniform in u. This turns a geometric concentration fact into a probabilistic limit theorem.\n\nIf X_d ~ Uniform(B(0,1) in R^d) then d(1-\u2016X_d\u2016) converges in distribution to Exp(1), and sup_u |P(d(1-\u2016X_d\u2016) > u) - e^{-u}| = O(1/d).\n\nFormalise the pushforward of volume under x \u21a6 d(1-\u2016x\u2016) and compare its CDF to 1-e^{-u} using peel_volume_fraction_tendsto plus a uniform version of shell_thickness_rate.\n\nEqual-volume peelings of balls become a source of exponential random variables, linking the peeling programme to concentration of measure.\n\nThe convergence fails to be uniform, isolating a boundary regime u \u224d d where the profile is not exponential.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_3970",
+    "priority_score": 0.5623007453630992,
+    "research_mode": "team",
+    "source_exp_id": "93d08ac5",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:28.704288+00:00",
+    "title": "Exponential Radial Law for Uniform Points in High-Dimensional Balls"
   },
   {
     "consumed_by_exp_id": "",
@@ -24547,6 +24597,76 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T07:21:59.856322+00:00",
     "title": "Optimal Determinacy Radius for Pole-Order-m Products"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Classify which pairs (k*@n, k*@2n) are reachable from a base pair by the composite operation dilate p \u2218 contract q. Dilation multiplies the doubling increment while merging quantises it, so the reachable set is a nontrivial arithmetic region rather than a ray. The result would replace per-domain grid sweeps by a decision procedure on two measured numbers.\n\nA pair (a, b) is reachable from (16, 20) by dilate p \u2218 contract q iff there exist p, q \u2265 1 with p\u00b7(\u230816/q\u2309\u22121) < a \u2264 p\u00b7\u230816/q\u2309 and p\u00b7(\u230820/q\u2309\u22121) < b \u2264 p\u00b7\u230820/q\u2309; in particular b = a forces q \u2265 5.\n\nFormalise the reachable set as a predicate in Lean and prove both inclusions; the forward inclusion follows from ratDilate_bracket, the converse needs explicit profiles.\n\nAny new domain is characterised by two integers, and the reported per-domain factor tables become derivable rather than measured.\n\nThe reachable set is strictly smaller, so some measured pairs need a mechanism outside dilation and merging.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3965",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c293906f",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:04.191096+00:00",
+    "title": "Mixed Dilation-Merging Classification of Budget Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 5 gives an explicit stabilisation locus for a geometrically decaying profile in terms of the gate slack of the limit knee. The conjecture is that the closed-form uniform budget geometricBudget r tau, computed from the decay ratio and the gate alone, is always itself such a locus. On the dyadic witness the two numbers coincide exactly at 21, and that value is tight.\n\nFor a positive profile with w(i+1) <= r*w(i), 0 < r < 1 and 0 < tau < 1, one has kstar w m tau = kinf w tau for every m >= max (geometricBudget r tau) 1.\n\nCompare the geometric tail at geometricBudget r tau with the slack tau * tsum w - headMass w (kinf w tau - 1) and feed the comparison into stabilisation_locus_explicit; falsify by constructing a profile whose limit knee has slack smaller than the tail at the budget.\n\nA domain's entire budget curve, including where it freezes and what it freezes at, is computable from (r, tau) before any sweep is run.\n\nStabilisation can be arbitrarily late relative to the uniform budget, so the locus genuinely depends on the profile and not only on its decay ratio.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3966",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c293906f",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:04.694308+00:00",
+    "title": "Uniform Budget as Stabilisation Context"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Upgrade the window-consistency statements for the German (20, 24) and code (12, 12) rows to explicit profiles. Each realiser would prove that the anomaly is a ceiling artefact of the mechanism rather than evidence against it.\n\nThere is a geometric profile w and a gate \u03c4 with kstar w 512 \u03c4 = 16, kstar w 1024 \u03c4 = 20, and kstar (ratDilate 5 4 w) 640 \u03c4 = 20, kstar (ratDilate 5 4 w) 1280 \u03c4 = 24.\n\nSearch (r, \u03c4) computationally, then verify the four knee values in Lean by rational arithmetic.\n\nThe German row is fully explained by rational rescaling and the sharpened verdict becomes a four-of-five statement.\n\nThe window is not attained, so the mechanism over-predicts and needs an additional constraint.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3967",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c293906f",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:05.196902+00:00",
+    "title": "Explicit Realisers for the Anomalous Domain Rows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Because the gap between the matched-context and token-matched readings is exactly c times the base increment, a domain is determined by the pair (factor, increment) rather than by a factor alone. The conjecture is that these two integers predict every further context column, making a third measurement a genuine falsification test.\n\nFor a c-fold dilation of a base curve with increment D per doubling, the measured knee at the m-th doubling satisfies c\u00b7(K + (m\u22121)\u00b7D) \u2212 c < k*_dilated \u2264 c\u00b7(K + (m\u22121)\u00b7D), for every m \u2265 1.\n\nIterate token_matched_window along a doubling chain and prove the resulting bracket by induction on m.\n\nTwo integers per domain replace an entire grid sweep, and a ctx = 2048 column is predicted in advance.\n\nThe increment itself drifts with context, so no finite descriptor of a domain exists and per-context sweeps are unavoidable.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3969",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c293906f",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:06.220302+00:00",
+    "title": "Two-Number Domain Descriptor: Factor and Increment"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The monotonicity of the rescaled shell thickness in the dimension was deduced from the fact that the Cesaro averages of the geometric sequence y^i decrease. The conjecture is that this is the whole story: any peel profile with antitone gaps has monotone rescaled deficit, and conversely.\n\nFor antitone nonnegative a : N \u2192 R the averages (1/n)\u2211_{i<n} a i are antitone in n, and a PeelProfile has monotone rescaled deficit iff its gap sequence has antitone Cesaro averages.\n\nGeneralise sum_geom_avg_antitone from y^i to an arbitrary antitone sequence, then quantify over the catalog's PeelProfile structure.\n\nThe abstract PeelProfile API inherits all the concentration results proved here for balls.\n\nA counterexample profile separates geometric peelings from abstract ones and explains why the ball case is special.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3972",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "93d08ac5",
+    "status": "available",
+    "timestamp": "2026-08-24T10:05:29.726624+00:00",
+    "title": "Cesaro Antitonicity as the Engine of Dimension Monotonicity"
   },
   {
     "consumed_by_exp_id": "",
@@ -36942,19 +37062,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalize from one-dimensional symmetry generators to Lie-group actions and prove equivariance of the momentum map."
   },
   {
-    "consumed_by_exp_id": "93d08ac5",
-    "description": "For `d \u2265 1`, `N \u2265 2`, the thickness of the outermost equal-volume\nshell of `B(0,R) \u2286 \u211d^d` satisfies\n`R/(d(N\u22121)) \u00b7 (1 \u2212 1/N) \u2264 R \u2212 R(1 \u2212 1/N)^{1/d} \u2264 R/(d(N\u22121))`,\nso the upper bound `shell_thickness_le` proved here is tight up to the factor\n`1 \u2212 1/N`, and the whole shell decomposition converges, after rescaling by `d`,\nto the exponential profile `R(1 \u2212 e^{\u2212t})`.",
-    "domains": [],
-    "id": "fd_1737",
-    "phase": "A",
-    "priority_score": 0.424,
-    "research_mode": "team",
-    "source_exp_id": "ce273a18",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T17:46:25.477431+00:00",
-    "title": "For `d \u2265 1`, `N \u2265 2`, the thickness of the outermost equal-volume"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The analytic half is now **proved**: if for each `g \u2208 G` the number\nof injective `r`-tuples of `Y_n` fixed by `g` is eventually polynomial in `n`\nof degree `\u2264 r`, then the Hilbert series has denominator dividing\n`(1-q)^{r+1}` with no transitivity assumption\n(`hilbertSeq_rational_of_fixedPoint_growth`, resting on the formal Burnside\nidentity `torbits_burnside`).",
     "domains": [],
@@ -41786,14 +41893,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Partial orders"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "194ffa72",
     "description": "Prove that the rectangularly windowed tone equals a sinc-type expression, with value `2T` at resonance. This would quantify peak width and sidelobes rather than merely prove the peak center.",
     "domains": [],
     "id": "fd_2014",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "f2f32f44",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:14.312638+00:00",
     "title": "Exact off-resonance window formula"
   },

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "43b197e4",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — after the QR footprint dial (paper 145 cycle)\n\nThis cycle established, with machine-checked proofs:\n\n1. the \"each QR prime divides `2/p` of the values\" slogan is an **exact ident",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 171,
-      "timestamp": "2026-08-22T17:37:04",
-      "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
-    },
-    {
       "cycle_id": "113c03c3",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — after the residue-dial converse\n\nProved in this cycle (all sorry-free, in `Catalog/Cryptography/ResidueDial/`):\n\n* the exact single-pass law `Speedup = 1/(1 − θ + θ²)`, derived f",
@@ -499,19 +489,19 @@
       "theorem_count": 95,
       "timestamp": "2026-08-24T10:05:21",
       "title": "NET-76: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE — complete 5-domain × 2-context table: each domain's ent"
+    },
+    {
+      "cycle_id": "93d08ac5",
+      "domain": "Shared",
+      "key_insight": "# Future directions — equal-volume shell peelings of Euclidean balls\n\nDerived from the three cycles formalised in\n`Catalog/Shared/ShellThicknessSharp.lean`,\n`Catalog/Shared/ShellThicknessMonotone.lean",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-08-24T10:05:36",
+      "title": "For `d ≥ 1`, `N ≥ 2`, the thickness of the outermost equal-volume"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "93afd30b",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Berggren Spectral Resonance\n\nDerived from the three research cycles recorded in\n`Catalog/Cryptography/BerggrenSpectral/` (spectra → resonance → factorization → exact\nspectrum, tr",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 122,
-      "timestamp": "2026-08-17T07:17:00",
-      "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factorization"
-    },
     {
       "cycle_id": "0b339d93",
       "domain": "Physics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 95,
       "timestamp": "2026-08-24T10:05:21",
       "title": "NET-76: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE — complete 5-domain × 2-context table: each domain's ent"
+    },
+    {
+      "cycle_id": "93d08ac5",
+      "domain": "Shared",
+      "key_insight": "# Future directions — equal-volume shell peelings of Euclidean balls\n\nDerived from the three cycles formalised in\n`Catalog/Shared/ShellThicknessSharp.lean`,\n`Catalog/Shared/ShellThicknessMonotone.lean",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-08-24T10:05:36",
+      "title": "For `d ≥ 1`, `N ≥ 2`, the thickness of the outermost equal-volume"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "43ad4483",
-      "domain": "Physics",
-      "name": "tower_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6f1d7e50",
-      "domain": "Novelty",
-      "name": "sum_negMulLog_le_group",
-      "quality": 0.82
-    },
     {
       "cycle_id": "86b92df3",
       "domain": "Combinatorics",
@@ -2803,9 +2791,21 @@
       "domain": "Probability",
       "name": "dilate_pos",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "93d08ac5",
+      "domain": "Shared",
+      "name": "sum_geom_avg_antitone",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "93d08ac5",
+      "domain": "Shared",
+      "name": "mul_one_sub_pow_le",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T10:05:21",
+  "last_updated": "2026-08-24T10:05:36",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "b8ad3057",
-        "quality": 0.85,
-        "theorems": 69,
-        "title": "What follows are the conjectures the analysis stage extracted, in decreasing ord"
-      },
-      {
         "cycle_id": "5be71780",
         "quality": 0.85,
         "theorems": 97,
@@ -3947,6 +3941,12 @@
         "quality": 0.78,
         "theorems": 51,
         "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (kn"
+      },
+      {
+        "cycle_id": "93d08ac5",
+        "quality": 0.82,
+        "theorems": 30,
+        "title": "For `d ≥ 1`, `N ≥ 2`, the thickness of the outermost equal-volume"
       }
     ],
     "Tropical": [
