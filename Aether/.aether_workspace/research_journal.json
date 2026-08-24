@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c08b5555",
-      "domain": "Shared",
-      "key_insight": "# Future directions — after the additive uncertainty principle on Z/pZ\n\n## What has been established\n\nThe previously open item was the *additive* uncertainty bound `|supp f| + |supp f̂| ≥ p + 1` for\np",
-      "quality_score": 0.93,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-22T15:36:10",
-      "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
-    },
-    {
       "cycle_id": "ba827ea4",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — reversible radius-one cellular automata over small alphabets\n\nThe cycle just completed answered the mission's falsifiable question negatively: for the\nternary alphabet there are",
@@ -499,19 +489,19 @@
       "theorem_count": 107,
       "timestamp": "2026-08-24T07:22:28",
       "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR — L22+L23 solo costs sum to 0.06pts but joint pruning c"
+    },
+    {
+      "cycle_id": "3be10ac1",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — TDIAL-BITLEN cycle (round-56 #1, exp 526)\n\n## What this cycle established\n\nFour sorry-free Lean files in `Catalog/Pythagorean/`:\n\n* `ZeroFitDialRelationRate48.lean` — the *coarse",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-24T09:05:56",
+      "title": "FACT round-56 #1 — TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "094ca37a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Hyper-Awareness: 11-dimensional perception architectures\n\nDerived from the analysis and adversarial review of this cycle. Every conjecture below is\nfalsifiable, and each is state",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 83,
-      "timestamp": "2026-08-17T04:03:34",
-      "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
-    },
     {
       "cycle_id": "d71114d5",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 107,
       "timestamp": "2026-08-24T07:22:28",
       "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR — L22+L23 solo costs sum to 0.06pts but joint pruning c"
+    },
+    {
+      "cycle_id": "3be10ac1",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — TDIAL-BITLEN cycle (round-56 #1, exp 526)\n\n## What this cycle established\n\nFour sorry-free Lean files in `Catalog/Pythagorean/`:\n\n* `ZeroFitDialRelationRate48.lean` — the *coarse",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-24T09:05:56",
+      "title": "FACT round-56 #1 — TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4caf1d72",
-      "domain": "Novelty",
-      "name": "rather",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4caf1d72",
-      "domain": "Novelty",
-      "name": "orbit_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4caf1d72",
-      "domain": "Novelty",
-      "name": "orbit_succ",
-      "quality": 0.82
-    },
     {
       "cycle_id": "43ad4483",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "survivors_nonempty",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "3be10ac1",
+      "domain": "Pythagorean",
+      "name": "geomBlocks_sum",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "3be10ac1",
+      "domain": "Pythagorean",
+      "name": "geomBlocks_zero",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "3be10ac1",
+      "domain": "Pythagorean",
+      "name": "geomBlocks_sum_cast",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-24T07:22:28",
+  "last_updated": "2026-08-24T09:05:56",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "a5150a29",
-        "quality": 0.82,
-        "theorems": 52,
-        "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
-      },
-      {
         "cycle_id": "16c8a71d",
         "quality": 0.82,
         "theorems": 21,
@@ -3885,6 +3879,12 @@
         "quality": 0.8,
         "theorems": 129,
         "title": "Do not infer infinite-digit laws from finite prefixes"
+      },
+      {
+        "cycle_id": "3be10ac1",
+        "quality": 0.83,
+        "theorems": 93,
+        "title": "FACT round-56 #1 — TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 unif"
       }
     ],
     "Shared": [

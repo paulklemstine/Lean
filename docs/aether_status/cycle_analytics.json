@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-24T07:22:31.831144+00:00",
+  "last_updated": "2026-08-24T09:06:02.336167+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -66206,6 +66206,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-24T07:22:31.537325+00:00",
       "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR \u2014 L22+L23 solo costs sum to 0.06pts but joint pruning c"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Pythagorean",
+      "duration_seconds": 6178.364917039871,
+      "end_time": 1787562290.684725,
+      "files_integrated": 4,
+      "job_id": "3be10ac1",
+      "outcome_quality": 0.83,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.83,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5485,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.83,
+        "novelty": 0.83,
+        "proof_depth": 0.83,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787556112.319808,
+      "strategy_count": 0,
+      "theorem_count": 93,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 73,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-24T09:06:01.946377+00:00",
+      "title": "FACT round-56 #1 \u2014 TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
     }
   ]
 }

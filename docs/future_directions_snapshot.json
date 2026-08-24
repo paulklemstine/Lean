@@ -1997,25 +1997,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "3be10ac1",
-    "description": "Round-56 #1, cron iteration (exp 526, assessment v291). The previously-unmeasured intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-48**: Spearman(T, rate) = **0.7192/0.7202/0.7198** across 3 seeds on uniform draws at exact bitlen 48; T beats count by +0.098 to +0.145 everywhere; mean relation rate 12.5% (unstarved regime).\n\nCELL CLOSED: the zero-fit dial holds at the intersection of bitlen-scaling and regime-invariance.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp526_t_dial_bitlen.py + exp526_result.json, seeds 20261110–12.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3696",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T17:37:32.034003+00:00",
-    "title": "FACT round-56 #1 — TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "## NET-59 — limited-memory axis, round 12 (paper 144, ResearchOutput/exp_net59_perlayer.py, /tmp/net59.log)\n\n**Verdict name: NO-SINGLE-LAYER-IS-THE-BOTTLENECK.**\n\n### Result\nSolo-layer causal pruning profiles: for each of Qwen2.5-0.5B's 24 layers independently, oracle top-k applied ONLY to that layer (k=16 and k=32), all others full (ctx=512, 24 held-out windows):\n\n- **k=16 profile: spread 0.6 points.** Best 1.0013 (L13), worst 0.9953 (L12); every layer ≥ 0.995.\n- The identity tail: L21 0.9987, L22 0.9987, **L23 1.0008 — the BEST layer in the stack.**\n- k=32: even flatter (spread 0.5 pts).\n\n- **P1 TAIL-IS-CRITICAL REFUTED**: the tail is not individually fragile under top-k.\n- **P2 CONFIRMED trivially**: all layers ≥ 0.995.\n- **P3 NON-UNIFORM-MAP REFUTED**: the profile is remarkably uniform.\n\n### The epistasis resolution\nFour prior rounds established L22/L23 as categorically different: only far-from-tropical region (NET-50), highest crystallization loss, only cross-fine-tune decision divergence (NET-51), only unportable weights (NET-54), personal KV. Yet solo deletion costs ≈ 0. **The tail's role lives in interaction with upstream representations**, exactly as NET-54's swap-collapse showed directly. Additional structure: joint all-layer k=16 costs 1.7% (NET-50) vs ~4.8% if solo costs were additive — pruning interactions are SUB-ADDITIVE/redundant.\n\n### Design implication\nThere is no per-layer budget hierarchy to exploit for mixed-precision serving at this scale; differentiation must come from interaction-aware or policy-level criteria.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean — causal solo profiles new in-programme; (c) confronted — limits: ONE context (512), solo-only granularity (pairs/joints open), 24 windows; (d) clean; (e) deterministic monotone profiles; (f) clean — gate exact, ALL_DONE_NET59; (g) fair — identical budgets per layer; (h) DIRECT.\n\n### Next\nPairwise/joint tail ablations; 1.5B replication; probe+recency hybrid; domain-jump corpora; 7B cell.\n\nNow 59 network experiments. Assessment v59. Paper 144.\n",
     "domain_bridges": [],
@@ -2548,7 +2529,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51837664",
     "description": "Round-71 #1, exp 552 (+coordinator fresh-seed replication 1200/1200). The Price tree's 2-adic visibility, exactly characterized.\n\n**TWO-ADIC-PATH-TWO-CLICKS-THEN-SEALED.** Derived before measurement, verified 100%: letter₀ = A ⟺ N≡1 mod 4 (N≡3 ⇒ B iff q<3p — a size rule); letter₁ = A ⟺ N mod 8 ∈ {1,3}; the first-two A-nesses are a BIJECTION with N mod 8.\n\n**Mechanism**: every Price step halves exactly one of U=p+q or V=q−p — A halves V and is admissible iff v₂(U)=1; B/C halve U, admissible iff v₂(U)≥2; B-vs-C is the sign of V−U/2 (size, never congruence). Non-A runs decrement v₂(U) by 1 ⟹ first A lands at position u₀−1. N mod 2^k reads u₀ only capped at {1,2,≥3} (higher bits scrambled via N=2^j·po−p²) — hence EXACTLY two residue-visible clicks.\n\n**Death at position 2 is provable**: conditional permutation nulls have zero variance at t≥2 — N mod 8 constant inside every prefix cell by the bijection.\n\nWhich-factor wall holds (z=+0.36 → joins the sealed residue-dial family); symmetric capacity I(N mod 2^k ; pair) = 0/.524/**1.523**/1.524/1.525 for k=1..5 — saturates EXACTLY at modulus 8, fitting the order-universal type-channel family. B-rarity explained: P(B)=½·P(q<3p).\n\n**The completed two-tree adic map**: Berggren sealed at 3-adics from position 0 + all magnitude probes; Price visible exactly 2 clicks at 2-adics then structurally sealed — both trees' cheap descriptions are factor-blind residue dials; no ascent route.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp552_two_adic_price.py + exp552_result.json + run_exp552.log, seed 20260825.",
     "domain_bridges": [],
     "domains": [
@@ -2560,7 +2541,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T02:00:10.711678+00:00",
     "title": "FACT round-71 #1 — TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exact v2(p+q) mechanism (paper 198)"
   },
@@ -3000,6 +2981,120 @@
     "status": "available",
     "timestamp": "2026-08-24T07:22:53.238419+00:00",
     "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Paper 218 · round-75 #2 · exp 570 · assessment v325 · script exp570_collision_trace.py · seed 20260824 · wall 1.3 s\n\n**Question.** Paper 215 confirmed NO ECM destruction wall and flagged a confound: guarded-affine accounting carries a random-collision baseline ~1−exp(−1.44·B1/p) per curve, so low-B1 successes conflate ORDER-HITS with COLLISION-LUCK. Discriminate by TRACE (normalized firing-step index) and SCALE (cross-bitlen collapse test), to settle whether \"it was collisions all along\" amends paper 159.\n\n**Pre-registration (verbatim).** H1: hit STEP-INDEX distribution ~UNIFORM at B1/p=0.125 (collision-dominated), CONCENTRATED in the FINAL 20% at B1/p≥0.5 (order-completion) — KS rejects at high B1 but not low. H2: bitlen-32 low-B1 found_p rate DROPS toward the collision baseline 16.47% per curve.\n\n**Result — both refuted, geometry inverted.**\n- H2 dead: found_p rates at B1/p=0.125 sit far ABOVE the floor — bitlen-26 65.0% [CI .495–.779], bitlen-32 62.5% [.470–.758] vs per-curve 16.47%; first-curve rates 42.5%/40.0%; cross-bitlen two-prop z p=0.8161 — no collapse toward floor as p grows ⇒ collisions real but SUBDOMINANT.\n- H1 inverted: KS REJECTS uniformity even at low B1 (p=0.0166/0.0446); at B1/p=0.9 hits concentrate near step ZERO — median normalized index 0.09/0.102, combined final-20% tail 0/55 (binom p≈0.004 vs registered 20%). Order-completion marks EARLY.\n- NEW TRACE LAW: hit position ~ max-prime-power(ord)/B1 (Golomb/Dickman-low flavor) — added to the factor-local map as a measured regularity.\n\n**Amendment chain terminates:** paper 159 wall sentence rejected as stated (by paper 215); collision-baseline amendment rejected here; paper 215's NO-WALL account stands unamended.\n\n**Honest caveats:** true ops = 2.59·B1, not the 1.44 constant — all baselines recomputed both ways and reported (exact-op per-curve means 27.1–27.8%, 3-curve cell means 61.2–62.3%); measured cell rates coincidentally near exact-op 3-curve collision arithmetic but per-curve excess + KS + empty tail rule out dominance; found_q censoring disclosed (pure q-side collision luck); deaths collapse silently (inherited exp568).\n\n**Ledger catch (pre-data):** closed-form step counter initially wrong on later chunks (len doubles / popcount adds, not len−1 / popcount−1) — caught by traced-vs-closed assert BEFORE any full data existed, fixed, verified 29/29 on smoke curves; smoke regenerated after fix.\n\n**Barrier framing:** barrier-8 bookkeeping audit completing paper 215's evidence chain. No barrier breached, no constant shaved. No breakthrough.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3959",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T09:06:21.849836+00:00",
+    "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry — low-B1 success sits far above the collision floor (65.0%/62.5% vs 16.47%, cross-bitlen z p=0.82); hits fire near step ZERO at high B1 (median 0.09–0.10, final-20% tail 0/55, binom p≈0.004) — paper-159 amendment-candidate REJECTED as stated; new early-fire trace law added"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Exp 572 · paper 217 · assessment v324 · script ResearchOutput/scripts/2026-08-24-round74/exp572_ma1_signed.py · seed 572 · wall 6.96 s.\n\n**Question.** Paper 213/exp566 closed the MAGNITUDE route of MA-1 effectivity (|L(1,χ)| does not predict |AP deviations|, R²=0.019) but preserved the SIGNED route: do signs of character-twisted prime-count deviations align with signs predicted by computable character data? A yes would be the first computable handle on AP-deviation structure.\n\n**Key structural disclosure** (post-smoke, pre-full-data): L(1,χ)>0 for EVERY real non-principal χ (class-number formula) ⇒ sign(w)≡+1 identically (n_cells_w_negative=0 at full scale), so registered criterion C1 reduces exactly to Pr[c_χ>0] and could only fire if prime twists were majority-positive. Working identity asserted exact (<1e-9): c_χ = Σ_a d_a·χ(a) = Σ_{p≤x} χ(p); the uniform-li theory term vanishes identically by orthogonality, so signed L(1,χ) is the only computable x-independent theory weight.\n\n**Design.** x=2²⁶ full (π(x)=3,957,809); 287 moduli (squarefree [3,300] ∪ primes [307,997]); 491 real-char cells; 86,882 unit classes; machinery verbatim from exp566 (class-number exact D<0 |D|≤400, truncated-L otherwise, median rel err 1.8e-5); CP95 intervals + within-modulus d-shuffle null (2000 draws — MEANINGFUL here unlike exp566 since sign(c) is not permutation-invariant in a).\n\n**Result H0 — both criteria fail, both levels.** Cell agreement 15.07% over 491 cells (74 agree), CP95 [0.1202, 0.1855], circular-sum z=−52.72 (C2 needs >3). Class level 48.74% over 86,882 classes, CP95 [0.4841, 0.4907], permutation z=−7.74 — significantly BELOW chance (mild anti-alignment). Breakdowns all CIs wholly below 50%: prime-modulus quadratics 26.9% (167), product chars ω≥2 8.95% (324), exact-L 12.8% (226), truncated-L 17.0% (265), drop-|w|<1e-3 robustness unchanged.\n\n**Named byproduct** (labeled exploratory, not pre-registered): prime twists NEGATIVE in 84.7% of cells (CP95 [0.8123, 0.8779]; smoke x=2²² read 91.7%) — the universal Chebyshev/Rubinstein–Sarnak low bias, independently confirmed inside the lab's own AP-deviation machinery at x=2²⁶. Deviation signs are one-directional across moduli and zero-driven, NOT carried by any computable L-value — precisely why no L-based predictor can track them.\n\n**Ledger.** (1) m=6 orthogonality assert exposed the raw-primitive-twist ±1 correction for primes p|m, p∤cond(χ) (max corr 3, 0 sign flips induced — disclosed, not corrected); (2) class-z scale mix-up fixed (−310 → single-scale −7.74); (3) exp566's 'within-modulus shuffle vacuous' caveat verified NOT to transfer here.\n\n**Barrier framing.** Closes barrier-map residual 'MA-1 effectivity' as a named question: no computable criterion via quadratic-character structure on either route (magnitude paper 213, sign here) at toy scale; the averaging identity's effective scope remains non-computable from N; consistent with barriers 4/5. No breakthrough.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3960",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T09:06:21.851457+00:00",
+    "title": "FACT round-75 #1 — MA1-SIGNED: signed route of MA-1 effectivity dies at both registered criteria (cell agreement 15.07%, CS_z=-52.7; class 48.74% below chance z=-7.74) — MA-1 computable-effectivity program CLOSED on both routes; Chebyshev/Rubinstein–Sarnak negative skew 84.7% confirmed as named byproduct"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Exp 569 · paper 216 · assessment v323 · script ResearchOutput/scripts/2026-08-24-round74/exp569_u9_drift_power.py (precision-patched POST-run; stored exp569_result.json is the pre-patch output) · seed 20260824 · wall 1467.4 s at 76.4 µs/value.\n\n**Question.** Paper 214 banked a direction-stable sub-1 drift in x²−N smoothness at band 9 (bitlen-96 balanced semiprimes): −5.3% at its primary 1e6 LPF-CDF cut and −13.6% at the 1e5 cut, every CI covering 1 but every split-half pointing the same way. Does a fresh independent seed/population at higher pair count replicate the drift downward?\n\n**Role honesty.** Throughput reality (76.4 µs/val) caps the night at ~1× the paper-214 pilot power, NOT the aspirational 10–30×; role reframed PRE-RUN as scoping (documented in-script): this run IS gate G1 (fresh-seed replication) of paper 214's own confirmation protocol; G2 control integrity is satisfied by construction (paired matching + identical tester code path).\n\n**Design.** 128 distinct N (seed 20260824), v = j²−N for j ∈ (s, 3s], 150k samples/N → exactly 19.2M candidate/control pairs. Tester: cumulative segment-primorial gcd chains (strip primes ≤1e5 then ≤1e6). Controls PAIRED per draw — same bit length, same 3-bit mantissa head, random low bits — through the IDENTICAL classify() code path. Cluster bootstrap NB=2000 percentile CIs over N-clusters / size-matched pseudo-clusters. Decision cut stays 1e5 per header pre-registration; 1e6 secondary (higher event rate → better powered, weight disclosed).\n\n**VERDICT: RANDOMNESS-EXTENDED (pre-registered H0 branch), no gate armed:**\n- PRIMARY cut 1e5: ratio CI95 [0.8571, 1.1488], excludes_1 FALSE ⇒ H0.\n- Secondary cut 1e6 (best powered): r = 0.0005/0.000506 ≈ 0.99, cluster-boot CI95 [0.919, 1.010] over 128 clusters on 19.2M pairs — tightest interval yet above u≈9; max CI-edge |r−1| = 0.081 tightens paper 214's 0.137 deliverable (H0 deliverable met).\n- POOLED with paper 214's pilot at matched conditions: @1e6 pilot 0.947 [0.8630, 1.0389] vs this 0.99 [0.919, 1.0101] — mutually consistent, joint point ≈ 0.97 (√2-tightened). The sub-1 drift does NOT replicate downward; residual tension DOWNGRADED from \"banked\" to \"open at reduced weight\". Decisive resolution still needs the 10–30× power run (queued named follow-up).\n\n**DISPLAY DEFECT disclosed prominently:** the pre-patch writer stored round(r,4), so the ~3e-5 candidate rate prints as stored \"r_cand\": 0.0 and raw hit counts were NOT persisted (unrecoverable post-hoc). True value is CI-pinned to [2.66e-5, 3.56e-5] (= CI × rate_ctrl 3.1e-5). Cite CI-implied bounds everywhere; NEVER the stored 0.0. Script precision-patched post-run (raw-count persistence added for any rerun).\n\n**Other ledger catches:** wall overshoot 1467 s vs ~1104 s estimate (candidate j²−N strips slower than random strips); smoke-leg verdict field is a NaN artifact of the starved-regime bootstrap (<100 non-degenerate resamples → NaN bounds → excludes_1 trivially True) — non-canonical, full-run verdict governs.\n\n**Barrier framing:** scale-smoothness frontier u ≥ 6–14; an H0 here STRENGTHENS papers 130/209/214 randomness into the Dickman approach zone through u≈11.7. No barrier breached, no constant shaved.\n\nArtifacts: exp569_u9_drift_power.py, exp569_result.json (pre-patch canonical), exp569_smoke_result.json, exp569_full.log, exp569_findings.md.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3961",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T09:06:21.852886+00:00",
+    "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut-1e6 r=0.99 CI [0.919,1.010] covers 1); pooled with paper 214 pilot joint point ~0.97 — banked tension downgraded to open at reduced weight"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 69 (compact cell completing the NET-92/93/94 KV trilogy).\n\n| arm | PPL | dPPL vs f16 control |\n|---|---|---|\n| **K q8_0 / V q4_0** | **7.1194** | **+0.142%** |\n| K q5_1 / V q5_1 | 68.7963 | +867.694% |\n\n**Findings:** (1) The NET-93 role-split prescription is DIRECTLY CONFIRMED: keys @8 bits + values @raw 4 bits = quality-free while halving KV memory (~6 avg bits/element) — the CPU serving default (-ctk q8_0 -ctv q4_0). (2) The key-side cliff is a TWO-STAGE FALL: free at 8 bits, severely broken (+868%) already at 5 bits, annihilated (+38,000%) at 4; values remain free at every width tested down to raw 4-bit. Key floor bracketed (5, 8]; llama.cpp offers no q6 cache type.\n\nSetup identical to NET-92/93 (llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice). Script ResearchOutput/exp_net94_rolesplit.py; results in ~/f3cache/net94_results.json.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3962",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T09:06:21.854276+00:00",
+    "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits — the serving default; key-side cliff is a two-stage fall (free @8b, +868% @5b, +38,000% @4b) while values stay free to raw 4-bit"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Paper 215 · exp 568 · round-74 #6 · assessment v322**\n\nVERDICT: **H3 CONFIRMED (strong form)** — H1/H0 moot-by-absence.\n\nPaper 159 headlines an ECM self-destruction wall: \"when B1 ≳ min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] infinite\", with a validity edge B1 ≲ min(p,q)/2. Exp568 tests that boundary under outcome-separated accounting {found_p, found_q, dead, nothing}.\n\n**Design.** Bitlen-26 q≫p stratum (generator nextprime(3p+U[1,200))), n_N=40/cell, grid B1/p ∈ {0.125, 0.25, 0.5, 0.9, 1.05} × arms B2/B1 ∈ {1 (control), 4, 16}; guarded affine EC ops reused VERBATIM from exp488_true_ecm.py (validated there 10/10 ladder + 100/100 mod-12); true-lcm stage-1 schedule; NEW true difference-stage stage-2. Pre-registration verbatim before any data: H1 slope(log w* vs log(B2/B1)) CI covers 1 / H0 covers 0 / MIXED; H3 ADDED after reading the mechanism sentence, BEFORE data (timing disclosed): the wall is a detection/accounting artifact — gcd(den,N)==N 'dead' events or missing p-vs-q separation — not method failure.\n\n**Results (600 trials).**\n- ZERO 'dead' outcomes in the entire grid.\n- Success 1.000 in every cell at B1/p ≥ 0.25; **6/6 cells at 1.000 at B1/p = 0.9 AND 1.05** — exactly where paper 159 records uncapped E[T] infinite.\n- Only misses: two low-edge cells at B1/p = 0.125 (arm-4 0.875, arm-16 0.95), all misses 'nothing', never 'dead'.\n- No w* exists anywhere → H1/H0 never arm.\n\n**Mechanism (pre-data note, vindicated).** B1 ≥ p+1+2√p ⇒ every Hasse-window order n ≤ B1 ⇒ every prime power l^e ‖ n has l^e ≤ B1 ⇒ n | lcm(1..B1) ⇒ [L]P = O mod p on EVERY curve ⇒ first guarded inversion with vanishing denominator returns gcd = p: GUARANTEED SUCCESS, not death. Simultaneous degeneracy mod q impossible for q ≫ B1. \"All curves degenerate\" can only have read as death if accounting conflated gcd=p wins with gcd=N losses or lacked p-vs-q separation.\n\n**Structural insight (ledger-grade).** Guarded-affine accounting carries a scale-independent random-collision baseline ≈ 1 − exp(−c·B1/p) (#ops ~ 1.44·B1, per-op hit ~1/p): ~17% predicted at B1/p = 0.125 vs 68% observed found-p share (collision-luck + order-divisibility mixed). Any historical success/E[T] accounting that did not separate collision-hits from order-hits could have manufactured the wall sentence. Named follow-up BEFORE amending paper 159 either way: larger-p rerun with per-op outcome tracing (order-hit vs collision-hit).\n\n**Honest disclosures.** (a) toy bitlen 26; (b) stage-2 arms UNTESTED DEAD CODE this run — stage 1 succeeded first everywhere, zero s2 outcomes; new difference-stage machinery validated only by smoke buckets + sign-convention note; cross-arm differences at fixed B1 are per-cell RNG drift; (c) inline coordinator implementation after 3× agent-channel failures (stall watchdog ×2, silent no-write ×1); (d) recorder catch: findings.md says \"14/15 cells at 1.000\" but canonical result.json shows TWO sub-1.000 cells (both at B1/p = 0.125) — JSON canonical, verdict unaffected.\n\n**Barrier framing.** Barrier-8 adjacency (known-method bookkeeping); self-audit genre — precedent: paper 91 stands / paper 99 retraction handled by side-by-side reconstruction. If the independent follow-up confirms, paper 159's wall sentence gets an AMENDMENT, not a silent rewrite; until then 159 stands as recorded with this audit appended.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/exp568_* ; paper ResearchOutput/NewMathematics/215_EcmStage2Wall.md.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3963",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T09:06:21.855664+00:00",
+    "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separated accounting — B1 ≥ p+1+2√p makes every curve succeed, not die (self-audit of paper 159)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Exp 567 · paper 214 · assessment v321 · script ResearchOutput/scripts/2026-08-24-round74/exp567_scale_u9_lift.py · seed 20260824 · honest partial (disclosed).\n\n**Question.** Does x²−N stay size-matched-random in smoothness at u ∈ [9, 11.x] — the approach zone of the Dickman leading-term regime (~u ≈ 14.75) — where raw B-smoothness testing starves (ρ(9)=1.0e-9 … ρ(11)=6.5e-13)? Frontier item: scale-smoothness deviations u ≥ 6–14.\n\n**Design.** Balanced semiprimes bitlen {96,104,112} → u-bands {9,10,11}, v=(s+j)²−N, j ≤ 3s; LPF-CDF cut ladder {500,1e3,1e4,1e5,1e6} via cumulative segment-primorial gcd chains batch-amortized by product-tree remainder descent (12×: 87→7 µs/value); exact (bitlen, mantissa-octant) matched controls, shared code path; per-N cluster bootstrap + built-in A/B split-halves. Pre-registered verbatim: H1 r_cut(u)=1 everywhere; H2 maximal-skepticism confirmation protocol; L1-vs-L2 overdispersion fork; B=500/1000 cuts pre-declared as ~zero-yield continuity carriers.\n\n**Status: HONEST PARTIAL.** An intermittent multiprocessing throughput collapse at full geometry (root-caused via preserved faulthandler dump: ready()-starved feed loop + slow completions) ate the headline runs; statistical weight rests on the completed pilot (band 9, bitlen 96, 24-N pool, 35.7M cand+ctrl pairs); three-band leg shipped at 45k pairs/band under the time-cap convention.\n\n**Achieved u:** band 9 [9.83,10.13] mean 9.89; band 10 [10.64,10.94]; band 11 [11.44,11.74]. No coverage in (10.94,11.44) — integer u=11 sits in a half-notch gap of grid geometry (disclosed pre-run).\n\n**Result — VERDICT RANDOM-EXTENDS / NULL-WITH-TENSION, deviation status NONE:**\n- Primary LPF-CDF-1e6 cut, band 9: r = 0.9468, cluster-boot CI [0.8630, 1.0389] (12,493 vs 13,195 events); splits A 0.939 / B 0.955.\n- 1e5 cut: r = 0.864, CI [0.7190, 1.0302] (667 vs 772); splits 0.848 / 0.881.\n- Three-band leg: every CI covers 1 (band 10 @1e6 r=2.0 [0.25,7.0] on 4-vs-2; band 11 kc=2 vs kctrl=0 undefined). Tightest |r−1| bound 0.137 (pilot primary).\n- B=500/1000: exactly zero events everywhere, as designed.\n- H2 never armed — no CI excludes 1 in any cell; per pre-registration this is a null.\n\n**Tension banked, NOT claimed:** points run 5–14% below 1 at both powered cuts, direction-stable across split-halves and cuts. Flagged as motivation for a future higher-power run (~30× more pairs at the 1e5 cut). Explicitly not a discovery per pre-registration.\n\n**OVERDISPERSION AMENDMENT to paper 209's secondary claim** ('D=1.61 persists at bin 5 then DIES by u≈7; residue-dial correlation gone'): at u=9.85 under the healthy-rate 1e6 lens, exposure-corrected D_cand = **28.87 [14.27, 44.08]** vs D_ctrl = 1.84 [0.90, 2.84] (exposures flat ±0.14%) — per-N clustering is ALIVE at u ≈ 10; Spearman(per-N rate, qr_frac) = 0.533 (perm p 0.006) @1e4 and 0.437 (p 0.033) @1e6 where 209 read ~0.04 'gone'. What died by u ≈ 7 was the B-smoothness INDICATOR starving (rate/threshold artifact, L1 direction), not clustering — consistent with paper 136's QR-bite = per-N variance law. Caveat recorded honestly: the formal L1 gate required ≥2 powered bins; only one survived the shrinkage, so this stands on the pilot's internal contrast as directionally confirmed / formally unmet.\n\n**Ledger catches (all disclosed):** mixed-segment checker bug gave 39/40 false mismatches — shipped tester proven EXACT vs exhaustive zero-early-exit strip of all primes ≤1e6 (368 cases full / 218 pilot incl. deep-window quadratics, 0 mismatches); backpressure watchdog false-trip terminated one attempt as 'calibration hung'; faulthandler SIGUSR1 re-raise killed one instrumented rerun; throughput collapse shrank the headline run from ~130M-value/band quotas to 45k pairs/band (an interim sub-powered write had flashed DEVIATION-UNCONFIRMED before supersession; canonical artifacts are final).\n\n**Barrier framing:** no barrier breached — a null here STRENGTHENS papers 130/209 randomness into new territory; variance-side accounting upgraded (variance N-covariant, means matched); constant-shaving risk none.\n\nArtifacts: exp567_scale_u9_lift.py, exp567_pilot_result.json (powered leg), exp567_result.json (three-band), exp567_full.log / exp567_pilot.log / exp567_smoke.log, exp567_stderr.txt (faulthandler snapshots from a healthy run, not a crash).",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3964",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T09:06:21.857114+00:00",
+    "title": "FACT round-74 #5 — SCALE-U9-LIFT: randomness extends through u≈11 toward the Dickman leading-term regime (H1-consistent null with sub-1 tension); paper 209 D-death amended to indicator starvation"
   },
   {
     "ambition_level": "grand_challenge",
@@ -5373,27 +5468,6 @@
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_267",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
     "ambition_level": "extension",
@@ -15035,6 +15109,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Pythagorean.ZeroFitDialResolutionLadder48",
+      "Catalog.Pythagorean.ZeroFitDialTipBlind48"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Generalise the bottom-merged and tip-merged blindness ceilings from an interval of dyadic tie blocks to an arbitrary union of 2-adic valuation classes. For each blindness pattern S the surviving between-group sum of squares is an explicit sum over the retained blocks, so the recorded dial value cuts out a down-set of admissible patterns. This upgrades a one-parameter threshold into a full classification of what the response must resolve.\n\nFor every S ⊆ {0,…,b-1}, the response constant on the merged classes outside S satisfies ρ² = (Σ over the retained blocks of an explicit block term)/((8^b − 1)/14), and the set of S compatible with ρ² ≥ 0.7192² is an up-set under inclusion.\n\nFormalise ssR of a general block-merge partition of dyadicBlocks b (generalising ssR_bottom_merged_gen and ssR_tip_merged), then prove monotonicity in S via ssR_coarse_le.\n\nThe recorded dial certifies a precise minimal set of valuation classes the statistic must separate.\n\nBlindness cost is not additive over classes, which would mean the coarsening order and the dial order genuinely disagree.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3954",
+    "lineage_refs": [],
+    "priority_score": 0.7113050847457628,
+    "proof_strategy": "Telescope ssR over the partition using ssR_append, ssR_shift_parallel and ssR_affine; monotonicity from ssR_coarse_le applied blockwise.",
+    "research_mode": "team",
+    "source_exp_id": "3be10ac1",
+    "status": "available",
+    "timestamp": "2026-08-24T09:05:41.488686+00:00",
+    "title": "Valuation-Class Resolution Spectrum"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Pythagorean.DigitAutocorrelation"
     ],
     "consumed_by_exp_id": "",
@@ -16081,7 +16178,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "99ec0ece",
     "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) — cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) — assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' — dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract — it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
     "domain_bridges": [],
     "domains": [
@@ -16095,7 +16192,7 @@
     "proof_strategy": "Define kitchen complexity: a recipe R is a tuple (ingredients, operations, output). Verification time V(R) = time to determine output quality (tasting). Cooking time C(R) = time to execute operations. Define Kitchen-P = {R : C(R) = O(poly(|R|))} — recipes that can be cooked in polynomial time. Define Kitchen-NP = {R : V(R) = O(poly(|R|))} — recipes that can be verified in polynomial time. Prove: salad is in Kitchen-P (chop and mix, linear time). Prove: souffle is Kitchen-NP-hard: verifying a souffle's rise requires computing the Navier-Stokes dynamics of the batter, which is PSPACE-hard. Prove Kitchen-P != Kitchen-NP for souffles: the Navier-Stokes computation cannot be shortcut. Classify 100 recipes: P=P (salads, sandwiches, smoothies), P<NP (baked goods, braises, ferments), P<<NP (souffles, tempered chocolate, molecular gastronomy). Test: time 50 people making 10 recipes each, measure cooking time vs verification time.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
   },
@@ -20215,6 +20312,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Pythagorean.ZeroFitDialTipBlind48",
+      "Catalog.Pythagorean.ZeroFitDialRelationRate48"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The coarse binary ceiling is attained exactly by top-segment responses, and the tip-blind ceiling is attained by an explicit nesting. The bottom-blind ceiling is currently only an upper bound. If it too is attained, the recorded dial value pins the response's resolution into a two-sided interval rather than merely excluding deep blindness, which strengthens every exclusion result of this cycle into a characterisation.\n\nFor every b > t there exists a response constant on the bottom 1 − 2^{-t} of the T-order and strictly increasing above it whose squared Spearman correlation equals the value given by bottom_merged_ceiling_gen.\n\nConstruct the response as the midrank map of bottomMergedProfile, as done for the tip in tip_blind_response_admissible, and verify covNest_eq_ssR saturates the Cauchy–Schwarz step in nested_spearmanSq.\n\nThe recorded dial determines the resolution depth exactly: t = 2 is not merely allowed but realisable.\n\nThere is a further loss factor between coarsening and attainability, and the ladder overestimates every rung.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3957",
+    "lineage_refs": [],
+    "priority_score": 0.5921428571428572,
+    "proof_strategy": "Follow aligned_response_attains_ceiling and tip_blind_response_admissible: exhibit the nesting, compute covNest and ssR of the coarse profile, and check the ratio equals the closed form.",
+    "research_mode": "team",
+    "source_exp_id": "3be10ac1",
+    "status": "available",
+    "timestamp": "2026-08-24T09:05:43.042897+00:00",
+    "title": "Attainment of the Blindness Ceiling"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Novelty.FairScheduleOptimality",
       "Novelty.FairScheduleGreedy"
     ],
@@ -20927,6 +21044,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Pythagorean.ZeroFitDialRelationRate48",
+      "Catalog.Pythagorean.ZeroFitDialResolutionLadder48"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Relation rate and resolution depth independently cap the dial, so the admissible region for a measured value is the intersection of the rate parabola and the blindness ladder. The conjecture is that this intersection is nonempty exactly for measured ρ below an explicit piecewise-algebraic envelope, and that the recorded point (p, ρ) = (1/8, 0.7195) lies inside it only for responses with at least three distinct output levels.\n\nAny response at relation rate 1/8 achieving ρ ≥ 0.7192 at exact bitlen 48 must take at least three distinct values and must separate the 2-adic classes v₂ ≤ 2.\n\nCombine relation_response_not_binary (rules out two levels) with resolution_threshold_at_bitlen48 (rules out depth ≥ 3 blindness) into a single Lean statement about the number of level sets.\n\nThe measurement itself certifies a lower bound on the arity of any explanatory statistic.\n\nSome two-level or bulk-blind response evades both caps, meaning one of the two ceilings is not tight enough to combine.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3958",
+    "lineage_refs": [],
+    "priority_score": 0.5639726200852386,
+    "proof_strategy": "Show a response with two level sets is the binary case, apply the rate parabola; show a response blind on the bottom bulk is dominated by bottomMergedProfile via ssR_coarse_le; conclude by contradiction with the recorded value.",
+    "research_mode": "team",
+    "source_exp_id": "3be10ac1",
+    "status": "available",
+    "timestamp": "2026-08-24T09:05:43.564949+00:00",
+    "title": "Rate-Resolution Trade-off Surface"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Probability.FactorLocalETShapeDrift",
       "Catalog.Probability.FactorLocalETTruncation",
       "Catalog.Probability.FactorLocalETCrossChannel"
@@ -21066,6 +21206,29 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Pythagorean.ZeroFitDialGeometricRatio",
+      "Catalog.Pythagorean.ZeroFitDialResolutionLadder48"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The attainable dial depends on a tie profile only through the scalar ratio ssR/((n^3-n)/12), so asking which response shape is hardest to fit becomes an extremal problem for one functional over compositions of n. The geometric family is now solved in closed form, which fixes one axis of the problem; the conjecture is that the extremes are the equal-block and maximally-skewed profiles.\n\nAmong all tie profiles of n items with exactly k blocks, ssR is maximised by the profile with k equal blocks and minimised by the maximally skewed profile (one block of size n-k+1 and k-1 singletons); consequently the relation-rate ceiling is smallest for the equal-block profile.\n\nFormalise an exchange argument: moving one unit of mass from a smaller to a larger block changes ssR by an explicit sign-definite amount, computed with ssR_append and ssR_shift_parallel.\n\nThe recorded dyadic regime can be located exactly inside the order of all tie spectra, not just the geometric ones.\n\nThe dial ceiling is not monotone under mass transfer between blocks, so no single scalar summary of a tie profile controls it.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3955",
+    "lineage_refs": [],
+    "priority_score": 0.5637633384699494,
+    "proof_strategy": "Write ssR for a two-block perturbation using the parallel-axis identity, show the difference factors as (mass moved)x(gap between block centres), and iterate to the extremal shapes.",
+    "research_mode": "team",
+    "source_exp_id": "3be10ac1",
+    "status": "available",
+    "timestamp": "2026-08-24T09:05:41.991768+00:00",
+    "title": "Extremal Tie Spectra for the Dial Ceiling"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The present formalization\n   proves the chain-complex dimension theorem over any field.  Realizing every\n   binary CSS chain complex by a *simplicial complex with its standard incidence\n   maps* is a substantially stronger representability claim and should not be\n   conflated with merely viewing matrices as abstract differentials.  Determine\n   necessary and sufficient representability conditions, or produce a minimal\n   counterexample.",
@@ -21186,6 +21349,29 @@
     "status": "available",
     "timestamp": "2026-08-22T13:02:23.732172+00:00",
     "title": "Residue Criterion for Flat Ternary Frames"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Pythagorean.ZeroFitDialRelationRate48",
+      "Catalog.Pythagorean.ZeroFitDialResolutionLadder48"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Refinement of a response is not monotone for the attainable dial: a balanced binary response reaches 7/8 while the fully refining dyadic response is capped near 6/7. The conjecture identifies the exact algebraic locus in the (rate, depth) plane where coarsening starts to help, turning an isolated inequality into a curve.\n\nThe set of (p,t) with (7/2)p(1−p) > (7/2)(2^t−1)2^t·8^{-t} + 8^{-t} is exactly the region bounded by an explicit conic, and it contains (1/2, 3) but not (1/8, 2).\n\nCompare the two closed forms dyadic_binary_ceiling and bottom_merged_ceiling_gen symbolically in Lean and decide membership for the dyadic grid p = 2^{-s}, t ≤ 6.\n\nCoarser statistics are provably preferable in a computable region, giving a design rule for dial construction.\n\nThe inversion at p = 1/2 is an isolated artefact of the balanced case and refinement is essentially monotone elsewhere.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3956",
+    "lineage_refs": [],
+    "priority_score": 0.563703751343374,
+    "proof_strategy": "Clear denominators in both closed forms, reduce to a polynomial inequality in 2^t and p, and discharge with nlinarith plus the two-power bounds already in the catalog.",
+    "research_mode": "team",
+    "source_exp_id": "3be10ac1",
+    "status": "available",
+    "timestamp": "2026-08-24T09:05:42.503455+00:00",
+    "title": "Coarsening Inversion Locus"
   },
   {
     "ambition_level": "extension",
