@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0f0bd7f8",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — after Cycles 6–9 (Markov-chain frame definability for `ModalSystem`)\n\nThe mission asked for a Lean development of frame definability for Cycle 4's\n`ModalSystem`, carried by the `",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 152,
-      "timestamp": "2026-08-22T13:02:14",
-      "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
-    },
-    {
       "cycle_id": "bb070ee4",
       "domain": "Algebra",
       "key_insight": "# Future directions\n\nThe cycle started from the one-parameter theorem `PMFrame.headCoeff_pmFrame_ge_neg_one` and the\ntwo-parameter (Migotti) theorem of `Catalog/Shared/PMFrameTwoParameter.lean`, and p",
@@ -499,19 +489,19 @@
       "theorem_count": 95,
       "timestamp": "2026-08-24T05:02:27",
       "title": "Conjecture. `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at"
+    },
+    {
+      "cycle_id": "9f4b7d2b",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after the exact-bitlen-48 cycle (exp 527)\n\n## What this cycle established\n\nFour formally verified layers, all in `Catalog/Novelty/`:\n\n1. **One-bit shift law.** Uniform sampling a",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-08-24T05:02:44",
+      "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "12195e06",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Algebra/KleberComplementaryProducts.lean` and\n`Catalog/Algebra/KleberManyFoldProducts.lean`, and from the exploratory data in\n`Computati",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-08-17T01:55:43",
-      "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functions"
-    },
     {
       "cycle_id": "6a0dc5c0",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 95,
       "timestamp": "2026-08-24T05:02:27",
       "title": "Conjecture. `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at"
+    },
+    {
+      "cycle_id": "9f4b7d2b",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after the exact-bitlen-48 cycle (exp 527)\n\n## What this cycle established\n\nFour formally verified layers, all in `Catalog/Novelty/`:\n\n1. **One-bit shift law.** Uniform sampling a",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-08-24T05:02:44",
+      "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "258afb8b",
-      "domain": "Novelty",
-      "name": "prefixMass_sq_le_collision",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "258afb8b",
-      "domain": "Novelty",
-      "name": "knee_ge_of_collision",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "242b27e9",
-      "domain": "Applications",
-      "name": "binEntropy_lipschitz_lower",
-      "quality": 0.85
-    },
     {
       "cycle_id": "e4ce2d9a",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "prodGate_zero_right",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "9f4b7d2b",
+      "domain": "Novelty",
+      "name": "alignedBlock_eq_image",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "9f4b7d2b",
+      "domain": "Novelty",
+      "name": "card_alignedBlock",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "9f4b7d2b",
+      "domain": "Novelty",
+      "name": "alignedCap_eq_singleton",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-24T05:02:27",
+  "last_updated": "2026-08-24T05:02:44",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "532d78bc",
-        "quality": 0.85,
-        "theorems": 124,
-        "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable C"
-      },
-      {
         "cycle_id": "71e110b3",
         "quality": 0.82,
         "theorems": 77,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 81,
         "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT — 1.5B knee at 2048 is 18 not 20; bot"
+      },
+      {
+        "cycle_id": "9f4b7d2b",
+        "quality": 0.84,
+        "theorems": 81,
+        "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitle"
       }
     ],
     "NumberTheory": [
