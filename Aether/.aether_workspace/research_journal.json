@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3fdce232",
-      "domain": "Computation",
-      "key_insight": "# Future directions — information reconciliation, transcripts, and leakage\n\nThe formalised core (in `Catalog/Computation/InformationReconciliation*.lean`)\nestablishes, for binary keys `Key n = Fin n →",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 141,
-      "timestamp": "2026-08-22T21:36:44",
-      "title": "Information reconciliation"
-    },
-    {
       "cycle_id": "22ca7429",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Rigidity gap for shallow product coins\n\nThis cycle formalised, in `Catalog/Geometry/ShallowProductCoin*.lean`:\n\n* the exact Cauchy–Schwarz defect identity and the rigidity charac",
@@ -499,19 +489,19 @@
       "theorem_count": 86,
       "timestamp": "2026-08-24T13:14:47",
       "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-44 fails); accelerat"
+    },
+    {
+      "cycle_id": "7934932a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — sharp total-variation normalization\n\nThis cycle replaced the deliberately crude `ℓ¹` distinguishing bound by the\nattained factor-`1/2` characterization\n\n`d_TV(p, q) = max_{A ⊆ X}",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-24T14:04:04",
+      "title": "Sharper normalization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c8991a0a",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nDerived from the results now formalized in `Catalog/Bridges/FundamentalGroupCovering*.lean`.\nEach conjecture below is falsifiable, and each is stated so that it can be attacked\ndi",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 294,
-      "timestamp": "2026-08-17T13:53:57",
-      "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-    },
     {
       "cycle_id": "286b3a0e",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 86,
       "timestamp": "2026-08-24T13:14:47",
       "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-44 fails); accelerat"
+    },
+    {
+      "cycle_id": "7934932a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — sharp total-variation normalization\n\nThis cycle replaced the deliberately crude `ℓ¹` distinguishing bound by the\nattained factor-`1/2` characterization\n\n`d_TV(p, q) = max_{A ⊆ X}",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-24T14:04:04",
+      "title": "Sharper normalization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c38d70d3",
-      "domain": "Probability",
-      "name": "twoSided_iff_asym",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "c38d70d3",
-      "domain": "Probability",
-      "name": "asym_capacity_upper",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "198a9f40",
-      "domain": "Bridges",
-      "name": "energy_mono",
-      "quality": 0.84
-    },
     {
       "cycle_id": "198a9f40",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "crossover_bound_profGap_profFloor",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "7934932a",
+      "domain": "MachineLearning",
+      "name": "disagreeProb_eq_one_sub_diag",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "7934932a",
+      "domain": "MachineLearning",
+      "name": "eventGap_le_disagreeProb",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "7934932a",
+      "domain": "MachineLearning",
+      "name": "tvD",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-24T13:14:47",
+  "last_updated": "2026-08-24T14:04:04",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "8a3962f5",
-        "quality": 0.86,
-        "theorems": 120,
-        "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated"
-      },
-      {
         "cycle_id": "d37c9a15",
         "quality": 0.85,
         "theorems": 61,
@@ -3575,6 +3569,12 @@
         "quality": 0.79,
         "theorems": 62,
         "title": "FACT round-69 #1 — TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190"
+      },
+      {
+        "cycle_id": "7934932a",
+        "quality": 0.84,
+        "theorems": 87,
+        "title": "Sharper normalization"
       }
     ],
     "Novelty": [

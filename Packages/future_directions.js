@@ -1956,16 +1956,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT rounds 70\u201371 SYNTHESIS \u2014 THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exact laws + method laws consolidated (paper 199)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a426ff06",
     "description": "Round-72 #5, exp 555 \u2014 the last untested face of the triplet-tree proposal.\n\n**TRIAL-DIVISION-EQUIVALENT-GUIDANCE-NULL.** The mod-N Berggren tree: expansion multiplication-free (T-coefficients \u00b11..3), **collision-free at 200k nodes on every N**, residue-class-confined (~99.75% of orbit in two nz-histogram classes). Order-free dive factors 200/200: v* \u2248 **0.89\u00b7p_min, \u03b1 = 1.007\u00b10.088** \u2014 TD scaling, not \u03c1-like; ~11\u00d7 worse constants than plain trial division at matched compute; \u03c1 dominates by orders of magnitude. Ambient null: the orbit UNDER-SAMPLES factor-revealing residues ~5\u00d7 vs random Pythagorean points \u2014 projection erases the order structure that made the integer face tractable. Guidance: naive z=12\u201324 'improvements' were pure traversal-shape artifact (random-order control alone z=21.8); honest paired |z|<2 everywhere \u27f9 pre-stated null CONFIRMED.\n\n**Campaign close** \u2014 every face of the proposal now measured: exact-target circular; modular descent TD-class (this paper); combining invalid-as-stated (202); multi-target relaxation = TD-in-tree-clothing (203); Euler route 5.7\u00d7 Fermat (201). Barriers 2/5/8 unchanged throughout.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp555_modular_dynamics.py + exp555_result.json + identity addendum + logs, seed 20260826.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3926",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T04:10:59.496275+00:00",
     "title": "FACT round-72 #5 \u2014 MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-slow (alpha=1.007); guidance null (paper 205)"
   },
@@ -2335,6 +2336,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "VERDICT: NEW-STRUCTURE-MAP-ENTRY (pre-registered H0 fires; H1 rejected).\n\n**Setup**: 128 balanced bitlen-96 semiprimes, FRESH master seed 20260826, stream-distinctness asserted+recorded vs 20260824/20260825 (pairwise-disjoint N sets, hashes e8d89a29a03779d5 / 9cb9cc800ee45a38 / 81acc9b5e1be619b). 150k j-samples/N (19.2M total), exp569 gcd-chain tester verbatim, cut 1e6; wall 368.9 s; sympy.jacobi_symbol.\n\n**Phenomenon replicates fresh-seed**: mean 76.7 hits/N, Var/mean D_raw = 7.27 (Poisson ~1), range 29\u2013172, top-3 clusters 172/151/130 = paper-220 envelope rescaled exactly.\n\n**Dial regressions (per-N log-rates)** \u2014 ALL far below H1 bars (R\u00b2\u22650.25 AND D-red\u226530%):\n- PRIMARY S_indiv (\u03a3 Jac(\u2113,p)+Jac(\u2113,q)=+1, \u2113\u2264100): R\u00b2_log=0.0127, slope NEGATIVE z=\u22122.82, D-reduction **0.88%** \u2014 H0 fires on BOTH legs.\n- Mechanistic S_prod (=#{\u2113\u2264100: N QR mod \u2113}): R\u00b2=0.0781, slope + z=10.9, D-red **14.22%**, \u03c6 7.33\u21926.07.\n- Tertiary S139@400 (recorded paper-136/139 form): R\u00b2=0.0565, z=8.7, D-red **9.07%**.\n\n**Analytic orthogonality catch (robustness)**: Cov(S_indiv,S_prod)=0 EXACTLY by multinomial algebra under independent characters; measured r=\u22120.01. Primary dial orthogonal-by-construction to the divisibility carrier (\u2113 | x\u00b2\u2212N iff Jac(\u2113,N)=+1); verdict robust either way since secondaries also miss H1.\n\n**Consequence**: the \u2264400 QR dial explains \u2264~14% of u\u224810 overdispersion; \u226586% is N-structure beyond every recorded mechanism \u2014 papers 136/139 line does not extend to scale. Scale-shift hypothesis: informative prime window moved past 400 into 400..1e6 at bitlen 96 (pools span ~2\u2074\u2079\u20132\u2075\u00b9); papers 136/139 calibrated at bitlen 40\u201348. NAMED FOLLOW-UP: product-form dial over ALL \u2113\u22641e6 (~78k symbols, cheap) \u2014 capture \u21d2 papers 136/139 + 220 unify with a scale-dependent dial bound; miss \u21d2 genuinely new N-structure at u\u224810.\n\n**Ledger catches**: (1) first-smoke GLM divergence fixed pre-full (Fisher scoring + deviance step-halving); (2) smoke/full S_indiv slope-sign instability flagged (n=16 +, n=128 \u2212, pseudo-R\u00b2\u2248\u22120.001) \u2014 negative direction NOT citable as paper-139 reversal without replication; (3) monitor double-fire \u2014 verified from JSON directly, no data impact.\n\n---\n\n**RIDER \u2014 P\u0302 RESOLUTION-LIMIT NOTE (paper 225 erratum thread, action (a))**: archival dig (pthat_extraction.md) finds NO raw P_hit in any papers-137/143 artifact \u2014 exp467 stored mean costs only (no hit indicator, orderings are full reorderings with no committed window R); exp474's P_hit was a DESIGNED oracle \u03b1=1.0 exactly at the 29.1\u00d7 cell (exact enum M=300). All four booked P\u0302 are drafted-law inversions recovered to \u22642e-4. Full-precision anchors extracted: 5.193592154916 (n=30000) / 6.914724537168 (n=6732) / 4.353075657862 (n=9651) / 29.125436718134 (exact enum M=300). Certified-law-implied P\u0302 = 0.841617/0.894868/0.800308/**0.985068** \u2014 booked 0.9853 overstates by ~2.3e-4 \u2192 printed 29.3152 overstates the certified reading ~0.19. Paper 225's corrected-table arithmetic EXACT at all four loci; feasibility margins hold \u00d74 (\u03bc\u22641/S_raw true; S_A@booked\u2265S_raw margins +0.212/+0.242/+0.183/+0.190). Recommendation: book all four anchors \"at resolution limit\" not \"at stored P\u0302\" per p225's own admissibility rule (raw-P\u0302-stored clause NOT met).\n\nBarrier framing: scale-smoothness frontier \u2014 opens the mechanism question \"what carries per-N clustering at u\u226510\"; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 226 \u00b7 assessment v332\u2192v333 \u00b7 count 564\u2192565.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4006",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T14:04:28.338872+00:00",
+    "title": "FACT round-78 #2 \u2014 QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY \u2014 small-prime QR dial does NOT explain u\u224810 overdispersion (best D-red 14.2% vs H1 bar 30%); \u226586% is N-structure beyond every recorded mechanism; papers-136/139 line does not extend to scale; + P\u0302 RESOLUTION-LIMIT rider on paper 225's erratum thread"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-78 #1, theory deliverable (no new physics). GAP-L4 of paper 219's roadmap CLOSED by the positional-stratum measure framework, recorded with fixes applied from an independent adversarial verifier.\n\nFORMULATIONS RANKED F1>F2>F3:\n- F1 (RECOMMENDED): worst-case with explicit bookings \u0398=E_\u03c0C/K_booked, \u03bc_eff=|R_eff|/M, k_bits, \u039b=C_sort/C_desc. Universal object = exact r\u0304-identity EC_A=P\u00b7r\u0304_R+(1\u2212P)\u00b7r\u0304_C (MC-validated max rel err 0.23%, 8 cells); T1a's certified form emerges exactly at uniform-within-cells (\u0398\u22611 iff uniform). Master inequality PROVEN unconditional: S_vs_desc \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^{k_bits}/(\u039b\u00b7\u0398)), proof chain = r\u0304-identity \u21d2 majorization C_sort\u2264C\u2080 \u21d2 \u039b-chain. No constant cap; D survives as inequality chain (cost-side 4/3 untouched), loses pathwise product.\n- F2: scale\u00d7balance prior \u2014 balance IS position (s=r^{\u22121/2}); canonical kernel b\u221dr^{\u22123/2} (= uniform-in-x positional prior, T1a's exact kernel); capture curve P(\u03bc)=\u03bc/(1\u2212R_max^{\u22121/2}) exact, linear iff canonical; all four anchors demand ultra-balanced populations (required-R 1.04\u20131.14) \u2192 witnesses demoted to generator shape estimators.\n- F3 BASELINE-CONDITIONAL (verifier caught unstated payoff convention): simultaneous-commitment value = certified law EXACTLY only vs full-scan-M baseline; HALVES vs T1a's own C\u2080=(M+1)/2; same-prior-descending adversary UNDERCUTS certified (5.365<5.4054); corner-is-max-EC brute-force confirmed.\n\nVALUE-universality FALSE off uniform cells: A3 sweep M=64\u00d74000 tilts violation rate .4395 concentrated at HEAD placements (.60/.37/.34 head/mid/tail), max S/S_A=1.54, witness S=62 vs booked 21.3.\n\nWITNESS RE-READS: 5.19 explained structurally \u2014 sits in (drafted 5.1948, certified 5.4054) window pinning \u03c1_R\u22480.59 mild adverse loading, not a corner identity; 29.1 AT RESOLUTION LIMIT (P_implied=0.98504, lives in P\u0302's 4th decimal).\n\nERRATUM to recorded paper 219 (genuine D-witness-table error caught by L4 verification): row prints (0.02,0.9853)|29.0698 but that value was computed at ROUNDED P=0.985 \u2014 certified law at stored P\u0302=0.9853 gives 29.3152. Rows 5.19/6.91/4.35 still print SUPERSEDED drafted-form values (certified there: 5.4054/7.1567/4.536); prose 4.649 belongs to stale locus (.115,.87). Feasibility conclusions of ALL FOUR anchors UNAFFECTED (\u03bc\u22641/S holds regardless).\n\nCONVENTION ADOPTED: state positional-stratum laws as the r\u0304-identity with bookings (\u03bc_eff, P_eff, \u03c1_R, \u03c1_C; \u039b) \u2014 never bare-(\u03bc,P) closed forms; canonical reporting prior b\u221dr^{\u22123/2}; admissibility rule requires raw-P\u0302 stored and \u03ba_desc reported; baseline named wherever a guarantee is claimed.\n\nROADMAP NOW EMPTY OF OPEN GAPS: T1/T2 verified \u00b7 D witnessed \u00b7 L7\u2032 proven-sketch \u00b7 L8 closed \u00b7 L4 closed by this framework.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/gapL4_measure.md (post-REVISION), gapL4_check.py/.json, verifyL4_verdict.md, verifyL4_recheck.py/.json. Paper 225, assessment v332 (papers-only bump, count unchanged at 564).",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4007",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T14:04:28.340349+00:00",
+    "title": "FACT round-78 #1 \u2014 GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3 \u2014 r\u0304-identity universal object (MC err 0.23%), master inequality S \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^k_bits/(\u039b\u00b7\u0398)) PROVEN via majorization; F3 baseline-conditional after verifier (5.365<5.4054 undercut); table error 29.0698\u219229.3152 at stored P\u0302=0.9853, feasibility unaffected; converse roadmap EMPTY"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -2406,20 +2435,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T05:46:10.947071+00:00",
     "title": "Deepening: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5297c534 (Q=0.860), which proved 49 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`\ndirection is open in this development.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_5297c534_15484863",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "5297c534",
-    "status": "available",
-    "timestamp": "2026-08-18T09:49:34.716388+00:00",
-    "title": "Deepening: The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
   },
   {
     "consumed_by_exp_id": "",
@@ -3092,6 +3107,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:59.281523+00:00",
     "title": "Existential-Risk-Optimization: Absolute Bounds on AI Alignment Failure Probabilities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 7934932a (Q=0.840), which proved 87 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove the standard factor-`1/2` total-variation\n   characterization as a supremum over events, yielding tight Boolean\n   distinguishing bounds rather than the deliberately simple `\u2113\u00b9` upper bound.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_7934932a_cd338cd5",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "7934932a",
+    "status": "available",
+    "timestamp": "2026-08-24T14:04:05.191402+00:00",
+    "title": "Deepening: Sharper normalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -4040,6 +4069,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "seed_308",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "",
+    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 18b02a30 (Q=0.880) proved 294 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` m",
     "domains": [
       "NumberTheory"
@@ -4082,21 +4126,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_308",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -11107,6 +11136,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This cycle proved that the optimal m-ary Bayes error equals 1 - Cs/m, identifying the universal-coding Shtarkov sum with the multi-hypothesis testing optimum. The conjecture extends the identity to list decoding: outputting k candidate hypotheses should cost 1 - Cs^(k)/m, where Cs^(k) sums the k largest likelihoods at each message. This would give a full interpolation between perfect identification and pure guessing.\n\nFor a finite source class with m members and uniform prior, the least average error of a rule outputting k hypotheses equals 1 - Cs^(k)/m with Cs^(k) = sum over x of the sum of the k largest values of p_theta x; the sequence k -> Cs^(k) is concave with Cs^(1) = Cs and Cs^(m) = m.\n\nDefine the top-k envelope by sorting the finite family of likelihoods at each x, mirror the argmax exchange used in isLeast_mAryError, and check the endpoints against shtarkovSum_le_card and shtarkovSum_eq_card_iff_mutuallySingular.\n\nUniversal-coding rigidity theorems transfer wholesale to list-decoding and top-k classification error, a directly practical machine-learning quantity.\n\nThe failure point would identify ties in the order statistics as a genuine obstruction, isolating where randomized list rules beat deterministic ones.",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_4005",
+    "priority_score": 0.7113870967741937,
+    "research_mode": "team",
+    "source_exp_id": "7934932a",
+    "status": "available",
+    "timestamp": "2026-08-24T14:03:51.469141+00:00",
+    "title": "List-Decoding Hierarchy of Truncated Shtarkov Sums"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The interval matrix of a melody window is idempotent in the min-plus matrix semiring, hence equal to its own Kleene star. We conjecture a full tropical Perron-Frobenius description: eigenvalue zero, eigenspace spanned by the columns, and a transposition-invariance classification of melodies with equal eigenspaces.\n\nFor every window, the tropical eigenvalue of the interval matrix is the tropical unit, its eigenspace is the tropical span of its columns, and two windows share an eigenspace iff their digit multisets agree up to a common additive shift.\n\nFormalize tropical eigenvectors for Matrix (Fin n) (Fin n) (Tropical (WithTop N)) and prove A * v = v for columns v of A using intervalMatrix_idempotent.\n\nMelody windows acquire a canonical tropical invariant, independent of any temporal lag statistic.\n\nIdempotency is not enough to pin down the eigenspace and additional metric hypotheses on the digit alphabet are needed.",
     "domains": [
       "Tropical",
@@ -11149,6 +11193,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T05:46:55.164654+00:00",
     "title": "Definable Invariants of Census Equivalence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The KL bridge proved here inherits Pinsker's sqrt(KL/2), which exceeds 1 and becomes vacuous for KL >= 2. The Bretagnolle-Huber bound sqrt(1 - exp(-KL)) is always non-vacuous. Both follow from the same Bernoulli reduction already performed in the catalog's Pinsker proof.\n\nFor all finite Q absolutely continuous with respect to P, d_TV(Q,P) <= sqrt(1 - exp(-KL(Q||P))), and this is strictly better than sqrt(KL/2) exactly for KL above a universal threshold in (1,2).\n\nReuse klFinDist_block_ge to reduce to the Bernoulli case and prove the scalar inequality for klBernoulli by calculus (derivative comparison), then re-derive bayesError_ge_of_kl with the new bound.\n\nEvery KL-based Le Cam bound in the catalog becomes non-vacuous, and PAC-Bayes generalization bounds inherit a strictly better distinguishability floor.\n\nThe Bernoulli reduction must lose information, which would itself be a notable failure of the standard two-point method.",
+    "domains": [
+      "MachineLearning",
+      "Bridges"
+    ],
+    "id": "fd_4004",
+    "priority_score": 0.7113333333333334,
+    "research_mode": "team",
+    "source_exp_id": "7934932a",
+    "status": "available",
+    "timestamp": "2026-08-24T14:03:50.895723+00:00",
+    "title": "Bretagnolle-Huber Refinement of the Pinsker Bridge"
   },
   {
     "consumed_by_exp_id": "",
@@ -11329,6 +11388,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T05:46:12.219891+00:00",
     "title": "Smoothness-Free Addition-Chain Barrier"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This cycle proved max over events equals min over couplings by exhibiting both optima. The conjecture is that the identity is an instance of finite LP duality, with complementary slackness forcing the maximal coupling's support. A duality proof would generalize the statement from the Hamming cost to arbitrary costs, i.e. to a finite Kantorovich-Rubinstein theorem.\n\nFor every cost c : X x X -> R the minimum of sum c(x,y) k(x,y) over the transport polytope of (p,q) equals the maximum of sum phi p - sum psi q over the dual polytope {phi x - psi y <= c(x,y)}, and for c = indicator of inequality the dual optimum is attained at phi = psi = indicator of {q <= p}.\n\nFormalize the two polytopes as Finset-indexed linear systems and prove duality by Farkas / Fourier-Motzkin elimination in the finite case, then specialize to c = 1 - delta and compare with isLeast_disagreeProb.\n\nThe catalog gains a reusable finite optimal-transport toolkit; total variation, Wasserstein and Kantorovich distances become one theorem.\n\nA degeneracy in the transport polytope would show that attainment needs the explicit construction, isolating exactly which vertices are missed.",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_4003",
+    "priority_score": 0.7106415094339623,
+    "research_mode": "team",
+    "source_exp_id": "7934932a",
+    "status": "available",
+    "timestamp": "2026-08-24T14:03:50.428473+00:00",
+    "title": "Linear-Programming Duality for the Transport Polytope"
   },
   {
     "consumed_by_exp_id": "",
@@ -15805,6 +15879,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T13:14:28.470377+00:00",
     "title": "Four-Thirds Saturation as a Local Tropical Height"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The geometric coupling bound 1 - (1 - d_TV)^n is provably valid but never tight for 0 < d_TV < 1. Replacing total variation by the Hellinger affinity, which is exactly multiplicative over products, should give matching upper and lower amplification laws. This turns n-sample indistinguishability from an inequality into an asymptotically exact rate.\n\nFor finite laws p, q with affinity rho = sum_x sqrt(p x * q x), one has 1 - rho^n <= d_TV(p^{otimes n}, q^{otimes n}) <= sqrt(1 - rho^{2n}), and both are strictly sharper than 1 - (1 - d_TV)^n when 0 < d_TV < 1.\n\nDefine hellingerAffinity in the TotalVariation namespace, prove multiplicativity by the same Fintype.prod_sum route used for sum_diag_powCoupling, then prove the Le Cam sandwich 1 - rho <= d_TV <= sqrt(1 - rho^2) pointwise and tensorize.\n\nSample-complexity bounds in the catalog become tight up to constants and the vacuous linear hybrid bound can be retired everywhere.\n\nSome pair violates the lower sandwich, which would identify a new obstruction to multiplicative amplification and force a per-coordinate correction term.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4002",
+    "priority_score": 0.5633481507492952,
+    "research_mode": "team",
+    "source_exp_id": "7934932a",
+    "status": "available",
+    "timestamp": "2026-08-24T14:03:49.948380+00:00",
+    "title": "Exact Hellinger Amplification Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -41220,14 +41309,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The open-embedding property of the sheets, path connectedness of the"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "10a8dba6",
     "description": "Both invariants are formalised and computed in closed form; what\nremains is to show the defect set is preserved by homeomorphisms of foams (it is\ndefined purely from the neighbourhood filters, so this should be routine) and to\ncompare the two multiplicities.",
     "domains": [],
     "id": "fd_1706",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "4b03d5cc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T10:47:35.428257+00:00",
     "title": "Both invariants are formalised and computed in closed form; what"
   },
@@ -42951,19 +43041,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:49.040586+00:00",
     "title": "Transition windows"
-  },
-  {
-    "consumed_by_exp_id": "7934932a",
-    "description": "Prove the standard factor-`1/2` total-variation\n   characterization as a supremum over events, yielding tight Boolean\n   distinguishing bounds rather than the deliberately simple `\u2113\u00b9` upper bound.",
-    "domains": [],
-    "id": "fd_2565",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "a68d3b50",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:54.392007+00:00",
-    "title": "Sharper normalization"
   },
   {
     "consumed_by_exp_id": "",
