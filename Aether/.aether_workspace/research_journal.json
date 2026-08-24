@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "08e16c4e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Aleph-One Surface: Geometry Between Dimensions\n\nDerived from the verified results in\n`Catalog/NumberTheory/AlephOneSurfaceHausdorff.lean` (the `ℓ²` aleph-one surface:\n`dimH = ⊤`,",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 125,
-      "timestamp": "2026-08-22T11:36:38",
-      "title": "Aleph-1 Surface: Geometry Between Dimensions"
-    },
-    {
       "cycle_id": "0f0bd7f8",
       "domain": "Probability",
       "key_insight": "# Future Directions — after Cycles 6–9 (Markov-chain frame definability for `ModalSystem`)\n\nThe mission asked for a Lean development of frame definability for Cycle 4's\n`ModalSystem`, carried by the `",
@@ -499,19 +489,19 @@
       "theorem_count": 70,
       "timestamp": "2026-08-24T04:10:35",
       "title": "C4 (reward hacking is a covariance) — PROVED at first order.*"
+    },
+    {
+      "cycle_id": "05978b53",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Polarisation cancellation in exponential–logarithmic gates\n\n## Where this cycle landed\n\nThe mission conjecture was\n\n> `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attain",
+      "quality_score": 0.89,
+      "sorry_count": 4,
+      "theorem_count": 95,
+      "timestamp": "2026-08-24T05:02:27",
+      "title": "Conjecture. `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "922db13f",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — NET-47 staircase thread\n\nFour cycles of the loop produced, in `Catalog/NumberTheory/`:\n\n| file | content |\n|---|---|\n| `KneeStaircaseArithmetic.lean` | binary staircase normal fo",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 83,
-      "timestamp": "2026-08-16T23:34:53",
-      "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112 (mid-grid), the kne"
-    },
     {
       "cycle_id": "12195e06",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 70,
       "timestamp": "2026-08-24T04:10:35",
       "title": "C4 (reward hacking is a covariance) — PROVED at first order.*"
+    },
+    {
+      "cycle_id": "05978b53",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Polarisation cancellation in exponential–logarithmic gates\n\n## Where this cycle landed\n\nThe mission conjecture was\n\n> `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attain",
+      "quality_score": 0.89,
+      "sorry_count": 4,
+      "theorem_count": 95,
+      "timestamp": "2026-08-24T05:02:27",
+      "title": "Conjecture. `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3d2c810c",
-      "domain": "Applications",
-      "name": "tr_inc",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3d2c810c",
-      "domain": "Applications",
-      "name": "tr_eval",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "258afb8b",
-      "domain": "Novelty",
-      "name": "collisionMass_mono",
-      "quality": 0.78
-    },
     {
       "cycle_id": "258afb8b",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Computation",
       "name": "variance_nonneg",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "05978b53",
+      "domain": "Bridges",
+      "name": "sqLayer_eval_zero",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "05978b53",
+      "domain": "Bridges",
+      "name": "prodGate_zero_left",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "05978b53",
+      "domain": "Bridges",
+      "name": "prodGate_zero_right",
+      "quality": 0.89
     }
   ],
-  "last_updated": "2026-08-24T04:10:35",
+  "last_updated": "2026-08-24T05:02:27",
   "open_questions": [
-    {
-      "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
-      "cycle_id": "6c07c4d0",
-      "domain": "Shared",
-      "sorry_count": 2,
-      "timestamp": "2026-08-06T12:26:25"
-    },
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
       "cycle_id": "2c38bc1a",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 1,
       "timestamp": "2026-08-22T07:46:29"
+    },
+    {
+      "context": "Everything is proved from `import Mathlib` plus the catalog files; no `sorry`.; Everything is proved from `import Mathlib` plus the catalog file; no `sorry`.; Everything is proved from `import Mathlib",
+      "cycle_id": "05978b53",
+      "domain": "Bridges",
+      "sorry_count": 4,
+      "timestamp": "2026-08-24T05:02:27"
     }
   ],
   "research_threads": {
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "9aa1e8d1",
-        "quality": 0.86,
-        "theorems": 93,
-        "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
-      },
-      {
         "cycle_id": "ef01dce6",
         "quality": 0.88,
         "theorems": 179,
@@ -3203,6 +3197,12 @@
         "quality": 0.84,
         "theorems": 94,
         "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healt"
+      },
+      {
+        "cycle_id": "05978b53",
+        "quality": 0.89,
+        "theorems": 95,
+        "title": "Conjecture. `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at"
       }
     ],
     "Combinatorics": [
