@@ -1573,21 +1573,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
   },
   {
-    "consumed_by_exp_id": "499e80a3",
-    "description": "## NET-67 \u2014 limited-memory axis, round 20 (paper 152, ResearchOutput/exp_net67_sub20.py, /tmp/net67.log)\n\n**Verdict name: SCALE-HALVES-THE-CONTEXT-INCREMENT.**\n\n### Result\nTwo-point addendum (Qwen2.5-1.5B, ctx=2048; baseline drift-assert passed exactly 0.5132):\n\n| k | 14 | 18 |\n|---|---|---|\n| retained | 0.9757 \u2717 (~2 SE) | **0.9811 \u2713** |\n\n- **P1 CONFIRMED**: the knee is 18 \u2014 NET-66's coarse read of 20 was one fine point high.\n- **P2 REFUTED** accordingly.\n\n### The refined law\nComplete measured picture: 0.5B {16, 20, 24} \u2014 starts at 16, +4 keys per context doubling. 1.5B {16, 16, 18} \u2014 starts at 16, +2 keys per doubling (first increment 0, second +2). **Scale compresses both the level and the increments of the attention-budget curve.** The one-octave reading (NET-66) was a coarse-grid approximation; increment-halving is the finer truth. Deployment: a 20-key budget covers BOTH models to 2048 with margin.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean; (c) confronted \u2014 two-point addendum stated; (d) clean; (e) deterministic drift-assert; (f) clean \u2014 ALL_DONE_NET67; (g) fair \u2014 same bar; (h) DIRECT.\n\n### Next\nIncrements at 4096; domain-jump corpora; 7B cell (does halving extend?).\n\nNow 67 network experiments. Assessment v67. Paper 152.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3711",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T18:51:45.076165+00:00",
-    "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT \u2014 1.5B knee at 2048 is 18 not 20; both models start at 16 keys, scale halves the +per-doubling increment (+4 -> +2)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "## NET-66 \u2014 limited-memory axis, round 19 (paper 151, ResearchOutput/exp_net66_1p5b2048.py, /tmp/net66.log)\n\n**Verdict name: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING.**\n\n### Result\nThe 1.5B's first ctx=2048 cell (fine grid, gate identical to NET-55/65):\n\n| k | 8 | 12 | 16 | 20 | 24 | 32 |\n|---|---|---|---|---|---|---|\n| retained | 0.9597 \u2717 | 0.9715 \u2717 | **0.9785 \u2717 (razor)** | **0.9817 \u2713** | 0.9846 \u2713 | 0.9867 \u2713 |\n\n- **P1 CONFIRMED**: the flat chain breaks upward \u2014 k\\*(2048) = 20 > 16.\n- **P2 REFUTED**: flatness does not hold through 2048.\n- **P3 REFUTED**: 20 < the 0.5B's 24 at the same context \u2014 scale does not increase sensitivity either.\n\n### The one-octave law\nThe two chains: 0.5B {16, 20, 24} vs 1.5B {16, 16, 20}. The 1.5B curve equals the 0.5B curve shifted right by ONE CONTEXT DOUBLING (20 arrives at 1024 for the small model, at 2048 for the large). Scale POSTPONES context-sensitivity rather than eliminating or amplifying it. Budget tables gain a scale-shift form: a 16-key budget covers the 0.5B to 512 and the 1.5B to 1024.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 2048 cell at 1.5B; (c) confronted \u2014 razor k=16 fail (~1 SE) leaves bracket (16, 20] partially open; 12 windows stated; (d) clean; (e) deterministic baseline monotone (0.5132); (f) clean \u2014 ALL_DONE_NET66; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-20 addendum @2048; 0.5B @4096 (does its chain continue rising?); domain-jump corpora; 7B cell (does the shift extend?).\n\nNow 66 network experiments. Assessment v66. Paper 151.\n",
     "domains": [
@@ -1661,16 +1646,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL \u2014 1.5B knee at 4096 is 56 (every point 16-44 fails); acceleration amplifies with scale (19x vs 4x); size relationship INVERTS past phase transition"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c96b94a8",
     "description": "Round-68 #1, cron iteration (exp 536). The first band-miss in the uniform-ladder series.\n\n**DRIFT-INCONCLUSIVE**: pooled Spearman(T, rate) = **0.534** CI [0.509, 0.555] \u2014 below 0.55 for the first time; only 1/3 seeds above floor; CI straddles the wall.\n\nH2 PASS: T beats count by +0.059 CI [0.032, 0.083].\n\nLadder: 0.78 (44) \u2192 ~0.81 (52) \u2192 ~0.69 (56) \u2192 ~0.65 (64) \u2192 ~0.61 (68) \u2192 ~0.61 (72) \u2192 ~0.61 (76) \u2192 ~0.57 (80) \u2192 ~0.56 (84) \u2192 **~0.53 (88)**. The erosion continues.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp536_t_dial_unif_88.py + exp536_result.json + LEDGER.md, seeds 20261200\u201302.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3742",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.047984+00:00",
     "title": "FACT round-68 #1 \u2014 TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
   },
@@ -2039,6 +2025,62 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T02:00:10.721551+00:00",
     "title": "FACT round-70 #1 \u2014 TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 66 (first round of the user-directed CPU pivot; doubles as the hardware-stability canary after the 2026-08-23 memory-fault fixes).\n\n**Claim:** Qwen2.5-7B-Instruct Q4_K_M executed entirely on CPU (llama.cpp, i9-9900K, threads=8, 5.79 tok/s greedy baseline) with same-family drafts:\n\n| config | prose speedup | prose accept | code speedup | code accept |\n|---|---|---|---|---|\n| 0.5B d=2 | 1.254x | 63.9% | 1.352x | 71.6% |\n| 0.5B d=4 | 1.416x | 47.7% | 1.616x | 63.0% |\n| 0.5B d=8 | **0.979x LOSS** | 30.9% | **1.661x BEST** | 56.0% |\n| 1.5B d=2 | 1.016x | 63.2% | 1.195x | 83.4% |\n| 1.5B d=4 | 1.153x | 51.9% | 1.395x | 74.8% |\n| 1.5B d=8 | 0.982x LOSS | 44.9% | 1.354x | 60.3% |\n\n**Scorecard:** P2 CONFIRMED dramatically (>1.05x predicted; up to 1.661x measured); P4 CONFIRMED (+17.8 pts code>prose acceptance, growing +14/+19/+20 with depth); P1 razor-thin REFUTED (47.72% vs >=50% horn); P3 REFUTED as stated \u2014 NO crossover: the 11.8%-of-target-cost 0.5B draft beats the 23.4%-cost 1.5B in ALL SIX head-to-heads even where 1.5B accepts more (code d=8: accept 60.3 vs 56.0 but speedup 1.354x vs 1.661x).\n\n**Laws:** (1) DRAFT-COST DOMINANCE ON CPU \u2014 acceptance advantages do not survive a 2x per-token cost disadvantage when proposal is sequential but verification amortizes; GPU folklore does not transfer. (2) OPTIMAL DEPTH IS DOMAIN-PARAMETERIZED \u2014 prose acceptance halves per doubling past d=2 and d=8 becomes a net loss; code decays gracefully and keeps paying through d=8; a static depth setting forfeits 25%+ throughput. (3) Practical: +66% free serving throughput from a 0.6GB side model; prescription = small q8_0 draft, d=8 for code, d=4 for prose.\n\n**Hardware note:** this round doubled as the stability canary after fixing the box's memory subsystem (XMP off + BIOS v1.F0 after uncorrected-MCE hard crashes) \u2014 ~55 minutes of sustained full-CPU llama.cpp load completed with zero incidents; the identical load profile hard-crashed the box three times pre-fix.\n\n**Honest limits:** one model family, one box, greedy sampling, ~500-token prompts, 12 configs x 8 runs; overall drafted-token acceptance (not per-position curves); absolute tok/s specific to post-fix JEDEC state (ratios within-round only). Catalog scan: no prior speculative-decoding/KV-quant work locally or in alethean index.\n\nScript ResearchOutput/exp_net91_specdec.py; paper ResearchOutput/NetworkMathematics/91_TheCheapDraftWins.md.\n\nOpen: per-position acceptance maps (why prose collapses past d=4); domain-adaptive draft depth; KV-cache quantization ladder on the same 7B; weight-quant floor transfer; knee-law transfer to 7B.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3917",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T03:18:15.573191+00:00",
+    "title": "NET-91 THE-CHEAP-DRAFT-WINS-AND-CODE-DRAFTS-DEEP: speculative decoding of a 7B LLM entirely on CPU pays up to 1.66x \u2014 smaller draft wins every cell (cost dominance), optimal depth is domain-parameterized (code deep, prose collapses past d=4 into a net loss)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-72 #1, exp 557 (user-directed Pythagorean/Euler campaign). Euler's factorization method, fully priced.\n\n**EULER-LOSES.** Existence: \u22652 essentially distinct sum-of-two-squares representations \u27fa **both primes \u22611 mod 4 \u2014 exactly two reps there, zero in every other class** (750/750 per cell; eligible fraction of draws exactly 0.2500; r\u2082=4(d\u2081\u2212d\u2083) validated vs brute force). Algebra: the combination step reduces to gcd(|ad\u2212bc|,N) via Im(z\u2081\u00b7conj(z\u2082)) hitting exactly one prime norm (bounds proven); verified **500/500 synthetic + 750/750 real instances** \u2014 extraction ALWAYS works when reps are known. Cost face: rep-search median 81k iterations \u2248 **2.48\u00d7 one plain-Fermat scan**, and Euler needs two \u27f9 end-to-end **median 5.70\u00d7 worse than Fermat on identical instances** (q75 33.8\u00d7, catastrophic on balanced pairs where Fermat lands instantly).\n\nBarrier-8 consistent: the c=m\u00b2+n\u00b2 face of the triplet idea is a known method with worse constants. No new leverage.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp557_euler_two_squares.py + exp557_result.json + logs, seed 20260826.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3918",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T03:18:15.574536+00:00",
+    "title": "FACT round-72 #1 \u2014 EULER-LOSES: two-squares route measured \u2014 algebra exact, class 25%, cost 5.7x Fermat (paper 201)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-71 #2, exp 553. The ladder turns.\n\n**U116-MIXED**: pooled Spearman(T, rate) = **0.4847** CI [0.4413, 0.5283] \u2014 fifth consecutive cell below the 0.55 band, but the step delta is **+0.0226, the FIRST POSITIVE step of the ladder** after five declines (0.5739 \u2192 .5436 \u2192 .5005 \u2192 .4880 \u2192 .4621 \u2192 .4847). T beats count by +0.1002 paired CI [+0.0481, +0.1461] \u2014 H2 restored decisively.\n\nThe QR-lottery dial's degradation is not a slide to zero \u2014 the shape reads as asymptotic fade with rebound noise toward a floor near ~0.46\u20130.49. Named follow-up: U120 tests the floor directly (under 0.46 \u2192 lower floor; in [0.46,0.53] \u2192 confirmed; above 0.55 \u2192 band re-entry).\n\nLedger: range correction documented PRE-DATA (brief \u00d716 typo family, binding rule applied); q-window overflow at exactly 2^64 fixed pre-data (uint64); stale exp540 ERROR artifact identified; rho-classifier spot-checks 0 mismatches.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp553_t_dial_unif_116.py + exp553_result.json + exp553_run.log, seeds 20261210\u201312.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3919",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T03:18:15.575758+00:00",
+    "title": "FACT round-71 #2 \u2014 TDIAL-U116: the fade REBOUNDS, floor forming near 0.46\u20130.49 (paper 200)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Consolidation of papers 192\u2013198 (issues #335\u2013#341, exps 545\u2013553).\n\n**THE TWO-TREE CLOSURE.** The energy-ascent question \u2014 can a magnitude spectrum computed from N climb the Berggren/Price trees toward the semiprime's node? \u2014 is answered NO, sealed at FOUR strengths: (1) residue dials blind (paper 81 replicated); (2) Gauss-sum magnitudes PROVEN residue dials (N mod 720720); (3) bracket/sign-count sensors structurally constant (MI=0.000000 exactly, identities proven); (4) spectral summaries RETRACTED to magnitude mirrors of |N| (exact null given log-N deciles). Only a factor-derived oracle bound remains (I peaks 0.4798 bits @ B\u224822758), unrealized by every tested probe.\n\nExact laws banked: Price two-adic law (letter\u2080=A \u27fa N\u22611 mod 4; letter\u2081=A \u27fa N mod 8 \u2208{1,3}; bijection with N mod 8; v\u2082(p+q)-capped mechanism; provable death at position 2); ascent economics (restart E=h\u00b7\u03b1^(\u2212h); branching base pinned at 3 \u2200\u03b1<1; win-vs-Fermat needs \u03b1*\u22650.85 & c\u22643000); sequential hints COMPOUND where the class-hint master law saturates \u2014 new taxonomy entry. Corrections: dP slope 1.211 not 1.4; dB/Fermat anticorrelation stratum-dependent.\n\nMethod laws banked lab-wide: row-shuffle nulls are WRONG for deterministic functions of N (condition on magnitude instead); derivation-first validation; smoke-run checks as mechanism detectors.\n\nWhat would reopen it: a probe class none of the four sealed kinds, non-monotone in |N|, delivering per-step accuracy above \u03b1*\u22480.85 at cost \u22643000 visit-equivalents. The geometry contains up to 0.48 bits of positional content; nothing cheap reads it.\n\nFull document: ResearchOutput/NewMathematics/199_TwoTreeClosure_Synthesis.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3920",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T03:18:15.576963+00:00",
+    "title": "FACT rounds 70\u201371 SYNTHESIS \u2014 THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exact laws + method laws consolidated (paper 199)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3789,23 +3831,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Geometry",
-      "MachineLearning"
-    ],
-    "id": "seed_178",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
   {
     "consumed_by_exp_id": "",
@@ -34298,6 +34323,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that unequal increments make the key gap between two\nserved models grow without bound (`gap_unbounded`) with budget ratio tending to\nexactly `2` (`ratio_tendsto_two`), so no fixed uniform budget is safe at all\ncontexts and the least safe budget at horizon `J` is dictated entirely by the\n*smallest* model (`least_budget_horizon`).\n**Why now?** Mixed-scale serving is the deployment setting these measurements\nare for; the conjecture is that per-model budgets `16 + 4j` and `max 16 (14+2j)`\nstrictly dominate any uniform budget in total memory at every horizon `J \u2265 1`,\nwith a saving that grows linearly in `J`.\n\n---\n\n```json future_directions.json\n[{\"title\": \"The 4.5B Context-Free Attention Threshold\",\n  \"domain\": \"MachineLearning\",\n  \"description\": \"Calibrating attention peakedness as a power law in parameter count, lam0(N) = (2N)^theta, is forced by the two measured NET-67 cells to have theta = log 2 / log 3. The induced increment law incrAt N = 4 (2N)^(-theta) crosses one key per context doubling exactly at N = 4.5 billion parameters. Above that threshold a model's attention budget is essentially context-free, which is the strongest deployment claim the campaign can currently make.\",\n  \"conjecture\": \"For the NET-67 drift-assert protocol, a model with N > 4.5 billion parameters requires strictly fewer than one additional retained key per context doubling; at N = 7 the increment lies strictly between 1/2 and 1.\",\n  \"test\": \"Run the NET-67 knee sweep for a 7B model at ctx = 2048 and 4096 on a spacing-1 grid; the measured knee must move by 0 or 1 key. Formally, the threshold and the bracket are already proved as incrAt_lt_one_iff and prediction_7B.\",\n  \"if_true\": \"A single key budget, fixed once, serves all models above 4.5B at any context; capacity planning decouples from context length.\",\n  \"if_false\": \"The power-law calibration of peakedness in parameter count is wrong, and the halving observed between 0.5B and 1.5B is a two-point coincidence rather than a scaling law.\",\n  \"proof_strategy\": \"Prove 3^theta = 2 from the definition of theta, lift it to (3^n)^theta = 2^n by induction, evaluate incrAt at 4.5 and 13.5 exactly, and transfer to arbitrary N by strict antitonicity of x -> x^(-theta).\",\n  \"catalog_references\": [\"Novelty.AttentionScaleThreshold\", \"Novelty.AttentionRetentionKnee\"]},\n\n {\"title\": \"Slope Identifiability of Hinge Budget Laws\",\n  \"domain\": \"MachineLearning\",\n  \"description\": \"The 1.5B curve is a hinge: a floor competing with an affine demand. A measurement grid whose points lie mostly below the hinge yields inequalities, not equations, so the slope is only bounded below. The conjecture makes identifiability a function of how many grid points lie past the hinge.\",\n  \"conjecture\": \"For a hinge law max(f, b + s*j), the pair (b, s) is identifiable from measurements at j in J if and only if J contains at least two indices j with b + s*j > f; otherwise the data determine only s >= (last - f)/(last index).\",\n  \"test\": \"F",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3916",
+    "priority_score": 0.4408645648875318,
+    "research_mode": "team",
+    "source_exp_id": "499e80a3",
+    "status": "available",
+    "timestamp": "2026-08-24T03:17:39.681240+00:00",
+    "title": "Divergence of Multi-Model Serving Budgets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In the cartesian monoidal category of real normed spaces and Lipschitz maps, parallel residual blocks with residual constants `K\u2081` and `K\u2082` have Lipschitz constant at most `max (1 + K\u2081) (1 + K\u2082)` for the max product norm, and this bound is attained for every `K\u2081,K\u2082 \u2265 0`. A counterexample to either the upper bound or attainability falsifies the conjecture.",
     "domains": [],
     "id": "fd_2784",
@@ -34441,6 +34481,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that a hinge law has three parameters but a flat measured\nprefix supplies only inequalities, so a measurement grid that starts below the\nhinge cannot identify the slope \u2014 it can only bound it below.\n**Why now?** `hinge_prediction_discriminates` shows the two admissible fits of\nthe current 1.5B data separate at exactly one point (20 vs 21 keys at 4096), so\none octave of extra data upgrades a lower bound into an identification. The\nconjecture to formalise: for a hinge with floor `f`, the slope is identifiable\nfrom a grid iff the grid contains at least two points strictly past the hinge.",
+    "domains": [],
+    "id": "fd_3913",
+    "priority_score": 0.4396190476190476,
+    "research_mode": "team",
+    "source_exp_id": "499e80a3",
+    "status": "available",
+    "timestamp": "2026-08-24T03:17:38.175612+00:00",
+    "title": "Slope Identifiability of Hinge Budget Laws"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For number fields `K\u2081, K\u2082` with Galois groups `G\u2081, G\u2082` and coprime discriminants,\nthe compositum has `I(class ; residue) = log\u2082 |G\u2081^ab| + log\u2082 |G\u2082^ab|`; the visible information is\nadditive while the total type entropy is *sub*additive, so the hidden fraction grows.\n\n*The key insight is* that `(G\u2081 \u00d7 G\u2082)^ab = G\u2081^ab \u00d7 G\u2082^ab`, so the abelian ceiling is additive by\n`uEnt` of a product read-out, whereas conjugacy classes multiply only up to the class-fusion of the\nproduct group.\n\n*Why now?* The catalog already contains a CRT/product law for the cyclic type channel\n(`Shared.CyclicTypeChannelProduct`, `Shared.CyclicTypeChannelCRTLaw`); this direction merges that\nline with the abelian-ceiling theorem proved here.",
     "domains": [
       "Algebra",
@@ -34479,15 +34531,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Adaptive logistic-map shadowing beyond the global factor four"
   },
   {
-    "consumed_by_exp_id": "c0a79113",
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** There is an explicit family of polynomial-size propositional certificates whose shortest paths to normal form under any fixed finite local, conclusion-preserving refinement basis have superpolynomial length.\n\nThe key insight is that a small final certificate need not imply a short route to it; local simplification can be obstructed by globally distributed redundancies.\n\n**Why now?** The distinction between well-foundedness and quantitative normalization time is exposed by the audited cost model. Candidate families can be built from repeated substitution, shared lemmas, and forced commuting conversions, giving concrete lower-bound instances.",
     "domains": [],
     "id": "fd_1909",
-    "phase": "A",
     "priority_score": 0.4392222222222222,
     "research_mode": "team",
     "source_exp_id": "21c08839",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:21:44.931663+00:00",
     "title": "Superpolynomial refinement distance for propositional certificates"
   },
@@ -36401,14 +36452,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalize from one-dimensional symmetry generators to Lie-group actions and prove equivariance of the momentum map."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "93d08ac5",
     "description": "For `d \u2265 1`, `N \u2265 2`, the thickness of the outermost equal-volume\nshell of `B(0,R) \u2286 \u211d^d` satisfies\n`R/(d(N\u22121)) \u00b7 (1 \u2212 1/N) \u2264 R \u2212 R(1 \u2212 1/N)^{1/d} \u2264 R/(d(N\u22121))`,\nso the upper bound `shell_thickness_le` proved here is tight up to the factor\n`1 \u2212 1/N`, and the whole shell decomposition converges, after rescaling by `d`,\nto the exponential profile `R(1 \u2212 e^{\u2212t})`.",
     "domains": [],
     "id": "fd_1737",
+    "phase": "A",
     "priority_score": 0.424,
     "research_mode": "team",
     "source_exp_id": "ce273a18",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T17:46:25.477431+00:00",
     "title": "For `d \u2265 1`, `N \u2265 2`, the thickness of the outermost equal-volume"
   },
@@ -37018,6 +37070,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T18:49:22.341173+00:00",
     "title": "D1 \u2014 Sub-additivity of the knee under corpus concatenation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that a knee read on a coarse grid is the least grid point\nabove the true knee, so a sweep with spacing `d` over-reads by at most `d - 1`\n(`kneeMul_bounds`), which is exactly the NET-66 read of 20 against the NET-67\nread of 18 (`coarse_grid_reads_twenty`).\n**Why now?** Every cell in the campaign is measured on a grid; the conjecture is\nthat the *entire* discrepancy history between rounds is explained by spacing,\ni.e. all previous readings are consistent with a single underlying curve once\neach is replaced by the interval `[read - d + 1, read]`. This is testable\nretroactively, without new experiments.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3914",
+    "priority_score": 0.40894474719752194,
+    "research_mode": "team",
+    "source_exp_id": "499e80a3",
+    "status": "available",
+    "timestamp": "2026-08-24T03:17:38.604520+00:00",
+    "title": "Grid-Resolution Correction for Knee Measurements"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that \"additive keys per context doubling\" is not a\nproperty of a distribution but a differential relation between the tail exponent\nand log-context: for exponential tails the equivalence is exact\n(`exp_tail_le_iff`, `kneeCts_lamAt`, `rate_of_increment`).\n**Why now?** The natural conjecture is that the equivalence extends to any tail\nfamily `T(k) = \u03c6(\u03bb k)` with `\u03c6` strictly decreasing: the knee is affine in `j`\nwith slope `s` iff `\u03bb_j = \u03c6\u207b\u00b9(\u03b4)/(s(j+1))`. Proving this would make the law\nindependent of the exponential ansatz, which is currently the weakest modelling\nassumption in the chain.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3915",
+    "priority_score": 0.4087557708818114,
+    "research_mode": "team",
+    "source_exp_id": "499e80a3",
+    "status": "available",
+    "timestamp": "2026-08-24T03:17:39.049332+00:00",
+    "title": "Rate\u2013Increment Duality for General Tail Families"
   },
   {
     "consumed_by_exp_id": "",
