@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a1194bd0",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's results in `Catalog/Shared/QSRelationPoolRandom.lean`,\n`QSPoolKernelSymmetry.lean`, `SievePolynomialUniversality.lean`,\n`SmoothCountSparsity.lean`, `Dick",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-22T14:38:51",
-      "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130"
-    },
-    {
       "cycle_id": "c08b5555",
       "domain": "Shared",
       "key_insight": "# Future directions — after the additive uncertainty principle on Z/pZ\n\n## What has been established\n\nThe previously open item was the *additive* uncertainty bound `|supp f| + |supp f̂| ≥ p + 1` for\np",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-24T07:22:12",
       "title": "Define Laurent q-series with the standard `q⁻¹ + O(q)` normalization and formalize the pole\n   order"
+    },
+    {
+      "cycle_id": "6c27d6f0",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — tropical epistasis of layer ablations\n\nThe formal development establishes:\n\n* pruning cost is the increase of a **tropical (min-plus) minimum** over surviving\n  computation paths",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 107,
+      "timestamp": "2026-08-24T07:22:28",
+      "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR — L22+L23 solo costs sum to 0.06pts but joint pruning c"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "86a70a4b",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — bold, testable conjectures from this cycle\n\nContext: the anti-Fibonacci sequence `antiFib 0 = 1`, `antiFib (n+1) = antiFib n + n`\n(closed form `2·antiFib n + n = n² + 2`) from `C",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 105,
-      "timestamp": "2026-08-17T04:03:22",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
     {
       "cycle_id": "094ca37a",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-24T07:22:12",
       "title": "Define Laurent q-series with the standard `q⁻¹ + O(q)` normalization and formalize the pole\n   order"
+    },
+    {
+      "cycle_id": "6c27d6f0",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — tropical epistasis of layer ablations\n\nThe formal development establishes:\n\n* pruning cost is the increase of a **tropical (min-plus) minimum** over surviving\n  computation paths",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 107,
+      "timestamp": "2026-08-24T07:22:28",
+      "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR — L22+L23 solo costs sum to 0.06pts but joint pruning c"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f099f0f6",
-      "domain": "Logic",
-      "name": "mem_fixedBy_pi",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "f099f0f6",
-      "domain": "Logic",
-      "name": "card_fixedBy_pi",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "f099f0f6",
-      "domain": "Logic",
-      "name": "mem_fixedBy_prod",
-      "quality": 0.85
-    },
     {
       "cycle_id": "4caf1d72",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "exists_pow_eq_of_constantCoeff_one",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "6c27d6f0",
+      "domain": "Tropical",
+      "name": "mem_survivors",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6c27d6f0",
+      "domain": "Tropical",
+      "name": "base_mem_survivors",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6c27d6f0",
+      "domain": "Tropical",
+      "name": "survivors_nonempty",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T07:22:12",
+  "last_updated": "2026-08-24T07:22:28",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "7477e654",
-        "quality": 0.85,
-        "theorems": 501,
-        "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/"
-      },
-      {
         "cycle_id": "13788cf3",
         "quality": 0.85,
         "theorems": 470,
@@ -4009,6 +4003,12 @@
         "quality": 0.82,
         "theorems": 111,
         "title": "Separate temporal and pitch lags"
+      },
+      {
+        "cycle_id": "6c27d6f0",
+        "quality": 0.82,
+        "theorems": 107,
+        "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR — L22+L23 solo costs sum to 0.06pts"
       }
     ]
   }

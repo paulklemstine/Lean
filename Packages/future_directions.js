@@ -1488,21 +1488,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-56 #1 \u2014 TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
   },
   {
-    "consumed_by_exp_id": "6c27d6f0",
-    "description": "## NET-60 \u2014 limited-memory axis, round 13 (paper 145, ResearchOutput/exp_net60_pairs.py, /tmp/net60.log)\n\n**Verdict name: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR.**\n\n### Result\nSix pair/triple ablations at k=16/layer (Qwen2.5-0.5B, ctx=512), each cost compared to the sum of its members' NET-59 solo costs:\n\n| arm | layers | retained | cost | \u03a3solo | class |\n|---|---|---|---|---|---|\n| **tail_22_23** | 22,23 | 0.9958 | **0.42 pts** | **0.06** | **SUPER 7\u00d7** |\n| bulk_12_15 | 12,15 | 0.9940 | 0.60 | 0.79 | sub |\n| front_0_1 | 0,1 | 0.9975 | 0.25 | 0.25 | \u2248additive |\n| mid_10_11 | 10,11 | 0.9960 | 0.40 | 0.28 | super 1.4\u00d7 |\n| cross_22_12 | 22,12 | 0.9941 | 0.59 | 0.60 | sub |\n| **triple_21_22_23** | 21,22,23 | 0.9924 | **0.76** | **0.19** | **SUPER 4\u00d7** |\n\n- **P1 CONFIRMED**: the tail pair is simultaneously the cheapest by solo sum and disproportionately costly jointly \u2014 7\u00d7 super-additive.\n- **P2 REFUTED**: three of six arms are super-additive.\n- **P3 CONFIRMED**: the tail triple compounds at 4\u00d7 and is the most costly arm.\n\n### The law\nThe last two layers function as a COORDINATED UNIT \u2014 co-adapted during pretraining; sparsifying either alone is absorbed, degrading both removes a joint capability no other pair exhibits. This causal signature matches the four correlational markers (NET-50 far-from-tropical, crystallization loss, NET-51 decision divergence, NET-54 unportability). **Prescription: treat the tail as ONE unit for bits/budgets \u2014 never differentiate between its members.**\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P2; (b) clean \u2014 pairwise super-additivity maps for pretrained LLM attention not previously measured; (c) confronted \u2014 one context/model, k=16 granularity, five chosen pairs stated; (d) clean \u2014 held-out, no training; (e) deterministic, solo sums inherited from the committed NET-59 profile; (f) clean \u2014 ALL_DONE_NET60; (g) fair \u2014 identical budgets across arms; (h) DIRECT.\n\n### Next\n1.5B replication; deeper-tail units on larger models; probe+recency hybrid (NET-58 follow-up); domain-jump corpora.\n\nNow 60 network experiments. Assessment v60. Paper 145.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3697",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T17:37:32.035503+00:00",
-    "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR \u2014 L22+L23 solo costs sum to 0.06pts but joint pruning costs 0.42pts (7x super-additive); the last two layers are one coordinated unit"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "## NET-59 \u2014 limited-memory axis, round 12 (paper 144, ResearchOutput/exp_net59_perlayer.py, /tmp/net59.log)\n\n**Verdict name: NO-SINGLE-LAYER-IS-THE-BOTTLENECK.**\n\n### Result\nSolo-layer causal pruning profiles: for each of Qwen2.5-0.5B's 24 layers independently, oracle top-k applied ONLY to that layer (k=16 and k=32), all others full (ctx=512, 24 held-out windows):\n\n- **k=16 profile: spread 0.6 points.** Best 1.0013 (L13), worst 0.9953 (L12); every layer \u2265 0.995.\n- The identity tail: L21 0.9987, L22 0.9987, **L23 1.0008 \u2014 the BEST layer in the stack.**\n- k=32: even flatter (spread 0.5 pts).\n\n- **P1 TAIL-IS-CRITICAL REFUTED**: the tail is not individually fragile under top-k.\n- **P2 CONFIRMED trivially**: all layers \u2265 0.995.\n- **P3 NON-UNIFORM-MAP REFUTED**: the profile is remarkably uniform.\n\n### The epistasis resolution\nFour prior rounds established L22/L23 as categorically different: only far-from-tropical region (NET-50), highest crystallization loss, only cross-fine-tune decision divergence (NET-51), only unportable weights (NET-54), personal KV. Yet solo deletion costs \u2248 0. **The tail's role lives in interaction with upstream representations**, exactly as NET-54's swap-collapse showed directly. Additional structure: joint all-layer k=16 costs 1.7% (NET-50) vs ~4.8% if solo costs were additive \u2014 pruning interactions are SUB-ADDITIVE/redundant.\n\n### Design implication\nThere is no per-layer budget hierarchy to exploit for mixed-precision serving at this scale; differentiation must come from interaction-aware or policy-level criteria.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 causal solo profiles new in-programme; (c) confronted \u2014 limits: ONE context (512), solo-only granularity (pairs/joints open), 24 windows; (d) clean; (e) deterministic monotone profiles; (f) clean \u2014 gate exact, ALL_DONE_NET59; (g) fair \u2014 identical budgets per layer; (h) DIRECT.\n\n### Next\nPairwise/joint tail ablations; 1.5B replication; probe+recency hybrid; domain-jump corpora; 7B cell.\n\nNow 59 network experiments. Assessment v59. Paper 144.\n",
     "domains": [
@@ -1747,16 +1732,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-87: CODE-AT-4096-IS-PROTECTED \u2014 code knee @4096 is 32 vs prose 40; domain factor narrows at long context"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9d509f0a",
     "description": "Round-68 #3, cron iteration (exp 543). Fresh-seed replication of paper 184's bitlen-64 uniform cell.\n\n**U64B-DIAL-HOLDS-COUNT-PARITY** (H1 pass; H2 count parity): pooled \u03c1(T, rate) = **0.641** [0.619, 0.660] \u2014 in band; advantage +0.044 [0.022, 0.066] \u2014 below +0.05 bar; only 1/3 seeds above. Six-seed combined: \u03c1T mean **0.644**, advantage mean +0.059 / median +0.058, 3/6 above bar.\n\nThe bitlen-64 zero-fit dial law replicates cleanly on fresh uniform seeds and H1 stands, but H2's point estimate flips below the bar \u2014 record as MARGINAL/count-parity.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp543_t_dial_unif_64.py + exp543_result.json, seeds 20261210\u201312.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3759",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T22:39:30.329884+00:00",
     "title": "FACT round-68 #3 \u2014 TDIAL-U64B: fresh-seed replication confirms the dial at bitlen 64 (paper 190)"
   },
@@ -2137,6 +2123,104 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:55:13.535981+00:00",
     "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates the model (PPL 7.11 -> 2714.6, +38000%) \u2014 the KV precision axis has no usable middle at ctx 2048"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 68 (the NET-92 rescue/discriminator cell).\n\n| arm | PPL | dPPL vs control |\n|---|---|---|\n| K q4_1 / V q4_1 | 3,158.07 | +44,322% |\n| K iq4_nl / V iq4_nl | 1,627.35 | +22,790% |\n| **K q4_0 / V f16** | **2,537.80** | **+35,597%** |\n| **K f16 / V q4_0** | **7.1211** | **+0.166%** |\n\n**Scorecard:** P1 REFUTED decisively (block scale+offset does not rescue \u2014 q4_1 marginally WORSE than raw q4_0); P2 CONFIRMED BEYOND ALL PREDICTION (predicted >=5x K-vs-V asymmetry; measured ~214,000x damage ratio); P3 technically true but meaningless (iq4_nl ranks best among three collapsed formats).\n\n**The law:** THE ENTIRE KV CLIFF LIVES IN THE KEYS. Values tolerate raw 4-bit quantization free; keys cannot survive 4 bits in ANY tested representation. Mechanism: keys feed every softmax selection boundary and amplify through layers (NET-83 path); value errors perturb only retrieved content \u2014 linear, local, benign.\n\n**Deployment consequence:** split the cache budget by role \u2014 keys >=8 bits, values accept 4. Given K8/V16 (+0.09%) and K16/V4 (+0.17%) are both individually free, a combined K8/V4 (~6 average bits) should be quality-free; direct confirmation is the immediate follow-up.\n\n**Honest limits:** three collapsed key formats triangulate but share one implementation family inside llama.cpp (fundamentality not proven); single slice/model/context; K8/V4 combined cell untested; per-arm SEs not captured.\n\nSetup identical to NET-92 (llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice). Script ResearchOutput/exp_net93_kvrescue.py; paper ResearchOutput/NetworkMathematics/93_KeysOwnTheCliff.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3947",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:53.229455+00:00",
+    "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES alone are free (+0.17%) \u2014 a four-order-of-magnitude asymmetry; no block-scaling format rescues keys"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**FACT round-74 #4 \u00b7 exp 566 \u00b7 paper 213 \u00b7 seed 566 \u00b7 walls 9.3 s + 247.7 s**\n\nAttacks the barrier-map residual item **MA-1 effectivity**: is there a COMPUTABLE per-modulus criterion for when the MA-1 averaging assumption (which-factor blindness as identity, papers 93/102/132) is realized? If AP-deviation magnitude were governed by quadratic-character L-values, one would exist. Pre-registered carrier: D(m) = max_a |\u03c0(x;m,a) \u2212 E|/\u221aE on P(m) = \u03a3|L(1,\u03c7)| over nontrivial real characters mod m; H1 R\u00b2 > 0.8 \u21d2 criterion armed; H0 R\u00b2 < 0.5 \u21d2 honest negative.\n\n**Pre-registered verdict rules evaluated verbatim \u2192 NULL-HONEST-NEGATIVE at TWO scales.**\n\n**(1) Registered stage A (x = 2^26 full, no shrinkage).** \u03c0(x) = 3,957,809, 287 moduli (squarefree [3,300] \u222a primes [307,997]), wall 9.3 s: log D ~ \u22120.0767\u00b7log P, slope CI95 (\u22120.136, \u22120.015), **R\u00b2 = 0.0187** [bootstrap 0.0007\u20130.065] \u2014 slope slightly NEGATIVE, opposite the effectivity story. Partial R\u00b2 controlling log \u03c6(m) = **0.0008** \u21d2 residual association purely a \u03c6(m) size effect. Secondary chi\u00b2 readout agrees (R\u00b2 = 0.025). Control cross-modulus pairing permutation (2000 draws) collapses to null (mean 0.0033 / max 0.0435); disclosed spec deviation: literal within-modulus count permutation is VACUOUS for max/\u03c7\u00b2 readouts (permutation-invariant).\n\n**(2) Final scaled artifact B (x = 2^28, \u03c0 = 14,630,843, 2489 moduli dense 2..1500 + primes beyond, wall 247.7 s).** Primary per-m carrier **R\u00b2 = 0.0785 \u2192 NULL**; cell-level secondary y ~ log(1/L), 1902 discriminant cells: R\u00b2 = 0.00052, theory-signed slope B = \u22120.034 [\u22120.101, +0.033] \u2014 not even positive. Baseline size control: OBS ~ log m alone explains **R\u00b2 = 0.790** \u2014 deviation magnitude is modulus-size-dominated; character-L mass adds nothing after size.\n\n**(3) Verification.** Exact class-number path validated: L(1, \u03c7\u208b\u2083) = \u03c0/(3\u221a3) exact (h(\u22123)=1, w=6); truncated series calibrated on 226 overlap discriminants, median rel err 1.8e-5; final-run truncation quality real-share median 8.7e-4, worst rel err 8.2e-2.\n\n> **SCOPING CAVEAT (prominent):** the registered readout D(m) is **SIGN-BLIND** and the predictor uses |L(1,\u03c7)| magnitudes \u2014 this bounds the MAGNITUDE route only. Signed character-alignment analysis is the required follow-up BEFORE killing the L-value route.\n\n**Barrier framing:** H0 here does NOT weaken the barrier program \u2014 it honestly bounds one computable-criterion route at toy scale. MA-1 stays axiomatic at practical scale; \"MA-1 effectivity\" stays an OPEN gap item.\n\nLedger catches, all disclosed: off-by-one corrupted non-exact L-values caught by spot check (\u03c7\u2085 gave 0.127 vs true 0.430), fixed + rerun before any recorded fit; smoke control gate failed at n = 29 (resolved at scale where the null collapses cleanly); Mertens gate FAIL per its own pre-stated rule (slope 0.9277 [0.9234, 0.9320], R\u00b2 = 0.9894 \u2014 near-proportional just outside the strict band; implied K\u0304 = \u22120.216 within theory bound |K| \u2264 0.756); scale-reconciliation disclosure (findings/digest describe stage A while canonical exp566_result.json holds the verdict-identical stage-B rerun that overwrote it mid-session; extended-rerun script variant not separately preserved); coordination disclosure \u2014 a parallel duplicate agent (coordinator double-dispatch after a stall) left an orphaned draft exp566_ma1_effectivity_alt_agentB.py with NO results attached; recorded artifact set solely from the completing agent, orphan left in place.\n\nPaper: ResearchOutput/NewMathematics/213_Ma1EffectivitySweep.md.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3948",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:53.231013+00:00",
+    "title": "FACT round-74 #4 \u2014 MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-deviation effectivity at toy scale (clean H0 honest negative at two scales: R\u00b2=0.0187 registered x=2^26 / R\u00b2=0.0785 scaled x=2^28 vs 0.8/0.5 bars; deviation field modulus-size-dominated, baseline OBS~log m R\u00b2=0.79) \u2014 MA-1 stays axiomatic, SIGN-BLIND scope disclosed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**FACT round-74 #3 \u00b7 exp 563 \u00b7 paper 212 \u00b7 seed 20260824 \u00b7 wall 2.0 s**\n\nResolves the hint-pricing tension between paper 138's linear no-synergy law and the rounds-70/71 \"sequential hints compound\" observation by isolating **adaptivity** (posterior conditioning between queries). n = 800 bitlen-40 semiprimes in two strata (600 BALANCED \u03c1 \u2208 [1, 1.01] / 200 UNBALANCED \u03c1 \u2208 [7.5, 8.5]), k \u2208 {0,1,2,3,6,9,12,14,16,20,24}, idealized truthful `p \u2264 t?` oracle, downstream Fermat-order scan priced in divisibility tests; arms ADAPT (bisection) / NONADAPT (uniform battery) / ADAPTQ/NONADAPTQ (draw-law-calibrated) / SHAM (cost gate).\n\n**Pre-registered verdict rules evaluated verbatim \u2192 COMPOUND-CONFIRMED-HALVING-FAIL** (the UNBALANCED stratum alone reads GEOMETRIC-COMPOUND-ISOLATION-CAPPED \u2014 every prediction passes there including the strict slope).\n\n**(1) Compounding real + superlinear + pure adaptivity (H1a/H1c CONFIRMED).** s_adapt(12)/s_adapt(3) = 165.2\u00d7 unbalanced / 20.8\u00d7 balanced (CIs exclude linear 4\u00d7); premium over the matched fixed battery at k = 12 = **239.5\u00d7 [220.1, 261.0]** unbalanced / **20.8\u00d7 [19.5, 22.3]** balanced, with r(1) = **1.00 EXACTLY** in all four pairs \u2014 nothing to adapt to at one query.\n\n**(2) Hard isolation cap, zero barrier events (H1b CONFIRMED).** 100% of N pinned at k = 20 = \u2308log\u2082 W\u2309; s(\u226520) = T\u2080 exactly (1072.43 balanced / 2.862e5 unbalanced); max s \u2264 T\u2080 \u00d7 1.01 everywhere \u2192 NO barrier event. Pin sits at the integer-bits cap above the prime-isolation bound \u2248 17 \u2014 barriers 4/8 UPHELD and now PRICED: external position info pays ISOLATION-COST per query.\n\n**(3) Halving slope (the FAIL clause).** Aligned A10 test: \u22120.6589 PASS unbalanced; \u22120.5836 FAIL balanced, 16% off \u2212ln2 (band-entry phase correlation; the width-halving law itself is EXACT: V2a 720 deterministic steps, V2b closed form vs dense grid 1.9%).\n\n**(4) HEADLINE SURPRISE (ledger catch A5).** Balanced semiprimes pin min(p,q) against \u221aN \u2192 a uniform FIXED battery carries **LITERALLY ZERO BITS** (s \u2261 1.00 exactly at every k \u2264 24 across all 600 N): non-adaptive batteries are waste-proof in the balanced stratum, and the adaptivity premium grows from exactly 1 into the hundreds.\n\n**Net economics (H3 CONFIRMED).** k_opt = 10/18 measured vs log\u2082((T\u2080\u22121)\u00b7ln2/c_q) = 9.54/17.60 predicted; s_net_max = 89.0 / 14245. SHAM gate PASSED both strata (never helps, never inflates).\n\n**RECONCILIATION \u2014 one pricing structure, two faces.** Paper 138's linear no-synergy pricing holds for NON-adaptive batteries (zero usable bits \u21d2 zero speedup, exactly as the balanced collapse shows); sequential ADAPTIVE hints compound superlinearly but saturate EXACTLY at the isolation-cost ceiling. New hint-taxonomy entry: adaptive sequential hints price geometrically up to isolation cost. This resolves the tension flagged when rounds 70\u201371 noted \"sequential hints COMPOUND\" vs paper 138's linearity.\n\nBarriers: #4/#8 upheld + priced; #2 untouched (idealized external channel by design); no barrier event \u21d2 no re-verification triggered. Validations V0/V1/V4/V5 all clean; zero-parameter theory curve wins fit selection in both strata.\n\nLedger catches, none adverse post-fix: A5 uniform-prior zero-bit collapse (smoke-caught pre-full-run; uniform curves retained as reference diagnostics per AMENDMENT-1); even-median bisection stall (lower-median fix); V2 MC-noise \u2192 deterministic dense-grid enumeration; V5 expectation-vs-bound constant fix; sham luck/inflation clause split.\n\nPaper: ResearchOutput/NewMathematics/212_SeqhintCompoundLaw.md.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3949",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:53.232489+00:00",
+    "title": "FACT round-74 #3 \u2014 SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3) = 165x unbalanced / 21x balanced, r(12) = 240x [220,261]) but saturate EXACTLY at the isolation ceiling (100% pinned at k=20, zero barrier events) while fixed batteries price linearly or carry literally ZERO bits in the balanced stratum \u2014 one pricing structure, two faces; paper-138 linearity reconciled"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**FACT round-74 #2 \u00b7 exp 564 \u00b7 paper 211 \u00b7 seed 20260824 \u00b7 wall 76.4 s**\n\nThird face of the Berggren triplet-tree campaign: does the mod-N orbit's revealed residue set (exp555/paper 205's under-sampling) carry per-N factor information, and can an orbit dial beat the residues-cap-4/3 (barrier 4)? n = 800 bitlen-40 semiprimes (500 balanced / 300 ratio-4), moduli m \u2208 {3,4,5,7,8,16}, logN-decile-stratified permutation nulls, paper-132 filter accounting.\n\n**Pre-registered hypotheses (verbatim): H1** \"orbit revealed-set MI fully accounted for by ordinary residue-dial content; measured speedup \u2264 4/3 within CI; = matched-random dial\" \u2014 **CONFIRMED with one scope refinement. H2** (speedup > 4/3 surviving replication + sham + N-computability) \u2014 **gate false; no barrier event.**\n\n**Design amendments disclosed pre-run:** (1) the exp555 root-BFS never wraps mod N at bitlen-40 budgets (depth \u2248 9, coords ~10\u2074 \u226a N ~10\u00b9\u00b2) \u2192 root revealed set N-INVARIANT across all 800 N at all six moduli \u2014 the task premise (\"which subset varies with N\") fails for the root component; characterization arm only. (2) Live test = generic components (10 random Pythagorean seeds \u00d7 1500 nodes): supports saturate instantly (exactly m classes at every modulus, component length uniform), variation only in frequencies/orbit-length.\n\n**Information null (H1):** over 48 cells max |z| joint = +2.29 (topshare@16), max |z| conditional = +1.78; feature MI \u2264 0.09 bits vs ordinary residue-dial baselines I(N mod m; p mod m) = 1.00\u20133.00 bits. Nothing beyond ordinary residue content.\n\n**Filter law check at \u03b8 = \u00bd (sqrt-descending TD):**\n- RAND-MATCH 1.3387 CI[1.3008, 1.382] vs prediction 4/3 = 1.3333 \u2014 **cap law confirmed to ~0.4%**; SHAM co-inflation control clean CI[1.2717, 1.3579].\n- ORBIT reads 2.0000 CI[2.0, 2.0], failure rate 0.000 \u2014 BUT **paired z vs UNIV fixed dial = 0.0 EXACTLY**: it IS the parity skip (root-orbit legs always odd). An N-invariant universal exclusion table computable blind from N alone; exceeds 4/3 with zero per-N information \u21d2 constant-shave, NOT a barrier event.\n- NET-loaded: every arm < 1 (0.20\u20130.75) \u2014 paper-131 lesson replicated. Replication gate not triggered.\n\n**New scope note on barrier 4:** the cap law presumes P(p kept) = \u03b8 exchangeability; deterministic exclusions escape via P(p kept) = 1 \u2014 an N-invariant structural dial can exceed 4/3 without carrying any information. The cap bounds information-bearing dials; blind structural exclusions are worth exactly their constant factor.\n\n**Barriers:** #2 consistent; #4 UPHELD + scope note; #5 EXTENDED to mod-N orbit projections; #6 restated as primitive-triple congruences; #8 unchanged. N-computability audit recompute-identical 3/3 both arms (no factor in any code path).\n\nLedger: three catches all fixed BEFORE the full run (empty-walk BFS \u2014 children never enqueued, caught by timing probe; odd-multiplier population-split bug \u2014 empty train half; g-unbound \u00d72); none adverse post-run.\n\n**Campaign CLOSED.** With paper 199 (two-tree closure synthesis of the four-strength seal), paper 205 (modular dynamics), and paper 210 (oracle bound unrealized), ALL faces of the user's triplet-tree proposal are now measured. Paper: ResearchOutput/NewMathematics/211_OrbitDialCapTest.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3950",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:53.233965+00:00",
+    "title": "FACT round-74 #2 \u2014 ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor information (max |z| +2.29, MI \u2264 0.09 bits vs 1\u20133-bit residue dials); its 2.0\u00d7 read beats the 4/3 cap ONLY as the N-invariant parity skip (paired z vs fixed dial = 0.0) \u2014 constant-shave, not a barrier event; triplet-tree campaign CLOSED"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**FACT round-74 #1 \u00b7 exp 565 \u00b7 paper 210 \u00b7 seeds 20260824/20260825 \u00b7 wall 55.8 s**\n\nQuestion: is the oracle navigation-sensor peak of paper 197 \u2014 I(1{d\u2264B}; b\u2081) = 0.479797 bits at B = 22758 (hit-rate 0.2053) \u2014 realizable by any N-computable query policy, or only by factor-conditioned posteriors (barrier 6)?\n\nFrame reused verbatim from exp549; budget = distinct information-bearing queries over a 295-item menu; discriminative policies fit on a labeled train split, evaluated test-time N-only; two seeds; MI bias-corrected.\n\n**Reproduction gate: PASS BIT-EXACTLY.** Seed-20260824 population regenerated from exp549's code path matches all 11 published fine-grid points to the last digit (peak delta = 0.000000). Fresh seed B: peak 0.4948 at the same B = 22758.\n\n**Pre-registered verdict (rules verbatim from exp565_prereg.json): H1 false, H2 not triggered \u2192 GAP-PARTIAL.**\n- Lenient pooled crediting: ADAPTIVE-NB/BATTERY realize 0.167\u20130.172 bits = **33.8\u201335.9% of peak**, credited on seed A only.\n- STRICT within-logN-strata crediting: **0% for EVERY N-only policy on BOTH seeds.**\n- No policy \u2265 50% anywhere; sham clean (max raw 0.0020 bits, credited 0).\n\n**Mechanism \u2014 disclosed post-hoc amendment A1 (documented separately from the pre-registered verdicts):** the entire lenient signal is the between-magnitude-strata population base-rate channel created by the population design (support-edge coupling in indep/unilog, q \u2264 2\u00b2\u00b2 truncation in ratio), read out by parabola-mirror ensembles: PARONLY-battery \u2248 full battery (0.161\u20130.167 vs 0.164\u20130.172); MODONLY residues \u2248 0 (0.0008\u20130.0032 \u2014 paper 81's seal holds jointly); pooled z +118..+128 stable but dead within strata (z_within32 \u2264 2.3); flat in B past ~64 queries (class exhausts at 295).\n\nDecisive split: within-strata geometric excess carried by the ORACLE = **0.3634\u20130.3687 bits = 73.5\u201376.8% of peak** (z 82\u201390); best N-only policy = **\u2264 0.0018 bits = 0.25\u20130.50%** of it. FULL-ORACLE anchor hint=b\u2081: 0.9563\u20130.9627 bits \u2248 200% of peak.\n\n**Answer: the peak remains UNREALIZED.** It splits into ~74\u201377% within-strata geometry + ~23\u201326% population-prior slice; realizing 1{d \u2264 B} requires d = M \u2212 isqrt(N) (median d = 215782 against menu exhaustion at 295 queries; a full Fermat scan at peak budget misses 79.5% of samples).\n\n**Barriers:** #6 CIRCULARITY CONFIRMED AND QUANTIFIED (gap = 73\u201377% of peak \u2014 first quantified circularity measurement). #2 does NOT seal b\u2081 a priori (p\u2194q-symmetric via max/min; residue null EMPIRICAL, extends paper 81 to joint NB resolution). #4/#5 consistent. #1/#3/#7/#8 unengaged.\n\nLedger: one disclosed amendment cycle, none adverse; pre-registered rules still evaluated verbatim. Honest limit: the ~24% between-strata slice is a property of this lab population's size-ratio coupling, not of semiprimes generally.\n\nThis closes the \"unrealized 0.48-bit oracle bound\" face of the Berggren triplet-tree \u00d7 energy-spectrum campaign (rounds 70\u201372, papers 192\u2013197) \u2014 a strengthening of closure, not a breakthrough. Paper: ResearchOutput/NewMathematics/210_OracleRealizationGap.md.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3951",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:53.235459+00:00",
+    "title": "FACT round-74 #1 \u2014 ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-computable policy (strict crediting 0% both seeds); barrier-6 circularity quantified at 73-77% of peak"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-73 #4, exp 562, status 04_final_time_capped. **RANDOM-AT-SCALE.** First direct measurement of the standing directive's scale-smoothness frontier cell (u\u22656), the properly-controlled redo of round-26 #3's underpowered SUBEXP-STRATUM attempt: is x\u00b2\u2212N's B-smoothness (B=1000) different from size-matched randomness at u = log v/log B in {5,6,7,8}? Controls exactly histogram-matched on (bitlen, mantissa-octant); shared gcd-chain primorial code path both populations; assert pipeline 844 cases incl 24 adversarial vs exhaustive strip, 0 mismatches; ~1.49e9 candidates tested PER ARM across bins; 4000 N-clusters/bin; cluster bootstrap n=2000.\n\nResult r(u) = p_cand/p_ctrl: 1.011 [0.947,1.075] @ u\u22485.96; 0.949 [0.783,1.152] @ 6.95; 0.900 [0.455,1.700] @ 7.93; 1.200 [0.500,3.000] @ 8.26 \u2014 ALL CIs cover 1. Trend slope +0.036 log-r/u, CI [\u22120.255,+0.345], p=0.831 \u2014 FLAT. Tightest 95% bound |r\u22121| \u2264 0.2168 (bin u=6). All pre-stated deviation rules FALSE \u2192 RANDOM-AT-SCALE.\n\nSecondary structure (real, confined to the low-u face): N-level overdispersion D=1.61 [1.50,1.73] vs Poisson PERSISTS at bin 5 then DIES (~1.00 by bins 7\u20138); QR-dial grip decays with u: Spearman(per-N rate, QR frac) 0.32 (perm p=7e-4) \u2192 0.04.\n\nCross-check vs paper 130: its ratios 0.88\u20130.91 (u<4.75, scales to 2^44) were attributed to a finite-x Dickman correction SHARED WITH CONTROLS ('relation pool ensemble-equals unrestricted random'). This experiment extends that random-pool claim to u \u2264 8.5 \u2014 CONSISTENT, no novelty claimed against it. Honest placement: directly on the asymptotic-goal frontier; NULL within bound |r\u22121|\u22640.217 \u2014 no O(1) smoothness edge from quadratic-polynomial structure at these scales. Truncation disclosed: N\u22642^80 with x\u22644\u221aN tops out near u\u22488.5; production-scale u\u22659 stays open, as does why the dispersion dies between u\u22486 and 7. Time-capped: bins 7/8 event counts tiny (18v20, 12v10), CIs wide.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp562_scale_smoothness.py + exp562_result.json.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3952",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:53.236958+00:00",
+    "title": "FACT round-73 #4 \u2014 SCALE-SMOOTHNESS-DEVIATION: x\u00b2\u2212N smoothness is random-level at u=6\u20138.5 (tightest bound |r\u22121|\u22640.217); per-N clustering and QR dial both die above u\u22487"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-73 #3, exp 561. **BATCH-WINS-TESTING.** Product-tree batch smoothness-testing vs solo trial division at fixed B=100, bitlen 40, pools k in {1,8,64,512}: best delta +0.104 (flat op model, k=512); batch beats solo at EVERY measured pool size in the flat model (no crossover below solo). The WORD model REVERSES at large k (delta \u221262.6 at k=512 \u2014 big-int intermediates dominate); word-model crossover vs solo at M* \u2248 1715 candidates. Exact-match audit PASS: batch-detected smooth set == per-item trial division on 500/500 samples (tree-vs-trial, direct-vs-trial, vector: 0 mismatches). E1 bound quantified: solo TESTING share of per-factor ops = 11.56%, so the saving is capped there even if testing were free \u2014 realized +0.104 sits just under. Finding phase strictly per-N (rho identical across arms by construction; qs_splits_total = 0 at bitlen 40/FB100 \u2014 yield far below quota).\n\nHonest placement: constant-shaving on a KNOWN method (batch smoothness testing is standard QS/NFS machinery, barrier 8) \u2014 engineering calibration of the method stratum, not an asymptotic result; zero class movement. Deployment caveat: GMP-level constant factors flip the sign past k\u22481715 candidates.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp561_batch.py + exp561_result.json.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3953",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:53.238419+00:00",
+    "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
   },
   {
     "consumed_by_exp_id": "",
@@ -3887,22 +3971,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_260",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Cellular Automata at the Ordinals: Transfinite Computation"
   },
   {
     "consumed_by_exp_id": "",
@@ -12208,6 +12276,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Rational star-powers of the corrected Monster product exist and are unique. Fixing a Laurent degree and varying the exponent r should produce a polynomial in r, whose degree and roots encode arithmetic of the 194 trace series.\n\nFor each k the function r -> (coefficient at degree k - 1 of the star-r-th power of a normalized f) is a polynomial in r of degree k with leading coefficient (f.coeff 0)^k / k!.\n\nProve the first three cases from the explicit expansions already formalized, then induct using the logarithm/exponential correspondence on 1-units.\n\nExplicit closed forms for all rational star-powers, hence a complete coefficient calculus for the corrected moonshine group.\n\nNon-polynomial dependence would reveal that ratPow is not compatible with coefficientwise limits.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_3943",
+    "priority_score": 0.7094912280701755,
+    "research_mode": "team",
+    "source_exp_id": "fdd9261c",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:00.310412+00:00",
+    "title": "Rational Power Spectrum of the Monster Product"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The equality between the modal theory of clock-and-switch worlds and that of finite rooted directed posets is proved. We conjecture that this theory is exactly S4.2, giving a completeness theorem whose frames are products of a chain with a Boolean cube.\n\nA modal formula is derivable in S4.2 iff it is valid on every CWorld (Fin n) (Fin m).\n\nFormalise the finite model property for S4.2 (filtration of the canonical model) and compose it with valid_boundedPoset_iff_valid_cworld.\n\nS4.2 gets a purely combinatorial frame class inside the catalog's Kripke semantics.\n\nCube frames validate a proper extension of S4.2, and identifying the extra axiom would characterise distributive-lattice-like frames modally.",
     "domains": [
       "Combinatorics",
@@ -13175,6 +13258,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T05:46:37.763046+00:00",
     "title": "Single-Crossing Barrier for Nonlinear Combiners"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The multiplicative monoid generated by normalized q-series should be isomorphic to the product of the additive monoid of pole orders with the group of 1-units, giving a universal target for pole-order-additive invariants.\n\nThe submonoid of the Laurent series field generated by all normalized series is isomorphic as a monoid to Multiplicative N times OneUnit, the N-component being the pole order.\n\nDefine the submonoid in Lean, build the homomorphism from the pair (pole order, 1-unit), and prove bijectivity using the order valuation.\n\nA clean universal property for pole-order invariants, extending the unit-group splitting to the non-invertible graded setting.\n\nThe monoid contains unexpected elements, indicating that products of normalized series generate more than the graded model.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3944",
+    "priority_score": 0.6702727272727275,
+    "research_mode": "team",
+    "source_exp_id": "fdd9261c",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:00.790445+00:00",
+    "title": "Graded Monoid Classification of Pole Data"
   },
   {
     "consumed_by_exp_id": "",
@@ -15628,6 +15725,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The unique corrected square root of the moonshine Hauptmodul J has integral Laurent coefficients as far as computed, while its cube root does not. We conjecture integrality holds at the prime 2 for all coefficients, and that this encodes 2-adic congruences for the coefficients of J. Proving it would connect the star-root construction with replication identities.\n\nLet g be the unique normalized Laurent series with q g^2 = J. Then every Laurent coefficient of g lies in Z; equivalently the binomial series (1+X)^{1/2} substituted with q J - 1 has 2-integral coefficients.\n\nFormalize the star-root over Z_2 rather than C, using PowerSeries.binomialSeries with r = 1/2 over the binomial ring Z_2, and prove that substitution preserves 2-integrality; verify numerically to degree 50 first.\n\nA new family of 2-adic congruences for the j-function coefficients, obtained purely from the group structure of normalized q-series.\n\nThe first denominator identifies a precise obstruction, isolating the 2-adic valuation of the coefficients of J where the pattern breaks.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_3941",
+    "priority_score": 0.5627588697648216,
+    "research_mode": "team",
+    "source_exp_id": "fdd9261c",
+    "status": "available",
+    "timestamp": "2026-08-24T07:21:59.302253+00:00",
+    "title": "Dyadic Integrality of Hauptmodul Star-Roots"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "No `EMLExpr` denotes `Real.sin` on\n   all of `\u211d` (and likewise for `Real.cos`).  A proof route is to formalize the\n   one-variable consequence of o-minimality of the real exponential field:\n   the zero set of an exp-log term is a finite union of points and intervals,\n   whereas the zeros of sine form an infinite discrete set.  A single explicit\n   expression whose evaluation equals sine everywhere would falsify this.",
     "domains": [
       "Applications",
@@ -16030,6 +16142,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:58.606300+00:00",
     "title": "Learnability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For a depth-$L$ transformer the epistasis order at a fixed\ntolerance grows like the width of the *deepest* co-adapted block, and this block\nis an interval of layers: there is a partition of $\\{0,\\dots,L-1\\}$ into intervals\nsuch that the near-optimal path hypergraph is the union of the \"all-of-a-block\"\nhyperedges of the partition.\n\nThe key insight is that a co-adapted unit is not a statistical cluster but a\n*minimal transversal* of the near-optimal path family, and the block-realization\ntheorem shows minimal transversals of any size are tropically realizable \u2014 the\nempirical question is only whether the realized ones are contiguous.\n\n**Why now?** The hitting-set characterization turns a costly ablation sweep into a\nhypergraph-covering question that can be tested with $O(L^2)$ pair ablations plus\na single fit, instead of $2^L$ subsets.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_3945",
+    "priority_score": 0.5579166666666666,
+    "research_mode": "team",
+    "source_exp_id": "6c27d6f0",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:19.560140+00:00",
+    "title": "Transversal-number depth law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** A layer-wise pruning budget is safe (per-layer accounting is\nvalid) **iff** the induced path system satisfies the merge axiom up to an additive\nslack $\\delta$, and the total super-additivity of a network is bounded by\n(number of layers) $\\cdot\\ \\delta$.\n\nThe key insight is that the per-layer budgeting bound upgrades a *local* two-path\nexchange property into a *global* bound on every subset at once, so a finite\ncertificate implies a statement over the whole Boolean lattice.\n\n**Why now?** The $\\delta$-relaxed merge axiom is checkable from pairwise data\nalready collected, and would give the first certificate of safe per-layer\nbudgeting rather than a heuristic.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_3946",
+    "priority_score": 0.5579166666666666,
+    "research_mode": "team",
+    "source_exp_id": "6c27d6f0",
+    "status": "available",
+    "timestamp": "2026-08-24T07:22:20.010743+00:00",
+    "title": "Merge-axiom certification of prunability"
   },
   {
     "consumed_by_exp_id": "",
@@ -24264,6 +24406,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T23:36:34.565023+00:00",
     "title": "Tokenisation Intercept Shift with Invariant Log-Slope"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We proved that agreement of m normalized factors up to degree N-1 forces agreement of their product up to degree N-m. We conjecture the shift m is optimal and that the truncation map is surjective onto the expected affine space, so exactly m coefficients of information are lost and no more.\n\nFor each m and N the map from m-tuples of truncated normalized series to truncated products is surjective onto the fibre determined by the leading coefficient, and there exist tuples agreeing to degree N-1 whose products differ at degree N-m+1.\n\nConstruct explicit witnesses with single-coefficient perturbations and formalize the surjectivity by an inductive lifting argument on truncations.\n\nA sharp information-theoretic bound for reconstructing factors from a moonshine-type product.\n\nAdditional hidden constraints link the coefficients of products of normalized series.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3942",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "fdd9261c",
+    "status": "available",
+    "timestamp": "2026-08-24T07:21:59.856322+00:00",
+    "title": "Optimal Determinacy Radius for Pole-Order-m Products"
   },
   {
     "consumed_by_exp_id": "",
@@ -42295,14 +42451,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transition windows"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7934932a",
     "description": "Prove the standard factor-`1/2` total-variation\n   characterization as a supremum over events, yielding tight Boolean\n   distinguishing bounds rather than the deliberately simple `\u2113\u00b9` upper bound.",
     "domains": [],
     "id": "fd_2565",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "a68d3b50",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:54.392007+00:00",
     "title": "Sharper normalization"
   },
@@ -42329,19 +42486,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:55.392990+00:00",
     "title": "McKay\u2013Thompson series are modular functions, normally of weight zero."
-  },
-  {
-    "consumed_by_exp_id": "fdd9261c",
-    "description": "Define Laurent q-series with the standard `q\u207b\u00b9 + O(q)` normalization and formalize the pole\n   order of finite products. This will make the normalization obstruction precise.",
-    "domains": [],
-    "id": "fd_2570",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "09a3e4f4",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:55.865505+00:00",
-    "title": "Define Laurent q-series with the standard `q\u207b\u00b9 + O(q)` normalization and formalize the pole\n   order of finite products."
   },
   {
     "consumed_by_exp_id": "",
