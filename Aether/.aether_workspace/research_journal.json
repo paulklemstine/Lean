@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f49038d4",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — curvature of universal-compression model pools\n\nThis cycle introduced the curvature `κ = 1 − min_{j∈Ω}(C(Ω) − C(Ω∖{j}))/C({j})`\nof a candidate pool for the Shtarkov-sum price fun",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-22T23:36:27",
-      "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` where `Ω` is the who"
-    },
-    {
       "cycle_id": "aa2d71a2",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — UNIFORM-DIAL thread (round 43 #2)\n\nThis cycle established, formally and in full generality, why the per-N yield dial is\ndraw-regime invariant: the dial is a *pairwise* functional",
@@ -499,19 +489,19 @@
       "theorem_count": 100,
       "timestamp": "2026-08-24T15:57:45",
       "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+    },
+    {
+      "cycle_id": "a331ba56",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — complementation symmetry of framed puzzles\n\nThis cycle settled the mission conjecture in a stronger and sharper form.  What\nwas proved (all sorry-free, in `Catalog/Novelty/`):\n\n*",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 117,
+      "timestamp": "2026-08-24T15:58:01",
+      "title": "Complementation as a free involution"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c798c801",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Topology of the Prime Point Cloud\n\nThe cycle just completed tested the \"primes look Poisson, and their `H₁` encodes twin\nprimes\" conjecture and found both halves false, replacing",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 110,
-      "timestamp": "2026-08-17T14:45:26",
-      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-    },
     {
       "cycle_id": "7ee9f549",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 100,
       "timestamp": "2026-08-24T15:57:45",
       "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+    },
+    {
+      "cycle_id": "a331ba56",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — complementation symmetry of framed puzzles\n\nThis cycle settled the mission conjecture in a stronger and sharper form.  What\nwas proved (all sorry-free, in `Catalog/Novelty/`):\n\n*",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 117,
+      "timestamp": "2026-08-24T15:58:01",
+      "title": "Complementation as a free involution"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "58176b8d",
-      "domain": "Algebra",
-      "name": "dot_sum_sum",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "58176b8d",
-      "domain": "Algebra",
-      "name": "bessel_ineq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "499e80a3",
-      "domain": "Novelty",
-      "name": "kneeSmall_zero",
-      "quality": 0.78
-    },
     {
       "cycle_id": "499e80a3",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "queryList_eval",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a331ba56",
+      "domain": "Novelty",
+      "name": "excludeClause_fits",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "a331ba56",
+      "domain": "Novelty",
+      "name": "assemblySet_puzzleOfList",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "a331ba56",
+      "domain": "Novelty",
+      "name": "assemblySet_puzzleOfSet",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-24T15:57:45",
+  "last_updated": "2026-08-24T15:58:01",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3eae19ad",
-        "quality": 0.85,
-        "theorems": 86,
-        "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count pa"
-      },
-      {
         "cycle_id": "0ef4aed2",
         "quality": 0.82,
         "theorems": 67,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 100,
         "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+      },
+      {
+        "cycle_id": "a331ba56",
+        "quality": 0.84,
+        "theorems": 117,
+        "title": "Complementation as a free involution"
       }
     ],
     "NumberTheory": [

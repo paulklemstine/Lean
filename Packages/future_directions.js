@@ -1642,21 +1642,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-87: CODE-AT-4096-IS-PROTECTED \u2014 code knee @4096 is 32 vs prose 40; domain factor narrows at long context"
   },
   {
-    "consumed_by_exp_id": "9d509f0a",
-    "description": "Round-68 #3, cron iteration (exp 543). Fresh-seed replication of paper 184's bitlen-64 uniform cell.\n\n**U64B-DIAL-HOLDS-COUNT-PARITY** (H1 pass; H2 count parity): pooled \u03c1(T, rate) = **0.641** [0.619, 0.660] \u2014 in band; advantage +0.044 [0.022, 0.066] \u2014 below +0.05 bar; only 1/3 seeds above. Six-seed combined: \u03c1T mean **0.644**, advantage mean +0.059 / median +0.058, 3/6 above bar.\n\nThe bitlen-64 zero-fit dial law replicates cleanly on fresh uniform seeds and H1 stands, but H2's point estimate flips below the bar \u2014 record as MARGINAL/count-parity.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp543_t_dial_unif_64.py + exp543_result.json, seeds 20261210\u201312.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3759",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T22:39:30.329884+00:00",
-    "title": "FACT round-68 #3 \u2014 TDIAL-U64B: fresh-seed replication confirms the dial at bitlen 64 (paper 190)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-68 #2, cron iteration (exp 541). Quantifying the fade's progression.\n\n**FADE-CONTINUES**: pooled Spearman(T, rate) = **0.500** CI [0.456, 0.545] at bitlen 104; per-seed 0.493/0.499/0.509 \u2014 all below 0.55 for the first time; fade is MONOTONE and NEAR-LINEAR (\u22120.030 then \u22120.043 per 4-bit step). T advantage WIDENS (+0.126 vs count) because count degrades faster.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp541_t_dial_unif_104.py + exp541_result.json, seeds 20261210\u201312.",
     "domains": [
@@ -2000,16 +1985,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-72 #2/#3 \u2014 TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-TARGET relaxation lands at trial division (papers 202\u2013203)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0eff9e0",
     "description": "Round-73 #2, exp 559. **ADAPT-NULL-EQUALIZER / SKIP-FLIP-WINS.** The QR(\u2264100) dial's calibration confirmed in fixed-FB regime (Spearman 0.739 vs oracle-dial 0.778; FB100 0.835; mechanism exact: (N|p)=\u22121 primes divide zero x\u00b2\u2212N values). But sieve-length \u221d 1/rate LOSES (\u221217.6% \u2014 floor clip load-bearing, unclipped \u2212146.7%); rate-concentrator +8.6%; realized oracle bound +74.8% = unclaimed headroom. Deployment flip works: \u03b8=q20 skips 28.3% of work at 89.5% retention (+28.9% throughput); hard tail 40/400 unreachable \u2192 deferral is the instrument, not deeper sieving. End-to-end PASS (20/20 factored, 1350 relations independently reverified).\n\nConstants-layer result under the standing asymptotic-goal directive. Repro: ResearchOutput/scripts/2026-08-21-resume/exp559_adaptive_qs.py + exp559_result.json.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3938",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T05:03:28.425620+00:00",
     "title": "FACT round-73 #2 \u2014 ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; skip-flip wins deployment (paper 207)"
   },
@@ -2362,6 +2348,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T14:04:28.340349+00:00",
     "title": "FACT round-78 #1 \u2014 GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3 \u2014 r\u0304-identity universal object (MC err 0.23%), master inequality S \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^k_bits/(\u039b\u00b7\u0398)) PROVEN via majorization; F3 baseline-conditional after verifier (5.365<5.4054 undercut); table error 29.0698\u219229.3152 at stored P\u0302=0.9853, feasibility unaffected; converse roadmap EMPTY"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Paper 228. exp 578. Sources: ResearchOutput/scripts/2026-08-24-round74/exp578_hit_position.py (pre-registration in header BEFORE any data generation) + exp578_stratified_check.py (confound check, rule pre-stated BEFORE running) -> exp578_result.json (+ magnitude_confound_check block), exp578_positions.npz, wall 363 s full / 21.8 s smoke.\n\nVERDICT: POSITIONAL-STRUCTURE-REAL, amended BEYOND-MAGNITUDE-POSITIONAL-STRUCTURE \u2014 the FIRST POSITIVE carrier candidate for the ~39-61% unexplained per-N overdispersion (papers 220/222/226/227 thread).\n\nPOPULATION: 128 balanced bitlen-96 semiprimes, FRESH seed 20260828 hash 06931068f8f3ca9b, lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 REPRODUCED exactly, five-seed family pairwise disjoint; exp569 tester verbatim 150k j-samples/N cut 1e6, every hit position persisted. Overdispersion REPLICATED 4th time: mean 74.95 hits/N, D_raw 6.37, range 29-136.\n\nPRIMARY LEGS (treatment | paired non-hit control): (a) pooled KS u vs U[0,1], 9565 hits / 127 HITRICH Ns: D=0.09519 p=6.9e-76 FIRES | control D=0.00693 p=0.744 null. (b) lag-1..10 autocorr rho=+0.00283 CI [0.00112,0.00475] excludes 0 but below 0.05 bar -> no fire | repaired control -0.00112 null. (c) edge frac 0.2346 p=1.1e-16 vs 0.20 but < 0.25 bar -> no fire | control 0.1935 null.\n\nSTRATIFIED ANSWER (decisive): confound = v=j^2-N monotone => pure decay skews small-u; rule pre-stated before running. All 8 (bitlen(v) x mantissa-octant) cells contain every hit; vs size-matched non-hits per cell: 7/8 fire at p<0.01 (median cell p=1.86e-5), pooled stratified D=0.10423 EXCEEDS unstratified 0.09519, within-cell permutation p<0.0005 (0/2000), stratified-edge z=10.08. Deciles [.162,.123,.109,.097,.091,.091,.090,.084,.081,.072] monotone-declining vs flat control: hits cluster toward small-j ~10x stronger than magnitude predicts => structure fully survives size-conditioning = BEYOND-MAGNITUDE.\n\nCONSEQUENCE: real WITHIN-N positional geometry in the smooth locus of j^2-N opens POLYNOMIAL-SEQUENCE LOCAL STRUCTURE as carrier candidate for the ~39-61% residual. Named follow-ups: (a) functional form of the small-j profile; (b) does j-local clustering predict WHICH N are hit-rich (positional <-> rate link).\n\nLEDGER CATCHES (disclosed): run-1 control-arm leg-b mirrored treatment (acf read hit arrays unconditionally) - repaired from npz BEFORE verdicts, fired nowhere either way; confound-check order on record (pre-stated by coordinator, labeled post-hoc everywhere); legs a/c overlap registered up front.\n\nBarrier framing: scale-smoothness mechanism frontier - opens rather than closes; H0-route also cleanly closed (control nulls). Residue cap untouched; no breakthrough claimed.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4022",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T15:58:32.184828+00:00",
+    "title": "FACT round-79 #2 \u2014 HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNITUDE \u2014 pooled KS D=0.09519 p=6.9e-76 (9565 hits/127 hit-rich Ns, paired control null); stratified check decisive: conditioning on all 8 v-cells RAISES D to 0.10423, 7/8 cells fire, permutation p<0.0005 \u2014 real within-N geometry in the smooth locus of j\u00b2\u2212N; first positive carrier candidate for the ~39\u201361% residual"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Paper 227. exp 577 (+ independent verification verifyL7b). Sources: ResearchOutput/scripts/2026-08-24-round74/exp577_product_dial.py (pre-registration in header BEFORE data generation; post-verification REVISION annotated in-script) -> exp577_result.json + smoke pair + diagnostics; verifyL7b_exp577_check.py -> verifyL7b_result.json.\n\nVERDICT (pre-registered): WINDOW-STRONGER-NOT-SHIFTED \u2014 H1 scale-shift REFUTED on all four shift candidates (both legs fail, R2 margins to abs bar -0.132..-0.160); H0 blocked by the disclosed branch (D-red@400 = 33.4% >= 30%).\n\nSWEEP (cumulative QR-count dial vs log-rate): B=400 R2=.3207/D-red 33.43% | 4000 .0241/2.40% | 4e4 .0150/1.68% | 1e5 .0000/0.0% | 1e6 .0277/4.11%. Extension DILUTES: equal-weight counting buries primes informative ~1/l. B* = 400 \u2014 paper-136/139 window location CONFIRMED scale-independent.\n\nWEIGHTED DIAL IS THE LAW: W(B)=sum_{QR l<=B} 1/l: W400 R2=.4731/D-red 48.11%, W1e6 .4786/48.51% (z~16.8); corr(W1e6,W400)=0.999 (independent verifier population 0.9991/0.9985) \u2014 signal SATURATES BY 400 once harmonically weighted. ADOPTED as canonical scale-smoothness covariate.\n\nVERIFIED THREE-PART DIAGNOSIS OF PAPER 226 (erratum-grade for SECONDARY conclusions): (1) S_prod/S139@400 rows are composite-bottom dials with reciprocity sign flipping iff l=3 mod 4 AND N=3 mod 4 (52.3% of N; conditional flip 100%, 2680/2680, zero violations; unconditional 27.19% predicted=measured to 2nd decimal) \u2014 published weakness (.0781/14.22%, .0565/9.07%) is DIAL-FORM ARTIFACT, reproduced under flipped forms (.030/4.11%, .0456/5.46%) while clean C100 Legendre is STRONG (.3728/34.45%) \u2014 RETRACTED-AS-ARTIFACT; (2) PRIMARY S_indiv null REPLICATES as true null here too (.0019/0.09%, z=0.72; flip mechanism inapplicable) \u2014 consistent null, only secondary retracted; (3) exp576-vs-exp577 S400 discrepancy (0.078 vs 0.32) traced to form difference + estimator spread (C400==recorded S400 on 128/128 rows; C100-clean strong in both populations 34.45%/34.75%) \u2014 documented, not a reproducibility failure.\n\nDISPERSION BOOKKEEPING both readings: count@400 = 33.4% of raw (=42.1% of excess-above-Poisson); W1e6 = 48.5% raw (=61.0% excess); residual ~51.4% raw / ~39.0% excess still overdispersed (D_cond>1). Paper 226's '>=86% new structure' shrinks to ~39-58% residual non-QR (dial/reading dependent).\n\nLEDGER CATCHES (adversarial BOTH directions): first-draft '(signs cancel)' orthogonality claim RETRACTED by verification (r(flipP100,C400)=0.058 stands FOR THE FLIPPED FORM via label-swap clarification); verifier addendum 'removing l=2 rescues formA' REJECTED empirically (.0322/4.34% without l=2); l=2 even-modulus Jacobi crash caught in smoke; first-draft T1 bound mismatch + missing-/n correlation self-caught pre-ledger; pre-reg header error annotated in-script; smoke n=16 spuriously fired H1 \u2014 marked NON-EVIDENTIARY. Lineage: four master-seed hashes reproduced/asserted pairwise disjoint.\n\nBarrier validation: closes paper 226's named follow-up under fixed bars; canonical-covariate upgrade count->weighted; papers 136/139 stand at their own scale with location vindicated and form upgraded; residue cap 4/3 untouched; no complexity claim; no breakthrough claimed.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4023",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T15:58:32.186714+00:00",
+    "title": "FACT round-79 #1 \u2014 PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED \u2014 H1 scale-shift REFUTED (no QR window past 400; B*=400 confirms papers-136/139 location), 1/\u2113-weighted dial is the law (48% D-red, saturates by 400, corr .999) \u2014 paper-226 SECONDARIES erratum-grade (reciprocity-flip dial-form artifacts, flip 100%-on-condition), its PRIMARY null stands"
   },
   {
     "consumed_by_exp_id": "",
@@ -3108,6 +3122,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:59.281523+00:00",
     "title": "Existential-Risk-Optimization: Absolute Bounds on AI Alignment Failure Probabilities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a331ba56 (Q=0.840), which proved 117 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture: for every framed puzzle not isomorphic to its global tab\u2013blank complement, complementation acts freely on the disjoint union of the two assembly spaces, forcing their combined cardinality to be even.\n\nThe key insight is that simultaneous Boolean negation and literal-polarity reversal is ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_a331ba56_7b207344",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "a331ba56",
+    "status": "available",
+    "timestamp": "2026-08-24T15:58:01.590613+00:00",
+    "title": "Deepening: Complementation as a free involution"
   },
   {
     "consumed_by_exp_id": "",
@@ -4113,21 +4141,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "seed_319",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
   {
     "consumed_by_exp_id": "",
@@ -11153,6 +11166,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjectured mean-based meta-analytic decorrelation budget is false, and fails only through a missing ordering hypothesis: decorrelation must antivary with headroom across replications. This turns the ordering into an empirical diagnostic of a dial cell. The conjecture is that clean cells antivary while count-parity cells monovary, with a quantifiable over-credit factor.\n\nFor a uniform dial cell the sequences (1 - c_i) and (1 - a_i b_i) over seeds are antivarying, so the mean-based budget holds; for a count-parity cell they are monovarying and the mean-based budget over-credits the pooled advantage energy by a factor at least 1 + Var(c)/(1 - cbar)^2.\n\nRecompute per-seed mutual correlations c_i and reading products a_i b_i from the recorded seeds, evaluate the rank correlation of (1 - c_i) against (1 - a_i b_i), and compare the two budgets against the measured pooled energy.\n\nMeta-analysis of dial cells acquires a validity precondition that can be checked from the same data, and count-parity verdicts become explainable as budget-allocation failures.\n\nThe ordering is an artefact of the counterexample and the mean-based budget fails for a different, still unidentified reason.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_4008",
+    "priority_score": 0.711360655737705,
+    "research_mode": "team",
+    "source_exp_id": "9d509f0a",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:12.469553+00:00",
+    "title": "Antivariation Test for Dial Meta-Analysis"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The trace formula turns the return sequence walkCount S n 1 into the moment sequence of the adjacency spectrum. For abelian G that spectrum is the multiset of character sums over S, so reconstructing S becomes a Fourier-uniqueness question. The non-abelian case is expected to fail, with a small explicit counterexample.\n\nFor finite abelian G, two inversion-closed connection sets with equal return sequences are related by an automorphism of G; for non-abelian G this fails for some group of order at most 16.\n\nCompute return sequences for all inversion-closed subsets of small abelian groups and search for collisions; formalise the abelian direction using the discrete Fourier transform.\n\nThe identity column of a census determines the connection set up to symmetry, so censuses are a faithful fingerprint for abelian Cayley graphs.\n\nThere are cospectral non-isomorphic circulant graphs whose spectra coincide as multisets, recovering classical circulant cospectrality inside this framework.",
     "domains": [
       "Algebra",
@@ -11300,6 +11328,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T17:35:45.995795+00:00",
     "title": "Entropy Submodularity versus Rank Non-Submodularity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The unrestricted count of complement-stable assembly spaces was settled this cycle at 2^(2^(n-1)), the square root of the total. The open refinement asks for the density of self-duality among puzzles of bounded description size, where the assembly space is no longer an arbitrary subset of the cube. The conjecture is that the density still vanishes and that stability is detectable syntactically from the piece multiset.\n\nFor fixed m and k, the fraction of framed puzzles with at most m clause pieces of at most k literal inputs each whose assembly space is complement-stable tends to 0 as n grows, and such puzzles are exactly those whose piece multiset is invariant under polarity reversal up to reordering.\n\nEnumerate all puzzles with small m, k, n and compare the syntactic invariance criterion with complement-stability of the computed assembly space.\n\nSelf-duality is syntactically decidable in bounded families, giving a fast filter for the parity law.\n\nThere are semantically self-dual puzzles with asymmetric piece multisets, so stability is a genuinely semantic property.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4021",
+    "priority_score": 0.7110769230769232,
+    "research_mode": "team",
+    "source_exp_id": "a331ba56",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:55.445855+00:00",
+    "title": "Bounded-Description Density of Self-Dual Framed Puzzles"
   },
   {
     "consumed_by_exp_id": "",
@@ -11540,6 +11583,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T07:48:07.070263+00:00",
     "title": "Prescribed Digit Frequency Vectors Over Any Prefix"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Tasting at random with two-sided error should save at most a cubic factor over deterministic tasting. The approach is to average the deterministic covering argument that already proves D \u2264 C0\u00b7C1 in this cycle. It quantifies how much a cook gains by guessing where to taste.\n\nFor every dish f, tasteCost f \u2264 c \u00b7 R_{1/3}(f)^3 for an absolute constant c.\n\nDefine randomised taste trees as PMFs over Taste n, prove the certificate-overlap lemma survives averaging, and check the bound numerically on the exhaustive n \u2264 3 census.\n\nRandomness is essentially useless in the kitchen, matching the classical polynomial-equivalence phenomenon.\n\nThere is a recipe where random tasting is superpolynomially better, an unexpected culinary use of randomness.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4014",
+    "priority_score": 0.7103214285714287,
+    "research_mode": "team",
+    "source_exp_id": "99ec0ece",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:38.221588+00:00",
+    "title": "Cubic Randomised Tasting Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -11930,23 +11988,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:57:32.085878+00:00",
     "title": "Cycle Spectrum Reconstruction for Subcubic Graphs"
-  },
-  {
-    "consumed_by_exp_id": "99ec0ece",
-    "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) \u2014 cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) \u2014 assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' \u2014 dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract \u2014 it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Speculative"
-    ],
-    "id": "seed_140",
-    "phase": "A",
-    "priority_score": 0.71,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
   },
   {
     "consumed_by_exp_id": "",
@@ -13191,6 +13232,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Almost every dish should be evasive, with the non-evasive fraction shrinking doubly exponentially in the number of ingredients. The approach sharpens the counting recursion c_{d+1} \u2264 2 + n c_d^2 proved here by tracking subcube refinements instead of raw trees. It would make 'C = V for a random recipe' a probability-one statement.\n\n#{f : Dish n | tasteCost f \u2264 n - 1} \u2264 2^(2^n) / 2^(2^(n-1)) for all n \u2265 2.\n\nExhaustive verification for n \u2264 4 with the brute-force solver, then a refined induction on the counting recursion in KitchenGenericHardness.\n\nThe kitchen is generically break-even; the interesting recipes are a measure-zero accident.\n\nNon-evasive dishes are far more common than tree counting suggests, indicating strong structure among Boolean dishes.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4015",
+    "priority_score": 0.6713870967741937,
+    "research_mode": "team",
+    "source_exp_id": "99ec0ece",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:38.708991+00:00",
+    "title": "Doubly Exponential Concentration of Evasiveness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The cross-channel discrepancy of a population decouples into the oscillation of a single per-level functional over the window box, turning the sharp-constant question into a one-dimensional extremal problem. Cycle 4 solved it for the exponent pair (1, 1/2) via the Kantorovich inequality, obtaining log2((4+3*sqrt2)/8) and matching it to within 5% by an explicit two-point population. The conjecture extrapolates the exponent dependence found numerically.\n\nFor pointwise costs a*p^s and c*p^t on a window of spread 2^sigma, max |t*slope_s - s*slope_t| = (ln2/8)*s*t*|s-t|*sigma^2/Dk to leading order, attained by a two-atom population whose x^t-mean equals the harmonic mean of the window endpoints.\n\nExtend the doubling-ray result (s = 2t, already proved with constant log2((1+2^t)^2/(4*2^t))) to a general power-mean version between exponents t < s, compute the oscillation of the per-level functional in closed form, and compare with the grid search (coefficient 0.0862 +- 0.0002 at sigma = 1 versus ln2/8 = 0.08664).\n\nEvery multi-channel benchmark gets an exact internal-consistency tolerance, and the (0.84, 0.52) refutation generalises to arbitrary cost exponents.\n\nThe oscillation is not governed by the two-atom endpoint configuration and the sharp constant depends on more than the window spread.",
     "domains": [
       "Combinatorics"
@@ -13272,6 +13327,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:07:54.684616+00:00",
     "title": "Mass-Support Uncertainty Principle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If each taste destroys a portion and only b portions exist, decidability rather than efficiency becomes the issue. The approach formalises a budgeted, partly nonadaptive model on top of the existing checklist notion and classifies which dishes remain decidable. It captures the actual souffl\u00e9 problem: cutting it open destroys the object being verified.\n\nIn the b-portion destructive model a dish is decidable iff it admits a nonadaptive checklist of size at most b; consequently the souffle is undecidable for every b < n, while anySpoiled is semi-decidable with a single portion.\n\nDefine the destructive model as a Taste tree whose probes must be chosen from a fixed budgeted checklist, and prove the equivalence using relevantSet_subset_of_checklist.\n\nDestructive verification separates decidability from efficiency, giving a genuine culinary analogue of undecidability.\n\nAdaptive reuse of partial portions recovers full power, meaning destruction costs nothing asymptotically.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4016",
+    "priority_score": 0.67111320754717,
+    "research_mode": "team",
+    "source_exp_id": "99ec0ece",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:39.211829+00:00",
+    "title": "Destructive Tasting Classes"
   },
   {
     "consumed_by_exp_id": "",
@@ -13709,6 +13778,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T07:46:17.286883+00:00",
     "title": "Switch Number as an Order Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sensitivity lower bound on tasting time proved in this cycle is conjectured to be polynomially tight: deterministic query complexity of a dish is at most the fourth power of its maximal pivotal-set size. The approach chains the formalised bound s(f) \u2264 D(f) with a block-sensitivity layer and the already proved product bound D \u2264 C0\u00b7C1. It would make 'find one pivotal ingredient' a complete design principle for tasting protocols.\n\nFor every dish f : Pantry n \u2192 Bool, tasteCost f \u2264 (max over x of (pivotalSet f x).card) ^ 4.\n\nFormalise block sensitivity bs(f), prove C(f) \u2264 s(f)\u00b7bs(f) and bs(f) \u2264 s(f)^2, then combine with the existing tasteCost_le_cert_mul.\n\nKitchen verification time is controlled by a purely local quantity, computable from single-ingredient swaps.\n\nThere is a dish with tiny local sensitivity but expensive global tasting, i.e. a genuinely non-local recipe.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4012",
+    "priority_score": 0.6696981132075474,
+    "research_mode": "team",
+    "source_exp_id": "99ec0ece",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:37.229322+00:00",
+    "title": "Sensitivity\u2013Tasting Polynomial Equivalence"
   },
   {
     "consumed_by_exp_id": "",
@@ -14546,6 +14629,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The complementation bijection is witness-preserving, so it should transport not only solvability but every modular counting class. The conjecture is that P to its complement is a parsimonious self-reduction, making the mod-2 assembly count a complementation invariant while the exact count stays #P-hard.\n\nFor every framed puzzle P, the assembly counts of P and of its complement are equal, and the map P to compPuzzle P is a polynomial-time parsimonious self-reduction of the assembly counting problem.\n\nCombine assemblyEquiv with the piece-count encoding of the catalog reduction and formalise a counting-reduction predicate; check the mod-2 invariance on enumerated small instances.\n\nModular counting for jigsaw assembly inherits all hardness of modular SAT counting, with complementation as a free symmetry of the instance space.\n\nThe encoding, not the mathematics, breaks parsimony, indicating that piece multiplicities carry counting information.",
+    "domains": [],
+    "id": "fd_4018",
+    "priority_score": 0.5932142857142858,
+    "research_mode": "team",
+    "source_exp_id": "a331ba56",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:54.028272+00:00",
+    "title": "Parity-Preserving Self-Reduction for Assembly Counting"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two candidate predictors of transplant damage exist in the catalog: a norm-based upper bound and a margin-based certificate. Conjecture: the margin-uncertified fraction predicts damage, and Lipschitz/norm distance between the two copies of a block does not.\n\nAcross layer blocks, the measured post-transplant disagreement correlates with the margin-uncertified fraction and is not monotone in the block's weight-space distance.\n\nCompute both predictors per block and compare against measured disagreement, using net54_margin_failure_fraction as the certified lower bound.\n\nPortability becomes predictable from a cheap forward-pass statistic, with no transplant needed.\n\nNorm-based bounds remain the operative predictor and the margin route is only a sufficient condition.",
     "domains": [],
     "id": "fd_3792",
@@ -14906,6 +15001,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The dial capacity threshold for a triple is (3 rho^2 - 1)/2, which is negative exactly below rho = 1/sqrt(3). Below that horizon a third statistic fits with no correlation at all, so the capacity constraint stops binding. The conjecture identifies the bitlen at which the count-parity verdict degrades into a failure verdict with the bitlen at which the pooled reading crosses the horizon.\n\nThe count-parity-to-failure crossing bitlen b* is the bitlen at which rho(b) crosses 1/sqrt(3) = 0.5774; the recorded declines rho(44)=0.78, rho(64)=0.641, rho(72)=0.605 place b* between 80 and 100.\n\nRun the uniform dial cell at bitlens 80, 88 and 96, record the pooled reading, and check whether the verdict changes exactly as rho crosses 0.5774.\n\nThe advantage bar can be replaced by a scale-free reading horizon, and the dial law acquires a predicted endpoint.\n\nCapacity does not govern the verdict transition and the decline of rho is not the operative mechanism.",
+    "domains": [],
+    "id": "fd_4009",
+    "priority_score": 0.5916666666666668,
+    "research_mode": "team",
+    "source_exp_id": "9d509f0a",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:13.089959+00:00",
+    "title": "Capacity-Two Horizon at Reading One Over Root Three"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Only states reachable from the initial states can ever participate in an experiment, so the block-counting potential should be bounded by the reachable counts. We conjecture the bound r_S + r_T - 2 with r the reachable-state counts, which is strictly better for machines with dead states.\n\nIf r_S and r_T are the numbers of states reachable from s and t, then inequivalent s,t are separated by a word of length at most r_S + r_T - 2.\n\nInstantiate the abstract stabilisation theorem exists_stable_index on the subtype of reachable states of the disjoint union.\n\nThe bound becomes invariant under adding unreachable states, hence a genuine invariant of the behaviour rather than the presentation.\n\nReachability interacts with the refinement chain in an unexpected way, indicating the potential function must count unreachable blocks too.",
     "domains": [],
     "id": "fd_3466",
@@ -15224,6 +15331,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A non-constant monotone dish invariant under a transitive group of ingredient permutations should be evasive, so that symmetric recipes force a full cook before any verdict. The approach adds a group-action layer to the pantry and applies a fixed-point/Euler-characteristic argument. This turns the intuition 'in a symmetric stew you must check everything' into a theorem.\n\nIf f is monotone, non-constant and invariant under a transitive subgroup of the symmetric group acting on the n ingredients, then tasteCost f = n.\n\nFormalise monotone dishes and group invariance over Pantry n, verify the claim exhaustively for n \u2264 4 by the brute-force solver, then formalise the Rivest\u2013Vuillemin argument for prime-power n.\n\nA large, natural family of recipes is provably break-even (C = V), strengthening the inversion result of this cycle.\n\nSome symmetric monotone recipe admits a shortcut, which would be a genuinely surprising culinary and combinatorial object.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4013",
+    "priority_score": 0.5640187118695582,
+    "research_mode": "team",
+    "source_exp_id": "99ec0ece",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:37.736595+00:00",
+    "title": "Evasiveness of Symmetric Monotone Dishes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Everything is proved for groupoids.  Transporting across\n   the fundamental-groupoid functor to genuine aspherical spaces requires the equivalence\n   between homotopy classes of maps of aspherical spaces and of their fundamental\n   groupoids, which is not in Mathlib and remains the main missing ingredient for a\n   statement such as \"degree classifies self-maps of the topological circle\".",
     "domains": [
       "Geometry",
@@ -15431,6 +15553,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T09:05:41.991768+00:00",
     "title": "Extremal Tie Spectra for the Dial Ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Count parity forces a dispersion floor on the seedwise advantage record, and the capacity law forces a threshold on the mutual correlation of a statistic family. Both are values of the same constrained quadratic optimisation, read once on the seed index and once on the statistic index. The conjecture is that the two numbers coincide at the recorded cell.\n\nFor a count-parity record of r seeds with l below the bar, the minimal pooled advantage energy r*mu^2 + r*l/(r-l)*(mu-tau)^2 equals the maximal energy compatible with a family of size K(rho, gamma) at mutual correlation exactly dialThreshold rho (K+1).\n\nEvaluate both sides at the recorded cell (r=6, l=3, mu=0.059, tau=0.05, rho=0.641) and, if they agree, formalise the common variational problem in Lean.\n\nThe order-statistic layer and the correlation-geometry layer are the same theorem in two indexings, collapsing the thread to a single principle.\n\nThe two layers remain genuinely independent and the bridge theorem is the strongest available coupling.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4010",
+    "priority_score": 0.5637633384699494,
+    "research_mode": "team",
+    "source_exp_id": "9d509f0a",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:13.569947+00:00",
+    "title": "Dispersion-Capacity Duality"
   },
   {
     "consumed_by_exp_id": "",
@@ -15779,6 +15916,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Complementation has fixed points at two levels: flat edges in the alphabet, and the empty assembly at zero variables. The conjecture is that a geometric realisation functor identifies the first with the boundary cells of the assembled figure and forces a congruence between its Euler characteristic and the combined assembly count mod 2.\n\nFor a geometric realisation of a framed puzzle with flat frame, the number of boundary cells equals the number of complementation-fixed edges, and the Euler characteristic is congruent mod 2 to the combined assembly count.\n\nDefine a realisation from pieces to a CW structure, compute both invariants for small grid puzzles, and formalise the congruence.\n\nSolution-count parity acquires a topological reading as a boundary invariant.\n\nThe two fixed-point phenomena are unrelated, and parity is purely a cube symmetry.",
+    "domains": [
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "fd_4020",
+    "priority_score": 0.5634281608829629,
+    "research_mode": "team",
+    "source_exp_id": "a331ba56",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:54.965117+00:00",
+    "title": "Two-Level Fixed-Point Correspondence for Framed Boundaries"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Extend the binary lattice-point model to ternary orders: the coefficient of X^n in the frame geometry of (p,q,r) counts lattice points of a box on the plane ip+jq+kr=n. The conjecture is that the resulting count deviates from its mean by at most p-1, which is Bang's theorem. This turns a classical polynomial statement into a counting problem already half-formalised in the catalog.\n\nFor odd primes p < q < r and all k, |coeff k (cyclotomic (p*q*r) \u2124)| \u2264 p - 1.\n\nFormalise the ternary frame geometry as the product of three truncated geometric series, prove a box-uniqueness lemma modulo p, and bound the alternating differences; test numerically on all p*q*r \u2264 10^4 first.\n\nBang's theorem enters the catalog and globalises to all orders with three odd prime divisors via height reduction.\n\nA concrete counterexample triple would contradict a classical theorem, indicating a modelling error to be localised.",
     "domains": [
       "Geometry",
@@ -16016,6 +16168,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T19:36:05.369650+00:00",
     "title": "Dyadic Rationality Threshold for the Type Entropy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The divisibility law proved for d interlock depths used only that translation acts freely on the cube. Replacing the cyclic group by an arbitrary finite group acting freely on the alphabet should give divisibility of the combined assembly count by the group order, with the failure case characterised by alphabet fixed points.\n\nIf a finite group G acts on the interlock alphabet with no non-identity element fixing a letter, then for n at least 1 the combined assembly count of the G-orbit of a framed puzzle is divisible by the order of G.\n\nGeneralise stable_card_eq_mul_gauge to a free G-action on the assembly cube and instantiate with a non-abelian G acting freely on its own underlying set.\n\nTab-blank parity is one instance of a general representation-theoretic constraint on puzzle solution counts.\n\nCommutativity is essential, and the gauge section has no non-abelian analogue.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4019",
+    "priority_score": 0.5631235609004032,
+    "research_mode": "team",
+    "source_exp_id": "a331ba56",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:54.497765+00:00",
+    "title": "Free Group Actions on Interlock Alphabets"
   },
   {
     "consumed_by_exp_id": "",
@@ -25007,6 +25174,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T11:45:07.568661+00:00",
     "title": "Strict Concavity of the Tie Ceiling Along Mixtures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The chord distance sqrt(2-2rho) is a metric on normalised statistics. The conjecture is that the trailing-zero statistic moves Lipschitz-continuously in 1/bitlen and that the recorded dial decline is the image of that curve. This is the one direction of the original set that remains fully open.\n\nThere is L > 0 with corrDist(T_b, T_b') <= L * |1/b - 1/b'| for all bitlens b, b', and the recorded readings 0.78, 0.641, 0.605 at bitlens 44, 64, 72 satisfy the induced triangle inequalities.\n\nCheck the three recorded chords against corrDist_triangle in Lean; then formalise the two-adic block comparison between T_b and T_b'.\n\nThe dial law extrapolates to untested bitlens with a certified error bar, which also pins down the horizon of the capacity conjecture.\n\nThe dial decline is not a continuous deformation of one statistic but a change of statistic, and cross-bitlen pooling is invalid.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4011",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9d509f0a",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:14.038761+00:00",
+    "title": "Chord-Metric Lipschitz Continuity of the Bitlen Dial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every subset of the Boolean cube is realised as an assembly space by a framed puzzle with 2^n - |S| clause pieces, which is far from minimal. The conjecture is that the minimum equals the CNF clause complexity of the indicator, and that for complement-stable S a minimal realisation can be chosen complement-stable. This turns the free involution into a symmetrisation operator on the space of realisations.\n\nFor complement-stable S there is a minimum-size framed puzzle P with assemblySet P = S such that compPuzzle P is a permutation of P.\n\nFormalise clause complexity of the indicator and prove a symmetrisation lemma; verify by enumeration for n = 2, 3 that minimal realisations of stable sets can be paired up under complementation.\n\nComplementation becomes a normalisation procedure for puzzle descriptions, giving canonical forms for self-dual instances.\n\nThere are stable spaces whose economical realisations are all asymmetric, exhibiting a symmetry-versus-size tradeoff.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4017",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a331ba56",
+    "status": "available",
+    "timestamp": "2026-08-24T15:57:53.554468+00:00",
+    "title": "Minimal Clause Realisations of Complement-Stable Assembly Spaces"
   },
   {
     "consumed_by_exp_id": "",
@@ -35678,19 +35873,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Confluence of audited certificate refinement"
   },
   {
-    "consumed_by_exp_id": "a331ba56",
-    "description": "Conjecture: for every framed puzzle not isomorphic to its global tab\u2013blank complement, complementation acts freely on the disjoint union of the two assembly spaces, forcing their combined cardinality to be even.\n\nThe key insight is that simultaneous Boolean negation and literal-polarity reversal is an order-two transport of complete solution spaces, not merely a preservation of solvability.\n\nWhy now? Solvability invariance has been established, while the exact boundary between free orbits and self-dual fixed configurations is now explicit and testable.",
-    "domains": [],
-    "id": "fd_1938",
-    "phase": "A",
-    "priority_score": 0.4390588235294117,
-    "research_mode": "team",
-    "source_exp_id": "154045db",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:52.095620+00:00",
-    "title": "Complementation as a free involution"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "**Conjecture.** For regularized logistic regression, empirical natural gradient is insensitive to feature covariance conditioning only while the empirical Fisher remains uniformly comparable to the loss Hessian; outside that regime, the rate degrades according to the generalized eigenvalue spread of the Hessian\u2013Fisher pair.\n\nThe key insight is that cancellation is controlled by metric\u2013curvature matching, not by the Fisher condition number in isolation.\n\n**Why now?** The diagonal matched model proves exact cancellation and exposes generalized mismatch as the minimal falsifiable parameter for numerical and theoretical comparison.",
     "domains": [],
@@ -35763,14 +35945,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Completion invariance under two-sided stabilization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "88291521",
     "description": "**Conjecture.** Under polynomial-overhead mutual simulation, completeness for every reduction-closed language class is preserved, provided both substrates support reduction precomposition with polynomial cost.\n\nThe key insight is that completeness combines two independent invariances: transport of bounded decision procedures and closure under semantic precomposition.\n\n**Why now?** These mechanisms have been proved separately in the exact setting, making their asymptotic interaction a sharply formulated next target.",
     "domains": [],
     "id": "fd_2229",
+    "phase": "A",
     "priority_score": 0.4390588235294117,
     "research_mode": "team",
     "source_exp_id": "9fc00121",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:13.615438+00:00",
     "title": "Reduction completeness independent of architecture"
   },
