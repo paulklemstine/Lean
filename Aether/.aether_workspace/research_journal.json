@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "22ca7429",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Rigidity gap for shallow product coins\n\nThis cycle formalised, in `Catalog/Geometry/ShallowProductCoin*.lean`:\n\n* the exact Cauchy–Schwarz defect identity and the rigidity charac",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-22T21:36:55",
-      "title": "Rigidity gap for shallow product coins"
-    },
-    {
       "cycle_id": "ccf34fd5",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Smooth Windows (Phase A v19c)\n\nThis cycle replaced the rectangular window of\n`Algebra.ReciprocalZeroHarmonics.WindowDichotomy` by a Gaussian/Schwartz window and proved the\nmodula",
@@ -499,19 +489,19 @@
       "theorem_count": 87,
       "timestamp": "2026-08-24T14:04:04",
       "title": "Sharper normalization"
+    },
+    {
+      "cycle_id": "9d509f0a",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — after TDIAL-U64B (round-68 #3, exp 543)\n\n## What this thread established\n\nThe record under study is `U64B-DIAL-HOLDS-COUNT-PARITY`: pooled `ρ(T, rate) = 0.641`\n(CI `[0.619, 0.660",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-24T15:57:28",
+      "title": "FACT round-68 #3 — TDIAL-U64B: fresh-seed replication confirms the dial at bitlen 64 (paper 190)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "286b3a0e",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Moonshine Beyond the j-Function\n\nThis research thread studies what survives, rigorously, of \"moonshine-type\" statements when the\nanalytic mythology is stripped away: element-inde",
-      "quality_score": 0.89,
-      "sorry_count": 3,
-      "theorem_count": 145,
-      "timestamp": "2026-08-17T13:54:12",
-      "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
-    },
     {
       "cycle_id": "2ce26220",
       "domain": "Geometry",
@@ -2501,6 +2491,16 @@
       "theorem_count": 87,
       "timestamp": "2026-08-24T14:04:04",
       "title": "Sharper normalization"
+    },
+    {
+      "cycle_id": "9d509f0a",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — after TDIAL-U64B (round-68 #3, exp 543)\n\n## What this thread established\n\nThe record under study is `U64B-DIAL-HOLDS-COUNT-PARITY`: pooled `ρ(T, rate) = 0.641`\n(CI `[0.619, 0.660",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-24T15:57:28",
+      "title": "FACT round-68 #3 — TDIAL-U64B: fresh-seed replication confirms the dial at bitlen 64 (paper 190)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-24T14:04:04",
+  "last_updated": "2026-08-24T15:57:28",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "12195e06",
-        "quality": 0.72,
-        "theorems": 7,
-        "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functio"
-      },
-      {
         "cycle_id": "843dbe86",
         "quality": 0.82,
         "theorems": 62,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 60,
         "title": "FACT round-63 #1 — TDIAL-U72: the zero-fit dial holds at bitlen 72 with count pa"
+      },
+      {
+        "cycle_id": "9d509f0a",
+        "quality": 0.87,
+        "theorems": 124,
+        "title": "FACT round-68 #3 — TDIAL-U64B: fresh-seed replication confirms the dial at bitle"
       }
     ],
     "Applications": [
