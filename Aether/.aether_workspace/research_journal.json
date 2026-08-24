@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cd05a1fd",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — the Lagrange exponent programme\n\nThis cycle settled the old sub-conjecture 1 (`lagrangeExponent_concaveOn`) and, more than\nthat, pinned the threshold `1/27` down exactly: `σ` is",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-08-23T07:02:41",
-      "title": "Concavity (old sub-conjecture 1)."
-    },
-    {
       "cycle_id": "50edc087",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What survived: the\nwhole grafting programme — digit recovery (`Pyth.digits_ofDigits`), lacunary irrationalit",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-24T22:45:54",
       "title": "FACT round-70 #6 — MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all re"
+    },
+    {
+      "cycle_id": "51837664",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — after the Two-Adic Price Law\n\nThis cycle closed the Price tree's 2-adic question in the exact form it was posed: the\naddress letters at positions 0 and 1 (counted from the leaf)",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 153,
+      "timestamp": "2026-08-24T23:36:39",
+      "title": "FACT round-71 #1 — TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exact v2(p+q) mechanism"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "33519cdb",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — the additive uncertainty principle on `ZMod p`\n\nState of the thread after this cycle (all statements below refer to\n`Catalog/MachineLearning/PrimeUncertainty/`, all proofs are `s",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-17T23:37:07",
-      "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
-    },
     {
       "cycle_id": "0cf95d8d",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-24T22:45:54",
       "title": "FACT round-70 #6 — MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all re"
+    },
+    {
+      "cycle_id": "51837664",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — after the Two-Adic Price Law\n\nThis cycle closed the Price tree's 2-adic question in the exact form it was posed: the\naddress letters at positions 0 and 1 (counted from the leaf)",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 153,
+      "timestamp": "2026-08-24T23:36:39",
+      "title": "FACT round-71 #1 — TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exact v2(p+q) mechanism"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6c27d6f0",
-      "domain": "Tropical",
-      "name": "mem_survivors",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6c27d6f0",
-      "domain": "Tropical",
-      "name": "base_mem_survivors",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6c27d6f0",
-      "domain": "Tropical",
-      "name": "survivors_nonempty",
-      "quality": 0.82
-    },
     {
       "cycle_id": "3be10ac1",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "energy_anchor_nonpos",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "51837664",
+      "domain": "Probability",
+      "name": "bigW_eq",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "51837664",
+      "domain": "Probability",
+      "name": "bigW_odd",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "51837664",
+      "domain": "Probability",
+      "name": "bigW_ge",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-24T22:45:54",
+  "last_updated": "2026-08-24T23:36:39",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "23eee1e8",
-        "quality": 0.87,
-        "theorems": 161,
-        "title": "Compression Research B5: PRNG-generated real-world data — detection and seed rec"
-      },
-      {
         "cycle_id": "4f724156",
         "quality": 0.82,
         "theorems": 21,
@@ -3823,6 +3817,12 @@
         "quality": 0.88,
         "theorems": 95,
         "title": "NET-76: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE — complete 5-domain × 2-context tabl"
+      },
+      {
+        "cycle_id": "51837664",
+        "quality": 0.87,
+        "theorems": 153,
+        "title": "FACT round-71 #1 — TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exa"
       }
     ],
     "Pythagorean": [
