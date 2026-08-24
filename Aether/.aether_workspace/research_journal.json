@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0c164125",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — NET-73 and the limited-memory axis\n\nThree research cycles were run and formalised:\n\n1. **Refutation.** Tokens-per-word explains none of the domain shift: on the\n   four uncensore",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-08-23T07:48:35",
-      "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*) = -0.40, R2 = 0.00"
-    },
-    {
       "cycle_id": "3eae19ad",
       "domain": "Novelty",
       "key_insight": "# Future Directions — after the U64 zero-fit dial cycle\n\nTwo research cycles were run on the round-61 #1 record\n(`U64-DIAL-HOLDS-COUNT-PARITY`, exp 530).\n\n**Cycle 1** produced the *tie-attenuation law",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-24T23:36:54",
       "title": "E3.  The margin does not"
+    },
+    {
+      "cycle_id": "eef05184",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Greedy difference avoidance and the `B_h` tower\n\nDerived from the verified results in `Catalog/Novelty/GreedyDifferenceSidon.lean`,\n`Catalog/Novelty/GreedyDifferenceCubic.lean`,",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 112,
+      "timestamp": "2026-08-24T23:37:08",
+      "title": "Weighted / signed sums"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "11c9ff9f",
-      "domain": "Logic",
-      "key_insight": "# Future directions — fibre spectrum of the orbit–pattern map\n\nThis cycle closed the assigned target (Conjecture E, first half: `sum_patternMultiplicity`,\n`one_le_patternMultiplicity`, `patternMultipl",
-      "quality_score": 0.86,
-      "sorry_count": 4,
-      "theorem_count": 90,
-      "timestamp": "2026-08-18T03:08:53",
-      "title": "Fibre spectrum (Conjecture E, first half, closed)"
-    },
     {
       "cycle_id": "be7c0bd7",
       "domain": "Geometry",
@@ -2501,6 +2491,16 @@
       "theorem_count": 63,
       "timestamp": "2026-08-24T23:36:54",
       "title": "E3.  The margin does not"
+    },
+    {
+      "cycle_id": "eef05184",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Greedy difference avoidance and the `B_h` tower\n\nDerived from the verified results in `Catalog/Novelty/GreedyDifferenceSidon.lean`,\n`Catalog/Novelty/GreedyDifferenceCubic.lean`,",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 112,
+      "timestamp": "2026-08-24T23:37:08",
+      "title": "Weighted / signed sums"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-24T23:36:54",
+  "last_updated": "2026-08-24T23:37:08",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "258afb8b",
-        "quality": 0.78,
-        "theorems": 72,
-        "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID — no grid point reaches the bar on Fren"
-      },
-      {
         "cycle_id": "4caf1d72",
         "quality": 0.82,
         "theorems": 75,
@@ -3637,6 +3631,12 @@
         "quality": 0.81,
         "theorems": 51,
         "title": "NET-87: CODE-AT-4096-IS-PROTECTED — code knee @4096 is 32 vs prose 40; domain fa"
+      },
+      {
+        "cycle_id": "eef05184",
+        "quality": 0.8,
+        "theorems": 112,
+        "title": "Weighted / signed sums"
       }
     ],
     "NumberTheory": [
