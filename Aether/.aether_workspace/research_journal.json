@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "113c03c3",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — after the residue-dial converse\n\nProved in this cycle (all sorry-free, in `Catalog/Cryptography/ResidueDial/`):\n\n* the exact single-pass law `Speedup = 1/(1 − θ + θ²)`, derived f",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-22T18:50:04",
-      "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum,"
-    },
-    {
       "cycle_id": "a4769f7a",
       "domain": "Bridges",
       "key_insight": "# Future directions — cyclic cubic conductor 13 and the subfield channel\n\n## What is now proved (all `sorry`-free, in `Catalog/Bridges/`)\n\nCycles 1–2:\n\n* the **periodic transfer / uniform-cover** inva",
@@ -499,19 +489,19 @@
       "theorem_count": 30,
       "timestamp": "2026-08-24T10:05:36",
       "title": "For `d ≥ 1`, `N ≥ 2`, the thickness of the outermost equal-volume"
+    },
+    {
+      "cycle_id": "95bfbbbf",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after the NET-78 audit\n\nThree research cycles were run on the NET-78 verdict\n*THE-INCREMENT-ACCELERATES-AT-4096*. What survived, what failed, and what each\nfailure teaches:\n\n* **",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-08-24T10:55:10",
+      "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 — knee jumps to k*=40 (increment +16/doubling vs prior +4)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0b339d93",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nFive bold, falsifiable conjectures distilled from the analysis and adversarial review of the\nformalised results in `Catalog/Physics/` (`QuantumSL2ClassicalLimit`, `QuantumSL2Braid",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 123,
-      "timestamp": "2026-08-17T07:17:11",
-      "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
-    },
     {
       "cycle_id": "507d1ef0",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 30,
       "timestamp": "2026-08-24T10:05:36",
       "title": "For `d ≥ 1`, `N ≥ 2`, the thickness of the outermost equal-volume"
+    },
+    {
+      "cycle_id": "95bfbbbf",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after the NET-78 audit\n\nThree research cycles were run on the NET-78 verdict\n*THE-INCREMENT-ACCELERATES-AT-4096*. What survived, what failed, and what each\nfailure teaches:\n\n* **",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-08-24T10:55:10",
+      "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 — knee jumps to k*=40 (increment +16/doubling vs prior +4)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "86b92df3",
-      "domain": "Combinatorics",
-      "name": "of",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "86b92df3",
-      "domain": "Combinatorics",
-      "name": "single_entry_iff",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "86b92df3",
-      "domain": "Combinatorics",
-      "name": "not_serves_both",
-      "quality": 0.78
-    },
     {
       "cycle_id": "620a1130",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "mul_one_sub_pow_le",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "95bfbbbf",
+      "domain": "Novelty",
+      "name": "kneeRamp_feasible",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "95bfbbbf",
+      "domain": "Novelty",
+      "name": "six_choose_three_le",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "95bfbbbf",
+      "domain": "Novelty",
+      "name": "kneeCubic_feasible",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T10:05:36",
+  "last_updated": "2026-08-24T10:55:10",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6cdc8533",
-        "quality": 0.78,
-        "theorems": 55,
-        "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL — base-vs-Instruct keys near-"
-      },
-      {
         "cycle_id": "cd05a1fd",
         "quality": 0.72,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 61,
         "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL — probes recover only R2=0.32 on co"
+      },
+      {
+        "cycle_id": "95bfbbbf",
+        "quality": 0.82,
+        "theorems": 81,
+        "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 — knee jumps to k*=40 (increment +16/d"
       }
     ],
     "NumberTheory": [

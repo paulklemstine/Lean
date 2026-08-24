@@ -1601,21 +1601,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-68 #1 \u2014 TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
   },
   {
-    "consumed_by_exp_id": "95bfbbbf",
-    "description": "## NET-78 \u2014 limited-memory axis, round 29 (paper 162, ResearchOutput/exp_net78_0p5b4096.py, /tmp/net78.log)\n\n**Verdict name: THE-INCREMENT-ACCELERATES-AT-4096.**\n\n### Result\nThe 0.5B at ctx=4096 (6 held-out windows; gate exact):\n\n| k | 16 | 20 | 24 | 28 | 32 | 40 |\n|---|---|---|---|---|---|---|\n| retained | 0.959 \u2717 | 0.969 \u2717 | 0.975 \u2717 | 0.977 \u2717 | 0.979 \u2717 | **0.984 \u2713** |\n\n**k\\*(4096) = 40.** The increment from 2048 to 4096 is **+16** \u2014 a 4\u00d7 ACCELERATION over the +4/doubling that held through three previous doublings.\n\n- **P1 REFUTED**: k\\* \u2260 28 (the +4 increment does NOT continue).\n- **P2 REFUTED**: k\\* > 24 (no saturation).\n- **P3 CONFIRMED dramatically**: k\\* = 40 > 28.\n\n### The complete 0.5B chain\n{16, 20, 24, **40**} at {512, 1024, 2048, 4096}: increments +4, +4, **+16**.\n\n### The phase transition\nAttention budgets are context-stable for the first ~2000 tokens then become sharply more expensive. The linear-increment law that held through three doublings BREAKS at the fourth. This is the first evidence of a PHASE TRANSITION in context-sensitivity.\n\n### Deployment consequence\nA 24-key cache that works perfectly at ctx=2048 will FAIL at ctx=4096. Budget tables need a nonlinear term beyond 2048.\n\n### All 8 barriers\n(a) clean; (b) clean \u2014 first 4096 cell in-programme; (c) confronted \u2014 6 windows and grid gap stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET78; (g) fair; (h) DIRECT.\n\n### Next\nFine grid between 32 and 40; 1.5B @4096 (does the shift delay apply here?); domain-jump @4096; 7B quantized-offload cell.\n\nNow 78 network experiments. Assessment v78. Paper 162.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3743",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T20:41:46.049470+00:00",
-    "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 \u2014 knee jumps to k*=40 (increment +16/doubling vs prior +4); linear increment law breaks after three doublings; phase transition in context-sensitivity"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.\n\nThe dial's signal degrades toward the floor on a gradual path.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp535_t_dial_unif_84.py + exp535_result.json, seeds 20261190\u201392.",
     "domains": [
@@ -1887,16 +1872,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-70 #6 \u2014 MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all realized probes (paper 197, errata to 193/195)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4951edd",
     "description": "Round-70 #5, exp 548.\n\n**PRICE-2ADIC-LETTERS-GAUSS-IS-RESIDUE-DIAL.**\n\nConstruction validated BEFORE measurement: brute-force 792 triples c\u22645000 vs Price-tree BFS \u2014 792 nodes, 0 duplicates/missing (uniqueness+completeness PASS); derived pair maps A:(m,n)\u2192(m+n,2n), B:(2m,m\u2212n), C:(2m,m+n) cross-checked on literature matrices; the brief's hinted matrix REFUTED pre-use ((3,4,5)\u2192(6,6,14)).\n\n**dP law corrected**: slope on log\u2082(p+q) = **1.211 CI95 [1.120,1.301] \u2014 the circulating 1.4 constant is OUTSIDE the CI**; dP mean 24.52 sd 2.65 range [16,34]; R\u00b2=0.255. Contrast quantified: two population nodes take 4566/7230 Berggren steps vs dP\u226434.\n\n**The discovery**: Price letters at positions 0\u20131 are MASSIVELY determined by N mod 4/8/16 (**|z| up to 1303**) while mod 2 is vacuous (N odd) \u2014 the halving alphabet lives exactly where Berggren's 3-adic seal doesn't look. Berggren b\u2081 stays blind (worst z=+4.57 FAILED fresh-seed replication \u00d73 \u2192 seed fluctuation). Placement: these are RESIDUE dials \u2014 symmetric, factor-blind by standing laws; both trees sealed, each at its own adic place.\n\n**GAUSS-DIAL-PROOF**: numeric Gauss sums = closed forms on ALL 7625 (a,b,M) cells; any |G|-magnitude feature \u2261 pure function of N mod 720720 \u2192 residue dial, already sealed; on the standard lab range literally CONSTANT (I=0 bits where residues carry H=1.000 on p\u2261q mod 4).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp548_price_gauss.py + exp548_result.json + run.log.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3907",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T02:00:10.715222+00:00",
     "title": "FACT round-70 #5 \u2014 PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adics; Gauss magnitudes proven residue dials (paper 196)"
   },
@@ -2277,6 +2263,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T09:06:21.857114+00:00",
     "title": "FACT round-74 #5 \u2014 SCALE-U9-LIFT: randomness extends through u\u224811 toward the Dickman leading-term regime (H1-consistent null with sub-1 tension); paper 209 D-death amended to indicator starvation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Paper 220. Verdict for exp569b as run: RANDOMNESS-EXTENDED per pre-registration letter \u2014 cut_1e5 PRIMARY r=0.9710 (2280/2348 events) cluster-boot CI95 [0.8976, 1.0521]; cut_1e6 secondary r=0.9623 (37255/38718) CI [0.9224, 1.004]; both cover 1, no gate armed. 128 band-9 bitlen-96 semiprimes, 600k samples/N = 76.8M pairs (2.15x paper-214 pilot), wall 5233.6s at 68.1us/val, precision-patched script persisting full-precision rates + raw per-cluster counts.\n\nPOOLING AUDIT (the substance):\n1. RETRACTED pre-publication: the three-seed inverse-variance joint (pilot+G1+B => r~0.971 CI [0.942,1.000]) treated G1(exp569) and B as independent; they share SEED=20260824 end-to-end and B is a STRICT SUPERSET of G1's draws (same chunk seeds SEED+1000+c, deterministic prefix consumption \u2014 first 150k samples/N identical candidates AND paired controls). One dataset counted twice.\n2. Corrected joint over the only nominally-independent pair pilot(0.9468\u00b1.0449) x B(0.9623\u00b1.0208): r=0.9596, sigma~0.0189, CI [0.9226, 0.9966] \u2014 EXCLUDES 1 downward (~4% deficit, z~2.14). BUT recorder verification (coordinator-directed) found paper 214's exp567 uses the SAME master-seed literal with an unconsumed-until-pools main rng and a byte-identical prime-start primitive; stream reconstruction puts ALL 24 pilot band-9 semiprimes INSIDE B's 128-N pool (24/24, zero rejects). The exclusion's sigma understates uncertainty via correlated clusters; the POINT stays meaningful (disjoint measurement machinery on shared Ns), the EDGE does not.\n\nDISPOSITION: every dataset from seed 20260824 is ONE seed's evidence, jointly 3-5% below 1 \u2014 a TWICE-GATED CANDIDATE DEVIATION, not confirmation. DECISIVE NAMED STEP: fresh-stream run at seed 20260825 (exp569_u9_drift_power.py full 600000 c_ ... 20260825, ~87 min): below-1 + pooled independent exclusion => CONFIRMED-DEVIATION candidate passes G1 modulo G2 audit; back to 1 => randomness stands tightened. No 20260825 numbers cited yet.\n\nMECHANISM NOTE: candidate-side DEFICIT is opposite in sign to paper 136's sieve-advantage direction (QR compensation); if real it is a NEW weak u~10-scale effect \u2014 full skepticism until the fresh seed lands.\n\nLEDGER: shared-stream design flaw (root cause: 'fresh seed' claimed by population re-draw within a fixed stream; lab-wide rule adopted \u2014 replication legs must VARY the master seed and scripts must assert seed distinctness in-output); pilot population overlap; findings rounding slip on the 1e5 point ratio (printed 0.981 via rounded numerator; exact rates give 0.9710 \u2014 verdict unaffected); precision patch verified in production; wall overshoot vs naive estimate documented as candidate-strip cost drift.\n\nBARRIER FRAMING: scale-smoothness frontier u>=9-14; strengthens papers 130/209/214/216 randomness line at rule level (H0 edge improves to 0.102 @1e5 / 0.078 @1e6 this run alone); no barrier breached, no constant shaved. Count 561->562 (id 569b under exp569 lineage; max id stays 572), papers 220, assessment v327. Round-75 #3 recorded after #4 due to compute wall-clock.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3980",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T10:55:32.771270+00:00",
+    "title": "FACT round-75 #3 \u2014 U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pairs; both poolings fail independence \u2014 twice-gated sub-1 candidate awaits seed 20260825"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-75 #4 \u00b7 THEORY deliverable (no new experiment id) \u00b7 paper 219 \u00b7 assessment v326.\n\n**What was recorded.** The verified draft of the POSITIONAL/MAGNITUDE stratum of the barrier-4 converse (`ResearchOutput/scripts/2026-08-24-round74/barrier4_positional_converse_draft.md`), independently rechecked per `verify_t1_t2_recheck.json` against the author's own finite checks `exp574b_saturation_check.py`/`exp574b_result.json`. Recorded as DRAFT-WITH-CAVEATS per verifier recommendation \u2014 NOT a sealed theorem.\n\n**T1 (fixed-window oracle).** CERTIFIED-SILENCE law S_A = 1/[\u03bc\u00b7P_hit + (1\u2212P_hit)(1\u2212\u03bc)] exact for protocol A committed policy (finite-M rational, 0 recheck failures). The DRAFTED fire-or-silent form 1/(1\u2212(1\u2212\u03bc)P_hit) is SUPERSEDED \u2014 non-certifying silence wastefully re-scans R; 14 algebra consistency failures caught. Protocol B optimal response S_B = 1/(1+\u03bc\u2212P_hit) \u2264 S_A; block-first dominance UNCONDITIONAL for protocol A, RESTRICTED to P_hit \u2265 \u03bc for protocol B (exhaustive orders + insertion sweep M\u2208{16,33,64}; all 12 counterexamples have P<\u03bc). Cap = 1/\u03bc at P_hit=1; NO constant cap exists.\n\n**T2 (adaptive saturation).** V(W) = log\u2082W + \u00bd EXACT on every dyadic W \u2208 [2,4096] (independent DP reproduction); general-L closed form an upper bound never crossing \u2212\u00bd to L=4096 (deepest undercut \u22120.499349 @ L=3073); cost-offset bracket corrected to [.415,.5011]; marginal-value identity rewritten as exact NET form cost(k)\u2212cost(k+1)=W/2^(k+2)\u22121 (250/250 cells) after drafted GROSS form failed 231 cells; census C*=19.5@2^19 / 20.5@2^20, argmin offsets {\u22122,\u22121} \u2260 k_pin=log\u2082W \u2014 and exp563's economic optimum is a THIRD convention ~1 query above k_opt: three distinct k's must stay distinguished.\n\n**Conjecture D (SET/COST dichotomy).** S(\u03a0)=S(R\u2218F)=S(R)\u00b7S(F), sup_F S(F)=4/3 (\u03b8=1/2), S(R) \u2264 min(1/\u03bc_eff, 2^k_bits). Residue cap 4/3 governs COST-class actions; position works the SET-class tail. All four measured anchors feasible under \u03bc \u2264 1/S: 5.19\u00d7 \u2261 (.05,.85), 6.91\u00d7 \u2261 (.05,.9003), 4.35\u00d7 \u2261 (.05,.8106), 29.1\u00d7 \u2261 (.02,.9853); identity check: paper-138 master law at uninformative point \u2261 paper-132 formula exactly. 5.19\u00d7 > 4/3 is CLASS-CROSSING, NOT cap-breaking \u2014 barrier map internally consistent.\n\n**Verification census.** Zero arithmetic errors across all numeric claims (stored-value discrepancies: none); ~60% of PROVEN upgraded to VERIFIED where independently recomputed. Named GAPs remain, load-bearing: L4 stratum measure \u0394(\u03c0,R), L7 extremality of sqrt-descending among N-computable orders (Siegel-type ineffectivity expected), L8 k-naming. These are the formal program's next work.\n\nCount unchanged by experiment (papers-only bump, convention stated in addendum): still 561 experiments (max id 572), papers now 219, assessment v325 \u2192 v326.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3981",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T10:55:32.772786+00:00",
+    "title": "FACT round-75 #4 \u2014 BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of the barrier-4 converse recorded as DRAFT-WITH-CAVEATS \u2014 certified-silence law S_A=1/[\u03bcP+(1\u2212P)(1\u2212\u03bc)] supersedes drafted fire-or-silent form (14 algebra failures caught by independent verification); T2 saturation V=log\u2082W+\u00bd exact on dyadic W\u2208[2,4096]; Conjecture D factors S(R\u2218F)=S(R)\u00b7S(F) with sup_F=4/3 \u2014 residue cap 4/3 governs COST-class actions while position works the SET-class tail: 5.19\u00d7>4/3 is class-crossing not cap-breaking; zero arithmetic errors in recheck; named GAPs L4/L7/L8 are the next work"
   },
   {
     "consumed_by_exp_id": "",
@@ -3051,20 +3065,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 93d08ac5 (Q=0.820), which proved 30 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For `d \u2265 1`, `N \u2265 2`, the thickness of the outermost equal-volume\nshell of `B(0,R) \u2286 \u211d^d` satisfies\n`R/(d(N\u22121)) \u00b7 (1 \u2212 1/N) \u2264 R \u2212 R(1 \u2212 1/N)^{1/d} \u2264 R/(d(N\u22121))`,\nso the upper bound `shell_thickness_le` proved here is tight up to the factor\n`1 \u2212 1/N`, and the whole shell decomposition converges, afte",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_93d08ac5_1c550c1a",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "93d08ac5",
-    "status": "available",
-    "timestamp": "2026-08-24T10:05:36.976273+00:00",
-    "title": "Deepening: For `d \u2265 1`, `N \u2265 2`, the thickness of the outermost equal-volume"
   },
   {
     "consumed_by_exp_id": "",
@@ -13273,6 +13273,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Knee and decay rate are exact reciprocals, so the measured acceleration is a statement about how quickly attention de-peaks with context. The conjecture is that the asymptotic per-doubling rate ratio increases with parameter count and tends to 1, i.e. sufficiently large models have context-free budgets even after the transition.\n\nThere is rho(N) in (0,1] with lam_{j+1}/lam_j -> rho(N) for a model of N parameters, rho increasing in N and rho(N) -> 1 as N -> infinity; the 4.5B context-free threshold of the earlier cycle must be recomputed under the crossover family.\n\nFit lam_j = log(1/delta)/k*_j from the measured chains at 0.5B and 1.5B, extend by the 1.5B ctx = 4096 cell and a 7B quantized-offload cell, and check monotonicity of the fitted rho.\n\nLarge-model serving budgets are asymptotically context-free and the phase transition is a small-model phenomenon, which changes cache sizing for 7B and above.\n\nThe collapse is scale-invariant, so every model has the same post-corner slope in log-context and budget tables need the nonlinear term at every scale.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_3979",
+    "priority_score": 0.6706190476190478,
+    "research_mode": "team",
+    "source_exp_id": "95bfbbbf",
+    "status": "available",
+    "timestamp": "2026-08-24T10:54:54.519459+00:00",
+    "title": "Scale-Dependent Rate-Collapse Exponent"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Windows of 2^s consecutive integers all carry the same trailing-zero tie profile, whatever their placement (proved in cycle 4). For a sample size L that is not a power of two the block counts become floor or ceiling of L/2^(k+1) depending on the window position, so the ceiling should wobble by Theta(1/L) in a way governed by the binary expansion of L.\n\nFor any A and L the k-th block of [A, A+L) has size floor(L/2^(k+1)) or that plus one, and the resulting ceiling equals 6/7 + f(L)/L + O(1/L^2) where f is a bounded nowhere-differentiable function of the binary expansion of L, with f identically zero exactly on powers of two.\n\nExtend card_Ico_modEq with a floor correction term, evaluate the exact rational ceiling for all L up to 2^16 and all residues of A, and plot the normalised deviation L*(ceiling - 6/7).\n\nSample size, not just scale, becomes a tunable knob of the dial, and power-of-two sample sizes are exactly the stationary points.\n\nThe ceiling depends on L smoothly, and translation invariance extends to all sample sizes.",
     "domains": [
       "Algebra"
@@ -15002,6 +15016,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Reading a knee on a coarse grid returns a bracket, not a value. The NET-78 grid leaves the true knee anywhere in [33,40], and both endpoints are realised by explicit profiles matching the whole table. Probe design is therefore threshold search on a monotone predicate, with a matching information-theoretic lower bound.\n\nThree further probes suffice to determine the knee inside a bracket of width 8, and no adaptive strategy using two probes can, because a monotone predicate on 8 candidate thresholds has 8 distinguishable outcomes.\n\nFormalise adaptive probe strategies as decision trees over monotone predicates and prove a depth lower bound of ceil(log2 (b-a+1)) together with a binary-search strategy attaining it; empirically, probe k = 34, 36, 38.\n\nEvery reported knee acquires a certified resolution, and grid design becomes a theorem-backed part of the protocol rather than a convention.\n\nSome structural property of retention curves (e.g. concavity of the tail) lets fewer probes suffice, which would itself be a strong statement about attention profiles.",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3976",
+    "priority_score": 0.5642197505032929,
+    "research_mode": "team",
+    "source_exp_id": "95bfbbbf",
+    "status": "available",
+    "timestamp": "2026-08-24T10:54:53.096960+00:00",
+    "title": "Optimal Probe Design for Knee Brackets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every L-estimator (weighted average of order statistics) should have breakdown number equal to the tent profile min(j+1, n-j) evaluated at the extreme support points of its weight vector. The approach lifts the two count-based sandwich lemmas from single order statistics to finite convex combinations. It matters because it would compute the breakdown numbers of the trimmed mean, Winsorised mean and trimean as instances of one theorem.\n\nFor weights w on {0,...,n-1} with nonnegative entries summing to 1, the breakdown number of xs \\mapsto \\sum_j w_j \\cdot orderStat j xs equals min(jmin+1, n-jmax) where jmin and jmax are the smallest and largest indices with w_j > 0.\n\nFormalise trimmedMean alpha as an L-estimator in Lean and prove IsLeast {k | not EstBounded ...} = min(jmin+1, n-jmax); first check the alpha-trimmed mean on ratios16 for alpha = 1/8, 1/4, 3/8 by #eval on the profile formula.\n\nA single theorem yields the breakdown numbers of the whole classical L-estimator family, and shows no L-estimator beats the median.\n\nThere is an L-estimator whose interior weights create extra robustness, which would contradict the support-functional picture and force a genuinely new mechanism.",
     "domains": [
       "Geometry",
@@ -15314,6 +15343,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T09:05:42.503455+00:00",
     "title": "Coarsening Inversion Locus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every monotone convex budget law equals the max-plus polynomial of its own tangents, so its phase transitions are exactly the corners of a tropical curve. The conjecture is that the number of corners counts attention regimes, giving a geometric invariant of a model's context behaviour.\n\nA knee law with r phase transitions is a max-plus polynomial with exactly r+1 non-redundant monomials, and r is bounded by the number of distinct attention regimes of the model; for the 0.5B model r = 1 up to ctx = 4096.\n\nMeasure ctx = 8192 and 16384 for the 0.5B model; fit the tangent envelope and count non-redundant monomials, comparing with kneeRamp_two_monomials which proves the current count is 2.\n\nBudget tables acquire a geometric normal form: a small list of slopes and corners, one per attention regime, replacing per-context tables.\n\nConvexity fails at some octave (increments decrease), which would refute the convex-fit family used for all current lower bounds and force a non-convex model.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_3978",
+    "priority_score": 0.563703751343374,
+    "research_mode": "team",
+    "source_exp_id": "95bfbbbf",
+    "status": "available",
+    "timestamp": "2026-08-24T10:54:54.043410+00:00",
+    "title": "Tropical Corner Count for Multi-Regime Attention"
   },
   {
     "consumed_by_exp_id": "",
@@ -15854,6 +15898,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T18:49:50.119638+00:00",
     "title": "Skip-Budget Interpolation of the Dial Cap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The kink in a model's top-k retention knee curve occurs where the knee crosses a model-independent critical key budget, rather than at a model-independent context length. For the 0.5B model the crossing index of 24 keys is exactly the measured corner at ctx=2048. The two readings predict different 1.5B behaviour at ctx=4096 and are already separated formally.\n\nFor every model f in the programme, the index of the corner of f equals crossIdx f 24; in particular the 1.5B curve does not kink until ctx = 16384 and its knee at ctx = 4096 is 20, not 28.\n\nRun the 1.5B cell at ctx = 4096 on the same held-out windows and gate; compare with kneeLargeBUD 3 = 20 and kneeLargeCTX 3 = 28, which are proved to differ by exactly 8.\n\nBudget tables become a single scale-free curve in the key budget, with context entering only through the crossing index; deployment tables can be generated per model from its pre-corner slope.\n\nThe transition is a property of the context window itself, so every model inherits the same ~2048-token cliff and per-model tables must each carry a nonlinear term past it.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3975",
+    "priority_score": 0.5628557806959551,
+    "research_mode": "team",
+    "source_exp_id": "95bfbbbf",
+    "status": "available",
+    "timestamp": "2026-08-24T10:54:52.593638+00:00",
+    "title": "Budget-Threshold Universality of the Attention Corner"
   },
   {
     "consumed_by_exp_id": "",
@@ -24667,6 +24726,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T10:05:29.726624+00:00",
     "title": "Cesaro Antitonicity as the Engine of Dimension Monotonicity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A key cache cannot exceed the context it summarises. This single constraint refutes the geometric continuation of the NET-78 chain without any new measurement, and suggests that all admissible knee laws are polynomial in the number of doublings, with vanishing retained fraction.\n\nAny budget law whose increments grow geometrically violates f j <= 512 * 2^j for all large j; conversely every feasible law that is convex and monotone is bounded by a polynomial in j, so its keepFraction tends to 0.\n\nProve the converse direction in Lean: from feasibility plus convexity derive a polynomial bound on f, and combine with the proved squeeze ratio_vanishes_of_poly.\n\nThe space of admissible continuations collapses to polynomial fits, reducing the ctx = 8192 experiment to a two-way test between 56 and 80 keys.\n\nSome feasible law grows faster than any polynomial while staying under the exponential ceiling, and the ctx = 8192 prediction interval must stay open.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3977",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "95bfbbbf",
+    "status": "available",
+    "timestamp": "2026-08-24T10:54:53.570378+00:00",
+    "title": "Feasibility Ceiling as a Selection Principle"
   },
   {
     "consumed_by_exp_id": "",
@@ -35865,14 +35938,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "\"two rows suffice\" form"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a9ba724",
     "description": "**Conjecture.**  Let `d, r : \u2115 \u2192 \u2115` be height and reflection-depth vectors with\n`r i \u2264 min N (d i)` for every tag `i`.  Then there is a consistent GL theory `S`\n(a tag-sensitive model with a valuation, i.e. the common refinement of `capC` and\n`valSys`) such that for every tag `i`\n\n* `Provable S (\u25a1_i^k \u22a5) \u2194 min N (d i) < k`, and\n* `DepthReflection r' i S \u2194 r' \u2264 r i`.\n\n**The key insight is** that the reflection depth measures the distance from the top of\nthe model to the point where the *valuation* stops being constant, while the\ninconsistency depth measures the distance from the top to the point where the *tag's\naccessibility* stops \u2014 two independent cut points of the same finite chain, which the\none-tag theorem `height_depth_realizable_iff` already decouples.\n\n**Why now?**  Both ingredients are formalized: the tag-sensitive depth vectors are a\ncomplete invariant (`provable_capC_congr_of_min_eq`, `capC_ne_of_min_ne`) and the\none-tag reflection spectrum is computed exactly.  What is missing is only the combined\nsemantics `satCV c V` and its locality lemma, both of which are one-page adaptations of\n`satC_congr_below` and `satV_blockVal_local`.\n\n*Falsified by* a pair `(d, r)` obeying `r i \u2264 min N (d i)` for which no such theory\nexists \u2014 equivalently by a general theorem forcing a second inequality between the two\nvectors.",
     "domains": [],
     "id": "fd_3129",
+    "phase": "A",
     "priority_score": 0.4384285714285714,
     "research_mode": "team",
     "source_exp_id": "ea50968d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:28:12.225372+00:00",
     "title": "Per-tag reflection depths are freely realizable"
   },
