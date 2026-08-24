@@ -1661,31 +1661,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-68 #1 \u2014 TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "95bfbbbf",
     "description": "## NET-78 \u2014 limited-memory axis, round 29 (paper 162, ResearchOutput/exp_net78_0p5b4096.py, /tmp/net78.log)\n\n**Verdict name: THE-INCREMENT-ACCELERATES-AT-4096.**\n\n### Result\nThe 0.5B at ctx=4096 (6 held-out windows; gate exact):\n\n| k | 16 | 20 | 24 | 28 | 32 | 40 |\n|---|---|---|---|---|---|---|\n| retained | 0.959 \u2717 | 0.969 \u2717 | 0.975 \u2717 | 0.977 \u2717 | 0.979 \u2717 | **0.984 \u2713** |\n\n**k\\*(4096) = 40.** The increment from 2048 to 4096 is **+16** \u2014 a 4\u00d7 ACCELERATION over the +4/doubling that held through three previous doublings.\n\n- **P1 REFUTED**: k\\* \u2260 28 (the +4 increment does NOT continue).\n- **P2 REFUTED**: k\\* > 24 (no saturation).\n- **P3 CONFIRMED dramatically**: k\\* = 40 > 28.\n\n### The complete 0.5B chain\n{16, 20, 24, **40**} at {512, 1024, 2048, 4096}: increments +4, +4, **+16**.\n\n### The phase transition\nAttention budgets are context-stable for the first ~2000 tokens then become sharply more expensive. The linear-increment law that held through three doublings BREAKS at the fourth. This is the first evidence of a PHASE TRANSITION in context-sensitivity.\n\n### Deployment consequence\nA 24-key cache that works perfectly at ctx=2048 will FAIL at ctx=4096. Budget tables need a nonlinear term beyond 2048.\n\n### All 8 barriers\n(a) clean; (b) clean \u2014 first 4096 cell in-programme; (c) confronted \u2014 6 windows and grid gap stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET78; (g) fair; (h) DIRECT.\n\n### Next\nFine grid between 32 and 40; 1.5B @4096 (does the shift delay apply here?); domain-jump @4096; 7B quantized-offload cell.\n\nNow 78 network experiments. Assessment v78. Paper 162.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3743",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T20:41:46.049470+00:00",
-    "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 \u2014 knee jumps to k*=40 (increment +16/doubling vs prior +4); linear increment law breaks after three doublings; phase transition in context-sensitivity"
-  },
-  {
-    "consumed_by_exp_id": "97a7afe4",
-    "description": "Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.\n\nThe dial's signal degrades toward the floor on a gradual path.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp535_t_dial_unif_84.py + exp535_result.json, seeds 20261190\u201392.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3744",
     "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
+    "timestamp": "2026-08-22T20:41:46.049470+00:00",
+    "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 \u2014 knee jumps to k*=40 (increment +16/doubling vs prior +4); linear increment law breaks after three doublings; phase transition in context-sensitivity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.\n\nThe dial's signal degrades toward the floor on a gradual path.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp535_t_dial_unif_84.py + exp535_result.json, seeds 20261190\u201392.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3744",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
     "timestamp": "2026-08-22T20:41:46.051034+00:00",
     "title": "FACT round-67 #1 \u2014 TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
   },
@@ -2081,6 +2081,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T03:18:15.576963+00:00",
     "title": "FACT rounds 70\u201371 SYNTHESIS \u2014 THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exact laws + method laws consolidated (paper 199)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-72 #5, exp 555 \u2014 the last untested face of the triplet-tree proposal.\n\n**TRIAL-DIVISION-EQUIVALENT-GUIDANCE-NULL.** The mod-N Berggren tree: expansion multiplication-free (T-coefficients \u00b11..3), **collision-free at 200k nodes on every N**, residue-class-confined (~99.75% of orbit in two nz-histogram classes). Order-free dive factors 200/200: v* \u2248 **0.89\u00b7p_min, \u03b1 = 1.007\u00b10.088** \u2014 TD scaling, not \u03c1-like; ~11\u00d7 worse constants than plain trial division at matched compute; \u03c1 dominates by orders of magnitude. Ambient null: the orbit UNDER-SAMPLES factor-revealing residues ~5\u00d7 vs random Pythagorean points \u2014 projection erases the order structure that made the integer face tractable. Guidance: naive z=12\u201324 'improvements' were pure traversal-shape artifact (random-order control alone z=21.8); honest paired |z|<2 everywhere \u27f9 pre-stated null CONFIRMED.\n\n**Campaign close** \u2014 every face of the proposal now measured: exact-target circular; modular descent TD-class (this paper); combining invalid-as-stated (202); multi-target relaxation = TD-in-tree-clothing (203); Euler route 5.7\u00d7 Fermat (201). Barriers 2/5/8 unchanged throughout.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp555_modular_dynamics.py + exp555_result.json + identity addendum + logs, seed 20260826.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3926",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T04:10:59.496275+00:00",
+    "title": "FACT round-72 #5 \u2014 MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-slow (alpha=1.007); guidance null (paper 205)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-72 #4, exp 554. **U120-FLOOR-LOWER**: pooled Spearman(T, rate) = **0.43636** CI [0.38815, 0.48113] \u2014 the U116 rebound fully retraced and overshot (step \u22120.0483); the +0.0226 was noise around a continuing decline. Ladder: 0.5739 \u2192 .5436 \u2192 .5005 \u2192 .4880 \u2192 .4621 \u2192 (.4847) \u2192 0.4364. Seed spread widened to 0.082. T beats count +0.0752 (point PASS; paired-CI caveat disclosed). Rate mean flat.\n\nLedger: window convention resolved pre-data; exact two-part q-decomposition past 2^66; all 36k values re-verified vs full Pollard-rho (0 mismatches); wall 41.9 min vs budget DISCLOSED.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp554_t_dial_unif_120.py + exp554_result.json + log.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3927",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T04:10:59.497816+00:00",
+    "title": "FACT round-72 #4 \u2014 TDIAL-U120: rebound was noise, fade continues below the hypothesized floor (paper 204)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**#2 exp556 TREE-SIEVE (paper 202):** the combining proposal is **INVALID AS STATED** \u2014 \u03a0(m\u1d62\u2212n\u1d62)(m\u1d62+n\u1d62)=Y\u00b2 lives in \u2124, never reduces mod N; candidate pairs are N-independent \u27f9 per-ticket success = generic gcd luck O(N^{\u22121/2}). End-to-end: 8/12000 splits vs baseline 4/12000 vs heuristic 6.55e-4 \u2014 CONSISTENT-LOTTERY. Smoothness boost real but modest: tree values 7.31\u00d7 smoother than random (vs naive ~44\u00d7 prediction); BFS starvation confirmed (50k nodes never reach the analysis window). Corrected variants forcing u\u2261v mod N collapse to Dixon/QS \u2014 barrier 8.\n\n**#3 exp558 MULTI-TARGET (paper 203):** relaxing exact a=N to gcd(a,N)>1 \u2014 blind FIFO stays broken (55% censored, \u03b1=1.17-finished); value-guided best-first wins 1500/1500 paired (median visit ratio 0.111, zero censoring) **but the mechanism is ascending-value sweep: 100% of first-hits land exactly at a=min(p,q), \u03b1=1.087 r\u00b2=1.0 = dead center of the TD band**. Honest headline: the relaxation turns an uncomputable search (~2^56 units) into a trial-division-class one (~2^16) \u2014 ~10^12\u00d7 better than blind, yet still dominated by \u03c1 (\u03b1=0.458). Every route through the tree's integer face ends in a known method.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp556_tree_sieve.py + exp558_multi_target.py + JSONs/logs, seed 20260826.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3928",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T04:10:59.499265+00:00",
+    "title": "FACT round-72 #2/#3 \u2014 TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-TARGET relaxation lands at trial division (papers 202\u2013203)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2855,6 +2897,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 2292d7e8 (Q=0.820), which proved 70 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **C4 (reward hacking is a covariance) \u2014 PROVED at first order.**\n  `RLHF.audit_gap_first_order`: `|\ud835\udd3c_{\u03c0_\u03b2}f \u2212 \ud835\udd3c_p f \u2212 Cov_p(r,f)/\u03b2| \u2264 24 (R/\u03b2)\u00b2 \u03c3_p(f)`\n  for `|r| \u2264 R \u2264 \u03b2`, hence `RLHF.audit_gap_of_uncorrelated`: statistics uncorrelated\n  with the reward move only at order `\u03b2\u207b\u00b2`.  The *sharp thresho",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_2292d7e8_1fe02a78",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "2292d7e8",
+    "status": "available",
+    "timestamp": "2026-08-24T04:10:35.874855+00:00",
+    "title": "Deepening: C4 (reward hacking is a covariance) \u2014 PROVED at first order.*"
   },
   {
     "consumed_by_exp_id": "",
@@ -3831,21 +3887,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that Wall-Sun-Sun primes exist (primes p where p\u00b2 divides F_{p-(p|5)}). Formalize the connection to Fermat's Last Theorem and establish search bounds for the first such prime.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_207",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Wall-Sun-Sun Primes"
   },
   {
     "consumed_by_exp_id": "",
@@ -12787,6 +12828,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A deployed system is monitored by many statistics at once. Conjecture: the suite's critical temperature is governed by the operator norm of the covariance functional on the audit span, so the first statistic to break is the maximizer of |Cov_p(r,f)|/sigma_p(f). This replaces per-statistic thresholds by a single spectral quantity.\n\nFor a finite family f_1,...,f_m, sup_i eps * beta_c^{(i)}(eps) -> max_i |Cov_p(r,f_i)| as eps -> 0, and the maximizing direction in the L^2(p) span is the normalized projection of r onto that span.\n\nExtend RLHF.tendsto_eps_mul_betaCrit to a finite family by taking maxima inside the two-sided window RLHF.betaCrit_window, then optimize |Cov_p(r,f)|/sigma_p(f) over the span using the Cauchy-Schwarz equality case.\n\nAudit suites can be scored by one spectral number, and redundant statistics are exactly those inside the reward's orthogonal complement.\n\nSuite-level hacking is not determined by pairwise covariances, indicating genuinely joint (multivariate) hacking effects.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_3922",
+    "priority_score": 0.6716486486486488,
+    "research_mode": "team",
+    "source_exp_id": "2292d7e8",
+    "status": "available",
+    "timestamp": "2026-08-24T04:10:21.972418+00:00",
+    "title": "Threshold Spectrum of an Audit Suite"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The equivariance shear only uses two corruption patterns, a prefix and a suffix, which together cover all coordinates precisely when 2k >= n. This suggests the real hypothesis behind the breakdown ceiling is a covering condition on the admissible corruption patterns rather than a cardinality bound. The conjecture replaces k-subsets by an arbitrary downward-closed set system and predicts the ceiling from its covering number.\n\nLet S be a downward-closed family of subsets of {0,...,n-1} of admissible corruption supports. Every translation-equivariant estimator is unbounded under S-contamination if and only if some two members of S cover {0,...,n-1}.\n\nFormalise S-contamination as diffSupport xs ys in S, re-prove breakdown_ceiling_unbounded from the covering hypothesis, and instantiate S as (i) all k-subsets, recovering 2k >= n, and (ii) contiguous blocks of length k, where the covering threshold differs.\n\nThe ceiling extends verbatim to structured adversaries such as sensor dropouts and block corruption, with no new analysis.\n\nBoundedness under structured contamination is not covering-determined, which would mean equivariance interacts with the combinatorics of the support family in a way the shear cannot see.",
     "domains": [
       "Algebra"
@@ -12812,6 +12867,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T18:49:45.771218+00:00",
     "title": "Fine-Wilf Threshold for Digit Windows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Real deployments optimize a learned reward r-hat, not the true reward r. Conjecture: the hacking threshold is Lipschitz in the reward in L^2(p), with constant sigma_p(f)/eps, so reward-model accuracy translates linearly into threshold accuracy.\n\nIf ||r - r_hat||_{L^2(p)} <= eta and both are bounded by R, then |eps * beta_c^{r}(eps) - eps * beta_c^{r_hat}(eps)| <= eta * sigma_p(f) + o(1) as eps -> 0.\n\nCombine RLHF.abs_cov_le (Cauchy-Schwarz gives |Cov(r,f) - Cov(r_hat,f)| <= eta sigma_p(f)) with the two-sided window RLHF.betaCrit_window applied to both rewards.\n\nA quantitative safety budget: reward-model error eta buys threshold error eta sigma_p(f), so audit thresholds inherit reward-learning guarantees.\n\nThreshold prediction is unstable under reward error, so measured thresholds cannot be transferred from a proxy reward to the true one.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_3923",
+    "priority_score": 0.6714375000000001,
+    "research_mode": "team",
+    "source_exp_id": "2292d7e8",
+    "status": "available",
+    "timestamp": "2026-08-24T04:10:22.454093+00:00",
+    "title": "Threshold Stability Under Reward-Model Error"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The first- and second-order hacking coefficients proved in this cycle are the covariance and the skew covariance. Conjecture: the k-th order coefficient is the mixed cumulant kappa_k(r,...,r,f)/k!, so safety to order beta^-k is orthogonality of the audit statistic to the first k reward cumulant tensors. This would turn ad-hoc audit design into a linear-algebraic orthogonality condition.\n\nFor |r| <= R <= beta there are constants C_k with |E_{pi_beta} f - E_p f - sum_{j=1}^{k} kappa_j(r,...,r,f)/(j! beta^j)| <= C_k (R/beta)^{k+1} sigma_p(f), where kappa_j is the mixed cumulant with j-1 copies of r and one copy of f.\n\nFormalize the k = 3 case first: identify the coefficient by expanding e^{r/beta}/Z to third order and prove the oscillation bound |tilt - cubic model| <= C (R/beta)^4 with the same Taylor-plus-Cauchy-Schwarz route used in SecondOrder.lean.\n\nAudit statistics can be certified safe to any prescribed order by finitely many orthogonality checks against reward cumulants.\n\nThe expansion coefficients are not cumulants beyond order two, which would mean higher-order hacking is not captured by moment orthogonality and needs a genuinely non-polynomial invariant.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3921",
+    "priority_score": 0.6714126984126986,
+    "research_mode": "team",
+    "source_exp_id": "2292d7e8",
+    "status": "available",
+    "timestamp": "2026-08-24T04:10:21.485839+00:00",
+    "title": "Cumulant Hierarchy of Audit Invariants"
   },
   {
     "consumed_by_exp_id": "",
@@ -12896,6 +12979,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T05:46:37.265614+00:00",
     "title": "Inversion Formula for the Oracle Gap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Alignment pressure is measured by KL divergence, audit failure by the gap. Conjecture: the two are linked by a temperature-free exchange rate, so moving a statistic by eps costs at least eps^2 Var_p(r) / (2 Cov_p(r,f)^2) nats of KL divergence.\n\nKL(pi_beta || p) >= (G(beta))^2 Var_p(r) / (2 Cov_p(r,f)^2) * (1 + o(1)) as beta -> infinity, with equality asymptotically for f proportional to the centred reward.\n\nRebuild the KL side (KL(pi_beta||p) = Var_p(r)/(2 beta^2) + O(beta^-3)) with the pair-representation technique of Core.lean and divide by the proved gap asymptotics.\n\nA currency conversion between alignment budget and audit failure that is independent of temperature, giving deployable guarantees from a KL budget alone.\n\nKL budgets do not control audit failure, so temperature must be monitored directly.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3925",
+    "priority_score": 0.6712142857142859,
+    "research_mode": "team",
+    "source_exp_id": "2292d7e8",
+    "status": "available",
+    "timestamp": "2026-08-24T04:10:23.422300+00:00",
+    "title": "KL Exchange Rate for Audit Failure"
   },
   {
     "consumed_by_exp_id": "",
@@ -13473,6 +13570,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T21:36:18.720679+00:00",
     "title": "Covering-Number Serving Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Because the second-order term can oppose the first, the audit gap need not be monotone in temperature. Conjecture: there are explicit finite models whose hacked set {beta : |G(beta)| >= eps} is disconnected, so a system can be safe at one temperature and hacked both below and above it.\n\nThere exist a three-point model and eps > 0 for which {beta >= R : |G(beta)| >= eps} is not an interval.\n\nSearch inside the biased two-point family of SharpOrder.lean extended by a third response, then certify the two crossings and the intermediate safe temperature by interval arithmetic in Lean.\n\nMonitoring at a single temperature is unsound; the supremum definition of beta_c used here is the only robust one.\n\nThe audit gap is unimodal in beta, which would upgrade the sharp threshold to a genuine phase transition with a single crossing.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3924",
+    "priority_score": 0.6695517241379312,
+    "research_mode": "team",
+    "source_exp_id": "2292d7e8",
+    "status": "available",
+    "timestamp": "2026-08-24T04:10:22.942523+00:00",
+    "title": "Non-Interval Hacked Sets from Sign-Changing Skew Covariance"
   },
   {
     "consumed_by_exp_id": "",
@@ -35987,19 +36098,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sparse corpora never approach the binomial ceiling.*"
   },
   {
-    "consumed_by_exp_id": "2292d7e8",
-    "description": "**C4 (reward hacking is a covariance) \u2014 PROVED at first order.**\n  `RLHF.audit_gap_first_order`: `|\ud835\udd3c_{\u03c0_\u03b2}f \u2212 \ud835\udd3c_p f \u2212 Cov_p(r,f)/\u03b2| \u2264 24 (R/\u03b2)\u00b2 \u03c3_p(f)`\n  for `|r| \u2264 R \u2264 \u03b2`, hence `RLHF.audit_gap_of_uncorrelated`: statistics uncorrelated\n  with the reward move only at order `\u03b2\u207b\u00b2`.  The *sharp threshold* half of C4 (a phase\n  transition in `\u03b2_c`) is still open and is restated as N2 below.",
-    "domains": [],
-    "id": "fd_1686",
-    "phase": "A",
-    "priority_score": 0.4300588235294117,
-    "research_mode": "team",
-    "source_exp_id": "84bf9824",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T07:57:24.524777+00:00",
-    "title": "C4 (reward hacking is a covariance) \u2014 PROVED at first order.*"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The set of pairs `(A, m)` with unique and pairwise distinct\nminimizers is open, dense, and of full Lebesgue measure in `\u211d^{rk} \u00d7 \u211d^k`; its\ncomplement is the finite union of the hyperplanes `m j + A i j = m j' + A i j'`, and\nconsequently the \"exact recession dimension `k \u2212 r`\" theorem holds off a set of\ncodimension one, with an explicit tube estimate: the failure locus within distance\n`\u03b5` of a generic point has measure `O(r k^2 \u03b5)`.",
     "domains": [],
@@ -41777,15 +41875,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Toric grids"
   },
   {
-    "consumed_by_exp_id": "d24e8d5b",
+    "consumed_by_exp_id": "",
     "description": "Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.",
     "domains": [],
     "id": "fd_2307",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3d25b5ad",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:23:34.380840+00:00",
     "title": "Biequivalence versus equality"
   },
@@ -42607,14 +42704,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Executable rounding decoder"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "80241759",
     "description": "For concrete `B` and threshold `T`, define and\n   compute the largest supported depth, proving maximality rather than only a\n   selected numerical instance.",
     "domains": [],
     "id": "fd_2778",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "61f6b5cb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:04.151398+00:00",
     "title": "Parameter-derived depth"
   },

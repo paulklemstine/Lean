@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-24T03:17:57.593365+00:00",
+  "last_updated": "2026-08-24T04:10:41.992014+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -65948,6 +65948,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-24T03:17:57.318904+00:00",
       "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT \u2014 1.5B knee at 2048 is 18 not 20; both models start at 16"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Computation",
+      "duration_seconds": 3092.6790425777435,
+      "end_time": 1787544568.4792566,
+      "files_integrated": 4,
+      "job_id": "2292d7e8",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787541475.800214,
+      "strategy_count": 0,
+      "theorem_count": 70,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 66,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-24T04:10:41.702479+00:00",
+      "title": "C4 (reward hacking is a covariance) \u2014 PROVED at first order.*"
     }
   ]
 }

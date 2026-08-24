@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6f0c0f57",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — THE-CYCLIC-CUBIC-IS-FULLY-PINNED (paper 122)\n\nWhat this cycle established, in one line: the conductor-7 cyclic cubic splitting\nlaw is a *deterministic* channel from `p mod 7` to",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 148,
-      "timestamp": "2026-08-22T11:36:24",
-      "title": "FACT round-32 #3 — CYCLIC-CUBIC-TYPE-CHANNEL: two types, full pinning (paper 122)"
-    },
-    {
       "cycle_id": "08e16c4e",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Aleph-One Surface: Geometry Between Dimensions\n\nDerived from the verified results in\n`Catalog/NumberTheory/AlephOneSurfaceHausdorff.lean` (the `ℓ²` aleph-one surface:\n`dimH = ⊤`,",
@@ -499,19 +489,19 @@
       "theorem_count": 81,
       "timestamp": "2026-08-24T03:17:51",
       "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT — 1.5B knee at 2048 is 18 not 20; both models start at 16"
+    },
+    {
+      "cycle_id": "2292d7e8",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — after C4 (first order) and N2 (sharp threshold)\n\n## What this cycle established\n\nAll statements below are formalized and proved sorry-free in\n`Catalog/Computation/RLHFThreshold/`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-24T04:10:35",
+      "title": "C4 (reward hacking is a covariance) — PROVED at first order.*"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "39757711",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Hamiltonicity of Cayley Graphs of Order `pqrs`\n\nThis document records the open conjectures that the formalization in\n`Catalog/Pythagorean/CayleyHamiltonian/` makes concrete and t",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 300,
-      "timestamp": "2026-08-16T22:37:14",
-      "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
-    },
     {
       "cycle_id": "922db13f",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 81,
       "timestamp": "2026-08-24T03:17:51",
       "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT — 1.5B knee at 2048 is 18 not 20; both models start at 16"
+    },
+    {
+      "cycle_id": "2292d7e8",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — after C4 (first order) and N2 (sharp threshold)\n\n## What this cycle established\n\nAll statements below are formalized and proved sorry-free in\n`Catalog/Computation/RLHFThreshold/`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-24T04:10:35",
+      "title": "C4 (reward hacking is a covariance) — PROVED at first order.*"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "04d3a29d",
-      "domain": "Cryptography",
-      "name": "fin_mul_ninf_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "04d3a29d",
-      "domain": "Cryptography",
-      "name": "pinf_mul_fin_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3d2c810c",
-      "domain": "Applications",
-      "name": "eval_ext_of_two_points",
-      "quality": 0.82
-    },
     {
       "cycle_id": "3d2c810c",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "kneeSmall_data",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "2292d7e8",
+      "domain": "Computation",
+      "name": "IsPosDist",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "2292d7e8",
+      "domain": "Computation",
+      "name": "mean_sub",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "2292d7e8",
+      "domain": "Computation",
+      "name": "variance_nonneg",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-24T03:17:51",
+  "last_updated": "2026-08-24T04:10:35",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "86a70a4b",
-        "quality": 0.88,
-        "theorems": 105,
-        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-      },
-      {
         "cycle_id": "c798c801",
         "quality": 0.82,
         "theorems": 110,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 107,
         "title": "The breakdown theorem is formalised and the two measured normalised distribution"
+      },
+      {
+        "cycle_id": "2292d7e8",
+        "quality": 0.82,
+        "theorems": 70,
+        "title": "C4 (reward hacking is a covariance) — PROVED at first order.*"
       }
     ],
     "Cryptography": [
