@@ -1797,21 +1797,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-70 #6 \u2014 MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all realized probes (paper 197, errata to 193/195)"
   },
   {
-    "consumed_by_exp_id": "969a5dc4",
-    "description": "Round-70 #4, exp 550 (coordinator inline reanalysis of the exp546 channel). Does the paper-193 magnitude channel persist along the descent? **DEPTH-DECAY-TO-NULL-BY-T5.**\n\nUnconditional MI(feature ; b_t) decays ~2\u00d7 every two levels: .184/.143/.094/.078/.054/.040/.032/.019 at t=1..8 (z +114\u2026+9). The honest conditional test (shuffle WITHIN path-prefix groups) gives true per-step information: **b\u2082 z=+32.3 (real), b\u2083 z=+6.7 (marginal), b\u2084 z=+2.7 (edge), b\u2085 z=+0.2 (NULL)**. Depth itself visible: MI(feature; dB)=0.111 z=+20.\n\nMechanism coherence: a fixed W-probe window resolves d\u2248n/(2\u03c1) to O(W) \u2014 it reads the coarse Gauss-map digits of \u03c1; the first 2\u20133 letters ARE those digits; deeper letters are finer digits no fixed-budget window can see.\n\n**Round synthesis (papers 193\u2013195):** energy-ascent closed at three strengths \u2014 channel EXISTS (position family), priced BELOW breakeven (\u03b1*\u22650.85 vs exact Fermat), and DEPTH-LIMITED (dies by depth 4\u20135). The Pythagorean tree stays factoring-sealed in practice: an N-computable window sensor reads the first few ratio digits and nothing more; the full path string again costs the scan.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp550_depthdecay.py + exp550_depthdecay.json (population reused from exp546_data.npz, seed 20260823 \u2014 disclosed).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3908",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T02:00:10.716872+00:00",
-    "title": "FACT round-70 #4 \u2014 DEPTH-DECAY: the magnitude channel sees only the first steps (paper 195)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-70 #3, exp 547. The pricing half of the energy-ascent round.\n\n**ASCENT-COST-LAW**: two exact cost laws under end-verification-only semantics \u2014 DFS-backtrack E = h\u00b7(1\u2212K/2) + K\u00b7(3^(h+1)\u22123)/4 with K=(1\u2212\u03b1)(2\u2212\u03b1); **restart-from-root E = h\u00b7\u03b1^(\u2212h), dominating DFS in 99.0% of cells**; beam never wins. **Effective-branching REFUTED**: the rate base stays pinned at exactly 3 for every \u03b1<1 \u2014 accuracy enters only through the prefactor until the \u03b1\u21921 exponential\u2192polynomial phase transition.\n\n**Breakeven vs EXACT Fermat scan** (median 183k steps): majority-win survives to c\u22643000 visit-equivalents/step, \u03b1* 0.85\u21920.96 over c\u2208[0,3000]; balanced stratum NEVER wins (Fermat already instant); the deep-dB tail is unwinnable even at \u03b1=0.9999. Barrier-8 probe computed: a \u221aN-cost per-step feature is excluded by only ~1.7 orders of magnitude \u2014 thin margin.\n\n**Master-law mapping REFUTED**: paper 138's class-hint law saturates at its 1/\u03b8=3 cap while empirical speedup diverges \u2014 1.01/1.30/1.98/3.56/10.10 at \u03b1=1/3\u20260.9. Branch hints compound sequentially (\u03b1^dB joint success) \u2014 NEW hint-taxonomy entry: sequential/geometric hints, priced by h\u00b7\u03b1^(\u2212h).\n\nSnaps together with paper 193: the measured magnitude channel (~19% of b\u2081 entropy, raw-b\u2081 accuracy \u2248 majority baseline) sits far below breakeven \u03b1*\u22650.85 \u2014 the channel exists but buys no ascent win today; gap quantified from both ends. Bonus ledger finding: Spearman(dB, Fermat-steps) = \u22120.364 pooled but **+0.443 within the main stratum** \u2014 exp391's anti-correlation is stratum-dependent.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp547_ascent_cost.py + exp547_result.json + run.log, seed 20260823. (Agent left status:\"running\" in the JSON post-completion \u2014 disclosed; validations all PASS in-file.)",
     "domains": [
@@ -2100,16 +2085,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9061d61f",
     "description": "Paper 218 \u00b7 round-75 #2 \u00b7 exp 570 \u00b7 assessment v325 \u00b7 script exp570_collision_trace.py \u00b7 seed 20260824 \u00b7 wall 1.3 s\n\n**Question.** Paper 215 confirmed NO ECM destruction wall and flagged a confound: guarded-affine accounting carries a random-collision baseline ~1\u2212exp(\u22121.44\u00b7B1/p) per curve, so low-B1 successes conflate ORDER-HITS with COLLISION-LUCK. Discriminate by TRACE (normalized firing-step index) and SCALE (cross-bitlen collapse test), to settle whether \"it was collisions all along\" amends paper 159.\n\n**Pre-registration (verbatim).** H1: hit STEP-INDEX distribution ~UNIFORM at B1/p=0.125 (collision-dominated), CONCENTRATED in the FINAL 20% at B1/p\u22650.5 (order-completion) \u2014 KS rejects at high B1 but not low. H2: bitlen-32 low-B1 found_p rate DROPS toward the collision baseline 16.47% per curve.\n\n**Result \u2014 both refuted, geometry inverted.**\n- H2 dead: found_p rates at B1/p=0.125 sit far ABOVE the floor \u2014 bitlen-26 65.0% [CI .495\u2013.779], bitlen-32 62.5% [.470\u2013.758] vs per-curve 16.47%; first-curve rates 42.5%/40.0%; cross-bitlen two-prop z p=0.8161 \u2014 no collapse toward floor as p grows \u21d2 collisions real but SUBDOMINANT.\n- H1 inverted: KS REJECTS uniformity even at low B1 (p=0.0166/0.0446); at B1/p=0.9 hits concentrate near step ZERO \u2014 median normalized index 0.09/0.102, combined final-20% tail 0/55 (binom p\u22480.004 vs registered 20%). Order-completion marks EARLY.\n- NEW TRACE LAW: hit position ~ max-prime-power(ord)/B1 (Golomb/Dickman-low flavor) \u2014 added to the factor-local map as a measured regularity.\n\n**Amendment chain terminates:** paper 159 wall sentence rejected as stated (by paper 215); collision-baseline amendment rejected here; paper 215's NO-WALL account stands unamended.\n\n**Honest caveats:** true ops = 2.59\u00b7B1, not the 1.44 constant \u2014 all baselines recomputed both ways and reported (exact-op per-curve means 27.1\u201327.8%, 3-curve cell means 61.2\u201362.3%); measured cell rates coincidentally near exact-op 3-curve collision arithmetic but per-curve excess + KS + empty tail rule out dominance; found_q censoring disclosed (pure q-side collision luck); deaths collapse silently (inherited exp568).\n\n**Ledger catch (pre-data):** closed-form step counter initially wrong on later chunks (len doubles / popcount adds, not len\u22121 / popcount\u22121) \u2014 caught by traced-vs-closed assert BEFORE any full data existed, fixed, verified 29/29 on smoke curves; smoke regenerated after fix.\n\n**Barrier framing:** barrier-8 bookkeeping audit completing paper 215's evidence chain. No barrier breached, no constant shaved. No breakthrough.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3959",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T09:06:21.849836+00:00",
     "title": "FACT round-75 #2 \u2014 COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry \u2014 low-B1 success sits far above the collision floor (65.0%/62.5% vs 16.47%, cross-bitlen z p=0.82); hits fire near step ZERO at high B1 (median 0.09\u20130.10, final-20% tail 0/55, binom p\u22480.004) \u2014 paper-159 amendment-candidate REJECTED as stated; new early-fire trace law added"
   },
@@ -2434,6 +2420,62 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T19:46:36.815634+00:00",
     "title": "FACT round-82 #2 \u2014 SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES \u2014 LRT stat=100.6 df=3 p=1.17e-21 perm 0/400: real non-linearity but STEEP MONOTONE DECLINE; PAPER-229 ERRATUM: peaked residual = baseline leakage, power law stands"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## exp588 EDGE-KERNEL-REFINEMENT \u2014 round-84 #1 \u00b7 paper 238 \u00b7 assessment v344 \u2192 v345 \u00b7 count 575 \u2192 576\n\nRuns paper 234 \u00a74a's named open refinement (\"harmonic bulk \u00d7 steeper-edge kernel \u2014 this tension travels forward on the ledger until that refinement is run or refuted\") and CLOSES it as CONFIRMED.\n\n### Data & method\n9594 pooled hits over 128 Ns from `exp581_regen_positions.npz`, canonical normalization x=(p\u2212jlo)/(jhi\u2212jlo); control arm 512k ctl_* same intervals; seed 588; wall 12.9 s; nboot 500 main (+300/200 posthoc). Pre-registration in script header BEFORE the full fit (smoke = pipeline validation only), including a registered observed-value reconciliation.\n\n### Registered results \u2014 all bars PASS\n- Single law reproduces exp579 reference (b_NLS=1.097 vs published 1.104; MLE 1.123) but left-decile prediction **.1415** sits below measured **.1620** [.1547,.1695] \u2192 tension real.\n- Two-component T(x)=A(1+x)^{\u2212b_bulk}+K(1+x)^{\u2212b_edge}: **\u0394AICc \u221237.33** (bar >6), LRT stat 41.59 df2 **p=9.3\u00d710\u207b\u00b9\u2070** (bar <0.01); bootstrap-stable b_bulk=.573 [.412,.767], w_edge=.086 [.064,.108]; fitted left-decile .1617 [boot .1557,.1695] **covers** observed .1620; bootstrap median \u0394AICc +60 across resamples.\n- Controls: **\u0394AICc +4.3** (two-comp worse), w\u22481.2\u00d710\u207b\u2074 \u2192 no kernel in controls.\n\n### Boundary censoring discovered + settled\nRegistered fit pinned delta=b_edge\u2212b_bulk at the implementation ceiling 10.000 (registered degeneracy rule covered only the LOWER bound; boundary solutions not forbidden) \u2192 read b_edge \u2265 ~10.6. POST-HOC cap-40 refit: INTERIOR unpinned optimum b_edge=22.54 (delta_pinned_at_40 false), improvement GROWS (**\u0394AICc \u221242.5, p=6.9\u00d710\u207b\u00b9\u00b9**), left-decile CI still covers \u2192 ceiling was conservative CENSORING, verdict cap-robust. Honest statement: b_edge \u2265 ~10.4\u201311.1 across caps; exact value unidentified near-spike (cap40 boot CI [11.1,20.5,41.0]).\n\n### Post-hoc attribution\n56% of SSR improvement in the FIRST DECILE alone, ~0% (\u22120.5%) at the known u*\u22480.65 hump zone, \u22123.2% right \u2192 genuinely edge-driven, orthogonal to paper 232's geometric-window feature. Left-half refit independently confirms (single steepens to b=1.798; \u0394AICc 16.8, p=2.6\u00d710\u207b\u2075; 47.5% again first-decile).\n\n### Consequence\nThe positional hit profile of v_j=j\u00b2\u2212N is **FLAT-BULK + NARROW LEFT-EDGE SPIKE**, NOT a pure power law; the single \u22121.104 law is RETIRED as final FORM (retained as bulk summary); kernel-refined profile becomes the canonical description \u2014 a pure power law is now KNOWN-WRONG at the edge (falsifiable constraint for any downstream shape model).\n\n### ERRATUM-GRADE provenance flag (travels forward)\nPaper 234's tension premise quoted measured edge fraction \".2346\" (z=10.08 stratified): NOT reproducible from the canonical npz under left-decile-only definition (.1620 measured); per-N equal-mean .1609 / log-normalization / (p\u2212jlo)/jlo / inverse-n weighting variants also miss, and .2346 lies outside even the two-comp prediction CI. Leading hypothesis: definitional mismatch with paper 230's combined-edge decomposition (.2346 = 228's .162+.072). Flagged for reconciliation against the paper-228 ledger; kernel confirmation unaffected \u2014 all registered bars judged against data-observed .1620.\n\n### Ledger catches (all disclosed)\n(1) dAICc sign-convention bug in an earlier full-run pass \u2014 caught and fixed BEFORE final verdict recording. (2) Boundary censoring discovered and resolved via cap-40 posthoc. (3) LRT null on parameter boundary (chi-bar-sq conservative in our favor) \u2014 significance required BOTH LRT and \u0394AICc>6. (4) Edge/end ratio carries last-bin noise (~10%, corroborative only).\n\n### Barrier validation\nNo breakthrough claimed \u2014 descriptive-form refinement INSIDE the positional layer (papers 228\u2013230 established it independent of rate). Residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, and paper 237's four-class rate-residual closure all untouched. u\u224810 data per the standing directive.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp588_edge_kernel.py`, `exp588_smoke.{log,json}`, `exp588_full.log`, `exp588_result.json` (incl. POSTHOC cap_sensitivity + left_half fields), `exp588_findings.md`. Paper: `ResearchOutput/NewMathematics/238_EdgeKernel.md`.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4050",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T20:50:39.555036+00:00",
+    "title": "FACT round-84 #1 \u2014 EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED \u2014 paper 234's left-edge tension resolves as GENUINE STRUCTURE, not noise: two-component kernel beats single power law \u0394AICc \u221237.3 (LRT p=9.3e-10), FLAT BULK b=.57 [.41,.77] + NARROW LEFT-EDGE SPIKE b_edge\u2265~10.6 (cap-censored; cap-40 posthoc interior optimum 22.5 confirms, improvement GROWS to \u221242.5) carrying 8.6% [6.4,10.8]% of mass; fitted left-decile .1617 COVERS observed .1620 while single law's .1415 misses; controls show NO kernel (\u0394AICc +4.3, w\u22481e-4); 56% of SSR improvement in first decile, ~0% at u*\u22480.65 hump \u2192 edge-driven, orthogonal to paper 232's feature; single \u22121.104 law RETIRED as final form (canonical profile = bulk+spike); ERRATUM-GRADE PROVENANCE FLAG: paper 234's quoted .2346 not reproducible under canonical normalization (.1620 measured) \u2014 likely combined-edge definitional mismatch with paper 230 (.162+.072), flagged for reconciliation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Paper 237 \u00b7 round-83 #4 \u00b7 exp 585 \u00b7 verdict H0_SUPPORTED (nothing-beyond-QR)**\n\n## Pre-registered result\n- H1: dR2_neighbors >= 0.05 AND perm p < 0.01. H0: dR2_neighbors < 0.02.\n- QR alone R2=.4112 (corr .641 \u2014 replication live) | NB alone [w-, w+, lpflog-, lpflog+] R2=.0319 | joint .4307 => **dR2 = +0.01946**\n- Permutation p=**0.389** (500 joint row-shuffles), null q95=**0.046 > observed**; best single |r|=0.16 vs dial r=.641; dR2(QR given NB)=+.3987; secondary hits_full dR2=+0.0126.\n\n## Map update\nFour-class negative COMPLETES the coverage claim: every tested N-property class fails on the ~40% u\u224810 residual \u2014 residual GENUINELY OPEN, redirect to sieve-process/j-sample-level carriers (round-81 sole-survivor channel). Refinement note: harmonic-form QR used here; adopted sqrt-weight B*=400 dial absorbs more, strengthening this H0.\n\n## Ledger catches (disclosed)\n1. **PROVENANCE UNVERIFIED**: exp581_regen_positions.npz has NO N array (positions + jlo/jhi only); population regenerated by documented recipe seed 20260827; isqrt fingerprint 0/128 match, 15-variant recipe grid all 0-match (exp577_result.json unreadable); computed hash 30009f0cfa7f85118d217bcacadb9d656fe5a1ae33b474b421492e828066bfef recorded. CONDITIONAL on balanced-96-bit exchangeability across seeds (lab precedent: population-robust laws).\n2. Smoke-stage endpoint amendment BEFORE lineage analysis: hits_full = 0 in 160k+ synthetic draws even at t<=16 \u2192 primary swapped to SIQS-partial hits (mu=4032/N, CV 1.6%), gates unchanged; itself a finding (QS relations at bitlen 96 are ALL partials).\n3. Wall 47.3 s (covariates 42.7 s).\n\nFiles: ResearchOutput/scripts/2026-08-24-round74/exp585_* ; paper ResearchOutput/NewMathematics/237_NeighborCovariate.md ; notebook Part 279 ; assessment v343\u2192v344 (count 574\u2192575).",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4051",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T20:50:39.557131+00:00",
+    "title": "FACT round-83 #4 \u2014 NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR \u2014 local factorization structure around N carries nothing beyond the QR dial (dR2=+0.0195: QR-alone .411 -> joint .431; perm p=0.389 with null q95=0.046 > observed; best single neighbor |r|=0.16); FOUR-CLASS NEGATIVE completes the coverage claim \u2014 ~40% u\u224810 rate residual is TESTED-AND-FAILED not not-yet-tested (QR dial real 227/235/236; neighborhood null this; positional independent layer 228-230; S_indiv null 226/227); closes paper 234 ranked queue #1; PROVENANCE UNVERIFIED disclosed (exp581 npz holds no N array \u2014 population regenerated by documented recipe seed 20260827, isqrt fingerprint 0/128, hash 30009f0c\u2026 recorded; results conditional on balanced-96-bit exchangeability)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Round-83 #3 \u00b7 exp 587 BSTAR-TRANSFER \u00b7 Paper 236 \u00b7 assessment v343 (count 573\u2192574)**\n\nVERDICT: **H1_BSTAR_TRANSFERS** \u2014 closes paper 235 \u00a73's named owed-check affirmatively: paper 227's window-saturation location B*=400 TRANSFERS to exp586's corrected 1/\u221a\u2113 weight. Pure reanalysis of exp577's per-N hit counts (no new j-sampling, wall 0.13 s), population regenerated VERBATIM seed 20260827, hash-match 128/128 hard-assert.\n\nDual-curve table (log((hits+0.5)/total) ~ S_w,B OLS, n=128 bitlen 96, odd primes 3..1600):\n\n| B | R\u00b2(\u221a-weight) | R\u00b2(harmonic) | \u0394R\u00b2 |\n|---|---|---|---|\n| 100 | .5279 | .4388 | +0.0891 |\n| 200 | .5976 | .4621 | +0.1355 |\n| **400** | **.6242** | .4731 | **+0.1511** |\n| 800 | .5913 | .4748 | +0.1165 |\n| 1600 | .6137 | .4795 | +0.1342 |\n\n- H1 fires per pre-registered rule: argmax_set under \u221a-weight = {400}, unique interior max.\n- Secondary PLATEAU_RAISED_EVERYWHERE fires: \u0394R\u00b2 > 0 at ALL five windows, no weight\u00d7window interaction.\n- ADOPTED lab-wide: canonical product dial **S_\u221a,B\\*, B\\* = 400** \u2014 location pinned to (200,800] at factor-2 grid steps. Refinement chain complete: 227 inspect (1/\u2113, B*=400) \u2192 235 \u03b1\u0302=0.5 \u2192 236 B* transfers.\n\n**Bimodal-tail caveat (honest):** bootstrap argmax {400:276, 1600:178, 200:37, 800:9}/500 \u2014 1600 sits only 0.0105 below the peak. Robust reading: \"saturation reached by B=400, no further gain through 1600\", NOT a sharp 400-vs-1600 separation. Single-seed caveat on the argmax LOCATION.\n\n**Ledger catches:**\n1. Recomputed harmonic curve peaks at EDGE 1600 not 400 (+0.006 vs 400, noise-level) \u2014 flat plateau above B=200; the interior-window signal is \u221a-WEIGHT-SPECIFIC on this dataset/grid; superseded weight saturates without locating an interior B*.\n2. exp577's stored S400 column IDENTIFIED as the UNWEIGHTED QR-count dial over odd primes \u2264400 (exact-0 diff at correct window; resolves the S400 cross-check discrepancy in paper 227's lineage).\n3. Crosscheck code window bug disclosed: result.json structured `S400_stored_crosscheck` fields compare stored S400 against count over ALL primes \u22641600 instead of masked B\u2264400 \u2014 artifact only, verdicts untouched.\n\nLimits: factor-2 grid resolution; single seed; bootstrap softness of location; log-rate Poisson attenuation uniform within-grid. Barrier framing: instrument hardening completing the paper-235 correction chain; residue cap 4/3, position 5.19\u00d7, quantum frontier untouched; strengthens queue #1 (rate-layer N-covariate structure at u\u224810); no breakthrough claimed.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp587_{bstar_transfer.py,result.json,smoke.log,full.log,findings.md}` \u00b7 Paper `ResearchOutput/NewMathematics/236_BstarTransfer.md` \u00b7 Notebook Part 278.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4052",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T20:50:39.558996+00:00",
+    "title": "FACT round-83 #3 \u2014 BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS \u2014 B*=400 transfers to the sqrt-weight (R2 .528/.598/.624/.591/.614 over B=100/200/400/800/1600, unique interior argmax); closes paper 235 \u00a73's named owed-check; dR2(sqrt-harm) positive at all 5 windows (+0.089..+0.151) no weight-x-window interaction; harmonic recomputed = flat plateau w/ edge peak 1600 (+0.006 noise) so interior-window signal is sqrt-specific; boot {400:276,1600:178} \u2014 saturation by 400, no gain through 1600; S400 stored column identified as unweighted count dial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Round-83 #2 \u00b7 exp 586 WEIGHT-EXPONENT-FIT \u00b7 Paper 235 \u00b7 assessment v342 (count 572\u2192573)**\n\nVERDICT: **H1_HARMONIC_REFINED (\u221a-WEIGHT)** \u2014 paper 227 adopted the 1/\u2113-harmonic product-dial weight BY INSPECTION; exp586 fit the optimal exponent \u03b1 properly on the SAME data (pure reanalysis of exp577's per-N hit counts, no new j-sampling).\n\n\u03b1-curve (n=128, bitlen 96, odd primes 3..400, c_\u2113=[jacobi(N mod \u2113,\u2113)=+1], log-rate ~ S_\u03b1 OLS):\n\n| \u03b1 | 0.0 | 0.25 | **0.5** | 0.75 | 1.0 | 1.25 | 1.5 | 2.0 |\n|---|---|---|---|---|---|---|---|---|\n| R\u00b2 | .3207 | .4985 | **.6242** | .5752 | .4731 | .3969 | .3479 | .2944 |\n\n- SINGLE-PEAKED INTERIOR MAX at \u03b1\u0302=0.5; harmonic sits on the FALLING limb.\n- \u0394R\u00b2(\u03b1\u0302)\u2212R\u00b2(1) = **+0.15114** \u2265 0.03 pre-registered bar \u2192 H1 fires.\n- Bootstrap CI95 = **[0.5, 0.5]** (492/500 reps pick 0.5, 8/500 pick 0.75, mean 0.504) \u2014 EXCLUDES 1 DECISIVELY.\n- Sanity anchors: even harmonic beats unweighted **+0.152** (227 right that weighting matters); best beats unweighted **+0.304** (wrong about the exponent).\n\n**ERRATUM-GRADE SUPERSESSION of recorded paper 227's adopted parameter**: canonical scale-smoothness covariate refined **1/\u2113 \u2192 1/\u221a\u2113 lab-wide**. Large primes carry ~\u221a\u2113\u00d7 more relative weight than the inspection-chosen form assumed (at \u2113=400: 1/11.5 vs 1/133 of \u2113=3's weight); the fix lifts dial explanatory power R\u00b2=.473 \u2192 .624 (**+31% relative**) on identical data. Every future dial computation uses \u221a-weight. NAMED OPEN CHECK: window-location saturation B\\*=400 was measured UNDER 1/\u2113 (papers 136/139/227) \u2014 transfer to \u221a-weight UNVERIFIED before reuse.\n\nIntegrity: 128/128 Ns regenerated byte-identical from recipe seed 20260827; odd-prime QR counts match stored S400 EXACTLY (diff 0.0, corr \u22481.0 \u2014 exp577's dial effectively excluded \u2113=2 despite config ambiguity). Limits disclosed: discrete grid \u00b10.25 resolution (fine structure near 0.5 not fit per pre-registration); one seed, pure reanalysis; log-rate Poisson attenuation uniform across \u03b1 (argmax robust, absolute R\u00b2s attenuated); smoke n=16 grid-edge 0.25 was small-n noise. Ledger catch: task-brief schema drift only (raw_counts keys vs rows layout) \u2014 no data issue.\n\nBarrier framing: instrument hardening of the map's canonical covariate \u2014 residue cap 4/3 untouched; no breakthrough claimed; directly strengthens ranked-queue #1 (rate-layer N-covariate at u\u224810) by raising the ceiling on QR-dial-absorbable N-structure.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/exp586_{weight_exponent.py, smoke.log, full.log, result.json} + exp586_findings.md; source data exp577_result.json rows. Notebook Part 277; assessment addendum v342.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4053",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-24T20:50:39.560667+00:00",
+    "title": "FACT round-83 #2 \u2014 WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED \u2014 dial weight exponent alpha_hat=0.5 not 1 (single-peaked R2 curve .32/.50/.62/.58/.47/.30, dR2=+0.151>=bar; boot CI [0.5,0.5] excludes 1 decisively 492/500); ERRATUM-GRADE SUPERSESSION of paper 227's adopted 1/l covariate -> 1/sqrt(l) lab-wide (+31% relative dial power on identical data)"
   },
   {
     "consumed_by_exp_id": "",
@@ -4114,6 +4156,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2a9ba724 (Q=0.800), which proved 98 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.**  Let `d, r : \u2115 \u2192 \u2115` be height and reflection-depth vectors with\n`r i \u2264 min N (d i)` for every tag `i`.  Then there is a consistent GL theory `S`\n(a tag-sensitive model with a valuation, i.e. the common refinement of `capC` and\n`valSys`) such that for every tag `i`\n\n* `Provable S (\u25a1_i",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_2a9ba724_e5bb790a",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "2a9ba724",
+    "status": "available",
+    "timestamp": "2026-08-24T20:49:57.398967+00:00",
+    "title": "Deepening: Per-tag reflection depths are freely realizable"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
     "domains": [
       "Algebra"
@@ -4185,21 +4241,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove special cases of Beal's conjecture (A^x + B^y = C^z with x,y,z > 2 implies gcd(A,B,C) > 1). Verify computationally for all values up to 1000. Prove the conjecture when one of x,y,z equals 3 and the other two are at most 5.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "seed_341",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Beal's Conjecture: Computational Evidence and Special Cases"
   },
   {
     "consumed_by_exp_id": "",
@@ -13770,6 +13811,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The refuted conjecture becomes true once the class of theories is enlarged from the common refinement of capC and valSys to all finite transitive tag-indexed frames with a valuation. The approach is to place each tag's accessibility image at a prescribed rung of a single 'type ladder' built from a chain of worlds, a valuation cut, and per-tag activity windows. It matters because it would show that the height vector and the reflection-depth vector are genuinely independent coordinates of GL theories, with the only constraint being the pointwise inequality r i <= min N (d i).\n\nFor every N and all d r : Nat -> Nat with r i <= min N (d i) there is a consistent GL theory S with Provable S (box_i^k bot) iff min N (d i) < k, and DepthReflection r' i S iff r' <= r i, for every tag i.\n\nFormalize a parametric frame family in Lean (worlds 0..M, per-tag window [b i, H i], valuation blockVal w) and prove the two spectra via provable_frameSys_box_iff for the upper bound and satF_congr_of_approx for the lower bound; test candidate parameter formulas first by exhaustive Boolean-algebra enumeration as in ComputationalEvidence.md.\n\nThe mission conjecture is correct after replacing the refinement class by all GL frames, and the height and reflection-depth vectors are free independent invariants.\n\nThere is a second, frame-independent inequality tying the two vectors, strictly stronger than the pointwise bound and the image-monotonicity principle; finding it would be a new structural theorem about GL.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4044",
+    "priority_score": 0.6699512195121953,
+    "research_mode": "team",
+    "source_exp_id": "2a9ba724",
+    "status": "available",
+    "timestamp": "2026-08-24T20:49:40.772744+00:00",
+    "title": "Full GL Realizability of Height-Depth Profiles"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The thresholds of BB84, the six-state protocol and their higher-dimensional analogues are zeros of Q-linear combinations of logarithms of rationals. The conjecture is that all are transcendental with unbounded continued-fraction partial quotients, and that each textbook percentage is a low-order convergent, as is verified here for 11/100 and p*.\n\nEvery QKD one-way threshold of the form 1 - a H_2(Q) - b H(f(Q)) = 0 with rational a,b is transcendental, and its convergents include the conventional percentage quoted in the literature.\n\nFormalize the six-state rate function, run the certificate scheme at denominators 100 and 10000, and compare the convergents of the resulting enclosure with 12.6 percent.\n\nA uniform explanation of why textbook QKD percentages are so short: they are convergents, hence optimal rational summaries.\n\nSome protocol has a badly approximable threshold, which would itself be a striking arithmetic phenomenon.",
     "domains": [
       "Pythagorean"
@@ -14603,6 +14658,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This cycle proved upper bounds on the reflection depths available inside the refinement of capC and valSys (a height gap bound and a collapse to depth one for non-maximal tags) and proved that they are attained when the height vector takes only two values. The conjecture extends the resulting closed formula to arbitrary height vectors: the reflection depth of a tag is the distance from its own cut point to the next cut point below it, giving a complete decision procedure for ClassRealizes.\n\nIn cvSys c V N the reflection depth of tag i equals min N (d i) minus the largest strictly smaller value of min N (d j), and equals min N (d i) when no tag is strictly lower; ClassRealizes N d r holds iff r is given by this formula. The two-valued case is the proved theorem classRealizes_twoValue.\n\nGeneralize the proved bisimulation satCV_flat_congr from one low cut point to the whole sequence of cut points, then assemble the biconditional characterization of ClassRealizes; check the formula first by exhaustive enumeration on three-valued height vectors.\n\nThe refinement class is completely classified: its reflection-depth vector is a computable function of the height vector, closing the question the mission conjecture opened.\n\nSome intermediate reflection depth is unreachable, which would mean the gap probe is not optimal and a sharper separating formula exists.",
+    "domains": [],
+    "id": "fd_4045",
+    "priority_score": 0.5934126984126985,
+    "research_mode": "team",
+    "source_exp_id": "2a9ba724",
+    "status": "available",
+    "timestamp": "2026-08-24T20:49:41.242512+00:00",
+    "title": "Cut-Point Formula for Multi-Valued Height Vectors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The celestial map sending an event to (a/c, b/c) is injective into the rational points of the unit circle, and the Pell spine converges to the irrational direction sqrt(2)/2. The conjecture is that the closure of the image is the whole open first-quadrant arc, so the conformal boundary of the causal set is all of null infinity in that sector.\n\nThe set { (a/c, b/c) : (a,b,c) a primitive Pythagorean triple with a,b,c > 0 } is dense in the open arc { (x,y) : x,y > 0, x^2+y^2 = 1 }.\n\nFormalise Berggren's completeness theorem (every primitive triple is a node of the tree, via descent using the parent map already formalised), then derive density from the Euclid parametrisation and density of the rationals.\n\nThe boundary of the Berggren causal set is exactly the celestial arc: a fully formalised discrete model of null infinity for the 2+1 null cone.\n\nThe image omits an arc, which would contradict the classical Euclid parametrisation and hence indicate an error in the descent, so the informative outcome is the completeness theorem itself.",
     "domains": [],
     "id": "fd_3408",
@@ -15395,6 +15462,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T20:40:07.330494+00:00",
     "title": "Concave Breakdown Profiles for L-Estimators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The image principle proved here says reflection depth only depends on, and is monotone in, the accessibility image of a tag. The conjecture upgrades this to an exact formula: the reflection depth is the least modal depth at which the image fails to realize all types of the model, turning a proof-theoretic invariant into a model-theoretic one and explaining every bound obtained so far.\n\nFor a finite frame theory frameSys R V N, the reflection depth of tag i equals the least k such that some world of the model has a depth-k modal type not realized in the image Im_i; moreover any monotone assignment of depths to the inclusion poset of images, bounded by the heights, is realizable by a suitable valuation.\n\nDefine depth-k types in Lean as the truth-set classes of the finitely many formulas of box depth <= k, prove that each type of a finite model is definable by a formula of that depth, and derive the equality; then attempt the realizability half on small posets by explicit construction.\n\nAll bounds on reflection depth become corollaries of a single counting principle, and the invariant is manifestly bisimulation-invariant.\n\nDefinability of types fails at some depth, revealing a genuinely proof-theoretic residue in DepthReflection that is not captured by the semantics.",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_4046",
+    "priority_score": 0.5641046101948811,
+    "research_mode": "team",
+    "source_exp_id": "2a9ba724",
+    "status": "available",
+    "timestamp": "2026-08-24T20:49:41.706664+00:00",
+    "title": "Reflection Depth as Type-Realization Index"
   },
   {
     "consumed_by_exp_id": "",
@@ -25342,6 +25424,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T17:48:35.654510+00:00",
     "title": "Argument-Phase Gauss Dial Below the Four-Thirds Cap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All theories here are truncations of the frame at a level N. The conjecture removes the truncation: arbitrary unbounded height vectors together with reflection depths bounded by them should be realized on an infinite frame, with the truncated theories forming a chain whose colimit is the limit theory and whose reflection depths stabilize.\n\nFor arbitrary d r : Nat -> Nat with r i <= d i and d unbounded there is a consistent GL theory on an infinite transitive tag frame with Provable S (box_i^k bot) iff d i < k and DepthReflection r' i S iff r' <= r i, unique up to bisimulation once the tag images are fixed.\n\nDefine the untruncated frame theory (validity at all worlds) in Lean, prove consistency and the GL axioms without the truncation, and transfer the height and depth computations using that a formula of box depth k inspects only k levels.\n\nThe height and reflection-depth invariants are genuinely infinitary invariants of GL theories, not artefacts of finite truncation.\n\nSome profile is realizable at every finite truncation but not in the limit, exhibiting a compactness failure for the depth-restricted reflection rules.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4047",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "2a9ba724",
+    "status": "available",
+    "timestamp": "2026-08-24T20:49:42.267962+00:00",
+    "title": "Limit Profiles Over Infinite Frames"
   },
   {
     "consumed_by_exp_id": "",
@@ -35691,6 +35787,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the same argument \u2014 translation branch transparent, inversion\nbranch opaque, boundaries non-dyadic \u2014 should transfer verbatim to any tree of\n`GL\u2082(\u2124)`-type descents, in particular the Markoff triple tree and the Pythagorean quadruple\ntree already in the catalog.  **Why now?** Those trees are formalized in\n`Catalog/Cryptography/MarkoffTransfer/` and `Catalog/Shared/HigherPythagorean/`, so the\nstatements can be instantiated rather than rebuilt.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Dyadic-Boundary Criterion for Window Readability\",\n    \"domain\": \"Cryptography\",\n    \"description\": \"A descent letter is readable by a fixed dyadic-truncation sensor precisely when the branch boundary separating its alternatives is dyadic. The depth-t boundaries are M\u00f6bius pullbacks of {2,3} along the preceding letters; they are dyadic exactly along the all-C spine. This would upgrade the two ad-hoc computations of this cycle into one criterion.\",\n    \"conjecture\": \"For an admissible state s and depth t, letterAt t s is determined by probe W s for some finite W if and only if the depth-t branch boundary of s (the pullback of {2,3} under the first t descent maps) is a dyadic rational; equivalently, if and only if letterAt j s = C for all j < t.\",\n    \"test\": \"Formalize the pullback boundaries as explicit M\u00f6bius maps of the ratio, prove dyadicity along C-words and non-dyadicity otherwise, then combine with the existing straddling construction generalized to arbitrary prefixes.\",\n    \"if_true\": \"The reach of any dyadic magnitude sensor on the Berggren tree is completely characterized, closing the exists/limited/null trilogy with an iff.\",\n    \"if_false\": \"Some non-dyadic boundary is nevertheless resolvable, revealing an arithmetic coincidence between the branch geometry and binary expansions worth exploiting.\",\n    \"proof_strategy\": \"Compute the pullback of {2,3} under the inverse Berggren M\u00f6bius maps; C acts by r \u21a6 r+2 (preserves dyadicity), A and B by r \u21a6 2 \u00b1 1/r (destroys it, sending 3 to 7/3 and 5/2). Then repeat the straddling-pair construction with an arbitrary readable prefix.\",\n    \"catalog_references\": [\"Cryptography.DepthDecay.WindowSensor\", \"Cryptography.DepthDecay.NullBeyondInversion\"]\n  },\n  {\n    \"title\": \"Euclidean-Step Hierarchy for Descent Sensors\",\n    \"domain\": \"Cryptography\",\n    \"description\": \"Rescaling the magnitude does not help: universal_depth_null kills every truncation sensor \u230a(a/b)(m/n)\u230b one letter past the first inversion, because the boundary 5/2+2k is attained by an admissible state. The right currency is Euclidean steps: a sensor returning the first t quotient/remainder pairs of m/n should read Theta(t) letters, and no more.\",\n    \"conjecture\": \"Let E_t (m,n) be the first t quotient-remainder pairs of the Euclidean algorithm on (m,n). There are constants c1, c2 > 0 such that E_t determines letterAt j for all j \u2264 c1\u00b7t, and for every t there are two admissible states with equal E_t whose letters differ ",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4049",
+    "priority_score": 0.44069276823688586,
+    "research_mode": "team",
+    "source_exp_id": "969a5dc4",
+    "status": "available",
+    "timestamp": "2026-08-24T20:50:04.631977+00:00",
+    "title": "D5. Transfer to the Markoff and quadruple trees"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  For every wolf count `k \u2265 1` and every population `n`, the quantity\n`n \u00b7 (failProb (n\u2212k) k / k)\u00b2` lies strictly below `1` when `n` is even and at or above `1`\nwhen `n` is odd \u2014 that is, the separator `1 = \u221a(2/\u03c0) \u00b7 \u221a(\u03c0/2)` proved for `k = 1`\n(`failProb_sq_parity_even`, `failProb_sq_parity_odd`) governs *every* wolf count, at every\nfinite population, with no asymptotics.\n\n**The key insight is** that the separator is exactly the geometric mean of the two limiting\nconstants (`parity_constants_geometric_mean`), and the identity\n`surv n \u00b7 surv (n+1) = 1/(n+1)` says the survival ladder is *self-reciprocal* about that\nmean \u2014 a symmetry that the union bound preserves up to the `C(k,2)/n` defect, which is\nprecisely the size needed for the inequality to survive division by `k`.\n\n**Why now?**  The `k = 1` case is proved by a purely rational certificate, and\n`defect_scaled_le` supplies exactly the quantitative control on `failProb / k` needed to\npropagate the argument to general `k`.  The remaining step is a comparison between\n`C(k,2)/(kn)` and the gap `1 \u2212 n\u00b7surv n\u00b2`, both now explicitly bounded.\n\n*If true*: the parity dichotomy holds pointwise, not just asymptotically, for the whole\nfamily \u2014 an unusually strong form of a \"two expansions\" statement.  *If false*: there is a\nsmall-`n`, large-`k` window in which the union-bound defect overwhelms the separator, and\nlocating it would pin down the exact regime of validity of the inclusion\u2013exclusion\nheuristic.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Rational-Function Ladder for Odd-Population Defects\",\n    \"domain\": \"Probability\",\n    \"description\": \"The scaled union-bound defect of the information-free werewolf game appears, on the odd-population fibre, to be an explicit rational function of the population whose limit is the binomial coefficient C(k,2). Exact rational computation gives R_2 = 1, R_3 = 3, R_4(n) = (6n-13)/(n-2), R_5(n) = (10n-25)/(n-2), R_6(n) = (15n^2-105n+183)/((n-2)(n-4)). Establishing the pattern would solve the odd-population game in closed form for every fixed wolf count.\",\n    \"conjecture\": \"For every k >= 2 there is a rational function R_k of degree ceil((k-2)/2) over degree ceil((k-2)/2) with R_k(infinity) = k(k-1)/2 such that for every odd population n >= k one has n * (k * surv n - failProb (n-k) k) = R_k(n).\",\n    \"test\": \"Extend the exact-closed-form ladder in Exact.lean / SecondOrder.lean to k = 4, 5, 6 by induction along the defect recursion defect_recursion, and verify the coefficient recursion by exact rational evaluation for k up to 10 and n up to 200.\",\n    \"if_true\": \"The odd-population game is solved in closed form for every fixed k, and n*defect -> C(k,2) follows, upgrading defect_scaled_le from an inequality to an asymptotic equality.\",\n    \"if_false\": \"The defect carries a transcendental Wallis component even on the odd fibre, revealing an unexpected asymmetry between the two parity fibres.\",\n    \"proof_strategy\": \"Use defect_recursion, which",
     "domains": [
       "Algebra",
@@ -36588,19 +36699,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:27:42.328547+00:00",
     "title": "\"two rows suffice\" form"
-  },
-  {
-    "consumed_by_exp_id": "2a9ba724",
-    "description": "**Conjecture.**  Let `d, r : \u2115 \u2192 \u2115` be height and reflection-depth vectors with\n`r i \u2264 min N (d i)` for every tag `i`.  Then there is a consistent GL theory `S`\n(a tag-sensitive model with a valuation, i.e. the common refinement of `capC` and\n`valSys`) such that for every tag `i`\n\n* `Provable S (\u25a1_i^k \u22a5) \u2194 min N (d i) < k`, and\n* `DepthReflection r' i S \u2194 r' \u2264 r i`.\n\n**The key insight is** that the reflection depth measures the distance from the top of\nthe model to the point where the *valuation* stops being constant, while the\ninconsistency depth measures the distance from the top to the point where the *tag's\naccessibility* stops \u2014 two independent cut points of the same finite chain, which the\none-tag theorem `height_depth_realizable_iff` already decouples.\n\n**Why now?**  Both ingredients are formalized: the tag-sensitive depth vectors are a\ncomplete invariant (`provable_capC_congr_of_min_eq`, `capC_ne_of_min_ne`) and the\none-tag reflection spectrum is computed exactly.  What is missing is only the combined\nsemantics `satCV c V` and its locality lemma, both of which are one-page adaptations of\n`satC_congr_below` and `satV_blockVal_local`.\n\n*Falsified by* a pair `(d, r)` obeying `r i \u2264 min N (d i)` for which no such theory\nexists \u2014 equivalently by a general theorem forcing a second inequality between the two\nvectors.",
-    "domains": [],
-    "id": "fd_3129",
-    "phase": "A",
-    "priority_score": 0.4384285714285714,
-    "research_mode": "team",
-    "source_exp_id": "ea50968d",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:28:12.225372+00:00",
-    "title": "Per-tag reflection depths are freely realizable"
   },
   {
     "consumed_by_exp_id": "",
@@ -38297,6 +38395,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The original form of this direction \u2014 \"a base-3 window sees deeper than a base-2 window\" \u2014\nwas **refuted inside this cycle**: `universal_depth_null` shows that *every* rational-scale\ntruncation `\u230a(a/b)(m/n)\u230b` fails at the very first letter past the inversion, because the\nboundary `5/2 + 2k` is *attained* by an admissible state and truncation is right-continuous.\nSo the surviving question is about a different sensor class.\n\n**The key insight is** that what a sensor really needs is not finer scaling but *Euclidean\nsteps*: the pair `(\u230am/n\u230b, m mod n)` is one step of the Euclidean algorithm and already\ndetermines strictly more letters than any single truncation.  **Why now?** The universal\nnull fixes the exact failure mode (attained boundaries), and a `t`-step Euclidean sensor is\nprecisely what resolves them, so the conjectured hierarchy \"`t` steps \u2194 `\u0398(t)` letters\" is\nnow the sharp question \u2014 and it is the one that prices an attack, since `t` full Euclidean\nsteps already cost the scan.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4048",
+    "priority_score": 0.4108345103546269,
+    "research_mode": "team",
+    "source_exp_id": "969a5dc4",
+    "status": "available",
+    "timestamp": "2026-08-24T20:50:04.022907+00:00",
+    "title": "D2. Euclidean-step hierarchy (after the universal null)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conformality is a hierarchy, not a single obstruction.**\n  `strict_hierarchy_of_local_conformality`: for every level `m \u2265 2` there is a corpus in\n  which every clique of at most `m` theorems has a common document while some clique of\n  `m + 1` theorems does not.  The catalogued three-theorem example is the case `m = 2`.",
     "domains": [],
     "id": "fd_1699",
@@ -38484,14 +38596,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Parametrised families and bifurcation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1567843a",
     "description": "Both regimes are proved unconditionally here\n(`sum_card_V4_of_isSquare_three`, `sum_card_V4_of_not_isSquare_three`), together with the\nreciprocity input for the classes `1, 5, 7 mod 12`; the general statement needs only the\nfactorisation of `\u03c8_n` over `\u211a(N)` plus the same fibre-counting bijection factor by factor.",
     "domains": [],
     "id": "fd_1734",
+    "phase": "A",
     "priority_score": 0.40820833333333334,
     "research_mode": "team",
     "source_exp_id": "a0dce043",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T17:46:03.842645+00:00",
     "title": "Both regimes are proved unconditionally here"
   },

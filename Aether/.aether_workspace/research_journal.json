@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a303e67d",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — from the NET-61 additive-hybrid eviction cycle\n\n## What this cycle established\n\nTwo Lean files, no `sorry`, no non-standard axioms.\n\n*Static selection* (`Catalog/Combinatorics/Hy",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-23T05:46:46",
-      "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP — hybrid z(acc)+lambda*z(probe) monotonically worse "
-    },
-    {
       "cycle_id": "347a400e",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Cayley Census Invariance\n\nThis cycle established that the Cayley walk census\n`walkCount S n g = #{(s₁,…,s_n) ∈ Sⁿ : s₁⋯s_n = g}` is a *class function up to\ninversion*: invariant",
@@ -499,19 +489,19 @@
       "theorem_count": 98,
       "timestamp": "2026-08-24T20:49:57",
       "title": "Per-tag reflection depths are freely realizable"
+    },
+    {
+      "cycle_id": "969a5dc4",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — after the depth-decay theorems\n\nThis cycle pinned the reach of a fixed-precision magnitude sensor on the Berggren\n(Pythagorean) tree, in three independent registers:\n\n* **exists*",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-08-24T20:50:14",
+      "title": "FACT round-70 #4 — DEPTH-DECAY: the magnitude channel sees only the first steps (paper 195)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2e6124e7",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  Everything cited as\n\"proved\" below is a `sorry`-free Lean theorem in `Catalog/Physics/FourierEnergyBound.lean`,\n`C",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-08-17T20:44:54",
-      "title": "The inequality itself is proved"
-    },
     {
       "cycle_id": "921a0e7b",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 98,
       "timestamp": "2026-08-24T20:49:57",
       "title": "Per-tag reflection depths are freely realizable"
+    },
+    {
+      "cycle_id": "969a5dc4",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — after the depth-decay theorems\n\nThis cycle pinned the reach of a fixed-precision magnitude sensor on the Berggren\n(Pythagorean) tree, in three independent registers:\n\n* **exists*",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-08-24T20:50:14",
+      "title": "FACT round-70 #4 — DEPTH-DECAY: the magnitude channel sees only the first steps (paper 195)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "33808f71",
-      "domain": "Novelty",
-      "name": "hybrid_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "33808f71",
-      "domain": "Novelty",
-      "name": "isTopSet_hybrid_iff",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "33808f71",
-      "domain": "Novelty",
-      "name": "hybrid_isTopSet_of_margin",
-      "quality": 0.78
-    },
     {
       "cycle_id": "fdd9261c",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "satF_imp",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "969a5dc4",
+      "domain": "Cryptography",
+      "name": "six_le_qOf",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "969a5dc4",
+      "domain": "Cryptography",
+      "name": "two_dvd_qOf",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "969a5dc4",
+      "domain": "Cryptography",
+      "name": "three_dvd_qOf",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-24T20:49:57",
+  "last_updated": "2026-08-24T20:50:14",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "f46e1405",
-        "quality": 0.86,
-        "theorems": 66,
-        "title": "The qualitative half is now proved: `Cₛ = 1` iff the class is degenerate\n(`shtar"
-      },
-      {
         "cycle_id": "ab33dc9e",
         "quality": 0.82,
         "theorems": 68,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 85,
         "title": "FACT round-70 #5 — PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adi"
+      },
+      {
+        "cycle_id": "969a5dc4",
+        "quality": 0.85,
+        "theorems": 88,
+        "title": "FACT round-70 #4 — DEPTH-DECAY: the magnitude channel sees only the first steps "
       }
     ],
     "Geometry": [
