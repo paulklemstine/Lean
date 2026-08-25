@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3d2c810c",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThree things are now established. The measured code knees — 12 keys at context 512 and 16\nat context 1024 — follow from exactly two bracketing readings each. The code/prose gap of",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-08-23T11:36:25",
-      "title": "NET-68: CODE-NEEDS-FEWER-KEYS — domain jump to Python shifts the knee chain down one fine step ({12,"
-    },
-    {
       "cycle_id": "258afb8b",
       "domain": "Novelty",
       "key_insight": "# Future directions — NET-72 (THE-FRENCH-KNEE-EXCEEDS-THE-GRID)\n\nThis cycle established four things about the memory knee of an attention\nprofile:\n\n1. a failed budget sweep certifies **only** a lower",
@@ -499,19 +489,19 @@
       "theorem_count": 171,
       "timestamp": "2026-08-25T05:50:13",
       "title": "FACT round-73 #1 — PORTFOLIO: no universal winner, no dial edge; regret tail is N-invisible (paper 2"
+    },
+    {
+      "cycle_id": "4aeadf94",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — after the U120 floor cycle (exp 554)\n\nSix cycles of the scientific loop were run in this session.\n\n* **Cycle 1** built the missing *pooling* layer of the `T`-dial thread: `pooled",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-08-25T05:50:30",
+      "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypothesized floor (paper"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4bf66c09",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nAll conjectures below are stated so that they can be attacked directly in Lean 4 on top of the\nmaterial now formalized in `Catalog/Novelty/ChebotarevDFT.lean`,\n`Catalog/Novelty/Ch",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 41,
-      "timestamp": "2026-08-18T05:46:10",
-      "title": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
-    },
     {
       "cycle_id": "e8a76d4f",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 171,
       "timestamp": "2026-08-25T05:50:13",
       "title": "FACT round-73 #1 — PORTFOLIO: no universal winner, no dial edge; regret tail is N-invisible (paper 2"
+    },
+    {
+      "cycle_id": "4aeadf94",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — after the U120 floor cycle (exp 554)\n\nSix cycles of the scientific loop were run in this session.\n\n* **Cycle 1** built the missing *pooling* layer of the `T`-dial thread: `pooled",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-08-25T05:50:30",
+      "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypothesized floor (paper"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c96b94a8",
-      "domain": "Pythagorean",
-      "name": "chan_length",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "6f277833",
-      "domain": "Tropical",
-      "name": "uEnt_ge_of_fiber_card_le",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "6f277833",
-      "domain": "Tropical",
-      "name": "uEnt_le_of_fiber_card_ge",
-      "quality": 0.83
-    },
     {
       "cycle_id": "6f277833",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "dialValue_le_ev_policy",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "4aeadf94",
+      "domain": "Algebra",
+      "name": "dialCapacity_antitone",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "4aeadf94",
+      "domain": "Algebra",
+      "name": "le_dialCapacity_of_le",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "4aeadf94",
+      "domain": "Algebra",
+      "name": "sq_le_of_le_dialCapacity",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-25T05:50:13",
+  "last_updated": "2026-08-25T05:50:30",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "843dbe86",
-        "quality": 0.82,
-        "theorems": 62,
-        "title": "All the moving parts — honest uniqueness decoding"
-      },
-      {
         "cycle_id": "252d7c91",
         "quality": 0.8,
         "theorems": 114,
@@ -3079,6 +3073,12 @@
         "quality": 0.87,
         "theorems": 124,
         "title": "FACT round-68 #3 — TDIAL-U64B: fresh-seed replication confirms the dial at bitle"
+      },
+      {
+        "cycle_id": "4aeadf94",
+        "quality": 0.84,
+        "theorems": 77,
+        "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypot"
       }
     ],
     "Applications": [
