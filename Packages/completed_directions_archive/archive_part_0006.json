@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-25T08:00:42Z",
-  "count": 176,
+  "archived_at": "2026-08-25T09:01:46Z",
+  "count": 177,
   "directions": [
     {
       "ambition_level": "extension",
@@ -6988,6 +6988,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_3471",
+      "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)",
+      "description": "## FACT round-30 #4 — TRACE-BATTERY (paper 108, /tmp/exp_tracebattery.py, /tmp/r30n4b.log)\n\n**Verdict name: THE-SCALING-IS-CONFIRMED.**\n\n### Result\nThe joint channel capacity for increasing subsets of the 6-dial battery, on a fresh independent population:\n\n| moduli subset | M | I(joint) |\n|---|---|---|\n| S₃a@31 + S₃b@23 | 713 | 7.9455 |\n| + A₄@9 | 6 417 | 10.4462 |\n| + D₄@8 | 51 336 | 12.1080 |\n\nPer-dial trace information varies enormously: C₅@11 carries 3.46 bits, S₃a@31 carries 0.04 — an 80× range. Which-factor wall 0.4677 consistent with sparse-table bias.\n\nConfirms paper 94's battery-scaling results on an independent population.\n\nNow 444 experiments. Assessment v218/v219. Paper 108.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "a3ad9f21",
+      "timestamp": "2026-08-21T20:42:26.610291+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-22T01:53:03.206171+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 200
     }
   ]
 }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f099f0f6",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Burnside Moment Hierarchy\n\nDerived from the analysis and adversarial review of the five research cycles recorded in\n`Catalog/Logic/MomentHierarchy.lean` (core hierarchy) and\n`Cat",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-23T15:37:32",
-      "title": "Moment hierarchy"
-    },
-    {
       "cycle_id": "4caf1d72",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Escape Criterion Iteration (Novelty thread)\n\n## What this cycle established\n\nStarting from `Catalog/Novelty/MandelbrotQuadraticEscape.lean` (which proved divergence of the\n*criti",
@@ -499,19 +489,19 @@
       "theorem_count": 45,
       "timestamp": "2026-08-25T08:00:48",
       "title": "Midpoint-corrected acceleration"
+    },
+    {
+      "cycle_id": "7957a9f1",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after the exp569b pooling audit (paper 220, round-75 #3)\n\nThe four files added this cycle turn the round's *procedural* finding (\"both poolings fail\nindependence\") into *theorems",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-08-25T09:02:00",
+      "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pairs; both poolings fa"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5297c534",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe `⇒` direction of the extremal problem for the Donoho–Stark uncertainty principle, open in\nthis development, is now closed: `FourierFA.extremal_iff_isCosetModulation` in\n`Catal",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 49,
-      "timestamp": "2026-08-18T09:49:33",
-      "title": "The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `⇒`"
-    },
     {
       "cycle_id": "c4b3dd3f",
       "domain": "Logic",
@@ -2501,21 +2491,19 @@
       "theorem_count": 45,
       "timestamp": "2026-08-25T08:00:48",
       "title": "Midpoint-corrected acceleration"
+    },
+    {
+      "cycle_id": "7957a9f1",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after the exp569b pooling audit (paper 220, round-75 #3)\n\nThe four files added this cycle turn the round's *procedural* finding (\"both poolings fail\nindependence\") into *theorems",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-08-25T09:02:00",
+      "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pairs; both poolings fa"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "99ec0ece",
-      "domain": "Novelty",
-      "name": "queryList_eval",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a331ba56",
-      "domain": "Novelty",
-      "name": "excludeClause_fits",
-      "quality": 0.84
-    },
     {
       "cycle_id": "a331ba56",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Computation",
       "name": "pade_lower_le_log_one_add",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "7957a9f1",
+      "domain": "Physics",
+      "name": "inner_obs_total",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "7957a9f1",
+      "domain": "Physics",
+      "name": "var_grandMean",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-25T08:00:48",
+  "last_updated": "2026-08-25T09:02:00",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "2e28602b",
-        "quality": 0.85,
-        "theorems": 158,
-        "title": "Inverse Stereographic Neural Field Theory"
-      },
-      {
         "cycle_id": "4b03d5cc",
         "quality": 0.86,
         "theorems": 159,
@@ -3761,6 +3755,12 @@
         "quality": 0.79,
         "theorems": 110,
         "title": "Parameter-derived depth"
+      },
+      {
+        "cycle_id": "7957a9f1",
+        "quality": 0.82,
+        "theorems": 66,
+        "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pai"
       }
     ],
     "Probability": [

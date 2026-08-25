@@ -2089,21 +2089,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #5 \u2014 SCALE-U9-LIFT: randomness extends through u\u224811 toward the Dickman leading-term regime (H1-consistent null with sub-1 tension); paper 209 D-death amended to indicator starvation"
   },
   {
-    "consumed_by_exp_id": "7957a9f1",
-    "description": "Paper 220. Verdict for exp569b as run: RANDOMNESS-EXTENDED per pre-registration letter \u2014 cut_1e5 PRIMARY r=0.9710 (2280/2348 events) cluster-boot CI95 [0.8976, 1.0521]; cut_1e6 secondary r=0.9623 (37255/38718) CI [0.9224, 1.004]; both cover 1, no gate armed. 128 band-9 bitlen-96 semiprimes, 600k samples/N = 76.8M pairs (2.15x paper-214 pilot), wall 5233.6s at 68.1us/val, precision-patched script persisting full-precision rates + raw per-cluster counts.\n\nPOOLING AUDIT (the substance):\n1. RETRACTED pre-publication: the three-seed inverse-variance joint (pilot+G1+B => r~0.971 CI [0.942,1.000]) treated G1(exp569) and B as independent; they share SEED=20260824 end-to-end and B is a STRICT SUPERSET of G1's draws (same chunk seeds SEED+1000+c, deterministic prefix consumption \u2014 first 150k samples/N identical candidates AND paired controls). One dataset counted twice.\n2. Corrected joint over the only nominally-independent pair pilot(0.9468\u00b1.0449) x B(0.9623\u00b1.0208): r=0.9596, sigma~0.0189, CI [0.9226, 0.9966] \u2014 EXCLUDES 1 downward (~4% deficit, z~2.14). BUT recorder verification (coordinator-directed) found paper 214's exp567 uses the SAME master-seed literal with an unconsumed-until-pools main rng and a byte-identical prime-start primitive; stream reconstruction puts ALL 24 pilot band-9 semiprimes INSIDE B's 128-N pool (24/24, zero rejects). The exclusion's sigma understates uncertainty via correlated clusters; the POINT stays meaningful (disjoint measurement machinery on shared Ns), the EDGE does not.\n\nDISPOSITION: every dataset from seed 20260824 is ONE seed's evidence, jointly 3-5% below 1 \u2014 a TWICE-GATED CANDIDATE DEVIATION, not confirmation. DECISIVE NAMED STEP: fresh-stream run at seed 20260825 (exp569_u9_drift_power.py full 600000 c_ ... 20260825, ~87 min): below-1 + pooled independent exclusion => CONFIRMED-DEVIATION candidate passes G1 modulo G2 audit; back to 1 => randomness stands tightened. No 20260825 numbers cited yet.\n\nMECHANISM NOTE: candidate-side DEFICIT is opposite in sign to paper 136's sieve-advantage direction (QR compensation); if real it is a NEW weak u~10-scale effect \u2014 full skepticism until the fresh seed lands.\n\nLEDGER: shared-stream design flaw (root cause: 'fresh seed' claimed by population re-draw within a fixed stream; lab-wide rule adopted \u2014 replication legs must VARY the master seed and scripts must assert seed distinctness in-output); pilot population overlap; findings rounding slip on the 1e5 point ratio (printed 0.981 via rounded numerator; exact rates give 0.9710 \u2014 verdict unaffected); precision patch verified in production; wall overshoot vs naive estimate documented as candidate-strip cost drift.\n\nBARRIER FRAMING: scale-smoothness frontier u>=9-14; strengthens papers 130/209/214/216 randomness line at rule level (H0 edge improves to 0.102 @1e5 / 0.078 @1e6 this run alone); no barrier breached, no constant shaved. Count 561->562 (id 569b under exp569 lineage; max id stays 572), papers 220, assessment v327. Round-75 #3 recorded after #4 due to compute wall-clock.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3980",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T10:55:32.771270+00:00",
-    "title": "FACT round-75 #3 \u2014 U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pairs; both poolings fail independence \u2014 twice-gated sub-1 candidate awaits seed 20260825"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-75 #4 \u00b7 THEORY deliverable (no new experiment id) \u00b7 paper 219 \u00b7 assessment v326.\n\n**What was recorded.** The verified draft of the POSITIONAL/MAGNITUDE stratum of the barrier-4 converse (`ResearchOutput/scripts/2026-08-24-round74/barrier4_positional_converse_draft.md`), independently rechecked per `verify_t1_t2_recheck.json` against the author's own finite checks `exp574b_saturation_check.py`/`exp574b_result.json`. Recorded as DRAFT-WITH-CAVEATS per verifier recommendation \u2014 NOT a sealed theorem.\n\n**T1 (fixed-window oracle).** CERTIFIED-SILENCE law S_A = 1/[\u03bc\u00b7P_hit + (1\u2212P_hit)(1\u2212\u03bc)] exact for protocol A committed policy (finite-M rational, 0 recheck failures). The DRAFTED fire-or-silent form 1/(1\u2212(1\u2212\u03bc)P_hit) is SUPERSEDED \u2014 non-certifying silence wastefully re-scans R; 14 algebra consistency failures caught. Protocol B optimal response S_B = 1/(1+\u03bc\u2212P_hit) \u2264 S_A; block-first dominance UNCONDITIONAL for protocol A, RESTRICTED to P_hit \u2265 \u03bc for protocol B (exhaustive orders + insertion sweep M\u2208{16,33,64}; all 12 counterexamples have P<\u03bc). Cap = 1/\u03bc at P_hit=1; NO constant cap exists.\n\n**T2 (adaptive saturation).** V(W) = log\u2082W + \u00bd EXACT on every dyadic W \u2208 [2,4096] (independent DP reproduction); general-L closed form an upper bound never crossing \u2212\u00bd to L=4096 (deepest undercut \u22120.499349 @ L=3073); cost-offset bracket corrected to [.415,.5011]; marginal-value identity rewritten as exact NET form cost(k)\u2212cost(k+1)=W/2^(k+2)\u22121 (250/250 cells) after drafted GROSS form failed 231 cells; census C*=19.5@2^19 / 20.5@2^20, argmin offsets {\u22122,\u22121} \u2260 k_pin=log\u2082W \u2014 and exp563's economic optimum is a THIRD convention ~1 query above k_opt: three distinct k's must stay distinguished.\n\n**Conjecture D (SET/COST dichotomy).** S(\u03a0)=S(R\u2218F)=S(R)\u00b7S(F), sup_F S(F)=4/3 (\u03b8=1/2), S(R) \u2264 min(1/\u03bc_eff, 2^k_bits). Residue cap 4/3 governs COST-class actions; position works the SET-class tail. All four measured anchors feasible under \u03bc \u2264 1/S: 5.19\u00d7 \u2261 (.05,.85), 6.91\u00d7 \u2261 (.05,.9003), 4.35\u00d7 \u2261 (.05,.8106), 29.1\u00d7 \u2261 (.02,.9853); identity check: paper-138 master law at uninformative point \u2261 paper-132 formula exactly. 5.19\u00d7 > 4/3 is CLASS-CROSSING, NOT cap-breaking \u2014 barrier map internally consistent.\n\n**Verification census.** Zero arithmetic errors across all numeric claims (stored-value discrepancies: none); ~60% of PROVEN upgraded to VERIFIED where independently recomputed. Named GAPs remain, load-bearing: L4 stratum measure \u0394(\u03c0,R), L7 extremality of sqrt-descending among N-computable orders (Siegel-type ineffectivity expected), L8 k-naming. These are the formal program's next work.\n\nCount unchanged by experiment (papers-only bump, convention stated in addendum): still 561 experiments (max id 572), papers now 219, assessment v325 \u2192 v326.",
     "domains": [
@@ -2264,16 +2249,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-80 #2 \u2014 POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS \u2014 hit-rich vs hit-poor positional profiles indistinguishable at registered bars (interaction LRT \u03c7\u00b2=51.31/df49 p=0.383, perm p=0.34; pooled rich-poor KS D=0.0462 raw p=0.0038 FAILS Bonferroni p_adj=0.049); edge-decile excess replicates universally 0.229/0.245/0.230 across terciles; control-arm family-B fired spuriously on dense size-matched controls (perm p=0.012, quasi-separation) \u2014 design flagged fragile; paper-228 positional and rate entries remain SEPARATE layers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a08d5a50",
     "description": "Round-80 #1, exp 579, paper 229. Pure re-analysis of exp578_positions.npz (128 bitlen-96 semiprimes seed 20260828, 9594 hits); no new physics. Pre-registered V1/V2 rules fired cleanly: V1 power-law winner (Akaike w 0.9866, cluster bootstrap over Ns 2000 reps seed 20260831); V2 residual R=T/M PEAKED \u2014 mixture-Dickman absorbs nearly all raw decline (M falls 3.64x vs T 3.25x), concave mid-window excess \u00b120%, small-j wall region OVER-predicts ~20%; baseline fragility gate passes all three offset-r brackets; control flat. Ledger: smoke bootstrap-broadcast bug fixed pre-full (FULL clean 10.2 s); ship-order/partial-completion check NEGATIVE (no such field in JSON, completion evidenced by boot_fits_ok=2000 x4). Joint consequence with round-80 #2 (#378): positional entry now law-complete (papers 228/229), layers SEPARATE. Files: ResearchOutput/scripts/2026-08-24-round74/exp579_{profile_form.py,result.json,findings.md}; paper ResearchOutput/NewMathematics/229_ProfileForm.md.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4025",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T16:57:03.774720+00:00",
     "title": "FACT round-80 #1 \u2014 PROFILE-FORM (exp 579): positional layer gets a LAW \u2014 small-j hit profile = POWER LAW T(x)\u22480.0295\u00b7(1+x)^\u22121.104 (b boot95 [0.991,1.218], Akaike weight 0.987; \u0394AICc exp +9.2 / logistic +11.5 degenerate / linear +16.9) \u2014 harmonic decline whose bulk IS the Dickman gradient; beyond-Dickman residual PEAKED not monotone: \u00b120% concave mid-window hump max 1.23 @ x\u22480.67 between end deficits 0.80/0.90 (quadratic dAICc 50.5, c-CI [\u22120.62,\u22120.14], vertex 0.59 interior), invariant across all three r-brackets; paper-228 follow-up (a) closed"
   },
@@ -3428,20 +3414,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 9fb758b1 (Q=0.820), which proved 54 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: * **C1 (drift constant is the standard deviation) \u2014 PROVED.**\n  `RLHF.kl_gibbs_le_variance` gives `KL(\u03c0_\u03b2\u2016p) \u2264 e^{range r/\u03b2} Var_p(r)/\u03b2\u00b2`,\n  `RLHF.gibbs_l1_le_variance` gives `\u2016\u03c0_\u03b2 \u2212 p\u2016\u2081 \u2264 \u221a(2 e^{range r/\u03b2} Var_p r)/\u03b2`, and\n  `RLHF.variance_constant_optimal` sandwiches the drift of an explicit famil",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_9fb758b1_bfb81d81",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "9fb758b1",
-    "status": "available",
-    "timestamp": "2026-08-25T08:00:15.635561+00:00",
-    "title": "Deepening: C1 (drift constant is the standard deviation) \u2014 PROVED.*"
   },
   {
     "consumed_by_exp_id": "",
@@ -13678,6 +13650,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A single scalar f, the variance inflation caused by overlap, damps every z-statistic of a pre-registration by 1/sqrt(f). Conjecture that the damping is uniform across primary and secondary cuts and across bootstrap schemes, so one audited number retracts or preserves a whole gate family.\n\nIf the honest variance of every reported statistic is f times the reported variance, then the honest z of each is its reported z divided by sqrt(f), and the family of gates at level c retracts simultaneously.\n\nProve zscore_scaled for a finite family of statistics sharing an inflation factor and derive the joint retraction threshold z_required = c*sqrt(f).\n\nThe seed-20260825 leg has an explicit pass mark computable before it is run.\n\nInflation is cut-dependent and each gate needs its own overlap accounting.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4131",
+    "priority_score": 0.6713870967741937,
+    "research_mode": "team",
+    "source_exp_id": "7957a9f1",
+    "status": "available",
+    "timestamp": "2026-08-25T09:01:45.204386+00:00",
+    "title": "Uniform Root-Inflation Damping of Pre-Registered Gates"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The cross-channel discrepancy of a population decouples into the oscillation of a single per-level functional over the window box, turning the sharp-constant question into a one-dimensional extremal problem. Cycle 4 solved it for the exponent pair (1, 1/2) via the Kantorovich inequality, obtaining log2((4+3*sqrt2)/8) and matching it to within 5% by an explicit two-point population. The conjecture extrapolates the exponent dependence found numerically.\n\nFor pointwise costs a*p^s and c*p^t on a window of spread 2^sigma, max |t*slope_s - s*slope_t| = (ln2/8)*s*t*|s-t|*sigma^2/Dk to leading order, attained by a two-atom population whose x^t-mean equals the harmonic mean of the window endpoints.\n\nExtend the doubling-ray result (s = 2t, already proved with constant log2((1+2^t)^2/(4*2^t))) to a general power-mean version between exponents t < s, compute the oscillation of the per-level functional in closed form, and compare with the grid search (coefficient 0.0862 +- 0.0002 at sigma = 1 versus ln2/8 = 0.08664).\n\nEvery multi-channel benchmark gets an exact internal-consistency tolerance, and the (0.84, 0.52) refutation generalises to arbitrary cost exponents.\n\nThe oscillation is not governed by the two-atom endpoint configuration and the sharp constant depends on more than the window spread.",
     "domains": [
       "Combinatorics"
@@ -15451,6 +15437,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The lab-wide rule that replication legs must vary the master seed is conjecturally equivalent to pairwise disjointness of consumed index sets, which is exactly the proved equality case for inverse-variance pooling. Formalising the certificate turns a procedural rule into a checkable proposition.\n\nAn inverse-variance pool of legs from one stream reports its true variance if and only if the legs' consumed index sets are pairwise disjoint.\n\nGeneralise Design.trueVar_eq_naiveVar_iff_disjoint from two legs to a finite family with interior weights.\n\nPublished joint intervals are honest exactly when a disjointness certificate accompanies them.\n\nSome non-disjoint families still pool honestly, and the certificate must be weakened to a cancellation condition on signed overlaps.",
+    "domains": [],
+    "id": "fd_4130",
+    "priority_score": 0.5920588235294119,
+    "research_mode": "team",
+    "source_exp_id": "7957a9f1",
+    "status": "available",
+    "timestamp": "2026-08-25T09:01:44.717082+00:00",
+    "title": "Disjointness Certificates for Replication Legs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Beyond qualitative concavity, the midpoint defect of sigma should be pinned between two constant multiples of (s-t)^2 (1+s+t)^{-5/3}. The exponent 5/3 is dictated by the second derivative sigma'' = -6 (27t-1)^{-5/3} up to constants, so the conjecture asserts that the naive scaling is the true one uniformly on the physical range.\n\nThere exist 0 < c1 <= c2 such that for all s,t >= 1/27, c1 (s-t)^2 (1+s+t)^{-5/3} <= sigma((s+t)/2) - (sigma s + sigma t)/2 <= c2 (s-t)^2 (1+s+t)^{-5/3}.\n\nDifferentiate lagrangeExponent twice using HasDerivAt.rpow_const on top of lagrangeExponent_hasDerivAt, then apply the Taylor remainder bound on the segment [s,t] and check the endpoint scaling numerically on a grid first.\n\nConcavity upgrades to a quantitative modulus, which is what any application (rate-of-convergence for averaging schemes) actually needs.\n\nThe defect degenerates near the threshold t = 1/27 where sigma'' blows up, so no uniform two-sided modulus exists and the estimate must be stated on [1/27 + delta, infinity).",
     "domains": [],
     "id": "fd_3812",
@@ -16312,6 +16310,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T10:05:29.219757+00:00",
     "title": "Gauge-Invariance of the Optimal Peeling Constant for Convex Bodies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every bound proved this cycle carries one unknown, the intra-modulus correlation rho of the drift-power readout. Conjecture that rho is positive and decays like C/u across the u = 9-14 band if the candidate-side deficit is a real weak scale effect, and is zero within error if the readout is pure randomness. It is estimable from the already recorded per-cluster counts.\n\nThe intra-modulus correlation of the band-9 drift-power readout satisfies rho(u) = C/u + o(1/u) with C > 0, and rho = 0 exactly under the randomness null.\n\nEstimate rho as the between-modulus variance component of the persisted per-cluster rates of exp569b, then substitute into var_grandMean and cov_legMean to price the retracted joints.\n\nThe cluster ceiling and the population covariance become numbers, and the mechanism note acquires a quantitative handle opposite in sign to the paper-136 sieve advantage.\n\nThe clustered bounds collapse to the i.i.d. case and the randomness line is strengthened rather than merely extended.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_4129",
+    "priority_score": 0.5638197894319682,
+    "research_mode": "team",
+    "source_exp_id": "7957a9f1",
+    "status": "available",
+    "timestamp": "2026-08-25T09:01:44.235621+00:00",
+    "title": "Intra-Modulus Correlation Law at the Smoothness Frontier"
   },
   {
     "consumed_by_exp_id": "",
@@ -26320,6 +26333,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T08:00:24.738335+00:00",
     "title": "Logarithmic Depth Exponent Recovers the Acceptance Rate"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved ceiling Var >= rho*sigma^2/k says precision at the u>=9-14 frontier is limited by the number of semiprime moduli, not by samples per modulus. Conjecture that the observed 3-5% deficit cannot be resolved at k=128 for any m, and quantify the k needed.\n\nFor intra-modulus correlation rho > 0, no run with k moduli can certify a deviation smaller than z*sqrt(rho)*sigma/sqrt(k), independently of the number of samples per modulus.\n\nCombine ClusterModel.var_grandMean_ge_cluster_floor with the z-threshold to derive a minimal-k theorem, then evaluate at the observed deficit.\n\nThe frontier is pushed only by enlarging the modulus population; wall-clock spent on longer runs is provably misallocated.\n\nIntra-modulus correlation is zero to within measurement, and sample-count scaling is restored.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4132",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "7957a9f1",
+    "status": "available",
+    "timestamp": "2026-08-25T09:01:45.687277+00:00",
+    "title": "Cluster-Count Barrier at the Scale-Smoothness Frontier"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The master bound Var >= sigma^2/|U| over all weightings gives the smallest deviation an entire lineage of runs could ever certify, computable from the union of consumed draws before any new compute is spent.\n\nA lineage that has consumed |U| distinct draws cannot certify a relative deviation below c*sigma/sqrt(|U|) at level c, whatever analysis is applied afterwards.\n\nCombine Design.var_combo_ge_distinct_draws with the z-threshold; instantiate at the union of exp567, exp569 and exp569b draws.\n\nEvery future leg comes with a computable minimum size for the effect it can decide, ending post-hoc reweighting disputes.\n\nSome estimator outside the linear-in-draws class beats the floor, which would itself be a significant methodological finding.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4133",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "7957a9f1",
+    "status": "available",
+    "timestamp": "2026-08-25T09:01:46.167935+00:00",
+    "title": "Distinct-Draw Floor as a Pre-Registration Requirement"
   },
   {
     "consumed_by_exp_id": "",
@@ -43702,14 +43743,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Model the circle of fifths explicitly"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05a687ab",
     "description": "Formalize normalized gap and pair-correlation statistics for finite spectra.\n   Compare the deterministic quadratic spectrum only after unfolding/rescaling,\n   and distinguish Poisson statistics from GUE statistics.",
     "domains": [],
     "id": "fd_2060",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c2f98a25",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:26.264921+00:00",
     "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
   },
