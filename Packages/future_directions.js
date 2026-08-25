@@ -2281,16 +2281,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-83 #2 \u2014 WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED \u2014 dial weight exponent alpha_hat=0.5 not 1 (single-peaked R2 curve .32/.50/.62/.58/.47/.30, dR2=+0.151>=bar; boot CI [0.5,0.5] excludes 1 decisively 492/500); ERRATUM-GRADE SUPERSESSION of paper 227's adopted 1/l covariate -> 1/sqrt(l) lab-wide (+31% relative dial power on identical data)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "85920838",
     "description": "Round-85 #1 \u00b7 exp 589 [FINAL RESOLUTION, findings rev 2026-08-24b] \u00b7 pure reanalysis of exp581_regen_positions.npz (9594 pooled hits / 128 Ns / 512k controls; wall_s 45.16) \u00b7 paper 240 \u00b7 supersedes the H0-MIXED letter of paper 239 (issue #387), which stands preserved as audit record of the intermediate analysis state.\n\nRESOLUTION (H1a-INCLUSION-ARTIFACT):\n1. MECHANICAL FORCING: D1 hit mass by v-band <80:0 / 80\u201389:85 / 90\u201395:1469 / >=96:0 \u2014 100% of first-decile hits have bitlen(v)<96, mechanically forced (D1 \u21d2 delta<0.2s \u21d2 v<0.44\u00b7s^2+o(s^2)<2^95 provable under window j in [isqrt(N)+1, 3\u00b7isqrt(N)]).\n2. SIZE-MATCHED BANDS ERASE THE EXCESS: within-band D1 rate ratios rr_d1 = 1.000 (80\u201389), 1.097 (90\u201395); band-referenced total excess +129.66 vs flat-null +604.76 (rr_d1 vs flat 1.637) \u2192 ~4/5 of the spike is band COMPOSITION, not decile-1 rate elevation. Controls clean (per-N D1-share z mean \u22120.223 sd 0.945 absmax 2.53).\n3. KEPT-FIT 'PERSISTENCE' DECOMPOSES ENTIRELY: kept fit (v>=2^95) w_edge .0403 [.0301,.0525] \u0394AICc 49.78 is carried entirely by bitlen[96,98) at the truncation boundary (\u0394AICc 5.94 \u2014 BELOW the registered bar of 6; no bootstrap CI disclosed) while bitlen>=98 has NO edge component (\u0394AICc \u22120.40) \u2192 truncation-boundary Dickman size gradient, NOT positional structure.\n\nERRATUM to paper 239: title claim ('kernel SURVIVES at reduced strength'), \u00a74 split reading ('half genuine small-|v| structure beyond Dickman prediction'), and \u00a75 consequences 1\u20132 are RETRACTED as truncation-boundary gradient. PRESERVED from 239: mechanical-degeneracy finding (strengthened \u2014 now load-bearing), regeneration verification, controls-clean, ledger disclosures, and the H0-MIXED verdict letter as audit record. No registered bar changed post hoc \u2014 resolution applies the REGISTERED \u0394AICc >= 6 bar to matched-v strata.\n\nMAP STATEMENT (arc closure papers 228\u2192239\u2192240): NO positional kernel component survives \u2014 the profile is fully accounted by magnitude + tiny-v window geometry.\n\nWHAT SURVIVES: overdispersion itself real (+605 named-origin, not deleted); positional layer independent (papers 228\u2013230 untouched); rate-layer question open.\n\nLINEAGE DISCIPLINE end-to-end: exp581 sha256 byte-exact quartet upstream with both self-caught fixes disclosed in-chain (run-1 COMPARATOR bug; run-2 LN-dict KeyError 350983 fixed via arbitrary-edge ln cache); exp589 downstream re-verification = 128x2 EXACT isqrt\u2192(jlo,jhi) matches + containment of every stored j (pop_hash 06931068f8f3ca9b recomputed, no external copy readable \u2014 disclosed).\n\nLEDGER CATCHES: degenerate exclusion clause (pre-registered mechanical note fired); kept-fit anchor adaptation registered pre-run; own two-component Poisson fitter nb=50 not paper-238 b_edge parametrization; capped first-4000 controls; POST-HOC labeling of all resolution diagnostics; subfits no bootstrap CI; wall-time drift noted (paper 239 quoted 42.34 s, artifacts record 45.16 s).\n\nBarrier framing: closure INSIDE the positional layer's shape description \u2014 residue cap 4/3, position 5.19x, external-hint laws, quantum frontier, four-class rate-residual closure all untouched; both surviving mechanisms scale-carrying (exact-arithmetic inclusion bound grows with scale). Paper 238's .2346 provenance flag still travels forward until reconciled against the paper-228 ledger.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4054",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T21:45:33.977842+00:00",
     "title": "FACT round-85 #1 \u2014 SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper 239 \u2014 paper 238's left-edge spike is tiny-v composition ENTIRELY (100% of D1 hits bitlen(v)<96 by window geometry; rr_d1 1.000/1.097 size-matched; kept-fit persistence = truncation-boundary gradient [96,98) dAICc 5.94 sub-bar, >=98 -0.40); NO positional kernel component survives"
   },
@@ -2559,6 +2560,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T16:57:26.561130+00:00",
     "title": "FACT round-95 #4 \u2014 KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES \u2014 composition order \u03ba replicates fresh + holds across bits {72,96,128} (\u0394 +0.087/+0.083/+0.059, perm_p 1/501 everywhere) with SCALE-STABLE NEGATIVE slope \u03b2\u2248\u22120.35 \u2014 but SUFFICIENCY BREAKS at 128 bits (cell identity adds beyond \u03ba exactly where smoothness is rare) \u2014 graded law: log-rate \u2248 dial \u2212 0.35\u03ba + identity terms switching on near u\u22484.5"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Round-95 #5 \u00b7 exp 607 STRATIFIED-DAYZERO \u00b7 verdict: SCREEN_NEGATIVE_AS_AMENDED \u2014 pooled-null hole CLOSES AGAINST**\n\nFleet Bet #1 day-zero (pre-registered EXPLORATORY screen, no evidentiary claim): does exp602's POOLED null hide cell-wise deviations cancelling across N-computable strata? Four independent fresh-seed populations from stored verify-npz artifacts (598c-b96 s20260907, 606-b96 s20261007, 606-b72 s20261008, 606-b128 s20261009; n=512 each), method-law-compliant calibration (within lnN-decile \u00d7 frac(\u221aN)-quintile strata, 5000 reps).\n\n## Phase 1 (dial-only): fires everywhere \u2014 ON THE RECORDED LAW\nG1(M\u00d7K) p_Q = .0002/.0016/.0014/.0060, G3(S\u00d7K) .0002\u2013.0004 across all four populations \u2014 sign-alternating alerts in the SAME pattern every time: low-\u03ba tercile +2.0\u2026+3.7, high-\u03ba \u22122.0\u2026\u22123.7. Near-identical graded monotone K-tercile profiles = **paper 257's \u03b2_\u03ba \u2248 \u22120.35 law replicated at CELL level in four independent datasets**.\n\n## Phase 2 (amendment: absorb \u03ba): everything vanishes\nG1 \u2192 .105/.724/.649/.669; G3 \u2192 .495\u2013.989; alerts \u2192 noise. **Verified non-mechanical three ways**: \u03ba adds \u0394R\u00b2 0.062\u20130.122 vs E[R\u00b2]\u22480.002 under noise (31\u201362\u00d7); \u03ba-only simulation through the identical pipeline reproduces fire/collapse exactly (190/200 & 162/200 then nominal-FP death); corr(\u03ba,lnN)\u22480 excludes masking.\n\n## Mandatory caveats (adjudicator)\n(a) **G2_MxF p column VOID** \u2014 degenerate by construction (axes \u2261 null strata \u21d2 Q bitwise invariant); recorded p=.0002 entries are fp-tie noise; decision robust without G2. (b) The LITERAL registration fired SCREEN_POSITIVE; the negative exists under the pre-decision against-interest amendment (disclosed prominently). (c) pooled_z \u2261 0 is intercept-orthogonality, not evidence. (d) prng stream collision B/C/D noted (harmless).\n\n## Consequence\nexp602's pooled null upgrades to a STRATIFIED-STRENGTH null: **dial + \u03ba exhausts the N-computable rate structure detectable at n=512/population across bits {72,96,96\u2032,128}** \u2014 no residual cancellation for a mixture to hide in at these resolutions. Bet #1 main run NOT funded from this screen; still licensable by u-regimes outside these windows (the door lives at u\u22656\u201314) or resolution beyond 512/population.\n\nVerification: independent recompute of both audited populations, zero discrepancies; exhaustive S_dial reconstruction ALL Ns (\u22643.6e\u221215); alternate-seed robustness \u0394p \u2264 0.005.\n\nArtifacts: `ResearchOutput/scripts/2026-08-25-round75/exp607_*`, paper `ResearchOutput/NewMathematics/258_StratifiedDayzero.md`.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4190",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T19:47:12.970255+00:00",
+    "title": "FACT round-95 #5 \u2014 STRATIFIED-DAYZERO (exp 607): SCREEN_NEGATIVE AS AMENDED \u2014 dial-only screen fires everywhere but EVERY alert sits on the K axis (= paper-257 law replicated cell-wise in FOUR independent populations); absorbing \u03ba erases all of it (verified non-mechanical) \u21d2 exp602 pooled null upgrades to stratified-strength: dial+\u03ba exhausts detectable rate structure at these resolutions; Bet#1 main run not funded"
   },
   {
     "consumed_by_exp_id": "",
@@ -4292,20 +4307,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 7b6f9981 (Q=0.790), which proved 94 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop injective subfamilies of the Vieta identity\n   `a\u00b3+b\u00b3+(-a-b)\u00b3=-3ab(a+b)` and derive quantitative lower bounds for the\n   number of represented integers, preferably without padded zero cubes.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_7b6f9981_78dd75f6",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "7b6f9981",
-    "status": "available",
-    "timestamp": "2026-08-25T18:58:46.777350+00:00",
-    "title": "Deepening: Parametric families"
   },
   {
     "consumed_by_exp_id": "",
@@ -45420,14 +45421,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "formalize H\u00f6lder classes on compact subsets of `\u211d\u207f`;"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dabb3404",
     "description": "Formalize the order isomorphism between the fixed points of `u \u2218 l` and those of `l \u2218 u`, and prove that it transports arbitrary meets and joins.",
     "domains": [],
     "id": "fd_2792",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "ef4982e9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:09.665712+00:00",
     "title": "Fixed-point duality"
   },
