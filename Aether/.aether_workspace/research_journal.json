@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "242b27e9",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Finite-Key Bounds on a Certified Asymptotic Core\n\nThis thread produced five Lean files in `Catalog/Applications/`, all sorry-free:\n\n* `BB84FiniteKeyBounds.lean` — the Padé `[1/1]",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-23T13:03:36",
-      "title": "Finite-Key Bounds on a Certified Asymptotic Core"
-    },
-    {
       "cycle_id": "e4ce2d9a",
       "domain": "Logic",
       "key_insight": "# FUTURE DIRECTIONS — after NET-71 (THE-TOKENIZER-TAX-IS-FOUR-KEYS)\n\nRound 24 closed the domain axis with a fourth corpus (German prose) and produced, in\nLean, four sorry-free files:\n\n* `Catalog/Logic",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-25T05:50:48",
       "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry — low-B1 "
+    },
+    {
+      "cycle_id": "9fb758b1",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — sharp geometry of RLHF alignment drift\n\n## Where this cycle left the thread\n\nConjecture **C1** (\"the drift constant is the standard deviation\") was carried as *proved\nup to an ab",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 54,
+      "timestamp": "2026-08-25T08:00:15",
+      "title": "C1 (drift constant is the standard deviation) — PROVED.*"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cf8480d3",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Orbital Rigidity\n\nDerived from the analysis (Stage 3) and adversarial review (Stage 4) of\n`Catalog/Novelty/OrbitalRigidity.lean`.  Each conjecture is falsifiable: a single finite",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-08-18T07:54:55",
-      "title": "Rigidity"
-    },
     {
       "cycle_id": "a5150a29",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-25T05:50:48",
       "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry — low-B1 "
+    },
+    {
+      "cycle_id": "9fb758b1",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — sharp geometry of RLHF alignment drift\n\n## Where this cycle left the thread\n\nConjecture **C1** (\"the drift constant is the standard deviation\") was carried as *proved\nup to an ab",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 54,
+      "timestamp": "2026-08-25T08:00:15",
+      "title": "C1 (drift constant is the standard deviation) — PROVED.*"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6f277833",
-      "domain": "Tropical",
-      "name": "uEnt_le_logb_card_of_mapsTo",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "f45042dc",
-      "domain": "Pythagorean",
-      "name": "is",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f45042dc",
-      "domain": "Pythagorean",
-      "name": "crossover_context_bound",
-      "quality": 0.82
-    },
     {
       "cycle_id": "f45042dc",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "sq_le_of_le_dialCapacity",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "9fb758b1",
+      "domain": "Algebra",
+      "name": "cov_eq_sum_ctr",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "9fb758b1",
+      "domain": "Algebra",
+      "name": "audit_gap_eq_centred",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "9fb758b1",
+      "domain": "Algebra",
+      "name": "abs_audit_num_sub_cov",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-25T05:50:48",
+  "last_updated": "2026-08-25T08:00:15",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "252d7c91",
-        "quality": 0.8,
-        "theorems": 114,
-        "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
-      },
-      {
         "cycle_id": "daf80a32",
         "quality": 0.82,
         "theorems": 142,
@@ -3079,6 +3073,12 @@
         "quality": 0.84,
         "theorems": 77,
         "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypot"
+      },
+      {
+        "cycle_id": "9fb758b1",
+        "quality": 0.82,
+        "theorems": 54,
+        "title": "C1 (drift constant is the standard deviation) — PROVED.*"
       }
     ],
     "Applications": [
