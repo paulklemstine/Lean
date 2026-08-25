@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-25T09:53:18Z",
-  "count": 180,
+  "archived_at": "2026-08-25T10:51:00Z",
+  "count": 181,
   "directions": [
     {
       "ambition_level": "extension",
@@ -7146,6 +7146,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 215
+    },
+    {
+      "id": "fd_3517",
+      "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)",
+      "description": "## FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13 (paper 126)\n\n**Verdict name: THE-CYCLIC-CUBIC-IS-FULLY-PINNED-AT-CONDUCTOR-13.**\n\nCyclic cubic Q(zeta_13 + zeta_13^-1) (C3, conductor 13): only TWO types.\nH(T) = 0.9192 bits. I(p mod 13; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.4702; which-factor 0.0001.\n\nNow 459 experiments. Assessment v228. Paper 126.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "a4769f7a",
+      "timestamp": "2026-08-21T23:39:20.826757+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.9,
+      "domain_quality_penalty": 0.1,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-22T04:51:29.441365+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 221
     }
   ]
 }

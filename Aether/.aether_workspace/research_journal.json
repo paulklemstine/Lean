@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "86b92df3",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-70 / MATH-READS-AS-PROSE\n\n## What this cycle established (formally)\n\nThree sorry-free Lean files develop a *demand-multiset calculus* for\nbudget/quality knees and apply",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-23T18:49:38",
-      "title": "NET-70: MATH-READS-AS-PROSE — mathematical text leaves knees exactly at prose values ({16,20}) despi"
-    },
-    {
       "cycle_id": "620a1130",
       "domain": "Tropical",
       "key_insight": "# Future Directions — temporal lags versus pitch intervals\n\nThis cycle established a complete separation of the two variables that the original\n\"lag 12 ≈ octave\" reading conflated:\n\n* the **temporal**",
@@ -499,19 +489,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-25T09:53:25",
       "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3"
+    },
+    {
+      "cycle_id": "a22e921b",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — from the k-taxonomy cycles\n\nThree sorry-free Lean files came out of this run:\n\n* `Catalog/Cryptography/KTaxonomyCensusEcon.lean` — the three budgets `k_pin`,\n  `k_opt^cost`, `k_o",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-08-25T10:51:17",
+      "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3eeb9235",
-      "domain": "Logic",
-      "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nEach conjecture below is falsifiable, is stated so that it can be formalised in\nthe existing `UniversalRedundancy` framework\n(`Catalo",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-18T13:57:55",
-      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
-    },
     {
       "cycle_id": "13fee392",
       "domain": "MachineLearning",
@@ -2501,15 +2491,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-25T09:53:25",
       "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3"
+    },
+    {
+      "cycle_id": "a22e921b",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — from the k-taxonomy cycles\n\nThree sorry-free Lean files came out of this run:\n\n* `Catalog/Cryptography/KTaxonomyCensusEcon.lean` — the three budgets `k_pin`,\n  `k_opt^cost`, `k_o",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-08-25T10:51:17",
+      "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d4951edd",
-      "domain": "Cryptography",
-      "name": "ValidZ",
-      "quality": 0.82
-    },
     {
       "cycle_id": "d4951edd",
       "domain": "Cryptography",
@@ -2803,9 +2797,15 @@
       "domain": "Applications",
       "name": "certifiedValue_of_blockEC",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a22e921b",
+      "domain": "Cryptography",
+      "name": "here",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-25T09:53:25",
+  "last_updated": "2026-08-25T10:51:17",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "ab33dc9e",
-        "quality": 0.82,
-        "theorems": 68,
-        "title": "Pole-order obstruction"
-      },
-      {
         "cycle_id": "254383ec",
         "quality": 0.78,
         "theorems": 67,
@@ -3389,6 +3383,12 @@
         "quality": 0.85,
         "theorems": 88,
         "title": "FACT round-70 #4 — DEPTH-DECAY: the magnitude channel sees only the first steps "
+      },
+      {
+        "cycle_id": "a22e921b",
+        "quality": 0.78,
+        "theorems": 58,
+        "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ f"
       }
     ],
     "Geometry": [

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-25T09:53:31.895149+00:00",
+  "last_updated": "2026-08-25T10:51:26.101808+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -67711,6 +67711,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-25T09:53:31.528953+00:00",
       "title": "FACT round-78 #1 \u2014 GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 3380.0100412368774,
+      "end_time": 1787654989.6173778,
+      "files_integrated": 4,
+      "job_id": "a22e921b",
+      "outcome_quality": 0.78,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787651609.6073365,
+      "strategy_count": 0,
+      "theorem_count": 58,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 57,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-25T10:51:25.712680+00:00",
+      "title": "FACT round-77 #2 \u2014 K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and "
     }
   ]
 }

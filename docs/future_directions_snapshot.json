@@ -2871,25 +2871,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "a22e921b",
-    "description": "## GAP-L8 CLOSED — k-TAXONOMY (round-77 #2, paper 224, theory deliverable)\n\nCloses draft items L8 + O5 of paper 219's roadmap (\"pin exp563's k\\* definition ... paper must name which\"). No new physics run; definitional/taxonomy result.\n\n### Three definitions\n1. **k_pin = ⌈log₂W⌉** — gain-saturation point: marginal gain exactly zero, support fully pinned. Paper 212's \"k\\*=⌈log₂W⌉\" retro-reads as this. NEVER an optimum.\n2. **k_opt^cost = argmin_k[k+(W/2^k+1)/2]** — T2 census total-cost stop. Dyadic W ⇒ tie set {log₂W−2, log₂W−1}, V\\*=log₂W+½ EXACT (W=2..4096); continuous location log₂W−1.5288.\n3. **k_opt^econ(T₀,c_q) = log₂((T₀−1)·ln2/c_q)** — net-economics optimum, queries paid c_q against the MEASURED baseline T₀.\n\n### Exact identity\nE(k;T₀,1)=1+k+(T₀−1)/2^k ≡ V(k; W=2(T₀−1))+½ pointwise ⇒ **k_opt^econ(T₀,1) == k_opt^cost(2(T₀−1))** (identical argmin sets AND locations). Factor-2 bookkeeping: T2 prices residual at half remaining support, exp563 charges full expected scan anchored at measured T̄₀. Unconverted same-number inputs differ by EXACTLY +1.000 query — paper 219's \"+~1\" note confirmed at exactly +1.\n\n### Numerical verification (`gapL8_check.py`, <2 s, ALL PASS)\n- Census offsets {−2,−1} rel log₂W, dyadic V\\*=log₂W+½ exact for all dyadic W ≤ 4096.\n- Identity max abs error < 1e-9; naive same-anchor shift exactly +1 on discrete argmin sets.\n- exp563 stored rows reproduce: balanced T̄₀=1072.425 → pred 9.536549 (=recorded), argmin 10 (=recorded); unbalanced T̄₀=286205.89 → pred 17.597922 (=recorded), argmin 18 (=recorded). Matched-anchor census gives same unique {10}/{18}.\n- Pin never coincides with either optimum: gap ∈ {1,2} for every W ≤ 4096.\n\n### Verdicts on coincidence\nOnly (k_opt^cost, k_opt^econ) ever coincide — after anchor conversion. k_pin NEVER coincides with either; conflating them overstates the work-optimal budget (exp563 balanced: 20 vs 10).\n\n### Naming rule adopted\nBare \"k\\*\" BANNED in future papers; must expand to k_pin / k_opt^cost (with W) / k_opt^econ(T₀,c_q) (with anchor and price). Draft T2 already complies.\n\n### Verification scope (disclosed)\nDefinitional result; verification = own check script ALL PASS + exact reproduction of previously-recorded exp563/T2-census values from stored rows (cross-validates against the existing record). NO separate adversarial verifier run — scope judgment, disclosed.\n\n### Ledger\nPapers-only bump: count UNCHANGED at 564. Assessment v330 → v331. Paper `ResearchOutput/NewMathematics/224_KTaxonomy.md`; artifacts `ResearchOutput/scripts/2026-08-24-round74/gapL8_k_taxonomy.md`, `gapL8_check.py`. Barrier framing: bookkeeping hygiene serving barrier-8 audit trail; residue cap 4/3 untouched; no breakthrough claimed.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3998",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T13:15:17.261963+00:00",
-    "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and never conflated — exact identity econ ≡ census under W ↔ 2(T₀−1), +1.000 resolves paper 219's +~1 note"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "**Verdict: H1 REFUTED DECISIVELY / MIXED-PARTIAL by literal rules.** Paper 221's named follow-up L7-a (measure the real generator tilt of deployed populations) is CLOSED; the Λ-channel scope question is settled ADVERSARIALLY.\n\n**Setup:** 4 pools × n=600, b=15, fixed seed 20260824, exact-uniform sieve-index prime sampling, touch-count costs verbatim from verifyL7_sim.py, 8-batch bootstrap SEs.\n\n**Per-pool results:**\n\n| pool | window | z_mean [CI95] | win_asc/desc S ± SE | in_win |\n|---|---|---|---|---|\n| HARD_BAL (control) | canonical | 0.4114 [0.3887,0.4341] | 1.5896 ± 0.0538 | 1.000 |\n| RSA_INDEP (deployed-style) | canonical | 0.6356 [0.6150,0.6562] | 0.5578 ± 0.0217 | 1.000 |\n| RATIO4 | adapted r_max=4.5 | 0.0558 [0.0530,0.0586] | 17.345 ± 0.4654 | 0.000 canon |\n| UNIFORM_WIDE | adapted r_max=8.0 | 0.5979 [0.5765,0.6194] | 0.5505 ± 0.0230 | 0.582 canon |\n\n**Three-way control replication:** HARD_BAL z=0.4114 matches analytic 0.414 AND independent verifier BAL_prime 0.4095–0.4148 / S=1.5785±0.029 at shifted bitlen b=11→15 (measured S=1.5896±0.0538). Machinery sound.\n\n**The inversion:** on independent same-bitlen primes the within-window divisor mass is TOP-heavy — ratio concentration near 1 (effective median r≈1.25) pushes min(p,q) HIGH into (√(N/2),√N]. Window-ascending is always well-defined there (in_win=1.000 vs paper-137's 21.6% undefined) yet LOSES ~44% to sqrt-descending. Tilt-only predictor (1−z)/z tracks measured S on all honest windows.\n\n**Consequence (plain):** Λ-dominance is CONFINED TO ARTIFICIAL HARD-BALANCE POOLS; real generator classes tilt ADVERSARially. No deployable reorder-class gain without ENFORCED q<2p balance at key-generation time — no deployed generator enforces it. Paper-221 caveat upgraded from \"tilt unmeasured\" to \"tilt adversarial off-balance\" — final word. Scoped reorder-class fact, no speed prescription.\n\n**Caveats:** RATIO4's 17x = narrow-stratum pinning artifact (needs N-invisible declared-support knowledge), not deployable. b=15 lab scale, scale-free transfer assumed (Mertens/Dickman) not verified; real deployed filters only narrow the ratio band further (worsen the tilt).\n\n**Ledger catches disclosed:** findings.md filename pre-existed → exp575_findings.md written instead; descriptive sign readout added post-smoke with pre-registered decision rules unmodified (in JSON honest_notes); sieve-index sampling replaced randprime rejection loop (identical in law).\n\n**Barrier validation:** factor-local/scan-order frontier row; completes L7-a; reorder-class map now has measured scope boundaries end-to-end; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 223 · assessment v329→v330 · count 563→564 · artifacts ResearchOutput/scripts/2026-08-24-round74/exp575_*",
     "domain_bridges": [],
@@ -3042,7 +3023,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "733effba",
     "description": "Round-81 #1 · exp 581 · paper 231 · closes paper-229's named residual question (what carries the ±20% concave mid-window hump in R=T/M?).\n\n**Verdict**: MIXED-INCONCLUSIVE by pre-registration letter (zero families fired: fitted-peak boot95 p2.5 must exceed 1.05, achieved 1.0094–1.0275 despite raw max 1.2227 @bin33); bars kept verbatim, no post-hoc rule change.\n\n**Regeneration pass (first-class result)**: pipeline re-executed from recorded seeds; canonical-int64 sha256 55729f1c99c0b5d2 regenerated == stored npz; hits byte-exact 9594/9594 across all 128 Ns; FULL capped control arrays + grids byte-exact; lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 reproduced pairwise-disjoint; master hash 06931068f8f3ca9b matched. All numbers below ran on verified-identical data.\n\n**Structural one-sidedness**:\n- Observed LPF masses [0, 0, 0.0007, 0.9993] (counts [0,0,7,9587]) vs mixture-Dickman prediction [0,0,0.0013,0.9987] — 99.93% of hits in ONE band (>1e4): any single-band carrier story dies ARITHMETICALLY (only one eligible stratum at LOW_MASS_MIN=200). Mass reallocation negligible (6e-4 gap).\n- Inside the band: dominant-band-only c=-0.299 vertex 0.590; descriptive LPF terciles (cuts 350983/671941, ~3196 hits each, medians 198k/511k/831k) c=-0.18/-0.25/-0.44 — concave in ALL THREE.\n- k100 terciles (cuts {2,3}): t1 concave (c=-0.13, vx .41); t2/t3 mildly convex but amplitude ±2% vs pooled +4.8% — combo conditioning does not absorb the excess.\n- Controls clean everywhere (pooled c=-0.105 CI straddles 0, peak fit 1.005).\n- Anchors PASS: R_first .8371 vs .8007±.08; R_peak 1.2227@bin33 vs 1.2257@bin33 EXACT; R_last .8935 vs .8957; pooled vertex 0.5901 vs exp579's independent 0.5896.\n\n**Consequence**: the hump lives INSIDE every resolvable stratum at a stable vertex — not completing-prime size, not small-prime combination structure, not Dickman band-mass reallocation. Sole surviving registered channel: **H0 window/polynomial geometry of j²−N itself interacting with v-sizes**. Named next probe (pre-stated): direct j-grid/v-size sensitivity analysis — bin-width permutation, u-grid shift — to close H0 affirmatively or watch it fragment.\n\n**Ledger catches (both disclosed)**: run-1 G1 \"failure\" = comparator bug (paired slices compared vs stored full arrays; hits were ALWAYS byte-exact per run-1 log evidence); run-2 KeyError 350983 = LN-dict lookup on an observed sub-band edge → arbitrary-edge ln cache + resume-from-persisted-regen (16.5 s completion; sampling never re-run after its single persisted 953 s pass). Smoke also caught a factorer early-exit bug pre-full; Dickman table refined to h=1/8192 (err 3.07e-05).\n\nDeviations disclosed: k100-tercile baseline = pooled positional profile (per-tercile Dickman needs Buchstab machinery, out of scope); sub-band split DESCRIPTIVE ONLY, never verdict-bearing; single seed/bitlen inherited from exp578.\n\nBarrier framing: structural (not power-limited) elimination prevents a wrong turn on paper-228's opened frontier; residue cap untouched; no complexity claim; no breakthrough claimed. Completes paper-229's characterization thread 228→229→231.\n\nFiles: ResearchOutput/scripts/2026-08-24-round74/exp581_* ; paper ResearchOutput/NewMathematics/231_HumpMechanism.md",
     "domain_bridges": [],
     "domains": [
@@ -3054,7 +3035,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T19:01:09.724421+00:00",
     "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE — no decomposition family met the HUMP bars (pooled fitted-peak boot95-lo 1.0094 vs bar 1.05; raw max still bin 33), but composition carriers die arithmetically: observed LPF masses [0,0,.0007,.9993] — 99.93% of hits share ONE band (>1e4) so H1a single-band-carrier is impossible; inside it concavity replicates in ALL THREE descriptive LPF terciles (c=-0.18/-0.25/-0.44), pooled vertex x=0.5901 == exp579's independent 0.5896 (raw max bin33 exact); k100 conditioning does NOT remove the excess (t2/t3 flat ±2% vs pooled +4.8%); controls clean everywhere; sole-survivor channel = H0 window/polynomial geometry of j²−N itself; named probe: direct j-grid/v-size sensitivity (bin-width permutation, u-grid shift); REGENERATION PASS sha256 55729f1c99c0b5d2 byte-exact 9594/9594 hits + full controls + grids + lineage quartet + master hash"
   },
@@ -4570,25 +4551,6 @@
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle d3d53c1e (Q=0.820), which proved 88 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the cartesian monoidal category of real normed spaces and Lipschitz maps, parallel residual blocks with residual constants `K₁` and `K₂` have Lipschitz constant at most `max (1 + K₁) (1 + K₂)` for the max product norm, and this bound is attained for every `K₁,K₂ ≥ 0`. A counterexample to either t",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_d3d53c1e_15bc37ed",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d3d53c1e",
-    "status": "available",
-    "timestamp": "2026-08-25T09:53:09.353358+00:00",
-    "title": "Deepening: Parallel residual blocks obey a tensor-product certificate"
   },
   {
     "ambition_level": "extension",
@@ -19032,6 +18994,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Cryptography.KTaxonomyGeneralWidth",
+      "Cryptography.KTaxonomyRigidity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend the census objective to b-ary splitting and determine when the discrete optimum is a tie. For b = 2 the tie set has exactly two elements at dyadic widths; the conjecture is that for b >= 3 ties never occur at integer widths.\n\nFor b >= 3 and every integer W >= 2, the argmin of k + (W/b^k + 1)/2 over k in N is a singleton; for b = 2 it has two elements exactly when W is a power of two.\n\nProve the b-ary increment formula 1 - W(b-1)/(2 b^(k+1)), characterise equality as 2 b^(k+1) = W(b-1), and resolve that Diophantine condition.\n\nReporting 'the' optimal budget is unambiguous outside binary search, and the dyadic tie is a base-2 artefact.\n\nTie sets recur in other bases and every b-ary report must name a tie-breaking rule.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4146",
+    "lineage_refs": [],
+    "priority_score": 0.6710769230769232,
+    "proof_strategy": "Number-theoretic case analysis on 2 b^(k+1) = W(b-1) after the increment computation, mirroring census_tie_iff.",
+    "research_mode": "team",
+    "source_exp_id": "a22e921b",
+    "status": "available",
+    "timestamp": "2026-08-25T10:50:59.541613+00:00",
+    "title": "b-ary Census Tie Dichotomy"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Novelty.ZeroFitDialPerturbation",
       "Novelty.ZeroFitDialEffectiveBase",
       "Novelty.ZeroFitDialU76"
@@ -21167,6 +21151,25 @@
     "status": "available",
     "timestamp": "2026-08-24T15:57:54.028272+00:00",
     "title": "Parity-Preserving Self-Reduction for Assembly Counting"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.KTaxonomyRigidity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The pin overcharge is proved to lie in [1/2, 5/4). Its running average over widths 2..N oscillates rather than converging: 0.87985 at N = 10^3, 0.93621 at N = 10^5, and 0.87497 at N = 2^18. The conjecture is that this is exact log-periodicity, with mean value 7/8 along dyadic N.\n\nThe average of census W (kPin W) - min_k census W k over 2 <= W <= N converges to 7/8 along N = 2^m, and in general converges to a nonconstant continuous log-periodic function of log2 N.\n\nUse the closed form 2 - 3W/2^(k+3) on the gap-2 locus and 1/2 on the dyadic locus to evaluate the block sums exactly, then take the Cesàro limit along and between powers of two.\n\nAmortised audit corrections for pin-based budgets are computable in closed form and depend only on the mantissa of the width.\n\nThe mean converges, and a single amortised correction constant suffices.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4148",
+    "lineage_refs": [],
+    "priority_score": 0.5932142857142858,
+    "proof_strategy": "Block decomposition over dyadic ranges, exact summation of the closed form within each block, then a renewal/log-periodicity argument.",
+    "research_mode": "team",
+    "source_exp_id": "a22e921b",
+    "status": "available",
+    "timestamp": "2026-08-25T10:51:00.546080+00:00",
+    "title": "Log-Periodic Mean of the Pin Overcharge"
   },
   {
     "ambition_level": "extension",
@@ -36950,6 +36953,49 @@
     "status": "available",
     "timestamp": "2026-08-25T09:53:17.595308+00:00",
     "title": "Entropy Refinement of the k-Bits Branch"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.KTaxonomyCensusEcon",
+      "Cryptography.KTaxonomyRigidity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Generalise the query price from a constant c_q to a schedule (c_j) and ask when the census and economics objectives still differ by a constant. The conjecture is that additive rigidity characterises affine schedules exactly. If it fails for convex schedules, the choice between k_opt^cost and k_opt^econ becomes a real modelling decision rather than a bookkeeping convention.\n\nFor a price schedule (c_j) the difference (sum_{j<k} c_j + (T0-1)/2^k) - census (2(T0-1)) k is constant in k if and only if c_j is constant; for strictly increasing c_j the two argmin sets differ by an amount that is unbounded as T0 grows.\n\nFormalise the schedule objective in Lean, telescope the increments to get the bracket c_k >= W/2^(k+2), and instantiate with c_j = 1 + eps*j to compare brackets against census_argmin_iff.\n\nThe k-taxonomy needs a fourth entry (schedule-optimal budget) whenever query prices are not flat.\n\nAdditive rigidity is robust and the three-way taxonomy is complete for all pricing models.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4145",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Increment analysis plus the existing discrete-convexity principle min_of_local_min, which applies verbatim once increments are shown monotone.",
+    "research_mode": "team",
+    "source_exp_id": "a22e921b",
+    "status": "available",
+    "timestamp": "2026-08-25T10:50:59.054510+00:00",
+    "title": "Convex Price Schedules and Taxonomy Separation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.KTaxonomyCensusEcon"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Price the residual scan as (W/2^k)^alpha for 0 < alpha <= 1, modelling cheaper-than-linear residual work. The conjecture is that the continuous optimum offset from log2 W depends only on alpha, giving a one-parameter deformation of the recorded -1.5288 offset.\n\nThe continuous minimiser of x + (W 2^(-x))^alpha / 2 sits at log2 W - (1/alpha) log2 (2 / (alpha ln 2)), reducing to log2 W - 1.5288... at alpha = 1.\n\nDifferentiate in Lean via the certificate exp(-alpha u) >= 1 - alpha u, the direct generalisation of the proof of econC_min_at_kOptEcon.\n\nA single formula covers all residual-scan cost models, so offsets are comparable across experiments with different scan costs.\n\nOffsets are model-specific and cross-experiment offset comparisons are meaningless.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4147",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Substitute u = (x - x*) alpha ln 2, reuse the convexity certificate, then transfer to the discrete argmin via monotone increments.",
+    "research_mode": "team",
+    "source_exp_id": "a22e921b",
+    "status": "available",
+    "timestamp": "2026-08-25T10:51:00.026827+00:00",
+    "title": "Sublinear Residual Exponent Family"
   },
   {
     "ambition_level": "extension",
@@ -60185,7 +60231,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4c991400",
     "description": "Represent translations by determinant-one matrices, prove compatibility of the Cayley transform with their Möbius action, and connect the horocycle equation directly to the parabolic trace condition.",
     "domain_bridges": [],
     "domains": [],
@@ -60195,7 +60241,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0f8a1331",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:22.836193+00:00",
     "title": "Matrix-level modular action"
   },
