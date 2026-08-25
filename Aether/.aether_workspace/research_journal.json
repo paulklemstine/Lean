@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4caf1d72",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Escape Criterion Iteration (Novelty thread)\n\n## What this cycle established\n\nStarting from `Catalog/Novelty/MandelbrotQuadraticEscape.lean` (which proved divergence of the\n*criti",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-08-23T16:44:29",
-      "title": "Escape criterion iteration"
-    },
-    {
       "cycle_id": "43ad4483",
       "domain": "Physics",
       "key_insight": "# Future Directions — radix-growth thresholds and iterated logarithms\n\nDerived from the verified results in `Catalog/Physics/RadixGrowthThreshold.lean`\n(all theorems there compile with `import Mathlib",
@@ -499,19 +489,19 @@
       "theorem_count": 66,
       "timestamp": "2026-08-25T09:02:00",
       "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pairs; both poolings fa"
+    },
+    {
+      "cycle_id": "5223d87b",
+      "domain": "Logic",
+      "key_insight": "# Future directions — dial capture ceilings and the `u ≈ 10` overdispersion carrier\n\nThe formalization in `Catalog/Logic/QRDialDispersionLaws.lean`,\n`Catalog/Logic/QRDialOrthogonality.lean`, `Catalog/",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-08-25T09:52:56",
+      "title": "FACT round-78 #2 — QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY — small-prime QR dial doe"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c4b3dd3f",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — after closing Conjecture A\n\nConjecture A is now closed in `Catalog/Logic/TraceDistribution/`:\n\n* `traceDistribution_eq_iff_card_orbits_eq` — trace distribution `⟺` orbit counts o",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-18T10:47:08",
-      "title": "Conjecture A, closed"
-    },
     {
       "cycle_id": "23eee1e8",
       "domain": "Probability",
@@ -2501,21 +2491,19 @@
       "theorem_count": 66,
       "timestamp": "2026-08-25T09:02:00",
       "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pairs; both poolings fa"
+    },
+    {
+      "cycle_id": "5223d87b",
+      "domain": "Logic",
+      "key_insight": "# Future directions — dial capture ceilings and the `u ≈ 10` overdispersion carrier\n\nThe formalization in `Catalog/Logic/QRDialDispersionLaws.lean`,\n`Catalog/Logic/QRDialOrthogonality.lean`, `Catalog/",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-08-25T09:52:56",
+      "title": "FACT round-78 #2 — QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY — small-prime QR dial doe"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a331ba56",
-      "domain": "Novelty",
-      "name": "assemblySet_puzzleOfList",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "a331ba56",
-      "domain": "Novelty",
-      "name": "assemblySet_puzzleOfSet",
-      "quality": 0.84
-    },
     {
       "cycle_id": "194ffa72",
       "domain": "NumberTheory",
@@ -2803,9 +2791,21 @@
       "domain": "Physics",
       "name": "var_grandMean",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "5223d87b",
+      "domain": "Logic",
+      "name": "cell_diam_le",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "5223d87b",
+      "domain": "Logic",
+      "name": "cell_mem_of_close",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-08-25T09:02:00",
+  "last_updated": "2026-08-25T09:52:56",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "c4b3dd3f",
-        "quality": 0.86,
-        "theorems": 63,
-        "title": "Conjecture A, closed"
-      },
-      {
         "cycle_id": "ed687362",
         "quality": 0.72,
         "theorems": 82,
@@ -3513,6 +3507,12 @@
         "quality": 0.85,
         "theorems": 64,
         "title": "Moment hierarchy"
+      },
+      {
+        "cycle_id": "5223d87b",
+        "quality": 0.75,
+        "theorems": 94,
+        "title": "FACT round-78 #2 — QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY — sma"
       }
     ],
     "MachineLearning": [
