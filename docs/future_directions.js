@@ -2250,16 +2250,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-82 #2 \u2014 SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES \u2014 LRT stat=100.6 df=3 p=1.17e-21 perm 0/400: real non-linearity but STEEP MONOTONE DECLINE; PAPER-229 ERRATUM: peaked residual = baseline leakage, power law stands"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acd2f64e",
     "description": "## exp588 EDGE-KERNEL-REFINEMENT \u2014 round-84 #1 \u00b7 paper 238 \u00b7 assessment v344 \u2192 v345 \u00b7 count 575 \u2192 576\n\nRuns paper 234 \u00a74a's named open refinement (\"harmonic bulk \u00d7 steeper-edge kernel \u2014 this tension travels forward on the ledger until that refinement is run or refuted\") and CLOSES it as CONFIRMED.\n\n### Data & method\n9594 pooled hits over 128 Ns from `exp581_regen_positions.npz`, canonical normalization x=(p\u2212jlo)/(jhi\u2212jlo); control arm 512k ctl_* same intervals; seed 588; wall 12.9 s; nboot 500 main (+300/200 posthoc). Pre-registration in script header BEFORE the full fit (smoke = pipeline validation only), including a registered observed-value reconciliation.\n\n### Registered results \u2014 all bars PASS\n- Single law reproduces exp579 reference (b_NLS=1.097 vs published 1.104; MLE 1.123) but left-decile prediction **.1415** sits below measured **.1620** [.1547,.1695] \u2192 tension real.\n- Two-component T(x)=A(1+x)^{\u2212b_bulk}+K(1+x)^{\u2212b_edge}: **\u0394AICc \u221237.33** (bar >6), LRT stat 41.59 df2 **p=9.3\u00d710\u207b\u00b9\u2070** (bar <0.01); bootstrap-stable b_bulk=.573 [.412,.767], w_edge=.086 [.064,.108]; fitted left-decile .1617 [boot .1557,.1695] **covers** observed .1620; bootstrap median \u0394AICc +60 across resamples.\n- Controls: **\u0394AICc +4.3** (two-comp worse), w\u22481.2\u00d710\u207b\u2074 \u2192 no kernel in controls.\n\n### Boundary censoring discovered + settled\nRegistered fit pinned delta=b_edge\u2212b_bulk at the implementation ceiling 10.000 (registered degeneracy rule covered only the LOWER bound; boundary solutions not forbidden) \u2192 read b_edge \u2265 ~10.6. POST-HOC cap-40 refit: INTERIOR unpinned optimum b_edge=22.54 (delta_pinned_at_40 false), improvement GROWS (**\u0394AICc \u221242.5, p=6.9\u00d710\u207b\u00b9\u00b9**), left-decile CI still covers \u2192 ceiling was conservative CENSORING, verdict cap-robust. Honest statement: b_edge \u2265 ~10.4\u201311.1 across caps; exact value unidentified near-spike (cap40 boot CI [11.1,20.5,41.0]).\n\n### Post-hoc attribution\n56% of SSR improvement in the FIRST DECILE alone, ~0% (\u22120.5%) at the known u*\u22480.65 hump zone, \u22123.2% right \u2192 genuinely edge-driven, orthogonal to paper 232's geometric-window feature. Left-half refit independently confirms (single steepens to b=1.798; \u0394AICc 16.8, p=2.6\u00d710\u207b\u2075; 47.5% again first-decile).\n\n### Consequence\nThe positional hit profile of v_j=j\u00b2\u2212N is **FLAT-BULK + NARROW LEFT-EDGE SPIKE**, NOT a pure power law; the single \u22121.104 law is RETIRED as final FORM (retained as bulk summary); kernel-refined profile becomes the canonical description \u2014 a pure power law is now KNOWN-WRONG at the edge (falsifiable constraint for any downstream shape model).\n\n### ERRATUM-GRADE provenance flag (travels forward)\nPaper 234's tension premise quoted measured edge fraction \".2346\" (z=10.08 stratified): NOT reproducible from the canonical npz under left-decile-only definition (.1620 measured); per-N equal-mean .1609 / log-normalization / (p\u2212jlo)/jlo / inverse-n weighting variants also miss, and .2346 lies outside even the two-comp prediction CI. Leading hypothesis: definitional mismatch with paper 230's combined-edge decomposition (.2346 = 228's .162+.072). Flagged for reconciliation against the paper-228 ledger; kernel confirmation unaffected \u2014 all registered bars judged against data-observed .1620.\n\n### Ledger catches (all disclosed)\n(1) dAICc sign-convention bug in an earlier full-run pass \u2014 caught and fixed BEFORE final verdict recording. (2) Boundary censoring discovered and resolved via cap-40 posthoc. (3) LRT null on parameter boundary (chi-bar-sq conservative in our favor) \u2014 significance required BOTH LRT and \u0394AICc>6. (4) Edge/end ratio carries last-bin noise (~10%, corroborative only).\n\n### Barrier validation\nNo breakthrough claimed \u2014 descriptive-form refinement INSIDE the positional layer (papers 228\u2013230 established it independent of rate). Residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, and paper 237's four-class rate-residual closure all untouched. u\u224810 data per the standing directive.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp588_edge_kernel.py`, `exp588_smoke.{log,json}`, `exp588_full.log`, `exp588_result.json` (incl. POSTHOC cap_sensitivity + left_half fields), `exp588_findings.md`. Paper: `ResearchOutput/NewMathematics/238_EdgeKernel.md`.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4050",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T20:50:39.555036+00:00",
     "title": "FACT round-84 #1 \u2014 EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED \u2014 paper 234's left-edge tension resolves as GENUINE STRUCTURE, not noise: two-component kernel beats single power law \u0394AICc \u221237.3 (LRT p=9.3e-10), FLAT BULK b=.57 [.41,.77] + NARROW LEFT-EDGE SPIKE b_edge\u2265~10.6 (cap-censored; cap-40 posthoc interior optimum 22.5 confirms, improvement GROWS to \u221242.5) carrying 8.6% [6.4,10.8]% of mass; fitted left-decile .1617 COVERS observed .1620 while single law's .1415 misses; controls show NO kernel (\u0394AICc +4.3, w\u22481e-4); 56% of SSR improvement in first decile, ~0% at u*\u22480.65 hump \u2192 edge-driven, orthogonal to paper 232's feature; single \u22121.104 law RETIRED as final form (canonical profile = bulk+spike); ERRATUM-GRADE PROVENANCE FLAG: paper 234's quoted .2346 not reproducible under canonical normalization (.1620 measured) \u2014 likely combined-edge definitional mismatch with paper 230 (.162+.072), flagged for reconciliation"
   },
@@ -3344,20 +3345,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 05a687ab (Q=0.820), which proved 76 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize normalized gap and pair-correlation statistics for finite spectra.\n   Compare the deterministic quadratic spectrum only after unfolding/rescaling,\n   and distinguish Poisson statistics from GUE statistics.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_05a687ab_6285fc58",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "05a687ab",
-    "status": "available",
-    "timestamp": "2026-08-25T14:05:36.664285+00:00",
-    "title": "Deepening: Formalize normalized gap and pair-correlation statistics for finite spectra."
   },
   {
     "consumed_by_exp_id": "",
@@ -38177,14 +38164,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C2. The 2-adic root explosion is governed by `v\u2082(p \u2212 q)`"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f48fd4dd",
     "description": "**Conjecture.** A single seed-2 run at `ctx = 4096` reports a knee in `[416, 448]`. A\nreport `\u2264 384` instead refutes the `ctx = 2048` amplitude window, and a report `\u2265 480`\nrefutes both seed-2 windows in favour of the seed-1 amplitude.\n\n*The key insight is* that the three surviving amplitude hypotheses have predictions at the\nnext rung that are pairwise separated by at least one full grid step\n(`KneeAmplitude.next_rung_three_way_separation`) \u2014 unlike the `224`-vs-`256` reading,\nwhich is not robust at its own resolution (`KneeDrift.net46_seed2_knee_not_robust`). This\nis the first cell of the programme where the grid can actually adjudicate.\n\n*Why now?* The separation theorem is proved and needs no new theory; only the run is\nmissing.\n\n---",
     "domains": [],
     "id": "fd_3358",
+    "phase": "A",
     "priority_score": 0.4378333333333333,
     "research_mode": "team",
     "source_exp_id": "4f1ff831",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:29:45.996442+00:00",
     "title": "C2. The decisive-context conjecture"
   },
