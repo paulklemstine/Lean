@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0ef4aed2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after round-65 #1 (TDIAL-U76, exp 533)\n\n## What this cycle settled\n\nFour Lean files (`Catalog/Novelty/ZeroFitDialU76.lean`,\n`ZeroFitDialPerturbation.lean`, `ZeroFitDialEffectiveB",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-23T09:44:21",
-      "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
-    },
-    {
       "cycle_id": "b8859dfd",
       "domain": "Physics",
       "key_insight": "# Future Directions — Parity-corrected asymptotics for the information-free game\n\nThis cycle established, with complete Lean 4 proofs and no `sorry`, that the\ninformation-free werewolf/village game ha",
@@ -499,19 +489,19 @@
       "theorem_count": 110,
       "timestamp": "2026-08-25T03:14:24",
       "title": "Parameter-derived depth"
+    },
+    {
+      "cycle_id": "22848dce",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Quartet Codes and Common Agreement\n\nThis cycle formalized the coding-theoretic reformulation of the common-quartet problem: a\nphylogenetic tree becomes a word in the ternary cube",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 112,
+      "timestamp": "2026-08-25T03:14:34",
+      "title": "Exponential lower bound via quartet codes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "856336cf",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nDerived from the results proved in `Catalog/Pythagorean/KernelPatterns.lean`,\n`KernelPatternsBell.lean`, `KernelBlockCount.lean`, `KernelStirlingRecurrence.lean`,\n`KernelStirlingC",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-08-18T03:58:45",
-      "title": "Kernel patterns"
-    },
     {
       "cycle_id": "ae5d2ae6",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 110,
       "timestamp": "2026-08-25T03:14:24",
       "title": "Parameter-derived depth"
+    },
+    {
+      "cycle_id": "22848dce",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Quartet Codes and Common Agreement\n\nThis cycle formalized the coding-theoretic reformulation of the common-quartet problem: a\nphylogenetic tree becomes a word in the ternary cube",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 112,
+      "timestamp": "2026-08-25T03:14:34",
+      "title": "Exponential lower bound via quartet codes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "93d08ac5",
-      "domain": "Shared",
-      "name": "sum_geom_avg_antitone",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "93d08ac5",
-      "domain": "Shared",
-      "name": "mul_one_sub_pow_le",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "95bfbbbf",
-      "domain": "Novelty",
-      "name": "kneeRamp_feasible",
-      "quality": 0.82
-    },
     {
       "cycle_id": "95bfbbbf",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "foamDepth_foamCells",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "22848dce",
+      "domain": "Combinatorics",
+      "name": "code3_eq_zero_iff",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "22848dce",
+      "domain": "Combinatorics",
+      "name": "code3_eq_one_iff",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "22848dce",
+      "domain": "Combinatorics",
+      "name": "code3_eq_two_iff",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-25T03:14:24",
+  "last_updated": "2026-08-25T03:14:34",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "39c3166e",
-        "quality": 0.74,
-        "theorems": 65,
-        "title": "reinforcement learning"
-      },
-      {
         "cycle_id": "3ec7eb1a",
         "quality": 0.76,
         "theorems": 37,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 64,
         "title": "FACT round-70 #6 — MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree s"
+      },
+      {
+        "cycle_id": "22848dce",
+        "quality": 0.82,
+        "theorems": 112,
+        "title": "Exponential lower bound via quartet codes"
       }
     ],
     "Computation": [

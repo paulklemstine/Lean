@@ -1865,17 +1865,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT rounds 70\u201371 SYNTHESIS \u2014 THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exact laws + method laws consolidated (paper 199)"
   },
   {
-    "consumed_by_exp_id": "a426ff06",
+    "consumed_by_exp_id": "",
     "description": "Round-72 #5, exp 555 \u2014 the last untested face of the triplet-tree proposal.\n\n**TRIAL-DIVISION-EQUIVALENT-GUIDANCE-NULL.** The mod-N Berggren tree: expansion multiplication-free (T-coefficients \u00b11..3), **collision-free at 200k nodes on every N**, residue-class-confined (~99.75% of orbit in two nz-histogram classes). Order-free dive factors 200/200: v* \u2248 **0.89\u00b7p_min, \u03b1 = 1.007\u00b10.088** \u2014 TD scaling, not \u03c1-like; ~11\u00d7 worse constants than plain trial division at matched compute; \u03c1 dominates by orders of magnitude. Ambient null: the orbit UNDER-SAMPLES factor-revealing residues ~5\u00d7 vs random Pythagorean points \u2014 projection erases the order structure that made the integer face tractable. Guidance: naive z=12\u201324 'improvements' were pure traversal-shape artifact (random-order control alone z=21.8); honest paired |z|<2 everywhere \u27f9 pre-stated null CONFIRMED.\n\n**Campaign close** \u2014 every face of the proposal now measured: exact-target circular; modular descent TD-class (this paper); combining invalid-as-stated (202); multi-target relaxation = TD-in-tree-clothing (203); Euler route 5.7\u00d7 Fermat (201). Barriers 2/5/8 unchanged throughout.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp555_modular_dynamics.py + exp555_result.json + identity addendum + logs, seed 20260826.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3926",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T04:10:59.496275+00:00",
     "title": "FACT round-72 #5 \u2014 MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-slow (alpha=1.007); guidance null (paper 205)"
   },
@@ -1966,17 +1965,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES alone are free (+0.17%) \u2014 a four-order-of-magnitude asymmetry; no block-scaling format rescues keys"
   },
   {
-    "consumed_by_exp_id": "b39e5830",
+    "consumed_by_exp_id": "",
     "description": "**FACT round-74 #4 \u00b7 exp 566 \u00b7 paper 213 \u00b7 seed 566 \u00b7 walls 9.3 s + 247.7 s**\n\nAttacks the barrier-map residual item **MA-1 effectivity**: is there a COMPUTABLE per-modulus criterion for when the MA-1 averaging assumption (which-factor blindness as identity, papers 93/102/132) is realized? If AP-deviation magnitude were governed by quadratic-character L-values, one would exist. Pre-registered carrier: D(m) = max_a |\u03c0(x;m,a) \u2212 E|/\u221aE on P(m) = \u03a3|L(1,\u03c7)| over nontrivial real characters mod m; H1 R\u00b2 > 0.8 \u21d2 criterion armed; H0 R\u00b2 < 0.5 \u21d2 honest negative.\n\n**Pre-registered verdict rules evaluated verbatim \u2192 NULL-HONEST-NEGATIVE at TWO scales.**\n\n**(1) Registered stage A (x = 2^26 full, no shrinkage).** \u03c0(x) = 3,957,809, 287 moduli (squarefree [3,300] \u222a primes [307,997]), wall 9.3 s: log D ~ \u22120.0767\u00b7log P, slope CI95 (\u22120.136, \u22120.015), **R\u00b2 = 0.0187** [bootstrap 0.0007\u20130.065] \u2014 slope slightly NEGATIVE, opposite the effectivity story. Partial R\u00b2 controlling log \u03c6(m) = **0.0008** \u21d2 residual association purely a \u03c6(m) size effect. Secondary chi\u00b2 readout agrees (R\u00b2 = 0.025). Control cross-modulus pairing permutation (2000 draws) collapses to null (mean 0.0033 / max 0.0435); disclosed spec deviation: literal within-modulus count permutation is VACUOUS for max/\u03c7\u00b2 readouts (permutation-invariant).\n\n**(2) Final scaled artifact B (x = 2^28, \u03c0 = 14,630,843, 2489 moduli dense 2..1500 + primes beyond, wall 247.7 s).** Primary per-m carrier **R\u00b2 = 0.0785 \u2192 NULL**; cell-level secondary y ~ log(1/L), 1902 discriminant cells: R\u00b2 = 0.00052, theory-signed slope B = \u22120.034 [\u22120.101, +0.033] \u2014 not even positive. Baseline size control: OBS ~ log m alone explains **R\u00b2 = 0.790** \u2014 deviation magnitude is modulus-size-dominated; character-L mass adds nothing after size.\n\n**(3) Verification.** Exact class-number path validated: L(1, \u03c7\u208b\u2083) = \u03c0/(3\u221a3) exact (h(\u22123)=1, w=6); truncated series calibrated on 226 overlap discriminants, median rel err 1.8e-5; final-run truncation quality real-share median 8.7e-4, worst rel err 8.2e-2.\n\n> **SCOPING CAVEAT (prominent):** the registered readout D(m) is **SIGN-BLIND** and the predictor uses |L(1,\u03c7)| magnitudes \u2014 this bounds the MAGNITUDE route only. Signed character-alignment analysis is the required follow-up BEFORE killing the L-value route.\n\n**Barrier framing:** H0 here does NOT weaken the barrier program \u2014 it honestly bounds one computable-criterion route at toy scale. MA-1 stays axiomatic at practical scale; \"MA-1 effectivity\" stays an OPEN gap item.\n\nLedger catches, all disclosed: off-by-one corrupted non-exact L-values caught by spot check (\u03c7\u2085 gave 0.127 vs true 0.430), fixed + rerun before any recorded fit; smoke control gate failed at n = 29 (resolved at scale where the null collapses cleanly); Mertens gate FAIL per its own pre-stated rule (slope 0.9277 [0.9234, 0.9320], R\u00b2 = 0.9894 \u2014 near-proportional just outside the strict band; implied K\u0304 = \u22120.216 within theory bound |K| \u2264 0.756); scale-reconciliation disclosure (findings/digest describe stage A while canonical exp566_result.json holds the verdict-identical stage-B rerun that overwrote it mid-session; extended-rerun script variant not separately preserved); coordination disclosure \u2014 a parallel duplicate agent (coordinator double-dispatch after a stall) left an orphaned draft exp566_ma1_effectivity_alt_agentB.py with NO results attached; recorded artifact set solely from the completing agent, orphan left in place.\n\nPaper: ResearchOutput/NewMathematics/213_Ma1EffectivitySweep.md.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3948",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T07:22:53.231013+00:00",
     "title": "FACT round-74 #4 \u2014 MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-deviation effectivity at toy scale (clean H0 honest negative at two scales: R\u00b2=0.0187 registered x=2^26 / R\u00b2=0.0785 scaled x=2^28 vs 0.8/0.5 bars; deviation field modulus-size-dominated, baseline OBS~log m R\u00b2=0.79) \u2014 MA-1 stays axiomatic, SIGN-BLIND scope disclosed"
   },
@@ -2196,16 +2194,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measured speculation optima exactly (prose d=4, code d=8); per-position differencing at n=4 prompts under-resolved (lesson: instrument directly)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a22e921b",
     "description": "## GAP-L8 CLOSED \u2014 k-TAXONOMY (round-77 #2, paper 224, theory deliverable)\n\nCloses draft items L8 + O5 of paper 219's roadmap (\"pin exp563's k\\* definition ... paper must name which\"). No new physics run; definitional/taxonomy result.\n\n### Three definitions\n1. **k_pin = \u2308log\u2082W\u2309** \u2014 gain-saturation point: marginal gain exactly zero, support fully pinned. Paper 212's \"k\\*=\u2308log\u2082W\u2309\" retro-reads as this. NEVER an optimum.\n2. **k_opt^cost = argmin_k[k+(W/2^k+1)/2]** \u2014 T2 census total-cost stop. Dyadic W \u21d2 tie set {log\u2082W\u22122, log\u2082W\u22121}, V\\*=log\u2082W+\u00bd EXACT (W=2..4096); continuous location log\u2082W\u22121.5288.\n3. **k_opt^econ(T\u2080,c_q) = log\u2082((T\u2080\u22121)\u00b7ln2/c_q)** \u2014 net-economics optimum, queries paid c_q against the MEASURED baseline T\u2080.\n\n### Exact identity\nE(k;T\u2080,1)=1+k+(T\u2080\u22121)/2^k \u2261 V(k; W=2(T\u2080\u22121))+\u00bd pointwise \u21d2 **k_opt^econ(T\u2080,1) == k_opt^cost(2(T\u2080\u22121))** (identical argmin sets AND locations). Factor-2 bookkeeping: T2 prices residual at half remaining support, exp563 charges full expected scan anchored at measured T\u0304\u2080. Unconverted same-number inputs differ by EXACTLY +1.000 query \u2014 paper 219's \"+~1\" note confirmed at exactly +1.\n\n### Numerical verification (`gapL8_check.py`, <2 s, ALL PASS)\n- Census offsets {\u22122,\u22121} rel log\u2082W, dyadic V\\*=log\u2082W+\u00bd exact for all dyadic W \u2264 4096.\n- Identity max abs error < 1e-9; naive same-anchor shift exactly +1 on discrete argmin sets.\n- exp563 stored rows reproduce: balanced T\u0304\u2080=1072.425 \u2192 pred 9.536549 (=recorded), argmin 10 (=recorded); unbalanced T\u0304\u2080=286205.89 \u2192 pred 17.597922 (=recorded), argmin 18 (=recorded). Matched-anchor census gives same unique {10}/{18}.\n- Pin never coincides with either optimum: gap \u2208 {1,2} for every W \u2264 4096.\n\n### Verdicts on coincidence\nOnly (k_opt^cost, k_opt^econ) ever coincide \u2014 after anchor conversion. k_pin NEVER coincides with either; conflating them overstates the work-optimal budget (exp563 balanced: 20 vs 10).\n\n### Naming rule adopted\nBare \"k\\*\" BANNED in future papers; must expand to k_pin / k_opt^cost (with W) / k_opt^econ(T\u2080,c_q) (with anchor and price). Draft T2 already complies.\n\n### Verification scope (disclosed)\nDefinitional result; verification = own check script ALL PASS + exact reproduction of previously-recorded exp563/T2-census values from stored rows (cross-validates against the existing record). NO separate adversarial verifier run \u2014 scope judgment, disclosed.\n\n### Ledger\nPapers-only bump: count UNCHANGED at 564. Assessment v330 \u2192 v331. Paper `ResearchOutput/NewMathematics/224_KTaxonomy.md`; artifacts `ResearchOutput/scripts/2026-08-24-round74/gapL8_k_taxonomy.md`, `gapL8_check.py`. Barrier framing: bookkeeping hygiene serving barrier-8 audit trail; residue cap 4/3 untouched; no breakthrough claimed.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3998",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T13:15:17.261963+00:00",
     "title": "FACT round-77 #2 \u2014 K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and never conflated \u2014 exact identity econ \u2261 census under W \u2194 2(T\u2080\u22121), +1.000 resolves paper 219's +~1 note"
   },
@@ -2614,6 +2613,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T01:54:45.658910+00:00",
     "title": "FACT round-89 #1 \u2014 COVARIATE-INTERACTIONS (exp 596 FINAL ADJUDICATION): H0_ADDITIVE_COMPLETE on CONFIRMED-lineage data \u2014 registered interaction test \u0394R\u00b2=+0.00079 raw / \u22120.0023 adjusted, perm p=0.62 \u2192 covariate COMBINATIONS absorb NONE of the ~40% residual to per-N hit-richness; it is irreducible sampling noise \u2014 paper 234's ranked-first queue item CLOSED definitively"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**FACT round-93 #1 \u2014 POOLED-ADJUDICATION (exp 602) \u2014 paper 243's reopen condition executed to closure.**\n\nVERDICT: **H0 FIRES ON THE REGISTERED CALIBRATED SCALE \u2014 density-only reading confirmed; POSITIONAL THREAD CLOSES.**\n\nPre-registered single test (script header before analysis): excess amplitude at u* in [0.55, 0.75] vs divisibility-mixture baseline, pooled over >=3 independent seed lineages, null-calibrated; H1: pooled z_cal >= 2 => non-divisibility positional mechanism CONFIRMED multi-seed; H0: pooled z_cal < 2 => density-only confirmed, thread closes.\n\n**Path A ran** (inventory rule: all three lineages carry mid-window positional data; positions reconstruct exactly t=(j-jlo)/(jhi-jlo), INT64-exact vs stored bounds, pairwise-disjoint N sets asserted): verbatim exp588c/exp592 mixture machinery tensor-pooled (kappa flank-fitted only, lam=5, buffer predicted-not-scored), cluster bootstrap over pooled N-clusters, CTRL-B estimator null with max-over-bins bias included. Lineages: 20260828 (128 Ns, 9,594 hits), 20260902 (128 Ns, 9,840 hits), 20260903 SMOKE-SIZED (16 Ns, 66 hits, ~0.5% of pooled hits \u2014 disclosed).\n\n**THE TWO-SCALE RESULT**: pooled amp_mix = 0.0918 \u00b1 0.0274 CI95 [0.0656, 0.1725] over 19,500 pooled hits / 1,043,200 reference points / 272 N-clusters; **pooled_z_mix_registered_raw = 3.36 > 2 BUT registered pooled_z_cal = 0.65 < 2** (calibrated excess 0.0256 \u00b1 0.0393 after CTRL-B subtraction \u2014 the estimator null absorbs 0.0662 of the raw amplitude). Per-seed calibrated breakdown REPORT-ONLY: z_cal = 1.07 / 1.47 / 0.97 \u2014 NONE individually clears; raw\u2192calibrated collapse systematic (4.26\u21921.07, 1.98\u21921.47, 1.96\u21920.97).\n\n**CTRL-A MACHINERY-GATE FAIL DISCLOSED PROMINENTLY**: gate amp = 0.0225 \u00b1 0.0074, maxdev_all_bins = 0.0225, pass = False \u2192 the raw-amplitude scale is discredited as positional evidence; strictest internal booking = ARTIFACT_CONTAMINATED / no clean gate verdict, booked alongside the headline. Both readings agree: NO H1 claim possible on any scale.\n\nWHAT SURVIVES: \u03ba composition ordering replicates across all seeds (rate-dial law untouched); the DENSITY phenomenon itself is real. WHAT DIES: any claim of POSITIONAL structure beyond it \u2014 no j-arithmetic carrier (#396), no consecutive-v dependency (#397), now no non-divisibility positional mechanism multi-seed. Paper 243's reopen condition CLOSED AGAINST; u*\u22480.65 enters the catalog as pure within-stratum rate structure absorbed by the divisibility mixture once the estimator null is paid. Paper 242's single-seed-unconfirmed note superseded.\n\nLedger catches disclosed: coordinator mechanical fixes (.tolist() conversion + _n naming fix to enable execution; type/bookkeeping only); L3 smoke-sizing disclosed up front; single registered test, no sweep; population hashes + disjointness asserted. Wall 2.2 s.\n\nPaper 252 (`ResearchOutput/NewMathematics/252_PooledAdjudication.md`); notebook Part 294; assessment v359; count 589.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4092",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:57.987023+00:00",
+    "title": "FACT round-93 #1 \u2014 POOLED-ADJUDICATION (exp 602): H0 FIRES ON REGISTERED CALIBRATED SCALE \u2014 pooled z_cal = 0.65 < 2 (raw z_mix 3.36 discredited by CTRL-A machinery-gate FAIL maxdev 0.0225) => DENSITY-ONLY CONFIRMED; POSITIONAL THREAD CLOSES \u2014 paper-243 reopen condition CLOSED AGAINST"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## exp600 SCAN-SIM-JOINT \u2014 round-92 #2 (paper 251)\n\nPaper 250's named decidable closer RUN. Pre-registered two-sided in script header BEFORE analysis: joint measurement of S/Lambda/Theta/qhat from exp581_regen_positions.npz yields S_obs in [1.10, 1.51] with S_obs < certified bound 1.5059 => CONFIRMS the calibrated-gap structure (slack real, predicted gap X ~ 1.15); outside on EITHER side => FAILS with side and magnitude.\n\n### DEFINITIONAL DIFF RESOLVED (load-bearing)\nThe task's literal operationalization (\"cost from the indicator series under pi\") prices the REALIZED multi-hit window: C_asc = min(hit)-jlo+1, C_desc = jhi-max(hit), C0 = (W+1)/(m+1) \u2014 min/max order statistics over m ~ 75 hits/pool. Paper 250/f1tight's own algebra (sec(b) finite check pins it) books SINGLE-DRAW PRIOR expectations: C_asc = W*E_pi[x], C_desc = W*E_pi[1-x], C0 = W/2 => Lambda = Ex/(1-Ex), Theta = 2Ex, X = 1/(2Ex). Two valid frames, different quantities. Both measured on the SAME store; diff = identifiable multiplicity factor, NOT noise.\n\n### ALIGNED FRAME (from raw positions, NO parametric refit)\n- E[x] = 0.4398 W-weighted (hit-weighted 0.4373) vs f1tight 0.4336\n- Lambda = 0.7852 CI95 [0.7656, 0.8065] \u2014 CONTAINS recorded 0.7657\n- Theta = 0.8797 [0.8673, 0.8929] \u2014 lower edge = recorded 0.8673\n- qhat = 1 trivially by pool construction (zero information on this store)\n- **S_obs = 1.2736 [1.2399, 1.3061] \u2014 inside band [1.10, 1.51], below bound 1.5059 => PREDICTION CONFIRMS** (hit-weighted sensitivity 1.2869 also in band)\n- X = 1.1368 [1.1200, 1.1530] \u2014 upper CI edge TOUCHES recorded slack 1.1530; inside corner-grid [1.1018, 1.2205]\n\n### REALIZED FRAME DIVERGENCE\nLiteral operationalization: S_obs = 3.3722 [2.5577, 4.6933] FAILS-HIGH by an IDENTIFIABLE EXTREME-VALUE FACTOR 2.65x (= 3.3722/1.2736). Order statistics over finite hit-windows inflate vs prior expectation (per-pool median S 3.89, IQR [1.25, 14.91]; min-x reaches 2e-4 of W).\n\n### NEW BOOKKEEPING PRINCIPLE (travels to every future bound-calibration)\n**Bound/slack must be booked PER MULTIPLICITY REGIME \u2014 prior-frame slack does not transfer to realized-frame scanning cost.** The same tilt is simultaneously a slack X ~ 1.14 in the prior frame and a >bound overrun in the realized frame; which number is operative depends on what the scanner knows when it orders tests. Must be STATED per claim, never inherited across frames.\n\n### CONTROLS ALL NULL\nIdentical pipeline, CI covers 1 everywhere: full ctl sets S_obs = 0.985 [.766, 1.260]; count-matched 0.882 [.687, 1.124]; single-draw ctl 0.998 \u2014 asymmetry carried by the HIT SETS alone.\n\n### Honest notes\nDeterministic indicators => EXACT integer costs (degenerate sum_k k*P, no Monte Carlo). Identity PASS: total hits 9594 = recorded pool count, out-of-window 0. C0 choice affects Theta/X not headline S. Single pool class (128 balanced bitlen-96 semiprimes) \u2014 generalization untested. Smoke n=16 already stable both frames.\n\nWall 0.08 s full (nboot 1000 cluster bootstrap over pools, seed 20260824). Barrier framing: prices one side of barrier-4's converse program (F1 sharpness) affirmatively; sharpness still posed over the prior class. Ledger: count 587 -> 588, assessment v357 -> v358, papers 250 -> 251. Named next probe: multiplicity-regime transfer test (realized-frame S on a low-m pool class \u2014 does 2.65x shrink toward 1 as m -> few?). Open unchanged: u >= 6-14 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4093",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:57.987913+00:00",
+    "title": "FACT round-92 #2 \u2014 SCAN-SIM-JOINT (exp 600): PREDICTION CONFIRMS ON ALIGNED FRAME \u2014 S_obs = 1.2736 [1.2399, 1.3061] inside registered band [1.10, 1.51], below certified bound 1.5059 => paper-250 calibrated-gap CONFIRMED; DEFINITIONAL DIFF RESOLVED (prior-frame vs realized-frame booking differ by identifiable extreme-value factor 2.65x: realized S_obs = 3.3722 [2.5577, 4.6933] fails high there); NEW BOOKKEEPING PRINCIPLE: bound/slack must be booked PER MULTIPLICITY REGIME \u2014 prior-frame slack does not transfer to realized-frame scanning; Lam = 0.7852 CI contains recorded 0.7657, Theta = 0.8797, X = 1.1368 upper CI edge touching recorded 1.1530; controls all null; every f1tight constant replicated from raw positions NO refit"
   },
   {
     "consumed_by_exp_id": "",
@@ -3374,6 +3401,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 22848dce (Q=0.820), which proved 112 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** Families of binary phylogenetic trees can be encoded as error-correcting codes in quartet-signature space so that large pairwise distance prevents a common quartet, yielding an exponential lower bound for the least leaf number forcing a common quartet. The optimal exponential rate eq",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_22848dce_e8c9780c",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "22848dce",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:35.031012+00:00",
+    "title": "Deepening: Exponential lower bound via quartet codes"
   },
   {
     "consumed_by_exp_id": "",
@@ -4351,17 +4392,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle ed1b07dd (Q=0.790), which proved 63 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.**  The median held-out logit margin is the same at `d = 4, 8, 16`\n(same context, same tokeniser) to within `\u00b110 %`, and equals `128\u00b7L\u00b7B\u00b7A`.  This\nis the opposite of the naive expectation that a deeper stack has a\nproportionally smaller usable margin: within the mechanism, the linear gr",
+    "description": "Building on cycle 80241759 (Q=0.790), which proved 110 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For concrete `B` and threshold `T`, define and\n   compute the largest supported depth, proving maximality rather than only a\n   selected numerical instance.",
     "domains": [
-      "Computation"
+      "Physics"
     ],
-    "id": "push_ed1b07dd_7308e8dd",
+    "id": "push_80241759_7d4f35bd",
     "priority_score": 0.89,
     "research_mode": "team",
-    "source_exp_id": "ed1b07dd",
+    "source_exp_id": "80241759",
     "status": "available",
-    "timestamp": "2026-08-24T23:36:54.569145+00:00",
-    "title": "Deepening: E3.  The margin does not"
+    "timestamp": "2026-08-25T03:14:24.715872+00:00",
+    "title": "Deepening: Parameter-derived depth"
   },
   {
     "consumed_by_exp_id": "",
@@ -9183,6 +9224,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The number of sum-free subsets of lattice cubes' and formalize its key results. Abstract: A subset of the $d$-dimensional lattice cube $[n]^d$ is sum-free if it contains no solution to the equation $x+y=z$. We study the total number of such subsets. For $d=1$, Cameron and Erd\u0151s conjectured that the number of sum-free subsets of $[n]$ is $O(2^{n/2})$, and this was proved independently by Green and Sapozhenko. A recent work by Ghosal solved the case $d = 2$. In this paper, we consider all remaining dimensions and prove that for every fixed integer $d \\geqslant 3$, the number of sum-free subsets of $[n]^d$ is $2^{M([n]^d) + O_d(n^{d-1})}$, where $M([n]^d)$ is the maximum possible size of a sum-free subset of $[n]^d$. This verifies a conjecture of Elsholtz and Rackham. Our proof combines the dual weights constructed by Keevash and Lim in their work for $M([n]^d)$, a one-dimensional counting estimate due to Ghosal, a bipartite swapping lemma of Zhao, and a strong fractional entropy inequality of Madiman and Tetali, and it avoids the use of the container lemma or deriving a stabi",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_4091",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.23544v1",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:50.110899+00:00",
+    "title": "ArXiv paper: The number of sum-free subsets of lattice cubes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Makhlin polytopes are Demazure string polytopes' and formalize its key results. Abstract: We show that Makhlin's polytopes in type $B_n$ are unimodularly equivalent to string polytopes for Demazure modules in type $B_{2n-1}$. The proof passes through type $C$, combining Makhlin's diagonal comparison with symplectic FFLV polytopes and the $B/C$ similarity for string cones.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4094",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.23431v1",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:53.352452+00:00",
+    "title": "ArXiv paper: Makhlin polytopes are Demazure string polytopes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -11434,6 +11505,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Tensoring budgets is additive on depth up to two levels, and both ends are attained. We conjecture an exact arithmetic criterion for the excess and a positive limiting density for the extremal case, tying composition to the deficit statistics.\n\nfoamDepth B (T1*T2) - foamDepth B T1 - foamDepth B T2 = 2 iff both T1 and T2 lie in the lossy part of their scale blocks and T1*T2 >= foamCells B (d1+d2+2); the set of such pairs has positive density.\n\nCross the interval descriptions of Deficit.lossy_filter_eq for the two factors with the multiplicative bounds foamCells_add_le_mul and foamCells_mul_le; verify exhaustively for B <= 5 and budgets up to 10^4.\n\nComposition of holographic budgets gets a complete combinatorial classification, sharpening the +2 into an exact rule.\n\nThe excess depends on finer arithmetic of T1, T2 than block position, suggesting a genuinely two-dimensional phenomenon.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_4084",
+    "priority_score": 0.7112456140350878,
+    "research_mode": "team",
+    "source_exp_id": "80241759",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:10.967224+00:00",
+    "title": "Arithmetic of the Two-Level Composition Gap"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Peak height 2T and sidelobe decay 2/|omega| are the two halves of a time-bandwidth statement. The conjecture is that no window supported on [-T,T] with unit sup-norm can simultaneously beat the rectangular peak and its sidelobe decay by more than bounded factors.\n\nIf w is supported in [-T,T] with |w| <= 1 then |w-hat(0)| <= 2T and the integral of |w-hat|^2 is at most 4 pi T, with equality in both iff w is the rectangular window almost everywhere.\n\nProve the two inequalities from the triangle inequality and Plancherel, then characterize the equality case via strict convexity of the L2 norm on the unit ball of L-infinity.\n\nThe rectangular window is the unique extremizer, so the sinc law is the universal model for windowed resonance.\n\nSome window beats the rectangle in both peak and energy, contradicting Plancherel; more likely the equality case is non-unique, revealing a family of extremal windows.",
     "domains": [
       "Algebra",
@@ -13341,6 +13427,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Inside each scale block B^L \u2264 T < B^(L+1) the budgets that lose depth to coarse-level overhead form an explicit interval of density 1/(B-1)^2. For perturbed cost models with per-cell weight a and per-level overhead c the deficit can take several values; we conjecture each value has a rational limiting density.\n\nFor energyCells a c B the deficit Nat.log B T - maxDepth takes values in {0,...,Nat.log B (2a+c)+1}, and each value j has a limiting density d_j(B,a,c) which is a rational function of B, a, c summing to 1.\n\nDecompose each scale block by the thresholds energyCells a c B (L-j) and compute the interval lengths exactly, as in Deficit.lossy_filter_eq; verify numerically for small a, c, B.\n\nThe overhead of coarse levels acquires a complete statistical description, refining the O(1) offset of the universality theorem.\n\nSome deficit value has no density, indicating oscillation of the thresholds relative to the powers of B, itself a striking equidistribution failure.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_4083",
+    "priority_score": 0.6716111111111113,
+    "research_mode": "team",
+    "source_exp_id": "80241759",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:10.681257+00:00",
+    "title": "Density Spectrum of the Depth Deficit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Our upper bounds are proved for caterpillar trees, encoded as leaf orders, while the lower bounds hold for arbitrary split systems. The direction is to transfer the upper bounds to all binary phylogenetic trees by extracting an inherited caterpillar on a logarithmic number of leaves from any binary tree.\n\nEvery binary phylogenetic tree on n leaves contains a subset of at least log_2 n leaves whose induced subtree is a caterpillar; consequently the common-quartet upper bounds for caterpillars imply upper bounds for arbitrary binary trees with n replaced by 2^n.\n\nFormalize the extraction (a longest root-to-leaf path plus its pendant leaves) and combine it with caterpillar_family_common_quartet via commonAgreement_subset.\n\nIsAgreementThreshold m k 4 becomes provable for explicit m for all binary trees, closing the theory on the upper side.\n\nCaterpillars are not representative of general trees for quartet agreement, and balanced trees form a genuinely harder extremal family.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4090",
+    "priority_score": 0.6716111111111113,
+    "research_mode": "team",
+    "source_exp_id": "22848dce",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:30.572603+00:00",
+    "title": "Caterpillar Extraction for General Binary Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Static probes have a fixed error vector, whereas accumulated heavy-hitter statistics observe realised attention and so have an error that decays with the observation window. Modelling the error as eps(t) and re-running the transfer argument should show that accumulation dominates any static score after a finite window.\n\nIf a score's sup-error satisfies eps(t) <= C/t while a static probe's error is bounded below by a positive constant, then beyond an explicit t0 the accumulated arm's guaranteed retention strictly exceeds the static arm's worst case at the same budget.\n\nState a time-indexed version of retained_ge_of_isTopSet_sup and combine with the sharpness instance, which certifies that the static worst case is attained.\n\nThe deployable pair recency+accumulation is justified by a theorem, not only by measurement.\n\nStatic content information retains a role at short windows, and the crossover point becomes the object of study.",
     "domains": [
       "MachineLearning"
@@ -13352,6 +13466,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:02:53.067868+00:00",
     "title": "Shrinking-Error Advantage of Accumulating Predictors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The least leaf number h(k) forcing k binary trees to share a quartet is proved here to lie between 3^((k-2)/4) and 3^(2^k)+1. Exhaustive and local-search data (h(2)=6, h(3)=10, and 19, 23, 29 for k=4,5,6) indicate a single exponential rate near 1.7. The direction is to prove h(k) = Theta(c^k) and identify c.\n\nThere is a constant c > 1 with h(k) = Theta(c^k); in particular h(k) <= C * c^k, replacing the doubly exponential Erdos-Szekeres bound.\n\nFormalize a 4-uniform hypergraph Ramsey bound for three colours and derive an exponential upper bound on h(k); check the predicted values against h(2)=6 (proved here) and the computed h(3)=10.\n\nThe quartet agreement threshold has a well-defined exponential rate, and the coding-theoretic packing rate is its logarithm.\n\nEither the truth is doubly exponential, in which case the small-case data is misleading, or h(k) is not of pure exponential type and a second parameter governs it.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4087",
+    "priority_score": 0.6715507246376813,
+    "research_mode": "team",
+    "source_exp_id": "22848dce",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:29.634485+00:00",
+    "title": "Exponential Rate of the Common-Quartet Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -13744,6 +13872,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T10:54:54.519459+00:00",
     "title": "Scale-Dependent Rate-Collapse Exponent"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Fractal foams have non-integer effective branching. Extending the cost to a real base beta > 1 should preserve maximality (an order-theoretic fact) while making the depth a locally constant function of beta with an explicitly algebraic jump set.\n\nFor real beta > 1 the largest d with (beta^(d+1)-1)/(beta-1) <= T equals floor(log_beta((beta-1)T+1)) - 1, and as a function of beta it is left-continuous, non-increasing, with jumps exactly at the algebraic numbers solving (beta^(d+1)-1)/(beta-1) = T.\n\nRestate Core with cost : natural -> real and reprove maximality; then derive the closed form with Real.logb and Nat.floor, and analyse the jump set by the intermediate value theorem.\n\nThe whole depth theory becomes available for fractal / non-integer branching geometries, with a rigidity statement about where depth can change.\n\nNon-integer branching produces a genuinely different depth law, which would be evidence that integrality of B is physically essential.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4086",
+    "priority_score": 0.6705806451612905,
+    "research_mode": "team",
+    "source_exp_id": "80241759",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:11.540119+00:00",
+    "title": "Real-Base Depth Function and Its Jump Set"
   },
   {
     "consumed_by_exp_id": "",
@@ -15560,6 +15702,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The proved lower bound spends one tree per 3^{1/4} leaves because it is a union bound over all ordered quadruples. Since the agreement probability is exactly 3^{-(k-1)} by the ternary balance theorem and quartets sharing at most two leaves are nearly independent, the Lovasz Local Lemma should improve the exponential base.\n\nThere are avoiding families of k random caterpillars on n leaves whenever k >= 3 log_3 n + O(1), improving the constant 4 in exponential_lower_bound, hence h(k) >= 3^{k/3 - O(1)}.\n\nFormalize the symmetric Lovasz Local Lemma for the events 'all k trees agree on quartet Q', with dependency degree O(n^3) and probability 3^{-(k-1)}, and re-derive the avoidance statement in the Lean framework of exists_quartet_avoiding_family.\n\nThe exponential lower bound base rises from 3^{1/4} = 1.316 toward the empirically observed 1.7, narrowing the gap with the upper bound.\n\nThe quartet agreement events are more strongly dependent than their pairwise leaf overlap suggests, indicating a hidden global constraint in tree space.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_4089",
+    "priority_score": 0.5646683179548131,
+    "research_mode": "team",
+    "source_exp_id": "22848dce",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:30.281430+00:00",
+    "title": "Local-Lemma Sharpening of the Avoidance Rate"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The energy dynamics is a\n   piecewise-M\u00f6bius interval map conjugated by `log`. Studying the invariant\n   measure of the induced map on `(0,\u221e)` (or on `r \u2208 (1,\u221e)`) would quantify how\n   the \"energy spectrum\" of level-`k` nodes distributes as `k \u2192 \u221e`, connecting\n   the tree to Gauss-map / continued-fraction ergodic theory: the inverse\n   branches `r \u21a6 1/(2\u2212r)`, `1/(r\u22122)`, `r\u22122` are exactly continued-fraction-type\n   maps.",
     "domains": [
       "Computation",
@@ -15977,6 +16134,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T15:57:13.569947+00:00",
     "title": "Dispersion-Capacity Duality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Viewing the maximal depth as an entropy budget, its discrete derivative in log-scale is a susceptibility that is almost always 1. We conjecture a fluctuation law: the exceptional scales where the susceptibility jumps have density controlled by the same 1/(B-1)^2 constant.\n\nFor every cost in the geometric universality class, maxDepth cost (B*T) - maxDepth cost T is 1 for all T outside a set of density 0 in each scale block, and the exceptional set is exactly the lossy set of Deficit.\n\nFormalise the susceptibility as a function of T, express it through the block decomposition, and bound the exceptional set by the lossy interval.\n\nThe depth behaves like a thermodynamic potential with computable fluctuations, connecting the arithmetic of repunits to extensivity of holographic entropy.\n\nThe susceptibility fluctuates at positive density, showing that depth is not asymptotically linear in log T even in an averaged sense.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4085",
+    "priority_score": 0.5637633384699494,
+    "research_mode": "team",
+    "source_exp_id": "80241759",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:11.252830+00:00",
+    "title": "Depth Susceptibility and Fluctuation Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -25726,6 +25898,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T23:36:47.267278+00:00",
     "title": "Optimal Geometric Sweeps for Knee Estimation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A disordered refinement cascade with level-dependent branching r(k) has a maximal supported depth trapped between two logarithms. We conjecture that the true depth is governed by the Birkhoff average of log r, not by the endpoints of the quench window. This would make the depth of a random foam a genuinely ergodic-theoretic quantity.\n\nIf (1/k)\u00b7\u2211_{j<k} log r j \u2192 m > 0 then maxDepth (schedCells r) T = (log T)/m + O(1) uniformly in T.\n\nFormalise schedWeight r k = exp(\u2211_{j<k} log r j), replace the constant base in Universality.maxDepth_sandwich by schedWeight, and prove matching upper/lower bounds from the Birkhoff average; test numerically on periodic and Sturmian schedules.\n\nThe logarithmic depth law becomes a statement about ergodic averages, unifying homogeneous, periodic and random foams.\n\nDepth is sensitive to the fluctuation, not just the mean, of the branching schedule, which would identify a new disorder-driven correction term.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4082",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "80241759",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:10.378552+00:00",
+    "title": "Ergodic Depth Law for Quenched Branching Schedules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A ternary word indexed by 4-subsets is realizable by a binary tree only if every 5-leaf window is realizable. We enumerated 210 valid two-premise five-leaf rules and formalized three of them. The conjecture is that these local rules are complete: local consistency on all 5-windows implies global realizability.\n\nA word w in (Fin 3)^{C(n,4)} is the quartet signature of a binary phylogenetic tree if and only if the restriction of w to every 5-element leaf subset is the signature of a tree on those five leaves.\n\nFormalize the window restriction using the restrict predicate of Combinatorics.Core, then prove the reconstruction direction by building splits from the 0-letters; verify by exhaustive enumeration at n = 6, 7 that no locally consistent non-realizable word exists.\n\nThe quartet code is a genuine low-density parity-check code with constant window size, so its rate can be estimated by standard LDPC counting.\n\nGlobal quartet consistency needs windows of unbounded size, and the coding analogy is only an upper-bound heuristic.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4088",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "22848dce",
+    "status": "available",
+    "timestamp": "2026-08-25T03:14:29.986737+00:00",
+    "title": "Local Axiomatization of Quartet Consistency"
   },
   {
     "consumed_by_exp_id": "",
@@ -36387,19 +36587,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "A concrete relativized jump realizes every abstract level"
   },
   {
-    "consumed_by_exp_id": "22848dce",
-    "description": "**Conjecture.** Families of binary phylogenetic trees can be encoded as error-correcting codes in quartet-signature space so that large pairwise distance prevents a common quartet, yielding an exponential lower bound for the least leaf number forcing a common quartet. The optimal exponential rate equals a packing rate in a constrained ternary code.\n\nThe key insight is that each four-leaf set admits three resolved quartet types, while consistency among overlapping quartets imposes code constraints analogous to local parity checks.\n\n**Why now?** The common-agreement predicate supplies an exact equality notion for restrictions. This makes it possible to formulate avoidance as distance in a finite signature space and to compare probabilistic tree constructions with coding-theoretic bounds.",
-    "domains": [],
-    "id": "fd_2316",
-    "phase": "A",
-    "priority_score": 0.4392222222222222,
-    "research_mode": "team",
-    "source_exp_id": "2607.18044v1",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:23:36.916354+00:00",
-    "title": "Exponential lower bound via quartet codes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let two prefix-free encodings of the same deductive system translate into one another with additive length overhead at most `b`. Conjecture that their level-`\u03b5` critical indices differ by at most `b`, after correcting for the two alphabet entropies.\n\nThe key insight is that a bounded recoding distorts metric balls only by a bounded radial shift, so a threshold should move rather than disappear.\n\nWhy now? The entropy\u2013density separation identifies exactly which observables must be compared, while the critical-index theorem isolates monotonicity and a positive crossing level as sufficient hypotheses.",
     "domains": [],
@@ -38624,14 +38811,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "State a precise Bertrand-theorem comparison"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4578ca8c",
     "description": "Define\n   `accelerated n = Real.eulerMascheroniSeq n + 1 / (2*(n+1 : \u211d))` and prove an\n   explicit `O(n\u207b\u00b2)` error bound, for example\n   `|Real.eulerMascheroniConstant - accelerated n| \u2264 1 / (12*(n+1 : \u211d)^2)`\n   for all sufficiently large `n` (with the exact threshold stated and checked).",
     "domains": [],
     "id": "fd_2682",
+    "phase": "A",
     "priority_score": 0.4131904761904762,
     "research_mode": "team",
     "source_exp_id": "593a0386",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:30.722608+00:00",
     "title": "Midpoint-corrected acceleration"
   },
@@ -38913,15 +39101,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Parametrised families and bifurcation"
   },
   {
-    "consumed_by_exp_id": "1567843a",
+    "consumed_by_exp_id": "",
     "description": "Both regimes are proved unconditionally here\n(`sum_card_V4_of_isSquare_three`, `sum_card_V4_of_not_isSquare_three`), together with the\nreciprocity input for the classes `1, 5, 7 mod 12`; the general statement needs only the\nfactorisation of `\u03c8_n` over `\u211a(N)` plus the same fibre-counting bijection factor by factor.",
     "domains": [],
     "id": "fd_1734",
-    "phase": "A",
     "priority_score": 0.40820833333333334,
     "research_mode": "team",
     "source_exp_id": "a0dce043",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T17:46:03.842645+00:00",
     "title": "Both regimes are proved unconditionally here"
   },
@@ -44284,19 +44471,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:03.096927+00:00",
     "title": "Executable rounding decoder"
-  },
-  {
-    "consumed_by_exp_id": "80241759",
-    "description": "For concrete `B` and threshold `T`, define and\n   compute the largest supported depth, proving maximality rather than only a\n   selected numerical instance.",
-    "domains": [],
-    "id": "fd_2778",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "61f6b5cb",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:26:04.151398+00:00",
-    "title": "Parameter-derived depth"
   },
   {
     "consumed_by_exp_id": "",
