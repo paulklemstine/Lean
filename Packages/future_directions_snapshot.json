@@ -3061,7 +3061,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01dd911f",
     "description": "**Round-83 #3 · exp 587 BSTAR-TRANSFER · Paper 236 · assessment v343 (count 573→574)**\n\nVERDICT: **H1_BSTAR_TRANSFERS** — closes paper 235 §3's named owed-check affirmatively: paper 227's window-saturation location B*=400 TRANSFERS to exp586's corrected 1/√ℓ weight. Pure reanalysis of exp577's per-N hit counts (no new j-sampling, wall 0.13 s), population regenerated VERBATIM seed 20260827, hash-match 128/128 hard-assert.\n\nDual-curve table (log((hits+0.5)/total) ~ S_w,B OLS, n=128 bitlen 96, odd primes 3..1600):\n\n| B | R²(√-weight) | R²(harmonic) | ΔR² |\n|---|---|---|---|\n| 100 | .5279 | .4388 | +0.0891 |\n| 200 | .5976 | .4621 | +0.1355 |\n| **400** | **.6242** | .4731 | **+0.1511** |\n| 800 | .5913 | .4748 | +0.1165 |\n| 1600 | .6137 | .4795 | +0.1342 |\n\n- H1 fires per pre-registered rule: argmax_set under √-weight = {400}, unique interior max.\n- Secondary PLATEAU_RAISED_EVERYWHERE fires: ΔR² > 0 at ALL five windows, no weight×window interaction.\n- ADOPTED lab-wide: canonical product dial **S_√,B\\*, B\\* = 400** — location pinned to (200,800] at factor-2 grid steps. Refinement chain complete: 227 inspect (1/ℓ, B*=400) → 235 α̂=0.5 → 236 B* transfers.\n\n**Bimodal-tail caveat (honest):** bootstrap argmax {400:276, 1600:178, 200:37, 800:9}/500 — 1600 sits only 0.0105 below the peak. Robust reading: \"saturation reached by B=400, no further gain through 1600\", NOT a sharp 400-vs-1600 separation. Single-seed caveat on the argmax LOCATION.\n\n**Ledger catches:**\n1. Recomputed harmonic curve peaks at EDGE 1600 not 400 (+0.006 vs 400, noise-level) — flat plateau above B=200; the interior-window signal is √-WEIGHT-SPECIFIC on this dataset/grid; superseded weight saturates without locating an interior B*.\n2. exp577's stored S400 column IDENTIFIED as the UNWEIGHTED QR-count dial over odd primes ≤400 (exact-0 diff at correct window; resolves the S400 cross-check discrepancy in paper 227's lineage).\n3. Crosscheck code window bug disclosed: result.json structured `S400_stored_crosscheck` fields compare stored S400 against count over ALL primes ≤1600 instead of masked B≤400 — artifact only, verdicts untouched.\n\nLimits: factor-2 grid resolution; single seed; bootstrap softness of location; log-rate Poisson attenuation uniform within-grid. Barrier framing: instrument hardening completing the paper-235 correction chain; residue cap 4/3, position 5.19×, quantum frontier untouched; strengthens queue #1 (rate-layer N-covariate structure at u≈10); no breakthrough claimed.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp587_{bstar_transfer.py,result.json,smoke.log,full.log,findings.md}` · Paper `ResearchOutput/NewMathematics/236_BstarTransfer.md` · Notebook Part 278.",
     "domain_bridges": [],
     "domains": [
@@ -3073,7 +3073,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T20:50:39.558996+00:00",
     "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfers to the sqrt-weight (R2 .528/.598/.624/.591/.614 over B=100/200/400/800/1600, unique interior argmax); closes paper 235 §3's named owed-check; dR2(sqrt-harm) positive at all 5 windows (+0.089..+0.151) no weight-x-window interaction; harmonic recomputed = flat plateau w/ edge peak 1600 (+0.006 noise) so interior-window signal is sqrt-specific; boot {400:276,1600:178} — saturation by 400, no gain through 1600; S400 stored column identified as unweighted count dial"
   },
@@ -4532,25 +4532,6 @@
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a32bc1e4 (Q=0.820), which proved 111 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Represent verification as a state transition that returns both a verdict and a residual dish. This would formally separate nondestructive certificates, destructive tests, and repeatable verification without assigning any of them an unsupported hardness label.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_a32bc1e4_66bf8a42",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a32bc1e4",
-    "status": "available",
-    "timestamp": "2026-08-25T16:56:56.810280+00:00",
-    "title": "Deepening: Destructive verification"
   },
   {
     "ambition_level": "extension",
@@ -21566,6 +21547,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Shared.MoonshineHeadRigidity",
+      "Catalog.Shared.MoonshineHeadTable"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Laurent coefficients of the 194-fold product in degrees 2k-194 are the elementary symmetric functions of the head table. Newton's inequalities for real-rooted polynomials predict log-concavity of these coefficients, giving a new structural constraint on any candidate head table.\n\nFor the Monster head table t, e_{k-1}(t) e_{k+1}(t) <= e_k(t)^2 for all 1 <= k <= 193, and e_k(t) != 0 for all k <= 194.\n\nFormalize Newton's inequality for the polynomial prod (X + t_i) over R and combine with coeff_headProduct_esymm; evaluate on candidate tables.\n\nThe moonshine product has a unimodal coefficient profile, constraining admissible head tables.\n\nThe first failing index k exposes a sign pattern in the character values chi_196883(g).",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4184",
+    "lineage_refs": [],
+    "priority_score": 0.5922222222222223,
+    "proof_strategy": "Prove Maclaurin/Newton inequalities for real-rooted integer polynomials by induction on derivatives, then transport along MoonshineHeadRigidity.coeff_headProduct_esymm.",
+    "research_mode": "team",
+    "source_exp_id": "6247b80f",
+    "status": "available",
+    "timestamp": "2026-08-25T17:46:44.202445+00:00",
+    "title": "Newton Log-Concavity of the Moonshine Product Spectrum"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.MarkoffTransfer.SilverBranchTransfer",
       "Cryptography.BerggrenSpectral.Generators"
     ],
@@ -22440,6 +22441,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Shared.MoonshineJExpansion",
+      "Catalog.Shared.MoonshineHeadTable"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every McKay-Thompson head coefficient should be derivable, like the 1A entry proved here, from an eta-quotient q-expansion checked by the Lean kernel. The pipeline uses only unit-ness of eta products in Z[[X]], never modularity. Completing it would convert the 194-entry head table from quoted data into verified data.\n\nFor each of the 194 conjugacy classes g of the Monster there is an integral exponent vector r with (prod_d eta(d tau)^{r_d}) + const having q-coefficient c_g(1), and the truncation identity mod q^8 is kernel-decidable.\n\nDefine etaQuotient for an arbitrary exponent vector, reprove unit-ness and truncation stability by the existing AgreeBelow calculus, and discharge class 2A end to end before looping over all classes.\n\nThe head conjecture becomes a single decide over 194 verified integers via head_check_iff.\n\nThe classes without eta-quotient hauptmoduln isolate where genuinely modular input is unavoidable.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4183",
+    "lineage_refs": [],
+    "priority_score": 0.5647297118692611,
+    "proof_strategy": "Generalize MoonshineJ.deltaPart to arbitrary exponent vectors; reuse isUnit_deltaPart, deltaPart_stable and j_coefficients_unique verbatim; discharge each class by decide on truncated list arithmetic.",
+    "research_mode": "team",
+    "source_exp_id": "6247b80f",
+    "status": "available",
+    "timestamp": "2026-08-25T17:46:43.713995+00:00",
+    "title": "Eta-Quotient Certificates for the Full Monster Head Table"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Novelty.EcmStageOneTraceLaw",
       "Novelty.EcmTraceLateTailDecay"
     ],
@@ -22459,6 +22483,29 @@
     "status": "available",
     "timestamp": "2026-08-25T05:50:40.217293+00:00",
     "title": "Work-Trace versus Step-Trace Separation on Prime Powers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Shared.MoonshineTauHecke",
+      "Catalog.Shared.MoonshineJWindow"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Ramanujan-type congruences for tau modulo 691, 23, 7, 5, 3, 2 are congruences between q-expansions, hence finite statements in (Z/l)[[X]]/(X^N) for each window N. A mod-l analogue of the AgreeBelow calculus would make each window a kernel decision, giving reusable certificates for modular-form congruences.\n\nFor each classical Ramanujan congruence modulo l, the truncated congruence holds for every window N and is decidable in time polynomial in N.\n\nDefine AgreeBelowMod l N, reprove the product/power/cancellation lemmas, and verify l = 691, 23, 7 at N = 20 by decide.\n\nA reusable, kernel-checkable certificate scheme for congruences between modular forms.\n\nThe first failing window exposes a normalization error in the classical statement.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4185",
+    "lineage_refs": [],
+    "priority_score": 0.5647058984721419,
+    "proof_strategy": "Reduce the integral eta-product computation modulo l via the ring hom Z -> Z/l, transport AgreeBelow through map_ringHom, and discharge windows by decide on lists over ZMod l.",
+    "research_mode": "team",
+    "source_exp_id": "6247b80f",
+    "status": "available",
+    "timestamp": "2026-08-25T17:46:44.688945+00:00",
+    "title": "Modular Congruence Certificates in Truncated Power Series"
   },
   {
     "ambition_level": "extension",
@@ -22795,6 +22842,28 @@
     "status": "available",
     "timestamp": "2026-08-24T20:49:41.706664+00:00",
     "title": "Reflection Depth as Type-Realization Index"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Shared.MoonshineHeadRigidity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Equality of two Monster-sized Laurent products is decidable through multiset comparison, bypassing the series entirely. Quantifying the gap between the multiset route and any coefficient-based route would formalize the value of the rigidity theorem as a proof-complexity statement.\n\nDeciding equality of two integral head products takes O(n log n) steps via sorting, while any certificate that only reads Laurent coefficients needs Omega(n^2) arithmetic operations.\n\nImplement both procedures over Fin n -> Z in Lean, prove equivalence via head_rigidity, and bound their step counts in a simple cost model.\n\nA template for replacing algebraic identity checks by combinatorial certificates in formalized mathematics.\n\nCoefficient-based certificates carry information the multiset route does not, contradicting rigidity.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4186",
+    "lineage_refs": [],
+    "priority_score": 0.5641046101948811,
+    "proof_strategy": "Formalize a cost-annotated evaluator, prove the sorting-based algorithm correct from head_rigidity, and derive the lower bound from the number of independent symmetric functions needed to separate multisets.",
+    "research_mode": "team",
+    "source_exp_id": "6247b80f",
+    "status": "available",
+    "timestamp": "2026-08-25T17:46:45.270387+00:00",
+    "title": "Certificate Complexity of the Moonshine Product Equation"
   },
   {
     "ambition_level": "extension",
@@ -51798,7 +51867,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a15951bd",
     "description": "**Conjecture.** Conjugation by `cayleyMat` carries `SL(2,ℝ)` isomorphically onto\n`SU(1,1)`, and under this isomorphism the trace trichotomy `|tr| < 2 / = 2 / > 2`\nmatches exactly the three normal forms `discPar t`, the diagonal rotation\n`diag(e^{iθ}, e^{-iθ})`, and the hyperbolic `!![cosh r, sinh r; sinh r, cosh r]`,\nwith the parabolic case characterised intrinsically by `discHoro`-invariance.\n\n**The key insight is** that `discPar_normSq_key` (`|den|² - |num|² = 1 - |w|²`) is the\ndefining `SU(1,1)` form identity written for one element; promoting it from the\nparabolic family to all of `SU(1,1)` turns three separate case analyses into one\nquadratic-form statement.\n\n**Why now?** `discriminant_dichotomy` already separates the elliptic and parabolic\ncases in the disc model; only the hyperbolic branch is missing, and its normal form is\na two-line matrix computation of the same shape as `discPar`.\n\n---",
     "domain_bridges": [],
     "domains": [],
@@ -51808,7 +51877,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "4c991400",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-25T16:02:11.580933+00:00",
     "title": "Full trichotomy in the SU(1,1) picture"
   },
@@ -57960,23 +58029,6 @@
     "status": "available",
     "timestamp": "2026-08-19T05:14:47.738568+00:00",
     "title": "The additivity theorem is now available for arbitrary finite index"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "6247b80f",
-    "description": "The reduction is proved, and the 194 values `c_g(1)` are tabulated\ndata; the conjecture is now a finite, checkable arithmetic statement that could\nbe discharged in Lean by `decide` once the table is entered.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1579",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3da67f84",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T05:14:48.013697+00:00",
-    "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
   },
   {
     "ambition_level": "extension",

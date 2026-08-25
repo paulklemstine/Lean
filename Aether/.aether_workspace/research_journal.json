@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2292d7e8",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — after C4 (first order) and N2 (sharp threshold)\n\n## What this cycle established\n\nAll statements below are formalized and proved sorry-free in\n`Catalog/Computation/RLHFThreshold/`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-24T04:10:35",
-      "title": "C4 (reward hacking is a covariance) — PROVED at first order.*"
-    },
-    {
       "cycle_id": "05978b53",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Polarisation cancellation in exponential–logarithmic gates\n\n## Where this cycle landed\n\nThe mission conjecture was\n\n> `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attain",
@@ -499,19 +489,19 @@
       "theorem_count": 111,
       "timestamp": "2026-08-25T16:56:56",
       "title": "Destructive verification"
+    },
+    {
+      "cycle_id": "6247b80f",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nDerived from the three research cycles in this run:\n\n1. a kernel-verified `q`-expansion of `j = E₄³/Δ` (twelve coefficients) built\n   from formal power series over `ℤ`, with a con",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-25T17:47:01",
+      "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "24a12580",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nDerived from the four completed cycles in `Catalog/Pythagorean/PRNGBerggren*.lean`\nand `Catalog/Pythagorean/PRNGMatrixFingerprint.lean`.  Each conjecture is stated\nso that it can",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 118,
-      "timestamp": "2026-08-18T21:38:44",
-      "title": "Compression Research B5: PRNG-generated real-world data — detection and seed recovery"
-    },
     {
       "cycle_id": "fbb9718e",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 111,
       "timestamp": "2026-08-25T16:56:56",
       "title": "Destructive verification"
+    },
+    {
+      "cycle_id": "6247b80f",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nDerived from the three research cycles in this run:\n\n1. a kernel-verified `q`-expansion of `j = E₄³/Δ` (twelve coefficients) built\n   from formal power series over `ℤ`, with a con",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-25T17:47:01",
+      "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "40fe72ea",
-      "domain": "Probability",
-      "name": "ev_policy_eq_sum_fiberVal",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "40fe72ea",
-      "domain": "Probability",
-      "name": "ev_const_eq_sum_fiberVal",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "40fe72ea",
-      "domain": "Probability",
-      "name": "dialValue_le_ev_policy",
-      "quality": 0.88
-    },
     {
       "cycle_id": "4aeadf94",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "test_eq",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "6247b80f",
+      "domain": "Shared",
+      "name": "coeff_traceLaurent_natCast",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6247b80f",
+      "domain": "Shared",
+      "name": "normalizedPart_headSeries",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6247b80f",
+      "domain": "Shared",
+      "name": "coeff_prod_one_add_C_X_sq",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-25T16:56:56",
+  "last_updated": "2026-08-25T17:47:01",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "fc85d14f",
-        "quality": 0.82,
-        "theorems": 41,
-        "title": "The one-parameter case is already a theorem here"
-      },
-      {
         "cycle_id": "6a8ae4e1",
         "quality": 0.85,
         "theorems": 76,
@@ -3947,6 +3941,12 @@
         "quality": 0.8,
         "theorems": 65,
         "title": "Matrix-level modular action"
+      },
+      {
+        "cycle_id": "6247b80f",
+        "quality": 0.82,
+        "theorems": 101,
+        "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
       }
     ],
     "Tropical": [
