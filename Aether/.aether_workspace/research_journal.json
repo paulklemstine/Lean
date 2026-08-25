@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "198a9f40",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — the geometry of retention knees\n\n## What survived, what failed\n\n**Survived.** Every order-theoretic statement about the knee: monotonicity in the\ngate, the fail/pass certificate,",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-24T01:59:21",
-      "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healthy margins; 0.5B cha"
-    },
-    {
       "cycle_id": "58176b8d",
       "domain": "Algebra",
       "key_insight": "# Future directions — parity geometry of the zero-fit dial (round-63 #1, exp 532)\n\nTwo Lean files were added in this cycle:\n\n* `Catalog/Algebra/ZeroFitDialU72Parity.lean` — Gram positivity for three r",
@@ -499,19 +489,19 @@
       "theorem_count": 50,
       "timestamp": "2026-08-25T14:05:54",
       "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNIT"
+    },
+    {
+      "cycle_id": "128c5007",
+      "domain": "Computation",
+      "key_insight": "# Future directions — binning-free geometry of window features\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What this cycle\nestablished (all machine-checked, 0 sorries):\n\n*",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-08-25T16:02:03",
+      "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE GEOMETRIC WINDOW FEA"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bba7fa1e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nDerived from what survived and what failed in this cycle.  Each conjecture is\nstated so that it can be refuted by a single Lean count",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-18T19:41:20",
-      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
-    },
     {
       "cycle_id": "4f724156",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 50,
       "timestamp": "2026-08-25T14:05:54",
       "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNIT"
+    },
+    {
+      "cycle_id": "128c5007",
+      "domain": "Computation",
+      "key_insight": "# Future directions — binning-free geometry of window features\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What this cycle\nestablished (all machine-checked, 0 sorries):\n\n*",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-08-25T16:02:03",
+      "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE GEOMETRIC WINDOW FEA"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "80241759",
-      "domain": "Physics",
-      "name": "pow_foamDepth_le_threshold",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "80241759",
-      "domain": "Physics",
-      "name": "threshold_lt_pow_foamDepth_add_two",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "80241759",
-      "domain": "Physics",
-      "name": "foamDepth_foamCells",
-      "quality": 0.79
-    },
     {
       "cycle_id": "22848dce",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "harmonic_block_decline",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "128c5007",
+      "domain": "Computation",
+      "name": "binAvg_translate",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "128c5007",
+      "domain": "Computation",
+      "name": "binVal_translate",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "128c5007",
+      "domain": "Computation",
+      "name": "binCenter_translate",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-08-25T14:05:54",
+  "last_updated": "2026-08-25T16:02:03",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "eccb3315",
-        "quality": 0.84,
-        "theorems": 147,
-        "title": "The Berggren Tree Zeta Function — Analytic Counting of Pythagorean Triples Gover"
-      },
-      {
         "cycle_id": "85ca8e3d",
         "quality": 0.86,
         "theorems": 58,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 76,
         "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
+      },
+      {
+        "cycle_id": "128c5007",
+        "quality": 0.74,
+        "theorems": 30,
+        "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE "
       }
     ],
     "Cryptography": [
