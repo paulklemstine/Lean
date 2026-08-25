@@ -3042,7 +3042,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5223d87b",
     "description": "VERDICT: NEW-STRUCTURE-MAP-ENTRY (pre-registered H0 fires; H1 rejected).\n\n**Setup**: 128 balanced bitlen-96 semiprimes, FRESH master seed 20260826, stream-distinctness asserted+recorded vs 20260824/20260825 (pairwise-disjoint N sets, hashes e8d89a29a03779d5 / 9cb9cc800ee45a38 / 81acc9b5e1be619b). 150k j-samples/N (19.2M total), exp569 gcd-chain tester verbatim, cut 1e6; wall 368.9 s; sympy.jacobi_symbol.\n\n**Phenomenon replicates fresh-seed**: mean 76.7 hits/N, Var/mean D_raw = 7.27 (Poisson ~1), range 29–172, top-3 clusters 172/151/130 = paper-220 envelope rescaled exactly.\n\n**Dial regressions (per-N log-rates)** — ALL far below H1 bars (R²≥0.25 AND D-red≥30%):\n- PRIMARY S_indiv (Σ Jac(ℓ,p)+Jac(ℓ,q)=+1, ℓ≤100): R²_log=0.0127, slope NEGATIVE z=−2.82, D-reduction **0.88%** — H0 fires on BOTH legs.\n- Mechanistic S_prod (=#{ℓ≤100: N QR mod ℓ}): R²=0.0781, slope + z=10.9, D-red **14.22%**, φ 7.33→6.07.\n- Tertiary S139@400 (recorded paper-136/139 form): R²=0.0565, z=8.7, D-red **9.07%**.\n\n**Analytic orthogonality catch (robustness)**: Cov(S_indiv,S_prod)=0 EXACTLY by multinomial algebra under independent characters; measured r=−0.01. Primary dial orthogonal-by-construction to the divisibility carrier (ℓ | x²−N iff Jac(ℓ,N)=+1); verdict robust either way since secondaries also miss H1.\n\n**Consequence**: the ≤400 QR dial explains ≤~14% of u≈10 overdispersion; ≥86% is N-structure beyond every recorded mechanism — papers 136/139 line does not extend to scale. Scale-shift hypothesis: informative prime window moved past 400 into 400..1e6 at bitlen 96 (pools span ~2⁴⁹–2⁵¹); papers 136/139 calibrated at bitlen 40–48. NAMED FOLLOW-UP: product-form dial over ALL ℓ≤1e6 (~78k symbols, cheap) — capture ⇒ papers 136/139 + 220 unify with a scale-dependent dial bound; miss ⇒ genuinely new N-structure at u≈10.\n\n**Ledger catches**: (1) first-smoke GLM divergence fixed pre-full (Fisher scoring + deviance step-halving); (2) smoke/full S_indiv slope-sign instability flagged (n=16 +, n=128 −, pseudo-R²≈−0.001) — negative direction NOT citable as paper-139 reversal without replication; (3) monitor double-fire — verified from JSON directly, no data impact.\n\n---\n\n**RIDER — P̂ RESOLUTION-LIMIT NOTE (paper 225 erratum thread, action (a))**: archival dig (pthat_extraction.md) finds NO raw P_hit in any papers-137/143 artifact — exp467 stored mean costs only (no hit indicator, orderings are full reorderings with no committed window R); exp474's P_hit was a DESIGNED oracle α=1.0 exactly at the 29.1× cell (exact enum M=300). All four booked P̂ are drafted-law inversions recovered to ≤2e-4. Full-precision anchors extracted: 5.193592154916 (n=30000) / 6.914724537168 (n=6732) / 4.353075657862 (n=9651) / 29.125436718134 (exact enum M=300). Certified-law-implied P̂ = 0.841617/0.894868/0.800308/**0.985068** — booked 0.9853 overstates by ~2.3e-4 → printed 29.3152 overstates the certified reading ~0.19. Paper 225's corrected-table arithmetic EXACT at all four loci; feasibility margins hold ×4 (μ≤1/S_raw true; S_A@booked≥S_raw margins +0.212/+0.242/+0.183/+0.190). Recommendation: book all four anchors \"at resolution limit\" not \"at stored P̂\" per p225's own admissibility rule (raw-P̂-stored clause NOT met).\n\nBarrier framing: scale-smoothness frontier — opens the mechanism question \"what carries per-N clustering at u≥10\"; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 226 · assessment v332→v333 · count 564→565.",
     "domain_bridges": [],
     "domains": [
@@ -3054,7 +3054,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T14:04:28.338872+00:00",
     "title": "FACT round-78 #2 — QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY — small-prime QR dial does NOT explain u≈10 overdispersion (best D-red 14.2% vs H1 bar 30%); ≥86% is N-structure beyond every recorded mechanism; papers-136/139 line does not extend to scale; + P̂ RESOLUTION-LIMIT rider on paper 225's erratum thread"
   },
@@ -3570,6 +3570,25 @@
     "status": "available",
     "timestamp": "2026-08-25T03:14:57.987913+00:00",
     "title": "FACT round-92 #2 — SCAN-SIM-JOINT (exp 600): PREDICTION CONFIRMS ON ALIGNED FRAME — S_obs = 1.2736 [1.2399, 1.3061] inside registered band [1.10, 1.51], below certified bound 1.5059 => paper-250 calibrated-gap CONFIRMED; DEFINITIONAL DIFF RESOLVED (prior-frame vs realized-frame booking differ by identifiable extreme-value factor 2.65x: realized S_obs = 3.3722 [2.5577, 4.6933] fails high there); NEW BOOKKEEPING PRINCIPLE: bound/slack must be booked PER MULTIPLICITY REGIME — prior-frame slack does not transfer to realized-frame scanning; Lam = 0.7852 CI contains recorded 0.7657, Theta = 0.8797, X = 1.1368 upper CI edge touching recorded 1.1530; controls all null; every f1tight constant replicated from raw positions NO refit"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Paper 253** · round-94 #2 · completes paper 245's loose end; final completing experiment of the positional thread (arc 228–253).\n\n## Pre-registration (verbatim, script header, written BEFORE fitting)\n- **H1 (identifiable):** at CAP ≥ 120 the bootstrap CI upper edge of b_edge stays strictly BELOW its cap at every rung ⇒ b_edge ± CI reported AS IDENTIFIED.\n- **H0 (unidentified):** CI upper edge keeps hitting successive caps ⇒ steepness formally UNIDENTIFIABLE at this data size; lower-bound ladder {CAP → CI lower} recorded FINAL.\n- **Control bar:** ctl_* fits kernel-free iff w_edge(x=0.9) < 0.10 AND 1→2-comp relSSE improvement < 5% at every cap.\n\nModel T(x)=A(1+x)^−b_bulk + K(1+x)^−b_edge; per-seed x=(v−jlo)/(jhi−jlo) clip [0,1] (0 clips); pooled nb=50 histogram (exp581/582 anchor grid); unweighted NLS, (A,K) profiled linearly on dense log grid incl. near-cap points + multi-start TRF point refine; cluster bootstrap over 128 seeds, nboot 1000 main / 300 ctl; cap-hit := b_edge_hat ≥ 0.999·CAP; percentile CI. Caps {80,120,240}. Data: exp581_regen_positions.npz (128 seeds, 9594 hits, 512000 ctl). Seed 20260824. Wall 0.94 s.\n\n## Result: **H0-UNIDENTIFIED_LADDER_FINAL**\n\n| cap | b_edge point | b_bulk | 95% CI | cap-hit | pure-bulk | identified |\n|-----|-------------|--------|--------|---------|-----------|------------|\n| 80  | 30.1223 | 0.83996 | [0.618, **80.00**]  | 7.8% | 0.0% | NO |\n| 120 | 30.1223 | 0.83996 | [0.583, **120.00**] | 4.9% | 0.0% | NO |\n| 240 | 30.1226 | 0.83996 | [0.642, **160.24**] | 1.8% | 0.0% | yes |\n\n- Point estimates EXACTLY invariant under tripling the box — the point optimum never touched any cap; the UNCERTAINTY hits it.\n- Ladder nuance booked honestly: mass thins toward an EFFECTIVE CEILING ≈160 (cap-240 upper DETACHES to 160.24 < 240; boot mean inflates 28.85→37.37 while median falls 28.91→27.84), but H1 required BOTH rungs ≥120 interior and cap 120 pins exactly ⇒ verdict stands as pre-written. No post-hoc bar adjustment either direction.\n- Lower-bound ladder FINAL: LB 0.62 / 0.58 / 0.64 (~0.6 bulk-floor at every rung).\n- Historical anchor exp594 cap-80: point 40.46, CI [15.2, 80.0], cap-hit 26.7% (pipeline not replicated bit-for-bit; registered test is the within-run cap-to-cap comparison).\n\n## Control arm clean\nKernel-free bar PASSES at every cap: w_edge(0.9) ~1e−45..1e−55, relSSE gain ~1e−15, K~1e−21..1e−23, frac_purebulk = 100% of 300 ctl boots at every cap. Control cap-hits amplitude-free (K≈0), cannot mimic detection. Main-arm pure-bulk boots 0.0%, excluded from CI, never counted as cap-hits.\n\n## Sensitivity (cross-pipeline)\n√(count+1) weighting @ cap 240: b_edge = 44.12 vs exp594's 40.46 — two pipelines with different variance treatments agree on the ~30–45 steepness decade. Unweighted NLS stays registered primary.\n\n## Consequence\nPapers 238/245 canonical profile description AMENDED: **\"flat bulk b ≈ .57 + left-edge spike, amplitude 8.6% [verified], steepness >~15 [lower bound only; point ≈30, effective ceiling ≈160]\"** — any future claim needing the actual exponent requires more hit mass, not a different cap.\n\nLedger catches: none. Barrier framing: last open MEASUREMENT of the positional density layer closes after round-93 #1 (#400) closed its mechanism layer; shape fully specified (two components, verified amplitude, one-sided steepness); positional thread arc 228–253 COMPLETE.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/{exp603_edge_cap_raised.py, exp603_result.json, exp603_full_run.log, exp603_smoke.log}; paper ResearchOutput/NewMathematics/253_EdgeCapRaised.md.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4095",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T04:01:30.584391+00:00",
+    "title": "FACT round-94 #2 — EDGE-CAP-RAISED (exp 603 FINAL): H0 — SPIKE STEEPNESS FORMALLY UNIDENTIFIABLE AT THIS DATA SIZE; LOWER-BOUND LADDER FINAL"
   },
   {
     "ambition_level": "grand_challenge",
@@ -4608,25 +4627,6 @@
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 22848dce (Q=0.820), which proved 112 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** Families of binary phylogenetic trees can be encoded as error-correcting codes in quartet-signature space so that large pairwise distance prevents a common quartet, yielding an exponential lower bound for the least leaf number forcing a common quartet. The optimal exponential rate eq",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_22848dce_e8c9780c",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "22848dce",
-    "status": "available",
-    "timestamp": "2026-08-25T03:14:35.031012+00:00",
-    "title": "Deepening: Exponential lower bound via quartet codes"
   },
   {
     "ambition_level": "extension",
@@ -20932,7 +20932,7 @@
       "Novelty.ZeroFitDialNested",
       "Novelty.ZeroFitDialU64"
     ],
-    "consumed_by_exp_id": "1101bcb2",
+    "consumed_by_exp_id": "",
     "description": "With both ceilings known, define a statistic's efficiency as reading^2 divided by its tie ceiling. At bitlen 52 the dial has efficiency 0.58 and the count baseline 0.41. Conjecture that this efficiency gap lower-bounds the extra mutual information the 2-adic valuation carries about the response, via a Fano-type inequality for rank correlations.\n\nFor any response Y and statistics T, C on the same sample, eff(T) - eff(C) <= c * (I(T;Y) - I(C;Y)) for an absolute constant c, where eff denotes squared Spearman reading divided by tie ceiling.\n\nFormalise efficiency in the existing tie-profile framework, prove the data-processing direction first (C a function of T implies eff(C) <= eff(T)), and calibrate c on the recorded bitlen-52 pair.\n\nThe dial's advantage becomes a certified information statement rather than a correlational one, and the validation band acquires an information-theoretic meaning.\n\nRank efficiency and mutual information are not comparable, so dial advantages must be reported strictly as rank statistics.",
     "domain_bridges": [],
     "domains": [],
@@ -20942,7 +20942,7 @@
     "proof_strategy": "Data-processing for refinements (already available as the nested-profile refinement bound) plus a Fano inequality applied blockwise to the coarser statistic.",
     "research_mode": "team",
     "source_exp_id": "147eac16",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-23T19:35:41.958035+00:00",
     "title": "Efficiency Gap as an Information Lower Bound"
   },
@@ -56435,7 +56435,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "539def03",
     "description": "Both endpoints are formalised and the numerics of Section 4 of\n`ComputationalEvidence.md` sit on the conjectured value to the digit; the open\npart is a lower bound over *all* 2-universal families, i.e. a converse to the\nunion bound rather than yet another application of it.",
     "domain_bridges": [],
     "domains": [],
@@ -56445,7 +56445,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "512ab986",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T01:53:32.832554+00:00",
     "title": "Both endpoints are formalised and the numerics of Section 4 of"
   },
