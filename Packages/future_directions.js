@@ -2311,16 +2311,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-84 #2 \u2014 SPIKE-ORIGIN (exp 589): H0-MIXED \u2014 paper 238's left-edge spike DECOMPOSES into ~half tiny-v inclusion artifact + half GENUINE small-|v| structure persisting among full-size v\u22652^95 hits (w_edge .0794 \u2192 .0403 kept-CI-excludes-0); exclusion clause PROVABLY DEGENERATE (D1 \u21d2 v<2^95 by arithmetic); kernel SURVIVES at reduced strength"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2af802e",
     "description": "**FACT round-87 #1 \u2014 exp 588c MIXTURE-BASELINE [FINAL] \u00b7 paper 242 \u00b7 closes paper 241's routed branch with a negative that converts to a NEW MAP ENTRY**\n\nVERDICT: **H0 \u2014 EXCESS SURVIVES THE DIVISIBILITY MIXTURE** (registered rule: H0 iff amp_mix >= 2\u00b7SE_mix; fired as registered).\n\n- Residual mid-window peak **amp_mix = 0.1774 \u00b1 0.0432 (z = 4.11 \u2265 registered bar of 2), peak at t = 0.65 exactly**; removal vs single-\u03b1 baseline = **0%** (pre-named corroboration).\n- Model: 16 cells = divisibility pattern (2|v, 3|v, 5|v, 7|v) of v = j\u00b2\u2212N; PRED(b) = \u03a3_c \u03ba_c\u00b7S_c(b); S_c = Dickman-weighted reference sums; \u03ba_c flank-only fit (score window excluded), \u03bb=5 shrinkage toward global flank rate.\n- **WHY the mixture couldn't absorb it:** class composition measured FLAT in t (max cell drift 0.269%) \u2014 the mixture had no positional freedom; per-cell rates ARE real (\u03ba/g spread **0.645\u20131.406**, ~2.2\u00d7 rate modulation, top cells 3|v&5|v combos) but t-INDEPENDENT by construction. Formulation: **DIVISIBILITY IS A RATE DIAL, NOT A POSITION DIAL.**\n- Bit 0 (2|v) \u2261 j-parity since N odd \u2014 parity merged into the grid and equally failed \u2192 closes paper 241's residual parity reading too.\n\n**CONTROLS + CAVEAT (disclosed per registration):** CTRL-A machinery null PASS (amp 0.0271 \u00b1 0.0102, max-dev all bins 0.0342). CTRL-B parametric Poisson estimator-null amp_sim 0.0860 \u00b1 0.0411 measures max-over-bins positive bias inside the raw amplitude \u2192 **null-calibrated z_cal = 1.53 < 2**; registered raw-amplitude rule stays verdict-bearing, disagreement flagged not silently resolved. Follow-ups power against the calibrated scale.\n\n**PROVENANCE:** Regen EXACT_MATCH on the proven exp588b-A3 lineage (population/windows int64-equal, stream order-walk 128/128, smoothness spot-check hits-smooth/controls-nonsmooth all pass), statistics gated on it; wall 12.6 s; npz sha256 df4830ed\u2026fbb74 re-recorded at load.\n\n**LEDGER CATCHES:** A1 amendment \u2014 original single control (count halves vs \u03c1-weighted prediction) had a NON-FLAT NULL BY CONSTRUCTION (counts carry no \u03c1(t) gradient); caught AT SMOKE (amp 0.47 from ~290 counts/bin), control split CTRL-A/CTRL-B PRE-FULL-RUN, registered rule unchanged, NO treatment number entered any verdict through the amendment.\n\n**THREE-PASS CHAIN CLOSED (232 \u2192 241 \u2192 242):** feature found/stable (232) \u2192 real over exact Dickman baseline, no single binary carrier, routed to mixture model (241) \u2192 mixture fails, removal 0% (242).\n\n**NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM** \u2014 third orthogonal layer beside positional (228\u2013230) and left-edge composition (238\u2013240): REAL (241), STABLE (shift-invariant since 232), NON-DIVISIBILITY (here).\n\n**NAMED FOLLOW-UP: identify the non-divisibility carrier.** Pre-named candidates: (i) j-arithmetic beyond small-prime divisibility \u2014 higher-order residues of v, bit structure near the truncation boundary, quadratic-character/Legendre patterns mod p > 7; (ii) polynomial-sequence correlations \u2014 values-of-(j\u00b2\u2212N) smoothness biases beyond divisibility.\n\nBarrier framing: map-entry addition INSIDE the rate layer's baseline-shape question \u2014 residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, four-class rate closure, spike-origin arc untouched; refuted family (divisibility-rate mixtures as a positional explanation) removed from the search space at every scale; entry defined at fixed data geometry so its test transfers across bit lengths unchanged. Open unchanged: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity; PLUS the named follow-up; .2346 provenance flag still traveling.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp588c_{mixbase.py, smoke.log, full.log, result.json}`; paper `ResearchOutput/NewMathematics/242_MixtureBaseline.md`; notebook Part 284; assessment v349.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4061",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T22:46:21.540196+00:00",
     "title": "FACT round-87 #1 \u2014 MIXTURE-BASELINE (exp 588c FINAL): H0 \u2014 u*\u22480.65 excess SURVIVES full divisibility mixture (amp .177\u00b1.043 z=4.11\u2265bar, peak t=0.65 exact, removal 0%) \u2014 composition FLAT in t, rates real but t-independent \u2192 DIVISIBILITY IS A RATE DIAL NOT A POSITION DIAL; NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM; chain 232\u2192241\u2192242 complete; CTRL-B caveat z_cal=1.53<2 disclosed; named follow-up: find the non-divisibility carrier"
   },
@@ -2663,20 +2664,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 7af52a9c (Q=0.860), which proved 5 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** Up to relabelling, the only triples of integer linear maps that act as a\nternary tree on the node set `{1 \u2264 n < m, gcd = 1, m+n odd}` with root `(2,1)` are the\nBerggren triple (determinants `\u00b11`) and the Price triple (determinants `\u00b12`), and no\ntriple of determinant `|det| \u2265 3` exist",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_7af52a9c_2fa29e3b",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "7af52a9c",
-    "status": "available",
-    "timestamp": "2026-08-25T20:47:32.298176+00:00",
-    "title": "Deepening: C4. The `\u00b12` obstruction is the only obstruction: classify the ternary Pythagore"
   },
   {
     "consumed_by_exp_id": "",
@@ -36989,14 +36976,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "(counting sumsets)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5e9b52ad",
     "description": "*Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement would immediately give a\n   `k`-auxiliary-class spread exclusion and, at `p = 5`, would remove the\n   profile `(8,2,2,2,2,2)`.",
     "domains": [],
     "id": "fd_3013",
+    "phase": "A",
     "priority_score": 0.4468333333333333,
     "research_mode": "team",
     "source_exp_id": "6e948588",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:27:30.175988+00:00",
     "title": "Kneser input for many lines"
   },
