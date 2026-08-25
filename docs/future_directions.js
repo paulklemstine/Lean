@@ -2176,21 +2176,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-80 #2 \u2014 POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS \u2014 hit-rich vs hit-poor positional profiles indistinguishable at registered bars (interaction LRT \u03c7\u00b2=51.31/df49 p=0.383, perm p=0.34; pooled rich-poor KS D=0.0462 raw p=0.0038 FAILS Bonferroni p_adj=0.049); edge-decile excess replicates universally 0.229/0.245/0.230 across terciles; control-arm family-B fired spuriously on dense size-matched controls (perm p=0.012, quasi-separation) \u2014 design flagged fragile; paper-228 positional and rate entries remain SEPARATE layers"
   },
   {
-    "consumed_by_exp_id": "a08d5a50",
-    "description": "Round-80 #1, exp 579, paper 229. Pure re-analysis of exp578_positions.npz (128 bitlen-96 semiprimes seed 20260828, 9594 hits); no new physics. Pre-registered V1/V2 rules fired cleanly: V1 power-law winner (Akaike w 0.9866, cluster bootstrap over Ns 2000 reps seed 20260831); V2 residual R=T/M PEAKED \u2014 mixture-Dickman absorbs nearly all raw decline (M falls 3.64x vs T 3.25x), concave mid-window excess \u00b120%, small-j wall region OVER-predicts ~20%; baseline fragility gate passes all three offset-r brackets; control flat. Ledger: smoke bootstrap-broadcast bug fixed pre-full (FULL clean 10.2 s); ship-order/partial-completion check NEGATIVE (no such field in JSON, completion evidenced by boot_fits_ok=2000 x4). Joint consequence with round-80 #2 (#378): positional entry now law-complete (papers 228/229), layers SEPARATE. Files: ResearchOutput/scripts/2026-08-24-round74/exp579_{profile_form.py,result.json,findings.md}; paper ResearchOutput/NewMathematics/229_ProfileForm.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4025",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T16:57:03.774720+00:00",
-    "title": "FACT round-80 #1 \u2014 PROFILE-FORM (exp 579): positional layer gets a LAW \u2014 small-j hit profile = POWER LAW T(x)\u22480.0295\u00b7(1+x)^\u22121.104 (b boot95 [0.991,1.218], Akaike weight 0.987; \u0394AICc exp +9.2 / logistic +11.5 degenerate / linear +16.9) \u2014 harmonic decline whose bulk IS the Dickman gradient; beyond-Dickman residual PEAKED not monotone: \u00b120% concave mid-window hump max 1.23 @ x\u22480.67 between end deficits 0.80/0.90 (quadratic dAICc 50.5, c-CI [\u22120.62,\u22120.14], vertex 0.59 interior), invariant across all three r-brackets; paper-228 follow-up (a) closed"
-  },
-  {
     "consumed_by_exp_id": "733effba",
     "description": "Round-81 #1 \u00b7 exp 581 \u00b7 paper 231 \u00b7 closes paper-229's named residual question (what carries the \u00b120% concave mid-window hump in R=T/M?).\n\n**Verdict**: MIXED-INCONCLUSIVE by pre-registration letter (zero families fired: fitted-peak boot95 p2.5 must exceed 1.05, achieved 1.0094\u20131.0275 despite raw max 1.2227 @bin33); bars kept verbatim, no post-hoc rule change.\n\n**Regeneration pass (first-class result)**: pipeline re-executed from recorded seeds; canonical-int64 sha256 55729f1c99c0b5d2 regenerated == stored npz; hits byte-exact 9594/9594 across all 128 Ns; FULL capped control arrays + grids byte-exact; lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 reproduced pairwise-disjoint; master hash 06931068f8f3ca9b matched. All numbers below ran on verified-identical data.\n\n**Structural one-sidedness**:\n- Observed LPF masses [0, 0, 0.0007, 0.9993] (counts [0,0,7,9587]) vs mixture-Dickman prediction [0,0,0.0013,0.9987] \u2014 99.93% of hits in ONE band (>1e4): any single-band carrier story dies ARITHMETICALLY (only one eligible stratum at LOW_MASS_MIN=200). Mass reallocation negligible (6e-4 gap).\n- Inside the band: dominant-band-only c=-0.299 vertex 0.590; descriptive LPF terciles (cuts 350983/671941, ~3196 hits each, medians 198k/511k/831k) c=-0.18/-0.25/-0.44 \u2014 concave in ALL THREE.\n- k100 terciles (cuts {2,3}): t1 concave (c=-0.13, vx .41); t2/t3 mildly convex but amplitude \u00b12% vs pooled +4.8% \u2014 combo conditioning does not absorb the excess.\n- Controls clean everywhere (pooled c=-0.105 CI straddles 0, peak fit 1.005).\n- Anchors PASS: R_first .8371 vs .8007\u00b1.08; R_peak 1.2227@bin33 vs 1.2257@bin33 EXACT; R_last .8935 vs .8957; pooled vertex 0.5901 vs exp579's independent 0.5896.\n\n**Consequence**: the hump lives INSIDE every resolvable stratum at a stable vertex \u2014 not completing-prime size, not small-prime combination structure, not Dickman band-mass reallocation. Sole surviving registered channel: **H0 window/polynomial geometry of j\u00b2\u2212N itself interacting with v-sizes**. Named next probe (pre-stated): direct j-grid/v-size sensitivity analysis \u2014 bin-width permutation, u-grid shift \u2014 to close H0 affirmatively or watch it fragment.\n\n**Ledger catches (both disclosed)**: run-1 G1 \"failure\" = comparator bug (paired slices compared vs stored full arrays; hits were ALWAYS byte-exact per run-1 log evidence); run-2 KeyError 350983 = LN-dict lookup on an observed sub-band edge \u2192 arbitrary-edge ln cache + resume-from-persisted-regen (16.5 s completion; sampling never re-run after its single persisted 953 s pass). Smoke also caught a factorer early-exit bug pre-full; Dickman table refined to h=1/8192 (err 3.07e-05).\n\nDeviations disclosed: k100-tercile baseline = pooled positional profile (per-tercile Dickman needs Buchstab machinery, out of scope); sub-band split DESCRIPTIVE ONLY, never verdict-bearing; single seed/bitlen inherited from exp578.\n\nBarrier framing: structural (not power-limited) elimination prevents a wrong turn on paper-228's opened frontier; residue cap untouched; no complexity claim; no breakthrough claimed. Completes paper-229's characterization thread 228\u2192229\u2192231.\n\nFiles: ResearchOutput/scripts/2026-08-24-round74/exp581_* ; paper ResearchOutput/NewMathematics/231_HumpMechanism.md",
     "domains": [
@@ -2281,16 +2266,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-83 #3 \u2014 BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS \u2014 B*=400 transfers to the sqrt-weight (R2 .528/.598/.624/.591/.614 over B=100/200/400/800/1600, unique interior argmax); closes paper 235 \u00a73's named owed-check; dR2(sqrt-harm) positive at all 5 windows (+0.089..+0.151) no weight-x-window interaction; harmonic recomputed = flat plateau w/ edge peak 1600 (+0.006 noise) so interior-window signal is sqrt-specific; boot {400:276,1600:178} \u2014 saturation by 400, no gain through 1600; S400 stored column identified as unweighted count dial"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f447886",
     "description": "**Round-83 #2 \u00b7 exp 586 WEIGHT-EXPONENT-FIT \u00b7 Paper 235 \u00b7 assessment v342 (count 572\u2192573)**\n\nVERDICT: **H1_HARMONIC_REFINED (\u221a-WEIGHT)** \u2014 paper 227 adopted the 1/\u2113-harmonic product-dial weight BY INSPECTION; exp586 fit the optimal exponent \u03b1 properly on the SAME data (pure reanalysis of exp577's per-N hit counts, no new j-sampling).\n\n\u03b1-curve (n=128, bitlen 96, odd primes 3..400, c_\u2113=[jacobi(N mod \u2113,\u2113)=+1], log-rate ~ S_\u03b1 OLS):\n\n| \u03b1 | 0.0 | 0.25 | **0.5** | 0.75 | 1.0 | 1.25 | 1.5 | 2.0 |\n|---|---|---|---|---|---|---|---|---|\n| R\u00b2 | .3207 | .4985 | **.6242** | .5752 | .4731 | .3969 | .3479 | .2944 |\n\n- SINGLE-PEAKED INTERIOR MAX at \u03b1\u0302=0.5; harmonic sits on the FALLING limb.\n- \u0394R\u00b2(\u03b1\u0302)\u2212R\u00b2(1) = **+0.15114** \u2265 0.03 pre-registered bar \u2192 H1 fires.\n- Bootstrap CI95 = **[0.5, 0.5]** (492/500 reps pick 0.5, 8/500 pick 0.75, mean 0.504) \u2014 EXCLUDES 1 DECISIVELY.\n- Sanity anchors: even harmonic beats unweighted **+0.152** (227 right that weighting matters); best beats unweighted **+0.304** (wrong about the exponent).\n\n**ERRATUM-GRADE SUPERSESSION of recorded paper 227's adopted parameter**: canonical scale-smoothness covariate refined **1/\u2113 \u2192 1/\u221a\u2113 lab-wide**. Large primes carry ~\u221a\u2113\u00d7 more relative weight than the inspection-chosen form assumed (at \u2113=400: 1/11.5 vs 1/133 of \u2113=3's weight); the fix lifts dial explanatory power R\u00b2=.473 \u2192 .624 (**+31% relative**) on identical data. Every future dial computation uses \u221a-weight. NAMED OPEN CHECK: window-location saturation B\\*=400 was measured UNDER 1/\u2113 (papers 136/139/227) \u2014 transfer to \u221a-weight UNVERIFIED before reuse.\n\nIntegrity: 128/128 Ns regenerated byte-identical from recipe seed 20260827; odd-prime QR counts match stored S400 EXACTLY (diff 0.0, corr \u22481.0 \u2014 exp577's dial effectively excluded \u2113=2 despite config ambiguity). Limits disclosed: discrete grid \u00b10.25 resolution (fine structure near 0.5 not fit per pre-registration); one seed, pure reanalysis; log-rate Poisson attenuation uniform across \u03b1 (argmax robust, absolute R\u00b2s attenuated); smoke n=16 grid-edge 0.25 was small-n noise. Ledger catch: task-brief schema drift only (raw_counts keys vs rows layout) \u2014 no data issue.\n\nBarrier framing: instrument hardening of the map's canonical covariate \u2014 residue cap 4/3 untouched; no breakthrough claimed; directly strengthens ranked-queue #1 (rate-layer N-covariate at u\u224810) by raising the ceiling on QR-dial-absorbable N-structure.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/exp586_{weight_exponent.py, smoke.log, full.log, result.json} + exp586_findings.md; source data exp577_result.json rows. Notebook Part 277; assessment addendum v342.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4053",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T20:50:39.560667+00:00",
     "title": "FACT round-83 #2 \u2014 WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED \u2014 dial weight exponent alpha_hat=0.5 not 1 (single-peaked R2 curve .32/.50/.62/.58/.47/.30, dR2=+0.151>=bar; boot CI [0.5,0.5] excludes 1 decisively 492/500); ERRATUM-GRADE SUPERSESSION of paper 227's adopted 1/l covariate -> 1/sqrt(l) lab-wide (+31% relative dial power on identical data)"
   },
@@ -4309,6 +4295,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7b6f9981 (Q=0.790), which proved 94 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop injective subfamilies of the Vieta identity\n   `a\u00b3+b\u00b3+(-a-b)\u00b3=-3ab(a+b)` and derive quantitative lower bounds for the\n   number of represented integers, preferably without padded zero cubes.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_7b6f9981_78dd75f6",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "7b6f9981",
+    "status": "available",
+    "timestamp": "2026-08-25T18:58:46.777350+00:00",
+    "title": "Deepening: Parametric families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
     "domains": [
       "Algebra",
@@ -4323,21 +4323,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Treat Lean 4's type checker as an 'environment' and formalized mathematics as 'organisms' adapting to it. Define fitness: f(M) = (number of theorems proved by M) / (lines of code in M). Prove: the fitness landscape has local optima corresponding to 'mathematical styles' (algebraic, analytic, combinatorial). Conjecture: Mathlib is a global fitness maximum for the set of theories expressible in CIC. Show: migrating a proof from one local optimum to another requires crossing a 'fitness valley' of temporarily decreased fitness.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "seed_393",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },
   {
     "consumed_by_exp_id": "",
@@ -37150,6 +37135,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the hump of the uniform-mixture residual is not a\nproperty of the pair `(power law, Dickman surrogate)` but a property of the\n*exponent*: the algebraic log-slope `(1 - (b-1)x)/(x(1+x))` and the exponential\ncorrection `1/(e^x - 1)` become tangent at a single critical `b_c`, above which\nno sign change survives.  The bracket `(11/10, 3/2)` is proved; unverified\nroot-finding puts `b_c \u2248 1.1605`, and the reported bootstrap interval\n`[0.991, 1.218]` straddles it.  **Why now?**  Both endpoints of the bracket are\ntheorems (`uniformResidual_peak`, `uniformMixtureResidual_strictAntiOn`), so the\nremaining task is the tangency system \u2014 a two-equation, two-unknown problem in\nelementary transcendental functions \u2014 and it converts a numerical observation\ninto a decidable experimental target.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4187",
+    "priority_score": 0.44258253139399084,
+    "research_mode": "team",
+    "source_exp_id": "a08d5a50",
+    "status": "available",
+    "timestamp": "2026-08-25T18:58:13.192598+00:00",
+    "title": "Critical exponent for mixture-hump onset"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** The map `\u03b2(g, z) = log (discHoro (g \u2022 w) / discHoro w)` with\n`w = cayleyC z` defines a genuine `\u211d`-valued cocycle on `SL(2,\u211d) \u00d7 \u210d` whose\ncoboundary class is trivial exactly on the parabolic subgroup fixing `\u221e`, i.e. the\nkernel of the class is precisely the set `{\u00b1 transMat t}` identified by\n`horocycle_preserving_iff_translation`.\n\n**The key insight is** that `horocycle_preserving_iff_translation` is really the\nstatement `\u03b2 \u2261 0 \u2194 g = \u00b1 transMat t`, so the theorem already computes the kernel of a\ncocycle that has not yet been named; naming it converts a matrix identity into a\ncohomological invariant.\n\n**Why now?** The formalisation gives the kernel exactly (both directions), which is the\nhard half of any cocycle-class computation; the cocycle identity itself follows from\n`mobius_mul`, also already proved.\n\n---",
     "domains": [
       "Algebra",
@@ -37319,6 +37319,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T10:41:05.526322+00:00",
     "title": "Direction 5 \u2014 Finite-Population Separator as a Geometric Mean"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that \"profile layer has a law, residual layer does not\"\ncan be phrased as an orthogonality: the residual has zero component along the\none-parameter group of dilations `x \u21a6 (1+x)\u03bb \u2212 1` that fixes the profile family.\n**Why now?**  The rigidity theorem identifies exactly that group, so the\ndecomposition of a measured profile into a group-covariant part and a peaked\nremainder is now well defined and testable on the existing data.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Critical Exponent for Mixture-Hump Onset\",\n    \"domain\": \"Probability\",\n    \"description\": \"The interior hump of the residual T/M against the uniform Dickman surrogate M(x)=(1-e^{-x})/x is exponent-dependent, not structural. Its exact log-derivative is 1/x - b/(1+x) - 1/(e^x-1); the algebraic part changes sign at 1/(b-1) while the exponential correction suppresses the change once b is large. We conjecture a single sharp critical exponent separating the two regimes.\",\n    \"conjecture\": \"There is a unique b_c such that the residual T/M with T(x)=(1+x)^{-b} against M(x)=(1-e^{-x})/x has an interior maximum on (0,infinity) exactly when 1 < b < b_c, and is strictly decreasing on (0,infinity) for b >= b_c; moreover b_c is the unique solution of the tangency system 1/x - b/(1+x) = 1/(e^x-1), -1/x^2 + b/(1+x)^2 = -e^x/(e^x-1)^2, and 1.16 < b_c < 1.161.\",\n    \"test\": \"Formalize the tangency system and prove uniqueness of its solution by a monotonicity argument in b; the bracket 11/10 < b_c < 3/2 is already proved (uniformResidual_peak and uniformMixtureResidual_strictAntiOn), so only tightening and uniqueness remain.\",\n    \"if_true\": \"The measured exponent b = 1.104 sits just below b_c while the bootstrap interval [0.991, 1.218] straddles it, so the experiment provably cannot decide whether the surrogate baseline itself humps \u2014 a second, independent undecidability of the same data set.\",\n    \"if_false\": \"Either the transition is not sharp (several sign changes, hence more than one hump), or monotonicity in b fails; in that case the shape of the residual carries strictly more information than a single threshold parameter.\",\n    \"proof_strategy\": \"Set F(b,x) = 1/x - b/(1+x) - 1/(e^x - 1) and note F is strictly decreasing in b for each x > 0. Hence the set of b admitting a positive value of F is a downward-closed interval, giving existence of b_c; uniqueness of the tangency point follows from strict concavity of x -> F(b,x) on the relevant range, which reduces to the Pade-type bounds already proved (exp_lt_pade, one_div_exp_sub_one_gt).\",\n    \"catalog_references\": [\n      \"Catalog.NumberTheory.ProfileFormHumpThreshold\",\n      \"Catalog.NumberTheory.ProfileFormHumpLocation\",\n      \"Catalog.NumberTheory.ProfileFormUniformMixturePeak\"\n    ]\n  },\n  {\n    \"title\": \"Exponent-One Mass Dichotomy for Positional Profiles\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"The fitted exponent b \u2248 1.104 has bootstrap interval [0.991, 1.218], which contains the value b = 1 at ",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4189",
+    "priority_score": 0.44050379192117534,
+    "research_mode": "team",
+    "source_exp_id": "a08d5a50",
+    "status": "available",
+    "timestamp": "2026-08-25T18:58:14.436517+00:00",
+    "title": "Layer separation as a spectral statement"
   },
   {
     "consumed_by_exp_id": "",
@@ -39890,6 +39905,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T20:50:04.022907+00:00",
     "title": "D2. Euclidean-step hierarchy (after the universal null)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that `b = 1` is not cosmetic: it separates finite from\ninfinite total window mass, and the bootstrap interval straddles it, so the\npresent experiment is provably unable to decide a qualitative property of the\npositional layer.  **Why now?**  `windowMass_tendsto_finite` /\n`windowMass_tendsto_atTop` make the dichotomy formal, so a re-run whose CI\nexcludes `1` converts a statistical statement into a proved qualitative one.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4188",
+    "priority_score": 0.4107400221967717,
+    "research_mode": "team",
+    "source_exp_id": "a08d5a50",
+    "status": "available",
+    "timestamp": "2026-08-25T18:58:13.655753+00:00",
+    "title": "Exponent-one dichotomy as a decidable experimental target"
   },
   {
     "consumed_by_exp_id": "",
@@ -45295,19 +45324,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "General negative radix"
   },
   {
-    "consumed_by_exp_id": "7b6f9981",
-    "description": "Develop injective subfamilies of the Vieta identity\n   `a\u00b3+b\u00b3+(-a-b)\u00b3=-3ab(a+b)` and derive quantitative lower bounds for the\n   number of represented integers, preferably without padded zero cubes.",
-    "domains": [],
-    "id": "fd_2705",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "972f5eac",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:38.674015+00:00",
-    "title": "Parametric families"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For\n   every `n \u2265 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.",
     "domains": [],
@@ -45538,14 +45554,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "prove *soundness* \u2014 every DP value is realised by some labelling;"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5020a9e7",
     "description": "Prove that the perfect-ZK property of\n   `viewProb` is preserved under `k`-fold sequential repetition by showing that the\n   product view distribution factorizes, i.e. `viewProb^{\u2297k} = simProb^{\u2297k}`.",
     "domains": [],
     "id": "fd_2865",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "6a4657f8",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:35.426665+00:00",
     "title": "Sequential and concurrent composition"
   },
