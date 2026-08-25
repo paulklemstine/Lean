@@ -2548,25 +2548,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "4aeadf94",
-    "description": "Round-72 #4, exp 554. **U120-FLOOR-LOWER**: pooled Spearman(T, rate) = **0.43636** CI [0.38815, 0.48113] — the U116 rebound fully retraced and overshot (step −0.0483); the +0.0226 was noise around a continuing decline. Ladder: 0.5739 → .5436 → .5005 → .4880 → .4621 → (.4847) → 0.4364. Seed spread widened to 0.082. T beats count +0.0752 (point PASS; paired-CI caveat disclosed). Rate mean flat.\n\nLedger: window convention resolved pre-data; exact two-part q-decomposition past 2^66; all 36k values re-verified vs full Pollard-rho (0 mismatches); wall 41.9 min vs budget DISCLOSED.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp554_t_dial_unif_120.py + exp554_result.json + log.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3927",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T04:10:59.497816+00:00",
-    "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypothesized floor (paper 204)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "**#2 exp556 TREE-SIEVE (paper 202):** the combining proposal is **INVALID AS STATED** — Π(mᵢ−nᵢ)(mᵢ+nᵢ)=Y² lives in ℤ, never reduces mod N; candidate pairs are N-independent ⟹ per-ticket success = generic gcd luck O(N^{−1/2}). End-to-end: 8/12000 splits vs baseline 4/12000 vs heuristic 6.55e-4 — CONSISTENT-LOTTERY. Smoothness boost real but modest: tree values 7.31× smoother than random (vs naive ~44× prediction); BFS starvation confirmed (50k nodes never reach the analysis window). Corrected variants forcing u≡v mod N collapse to Dixon/QS — barrier 8.\n\n**#3 exp558 MULTI-TARGET (paper 203):** relaxing exact a=N to gcd(a,N)>1 — blind FIFO stays broken (55% censored, α=1.17-finished); value-guided best-first wins 1500/1500 paired (median visit ratio 0.111, zero censoring) **but the mechanism is ascending-value sweep: 100% of first-hits land exactly at a=min(p,q), α=1.087 r²=1.0 = dead center of the TD band**. Honest headline: the relaxation turns an uncomputable search (~2^56 units) into a trial-division-class one (~2^16) — ~10^12× better than blind, yet still dominated by ρ (α=0.458). Every route through the tree's integer face ends in a known method.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp556_tree_sieve.py + exp558_multi_target.py + JSONs/logs, seed 20260826.",
     "domain_bridges": [],
@@ -2601,25 +2582,6 @@
     "status": "available",
     "timestamp": "2026-08-24T05:03:28.425620+00:00",
     "title": "FACT round-73 #2 — ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; skip-flip wins deployment (paper 207)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "40fe72ea",
-    "description": "Round-73 #1, exp 560. **PORTFOLIO-RHO-UNIVERSAL+H3-FAIL.** Oracle winner shares: ρ 58.0%, p−1@256 34.5%, PM1@1024 4.5%, Fermat 2.8%, TD 0.17% — flat across bitlen AND balance quintiles; the organizing axis is p−1 powersmoothness, an **N-INVISIBLE channel** (self-hint closure replicated in a scheduling frame). Scheduling: static regret 3.117 vs oracle; dial rule tuned itself to do-nothing (Δ=0.000); ML rule significantly WORSE (4.683). Median regret 1.000 for all strategies — the fat tail lives in the smoothness-carried minority no N-only dial reaches. Named next cell: PAID smoothness probes (short-capped p−1 as observation).\n\nLedger: eliminations need dominance-in-distribution arguments (mean-vs-constant H3 refuted by TD variance-tail + PM1_1024 share); sampler-dependence scope note (wide ranges dilute the Fermat channel vs paper 137's balanced-bet design).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp560_portfolio.py + exp560_result.json + per-N CSVs, seed 20260827.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3939",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T05:03:28.427083+00:00",
-    "title": "FACT round-73 #1 — PORTFOLIO: no universal winner, no dial edge; regret tail is N-invisible (paper 206)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2776,25 +2738,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "9061d61f",
-    "description": "Paper 218 · round-75 #2 · exp 570 · assessment v325 · script exp570_collision_trace.py · seed 20260824 · wall 1.3 s\n\n**Question.** Paper 215 confirmed NO ECM destruction wall and flagged a confound: guarded-affine accounting carries a random-collision baseline ~1−exp(−1.44·B1/p) per curve, so low-B1 successes conflate ORDER-HITS with COLLISION-LUCK. Discriminate by TRACE (normalized firing-step index) and SCALE (cross-bitlen collapse test), to settle whether \"it was collisions all along\" amends paper 159.\n\n**Pre-registration (verbatim).** H1: hit STEP-INDEX distribution ~UNIFORM at B1/p=0.125 (collision-dominated), CONCENTRATED in the FINAL 20% at B1/p≥0.5 (order-completion) — KS rejects at high B1 but not low. H2: bitlen-32 low-B1 found_p rate DROPS toward the collision baseline 16.47% per curve.\n\n**Result — both refuted, geometry inverted.**\n- H2 dead: found_p rates at B1/p=0.125 sit far ABOVE the floor — bitlen-26 65.0% [CI .495–.779], bitlen-32 62.5% [.470–.758] vs per-curve 16.47%; first-curve rates 42.5%/40.0%; cross-bitlen two-prop z p=0.8161 — no collapse toward floor as p grows ⇒ collisions real but SUBDOMINANT.\n- H1 inverted: KS REJECTS uniformity even at low B1 (p=0.0166/0.0446); at B1/p=0.9 hits concentrate near step ZERO — median normalized index 0.09/0.102, combined final-20% tail 0/55 (binom p≈0.004 vs registered 20%). Order-completion marks EARLY.\n- NEW TRACE LAW: hit position ~ max-prime-power(ord)/B1 (Golomb/Dickman-low flavor) — added to the factor-local map as a measured regularity.\n\n**Amendment chain terminates:** paper 159 wall sentence rejected as stated (by paper 215); collision-baseline amendment rejected here; paper 215's NO-WALL account stands unamended.\n\n**Honest caveats:** true ops = 2.59·B1, not the 1.44 constant — all baselines recomputed both ways and reported (exact-op per-curve means 27.1–27.8%, 3-curve cell means 61.2–62.3%); measured cell rates coincidentally near exact-op 3-curve collision arithmetic but per-curve excess + KS + empty tail rule out dominance; found_q censoring disclosed (pure q-side collision luck); deaths collapse silently (inherited exp568).\n\n**Ledger catch (pre-data):** closed-form step counter initially wrong on later chunks (len doubles / popcount adds, not len−1 / popcount−1) — caught by traced-vs-closed assert BEFORE any full data existed, fixed, verified 29/29 on smoke curves; smoke regenerated after fix.\n\n**Barrier framing:** barrier-8 bookkeeping audit completing paper 215's evidence chain. No barrier breached, no constant shaved. No breakthrough.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3959",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T09:06:21.849836+00:00",
-    "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry — low-B1 success sits far above the collision floor (65.0%/62.5% vs 16.47%, cross-bitlen z p=0.82); hits fire near step ZERO at high B1 (median 0.09–0.10, final-20% tail 0/55, binom p≈0.004) — paper-159 amendment-candidate REJECTED as stated; new early-fire trace law added"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Exp 572 · paper 217 · assessment v324 · script ResearchOutput/scripts/2026-08-24-round74/exp572_ma1_signed.py · seed 572 · wall 6.96 s.\n\n**Question.** Paper 213/exp566 closed the MAGNITUDE route of MA-1 effectivity (|L(1,χ)| does not predict |AP deviations|, R²=0.019) but preserved the SIGNED route: do signs of character-twisted prime-count deviations align with signs predicted by computable character data? A yes would be the first computable handle on AP-deviation structure.\n\n**Key structural disclosure** (post-smoke, pre-full-data): L(1,χ)>0 for EVERY real non-principal χ (class-number formula) ⇒ sign(w)≡+1 identically (n_cells_w_negative=0 at full scale), so registered criterion C1 reduces exactly to Pr[c_χ>0] and could only fire if prime twists were majority-positive. Working identity asserted exact (<1e-9): c_χ = Σ_a d_a·χ(a) = Σ_{p≤x} χ(p); the uniform-li theory term vanishes identically by orthogonality, so signed L(1,χ) is the only computable x-independent theory weight.\n\n**Design.** x=2²⁶ full (π(x)=3,957,809); 287 moduli (squarefree [3,300] ∪ primes [307,997]); 491 real-char cells; 86,882 unit classes; machinery verbatim from exp566 (class-number exact D<0 |D|≤400, truncated-L otherwise, median rel err 1.8e-5); CP95 intervals + within-modulus d-shuffle null (2000 draws — MEANINGFUL here unlike exp566 since sign(c) is not permutation-invariant in a).\n\n**Result H0 — both criteria fail, both levels.** Cell agreement 15.07% over 491 cells (74 agree), CP95 [0.1202, 0.1855], circular-sum z=−52.72 (C2 needs >3). Class level 48.74% over 86,882 classes, CP95 [0.4841, 0.4907], permutation z=−7.74 — significantly BELOW chance (mild anti-alignment). Breakdowns all CIs wholly below 50%: prime-modulus quadratics 26.9% (167), product chars ω≥2 8.95% (324), exact-L 12.8% (226), truncated-L 17.0% (265), drop-|w|<1e-3 robustness unchanged.\n\n**Named byproduct** (labeled exploratory, not pre-registered): prime twists NEGATIVE in 84.7% of cells (CP95 [0.8123, 0.8779]; smoke x=2²² read 91.7%) — the universal Chebyshev/Rubinstein–Sarnak low bias, independently confirmed inside the lab's own AP-deviation machinery at x=2²⁶. Deviation signs are one-directional across moduli and zero-driven, NOT carried by any computable L-value — precisely why no L-based predictor can track them.\n\n**Ledger.** (1) m=6 orthogonality assert exposed the raw-primitive-twist ±1 correction for primes p|m, p∤cond(χ) (max corr 3, 0 sign flips induced — disclosed, not corrected); (2) class-z scale mix-up fixed (−310 → single-scale −7.74); (3) exp566's 'within-modulus shuffle vacuous' caveat verified NOT to transfer here.\n\n**Barrier framing.** Closes barrier-map residual 'MA-1 effectivity' as a named question: no computable criterion via quadratic-character structure on either route (magnitude paper 213, sign here) at toy scale; the averaging identity's effective scope remains non-computable from N; consistent with barriers 4/5. No breakthrough.",
     "domain_bridges": [],
@@ -2814,7 +2757,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "3878539c",
+    "consumed_by_exp_id": "",
     "description": "Exp 569 · paper 216 · assessment v323 · script ResearchOutput/scripts/2026-08-24-round74/exp569_u9_drift_power.py (precision-patched POST-run; stored exp569_result.json is the pre-patch output) · seed 20260824 · wall 1467.4 s at 76.4 µs/value.\n\n**Question.** Paper 214 banked a direction-stable sub-1 drift in x²−N smoothness at band 9 (bitlen-96 balanced semiprimes): −5.3% at its primary 1e6 LPF-CDF cut and −13.6% at the 1e5 cut, every CI covering 1 but every split-half pointing the same way. Does a fresh independent seed/population at higher pair count replicate the drift downward?\n\n**Role honesty.** Throughput reality (76.4 µs/val) caps the night at ~1× the paper-214 pilot power, NOT the aspirational 10–30×; role reframed PRE-RUN as scoping (documented in-script): this run IS gate G1 (fresh-seed replication) of paper 214's own confirmation protocol; G2 control integrity is satisfied by construction (paired matching + identical tester code path).\n\n**Design.** 128 distinct N (seed 20260824), v = j²−N for j ∈ (s, 3s], 150k samples/N → exactly 19.2M candidate/control pairs. Tester: cumulative segment-primorial gcd chains (strip primes ≤1e5 then ≤1e6). Controls PAIRED per draw — same bit length, same 3-bit mantissa head, random low bits — through the IDENTICAL classify() code path. Cluster bootstrap NB=2000 percentile CIs over N-clusters / size-matched pseudo-clusters. Decision cut stays 1e5 per header pre-registration; 1e6 secondary (higher event rate → better powered, weight disclosed).\n\n**VERDICT: RANDOMNESS-EXTENDED (pre-registered H0 branch), no gate armed:**\n- PRIMARY cut 1e5: ratio CI95 [0.8571, 1.1488], excludes_1 FALSE ⇒ H0.\n- Secondary cut 1e6 (best powered): r = 0.0005/0.000506 ≈ 0.99, cluster-boot CI95 [0.919, 1.010] over 128 clusters on 19.2M pairs — tightest interval yet above u≈9; max CI-edge |r−1| = 0.081 tightens paper 214's 0.137 deliverable (H0 deliverable met).\n- POOLED with paper 214's pilot at matched conditions: @1e6 pilot 0.947 [0.8630, 1.0389] vs this 0.99 [0.919, 1.0101] — mutually consistent, joint point ≈ 0.97 (√2-tightened). The sub-1 drift does NOT replicate downward; residual tension DOWNGRADED from \"banked\" to \"open at reduced weight\". Decisive resolution still needs the 10–30× power run (queued named follow-up).\n\n**DISPLAY DEFECT disclosed prominently:** the pre-patch writer stored round(r,4), so the ~3e-5 candidate rate prints as stored \"r_cand\": 0.0 and raw hit counts were NOT persisted (unrecoverable post-hoc). True value is CI-pinned to [2.66e-5, 3.56e-5] (= CI × rate_ctrl 3.1e-5). Cite CI-implied bounds everywhere; NEVER the stored 0.0. Script precision-patched post-run (raw-count persistence added for any rerun).\n\n**Other ledger catches:** wall overshoot 1467 s vs ~1104 s estimate (candidate j²−N strips slower than random strips); smoke-leg verdict field is a NaN artifact of the starved-regime bootstrap (<100 non-degenerate resamples → NaN bounds → excludes_1 trivially True) — non-canonical, full-run verdict governs.\n\n**Barrier framing:** scale-smoothness frontier u ≥ 6–14; an H0 here STRENGTHENS papers 130/209/214 randomness into the Dickman approach zone through u≈11.7. No barrier breached, no constant shaved.\n\nArtifacts: exp569_u9_drift_power.py, exp569_result.json (pre-patch canonical), exp569_smoke_result.json, exp569_full.log, exp569_findings.md.\n",
     "domain_bridges": [],
     "domains": [
@@ -2826,7 +2769,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T09:06:21.852886+00:00",
     "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut-1e6 r=0.99 CI [0.919,1.010] covers 1); pooled with paper 214 pilot joint point ~0.97 — banked tension downgraded to open at reduced weight"
   },
@@ -3080,7 +3023,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea4eae2e",
     "description": "Paper 228. exp 578. Sources: ResearchOutput/scripts/2026-08-24-round74/exp578_hit_position.py (pre-registration in header BEFORE any data generation) + exp578_stratified_check.py (confound check, rule pre-stated BEFORE running) -> exp578_result.json (+ magnitude_confound_check block), exp578_positions.npz, wall 363 s full / 21.8 s smoke.\n\nVERDICT: POSITIONAL-STRUCTURE-REAL, amended BEYOND-MAGNITUDE-POSITIONAL-STRUCTURE — the FIRST POSITIVE carrier candidate for the ~39-61% unexplained per-N overdispersion (papers 220/222/226/227 thread).\n\nPOPULATION: 128 balanced bitlen-96 semiprimes, FRESH seed 20260828 hash 06931068f8f3ca9b, lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 REPRODUCED exactly, five-seed family pairwise disjoint; exp569 tester verbatim 150k j-samples/N cut 1e6, every hit position persisted. Overdispersion REPLICATED 4th time: mean 74.95 hits/N, D_raw 6.37, range 29-136.\n\nPRIMARY LEGS (treatment | paired non-hit control): (a) pooled KS u vs U[0,1], 9565 hits / 127 HITRICH Ns: D=0.09519 p=6.9e-76 FIRES | control D=0.00693 p=0.744 null. (b) lag-1..10 autocorr rho=+0.00283 CI [0.00112,0.00475] excludes 0 but below 0.05 bar -> no fire | repaired control -0.00112 null. (c) edge frac 0.2346 p=1.1e-16 vs 0.20 but < 0.25 bar -> no fire | control 0.1935 null.\n\nSTRATIFIED ANSWER (decisive): confound = v=j^2-N monotone => pure decay skews small-u; rule pre-stated before running. All 8 (bitlen(v) x mantissa-octant) cells contain every hit; vs size-matched non-hits per cell: 7/8 fire at p<0.01 (median cell p=1.86e-5), pooled stratified D=0.10423 EXCEEDS unstratified 0.09519, within-cell permutation p<0.0005 (0/2000), stratified-edge z=10.08. Deciles [.162,.123,.109,.097,.091,.091,.090,.084,.081,.072] monotone-declining vs flat control: hits cluster toward small-j ~10x stronger than magnitude predicts => structure fully survives size-conditioning = BEYOND-MAGNITUDE.\n\nCONSEQUENCE: real WITHIN-N positional geometry in the smooth locus of j^2-N opens POLYNOMIAL-SEQUENCE LOCAL STRUCTURE as carrier candidate for the ~39-61% residual. Named follow-ups: (a) functional form of the small-j profile; (b) does j-local clustering predict WHICH N are hit-rich (positional <-> rate link).\n\nLEDGER CATCHES (disclosed): run-1 control-arm leg-b mirrored treatment (acf read hit arrays unconditionally) - repaired from npz BEFORE verdicts, fired nowhere either way; confound-check order on record (pre-stated by coordinator, labeled post-hoc everywhere); legs a/c overlap registered up front.\n\nBarrier framing: scale-smoothness mechanism frontier - opens rather than closes; H0-route also cleanly closed (control nulls). Residue cap untouched; no breakthrough claimed.",
     "domain_bridges": [],
     "domains": [
@@ -3092,7 +3035,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T15:58:32.184828+00:00",
     "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNITUDE — pooled KS D=0.09519 p=6.9e-76 (9565 hits/127 hit-rich Ns, paired control null); stratified check decisive: conditioning on all 8 v-cells RAISES D to 0.10423, 7/8 cells fire, permutation p<0.0005 — real within-N geometry in the smooth locus of j²−N; first positive carrier candidate for the ~39–61% residual"
   },
@@ -3613,6 +3556,25 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**Round-95 #2 · exp 598b MIXTURE-RATE-CELLS · verdict: BORDERLINE_INCONCLUSIVE_CONTROL_FLAGGED**\n\nCompletes the rate-layer coverage matrix: papers 227/235/236 tested QR **dials** (weighted marginals S_α); exp596 tested **pairwise interactions**; this experiment asked whether the FULL **16-cell divisibility mixture** — joint class vector (2|v, 3|v, 5|v, 7|v), v = j²−N — explains per-N hit-rate variance BEYOND the sqrt dial S_sqrt,400.\n\n## Pre-registration (script header, BEFORE analysis)\n- **H1 (mixture adds):** hierarchical OLS log-rate ~ dial alone vs ~ dial + cell fixed effects raises adjR² ≥ 0.05 WITH perm p < 0.01 (500 row-shuffles of cell labels)\n- **H0 (dial sufficient):** ΔadjR² < 0.02\n- else BORDERLINE; **control:** permuted-RATE arm must be null (p_ctrl > 0.05 AND max control Δ < observed) — non-null FLAGS THE WHOLE INFERENCE\n\n## Result (full run: seed-20260827 semiprimes bits=96, n_pool=128, two fresh 50k/N streams, gcd-chain primorial(10⁶) tester, mean 779 hits/N, wall 551.6 s)\n\n| Bar | Threshold | Observed | Fires? |\n|---|---|---|---|\n| H1 effect | ΔadjR² ≥ 0.05 | **+0.0827** [0.0209 → 0.1036] | ✅ |\n| H1 permutation | p < 0.01 | **0.0399** (null q95 0.0727, max 0.163) | ❌ |\n| H0 sufficiency | ΔadjR² < 0.02 | 0.0827 | ❌ |\n| CTRL clause 1 | p_ctrl > 0.05 | 0.0519 (barely) | ✅ |\n| CTRL clause 2 | max(control Δ) < obs | **0.186 > 0.083** | ❌ |\n\n⇒ Neither claim available. A y-shuffle produced ΔadjR² LARGER than the observed effect: 15 free cell betas against 128 noisy log-rates fit shuffled rates to R² ≈ 0.1+, so the raw +0.083 cannot be read as composition carrying rate structure beyond the dial — and the dial-sufficiency upgrade is equally unavailable.\n\n## Sensitivity / consistency\n- α = 1 sensitivity: Δ = +0.066, same sign, same sub-threshold character.\n- Smoke (32 Ns, non-evidentiary): Δ = +0.346 with ctrl_ok false — textbook small-n overfit; collapse +0.346 → +0.083 under 4× population is itself the warning.\n- Does NOT contradict exp592's kappa-ordering replication (top-cell RANKING ≠ rate-variance increment).\n\n## Consequence\nAdditive-completeness stays at **DIAL level**. Rate-layer coverage matrix closes UNRESOLVED-AT-RESOLUTION on the joint-cell layer: answerable at ~4× n_pool, a reduced cell basis, or a paired design with null spread measured on the test statistic's own footing — pre-stated so the next iteration powers it correctly instead of re-firing the flagged design.\n\n## Honest limits\nRegen hash-check CONDITIONAL (exp586 stores no N strings; recipe identity + exp586's own 128/128 regeneration_verified are the mitigation). Hit classifier = gcd-chain primorial(10⁶) full-smoothness — same CLASS/cut as exp577's spec, not source-verbatim (source outside read allowance); absolute rates not comparable to exp577 rows. Cell rows permuted JOINTLY (conservative). Session crashed between completion (result JSON written 23:47) and recording; recovered post-hoc from completed artifacts.\n\nNo barrier breached; the flagged control REDUCES downstream exposure (discredits naive uncalibrated ΔadjR² readings from rich fixed-effect designs at small n_pool).\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp598b_*`, paper `ResearchOutput/NewMathematics/255_MixtureRateCells.md`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4113",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T05:51:23.152998+00:00",
+    "title": "FACT round-95 #2 — MIXTURE-RATE-CELLS (exp 598b): BORDERLINE-INCONCLUSIVE CONTROL-FLAGGED — ΔadjR² +0.083 clears the H1 effect bar but perm p = 0.0399 misses <0.01 AND the permuted-rate control arm is NON-NULL (max control Δ 0.186 > observed, p_vs_obs 0.052) — neither mixture-adds nor dial-sufficient claimable at n_pool=128; rate-layer coverage matrix closes UNRESOLVED-AT-RESOLUTION on the joint-cell layer"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domain_bridges": [
       "Pythagorean <-> Physics"
@@ -3715,6 +3677,25 @@
     "status": "available",
     "timestamp": "2026-08-18T05:46:10.947071+00:00",
     "title": "Deepening: Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 569bc76d (Q=0.880), which proved 156 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_569bc76d_a03292db",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "569bc76d",
+    "status": "available",
+    "timestamp": "2026-08-25T05:49:54.837772+00:00",
+    "title": "Deepening: Ellipsoids"
   },
   {
     "ambition_level": "grand_challenge",
@@ -5982,26 +5963,6 @@
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "seed_363",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
     "ambition_level": "extension",
@@ -15757,6 +15718,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Bridges.EllipsoidLowerDimSections",
+      "Bridges.EllipsoidExtremalUniqueness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Identify the minimizing and maximizing m-dimensional central sections of a diagonal ellipsoid. The Gram determinant governing the section volume is, by Cauchy-Binet, a weighted sum of squared m x m minors of A^{-1} iota, so the extremal subspaces should be spanned by the extreme semiaxes. The codimension-one case, including its equality case, is now proved and serves as the base case.\n\nFor A = diag(d) with 0 < d_0 <= ... <= d_{n-1}, the minimum of vol_m(E A ∩ V) over m-dimensional subspaces V equals (prod_{j<m} d_j) vol(B^m) and the maximum equals (prod_{j>=n-m} d_j) vol(B^m), both attained at coordinate subspaces, and only there up to multiplicities.\n\nProve Cauchy-Binet for det((A^{-1} iota)^T (A^{-1} iota)) in Lean, compare the resulting sum of squared minors against the extreme coordinate terms, and sample random orthonormal frames numerically for n <= 5, m <= 3.\n\nUpgrades volume_centralSection_sandwich from crude lo^m/hi^m bounds to the exact extremal values, with explicit extremizers and uniqueness.\n\nSome non-coordinate subspace beats every coordinate one, revealing that the compound matrix of A^{-1} is not diagonally extremal and requiring a genuinely new majorization argument.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4098",
+    "lineage_refs": [],
+    "priority_score": 0.710972972972973,
+    "proof_strategy": "Establish Cauchy-Binet for Gram determinants; observe that the minors of a diagonal-times-frame product factor as (prod_{i in S} d_i) times a minor of iota; bound the resulting convex combination using the orthonormality relation sum_S (minor_S iota)^2 = 1, and import the equality case from volume_centralSection_eq_max_iff in codimension one.",
+    "research_mode": "team",
+    "source_exp_id": "569bc76d",
+    "status": "available",
+    "timestamp": "2026-08-25T05:49:40.477859+00:00",
+    "title": "Cauchy–Binet Extremality of Coordinate Sections"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Bridges.LovaszLocalLemmaFinite",
       "Bridges.ErdosProbabilisticRamsey"
     ],
@@ -20807,6 +20791,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Algebra.ZeroFitDialU120Floor",
+      "Algebra.ZeroFitDialU120Kantorovich"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Pooling a seed family can only lower a positive reading, and the exact worst case is now known to be the Kantorovich constant. The conjecture is that the upper bound (the seed maximum) and the lower bound (the Kantorovich value) are jointly attained by a single explicit family, so the envelope is a complete description of pooling.\n\nFor every window [alpha, beta] with 0 < alpha <= beta and every rho in [0,1] there is a two-block family with per-seed readings exactly rho, ratios in [alpha, beta], and pooled reading any prescribed value in [rho*2*sqrt(alpha*beta)/(alpha+beta), rho].\n\nConstruct the family explicitly in Fin 2 blocks of dimension 2 and verify both endpoints and an interpolation parameter in Lean.\n\nPooled readings can be inverted into exact per-seed intervals, upgrading the two-spread criterion from a sufficient test to a characterisation.\n\nThere is an unnoticed obstruction between the two envelopes, and the interval of achievable pooled values is a proper subset that must be computed.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4105",
+    "lineage_refs": [],
+    "priority_score": 0.5936486486486487,
+    "proof_strategy": "Interpolate between the Kantorovich extremiser (energies alpha : beta reversed) and the balanced family, using pooled_balanced_eq_weighted_avg for the upper endpoint and continuity of pooledCorr in the block energies.",
+    "research_mode": "team",
+    "source_exp_id": "4aeadf94",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:21.236441+00:00",
+    "title": "Sharp Two-Sided Pooling Envelope"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Combinatorics.KneeInvariance",
       "Catalog.Probability.NET76MultiplicativeAudit"
     ],
@@ -21531,6 +21535,27 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Algebra.ZeroFitDialU72Parity",
+      "Algebra.ZeroFitDialU120Certificates",
+      "Algebra.ZeroFitDialU64Aggregation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Gram positivity for three vectors is equivalent to the ellipse inequality (c-ab)^2 <= (1-a^2)(1-b^2), which this cycle showed is strictly stronger than its AM-GM relaxation. The conjecture is that a record of k statistics against one response is governed by a nested chain of ellipsoid certificates given by the leading principal minors of the Gram matrix, with the innermost one pinning the matrix completely.\n\nFor k statistics with readings a_1,...,a_k against a unit response, the achievable set of pairwise correlations is exactly the set cut out by the nonnegativity of all leading principal minors of the bordered Gram matrix, and the k-th minor is tight precisely for the equidistant extremisers of the capacity sheet.\n\nFormalise the k = 3 case (a four-by-four bordered Gram determinant) and compare its projection to the pairwise ellipse certificates already proved.\n\nMulti-statistic records get exact feasibility tests, replacing the current per-pair certificates.\n\nThe projections of the higher minors are strictly larger than the pairwise intersections, and the pairwise certificates are the best practical tool.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4107",
+    "lineage_refs": [],
+    "priority_score": 0.591969696969697,
+    "proof_strategy": "Use the Cholesky/Schur-complement factorisation of a positive semidefinite Gram matrix to express each minor as a residual norm, exactly as gram_det_nonneg does for k = 2.",
+    "research_mode": "team",
+    "source_exp_id": "4aeadf94",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:22.293901+00:00",
+    "title": "Determinantal Hierarchy of Ellipse Certificates"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Pythagorean.ZeroFitDialAlphabetUniversality88",
       "Catalog.Pythagorean.ZeroFitDialProductLaw88"
     ],
@@ -22046,6 +22071,76 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Novelty.EcmStageOneTraceLaw",
+      "Novelty.EcmTraceLateTailDecay",
+      "Novelty.SmoothNumberLowerBound"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The density of ECM stage-1 orders firing in the last tau-fraction of the prime schedule should equal log(1/(1-tau))/log B1 asymptotically. The trace law turns the positional question into a Mertens sum over primes in ((1-tau)B1, B1]. It replaces the pre-registered constant-tail hypothesis by a decaying law.\n\nFor fixed tau in (0,1), the density of n <= M with pi(maxPF n) > (1-tau) pi(B1) and maxPF n <= B1 equals (log(1/(1-tau))/log B1)(1+o(1)) as B1 -> infinity.\n\nFormalize Mertens' second theorem with explicit error, combine with lateCount_le_primeContribution and a matching Bonferroni lower bound; check against the sieve table for N = 10^3..10^7.\n\nThe late tail of any stage-1 trace is predictable from B1 alone, giving a parameter-free null for future ECM accounting audits.\n\nThe union bound is lossy at the top of the schedule, indicating correlations between large-prime divisibility events that themselves need explanation.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_4109",
+    "lineage_refs": [],
+    "priority_score": 0.5647746171324002,
+    "proof_strategy": "Union bound (already formal) for the upper bound; inclusion-exclusion to second order for the lower bound; Mertens with error term to evaluate the reciprocal sum over the window.",
+    "research_mode": "team",
+    "source_exp_id": "9061d61f",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:38.543793+00:00",
+    "title": "Mertens Firing-Tail Law"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.EcmStageOneTraceLaw",
+      "Novelty.EcmTraceLateTailDecay"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The stage-1 schedule weights a prime p by floor(log_p B1) bits of work, so the step-normalized and work-normalized firing traces differ exactly on orders divisible by higher prime powers. This predicts a second, independent observable for the next experiment.\n\nFor B1 >= 10^3 the expected gap between the work-normalized and step-normalized firing index is Theta(sqrt(B1) log B1 / (B1 / log B1)) and is dominated by the O(sqrt(B1)) schedule primes with exponent at least 2.\n\nProve matching upper and lower bounds for log2 stageProd B1 y against pi(y) log2 B1 and theta(y), then measure both traces in the next ECM run.\n\nRecording both traces yields a direct read-out of the prime-power structure of the group order, a new factor-local invariant.\n\nThe two normalizations agree to leading order, so trace bookkeeping can safely ignore prime powers.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4112",
+    "lineage_refs": [],
+    "priority_score": 0.5647058984721419,
+    "proof_strategy": "Split log stageProd into theta(y) plus the higher-prime-power correction, bound the correction by Chebyshev-type estimates, and compare with the pi-weighted step count.",
+    "research_mode": "team",
+    "source_exp_id": "9061d61f",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:40.217293+00:00",
+    "title": "Work-Trace versus Step-Trace Separation on Prime Powers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.EcmStageOneTraceLaw",
+      "Novelty.SmoothNumberLowerBound"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Because the firing threshold equals the largest prime factor, the median normalized firing index is pi(B1^rho)/pi(B1) with rho the Golomb-Dickman constant. This explains the measured medians 0.09-0.10 as a Dickman phenomenon rather than an elliptic-curve one.\n\nmedian_{n <= B1} pi(maxPF n)/pi(B1) = Theta(B1^(rho-1) log B1) with rho = 0.6243299885...\n\nProve the two-sided smooth-number bounds needed for the median of log maxPF n / log n, then apply Chebyshev bounds on pi; validate against the sieve table (medians 0.083, 0.034, 0.020, 0.005 for N = 10^3..10^6).\n\nEarly firing is universal across all stage-1 implementations and carries no curve-specific information, closing the trace channel as a factorization side channel.\n\nSome arithmetic of elliptic-curve orders biases the largest prime factor away from Dickman, which would be a genuinely new statement about #E(F_p).",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4110",
+    "lineage_refs": [],
+    "priority_score": 0.56469362728281,
+    "proof_strategy": "Dickman rho as the limit distribution of log maxPF n / log n, plus Chebyshev-type upper and lower bounds for pi to convert an exponent statement into a counting statement.",
+    "research_mode": "team",
+    "source_exp_id": "9061d61f",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:39.028395+00:00",
+    "title": "Dickman Median of the Normalized Firing Index"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Combinatorics.QuartetCodes",
       "Combinatorics.QuartetCodesSmallCases"
     ],
@@ -22243,6 +22338,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Algebra.ZeroFitDialU120Kantorovich",
+      "Algebra.ZeroFitDialU120Rigidity",
+      "Algebra.ZeroFitDialU120Stability",
+      "Algebra.ZeroFitDialU120Capacity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Scalar stability for the Kantorovich inequality is now proved: slack eps forces the ratio profile within weighted L1 distance eps/(2*alpha*beta*(beta-alpha)) of the window endpoints. The conjecture transfers this to the geometric dial, where the per-seed readings also vary, so the observed excess of the pooled reading over the sharp bound mixes reading spread with ratio spread. The claim is that the two contributions separate with an explicit constant.\n\nFor a block family with per-seed readings in [rho, rho+delta] and ratios in [alpha, beta], pooledCorr - rho*2*sqrt(alpha*beta)/(alpha+beta) is bounded below by c1(alpha,beta) times the weighted L1 distance of the ratio profile to the window endpoints, minus c2*delta.\n\nInstrument the proof of pooled_kantorovich_bound to carry the slack term rather than discarding it, then combine with kantorovich_stability and the reading spread bound from seed_reading_window; check numerically on two-block families with prescribed reading and ratio spreads.\n\nA measured pooled excess becomes a two-sided measurement of the seed energy profile, upgrading the inverse pooling law from a window to a quantitative reconstruction.\n\nReading spread and ratio spread cannot be disentangled from a single pooled number, and per-seed instrumentation is mandatory for any structural conclusion about seeds.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "fd_4106",
+    "lineage_refs": [],
+    "priority_score": 0.5641830391006109,
+    "proof_strategy": "Track the Cauchy-Schwarz defect in blockDot alongside the Kantorovich defect, express both against the same weighted measure given by the block energies, and apply kantorovich_stability to the ratio half while bounding the reading half by delta times the total energy.",
+    "research_mode": "team",
+    "source_exp_id": "4aeadf94",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:21.794313+00:00",
+    "title": "Stability Transfer to the Geometric Pooled Dial"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.NumberTheory.TagFrameSemantics",
       "Catalog.Combinatorics.BoxDepthReflection"
     ],
@@ -22262,6 +22382,29 @@
     "status": "available",
     "timestamp": "2026-08-24T20:49:41.706664+00:00",
     "title": "Reflection Depth as Type-Realization Index"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.PortfolioShareRealizability",
+      "Probability.PortfolioExp560"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Winner shares are realisable arbitrarily by choice of sampler, so they carry no algorithm-intrinsic information. Conjecture that the pointwise dominance order on cost vectors is the complete invariant: two portfolios induce the same set of achievable share-and-ranking profiles across all samplers iff their cost matrices have the same dominance order.\n\nTwo finite cost matrices are sampler-equivalent (same achievable pairs of winner-share vector and static ranking over all weightings) if and only if they induce the same pointwise dominance preorder on members.\n\nFormalise sampler-equivalence in the framework of Probability.PortfolioShareRealizability and verify the equivalence by exhaustive search over small matrices before attempting the general proof.\n\nBenchmark claims must be re-stated relative to a named sampler or to the dominance order, sharpening the scope caveat recorded in the ledger.\n\nSome sampler-invariant statistic beyond dominance exists, and identifying it would give a genuinely algorithm-intrinsic benchmark.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_4103",
+    "lineage_refs": [],
+    "priority_score": 0.5640838761163549,
+    "proof_strategy": "One direction follows from share_realizability by exhibiting extreme-point samplers; the converse requires separating hyperplanes on the simplex of weightings.",
+    "research_mode": "team",
+    "source_exp_id": "40fe72ea",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:03.713980+00:00",
+    "title": "Sampler-Invariant Content of a Factoring Portfolio"
   },
   {
     "ambition_level": "extension",
@@ -22493,6 +22636,52 @@
     "status": "available",
     "timestamp": "2026-08-23T04:53:23.384021+00:00",
     "title": "Drift Spectrum of the Shape Moments"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.EllipsoidJohnExistence",
+      "Bridges.EllipsoidCentralSections"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Existence of a determinant-maximizing inscribed ellipsoid is now formalized for arbitrary closed bounded sets. The conjecture is that for convex bodies the maximizer is unique, which would complete John's theorem on the existence-and-uniqueness level. The route is strict concavity of log det combined with convexity of the constraint set in the matrix variable.\n\nFor a convex body K with nonempty interior in R^n, there is exactly one positive definite A maximizing det A subject to E A contained in K.\n\nFormalize that inscribedGens K is convex when K is convex, prove strict concavity of log det on positive definite matrices, and derive uniqueness by contradiction from the midpoint of two maximizers; test numerically by running a determinant maximization from several random starting points for polytopes in dimensions 2 and 3.\n\nYields the John ellipsoid as a well-defined function of the body, unlocking John position, distance estimates and Banach-Mazur bounds in formalized form.\n\nNon-uniqueness for a convex body would contradict strict concavity of log det and would point to an error in the identification of the constraint set as convex.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4097",
+    "lineage_refs": [],
+    "priority_score": 0.563924223711703,
+    "proof_strategy": "Show that E((A+B)/2) is contained in the convex hull of E A and E B, hence in K; use the strict concavity inequality det((A+B)/2) > sqrt(det A det B) for distinct positive definite A, B (a consequence of the AM-GM inequality applied to the eigenvalues of A^{-1/2} B A^{-1/2}); conclude that two distinct maximizers are impossible.",
+    "research_mode": "team",
+    "source_exp_id": "569bc76d",
+    "status": "available",
+    "timestamp": "2026-08-25T05:49:39.938418+00:00",
+    "title": "Uniqueness of the John Ellipsoid"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.PortfolioThresholdSchedule",
+      "Probability.PortfolioSmoothnessChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The abstract threshold theorem shows that a monotone schedule is optimal as soon as the conditional cost matrix has decreasing differences in (smoothness quantile, member). Conjecture that the five-member factoring portfolio does satisfy this over powersmoothness quantiles, so the optimal paid-probe schedule is an interval rule in one scalar.\n\nFor the portfolio (rho, p-1 at cap 256, PM1 at cap 1024, Fermat, trial division) ordered by probe cap, and instances binned by the largest prime power of p-1, the matrix of conditional expected costs has decreasing differences; hence the optimal dial is monotone in the quantile.\n\nBin the per-N CSVs by powersmoothness quantile, form the conditional cost matrix and check decreasing differences directly; then instantiate exists_monotone_optimal_dial on the resulting rational matrix.\n\nThe paid-probe schedule collapses to a threshold search in one number, with each member played on an interval of quantiles.\n\nSome pair of members crosses twice, so the winner is not monotone in powersmoothness and the organising axis of the cell is not order-faithful.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4101",
+    "lineage_refs": [],
+    "priority_score": 0.563924223711703,
+    "proof_strategy": "Check the finitely many inequalities of DecreasingDifferences on the binned matrix, then apply leastArgmin_monotone and dial_fibers_ordConnected.",
+    "research_mode": "team",
+    "source_exp_id": "40fe72ea",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:02.623939+00:00",
+    "title": "Powersmoothness Single-Crossing Certificate"
   },
   {
     "ambition_level": "extension",
@@ -23511,6 +23700,52 @@
     "status": "available",
     "timestamp": "2026-08-23T23:36:34.129312+00:00",
     "title": "Probabilistic Replication Bound at Measured Margins"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.EllipsoidJohnExistence",
+      "Bridges.EllipsoidCentralSections"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Turn the newly formalized maximality of the John ellipsoid into the classical algebraic identity carried by the contact points. When the maximal inscribed ellipsoid of K is the unit ball, the contact points should admit positive weights resolving the identity matrix. This bridges convex optimization (first-order conditions for log det) with linear algebra (resolutions of the identity).\n\nIf K is a convex body whose maximal-volume inscribed ellipsoid is the unit ball, then there are unit vectors u_1, ..., u_N in the boundary of K and weights c_i > 0 with sum c_i u_i u_i^T = I and sum c_i u_i = 0, and N can be taken at most n(n+3)/2.\n\nFormalize the first-order condition: for every symmetric H with positive trace, the perturbed generator I + tH fails to be inscribed for small t > 0; dualize this to a separation statement in the space of symmetric matrices; verify numerically for the cube, the simplex and random polytopes in dimensions 2 and 3.\n\nProvides the algebraic engine behind John position, and hence formalized routes to the John inclusion K contained in n times the ball and to reverse isoperimetric estimates.\n\nFailure would mean that maximality of the determinant is not detected by first-order perturbations, which would indicate that the constraint set has a degenerate boundary at the maximizer and would demand a nonsmooth analysis.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4100",
+    "lineage_refs": [],
+    "priority_score": 0.5632628066067162,
+    "proof_strategy": "Differentiate log det at the maximizer to obtain the trace functional; show that the cone generated by the matrices u u^T over contact points u must span all symmetric matrices, else a strictly determinant-increasing perturbation stays inscribed; extract the weights from a separating hyperplane and Caratheodory's theorem for the dimension bound.",
+    "research_mode": "team",
+    "source_exp_id": "569bc76d",
+    "status": "available",
+    "timestamp": "2026-08-25T05:49:41.608223+00:00",
+    "title": "Contact-Point Decomposition in John Position"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.EcmTraceDivisorModel",
+      "Novelty.EcmTraceLateTailDecay"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The uniform-divisor null model and the uniform-integer null model give opposite predictions for the late-firing tail (63/64 versus < 0.08 at B1 = 100). Quantify how fast a batch of m recorded hits separates them.\n\nThe log-likelihood ratio between the integer and divisor models on m independent empty-tail observations grows at least like c(tau) m log log B1, with the divisor model rejected at m = O(1) for every B1 >= 100.\n\nCompute both tail probabilities in closed form (already formal for the divisor side) and bound the ratio; replay against the 55 recorded hits of exp 570.\n\nThe trace observable is a cheap, decisive discriminator between accounting models for guarded-affine ECM, usable as a routine audit.\n\nThe two models are statistically close on realistic batch sizes and the empty tail is uninformative, which would weaken the paper 218 conclusion.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4111",
+    "lineage_refs": [],
+    "priority_score": 0.5632628066067162,
+    "proof_strategy": "Exact divisor-count factorization for the divisor model, the log-decay bound for the integer model, then a Chernoff/binomial comparison.",
+    "research_mode": "team",
+    "source_exp_id": "9061d61f",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:39.509926+00:00",
+    "title": "Divisor-Model Separation Exponent"
   },
   {
     "ambition_level": "extension",
@@ -36071,6 +36306,94 @@
     "status": "available",
     "timestamp": "2026-08-25T03:14:29.986737+00:00",
     "title": "Local Axiomatization of Quartet Consistency"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.EllipsoidPolarDuality",
+      "Bridges.EllipsoidSlicingBounds"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend the exact Blaschke-Santalo equality for a single ellipsoid to bodies generated by finitely many ellipsoids. Polarity exchanges hulls with intersections, so the single-ellipsoid identity together with the polar calculus of this thread should give explicit two-sided bounds for the volume product of such bodies, producing calibration examples for the reverse Santalo inequality.\n\nFor invertible A and B, vol(conv(E A ∪ E B)) * vol((conv(E A ∪ E B))°) <= vol(B_n)^2, with equality if and only if E A = E B.\n\nProve that a set and its convex hull have the same polar, combine with polarSet_union and polarSet_ellipsoid to get (conv(E A ∪ E B))° = E((A^T)^{-1}) ∩ E((B^T)^{-1}), then bound the volume of that intersection; test numerically for diagonal A, B in dimensions 2 and 3.\n\nYields an explicit, fully formalized family attaining or nearly attaining the Santalo bound, useful as a calibration class.\n\nA hull of two ellipsoids would beat the ball, contradicting Blaschke-Santalo; a genuine counterexample would be a major discovery, so failure most likely localizes an error in the polarity step.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4099",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Prove polarSet (convexHull s) = polarSet s from linearity of the inner product, combine with polarSet_union, polarSet_ellipsoid and volume_ellipsoid, then use monotonicity of volume under inclusion together with volume_mul_volume_polarSet_le.",
+    "research_mode": "team",
+    "source_exp_id": "569bc76d",
+    "status": "available",
+    "timestamp": "2026-08-25T05:49:41.098296+00:00",
+    "title": "Volume Products of Multi-Ellipsoid Bodies"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.PortfolioNullDial",
+      "Probability.PortfolioRegretTail"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Fiberwise dominance of conditional means is now proved to preserve both the optimal dial value and the best static value. The open half is the distributional one: conditional stochastic dominance on every fiber is weaker per fiber, and it is unclear whether it still licenses deletion or whether the variance tail defeats it as it defeats global mean comparison.\n\nIf member b stochastically dominates member a conditionally on every fiber of obs, then deleting b changes neither dialValue nor bestConstant; and unconditional stochastic dominance does not suffice.\n\nFormalise conditional stochastic dominance in the finite rational framework, derive fiberwise mean inequalities from ev_le_of_stochDom, feed them into dialValueOn_erase_of_fiberwise_dominates, and search small cost matrices for the separating counterexample in the unconditional case.\n\nPortfolio pruning gains a distribution-level certificate strictly weaker per fiber than the mean test now proved safe.\n\nOnly fiber-mean comparisons are safe, and distributional eliminations in the literature need re-auditing.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4102",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Apply ev_le_of_stochDom fiber by fiber to obtain the hypothesis of the proved fiberwise elimination theorems; build the counterexample from the two-instance portfolio of mean_elimination_unsafe.",
+    "research_mode": "team",
+    "source_exp_id": "40fe72ea",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:03.230623+00:00",
+    "title": "Conditional Distributional Dominance as an Elimination Certificate"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.ZeroFitDialU64",
+      "Algebra.ZeroFitDialU72Parity",
+      "Algebra.ZeroFitDialU120Floor"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The recorded dial fades monotonically with bitlen once the U116 rebound is removed. Pooling and seed imbalance have both been eliminated as explanations, so the fade should come from tie geometry: the trailing-zero statistic has a fixed dyadic tie profile while the response's tie profile coarsens with bitlen. The conjecture makes the fade a product of two computable tie corrections.\n\nThere are tie-correction factors T_stat and T_resp(L), depending only on the tie profiles, with rho(L) = T_stat * T_resp(L) and T_resp(L+1)/T_resp(L) bounded above by a constant q < 1 for all large L.\n\nFormalise the two-sided tie-corrected Spearman ceiling for a pair of tie profiles, specialise the statistic side to the dyadic profile of Novelty.ZeroFitDialU64, and check the resulting ratio against the de-noised ladder ratios 0.9472, 0.9207, 0.9750, 0.9469, 0.9444.\n\nThe fade becomes a theorem about tie profiles rather than an empirical law, and the no-floor theorem of this cycle applies unconditionally.\n\nThe fade is driven by the response distribution itself, and the dial must be re-instrumented with a tie-free response before further ladder rungs are meaningful.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4104",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Extend the tie-attenuation identity rho^2 = 1 - 12*sum(m^3-m)/(n^3-n) to a two-profile version by applying it separately to each ranking and combining through the Gram inequality of ZeroFitDialU72Parity; then estimate the dyadic profile sums geometrically.",
+    "research_mode": "team",
+    "source_exp_id": "4aeadf94",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:20.738884+00:00",
+    "title": "Bitlen-Indexed Tie Attenuation for the Zero-Count Dial"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Algebra.ZeroFitDialU120Floor"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The de-noised ladder obeys a per-rung ratio bound 0.98. Combined with the geometric envelope theorem this yields an exact, falsifiable prediction five rungs ahead, already proved in Lean. The conjecture is that the law persists and the prediction holds.\n\nContinuing the bitlen sweep at the recorded cadence, the pooled Spearman reading five rungs after U120 is below 0.40.\n\nRun the sweep to five further bitlens and compare with the proved bound rho(5) < 0.40 under the hypothesis rho(k+1) <= 0.98*rho(k); a reading above 0.40 refutes the ratio bound at some rung.\n\nThe no-positive-floor theorem applies to the measured ladder and the floor hypothesis is dead.\n\nSome rung violates the 0.98 ratio, locating a bitlen at which the fade mechanism changes, which is itself the most informative possible outcome.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4108",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Already proved as u120_predicts_below_forty; the open part is experimental, namely whether the hypothesis holds at the next five rungs.",
+    "research_mode": "team",
+    "source_exp_id": "4aeadf94",
+    "status": "available",
+    "timestamp": "2026-08-25T05:50:22.776769+00:00",
+    "title": "Five-Rung Refutation Test for the Persistent Fade Law"
   },
   {
     "ambition_level": "extension",
@@ -51813,7 +52136,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7af52a9c",
     "description": "**Conjecture.** Up to relabelling, the only triples of integer linear maps that act as a\nternary tree on the node set `{1 ≤ n < m, gcd = 1, m+n odd}` with root `(2,1)` are the\nBerggren triple (determinants `±1`) and the Price triple (determinants `±2`), and no\ntriple of determinant `|det| ≥ 3` exists.\n\n*The key insight is* that determinant `d` forces the gcd of an image pair to divide `d`,\nwhich together with the parity condition (`a+c` and `b+d` odd, proved to be necessary)\nleaves only finitely many candidate matrices with entries bounded by the growth of `m`.\n*Why now?* An exhaustive search over `|entries| ≤ 3` already returns exactly the six\nknown generators, so the classification is within reach of a finite case analysis in\nLean.",
     "domain_bridges": [],
     "domains": [],
@@ -51823,7 +52146,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a1fe4956",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:28:38.902790+00:00",
     "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagorean trees"
   },
@@ -58380,7 +58703,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0bacd71c",
+    "consumed_by_exp_id": "",
     "description": "The dichotomy, the local homeomorphism property and the semicontinuity\nof `sheetNumber` are all proved; the remaining step is to run the same\ntrivialisation argument relative to an open subset of the base.",
     "domain_bridges": [],
     "domains": [],
@@ -58390,7 +58713,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "4b03d5cc",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T10:47:35.625224+00:00",
     "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
   },
@@ -61495,23 +61818,6 @@
     "status": "available",
     "timestamp": "2026-08-21T06:26:13.121258+00:00",
     "title": "monotonic improvement of the resulting guarantee as descriptions become shorter."
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "569bc76d",
-    "description": "Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_2804",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "2acb9b42",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:26:13.533810+00:00",
-    "title": "Ellipsoids"
   },
   {
     "ambition_level": "extension",

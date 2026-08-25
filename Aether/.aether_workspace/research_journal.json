@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "258afb8b",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — NET-72 (THE-FRENCH-KNEE-EXCEEDS-THE-GRID)\n\nThis cycle established four things about the memory knee of an attention\nprofile:\n\n1. a failed budget sweep certifies **only** a lower",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-23T13:03:22",
-      "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID — no grid point reaches the bar on French prose (knee >24 @"
-    },
-    {
       "cycle_id": "242b27e9",
       "domain": "Applications",
       "key_insight": "# Future Directions — Finite-Key Bounds on a Certified Asymptotic Core\n\nThis thread produced five Lean files in `Catalog/Applications/`, all sorry-free:\n\n* `BB84FiniteKeyBounds.lean` — the Padé `[1/1]",
@@ -499,19 +489,19 @@
       "theorem_count": 77,
       "timestamp": "2026-08-25T05:50:30",
       "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypothesized floor (paper"
+    },
+    {
+      "cycle_id": "9061d61f",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — ECM stage-1 firing trace (paper 218 / exp 570 thread)\n\n## What this cycle established (all formal, 0 sorries)\n\nThree new Lean files in `Catalog/Novelty/`:\n\n* **`EcmStageOneTraceL",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-25T05:50:48",
+      "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry — low-B1 "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e8a76d4f",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — Compression ⇋ one-way functions (Phase B / M8)\n\nDerived from the results in `Catalog/Novelty/CompressionLasVegasOWF.lean` and\n`Catalog/Novelty/CompressionLasVegasDecision.lean`,",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 109,
-      "timestamp": "2026-08-18T05:46:22",
-      "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
-    },
     {
       "cycle_id": "cf8480d3",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 77,
       "timestamp": "2026-08-25T05:50:30",
       "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypothesized floor (paper"
+    },
+    {
+      "cycle_id": "9061d61f",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — ECM stage-1 firing trace (paper 218 / exp 570 thread)\n\n## What this cycle established (all formal, 0 sorries)\n\nThree new Lean files in `Catalog/Novelty/`:\n\n* **`EcmStageOneTraceL",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-25T05:50:48",
+      "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry — low-B1 "
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-25T05:50:30",
+  "last_updated": "2026-08-25T05:50:48",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4caf1d72",
-        "quality": 0.82,
-        "theorems": 75,
-        "title": "Escape criterion iteration"
-      },
-      {
         "cycle_id": "6f1d7e50",
         "quality": 0.82,
         "theorems": 91,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 112,
         "title": "Weighted / signed sums"
+      },
+      {
+        "cycle_id": "9061d61f",
+        "quality": 0.78,
+        "theorems": 56,
+        "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverte"
       }
     ],
     "NumberTheory": [
