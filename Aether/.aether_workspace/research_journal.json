@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e4ce2d9a",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-71 (THE-TOKENIZER-TAX-IS-FOUR-KEYS)\n\nRound 24 closed the domain axis with a fourth corpus (German prose) and produced, in\nLean, four sorry-free files:\n\n* `Catalog/Logic",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 115,
-      "timestamp": "2026-08-23T13:47:36",
-      "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly one fine step ({20,24}"
-    },
-    {
       "cycle_id": "7797dc46",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Known versus unresolved cards\n\nThe cycle just completed established, with machine-checked proofs:\n\n* the **splitting theorem** `E[total payoff] = d` for `d` resolved cards plus a",
@@ -499,19 +489,19 @@
       "theorem_count": 54,
       "timestamp": "2026-08-25T08:00:15",
       "title": "C1 (drift constant is the standard deviation) — PROVED.*"
+    },
+    {
+      "cycle_id": "16c9261f",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — NET-96 thread (cost law for speculative decoding)\n\n## What this cycle established\n\nThree Lean files, all `sorry`-free:\n\n* `Catalog/Computation/SpeculativeSurvivalCostLaw.lean` —",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-08-25T08:00:33",
+      "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measu"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a5150a29",
-      "domain": "Pythagorean",
-      "key_insight": "# FUTURE DIRECTIONS — after the character-agnostic Weil floor\n\nThis cycle closed, in Lean, the algebraic content of four of the five conjectures of the\nprevious cycle and refuted half of one of them.",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-08-18T07:55:08",
-      "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
-    },
     {
       "cycle_id": "9aa1e8d1",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 54,
       "timestamp": "2026-08-25T08:00:15",
       "title": "C1 (drift constant is the standard deviation) — PROVED.*"
+    },
+    {
+      "cycle_id": "16c9261f",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — NET-96 thread (cost law for speculative decoding)\n\n## What this cycle established\n\nThree Lean files, all `sorry`-free:\n\n* `Catalog/Computation/SpeculativeSurvivalCostLaw.lean` —",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-08-25T08:00:33",
+      "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measu"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f45042dc",
-      "domain": "Pythagorean",
-      "name": "crossover_bound_profGap_profFloor",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "7934932a",
-      "domain": "MachineLearning",
-      "name": "disagreeProb_eq_one_sub_diag",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "7934932a",
-      "domain": "MachineLearning",
-      "name": "eventGap_le_disagreeProb",
-      "quality": 0.84
-    },
     {
       "cycle_id": "7934932a",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "abs_audit_num_sub_cov",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "16c9261f",
+      "domain": "Computation",
+      "name": "accept_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "16c9261f",
+      "domain": "Computation",
+      "name": "accept_succ",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "16c9261f",
+      "domain": "Computation",
+      "name": "gain_zero",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-25T08:00:15",
+  "last_updated": "2026-08-25T08:00:33",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "921a0e7b",
-        "quality": 0.83,
-        "theorems": 105,
-        "title": "It would upgrade \"the cost of internal soundness is one loop\""
-      },
-      {
         "cycle_id": "09567e3d",
         "quality": 0.89,
         "theorems": 134,
@@ -3327,6 +3321,12 @@
         "quality": 0.79,
         "theorems": 63,
         "title": "E3.  The margin does not"
+      },
+      {
+        "cycle_id": "16c9261f",
+        "quality": 0.78,
+        "theorems": 66,
+        "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival cur"
       }
     ],
     "Cryptography": [
