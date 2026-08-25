@@ -64343,7 +64343,7 @@
       "depth_estimate": 3,
       "description": "Define a formula `C_PA` representing `∀ n > 0, ∃ k, T^[k](n) = 1`, and prove adequacy between formula satisfaction in the standard model and `CollatzConjecture`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean"
       ],
@@ -75000,7 +75000,7 @@
       "depth_estimate": 3,
       "description": "connect that abstract theorem to a formalized Riemann zeta zero-counting theorem;",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean"
       ],
@@ -82340,7 +82340,7 @@
       "depth_estimate": 3,
       "description": "The odd-leg triples here are the \"consecutive\n   leg–hypotenuse\" family. Investigate whether a modified greedy rule enumerates\n   other primitive-triple families (e.g. consecutive-leg triples via Pell).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [],
       "github_issue": 0,
       "id": "fd_2507",
@@ -96607,7 +96607,7 @@
       "depth_estimate": 3,
       "description": "`r(D) − r(K − D) = deg D + 1 − g`.  With\n   `Reduced.lean`, `ReducedUnique.lean` and `Dhar.lean` the reduced-divisor calculus\n   is complete, so the missing ingredient is the combinatorics of acyclic\n   orientations with a unique source: the non-special divisors of degree `g − 1` are\n   exactly the classes `ν_σ`, and reversing `σ` realises `D ↦ K − D`.  This is what\n   makes the half-canonical degree self-dual and hence the natural place to test the\n   Brill–Noether conjecture: at `deg D = g − 1` Riemann's inequality gives nothing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean"
       ],
@@ -99807,7 +99807,7 @@
       "depth_estimate": 3,
       "description": "**C1 (`K_Schur ≤ 2·C_opt` for every family) — REFUTED, and not just for the constant `2`.**\n  `AsaiLargeSieve.schur_row_gap_unbounded` (in `AsaiSchurGap.lean`) shows that for *every*\n  constant `K` there is a family whose Gram matrix is Hermitian positive semidefinite — a\n  rank-one family `v = (1, ε, …, ε)` with `ε = 1/m` and `m³` copies of `ε`, i.e. a single\n  form — with an admissible large sieve constant `C = 1 + m` (`largeSieve_rankOne`) and Schur\n  row `1 + m²` (`schur_row_rankOne`).  So `K_Schur / C_opt` is unbounded, and positivity of\n  the Gram matrix alone gives no constant-factor comparison.  The case `K = 2` is recorded as\n  `schur_row_not_le_two_mul_largeSieve`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean"
       ],
@@ -100323,7 +100323,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For the true zeta ordinates, the limit `lim_{T→∞} Σ_{0<γ≤T} 1/(1/4+γ²)` proved to\nexist in `Convergence.lean` (under the ordinate bound calibrated numerically to `a ≈ 9.79`)\nequals `1 + γ_E/2 − log(2√π)`, and the truncation error satisfies the two-sided bound\n`c₁ log T / T ≤ Σ_{γ > T} 1/(1/4+γ²) ≤ c₂ log T / T` with `c₁, c₂ → 1/2π`.\n\n*The key insight is* that the conjugate-paired series is a **positive** series, so Abel summation\nagainst the counting function `N(T)` converts the Riemann–von Mangoldt asymptotic directly into a\ntwo-sided tail estimate, with no cancellation to control.\n\n*Why now?* `tail_bound_of_separated` already gives a one-sided `1/(a²N)` bound from a telescoping\nargument, and the numerics in `ComputationalEvidence.md` show the true decay is `log T/T`; the\nonly missing ingredient is a formalised Abel-summation lemma against a counting function.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean"
       ],
@@ -105118,7 +105118,7 @@
       "depth_estimate": 3,
       "description": "Let `σ(n)` be the stopping time of `n` under `T_3` and define the *orbit\ntransform* `G ω N = Σ_{n≤N} e(ω σ(n)/log n)`.  Then `G ω N / N` converges for\nevery `ω` to the characteristic function of the limiting distribution of\n`σ(n)/log n`, and the Collatz conjecture restricted to `[1,N]` is *equivalent*\nto `σ` being everywhere finite, i.e. to `G` being well defined — whereas no\nstatement about `F a ω N` has this property (by Conjecture 3 / the proved\nblindness theorem).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean"
       ],
@@ -109201,7 +109201,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every node satisfies `d_P(m,n) ≤ 2·log₂(m) + O(1)`; combined with the\nproved lower bound `m ≤ 2^(d+1)` this makes Price depth `Θ(log m)`, and hence\n`d_P = Θ(log N)` at the `N`-node, matching the observed `≈ 1.4·log₂(p+q)`.\n\n*The key insight is* that the Price parent halves `m` when `m` is even and halves `n`\nwhen `m` is odd, and the parity of `m` cannot stay odd twice in a row along a descent\nonce one tracks `(m mod 2, n mod 4)`: a two-step potential `Φ = log₂(m·n)` decreases by\nat least `1` per two steps. *Why now?* `price_parent` is formalised with all four cases\nexplicit, so the potential argument is a direct induction; this would upgrade\n`price_level_gt_fermat` from \"level width beats Fermat\" to a *complete* cost model of the\nPrice tree.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean"
       ],
@@ -118612,7 +118612,7 @@
       "depth_estimate": 3,
       "description": "The thresholds of BB84, the six-state protocol and their higher-dimensional analogues are zeros of Q-linear combinations of logarithms of rationals. The conjecture is that all are transcendental with unbounded continued-fraction partial quotients, and that each textbook percentage is a low-order convergent, as is verified here for 11/100 and p*.\n\nEvery QKD one-way threshold of the form 1 - a H_2(Q) - b H(f(Q)) = 0 with rational a,b is transcendental, and its convergents include the conventional percentage quoted in the literature.\n\nFormalize the six-state rate function, run the certificate scheme at denominators 100 and 10000, and compare the convergents of the resulting enclosure with 12.6 percent.\n\nA uniform explanation of why textbook QKD percentages are so short: they are convergents, hence optimal rational summaries.\n\nSome protocol has a badly approximable threshold, which would itself be a striking arithmetic phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean"
       ],
@@ -119036,7 +119036,7 @@
       "depth_estimate": 3,
       "description": "Allowing n regrown heads at move n (the Kirby-Paris convention) keeps termination — proved here via Dershowitz-Manna — but destroys the elementary bound. The conjecture is that the greedy strategy then takes ackermannian time, placing the game exactly at level F_omega of the fast-growing hierarchy: not primitive recursive, yet still provably terminating in PA.\n\nThe greedy stage-dependent Berggren battle from a single head of depth d has length at least A(d), the diagonal Ackermann function, and at most F_omega(c) for an explicit c.\n\nDefine the stage-indexed game StepsToStage and prove length >= A(d) by induction on d, matching the known analysis of flat hydras.\n\nA precise placement of a Pythagorean game at the Ackermann barrier: the first non-primitive-recursive phenomenon on the Berggren tree.\n\nThe stage dependence is absorbed by the potential, showing the game remains elementary and that branching alone can never leave the elementary class.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [],
       "github_issue": 0,
       "id": "fd_3444",
@@ -124099,46 +124099,6 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "43b197e4",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Round-40 #1, cron iteration (exp 477, assessment v254). Paper 144's honest remainder explained.\n\n**FOOTPRINT-WEIGHTS-CAPTURE-THE-RESIDUAL**: the theoretically-motivated feature Σ(2/p) over QR primes ≤400 (each QR prime p divides ~2/p of the x²−N values — two roots) lifts out-of-sample R² from 0.3927 to **0.5691** (+0.176, bootstrap CI [0.120, 0.229]) at u=2.5, and 0.2063 → 0.3078 (+0.102) at u=3.5. The direct mechanism feature (fraction of values divisible by p ≤13) adds independently; both together R² = 0.5864.\n\nThe per-N yield dial's final form: two cheap features (~200 Euler tests + a mod count), R² ≈ 0.59/0.34 out-of-sample. H3 (nothing systematic) refuted — the residual was real structure.\n\nBarriers: (5) all features are residue dials of METHOD input statistics — zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp477_qr_residual.py + exp477_result.json, seed 20260829.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Novelty"
-      ],
-      "github_issue": 247,
-      "id": "fd_3574",
-      "last_attempt_time": "2026-08-22T09:43:56.597514+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.89,
-      "parent_direction": "",
-      "priority_score": 1000.0,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "github_injection",
-      "source_exp_id": "github",
-      "source_path": "github",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "2026-08-22T04:50:57.567537+00:00",
-      "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
       "consumed_by_exp_id": "78e6d19a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -127128,7 +127088,7 @@
       "depth_estimate": 3,
       "description": "The map S ↦ surfaceOf S is uniformly definable and sends the finiteness of S to the triangulability of a surface. Every Π₂ arithmetic statement of the form 'infinitely many n satisfy P' therefore has an exactly equivalent geometric form, and the base theory needed for the equivalence can be measured.\n\nFor every arithmetic predicate P, surfaceOf {n | P n} is transfinite-dimensional iff {n | P n} is infinite, provably in a weak base theory.\n\nFormalise the equivalence for a general decidable predicate and inspect the axioms used by the resulting bridge theorems.\n\nA uniform dictionary translating Π₂ number theory into fractal geometry, with the twin prime instance already formalised.\n\nThe translation needs strength beyond the base theory, which would itself be a striking reverse-mathematical fact.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -128109,7 +128069,7 @@
       "depth_estimate": 3,
       "description": "High-precision computation shows the leading term L(u) = exp(-u(ln u + ln ln u - 1)) overshoots the Dickman function by a factor that grows with u (12.5 at u=2, 31 at u=14.75, 602 at u=40), so the leading term is only ever accurate in the exponent. The conjecture pins down the growth of that ratio.\n\nL(u)/rho(u) = (1+o(1)) * sqrt(2*pi*u) * exp(u*(ln ln u - 1)/ln u) * C(u) with C(u) slowly varying and bounded between 1 and 4 for 10 <= u <= 100.\n\nExtend the interval power-series computation of rho to u = 200 at 200-digit precision and fit ln(L/rho) - ln(sqrt(2 pi u)) - u(ln ln u - 1)/ln u; formalise the proved base case rho(u) = 1 - ln u on (1,2].\n\nGives a usable finite-u correction factor for smoothness estimates in sieve parameter selection, replacing the leading term.\n\nThe ratio has a genuinely different shape, indicating the saddle-point expansion of rho needs a further term at reachable u.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean"
       ],
@@ -132879,7 +132839,7 @@
       "depth_estimate": 3,
       "description": "Extend the single-block duality eigensystem to a graded family H^0..H^{2n} in which duality pairs degree i with degree 2n-i. Conjecture that the global zeta functional equation has exponent the Euler characteristic and sign carried entirely by the middle block. This would explain why root numbers of varieties are middle-cohomology invariants.\n\nFor a graded duality system, Z(1/(q^n T)) = ± q^{n·chi/2} T^chi Z(T) with chi = sum (-1)^i b_i, and the sign equals (-1)^{m_+ of the middle block}.\n\nFormalise a GradedDualSystem structure (blocks plus pairing between i and 2n-i), prove block-wise telescoping using rootSign_directSum, and derive the global equation.\n\nThe root sign of a variety is a middle-cohomology invariant, provable in the eigenvalue model without any geometry.\n\nOff-middle blocks contribute signs, which would identify a new invariant beyond the fixed-point count.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -134214,7 +134174,7 @@
       "depth_estimate": 3,
       "description": "The dichotomy theorem gives non-eventual-periodicity of the decimal expansion of sqrt 2 abstractly. We conjecture an effective form: any claimed eventual period p starting at position n is refuted at an index bounded polynomially in p and in the denominators controlled by the irrationality measure 2 of sqrt 2.\n\nThere is an explicit constant C such that for all n and p >= 1 there is i <= C * p * 10^(n) with digit(i+p+n) != digit(i+n) for sqrt 2.\n\nQuantify the pigeonhole in Pyth.digits_eventually_periodic_of_not_irrational and combine with a quantitative irrationality measure for sqrt 2; sanity-check against the first 10^4 digits.\n\nAperiodicity of a quadratic irrational becomes a finite, checkable statement at every scale.\n\nThe orbit of frac(10^k sqrt 2) would return to near-repetition faster than approximation theory allows, contradicting the standard measure of irrationality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -137566,7 +137526,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723). with terms 36,180,252,392,396,468,612,684,828,1044,1116,1176,1260,1332,1476,1548,1692,1908,1960,1980,2124,2196,. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean"
       ],
@@ -141552,7 +141512,7 @@
       "depth_estimate": 3,
       "description": "The trailing-zero tie profile of the even legs 2mn of the Euclid family with odd generator m is literally the dyadic profile, proved in pythLeg_profile_eq_dyadic. Since the product law factorises the dial into a tie factor and a channel factor, the two ladders can differ only in the channel factor. We conjecture they coincide rung by rung within seed noise, including the first band miss at bitlen 88.\n\nFor every odd generator m and every recorded bitlen b, the Pythagorean even-leg ladder value rho_pyth(b) satisfies |rho_pyth(b) - rho_unif(b)| < 0.03, and rho_pyth(88) < 0.55 < rho_pyth(84).\n\nSubstitute the sampler n -> 2mn into the exp536 harness for m = 3, 5, 2^k+1 and rerun all ten rungs with the same seeds. Formalize the transfer of the tie factor in Lean (already done) and the band-miss consequence as an exact inequality on the recorded values.\n\nThe erosion is arithmetic-free: it depends only on bit width, so the dial can be calibrated once and reused across arithmetic families.\n\nThe channel factor is sensitive to arithmetic structure, isolating a Pythagorean-specific channel that the uniform ladder cannot see, and giving a new invariant of the Euclid family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [],
       "github_issue": 0,
       "id": "fd_3991",
@@ -143283,7 +143243,7 @@
       "depth_estimate": 3,
       "description": "Price letters are readable mod 4 and mod 8 and unreadable deeper; Berggren letters are provably unreadable 2-adically at any depth. The conjecture is the exact mirror statement at the prime 3, making the two trees complementary seals.\n\nThe last Berggren letter is a function of the triple's residues modulo 3 and modulo 9, and for every k there exist two Berggren children of different letters whose triples agree modulo 2^k (already proved) while no such pair exists modulo 3.\n\nFormalise a Berggren letterOf on actGen and prove the mod-3 classification; reuse the counterexample construction of Price2Adic.berg_twoAdic_blind for the negative half.\n\nA clean placement theorem: each ternary Pythagorean tree is sealed at exactly one adic place.\n\nThe Berggren alphabet is not a residue dial at all, and the placement claim must be weakened to Price only.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory"
       ],
@@ -144042,7 +144002,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.78,
       "parent_direction": "",
       "priority_score": 1000.0,
       "proof_strategy": "",
@@ -144053,7 +144013,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-08-24T20:50:39.555036+00:00",
       "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's left-edge tension resolves as GENUINE STRUCTURE, not noise: two-component kernel beats single power law ΔAICc −37.3 (LRT p=9.3e-10), FLAT BULK b=.57 [.41,.77] + NARROW LEFT-EDGE SPIKE b_edge≥~10.6 (cap-censored; cap-40 posthoc interior optimum 22.5 confirms, improvement GROWS to −42.5) carrying 8.6% [6.4,10.8]% of mass; fitted left-decile .1617 COVERS observed .1620 while single law's .1415 misses; controls show NO kernel (ΔAICc +4.3, w≈1e-4); 56% of SSR improvement in first decile, ~0% at u*≈0.65 hump → edge-driven, orthogonal to paper 232's feature; single −1.104 law RETIRED as final form (canonical profile = bulk+spike); ERRATUM-GRADE PROVENANCE FLAG: paper 234's quoted .2346 not reproducible under canonical normalization (.1620 measured) — likely combined-edge definitional mismatch with paper 230 (.162+.072), flagged for reconciliation"
@@ -144316,7 +144276,7 @@
       "depth_estimate": 3,
       "description": "The proved two-sided bounds 2*m*j <= k^2 + 2*m and k^2 <= 2(u+k)*j pin the Fermat frontier offset at Theta(k^2/sqrt N). Promote this to an exponent law in terms of k = N^alpha, making the stipulated oracle cost laws into theorems.\n\nFor N = u(u+2k) with k = N^alpha, the anchored ascent offset satisfies j = Theta(N^(2*alpha - 1/2)) for 1/4 < alpha < 1/2, and j = O(1) for alpha <= 1/4.\n\nWrap the two proved inequalities with Nat.sqrt asymptotics and instantiate at k = N^alpha; verify numerically on semiprime families with prescribed imbalance.\n\nFermat-window cost becomes a theorem-level baseline against which any claimed channel must be measured.\n\nOne of the two inequalities is not tight, revealing extra structure in the anchor correction N - m^2.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -144405,7 +144365,7 @@
       "depth_estimate": 3,
       "description": "The square-hit bijection sends factorisations of s^2 to Pythagorean triples (k, s, u+k), and the Barning-Hall parent strictly decreases the hypotenuse. Conjecture that the descent also decreases the imbalance and terminates in logarithmically many steps, giving a canonical schedule through the tree of hits.\n\nTransporting the Barning-Hall parent map through the square-hit bijection yields a factorisation of a strictly smaller square with strictly smaller imbalance k, reaching (3,4,5) in Theta(log(k+s)) steps.\n\nCompute the transported map explicitly on the three inverse matrices, prove monotonicity of k, and bound the step count by a descent measure.\n\nFermat hits over square moduli inherit the full tree structure, so window walks become tree walks.\n\nThe imbalance is not monotone along the descent, isolating the branches where it grows.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean"
       ],
@@ -144516,11 +144476,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3b9c1eb4",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -144532,7 +144492,7 @@
       ],
       "github_issue": 389,
       "id": "fd_4062",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-25T22:48:10.907086+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -144547,7 +144507,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-24T22:46:21.541735+00:00",
       "title": "FACT round-86 #1 — U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL — hump REAL over exact Dickman baseline (amp .116±.036 z=3.23, control null) but NO single carrier — parity/3|v/5|v/7|v/omega100/gcd ALL remove 0% (worst strata z 2.4–4.6); excess ARITHMETIC-INTERNAL, divisibility-distributed (~45–60% absorbed by m|v conditioning) → routes paper 232 feature to DIVISIBILITY-MIXTURE BASELINE model not per-hit binary covariates; TWO-PASS: blind arm 13 recipes NO_MATCH → surrogate baseline VOIDed pre-verdict (A2) → coordinator amendment A3 exact regeneration (order-walk 128/128, hits re-validated exp569 tester)"
@@ -144571,7 +144531,7 @@
       "depth_estimate": 3,
       "description": "The Price tree exposes exactly two address letters to 2-adic residues of the odd leg, while the Berggren tree exposes none to 3-adic residues. The conjecture is that the number of visible clicks equals the number of valuation levels of the halved coordinate that survive the quadratic reconstruction of the odd leg, giving a single formula covering both trees. It matters because it turns two isolated 'residue dial' phenomena into one structural invariant of ternary triple trees.\n\nFor a triple tree whose moves halve one of two linear forms L1, L2 with the odd leg N a fixed quadratic expression in them, the maximal k such that the first k letters are functions of N mod p^m for some m equals the number of steps for which the p-adic valuation of the halved form is determined by N; for the Price tree at p = 2 this number is 2, and for the Berggren tree at p = 3 it is 0.\n\nFormalize the invariant for the Price and Berggren move sets and verify it reproduces the proved values 2 and 0; then test it numerically on the Barning-Hall and Price variants before attempting the general proof.\n\nA single theorem subsumes both trees' sealing results and predicts the visible prefix length of any new triple tree without measurement.\n\nThe visible prefix length is tree-specific, and the two-tree adic map is a coincidence of the particular move matrices rather than a structural law.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Logic"
@@ -146168,7 +146128,7 @@
       "depth_estimate": 3,
       "description": "The abstract threshold theorem shows that a monotone schedule is optimal as soon as the conditional cost matrix has decreasing differences in (smoothness quantile, member). Conjecture that the five-member factoring portfolio does satisfy this over powersmoothness quantiles, so the optimal paid-probe schedule is an interval rule in one scalar.\n\nFor the portfolio (rho, p-1 at cap 256, PM1 at cap 1024, Fermat, trial division) ordered by probe cap, and instances binned by the largest prime power of p-1, the matrix of conditional expected costs has decreasing differences; hence the optimal dial is monotone in the quantile.\n\nBin the per-N CSVs by powersmoothness quantile, form the conditional cost matrix and check decreasing differences directly; then instantiate exists_monotone_optimal_dial on the resulting rational matrix.\n\nThe paid-probe schedule collapses to a threshold search in one number, with each member played on an interval of quantiles.\n\nSome pair of members crosses twice, so the winner is not monotone in powersmoothness and the organising axis of the cell is not order-faithful.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -146515,7 +146475,7 @@
       "depth_estimate": 3,
       "description": "The density of ECM stage-1 orders firing in the last tau-fraction of the prime schedule should equal log(1/(1-tau))/log B1 asymptotically. The trace law turns the positional question into a Mertens sum over primes in ((1-tau)B1, B1]. It replaces the pre-registered constant-tail hypothesis by a decaying law.\n\nFor fixed tau in (0,1), the density of n <= M with pi(maxPF n) > (1-tau) pi(B1) and maxPF n <= B1 equals (log(1/(1-tau))/log B1)(1+o(1)) as B1 -> infinity.\n\nFormalize Mertens' second theorem with explicit error, combine with lateCount_le_primeContribution and a matching Bonferroni lower bound; check against the sieve table for N = 10^3..10^7.\n\nThe late tail of any stage-1 trace is predictable from B1 alone, giving a parameter-free null for future ECM accounting audits.\n\nThe union bound is lossy at the top of the schedule, indicating correlations between large-prime divisibility events that themselves need explanation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Pythagorean"
@@ -146559,7 +146519,7 @@
       "depth_estimate": 3,
       "description": "Because the firing threshold equals the largest prime factor, the median normalized firing index is pi(B1^rho)/pi(B1) with rho the Golomb-Dickman constant. This explains the measured medians 0.09-0.10 as a Dickman phenomenon rather than an elliptic-curve one.\n\nmedian_{n <= B1} pi(maxPF n)/pi(B1) = Theta(B1^(rho-1) log B1) with rho = 0.6243299885...\n\nProve the two-sided smooth-number bounds needed for the median of log maxPF n / log n, then apply Chebyshev bounds on pi; validate against the sieve table (medians 0.083, 0.034, 0.020, 0.005 for N = 10^3..10^6).\n\nEarly firing is universal across all stage-1 implementations and carries no curve-specific information, closing the trace channel as a factorization side channel.\n\nSome arithmetic of elliptic-curve orders biases the largest prime factor away from Dickman, which would be a genuinely new statement about #E(F_p).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -147243,7 +147203,7 @@
       "depth_estimate": 3,
       "description": "The two envelope theorems proved here are stated for an arbitrary envelope H but a fixed increment 1/m - log(1+1/m). Abstracting the increment to a general analytic g with g(x) = O(x^2) would make the principle applicable to Stieltjes constants, log Gamma, and tails of zeta partial sums. This would supply Mathlib with effective error bounds where currently only qualitative convergence exists.\n\nIf s(n+1) - s(n) = g(1/(n+1)) with g analytic, g(x) = O(x^2), and H telescopes against g in the sense H(m) - H(m+1) >= g(1/m) with H >= 0, then lim s - s(n) <= H(n+1); dually for the lower bound.\n\nGeneralize tail_le_envelope / envelope_le_tail by replacing the explicit increment with a hypothesis s(n+1) - s(n) = g(1/(n+1)), and instantiate at the first Stieltjes constant gamma_1.\n\nA single reusable lemma yields explicit sharp error bounds for a whole family of classical constants without any integral remainder theory.\n\nThe telescoping principle depends on monotonicity special to the harmonic increment, isolating what makes gamma easier than gamma_1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -147371,7 +147331,7 @@
       "depth_estimate": 3,
       "description": "Every bound proved this cycle carries one unknown, the intra-modulus correlation rho of the drift-power readout. Conjecture that rho is positive and decays like C/u across the u = 9-14 band if the candidate-side deficit is a real weak scale effect, and is zero within error if the readout is pure randomness. It is estimable from the already recorded per-cluster counts.\n\nThe intra-modulus correlation of the band-9 drift-power readout satisfies rho(u) = C/u + o(1/u) with C > 0, and rho = 0 exactly under the randomness null.\n\nEstimate rho as the between-modulus variance component of the persisted per-cluster rates of exp569b, then substitute into var_grandMean and cov_legMean to price the retracted joints.\n\nThe cluster ceiling and the population covariance become numbers, and the mechanism note acquires a quantitative handle opposite in sign to the paper-136 sieve advantage.\n\nThe clustered bounds collapse to the i.i.d. case and the randomness line is strengthened rather than merely extended.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -148097,7 +148057,7 @@
       "depth_estimate": 3,
       "description": "Extend the census objective to b-ary splitting and determine when the discrete optimum is a tie. For b = 2 the tie set has exactly two elements at dyadic widths; the conjecture is that for b >= 3 ties never occur at integer widths.\n\nFor b >= 3 and every integer W >= 2, the argmin of k + (W/b^k + 1)/2 over k in N is a singleton; for b = 2 it has two elements exactly when W is a power of two.\n\nProve the b-ary increment formula 1 - W(b-1)/(2 b^(k+1)), characterise equality as 2 b^(k+1) = W(b-1), and resolve that Diophantine condition.\n\nReporting 'the' optimal budget is unambiguous outside binary search, and the dyadic tie is a base-2 artefact.\n\nTie sets recur in other bases and every b-ary report must name a tie-breaking rule.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean"
       ],
@@ -148897,7 +148857,7 @@
       "depth_estimate": 3,
       "description": "The spectrum k^2 unfolds to an exact arithmetic progression and is maximally rigid, but the fractional parts of k^2 alpha are expected to have Poisson pair correlation for generic alpha. Conjecture a sharp dichotomy between rational and Diophantine alpha, formalized with the same pair-correlation counting machinery.\n\nFor alpha rational the unfolded pair correlation of the sequence of fractional parts of k^2 alpha is the staircase 2 floor(t), while for alpha of finite Diophantine type less than 2 it converges to the Poisson value 2t.\n\nReuse pairCorrCount on the sequence of fractional parts and prove the rational case exactly by periodicity; attack the Diophantine case via exponential sums.\n\nA fully formal instance of the Rudnick-Sarnak pair correlation phenomenon, bridging number theory and spectral statistics.\n\nThe dichotomy has a third regime, which would refine the current arithmetic picture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -148941,7 +148901,7 @@
       "depth_estimate": 3,
       "description": "The only position-declining carrier of the Fermat sieve is the set of positions j dividing the base value v(0). Its exact density is 1/j, so its counting function is the divisor-counting function of v(0) restricted to the sieve range. We conjecture the classical Dirichlet asymptotics transfer verbatim, giving the exact functional form of the small-j profile that exp 578 asked for.\n\nFor base values v(0) uniform in a window, the expected number of positions j <= J with j | v(0) is log J + 2*gamma - 1 + o(1), and the block excess of [1,K] over (K,2K] tends to log 2.\n\nExtend FermatPosition.divisor_positions_small_j_excess from a strict block inequality to an asymptotic; verify numerically with the sieve code in evidence/ over many base values.\n\nThe functional form of the only genuine positional carrier is known exactly, and its total mass can be subtracted from any observed profile.\n\nThe self-divisor carrier interacts with the sieve polynomial beyond the uniform model, which would itself be a new positional mechanism.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -148984,7 +148944,7 @@
       "depth_estimate": 3,
       "description": "The proved sandwich 2bj <= v(j) <= 2bj + j^2 + 2b pins log v(j) to log(2bj) with an explicit error, so the magnitude-only prediction for the hit density at position j is the Dickman value rho(log v(j)/log B) with bounded uncertainty. The conjecture is that the entire observed within-N profile is inside this band.\n\nFor balanced semiprimes and j <= b, the empirical hit density at position j lies within sampling error of rho(log(2bj)/log B), with no residual positional term.\n\nFormalise an interval bound for the Dickman function in Lean, combine with sieveVal_sandwich, and compare against the decile data recorded in ComputationalEvidence.md.\n\nThe residual overdispersion thread loses its positional carrier candidate and must be sought in per-N (rate) rather than within-N (position) structure.\n\nThe gap between the observed profile and the Dickman band is a quantitative, reproducible carrier with a known size.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -149027,7 +148987,7 @@
       "depth_estimate": 3,
       "description": "The unique nontrivial square position of a semiprime sieve is the terminal Fermat position 2(b+j0) = p+q, and it satisfies 2*b*j0 <= d^2 with d the half-difference of the factors. This makes the position of the square value an exact read-out of factor imbalance and suggests an early-abort criterion for Fermat-type search.\n\nIf d <= N^(1/4) then the terminal position is the first position at which the square part of v(j) exceeds v(j)/b, so scanning square parts detects the terminal position before reaching it.\n\nSieve balanced and mildly unbalanced semiprimes, record the largest square divisor of each v(j), and check whether the terminal position is the first to satisfy the criterion.\n\nA cheap early-abort test for Fermat/QS style searches on unbalanced moduli, with a proved positional bound behind it.\n\nSquare parts of sieve values are noisier than the terminal bound suggests, quantifying how much of the square-part signal is background.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -149743,7 +149703,7 @@
       "depth_estimate": 3,
       "description": "Ramanujan-type congruences for tau modulo 691, 23, 7, 5, 3, 2 are congruences between q-expansions, hence finite statements in (Z/l)[[X]]/(X^N) for each window N. A mod-l analogue of the AgreeBelow calculus would make each window a kernel decision, giving reusable certificates for modular-form congruences.\n\nFor each classical Ramanujan congruence modulo l, the truncated congruence holds for every window N and is decidable in time polynomial in N.\n\nDefine AgreeBelowMod l N, reprove the product/power/cancellation lemmas, and verify l = 691, 23, 7 at N = 20 by decide.\n\nA reusable, kernel-checkable certificate scheme for congruences between modular forms.\n\nThe first failing window exposes a normalization error in the classical statement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -149993,7 +149953,7 @@
       "depth_estimate": 3,
       "description": "The ternary case admits exactly three trees because the density budget 1 = sum of 1/(a(a+b)) has three admissible solutions, one of which mixes Berggren and Price branches. For general arity k the same budget equation plus the power-of-two determinant constraint bounds the search space. Determining t(k), the number of k-ary trees, would show whether hybridisation is an accident of arity three or a general phenomenon.\n\nFor every k >= 2 the number t(k) of k-ary trees on the node set {1 <= n < m, gcd(m,n)=1, m+n odd} with root (2,1) is finite, with t(2) = 0, t(3) = 3 and t(k) >= 3 for k >= 3, and every branch of every such tree satisfies |det| <= 2.\n\nExtend the finite search of evidence.py from triples to k-tuples of admissible matrices with |entries| <= 8, checking that the images partition the non-root nodes with first coordinate at most 200; then formalise the arity-k analogue of TernaryTree.no_branch_det_ge_three using the same root-child forcing argument.\n\nThe bound |det| <= 2 is a structural property of the node cone rather than of arity three, and the classification method generalises to a uniform theorem.\n\nA k-ary branch with |det| = 4 exists, showing that the power-of-two spectrum is genuinely realised beyond 2 and that the ternary bound is a low-arity coincidence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -150106,6 +150066,172 @@
       "thread_id": "",
       "timestamp": "2026-08-25T20:47:17.420580+00:00",
       "title": "Transport of the Classification to Triple-Space Linear Maps"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Pythagorean.EdgeKernelRefinement",
+        "Pythagorean.EdgeKernelSeparation"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a bulk+spike profile, the exponent obtained by matching the cumulative edge mass on the window [0,t] should be a strictly decreasing function of t. Non-constancy is already a theorem; monotonicity would turn the qualitative 'refits steepen on the left' observation into a quantitative law. The route is the implicit function theorem applied to the edge fraction, whose strict monotonicity in the exponent is proved.\n\nIf 0 < w < 1 and b₁ < b₂ then the unique b_eff(t) with edgeFrac (b_eff t) t = mixFrac w b₁ b₂ t is strictly decreasing on (0,1).\n\nFormalise b_eff via the proved existence/uniqueness statements, differentiate the defining identity, and show the derivative is negative using headMass/tailMass comparisons.\n\nWindow-restricted refits become a calibrated diagnostic: the drift rate estimates the spike weight.\n\nSome profiles would produce non-monotone refits, so window choice could not be interpreted as a probe of edge structure.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_4194",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.593529411764706,
+      "proof_strategy": "Implicit differentiation of edgeFrac (b,t) = mix(t) using strict monotonicity in b for nondegeneracy, plus a sign computation for the mixed partial.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "acd2f64e",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/acd2f64e",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T22:46:27.980100+00:00",
+      "title": "Monotone Drift of the Window-Fitted Exponent"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Pythagorean.EdgeKernelRefinement"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "In the narrow-spike limit the profile depends on the spike exponent only through an exponentially small remainder, while the spike weight survives in the limit. This explains why a fitted spike exponent can be boundary-censored while the associated mass fraction is stable.\n\nsup over windows of |mixFrac w b₁ b₂ t − (w + (1-w) edgeFrac b₁ t)| = O(2^{-b₂}) as b₂ → ∞, while w is recovered exactly as the limit of the excess over the bulk prediction.\n\nUpgrade the proved pointwise limit to a uniform bound using the closed form for edgeFrac and elementary estimates on (1+t)^{1-b}.\n\nReported spike exponents should be quoted as lower bounds only; spike mass is the identifiable parameter.\n\nThe spike exponent would be identifiable and boundary-censored fits would indicate a modelling error rather than flat likelihood.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_4195",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5930000000000001,
+      "proof_strategy": "Explicit estimate of ((1+t)^{1-b}-1)/(2^{1-b}-1) − 1 in terms of 2^{1-b}, uniform for t in a compact subinterval.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "acd2f64e",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/acd2f64e",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T22:46:28.533711+00:00",
+      "title": "Censored Spike Exponent versus Identifiable Spike Weight"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Pythagorean.EdgeKernelSeparation"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Global separation of the mixture family from the single-law family is proved. The conjecture localises it: any two distinct windows already suffice to exclude every single power law, so a two-number summary is a complete falsification test.\n\nFor 0 < w < 1, b₁ ≠ b₂ and any t₁ ≠ t₂ in (0,1) there is no b with edgeFrac b t₁ = mixFrac w b₁ b₂ t₁ and edgeFrac b t₂ = mixFrac w b₁ b₂ t₂.\n\nCompare the single-law curve b ↦ (edgeFrac b t₁, edgeFrac b t₂) with the mixture point using the head/tail comparison lemmas.\n\nTwo decile measurements constitute a complete falsification test for the pure power-law form.\n\nThere are windows on which a mixture is exactly mimicked, so window selection must be justified.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_4196",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.55,
+      "proof_strategy": "Show the single-law curve is the graph of a strictly convex function of the first coordinate and that mixtures lie strictly below it, via strict log-convexity.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "acd2f64e",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/acd2f64e",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T22:46:29.075152+00:00",
+      "title": "Two-Window Separation of Bulk-Plus-Spike Profiles"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Pythagorean.EdgeKernelSeparation",
+        "Pythagorean.PositionalAggregate"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The continuum obstruction proved here should transfer to the discrete counting problem for positions j where j² − N satisfies a fixed arithmetic condition, giving a genuinely arithmetic falsifiable statement rather than a statement about a fitted curve.\n\nAny weak-* limit of the normalised empirical position measures with log-convex density is not a pure power law, and finite-N fitted exponents inherit the window drift up to O(N^{-1/2}).\n\nFormalise the empirical measures, prove tightness, and combine Portmanteau with the log-convexity obstruction.\n\nThe bulk+spike description becomes an arithmetic statement about quadratic residues, not merely a curve-fitting summary.\n\nThe continuum model would be an artefact of normalisation and the discrete profile could be a genuine power law.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_4197",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.55,
+      "proof_strategy": "Uniform density bounds on the counting measure, weak-* compactness, and closedness of multiplicative convexity under limits.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "acd2f64e",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/acd2f64e",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T22:46:29.617802+00:00",
+      "title": "Discrete-to-Continuum Transfer for Quadratic Hit Profiles"
     },
     {
       "ambition_level": "extension",
@@ -168509,11 +168635,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f88727cd",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -168527,7 +168653,7 @@
       ],
       "github_issue": 0,
       "id": "seed_173",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-25T22:48:19.956145+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -168542,7 +168668,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
@@ -175863,14 +175989,14 @@
       "parent_direction": "",
       "priority_score": 0.84,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Ill-defined and mathematically unsound as stated. 'Person-equivalence' as functional equivalence of automata is just Moore/Hopcroft state equivalence, whose decidability for finite-state machines is a textbook triviality; the claim that quantum computation makes it undecidable is a non sequitur (no-cloning is a linear-algebra statement about state duplication and implies nothing about decidability of behavioural equivalence, which is in fact decidable for finite-dimensional quantum automata models); and the 'Kolmogorov complexity of a person's identity is bounded by ~10^15 bits' conjecture has no formalizable mathematical content, since it depends on an unspecified encoding and Kolmogorov complexity is only defined up to an additive constant relative to a chosen universal machine. No genuine theorem can be extracted.",
+      "pruned_at": "2026-08-25T22:46:44Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Rucker: The Lifebox — Information-Theoretic Identity"
@@ -177989,7 +178115,7 @@
     "Computation": 2,
     "Geometry": 2,
     "Logic": 2,
-    "Novelty": 71.0,
+    "Novelty": 72.0,
     "NumberTheory": 2,
     "SetTheory": 1,
     "Speculative": 2
@@ -178004,17 +178130,18 @@
     "**verdict": 25,
     "0.0001": 2,
     "3-adic": 3,
+    "`exp588_result.json`": 1,
     "acting": 2,
     "algebraic": 2.0,
     "already": 18,
-    "assessment": 31,
+    "assessment": 32,
     "a²+b²−c²": 3,
     "barriers": 11,
-    "becomes": 5,
+    "becomes": 6,
     "berggren": 12.0,
-    "boundary": 10,
+    "boundary": 11,
     "cantor": 2,
-    "carries": 11,
+    "carries": 12,
     "catalog": 5,
     "computable": 6.0,
     "compute": 7,
@@ -178047,7 +178174,6 @@
     "holds": 5,
     "hyperbolic": 6.0,
     "i(joint": 2,
-    "insight": 1,
     "iteration": 11,
     "itself": 11.0,
     "limited-memory": 9,
@@ -178056,7 +178182,7 @@
     "lorentz-preserving": 5.0,
     "matrices": 6.0,
     "metric": 6.0,
-    "model": 2,
+    "model": 3,
     "modular": 3,
     "monotone": 6,
     "moonshot)**": 4,
@@ -178064,7 +178190,7 @@
     "now**": 9.0,
     "number": 15.0,
     "opening": 2,
-    "paper": 50,
+    "paper": 51,
     "positive": 7,
     "precise": 5,
     "preserving": 4,
@@ -178076,14 +178202,14 @@
     "questions": 2.0,
     "reduces": 3,
     "represent": 2,
-    "residue": 11,
+    "residue": 12,
     "result": 23,
     "round-32": 2,
     "semiprime": 3,
     "silver": 4.0,
     "silver-ratio": 5,
     "spectral": 4,
-    "structure": 20.0,
+    "structure": 21.0,
     "ternary": 8.0,
     "theorem": 17,
     "theory": 15.0,
@@ -178094,7 +178220,7 @@
     "unified": 2,
     "vanishingly": 3,
     "well-defined": 3.0,
-    "while": 3
+    "while": 4
   },
   "selection_log": [
     "famous_subtask",

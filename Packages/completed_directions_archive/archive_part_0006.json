@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-25T20:47:17Z",
-  "count": 193,
+  "archived_at": "2026-08-25T22:46:30Z",
+  "count": 194,
   "directions": [
     {
       "ambition_level": "extension",
@@ -7654,6 +7654,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_3574",
+      "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)",
+      "description": "Round-40 #1, cron iteration (exp 477, assessment v254). Paper 144's honest remainder explained.\n\n**FOOTPRINT-WEIGHTS-CAPTURE-THE-RESIDUAL**: the theoretically-motivated feature Σ(2/p) over QR primes ≤400 (each QR prime p divides ~2/p of the x²−N values — two roots) lifts out-of-sample R² from 0.3927 to **0.5691** (+0.176, bootstrap CI [0.120, 0.229]) at u=2.5, and 0.2063 → 0.3078 (+0.102) at u=3.5. The direct mechanism feature (fraction of values divisible by p ≤13) adds independently; both together R² = 0.5864.\n\nThe per-N yield dial's final form: two cheap features (~200 Euler tests + a mod count), R² ≈ 0.59/0.34 out-of-sample. H3 (nothing systematic) refuted — the residual was real structure.\n\nBarriers: (5) all features are residue dials of METHOD input statistics — zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp477_qr_residual.py + exp477_result.json, seed 20260829.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "43b197e4",
+      "timestamp": "2026-08-22T04:50:57.567537+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.89,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-22T09:43:56.597514+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 247
     }
   ]
 }

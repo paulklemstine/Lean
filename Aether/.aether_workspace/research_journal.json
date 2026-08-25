@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fdd9261c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — normalized `q`-series, the corrected product, and beyond\n\nThis cycle formalized the `q⁻¹ + O(1)` normalization, the pole order of finite\nproducts, and then went further: the *cor",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-24T07:22:12",
-      "title": "Define Laurent q-series with the standard `q⁻¹ + O(q)` normalization and formalize the pole\n   order"
-    },
-    {
       "cycle_id": "6c27d6f0",
       "domain": "Tropical",
       "key_insight": "# Future directions — tropical epistasis of layer ablations\n\nThe formal development establishes:\n\n* pruning cost is the increase of a **tropical (min-plus) minimum** over surviving\n  computation paths",
@@ -499,19 +489,19 @@
       "theorem_count": 5,
       "timestamp": "2026-08-25T20:47:31",
       "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagorean trees"
+    },
+    {
+      "cycle_id": "acd2f64e",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — edge-kernel refinement (positional profiles)\n\nThe two new files\n`Catalog/Pythagorean/EdgeKernelRefinement.lean` and\n`Catalog/Pythagorean/EdgeKernelSeparation.lean`\nestablish, wit",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 39,
+      "timestamp": "2026-08-25T22:46:43",
+      "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's left-edge tension re"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "512ab986",
-      "domain": "Logic",
-      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from the formalised results in `Catalog/Logic/AlmostLossless/`\n(`Core`, `Hashing`, `Scheme`, `Instances`, `ExactP",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 104,
-      "timestamp": "2026-08-19T01:53:45",
-      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-    },
     {
       "cycle_id": "308f24be",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 5,
       "timestamp": "2026-08-25T20:47:31",
       "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagorean trees"
+    },
+    {
+      "cycle_id": "acd2f64e",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — edge-kernel refinement (positional profiles)\n\nThe two new files\n`Catalog/Pythagorean/EdgeKernelRefinement.lean` and\n`Catalog/Pythagorean/EdgeKernelSeparation.lean`\nestablish, wit",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 39,
+      "timestamp": "2026-08-25T22:46:43",
+      "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's left-edge tension re"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "16c9261f",
-      "domain": "Computation",
-      "name": "gain_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "4578ca8c",
-      "domain": "Computation",
-      "name": "hasDerivAt_poly6",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "4578ca8c",
-      "domain": "Computation",
-      "name": "nonneg_of_hasDerivAt_nonneg",
-      "quality": 0.86
-    },
     {
       "cycle_id": "4578ca8c",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "app_snd",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "acd2f64e",
+      "domain": "Pythagorean",
+      "name": "ker_zero_arg",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "acd2f64e",
+      "domain": "Pythagorean",
+      "name": "ker_pos",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "acd2f64e",
+      "domain": "Pythagorean",
+      "name": "ker_cont",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-25T20:47:31",
+  "last_updated": "2026-08-25T22:46:43",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "a23b48bf",
-        "quality": 0.85,
-        "theorems": 74,
-        "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is op"
-      },
-      {
         "cycle_id": "1a7b47b1",
         "quality": 0.82,
         "theorems": 58,
@@ -3885,6 +3879,12 @@
         "quality": 0.83,
         "theorems": 94,
         "title": "Both endpoints are formalised and the numerics of Section 4 of"
+      },
+      {
+        "cycle_id": "acd2f64e",
+        "quality": 0.78,
+        "theorems": 39,
+        "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's "
       }
     ],
     "Shared": [

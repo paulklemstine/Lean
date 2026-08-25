@@ -2221,21 +2221,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-82 #2 \u2014 SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES \u2014 LRT stat=100.6 df=3 p=1.17e-21 perm 0/400: real non-linearity but STEEP MONOTONE DECLINE; PAPER-229 ERRATUM: peaked residual = baseline leakage, power law stands"
   },
   {
-    "consumed_by_exp_id": "acd2f64e",
-    "description": "## exp588 EDGE-KERNEL-REFINEMENT \u2014 round-84 #1 \u00b7 paper 238 \u00b7 assessment v344 \u2192 v345 \u00b7 count 575 \u2192 576\n\nRuns paper 234 \u00a74a's named open refinement (\"harmonic bulk \u00d7 steeper-edge kernel \u2014 this tension travels forward on the ledger until that refinement is run or refuted\") and CLOSES it as CONFIRMED.\n\n### Data & method\n9594 pooled hits over 128 Ns from `exp581_regen_positions.npz`, canonical normalization x=(p\u2212jlo)/(jhi\u2212jlo); control arm 512k ctl_* same intervals; seed 588; wall 12.9 s; nboot 500 main (+300/200 posthoc). Pre-registration in script header BEFORE the full fit (smoke = pipeline validation only), including a registered observed-value reconciliation.\n\n### Registered results \u2014 all bars PASS\n- Single law reproduces exp579 reference (b_NLS=1.097 vs published 1.104; MLE 1.123) but left-decile prediction **.1415** sits below measured **.1620** [.1547,.1695] \u2192 tension real.\n- Two-component T(x)=A(1+x)^{\u2212b_bulk}+K(1+x)^{\u2212b_edge}: **\u0394AICc \u221237.33** (bar >6), LRT stat 41.59 df2 **p=9.3\u00d710\u207b\u00b9\u2070** (bar <0.01); bootstrap-stable b_bulk=.573 [.412,.767], w_edge=.086 [.064,.108]; fitted left-decile .1617 [boot .1557,.1695] **covers** observed .1620; bootstrap median \u0394AICc +60 across resamples.\n- Controls: **\u0394AICc +4.3** (two-comp worse), w\u22481.2\u00d710\u207b\u2074 \u2192 no kernel in controls.\n\n### Boundary censoring discovered + settled\nRegistered fit pinned delta=b_edge\u2212b_bulk at the implementation ceiling 10.000 (registered degeneracy rule covered only the LOWER bound; boundary solutions not forbidden) \u2192 read b_edge \u2265 ~10.6. POST-HOC cap-40 refit: INTERIOR unpinned optimum b_edge=22.54 (delta_pinned_at_40 false), improvement GROWS (**\u0394AICc \u221242.5, p=6.9\u00d710\u207b\u00b9\u00b9**), left-decile CI still covers \u2192 ceiling was conservative CENSORING, verdict cap-robust. Honest statement: b_edge \u2265 ~10.4\u201311.1 across caps; exact value unidentified near-spike (cap40 boot CI [11.1,20.5,41.0]).\n\n### Post-hoc attribution\n56% of SSR improvement in the FIRST DECILE alone, ~0% (\u22120.5%) at the known u*\u22480.65 hump zone, \u22123.2% right \u2192 genuinely edge-driven, orthogonal to paper 232's geometric-window feature. Left-half refit independently confirms (single steepens to b=1.798; \u0394AICc 16.8, p=2.6\u00d710\u207b\u2075; 47.5% again first-decile).\n\n### Consequence\nThe positional hit profile of v_j=j\u00b2\u2212N is **FLAT-BULK + NARROW LEFT-EDGE SPIKE**, NOT a pure power law; the single \u22121.104 law is RETIRED as final FORM (retained as bulk summary); kernel-refined profile becomes the canonical description \u2014 a pure power law is now KNOWN-WRONG at the edge (falsifiable constraint for any downstream shape model).\n\n### ERRATUM-GRADE provenance flag (travels forward)\nPaper 234's tension premise quoted measured edge fraction \".2346\" (z=10.08 stratified): NOT reproducible from the canonical npz under left-decile-only definition (.1620 measured); per-N equal-mean .1609 / log-normalization / (p\u2212jlo)/jlo / inverse-n weighting variants also miss, and .2346 lies outside even the two-comp prediction CI. Leading hypothesis: definitional mismatch with paper 230's combined-edge decomposition (.2346 = 228's .162+.072). Flagged for reconciliation against the paper-228 ledger; kernel confirmation unaffected \u2014 all registered bars judged against data-observed .1620.\n\n### Ledger catches (all disclosed)\n(1) dAICc sign-convention bug in an earlier full-run pass \u2014 caught and fixed BEFORE final verdict recording. (2) Boundary censoring discovered and resolved via cap-40 posthoc. (3) LRT null on parameter boundary (chi-bar-sq conservative in our favor) \u2014 significance required BOTH LRT and \u0394AICc>6. (4) Edge/end ratio carries last-bin noise (~10%, corroborative only).\n\n### Barrier validation\nNo breakthrough claimed \u2014 descriptive-form refinement INSIDE the positional layer (papers 228\u2013230 established it independent of rate). Residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, and paper 237's four-class rate-residual closure all untouched. u\u224810 data per the standing directive.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp588_edge_kernel.py`, `exp588_smoke.{log,json}`, `exp588_full.log`, `exp588_result.json` (incl. POSTHOC cap_sensitivity + left_half fields), `exp588_findings.md`. Paper: `ResearchOutput/NewMathematics/238_EdgeKernel.md`.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4050",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T20:50:39.555036+00:00",
-    "title": "FACT round-84 #1 \u2014 EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED \u2014 paper 234's left-edge tension resolves as GENUINE STRUCTURE, not noise: two-component kernel beats single power law \u0394AICc \u221237.3 (LRT p=9.3e-10), FLAT BULK b=.57 [.41,.77] + NARROW LEFT-EDGE SPIKE b_edge\u2265~10.6 (cap-censored; cap-40 posthoc interior optimum 22.5 confirms, improvement GROWS to \u221242.5) carrying 8.6% [6.4,10.8]% of mass; fitted left-decile .1617 COVERS observed .1620 while single law's .1415 misses; controls show NO kernel (\u0394AICc +4.3, w\u22481e-4); 56% of SSR improvement in first decile, ~0% at u*\u22480.65 hump \u2192 edge-driven, orthogonal to paper 232's feature; single \u22121.104 law RETIRED as final form (canonical profile = bulk+spike); ERRATUM-GRADE PROVENANCE FLAG: paper 234's quoted .2346 not reproducible under canonical normalization (.1620 measured) \u2014 likely combined-edge definitional mismatch with paper 230 (.162+.072), flagged for reconciliation"
-  },
-  {
     "consumed_by_exp_id": "217690eb",
     "description": "**Paper 237 \u00b7 round-83 #4 \u00b7 exp 585 \u00b7 verdict H0_SUPPORTED (nothing-beyond-QR)**\n\n## Pre-registered result\n- H1: dR2_neighbors >= 0.05 AND perm p < 0.01. H0: dR2_neighbors < 0.02.\n- QR alone R2=.4112 (corr .641 \u2014 replication live) | NB alone [w-, w+, lpflog-, lpflog+] R2=.0319 | joint .4307 => **dR2 = +0.01946**\n- Permutation p=**0.389** (500 joint row-shuffles), null q95=**0.046 > observed**; best single |r|=0.16 vs dial r=.641; dR2(QR given NB)=+.3987; secondary hits_full dR2=+0.0126.\n\n## Map update\nFour-class negative COMPLETES the coverage claim: every tested N-property class fails on the ~40% u\u224810 residual \u2014 residual GENUINELY OPEN, redirect to sieve-process/j-sample-level carriers (round-81 sole-survivor channel). Refinement note: harmonic-form QR used here; adopted sqrt-weight B*=400 dial absorbs more, strengthening this H0.\n\n## Ledger catches (disclosed)\n1. **PROVENANCE UNVERIFIED**: exp581_regen_positions.npz has NO N array (positions + jlo/jhi only); population regenerated by documented recipe seed 20260827; isqrt fingerprint 0/128 match, 15-variant recipe grid all 0-match (exp577_result.json unreadable); computed hash 30009f0cfa7f85118d217bcacadb9d656fe5a1ae33b474b421492e828066bfef recorded. CONDITIONAL on balanced-96-bit exchangeability across seeds (lab precedent: population-robust laws).\n2. Smoke-stage endpoint amendment BEFORE lineage analysis: hits_full = 0 in 160k+ synthetic draws even at t<=16 \u2192 primary swapped to SIQS-partial hits (mu=4032/N, CV 1.6%), gates unchanged; itself a finding (QS relations at bitlen 96 are ALL partials).\n3. Wall 47.3 s (covariates 42.7 s).\n\nFiles: ResearchOutput/scripts/2026-08-24-round74/exp585_* ; paper ResearchOutput/NewMathematics/237_NeighborCovariate.md ; notebook Part 279 ; assessment v343\u2192v344 (count 574\u2192575).",
     "domains": [
@@ -2326,16 +2311,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-87 #1 \u2014 MIXTURE-BASELINE (exp 588c FINAL): H0 \u2014 u*\u22480.65 excess SURVIVES full divisibility mixture (amp .177\u00b1.043 z=4.11\u2265bar, peak t=0.65 exact, removal 0%) \u2014 composition FLAT in t, rates real but t-independent \u2192 DIVISIBILITY IS A RATE DIAL NOT A POSITION DIAL; NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM; chain 232\u2192241\u2192242 complete; CTRL-B caveat z_cal=1.53<2 disclosed; named follow-up: find the non-divisibility carrier"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b9c1eb4",
     "description": "Paper 241 (ResearchOutput/NewMathematics/241_U065Mechanism.md). Completes paper 232's named mechanism probe.\n\nVERDICT: MIXED-PARTIAL per registered tree (zero winners; H0 strict letter also unmet via 5|v yes-stratum z=1.84).\n\nRESULTS\n- Exact Dickman baseline rho(ln v / ln 1e6), alpha flank-fit: amp 0.1163 \u00b1 0.0360 (z=3.23) over t in [0.45,0.85]; paired-random control 0.0269 \u00b1 0.0109 NULL.\n- Removal table (win bar removal>=60% AND all strata z<2): parity z 3.51/4.16; 3|v 4.36/2.38; 5|v 4.56/1.84; 7|v 3.91/2.44; omega_100 tercile 4.14/2.49/4.19; gcd(j,N)>1 stratum structurally EMPTY at bitlen 96 (p~2^48 cannot divide j<=8.4e14) \u2014 vacuous, not tested. removal_pct = 0.0 for every candidate.\n- Reading: m|v conditioning consistently absorbs ~45\u201360% of yes-stratum point-amplitude while parity/omega absorb none \u2192 excess distributed across the small-prime divisibility structure of v=j\u00b2\u2212N (arithmetic-internal). CONSEQUENCE: route to divisibility-mixture baseline model (mixture over v mod small primes), NOT per-hit binary covariates.\n\nTWO-PASS HISTORY (amendment log A1\u2013A3 timed in script+json)\n- A1: coordinator brief restricted reads to npz+exp582_findings.md \u2192 blind recipe reconstruction (window-law discriminator r_i=jlo/isqrt(N)); 13 recipes, ALL NO_MATCH.\n- A2 (post-smoke, PRE-verdict): hit density peaked at t~0 \u21d2 window above sqrt(N) \u21d2 surrogate flank baseline MISPECIFIED \u2192 VOIDed before any conditioned statistic entered a verdict.\n- A3 (coordinator-directed): restriction lifted; exact seed-20260828 exp578 lineage verbatim; lnB fixed ln(1e6); registered grid-fit retired (disclosed). EXACT REGENERATION VERIFIED: population/window int64-equal all samples; stream order-walk EXACT 128/128; stored hits re-validated smooth / controls non-smooth under exact N via verbatim exp569 tester B=1e6. Disclosed limit: no full 150k-draw rescan-and-reclassify (budget) \u2014 strictly weaker than byte-level reproduction.\n\nDEGRADED ARM: retained in json labeled DEGRADED (statistical N-mod-{3,5,7} labels from residue-enrichment argmax, attenuation noted); strongest read z=1.22 vs exact-baseline 3.23 \u2014 the blind path would have reported sub-bar noise; exactness load-bearing for DETECTION.\n\nLEDGER CATCHES: coordinator-brief over-restriction disclosed BOTH ways (lesson: grant recipe-lineage access up front when the population is procedurally reproducible); surrogate baseline voided pre-verdict (clean catch, zero contamination); grid-fit retirement information-forced; control-bar restatement pre-full-run disclosed; gcd vacuous; omega_100 ignores factors >100 by definition.\n\nBARRIER VALIDATION: no breakthrough claimed \u2014 closure INSIDE the rate layer's baseline-shape question. Untouched: residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, four-class rate closure, papers 238\u2013240 spike-origin arc. Carrier class identified (v-divisibility distribution) is SCALE-CARRYING; per-hit binary family removed from search space. Open: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity; paper-238 .2346 provenance flag still traveling.\n\nSources: ResearchOutput/scripts/2026-08-24-round74/exp588b_{u065_mechanism.py, smoke.log, full.log, result.json, findings.md}; data exp581_regen_positions.npz sha256 df4830ed\u2026fbb74. Wall 15.1 s; boot seed 20260901; 9594 hits / 512k controls / 128 Ns.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4062",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T22:46:21.541735+00:00",
     "title": "FACT round-86 #1 \u2014 U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL \u2014 hump REAL over exact Dickman baseline (amp .116\u00b1.036 z=3.23, control null) but NO single carrier \u2014 parity/3|v/5|v/7|v/omega100/gcd ALL remove 0% (worst strata z 2.4\u20134.6); excess ARITHMETIC-INTERNAL, divisibility-distributed (~45\u201360% absorbed by m|v conditioning) \u2192 routes paper 232 feature to DIVISIBILITY-MIXTURE BASELINE model not per-hit binary covariates; TWO-PASS: blind arm 13 recipes NO_MATCH \u2192 surrogate baseline VOIDed pre-verdict (A2) \u2192 coordinator amendment A3 exact regeneration (order-walk 128/128, hits re-validated exp569 tester)"
   },
@@ -4326,22 +4312,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "MachineLearning"
-    ],
-    "id": "seed_399",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
   {
     "consumed_by_exp_id": "",
@@ -9401,7 +9371,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f88727cd",
     "description": "The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omega*T(n)/n} for N large. Conjecture: F_T has a spectral gap: |F_T(omega)| < C for all irrational omega, where C < sqrt(N). This would mean that the Collatz map does not concentrate energy at any irrational frequency \u2014 it is 'mixing' in the Fourier sense. Moreover, the spectral gap is related to the convergence rate: the wider the gap, the faster the orbit reaches 1. Conjecture: for the orbit of n, the number of steps to reach 1 is O(log(n)), which is equivalent to F_T having a spectral gap of width Omega(1/log(n)). Test: compute F_T for n up to 10^6 and measure the spectral gap. Compare with the spectral gaps of related maps (5n+1, 7n+1) which do NOT always converge. Impact: the Collatz conjecture is a spectral gap problem. Convergence to 1 means the Fourier transform has no resonances at irrational frequencies.",
     "domains": [
       "Novelty",
@@ -9409,10 +9379,11 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "seed_173",
+    "phase": "A",
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
@@ -14977,6 +14948,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a bulk+spike profile, the exponent obtained by matching the cumulative edge mass on the window [0,t] should be a strictly decreasing function of t. Non-constancy is already a theorem; monotonicity would turn the qualitative 'refits steepen on the left' observation into a quantitative law. The route is the implicit function theorem applied to the edge fraction, whose strict monotonicity in the exponent is proved.\n\nIf 0 < w < 1 and b\u2081 < b\u2082 then the unique b_eff(t) with edgeFrac (b_eff t) t = mixFrac w b\u2081 b\u2082 t is strictly decreasing on (0,1).\n\nFormalise b_eff via the proved existence/uniqueness statements, differentiate the defining identity, and show the derivative is negative using headMass/tailMass comparisons.\n\nWindow-restricted refits become a calibrated diagnostic: the drift rate estimates the spike weight.\n\nSome profiles would produce non-monotone refits, so window choice could not be interpreted as a probe of edge structure.",
+    "domains": [],
+    "id": "fd_4194",
+    "priority_score": 0.593529411764706,
+    "research_mode": "team",
+    "source_exp_id": "acd2f64e",
+    "status": "available",
+    "timestamp": "2026-08-25T22:46:27.980100+00:00",
+    "title": "Monotone Drift of the Window-Fitted Exponent"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Any monotone, translation-equivariant aggregator of per-seed margins is sandwiched between order statistics, so its breakdown point cannot exceed that of the median. The conjecture states the median is optimal and quantifies the seed budget needed to tolerate k hardware failures. It matters because seed count dominates the cost of the E3 run.\n\nFor every monotone translation-equivariant aggregator T of n reals, the breakdown point of T is at most ceil(n/2), with equality for the median; consequently a protocol tolerating k corrupted runs needs n >= 2k+1 runs.\n\nFormalize monotone equivariant aggregators, prove the sandwich between order statistics, and reuse the sharpness half of MedianBreakdown for the upper bound.\n\nAdding seeds is provably the only way to harden the E3 measurement.\n\nA more robust statistic exists and the protocol should adopt it instead of adding runs.",
     "domains": [],
     "id": "fd_4068",
@@ -15238,6 +15221,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:02:36.888610+00:00",
     "title": "Sharp Constant for Odd Franel Cube Sums"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the narrow-spike limit the profile depends on the spike exponent only through an exponentially small remainder, while the spike weight survives in the limit. This explains why a fitted spike exponent can be boundary-censored while the associated mass fraction is stable.\n\nsup over windows of |mixFrac w b\u2081 b\u2082 t \u2212 (w + (1-w) edgeFrac b\u2081 t)| = O(2^{-b\u2082}) as b\u2082 \u2192 \u221e, while w is recovered exactly as the limit of the excess over the bulk prediction.\n\nUpgrade the proved pointwise limit to a uniform bound using the closed form for edgeFrac and elementary estimates on (1+t)^{1-b}.\n\nReported spike exponents should be quoted as lower bounds only; spike mass is the identifiable parameter.\n\nThe spike exponent would be identifiable and boundary-censored fits would indicate a modelling error rather than flat likelihood.",
+    "domains": [],
+    "id": "fd_4195",
+    "priority_score": 0.5930000000000001,
+    "research_mode": "team",
+    "source_exp_id": "acd2f64e",
+    "status": "available",
+    "timestamp": "2026-08-25T22:46:28.533711+00:00",
+    "title": "Censored Spike Exponent versus Identifiable Spike Weight"
   },
   {
     "consumed_by_exp_id": "",
@@ -26869,6 +26864,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T20:47:17.420580+00:00",
     "title": "Transport of the Classification to Triple-Space Linear Maps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Global separation of the mixture family from the single-law family is proved. The conjecture localises it: any two distinct windows already suffice to exclude every single power law, so a two-number summary is a complete falsification test.\n\nFor 0 < w < 1, b\u2081 \u2260 b\u2082 and any t\u2081 \u2260 t\u2082 in (0,1) there is no b with edgeFrac b t\u2081 = mixFrac w b\u2081 b\u2082 t\u2081 and edgeFrac b t\u2082 = mixFrac w b\u2081 b\u2082 t\u2082.\n\nCompare the single-law curve b \u21a6 (edgeFrac b t\u2081, edgeFrac b t\u2082) with the mixture point using the head/tail comparison lemmas.\n\nTwo decile measurements constitute a complete falsification test for the pure power-law form.\n\nThere are windows on which a mixture is exactly mimicked, so window selection must be justified.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4196",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "acd2f64e",
+    "status": "available",
+    "timestamp": "2026-08-25T22:46:29.075152+00:00",
+    "title": "Two-Window Separation of Bulk-Plus-Spike Profiles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The continuum obstruction proved here should transfer to the discrete counting problem for positions j where j\u00b2 \u2212 N satisfies a fixed arithmetic condition, giving a genuinely arithmetic falsifiable statement rather than a statement about a fitted curve.\n\nAny weak-* limit of the normalised empirical position measures with log-convex density is not a pure power law, and finite-N fitted exponents inherit the window drift up to O(N^{-1/2}).\n\nFormalise the empirical measures, prove tightness, and combine Portmanteau with the log-convexity obstruction.\n\nThe bulk+spike description becomes an arithmetic statement about quadratic residues, not merely a curve-fitting summary.\n\nThe continuum model would be an artefact of normalisation and the discrete profile could be a genuine power law.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4197",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "acd2f64e",
+    "status": "available",
+    "timestamp": "2026-08-25T22:46:29.617802+00:00",
+    "title": "Discrete-to-Continuum Transfer for Quadratic Hit Profiles"
   },
   {
     "consumed_by_exp_id": "",

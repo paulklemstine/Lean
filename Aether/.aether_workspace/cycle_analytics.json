@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-25T20:47:35.894148+00:00",
+  "last_updated": "2026-08-25T22:46:47.109324+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -68270,6 +68270,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-25T20:47:35.508332+00:00",
       "title": "C4. The `\u00b12` obstruction is the only obstruction: classify the ternary Pythagorean trees"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Pythagorean",
+      "duration_seconds": 3613.401034116745,
+      "end_time": 1787697928.417907,
+      "files_integrated": 4,
+      "job_id": "acd2f64e",
+      "outcome_quality": 0.78,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787694315.016873,
+      "strategy_count": 0,
+      "theorem_count": 39,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 39,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-25T22:46:46.798378+00:00",
+      "title": "FACT round-84 #1 \u2014 EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED \u2014 paper 234's left-edge tension re"
     }
   ]
 }
