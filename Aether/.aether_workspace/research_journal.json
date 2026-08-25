@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "58176b8d",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — parity geometry of the zero-fit dial (round-63 #1, exp 532)\n\nTwo Lean files were added in this cycle:\n\n* `Catalog/Algebra/ZeroFitDialU72Parity.lean` — Gram positivity for three r",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 60,
-      "timestamp": "2026-08-24T01:59:38",
-      "title": "FACT round-63 #1 — TDIAL-U72: the zero-fit dial holds at bitlen 72 with count parity (paper 185)"
-    },
-    {
       "cycle_id": "499e80a3",
       "domain": "Novelty",
       "key_insight": "# Future directions — NET-67 attention-budget theory\n\nDerived from the two research cycles formalised in\n`Catalog/Novelty/AttentionBudgetIncrement.lean`,\n`Catalog/Novelty/AttentionRetentionKnee.lean`",
@@ -499,19 +489,19 @@
       "theorem_count": 30,
       "timestamp": "2026-08-25T16:02:03",
       "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE GEOMETRIC WINDOW FEA"
+    },
+    {
+      "cycle_id": "4c991400",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Matrix-level modular action (Phase A, v19c)\n\nThis cycle established, in `Catalog/Shared/ModularCayley/MatrixModularAction.lean`:\n\n* translations `transMat t = !![1,t;0,1]` as an",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-08-25T16:02:18",
+      "title": "Matrix-level modular action"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4f724156",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — status of the Conjecture-C thread and next-cycle conjectures\n\nThe thread now spans five Lean files, all compiling with `0` sorries and only the standard\naxioms (`propext`, `Class",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-18T21:38:19",
-      "title": "Conjecture C, closed"
-    },
     {
       "cycle_id": "16c8a71d",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 30,
       "timestamp": "2026-08-25T16:02:03",
       "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE GEOMETRIC WINDOW FEA"
+    },
+    {
+      "cycle_id": "4c991400",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Matrix-level modular action (Phase A, v19c)\n\nThis cycle established, in `Catalog/Shared/ModularCayley/MatrixModularAction.lean`:\n\n* translations `transMat t = !![1,t;0,1]` as an",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-08-25T16:02:18",
+      "title": "Matrix-level modular action"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "22848dce",
-      "domain": "Combinatorics",
-      "name": "code3_eq_zero_iff",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "22848dce",
-      "domain": "Combinatorics",
-      "name": "code3_eq_one_iff",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "22848dce",
-      "domain": "Combinatorics",
-      "name": "code3_eq_two_iff",
-      "quality": 0.82
-    },
     {
       "cycle_id": "569bc76d",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "binCenter_translate",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "4c991400",
+      "domain": "Shared",
+      "name": "cx_apply",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "4c991400",
+      "domain": "Shared",
+      "name": "mobius_im_ofReal",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "4c991400",
+      "domain": "Shared",
+      "name": "mobius_cx",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-08-25T16:02:03",
+  "last_updated": "2026-08-25T16:02:18",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "5be71780",
-        "quality": 0.85,
-        "theorems": 97,
-        "title": "reinforcement learning"
-      },
-      {
         "cycle_id": "fc85d14f",
         "quality": 0.82,
         "theorems": 41,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 30,
         "title": "For `d ≥ 1`, `N ≥ 2`, the thickness of the outermost equal-volume"
+      },
+      {
+        "cycle_id": "4c991400",
+        "quality": 0.8,
+        "theorems": 65,
+        "title": "Matrix-level modular action"
       }
     ],
     "Tropical": [

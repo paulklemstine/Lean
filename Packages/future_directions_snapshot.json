@@ -2890,7 +2890,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56a9e19d",
     "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 70 (weight-quant floor-transfer cell).\n\n| rung | bpw | PPL | dPPL vs fp16 (6.9825) |\n|---|---|---|---|\n| fp16 | 16 | 6.9825 | — |\n| q8_0 | ~8.5 | 6.9781 | -0.063% |\n| q6_k | ~6.6 | 7.0006 | +0.259% |\n| q5_k_m | ~5.5 | 7.0427 | +0.862% |\n| q4_k_m | ~4.8 | 7.1093 | +1.816% |\n| q3_k_m | ~3.9 | 7.2758 | +4.201% |\n| q2_k | ~2.6 | 8.1105 | **+16.155%** |\n\n**Scorecard:** P1 CONFIRMED (q6_k inside ±0.5%); P2 REFUTED BY A HAIR (+4.20% vs the stated [+5%,+30%] band — scale+calibration rescues more than predicted; 'erased' <2% also refuted); P3 REFUTED DECISIVELY (+16.2% << +50% — 2.6bpw is degraded but usable).\n\n**The law:** THE WEIGHT FLOOR IS NOT A PROPERTY OF BIT-WIDTH — it is a property of (quantizer quality × scale). NET-52's toy RTN floor (<6 bits undeployable) dissolves into a gentle convex curve at 14x scale with calibration-aware k-quants. The contrast with the cache axis is total: weights quantize smoothly (no cliff anywhere through 2.6bpw) while cache KEYS fall off a wall between 8 and 5 bits (NET-92/93). Selection interfaces carry precision requirements; content containers do not.\n\n**Cross-round determinism:** the q4_k_m arm reproduced NET-92's control PPL 7.1093 EXACTLY — same model file, same slice, days apart.\n\n**Practical:** full CPU serving stack = q4_k_m weights (+1.8%) + K8/V4 cache (+0.14%) + speculation (+66% throughput, NET-91) ≈ one-eighth naive memory for ~18% aggregate quality-equivalent cost.\n\n**Honest limits:** single slice/family; llama.cpp calibrations only — the toy-vs-scale comparison crosses quantizer quality AND scale simultaneously (confound documented, separation open as RTN-vs-kquant-at-fixed-scale); q8_0's −0.06% treated as within-noise; per-arm SEs not captured.\n\nSetup: llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice. Script ResearchOutput/exp_net94_weightquant.py; paper ResearchOutput/NetworkMathematics/95_TheWeightFloorCollapsed.md.",
     "domain_bridges": [],
     "domains": [
@@ -2902,7 +2902,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T13:15:17.264782+00:00",
     "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q2_k just +16.2%) — the toy sub-6-bit floor was quantizer-quality x scale, not a bit-width law; weights curve smoothly where cache keys cliff"
   },
@@ -2962,25 +2962,6 @@
     "status": "in_progress",
     "timestamp": "2026-08-24T16:57:03.774720+00:00",
     "title": "FACT round-80 #1 — PROFILE-FORM (exp 579): positional layer gets a LAW — small-j hit profile = POWER LAW T(x)≈0.0295·(1+x)^−1.104 (b boot95 [0.991,1.218], Akaike weight 0.987; ΔAICc exp +9.2 / logistic +11.5 degenerate / linear +16.9) — harmonic decline whose bulk IS the Dickman gradient; beyond-Dickman residual PEAKED not monotone: ±20% concave mid-window hump max 1.23 @ x≈0.67 between end deficits 0.80/0.90 (quadratic dAICc 50.5, c-CI [−0.62,−0.14], vertex 0.59 interior), invariant across all three r-brackets; paper-228 follow-up (a) closed"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "128c5007",
-    "description": "Completes paper 231's named probe (bin-width permutation x u-grid shift on the mid-window hump in R=T/M). 30-cell grid = 6 widths {10,20,33,50,66,100} x 5 circular shifts {-0.25..+0.25} (task said 15; named sets multiply to 30 — disclosed, full product run). Anchor (nb=50,sh=0) reproduces paper 231 exactly: raw_max 1.22636 vs 1.2227 (diff .004), bins 2..49 <=.005 (edge diff = center-vs-integrated M convention only). DATA: raw-max hump present 30/30 cells (range 1.0706–1.2960, never below noise ceiling); ABSOLUTE vertex SHIFT-INVARIANT — label vx drifts by construction but vx+sh pins 0.6482–0.6492 across all five shifts at nb=100 (rigid transport; erratic precondition unmet at far fraction 3.45%, vanish precondition unmet 0/30 below 1.03); sole erratic item one degenerate nb=33 quadratic fit (vertex off 0.19 while argmax bin center sits 0.01 from median). CONTROLS: three cells breach the nb-agnostic 1.02 bar at amp 1.0215–1.0305 — exactly the measured multinomial extreme-value ceiling z +3.05/−3.45 two-sided (widths 50/66/100 only), inside the nb-aware ceiling 1.05; hence the mechanical registered precedence chain outputs ARTIFACT-CONTAMINATED — RETAINED VERBATIM in the JSON as an audit record, NEVER the headline: its leak semantics falsified by persistence + rigid transport. H1 failed AS OPERATIONALIZED: fitted-peak amp >=1.10 in only 7/30 local-quadratic fits (estimator-stricter-than-phenomenon, same gap class as exp581's ~1.03-vs-1.05; marginals amp 7 / vx 5 / sig 21 / raw>=1.10 22; 0/30 survive all three bars vs 80% required). VERDICT MIXED-INCONCLUSIVE: STABLE GEOMETRIC WINDOW FEATURE at u*≈0.65 — polynomial/window-geometry channel stays OPEN; what failed is ONE operationalization of hump significance. NAMED FOLLOW-UP: binning-independent shape test (nonparametric density-regression or wavelet-free curvature test with analytic SEs). LEDGER: two PRE-GRID smoke-caught amendments disclosed (treatment M := exp579 mixture-Dickman after fake bin0 edge peak R=1.49; control denominator := uniform sampling null after manufactured control shape amp 1.3611); reporting-addendum timing disclosed, no registered bar changed; deterministic re-run 6.1 s post-reconciliation; cluster bootstrap 2000 reps seed 20260901 (single seed noted). Pure reanalysis of hash-verified exp581_regen_positions.npz + exp579 M curve; no sampling/factoring. Barrier framing: prevents a wrong closure of the geometry channel from either a mechanical-string headline or an unprobed sole-survivor assumption; residue cap untouched; no breakthrough claimed. Paper 232, assessment v338→v339, count 570→571.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4036",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T19:01:09.723130+00:00",
-    "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE GEOMETRIC WINDOW FEATURE at u*≈0.65; paper 232"
   },
   {
     "ambition_level": "grand_challenge",
@@ -5771,6 +5752,25 @@
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 4c991400 (Q=0.800), which proved 65 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Represent translations by determinant-one matrices, prove compatibility of the Cayley transform with their Möbius action, and connect the horocycle equation directly to the parabolic trace condition.",
+    "domain_bridges": [],
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_4c991400_5760aaa6",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4c991400",
+    "status": "available",
+    "timestamp": "2026-08-25T16:02:18.395817+00:00",
+    "title": "Deepening: Matrix-level modular action"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -5848,26 +5848,6 @@
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "seed_388",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
   {
     "ambition_level": "extension",
@@ -15068,6 +15048,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Computation.BinwidthUShiftShapeTest"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The exact box-kernel deflation k w^2 / 12 is the curvature times the variance of the box kernel. We conjecture the same formula with Var(K) for every symmetric unimodal kernel, with the vertex exactly preserved. This identifies the single number any binning-free shape test must report.\n\nFor symmetric non-negative unimodal K with unit mass and f symmetric and concave about u*, argmax (f * K_h) = u* and (f * K_h)(u*) = f(u*) + (1/2) f''(u*) Var(K_h) + o(Var(K_h)).\n\nGeneralise slidingAvg_quadratic from the box kernel to an arbitrary kernel by second-order Taylor expansion under the integral, and re-derive w^2/12 as the box variance.\n\nBin width, kernel bandwidth and wavelet scale become interchangeable through a single scalar, making cross-method comparison exact.\n\nKernel shape enters at leading order and histogram results cannot be compared with density-regression results without recalibration.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_4171",
+    "lineage_refs": [],
+    "priority_score": 0.7115714285714286,
+    "proof_strategy": "Expand f to second order about u*, integrate against K using symmetry to kill the first moment, and control the remainder by the modulus of continuity of f''.",
+    "research_mode": "team",
+    "source_exp_id": "128c5007",
+    "status": "available",
+    "timestamp": "2026-08-25T16:01:43.513315+00:00",
+    "title": "Kernel-Variance Universality of the Deflation Law"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MachineLearning.KnownUnresolvedCards.FeedbackGame"
     ],
     "consumed_by_exp_id": "",
@@ -19393,6 +19395,28 @@
     "status": "available",
     "timestamp": "2026-08-23T16:44:16.437022+00:00",
     "title": "Certified Escape-Time Rendering of the Mandelbrot Complement"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Computation.BinwidthUShiftProbe",
+      "Computation.BinwidthUShiftShapeTest"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Second-differencing a histogram of bin averages is exactly convolution of the second derivative with a Bartlett kernel. This turns the fitted-vertex significance test into a parameter-free curvature-sign readout with an analytic error term, eliminating the degenerate-fit failure mode observed at nb = 33. It gives the named follow-up (binning-independent shape test) a concrete estimator.\n\nFor f in C^2 and bin width w, binVal f o w (i+1) - 2 binVal f o w i + binVal f o w (i-1) = w * (f'' convolved with the triangular kernel of half-width w) evaluated at binCenter o w i.\n\nFormalise in Lean by twice applying intervalIntegral.integral_comp_add_right to slidingAvg and integrating by parts; verify numerically against the exp-581 regenerated positions.\n\nThe 30-cell grid collapses to a single sign vector with analytic standard errors; hump significance becomes testable without any fit.\n\nCurvature readout is bin-width dependent and the shape test must be replaced by a bandwidth-selection procedure.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4170",
+    "lineage_refs": [],
+    "priority_score": 0.6700588235294119,
+    "proof_strategy": "Write binVal as slidingAvg (proved), express the second difference as an integral of f over a triangular weight by telescoping two box kernels, then integrate by parts twice.",
+    "research_mode": "team",
+    "source_exp_id": "128c5007",
+    "status": "available",
+    "timestamp": "2026-08-25T16:01:42.831911+00:00",
+    "title": "Curvature-Sign Certificates for Box-Averaged Windows"
   },
   {
     "ambition_level": "extension",
@@ -23888,6 +23912,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Computation.BinwidthUShiftProbe"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Exact bin averaging is an L-infinity contraction, so it cannot create a hump; sample counting is not, so all artefact risk lives in the sampling step. Quantifying the count at which a spurious hump becomes likely separates a harmless convention amendment from a load-bearing one.\n\nNo curve with sup f < 1 + delta admits a grid whose exact bin averages exceed 1 + delta; for counted histograms with n cells the least N making a spurious 1 + delta hump probable satisfies N = Theta(n log n / delta^2).\n\nThe first half is already proved (hump_certifies_peak); formalise the counting half via the Gumbel ceiling of Direction 3 and check by simulation at delta = 0.02.\n\nAudit ledgers can be split mechanically into binning amendments (harmless) and sampling amendments (load-bearing).\n\nBinning conventions can also inject bias and every convention change must be re-registered.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4172",
+    "lineage_refs": [],
+    "priority_score": 0.5634281608829629,
+    "proof_strategy": "L-infinity contraction of the averaging operator for the first half; for the second, invert the Chernoff bound of Direction 3 to solve for N.",
+    "research_mode": "team",
+    "source_exp_id": "128c5007",
+    "status": "available",
+    "timestamp": "2026-08-25T16:01:44.000884+00:00",
+    "title": "Contraction Separation between Averaging and Counting"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Shared.PMFrameTwoParameter",
       "Catalog.Algebra.PMFrameTernaryBoundary",
       "Catalog.Algebra.PMFrame105Explicit"
@@ -25452,6 +25498,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Restricting `horocycle_preserving_iff_translation` to `SL(2,ℤ)` yields:\na matrix in `SL(2,ℤ)` preserves every horocycle at `∞` iff it is `± transMat n` with\n`n ∈ ℤ`, and the failure set — parabolics with a different fixed point, e.g.\n`!![1,0;1,1]` — is in explicit bijection with `ℚ ∪ {∞}` via the continued-fraction\nexpansion of the fixed point.\n\n**The key insight is** that the counterexample `parabolic_not_horocycle_preserving`\nis not an anomaly but the generic member of a `ℚ`-indexed family: the fixed point of a\nparabolic is the obstruction, and over `ℤ` fixed points are exactly cusps.\n\n**Why now?** `parabolic_fixed_point` and `parabolic_conjugate_to_translation` are\nalready proved for real matrices; the integral statement needs only a denominator\nargument, and it links this file to the catalog's continued-fraction modules.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Ping-Pong Threshold for Parabolic-Elliptic Pairs\",\n    \"domain\": \"Geometry\",\n    \"description\": \"The group generated by a unipotent translation transMat t and an elliptic rotMat a should be discrete and free of rank two precisely above an explicit threshold in |t| depending algebraically on a. The approach transports both generators to the unit disc by the Cayley matrix and uses the horocycle height discHoro as a single Lyapunov function defining the ping-pong sets. This would give a fully formal, inequality-only discreteness criterion.\",\n    \"conjecture\": \"There is a real-algebraic function T(a) such that the subgroup of SL(2,R) generated by transMat t and rotMat a is discrete and free of rank 2 if and only if |t| >= T(a), where T(a) is a root of a polynomial in the entries of cayleyMat * rotMat a * cayleyMat_inv.\",\n    \"test\": \"Formalise the ping-pong lemma with sets cut out by discHoro inequalities; numerically locate T(a) for a in a grid and check freeness of all words of length <= 8.\",\n    \"if_true\": \"Yields a formal, checkable discreteness test for two-generator Fuchsian groups stated purely in terms of horocycle height.\",\n    \"if_false\": \"The threshold is not algebraic, indicating that horocycle height alone cannot separate the ping-pong sets and a second invariant is needed.\",\n    \"proof_strategy\": \"Conjugate both generators into SU(1,1); use discPar_preserves_discHoro for exact invariance under the parabolic and strict monotonicity of discHoro under the elliptic away from its fixed point; apply the classical ping-pong lemma to the resulting sublevel sets.\",\n    \"catalog_references\": [\"Catalog.Shared.ModularCayley.MatrixModularAction\", \"Catalog.Shared.CatalogbuildSharedCayley.Cayley\"]\n  },\n  {\n    \"title\": \"Horocycle Height Cocycle and Its Kernel\",\n    \"domain\": \"Algebra\",\n    \"description\": \"Horocycle height change under a Moebius action should be recognised as an additive cocycle on SL(2,R) acting on the upper half-plane. The already-proved characterisation of horocycle-preserving matrices computes exactly the kernel of this cocycle. Naming the",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_4176",
+    "lineage_refs": [],
+    "priority_score": 0.5577272727272726,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4c991400",
+    "status": "available",
+    "timestamp": "2026-08-25T16:02:12.273016+00:00",
+    "title": "Horocycle equation over `ℚ` and continued fractions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** Among graphs formed from `n` triangles by identifying vertices while keeping a connected triangle-intersection pattern, the windmill graph extremizes the ratio between the number of six-emotion assignments and the number of minimum-palette assignments; characterize all equality cases.\n\nThe key insight is that the windmill’s independent outer pairs produce the exact ratio `2 · 10^n`, suggesting that overlap geometry controls a multiplicative entropy loss.\n\n**Why now?** Closed formulas are available at both the minimum palette and the six-emotion palette, providing a calibrated baseline against which more complicated triangle gluing patterns can be tested.",
     "domain_bridges": [],
     "domains": [
@@ -25547,6 +25613,26 @@
     "status": "available",
     "timestamp": "2026-08-21T06:29:44.607996+00:00",
     "title": "C3. Facet conjecture for the cyclic inequality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For the group `Γ(t,a) ≤ SL(2,ℝ)` generated by `transMat t` and the\nelliptic rotation `rotMat a` (the Cayley conjugate of `spbMat a`), there is an explicit\nreal-algebraic threshold `T(a)` such that `Γ(t,a)` is discrete and free of rank 2\nexactly when `|t| ≥ T(a)`, and `T(a)` is the root of a polynomial whose coefficients\nare the entries of `cayleyMat * rotMat a * cayleyMat⁻¹`.\n\n**The key insight is** that after the Cayley transform both generators act on the unit\ndisc, where `discHoro` supplies a *single* scalar Lyapunov function: horocycle height\nis exactly invariant under the parabolic and strictly monotone under the elliptic away\nfrom the fixed point, so the classical ping-pong sets can be defined by inequalities\non `discHoro` rather than by ad-hoc fundamental domains.\n\n**Why now?** `discHoro_cayleyC`, `discPar_preserves_discHoro` and\n`normSq_cayleyC_lt_one` are already formalised with zero sorries, which is precisely\nthe analytic input a ping-pong argument needs; the remaining work is combinatorial\nbookkeeping rather than new analysis.\n\n---",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4173",
+    "lineage_refs": [],
+    "priority_score": 0.5576190476190476,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4c991400",
+    "status": "available",
+    "timestamp": "2026-08-25T16:02:10.542442+00:00",
+    "title": "Ping-pong discreteness for the parabolic–elliptic pair"
   },
   {
     "ambition_level": "extension",
@@ -51156,6 +51242,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The map `β(g, z) = log (discHoro (g • w) / discHoro w)` with\n`w = cayleyC z` defines a genuine `ℝ`-valued cocycle on `SL(2,ℝ) × ℍ` whose\ncoboundary class is trivial exactly on the parabolic subgroup fixing `∞`, i.e. the\nkernel of the class is precisely the set `{± transMat t}` identified by\n`horocycle_preserving_iff_translation`.\n\n**The key insight is** that `horocycle_preserving_iff_translation` is really the\nstatement `β ≡ 0 ↔ g = ± transMat t`, so the theorem already computes the kernel of a\ncocycle that has not yet been named; naming it converts a matrix identity into a\ncohomological invariant.\n\n**Why now?** The formalisation gives the kernel exactly (both directions), which is the\nhard half of any cocycle-class computation; the cocycle identity itself follows from\n`mobius_mul`, also already proved.\n\n---",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4174",
+    "lineage_refs": [],
+    "priority_score": 0.44238360895640083,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4c991400",
+    "status": "available",
+    "timestamp": "2026-08-25T16:02:11.059531+00:00",
+    "title": "Horocycle height as a group cocycle"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize conservative and faithful interpretations between theories. This would distinguish expressive convenience, uniform abstraction, and genuine proof-theoretic strength.",
     "domain_bridges": [],
     "domains": [
@@ -51557,6 +51663,23 @@
     "status": "available",
     "timestamp": "2026-08-22T05:43:18.226889+00:00",
     "title": "C3. Multiplicativity of the visible bits over composita"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Conjugation by `cayleyMat` carries `SL(2,ℝ)` isomorphically onto\n`SU(1,1)`, and under this isomorphism the trace trichotomy `|tr| < 2 / = 2 / > 2`\nmatches exactly the three normal forms `discPar t`, the diagonal rotation\n`diag(e^{iθ}, e^{-iθ})`, and the hyperbolic `!![cosh r, sinh r; sinh r, cosh r]`,\nwith the parabolic case characterised intrinsically by `discHoro`-invariance.\n\n**The key insight is** that `discPar_normSq_key` (`|den|² - |num|² = 1 - |w|²`) is the\ndefining `SU(1,1)` form identity written for one element; promoting it from the\nparabolic family to all of `SU(1,1)` turns three separate case analyses into one\nquadratic-form statement.\n\n**Why now?** `discriminant_dichotomy` already separates the elliptic and parabolic\ncases in the disc model; only the hyperbolic branch is missing, and its normal form is\na two-line matrix computation of the same shape as `discPar`.\n\n---",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4175",
+    "lineage_refs": [],
+    "priority_score": 0.43949999999999995,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4c991400",
+    "status": "available",
+    "timestamp": "2026-08-25T16:02:11.580933+00:00",
+    "title": "Full trichotomy in the SU(1,1) picture"
   },
   {
     "ambition_level": "extension",
@@ -60544,23 +60667,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4c991400",
-    "description": "Represent translations by determinant-one matrices, prove compatibility of the Cayley transform with their Möbius action, and connect the horocycle equation directly to the parabolic trace condition.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1828",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0f8a1331",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:22.836193+00:00",
-    "title": "Matrix-level modular action"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Define the relevant imaginary quadratic orders and prove\n   the class-number-one statements for the nine listed discriminants. This would\n   replace the current finite list definition with a mathematically characterized\n   predicate.",
     "domain_bridges": [],
@@ -62703,7 +62809,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2e74b6a",
     "description": "Conjecture: every\n   non-derivable formula `A` of the calculus above has a `TempFrame` countermodel with\n   at most `2^(2 * subformulaCount A)` worlds. This can be tested by filtration and\n   exhaustive bounded model search.",
     "domain_bridges": [],
     "domains": [],
@@ -62713,7 +62819,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "17b35eaf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:19.038154+00:00",
     "title": "Finite model property with an explicit bound"
   },
