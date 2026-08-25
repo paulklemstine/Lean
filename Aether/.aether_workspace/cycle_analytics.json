@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-25T18:58:50.626435+00:00",
+  "last_updated": "2026-08-25T20:47:35.894148+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -68227,6 +68227,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-25T18:58:50.310935+00:00",
       "title": "Parametric families"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Physics",
+      "duration_seconds": 27201.5826086998,
+      "end_time": 1787690770.7809157,
+      "files_integrated": 4,
+      "job_id": "7af52a9c",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.86,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.562,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.86,
+        "novelty": 0.86,
+        "proof_depth": 0.86,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787663569.198307,
+      "strategy_count": 0,
+      "theorem_count": 5,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-25T20:47:35.508332+00:00",
+      "title": "C4. The `\u00b12` obstruction is the only obstruction: classify the ternary Pythagorean trees"
     }
   ]
 }

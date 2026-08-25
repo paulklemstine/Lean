@@ -50473,7 +50473,7 @@
       "depth_estimate": 3,
       "description": "is `𝓛 n = {H : Matrix n n ℂ | H Hermitian ∧ H² = t*² I}`; by the\nrigidity theorem of this thread it is exactly the set of Hamiltonians whose logarithmic\nactivation `log (I + iH)` is unitary.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -50513,7 +50513,7 @@
       "depth_estimate": 3,
       "description": "Both channels are now proved theorems in this catalog, so the conjecture is a\nconcrete statement about the pair of certified constants `(2.7 · 10⁻⁶, 1288)` and can be\nfalsified by exhibiting an admissible Gaussian-rational Hamiltonian with `q` inside the\nclaimed range.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -50833,7 +50833,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Two diagonalisable rational matrices `A, B` (not assumed diagonal) whose\neigenvalues are natural numbers `≤ N` and which satisfy `tr(A^k) = tr(B^k)` for all `k ≤ N`\nare conjugate over `ℚ̄`, and in fact have equal characteristic polynomials.\n\n*The key insight is* that `count_eq_of_traces` already gives equality of eigenvalue\nmultiplicities for the diagonal representatives, and the missing step is only the transfer\nfrom a diagonalisable matrix to its diagonalisation — a statement about `Matrix.IsDiag`\nconjugacy rather than about power sums.\n\n*Why now?*  `exists_equiv_of_powerSums` supplies precisely the index-set bijection needed to\nbuild the conjugating matrix, so the remaining work is packaging rather than new\nmathematics; it would upgrade the spectral corollary from diagonal matrices to the class\nthat actually occurs in applications.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -50952,7 +50952,7 @@
       "depth_estimate": 3,
       "description": "Both endpoints of the phase diagram are now theorems\n(`freeEnergy_tendsto_sup`, `l1Dist_spike_tendsto_one`, `gibbs_l1_le_two_range_div`);\nwhat is missing is monotonicity in `β`, a one-variable calculus statement about\n`β ↦ KL(π_β ‖ p)` whose derivative is again a variance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -55176,7 +55176,7 @@
       "depth_estimate": 3,
       "description": "Fix a prefix length in advance and compare centered decimal-digit autocorrelations at lags 1–12 against the exact permutation distribution, with family-wise error controlled across constants and lags. The conjecture is that none of the three advertised preferred lags remains significant after correction at prefix lengths 10³, 10⁴, and 10⁵.\n\nThe key insight is that an exact finite-sample null distribution separates reproducible digit evidence from interpretations based only on irrationality. Why now? The deterministic energy identity identifies the precise statistic to test and exposes every convention that must be fixed before significance has a meaning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -55254,7 +55254,7 @@
       "depth_estimate": 3,
       "description": "For centered cyclic digit prefixes, the conjecture is that statistically exceptional autocorrelation peaks are equivalent to concentration of Fourier power on characters whose phases nearly stabilize the corresponding shift, with quantitative two-sided bounds uniform in prefix length.\n\nThe key insight is that Fourier inversion turns temporal repetition into spectral concentration, while polarization turns it into low interval energy. Why now? These two exact descriptions are now available in one framework, making a sharp stability theorem a concrete target.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -58139,7 +58139,7 @@
       "depth_estimate": 3,
       "description": "For a finite self-adjoint Hamiltonian decomposed into irreducible angular-momentum sectors, conjecture that sufficiently small perturbations commuting with the symmetry action preserve cumulative shell multiplicities whenever adjacent spectral clusters have a positive gap.\n\nThe key insight is that periodic structure depends on spectral projections and their ranks, not on exact numerical eigenvalues; ranks should remain constant until a gap closes.\n\nWhy now? The diagonal shell model gives explicit eigenvectors and multiplicities, making it possible to formulate a quantitative gap condition and then broaden from diagonal matrices to general Hermitian operators.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -58220,7 +58220,7 @@
       "depth_estimate": 3,
       "description": "For any fixed positive scale `E₀`, conjecture that nuclear binding energies across all stable isotopes cannot satisfy `round(E/E₀)=Z` consistently, even after choosing one representative isotope per element.\n\nThe key insight is that binding energy is controlled primarily by mass number and saturation, whereas atomic number is a charge count; a universal scalar rounding rule discards the independent neutron degree of freedom.\n\nWhy now? The shell-spectrum results clarify the valid role of multiplicity while separating it from the stronger and falsifiable claim that energy values themselves encode atomic numbers by uniform rounding.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -59657,7 +59657,7 @@
       "depth_estimate": 3,
       "description": "For directed edges with `pₙ → 0`, conjecture that the centered, variance-normalized empirical spectrum obeys the circular law whenever `npₙ` grows faster than a logarithmic threshold, while below that scale isolated rows create a nonvanishing atom at zero.\n\nThe key insight is that the same sparsity scale controlling isolated vertices also controls singularity and hence the failure of two-dimensional spectral spreading.\n\nWhy now? The finite product-law infrastructure already separates exact edge independence from asymptotic analysis, and the deterministic obstruction shows that sparsity must be studied only after the symmetry issue is repaired.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -61225,7 +61225,7 @@
       "depth_estimate": 3,
       "description": "Define the order-`s` adjacency tensor, its homogeneous clique polynomial, and the maximum over the nonnegative unit `s`-norm sphere. Establish existence of a maximizer by compactness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -61265,7 +61265,7 @@
       "depth_estimate": 3,
       "description": "Prove that cloning vertices with equal multipartite neighborhoods does not decrease the spectral objective, then derive a weighted analogue of the exact balancing identity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -62869,7 +62869,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every maximal geodesic of the metric\n\\(\\cosh(y)^{-2}dx^2+\\cosh(x)^2dy^2\\) is defined for all real time.\n\nThe key insight is that degeneration of the horizontal coefficient at large\n\\(|y|\\) is coupled to rapid growth of the vertical coefficient at large \\(|x|\\),\nso conserved energy may prevent finite-time escape even though neither coordinate\ncoefficient is uniformly comparable to the Euclidean metric. **Why now?** The\nmetric is known to be smooth and positive definite everywhere, and its exact\ncoefficient structure is explicit enough to turn completeness into quantitative\nODE estimates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -63904,7 +63904,7 @@
       "depth_estimate": 3,
       "description": "Compare the proved\n   parameters against the quantum Singleton bound using the number of physical\n   edge qubits `N=n·2^(n-1)`, rather than using the cube dimension `n` as though it\n   were block length.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -69322,7 +69322,7 @@
       "depth_estimate": 3,
       "description": "Define trajectories in `EuclideanSpace ℝ (Fin 2)`, angular momentum, and the central-force ODE. Prove conservation of energy and angular momentum, then derive the effective radial equation rather than taking it as the starting model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -69480,7 +69480,7 @@
       "depth_estimate": 3,
       "description": "Establish existence and uniqueness for the logarithmic central-force ODE away from the origin, classify turning radii using the effective potential, and determine which exceptional energy-angular-momentum pairs, if any, yield closed noncircular trajectories.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -69674,7 +69674,7 @@
       "depth_estimate": 3,
       "description": "Refine `bekensteinBits` using a dimensional-quantity library, so radius, energy, action, and velocity cannot be mixed incorrectly. Concrete bounds could then be derived from explicitly stated empirical assumptions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -74324,7 +74324,7 @@
       "depth_estimate": 3,
       "description": "A quantum CSS code has both `Z` and `X` distances. Define the dual cochain complex and prove total code distance is the minimum of primal and dual systoles.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -77438,7 +77438,7 @@
       "depth_estimate": 3,
       "description": "The proved model is exactly quadratic in speed. Investigate how bubble radius, wall thickness, shape profile, and any ship-mass coupling alter the scaling. The proposed `E ~ M vₛ c` law is not established by the standard fixed-profile density formula.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -77554,7 +77554,7 @@
       "depth_estimate": 3,
       "description": "Formalize null, weak, dominant, and averaged energy conditions and identify exactly which fail for classes of shape functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -80139,7 +80139,7 @@
       "depth_estimate": 3,
       "description": "Generalize binary activity to finite alphabets, obtaining `q^N` capacity and energy-constrained type-class bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -85757,7 +85757,7 @@
       "depth_estimate": 3,
       "description": "For every `d ≥ 2` and every real `d × d` matrix `M`, `d * |det M|^(2/d) ≤ squareEnergy M`; equality holds exactly when `MᵀM` is a nonnegative scalar multiple of the identity. The file proves the inequality and sharpness family when `d = 2`, but not the equality classification.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -87891,7 +87891,7 @@
       "depth_estimate": 3,
       "description": "Represent Eve's coherent interaction with all transmitted systems and an ancilla. Formalize purification, deferred measurement, symmetrization, and a justified reduction from coherent attacks to a tractable attack class.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -87971,7 +87971,7 @@
       "depth_estimate": 3,
       "description": "Extend the proved classical collision bound to smooth conditional min-entropy against quantum side information, with a trace-distance secrecy bound of the form `ε + 1/2 · sqrt(2^(ℓ-Hmin))`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -92565,7 +92565,7 @@
       "depth_estimate": 3,
       "description": "The entry formula is now reduced to the formal codegree theorem.  The conjecture\nis a finite, exact spectral assertion and can be falsified by a single parameter\ntriple or symbolic rank/eigenvalue calculation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -97446,7 +97446,7 @@
       "depth_estimate": 3,
       "description": "Relate `rotEnergy` to the eigenvalues of the actual\n   matrix `D − A_om` in `Matrix.IsHermitian` form, and prove\n   `λ_min ≤ periodicityRatio` as a statement about `Matrix.IsHermitian.eigenvalues`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -97526,7 +97526,7 @@
       "depth_estimate": 3,
       "description": "`cdet` satisfies a cofactor expansion\n   along the first column for *any* matrix; for right-quantum matrices one expects the full\n   set of quantum Cramer identities and a quantum Jacobi ratio theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -99767,7 +99767,7 @@
       "depth_estimate": 3,
       "description": "**C3 (a matching lower bound for multi-block AFEs) — PROVED, in a stronger form.**  For an\n  AFE whose blocks are spectrally separated (pairwise disjoint coefficient supports, e.g. a\n  dyadic decomposition) the whole AFE collapses to a single Dirichlet polynomial\n  (`AsaiSecondMoment.afe_eq_linForm_aggregate`) whose coefficient mass is the sum of the\n  blockwise masses (`sum_normSq_aggregate_of_disjoint`).  Hence the lower bound\n  `(D − eN)·∑_j |w j|²‖A j‖²` (`secondMoment_disjoint_lower`), the removal of one factor `J`\n  from the flagship bound (`secondMoment_disjoint_uniform`), their combination into an exact\n  order `≍ D·∑_j |w j|²‖A j‖²` when `2eN ≤ D` (`secondMoment_disjoint_order`), and the dyadic\n  case used in the paper (`dyadic_support_disjoint`, `secondMoment_dyadic`: the bound is\n  `C · W · B`, with no `J`-dependence).  All in `AsaiSecondMomentLower.lean`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -100245,7 +100245,7 @@
       "depth_estimate": 3,
       "description": "`(x_c - x)^m·κ_m(x) → (m-1)!·x_c^m` for every\n   `m ≥ 1`: the pole order of the `m`-th cumulant is exactly `m`.  The cases `m = 1, 2, 3` are\n   now proved (`meanArea_pole_residue`, `areaVariance_pole_residue`,\n   `areaThirdCumulant_pole_residue`); the uniform statement would identify the full singular\n   structure of the horizon free energy as `log Z(x) = -log(x_c - x) + O(1)`, i.e. an exactly\n   logarithmic free energy at the transition.  The key insight is that all three residues come\n   from a single simple pole of `Z` at `x_c`: `(x d/dx)^m log Z` differentiates only the factor\n   `-log(x_c - x)` to leading order, and that factor is now available in closed form.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -101164,7 +101164,7 @@
       "depth_estimate": 3,
       "description": "For a defect rate whose budget at scale `a` grows sublinearly, `Q(t) ≤ D₀ + κ t^α`\n(`0 ≤ α < 1`), the family of bounds `L ≤ (m/a)(π + Q(L)/a)` proved in `anec_domain_bound`,\noptimized over the free scale `a > 0`, yields `L ≤ C(m, α)·(D₀ + κ L^α)^{1/(1-α)}`, and\nthe envelope is attained by an explicit oscillating curvature profile.\n\n**The key insight is** that the scale `a` in the Prüfer angle is a genuinely free\nparameter: the theorem is a one-parameter *family* of bounds and the physics lies in its\nenvelope, not in any single member — `EnergyShortfall.lean` is the special case `a = √(mε)`\nand already shows how much the right choice of scale buys.\n\n**Why now?** `anec_domain_bound` takes `a` as an argument and\n`myers_bound_with_shortfall` demonstrates the pattern for one fixed scale; the remaining\nstep is to minimize a smooth function of one variable and to build the matching profile\nfrom the `tanSol` / `riccatiSol` blocks already formalized.\n\n**Falsifiable by:** a defect profile with sublinear budget whose exact blow-up time\nexceeds the optimized envelope.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -102044,7 +102044,7 @@
       "depth_estimate": 3,
       "description": "**Correction to old Conjecture 5.** The \"no threshold at all\" claim is *false* at the\n  level of the parametrised quartic: the closed window `[8/9, 1]` is a genuine spectral\n  stability band. What survives is the conditional statement: *whenever the Euler\n  parameter exceeds `1`*, the collinear configuration is unstable, with no further\n  threshold and a real growth rate. The remaining physical input is Conjecture 5′ below.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -107295,7 +107295,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every `r ≥ 4` the density of pairs `(N, a)` with\n`ord_N(a) = r` for which the fundamental bin is *not* the largest non-DC bin of\nthe value signal is bounded away from `0` as `N → ∞`; in fact the fundamental's\nrank grows like `Θ(r)`.\n\n**The key insight is** that the residues `aˣ mod N` behave like an equidistributed\nsequence with respect to the additive characters of `ℤ/r`, so the value signal's\nspectrum is asymptotically flat and the fundamental has no structural advantage —\nit is the *comb*, not the exponential, that produces sharpness.\n\n**Why now?** The order-4 slice is already exactly solvable\n(`|V̂(1)|² = (v₀-v₂)²+(v₁-v₃)²` versus `|V̂(2)|² = (v₀-v₁+v₂-v₃)²`, formalised for\n`N = 15, a = 7` in `SpectralHiding.lean`), and the measured density there is\n`0.366` over `N < 500` (see `ComputationalEvidence.md`). The general statement\nneeds only Weyl-sum bounds for exponential sequences modulo `N`.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -109272,44 +109272,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "7af52a9c",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "**Conjecture.** Up to relabelling, the only triples of integer linear maps that act as a\nternary tree on the node set `{1 ≤ n < m, gcd = 1, m+n odd}` with root `(2,1)` are the\nBerggren triple (determinants `±1`) and the Price triple (determinants `±2`), and no\ntriple of determinant `|det| ≥ 3` exists.\n\n*The key insight is* that determinant `d` forces the gcd of an image pair to divide `d`,\nwhich together with the parity condition (`a+c` and `b+d` odd, proved to be necessary)\nleaves only finitely many candidate matrices with entries bounded by the growth of `m`.\n*Why now?* An exhaustive search over `|entries| ≤ 3` already returns exactly the six\nknown generators, so the classification is within reach of a finite case analysis in\nLean.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
-      "domains": [],
-      "github_issue": 0,
-      "id": "fd_3199",
-      "last_attempt_time": "2026-08-25T05:52:50.816701+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.43699999999999994,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "a1fe4956",
-      "source_path": "resplit_migration",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-08-21T06:28:38.902790+00:00",
-      "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagorean trees"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
       "category": "",
@@ -109442,7 +109404,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every free witness that recovers a residue/order coordinate `r ≤ N` to\naccuracy `o(1/r²)` is, as a function of `r`, within `O(1/N²)` of a *multiplicative*\nfunction of `r`; the \"spectral vs. CRT-multiplicative\" distinction therefore lives in the\n*computation*, never in the witness value.\n\n*The key insight is* that exact rounding forces the witness to agree with `1/r` (or an\ninvertible reparametrisation of it) to accuracy `1/(2r²)`, and `1/r` is multiplicative —\nthis is exactly what `heatReturn_approx_multiplicative` proves for the heat kernel.\n\n*Why now?* This cycle turned a qualitative classification label into a quantitative,\ncheckable statement; the general version needs only an abstract \"recovery ⇒ proximity to\n`1/r`\" lemma, which our rounding lemma `round_one_div_of_close` already contains in germ.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -113805,7 +113767,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For a finite decoder-state set `M`, delta cost `dlt` and a periodic stream\nof residual costs, the limit `optCost(n)/n` exists and equals the minimum cycle mean of the\nassociated min-plus cost matrix (its tropical eigenvalue), and the optimal protocol is\neventually periodic with that cycle.\n\n*The key insight is* that `CompressionDelta.tropical_pow_mulVec_eq_optCost` already\nidentifies `optCost` with a tropical matrix power, so the asymptotic bits-per-message is\nby definition the growth rate of tropical powers — the min-plus analogue of the spectral\nradius, which for min-plus matrices is the minimum cycle mean.\n\n*Why now?*  Both special cases are proved: coherent streams give cycle mean `r`\n(`tendsto_amortized_rate`), block-alternating streams give `r + min(2D,L)/(2L)`\n(`tendsto_block_rate`).  A general Karp-style theorem would subsume both and give a\ncomputable design rule for adaptation schedules.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Tropical",
         "Physics"
@@ -117145,7 +117107,7 @@
       "depth_estimate": 3,
       "description": "No matrix realizes a Markoff Vieta move, in contrast with the linear Berggren action. The conjecture is that degree two is optimal and that the obstruction is a rank computation on finitely many Markoff base points.\n\nNo polynomial map of degree less than two in any linear coordinate system realizes the Vieta involution on the Markoff surface, and the quadratic realization is unique modulo the surface equation.\n\nSet up the general quadratic ansatz and solve the resulting linear system on a spanning set of Markoff triples.\n\nA clean statement of why the Lorentz half of the Berggren machinery cannot transport, valid for all coordinate changes.\n\nA hidden linearization exists, which would immediately import the Berggren hyperbolic geometry to the Markoff tree.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Physics"
@@ -118902,7 +118864,7 @@
       "depth_estimate": 3,
       "description": "Every normalised spectral moment of the symmetric Rademacher ensemble should converge to the corresponding semicircle moment. Polynomiality reduces this to a single leading coefficient, and the odd orders are already exact at finite N.\n\nFor every m, expect (normalizedMoment (W ·) m) tends to WignerSemicircle.semicircleMoment m as N tends to infinity.\n\nCombine EvenWalks.evenClosedWalkCount_eq_sum_choose with the conjectured top shape count and take limits of the explicit rational function of N.\n\nThe moment method for the semicircle law is complete at all orders for this ensemble, with exact finite-N formulas at every order.\n\nEither the shape counts grow faster than the degree bound allows or the semicircle moments are not the limits, contradicting the verified orders 2, 4 and 6.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Physics"
       ],
@@ -130499,7 +130461,7 @@
       "depth_estimate": 3,
       "description": "The L1 rounding energy of the mesh (1/q)Z equals the Mantel-Turan number floor(q^2/4). We conjecture the p-th moment gives a family of extremal numbers with an exact division-free identity for each p.\n\nFor every p >= 1 there are explicit polynomials P_p, R_p with 2^p (p+1) * sum_{j<q} min(j, q-j)^p = P_p(q) - R_p(q % 2).\n\nVerify by decide for p <= 4 and q <= 40, then prove by the same lower/upper half splitting plus Faulhaber sums.\n\nEvery Lp quantization energy is an exact extremal-combinatorial quantity, linking loss exponents to Turan-type numbers.\n\nOnly p = 1 admits a clean closed form, isolating the Mantel bridge as special.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Physics"
@@ -132707,7 +132669,7 @@
       "depth_estimate": 3,
       "description": "The draw-weighted dial is the quadratic form p ↦ ½ pᵀ D p with D_ij = (x_i − x_j)(y_i − y_j). All regime dependence is spectral. Determining the inertia of D turns 'can an unbalanced draw flip the dial?' into an eigenvalue comparison.\n\nFor a comonotone population with pairwise distinct footprints, D has exactly one positive eigenvalue, and the flip threshold for the conditioning number satisfies κ_crit² = |λ_max| / |λ_min^-| up to a factor |ι|.\n\nFormalize D as a Matrix ι ι ℝ, prove Hermitian, and relate ½ pᵀ D p to Catalog.UniformDial.wcov via wcov_eq_half_double_sum; then bound the Rayleigh quotient on the simplex.\n\nThe triage rule becomes computable from a single eigenvalue pair rather than from all pair masses.\n\nThe budget bound ε²C − M²Δ is the sharp regime-free criterion and no spectral shortcut exists.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Physics"
@@ -134769,7 +134731,7 @@
       "depth_estimate": 3,
       "description": "The tie-attenuation law is the top eigenvalue of the block-averaging projector acting on centred rank space. Extending the ssR/ssS decomposition to the full spectrum should give a ladder of canonical correlations, of which the recorded dial is only the first rung.\n\nFor a tie profile with blocks m_1,...,m_k the canonical correlations between the midrank vector and any refining response are the square roots of the eigenvalues of the block-averaging projector, whose multiset is determined by the profile alone.\n\nFormalise the projector on the rank space of a profile, compute its spectrum for small profiles, and match against ssR/ssS.\n\nTurns the single dial into a spectral fingerprint that identifies the tie profile, not just its ceiling.\n\nThe response enters beyond the projector, meaning the one-sided law hides response-dependent structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Physics"
       ],
@@ -135955,7 +135917,7 @@
       "depth_estimate": 3,
       "description": "The proved sandwich |X|^k ≤ |G|·o_k ≤ |G|·|X|^k pins the exponential growth rate of the hierarchy at |X|. The conjecture sharpens this to an exact second-order expansion controlled by the second largest fixed-point count, making the hierarchy a spectral probe of the action.\n\n|G|·o_k = |X|^k + m·r^k + O(s^k) where r is the largest fixed-point count among nonidentity elements, m the number of elements attaining it, and s < r.\n\nSplit the moment sum by the value of |X^g| and bound the tail; formalise as an inequality with explicit constants rather than an asymptotic statement.\n\nOrbit counts on tuples determine the fixed-point spectrum of the action, an inverse-problem statement.\n\nCancellation among elements with equal fixed-point counts would have to be exhibited, contradicting positivity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics"
       ],
@@ -137266,7 +137228,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a sorted attention profile that is asymptotically Zipf with exponent $s > 1$,\nthe knee at gate $\\tau$ satisfies $k^*(n) = \\Theta\\big((1-\\tau)^{-1/(s-1)}\\big)$ uniformly in $n$,\nso that two knee measurements at different gates determine $s$ up to $o(1)$.\n\n*The key insight is* that the tail criterion converts the gate slack $1 - \\tau$ into a tail-mass\nbudget, and for a power-law tail the inverse of the tail function is again a power law with\nexponent $1/(s-1)$.\n\n*Why now?* The tail criterion is already established and gate-general; the missing ingredient is a\nmatching lower bound via integral comparison.\n\n**Test.** Establish matching upper and lower bounds for the Zipf knee and check numerically that\nthe measured grid ($0.9318$ / $0.9532$ / $0.9660$ / $0.9759$) pins $s \\in [2.2, 2.3]$.\n\n**If true:** a knee sweep measures a spectral exponent of the model's attention, turning the knee\ninto a model-internal observable. **If false:** the knee depends on more than the tail exponent,\nand the profile must be described by at least two parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Physics"
@@ -138699,7 +138661,7 @@
       "depth_estimate": 3,
       "description": "A deployed system is monitored by many statistics at once. Conjecture: the suite's critical temperature is governed by the operator norm of the covariance functional on the audit span, so the first statistic to break is the maximizer of |Cov_p(r,f)|/sigma_p(f). This replaces per-statistic thresholds by a single spectral quantity.\n\nFor a finite family f_1,...,f_m, sup_i eps * beta_c^{(i)}(eps) -> max_i |Cov_p(r,f_i)| as eps -> 0, and the maximizing direction in the L^2(p) span is the normalized projection of r onto that span.\n\nExtend RLHF.tendsto_eps_mul_betaCrit to a finite family by taking maxima inside the two-sided window RLHF.betaCrit_window, then optimize |Cov_p(r,f)|/sigma_p(f) over the span using the Cauchy-Schwarz equality case.\n\nAudit suites can be scored by one spectral number, and redundant statistics are exactly those inside the reward's orthogonal complement.\n\nSuite-level hacking is not determined by pairwise covariances, indicating genuinely joint (multivariate) hacking effects.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Physics"
       ],
@@ -142311,7 +142273,7 @@
       "depth_estimate": 3,
       "description": "The conjectured mean-based meta-analytic decorrelation budget is false, and fails only through a missing ordering hypothesis: decorrelation must antivary with headroom across replications. This turns the ordering into an empirical diagnostic of a dial cell. The conjecture is that clean cells antivary while count-parity cells monovary, with a quantifiable over-credit factor.\n\nFor a uniform dial cell the sequences (1 - c_i) and (1 - a_i b_i) over seeds are antivarying, so the mean-based budget holds; for a count-parity cell they are monovarying and the mean-based budget over-credits the pooled advantage energy by a factor at least 1 + Var(c)/(1 - cbar)^2.\n\nRecompute per-seed mutual correlations c_i and reading products a_i b_i from the recorded seeds, evaluate the rank correlation of (1 - c_i) against (1 - a_i b_i), and compare the two budgets against the measured pooled energy.\n\nMeta-analysis of dial cells acquires a validity precondition that can be checked from the same data, and count-parity verdicts become explainable as budget-allocation failures.\n\nThe ordering is an artefact of the counterexample and the mean-based budget fails for a different, still unidentified reason.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Physics"
@@ -144260,11 +144222,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "55b01213",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -144276,7 +144238,7 @@
       ],
       "github_issue": 387,
       "id": "fd_4055",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-25T20:49:11.142006+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -144291,7 +144253,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-24T21:45:33.979668+00:00",
       "title": "FACT round-84 #2 — SPIKE-ORIGIN (exp 589): H0-MIXED — paper 238's left-edge spike DECOMPOSES into ~half tiny-v inclusion artifact + half GENUINE small-|v| structure persisting among full-size v≥2^95 hits (w_edge .0794 → .0403 kept-CI-excludes-0); exclusion clause PROVABLY DEGENERATE (D1 ⇒ v<2^95 by arithmetic); kernel SURVIVES at reduced strength"
@@ -145192,7 +145154,7 @@
       "depth_estimate": 3,
       "description": "Round-92 #1, THEORY deliverable (papers-only bump; experiment count UNCHANGED at 587). Paper 250.\n\nConnects paper 225's PROVEN F1 master inequality S <= min(1/(Lam*Theta*qhat), 2^k_bits/(Lam*Theta)) to the measured positional profile (papers 228-242 chain).\n\nPARAMETER MAP: Lambda_meas = 0.766 [independently verified 0.765671] = prior shape itself (b_bulk=.573 [.412,.767], w=.086 [.064,.108], b_edge>=15) -> ascending beats descending 1/Lam ~= 1.306; Theta_asc ~= 0.867 [0.8193, 0.9076]; qhat NOT identified by any recorded number in the chain (full-window scans => qhat=1 trivially); k_bits=0 test-blind => arm 1 binds everywhere.\n\nEQUALITY REFUTED THREE WAYS (E1: pi flat within cells; controls flat in all three): KS D=.09519 p=6.9e-76 (paper 228/exp578); two-component LRT p=9.3e-10, spike weight and b_bulk CIs exclude flatness (paper 238/exp588, exp594 cap ladder); binning-free conditional-logistic LRT p=1.17e-21 (paper 233). E1 fails POOL-SIDE, beyond policy choice => NO realizable policy attains the bound on this data.\n\nGAP FACTOR X := bound/S_asc = C0/C_sort = 1.15302 [27-cell CI 1.10175-1.22054]; policy/baseline-independent via verified identity chain C0/c_asc = bound/S = (M+1)/(2M*E_x+1); hump-insensitive (dX=-0.019 at +20% amplitude).\n\nTIGHTNESS-CIRCULARITY CATCH: all four legacy anchors' P_hat satisfy Lam*Theta ~= 1.00-1.04 BY CONSTRUCTION (inverted through S_A=1/qhat, the bound at Lam=Theta=1); identity machine-zero (verifier resid 0.0, band [0.99999,1.0422]); anchor 4 exact self-consistent inversion (P matches booked to 4.9e-7) -> zero evidential weight for attainment; truncation/witness anchor tightness NOT-CURRENTLY-DECIDABLE without a raw non-inverted P_eff under a named committed R_eff (none exists).\n\nVERDICT BOUND-SLACK-BY-X: proven inequality overshoots every realizable test-blind policy on the measured profile by >=10% and <=22%; slack PROFILE-FORCED and POLICY-INDEPENDENT. Does not weaken the theorem - LOCATES the open work.\n\nDECIDABLE CLOSER: scan-simulation joint S/Lam/Theta/qhat measurement on exp578_positions.npz (window-ascending policy); map predicts S~=1.31 vs bound 1.51; observing S>1.51 would FALSIFY the mapping - genuine two-sided test, ~1 session, no heavy compute. Theorem-side closer: sharpness must be posed over the prior class, never as tightness-on-this-pool.\n\nVERIFICATION: verifyf1_recompute.py reimplemented from md definitions ONLY (no import of f1tight_check), Gauss-Legendre continuum + M=40k discrete cross-check (disc spread 5.2e-6): ALL THREE claims PASS, discrepancies=0. Cosmetic corrections folded per verifier: bulk-alone Lam=0.8769/gain 1.140/spike log-share 50.8% (draft ~1/3); Theta floor 0.8193 (draft ~0.83).\n\nScope: exp597 dial plateau concerns RATE layer, orthogonal to shape layer consumed by Lam/Theta; round-91 closure (#396/#397 pure density, no sequence structure) consistent - this consumes only the density shape. Barrier framing: none - prices one side of barrier-4's converse program (F1 sharpness) inside the already-mapped positional stratum.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/{f1tight_connection.md, f1tight_check.py, f1tight_result.json, verifyf1_recompute.py, verifyf1_result.json}; paper ResearchOutput/NewMathematics/250_F1Tightness.md.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Novelty"
       ],
@@ -145438,7 +145400,7 @@
       "depth_estimate": 3,
       "description": "Inside each scale block B^L ≤ T < B^(L+1) the budgets that lose depth to coarse-level overhead form an explicit interval of density 1/(B-1)^2. For perturbed cost models with per-cell weight a and per-level overhead c the deficit can take several values; we conjecture each value has a rational limiting density.\n\nFor energyCells a c B the deficit Nat.log B T - maxDepth takes values in {0,...,Nat.log B (2a+c)+1}, and each value j has a limiting density d_j(B,a,c) which is a rational function of B, a, c summing to 1.\n\nDecompose each scale block by the thresholds energyCells a c B (L-j) and compute the interval lengths exactly, as in Deficit.lossy_filter_eq; verify numerically for small a, c, B.\n\nThe overhead of coarse levels acquires a complete statistical description, refining the O(1) offset of the universality theorem.\n\nSome deficit value has no density, indicating oscillation of the thresholds relative to the powers of B, itself a striking equidistribution failure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Physics"
       ],
@@ -146424,7 +146386,7 @@
       "depth_estimate": 3,
       "description": "Scalar stability for the Kantorovich inequality is now proved: slack eps forces the ratio profile within weighted L1 distance eps/(2*alpha*beta*(beta-alpha)) of the window endpoints. The conjecture transfers this to the geometric dial, where the per-seed readings also vary, so the observed excess of the pooled reading over the sharp bound mixes reading spread with ratio spread. The claim is that the two contributions separate with an explicit constant.\n\nFor a block family with per-seed readings in [rho, rho+delta] and ratios in [alpha, beta], pooledCorr - rho*2*sqrt(alpha*beta)/(alpha+beta) is bounded below by c1(alpha,beta) times the weighted L1 distance of the ratio profile to the window endpoints, minus c2*delta.\n\nInstrument the proof of pooled_kantorovich_bound to carry the slack term rather than discarding it, then combine with kantorovich_stability and the reading spread bound from seed_reading_window; check numerically on two-block families with prescribed reading and ratio spreads.\n\nA measured pooled excess becomes a two-sided measurement of the seed energy profile, upgrading the inverse pooling law from a window to a quantitative reconstruction.\n\nReading spread and ratio spread cannot be disentangled from a single pooled number, and per-seed instrumentation is mandatory for any structural conclusion about seeds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Physics"
@@ -148509,7 +148471,7 @@
       "depth_estimate": 3,
       "description": "Saturation of the weighted dial is exactly the smallness of the tail mass of the squared amplitude profile. Conjecture that for the arithmetic profile the tail decays like 1/B, so that the window needed for a given accuracy is inversely proportional to the tolerance and independent of the population size.\n\nFor the arithmetic amplitude profile a_l comparable to 1/l on primes, 1 - weightedR2 over a window of cutoff B is Theta(1/log B), matching the Theta(1/n) law already proved for the index model.\n\nTransfer the proved model bounds (harmonic_weightedR2_ge and harmonic_weightedR2_le) to the prime-indexed profile using Mertens' theorem for the tail of sum 1/l^2 over primes.\n\nWindow size is a tolerance parameter, not a scale parameter: B* is universal.\n\nSaturation depends on the population and the B*=400 location is population-specific.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory",
         "Physics"
@@ -149191,7 +149153,7 @@
       "depth_estimate": 3,
       "description": "The exact box-kernel deflation k w^2 / 12 is the curvature times the variance of the box kernel. We conjecture the same formula with Var(K) for every symmetric unimodal kernel, with the vertex exactly preserved. This identifies the single number any binning-free shape test must report.\n\nFor symmetric non-negative unimodal K with unit mass and f symmetric and concave about u*, argmax (f * K_h) = u* and (f * K_h)(u*) = f(u*) + (1/2) f''(u*) Var(K_h) + o(Var(K_h)).\n\nGeneralise slidingAvg_quadratic from the box kernel to an arbitrary kernel by second-order Taylor expansion under the integral, and re-derive w^2/12 as the box variance.\n\nBin width, kernel bandwidth and wavelet scale become interchangeable through a single scalar, making cross-method comparison exact.\n\nKernel shape enters at leading order and histogram results cannot be compared with density-regression results without recalibration.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -150012,6 +149974,138 @@
       "thread_id": "",
       "timestamp": "2026-08-25T19:47:12.970255+00:00",
       "title": "FACT round-95 #5 — STRATIFIED-DAYZERO (exp 607): SCREEN_NEGATIVE AS AMENDED — dial-only screen fires everywhere but EVERY alert sits on the K axis (= paper-257 law replicated cell-wise in FOUR independent populations); absorbing κ erases all of it (verified non-mechanical) ⇒ exp602 pooled null upgrades to stratified-strength: dial+κ exhausts detectable rate structure at these resolutions; Bet#1 main run not funded"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Physics.TernaryPythagoreanTrees.Basic",
+        "Physics.TernaryPythagoreanTrees.Classification",
+        "Physics.TernaryPythagoreanTrees.Density"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The ternary case admits exactly three trees because the density budget 1 = sum of 1/(a(a+b)) has three admissible solutions, one of which mixes Berggren and Price branches. For general arity k the same budget equation plus the power-of-two determinant constraint bounds the search space. Determining t(k), the number of k-ary trees, would show whether hybridisation is an accident of arity three or a general phenomenon.\n\nFor every k >= 2 the number t(k) of k-ary trees on the node set {1 <= n < m, gcd(m,n)=1, m+n odd} with root (2,1) is finite, with t(2) = 0, t(3) = 3 and t(k) >= 3 for k >= 3, and every branch of every such tree satisfies |det| <= 2.\n\nExtend the finite search of evidence.py from triples to k-tuples of admissible matrices with |entries| <= 8, checking that the images partition the non-root nodes with first coordinate at most 200; then formalise the arity-k analogue of TernaryTree.no_branch_det_ge_three using the same root-child forcing argument.\n\nThe bound |det| <= 2 is a structural property of the node cone rather than of arity three, and the classification method generalises to a uniform theorem.\n\nA k-ary branch with |det| = 4 exists, showing that the power-of-two spectrum is genuinely realised beyond 2 and that the ternary bound is a low-arity coincidence.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_4191",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.6706744186046513,
+      "proof_strategy": "Reuse preserves_iff to bound entries via root minimality, then run the root-child forcing argument (root_child_cases_*) for the k smallest uncovered nodes; the density budget forces the branch with maximal density to be bergA or priceP0 exactly as in exists_bergA_or_priceP0.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "7af52a9c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/7af52a9c",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T20:47:16.276489+00:00",
+      "title": "Hybridisation Threshold for k-ary Pythagorean Trees"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Physics.TernaryPythagoreanTrees.Density",
+        "Physics.TernaryPythagoreanTrees.Basic"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The rational identity sum 1/(a_i(a_i+b_i)) = 1 proved for every ternary tree is the algebraic shadow of an equidistribution statement: each branch image occupies an exact area fraction of the node cone. Upgrading it to a counting theorem with an error term would make the conservation law analytic rather than formal.\n\nFor each branch M = (a,b;c,d) of a ternary Pythagorean tree, the number of nodes whose image under M has first coordinate at most B equals (3/pi^2) B^2/(a(a+b)) + O(B log B), and the three counts sum to the number of non-root nodes with first coordinate at most B.\n\nCompute the three counts numerically for B up to 10^5 and fit the error; formally, count coprime opposite-parity lattice points in the triangle {0 < y < x, a x + b y <= B} using Moebius inversion over the density 3/pi^2 of the node set.\n\nThe tree condition becomes an exact equidistribution partition of the coprime cone, giving a soft proof that no fourth tree exists via a density obstruction.\n\nThe branch images are not equidistributed, so the density identity is a coincidence of the three solutions rather than a structural constraint.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_4192",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5619399723967428,
+      "proof_strategy": "Write the count as a Moebius sum over d | gcd of triangle lattice counts, apply the standard Gauss bound to each triangle, and sum the tail; the parity condition contributes a factor handled by splitting the sublattice modulo two.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "7af52a9c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/7af52a9c",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T20:47:16.896973+00:00",
+      "title": "Lattice-Point Form of the Branch Density Conservation Law"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Physics.TernaryPythagoreanTrees.Triples",
+        "Physics.TernaryPythagoreanTrees.Classification",
+        "Physics.BerggrenTrees.Parent_hyp_lt"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The Euclid map (m,n) -> (m^2-n^2, 2mn, m^2+n^2) is proved here to be a bijection from nodes to primitive Pythagorean triples with even second leg. Trees built from 3x3 integer matrices acting directly on triples are the classical Barning-Hall picture; the conjecture is that every such tree is the pushforward of one of the three trees on parameter space.\n\nEvery ternary tree structure on primitive Pythagorean triples generated by 3x3 integer matrices acting on (x,y,z) is the pushforward along the Euclid map of one of the three trees on the node set; in particular there are exactly three, and no branch matrix has determinant of odd prime absolute value.\n\nFormalise the pushforward of an IntMap to a 3x3 matrix and verify the Barning-Hall matrices are the pushforwards of the Berggren branches; then search 3x3 integer matrices with small entries preserving the primitive-triple set and compare with the three predicted families.\n\nThe classification of Pythagorean trees is intrinsic to the triples and independent of the Euclid parametrisation, and the mixed tree yields a previously unlisted 3x3 generating triple.\n\nThere is a triple-space tree not induced by any parameter-space tree, so the Euclid parametrisation loses tree structure and the two classification problems genuinely differ.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory"
+      ],
+      "github_issue": 0,
+      "id": "fd_4193",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.55,
+      "proof_strategy": "Use toTriple_inj and exists_node_of_isPPT to transport covering and injectivity across the bijection; the only new content is that a linear map on triples pulls back to a linear map on parameters, which follows from comparing quadratic forms coefficientwise.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "7af52a9c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/7af52a9c",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T20:47:17.420580+00:00",
+      "title": "Transport of the Classification to Triple-Space Linear Maps"
     },
     {
       "ambition_level": "extension",
@@ -155492,6 +155586,46 @@
       "thread_id": "",
       "timestamp": "2026-08-16T21:35:04.799172+00:00",
       "title": "Deepening: Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 7af52a9c (Q=0.860), which proved 5 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** Up to relabelling, the only triples of integer linear maps that act as a\nternary tree on the node set `{1 ≤ n < m, gcd = 1, m+n odd}` with root `(2,1)` are the\nBerggren triple (determinants `±1`) and the Price triple (determinants `±2`), and no\ntriple of determinant `|det| ≥ 3` exist",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "push_7af52a9c_2fa29e3b",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.95,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "7af52a9c",
+      "source_path": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagore",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T20:47:32.298176+00:00",
+      "title": "Deepening: C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagore"
     },
     {
       "ambition_level": "extension",
@@ -175603,14 +175737,14 @@
       "parent_direction": "",
       "priority_score": 0.84,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Ill-defined: the central notion of a 'mind tool' quantifies over 'the set of theorems the human brain can directly apprehend', which is not a mathematical object and admits no formal definition, so the claim 'ZFC is a mind tool' is unformalizable as stated. The subsidiary claims are equally defective: 'category theory is a more powerful mind tool than set theory' has no stated comparison relation (and the usual formalizations, e.g. ZFC + universes vs ZFC, are consistency-strength facts already standard), and the conjecture that the hierarchy of mind tools is well-ordered by proof-theoretic ordinal is false for any reasonable reading, since proof-theoretic ordinals do not linearly order arbitrary theories (incomparable theories of equal ordinal strength exist) and ordinal analysis is undefined for theories such as ZFC. No actionable theorem statement can be extracted.",
+      "pruned_at": "2026-08-25T20:47:33Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
@@ -176078,11 +176212,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c5e2257b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -176096,7 +176230,7 @@
       ],
       "github_issue": 0,
       "id": "seed_408",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-25T20:49:20.020945+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -176111,7 +176245,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
@@ -177872,12 +178006,12 @@
     "3-adic": 3,
     "acting": 2,
     "algebraic": 2.0,
-    "already": 17,
+    "already": 18,
     "assessment": 31,
     "a²+b²−c²": 3,
     "barriers": 11,
     "becomes": 5,
-    "berggren": 11.0,
+    "berggren": 12.0,
     "boundary": 10,
     "cantor": 2,
     "carries": 11,
@@ -177894,13 +178028,13 @@
     "embedding": 3,
     "essentially": 3.0,
     "events": 4,
-    "exactly": 41.0,
+    "exactly": 42.0,
     "existing": 6.0,
     "experiments": 25,
     "explicit": 11,
     "exponent": 5.0,
     "false**": 9.0,
-    "finite": 19.0,
+    "finite": 20.0,
     "formal": 3,
     "formalize": 15.0,
     "formalized": 9,
@@ -177908,18 +178042,19 @@
     "geometry": 10.0,
     "groupoid": 4,
     "groups": 4.0,
-    "growth": 9.0,
+    "growth": 10.0,
     "here": 3,
     "holds": 5,
     "hyperbolic": 6.0,
     "i(joint": 2,
+    "insight": 1,
     "iteration": 11,
     "itself": 11.0,
     "limited-memory": 9,
     "log(1+√2": 4.0,
     "lorentz": 5.0,
     "lorentz-preserving": 5.0,
-    "matrices": 5.0,
+    "matrices": 6.0,
     "metric": 6.0,
     "model": 2,
     "modular": 3,
@@ -177937,8 +178072,7 @@
     "producing": 2.0,
     "proven": 8,
     "proves": 3,
-    "pythagorean": 14.0,
-    "quantitative": 1,
+    "pythagorean": 15.0,
     "questions": 2.0,
     "reduces": 3,
     "represent": 2,
@@ -177950,12 +178084,12 @@
     "silver-ratio": 5,
     "spectral": 4,
     "structure": 20.0,
-    "ternary": 7.0,
+    "ternary": 8.0,
     "theorem": 17,
     "theory": 15.0,
     "tree's": 10.0,
-    "trees": 3.0,
-    "triples": 14.0,
+    "trees": 4.0,
+    "triples": 15.0,
     "true**": 9.0,
     "unified": 2,
     "vanishingly": 3,

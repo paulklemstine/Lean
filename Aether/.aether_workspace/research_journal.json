@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "33808f71",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — NET-69 round 22 (selection-theoretic layer)\n\n## What this cycle established\n\nThree Lean files in `Catalog/Novelty/`:\n\n* `ProbeRetentionLimits.lean` — the exchange inequality for",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-08-24T05:02:59",
-      "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL — probes recover only R2=0.32 on code too; probe-only l"
-    },
-    {
       "cycle_id": "fdd9261c",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — normalized `q`-series, the corrected product, and beyond\n\nThis cycle formalized the `q⁻¹ + O(1)` normalization, the pole order of finite\nproducts, and then went further: the *cor",
@@ -499,19 +489,19 @@
       "theorem_count": 94,
       "timestamp": "2026-08-25T18:58:46",
       "title": "Parametric families"
+    },
+    {
+      "cycle_id": "7af52a9c",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — after C4 (classification of the ternary Pythagorean trees)\n\n## What this cycle established\n\nWorking with the node set `N = {1 ≤ n < m, gcd(m,n) = 1, m+n odd}` and root `(2,1)`, a",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-08-25T20:47:31",
+      "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagorean trees"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "aa4eb9d3",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — the tropical cost/reliability trade-off\n\nThe results now in `Catalog/Tropical/DecodingTradeoff/` supply both endpoints\n(`decode_cost` + `failSet_prob_le`; `blockDecode_cost` + `b",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 106,
-      "timestamp": "2026-08-18T23:36:29",
-      "title": "Both endpoints of the trade-off are now formal theorems in this"
-    },
     {
       "cycle_id": "512ab986",
       "domain": "Logic",
@@ -2501,21 +2491,19 @@
       "theorem_count": 94,
       "timestamp": "2026-08-25T18:58:46",
       "title": "Parametric families"
+    },
+    {
+      "cycle_id": "7af52a9c",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — after C4 (classification of the ternary Pythagorean trees)\n\n## What this cycle established\n\nWorking with the node set `N = {1 ≤ n < m, gcd(m,n) = 1, m+n odd}` and root `(2,1)`, a",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-08-25T20:47:31",
+      "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagorean trees"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "16c9261f",
-      "domain": "Computation",
-      "name": "accept_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "16c9261f",
-      "domain": "Computation",
-      "name": "accept_succ",
-      "quality": 0.78
-    },
     {
       "cycle_id": "16c9261f",
       "domain": "Computation",
@@ -2803,9 +2791,21 @@
       "domain": "NumberTheory",
       "name": "posRepSet_mono",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "7af52a9c",
+      "domain": "Physics",
+      "name": "app_fst",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "7af52a9c",
+      "domain": "Physics",
+      "name": "app_snd",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-25T18:58:46",
+  "last_updated": "2026-08-25T20:47:31",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "4b03d5cc",
-        "quality": 0.86,
-        "theorems": 159,
-        "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
-      },
-      {
         "cycle_id": "db2f2b2f",
         "quality": 0.9,
         "theorems": 426,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 66,
         "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pai"
+      },
+      {
+        "cycle_id": "7af52a9c",
+        "quality": 0.86,
+        "theorems": 5,
+        "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagore"
       }
     ],
     "Probability": [

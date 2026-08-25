@@ -2296,16 +2296,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-85 #1 \u2014 SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper 239 \u2014 paper 238's left-edge spike is tiny-v composition ENTIRELY (100% of D1 hits bitlen(v)<96 by window geometry; rr_d1 1.000/1.097 size-matched; kept-fit persistence = truncation-boundary gradient [96,98) dAICc 5.94 sub-bar, >=98 -0.40); NO positional kernel component survives"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "55b01213",
     "description": "## exp589 SPIKE-ORIGIN \u2014 round-84 #2 \u00b7 paper 239 \u00b7 assessment v345 \u2192 v346 \u00b7 count 576 \u2192 577\n\nResolves paper 238's spike-origin follow-up: is the left-edge spike (b_edge \u2265 ~10.6, 8.6% mass in the first decile) carried by TINY-v hits? Pure reanalysis of `exp581_regen_positions.npz`; Ns regenerated verbatim exp578 recipe, seed 20260828; lineage = 128\u00d72 EXACT isqrt\u2192(jlo,jhi) matches + containment of every stored j; pop_hash 06931068f8f3ca9b recomputed with no external copy readable to compare (disclosed); wall 42.34 s.\n\n### Verdict: H0-MIXED \u2014 the spike splits into two quantitatively named parts\nThe registered fraction clause and refit clause DISAGREE; both reported honestly. Neither registered arm fires (H1a false, H1b false).\n\n### Pre-registered mechanical note FIRED \u2014 the exclusion clause is degenerate\nD1 \u21d2 delta = j\u2212s < 0.2s+1 \u21d2 v = j\u00b2\u2212N \u2264 0.44\u00b7s\u00b2 + o(s\u00b2) < 2^95 provably (window j \u2208 [s+1, 3s], s = isqrt(N), N 96-bit). EVERY first-decile hit has bitlen(v) \u2264 95: band table shows ZERO D1 hits among the 7221 full-size hits and zero among 426525 full-size controls. So \"exclude v < 96-bit\" removes 100% of the D1 mass BY GEOMETRY (fraction_removed_primary = 1.000, flat-secondary 2.21) \u2014 that clause cannot discriminate H1a from H1b; per the pre-run adaptation, the verdict rode on the REFIT clause.\n\n### Refit clause (the informative one)\nTwo-component Poisson bin fit (nb=50 equal-width u-bins per exp582 anchor, control-shape bulk exposure, half-Gaussian edge), cluster-over-Ns bootstrap 2000, seed 20260902:\n- ALL hits (n=9594): **w_edge = .0794** [.0702,.0908], **\u0394AICc = 374.77**\n- KEPT (v \u2265 2^95, n=7221): **w_edge = .0403** [.0301,.0525], **\u0394AICc = 49.78**\n\nKept CI EXCLUDES zero \u2192 an edge component PERSISTS among full-size hits at the kept population's own left edge u\u2080 = .110 (kept support starts at u \u2248 .114 where v crosses 2^95; anchor adaptation registered pre-run). Split reading: ~half the spike weight is tiny-v INCLUSION ARTIFACT (sub-2^95 hits, v as small as ~2\u221aN \u2248 2^50, vastly smoother than full-size draws); ~half GENUINE elevated small-|v| smoothness beyond Dickman prediction.\n\nBand corroboration: hit mass by band <80 = 0, 80\u201389 = .0089, 90\u201395 = .2385, \u226596 = .7527; within-band D1 fractions 1.000/.642/**0.000** (RR vs window 1.097 in 90\u201395). Controls clean: per-N D1-share z mean \u22120.223 sd 0.945 absmax 2.53 over 128 Ns.\n\n### Consequence\nPaper 238's kernel SURVIVES at reduced strength on legitimate full-size hits (.0794 \u2192 .0403, both decisive \u0394AICc) \u2014 nothing overturned, interpretation CORRECTED: the quoted 8.6% spike conflates two objects. Any future positional-shape model needs BOTH the kernel AND a bitlen(v)-band stratification at the left edge \u2014 the spike is not one object. The tiny-v mechanism is exact arithmetic at every scale, so the inclusion channel is a falsifiable constraint for downstream models.\n\n### Ledger catches (all disclosed)\n(1) Degenerate exclusion clause \u2014 pre-registered mechanical note fired exactly as deduced. (2) Kept-fit edge anchor adapted to kept-left-edge u\u2080=.110 instead of 0 \u2014 registered pre-run (support truncation; without it no exposed edge to test). (3) Own fitter (nb=50 Poisson bin fit), NOT paper-238's b_edge parametrization \u2014 amplitudes not numerically comparable across papers; comparisons internal to this experiment. (4) Controls = capped first-4000 non-hit j per N (position-uniform reference), not the paper-238 construction. (5) pop_hash recomputed without an external copy to compare \u2014 lineage rests on exact jlo/jhi reproduction. Smoke preceded full run; no commits during run; only exp589_* touched.\n\n### Barrier validation\nNo breakthrough claimed \u2014 reanalysis INSIDE the positional layer (papers 228\u2013230, 238). Residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, paper 237's four-class closure untouched. Paper 238's erratum-grade .2346 provenance flag still travels forward until reconciled against the paper-228 ledger.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp589_spike_origin.py`, `exp589_smoke.log`, `exp589_run.log`, `exp589_result.json`, `exp589_findings.md`. Paper: `ResearchOutput/NewMathematics/239_SpikeOrigin.md`.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4055",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T21:45:33.979668+00:00",
     "title": "FACT round-84 #2 \u2014 SPIKE-ORIGIN (exp 589): H0-MIXED \u2014 paper 238's left-edge spike DECOMPOSES into ~half tiny-v inclusion artifact + half GENUINE small-|v| structure persisting among full-size v\u22652^95 hits (w_edge .0794 \u2192 .0403 kept-CI-excludes-0); exclusion clause PROVABLY DEGENERATE (D1 \u21d2 v<2^95 by arithmetic); kernel SURVIVES at reduced strength"
   },
@@ -2662,6 +2663,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 7af52a9c (Q=0.860), which proved 5 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** Up to relabelling, the only triples of integer linear maps that act as a\nternary tree on the node set `{1 \u2264 n < m, gcd = 1, m+n odd}` with root `(2,1)` are the\nBerggren triple (determinants `\u00b11`) and the Price triple (determinants `\u00b12`), and no\ntriple of determinant `|det| \u2265 3` exist",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_7af52a9c_2fa29e3b",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "7af52a9c",
+    "status": "available",
+    "timestamp": "2026-08-25T20:47:32.298176+00:00",
+    "title": "Deepening: C4. The `\u00b12` obstruction is the only obstruction: classify the ternary Pythagore"
   },
   {
     "consumed_by_exp_id": "",
@@ -4327,21 +4342,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the concept of 'mind tools' \u2014 mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by G\u00f6del's incompleteness \u2014 there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "seed_396",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
     "domains": [
       "Novelty",
@@ -5044,7 +5044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5e2257b",
     "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
     "domains": [
       "Novelty",
@@ -5052,10 +5052,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_408",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
@@ -13805,6 +13806,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The ternary case admits exactly three trees because the density budget 1 = sum of 1/(a(a+b)) has three admissible solutions, one of which mixes Berggren and Price branches. For general arity k the same budget equation plus the power-of-two determinant constraint bounds the search space. Determining t(k), the number of k-ary trees, would show whether hybridisation is an accident of arity three or a general phenomenon.\n\nFor every k >= 2 the number t(k) of k-ary trees on the node set {1 <= n < m, gcd(m,n)=1, m+n odd} with root (2,1) is finite, with t(2) = 0, t(3) = 3 and t(k) >= 3 for k >= 3, and every branch of every such tree satisfies |det| <= 2.\n\nExtend the finite search of evidence.py from triples to k-tuples of admissible matrices with |entries| <= 8, checking that the images partition the non-root nodes with first coordinate at most 200; then formalise the arity-k analogue of TernaryTree.no_branch_det_ge_three using the same root-child forcing argument.\n\nThe bound |det| <= 2 is a structural property of the node cone rather than of arity three, and the classification method generalises to a uniform theorem.\n\nA k-ary branch with |det| = 4 exists, showing that the power-of-two spectrum is genuinely realised beyond 2 and that the ternary bound is a low-arity coincidence.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4191",
+    "priority_score": 0.6706744186046513,
+    "research_mode": "team",
+    "source_exp_id": "7af52a9c",
+    "status": "available",
+    "timestamp": "2026-08-25T20:47:16.276489+00:00",
+    "title": "Hybridisation Threshold for k-ary Pythagorean Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three Berggren generators split into one parabolic and two hyperbolic directions, which makes the ternary tree exponentially unbalanced. The maximal depth reachable inside a hypotenuse box should be governed purely by the parabolic spine and hence grow like sqrt(H), while a typical node sits at logarithmic depth. This quantifies how far the tree is from a balanced ternary tree.\n\nThe maximal Berggren word length among triples with hypotenuse at most H satisfies D(H) = (1/2 + o(1)) * sqrt(H), while the average depth is Theta(log H).\n\nProve that a word containing k non-parabolic letters has hypotenuse at least 5^k, deduce k = O(log H), and combine with the closed form 4(j+1)^2+1 for parabolic runs; compare with the measured D(10^5) = 222.\n\nThe tree has a canonical thin spine, giving a seed-independent sqrt(H) lower bound for any single-orbit count and an explicit height function for enumeration algorithms.\n\nMixed words would have to beat pure parabolic runs, contradicting the multiplicative growth of the hyperbolic generators.",
     "domains": [
       "Computation"
@@ -17816,6 +17831,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T13:14:06.922549+00:00",
     "title": "Tie-Ceiling Crossover Kink at Bitlen 31"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The rational identity sum 1/(a_i(a_i+b_i)) = 1 proved for every ternary tree is the algebraic shadow of an equidistribution statement: each branch image occupies an exact area fraction of the node cone. Upgrading it to a counting theorem with an error term would make the conservation law analytic rather than formal.\n\nFor each branch M = (a,b;c,d) of a ternary Pythagorean tree, the number of nodes whose image under M has first coordinate at most B equals (3/pi^2) B^2/(a(a+b)) + O(B log B), and the three counts sum to the number of non-root nodes with first coordinate at most B.\n\nCompute the three counts numerically for B up to 10^5 and fit the error; formally, count coprime opposite-parity lattice points in the triangle {0 < y < x, a x + b y <= B} using Moebius inversion over the density 3/pi^2 of the node set.\n\nThe tree condition becomes an exact equidistribution partition of the coprime cone, giving a soft proof that no fourth tree exists via a density obstruction.\n\nThe branch images are not equidistributed, so the density identity is a coincidence of the three solutions rather than a structural constraint.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4192",
+    "priority_score": 0.5619399723967428,
+    "research_mode": "team",
+    "source_exp_id": "7af52a9c",
+    "status": "available",
+    "timestamp": "2026-08-25T20:47:16.896973+00:00",
+    "title": "Lattice-Point Form of the Branch Density Conservation Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -26838,6 +26868,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T16:56:37.122108+00:00",
     "title": "Adaptive Battery Reachability Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Euclid map (m,n) -> (m^2-n^2, 2mn, m^2+n^2) is proved here to be a bijection from nodes to primitive Pythagorean triples with even second leg. Trees built from 3x3 integer matrices acting directly on triples are the classical Barning-Hall picture; the conjecture is that every such tree is the pushforward of one of the three trees on parameter space.\n\nEvery ternary tree structure on primitive Pythagorean triples generated by 3x3 integer matrices acting on (x,y,z) is the pushforward along the Euclid map of one of the three trees on the node set; in particular there are exactly three, and no branch matrix has determinant of odd prime absolute value.\n\nFormalise the pushforward of an IntMap to a 3x3 matrix and verify the Barning-Hall matrices are the pushforwards of the Berggren branches; then search 3x3 integer matrices with small entries preserving the primitive-triple set and compare with the three predicted families.\n\nThe classification of Pythagorean trees is intrinsic to the triples and independent of the Euclid parametrisation, and the mixed tree yields a previously unlisted 3x3 generating triple.\n\nThere is a triple-space tree not induced by any parameter-space tree, so the Euclid parametrisation loses tree structure and the two classification problems genuinely differ.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4193",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "7af52a9c",
+    "status": "available",
+    "timestamp": "2026-08-25T20:47:17.420580+00:00",
+    "title": "Transport of the Classification to Triple-Space Linear Maps"
   },
   {
     "consumed_by_exp_id": "",
@@ -38554,19 +38598,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:23:53.141522+00:00",
     "title": "Choice independence from unique semantic fixed points"
-  },
-  {
-    "consumed_by_exp_id": "7af52a9c",
-    "description": "**Conjecture.** Up to relabelling, the only triples of integer linear maps that act as a\nternary tree on the node set `{1 \u2264 n < m, gcd = 1, m+n odd}` with root `(2,1)` are the\nBerggren triple (determinants `\u00b11`) and the Price triple (determinants `\u00b12`), and no\ntriple of determinant `|det| \u2265 3` exists.\n\n*The key insight is* that determinant `d` forces the gcd of an image pair to divide `d`,\nwhich together with the parity condition (`a+c` and `b+d` odd, proved to be necessary)\nleaves only finitely many candidate matrices with entries bounded by the growth of `m`.\n*Why now?* An exhaustive search over `|entries| \u2264 3` already returns exactly the six\nknown generators, so the classification is within reach of a finite case analysis in\nLean.",
-    "domains": [],
-    "id": "fd_3199",
-    "phase": "B",
-    "priority_score": 0.43699999999999994,
-    "research_mode": "team",
-    "source_exp_id": "a1fe4956",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:28:38.902790+00:00",
-    "title": "C4. The `\u00b12` obstruction is the only obstruction: classify the ternary Pythagorean trees"
   },
   {
     "consumed_by_exp_id": "",
