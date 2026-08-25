@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "499e80a3",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — NET-67 attention-budget theory\n\nDerived from the two research cycles formalised in\n`Catalog/Novelty/AttentionBudgetIncrement.lean`,\n`Catalog/Novelty/AttentionRetentionKnee.lean`",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 81,
-      "timestamp": "2026-08-24T03:17:51",
-      "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT — 1.5B knee at 2048 is 18 not 20; both models start at 16"
-    },
-    {
       "cycle_id": "2292d7e8",
       "domain": "Computation",
       "key_insight": "# Future Directions — after C4 (first order) and N2 (sharp threshold)\n\n## What this cycle established\n\nAll statements below are formalized and proved sorry-free in\n`Catalog/Computation/RLHFThreshold/`",
@@ -499,19 +489,19 @@
       "theorem_count": 65,
       "timestamp": "2026-08-25T16:02:18",
       "title": "Matrix-level modular action"
+    },
+    {
+      "cycle_id": "a32bc1e4",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — destructive verification as a state transition\n\nThis cycle formalised verification as a state transition `t : D → Bool × D`\n(\"run the test, get a verdict and a residual dish\") an",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 111,
+      "timestamp": "2026-08-25T16:56:56",
+      "title": "Destructive verification"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "16c8a71d",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — aggregate dichotomy for Pythagorean families\n\nThe formal results of this cycle live in\n\n* `Catalog/Pythagorean/PTripleMonoid.lean` — the commutative monoid `PTriple` of integral",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-18T21:38:31",
-      "title": "Aggregate dichotomy"
-    },
     {
       "cycle_id": "24a12580",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 65,
       "timestamp": "2026-08-25T16:02:18",
       "title": "Matrix-level modular action"
+    },
+    {
+      "cycle_id": "a32bc1e4",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — destructive verification as a state transition\n\nThis cycle formalised verification as a state transition `t : D → Bool × D`\n(\"run the test, get a verdict and a residual dish\") an",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 111,
+      "timestamp": "2026-08-25T16:56:56",
+      "title": "Destructive verification"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "569bc76d",
-      "domain": "Bridges",
-      "name": "dotProduct_self_nonneg",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "569bc76d",
-      "domain": "Bridges",
-      "name": "eucNorm_nonneg",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "569bc76d",
-      "domain": "Bridges",
-      "name": "eucNorm_sq",
-      "quality": 0.88
-    },
     {
       "cycle_id": "40fe72ea",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "mobius_cx",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "a32bc1e4",
+      "domain": "Combinatorics",
+      "name": "verdict_apply",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a32bc1e4",
+      "domain": "Combinatorics",
+      "name": "residue_apply",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a32bc1e4",
+      "domain": "Combinatorics",
+      "name": "test_eq",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-25T16:02:18",
+  "last_updated": "2026-08-25T16:56:56",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "3ec7eb1a",
-        "quality": 0.76,
-        "theorems": 37,
-        "title": "The Bonferroni machinery"
-      },
-      {
         "cycle_id": "df44f621",
         "quality": 0.82,
         "theorems": 52,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 112,
         "title": "Exponential lower bound via quartet codes"
+      },
+      {
+        "cycle_id": "a32bc1e4",
+        "quality": 0.82,
+        "theorems": 111,
+        "title": "Destructive verification"
       }
     ],
     "Computation": [
