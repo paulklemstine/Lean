@@ -2249,16 +2249,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-79 #2 \u2014 HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNITUDE \u2014 pooled KS D=0.09519 p=6.9e-76 (9565 hits/127 hit-rich Ns, paired control null); stratified check decisive: conditioning on all 8 v-cells RAISES D to 0.10423, 7/8 cells fire, permutation p<0.0005 \u2014 real within-N geometry in the smooth locus of j\u00b2\u2212N; first positive carrier candidate for the ~39\u201361% residual"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2111d025",
     "description": "Paper 227. exp 577 (+ independent verification verifyL7b). Sources: ResearchOutput/scripts/2026-08-24-round74/exp577_product_dial.py (pre-registration in header BEFORE data generation; post-verification REVISION annotated in-script) -> exp577_result.json + smoke pair + diagnostics; verifyL7b_exp577_check.py -> verifyL7b_result.json.\n\nVERDICT (pre-registered): WINDOW-STRONGER-NOT-SHIFTED \u2014 H1 scale-shift REFUTED on all four shift candidates (both legs fail, R2 margins to abs bar -0.132..-0.160); H0 blocked by the disclosed branch (D-red@400 = 33.4% >= 30%).\n\nSWEEP (cumulative QR-count dial vs log-rate): B=400 R2=.3207/D-red 33.43% | 4000 .0241/2.40% | 4e4 .0150/1.68% | 1e5 .0000/0.0% | 1e6 .0277/4.11%. Extension DILUTES: equal-weight counting buries primes informative ~1/l. B* = 400 \u2014 paper-136/139 window location CONFIRMED scale-independent.\n\nWEIGHTED DIAL IS THE LAW: W(B)=sum_{QR l<=B} 1/l: W400 R2=.4731/D-red 48.11%, W1e6 .4786/48.51% (z~16.8); corr(W1e6,W400)=0.999 (independent verifier population 0.9991/0.9985) \u2014 signal SATURATES BY 400 once harmonically weighted. ADOPTED as canonical scale-smoothness covariate.\n\nVERIFIED THREE-PART DIAGNOSIS OF PAPER 226 (erratum-grade for SECONDARY conclusions): (1) S_prod/S139@400 rows are composite-bottom dials with reciprocity sign flipping iff l=3 mod 4 AND N=3 mod 4 (52.3% of N; conditional flip 100%, 2680/2680, zero violations; unconditional 27.19% predicted=measured to 2nd decimal) \u2014 published weakness (.0781/14.22%, .0565/9.07%) is DIAL-FORM ARTIFACT, reproduced under flipped forms (.030/4.11%, .0456/5.46%) while clean C100 Legendre is STRONG (.3728/34.45%) \u2014 RETRACTED-AS-ARTIFACT; (2) PRIMARY S_indiv null REPLICATES as true null here too (.0019/0.09%, z=0.72; flip mechanism inapplicable) \u2014 consistent null, only secondary retracted; (3) exp576-vs-exp577 S400 discrepancy (0.078 vs 0.32) traced to form difference + estimator spread (C400==recorded S400 on 128/128 rows; C100-clean strong in both populations 34.45%/34.75%) \u2014 documented, not a reproducibility failure.\n\nDISPERSION BOOKKEEPING both readings: count@400 = 33.4% of raw (=42.1% of excess-above-Poisson); W1e6 = 48.5% raw (=61.0% excess); residual ~51.4% raw / ~39.0% excess still overdispersed (D_cond>1). Paper 226's '>=86% new structure' shrinks to ~39-58% residual non-QR (dial/reading dependent).\n\nLEDGER CATCHES (adversarial BOTH directions): first-draft '(signs cancel)' orthogonality claim RETRACTED by verification (r(flipP100,C400)=0.058 stands FOR THE FLIPPED FORM via label-swap clarification); verifier addendum 'removing l=2 rescues formA' REJECTED empirically (.0322/4.34% without l=2); l=2 even-modulus Jacobi crash caught in smoke; first-draft T1 bound mismatch + missing-/n correlation self-caught pre-ledger; pre-reg header error annotated in-script; smoke n=16 spuriously fired H1 \u2014 marked NON-EVIDENTIARY. Lineage: four master-seed hashes reproduced/asserted pairwise disjoint.\n\nBarrier validation: closes paper 226's named follow-up under fixed bars; canonical-covariate upgrade count->weighted; papers 136/139 stand at their own scale with location vindicated and form upgraded; residue cap 4/3 untouched; no complexity claim; no breakthrough claimed.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4023",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T15:58:32.186714+00:00",
     "title": "FACT round-79 #1 \u2014 PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED \u2014 H1 scale-shift REFUTED (no QR window past 400; B*=400 confirms papers-136/139 location), 1/\u2113-weighted dial is the law (48% D-red, saturates by 400, corr .999) \u2014 paper-226 SECONDARIES erratum-grade (reciprocity-flip dial-form artifacts, flip 100%-on-condition), its PRIMARY null stands"
   },
@@ -2639,6 +2640,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:51:23.152998+00:00",
     "title": "FACT round-95 #2 \u2014 MIXTURE-RATE-CELLS (exp 598b): BORDERLINE-INCONCLUSIVE CONTROL-FLAGGED \u2014 \u0394adjR\u00b2 +0.083 clears the H1 effect bar but perm p = 0.0399 misses <0.01 AND the permuted-rate control arm is NON-NULL (max control \u0394 0.186 > observed, p_vs_obs 0.052) \u2014 neither mixture-adds nor dial-sufficient claimable at n_pool=128; rate-layer coverage matrix closes UNRESOLVED-AT-RESOLUTION on the joint-cell layer"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Round-95 #3 \u00b7 exp 598c MIXTURE-RATE-CELLS-POWERED \u00b7 verdict: H1_MIXTURE_ADDS**\n\nRe-fires exp598b's flagged question at its pre-stated power remedy (n_pool 128 \u2192 512, fresh seed), under a pre-registration **v2** amended before any full-mode data existed after a two-agent adversarial audit of v1 caught two must-fixes:\n\n1. **598b's control_ok conjunction was logically unsatisfiable** \u2014 p_ctrl > 0.05 forces \u226525/500 y-shuffle deltas \u2265 obs, forcing max(ctrl_null) \u2265 d_obs. control_ok=False was guaranteed by construction. *Erratum on paper 255*: the informative content was c = 25/500 (obs at the y-shuffle 95th percentile), not an independent clause failure; BORDERLINE itself stands (598b never gated on it). Corrected rule: `clean_control := max(ctrl_null) < d_obs` gates H1; `machinery_ok := |mean| < 0.01` gates H0.\n2. **v1's seed 20260903 was exp601's recorded lineage** (`fa1746a5b065cbd9` prefix-collides) \u2014 withdrawn to registry-verified-unused **20260907**, self-exclusion + 11-seed disjointness + stream-band assertions added.\n\n## Result (512 fresh semiprimes bits=96, two independent 50k/N streams, gcd-chain primorial(10\u2076) tester, perm seed 599, 500 reps, wall 286.5 s)\n\n| Bar | Threshold | Observed | Fires? |\n|---|---|---|---|\n| H1 effect | \u0394adjR\u00b2 \u2265 0.05 | **+0.105498** [0.051576 \u2192 0.157074] | \u2705 |\n| H1 permutation | p < 0.01 | **1/501 \u2248 0.001996** (0/500 exceedances; null q95 0.0189, max 0.0402) | \u2705 |\n| clean_control | max(ctrl_null) < obs | **0.054872 < 0.105498** | \u2705 |\n| machinery | \\|mean(ctrl)\\| < 0.01 | 6.9e\u221205 | \u2705 |\n\n## The power remedy validated\ny-shuffle null max collapsed **{n=128: 0.186 \u2192 n=512: 0.0549}** (~p/(n\u2212p) scaling) while the effect GREW across independent populations (**+0.083 on seed 20260827 \u2192 +0.105 on seed 20260907**). Paper 255's BORDERLINE resolves as UNDERPOWERED, not null.\n\n## Mechanism named by the secondary arm\nRepaired single covariate **\u03ba = \u03a3\u2096 P(l\u2096|v)** (expected # distinct small primes dividing v, from cell marginals) captures **\u0394 = +0.114 alone** \u2014 matching/beating the full 15-cell basis. Composition ORDER, not cell identity, is the dominant axis; subsumes exp592's kappa-ordering replication as the tip of this graded law. \u03b1=1 sensitivity agrees (+0.108).\n\n## Verification\nIndependent verifier recomputed every headline stat from `exp598c_verify.npz` alone with a from-scratch code path: \u0394 exact to full float64 precision, perm_p bit-exact, permutation arrays regenerate bit-exactly from the documented call order. Hostile adjudication audit: all overturn attempts failed; occupancies match closed-form independence products. Chain-of-custody caveat disclosed (v1 smoke overwritten; filesystem forensics support pre-data integrity) \u2192 **adopted process law: commit pre-registrations before data-producing runs.**\n\n## Consequence\nPapers 227/235/236 additive completeness upgrades DIAL \u2192 CELL level: divisibility composition of v = j\u00b2\u2212N carries per-N rate structure beyond the QR dial's marginals, dominated by composition depth. No barrier breached (proposal-geometry layer, not N-information); catalog scan found no prior work on joint mixtures/permutation-calibrated increments. Falsifiable follow-ups: \u03ba-only nested test at higher resolution; bits {72,128} scale stability; Dickman-type closed-form slope check.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp598c_*`, paper `ResearchOutput/NewMathematics/256_MixtureRateCellsPowered.md` (errata for paper 255 ride inside).\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4114",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T07:10:45.366320+00:00",
+    "title": "FACT round-95 #3 \u2014 MIXTURE-RATE-CELLS-POWERED (exp 598c): H1 FIRES \u2014 \u0394adjR\u00b2 +0.105 clears the bar at the pre-stated power remedy (n=512, fresh seed) with perm_p = 1/501 AND clean control (null max collapsed 0.186\u21920.0549 while effect GREW +0.083\u2192+0.105) \u2014 rate map refines to CELL level; secondary arm names the mechanism: composition order \u03ba captures \u0394 +0.114 ALONE; paper-255 BORDERLINE resolves UNDERPOWERED-not-null + control-conjunction erratum carried"
   },
   {
     "consumed_by_exp_id": "",
@@ -4344,21 +4359,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T06:30:57.793286+00:00",
     "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_308",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -15162,14 +15162,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniform Bitlen Saturation for Valuation Statistics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d59c6a1a",
     "description": "Fix a thickness budget \u03b4. Only the innermost shells of an equal-volume peeling can violate it, and the sandwich for general k quantifies exactly when. The conjecture is that the number of shells thicker than \u03b4 is O(d log(R/\u03b4)) while the number of thinner ones grows exponentially in d.\n\nFor fixed \u03b4 \u2208 (0,R), #{k < N : shellRadius R d N k - shellRadius R d N (k+1) > \u03b4} = O(d log(R/\u03b4)) uniformly in N, and the maximal N with all shells of thickness \u2264 \u03b4 grows like (1-\u03b4/R)^{-d}.\n\nCombine shell_depth_sandwich with the dichotomy to bound the index range where the thickness exceeds \u03b4, then count.\n\nA sharp structural description of equal-volume peelings: exponentially many skins plus boundedly many thick layers.\n\nThe thick layers are more numerous than expected, which would contradict the observed collapse onto the boundary sphere.",
     "domains": [],
     "id": "fd_3974",
+    "phase": "A",
     "priority_score": 0.5930769230769232,
     "research_mode": "team",
     "source_exp_id": "93d08ac5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T10:05:30.736330+00:00",
     "title": "Thin-Shell Counting under a Thickness Budget"
   },

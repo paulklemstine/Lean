@@ -3042,7 +3042,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2111d025",
     "description": "Paper 227. exp 577 (+ independent verification verifyL7b). Sources: ResearchOutput/scripts/2026-08-24-round74/exp577_product_dial.py (pre-registration in header BEFORE data generation; post-verification REVISION annotated in-script) -> exp577_result.json + smoke pair + diagnostics; verifyL7b_exp577_check.py -> verifyL7b_result.json.\n\nVERDICT (pre-registered): WINDOW-STRONGER-NOT-SHIFTED — H1 scale-shift REFUTED on all four shift candidates (both legs fail, R2 margins to abs bar -0.132..-0.160); H0 blocked by the disclosed branch (D-red@400 = 33.4% >= 30%).\n\nSWEEP (cumulative QR-count dial vs log-rate): B=400 R2=.3207/D-red 33.43% | 4000 .0241/2.40% | 4e4 .0150/1.68% | 1e5 .0000/0.0% | 1e6 .0277/4.11%. Extension DILUTES: equal-weight counting buries primes informative ~1/l. B* = 400 — paper-136/139 window location CONFIRMED scale-independent.\n\nWEIGHTED DIAL IS THE LAW: W(B)=sum_{QR l<=B} 1/l: W400 R2=.4731/D-red 48.11%, W1e6 .4786/48.51% (z~16.8); corr(W1e6,W400)=0.999 (independent verifier population 0.9991/0.9985) — signal SATURATES BY 400 once harmonically weighted. ADOPTED as canonical scale-smoothness covariate.\n\nVERIFIED THREE-PART DIAGNOSIS OF PAPER 226 (erratum-grade for SECONDARY conclusions): (1) S_prod/S139@400 rows are composite-bottom dials with reciprocity sign flipping iff l=3 mod 4 AND N=3 mod 4 (52.3% of N; conditional flip 100%, 2680/2680, zero violations; unconditional 27.19% predicted=measured to 2nd decimal) — published weakness (.0781/14.22%, .0565/9.07%) is DIAL-FORM ARTIFACT, reproduced under flipped forms (.030/4.11%, .0456/5.46%) while clean C100 Legendre is STRONG (.3728/34.45%) — RETRACTED-AS-ARTIFACT; (2) PRIMARY S_indiv null REPLICATES as true null here too (.0019/0.09%, z=0.72; flip mechanism inapplicable) — consistent null, only secondary retracted; (3) exp576-vs-exp577 S400 discrepancy (0.078 vs 0.32) traced to form difference + estimator spread (C400==recorded S400 on 128/128 rows; C100-clean strong in both populations 34.45%/34.75%) — documented, not a reproducibility failure.\n\nDISPERSION BOOKKEEPING both readings: count@400 = 33.4% of raw (=42.1% of excess-above-Poisson); W1e6 = 48.5% raw (=61.0% excess); residual ~51.4% raw / ~39.0% excess still overdispersed (D_cond>1). Paper 226's '>=86% new structure' shrinks to ~39-58% residual non-QR (dial/reading dependent).\n\nLEDGER CATCHES (adversarial BOTH directions): first-draft '(signs cancel)' orthogonality claim RETRACTED by verification (r(flipP100,C400)=0.058 stands FOR THE FLIPPED FORM via label-swap clarification); verifier addendum 'removing l=2 rescues formA' REJECTED empirically (.0322/4.34% without l=2); l=2 even-modulus Jacobi crash caught in smoke; first-draft T1 bound mismatch + missing-/n correlation self-caught pre-ledger; pre-reg header error annotated in-script; smoke n=16 spuriously fired H1 — marked NON-EVIDENTIARY. Lineage: four master-seed hashes reproduced/asserted pairwise disjoint.\n\nBarrier validation: closes paper 226's named follow-up under fixed bars; canonical-covariate upgrade count->weighted; papers 136/139 stand at their own scale with location vindicated and form upgraded; residue cap 4/3 untouched; no complexity claim; no breakthrough claimed.",
     "domain_bridges": [],
     "domains": [
@@ -3054,7 +3054,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T15:58:32.186714+00:00",
     "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED — H1 scale-shift REFUTED (no QR window past 400; B*=400 confirms papers-136/139 location), 1/ℓ-weighted dial is the law (48% D-red, saturates by 400, corr .999) — paper-226 SECONDARIES erratum-grade (reciprocity-flip dial-form artifacts, flip 100%-on-condition), its PRIMARY null stands"
   },
@@ -3575,6 +3575,25 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**Round-95 #3 · exp 598c MIXTURE-RATE-CELLS-POWERED · verdict: H1_MIXTURE_ADDS**\n\nRe-fires exp598b's flagged question at its pre-stated power remedy (n_pool 128 → 512, fresh seed), under a pre-registration **v2** amended before any full-mode data existed after a two-agent adversarial audit of v1 caught two must-fixes:\n\n1. **598b's control_ok conjunction was logically unsatisfiable** — p_ctrl > 0.05 forces ≥25/500 y-shuffle deltas ≥ obs, forcing max(ctrl_null) ≥ d_obs. control_ok=False was guaranteed by construction. *Erratum on paper 255*: the informative content was c = 25/500 (obs at the y-shuffle 95th percentile), not an independent clause failure; BORDERLINE itself stands (598b never gated on it). Corrected rule: `clean_control := max(ctrl_null) < d_obs` gates H1; `machinery_ok := |mean| < 0.01` gates H0.\n2. **v1's seed 20260903 was exp601's recorded lineage** (`fa1746a5b065cbd9` prefix-collides) — withdrawn to registry-verified-unused **20260907**, self-exclusion + 11-seed disjointness + stream-band assertions added.\n\n## Result (512 fresh semiprimes bits=96, two independent 50k/N streams, gcd-chain primorial(10⁶) tester, perm seed 599, 500 reps, wall 286.5 s)\n\n| Bar | Threshold | Observed | Fires? |\n|---|---|---|---|\n| H1 effect | ΔadjR² ≥ 0.05 | **+0.105498** [0.051576 → 0.157074] | ✅ |\n| H1 permutation | p < 0.01 | **1/501 ≈ 0.001996** (0/500 exceedances; null q95 0.0189, max 0.0402) | ✅ |\n| clean_control | max(ctrl_null) < obs | **0.054872 < 0.105498** | ✅ |\n| machinery | \\|mean(ctrl)\\| < 0.01 | 6.9e−05 | ✅ |\n\n## The power remedy validated\ny-shuffle null max collapsed **{n=128: 0.186 → n=512: 0.0549}** (~p/(n−p) scaling) while the effect GREW across independent populations (**+0.083 on seed 20260827 → +0.105 on seed 20260907**). Paper 255's BORDERLINE resolves as UNDERPOWERED, not null.\n\n## Mechanism named by the secondary arm\nRepaired single covariate **κ = Σₖ P(lₖ|v)** (expected # distinct small primes dividing v, from cell marginals) captures **Δ = +0.114 alone** — matching/beating the full 15-cell basis. Composition ORDER, not cell identity, is the dominant axis; subsumes exp592's kappa-ordering replication as the tip of this graded law. α=1 sensitivity agrees (+0.108).\n\n## Verification\nIndependent verifier recomputed every headline stat from `exp598c_verify.npz` alone with a from-scratch code path: Δ exact to full float64 precision, perm_p bit-exact, permutation arrays regenerate bit-exactly from the documented call order. Hostile adjudication audit: all overturn attempts failed; occupancies match closed-form independence products. Chain-of-custody caveat disclosed (v1 smoke overwritten; filesystem forensics support pre-data integrity) → **adopted process law: commit pre-registrations before data-producing runs.**\n\n## Consequence\nPapers 227/235/236 additive completeness upgrades DIAL → CELL level: divisibility composition of v = j²−N carries per-N rate structure beyond the QR dial's marginals, dominated by composition depth. No barrier breached (proposal-geometry layer, not N-information); catalog scan found no prior work on joint mixtures/permutation-calibrated increments. Falsifiable follow-ups: κ-only nested test at higher resolution; bits {72,128} scale stability; Dickman-type closed-form slope check.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp598c_*`, paper `ResearchOutput/NewMathematics/256_MixtureRateCellsPowered.md` (errata for paper 255 ride inside).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4114",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T07:10:45.366320+00:00",
+    "title": "FACT round-95 #3 — MIXTURE-RATE-CELLS-POWERED (exp 598c): H1 FIRES — ΔadjR² +0.105 clears the bar at the pre-stated power remedy (n=512, fresh seed) with perm_p = 1/501 AND clean control (null max collapsed 0.186→0.0549 while effect GREW +0.083→+0.105) — rate map refines to CELL level; secondary arm names the mechanism: composition order κ captures Δ +0.114 ALONE; paper-255 BORDERLINE resolves UNDERPOWERED-not-null + control-conjunction erratum carried"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domain_bridges": [
       "Pythagorean <-> Physics"
@@ -3679,7 +3698,7 @@
     "title": "Deepening: Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 569bc76d (Q=0.880), which proved 156 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
@@ -5883,26 +5902,6 @@
     "status": "available",
     "timestamp": "2026-07-19T06:30:57.793286+00:00",
     "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_308",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
     "ambition_level": "grand_challenge",
@@ -21178,7 +21177,7 @@
       "Shared.ShellThicknessSharp",
       "Shared.ShellThicknessRate"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d59c6a1a",
     "description": "Fix a thickness budget δ. Only the innermost shells of an equal-volume peeling can violate it, and the sandwich for general k quantifies exactly when. The conjecture is that the number of shells thicker than δ is O(d log(R/δ)) while the number of thinner ones grows exponentially in d.\n\nFor fixed δ ∈ (0,R), #{k < N : shellRadius R d N k - shellRadius R d N (k+1) > δ} = O(d log(R/δ)) uniformly in N, and the maximal N with all shells of thickness ≤ δ grows like (1-δ/R)^{-d}.\n\nCombine shell_depth_sandwich with the dichotomy to bound the index range where the thickness exceeds δ, then count.\n\nA sharp structural description of equal-volume peelings: exponentially many skins plus boundedly many thick layers.\n\nThe thick layers are more numerous than expected, which would contradict the observed collapse onto the boundary sphere.",
     "domain_bridges": [],
     "domains": [],
@@ -21188,7 +21187,7 @@
     "proof_strategy": "Write the k-th gap as R((1-k/N)^{1/d} - (1-(k+1)/N)^{1/d}), apply the sandwich to each factor, and sum a geometric series.",
     "research_mode": "team",
     "source_exp_id": "93d08ac5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T10:05:30.736330+00:00",
     "title": "Thin-Shell Counting under a Thickness Budget"
   },
