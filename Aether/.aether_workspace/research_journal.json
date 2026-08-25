@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6c27d6f0",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — tropical epistasis of layer ablations\n\nThe formal development establishes:\n\n* pruning cost is the increase of a **tropical (min-plus) minimum** over surviving\n  computation paths",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 107,
-      "timestamp": "2026-08-24T07:22:28",
-      "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR — L22+L23 solo costs sum to 0.06pts but joint pruning c"
-    },
-    {
       "cycle_id": "3be10ac1",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — TDIAL-BITLEN cycle (round-56 #1, exp 526)\n\n## What this cycle established\n\nFour sorry-free Lean files in `Catalog/Pythagorean/`:\n\n* `ZeroFitDialRelationRate48.lean` — the *coarse",
@@ -499,19 +489,19 @@
       "theorem_count": 39,
       "timestamp": "2026-08-25T22:46:43",
       "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's left-edge tension re"
+    },
+    {
+      "cycle_id": "e645a8ec",
+      "domain": "Probability",
+      "key_insight": "# Future directions after exp 580 / paper 230 (round-80 #2)\n\nThe formal cycle established four things: (i) the occupancy table of a scan is\na rate layer times a positional layer, and \"no interaction\"",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-25T23:40:18",
+      "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-rich vs hit-poor posi"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "308f24be",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — geometry of the attention-cost knee distribution\n\nDerived from the six Lean files added in `Catalog/Geometry/`\n(`KneeFermatWeber`, `KneeMedianProjection`, `KneeScalingRays`, `Kne",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 113,
-      "timestamp": "2026-08-19T03:58:14",
-      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
-    },
     {
       "cycle_id": "3da67f84",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 39,
       "timestamp": "2026-08-25T22:46:43",
       "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's left-edge tension re"
+    },
+    {
+      "cycle_id": "e645a8ec",
+      "domain": "Probability",
+      "key_insight": "# Future directions after exp 580 / paper 230 (round-80 #2)\n\nThe formal cycle established four things: (i) the occupancy table of a scan is\na rate layer times a positional layer, and \"no interaction\"",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-25T23:40:18",
+      "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-rich vs hit-poor posi"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4578ca8c",
-      "domain": "Computation",
-      "name": "pade_lower_le_log_one_add",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "7957a9f1",
-      "domain": "Physics",
-      "name": "inner_obs_total",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "7957a9f1",
-      "domain": "Physics",
-      "name": "var_grandMean",
-      "quality": 0.82
-    },
     {
       "cycle_id": "5223d87b",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "ker_cont",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "e645a8ec",
+      "domain": "Probability",
+      "name": "harmonic_window_sum",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "e645a8ec",
+      "domain": "Probability",
+      "name": "tendsto_harmonic_diff",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "e645a8ec",
+      "domain": "Probability",
+      "name": "tendsto_discrete_decile_harmCDF",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-25T22:46:43",
+  "last_updated": "2026-08-25T23:40:18",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "c0dccdf7",
-        "quality": 0.88,
-        "theorems": 89,
-        "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin"
-      },
-      {
         "cycle_id": "5bad6114",
         "quality": 0.91,
         "theorems": 17,
@@ -3823,6 +3817,12 @@
         "quality": 0.88,
         "theorems": 171,
         "title": "FACT round-73 #1 — PORTFOLIO: no universal winner, no dial edge; regret tail is "
+      },
+      {
+        "cycle_id": "e645a8ec",
+        "quality": 0.85,
+        "theorems": 124,
+        "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-r"
       }
     ],
     "Pythagorean": [
