@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b8859dfd",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Parity-corrected asymptotics for the information-free game\n\nThis cycle established, with complete Lean 4 proofs and no `sorry`, that the\ninformation-free werewolf/village game ha",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-23T10:41:17",
-      "title": "Parity-corrected asymptotics for the information-free game"
-    },
-    {
       "cycle_id": "04d3a29d",
       "domain": "Cryptography",
       "key_insight": "# Future directions: the guarded transfer principle\n\nThis cycle formalised, in `Catalog/Cryptography/Transreal/`, the following:\n\n* `Core.lean` — the four-constructor carrier `Transreal = fin ℝ | pinf",
@@ -499,19 +489,19 @@
       "theorem_count": 112,
       "timestamp": "2026-08-25T03:14:34",
       "title": "Exponential lower bound via quartet codes"
+    },
+    {
+      "cycle_id": "569bc76d",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Ellipsoids as Positive-Definite Images of Balls\n\n## What the thread has established\n\nEight Lean files in `Catalog/Bridges/` now carry a complete, `sorry`-free development.\n\n* `El",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 156,
+      "timestamp": "2026-08-25T05:49:54",
+      "title": "Ellipsoids"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ae5d2ae6",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — the price of universality\n\nThe formalised results of this phase answer Question 1 of *Compression Beyond the\nPigeonhole Bound* in the following form.\n\n* **Exact worst-case price.",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-08-18T04:52:43",
-      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
-    },
     {
       "cycle_id": "6ba84571",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 112,
       "timestamp": "2026-08-25T03:14:34",
       "title": "Exponential lower bound via quartet codes"
+    },
+    {
+      "cycle_id": "569bc76d",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Ellipsoids as Positive-Definite Images of Balls\n\n## What the thread has established\n\nEight Lean files in `Catalog/Bridges/` now carry a complete, `sorry`-free development.\n\n* `El",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 156,
+      "timestamp": "2026-08-25T05:49:54",
+      "title": "Ellipsoids"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "95bfbbbf",
-      "domain": "Novelty",
-      "name": "six_choose_three_le",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "95bfbbbf",
-      "domain": "Novelty",
-      "name": "kneeCubic_feasible",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "59651b5d",
-      "domain": "MachineLearning",
-      "name": "cappedBlocks_sum",
-      "quality": 0.79
-    },
     {
       "cycle_id": "59651b5d",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "code3_eq_two_iff",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "569bc76d",
+      "domain": "Bridges",
+      "name": "dotProduct_self_nonneg",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "569bc76d",
+      "domain": "Bridges",
+      "name": "eucNorm_nonneg",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "569bc76d",
+      "domain": "Bridges",
+      "name": "eucNorm_sq",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-25T03:14:34",
+  "last_updated": "2026-08-25T05:49:54",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "ef01dce6",
-        "quality": 0.88,
-        "theorems": 179,
-        "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-      },
-      {
         "cycle_id": "18f8232d",
         "quality": 0.89,
         "theorems": 17,
@@ -3203,6 +3197,12 @@
         "quality": 0.89,
         "theorems": 95,
         "title": "Conjecture. `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at"
+      },
+      {
+        "cycle_id": "569bc76d",
+        "quality": 0.88,
+        "theorems": 156,
+        "title": "Ellipsoids"
       }
     ],
     "Combinatorics": [

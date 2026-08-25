@@ -56843,7 +56843,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** A depth-varying residual system `x ↦ x + g_n(x)` with certified constants `L_n` admits a pseudo-orbit bound governed by products of `(1+L_n)`, and under a summability or averaged contraction condition this bound becomes uniform in depth.\n\nThe key insight is that residual robustness and numerical shadowing are instances of the same nonautonomous error recurrence, but varying layers permit stability mechanisms invisible in a single worst-case constant.\n\n**Why now?** The autonomous residual bridge identifies the common calculus; the next test is whether layerwise structure can convert a geometric finite-depth estimate into a uniform guarantee.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Bridges"
@@ -57966,7 +57966,7 @@
       "depth_estimate": 3,
       "description": "Formalize the equality between degree and normalized polytope volume, and the equality between lattice-point counts in dilates and dimensions of spaces of sections (Ehrhart/Hilbert correspondence).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Bridges",
         "Geometry"
@@ -60212,7 +60212,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: deciding whether a finite multiset of non-rotatable square pieces with flat, tab, and blank edges tiles a prescribed rectangle is NP-complete, even when each non-flat edge carries one of only finitely many colors and every valid tiling has a fixed outer frame.\n\nThe key insight is that the assignment-level bijection should survive replacement of the abstract clause predicate by planar wire, crossover, fan-out, and clause gadgets whose unused interfaces are forced by the frame.\n\nWhy now? The exact witness correspondence isolates the sole missing burden: a polynomial-size geometric realization that introduces neither spurious assemblies nor lost satisfying assignments.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Bridges"
@@ -62494,7 +62494,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** A scale-uniform fractal uncertainty exponent for Fourier restrictions to families of Radon slices implies a nontrivial incidence bound for product-structured tube families.\n\nThe key insight is that simultaneous localization in position and slice frequency constrains how many directions can share the same spatial concentration. **Why now?** The qualitative continuation mechanism clarifies what must be strengthened, while the Radon exception identifies incidence geometry as the necessary replacement for holomorphic rigidity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Bridges"
@@ -68261,7 +68261,7 @@
       "depth_estimate": 3,
       "description": "Given finite metric spaces related by a correspondence of distortion at most `2δ`, conjecture that their Rips filtrations admit a natural `2δ` simplicial interleaving that descends functorially to persistent homology in every degree. Establish sharpness by constructing finite spaces for which no smaller uniform translation works. **The key insight is...** indexwise matching is only a special case; correspondences are the correct bridge from perturbation geometry to Gromov–Hausdorff stability. **Why now?** The matched-sample theorem already identifies the sharp triangle-inequality mechanism, so the remaining issue is compatibility with nonfunctional correspondences.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Bridges"
@@ -69426,7 +69426,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every position from which the attacker forces mate, the accessibility rank of its legal-play relation equals its minimax ordinal game value after the standard winner/loser normalization.\n\nThe key insight is that accessibility recursion and ordinal minimax recursion are two presentations of the same well-founded strategy tree, but alternating choices require a carefully polarized rank transformation.\n\n**Why now?** The present escape theorem identifies the complementary non-well-founded case by an explicit infinite chain, while the abstract hierarchy supplies nontrivial well-founded test cases.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Bridges",
         "Logic"
@@ -70700,7 +70700,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** In a precisely specified choiceless set theory with dependent choice and a strong regularity principle, universal Lebesgue measurability is equivalent to a determinacy-style statement for a definable class of infinite games, but it is independent of the bare negation of Choice.\n\nThe key insight is that measurability arises from regularity or determinacy structure, not from the logical negation of a selection principle by itself. The correct bridge should therefore factor through games rather than proceed directly from anti-Choice.\n\n**Why now?** Separating relation-level anti-axioms from extra semantic structure prevents the common invalid inference from “Choice fails” to “every set is measurable” and gives a falsifiable route to a guarded replacement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Logic",
         "Bridges"
@@ -76224,7 +76224,7 @@
       "depth_estimate": 3,
       "description": "For a concrete arithmetized theory with a fixed prefix-free syntax, conjecture explicit upper and lower bounds on the shortest fixed-point sentence in terms of the description length of its provability predicate. Test whether bounded recodings preserve these bounds up to additive constants.\n\nThe key insight is that semantic incompleteness yields existence but no numerical threshold; quantitative diagonalization must account for the cost of quotation, substitution, and the provability predicate.\n\nWhy now? The abstract boundary is clear: counting laws and fixed-point laws are presently separate, so coding-cost estimates are the necessary bridge between them.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Logic",
         "Bridges"
@@ -78907,7 +78907,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every countable dependency relation that is well-founded and has finite predecessor sets admits a rank into the natural numbers that strictly decreases along dependency edges; without finite branching, ordinal-valued ranks are necessary and sufficient.\n\nThe key insight is that absence of cycles is weaker than the existence of a numerical level assignment, while finite branching may bridge that gap by bounding the height below each node.\n\n**Why now?** The finite-cycle obstruction isolates rank descent as the mechanism behind untangled hierarchies, making the precise boundary between natural and transfinite ranks directly testable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Bridges",
         "Logic"
@@ -93984,7 +93984,7 @@
       "depth_estimate": 3,
       "description": "The current dimension theorem treats activity as the range of a linear map from\nbehavioral coordinates. A nonlinear version should formalize a smooth map from\na `d`-dimensional behavioral manifold into neural state space and prove that an\nimmersed image has dimension at most `d`. Rank bounds on the derivative are a\nnatural first bridge.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Bridges"
@@ -94144,7 +94144,7 @@
       "depth_estimate": 3,
       "description": "Formalize barycenters, covariance operators, and isotropic position. This is the standard bridge from geometric sections to analytic information about a normalized measure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Bridges"
@@ -95696,7 +95696,7 @@
       "depth_estimate": 3,
       "description": "Original conjecture: `∀ a, psi a < Om`. This is **false** for the unrestricted hull:\n`Bridges.OrdinalCollapsing.not_forall_psi_lt_Om`. For `a < b` the ordinal `psi a` *is* a\ngenerator at stage `b`, whereas `psi b ∉ Gen (gens b)`; so `psi a ≠ psi b`, and with\n`psi_mono` this upgrades to `psi_strictMono`, hence `a ≤ psi a` (`self_le_psi`) and\n`Om ≤ psi Om`. The exact form of the failure is now known: `psi c < Ω` *does* hold for\nevery countable `c` (`psi_lt_Om`), and the first value at or above `Ω` is\n`psi Ω = ε_{Ω+1}`.\n\n> **C1′.** Let `psi'` be the *restricted* Madore collapse, defined by\n> `gens' a = {0, Ω} ∪ {psi' c | c < a ∧ c ∈ Gen (gens' a)}`. Then `psi' a < Ω` for every\n> `a`, `psi'` is non-decreasing, and `psi' (ε_{Ω+1})` is the Bachmann–Howard ordinal.\n> Falsifiable by exhibiting `a` with `psi' a ≥ Ω`. Formalising `psi'` requires a\n> simultaneous recursion between the hull and the function, which is the main technical\n> obstacle; the results proved here for `psi` (`psi_zero`, monotonicity, the bridge\n> theorems) should transfer, since the two functions agree at `0` and the chain\n> `ε₀ = psi 0 < psi (Ω^ω)` uses only generators of the form `psi c` with `c` explicitly\n> in the hull.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Bridges",
         "Logic"
@@ -95737,7 +95737,7 @@
       "depth_estimate": 3,
       "description": "> **C6.** *(Collapsing is exactly the loss of one epsilon number.)* For the unrestricted\n> hull, `range psi = ε '' {a | a ≠ Ω}` is now a theorem (`range_psi`). Conjecture: for\n> the restricted collapse of C1′, `range psi' = {ε_a | a < Ω} ∪ {ψ'-values below Ω}` is\n> instead a set of order type `Ω` cofinal in `Ω`, and `psi'` is *not* injective.\n> Falsifiable by proving `psi'` injective, or by exhibiting a value of `psi'` at or\n> above `Ω`.\n\n> **C7.** *(Notation systems.)* The term system `OTerm` modulo `Step` (equivalently, its\n> normal forms) with the induced order is order-isomorphic to a *proper initial segment*\n> of `Iio (psi (ε_{Ω+1}))`, not to all of it: the missing ordinals are exactly those\n> whose `Ω`-CNF needs a value `psi a` with `a` not itself denoted by a term. Falsifiable\n> by producing a surjection of term values onto `Iio (psi (ε_{Ω+1}))`.\n\n> **C8.** *(Sharpness of the PA bridge.)* The `ψ`-free fragment of the term system and\n> the `PA` notation system have the same values:\n> `{t.val | t : OTerm, t.Simple} = {o.repr | o : ONote, o.NF}`, and `ofONote` maps every\n> `NF` notation to a `Simple` term. Value preservation and order reflection are already\n> proved (`val_ofONote`, `ofONote_val_lt_iff`, `strictMono_ofONote`), and the left-hand\n> side is `Iio ε₀` (`simple_val_range`), so the conjecture is equivalent to: every\n> ordinal below `ε₀` is `o.repr` for some `NF` notation `o`. Falsifiable by an ordinal\n> `< ε₀` outside the image of `ONote.repr`, or by an `NF` notation whose `ofONote`\n> translation is not `Simple`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Bridges",
         "Logic"
@@ -97272,7 +97272,7 @@
       "depth_estimate": 3,
       "description": "A ReLU network computes a\n   tropical rational function; the `b`-smoothed network computes a\n   log-sum-exp expression. Quantifying the uniform distance between a smoothed\n   network of depth `d` and its tropical limit (an `O(d · log(width)/b)` bound)\n   would extend the bridge theorem from one neuron to a whole architecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical",
         "Bridges"
@@ -122268,7 +122268,7 @@
       "depth_estimate": 3,
       "description": "Every set map between pointed magmas induces a pseudofunctor of codiscrete bicategories, and round trips are invisible to 2-cells. This suggests that the construction is a genuine 2-categorical left adjoint lifting Mathlib's adjunction between objects of a category and codiscrete categories.\n\nM |-> MagmaBicat M extends to a 2-functor from pointed sets to bicategories that is adjoint to taking the 1-cells of the unique object, and it is an equivalence onto one-object bicategories with codiscrete hom-categories.\n\nBuild the unit and counit in Lean using mapPseudofunctor, verify the triangle identities up to invertible modifications, and compare with CategoryTheory.Codiscrete.adj.\n\nThe codiscrete construction is characterised universally, so coherence-by-codiscreteness is not an ad hoc trick but a right/left adjoint phenomenon.\n\nCoherence data cannot be produced adjointly at the bicategorical level, indicating that pseudofunctoriality on all set maps is an accident of thinness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -122859,7 +122859,7 @@
       "depth_estimate": 3,
       "description": "Witness B shows chi(G) = max(chi_1, chi_2) fails precisely when the edges of the glueing clique are split between the sides, so each side needs fewer than k colours. We conjecture the failure is controlled by a defect d measuring how far K is from being a clique on the worse side, giving a two-sided estimate for weak clique sums. This interpolates between the weak and genuine settings.\n\nFor a weak clique sum with defect d = |K| - max(omega_1(K), omega_2(K)), one has max(chi_1, chi_2) <= chi(G) <= max(chi_1, chi_2) + d.\n\nEnumerate all weak clique sums on at most six vertices, record chi(G) - max(chi_1, chi_2) against d, then formalise the upper bound by extending the colour permutation to a partial matching on the split part.\n\nA quantitative bridge covering both the proved chi = max theorem (d = 0) and the Witness B failure (d = 1).\n\nThe data would reveal a second parameter, presumably the interaction pattern of the split edges, needed to control colouring of weak sums.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -128289,7 +128289,7 @@
       "depth_estimate": 3,
       "description": "No modal axiom set should define primitivity, nor bound the uniform primitivity exponent. Cycle 8 supplies, for each N, a frame whose exponent is exactly N, so the classes to be separated are now explicitly populated. This draws a sharp boundary around what correspondence theory expresses about mixing.\n\nFor every set Gamma of modal formulas and every natural N, Gamma defines neither the class of primitive support frames nor the class whose uniform primitivity exponent is at most N.\n\nFor each N take the nearest-neighbour chain on N+1 states, whose exponent is exactly N by nbrChain_exponent_eq, and collapse it by a surjective bounded morphism onto a lazy frame of smaller exponent; apply Valid_of_boundedMorphism_surjective.\n\nMixing is beyond modal axiomatisation, extending the limitative results from irreflexivity to quantitative dynamics.\n\nA modal scheme forcing primitivity would be a positive correspondence result and a proof-theoretic certificate of mixing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic",
         "Bridges"
@@ -134735,7 +134735,7 @@
       "depth_estimate": 3,
       "description": "Census equivalence provably preserves being an involution. The conjecture is that this is one instance of a general descent principle for functorial group-theoretic invariants, and that these invariants are jointly complete for the relation. This would give a decision procedure for census equivalence that avoids searching Aut(G).\n\nEvery invariant of group elements that is preserved by inversion and by all automorphisms in Aut(G,S) is constant on census-equivalence classes, and the family of such invariants separates distinct classes.\n\nFormalise a general descent lemma parameterised by an invariant, instantiate it at orderOf and at derived-series membership, and test completeness computationally on groups of order ≤ 16.\n\nCensus equivalence becomes decidable by evaluating a finite list of invariants, replacing an automorphism search.\n\nThere are census-inequivalent elements agreeing on all definable invariants, which would be an interesting rigidity failure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Bridges"
@@ -140196,7 +140196,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.88,
       "parent_direction": "",
       "priority_score": 1000.0,
       "proof_strategy": "",
@@ -140207,7 +140207,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-08-24T05:03:28.427083+00:00",
       "title": "FACT round-73 #1 — PORTFOLIO: no universal winner, no dial edge; regret tail is N-invisible (paper 206)"
@@ -140355,7 +140355,7 @@
       "depth_estimate": 3,
       "description": "Rational star-powers of the corrected Monster product exist and are unique. Fixing a Laurent degree and varying the exponent r should produce a polynomial in r, whose degree and roots encode arithmetic of the 194 trace series.\n\nFor each k the function r -> (coefficient at degree k - 1 of the star-r-th power of a normalized f) is a polynomial in r of degree k with leading coefficient (f.coeff 0)^k / k!.\n\nProve the first three cases from the explicit expansions already formalized, then induct using the logarithm/exponential correspondence on 1-units.\n\nExplicit closed forms for all rational star-powers, hence a complete coefficient calculus for the corrected moonshine group.\n\nNon-polynomial dependence would reveal that ratPow is not compatible with coefficientwise limits.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -142505,7 +142505,7 @@
       "depth_estimate": 3,
       "description": "Because Ipair is additive over coprime factorisations, n -> 2^{Ipair n} is multiplicative, so its Dirichlet series should factor as an Euler product whose local factors are explicit once the primary law is known. The q = 2 factor is already fully determined by the closed form proved in this cycle. This bridges an information-theoretic invariant with analytic number theory.\n\nD(s) = sum_{n>=1} 2^{Ipair n} n^{-s} equals prod_q ( sum_{k>=0} 2^{Ipair(q^k)} q^{-ks} ) for Re s > 1, with a simple pole at s = 1.\n\nFormalise multiplicativity of n -> 2^{Ipair n} from Ipair_mul_of_coprime, then apply the Mathlib machinery for Euler products of multiplicative arithmetic functions; bound the local factor at q = 2 using Ipair_two_pow_lt_four_thirds.\n\nThe distribution of cap-breaking orders becomes accessible to Tauberian methods, giving Direction 4 for free.\n\nThe series diverges at s = 1 faster than a simple pole, which would mean the average of 2^{Ipair n} grows and the cap is broken on a set of positive logarithmic weight.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory",
         "Bridges"
@@ -142924,7 +142924,7 @@
       "depth_estimate": 3,
       "description": "The KL bridge proved here inherits Pinsker's sqrt(KL/2), which exceeds 1 and becomes vacuous for KL >= 2. The Bretagnolle-Huber bound sqrt(1 - exp(-KL)) is always non-vacuous. Both follow from the same Bernoulli reduction already performed in the catalog's Pinsker proof.\n\nFor all finite Q absolutely continuous with respect to P, d_TV(Q,P) <= sqrt(1 - exp(-KL(Q||P))), and this is strictly better than sqrt(KL/2) exactly for KL above a universal threshold in (1,2).\n\nReuse klFinDist_block_ge to reduce to the Bernoulli case and prove the scalar inequality for klBernoulli by calculus (derivative comparison), then re-derive bayesError_ge_of_kl with the new bound.\n\nEvery KL-based Le Cam bound in the catalog becomes non-vacuous, and PAC-Bayes generalization bounds inherit a strictly better distinguishability floor.\n\nThe Bernoulli reduction must lose information, which would itself be a notable failure of the standard two-point method.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "MachineLearning",
         "Bridges"
@@ -143607,7 +143607,7 @@
       "depth_estimate": 3,
       "description": "Complementation has fixed points at two levels: flat edges in the alphabet, and the empty assembly at zero variables. The conjecture is that a geometric realisation functor identifies the first with the boundary cells of the assembled figure and forces a congruence between its Euler characteristic and the combined assembly count mod 2.\n\nFor a geometric realisation of a framed puzzle with flat frame, the number of boundary cells equals the number of complementation-fixed edges, and the Euler characteristic is congruent mod 2 to the combined assembly count.\n\nDefine a realisation from pieces to a CW structure, compute both invariants for small grid puzzles, and formalise the congruence.\n\nSolution-count parity acquires a topological reading as a boundary invariant.\n\nThe two fixed-point phenomena are unrelated, and parity is purely a cube symmetry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Bridges"
@@ -146975,6 +146975,137 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
+      "catalog_references": [
+        "Probability.PortfolioThresholdSchedule",
+        "Probability.PortfolioSmoothnessChannel"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The abstract threshold theorem shows that a monotone schedule is optimal as soon as the conditional cost matrix has decreasing differences in (smoothness quantile, member). Conjecture that the five-member factoring portfolio does satisfy this over powersmoothness quantiles, so the optimal paid-probe schedule is an interval rule in one scalar.\n\nFor the portfolio (rho, p-1 at cap 256, PM1 at cap 1024, Fermat, trial division) ordered by probe cap, and instances binned by the largest prime power of p-1, the matrix of conditional expected costs has decreasing differences; hence the optimal dial is monotone in the quantile.\n\nBin the per-N CSVs by powersmoothness quantile, form the conditional cost matrix and check decreasing differences directly; then instantiate exists_monotone_optimal_dial on the resulting rational matrix.\n\nThe paid-probe schedule collapses to a threshold search in one number, with each member played on an interval of quantiles.\n\nSome pair of members crosses twice, so the winner is not monotone in powersmoothness and the organising axis of the cell is not order-faithful.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "NumberTheory"
+      ],
+      "github_issue": 0,
+      "id": "fd_4101",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.563924223711703,
+      "proof_strategy": "Check the finitely many inequalities of DecreasingDifferences on the binned matrix, then apply leastArgmin_monotone and dial_fibers_ordConnected.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "40fe72ea",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/40fe72ea",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T05:50:02.623939+00:00",
+      "title": "Powersmoothness Single-Crossing Certificate"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Probability.PortfolioNullDial",
+        "Probability.PortfolioRegretTail"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Fiberwise dominance of conditional means is now proved to preserve both the optimal dial value and the best static value. The open half is the distributional one: conditional stochastic dominance on every fiber is weaker per fiber, and it is unclear whether it still licenses deletion or whether the variance tail defeats it as it defeats global mean comparison.\n\nIf member b stochastically dominates member a conditionally on every fiber of obs, then deleting b changes neither dialValue nor bestConstant; and unconditional stochastic dominance does not suffice.\n\nFormalise conditional stochastic dominance in the finite rational framework, derive fiberwise mean inequalities from ev_le_of_stochDom, feed them into dialValueOn_erase_of_fiberwise_dominates, and search small cost matrices for the separating counterexample in the unconditional case.\n\nPortfolio pruning gains a distribution-level certificate strictly weaker per fiber than the mean test now proved safe.\n\nOnly fiber-mean comparisons are safe, and distributional eliminations in the literature need re-auditing.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "fd_4102",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.55,
+      "proof_strategy": "Apply ev_le_of_stochDom fiber by fiber to obtain the hypothesis of the proved fiberwise elimination theorems; build the counterexample from the two-instance portfolio of mean_elimination_unsafe.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "40fe72ea",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/40fe72ea",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T05:50:03.230623+00:00",
+      "title": "Conditional Distributional Dominance as an Elimination Certificate"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Probability.PortfolioShareRealizability",
+        "Probability.PortfolioExp560"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Winner shares are realisable arbitrarily by choice of sampler, so they carry no algorithm-intrinsic information. Conjecture that the pointwise dominance order on cost vectors is the complete invariant: two portfolios induce the same set of achievable share-and-ranking profiles across all samplers iff their cost matrices have the same dominance order.\n\nTwo finite cost matrices are sampler-equivalent (same achievable pairs of winner-share vector and static ranking over all weightings) if and only if they induce the same pointwise dominance preorder on members.\n\nFormalise sampler-equivalence in the framework of Probability.PortfolioShareRealizability and verify the equivalence by exhaustive search over small matrices before attempting the general proof.\n\nBenchmark claims must be re-stated relative to a named sampler or to the dominance order, sharpening the scope caveat recorded in the ledger.\n\nSome sampler-invariant statistic beyond dominance exists, and identifying it would give a genuinely algorithm-intrinsic benchmark.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_4103",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5640838761163549,
+      "proof_strategy": "One direction follows from share_realizability by exhibiting extreme-point samplers; the converse requires separating hyperplanes on the simplex of weightings.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "40fe72ea",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/40fe72ea",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T05:50:03.713980+00:00",
+      "title": "Sampler-Invariant Content of a Factoring Portfolio"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -150329,6 +150460,46 @@
       "thread_id": "",
       "timestamp": "2026-08-20T13:11:32.982421+00:00",
       "title": "Deepening: The finite-state class and its bound were constructed this cycle"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 569bc76d (Q=0.880), which proved 156 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "push_569bc76d_a03292db",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.95,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "569bc76d",
+      "source_path": "Ellipsoids",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T05:49:54.837772+00:00",
+      "title": "Deepening: Ellipsoids"
     },
     {
       "ambition_level": "extension",
@@ -162979,49 +163150,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "63cef724",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form ±p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime — a number-theoretic analog of spin in physics.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Novelty",
-        "NumberTheory",
-        "Geometry",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "seed_124",
-      "last_attempt_time": "2026-08-21T09:00:00.418946+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.79,
-      "parent_direction": "",
-      "priority_score": 0.76,
-      "proof_strategy": "Define Z_M as the image of Z in the Moebius band M = [0,1] x R / ~ where (0,y) ~ (1,-y). Embed n -> (1/(1+|n|), n) for n >= 0 and n -> (1/(1+|n|), -|n|) for n < 0. Define addition and multiplication coordinatewise on M. Prove Z_M is a ring: (a,b) + (c,d) = ((a+c mod 1), b+d with sign from twist). Prove Z_M is not an integral domain: find zero divisors. Prove the twist prime theorem: every Moebius integer n has a unique factorization n = epsilon * p_1^{a_1} * ... * p_k^{a_k} where epsilon = +1 or -1 is the twist, and p_i are ordinary primes. Test: factor 6 = +1 * 2 * 3, -6 = -1 * 2 * 3. Verify multiplication: 2_+ * 3_+ = 6_+ and 2_- * 3_- = 6_+ (two twists cancel). Verify that -1 is prime: if -1 = a*b in Z_M, then a or b must be the twist.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "seed",
-      "source_path": "seed:manual_v2",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "",
-      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
       "category": "",
@@ -174577,7 +174705,7 @@
     "Computation": 2,
     "Geometry": 2,
     "Logic": 2,
-    "Novelty": 59.0,
+    "Novelty": 60.0,
     "NumberTheory": 2,
     "SetTheory": 1,
     "Speculative": 2
@@ -174601,7 +174729,6 @@
     "becomes": 5,
     "berggren": 11.0,
     "boundary": 9,
-    "bounds": 1,
     "cantor": 2,
     "carries": 9,
     "catalog": 5,
@@ -174611,6 +174738,7 @@
     "conjecture": 21.0,
     "connecting": 5.0,
     "correct**": 2,
+    "dilute": 1,
     "e.g": 5.0,
     "elementary": 2,
     "embedding": 3,
@@ -174636,7 +174764,7 @@
     "hyperbolic": 6.0,
     "i(joint": 2,
     "iteration": 10,
-    "itself": 10.0,
+    "itself": 11.0,
     "limited-memory": 9,
     "log(1+√2": 4.0,
     "lorentz": 5.0,
@@ -174648,13 +174776,11 @@
     "monotone": 4,
     "moonshot)**": 4,
     "moves": 3.0,
-    "normalization": 1,
     "now**": 9.0,
     "number": 13.0,
     "opening": 2,
-    "paper": 45,
+    "paper": 46,
     "positive": 6,
-    "positive-definite": 1,
     "precise": 5,
     "preserving": 4,
     "primitive": 10.0,
@@ -174667,9 +174793,11 @@
     "residue": 6,
     "result": 22,
     "round-32": 2,
+    "scheduling": 1,
     "semiprime": 3,
     "silver": 4.0,
     "silver-ratio": 5,
+    "smoothness-carried": 1,
     "spectral": 4,
     "structure": 19.0,
     "ternary": 7.0,
