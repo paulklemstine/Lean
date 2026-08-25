@@ -2094,5 +2094,6 @@
   "ed1b07dd": "e3__the_margin_does_not.json",
   "eef05184": "weighted__signed_sums.json",
   "80241759": "parameter_derived_depth.json",
-  "22848dce": "exponential_lower_bound_via_quartet_codes.json"
+  "22848dce": "exponential_lower_bound_via_quartet_codes.json",
+  "569bc76d": "ellipsoids.json"
 }
