@@ -1,5 +1,7 @@
 {
-  "cycle_syntheses": {},
+  "cycle_syntheses": {
+    "7b6f9981": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  What was\nproved (all `sorry`-free, in `Catalog/NumberTheory/`):\n\n* `VietaInjectiveFamilies.lean` — the six-element symmetry orbit of\n  `vietaValue a b = −3ab(a+b)`, a residual collision inside the fundamental\n  domain (`f(1,5) = f(2,3)`), the divisor bound for the multiplicity of a Vieta\n  value, two injective subfamilies (the spine `a = 1`, and the two-parameter\n  dyadic family `a = 2^i`, `b` odd, injective via the `2`-adic valuation), and\n  the counting bounds `⌊√(N/6)⌋` (one-sided) and `2⌊√(N/6)⌋` (both signs), all\n  with three nonzero cubes.\n* `CubeDigitFamilies.lean` — the greedy cube-digit principle, an injective\n  three-scale box, and the counting bound `≫ N^{19/27}` for sums of three\n  positive cubes (`19/27 ≈ 0.7037`), including a real-analytic version valid\n  for all `N` and the explicit comparison `100√N ≤ t¹⁹`.\n* `VietaEscape.lean` — every Vieta value is divisible by `6`, hence the Vieta\n  counting function is sandwiched `⌊√(N/6)⌋ ≤ #Vieta(N) ≤ ⌊N/6⌋`; and a\n  residue-restricted cube-digit family producing `≥ 136 t¹⁹` integers below\n  `10⁸ t²⁷` that are sums of three positive cubes and are *not* Vieta values.\n* `GreedyCubeTower.lean` — the induction generalising the cube-digit principle\n  to `s` cubes: exponent `1 − (2/3)^s` (proved both at the sample scales and, in\n  real-analytic form `tower_count_rpow`, for every `N ≥ towerConst s`),\n  converging to `1`; the cases `s = 2, 3, 4` give `5/9`, `19/27`, `65/81`.\n\nAnalysis of the gap: the truth for the Vieta value set is `≍ N^{2/3}`\n(experiment: `≈ 0.53 N^{2/3}`), while the provable injective subfamilies only\nreach `N^{1/2}`, because collisions are governed by divisors of the value, and\nsparsifying the first parameter to make the value determine it (valuations,\nsmooth numbers) makes the sum `Σ_a (N/a)^{1/2}` converge.  This is a genuine\n\"needs a different definition\" failure, not a false statement.\n\n---\n\n## Conjecture 1 — Divisor-Controlled Vieta Density\n\nFor every `ε > 0` there is `c(ε) > 0` such that the number of integers of\nabsolute value `≤ N` of the form `3ab(a+b)` is at least `c(ε) N^{2/3−ε}`.\n\n**The key insight is** that the proved bound\n`#{(a,b) : 3ab(a+b) = v} ≤ d(v)` converts the problem into a divisor-moment\nestimate: the `N^{2/3}` lattice points in the region `3ab(a+b) ≤ N` collapse\nonly by the divisor function, so any sub-polynomial bound `d(v) ≪_ε v^ε`\nimmediately yields the conjecture.\n\n**Why now?**  `vieta_multiplicity_le_card_divisors` is already formalised, and\n`d(n) ≪_ε n^ε` is an elementary multiplicative-function argument that Mathlib\ndoes not yet have but which is squarely within reach; nothing deeper (no\nclass-field theory, no Thue equations) is required for the `2/3 − ε` bound.\n\n## Conjecture 2 — Exact Vieta Counting Asymptotic\n\n`#{v : |v| ≤ N, v = 3ab(a+b) for some integers a,b}` is asymptotic to\n`κ N^{2/3}` with `κ ≈ 1.05` (empirically `0.53` on the positive side, doubled by\nsign symmetry), and the second-order term is `O(N^{1/2} log N)`.\n\n**The key insight is** that the binary cubic form `3ab(a+b)` has an\nautomorphism group of order exactly `6` (the `S₃`-orbit proved in\n`vietaValue_orbit`) and class number one in the relevant sense, so its value set\nshould behave like a generic lattice count divided by `6`.\n\n**Why now?**  The orbit theorem and the divisor multiplicity bound are\nformalised; the missing input is an average (not maximal) divisor bound, i.e. a\nsecond-moment count `Σ_{v ≤ N} r(v)² ≪ N^{2/3} log^c N`, which is a\nCauchy–Schwarz computation over a two-dimensional region.\n\n## Conjecture 3 — Greedy Barrier Is Sharp at `1 − (2/3)^s`\n\nAny family of sums of `s` positive cubes whose injectivity is certified purely\nby nested \"remainder below the cube gap\" conditions has counting exponent at\nmost `1 − (2/3)^s`, and this is attained (proved: `tower_count`).  Breaking it\nfor `s = 2` (i.e. beating `N^{5/9}` for sums of two positive cubes) is\nequivalent to a quantitative taxicab-rarity statement:\n`#{v ≤ N : r₂(v) ≥ 2} = o(N^{2/3})`.\n\n**The key insight is** that the greedy scheme is exactly an optimisation of\n`Σ_i (2/3)^i` over the nesting depth, so the only way to gain is to prove that\ncoincidences `x³+y³ = x'³+y'³` are rare, rather than to forbid them by size.\n\n**Why now?**  The `s`-fold induction is formalised, so the extremal problem is\nnow a statement about a concrete formal object; and taxicab rarity is provable\nin the weak form needed (`o(N^{2/3})`) by an elementary counting of solutions of\na genus-one curve in boxes.\n\n## Conjecture 4 — Escape Density of Non-Vieta Cube Sums\n\nFor every residue `r ∉ 6ℤ` the number of integers `n ≤ N` with `n ≡ r (mod 6)`\nwhich are sums of three positive cubes is `≫ N^{19/27}`, and in fact\n`≫ N^{1−(2/3)^3}` uniformly in `r`; consequently the Vieta family, whose values\nall lie in `6ℤ` (proved: `six_dvd_vietaValue`), misses a positive-density\nportion of the three-cube values in every non-trivial class.\n\n**The key insight is** that `n³ ≡ n (mod 6)` lets one prescribe the residue of a\ncube sum by prescribing the residues of the roots, at the cost of an explicit\nconstant only, so the greedy box construction is compatible with arbitrary\ncongruence conditions.\n\n**Why now?**  The case `r = 3` is already proved (`escape_count`); the general\ncase only needs the box to be re-centred at roots `≡ r_i (mod 6)`, which the\nexisting gap lemmas support verbatim.\n\n## Conjecture 5 — Tower Exponents Meet the Wooley Regime\n\nFor `s = 3` the elementary tower gives `19/27 ≈ 0.7037`; the conjecture is that\na hybrid of the tower with one divisor-controlled Vieta layer gives\n`N^{3/4}` for sums of three positive cubes, i.e. the first elementary bound\npast `0.75` without circle-method input.\n\n**The key insight is** that the bottom layer of the tower wastes the most:\nit contributes only `y^{2/3}` choices where a divisor-controlled Vieta layer\nwould contribute `y^{1−ε}` values in the same range.\n\n**Why now?**  Conjecture 1 supplies exactly the missing layer, and the tower\ninduction (`greedy_tower`) is already parameterised by \"a family of values below\n`B`\", so a stronger bottom layer can be substituted without redoing the\ninduction.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Divisor-Controlled Vieta Density\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"The Vieta value set {3ab(a+b)} should contain at least c(ε)N^{2/3−ε} integers of absolute value at most N. The proved multiplicity bound (a divides v and determines b) reduces this to a sub-polynomial bound for the divisor function. It matters because it would close the gap between the proved N^{1/2} and the empirical 0.53·N^{2/3}.\",\n    \"conjecture\": \"For every ε>0 there is c(ε)>0 with #{v : |v| ≤ N, ∃ a,b ∈ ℤ, v = 3ab(a+b)} ≥ c(ε) N^{2/3−ε}.\",\n    \"test\": \"Formalise d(n) ≪_ε n^ε in Lean, combine with VietaInjectiveFamilies.vieta_multiplicity_le_card_divisors and a lattice count of {(a,b) : 1 ≤ a ≤ b, 3ab(a+b) ≤ N}.\",\n    \"if_true\": \"The Vieta identity alone gives N^{2/3−ε} representable integers, matching the heuristic and beating every injective subfamily.\",\n    \"if_false\": \"Collisions of the cubic form would have to be far denser than divisor heuristics predict, indicating hidden algebraic structure in 3ab(a+b).\",\n    \"proof_strategy\": \"Count lattice points with 3ab(a+b) ≤ N (≍ N^{2/3}); bound the fibre over each value by d(v) via a ∣ v plus strict monotonicity in b; insert the elementary multiplicative bound d(n) ≤ C_ε n^ε.\",\n    \"catalog_references\": [\"Catalog.NumberTheory.VietaInjectiveFamilies\", \"Catalog.NumberTheory.SumsOfThreeCubes\"]\n  },\n  {\n    \"title\": \"Exact Asymptotic for the Vieta Value Count\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"Beyond the order of magnitude, the Vieta value count should have an honest asymptotic constant coming from the order-six automorphism group of the form. The approach is a second-moment (Cauchy–Schwarz) count of representations. It matters because it converts a counting inequality into an equality with an explicit constant.\",\n    \"conjecture\": \"#{v : |v| ≤ N, v ∈ Vieta values} ~ κ N^{2/3} for an effectively computable κ > 0, with error O(N^{1/2} log N).\",\n    \"test\": \"Numerically fit κ on N up to 10^10, then formalise the upper bound by the lattice count and the lower bound by a second-moment estimate Σ r(v)² ≪ N^{2/3} log^c N.\",\n    \"if_true\": \"The Vieta family is completely understood as a counting object, with the S₃ orbit accounting exactly for the factor 6.\",\n    \"if_false\": \"Either the automorphism group is not the only source of collisions or the error term hides a secondary main term.\",\n    \"proof_strategy\": \"Use vietaValue_orbit to fix a fundamental domain; count lattice points by integration; bound multiplicities in mean square using the divisor correlation Σ_{v≤N} d(v)² ≪ N log³N.\",\n    \"catalog_references\": [\"Catalog.NumberTheory.VietaInjectiveFamilies\"]\n  },\n  {\n    \"title\": \"Sharpness of the Greedy Tower Barrier\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"The formalised tower attains exponent 1−(2/3)^s for sums of s positive cubes. The conjecture is that no purely size-based (greedy) certificate can do better, and that beating it for s = 2 is equivalent to quantitative rarity of taxicab coincidences. It matters because it identifies precisely which arithmetic input is missing.\",\n    \"conjecture\": \"Every family of s-cube sums whose injectivity follows from nested remainder-below-cube-gap conditions has counting exponent ≤ 1−(2/3)^s; and #{v ≤ N : v = x³+y³ in two essentially different ways} = o(N^{2/3}).\",\n    \"test\": \"Formalise the optimisation over nesting windows as a finite-dimensional linear program; for the taxicab half, count integral points on x³+y³ = x'³+y'³ in dyadic boxes.\",\n    \"if_true\": \"Any improvement of the elementary exponent must use arithmetic (not size) information, delimiting the reach of the method.\",\n    \"if_false\": \"There is a size-based certificate beyond the greedy scheme, which would immediately improve the three-cube exponent past 19/27.\",\n    \"proof_strategy\": \"Show any greedy certificate yields window exponents e_{i+1} ≤ (2/3)e_i, so Σ e_i ≤ 3(1−(2/3)^s); combine with the proved attainment in GreedyCubeTower.tower_count.\",\n    \"catalog_references\": [\"Catalog.NumberTheory.GreedyCubeTower\", \"Catalog.NumberTheory.CubeDigitFamilies\"]\n  },\n  {\n    \"title\": \"Uniform Congruence Escape from the Vieta Set\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"Every Vieta value is divisible by six, and n³ ≡ n (mod 6) lets one prescribe the residue of a cube sum. The conjecture is that each residue class mod 6 (indeed mod any modulus) carries ≫ N^{19/27} sums of three positive cubes. It matters because it quantifies how much of the three-cube world the Vieta identity structurally misses.\",\n    \"conjecture\": \"For every residue r mod 6 the number of n ≤ N with n ≡ r (mod 6) that are sums of three positive cubes is ≫ N^{19/27}; for r ∉ 6ℤ none of these is a Vieta value.\",\n    \"test\": \"Re-centre the residue-restricted box of VietaEscape.escBox at roots ≡ r_i (mod 6) for each admissible triple (r_1,r_2,r_3) with r_1+r_2+r_3 ≡ r, and re-run the two greedy gap lemmas.\",\n    \"if_true\": \"The Vieta identity is missing a full 5/6 of the residue classes at density N^{19/27}, quantifying its structural ceiling.\",\n    \"if_false\": \"Some residue class would be sparse for sums of three positive cubes, contradicting the mod-9 analysis of the catalog file SumsOfThreeCubes.\",\n    \"proof_strategy\": \"Use n³ ≡ n (mod 6) to control residues; reuse escBox_gap_x and escBox_gap_xy with rescaled constants; count by the same injective image argument.\",\n    \"catalog_references\": [\"Catalog.NumberTheory.VietaEscape\", \"Catalog.NumberTheory.SumsOfThreeCubes\"]\n  },\n  {\n    \"title\": \"Hybrid Vieta-Tower Exponent Three Quarters\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"Substituting a divisor-controlled Vieta layer for the wasteful bottom layer of the greedy tower should push the elementary exponent for sums of three positive cubes past 3/4. The tower induction is already parameterised by an arbitrary family of small values, so the substitution is modular. It matters as the first elementary bound beyond 0.75 without circle-method input.\",\n    \"conjecture\": \"#{n ≤ N : n is a sum of three positive cubes} ≫ N^{3/4−o(1)}, provable by combining a Vieta bottom layer of size B^{2/3−ε} with two greedy layers.\",\n    \"test\": \"Formalise the modified induction step in GreedyCubeTower with the bottom family replaced by the Vieta value set below B, assuming Conjecture 1.\",\n    \"if_true\": \"An elementary route to exponents in the Wooley regime, previously reached only by the circle method.\",\n    \"if_false\": \"The Vieta layer collides too often with the greedy layers, showing that layer independence, not layer size, is the bottleneck.\",\n    \"proof_strategy\": \"Keep the cube-gap certificate for the top two layers; require the bottom family only to consist of distinct values below the gap, which the Vieta count under Conjecture 1 supplies.\",\n    \"catalog_references\": [\"Catalog.NumberTheory.GreedyCubeTower\", \"Catalog.NumberTheory.VietaInjectiveFamilies\"]\n  }\n]\n```\n"
+  },
   "directions": [
     {
       "ambition_level": "extension",
@@ -52053,7 +52055,7 @@
       "depth_estimate": 3,
       "description": "Fix `k` and a prime `ℓ ∤ q`, and let `d = ord_ℓ(q)`, `e = v_ℓ([d]_q)`.  The map\n`n ↦ binom(n,k)_q` extends to a continuous function `d·ℤ_ℓ → ℤ_ℓ`, with explicit modulus of\ncontinuity `v_ℓ(binom(n,k)_q − binom(n',k)_q) ≥ e + v_ℓ((n − n')/d)` whenever `n ≡ n' (mod d)`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "NumberTheory"
       ],
@@ -55488,7 +55490,7 @@
       "depth_estimate": 3,
       "description": "π and e do not have bounded partial quotients established by the proposal, while √2 does. A theorem connecting decimal digit consonance to continued-fraction coefficients would require a precise statistic and substantial new number theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -57328,7 +57330,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For each fixed degree `d`, the number of primitive Selberg-class functions of conductor at most `Q` is bounded by a polynomial in `Q`, after specifying an equivalence relation that removes duplicate presentations.\n\nThe key insight is that Chinese-remainder factorization makes the degree-one census multiplicative across coprime conductors, suggesting that local-to-global structure should constrain global growth.\n\n**Why now?** A rigorous multiplicative count is available for Dirichlet characters, while the finite-prefix obstruction shows exactly why an unrestricted analytic counting argument cannot establish such a bound.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -57450,7 +57452,7 @@
       "depth_estimate": 3,
       "description": "Treat positive-density claims as conditional results under an explicitly stated\n   prime-tuple conjecture. An unconditional positive-density theorem for exact\n   prescribed consecutive-prime patterns would require major analytic number\n   theory well beyond the elementary deterministic rules proved here.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -58659,7 +58661,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Möbius formula counts exact-period points for generic parameters, derive divisibility of the count by the period, and interpret the quotient as the number of cycles.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -59133,7 +59135,7 @@
       "depth_estimate": 3,
       "description": "Package the Kronecker symbol `n ↦ (D/n)` as a Mathlib\n   `DirichletCharacter`, including the prime `2` and composite moduli. Prove its conductor is\n   `|D|` for fundamental `D` and connect evaluation at odd primes to `quadraticColor`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -59451,7 +59453,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every real `c > 0`, there exists a permutation `σ` of the natural numbers such that `p_{σ(n)}/p_n → c`.\n\nThe key insight is that the prime number theorem turns this into an asymptotic matching problem with target index scale `σ(n) ∼ cn`; global bijectivity may be achieved by sparse corrections whose relative displacement tends to zero.\n\n**Why now?** The dense limit-one core shows that finite constraints are harmless, allowing a construction to be assembled in long blocks while preserving any prescribed finite prefix.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -62587,7 +62589,7 @@
       "depth_estimate": 3,
       "description": "Specialize the generic ordered-cloud theorem to a formally defined increasing enumeration of primes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -63064,7 +63066,7 @@
       "depth_estimate": 3,
       "description": "Formalize finite truncations of `-ζ'/ζ`, whose coefficients are the von Mangoldt function. Its frequencies still include prime powers, but its support encodes primes in a mathematically correct way.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -69831,7 +69833,7 @@
       "depth_estimate": 3,
       "description": "For `targetedForgetting retain`, one can characterize two streams as indistinguishable exactly when deleting all rejected symbols yields the same retained stream. This would turn the abstract kernel congruence into a concrete normalization theorem and identify the observable range with the free monoid on the retained subtype.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -71067,7 +71069,7 @@
       "depth_estimate": 3,
       "description": "A full prime-number-theorem analogue remains to be formalized. The natural next theorem is a concentration result for independent Bernoulli variables with probabilities `1 / log(n+2)`, showing that their counting function is asymptotic almost surely to its expectation, followed by an asymptotic evaluation of that expectation as `N / log N`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -77752,7 +77754,7 @@
       "depth_estimate": 3,
       "description": "The proved surjective-input and injective-output invariance laws suggest organizing person models and information-preserving encodings into a category. Behavioral equivalence could then be studied as a congruence, with products representing combined observation channels and quotients representing substrate erasure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -80973,7 +80975,7 @@
       "depth_estimate": 3,
       "description": "Conjecture that there is an exponent `θ<1` such that, for every sufficiently large `T`, the\nwindow `[T,T+T^θ]` contains conductors `m,n` with `φ(m)≤T<φ(n)`, and that this remains true\nafter restricting to prescribed squarefree factorization patterns.\n\n**The key insight is...** composite conductors turn monotone prime activation into an\nintermittent multiplicative process, while deformation stability guarantees that every\nzero-reflecting order parameter detects the same crossings.\n\n**Why now?** The response law has been removed as a confounding variable; the remaining\nquestion is a concrete short-interval problem about Euler's totient and controlled\nfactorization types.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -83657,7 +83659,7 @@
       "depth_estimate": 3,
       "description": "For every nonexceptional composite index, the primitive part of the corresponding Fibonacci number should contain a prime whose divisibility locus is exactly the multiples of that index. This would extend finite-family synchronization from prime indices to the full range of Carmichael’s theorem.\n\nThe key insight is that finite gcd transport already converts an exact apparition law for one prime into synchronization over every finite family, so only primitive-prime existence remains quantitative.\n\nWhy now? The finite-meet mechanism has been isolated from the growth argument, allowing cyclotomic estimates to be developed independently and attached at a single interface.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -83738,7 +83740,7 @@
       "depth_estimate": 3,
       "description": "For pairwise coprime moduli whose ranks of apparition exist, the rank of their product should equal the least common multiple of their individual ranks, subject to explicit local conditions at primes dividing the discriminant.\n\nThe key insight is that the proved gcd synchronization is the meet-side shadow of a dual join law on divisibility loci.\n\nWhy now? Exact prime-index apparition gives a clean family of test cases in which the proposed lcm law predicts simultaneous Fibonacci divisibility without additional recurrence calculations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -83778,7 +83780,7 @@
       "depth_estimate": 3,
       "description": "There should be an explicit bound, polynomial in the logarithmic height of the defining recurrence data, beyond which every index admits a synchronizing primitive prime for all finite index families.\n\nThe key insight is that synchronization itself has no quantitative cost once a primitive divisor exists; every effective bound can therefore focus entirely on the growth of the primitive part.\n\nWhy now? The structural theorem turns a potentially many-family assertion into one primitive-divisor estimate, making uniform quantitative bounds testable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -84054,7 +84056,7 @@
       "depth_estimate": 3,
       "description": "Develop the prime-power product formula\n   `abundancy n = ∏ p ∈ n.primeFactors, abundancy (p ^ n.factorization p)`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -85164,7 +85166,7 @@
       "depth_estimate": 3,
       "description": "Prove that the general Artin reciprocity map, specialized to `K = ℚ` and a cyclotomic extension, agrees on every rational prime coprime to the conductor with the catalog map sending a residue-class unit to the automorphism `ζ ↦ ζ^p`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -89706,7 +89708,7 @@
       "depth_estimate": 3,
       "description": "Classify fibers over `Z/p^r Z`, count their\n   cardinalities, and prove compatibility of solutions under reduction. This\n   would turn the qualitative local statements into finite local-density\n   factors.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -89932,44 +89934,6 @@
       "thread_id": "",
       "timestamp": "2026-08-21T06:25:38.427029+00:00",
       "title": "Hasse-principle interface"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "7b6f9981",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Develop injective subfamilies of the Vieta identity\n   `a³+b³+(-a-b)³=-3ab(a+b)` and derive quantitative lower bounds for the\n   number of represented integers, preferably without padded zero cubes.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [],
-      "github_issue": 0,
-      "id": "fd_2705",
-      "last_attempt_time": "2026-08-25T13:15:04.501763+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.4,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "972f5eac",
-      "source_path": "resplit_migration",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-08-21T06:25:38.674015+00:00",
-      "title": "Parametric families"
     },
     {
       "ambition_level": "extension",
@@ -90432,7 +90396,7 @@
       "depth_estimate": 3,
       "description": "If `T` is finite of prime cardinality\n   `p`, every finite family `F` satisfying `T ≃ ((x : T) → F x)` has exactly one\n   fiber of cardinality `p` and every other fiber has cardinality `1`.\n   This should follow from the proved product-cardinality equation and prime\n   factorization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -94590,7 +94554,7 @@
       "depth_estimate": 3,
       "description": "Formalize only accurately sourced historical FLT criteria involving Fibonacci–Wieferich\n   primes. Such criteria are subtler than an equivalence with FLT itself; the counterexample at\n   exponent 3 rules out that naive formulation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -95106,7 +95070,7 @@
       "depth_estimate": 3,
       "description": "The predicate `TwinPrimeGaps.ArbitrarilyLargePrimePairs 246` holds. Together with the proved reduction `liminf_primeGap_le_246_of_maynard_output`, this gives `Filter.atTop.liminf TwinPrimeGaps.primeGap ≤ 246`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -96159,7 +96123,7 @@
       "depth_estimate": 3,
       "description": "Convert `R1CS` to a quadratic arithmetic program by\n   interpolating the constraint matrices at distinct evaluation points and prove the\n   divisibility criterion `A(X)·B(X) - C(X) = H(X)·Z(X)` is equivalent to satisfaction.\n   Mathlib's `Lagrange` interpolation API makes this reachable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -98882,7 +98846,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a fixed finite-outcome protocol `S` obeying Jarzynski at cost `ΔF`,\n\n```\nlim_{n→∞} -(1/n) log P( ∑ W_i ≤ n·w )  =  I_S(w)  ≥  β (ΔF - w),\n```\n\nwhere `I_S` is the Legendre transform of `Λ_S(λ) = log ⟨e^{λ W}⟩`, and equality\n`I_S(w) = β(ΔF - w)` holds **iff** the sub-threshold mass of `S` sits at the single work\nvalue `w` (the \"all-or-nothing\" protocol).\n\n*Status.* `FluctDemon.single_deficit_bound` gives `≥` at `n = 1`, and the new\n`FluctDemon.crooks_deficit_le_rev` identifies the exact one-shot slack: the bound is\n`e^{-β(ΔF-w)}·m_rev(w)` with `m_rev(w)` the reverse mass of the time-reversed deficit\nevent, and this is attained with equality for `coinDemon` at `w = ΔF - log(3/2)/β`.  So the\nsharpened one-shot statement is tight; the open content is now purely the `n → ∞`\ntensorisation of the factor `m_rev(w)`, which we conjecture contributes the missing\n`I_S(w) - β(ΔF - w)`.\n\n*Falsifiable:* a two- or three-outcome protocol with `I_S(w) = β(ΔF-w)` whose sub-threshold\nmass is spread over two distinct work values; equivalently, one whose reverse mass\n`m_rev(w)^n` fails to capture the `n`-fold slack.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -104225,7 +104189,7 @@
       "depth_estimate": 3,
       "description": "**A refuted guess, recorded because the refutation is informative.** The natural\nfirst conjecture was `d(z₁,z₂) = log max(g, N/g) + O(1)`: \"balanced factorisations\ngive distant witnesses\". It is **false**. At `N = 52565 = 5 · 10513` the two nodes\nsit at distance `d = 2.568` while `log max(g, N/g) = 9.26`. The correct parameter\nis the pivot deficit `N − P`, not the factorisation balance; a large factor\nguarantees a large *deficit-divisibility*, not a large deficit.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -107737,7 +107701,7 @@
       "depth_estimate": 3,
       "description": "There is a strict hierarchy of hints for semiprimes:\n`φ(N)` ⟹ factorisation (proved) ⟹ `λ(N)` ⟹ ... ⟹ `g` ⟹ nothing,\nand `g` sits strictly below `λ(N) = lcm(p-1,q-1)` in the sense that there are\ninfinitely many pairs of semiprimes with equal `g` and different `λ`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -108101,7 +108065,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For `N = pq` with both primes `≡ 1 (mod 4)`, `v₂(W(N)) = 2` exactly, and\nmore generally `v₂(W(N)) = #{primes p | N with p ≡ 1 mod 4}`; consequently the 2-adic\nvaluation of the statistic counts the number of `1 mod 4` prime factors — a genuine but\n*already publicly computable* invariant (it is determined by `N mod 4` for semiprimes),\nso it leaks nothing new.\n\n*The key insight is* that `W_mod_four` gives `v₂ = 1` at each `1 mod 4` prime and\nmultiplicativity adds valuations, so the 2-adic content of the statistic is exactly the\ncount of such factors and nothing more.\n\n*Why now?* `W_mod_four` and `WZ_mul` are proved; the conjecture is a short corollary for\nsemiprimes and an induction for general `N`, and its \"leaks nothing new\" half is a\nprecise, falsifiable information claim.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -108467,7 +108431,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For the exact `k`-bit prime semiprime support, for every fixed degree `d` there is\n`k_0(d)` such that for all `k ≥ k_0(d)` and all `1 ≤ j ≤ k - 7`, every parity of degree `≤ d` of\nthe bits of `N` correlates with `p_j` by at most `C_d · π(2^k)^{-1/2} · polylog`, while for\n`j > k - 7` the maximum degree-1 correlation stays bounded away from `0`.\n\n*The key insight is* that the two proved theorems bracket the truth from both sides — exactly zero\nbelow (`lowblock_corr_zero`, on the odd support) and strictly positive above (`covTop_pos`) — so the\nonly open content is the *transition window*, whose width the experiment measures as ~6 bits.\n\n*Why now?* `highDegree_mass_ge` converts any such correlation bound into a statement about where\nthe Fourier mass lives, so a single quantitative equidistribution input (primes in short\narithmetic progressions mod `2^t`) would upgrade the empirical claim to a theorem.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -108834,7 +108798,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** The bound of `CandidateLists.no_bounded_candidate_list` is\nquantitatively sharp in the following sense: for a modulus `m` and a threshold\n`B = N`, any congruence-determined candidate list that succeeds on all\nsemiprimes below `N` must have size `Ω(π(√N) / m)`, i.e. essentially the trial\ndivision list, and the residue class contributes only a constant-factor saving.\n\n*The key insight is* that the coprime family constructed above can be taken\ninside a single class of *any* modulus, so the class structure removes no\ncandidates at all beyond those excluded by congruence obstructions on the\nfactors themselves.\n\n*Why now?* The qualitative statement is proved unconditionally; the quantitative\nversion needs only a counting version of the same Dirichlet input (prime\ncounting in progressions), which is available in effective form.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -109036,7 +109000,7 @@
       "depth_estimate": 3,
       "description": "For real positive semidefinite `A ≼ B` (Loewner order) and `b > 0`,\n\n```\ntr (A (A + b•1)⁻¹)  ≤  tr (B (B + b•1)⁻¹).\n```\n\n**The key insight is** that `x ↦ x/(x+b) = 1 - b/(x+b)` is operator monotone, so\nthe statement reduces to the antitonicity of the matrix inverse on the positive\ncone, `A ≼ B ⟹ (B+b·1)⁻¹ ≼ (A+b·1)⁻¹`, followed by taking traces — turning an\nanalytic inequality into a congruence-transformation argument with\n`PosSemidef.sqrt`.\n\n**Why now?** Round 6 already provides the exact resolvent diagonalisation\n(`resolvent_eq`) and the identification of the trace with `effDim`, so the only\nmissing ingredient is the operator-inverse antitonicity, which is a\nself-contained matrix lemma; with D1 the entire Part I–VI theory upgrades from\n\"fixed spectrum\" to \"monotone in the data covariance\", i.e. *more data in the\nLoewner sense never lowers the effective dimension.*\n\n**Falsifier:** a pair `A ≼ B` of `2×2` PSD matrices with\n`tr(A(A+b)⁻¹) > tr(B(B+b)⁻¹)`.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -109722,7 +109686,7 @@
       "depth_estimate": 3,
       "description": "If the period is odd then\n   `x² − N y² = −1` is soluble, i.e. `N` is a sum of two coprime squares.  This\n   project proves the obstruction direction only\n   (`negPell_prime_factor_ne_three_mod_four`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -110047,7 +110011,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every infinite set `S ⊆ ℕ` of exponents with `#(S ∩ [1, X]) = O(X^{1-ε})` and\nevery prime `q`, there are still two distinct primes `p ≠ p'` with `R_k(pq) = R_k(p'q)` for all\n`k ∈ S ∩ [1, N]`.\n\n*The key insight is* that the Dirichlet argument used for finite `S` only needs the primes to be\n`≡ 1` modulo `lcm(S ∩ [1, X])`, and for sparse `S` that lcm is still small enough for a prime of the\nright size to exist under standard prime-gap heuristics — so sparsity, not finiteness, is the\noperative hypothesis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -110648,7 +110612,7 @@
       "depth_estimate": 3,
       "description": "**C2 (inert half): closed at every modulus.**\n  `ℓ ∣ #E_{j0}(𝔽_p) ↔ p ≡ ℓ − 1 (mod ℓ)` for all `ℓ ≥ 1` and all `p ≡ 2 (mod 3)`,\n  specialised to `ℓ = 3^m` and stated as genuine residue visibility (two inert\n  primes in the same class mod `ℓ` have the same `ℓ`-divisibility). The split\n  half stays open (see C2′ below); the mod-`9` counterexample shows no such dial\n  can exist there at that modulus.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -111051,7 +111015,7 @@
       "depth_estimate": 3,
       "description": "`which_factor_wall_general` gives `I(class N ; F(class p)) = 0` for a semiprime and *any* statistic\n`F`; `last_factor_wall` proves `I( h(u)·v ; F(u) ) = 0` for any aggregate `h` of the other factors,\nand `kfactor_wall` instantiates it at `N = p₁⋯p_{k+1}` for every `k`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -111255,7 +111219,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For all coprime `m, n ≥ 1`: `I_pair(mn) = I_pair(m) + I_pair(n)`.\n\n*Status:* proved here for `12 = 4·3`, `10 = 2·5`, `15 = 3·5`, `14 = 2·7`, `20 = 4·5`,\n`18 = 2·9`; verified numerically for every coprime splitting with `mn ≤ 40`.\n\n**The key insight is** that the type map factors through the CRT isomorphism\n`ℤ/mn ≅ ℤ/m × ℤ/n` as `T = T_m · T_n` with `gcd(T_m, T_n) = 1`, so the *unordered*\ntype pair of a semiprime is recoverable from the two component unordered pairs together\nwith the matching data, and the matching ambiguity is exactly cancelled by the\nconditioning on the norm class in each factor.\n\n**Why now?** All the pieces are in place: the Euler-φ type law is proved in general\n(`typeCount_eq_totient`), the entropy of a counting distribution has a closed counting\nform (`Hlist_eq`), and the conjecture is an equality of two finite sums that only needs a\nmeasure-preserving bijection — no analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -111458,7 +111422,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For every odd prime `p` and all `N, N' ∈ 𝔽_p^×`,\n`S_p(N) = S_p(N')` implies `N = N'`.\n\n*Status.* Verified for `p ≤ 41` computationally; formally verified at `p = 13`\n(`traceSet_injective_thirteen`).\n\n*The key insight is* that `S_p(N) = {s : χ(s² - 4N) ≠ -1}` is the \"non-residue\nlocus\" of the quadratic pencil `s² - 4N`, and two such loci coincide only if the\npencils agree: the overlap `|S_p(N) ∩ S_p(N')|` is a two-variable character sum\nequal to `p/4 + O(√p)` for `N ≠ N'`, whereas equality would force `p/2 + O(1)`.\n\n*Why now?*  The Legendre-symbol identification proved in this cycle\n(`two_mul_card_traceSet_eq_add_legendreSym`) shows the *size* of `S_p(N)` sees only\n`χ_p(N)`; C1 says the *set* sees everything.  That gap is precisely the information\nthat a residue attack fails to convert into factors, and pinning it down turns the\nqualitative verdict \"the trace is the least hidden invariant\" into a theorem about\nhow much is hidden.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -111539,7 +111503,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Let `M` be squarefree odd and coprime to `N`.  Then the trace set\n`S_M(N)` is determined by, and determines, the tuple of Legendre symbols\n`(χ_p(N))_{p ∣ M}` *together with* `N mod M`; and the *size* `|S_M(N)|` is\ndetermined by the Jacobi symbol data alone:\n`2^{ω(M)} |S_M(N)| = ∏_{p ∣ M} (p + χ_p(N))`.\n\n*Status.* The size formula follows from `card_traceSet_prime` plus\n`traceNat_primorial` (both proved); the \"no more\" half — that no function of\n`S_M(N)` beyond the character tuple is computable in polynomial time from `N` — is\nopen.\n\n*The key insight is* that every bit the trace exposes to a congruence battery is a\nvalue of a quadratic character of the *public* modulus, hence computable by\nreciprocity in polynomial time from `N` alone; a leak would have to come from the\n*joint* distribution across primes, which the CRT factorisation of the trace set\nrules out.\n\n*Why now?*  This is the exact information-theoretic form of Barrier 2, and it is\nnow within reach: multiplicativity and the prime-level formula are theorems, so\nonly the \"no residual information\" half remains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -111579,7 +111543,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For a semiprime `N = pq` and a squarefree odd `M` coprime to `N`,\nthe number of `t ∈ [1, N]` with `t mod M ∈ S_M(N)` is\n`(1 + o(1)) · N · 2^{-ω(M)} · ∏_{p ∣ M}(1 + χ_p(N)/p)`,\nand in particular a congruence battery must use `ω(M) ≥ log₂ N - O(1)` primes before\na single candidate trace remains.\n\n*Status.* The lower bound `≥ (∏(p-1)/2^{ω}) (N/M - 1)` is proved\n(`trace_pinning_barrier`); the matching upper bound and the `o(1)` are open.\n\n*The key insight is* that the surviving set is a union of `|S_M|` full residue\nclasses, so its density is *exactly* `|S_M|/M` up to boundary terms — the only\nquestion is the boundary, which is `O(|S_M|)` and hence negligible when `M ≪ N`.\n\n*Why now?*  With the lower bound formal, the upper bound is elementary counting;\ntogether they would give the first fully formal statement of the shape \"residue\ninformation about the trace is worth `ω` bits and the search space is `log₂ N`\nbits\", i.e. a proved (not measured) version of the paper's verdict.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -112029,7 +111993,7 @@
       "depth_estimate": 3,
       "description": "**Statement.** With `P = (9,28)` on `E_55`, `log den x(kP) ∼ 2 ĥ(P) k²`, and consequently the\nset `S(P) = {ℓ prime : ∃ k, ℓ ∣ den x(kP)}` has natural density one among the primes.\n\n**The key insight is** that the exact `2`-adic law already proves *linear* growth of one\nvaluation along one sub-orbit (`v₂ = v + 2k`), which is the degenerate case of the canonical\nheight asymptotic; upgrading `k ↦ 2^k` to all `k` is what converts linear growth in `log` into\nthe quadratic law.\n\n**Why now?** `mordell_55_point_infinite_order` removes the only hypothesis such a statement\nneeds (non-torsion), and it is proved here without heights — so the height asymptotic is now a\nstatement about an object already known to be infinite rather than a conditional one.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -112069,7 +112033,7 @@
       "depth_estimate": 3,
       "description": "**Statement.** For semiprime `N = pq`, the multiset of primes dividing `den x(kP)` for\n`k ≤ K` is, for every fixed `K`, computable from `N` alone in time polynomial in `log N` *given\noracle access to the points* — and contains no subsequence that isolates `p` or `q` more often\nthan the trivial guess. Concretely: there is no function of `{den x(kP) : k ≤ K}` that outputs a\nnontrivial factor of `N` for a positive proportion of semiprimes.\n\n**The key insight is** that the apparition index law makes the appearance of *every* prime — good\nor bad — governed by the same mechanism (the order of the reduced point), so the primes dividing\n`N` enjoy no structural distinction inside the denominators; the survey data (`p` present 54.5%,\n`q` present 0%) is exactly what this predicts.\n\n**Why now?** With closure, the index law and the infinite-orbit theorem in place, the barrier can\nbe stated as a theorem about the index function `ℓ ↦ m(ℓ)` rather than as a collection of\ncounterexamples; the missing step is a uniform bound showing `m(p)` and `m(q)` are not\ndistinguishable from `m(ℓ)` for good `ℓ`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -112273,7 +112237,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For every `n ≥ 2` and every prime `ℓ ≥ 5` not dividing `n`,\n`∑_{c mod ℓ} #{x mod ℓ : ℓ ∣ den x(nP) for x ≡ c}` equals `(n² - 1)·ℓ/ (something explicit) + O_n(1)`;\nconcretely, `deg ψ_n = (n² - 1)/2` or `(n² - 4)/2` and the total should be\n`deg ψ_n · ℓ / (deg ψ_n) = ℓ` per irreducible factor, giving `#{factors}·ℓ + O(1)`.  The proved\nvalues are `ℓ` for `n = 2` and `2ℓ - 1` for `n = 3`.\n\n*The key insight is* that each factor of `ψ_n` over `ℚ(N)` is, like `T³ + N` and `T³ + 4N`, a\nKummer-type polynomial in `x` whose root count averages exactly `1` over `N mod ℓ`, so the total\ncounts the *number of irreducible factors*, not their degrees.\n\n*Why now?*  The two proved cases are exactly the two smallest instances of this factor count\n(`ψ₂ = T³ + N`: one factor; `ψ₃ = 3T(T³ + 4N)`: two factors), and the averaging bijection used\nhere (`x ↦ -x³`) generalises verbatim to any factor of the shape `T^k + cN^j`.\n\n**Falsifiable form.**  Compute `∑_c #V₄(c)` for `ℓ = 7, 13, 19`; the conjecture predicts a value\nof the form `k·ℓ + O(1)` with `k` = number of `ℚ(N)`-irreducible factors of `ψ₄`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -114559,7 +114523,7 @@
       "depth_estimate": 3,
       "description": "Two successive versions of this conjecture are now **refuted** in\n`Catalog/Novelty/NonstandardPrimeGaps.lean`: \"every galaxy contains a\nhyperprime\" fails (`exists_primeFree_galaxy`), and even \"prime-carrying\ngalaxies are dense\" fails (`no_prime_galaxy_between`: no galaxy strictly\nbetween `[i!]` and `[i! + i]` carries a prime).  Additive scales are therefore\nthe wrong invariant.  The surviving conjecture is multiplicative:",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -115763,7 +115727,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** `lim_{m→∞} N(m) log m / m = 1`, where `N(m) = boxCount m` is the number\nof boxes of size `1/m` meeting the prime fractal.  Equivalently\n`N(m) = (1 + o(1)) m / log m`.\n\n*The key insight is* that the occupied boxes split into a \"dense tail\" (indices\n`k ≤ m/log X` are all occupied because every interval `(e^{m/(k+1)}, e^{m/k}]` contains\na prime once `m/(k(k+1))` is large) and a \"sparse head\" (one box per prime `p ≤ X`),\nand optimising the split at `X = m` makes the tail `m/log m` and the head `o(m/log m)`;\nthe constant `1` then comes from the tail alone, not from `π`.\n\n*Why now?* The two-sided bracket `m/(16 (log m)^4) ≤ N(m) ≤ 5 m/log m` is already\nformalised, and the numerical band (`N log m / m ∈ [1.26, 1.75]`, decreasing) is in\n`ComputationalEvidence.md`.  Closing the gap needs only prime existence in the\nintervals `(e^{m/(k+1)}, e^{m/k}]` — Bertrand's postulate (in Mathlib) already handles\n`k ≲ √m`, and any Chebyshev-type short-interval result upgrades this to the full range.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -116574,7 +116538,7 @@
       "depth_estimate": 3,
       "description": "**Statement.** A prime `p > 2` divides some anti-Fibonacci number iff `-7` is a quadratic\nresidue modulo `p`, i.e. iff `p = 7` or `p ≡ 1, 2, 4 (mod 7)`; and the set of such primes\nhas density `1/2`.\n\n*Status update (this cycle).* The congruence criterion is now **proved** in\n`Catalog/Computation/AntiFibonacciPrimeDivisors.lean` (`prime_dvd_antiFib_iff`, uniform in\n`p` including `p = 2`), together with the two infinitude statements\n`infinite_divisor_primes` and `infinite_nondivisor_primes` (Dirichlet).  What remains open\nis only the *quantitative* half: that the divisor primes have natural density exactly\n`1/2`, i.e. `#{p ≤ x : p ∣ some antiFib n} ~ x / (2 log x)`, which needs the prime number\ntheorem in arithmetic progressions rather than mere infinitude.\n\n**The key insight is** the proved spectrum criterion `m ∈ range(antiFib mod p) ↔ 8m - 7 is\na square`: taking `m = 0` this says `p ∣ antiFib n` for some `n` iff `-7` is a square mod\n`p`, which by quadratic reciprocity is a congruence condition modulo `7`.\n\n**Why now?** Mathlib has full quadratic reciprocity (`legendreSym.quadratic_reciprocity`)\nand the residue-spectrum theorem is already formalised, so only the reciprocity\ncomputation for the discriminant `-7` remains; the density statement then follows from\nDirichlet's theorem, also available.\n\n**Falsifiable:** list the primes dividing some `antiFib n` for `p < 1000` and compare with\nthe residues `1, 2, 4 (mod 7)`; a single mismatch refutes it.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -117097,7 +117061,7 @@
       "depth_estimate": 3,
       "description": "The proved equivalence markoff_uniqueness_iff_min_determined shows the middle entry is always forced by the outer pair. Hence the open uniqueness conjecture is a statement about the minimum alone, a strictly one-variable problem.\n\nUniqueness of the ordered Markoff triple given its maximum is equivalent to uniqueness of the minimum, and holds unconditionally for all maxima in the classified x = 1 and x = 2 fibres.\n\nProve uniqueness for maxima lying in the silver branch using markoff_min_two_classification, then attempt congruence obstructions for general maxima.\n\nA new, strictly smaller formulation of the Markoff uniqueness conjecture, with two infinite families settled.\n\nA counterexample to the reduction would be a counterexample to uniqueness itself, hence a famous result.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -119530,7 +119494,7 @@
       "depth_estimate": 3,
       "description": "Prime hypotenuses of the tree are exactly the primes ≡ 1 mod 4, each at a unique node. The tree-specific question is therefore not how many primes there are below H, but how they are distributed across depths, where the silver poles at Re s = σ₀ predict an oscillation of frequency π/log(1+√2).\n\nπ_tree(H) = ½ Li(H) + O(H exp(−c√log H)), and the number of prime nodes of depth at most d is ≍ (3+2√2)^d/d with a secondary oscillatory term of frequency π/log(1+√2).\n\nDerive the first statement from prime_hyp_iff plus the prime number theorem in arithmetic progressions; test the second numerically by counting prime hypotenuses per depth slice up to depth 12 and fitting the oscillation.\n\nThe tree has a prime number theorem whose error term is genuinely controlled by its own silver poles — the analogue of zero-controlled error terms in the classical theory.\n\nThe depth distribution of prime nodes is governed by the arithmetic of m²+n² alone and carries no trace of the silver spectrum.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -120932,7 +120896,7 @@
       "depth_estimate": 3,
       "description": "On the A-spine the quality bound q < 2 - eps is equivalent to a lower bound on rad(n) rad(n+1) rad(2n^2+2n+1). Proving such a bound for all n would give the first uniform abc-type gap for an infinite Pythagorean family.\n\nThere is delta > 0 with rad(n) rad(n+1) rad(2n^2+2n+1) >= n^{1+delta} for all n >= 2; consequently q <= 2 - eps(delta) on the whole A-spine.\n\nFormalize the reduction (already available through BerggrenABC.spine_hit_criterion and one_lt_quality_iff) and attack the radical inequality for n in fixed congruence classes.\n\nA uniform quality ceiling below 2 for an infinite abc family, unconditionally.\n\nThere are spine parameters with triply deficient radicals, producing abc triples of quality approaching 2 - a sensational counterexample-hunting target.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -123087,7 +123051,7 @@
       "depth_estimate": 3,
       "description": "The seeded convolution engine converts any certified invisible seed into a global growth bound. We conjecture the existence of seeds whose mass is subexponential in the window, built as products of sparse binomials X^a - 1 with tuned exponents, driving the growth base to 1.\n\nFor every K there is a nonzero P in Z[X] with (X-1)^K dividing P and coefficient l1 norm at most exp(C sqrt(K log K)).\n\nSearch exponent sequences (a_1,...,a_K) minimising the l1 norm of the product, certify the best families in Lean, and feed them to PTEBase.exists_invisible_pow_of_seed.\n\nEvery exponential upper bound in the catalog collapses to subexponential, and the minimal-mass problem becomes a question of polynomial versus subexponential growth.\n\nThere is a genuine exponential barrier for products of sparse binomials, isolating cancellation, rather than divisibility, as the obstruction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -126160,7 +126124,7 @@
       "depth_estimate": 3,
       "description": "Observing a product of k primes only through the unordered multiset of splitting types should still leak exactly one bit, for every k. The k=1 and k=2 cases are proved here with different type profiles, suggesting a convolution-stable mass balance.\n\nFor every k >= 1, I(residue class of n = p_1...p_k ; multiset of splitting types) = 1 exactly.\n\nDefine the k-fold multiset alphabet with multiplicities given by the multinomial expansion of the profile 1:3:2, prove the sign-product factors through the multiset, and apply the character channel law.\n\nFactorisation-type data never leaks more than one bit about a squarefree integer's quadratic character, at any number of factors.\n\nThere is a k at which the multiset readout becomes correlated beyond the sign, which would be a genuinely new arithmetic correlation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory"
       ],
@@ -127117,7 +127081,7 @@
       "depth_estimate": 3,
       "description": "Quantify how badly the prime surface fails to be triangulable by counting the minimal number of Lipschitz d-cells needed to cover its truncation at level d. The upper bound is already constructive; the conjecture is that it is sharp, so the covering number equals the prime counting function.\n\nFor finite S, the minimal number of Lipschitz d-cells covering surfaceOf S equals #S; for S the primes and d → ∞ this is asymptotically d / log d.\n\nProve the lower bound cell-count ≥ #S in Lean using dimH monotonicity per cell, then instantiate with Mathlib's prime counting estimates.\n\nNon-triangulability acquires a quantitative, number-theoretic modulus.\n\nCells can be reused across dimensions, meaning Lipschitz cells are strictly more efficient than simplicial ones.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "NumberTheory"
@@ -127589,7 +127553,7 @@
       "depth_estimate": 3,
       "description": "Extend the binary lattice-point model to ternary orders: the coefficient of X^n in the frame geometry of (p,q,r) counts lattice points of a box on the plane ip+jq+kr=n. The conjecture is that the resulting count deviates from its mean by at most p-1, which is Bang's theorem. This turns a classical polynomial statement into a counting problem already half-formalised in the catalog.\n\nFor odd primes p < q < r and all k, |coeff k (cyclotomic (p*q*r) ℤ)| ≤ p - 1.\n\nFormalise the ternary frame geometry as the product of three truncated geometric series, prove a box-uniqueness lemma modulo p, and bound the alternating differences; test numerically on all p*q*r ≤ 10^4 first.\n\nBang's theorem enters the catalog and globalises to all orders with three odd prime divisors via height reduction.\n\nA concrete counterexample triple would contradict a classical theorem, indicating a modelling error to be localised.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "NumberTheory"
@@ -127634,7 +127598,7 @@
       "depth_estimate": 3,
       "description": "Height reduction proves that the coefficient height of a cyclotomic polynomial depends only on the odd radical, and the values 1, 2, 3 are now realised formally by 231, 105, 385. The open half asks how the height grows along squarefree odd radicals with three prime factors, and whether it is unbounded there.\n\nThe height function is constant on fibres of the odd radical, and sup { A(Φ_{pqr}) : p<q<r odd primes } = ∞.\n\nCompute A(Φ_{pqr}) for all ternary radicals below 10^5 and fit growth; formally, iterate the explicit-polynomial method already used for Φ₁₀₅ and Φ₃₈₅ on families such as 5·7·r.\n\nHeights are a genuine odd-radical invariant with unbounded range on ternary orders.\n\nTernary heights would be uniformly bounded, contradicting the reduction or known growth results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory"
       ],
@@ -128226,7 +128190,7 @@
       "depth_estimate": 3,
       "description": "Since the average hit count of any sieve map is pinned to |domain|/|targets|, no single-prime measurement can separate the x^2-N pool from a random pool. Any real deviation must live in the joint law of admissibility and hit patterns across two or more primes at fixed N. This turns a vague randomness question into a sharp two-prime independence statement.\n\nFor fixed N and distinct odd primes p, q not dividing N, the events 'p divides x^2-N' and 'q divides x^2-N' are exactly independent for x uniform mod pq, and hence the smooth-density model factorises exactly over the factor base.\n\nProve the CRT product formula for the joint hit count mod pq, then measure higher-order (three-prime, prime-power) correlations empirically against the proved two-prime baseline.\n\nThe Dickman-style independence heuristic for the sieve is exact at the level of the factor base, and the only remaining error is the finite-x correction.\n\nA measurable cross-prime correlation exists, which is the first genuine non-randomness of the relation pool and would change sieve yield predictions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -128270,7 +128234,7 @@
       "depth_estimate": 3,
       "description": "The formal end-to-end result here needs only |A|+1 smooth relations, where A is the set of admissible primes. Combining it with an effective density statement for quadratic residues among the primes up to B would convert the folklore factor-2 saving of the quadratic sieve into a theorem with an explicit error term.\n\nFor every non-square N and every B >= B0(N), |A(N,B)| = pi(B)/2 + O(sqrt(B) log(B|N|) / log B), hence pi(B)/2 + O(...) + 1 smooth relations provably suffice to produce a congruence of squares.\n\nFormalise the character-sum count of primes p <= B with (N|p) = 1 under GRH or via Chebotarev with an effective error, then plug into qs_congruence_of_squares.\n\nA fully proved relation-count bound for the quadratic sieve, halving the classical unconditional requirement.\n\nThe admissible set is not equidistributed for some N, which would itself be a striking arithmetic phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "NumberTheory",
         "Pythagorean"
@@ -128474,7 +128438,7 @@
       "depth_estimate": 3,
       "description": "* **Chebotarev's theorem on the minors of the prime-order Fourier matrix**: *every* minor of the\n  prime-order DFT matrix is nonsingular. Established from scratch by an order-of-vanishing\n  argument: the integer polynomial `F(X) = det(X^{a_i b_j})`, shifted to `G(X) = F(X+1)`, has all\n  coefficients below `N = k(k-1)/2` equal to zero, and `(∏_{j<k} j!) · G_N = V(a)·V(b)` is a\n  product of two Vandermonde determinants. If `F(ζ) = 0` then `Φ_p(X+1) ∣ G`, and `Φ_p(1) = p`\n  forces `p ∣ G_N`, contradicting `p ∤ V(a)V(b)`.\n* **The additive uncertainty principle** itself.\n* **The exact converse**: *every* splitting `|A| + |B| = p + 1` is realised by some `f` with\n  `supp f = A` and `supp f̂ = B`.\n* **Sparse recovery and threshold sharpness**: `k`-sparse signals are determined by any `2k`\n  frequencies, and `2k` is optimal for every sampling pattern.\n* **Failure at modulus four**: primality is not decorative.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory"
       ],
@@ -129002,7 +128966,7 @@
       "depth_estimate": 3,
       "description": "The exact variance of the dial, Σ_{p ≤ B} (p²−1)/p⁴, converges as B → ∞ while its mean Σ (p+1)/p² diverges. The centred dial is therefore a sum of independent bounded terms with summable variances and must converge in law to a nondegenerate limit: an infinite Bernoulli convolution with weights 2/p and success probabilities (p+1)/(2p). Identifying that limit law turns the empirical spread of the feature into an arithmetic constant.\n\nThe centred dials qrWeight(·,B) − Σ_{p≤B}(p+1)/p² converge in distribution as B → ∞ to a nondegenerate law of variance Σ_{p odd prime} (p²−1)/p⁴, and that law is absolutely continuous.\n\nFormalise the finite-B distributions from card_qr_pattern, prove tightness from the uniform bound qrWeight_variance_lt_half, and compare the resulting characteristic function ∏_p (1 − a_p + a_p·e^{2it/p}) with an empirical histogram over one period for B = 5, 7, 11, 13.\n\nThe dial has a universal limiting fluctuation profile, so calibration constants measured at one factor-base bound transfer to any other.\n\nThe limit is singular or degenerate, meaning the dial's fluctuation is dominated by finitely many small primes and the feature is effectively low-dimensional.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory"
       ],
@@ -129089,7 +129053,7 @@
       "depth_estimate": 3,
       "description": "The Hensel step proved for odd primes breaks at p = 2, where the derivative 2x is not invertible. For odd N the congruence x² ≡ N mod 2^k is solvable only when N ≡ 1 mod 8, and then has four roots for every k ≥ 3. Conjecture: the even prime therefore contributes a footprint 4/2^k, twice the odd density, and the yield dial needs a separate N mod 8 term.\n\nFor odd N and k ≥ 3, hitCount N (2^k) = 4 if N ≡ 1 (mod 8) (the vanishing case N ≢ 1 mod 8 is already proved as hitCount_two_pow_eq_zero); consequently the mean footprint of the even part of the factor base is 4·Σ_{3≤k} 2^{-k} on the residue class 1 mod 8 and 0 elsewhere.\n\nAdapt the lifting bijection of hitCount_pow_succ, replacing the unique-lift step by the two-lift step forced by the non-invertible derivative; check the counts by decide for 2^3, 2^4, 2^5 and N = 1, 9, 17, 3.\n\nThe dial gains an exactly computed, arithmetically distinct N mod 8 feature, a candidate explanation for a further slice of the residual.\n\nThe even prime's contribution is not a pure residue-class effect, which would make the 2-part of the sieve genuinely different from its odd part.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "NumberTheory",
         "Pythagorean"
@@ -129133,7 +129097,7 @@
       "depth_estimate": 3,
       "description": "The dial-blindness theorem is an instance of a general symmetry principle: features invariant along arithmetic progressions cannot separate primes from semiprimes. Conjecture: every feature computed from finitely many residues of N modulo primes ≤ B has AUC exactly 1/2 for that task.\n\nFor any F : (ZMod P) → ℝ and any n, there are primes q > n and semiprimes m > n with F(q mod P) = F(m mod P); consequently the induced ranking has AUC 1/2 on matched families.\n\nGeneralise qrWeight_blind_semiprime from qrWeight to an arbitrary function of the residue vector, then combine with the catalog AUC lemma auc_eq_half_of_blind.\n\nA clean frontier: residue-only features are provably useless for factor detection, and any positive result must use non-residue information.\n\nSome residue statistic would detect factor structure, contradicting Dirichlet-type equidistribution — a major surprise.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory"
       ],
@@ -129540,7 +129504,7 @@
       "depth_estimate": 3,
       "description": "The universal cap is 4/3 for single-pass scans and r for full reveals with r symbols. We conjecture a monotone one-parameter family of caps indexed by the fraction s of rejected classes the algorithm may skip for free, interpolating the two. This would say precisely how much of a sieve's advantage comes from skipping rather than from filtering.\n\nFor skip fraction s ∈ [0,1] the maximal speedup of an r-block dial is C(r,s) = 1 / min_θ Σ_i θ_i (θ_i + (1-s)(θ_1 + … + θ_{i-1})), which is continuous and increasing in s, with C(r,0) = 2r/(r+1) and C(r,1) = r.\n\nDefine the s-cost in Lean as a Finset sum, prove the closed form by the same doubling identity used for prefixCost, and minimize by Cauchy–Schwarz; verify exhaustively on rational density grids for r = 2,3,4 and s ∈ {0, 1/4, 1/2, 3/4, 1}.\n\nAny claimed congruence speedup can be classified by its skip budget, and the 4/3-versus-2-versus-r confusion disappears.\n\nSkipping interacts with density in a non-monotone way, which would itself be a new phenomenon worth isolating.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -129584,7 +129548,7 @@
       "depth_estimate": 3,
       "description": "Reading a dial is free in the current law. Charging c per reading converts the cap into a profitability criterion: the absolute saving of a density-θ dial on an n-class scan is n(θ − θ²), maximized at n/4. Superconstant-cost congruence tests are then provably unprofitable.\n\nWith reading cost c and baseline n, a dial of density θ is profitable iff c < n(θ − θ²); in particular no dial with c ≥ n/4 is ever profitable.\n\nAdd the cost term to expectedScanCost in Lean, maximize θ − θ² = 1/4 by completing the square, and compare against simulated trial division with explicit residue tests.\n\nResidual gap (2) — superconstant-cost tests — closes inside the scan-order framing.\n\nSome expensive local test pays for itself, locating a resource outside the classified set.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory"
       ],
@@ -130277,7 +130241,7 @@
       "depth_estimate": 3,
       "description": "The prime-power saturation law turns the type entropy of a squarefree degree into a pure sum over primes. For the primorial degree P(x) that sum is governed by two classical Mertens estimates, predicting H = log2 x + log2 log x + c + o(1) with c approximately -1.9254.\n\nH(T_{P(x)}) - log2 x - log2 log x converges to an absolute constant c, where P(x) is the product of the primes up to x.\n\nFormalize H(T_{P(x)}) = sum over p <= x of (log2 p - ((p-1)/p) log2 (p-1)) from typeEntropy_prime_pow_eq and typeEntropy_mul_of_coprime, then bound the two prime sums.\n\nThe information content of the splitting type is doubly logarithmic in the conductor, so pinning stays bounded while the degree explodes.\n\nEither the reduction to a prime sum fails, or the Mertens cancellation is not uniform, pointing to an arithmetic obstruction in the channel.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory"
       ],
@@ -130320,7 +130284,7 @@
       "depth_estimate": 3,
       "description": "This cycle proved that typeEntropy q is rational exactly at the prime q = 2. Combined with CRT additivity and the prime-power saturation law, the natural completion is that the type entropy of degree m is rational precisely when m is a power of two, the dyadic tower being the unique source of rational values.\n\nFor every m >= 1, typeEntropy m is rational if and only if m is a power of 2 (in which case it equals 2 - 2^{1-e} for m = 2^e).\n\nWrite typeEntropy m through typeEntropy_mul_of_coprime and typeEntropy_prime_pow_eq as a rational combination of log2 p and log2 (p-1) over p | m, then apply irrational_log_combination after proving that no cancellation between distinct primes can occur.\n\nA complete rationality classification of the cyclic splitting-type entropy, with the dyadic tower isolated as the only rational family.\n\nThere is a multiplicative coincidence between the numbers p and p-1 for distinct primes, itself a strong Diophantine statement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "NumberTheory",
         "Pythagorean"
@@ -130364,7 +130328,7 @@
       "depth_estimate": 3,
       "description": "The prime-degree splitting-type channel is the two-point vector (1/q, (q-1)/q), whose Renyi entropy of every real order is now in closed form, and the orders 0, 1, 2 are strictly ordered with integer certificates. The conjecture upgrades those finitely many comparisons to strict monotonicity in the order parameter, with infimum log2(q/(q-1)).\n\nFor every prime q >= 3 the map a -> H_a(T_q) is strictly decreasing on (0, infinity) and tends to log2(q/(q-1)) as a tends to infinity.\n\nDifferentiate the closed form typeRenyi_prime_formula in a and identify the derivative with minus a Kullback-Leibler divergence between the escort distribution of order a and the original two-point vector; then prove strict positivity of that divergence for a non-uniform pair.\n\nThe whole Renyi spectrum of a cyclic prime-degree channel is pinned between one bit and log2(q/(q-1)), an effective two-sided bound uniform in the conductor.\n\nThe order profile is non-monotone somewhere, which for a two-point distribution would contradict the escort-divergence identity and reveal an error in the closed form.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory"
       ],
@@ -130407,7 +130371,7 @@
       "depth_estimate": 3,
       "description": "Pinning is exact on unramified classes because the type is a deterministic function of the residue. Enlarging the sample space by the single ramified prime p = f should degrade the identity by a computable amount of order (log f)/f, and by nothing else.\n\nWith the ramified class adjoined, H(T) - I(p mod f ; T) = Theta((log f)/f), and the difference is 0 exactly when the ramified class is removed.\n\nCompute the enlarged-channel entropies exactly with uEnt_eq_shannon for f = 7, 13, 19, 31 and fit the constant; then prove two-sided bounds.\n\nFull pinning becomes a theorem with an explicit error term, valid uniformly in the conductor.\n\nRamification interacts with the type distribution non-perturbatively, a genuinely new phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory"
       ],
@@ -130946,7 +130910,7 @@
       "depth_estimate": 3,
       "description": "For n = pq with coprime factors, ZMod n splits as a product, so an encoding at modulus n is a two-block encoding. The conjecture is that the degree-1 ceiling of a target factors through this splitting in a computable way. This turns 'which modulus to dial' into arithmetic rather than search.\n\nIf y on ZMod n x ZMod n is transported along the CRT equivalence to (ZMod p x ZMod q)^2, then varr(addPart y) is unchanged, and for alignment targets the ceiling is 0 for every divisor structure of n.\n\nCombine Rsq_reindex with varr_split; instantiate the CRT equivalence ZMod (p*q) ~ ZMod p x ZMod q from Mathlib and compute both sides for n = 15, 21, 91.\n\nComposite-modulus encodings inherit their ceilings from the prime factors, so the 3..97 scan already covers the composite range.\n\nComposite moduli carry structure absent at prime moduli, which would be a genuinely new dial for the next round.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory"
       ],
@@ -133432,7 +133396,7 @@
       "depth_estimate": 3,
       "description": "Cycle 7 proved that every channel's slope deficit is the same functional of one population: s - slope_s = log2(M_s(16)/M_s(24))/Dk for the shape moments M_s(k) = mean (p_k/2^k)^s. The reported slopes are therefore two samples of a single drift function D(s), at s = 1 (trial division) and s = 1/2 (Pollard rho). A pure rescaling of the shape would make D linear, so the shape of D reads off how the sampler's normalised dispersion moves with k.\n\nFor the round-41 balanced-semiprime sampler the drift function D(s) = log2(M_s(16)/M_s(24))/8 is strictly convex with a zero in (1/2, 1); equivalently D(s)/s is strictly increasing on (0, 1], so D is not linear and the normalised log-dispersion Var(log u_k) increases with k.\n\nCompute M_s(k) for s on a grid in (0, 2] from the seed-20260920 draws, form D(s), and check convexity and the sign change; formally, prove in Lean that D is linear if and only if the normalised populations are proportional, starting from the proved identity shape_drift_identity.\n\nThe trial and rho deficits are explained by a single dispersion drift of the sampler, and the across-k table must report the whole drift curve rather than one slope per channel.\n\nThe two deficits cannot come from one population under pointwise power costs, so at least one reported slope is a fitting artefact rather than a measurement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "NumberTheory"
@@ -133563,7 +133527,7 @@
       "depth_estimate": 3,
       "description": "Because the x-coordinate detector is invariant under the elliptic involution, the detected orders are the divisors of the sumset J+J together with the difference set J-J of the visited multiple set J. Conjecture: the sequential run is far from optimal and a Sidon-complement construction detects many more orders at equal cost.\n\nThe advantage already proved at k = 4 (the set {1,2,4,8} detects orders 9, 10 and 12 that {1,2,3,4} misses) persists and grows: the ratio of detected-order counts between the best J of size k and the sequential set tends to infinity with k.\n\nExhaustive or randomized search over J for small k, then a Lean certificate for the winning set using the divisibility characterization xEq_iff_dvd.\n\nA cheap redesign of stage one improves the constant of every lite-style method.\n\nThe sequential run is combinatorially optimal for involution detectors, a satisfying rigidity statement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -133606,7 +133570,7 @@
       "depth_estimate": 3,
       "description": "True ECM replaces the window [1,B] by the divisor-closed set of B-smooth integers, whose density is governed by Dickman's rho. We conjecture that the two arms have equal curve budget exactly when B is of order log^2 p, and that below that threshold the lite arm is exponentially worse.\n\nThere are absolute constants c1 < c2 with: for B <= c1 log^2 p the true-ECM budget is smaller than the lite budget by a factor tending to infinity, and for B >= c2 log^2 p the two agree up to constants.\n\nRun the still-deferred lcm-based arm on the same population and fit both budgets; formally, compare the truncated totient count with the count of smooth divisors of the group order.\n\nThe deferred ECM arm of paper 154 gets a sharp quantitative statement rather than a measured slope.\n\nSmooth-order density in the Hasse interval behaves unlike the Dickman heuristic at these sizes, itself a notable finding.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -136740,7 +136704,7 @@
       "depth_estimate": 3,
       "description": "The inverse theorem realizes any prescribed interval histogram at a single lag. The next question is joint control at two lags. We conjecture free joint realizability for coprime lags and a tropical obstruction otherwise.\n\nFor coprime k, l >= 1 and admissible histograms N_k, N_l of equal mass there is a decimal melody realizing both simultaneously; for l = 2k the support of N_l is forced into [0, 2 max supp N_k].\n\nExtend the interleave construction to a Chinese-remainder indexing of positions and prove the counting lemma for the product window; derive the obstruction from maxInterval_add_le.\n\nNo pair of lag statistics can certify structure in a digit expansion, closing the methodological question raised by lag-12 claims.\n\nThere is a genuine multi-lag invariant of digit melodies, which would be the first real statistic in this family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Tropical"
@@ -137967,7 +137931,7 @@
       "depth_estimate": 3,
       "description": "Asks for genuinely arithmetic witnesses of the capacity law: families of statistics on b-bit integers (2-adic valuation, popcount residues, digit sums modulo distinct primes) that are asymptotically pairwise decorrelated. Combined with the capacity law they cap any dial built from k such statistics at 1/sqrt(k).\n\nFor every k there is a family of k arithmetic statistics on {0,...,2^b-1} whose pairwise Spearman correlations tend to 0 as b -> infinity; consequently their common reading against any response is at most 1/sqrt(k) + o(1).\n\nCompute the pairwise rank correlations of the 2-adic valuation and popcount profiles exactly at small b, and formalise the limit via equidistribution of digits modulo independent moduli.\n\nDial engineering has an information-theoretic ceiling: adding decorrelated baselines strictly lowers the attainable common reading.\n\nArithmetic statistics on binary expansions are inherently correlated, which would itself explain the persistent count advantage.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -139106,7 +139070,7 @@
       "depth_estimate": 3,
       "description": "The dyadic dial is the p = 2 case of a p-adic family whose ceiling tends to 3p/(p^2+p+1). The count baseline generalises to the p-ary multinomial row. The inversion threshold b >= 3 proved for p = 2 should become a threshold B(p) growing like log p.\n\nFor every prime p there is B(p) = Theta(log p) such that the p-ary count profile has strictly larger tie ceiling than padicBlocks p b exactly when b >= B(p), and B(2) = 3.\n\nProve a multinomial analogue of the Franel bound and rerun the cube-sum comparison; check small p and b by exact rational evaluation.\n\nThe dial's tie disadvantage against counting baselines is a universal arithmetic phenomenon, not a binary accident.\n\nSome prime inverts the ordering, isolating p = 2 as structurally special.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -139524,7 +139488,7 @@
       "depth_estimate": 3,
       "description": "The unique corrected square root of the moonshine Hauptmodul J has integral Laurent coefficients as far as computed, while its cube root does not. We conjecture integrality holds at the prime 2 for all coefficients, and that this encodes 2-adic congruences for the coefficients of J. Proving it would connect the star-root construction with replication identities.\n\nLet g be the unique normalized Laurent series with q g^2 = J. Then every Laurent coefficient of g lies in Z; equivalently the binomial series (1+X)^{1/2} substituted with q J - 1 has 2-integral coefficients.\n\nFormalize the star-root over Z_2 rather than C, using PowerSeries.binomialSeries with r = 1/2 over the binomial ring Z_2, and prove that substitution preserves 2-integrality; verify numerically to degree 50 first.\n\nA new family of 2-adic congruences for the j-function coefficients, obtained purely from the group structure of normalized q-series.\n\nThe first denominator identifies a precise obstruction, isolating the 2-adic valuation of the coefficients of J where the pattern breaks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -141669,7 +141633,7 @@
       "depth_estimate": 3,
       "description": "The exact two-primary law Ipair(2^k) = (4/3)(1 - 4^{-k}) proved in this cycle is conjectured to be the q = 2 case of a uniform geometric law Ipair(q^k) = Ipair(q)(1 - q^{-2k})/(1 - q^{-2}) for every prime q. The approach is to close the class-wise fibre sandwich for odd q by showing the product residue covers exactly one coset of q^{v+1} Z on each type class. This would upgrade the current one-sided envelope into an equality and make the whole channel explicitly computable from its prime values.\n\nFor every prime q and every k >= 1, Ipair (q^k) = Ipair q * (1 - q^{-2k}) / (1 - q^{-2}).\n\nFormalise the counting lemma card {s < q^k : s = r mod q^{v+1}} generalised to unions of q-1 progressions, then reuse Ipair_ge_Wsum and Wsum_prime_pow_closed exactly as in Catalog/Tropical/OneBitCapTwoPower.lean. Numerically pre-check for q in {3,5,7}, k <= 4 against brute force.\n\nIpair becomes a completely explicit multiplicative invariant, immediately giving the Euler product of Direction 3 and the sharp odd threshold of Direction 2.\n\nThe fibre sandwich is genuinely lossy for odd q, and the true odd law must involve a second-order correction depending on the residue structure of the units modulo q^k.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory",
         "Geometry"
@@ -141715,7 +141679,7 @@
       "depth_estimate": 3,
       "description": "C3 fails on the odd side, but only barely: the supremum of the odd primary contributions is about 1.0655, and its partial sums over increasing odd primes first exceed 1 at the eighth odd prime q = 23. The conjecture is that this is sharp, so an odd cyclic order can break the one-bit cap only if it has at least eight distinct prime factors. This converts the failed dichotomy into a precise combinatorial threshold.\n\nIf n is odd and Ipair n > 1 then omega(n) >= 8; and there exists an odd n with omega(n) = 8 and Ipair n > 1.\n\nStrengthen Ipair_odd_le_omega to a weighted bound sum over p in primeFactors n of G(p), prove G is decreasing, verify the eight smallest odd primes numerically inside Lean with explicit logarithm bounds, and bound the tail sum for q > 23 by a Mertens-type estimate.\n\nThe even/odd dichotomy is replaced by a clean quantitative statement: evenness OR at least eight odd primary components.\n\nEither an odd cap breaker with omega <= 7 exists (contradicting the numerics), or the supremum G(q) is not attained in the limit k -> infinity, indicating the primary law is not geometric.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -141760,7 +141724,7 @@
       "depth_estimate": 3,
       "description": "Because Ipair is additive over coprime factorisations, n -> 2^{Ipair n} is multiplicative, so its Dirichlet series should factor as an Euler product whose local factors are explicit once the primary law is known. The q = 2 factor is already fully determined by the closed form proved in this cycle. This bridges an information-theoretic invariant with analytic number theory.\n\nD(s) = sum_{n>=1} 2^{Ipair n} n^{-s} equals prod_q ( sum_{k>=0} 2^{Ipair(q^k)} q^{-ks} ) for Re s > 1, with a simple pole at s = 1.\n\nFormalise multiplicativity of n -> 2^{Ipair n} from Ipair_mul_of_coprime, then apply the Mathlib machinery for Euler products of multiplicative arithmetic functions; bound the local factor at q = 2 using Ipair_two_pow_lt_four_thirds.\n\nThe distribution of cap-breaking orders becomes accessible to Tauberian methods, giving Direction 4 for free.\n\nThe series diverges at s = 1 faster than a simple pole, which would mean the average of 2^{Ipair n} grows and the cap is broken on a set of positive logarithmic weight.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Bridges"
@@ -141805,7 +141769,7 @@
       "depth_estimate": 3,
       "description": "The proved limit sup_k Ipair(2^k) = 4/3 identifies four thirds of a bit as the exact two-adic saturation level of the type-pair channel. The conjecture is that Ipair is the tropicalisation of a multiplicative height on the lattice of cyclic quotients, with local weights q^{-2} coming from the fibre geometry of the sum map on a product of type classes, so the maximum over orders with at most m primary parts has an explicit closed form.\n\nsup { Ipair n : omega(n) <= m } = 4/3 + sum over the first m-1 odd primes q of Ipair(q) q^2/(q^2-1), attained only in the limit along towers.\n\nProve the supremum statement for m = 1 and m = 2 from the primary law of Direction 1 plus CRT additivity, then verify the value numerically for m <= 5 by brute force over highly composite n.\n\nIpair is a genuine tropical height and its extremal values are computable, giving a canonical ordering of cyclic orders by information content.\n\nThe supremum is not additive across primary parts, indicating a hidden interaction term between primary components that CRT additivity does not see.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -142562,7 +142526,7 @@
       "depth_estimate": 3,
       "description": "A non-constant monotone dish invariant under a transitive group of ingredient permutations should be evasive, so that symmetric recipes force a full cook before any verdict. The approach adds a group-action layer to the pantry and applies a fixed-point/Euler-characteristic argument. This turns the intuition 'in a symmetric stew you must check everything' into a theorem.\n\nIf f is monotone, non-constant and invariant under a transitive subgroup of the symmetric group acting on the n ingredients, then tasteCost f = n.\n\nFormalise monotone dishes and group invariance over Pantry n, verify the claim exhaustively for n ≤ 4 by the brute-force solver, then formalise the Rivest–Vuillemin argument for prime-power n.\n\nA large, natural family of recipes is provably break-even (C = V), strengthening the inversion result of this cycle.\n\nSome symmetric monotone recipe admits a shortcut, which would be a genuinely surprising culinary and combinatorial object.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -142818,7 +142782,7 @@
       "depth_estimate": 3,
       "description": "The divisibility law proved for d interlock depths used only that translation acts freely on the cube. Replacing the cyclic group by an arbitrary finite group acting freely on the alphabet should give divisibility of the combined assembly count by the group order, with the failure case characterised by alphabet fixed points.\n\nIf a finite group G acts on the interlock alphabet with no non-identity element fixing a letter, then for n at least 1 the combined assembly count of the G-orbit of a framed puzzle is divisible by the order of G.\n\nGeneralise stable_card_eq_mul_gauge to a free G-action on the assembly cube and instantiate with a non-abelian G acting freely on its own underlying set.\n\nTab-blank parity is one instance of a general representation-theoretic constraint on puzzle solution counts.\n\nCommutativity is essential, and the gauge section has no non-abelian analogue.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -143357,7 +143321,7 @@
       "depth_estimate": 3,
       "description": "Price letters are readable mod 4 and mod 8 and unreadable deeper; Berggren letters are provably unreadable 2-adically at any depth. The conjecture is the exact mirror statement at the prime 3, making the two trees complementary seals.\n\nThe last Berggren letter is a function of the triple's residues modulo 3 and modulo 9, and for every k there exist two Berggren children of different letters whose triples agree modulo 2^k (already proved) while no such pair exists modulo 3.\n\nFormalise a Berggren letterOf on actGen and prove the mod-3 classification; reuse the counterexample construction of Price2Adic.berg_twoAdic_blind for the negative half.\n\nA clean placement theorem: each ternary Pythagorean tree is sealed at exactly one adic place.\n\nThe Berggren alphabet is not a residue dial at all, and the placement claim must be weakened to Price only.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory"
       ],
@@ -143444,7 +143408,7 @@
       "depth_estimate": 3,
       "description": "Gauss-sum magnitudes are constant across residue classes and hence buy a speedup of exactly one. The open question is whether the argument (phase) of the Gauss sum, which does vary, can approach the universal 4/3 scan cap.\n\nFor every quantisation of the argument of the quadratic Gauss sum into t bits, the induced residue dial has density bounded away from 1/2 uniformly in t, so the speedup it buys is bounded strictly below 4/3.\n\nCompute the argument distribution of twisted Gauss sums over ZMod p for many primes; formalise the density bound and feed it to ResidueDial.speedup_strictMonoOn.\n\nCharacter-sum cryptanalysis provably cannot reach the scan cap, extending the zero-bit magnitude theorem to the full complex value.\n\nThere is a phase-based dial at the cap, and the magnitude/phase split becomes the sharp boundary of the barrier.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -144390,7 +144354,7 @@
       "depth_estimate": 3,
       "description": "The proved two-sided bounds 2*m*j <= k^2 + 2*m and k^2 <= 2(u+k)*j pin the Fermat frontier offset at Theta(k^2/sqrt N). Promote this to an exponent law in terms of k = N^alpha, making the stipulated oracle cost laws into theorems.\n\nFor N = u(u+2k) with k = N^alpha, the anchored ascent offset satisfies j = Theta(N^(2*alpha - 1/2)) for 1/4 < alpha < 1/2, and j = O(1) for alpha <= 1/4.\n\nWrap the two proved inequalities with Nat.sqrt asymptotics and instantiate at k = N^alpha; verify numerically on semiprime families with prescribed imbalance.\n\nFermat-window cost becomes a theorem-level baseline against which any claimed channel must be measured.\n\nOne of the two inequalities is not tight, revealing extra structure in the anchor correction N - m^2.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -144776,7 +144740,7 @@
       "depth_estimate": 3,
       "description": "For every position t >= 2 the set of odd legs carrying a same-odd-leg pair of nodes that agree below t and split at t is now proved infinite, via a quadratic family. The conjecture upgrades infinitude to positive density: the number of such odd legs below X is at least c_t * X / log X, and among same-odd-leg pairs the splitting fraction tends to a positive constant. It matters because it separates 'sealed by a sparse conspiracy' from 'sealed generically'.\n\nFor every t >= 2 there is c_t > 0 such that the number of odd N <= X admitting two valid Price nodes of odd leg N that agree at all positions below t and split at t is at least c_t * X / log X for all large X.\n\nCount sealed odd legs below X for X up to 10^7 by factoring each odd N into coprime pairs and reading v2 of (b-a)/2, and fit the growth; then formalize a lower bound by restricting to N with a prescribed divisor of controlled 2-adic type.\n\nSealing is a generic property of odd legs, so no probabilistic classifier reading N can guess position t with advantage bounded away from zero.\n\nSealed odd legs are sparse, and a classifier correct on almost all N may exist despite the proved infinitude of counterexamples.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -146242,7 +146206,7 @@
       "depth_estimate": 3,
       "description": "The abstract threshold theorem shows that a monotone schedule is optimal as soon as the conditional cost matrix has decreasing differences in (smoothness quantile, member). Conjecture that the five-member factoring portfolio does satisfy this over powersmoothness quantiles, so the optimal paid-probe schedule is an interval rule in one scalar.\n\nFor the portfolio (rho, p-1 at cap 256, PM1 at cap 1024, Fermat, trial division) ordered by probe cap, and instances binned by the largest prime power of p-1, the matrix of conditional expected costs has decreasing differences; hence the optimal dial is monotone in the quantile.\n\nBin the per-N CSVs by powersmoothness quantile, form the conditional cost matrix and check decreasing differences directly; then instantiate exists_monotone_optimal_dial on the resulting rational matrix.\n\nThe paid-probe schedule collapses to a threshold search in one number, with each member played on an interval of quantiles.\n\nSome pair of members crosses twice, so the winner is not monotone in powersmoothness and the organising axis of the cell is not order-faithful.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -146589,7 +146553,7 @@
       "depth_estimate": 3,
       "description": "The density of ECM stage-1 orders firing in the last tau-fraction of the prime schedule should equal log(1/(1-tau))/log B1 asymptotically. The trace law turns the positional question into a Mertens sum over primes in ((1-tau)B1, B1]. It replaces the pre-registered constant-tail hypothesis by a decaying law.\n\nFor fixed tau in (0,1), the density of n <= M with pi(maxPF n) > (1-tau) pi(B1) and maxPF n <= B1 equals (log(1/(1-tau))/log B1)(1+o(1)) as B1 -> infinity.\n\nFormalize Mertens' second theorem with explicit error, combine with lateCount_le_primeContribution and a matching Bonferroni lower bound; check against the sieve table for N = 10^3..10^7.\n\nThe late tail of any stage-1 trace is predictable from B1 alone, giving a parameter-free null for future ECM accounting audits.\n\nThe union bound is lossy at the top of the schedule, indicating correlations between large-prime divisibility events that themselves need explanation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory",
         "Pythagorean"
@@ -146633,7 +146597,7 @@
       "depth_estimate": 3,
       "description": "Because the firing threshold equals the largest prime factor, the median normalized firing index is pi(B1^rho)/pi(B1) with rho the Golomb-Dickman constant. This explains the measured medians 0.09-0.10 as a Dickman phenomenon rather than an elliptic-curve one.\n\nmedian_{n <= B1} pi(maxPF n)/pi(B1) = Theta(B1^(rho-1) log B1) with rho = 0.6243299885...\n\nProve the two-sided smooth-number bounds needed for the median of log maxPF n / log n, then apply Chebyshev bounds on pi; validate against the sieve table (medians 0.083, 0.034, 0.020, 0.005 for N = 10^3..10^6).\n\nEarly firing is universal across all stage-1 implementations and carries no curve-specific information, closing the trace channel as a factorization side channel.\n\nSome arithmetic of elliptic-curve orders biases the largest prime factor away from Dickman, which would be a genuinely new statement about #E(F_p).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -146721,7 +146685,7 @@
       "depth_estimate": 3,
       "description": "The stage-1 schedule weights a prime p by floor(log_p B1) bits of work, so the step-normalized and work-normalized firing traces differ exactly on orders divisible by higher prime powers. This predicts a second, independent observable for the next experiment.\n\nFor B1 >= 10^3 the expected gap between the work-normalized and step-normalized firing index is Theta(sqrt(B1) log B1 / (B1 / log B1)) and is dominated by the O(sqrt(B1)) schedule primes with exponent at least 2.\n\nProve matching upper and lower bounds for log2 stageProd B1 y against pi(y) log2 B1 and theta(y), then measure both traces in the next ECM run.\n\nRecording both traces yields a direct read-out of the prime-power structure of the group order, a new factor-local invariant.\n\nThe two normalizations agree to leading order, so trace bookkeeping can safely ignore prime powers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -147571,7 +147535,7 @@
       "depth_estimate": 3,
       "description": "The proved ceiling Var >= rho*sigma^2/k says precision at the u>=9-14 frontier is limited by the number of semiprime moduli, not by samples per modulus. Conjecture that the observed 3-5% deficit cannot be resolved at k=128 for any m, and quantify the k needed.\n\nFor intra-modulus correlation rho > 0, no run with k moduli can certify a deviation smaller than z*sqrt(rho)*sigma/sqrt(k), independently of the number of samples per modulus.\n\nCombine ClusterModel.var_grandMean_ge_cluster_floor with the z-threshold to derive a minimal-k theorem, then evaluate at the observed deficit.\n\nThe frontier is pushed only by enlarging the modulus population; wall-clock spent on longer runs is provably misallocated.\n\nIntra-modulus correlation is zero to within measurement, and sample-count scaling is restored.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -147656,7 +147620,7 @@
       "depth_estimate": 3,
       "description": "For balanced semiprimes N, define the capture spectrum C(X) = Σ_{ℓ ≤ X} r_ℓ², where r_ℓ is the sample correlation between the per-N log hit rate and the product-form Legendre indicator at prime ℓ. The conjecture is that C(X) stays below the pre-registered 0.30 bar for every X up to 10⁶ at bitlen 96, so the overdispersion carrier is not a small-prime residue effect at any window. The family capture bound turns this into a finite scalar computation with a proved stopping rule.\n\nFor bitlen-96 balanced semiprimes, sup_{X ≤ 10⁶} Σ_{ℓ ≤ X} r_ℓ² < 0.30, hence no affine recalibration of the ℓ ≤ X product-form dial family attains a 30% dispersion reduction.\n\nCompute the 78k per-prime correlations and partial sums; compare against Logic.QRDial.family_bar_missed, whose hypothesis is exactly Σ_j corrSq y (s j) < 3/10.\n\nThe papers-136/139 dial line does not extend to bitlen 96 at any prime window; the carrier of u ≈ 10 clustering is a genuinely new N-structure.\n\nPapers 136/139, 220 and 226 unify under a scale-dependent dial bound, with the crossing point of C(X) giving the calibration scale.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -147785,7 +147749,7 @@
       "depth_estimate": 3,
       "description": "The proved inequality r² ≤ η² quantifies how much a dial loses by being fitted affinely. The conjecture is that the deficit η² − r² is bounded below by a universal constant fraction for monotone-but-convex dials such as the product-form Legendre count, so all previously published R² legs understate dial strength by a predictable factor.\n\nFor the product-form dial at bitlen 96, η² ≥ 1.5·r², and this ratio is stable across prime cuts.\n\nRecompute the recorded dials cellwise (level sets) and compare with their linear fits, using disp_reduction_eq_eta_sq to express both legs in the same units.\n\nAll prior R²-based dial verdicts should be re-read cellwise; some may cross their bars.\n\nThe dial is effectively linear in the log-rate, and the R² leg is a faithful summary — simplifying the whole comparison line.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Geometry"
@@ -147871,7 +147835,7 @@
       "depth_estimate": 3,
       "description": "Spreading the 0.1578 of squared correlation that the extension window 400 < ℓ ≤ 10⁶ would have to supply over at most 78498 primes forces some single Legendre-symbol dial to reach r² ≥ 2·10⁻⁶. The conjecture is that no symbol in that window reaches the floor at bitlen 96, so the scale-shift hypothesis fails and the carrier lies outside the QR dial family. The test is a single pass over 78k per-prime correlations with a proved threshold.\n\nFor bitlen-96 balanced semiprimes, max_{400 < ℓ ≤ 10⁶} r_ℓ² < 2·10⁻⁶ for the per-N log hit rate, hence Σ_{400 < ℓ ≤ 10⁶} r_ℓ² < 0.1578 and the ℓ ≤ 10⁶ family misses the 0.30 bar.\n\nCompute the per-prime squared correlations over the extension window and compare with the hypotheses of Logic.QRDial.exp576_window_extension_target; a single symbol above the floor is required for the scale-shift reading to survive.\n\nThe QR dial family is exhausted at bitlen 96 and the u ≈ 10 carrier is structure outside every recorded mechanism.\n\nThe informative window has genuinely moved past 400, and the crossing prime calibrates a scale-dependent dial bound unifying papers 136/139 and 220.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory",
         "Logic"
@@ -148416,7 +148380,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  A uniformly weighted exactly 2-universal family on at least\ntwo keys and `m` buckets has size `N` divisible by `m` (proved:\n`card_dvd_card_of_uniform_exactly2Universal`), and moreover `N ≥ m²` whenever\nthe family is exactly 2-universal on `m` keys; the affine family (`N = p²`) is\ntherefore size-optimal.\n\nThe key insight is that the `m` fibres of the collision event must each be\nrealised by a positive number of indices while the `m²` pairs of prescribed\nvalues `(u,v)` must be equidistributed, forcing `m² ∣ N` for strongly\n2-universal families and `m ∣ N` in general.\n\n**Why now?**  The divisibility half is already a theorem, and the pairwise\nindependence of the affine family (`affine_pairwiseIndependent`) provides the\nequidistribution statement that the lower bound `N ≥ m²` needs.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Degenerate Second Moment of Extremal Universal Families\",\n    \"domain\": \"Probability\",\n    \"description\": \"The affine family minimises the collision probability of a 2-universal family, and its collision counter is two-valued. We conjecture that minimising the collision probability and minimising the second moment of the collision counter are achieved at the same extremal point of the universality polytope. This would explain the tightness of the reverse Markov step rather than merely exhibiting it.\",\n    \"conjecture\": \"Among exactly 2-universal families on n >= 3 keys and m buckets, the minimiser of P(Coll) also minimises E[X^2], where X counts colliding ordered pairs; equality in the reverse Markov inequality P(X>0) >= E[X]/max X characterises the minimisers as those with X supported on {0, n(n-1)}.\",\n    \"test\": \"Formalise E[X^2] for the affine family, compare with the Chung-Erdos bound collisionProb_ge_second_moment, and enumerate the vertices of the universality polytope for (n,m) in {(3,3),(3,4),(4,4)} in exact rational arithmetic.\",\n    \"if_true\": \"Gives a structural characterisation of extremal universal families: they are exactly the two-valued ones, i.e. mixtures of injective maps with a totally collapsing map.\",\n    \"if_false\": \"There exist universal families with strictly smaller second moment than the affine one, and the Chung-Erdos route would then yield a strictly better converse than 1/m for some n.\",\n    \"proof_strategy\": \"Show equality in reverse Markov forces X in {0, C} almost surely; then classify laws on functions whose collision counter is two-valued using the exactness constraints.\",\n    \"catalog_references\": [\"Pythagorean.UnionBoundConverse.FiniteLaw\", \"Pythagorean.UnionBoundConverse.UniversalCollision\"]\n  },\n  {\n    \"title\": \"Strong Universality of the Bijection-Constant Mixture\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"The prime-free attainment of the extremal value 1/m is now proved via the bijection-constant mixture, but only exact 2-universality of that mixture was needed. We conjecture the stronger statement that the mixture is pairwise independent for every",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "NumberTheory"
@@ -148459,7 +148423,7 @@
       "depth_estimate": 3,
       "description": "The flatness factorisation shows that a window's explained variance is the amplitude profile's Rayleigh quotient against the covariate. Conjecture that among all arithmetically computable weight profiles the harmonic profile is optimal up to a bounded factor. Testing this settles whether 1/l is canonical or merely convenient.\n\nFor every weight profile w supported on primes below B, the explained variance R2(w) is at most C times R2(1/l) with an absolute constant C, whenever the signal amplitudes satisfy a_l = Theta(1/l).\n\nFormalise R2 for arbitrary weights in the orthonormal model (already available as R2_of_orthonormal) and prove the comparison by Cauchy-Schwarz plus a two-sided amplitude hypothesis; verify numerically on the exp 577 population.\n\nThe 1/l dial is canonical: no reweighting can improve it beyond a constant.\n\nThere is a strictly better computable dial, and the covariate upgrade is not finished.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -148502,7 +148466,7 @@
       "depth_estimate": 3,
       "description": "The flipped dial is the clean dial multiplied by the twist character chi4(l)chi4(N). Conjecture that the covariance of the flipped dial with any fixed target is bounded by a Polya-Vinogradov-type character sum, hence negligible relative to the clean dial's covariance. This would upgrade the erratum from empirical to provable.\n\nFor a window P of odd primes and a target bounded by 1, the covariance of the flipped dial with the target is O(sqrt(N) log N) uniformly, while the clean dial's covariance is of order |P|.\n\nExpress the covariance as a sum of chi4-twisted Jacobi symbols over the window using jacobi_eq_twist_mul, then apply a character-sum bound.\n\nThe paper-226 secondary weakness is provably a form artifact, not arithmetic.\n\nThe flipped form carries genuine signal and the erratum must be narrowed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -148545,7 +148509,7 @@
       "depth_estimate": 3,
       "description": "Saturation of the weighted dial is exactly the smallness of the tail mass of the squared amplitude profile. Conjecture that for the arithmetic profile the tail decays like 1/B, so that the window needed for a given accuracy is inversely proportional to the tolerance and independent of the population size.\n\nFor the arithmetic amplitude profile a_l comparable to 1/l on primes, 1 - weightedR2 over a window of cutoff B is Theta(1/log B), matching the Theta(1/n) law already proved for the index model.\n\nTransfer the proved model bounds (harmonic_weightedR2_ge and harmonic_weightedR2_le) to the prime-indexed profile using Mertens' theorem for the tail of sum 1/l^2 over primes.\n\nWindow size is a tolerance parameter, not a scale parameter: B* is universal.\n\nSaturation depends on the population and the B*=400 location is population-specific.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Physics"
@@ -148589,7 +148553,7 @@
       "depth_estimate": 3,
       "description": "Both the class-group residue dial and the weighted product dial collapse the PP and NN factorisation types. Conjecture a single obstruction theorem: any readout that factors through a group homomorphism from the multiplicative monoid of integers to a finite abelian group is blind to that distinction. This would close a family of proposed factoring covariates at once.\n\nIf f is a monoid homomorphism from integers coprime to m into a finite abelian group G, and f(p) = f(q) = g while f(p') = f(q') = g^{-1}, then f(pq) = f(p'q').\n\nState and prove the homomorphism version in Lean, then derive both the Jacobi dial and the class-group dial collapses as instances.\n\nA whole class of proposed dials is provably factor-blind, independent of window size.\n\nSome non-multiplicative readout escapes the collapse, which would be the first genuinely new covariate.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -148971,7 +148935,7 @@
       "depth_estimate": 3,
       "description": "The spectrum k^2 unfolds to an exact arithmetic progression and is maximally rigid, but the fractional parts of k^2 alpha are expected to have Poisson pair correlation for generic alpha. Conjecture a sharp dichotomy between rational and Diophantine alpha, formalized with the same pair-correlation counting machinery.\n\nFor alpha rational the unfolded pair correlation of the sequence of fractional parts of k^2 alpha is the staircase 2 floor(t), while for alpha of finite Diophantine type less than 2 it converges to the Poisson value 2t.\n\nReuse pairCorrCount on the sequence of fractional parts and prove the rational case exactly by periodicity; attack the Diophantine case via exponential sums.\n\nA fully formal instance of the Rudnick-Sarnak pair correlation phenomenon, bridging number theory and spectral statistics.\n\nThe dichotomy has a third regime, which would refine the current arithmetic picture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -149058,7 +149022,7 @@
       "depth_estimate": 3,
       "description": "The proved sandwich 2bj <= v(j) <= 2bj + j^2 + 2b pins log v(j) to log(2bj) with an explicit error, so the magnitude-only prediction for the hit density at position j is the Dickman value rho(log v(j)/log B) with bounded uncertainty. The conjecture is that the entire observed within-N profile is inside this band.\n\nFor balanced semiprimes and j <= b, the empirical hit density at position j lies within sampling error of rho(log(2bj)/log B), with no residual positional term.\n\nFormalise an interval bound for the Dickman function in Lean, combine with sieveVal_sandwich, and compare against the decile data recorded in ComputationalEvidence.md.\n\nThe residual overdispersion thread loses its positional carrier candidate and must be sought in per-N (rate) rather than within-N (position) structure.\n\nThe gap between the observed profile and the Dickman band is a quantitative, reproducible carrier with a known size.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -149101,7 +149065,7 @@
       "depth_estimate": 3,
       "description": "The unique nontrivial square position of a semiprime sieve is the terminal Fermat position 2(b+j0) = p+q, and it satisfies 2*b*j0 <= d^2 with d the half-difference of the factors. This makes the position of the square value an exact read-out of factor imbalance and suggests an early-abort criterion for Fermat-type search.\n\nIf d <= N^(1/4) then the terminal position is the first position at which the square part of v(j) exceeds v(j)/b, so scanning square parts detects the terminal position before reaching it.\n\nSieve balanced and mildly unbalanced semiprimes, record the largest square divisor of each v(j), and check whether the terminal position is the first to satisfy the criterion.\n\nA cheap early-abort test for Fermat/QS style searches on unbalanced moduli, with a proved positional bound behind it.\n\nSquare parts of sieve values are noisier than the terminal bound suggests, quantifying how much of the square-part signal is background.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -149475,7 +149439,7 @@
       "depth_estimate": 3,
       "description": "The formalised bound says n runs of a test decide whether two dishes are observationally equivalent, but exhaustive enumeration for n <= 4 and a 5-dish Fine-Wilf extremal witness both indicate that n-1 runs suffice. The conjecture is that n-1 is the exact threshold. It matters because it converts a linear bound into an exact query complexity for repeated destructive testing.\n\nFor every finite dish type D with n = card D >= 2, every test t : D -> Bool x D and all dishes d, e: if transcript t d j = transcript t e j for all j < n - 1, then transcript t d m = transcript t e m for all m; and there exist D, t, d, e realising first disagreement at index n - 2.\n\nStarting from the formalised orbit dichotomy and the proved threshold n, tighten the window estimate by one, e.g. by showing that when both transients are nonempty the two orbits cannot both saturate the dish space; verify the extremal side by extending clockTest to coprime cycle pairs p + q = n.\n\nObservational equivalence under destructive testing has exact query complexity n - 1, matching the destruction-depth bound and making the two sharp constants of the theory equal.\n\nThere is a family of tests whose dishes stay indistinguishable for at least n - 1 runs; such a family would be a new extremal object interpolating between rho shapes and coprime cycle pairs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -149817,7 +149781,7 @@
       "depth_estimate": 3,
       "description": "Ramanujan-type congruences for tau modulo 691, 23, 7, 5, 3, 2 are congruences between q-expansions, hence finite statements in (Z/l)[[X]]/(X^N) for each window N. A mod-l analogue of the AgreeBelow calculus would make each window a kernel decision, giving reusable certificates for modular-form congruences.\n\nFor each classical Ramanujan congruence modulo l, the truncated congruence holds for every window N and is decidable in time polynomial in N.\n\nDefine AgreeBelowMod l N, reprove the product/power/cancellation lemmas, and verify l = 691, 23, 7 at N = 20 by decide.\n\nA reusable, kernel-checkable certificate scheme for congruences between modular forms.\n\nThe first failing window exposes a normalization error in the classical statement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -176497,7 +176461,7 @@
       "depth_estimate": 3,
       "description": "Cycle 18b02a30 (Q=0.880) proved 294 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: for `q ≥ 2` and a prime `ℓ ∤ q`, the `ℓ`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` m",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -177377,7 +177341,7 @@
       "depth_estimate": 3,
       "description": "Cycle a0dce043 (Q=0.780) proved 50 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future directions\n\nFive bold, testable conjectures generated by this cycle's analysis of denominator primes of\nmultiples of points on Mordell curves `E_N : y² = x³ + N`.  Layers 2 and 3 are now theo",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -177860,7 +177824,6 @@
     "formal": 3,
     "formalize": 15.0,
     "formalized": 9,
-    "fragility": 1,
     "general": 5,
     "geometry": 10.0,
     "groupoid": 4,
@@ -177884,7 +177847,7 @@
     "moonshot)**": 4,
     "moves": 3.0,
     "now**": 9.0,
-    "number": 14.0,
+    "number": 15.0,
     "opening": 2,
     "paper": 50,
     "positive": 7,
@@ -177895,6 +177858,7 @@
     "proven": 8,
     "proves": 3,
     "pythagorean": 14.0,
+    "quantitative": 1,
     "questions": 2.0,
     "reduces": 3,
     "represent": 2,
