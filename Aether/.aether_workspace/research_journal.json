@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c38d70d3",
-      "domain": "Probability",
-      "key_insight": "# Future directions — NET-64 knee axis (after six research cycles)\n\nCycle 1 established the grid-artifact calculus (a sweep reports the *ceiling of\nthe true knee in its grid*), the margin-based replic",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 141,
-      "timestamp": "2026-08-23T23:36:49",
-      "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT — corpus-B fine knee at 2048 is also 24; the {"
-    },
-    {
       "cycle_id": "198a9f40",
       "domain": "Bridges",
       "key_insight": "# Future Directions — the geometry of retention knees\n\n## What survived, what failed\n\n**Survived.** Every order-theoretic statement about the knee: monotonicity in the\ngate, the fail/pass certificate,",
@@ -499,19 +489,19 @@
       "theorem_count": 76,
       "timestamp": "2026-08-25T14:05:36",
       "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
+    },
+    {
+      "cycle_id": "ea4eae2e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — positional geometry of the Fermat / quadratic-sieve polynomial\n\nDerived from this cycle's proofs (`Catalog/NumberTheory/FermatPosition{Geometry,Density,\nTerminal,Nonlocality}.lea",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 50,
+      "timestamp": "2026-08-25T14:05:54",
+      "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNIT"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "09567e3d",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nDerived from the seven research cycles in `Catalog/Computation/ListHammingBallParity.lean`,\n`BinaryCodeBounds.lean`, `HammingCodePerfect.lean`, `HammingCodesGeneral.lean`,\n`Plotki",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 134,
-      "timestamp": "2026-08-18T18:57:47",
-      "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
-    },
     {
       "cycle_id": "bba7fa1e",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 76,
       "timestamp": "2026-08-25T14:05:36",
       "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
+    },
+    {
+      "cycle_id": "ea4eae2e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — positional geometry of the Fermat / quadratic-sieve polynomial\n\nDerived from this cycle's proofs (`Catalog/NumberTheory/FermatPosition{Geometry,Density,\nTerminal,Nonlocality}.lea",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 50,
+      "timestamp": "2026-08-25T14:05:54",
+      "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNIT"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "51837664",
-      "domain": "Probability",
-      "name": "bigW_ge",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "ed1b07dd",
-      "domain": "Computation",
-      "name": "margin_pinned_of_knee",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "ed1b07dd",
-      "domain": "Computation",
-      "name": "margin_pinned_of_knee_32",
-      "quality": 0.79
-    },
     {
       "cycle_id": "80241759",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "gapRatio_nonneg",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "ea4eae2e",
+      "domain": "NumberTheory",
+      "name": "dvd_window_card_eq_one",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "ea4eae2e",
+      "domain": "NumberTheory",
+      "name": "card_filter_dvd",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "ea4eae2e",
+      "domain": "NumberTheory",
+      "name": "harmonic_block_decline",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-25T14:05:36",
+  "last_updated": "2026-08-25T14:05:54",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "5c70a18c",
-        "quality": 0.86,
-        "theorems": 281,
-        "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean"
-      },
-      {
         "cycle_id": "18b02a30",
         "quality": 0.88,
         "theorems": 294,
@@ -3699,6 +3693,12 @@
         "quality": 0.8,
         "theorems": 98,
         "title": "Per-tag reflection depths are freely realizable"
+      },
+      {
+        "cycle_id": "ea4eae2e",
+        "quality": 0.78,
+        "theorems": 50,
+        "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL a"
       }
     ],
     "Physics": [

@@ -2160,21 +2160,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-76 #2 \u2014 U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip \u2014 fresh seed 20260825 reads r=1.1536 SURPLUS where the 20260824 family read deficit; randomness stands through u\u224811 with a measured \u00b15\u201315% single-run fluctuation envelope"
   },
   {
-    "consumed_by_exp_id": "ea4eae2e",
-    "description": "Paper 228. exp 578. Sources: ResearchOutput/scripts/2026-08-24-round74/exp578_hit_position.py (pre-registration in header BEFORE any data generation) + exp578_stratified_check.py (confound check, rule pre-stated BEFORE running) -> exp578_result.json (+ magnitude_confound_check block), exp578_positions.npz, wall 363 s full / 21.8 s smoke.\n\nVERDICT: POSITIONAL-STRUCTURE-REAL, amended BEYOND-MAGNITUDE-POSITIONAL-STRUCTURE \u2014 the FIRST POSITIVE carrier candidate for the ~39-61% unexplained per-N overdispersion (papers 220/222/226/227 thread).\n\nPOPULATION: 128 balanced bitlen-96 semiprimes, FRESH seed 20260828 hash 06931068f8f3ca9b, lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 REPRODUCED exactly, five-seed family pairwise disjoint; exp569 tester verbatim 150k j-samples/N cut 1e6, every hit position persisted. Overdispersion REPLICATED 4th time: mean 74.95 hits/N, D_raw 6.37, range 29-136.\n\nPRIMARY LEGS (treatment | paired non-hit control): (a) pooled KS u vs U[0,1], 9565 hits / 127 HITRICH Ns: D=0.09519 p=6.9e-76 FIRES | control D=0.00693 p=0.744 null. (b) lag-1..10 autocorr rho=+0.00283 CI [0.00112,0.00475] excludes 0 but below 0.05 bar -> no fire | repaired control -0.00112 null. (c) edge frac 0.2346 p=1.1e-16 vs 0.20 but < 0.25 bar -> no fire | control 0.1935 null.\n\nSTRATIFIED ANSWER (decisive): confound = v=j^2-N monotone => pure decay skews small-u; rule pre-stated before running. All 8 (bitlen(v) x mantissa-octant) cells contain every hit; vs size-matched non-hits per cell: 7/8 fire at p<0.01 (median cell p=1.86e-5), pooled stratified D=0.10423 EXCEEDS unstratified 0.09519, within-cell permutation p<0.0005 (0/2000), stratified-edge z=10.08. Deciles [.162,.123,.109,.097,.091,.091,.090,.084,.081,.072] monotone-declining vs flat control: hits cluster toward small-j ~10x stronger than magnitude predicts => structure fully survives size-conditioning = BEYOND-MAGNITUDE.\n\nCONSEQUENCE: real WITHIN-N positional geometry in the smooth locus of j^2-N opens POLYNOMIAL-SEQUENCE LOCAL STRUCTURE as carrier candidate for the ~39-61% residual. Named follow-ups: (a) functional form of the small-j profile; (b) does j-local clustering predict WHICH N are hit-rich (positional <-> rate link).\n\nLEDGER CATCHES (disclosed): run-1 control-arm leg-b mirrored treatment (acf read hit arrays unconditionally) - repaired from npz BEFORE verdicts, fired nowhere either way; confound-check order on record (pre-stated by coordinator, labeled post-hoc everywhere); legs a/c overlap registered up front.\n\nBarrier framing: scale-smoothness mechanism frontier - opens rather than closes; H0-route also cleanly closed (control nulls). Residue cap untouched; no breakthrough claimed.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4022",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T15:58:32.184828+00:00",
-    "title": "FACT round-79 #2 \u2014 HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNITUDE \u2014 pooled KS D=0.09519 p=6.9e-76 (9565 hits/127 hit-rich Ns, paired control null); stratified check decisive: conditioning on all 8 v-cells RAISES D to 0.10423, 7/8 cells fire, permutation p<0.0005 \u2014 real within-N geometry in the smooth locus of j\u00b2\u2212N; first positive carrier candidate for the ~39\u201361% residual"
-  },
-  {
     "consumed_by_exp_id": "e645a8ec",
     "description": "Round-80 #2, exp 580, paper 230. Pure re-analysis of exp578_positions.npz (9594 hits); terciles by per-N hit count poor<=64/mid 64-80/rich>=80 (42/42/44). Pre-registered H1 refuted: family A no fire (KS dies at Bonferroni; per-decile min raw p=0.425), family B no fire decisively (LRT chi2=51.31/49 p=0.383, perm p=0.34, 0/49 Wald bins); control A clean (min p_adj=0.235). LEDGER FLAG: control family B fired spuriously (LRT p=0.0215, perm p=0.012) \u2014 occupancy regression fragile on dense size-matched controls (quasi-separation, ORs clipped at e^\u00b130); H0 stands without family B but design-B unreliable for control arms. Post-hoc descriptive only: poor-Ns' hits at larger mean_u (rich-minus-poor -0.0205 [-0.0337,-0.0075], SIGN FLIPS under matching +0.012 CI straddles 0) \u2014 motive for a powered follow-up, NOT a map claim. JOINT CONSEQUENCE with round-80 #1 (#377)/paper 229: paper-228's positional layer is now law-complete (harmonic profile + mid-window excess hump) and does NOT couple to between-N rate variance \u2014 the ~39-61% unexplained overdispersion is not carried by profile-shape heterogeneity across terciles; the carrier affects how many smooth values j^2-N produces per N, not where along j they land. Files: ResearchOutput/scripts/2026-08-24-round74/exp580_{positional_rate_link.py,result.json,findings.md}; paper ResearchOutput/NewMathematics/230_PositionalRateLink.md.",
     "domains": [
@@ -2250,16 +2235,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-83 #1 \u2014 SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION \u2014 five closures confirmed (Berggren all-faces, MA-1 both routes, u~10 gate rejection = +-5-15% envelope, converse roadmap EMPTY master inequality proven, canonical 1/l dial saturates by 400 corr .999); two record corrections mechanism-named (paper-159 wall rejected by early-fire trace law; 226-secondaries reciprocity-flip artifact + 229 residual baseline leakage \u2014 power law STANDS strengthened); three new laws (early-fire trace; Lambda prior-shape channel WITH scope boundaries: hard-balance 1.58x does NOT deploy, RSA pools ascending LOSES ~44%; harmonic-weight saturation); CONTRADICTION SCAN 7 pairs -> 4 clean + 2 resolved covering both readings (226-vs-227 dial-form difference; 232-vs-229 agreement-about-a-ghost via shared M_pred) + 1 UNRESOLVED MINOR TENSION carried forward: bulk exponent -1.10 vs steeper-than-harmonic LEFT EDGE (.2346/.162/2.54) \u2014 named refinement harmonic-bulk x steeper-edge kernel"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0dec095c",
     "description": "exp 583 \u00b7 round-82 #2 \u00b7 paper 233 \u00b7 assessment v339\u2192v340 \u00b7 count 571\u2192572.\n\n**VERDICT: H0_CHANNEL_CLOSES** (registered rule) with the decisive decomposition. Paper 232's named follow-up (binning-independent shape test): pure reanalysis of exp581_regen_positions.npz (128 strata, hits 9594 / controls 512000, windows [jlo,jhi] jhi/jlo=3). ZERO binning: raw hit-indicator stratum-conditional case-control logistic, 128 profiled intercepts; free natural cubic spline df5 (knots .25/.5/.75) vs LINEAR-x; LRT on full design + permutation calibration (within-stratum label shuffles B=400, capped 200-ctl/stratum design); bootstrap 150 reps.\n\nResults:\n- Free-vs-linear LRT stat=100.574 df=3, asym p=1.17e-21; permutation 0/400 exceedances => p\u22640.0025 floor at B=400 (registered <0.001 unmeetable at this B; direction strongly confirms real non-linear structure)\n- BUT interior max x*=0.020 CI[0.020,0.020] \u2014 pinned LEFT EDGE in all 150 reps; [0.4,0.8] bar FAILS\n- Peak/end rate-ratio 2.54 CI[2.243,2.798] \u2014 steep small-x decline, exactly Dickman-type, not a hump\n- Control arm null (perm p=0.856; big-design asym p=0.035 marginal, passes via perm criterion)\n- Deciles strictly declining [1554\u2026694]; the +1.6% blip near u*\u22480.55\u20130.65 is exp582's vertex ghost \u2014 baseline-relative ripple, not a mode\n\n**ERRATUM-GRADE CORRECTION TO RECORDED PAPER 229**: RESIDUAL-PEAKED-MID-WINDOW retracted as BASELINE-CURVATURE LEAKAGE \u2014 the mid-window excess lived in the mixture-Dickman denominator's own curvature, not in position shape. Paper 229's POWER-LAW headline T(x)\u22480.0295\u00b7(1+x)^\u22121.104 STANDS and is STRENGTHENED (re-found binning-free). Any revival must be a baseline-mis-specification claim, never a positional mode. Absolute-shape channel CLOSES; sole remaining open item on this thread = rate-layer N-covariate.\n\nCoordinator fuse disclosure: minimal skeleton under ~15-min fuse \u2014 monotone-I-spline/isotonic and Dickman-offset legs SKIPPED (documented in skipped_legs), H1's beats-monotone clause UNTESTED; two run legs suffice for the registered comparison since the location clause fails independently.\n\nLedger: x-convention verified pre-script from ctl linear-uniformity; perm/boot on capped designs with observed stats from full design (disclosed); design-matrix scale surprise (obs rows 521,594; control rows 1,024,000) handled within budget; wall 273.4 s; seeds P/B/S 20260902/03/04.\n\nBarrier framing: scale-smoothness mechanism frontier \u2014 clean closure preventing both a wrong positional-mode hunt and a wrong closure of the true power law; residue cap untouched.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4043",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T19:46:36.815634+00:00",
     "title": "FACT round-82 #2 \u2014 SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES \u2014 LRT stat=100.6 df=3 p=1.17e-21 perm 0/400: real non-linearity but STEEP MONOTONE DECLINE; PAPER-229 ERRATUM: peaked residual = baseline leakage, power law stands"
   },
@@ -2570,6 +2556,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T07:10:45.366320+00:00",
     "title": "FACT round-95 #3 \u2014 MIXTURE-RATE-CELLS-POWERED (exp 598c): H1 FIRES \u2014 \u0394adjR\u00b2 +0.105 clears the bar at the pre-stated power remedy (n=512, fresh seed) with perm_p = 1/501 AND clean control (null max collapsed 0.186\u21920.0549 while effect GREW +0.083\u2192+0.105) \u2014 rate map refines to CELL level; secondary arm names the mechanism: composition order \u03ba captures \u0394 +0.114 ALONE; paper-255 BORDERLINE resolves UNDERPOWERED-not-null + control-conjunction erratum carried"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 72 (LAST standing cell of the original limited-memory axis \u2014 size chain CLOSED).\n\n| k | retained | verdict |\n|---|---|---|\n| **8** | **0.98056** | **PASS \u2014 the knee** |\n| 12 | 0.98928 | PASS |\n| 16 | 0.98928 | PASS |\n| 20 | 0.99196 | PASS |\n| 24 | 0.99531 | PASS |\n\nGate: max|dlogit| = 0.000000, top-1 agreement = 1.000000 vs HF eager (BIT-EXACT). Full baseline CE 2.50867 / acc 0.48663.\n\n**Scorecard:** P1 REFUTED downward (predicted band {12,16,20}; measured 8); P2 CONFIRMED beyond tolerance (exact equality); P3 CONFIRMED (strictly monotone).\n\n**The law:** THE THREE-SCALE CHAIN IS {16, 16, <=8} \u2014 attention-knee size-invariance (NET-55/65/66) holds from 0.5B to 1.5B then INVERTS at 14x scale: the largest model is the CHEAPEST to serve sparsely (<=8 oracle keys @512 = 64x fewer KV reads, half the small-model key budget). Combined with NET-49's depth-multiplier collapse, pretrained attention concentrates MORE as models grow \u2014 opposite the toy-law extrapolation.\n\n**Honest limits:** sub-8 unmeasured (open bracket below); razor-thin pass margin (+0.0006); n=6 windows, single corpus/model/context; cross-scale comparison crosses substrate (7B bf16-CPU vs smaller fp32-GPU) \u2014 internal gate neutralizes dtype internally but not across scales; grid granularity leaves (8,12) unexplored.\n\nSetup: validated oracle-top-k Runner port (exp_net90 lineage), Qwen2.5-7B-Instruct bf16 CPU eager, ctx=512, 6 held-out wikitext windows, threads=8. Script ResearchOutput/exp_net97_knee7b.py; paper ResearchOutput/NetworkMathematics/97_TheKneeShrinksWithScale.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4169",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T14:06:20.964894+00:00",
+    "title": "NET-97 THE-KNEE-SHRINKS-WITH-SCALE: the 7B passes the 0.98-retention gate at just 8 oracle keys \u2014 three-scale chain {16, 16, <=8}: size-invariance holds to 3x then INVERTS at 14x"
   },
   {
     "consumed_by_exp_id": "",
@@ -3344,6 +3344,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 05a687ab (Q=0.820), which proved 76 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize normalized gap and pair-correlation statistics for finite spectra.\n   Compare the deterministic quadratic spectrum only after unfolding/rescaling,\n   and distinguish Poisson statistics from GUE statistics.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_05a687ab_6285fc58",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "05a687ab",
+    "status": "available",
+    "timestamp": "2026-08-25T14:05:36.664285+00:00",
+    "title": "Deepening: Formalize normalized gap and pair-correlation statistics for finite spectra."
   },
   {
     "consumed_by_exp_id": "",
@@ -4320,21 +4334,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "seed_385",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: Number Theory as Music Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -13928,6 +13927,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The only position-declining carrier of the Fermat sieve is the set of positions j dividing the base value v(0). Its exact density is 1/j, so its counting function is the divisor-counting function of v(0) restricted to the sieve range. We conjecture the classical Dirichlet asymptotics transfer verbatim, giving the exact functional form of the small-j profile that exp 578 asked for.\n\nFor base values v(0) uniform in a window, the expected number of positions j <= J with j | v(0) is log J + 2*gamma - 1 + o(1), and the block excess of [1,K] over (K,2K] tends to log 2.\n\nExtend FermatPosition.divisor_positions_small_j_excess from a strict block inequality to an asymptotic; verify numerically with the sieve code in evidence/ over many base values.\n\nThe functional form of the only genuine positional carrier is known exactly, and its total mass can be subtracted from any observed profile.\n\nThe self-divisor carrier interacts with the sieve polynomial beyond the uniform model, which would itself be a new positional mechanism.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4166",
+    "priority_score": 0.6701428571428573,
+    "research_mode": "team",
+    "source_exp_id": "ea4eae2e",
+    "status": "available",
+    "timestamp": "2026-08-25T14:05:44.316585+00:00",
+    "title": "Divisor-Counting Profile of Self-Divisor Sieve Positions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prime hypotenuses of the tree are exactly the primes \u2261 1 mod 4, each at a unique node. The tree-specific question is therefore not how many primes there are below H, but how they are distributed across depths, where the silver poles at Re s = \u03c3\u2080 predict an oscillation of frequency \u03c0/log(1+\u221a2).\n\n\u03c0_tree(H) = \u00bd Li(H) + O(H exp(\u2212c\u221alog H)), and the number of prime nodes of depth at most d is \u224d (3+2\u221a2)^d/d with a secondary oscillatory term of frequency \u03c0/log(1+\u221a2).\n\nDerive the first statement from prime_hyp_iff plus the prime number theorem in arithmetic progressions; test the second numerically by counting prime hypotenuses per depth slice up to depth 12 and fitting the oscillation.\n\nThe tree has a prime number theorem whose error term is genuinely controlled by its own silver poles \u2014 the analogue of zero-controlled error terms in the classical theory.\n\nThe depth distribution of prime nodes is governed by the arithmetic of m\u00b2+n\u00b2 alone and carries no trace of the silver spectrum.",
     "domains": [
       "NumberTheory"
@@ -15052,6 +15065,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The spacing variances 0 (rigid), 3 pi / 8 - 1 (GUE) and 1 (Poisson) are already proved to be strictly ordered. Extend this to the full moment sequence and conjecture that the second moment alone classifies the regime of a finite spectrum up to fluctuations of order n^{-1/2}.\n\nThe k-th moments of the Wigner surmise and of the exponential law agree only at k = 0 and k = 1, and the second moment separates all three regimes with an explicit gap.\n\nIterate the antiderivative recursion used for the second and fourth Gaussian moments to get all even moments in closed form, then compare with k factorial.\n\nA single computable statistic classifies finite spectra, with a proved separation constant.\n\nSome higher moment coincidence exists, indicating an unexpected relation between the Wigner surmise and the exponential law.",
+    "domains": [],
+    "id": "fd_4164",
+    "priority_score": 0.5933333333333334,
+    "research_mode": "team",
+    "source_exp_id": "05a687ab",
+    "status": "available",
+    "timestamp": "2026-08-25T14:05:22.674761+00:00",
+    "title": "Moment Fingerprint Classification"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Mirrors contribute nothing and each Boolean oracle bit contributes at most a factor two. Conjecture that any battery of mirrors plus L factor-derived bits leaves at least |Omega|/2^L indistinguishable instances, and that this is tight for well-chosen thresholds.\n\nFor any finite family of magnitude mirrors together with L Boolean factor-derived probes, the largest class of instances agreeing on all readings has cardinality at least |Omega| / 2^L, with equality achievable.\n\nCombine mirror_conditional_zeroInfo (mirrors are constant on cells) with multi_oracle_pigeonhole, then construct a tight family from dyadic factor thresholds.\n\nThe surviving positional channel is quantitatively capped: no amplification beyond one bit per threshold read.\n\nSome interleaving of mirrors and oracle bits amplifies, which would be the first realized amplification in the round-70 programme.",
     "domains": [],
     "id": "fd_4060",
@@ -15751,6 +15776,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:55.304733+00:00",
     "title": "Empirical encoding conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The spectrum k^2 unfolds to an exact arithmetic progression and is maximally rigid, but the fractional parts of k^2 alpha are expected to have Poisson pair correlation for generic alpha. Conjecture a sharp dichotomy between rational and Diophantine alpha, formalized with the same pair-correlation counting machinery.\n\nFor alpha rational the unfolded pair correlation of the sequence of fractional parts of k^2 alpha is the staircase 2 floor(t), while for alpha of finite Diophantine type less than 2 it converges to the Poisson value 2t.\n\nReuse pairCorrCount on the sequence of fractional parts and prove the rational case exactly by periodicity; attack the Diophantine case via exponential sums.\n\nA fully formal instance of the Rudnick-Sarnak pair correlation phenomenon, bridging number theory and spectral statistics.\n\nThe dichotomy has a third regime, which would refine the current arithmetic picture.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4165",
+    "priority_score": 0.5650265855533476,
+    "research_mode": "team",
+    "source_exp_id": "05a687ab",
+    "status": "available",
+    "timestamp": "2026-08-25T14:05:23.157975+00:00",
+    "title": "Quadratic Spectra Modulo One"
   },
   {
     "consumed_by_exp_id": "",
@@ -16579,6 +16619,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The unique nontrivial square position of a semiprime sieve is the terminal Fermat position 2(b+j0) = p+q, and it satisfies 2*b*j0 <= d^2 with d the half-difference of the factors. This makes the position of the square value an exact read-out of factor imbalance and suggests an early-abort criterion for Fermat-type search.\n\nIf d <= N^(1/4) then the terminal position is the first position at which the square part of v(j) exceeds v(j)/b, so scanning square parts detects the terminal position before reaching it.\n\nSieve balanced and mildly unbalanced semiprimes, record the largest square divisor of each v(j), and check whether the terminal position is the first to satisfy the criterion.\n\nA cheap early-abort test for Fermat/QS style searches on unbalanced moduli, with a proved positional bound behind it.\n\nSquare parts of sieve values are noisier than the terminal bound suggests, quantifying how much of the square-part signal is background.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4168",
+    "priority_score": 0.5636536439869356,
+    "research_mode": "team",
+    "source_exp_id": "ea4eae2e",
+    "status": "available",
+    "timestamp": "2026-08-25T14:05:45.286623+00:00",
+    "title": "Terminal Position Read-Out for Unbalanced Semiprimes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved converse to slope identifiability shows two exponents differing by 2*sigma/Dk admit admissible populations with identical two-point slopes. It applies only to two-level designs; with m levels inside the same span an adversary must satisfy more constraints with the same window slack. Quantifying the gain turns experiment design into an optimisation problem.\n\nFor a least-squares slope fit over m equally spaced levels in a window of spread 2^sigma, exponents alpha1 < alpha2 are indistinguishable iff alpha2 - alpha1 <= c_m * sigma/Dk with c_m decreasing to 0; no finite m removes within-k confounding (Dk < 1), but m = 5 at Dk = 8 separates 0.84 from 1.\n\nGeneralise slope_band_attained to m endpoint-saturating levels, compute the least-squares slope of the adversarial curve in closed form, and extract c_m.\n\nRound-42 can be designed to a stated resolution by choosing m and Dk, instead of reporting confounded within-k fits.\n\nExtra levels inside a fixed span buy nothing, and only widening the bit range can resolve exponents.",
     "domains": [
       "Algebra",
@@ -16834,6 +16889,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The consecutive gap ratio r is invariant under affine rescaling and needs no unfolding, so its mean is a genuine universality constant. Compute the Poisson value 2 log 2 - 1 and the Wigner-surmise value exactly, and show both are strictly below the rigid value 1 attained in the limit by the quadratic spectrum.\n\nThe double integral of min(s,t)/max(s,t) against exp(-s-t) over the positive quadrant equals 2 log 2 - 1, and the analogous Wigner-surmise average is strictly larger and strictly less than 1.\n\nFormalize the two-dimensional integrals by symmetry reduction to s < t and a change of variables u = s/t, reusing the Gaussian moment lemmas of SpectralPoissonVsGUE.\n\nAn unfolding-free numerical fingerprint separates all three regimes, usable directly on finite experimental spectra.\n\nThe r-statistic fails to separate the classes and unfolding is unavoidable after all.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4162",
+    "priority_score": 0.5634281608829629,
+    "research_mode": "team",
+    "source_exp_id": "05a687ab",
+    "status": "available",
+    "timestamp": "2026-08-25T14:05:21.710770+00:00",
+    "title": "Gap-Ratio Universality Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Extend the binary lattice-point model to ternary orders: the coefficient of X^n in the frame geometry of (p,q,r) counts lattice points of a box on the plane ip+jq+kr=n. The conjecture is that the resulting count deviates from its mean by at most p-1, which is Bang's theorem. This turns a classical polynomial statement into a counting problem already half-formalised in the catalog.\n\nFor odd primes p < q < r and all k, |coeff k (cyclotomic (p*q*r) \u2124)| \u2264 p - 1.\n\nFormalise the ternary frame geometry as the product of three truncated geometric series, prove a box-uniqueness lemma modulo p, and bound the alternating differences; test numerically on all p*q*r \u2264 10^4 first.\n\nBang's theorem enters the catalog and globalises to all orders with three odd prime divisors via height reduction.\n\nA concrete counterexample triple would contradict a classical theorem, indicating a modelling error to be localised.",
     "domains": [
       "Geometry",
@@ -16966,6 +17036,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T13:12:56.431845+00:00",
     "title": "Lattice-Point Formula for the Thick-Shell Count"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved sandwich 2bj <= v(j) <= 2bj + j^2 + 2b pins log v(j) to log(2bj) with an explicit error, so the magnitude-only prediction for the hit density at position j is the Dickman value rho(log v(j)/log B) with bounded uncertainty. The conjecture is that the entire observed within-N profile is inside this band.\n\nFor balanced semiprimes and j <= b, the empirical hit density at position j lies within sampling error of rho(log(2bj)/log B), with no residual positional term.\n\nFormalise an interval bound for the Dickman function in Lean, combine with sieveVal_sandwich, and compare against the decile data recorded in ComputationalEvidence.md.\n\nThe residual overdispersion thread loses its positional carrier candidate and must be sought in per-N (rate) rather than within-N (position) structure.\n\nThe gap between the observed profile and the Dickman band is a quantitative, reproducible carrier with a known size.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4167",
+    "priority_score": 0.5633481507492952,
+    "research_mode": "team",
+    "source_exp_id": "ea4eae2e",
+    "status": "available",
+    "timestamp": "2026-08-25T14:05:44.801315+00:00",
+    "title": "Dickman Calibration of Sieve Hit Profiles"
   },
   {
     "consumed_by_exp_id": "",
@@ -26575,6 +26660,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T11:45:23.020026+00:00",
     "title": "Character-Sum Cancellation for the Reciprocity Twist"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The unfolded quadratic spectrum has two-level density exactly 2 floor(t), a staircase with plateaus, while Poisson and GUE densities are continuous. Conjecture that a plateau in the limiting two-level density is an absolute obstruction to being the limit of a determinantal or Poisson process.\n\nIf the limiting normalized two-level density of a sequence of finite spectra is constant on some interval of positive length, then that sequence is not the empirical spectrum of any determinantal or Poisson point process with continuous correlation kernel.\n\nProve that determinantal and Poisson two-level densities are strictly increasing, then combine with picket_pairCorr_density_tendsto.\n\nGives a one-line certificate of non-randomness for deterministic spectra.\n\nSome determinantal process has a plateau, which would be a new and surprising kernel degeneracy.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4163",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "05a687ab",
+    "status": "available",
+    "timestamp": "2026-08-25T14:05:22.195277+00:00",
+    "title": "Staircase Obstruction to Random-Matrix Statistics"
   },
   {
     "consumed_by_exp_id": "",
@@ -37562,14 +37661,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Temporal-lag and pitch-interval separation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f4ec4fd",
     "description": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching search language, and suppose `N(n+m) \u2264 N(n)N(m)` with `N(n) \u2265 1`. Then the normalized logarithmic growth rate exists and equals the infimum of the finite-scale rates. Under a compatible ultrametric and a finite-type extension condition, this rate also equals the Hausdorff dimension of the infinite successful-path boundary.\n\nThe key insight is that the exact additivity proved for finite profiles should be replaced by subadditivity, while the relative-entropy normalization remains unchanged. **Why now?** The finite multiscale composition law identifies precisely which quantity must survive when exact self-similarity is weakened.",
     "domains": [],
     "id": "fd_1947",
+    "phase": "A",
     "priority_score": 0.43887499999999996,
     "research_mode": "team",
     "source_exp_id": "115a4ee3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:54.774147+00:00",
     "title": "Entropy dimension for genuinely submultiplicative search languages"
   },
@@ -38237,7 +38337,7 @@ window.FUTURE_DIRECTIONS = [
     "description": "**Conjecture.** Up to relabelling, the only triples of integer linear maps that act as a\nternary tree on the node set `{1 \u2264 n < m, gcd = 1, m+n odd}` with root `(2,1)` are the\nBerggren triple (determinants `\u00b11`) and the Price triple (determinants `\u00b12`), and no\ntriple of determinant `|det| \u2265 3` exists.\n\n*The key insight is* that determinant `d` forces the gcd of an image pair to divide `d`,\nwhich together with the parity condition (`a+c` and `b+d` odd, proved to be necessary)\nleaves only finitely many candidate matrices with entries bounded by the growth of `m`.\n*Why now?* An exhaustive search over `|entries| \u2264 3` already returns exactly the six\nknown generators, so the classification is within reach of a finite case analysis in\nLean.",
     "domains": [],
     "id": "fd_3199",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.43699999999999994,
     "research_mode": "team",
     "source_exp_id": "a1fe4956",
@@ -43992,19 +44092,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:22:24.854991+00:00",
     "title": "Model the circle of fifths explicitly"
-  },
-  {
-    "consumed_by_exp_id": "05a687ab",
-    "description": "Formalize normalized gap and pair-correlation statistics for finite spectra.\n   Compare the deterministic quadratic spectrum only after unfolding/rescaling,\n   and distinguish Poisson statistics from GUE statistics.",
-    "domains": [],
-    "id": "fd_2060",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "c2f98a25",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:22:26.264921+00:00",
-    "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
   },
   {
     "consumed_by_exp_id": "",
