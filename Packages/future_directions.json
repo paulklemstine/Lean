@@ -49190,7 +49190,7 @@
       "depth_estimate": 3,
       "description": "The depth-`3` amplitude equals `(1/8)e(ω/8) + (5/8)e(aω/4) + (1/4)e(a²ω/2)`\n   for every odd `a`, with `‖·‖ ≥ 1/4`.  (Direct, finite mod-8 case analysis; the\n   numerics already match to four decimals.)\n2. **(3b)** `P_3 = 15/32` exactly, giving a formally verified counterexample to\n   monotonicity of spectral power in the depth.\n3. **(3c)** The base-`b` normalization theorem `FB b a ω N / N → (1/b)e(ω/b) + (1-1/b)e(aω)`,\n   turning the proved `1 - 2/b - ε` bound into an exact limit law with attainment.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -50547,7 +50547,7 @@
       "depth_estimate": 3,
       "description": "is `𝓛 n = {H : Matrix n n ℂ | H Hermitian ∧ H² = t*² I}`; by the\nrigidity theorem of this thread it is exactly the set of Hamiltonians whose logarithmic\nactivation `log (I + iH)` is unitary.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -50587,7 +50587,7 @@
       "depth_estimate": 3,
       "description": "Both channels are now proved theorems in this catalog, so the conjecture is a\nconcrete statement about the pair of certified constants `(2.7 · 10⁻⁶, 1288)` and can be\nfalsified by exhibiting an admissible Gaussian-rational Hamiltonian with `q` inside the\nclaimed range.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -50907,7 +50907,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Two diagonalisable rational matrices `A, B` (not assumed diagonal) whose\neigenvalues are natural numbers `≤ N` and which satisfy `tr(A^k) = tr(B^k)` for all `k ≤ N`\nare conjugate over `ℚ̄`, and in fact have equal characteristic polynomials.\n\n*The key insight is* that `count_eq_of_traces` already gives equality of eigenvalue\nmultiplicities for the diagonal representatives, and the missing step is only the transfer\nfrom a diagonalisable matrix to its diagonalisation — a statement about `Matrix.IsDiag`\nconjugacy rather than about power sums.\n\n*Why now?*  `exists_equiv_of_powerSums` supplies precisely the index-set bijection needed to\nbuild the conjugating matrix, so the remaining work is packaging rather than new\nmathematics; it would upgrade the spectral corollary from diagonal matrices to the class\nthat actually occurs in applications.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -51064,7 +51064,7 @@
       "depth_estimate": 3,
       "description": "Both endpoints of the phase diagram are now theorems\n(`freeEnergy_tendsto_sup`, `l1Dist_spike_tendsto_one`, `gibbs_l1_le_two_range_div`);\nwhat is missing is monotonicity in `β`, a one-variable calculus statement about\n`β ↦ KL(π_β ‖ p)` whose derivative is again a variance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -55288,7 +55288,7 @@
       "depth_estimate": 3,
       "description": "Fix a prefix length in advance and compare centered decimal-digit autocorrelations at lags 1–12 against the exact permutation distribution, with family-wise error controlled across constants and lags. The conjecture is that none of the three advertised preferred lags remains significant after correction at prefix lengths 10³, 10⁴, and 10⁵.\n\nThe key insight is that an exact finite-sample null distribution separates reproducible digit evidence from interpretations based only on irrationality. Why now? The deterministic energy identity identifies the precise statistic to test and exposes every convention that must be fixed before significance has a meaning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -55366,7 +55366,7 @@
       "depth_estimate": 3,
       "description": "For centered cyclic digit prefixes, the conjecture is that statistically exceptional autocorrelation peaks are equivalent to concentration of Fourier power on characters whose phases nearly stabilize the corresponding shift, with quantitative two-sided bounds uniform in prefix length.\n\nThe key insight is that Fourier inversion turns temporal repetition into spectral concentration, while polarization turns it into low interval energy. Why now? These two exact descriptions are now available in one framework, making a sharp stability theorem a concrete target.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -58289,7 +58289,7 @@
       "depth_estimate": 3,
       "description": "For a finite self-adjoint Hamiltonian decomposed into irreducible angular-momentum sectors, conjecture that sufficiently small perturbations commuting with the symmetry action preserve cumulative shell multiplicities whenever adjacent spectral clusters have a positive gap.\n\nThe key insight is that periodic structure depends on spectral projections and their ranks, not on exact numerical eigenvalues; ranks should remain constant until a gap closes.\n\nWhy now? The diagonal shell model gives explicit eigenvectors and multiplicities, making it possible to formulate a quantitative gap condition and then broaden from diagonal matrices to general Hermitian operators.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -58370,7 +58370,7 @@
       "depth_estimate": 3,
       "description": "For any fixed positive scale `E₀`, conjecture that nuclear binding energies across all stable isotopes cannot satisfy `round(E/E₀)=Z` consistently, even after choosing one representative isotope per element.\n\nThe key insight is that binding energy is controlled primarily by mass number and saturation, whereas atomic number is a charge count; a universal scalar rounding rule discards the independent neutron degree of freedom.\n\nWhy now? The shell-spectrum results clarify the valid role of multiplicity while separating it from the stronger and falsifiable claim that energy values themselves encode atomic numbers by uniform rounding.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -59845,7 +59845,7 @@
       "depth_estimate": 3,
       "description": "For directed edges with `pₙ → 0`, conjecture that the centered, variance-normalized empirical spectrum obeys the circular law whenever `npₙ` grows faster than a logarithmic threshold, while below that scale isolated rows create a nonvanishing atom at zero.\n\nThe key insight is that the same sparsity scale controlling isolated vertices also controls singularity and hence the failure of two-dimensional spectral spreading.\n\nWhy now? The finite product-law infrastructure already separates exact edge independence from asymptotic analysis, and the deterministic obstruction shows that sparsity must be studied only after the symmetry issue is repaired.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -61413,7 +61413,7 @@
       "depth_estimate": 3,
       "description": "Define the order-`s` adjacency tensor, its homogeneous clique polynomial, and the maximum over the nonnegative unit `s`-norm sphere. Establish existence of a maximizer by compactness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -61453,7 +61453,7 @@
       "depth_estimate": 3,
       "description": "Prove that cloning vertices with equal multipartite neighborhoods does not decrease the spectral objective, then derive a weighted analogue of the exact balancing identity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -62576,7 +62576,7 @@
       "depth_estimate": 3,
       "description": "Over the real or complex numbers, equip each coboundary with singular values and define an approximate obstruction dimension by counting singular values below a tolerance. Conjecture a stability theorem bounding changes in this quantity by spectral gaps and operator-norm perturbations, yielding a robust analogue of first cohomology for noisy local consistency.\n\n**The key insight is...** exact cohomology detects zero singular values, while practical data require a controlled replacement that distinguishes structural obstruction from measurement noise.\n\n**Why now?** The finite-dimensional complex and its rank decomposition provide a direct route from exact patchability to quantitative perturbation theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Physics"
@@ -63057,7 +63057,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every maximal geodesic of the metric\n\\(\\cosh(y)^{-2}dx^2+\\cosh(x)^2dy^2\\) is defined for all real time.\n\nThe key insight is that degeneration of the horizontal coefficient at large\n\\(|y|\\) is coupled to rapid growth of the vertical coefficient at large \\(|x|\\),\nso conserved energy may prevent finite-time escape even though neither coordinate\ncoefficient is uniformly comparable to the Euclidean metric. **Why now?** The\nmetric is known to be smooth and positive definite everywhere, and its exact\ncoefficient structure is explicit enough to turn completeness into quantitative\nODE estimates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -64092,7 +64092,7 @@
       "depth_estimate": 3,
       "description": "Compare the proved\n   parameters against the quantum Singleton bound using the number of physical\n   edge qubits `N=n·2^(n-1)`, rather than using the cube dimension `n` as though it\n   were block length.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -64887,7 +64887,7 @@
       "depth_estimate": 3,
       "description": "Investigate orbit-dependent transforms separately from the one-step cutoff sum. A rigorous implication between an orbit hitting-time estimate and a spectral estimate would require precise definitions and directional proofs; it should not be treated as an automatic equivalence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics",
         "Logic"
@@ -69548,7 +69548,7 @@
       "depth_estimate": 3,
       "description": "Define trajectories in `EuclideanSpace ℝ (Fin 2)`, angular momentum, and the central-force ODE. Prove conservation of energy and angular momentum, then derive the effective radial equation rather than taking it as the starting model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -69706,7 +69706,7 @@
       "depth_estimate": 3,
       "description": "Establish existence and uniqueness for the logarithmic central-force ODE away from the origin, classify turning radii using the effective potential, and determine which exceptional energy-angular-momentum pairs, if any, yield closed noncircular trajectories.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -69900,7 +69900,7 @@
       "depth_estimate": 3,
       "description": "Refine `bekensteinBits` using a dimensional-quantity library, so radius, energy, action, and velocity cannot be mixed incorrectly. Concrete bounds could then be derived from explicitly stated empirical assumptions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -72096,7 +72096,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a finite network of interacting polynomial causal loops, a weighted product metric yields unique global consistency whenever the nonnegative matrix of componentwise Lipschitz influences has spectral radius below one. Conversely, linear networks with spectral radius at least one admit parameters exhibiting either nonuniqueness or instability.\n\nThe key insight is that network consistency should be governed by spectral gain around all feedback cycles, not by the largest local coupling in isolation. **Why now?** The one-loop theorem supplies the scalar base case, and causal networks provide a falsifiable bridge between fixed-point theory, matrix analysis, and polynomial dynamics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics",
         "Bridges"
@@ -74550,7 +74550,7 @@
       "depth_estimate": 3,
       "description": "A quantum CSS code has both `Z` and `X` distances. Define the dual cochain complex and prove total code distance is the minimum of primal and dual systoles.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -75099,44 +75099,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "22848dce",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "**Conjecture.** Families of binary phylogenetic trees can be encoded as error-correcting codes in quartet-signature space so that large pairwise distance prevents a common quartet, yielding an exponential lower bound for the least leaf number forcing a common quartet. The optimal exponential rate equals a packing rate in a constrained ternary code.\n\nThe key insight is that each four-leaf set admits three resolved quartet types, while consistency among overlapping quartets imposes code constraints analogous to local parity checks.\n\n**Why now?** The common-agreement predicate supplies an exact equality notion for restrictions. This makes it possible to formulate avoidance as distance in a finite signature space and to compare probabilistic tree constructions with coding-theoretic bounds.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [],
-      "github_issue": 0,
-      "id": "fd_2316",
-      "last_attempt_time": "2026-08-24T17:50:25.210056+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.4392222222222222,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.18044v1",
-      "source_path": "resplit_migration",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-08-21T06:23:36.916354+00:00",
-      "title": "Exponential lower bound via quartet codes"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
       "category": "",
@@ -75663,7 +75625,7 @@
       "depth_estimate": 3,
       "description": "Separate logical irreversibility from physical dissipation by defining an implementation semantics and explicitly assuming a thermodynamic realization theorem. This would clarify exactly where the physical Landauer principle enters beyond the formal accounting functional.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics",
         "Logic"
@@ -77579,7 +77541,7 @@
       "depth_estimate": 3,
       "description": "Define the manifold `ℝ × ℝ³`, a smooth ship worldline, `rₛ`, and a smooth compactly supported (or rapidly decaying) shape function. Package `metricB` as a smooth Lorentzian metric tensor and derive its inverse and determinant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Physics"
@@ -77702,7 +77664,7 @@
       "depth_estimate": 3,
       "description": "The proved model is exactly quadratic in speed. Investigate how bubble radius, wall thickness, shape profile, and any ship-mass coupling alter the scaling. The proposed `E ~ M vₛ c` law is not established by the standard fixed-profile density formula.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -77818,7 +77780,7 @@
       "depth_estimate": 3,
       "description": "Formalize null, weak, dominant, and averaged energy conditions and identify exactly which fail for classes of shape functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -78297,7 +78259,7 @@
       "depth_estimate": 3,
       "description": "The Gödel-universe conjecture is not asserted here: a closed\n   timelike curve is geometric, whereas self-consistency requires an additional dynamical law.\n   A faithful future treatment should first formalize a Lorentzian spacetime, timelike curves,\n   Gödel's metric, and a matter evolution relation. It should then state consistency relative to\n   that evolution law rather than infer it from geometric closure alone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Physics"
@@ -80403,7 +80365,7 @@
       "depth_estimate": 3,
       "description": "Generalize binary activity to finite alphabets, obtaining `q^N` capacity and energy-constrained type-class bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -82365,7 +82327,7 @@
       "depth_estimate": 3,
       "description": "Model the round-trip as a completely positive\n   trace-preserving map (Deutsch's D-CTC prescription) on density matrices and prove\n   existence of self-consistent mixed states via the Brouwer/Schauder fixed-point\n   theorem on the compact convex state space, connecting to the catalog's existing\n   quantum-information developments.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Physics"
@@ -82803,7 +82765,7 @@
       "depth_estimate": 3,
       "description": "Lift `balanced_minimizes_energy` to a genuine\n   `argmin` statement over the finite candidate set of valid abscissae using\n   Mathlib's `IsMinOn` / `StrictConvexOn.lt_of_ne`, making the \"gradient descent on a\n   convex spectrum\" reading a literal Lean theorem about the minimizer.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Physics"
@@ -86021,7 +85983,7 @@
       "depth_estimate": 3,
       "description": "For every `d ≥ 2` and every real `d × d` matrix `M`, `d * |det M|^(2/d) ≤ squareEnergy M`; equality holds exactly when `MᵀM` is a nonnegative scalar multiple of the identity. The file proves the inequality and sharpness family when `d = 2`, but not the equality classification.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -87714,7 +87676,7 @@
       "depth_estimate": 3,
       "description": "Package the family over all copy numbers with marginal compatibility. Develop the needed partial-trace lemmas and formulate an infinite quantum state as a compatible family of finite marginals.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Physics"
@@ -88155,7 +88117,7 @@
       "depth_estimate": 3,
       "description": "Represent Eve's coherent interaction with all transmitted systems and an ancilla. Formalize purification, deferred measurement, symmetrization, and a justified reduction from coherent attacks to a tractable attack class.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -88235,7 +88197,7 @@
       "depth_estimate": 3,
       "description": "Extend the proved classical collision bound to smooth conditional min-entropy against quantum side information, with a trace-distance secrecy bound of the form `ε + 1/2 · sqrt(2^(ℓ-Hmin))`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -92905,7 +92867,7 @@
       "depth_estimate": 3,
       "description": "The entry formula is now reduced to the formal codegree theorem.  The conjecture\nis a finite, exact spectral assertion and can be falsified by a single parameter\ntriple or symbolic rank/eigenvalue calculation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -97862,7 +97824,7 @@
       "depth_estimate": 3,
       "description": "Relate `rotEnergy` to the eigenvalues of the actual\n   matrix `D − A_om` in `Matrix.IsHermitian` form, and prove\n   `λ_min ≤ periodicityRatio` as a statement about `Matrix.IsHermitian.eigenvalues`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -97942,7 +97904,7 @@
       "depth_estimate": 3,
       "description": "`cdet` satisfies a cofactor expansion\n   along the first column for *any* matrix; for right-quantum matrices one expects the full\n   set of quantum Cramer identities and a quantum Jacobi ratio theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -100183,7 +100145,7 @@
       "depth_estimate": 3,
       "description": "**C3 (a matching lower bound for multi-block AFEs) — PROVED, in a stronger form.**  For an\n  AFE whose blocks are spectrally separated (pairwise disjoint coefficient supports, e.g. a\n  dyadic decomposition) the whole AFE collapses to a single Dirichlet polynomial\n  (`AsaiSecondMoment.afe_eq_linForm_aggregate`) whose coefficient mass is the sum of the\n  blockwise masses (`sum_normSq_aggregate_of_disjoint`).  Hence the lower bound\n  `(D − eN)·∑_j |w j|²‖A j‖²` (`secondMoment_disjoint_lower`), the removal of one factor `J`\n  from the flagship bound (`secondMoment_disjoint_uniform`), their combination into an exact\n  order `≍ D·∑_j |w j|²‖A j‖²` when `2eN ≤ D` (`secondMoment_disjoint_order`), and the dyadic\n  case used in the paper (`dyadic_support_disjoint`, `secondMoment_dyadic`: the bound is\n  `C · W · B`, with no `J`-dependence).  All in `AsaiSecondMomentLower.lean`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -100661,7 +100623,7 @@
       "depth_estimate": 3,
       "description": "`(x_c - x)^m·κ_m(x) → (m-1)!·x_c^m` for every\n   `m ≥ 1`: the pole order of the `m`-th cumulant is exactly `m`.  The cases `m = 1, 2, 3` are\n   now proved (`meanArea_pole_residue`, `areaVariance_pole_residue`,\n   `areaThirdCumulant_pole_residue`); the uniform statement would identify the full singular\n   structure of the horizon free energy as `log Z(x) = -log(x_c - x) + O(1)`, i.e. an exactly\n   logarithmic free energy at the transition.  The key insight is that all three residues come\n   from a single simple pole of `Z` at `x_c`: `(x d/dx)^m log Z` differentiates only the factor\n   `-log(x_c - x)` to leading order, and that factor is now available in closed form.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -101580,7 +101542,7 @@
       "depth_estimate": 3,
       "description": "For a defect rate whose budget at scale `a` grows sublinearly, `Q(t) ≤ D₀ + κ t^α`\n(`0 ≤ α < 1`), the family of bounds `L ≤ (m/a)(π + Q(L)/a)` proved in `anec_domain_bound`,\noptimized over the free scale `a > 0`, yields `L ≤ C(m, α)·(D₀ + κ L^α)^{1/(1-α)}`, and\nthe envelope is attained by an explicit oscillating curvature profile.\n\n**The key insight is** that the scale `a` in the Prüfer angle is a genuinely free\nparameter: the theorem is a one-parameter *family* of bounds and the physics lies in its\nenvelope, not in any single member — `EnergyShortfall.lean` is the special case `a = √(mε)`\nand already shows how much the right choice of scale buys.\n\n**Why now?** `anec_domain_bound` takes `a` as an argument and\n`myers_bound_with_shortfall` demonstrates the pattern for one fixed scale; the remaining\nstep is to minimize a smooth function of one variable and to build the matching profile\nfrom the `tanSol` / `riccatiSol` blocks already formalized.\n\n**Falsifiable by:** a defect profile with sublinear budget whose exact blow-up time\nexceeds the optimized envelope.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -102419,7 +102381,7 @@
       "depth_estimate": 3,
       "description": "**Zero-energy escape (the `E = 0` half of old Conjecture 4).** `strictly_convex_escape`\n  (a general convexity lemma) plus positivity of the potential gives\n  `nonneg_energy_escape`: at `E ≥ 0` the moment of inertia tends to `+∞` in forward or in\n  backward time, and hence `bounded_motion_energy_neg`: every eternally bounded three-body\n  motion has **strictly negative** energy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Physics"
@@ -102460,7 +102422,7 @@
       "depth_estimate": 3,
       "description": "**Correction to old Conjecture 5.** The \"no threshold at all\" claim is *false* at the\n  level of the parametrised quartic: the closed window `[8/9, 1]` is a genuine spectral\n  stability band. What survives is the conditional statement: *whenever the Euler\n  parameter exceeds `1`*, the collinear configuration is unstable, with no further\n  threshold and a real growth rate. The remaining physical input is Conjecture 5′ below.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -103913,7 +103875,7 @@
       "depth_estimate": 3,
       "description": "3. Extend exponential surjectivity beyond finite spectrum: the present proof\n   already covers every unitary whose spectrum omits at least one point of the\n   circle, and spectral measures should remove the restriction entirely.\n4. Develop the operator-valued analogue: replace the line `1 + t i` by\n   `1 + t N` for a normal or nilpotent operator `N` and characterise when\n   `‖log (1 + t N)‖ = 1` in operator norm.\n5. Characterise the image of the polar-normalized factor\n   `{ log(1 + t i) / |log(1 + t i)| : t > 0 }` as an explicit subarc of the unit\n   circle, with endpoints identified.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics",
         "Logic"
@@ -107711,7 +107673,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every `r ≥ 4` the density of pairs `(N, a)` with\n`ord_N(a) = r` for which the fundamental bin is *not* the largest non-DC bin of\nthe value signal is bounded away from `0` as `N → ∞`; in fact the fundamental's\nrank grows like `Θ(r)`.\n\n**The key insight is** that the residues `aˣ mod N` behave like an equidistributed\nsequence with respect to the additive characters of `ℤ/r`, so the value signal's\nspectrum is asymptotically flat and the fundamental has no structural advantage —\nit is the *comb*, not the exponential, that produces sharpness.\n\n**Why now?** The order-4 slice is already exactly solvable\n(`|V̂(1)|² = (v₀-v₂)²+(v₁-v₃)²` versus `|V̂(2)|² = (v₀-v₁+v₂-v₃)²`, formalised for\n`N = 15, a = 7` in `SpectralHiding.lean`), and the measured density there is\n`0.366` over `N < 500` (see `ComputationalEvidence.md`). The general statement\nneeds only Weyl-sum bounds for exponential sequences modulo `N`.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -109858,7 +109820,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Every free witness that recovers a residue/order coordinate `r ≤ N` to\naccuracy `o(1/r²)` is, as a function of `r`, within `O(1/N²)` of a *multiplicative*\nfunction of `r`; the \"spectral vs. CRT-multiplicative\" distinction therefore lives in the\n*computation*, never in the witness value.\n\n*The key insight is* that exact rounding forces the witness to agree with `1/r` (or an\ninvertible reparametrisation of it) to accuracy `1/(2r²)`, and `1/r` is multiplicative —\nthis is exactly what `heatReturn_approx_multiplicative` proves for the heat kernel.\n\n*Why now?* This cycle turned a qualitative classification label into a quantitative,\ncheckable statement; the general version needs only an abstract \"recovery ⇒ proximity to\n`1/r`\" lemma, which our rounding lemma `round_one_div_of_close` already contains in germ.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -114221,7 +114183,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For a finite decoder-state set `M`, delta cost `dlt` and a periodic stream\nof residual costs, the limit `optCost(n)/n` exists and equals the minimum cycle mean of the\nassociated min-plus cost matrix (its tropical eigenvalue), and the optimal protocol is\neventually periodic with that cycle.\n\n*The key insight is* that `CompressionDelta.tropical_pow_mulVec_eq_optCost` already\nidentifies `optCost` with a tropical matrix power, so the asymptotic bits-per-message is\nby definition the growth rate of tropical powers — the min-plus analogue of the spectral\nradius, which for min-plus matrices is the minimum cycle mean.\n\n*Why now?*  Both special cases are proved: coherent streams give cycle mean `r`\n(`tendsto_amortized_rate`), block-alternating streams give `r + min(2D,L)/(2L)`\n(`tendsto_block_rate`).  A general Karp-style theorem would subsume both and give a\ncomputable design rule for adaptation schedules.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical",
         "Physics"
@@ -115133,7 +115095,7 @@
       "depth_estimate": 3,
       "description": "New in this cycle:\n   `WignerBridge.frac_large_eigenvalues_le` is a deterministic Markov inequality for\n   the ESD of any real symmetric matrix, and\n   `RademacherWigner.expect_frac_large_eigenvalues_le` turns the uniform moment bound\n   into `E[#{i : |λᵢ|/√N ≥ t}/N] ≤ (k+1)^(2k)/t^(2k)`, independent of `N`. Hence\n   `RademacherWigner.esd_tight`: for every `ε > 0` there is a threshold `t` (one may\n   take `t = 2/√ε`) with expected mass at most `ε` outside `[−t, t]` **in every\n   dimension**. This is precisely the compactness hypothesis of Conjecture 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics",
         "Bridges"
@@ -117561,7 +117523,7 @@
       "depth_estimate": 3,
       "description": "No matrix realizes a Markoff Vieta move, in contrast with the linear Berggren action. The conjecture is that degree two is optimal and that the obstruction is a rank computation on finitely many Markoff base points.\n\nNo polynomial map of degree less than two in any linear coordinate system realizes the Vieta involution on the Markoff surface, and the quadratic realization is unique modulo the surface equation.\n\nSet up the general quadratic ansatz and solve the resulting linear system on a spanning set of Markoff triples.\n\nA clean statement of why the Lorentz half of the Berggren machinery cannot transport, valid for all coordinate changes.\n\nA hidden linearization exists, which would immediately import the Berggren hyperbolic geometry to the Markoff tree.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Physics"
@@ -117806,7 +117768,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Any braid representation whose matrix entries lie in ℤ[1/√2, i] and which\nis generated by matrices of finite order lands inside the Clifford group; hence no\narithmetic braid representation over the Berggren spectral field is dense in `U(2)`, and\nuniversality requires leaving the field ℚ(√2, i) (e.g. Fibonacci anyons over ℚ(√5)).\n\n*The key insight is* that the Clifford condition is a *closed* algebraic condition on the\nconjugation action on Pauli matrices, so it survives limits and constrains the whole closure\nof the generated monoid. **Why now?** The `Cliff` set, its closedness, its containment of\nthe Ising generators, and the exclusion of `T` are all already formalized\n(`isClosed_cliff`, `isingMonoid_le_cliff`, `tgate_not_cliff`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Physics"
@@ -119359,7 +119321,7 @@
       "depth_estimate": 3,
       "description": "Every normalised spectral moment of the symmetric Rademacher ensemble should converge to the corresponding semicircle moment. Polynomiality reduces this to a single leading coefficient, and the odd orders are already exact at finite N.\n\nFor every m, expect (normalizedMoment (W ·) m) tends to WignerSemicircle.semicircleMoment m as N tends to infinity.\n\nCombine EvenWalks.evenClosedWalkCount_eq_sum_choose with the conjectured top shape count and take limits of the explicit rational function of N.\n\nThe moment method for the semicircle law is complete at all orders for this ensemble, with exact finite-N formulas at every order.\n\nEither the shape counts grow faster than the degree bound allows or the semicircle moments are not the limits, contradicting the verified orders 2, 4 and 6.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Physics"
       ],
@@ -122979,7 +122941,7 @@
       "depth_estimate": 3,
       "description": "With alpha computed exactly for clique sums, the gap between alpha and the Lovasz theta function becomes testable under gluing. We conjecture that the gap is additive up to the same minus-two defect, bridging the combinatorial trace calculus with semidefinite relaxations. Small cases with C5-like sides are finite computations.\n\nFor a clique sum along a clique of size k, theta(G) - alpha(G) <= (theta(G_1) - alpha(G_1)) + (theta(G_2) - alpha(G_2)) + min(k, 2).\n\nCompute theta numerically for clique sums of two C5s glued along an edge and along a vertex, and compare with the exactly known alpha from the trace formula.\n\nThe trace calculus extends to spectral relaxations, giving gluing rules for Shannon capacity bounds.\n\nA numerical violation would show the theta function is not controlled by separator traces, isolating a genuinely spectral obstruction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Physics"
@@ -124371,7 +124333,7 @@
       "depth_estimate": 3,
       "description": "For graphs of maximum degree at most three the non-backtracking trace sequence should determine the number of cycles of each length. The proved value at n = 3 (six times the number of triangles) is the first case, and the girth criterion pins the first nonzero index. This would make the Hashimoto trace a strictly finer invariant than the adjacency spectrum on this class.\n\nIf G and G' have maximum degree at most three and trace(B_G^n) = trace(B_{G'}^n) for all n, then G and G' have the same number of cycles of every length.\n\nCompute the trace sequences of adjacency-cospectral subcubic pairs and compare cycle counts; formally, set up the triangular system relating trace(B^n) to cycle counts of length at most n and prove its unipotence by induction on n.\n\nThe non-backtracking trace sequence is a cycle-spectrum invariant, strictly refining the adjacency spectrum on subcubic graphs.\n\nA cospectral subcubic pair with equal non-backtracking traces but different cycle counts exists, bounding how much combinatorial data the Hashimoto matrix retains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Physics"
@@ -131356,7 +131318,7 @@
       "depth_estimate": 3,
       "description": "The L1 rounding energy of the mesh (1/q)Z equals the Mantel-Turan number floor(q^2/4). We conjecture the p-th moment gives a family of extremal numbers with an exact division-free identity for each p.\n\nFor every p >= 1 there are explicit polynomials P_p, R_p with 2^p (p+1) * sum_{j<q} min(j, q-j)^p = P_p(q) - R_p(q % 2).\n\nVerify by decide for p <= 4 and q <= 40, then prove by the same lower/upper half splitting plus Faulhaber sums.\n\nEvery Lp quantization energy is an exact extremal-combinatorial quantity, linking loss exponents to Turan-type numbers.\n\nOnly p = 1 admits a clean closed form, isolating the Mantel bridge as special.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "Physics"
@@ -133011,7 +132973,7 @@
       "depth_estimate": 3,
       "description": "Define the spurious energy of a window as the sum of the scale-invariant sidelobe amplitudes of its Fourier transform. The conjecture is that this quantity is infinite exactly for windows with a boundary discontinuity and finite for Schwartz windows, making it a two-valued detector of smoothness. The approach is repeated integration by parts to convert the order of the boundary singularity into the polynomial order of the sidelobe envelope.\n\nE(w) = Σ_n ξ_n·‖𝓕w(ξ_n)‖ over the non-principal local maxima of ‖𝓕w‖ diverges for every compactly supported w that is not C^∞, and converges for every Schwartz w.\n\nExtend Algebra.SmoothWindows.Sidelobes from the indicator function to the family of B-spline windows (k-fold convolutions of rect), where the transfer function is sinc^k and the sidelobe amplitudes are explicit; check the divergence/convergence dichotomy against k.\n\nWindow quality becomes a single computable invariant, and 'peaks that are really sidelobes' get a sharp criterion independent of the data being analysed.\n\nThere is a compactly supported, non-smooth window with summable spurious energy, which would give a strictly better compactly supported detector than any Schwartz window — an outcome of independent practical interest.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Physics"
@@ -133146,7 +133108,7 @@
       "depth_estimate": 3,
       "description": "The wide-window limit recovers the catalog's harmonicSum; the conjecture is that the rate of convergence encodes the zero counting function, and that the whole scale space determines the zero family uniquely. The approach identifies gaussSpectral with a heat smoothing of the weighted counting measure and applies injectivity of the heat semigroup. It matters because it makes the smooth window a lossless, rather than merely convenient, reparametrisation of the data.\n\nFor a ConjSymm family with counting function N(T) ~ (T/2π)log(T/2πe), harmonicSum - gaussSpectral(S,s) ≍ (log s)/s² as s → ∞; moreover gaussSpectral(S,·) = gaussSpectral(S',·) on a nondegenerate interval implies S = S'.\n\nProve the injectivity half first for finite multisets by analytic continuation in 1/s², then test the asymptotic rate numerically against the first 10^4 ordinates before attempting the Mellin-transform argument.\n\nThe Gaussian scale space is a complete invariant of the zero family, so any statement about zeros can be restated as a statement about a single smooth function of one real variable.\n\nThere exist distinct zero families with the same scale space, which would exhibit an explicit kernel of the smoothing operator and bound what any window-based statistic can distinguish.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Physics"
@@ -133564,7 +133526,7 @@
       "depth_estimate": 3,
       "description": "The draw-weighted dial is the quadratic form p ↦ ½ pᵀ D p with D_ij = (x_i − x_j)(y_i − y_j). All regime dependence is spectral. Determining the inertia of D turns 'can an unbalanced draw flip the dial?' into an eigenvalue comparison.\n\nFor a comonotone population with pairwise distinct footprints, D has exactly one positive eigenvalue, and the flip threshold for the conditioning number satisfies κ_crit² = |λ_max| / |λ_min^-| up to a factor |ι|.\n\nFormalize D as a Matrix ι ι ℝ, prove Hermitian, and relate ½ pᵀ D p to Catalog.UniformDial.wcov via wcov_eq_half_double_sum; then bound the Rayleigh quotient on the simplex.\n\nThe triage rule becomes computable from a single eigenvalue pair rather than from all pair masses.\n\nThe budget bound ε²C − M²Δ is the sharp regime-free criterion and no spectral shortcut exists.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Physics"
@@ -135626,7 +135588,7 @@
       "depth_estimate": 3,
       "description": "The tie-attenuation law is the top eigenvalue of the block-averaging projector acting on centred rank space. Extending the ssR/ssS decomposition to the full spectrum should give a ladder of canonical correlations, of which the recorded dial is only the first rung.\n\nFor a tie profile with blocks m_1,...,m_k the canonical correlations between the midrank vector and any refining response are the square roots of the eigenvalues of the block-averaging projector, whose multiset is determined by the profile alone.\n\nFormalise the projector on the rank space of a profile, compute its spectrum for small profiles, and match against ssR/ssS.\n\nTurns the single dial into a spectral fingerprint that identifies the tie profile, not just its ceiling.\n\nThe response enters beyond the projector, meaning the one-sided law hides response-dependent structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Physics"
       ],
@@ -136812,7 +136774,7 @@
       "depth_estimate": 3,
       "description": "The proved sandwich |X|^k ≤ |G|·o_k ≤ |G|·|X|^k pins the exponential growth rate of the hierarchy at |X|. The conjecture sharpens this to an exact second-order expansion controlled by the second largest fixed-point count, making the hierarchy a spectral probe of the action.\n\n|G|·o_k = |X|^k + m·r^k + O(s^k) where r is the largest fixed-point count among nonidentity elements, m the number of elements attaining it, and s < r.\n\nSplit the moment sum by the value of |X^g| and bound the tail; formalise as an inequality with explicit constants rather than an asymptotic statement.\n\nOrbit counts on tuples determine the fixed-point spectrum of the action, an inverse-problem statement.\n\nCancellation among elements with equal fixed-point counts would have to be exhibited, contradicting positivity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -138123,7 +138085,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a sorted attention profile that is asymptotically Zipf with exponent $s > 1$,\nthe knee at gate $\\tau$ satisfies $k^*(n) = \\Theta\\big((1-\\tau)^{-1/(s-1)}\\big)$ uniformly in $n$,\nso that two knee measurements at different gates determine $s$ up to $o(1)$.\n\n*The key insight is* that the tail criterion converts the gate slack $1 - \\tau$ into a tail-mass\nbudget, and for a power-law tail the inverse of the tail function is again a power law with\nexponent $1/(s-1)$.\n\n*Why now?* The tail criterion is already established and gate-general; the missing ingredient is a\nmatching lower bound via integral comparison.\n\n**Test.** Establish matching upper and lower bounds for the Zipf knee and check numerically that\nthe measured grid ($0.9318$ / $0.9532$ / $0.9660$ / $0.9759$) pins $s \\in [2.2, 2.3]$.\n\n**If true:** a knee sweep measures a spectral exponent of the model's attention, turning the knee\ninto a model-internal observable. **If false:** the knee depends on more than the tail exponent,\nand the profile must be described by at least two parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Physics"
@@ -139556,7 +139518,7 @@
       "depth_estimate": 3,
       "description": "A deployed system is monitored by many statistics at once. Conjecture: the suite's critical temperature is governed by the operator norm of the covariance functional on the audit span, so the first statistic to break is the maximizer of |Cov_p(r,f)|/sigma_p(f). This replaces per-statistic thresholds by a single spectral quantity.\n\nFor a finite family f_1,...,f_m, sup_i eps * beta_c^{(i)}(eps) -> max_i |Cov_p(r,f_i)| as eps -> 0, and the maximizing direction in the L^2(p) span is the normalized projection of r onto that span.\n\nExtend RLHF.tendsto_eps_mul_betaCrit to a finite family by taking maxima inside the two-sided window RLHF.betaCrit_window, then optimize |Cov_p(r,f)|/sigma_p(f) over the span using the Cauchy-Schwarz equality case.\n\nAudit suites can be scored by one spectral number, and redundant statistics are exactly those inside the reward's orthogonal complement.\n\nSuite-level hacking is not determined by pairwise covariances, indicating genuinely joint (multivariate) hacking effects.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -143168,7 +143130,7 @@
       "depth_estimate": 3,
       "description": "The conjectured mean-based meta-analytic decorrelation budget is false, and fails only through a missing ordering hypothesis: decorrelation must antivary with headroom across replications. This turns the ordering into an empirical diagnostic of a dial cell. The conjecture is that clean cells antivary while count-parity cells monovary, with a quantifiable over-credit factor.\n\nFor a uniform dial cell the sequences (1 - c_i) and (1 - a_i b_i) over seeds are antivarying, so the mean-based budget holds; for a count-parity cell they are monovarying and the mean-based budget over-credits the pooled advantage energy by a factor at least 1 + Var(c)/(1 - cbar)^2.\n\nRecompute per-seed mutual correlations c_i and reading products a_i b_i from the recorded seeds, evaluate the rank correlation of (1 - c_i) against (1 - a_i b_i), and compare the two budgets against the measured pooled energy.\n\nMeta-analysis of dial cells acquires a validity precondition that can be checked from the same data, and count-parity verdicts become explainable as budget-allocation failures.\n\nThe ordering is an artefact of the counterexample and the mean-based budget fails for a different, still unidentified reason.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Physics"
@@ -146049,7 +146011,7 @@
       "depth_estimate": 3,
       "description": "Round-92 #1, THEORY deliverable (papers-only bump; experiment count UNCHANGED at 587). Paper 250.\n\nConnects paper 225's PROVEN F1 master inequality S <= min(1/(Lam*Theta*qhat), 2^k_bits/(Lam*Theta)) to the measured positional profile (papers 228-242 chain).\n\nPARAMETER MAP: Lambda_meas = 0.766 [independently verified 0.765671] = prior shape itself (b_bulk=.573 [.412,.767], w=.086 [.064,.108], b_edge>=15) -> ascending beats descending 1/Lam ~= 1.306; Theta_asc ~= 0.867 [0.8193, 0.9076]; qhat NOT identified by any recorded number in the chain (full-window scans => qhat=1 trivially); k_bits=0 test-blind => arm 1 binds everywhere.\n\nEQUALITY REFUTED THREE WAYS (E1: pi flat within cells; controls flat in all three): KS D=.09519 p=6.9e-76 (paper 228/exp578); two-component LRT p=9.3e-10, spike weight and b_bulk CIs exclude flatness (paper 238/exp588, exp594 cap ladder); binning-free conditional-logistic LRT p=1.17e-21 (paper 233). E1 fails POOL-SIDE, beyond policy choice => NO realizable policy attains the bound on this data.\n\nGAP FACTOR X := bound/S_asc = C0/C_sort = 1.15302 [27-cell CI 1.10175-1.22054]; policy/baseline-independent via verified identity chain C0/c_asc = bound/S = (M+1)/(2M*E_x+1); hump-insensitive (dX=-0.019 at +20% amplitude).\n\nTIGHTNESS-CIRCULARITY CATCH: all four legacy anchors' P_hat satisfy Lam*Theta ~= 1.00-1.04 BY CONSTRUCTION (inverted through S_A=1/qhat, the bound at Lam=Theta=1); identity machine-zero (verifier resid 0.0, band [0.99999,1.0422]); anchor 4 exact self-consistent inversion (P matches booked to 4.9e-7) -> zero evidential weight for attainment; truncation/witness anchor tightness NOT-CURRENTLY-DECIDABLE without a raw non-inverted P_eff under a named committed R_eff (none exists).\n\nVERDICT BOUND-SLACK-BY-X: proven inequality overshoots every realizable test-blind policy on the measured profile by >=10% and <=22%; slack PROFILE-FORCED and POLICY-INDEPENDENT. Does not weaken the theorem - LOCATES the open work.\n\nDECIDABLE CLOSER: scan-simulation joint S/Lam/Theta/qhat measurement on exp578_positions.npz (window-ascending policy); map predicts S~=1.31 vs bound 1.51; observing S>1.51 would FALSIFY the mapping - genuine two-sided test, ~1 session, no heavy compute. Theorem-side closer: sharpness must be posed over the prior class, never as tightness-on-this-pool.\n\nVERIFICATION: verifyf1_recompute.py reimplemented from md definitions ONLY (no import of f1tight_check), Gauss-Legendre continuum + M=40k discrete cross-check (disc spread 5.2e-6): ALL THREE claims PASS, discrepancies=0. Cosmetic corrections folded per verifier: bulk-alone Lam=0.8769/gain 1.140/spike log-share 50.8% (draft ~1/3); Theta floor 0.8193 (draft ~0.83).\n\nScope: exp597 dial plateau concerns RATE layer, orthogonal to shape layer consumed by Lam/Theta; round-91 closure (#396/#397 pure density, no sequence structure) consistent - this consumes only the density shape. Barrier framing: none - prices one side of barrier-4's converse program (F1 sharpness) inside the already-mapped positional stratum.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/{f1tight_connection.md, f1tight_check.py, f1tight_result.json, verifyf1_recompute.py, verifyf1_result.json}; paper ResearchOutput/NewMathematics/250_F1Tightness.md.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty"
       ],
@@ -146295,7 +146257,7 @@
       "depth_estimate": 3,
       "description": "Inside each scale block B^L ≤ T < B^(L+1) the budgets that lose depth to coarse-level overhead form an explicit interval of density 1/(B-1)^2. For perturbed cost models with per-cell weight a and per-level overhead c the deficit can take several values; we conjecture each value has a rational limiting density.\n\nFor energyCells a c B the deficit Nat.log B T - maxDepth takes values in {0,...,Nat.log B (2a+c)+1}, and each value j has a limiting density d_j(B,a,c) which is a rational function of B, a, c summing to 1.\n\nDecompose each scale block by the thresholds energyCells a c B (L-j) and compute the interval lengths exactly, as in Deficit.lossy_filter_eq; verify numerically for small a, c, B.\n\nThe overhead of coarse levels acquires a complete statistical description, refining the O(1) offset of the universality theorem.\n\nSome deficit value has no density, indicating oscillation of the thresholds relative to the powers of B, itself a striking equidistribution failure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -146451,6 +146413,183 @@
       "thread_id": "",
       "timestamp": "2026-08-25T03:14:11.540119+00:00",
       "title": "Real-Base Depth Function and Its Jump Set"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Combinatorics.QuartetCodes",
+        "Combinatorics.QuartetCodesUpperBound",
+        "Combinatorics.QuartetCodesSmallCases",
+        "Combinatorics.QuartetCodesSharpPair",
+        "Combinatorics.Core"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The least leaf number h(k) forcing k binary trees to share a quartet is proved here to lie between 3^((k-2)/4) and 3^(2^k)+1. Exhaustive and local-search data (h(2)=6, h(3)=10, and 19, 23, 29 for k=4,5,6) indicate a single exponential rate near 1.7. The direction is to prove h(k) = Theta(c^k) and identify c.\n\nThere is a constant c > 1 with h(k) = Theta(c^k); in particular h(k) <= C * c^k, replacing the doubly exponential Erdos-Szekeres bound.\n\nFormalize a 4-uniform hypergraph Ramsey bound for three colours and derive an exponential upper bound on h(k); check the predicted values against h(2)=6 (proved here) and the computed h(3)=10.\n\nThe quartet agreement threshold has a well-defined exponential rate, and the coding-theoretic packing rate is its logarithm.\n\nEither the truth is doubly exponential, in which case the small-case data is misleading, or h(k) is not of pure exponential type and a second parameter governs it.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_4087",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.6715507246376813,
+      "proof_strategy": "Replace the iterated global monotone-subsequence extraction of caterpillar_family_common_quartet by a single application of a 3-colour Ramsey theorem for 4-sets, using that a common quartet only needs agreement on four leaves.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "22848dce",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/22848dce",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T03:14:29.634485+00:00",
+      "title": "Exponential Rate of the Common-Quartet Threshold"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Combinatorics.QuartetCodesConsistency",
+        "Combinatorics.Core"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "A ternary word indexed by 4-subsets is realizable by a binary tree only if every 5-leaf window is realizable. We enumerated 210 valid two-premise five-leaf rules and formalized three of them. The conjecture is that these local rules are complete: local consistency on all 5-windows implies global realizability.\n\nA word w in (Fin 3)^{C(n,4)} is the quartet signature of a binary phylogenetic tree if and only if the restriction of w to every 5-element leaf subset is the signature of a tree on those five leaves.\n\nFormalize the window restriction using the restrict predicate of Combinatorics.Core, then prove the reconstruction direction by building splits from the 0-letters; verify by exhaustive enumeration at n = 6, 7 that no locally consistent non-realizable word exists.\n\nThe quartet code is a genuine low-density parity-check code with constant window size, so its rate can be estimated by standard LDPC counting.\n\nGlobal quartet consistency needs windows of unbounded size, and the coding analogy is only an upper-bound heuristic.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_4088",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.55,
+      "proof_strategy": "From a locally consistent word, define a binary relation 'a,b form a cherry relative to c,d' and show the five-leaf rules make it a compatible split system, then invoke the splits-equivalence theorem for trees.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "22848dce",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/22848dce",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T03:14:29.986737+00:00",
+      "title": "Local Axiomatization of Quartet Consistency"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Combinatorics.QuartetCodes",
+        "Combinatorics.QuartetCodesSmallCases"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The proved lower bound spends one tree per 3^{1/4} leaves because it is a union bound over all ordered quadruples. Since the agreement probability is exactly 3^{-(k-1)} by the ternary balance theorem and quartets sharing at most two leaves are nearly independent, the Lovasz Local Lemma should improve the exponential base.\n\nThere are avoiding families of k random caterpillars on n leaves whenever k >= 3 log_3 n + O(1), improving the constant 4 in exponential_lower_bound, hence h(k) >= 3^{k/3 - O(1)}.\n\nFormalize the symmetric Lovasz Local Lemma for the events 'all k trees agree on quartet Q', with dependency degree O(n^3) and probability 3^{-(k-1)}, and re-derive the avoidance statement in the Lean framework of exists_quartet_avoiding_family.\n\nThe exponential lower bound base rises from 3^{1/4} = 1.316 toward the empirically observed 1.7, narrowing the gap with the upper bound.\n\nThe quartet agreement events are more strongly dependent than their pairwise leaf overlap suggests, indicating a hidden global constraint in tree space.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_4089",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5646683179548131,
+      "proof_strategy": "Use three_mul_qclass_card for the exact per-quartet probability, bound the dependency degree by counting quadruples sharing a leaf, and apply the symmetric LLL condition e * p * (d+1) <= 1.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "22848dce",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/22848dce",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T03:14:30.281430+00:00",
+      "title": "Local-Lemma Sharpening of the Avoidance Rate"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Combinatorics.QuartetCodesUpperBound",
+        "Combinatorics.Core",
+        "Combinatorics.QuartetCodes"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Our upper bounds are proved for caterpillar trees, encoded as leaf orders, while the lower bounds hold for arbitrary split systems. The direction is to transfer the upper bounds to all binary phylogenetic trees by extracting an inherited caterpillar on a logarithmic number of leaves from any binary tree.\n\nEvery binary phylogenetic tree on n leaves contains a subset of at least log_2 n leaves whose induced subtree is a caterpillar; consequently the common-quartet upper bounds for caterpillars imply upper bounds for arbitrary binary trees with n replaced by 2^n.\n\nFormalize the extraction (a longest root-to-leaf path plus its pendant leaves) and combine it with caterpillar_family_common_quartet via commonAgreement_subset.\n\nIsAgreementThreshold m k 4 becomes provable for explicit m for all binary trees, closing the theory on the upper side.\n\nCaterpillars are not representative of general trees for quartet agreement, and balanced trees form a genuinely harder extremal family.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_4090",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.6716111111111113,
+      "proof_strategy": "Induct on the tree: a binary tree on n leaves has a leaf at depth at least log_2 n; the leaves attached along that path induce a caterpillar, and quartets of the induced subtree are quartets of the original.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "22848dce",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/22848dce",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T03:14:30.572603+00:00",
+      "title": "Caterpillar Extraction for General Binary Trees"
     },
     {
       "ambition_level": "extension",
@@ -151851,6 +151990,46 @@
       "thread_id": "",
       "timestamp": "2026-08-17T16:46:12.297819+00:00",
       "title": "Deepening: Compression Research B5: PRNG-generated real-world data — detection and seed rec"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 80241759 (Q=0.790), which proved 110 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For concrete `B` and threshold `T`, define and\n   compute the largest supported depth, proving maximality rather than only a\n   selected numerical instance.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "push_80241759_7d4f35bd",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.89,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "80241759",
+      "source_path": "Parameter-derived depth",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-25T03:14:24.715872+00:00",
+      "title": "Deepening: Parameter-derived depth"
     },
     {
       "ambition_level": "grand_challenge",
@@ -174002,6 +174181,7 @@
     "barriers": 11,
     "becomes": 5,
     "berggren": 11.0,
+    "bound": 1,
     "boundary": 9,
     "cantor": 2,
     "carries": 9,
@@ -174012,7 +174192,6 @@
     "conjecture": 21.0,
     "connecting": 5.0,
     "correct**": 2,
-    "define": 1,
     "e.g": 5.0,
     "elementary": 2,
     "embedding": 3,
@@ -174023,8 +174202,9 @@
     "experiments": 25,
     "explicit": 7,
     "exponent": 5.0,
+    "exponential": 1,
     "false**": 9.0,
-    "finite": 16.0,
+    "finite": 17.0,
     "formal": 3,
     "formalize": 13.0,
     "formalized": 9,
@@ -174039,7 +174219,6 @@
     "i(joint": 2,
     "iteration": 10,
     "itself": 10.0,
-    "largest": 1,
     "limited-memory": 9,
     "log(1+√2": 4.0,
     "lorentz": 5.0,
@@ -174052,8 +174231,7 @@
     "moonshot)**": 4,
     "moves": 3.0,
     "now**": 9.0,
-    "number": 12.0,
-    "numerical": 1,
+    "number": 13.0,
     "opening": 2,
     "paper": 45,
     "positive": 6,
@@ -174067,6 +174245,7 @@
     "questions": 2.0,
     "reduces": 3,
     "residue": 6,
+    "resolved": 1,
     "result": 22,
     "round-32": 2,
     "semiprime": 3,
@@ -174074,7 +174253,7 @@
     "silver-ratio": 5,
     "spectral": 4,
     "structure": 19.0,
-    "ternary": 6.0,
+    "ternary": 7.0,
     "theorem": 17,
     "theory": 13.0,
     "tree's": 10.0,

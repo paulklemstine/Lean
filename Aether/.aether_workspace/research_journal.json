@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3eae19ad",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after the U64 zero-fit dial cycle\n\nTwo research cycles were run on the round-61 #1 record\n(`U64-DIAL-HOLDS-COUNT-PARITY`, exp 530).\n\n**Cycle 1** produced the *tie-attenuation law",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 86,
-      "timestamp": "2026-08-23T08:50:02",
-      "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count parity (paper 185)"
-    },
-    {
       "cycle_id": "0ef4aed2",
       "domain": "Novelty",
       "key_insight": "# Future Directions — after round-65 #1 (TDIAL-U76, exp 533)\n\n## What this cycle settled\n\nFour Lean files (`Catalog/Novelty/ZeroFitDialU76.lean`,\n`ZeroFitDialPerturbation.lean`, `ZeroFitDialEffectiveB",
@@ -499,19 +489,19 @@
       "theorem_count": 112,
       "timestamp": "2026-08-24T23:37:08",
       "title": "Weighted / signed sums"
+    },
+    {
+      "cycle_id": "80241759",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Parameter-derived depth (Physics, cycle v19c)\n\n## What this cycle established\n\nFor a concrete branching number `B` and a concrete information threshold `T`, the largest\nsupported",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-08-25T03:14:24",
+      "title": "Parameter-derived depth"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "be7c0bd7",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from what survived and what broke in this cycle\n(`Catalog/Geometry/AlmostLossless*.lean`).\n\n**What survived.**  (",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-18T03:09:07",
-      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-    },
     {
       "cycle_id": "856336cf",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 112,
       "timestamp": "2026-08-24T23:37:08",
       "title": "Weighted / signed sums"
+    },
+    {
+      "cycle_id": "80241759",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Parameter-derived depth (Physics, cycle v19c)\n\n## What this cycle established\n\nFor a concrete branching number `B` and a concrete information threshold `T`, the largest\nsupported",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-08-25T03:14:24",
+      "title": "Parameter-derived depth"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3be10ac1",
-      "domain": "Pythagorean",
-      "name": "geomBlocks_sum_cast",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "c293906f",
-      "domain": "Probability",
-      "name": "here",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "c293906f",
-      "domain": "Probability",
-      "name": "dilate_pos",
-      "quality": 0.88
-    },
     {
       "cycle_id": "93d08ac5",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "margin_pinned_of_knee_32",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "80241759",
+      "domain": "Physics",
+      "name": "pow_foamDepth_le_threshold",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "80241759",
+      "domain": "Physics",
+      "name": "threshold_lt_pow_foamDepth_add_two",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "80241759",
+      "domain": "Physics",
+      "name": "foamDepth_foamCells",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-24T23:37:08",
+  "last_updated": "2026-08-25T03:14:24",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "6d98445d",
-        "quality": 0.82,
-        "theorems": 57,
-        "title": "Future directions from cycle 4c2c71e5"
-      },
-      {
         "cycle_id": "2e28602b",
         "quality": 0.85,
         "theorems": 158,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 56,
         "title": "A radix-growth threshold"
+      },
+      {
+        "cycle_id": "80241759",
+        "quality": 0.79,
+        "theorems": 110,
+        "title": "Parameter-derived depth"
       }
     ],
     "Probability": [
