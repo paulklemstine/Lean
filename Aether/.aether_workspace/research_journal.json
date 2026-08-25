@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7797dc46",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Known versus unresolved cards\n\nThe cycle just completed established, with machine-checked proofs:\n\n* the **splitting theorem** `E[total payoff] = d` for `d` resolved cards plus a",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 95,
-      "timestamp": "2026-08-23T15:37:18",
-      "title": "Known versus unresolved cards."
-    },
-    {
       "cycle_id": "f099f0f6",
       "domain": "Logic",
       "key_insight": "# Future Directions — Burnside Moment Hierarchy\n\nDerived from the analysis and adversarial review of the five research cycles recorded in\n`Catalog/Logic/MomentHierarchy.lean` (core hierarchy) and\n`Cat",
@@ -499,19 +489,19 @@
       "theorem_count": 66,
       "timestamp": "2026-08-25T08:00:33",
       "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measu"
+    },
+    {
+      "cycle_id": "4578ca8c",
+      "domain": "Computation",
+      "key_insight": "# Future directions — Euler–Mascheroni acceleration by telescoping envelopes\n\n## What this cycle established\n\nThree Lean files in `Catalog/Computation/` develop a complete, sorry-free theory of\nmidpoi",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 45,
+      "timestamp": "2026-08-25T08:00:48",
+      "title": "Midpoint-corrected acceleration"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9aa1e8d1",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Arithmetic Geometry of Transformer Weight Lattices\n\nDerived from the Stage-3 analysis and the Stage-4 adversarial review of\n`Catalog/Bridges/QuantizedWeightLattices*.lean`, after",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-18T08:54:38",
-      "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
-    },
     {
       "cycle_id": "5297c534",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 66,
       "timestamp": "2026-08-25T08:00:33",
       "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measu"
+    },
+    {
+      "cycle_id": "4578ca8c",
+      "domain": "Computation",
+      "key_insight": "# Future directions — Euler–Mascheroni acceleration by telescoping envelopes\n\n## What this cycle established\n\nThree Lean files in `Catalog/Computation/` develop a complete, sorry-free theory of\nmidpoi",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 45,
+      "timestamp": "2026-08-25T08:00:48",
+      "title": "Midpoint-corrected acceleration"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7934932a",
-      "domain": "MachineLearning",
-      "name": "tvD",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "99ec0ece",
-      "domain": "Novelty",
-      "name": "only",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "99ec0ece",
-      "domain": "Novelty",
-      "name": "queryList_depth",
-      "quality": 0.82
-    },
     {
       "cycle_id": "99ec0ece",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "gain_zero",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "4578ca8c",
+      "domain": "Computation",
+      "name": "hasDerivAt_poly6",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "4578ca8c",
+      "domain": "Computation",
+      "name": "nonneg_of_hasDerivAt_nonneg",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "4578ca8c",
+      "domain": "Computation",
+      "name": "pade_lower_le_log_one_add",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-25T08:00:33",
+  "last_updated": "2026-08-25T08:00:48",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "09567e3d",
-        "quality": 0.89,
-        "theorems": 134,
-        "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
-      },
-      {
         "cycle_id": "39ef81fe",
         "quality": 0.8,
         "theorems": 90,
@@ -3327,6 +3321,12 @@
         "quality": 0.78,
         "theorems": 66,
         "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival cur"
+      },
+      {
+        "cycle_id": "4578ca8c",
+        "quality": 0.86,
+        "theorems": 45,
+        "title": "Midpoint-corrected acceleration"
       }
     ],
     "Cryptography": [

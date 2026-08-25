@@ -2132,21 +2132,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-76 #1 \u2014 GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' \u2014 extremal order = population mass-sort (window-ascending beats descending 1.58x\u00b10.03 n=2400; sign-flip crossover E[\u221ar]=1.1716); master inequality S \u2264 (4/3)\u00b7T1-cap/\u039b zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) \u2192 keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078\u00d7 vs 1.08\u00d7); L7-a measure deployed generator tilt named next"
   },
   {
-    "consumed_by_exp_id": "16c9261f",
-    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 71.\n\n**Design:** fine depth sweep {1..8} x {prose,code} on the NET-91-winning 0.5B draft targeting the CPU 7B; per-position survival s_i extracted via s_d = d*m(d) - (d-1)*m(d-1) from cumulative acceptance.\n\n**Scorecard:** P3 CONFIRMED CLEANLY \u2014 argmax_d [sum s_i/(1+0.118d)] reproduces NET-91's measured optima EXACTLY (prose 4, code 8): micro-mechanism to macro-throughput closed end-to-end. P1 directionally supported (prose survival collapses by position ~5: s5=0.119 < s1/2=0.335). P2 REFUTED AS MEASURED \u2014 and the honest root cause identified: differencing doubles aggregate noise; n=4 prompts/cell yields impossible values (three positions s_i>1, one negative). The robust deliverable: the optimal-depth argmax is INSENSITIVE to that jitter.\n\n**Lesson recorded:** per-position acceptance needs direct instrumentation (verbose logging / custom harness), not numerical differentiation of small-n aggregates.\n\nSetup identical to NET-91 (llama-speculative, greedy seed 42, ctx<=1024, threads=8). Script ResearchOutput/exp_net96_survival.py.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3997",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T13:15:17.260104+00:00",
-    "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measured speculation optima exactly (prose d=4, code d=8); per-position differencing at n=4 prompts under-resolved (lesson: instrument directly)"
-  },
-  {
     "consumed_by_exp_id": "a22e921b",
     "description": "## GAP-L8 CLOSED \u2014 k-TAXONOMY (round-77 #2, paper 224, theory deliverable)\n\nCloses draft items L8 + O5 of paper 219's roadmap (\"pin exp563's k\\* definition ... paper must name which\"). No new physics run; definitional/taxonomy result.\n\n### Three definitions\n1. **k_pin = \u2308log\u2082W\u2309** \u2014 gain-saturation point: marginal gain exactly zero, support fully pinned. Paper 212's \"k\\*=\u2308log\u2082W\u2309\" retro-reads as this. NEVER an optimum.\n2. **k_opt^cost = argmin_k[k+(W/2^k+1)/2]** \u2014 T2 census total-cost stop. Dyadic W \u21d2 tie set {log\u2082W\u22122, log\u2082W\u22121}, V\\*=log\u2082W+\u00bd EXACT (W=2..4096); continuous location log\u2082W\u22121.5288.\n3. **k_opt^econ(T\u2080,c_q) = log\u2082((T\u2080\u22121)\u00b7ln2/c_q)** \u2014 net-economics optimum, queries paid c_q against the MEASURED baseline T\u2080.\n\n### Exact identity\nE(k;T\u2080,1)=1+k+(T\u2080\u22121)/2^k \u2261 V(k; W=2(T\u2080\u22121))+\u00bd pointwise \u21d2 **k_opt^econ(T\u2080,1) == k_opt^cost(2(T\u2080\u22121))** (identical argmin sets AND locations). Factor-2 bookkeeping: T2 prices residual at half remaining support, exp563 charges full expected scan anchored at measured T\u0304\u2080. Unconverted same-number inputs differ by EXACTLY +1.000 query \u2014 paper 219's \"+~1\" note confirmed at exactly +1.\n\n### Numerical verification (`gapL8_check.py`, <2 s, ALL PASS)\n- Census offsets {\u22122,\u22121} rel log\u2082W, dyadic V\\*=log\u2082W+\u00bd exact for all dyadic W \u2264 4096.\n- Identity max abs error < 1e-9; naive same-anchor shift exactly +1 on discrete argmin sets.\n- exp563 stored rows reproduce: balanced T\u0304\u2080=1072.425 \u2192 pred 9.536549 (=recorded), argmin 10 (=recorded); unbalanced T\u0304\u2080=286205.89 \u2192 pred 17.597922 (=recorded), argmin 18 (=recorded). Matched-anchor census gives same unique {10}/{18}.\n- Pin never coincides with either optimum: gap \u2208 {1,2} for every W \u2264 4096.\n\n### Verdicts on coincidence\nOnly (k_opt^cost, k_opt^econ) ever coincide \u2014 after anchor conversion. k_pin NEVER coincides with either; conflating them overstates the work-optimal budget (exp563 balanced: 20 vs 10).\n\n### Naming rule adopted\nBare \"k\\*\" BANNED in future papers; must expand to k_pin / k_opt^cost (with W) / k_opt^econ(T\u2080,c_q) (with anchor and price). Draft T2 already complies.\n\n### Verification scope (disclosed)\nDefinitional result; verification = own check script ALL PASS + exact reproduction of previously-recorded exp563/T2-census values from stored rows (cross-validates against the existing record). NO separate adversarial verifier run \u2014 scope judgment, disclosed.\n\n### Ledger\nPapers-only bump: count UNCHANGED at 564. Assessment v330 \u2192 v331. Paper `ResearchOutput/NewMathematics/224_KTaxonomy.md`; artifacts `ResearchOutput/scripts/2026-08-24-round74/gapL8_k_taxonomy.md`, `gapL8_check.py`. Barrier framing: bookkeeping hygiene serving barrier-8 audit trail; residue cap 4/3 untouched; no breakthrough claimed.",
     "domains": [
@@ -2264,16 +2249,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-79 #1 \u2014 PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED \u2014 H1 scale-shift REFUTED (no QR window past 400; B*=400 confirms papers-136/139 location), 1/\u2113-weighted dial is the law (48% D-red, saturates by 400, corr .999) \u2014 paper-226 SECONDARIES erratum-grade (reciprocity-flip dial-form artifacts, flip 100%-on-condition), its PRIMARY null stands"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e645a8ec",
     "description": "Round-80 #2, exp 580, paper 230. Pure re-analysis of exp578_positions.npz (9594 hits); terciles by per-N hit count poor<=64/mid 64-80/rich>=80 (42/42/44). Pre-registered H1 refuted: family A no fire (KS dies at Bonferroni; per-decile min raw p=0.425), family B no fire decisively (LRT chi2=51.31/49 p=0.383, perm p=0.34, 0/49 Wald bins); control A clean (min p_adj=0.235). LEDGER FLAG: control family B fired spuriously (LRT p=0.0215, perm p=0.012) \u2014 occupancy regression fragile on dense size-matched controls (quasi-separation, ORs clipped at e^\u00b130); H0 stands without family B but design-B unreliable for control arms. Post-hoc descriptive only: poor-Ns' hits at larger mean_u (rich-minus-poor -0.0205 [-0.0337,-0.0075], SIGN FLIPS under matching +0.012 CI straddles 0) \u2014 motive for a powered follow-up, NOT a map claim. JOINT CONSEQUENCE with round-80 #1 (#377)/paper 229: paper-228's positional layer is now law-complete (harmonic profile + mid-window excess hump) and does NOT couple to between-N rate variance \u2014 the ~39-61% unexplained overdispersion is not carried by profile-shape heterogeneity across terciles; the carrier affects how many smooth values j^2-N produces per N, not where along j they land. Files: ResearchOutput/scripts/2026-08-24-round74/exp580_{positional_rate_link.py,result.json,findings.md}; paper ResearchOutput/NewMathematics/230_PositionalRateLink.md.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4024",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T16:57:03.773190+00:00",
     "title": "FACT round-80 #2 \u2014 POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS \u2014 hit-rich vs hit-poor positional profiles indistinguishable at registered bars (interaction LRT \u03c7\u00b2=51.31/df49 p=0.383, perm p=0.34; pooled rich-poor KS D=0.0462 raw p=0.0038 FAILS Bonferroni p_adj=0.049); edge-decile excess replicates universally 0.229/0.245/0.230 across terciles; control-arm family-B fired spuriously on dense size-matched controls (perm p=0.012, quasi-separation) \u2014 design flagged fragile; paper-228 positional and rate entries remain SEPARATE layers"
   },
@@ -2714,6 +2700,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 4578ca8c (Q=0.860), which proved 45 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define\n   `accelerated n = Real.eulerMascheroniSeq n + 1 / (2*(n+1 : \u211d))` and prove an\n   explicit `O(n\u207b\u00b2)` error bound, for example\n   `|Real.eulerMascheroniConstant - accelerated n| \u2264 1 / (12*(n+1 : \u211d)^2)`\n   for all sufficiently large `n` (with the exact threshold stated and checked).",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_4578ca8c_b864f716",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "4578ca8c",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:48.683572+00:00",
+    "title": "Deepening: Midpoint-corrected acceleration"
   },
   {
     "consumed_by_exp_id": "",
@@ -3428,6 +3428,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 9fb758b1 (Q=0.820), which proved 54 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: * **C1 (drift constant is the standard deviation) \u2014 PROVED.**\n  `RLHF.kl_gibbs_le_variance` gives `KL(\u03c0_\u03b2\u2016p) \u2264 e^{range r/\u03b2} Var_p(r)/\u03b2\u00b2`,\n  `RLHF.gibbs_l1_le_variance` gives `\u2016\u03c0_\u03b2 \u2212 p\u2016\u2081 \u2264 \u221a(2 e^{range r/\u03b2} Var_p r)/\u03b2`, and\n  `RLHF.variance_constant_optimal` sandwiches the drift of an explicit famil",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_9fb758b1_bfb81d81",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "9fb758b1",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:15.635561+00:00",
+    "title": "Deepening: C1 (drift constant is the standard deviation) \u2014 PROVED.*"
   },
   {
     "consumed_by_exp_id": "",
@@ -4404,21 +4418,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize tropical linear programming: maximize c^T \u2297 x subject to A \u2297 x \u2264 b in the tropical semiring. Prove that the tropical simplex method finds the optimum in strongly polynomial time. Show that the tropical dual equals the classical dual under the Log transformation. Prove complementary slackness in the tropical setting.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "seed_368",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Optimization: Linear Programming in the Max-Plus Algebra"
   },
   {
     "consumed_by_exp_id": "",
@@ -11279,6 +11278,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The two envelope theorems proved here are stated for an arbitrary envelope H but a fixed increment 1/m - log(1+1/m). Abstracting the increment to a general analytic g with g(x) = O(x^2) would make the principle applicable to Stieltjes constants, log Gamma, and tails of zeta partial sums. This would supply Mathlib with effective error bounds where currently only qualitative convergence exists.\n\nIf s(n+1) - s(n) = g(1/(n+1)) with g analytic, g(x) = O(x^2), and H telescopes against g in the sense H(m) - H(m+1) >= g(1/m) with H >= 0, then lim s - s(n) <= H(n+1); dually for the lower bound.\n\nGeneralize tail_le_envelope / envelope_le_tail by replacing the explicit increment with a hypothesis s(n+1) - s(n) = g(1/(n+1)), and instantiate at the first Stieltjes constant gamma_1.\n\nA single reusable lemma yields explicit sharp error bounds for a whole family of classical constants without any integral remainder theory.\n\nThe telescoping principle depends on monotonicity special to the harmonic increment, isolating what makes gamma easier than gamma_1.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_4126",
+    "priority_score": 0.7116486486486487,
+    "research_mode": "team",
+    "source_exp_id": "4578ca8c",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:41.354381+00:00",
+    "title": "Envelope Transfer Principle for Log-Type Limits"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Robustness has two finite-sample axioms: resisting explosion (breakdown) and reproducing an uncontaminated majority (exact fit). The conjecture is that for equivariant estimators the exact-fit point never exceeds the breakdown number, with equality for every order statistic. The approach reuses the general predicate-count transfer lemma with an equality predicate in place of an order predicate.\n\nFor every translation-equivariant T and non-empty xs, exactFitPoint T xs <= breakdownNumber T xs, and for T = orderStat j both equal min(j+1, n-j).\n\nDefine exactFitPoint via IsLeast {k | exists a k-contamination on which T differs from the majority value} and prove the order-statistic case; then search for a gap by testing piecewise-defined equivariant estimators on ratios8.\n\nThe two classical robustness axioms are formally comparable and coincide on the whole order-statistic family.\n\nA gap exhibits an estimator that resists explosion but misreports a clean majority, separating the axioms at finite sample size.",
     "domains": [
       "MachineLearning",
@@ -11471,6 +11485,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T09:05:41.488686+00:00",
     "title": "Valuation-Class Resolution Spectrum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "RLHF.audit_invariant_of_cov_zero shows that an audit statistic uncorrelated with the reward has o(1/\u03b2) drift. The conjecture computes the next term: a third-moment (skewness) pairing, giving a hierarchy of orthogonality conditions that a statistic must satisfy to be robust to alignment pressure at every order.\n\nIf Cov_p(r,f) = 0 then \u03b2\u00b2(\ud835\udd3c_{\u03c0_\u03b2}f \u2212 \ud835\udd3c_p f) \u2192 \ud835\udd3c_p[(r \u2212 \ud835\udd3c_p r)\u00b2(f \u2212 \ud835\udd3c_p f)]/2, and f is unmovable at all orders iff f is p-a.s. constant on each level set of r.\n\nExpand RLHF.audit_gap_eq_centred to third order using Real.exp_bound with n = 3, exactly as in RLHF.abs_tiltNorm_sub_quad; verify numerically on a 3-point space with an audit statistic orthogonal to the reward.\n\nAlignment robustness of a monitor is a checkable finite hierarchy of moment conditions, not a single correlation test.\n\nThe second-order term is not a pure third moment, meaning normalisation effects (W_\u03b2) survive at second order and audits can be hacked through the partition function.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4116",
+    "priority_score": 0.7112758620689656,
+    "research_mode": "team",
+    "source_exp_id": "9fb758b1",
+    "status": "available",
+    "timestamp": "2026-08-25T07:59:59.988998+00:00",
+    "title": "Second-Order Hackability Hierarchy for Uncorrelated Audits"
   },
   {
     "consumed_by_exp_id": "",
@@ -13341,6 +13370,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every truncation of the Euler-Maclaurin/Bernoulli expansion of gamma - eulerMascheroniSeq n should be provable by pure telescoping, with error bounded by the first omitted term. The approach replaces the Euler-Maclaurin remainder integral with a monotone envelope whose one-step decrement is compared to log(1+x) via a rational Pade inequality. It matters because it turns an analytic asymptotic expansion into a uniform, effective, machine-checkable family of bounds.\n\nFor every K >= 1 and every n : Nat, with m = n+1 and A_K(n) = eulerMascheroniSeq n + 1/(2m) + sum_{k=1}^{K} (-1)^{k+1} |B_{2k}|/(2k) m^{-2k}, one has |gamma - A_K(n)| <= |B_{2K+2}|/((2K+2) m^{2K+2}), with equality asymptotically and alternating sign in K.\n\nFormalize the general envelope H_K(x) = 1/(2x) + sum (-1)^{k+1}|B_2k|/(2k) x^{-2k} and prove, uniformly in K, that (log(1+x) - R_K(x)) has derivative x^{2K+2} P_K(x) / (c_K (1+x)^{2K+3}) with P_K having nonnegative coefficients; then apply tail_le_envelope / envelope_le_tail.\n\nMathlib gains a complete effective Euler-Maclaurin expansion for the harmonic numbers with explicit constants, and arbitrary-precision certified enclosures of gamma.\n\nSome order K must fail the termwise positivity, locating exactly where the naive telescoping envelope breaks and forcing a genuine remainder-integral argument.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4125",
+    "priority_score": 0.6717500000000002,
+    "research_mode": "team",
+    "source_exp_id": "4578ca8c",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:40.762078+00:00",
+    "title": "Bernoulli Envelope Tower for the Harmonic Tail"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Unary Moore machines have eventually periodic behaviours, so the shortest distinguishing word is the first mismatch of two eventually periodic words. We conjecture the exact bound max(p1,p2) + q1 + q2 - gcd(q1,q2) - 1 in terms of preperiods and periods, refining the coarse |S|+|T|-2 estimate. This ties automata testing to word combinatorics.\n\nFor unary machines with rho-shapes (p1,q1) and (p2,q2), inequivalent initial states are separated by a word of length at most max(p1,p2) + q1 + q2 - gcd(q1,q2) - 1, and some pair attains it.\n\nFormalise a rho-decomposition of unary machines, then prove the bound by Fine-Wilf; validate by exhaustive enumeration for n,m <= 5 as in ComputationalEvidence.md.\n\nA tight, gcd-sensitive refinement of the Moore bound for unary alphabets, strictly stronger than |S|+|T|-2 whenever gcd(q1,q2) > 1.\n\nThe extremal pairs must use preperiods in an essential way, isolating a new combinatorial obstruction beyond Fine-Wilf.",
     "domains": [
       "Combinatorics"
@@ -13439,6 +13482,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Among all corrections of a fixed rational degree added to eulerMascheroniSeq, the Bernoulli truncation should be the unique minimiser of the asymptotic error constant. This would upgrade the sharp constants proved here from statements about one particular corrector to an extremal characterisation.\n\nFor every rational function P/Q with deg Q - deg P = 2, limsup m^2 |gamma - eulerMascheroniSeq n - P(m)/Q(m)| >= 1/12, with equality iff P/Q = 1/(2m) + O(m^{-3}) matches the Bernoulli truncation to leading order.\n\nFormalize the asymptotic expansion of gamma - eulerMascheroniSeq n to order m^{-3} (already available from the proved two-sided bounds) and compare against an arbitrary rational corrector using the sharpness theorems tendsto_scaled_error and tendsto_scaled_error2.\n\nThe midpoint correction is provably the best possible correction of its degree, not just a convenient one.\n\nSome non-Bernoulli rational corrector beats the Euler-Maclaurin truncation, which would be a genuinely surprising acceleration scheme.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4127",
+    "priority_score": 0.6716111111111113,
+    "research_mode": "team",
+    "source_exp_id": "4578ca8c",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:41.877531+00:00",
+    "title": "Optimality of Bernoulli Truncations Among Rational Correctors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Static probes have a fixed error vector, whereas accumulated heavy-hitter statistics observe realised attention and so have an error that decays with the observation window. Modelling the error as eps(t) and re-running the transfer argument should show that accumulation dominates any static score after a finite window.\n\nIf a score's sup-error satisfies eps(t) <= C/t while a static probe's error is bounded below by a positive constant, then beyond an explicit t0 the accumulated arm's guaranteed retention strictly exceeds the static arm's worst case at the same budget.\n\nState a time-indexed version of retained_ge_of_isTopSet_sup and combine with the sharpness instance, which certifies that the static worst case is attained.\n\nThe deployable pair recency+accumulation is justified by a theorem, not only by measurement.\n\nStatic content information retains a role at short windows, and the crossover point becomes the object of study.",
     "domains": [
       "MachineLearning"
@@ -13520,6 +13577,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T04:10:22.454093+00:00",
     "title": "Threshold Stability Under Reward-Model Error"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Cauchy\u2013Schwarz slack in the covariance bound for audit drift and the Pinsker slack in the total-variation bound are conjectured to be the same quantity: the deviation defect \u03c3_p(r) \u2212 MAD_p(r). This would make a single scalar functional of the reward the exact measure of how much worst-case bounds overstate actual drift.\n\nsup over audit statistics f of the normalised drift equals \u03c3_p(r)/\u03b2 asymptotically, while the policy's own total-variation drift equals MAD_p(r)/\u03b2; the two agree iff \u03c3_p(r) \u2212 MAD_p(r) = 0, i.e. iff |r \u2212 \ud835\udd3c_p r| is p-a.s. constant.\n\nFormalize the extremal problem sup_f Cov_p(r,f)/\u03c3_p(f) = \u03c3_p(r) (attained at f = r) in Lean, and combine with RLHF.pinsker_defect_tendsto and RLHF.mad_eq_sqrt_variance_iff.\n\nA one-number diagnostic, computable from the reference policy and reward alone, that predicts the gap between worst-case and realised reward hacking.\n\nThe two slacks are governed by different functionals, so worst-case audit hacking and policy drift are not comparable through a single index.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4117",
+    "priority_score": 0.6714375000000001,
+    "research_mode": "team",
+    "source_exp_id": "9fb758b1",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:00.523399+00:00",
+    "title": "Deviation Defect as a Universal Hackability Index"
   },
   {
     "consumed_by_exp_id": "",
@@ -15055,6 +15126,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The reward range, standard deviation and mean absolute deviation are the q = \u221e, 2, 1 members of one family of centred L^q norms, indexed by the order of the divergence used to measure drift. The conjecture asserts D_\u03b1(\u03c0_\u03b2\u2016p) = \u03b1\u00b7Var/(2\u03b2\u00b2) + O(\u03b2\u207b\u00b3) and an L^q drift law with constant \u2016r \u2212 \ud835\udd3cr\u2016_{L^q(p)}. It would unify the three competing constants in the catalogue into a single theorem.\n\nFor every q \u2208 [1,\u221e], \u03b2\u00b7\u2016(\u03c0_\u03b2 \u2212 p)/p\u2016_{L^q(p)} \u2192 \u2016r \u2212 \ud835\udd3c_p r\u2016_{L^q(p)}, and for every R\u00e9nyi order \u03b1 > 0, \u03b2\u00b2\u00b7D_\u03b1(\u03c0_\u03b2\u2016p) \u2192 \u03b1\u00b7Var_p(r)/2.\n\nFormalize the L^q statement for q = 1, 2, \u221e first (q = 1 is RLHF.l1_drift_tendsto_mad, q = \u221e is a sup' computation), then the general q by the same centred-tilt expansion; check numerically on rare-spike and 3-point families.\n\nA single drift theorem specialising to all constants in the RLHF drift thread, with the divergence order as the only parameter.\n\nSome divergence order has a drift constant that is not a centred moment, which would mean the tilt expansion is not uniform in the order.",
+    "domains": [],
+    "id": "fd_4115",
+    "priority_score": 0.5933333333333334,
+    "research_mode": "team",
+    "source_exp_id": "9fb758b1",
+    "status": "available",
+    "timestamp": "2026-08-25T07:59:59.456950+00:00",
+    "title": "R\u00e9nyi-Order Interpolation of Alignment Drift Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Mirrors contribute nothing and each Boolean oracle bit contributes at most a factor two. Conjecture that any battery of mirrors plus L factor-derived bits leaves at least |Omega|/2^L indistinguishable instances, and that this is tight for well-chosen thresholds.\n\nFor any finite family of magnitude mirrors together with L Boolean factor-derived probes, the largest class of instances agreeing on all readings has cardinality at least |Omega| / 2^L, with equality achievable.\n\nCombine mirror_conditional_zeroInfo (mirrors are constant on cells) with multi_oracle_pigeonhole, then construct a tight family from dyadic factor thresholds.\n\nThe surviving positional channel is quantitatively capped: no amplification beyond one bit per threshold read.\n\nSome interleaving of mirrors and oracle bits amplifies, which would be the first realized amplification in the round-70 programme.",
     "domains": [],
     "id": "fd_4060",
@@ -15512,6 +15595,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The proved sandwich accelerated n < gamma < accelerated2 n has width exactly 1/(12(n+1)^2) and endpoints that are rational numbers plus a single logarithm. Combining it with certified interval bounds for log(n+1) yields a machine-checked decimal expansion of gamma, and the sixth-order version reduces the cost per digit cubically.\n\nFor every d there is an explicit n = O(10^{d/6}) such that the accelerated3-based enclosure determines gamma to d decimal digits, and the enclosure is verifiable in Lean with only rational arithmetic plus one certified logarithm bound.\n\nInstantiate the enclosure at n = 0 (already gives gamma < 7/12), then at n = 1, 3, 7 using Real.log_two-style bounds, and measure the digits gained.\n\nMathlib's bounds 1/2 < gamma < 2/3 can be replaced by an arbitrary-precision certified enclosure produced by a uniform lemma.\n\nThe bottleneck is certified logarithm evaluation rather than the acceleration, redirecting effort to interval arithmetic for log.",
+    "domains": [],
+    "id": "fd_4128",
+    "priority_score": 0.5916666666666668,
+    "research_mode": "team",
+    "source_exp_id": "4578ca8c",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:42.372461+00:00",
+    "title": "Certified Decimal Enclosure of Euler's Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Only states reachable from the initial states can ever participate in an experiment, so the block-counting potential should be bounded by the reachable counts. We conjecture the bound r_S + r_T - 2 with r the reachable-state counts, which is strictly better for machines with dead states.\n\nIf r_S and r_T are the numbers of states reachable from s and t, then inequivalent s,t are separated by a word of length at most r_S + r_T - 2.\n\nInstantiate the abstract stabilisation theorem exists_stable_index on the subtype of reachable states of the disjoint union.\n\nThe bound becomes invariant under adding unreachable states, hence a genuine invariant of the behaviour rather than the presentation.\n\nReachability interacts with the refinement chain in an unexpected way, indicating the potential function must count unreachable blocks too.",
     "domains": [],
     "id": "fd_3466",
@@ -15812,6 +15907,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:01.175111+00:00",
     "title": "Lorentzian geometry boundary"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved non-asymptotic law has remainders 2\u00b7Var/\u03b2\u00b2 (upper) and 3\u00b7Var/\u03b2\u00b2 (lower). The conjecture is that both optimal constants are 1, because the Taylor remainder and the normalisation shift partially cancel rather than adding. Random search shows the current bounds are never violated but are not far from tight.\n\nFor \u03b2 \u2265 range r, |\u2016\u03c0_\u03b2 \u2212 p\u2016\u2081 \u2212 MAD_p(r)/\u03b2| \u2264 Var_p(r)/\u03b2\u00b2.\n\nRe-run the proof of RLHF.abs_l1_numerator_sub_mad keeping the sign of (W_\u03b2 \u2212 1) instead of taking absolute values, and test the resulting constant numerically over random instances with \u03b2/range near 1.\n\nA clean, memorable non-asymptotic drift law with all constants equal to 1.\n\nThere is a genuine instance forcing a constant above 1, which would identify the extremal reward shape for finite temperature.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4118",
+    "priority_score": 0.5644386592378038,
+    "research_mode": "team",
+    "source_exp_id": "9fb758b1",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:01.034990+00:00",
+    "title": "Optimal Second-Order Constants in the Mean-Deviation Drift Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -16397,6 +16507,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T10:54:54.043410+00:00",
     "title": "Tropical Corner Count for Multi-Regime Attention"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The cost law uses only the mean accepted-run length, but realized throughput is a ratio of random variables. Using the tail-sum bridge, both the mean and the variance of the run length are determined by the survival curve. Conjecture: the flatness of measured throughput near the argmax is explained by a second-order term proportional to the run-length variance, and this term can shift the argmax by at most one when the survival curve is antitone.\n\nWith X the accepted-run length at depth d (tail probabilities s), E[X] = \u03a3_{i<d} s_i and Var(X) = \u03a3_{i<d} (2i+1) s_i - (\u03a3_{i<d} s_i)\u00b2, and the variance-corrected objective E[X]/(1+cd) - \u03ba Var(X)/(1+cd)\u00b2 has an argmax within distance 1 of the mean-only argmax for small \u03ba.\n\nDerive the variance tail-sum identity by the same Abel summation used in accept_eq_tailsum, then bound the perturbation with argmax_stable.\n\nLatency-tail-aware serving gets a closed-form depth rule from the same survival measurement.\n\nVariance effects can move the optimum arbitrarily far, so mean-throughput tuning is unsafe under tail-latency SLOs.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4124",
+    "priority_score": 0.563703751343374,
+    "research_mode": "team",
+    "source_exp_id": "16c9261f",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:25.273322+00:00",
+    "title": "Second-Order Cost Law from Run-Length Variance"
   },
   {
     "consumed_by_exp_id": "",
@@ -26125,6 +26250,76 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:50:22.776769+00:00",
     "title": "Five-Rung Refutation Test for the Persistent Fade Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For multi-objective RLHF with a vector reward the KL drift should still be governed by the covariance matrix (trace/2), but the total-variation drift should be the mean Euclidean norm of the centred reward vector, which is not a function of the covariance matrix. This predicts a genuine multi-objective phenomenon invisible to KL-based analysis.\n\nFor r : \u03a9 \u2192 \u211d^k and temperature \u03b2, \u03b2\u00b7\u2016\u03c0_\u03b2 \u2212 p\u2016\u2081 \u2192 \ud835\udd3c_p\u2016r \u2212 \ud835\udd3c_p r\u2016 and \u03b2\u00b2\u00b7KL(\u03c0_\u03b2\u2016p) \u2192 tr(Cov_p(r))/2; the first limit is not determined by Cov_p(r).\n\nFormalize the scalar proof with s_y = \u27e8\u03b8, r y \u2212 \ud835\udd3cr\u27e9/\u03b2 replaced by a vector inner product; exhibit two vector rewards with equal covariance matrices but different \ud835\udd3c\u2016r \u2212 \ud835\udd3cr\u2016 and compute both drifts numerically.\n\nMulti-objective alignment needs a norm-based, not covariance-based, drift budget.\n\nThe vector L\u00b9 law collapses to a covariance functional, meaning the L\u00b9/L\u00b2 distinction is an artifact of dimension one.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4119",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9fb758b1",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:01.558522+00:00",
+    "title": "Vector-Reward Drift and the Failure of Covariance Sufficiency"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The argmax of the cost law is decided by the sup-norm accuracy of the cumulative mean acceptance, and the stability theorem already converts accuracy into a margin condition. Conjecture: for a measured margin g between the best and second-best depth over a sweep of horizon D, n = O(D^2 log(D/delta) / g^2) prompts per cell suffice for the sweep argmax to equal the population argmax with probability at least 1 - delta. This replaces per-position instrumentation by a sample-size prescription on aggregates only.\n\nLet m_hat(d) be the empirical mean acceptance over n i.i.d. prompts with per-prompt accepted counts in [0, D]. If min over d != d0 of (gain(d0) - gain(d)) > 2 D epsilon and n >= D^2 log(2 D / delta) / (2 epsilon^2), then with probability at least 1 - delta the empirical argmax over {1..D} equals the population argmax.\n\nCombine a Hoeffding bound for each of the D cells with a union bound, then feed the resulting sup-norm accuracy into argmax_stable; instantiate with the measured prose margin 0.0764 and code margin 0.1468.\n\nThe NET-96 conclusion can be certified at a stated confidence from aggregate throughput alone, with an explicit prompt budget.\n\nAggregate concentration is too weak at realistic n, which would make direct per-position logging mandatory for any certified claim.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4120",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "16c9261f",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:23.158939+00:00",
+    "title": "Sample-Size Law for a Certified Speculation Optimum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The equilibrium law says the optimal depth is where per-position survival crosses c times throughput. Reading it backwards, each observed optimum under a different overhead c pins the survival curve between two consecutive values. Conjecture: a sweep over k distinct overheads determines the survival curve to within an explicit interval at k positions, with no per-position logging at all.\n\nFor antitone s and overheads c\u2081 < \u2026 < c_k with optima d\u2081 \u2265 \u2026 \u2265 d_k, one has s_{d_j} < c_j\u00b7gain(c_j, s, d_j) \u2264 s_{d_j - 1} for each j, and these intervals are nonempty and shrink as k grows.\n\nFormalize the two-sided sandwich from marginal_neg_iff_survival_below_throughput plus optimal_depth_antitone_in_cost, then instantiate on a synthetic geometric curve and check interval widths.\n\nPer-position acceptance becomes measurable from throughput alone, sidestepping the (2i+1)\u03b4 amplification entirely.\n\nSome survival curves are indistinguishable by any overhead sweep, which itself would be a clean identifiability obstruction.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4121",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "16c9261f",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:23.688479+00:00",
+    "title": "Overhead-Sweep Identifiability of the Survival Curve"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Real traffic mixes registers. Since the cost law is linear in the survival curve, the mixture \u03bb s\u1d2c + (1-\u03bb) s\u1d2e has gain equal to the same convex combination of the two gains. Conjecture: the optimal depth of the mixture always lies between the two register optima and is monotone in \u03bb, so mixed-traffic tuning needs no new measurement.\n\nIf d_A and d_B are global optima for antitone s\u1d2c, s\u1d2e with d_A \u2264 d_B, then every global optimum of \u03bb s\u1d2c + (1-\u03bb) s\u1d2e lies in [d_A, d_B], and the least optimum is monotone nondecreasing in \u03bb for the curve with the deeper optimum.\n\nProve gain c (\u03bb s + (1-\u03bb) t) d = \u03bb gain c s d + (1-\u03bb) gain c t d, then bound the marginal of the mixture; instantiate on proseSurv and codeSurv at \u03bb = 1/2.\n\nA single interpolation formula tunes deployment depth for arbitrary traffic mixes from two per-register sweeps.\n\nMixtures can have optima outside the hull, meaning register detection (not interpolation) is required at serve time.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4122",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "16c9261f",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:24.221923+00:00",
+    "title": "Mixture Interpolation of Register Optima"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For geometric survival the optimal depth is bracketed between log((1-r)/c)/log(1/r) and the first d with r\u1d48(1+cd) < c, both \u0398(log 1/c). Conjecture: the bracket collapses, i.e. d*(c)\u00b7log(1/r) - log(1/c) stays bounded as c \u2192 0, so the slope of measured d* against log(1/c) estimates 1/log(1/r).\n\nThere is a constant K depending only on r such that |d*(c)\u00b7log(1/r) - log(1/c)| \u2264 K for all sufficiently small c > 0, where d*(c) is any global optimum for geomSurv r.\n\nSharpen geom_depth_upper_bound by absorbing the (1+cd) factor via a log-log estimate, then combine with geom_depth_log_lower_bound.\n\nThe acceptance rate r is measurable purely from how the optimal depth responds to thread count or quantization.\n\nThe (1+cd) verification term contributes a genuinely unbounded correction, so depth-versus-overhead plots cannot be read as acceptance-rate measurements.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4123",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "16c9261f",
+    "status": "available",
+    "timestamp": "2026-08-25T08:00:24.738335+00:00",
+    "title": "Logarithmic Depth Exponent Recovers the Acceptance Rate"
   },
   {
     "consumed_by_exp_id": "",
@@ -38343,19 +38538,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The one-dimensional case is a proved theorem (`headCoeff_surjective`, with"
   },
   {
-    "consumed_by_exp_id": "9fb758b1",
-    "description": "* **C1 (drift constant is the standard deviation) \u2014 PROVED.**\n  `RLHF.kl_gibbs_le_variance` gives `KL(\u03c0_\u03b2\u2016p) \u2264 e^{range r/\u03b2} Var_p(r)/\u03b2\u00b2`,\n  `RLHF.gibbs_l1_le_variance` gives `\u2016\u03c0_\u03b2 \u2212 p\u2016\u2081 \u2264 \u221a(2 e^{range r/\u03b2} Var_p r)/\u03b2`, and\n  `RLHF.variance_constant_optimal` sandwiches the drift of an explicit family between\n  `\u03c3/(2\u03b2)` and `3\u03c3/\u03b2`.  So the law is `\u0398(\u03c3_p(r)/\u03b2)`; only the absolute constant (which\n  should be `1` by the cumulant heuristic) is still open.  `RLHF.variance_le_range_sq`\n  (Popoviciu) shows this is never weaker, and `ComputationalEvidence.md` \u00a75 shows it is\n  unboundedly stronger on rare-spike rewards.",
-    "domains": [],
-    "id": "fd_1685",
-    "phase": "A",
-    "priority_score": 0.4282380952380952,
-    "research_mode": "team",
-    "source_exp_id": "84bf9824",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T07:57:24.260050+00:00",
-    "title": "C1 (drift constant is the standard deviation) \u2014 PROVED.*"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The qualitative half is now **proved**: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the class (`price_reindex_le`).  What\nremains is the quantitative form.  If `S'` is obtained from `S` by adding one\nsource `p_new`, then\n`C\u209b' \u2212 C\u209b = \u03a3_x (p_new(x) \u2212 maxLik_S(x))\u207a`, and this is strictly positive unless\n`p_new \u2264 maxLik_S` pointwise.  *The key insight is* that the Shtarkov sum is\nthe `\u2113\u00b9`-norm of a pointwise supremum, so its increments measure exactly the\nmass on which the new model strictly dominates the old envelope \u2014 a\n\"marginal value of a model\" formula.  *Why now?*  `maxLik` and the library\nbounds (`shtarkovSum_sigma_le`, `le_shtarkovSum_sigma`) are in place, so the\nstatement is a pointwise `max` computation; if true it turns the price of\nuniversality into a submodular set function on model libraries, which would make\ngreedy decompressor-library design provably near-optimal.",
     "domains": [],
@@ -39010,19 +39192,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:22:59.081586+00:00",
     "title": "State a precise Bertrand-theorem comparison"
-  },
-  {
-    "consumed_by_exp_id": "4578ca8c",
-    "description": "Define\n   `accelerated n = Real.eulerMascheroniSeq n + 1 / (2*(n+1 : \u211d))` and prove an\n   explicit `O(n\u207b\u00b2)` error bound, for example\n   `|Real.eulerMascheroniConstant - accelerated n| \u2264 1 / (12*(n+1 : \u211d)^2)`\n   for all sufficiently large `n` (with the exact threshold stated and checked).",
-    "domains": [],
-    "id": "fd_2682",
-    "phase": "A",
-    "priority_score": 0.4131904761904762,
-    "research_mode": "team",
-    "source_exp_id": "593a0386",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:30.722608+00:00",
-    "title": "Midpoint-corrected acceleration"
   },
   {
     "consumed_by_exp_id": "",
@@ -44721,14 +44890,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "monotonic improvement of the resulting guarantee as descriptions become shorter."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56c4877a",
     "description": "Formalize the left and right `U(2)` actions and prove that every normalized\nsharp maximizer lies in the local-unitary orbit of `diag(1/\u221a2,1/\u221a2)`. The row\nclassification proved here should reduce this to constructing a unitary matrix\nfrom an orthonormal basis.",
     "domains": [],
     "id": "fd_2808",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "064bb153",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:14.689437+00:00",
     "title": "Local-unitary normal form"
   },
