@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4be48a30",
-      "domain": "Shared",
-      "key_insight": "# Future directions — the attention-budget knee\n\n## What is now established\n\nA model-free theory of the measured object — the top-$k$ retained attention mass, its knee\n$k^*(n)$, and the context sensit",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 51,
-      "timestamp": "2026-08-23T22:39:22",
-      "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scal"
-    },
-    {
       "cycle_id": "c38d70d3",
       "domain": "Probability",
       "key_insight": "# Future directions — NET-64 knee axis (after six research cycles)\n\nCycle 1 established the grid-artifact calculus (a sweep reports the *ceiling of\nthe true knee in its grid*), the margin-based replic",
@@ -499,19 +489,19 @@
       "theorem_count": 37,
       "timestamp": "2026-08-25T13:13:10",
       "title": "Thin-Shell Counting under a Thickness Budget"
+    },
+    {
+      "cycle_id": "05a687ab",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results now formalized in\n`Catalog/Computation/SpectralUnfoldingGapStatistics.lean`,\n`Catalog/Computation/SpectralPoissonVs",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-08-25T14:05:36",
+      "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ef01dce6",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Almost-Lossless / Monte-Carlo Compression (M9)\n\nDerived from the verified results in `Catalog/Bridges/AlmostLossless*.lean`\n(fifteen files, all compiling, no `sorry`, standard ax",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 179,
-      "timestamp": "2026-08-18T18:57:37",
-      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-    },
     {
       "cycle_id": "09567e3d",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 37,
       "timestamp": "2026-08-25T13:13:10",
       "title": "Thin-Shell Counting under a Thickness Budget"
+    },
+    {
+      "cycle_id": "05a687ab",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results now formalized in\n`Catalog/Computation/SpectralUnfoldingGapStatistics.lean`,\n`Catalog/Computation/SpectralPoissonVs",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-08-25T14:05:36",
+      "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "886e75dc",
-      "domain": "Combinatorics",
-      "name": "energy_anchor_nonpos",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "51837664",
-      "domain": "Probability",
-      "name": "bigW_eq",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "51837664",
-      "domain": "Probability",
-      "name": "bigW_odd",
-      "quality": 0.87
-    },
     {
       "cycle_id": "51837664",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "shellRadius_le_self",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "05a687ab",
+      "domain": "Computation",
+      "name": "gapRatio_affine",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "05a687ab",
+      "domain": "Computation",
+      "name": "gapRatio_le_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "05a687ab",
+      "domain": "Computation",
+      "name": "gapRatio_nonneg",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-25T13:13:10",
+  "last_updated": "2026-08-25T14:05:36",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "39ef81fe",
-        "quality": 0.8,
-        "theorems": 90,
-        "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-      },
-      {
         "cycle_id": "eccb3315",
         "quality": 0.84,
         "theorems": 147,
@@ -3327,6 +3321,12 @@
         "quality": 0.86,
         "theorems": 45,
         "title": "Midpoint-corrected acceleration"
+      },
+      {
+        "cycle_id": "05a687ab",
+        "quality": 0.82,
+        "theorems": 76,
+        "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
       }
     ],
     "Cryptography": [
