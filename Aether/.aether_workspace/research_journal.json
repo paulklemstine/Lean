@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "620a1130",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — temporal lags versus pitch intervals\n\nThis cycle established a complete separation of the two variables that the original\n\"lag 12 ≈ octave\" reading conflated:\n\n* the **temporal**",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 111,
-      "timestamp": "2026-08-23T18:49:52",
-      "title": "Separate temporal and pitch lags"
-    },
-    {
       "cycle_id": "147eac16",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — after TDIAL-U52 (round-58 #1, exp 528)\n\nThree Lean files were added this cycle, all `sorry`-free:\n\n* `Catalog/MachineLearning/ZeroFitDialUnif52.lean` — the tie geometry of the **",
@@ -499,19 +489,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-25T10:51:17",
       "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and "
+    },
+    {
+      "cycle_id": "539def03",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions: converses to the union bound for universal hashing\n\nThis thread closed the open item of the assignment — a lower bound valid over\n*all* 2-universal families — and in fact determin",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-08-25T11:45:16",
+      "title": "Both endpoints are formalised and the numerics of Section 4 of"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "13fee392",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — bold, testable conjectures\n\nDerived from the analysis and adversarial review of the results now formalised\nin `Catalog/MachineLearning/BonferroniMarginals/`\n(`Core`, `Rigidity`,",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 97,
-      "timestamp": "2026-08-18T15:47:12",
-      "title": "The Bonferroni machinery"
-    },
     {
       "cycle_id": "2afe0ce6",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-25T10:51:17",
       "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and "
+    },
+    {
+      "cycle_id": "539def03",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions: converses to the union bound for universal hashing\n\nThis thread closed the open item of the assignment — a lower bound valid over\n*all* 2-universal families — and in fact determin",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-08-25T11:45:16",
+      "title": "Both endpoints are formalised and the numerics of Section 4 of"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d4951edd",
-      "domain": "Cryptography",
-      "name": "berg_children_diff",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "2a9ba724",
-      "domain": "NumberTheory",
-      "name": "satF_bot",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "2a9ba724",
-      "domain": "NumberTheory",
-      "name": "satF_atom",
-      "quality": 0.8
-    },
     {
       "cycle_id": "2a9ba724",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "here",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "539def03",
+      "domain": "Pythagorean",
+      "name": "affine_collision_count_two",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "539def03",
+      "domain": "Pythagorean",
+      "name": "affine_collision_count_three",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "539def03",
+      "domain": "Pythagorean",
+      "name": "affine_collision_count_five",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-25T10:51:17",
+  "last_updated": "2026-08-25T11:45:16",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "fbb9718e",
-        "quality": 0.82,
-        "theorems": 278,
-        "title": "The case `m = 3`, `F = x² + y² - z²` is fully proved"
-      },
-      {
         "cycle_id": "a23b48bf",
         "quality": 0.85,
         "theorems": 74,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 86,
         "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-"
+      },
+      {
+        "cycle_id": "539def03",
+        "quality": 0.83,
+        "theorems": 94,
+        "title": "Both endpoints are formalised and the numerics of Section 4 of"
       }
     ],
     "Shared": [
