@@ -32,8 +32,8 @@ Main results:
 -/
 
 import Mathlib
-import Catalog.Probability.ParityGap.Valuation
-import Catalog.Probability.ParityGap.GapQuantitative
+import Probability.Valuation
+import Probability.GapQuantitative
 
 open Polynomial Finset PrimeUncertainty
 

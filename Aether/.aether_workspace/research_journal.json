@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3be10ac1",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — TDIAL-BITLEN cycle (round-56 #1, exp 526)\n\n## What this cycle established\n\nFour sorry-free Lean files in `Catalog/Pythagorean/`:\n\n* `ZeroFitDialRelationRate48.lean` — the *coarse",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-24T09:05:56",
-      "title": "FACT round-56 #1 — TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
-    },
-    {
       "cycle_id": "c293906f",
       "domain": "Probability",
       "key_insight": "# Future directions — NET-76, after the dilation / merging / token-matching cycles\n\nFour formal files were added in this thread, all sorry-free and using only the standard\naxioms:\n\n* `Catalog/Probabil",
@@ -499,19 +489,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-25T23:40:18",
       "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-rich vs hit-poor posi"
+    },
+    {
+      "cycle_id": "0dec095c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — the shape/leakage frontier\n\nThe work delivered in this cycle settles, as theorems, the three inferential steps that the\nabsolute-shape closure rested on:\n\n1. **Nonlinearity ⇏ mod",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-25T23:40:36",
+      "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=100.6 df=3 p=1.17e-21"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3da67f84",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Pole-order obstruction\n\nDerived from the two research cycles formalized in\n`Catalog/Shared/PoleOrderObstruction.lean` and\n`Catalog/Shared/PoleOrderObstructionDeep.lean`.\n\nWhat su",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 53,
-      "timestamp": "2026-08-19T05:14:59",
-      "title": "Pole-order obstruction"
-    },
     {
       "cycle_id": "c0dccdf7",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-25T23:40:18",
       "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-rich vs hit-poor posi"
+    },
+    {
+      "cycle_id": "0dec095c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — the shape/leakage frontier\n\nThe work delivered in this cycle settles, as theorems, the three inferential steps that the\nabsolute-shape closure rested on:\n\n1. **Nonlinearity ⇏ mod",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-25T23:40:36",
+      "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=100.6 df=3 p=1.17e-21"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5223d87b",
-      "domain": "Logic",
-      "name": "cell_diam_le",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "5223d87b",
-      "domain": "Logic",
-      "name": "cell_mem_of_close",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "d3d53c1e",
-      "domain": "Algebra",
-      "name": "toFun_apply",
-      "quality": 0.82
-    },
     {
       "cycle_id": "d3d53c1e",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "tendsto_discrete_decile_harmCDF",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "0dec095c",
+      "domain": "Novelty",
+      "name": "block_integral_strictAnti",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0dec095c",
+      "domain": "Novelty",
+      "name": "rateT_continuousOn",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0dec095c",
+      "domain": "Novelty",
+      "name": "rateT_blockMean_strictAnti",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-25T23:40:18",
+  "last_updated": "2026-08-25T23:40:36",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6f1d7e50",
-        "quality": 0.82,
-        "theorems": 91,
-        "title": "Cut-indexed defects"
-      },
-      {
         "cycle_id": "499e80a3",
         "quality": 0.78,
         "theorems": 81,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 56,
         "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverte"
+      },
+      {
+        "cycle_id": "0dec095c",
+        "quality": 0.72,
+        "theorems": 64,
+        "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=1"
       }
     ],
     "NumberTheory": [

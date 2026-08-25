@@ -22,7 +22,7 @@ Main results: `ParityGap.parity_gap_closes_of_factorisation`,
 -/
 
 import Mathlib
-import Catalog.Probability.ParityGap.GapQuantitative
+import Probability.GapQuantitative
 
 open Finset PrimeUncertainty
 

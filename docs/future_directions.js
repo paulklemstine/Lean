@@ -2161,21 +2161,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-76 #2 \u2014 U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip \u2014 fresh seed 20260825 reads r=1.1536 SURPLUS where the 20260824 family read deficit; randomness stands through u\u224811 with a measured \u00b15\u201315% single-run fluctuation envelope"
   },
   {
-    "consumed_by_exp_id": "e645a8ec",
-    "description": "Round-80 #2, exp 580, paper 230. Pure re-analysis of exp578_positions.npz (9594 hits); terciles by per-N hit count poor<=64/mid 64-80/rich>=80 (42/42/44). Pre-registered H1 refuted: family A no fire (KS dies at Bonferroni; per-decile min raw p=0.425), family B no fire decisively (LRT chi2=51.31/49 p=0.383, perm p=0.34, 0/49 Wald bins); control A clean (min p_adj=0.235). LEDGER FLAG: control family B fired spuriously (LRT p=0.0215, perm p=0.012) \u2014 occupancy regression fragile on dense size-matched controls (quasi-separation, ORs clipped at e^\u00b130); H0 stands without family B but design-B unreliable for control arms. Post-hoc descriptive only: poor-Ns' hits at larger mean_u (rich-minus-poor -0.0205 [-0.0337,-0.0075], SIGN FLIPS under matching +0.012 CI straddles 0) \u2014 motive for a powered follow-up, NOT a map claim. JOINT CONSEQUENCE with round-80 #1 (#377)/paper 229: paper-228's positional layer is now law-complete (harmonic profile + mid-window excess hump) and does NOT couple to between-N rate variance \u2014 the ~39-61% unexplained overdispersion is not carried by profile-shape heterogeneity across terciles; the carrier affects how many smooth values j^2-N produces per N, not where along j they land. Files: ResearchOutput/scripts/2026-08-24-round74/exp580_{positional_rate_link.py,result.json,findings.md}; paper ResearchOutput/NewMathematics/230_PositionalRateLink.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4024",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T16:57:03.773190+00:00",
-    "title": "FACT round-80 #2 \u2014 POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS \u2014 hit-rich vs hit-poor positional profiles indistinguishable at registered bars (interaction LRT \u03c7\u00b2=51.31/df49 p=0.383, perm p=0.34; pooled rich-poor KS D=0.0462 raw p=0.0038 FAILS Bonferroni p_adj=0.049); edge-decile excess replicates universally 0.229/0.245/0.230 across terciles; control-arm family-B fired spuriously on dense size-matched controls (perm p=0.012, quasi-separation) \u2014 design flagged fragile; paper-228 positional and rate entries remain SEPARATE layers"
-  },
-  {
     "consumed_by_exp_id": "733effba",
     "description": "Round-81 #1 \u00b7 exp 581 \u00b7 paper 231 \u00b7 closes paper-229's named residual question (what carries the \u00b120% concave mid-window hump in R=T/M?).\n\n**Verdict**: MIXED-INCONCLUSIVE by pre-registration letter (zero families fired: fitted-peak boot95 p2.5 must exceed 1.05, achieved 1.0094\u20131.0275 despite raw max 1.2227 @bin33); bars kept verbatim, no post-hoc rule change.\n\n**Regeneration pass (first-class result)**: pipeline re-executed from recorded seeds; canonical-int64 sha256 55729f1c99c0b5d2 regenerated == stored npz; hits byte-exact 9594/9594 across all 128 Ns; FULL capped control arrays + grids byte-exact; lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 reproduced pairwise-disjoint; master hash 06931068f8f3ca9b matched. All numbers below ran on verified-identical data.\n\n**Structural one-sidedness**:\n- Observed LPF masses [0, 0, 0.0007, 0.9993] (counts [0,0,7,9587]) vs mixture-Dickman prediction [0,0,0.0013,0.9987] \u2014 99.93% of hits in ONE band (>1e4): any single-band carrier story dies ARITHMETICALLY (only one eligible stratum at LOW_MASS_MIN=200). Mass reallocation negligible (6e-4 gap).\n- Inside the band: dominant-band-only c=-0.299 vertex 0.590; descriptive LPF terciles (cuts 350983/671941, ~3196 hits each, medians 198k/511k/831k) c=-0.18/-0.25/-0.44 \u2014 concave in ALL THREE.\n- k100 terciles (cuts {2,3}): t1 concave (c=-0.13, vx .41); t2/t3 mildly convex but amplitude \u00b12% vs pooled +4.8% \u2014 combo conditioning does not absorb the excess.\n- Controls clean everywhere (pooled c=-0.105 CI straddles 0, peak fit 1.005).\n- Anchors PASS: R_first .8371 vs .8007\u00b1.08; R_peak 1.2227@bin33 vs 1.2257@bin33 EXACT; R_last .8935 vs .8957; pooled vertex 0.5901 vs exp579's independent 0.5896.\n\n**Consequence**: the hump lives INSIDE every resolvable stratum at a stable vertex \u2014 not completing-prime size, not small-prime combination structure, not Dickman band-mass reallocation. Sole surviving registered channel: **H0 window/polynomial geometry of j\u00b2\u2212N itself interacting with v-sizes**. Named next probe (pre-stated): direct j-grid/v-size sensitivity analysis \u2014 bin-width permutation, u-grid shift \u2014 to close H0 affirmatively or watch it fragment.\n\n**Ledger catches (both disclosed)**: run-1 G1 \"failure\" = comparator bug (paired slices compared vs stored full arrays; hits were ALWAYS byte-exact per run-1 log evidence); run-2 KeyError 350983 = LN-dict lookup on an observed sub-band edge \u2192 arbitrary-edge ln cache + resume-from-persisted-regen (16.5 s completion; sampling never re-run after its single persisted 953 s pass). Smoke also caught a factorer early-exit bug pre-full; Dickman table refined to h=1/8192 (err 3.07e-05).\n\nDeviations disclosed: k100-tercile baseline = pooled positional profile (per-tercile Dickman needs Buchstab machinery, out of scope); sub-band split DESCRIPTIVE ONLY, never verdict-bearing; single seed/bitlen inherited from exp578.\n\nBarrier framing: structural (not power-limited) elimination prevents a wrong turn on paper-228's opened frontier; residue cap untouched; no complexity claim; no breakthrough claimed. Completes paper-229's characterization thread 228\u2192229\u2192231.\n\nFiles: ResearchOutput/scripts/2026-08-24-round74/exp581_* ; paper ResearchOutput/NewMathematics/231_HumpMechanism.md",
     "domains": [
@@ -2204,21 +2189,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-24T19:46:36.813358+00:00",
     "title": "FACT round-83 #1 \u2014 SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION \u2014 five closures confirmed (Berggren all-faces, MA-1 both routes, u~10 gate rejection = +-5-15% envelope, converse roadmap EMPTY master inequality proven, canonical 1/l dial saturates by 400 corr .999); two record corrections mechanism-named (paper-159 wall rejected by early-fire trace law; 226-secondaries reciprocity-flip artifact + 229 residual baseline leakage \u2014 power law STANDS strengthened); three new laws (early-fire trace; Lambda prior-shape channel WITH scope boundaries: hard-balance 1.58x does NOT deploy, RSA pools ascending LOSES ~44%; harmonic-weight saturation); CONTRADICTION SCAN 7 pairs -> 4 clean + 2 resolved covering both readings (226-vs-227 dial-form difference; 232-vs-229 agreement-about-a-ghost via shared M_pred) + 1 UNRESOLVED MINOR TENSION carried forward: bulk exponent -1.10 vs steeper-than-harmonic LEFT EDGE (.2346/.162/2.54) \u2014 named refinement harmonic-bulk x steeper-edge kernel"
-  },
-  {
-    "consumed_by_exp_id": "0dec095c",
-    "description": "exp 583 \u00b7 round-82 #2 \u00b7 paper 233 \u00b7 assessment v339\u2192v340 \u00b7 count 571\u2192572.\n\n**VERDICT: H0_CHANNEL_CLOSES** (registered rule) with the decisive decomposition. Paper 232's named follow-up (binning-independent shape test): pure reanalysis of exp581_regen_positions.npz (128 strata, hits 9594 / controls 512000, windows [jlo,jhi] jhi/jlo=3). ZERO binning: raw hit-indicator stratum-conditional case-control logistic, 128 profiled intercepts; free natural cubic spline df5 (knots .25/.5/.75) vs LINEAR-x; LRT on full design + permutation calibration (within-stratum label shuffles B=400, capped 200-ctl/stratum design); bootstrap 150 reps.\n\nResults:\n- Free-vs-linear LRT stat=100.574 df=3, asym p=1.17e-21; permutation 0/400 exceedances => p\u22640.0025 floor at B=400 (registered <0.001 unmeetable at this B; direction strongly confirms real non-linear structure)\n- BUT interior max x*=0.020 CI[0.020,0.020] \u2014 pinned LEFT EDGE in all 150 reps; [0.4,0.8] bar FAILS\n- Peak/end rate-ratio 2.54 CI[2.243,2.798] \u2014 steep small-x decline, exactly Dickman-type, not a hump\n- Control arm null (perm p=0.856; big-design asym p=0.035 marginal, passes via perm criterion)\n- Deciles strictly declining [1554\u2026694]; the +1.6% blip near u*\u22480.55\u20130.65 is exp582's vertex ghost \u2014 baseline-relative ripple, not a mode\n\n**ERRATUM-GRADE CORRECTION TO RECORDED PAPER 229**: RESIDUAL-PEAKED-MID-WINDOW retracted as BASELINE-CURVATURE LEAKAGE \u2014 the mid-window excess lived in the mixture-Dickman denominator's own curvature, not in position shape. Paper 229's POWER-LAW headline T(x)\u22480.0295\u00b7(1+x)^\u22121.104 STANDS and is STRENGTHENED (re-found binning-free). Any revival must be a baseline-mis-specification claim, never a positional mode. Absolute-shape channel CLOSES; sole remaining open item on this thread = rate-layer N-covariate.\n\nCoordinator fuse disclosure: minimal skeleton under ~15-min fuse \u2014 monotone-I-spline/isotonic and Dickman-offset legs SKIPPED (documented in skipped_legs), H1's beats-monotone clause UNTESTED; two run legs suffice for the registered comparison since the location clause fails independently.\n\nLedger: x-convention verified pre-script from ctl linear-uniformity; perm/boot on capped designs with observed stats from full design (disclosed); design-matrix scale surprise (obs rows 521,594; control rows 1,024,000) handled within budget; wall 273.4 s; seeds P/B/S 20260902/03/04.\n\nBarrier framing: scale-smoothness mechanism frontier \u2014 clean closure preventing both a wrong positional-mode hunt and a wrong closure of the true power law; residue cap untouched.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4043",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T19:46:36.815634+00:00",
-    "title": "FACT round-82 #2 \u2014 SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES \u2014 LRT stat=100.6 df=3 p=1.17e-21 perm 0/400: real non-linearity but STEEP MONOTONE DECLINE; PAPER-229 ERRATUM: peaked residual = baseline leakage, power law stands"
   },
   {
     "consumed_by_exp_id": "217690eb",
@@ -2326,16 +2296,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-86 #1 \u2014 U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL \u2014 hump REAL over exact Dickman baseline (amp .116\u00b1.036 z=3.23, control null) but NO single carrier \u2014 parity/3|v/5|v/7|v/omega100/gcd ALL remove 0% (worst strata z 2.4\u20134.6); excess ARITHMETIC-INTERNAL, divisibility-distributed (~45\u201360% absorbed by m|v conditioning) \u2192 routes paper 232 feature to DIVISIBILITY-MIXTURE BASELINE model not per-hit binary covariates; TWO-PASS: blind arm 13 recipes NO_MATCH \u2192 surrogate baseline VOIDed pre-verdict (A2) \u2192 coordinator amendment A3 exact regeneration (order-walk 128/128, hits re-validated exp569 tester)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92ebc5bc",
     "description": "Round-88 #2 \u00b7 exp 594 [FINAL] \u00b7 pure reanalysis of exp581_regen_positions.npz (9594 pooled hits / 128 trials; wall_s 5.95) \u00b7 paper 245 \u00b7 pre-registration fixed in script header BEFORE any fit; amendment log none.\n\nVERDICT H0_SPIKE_STEEPNESS_UNIDENTIFIABLE (flags: traj_ok False, excl_single True, excl_degeneracy False, caps_ridden=[40], ci_caps_hit=[40,80]).\n\nLADDER (treatment): dAICc vs single -99.57 / -99.57 / -101.28 / -101.33 at caps 10/20/40/80 \u2014 kernel existence never wavers (chi2 158.2 -> 52-54, bar -6); single-law b=1.1596 replicates papers 229/238 (~1.104). b_edge points .8326 / .8326 / 40.000 (=cap, interior False) / 40.4635; edge mass rho .545/.545/.475/.476. Bootstrap best cap 80 (nboot 300, 0 fail): b_edge CI [15.25, 80.0], cap-hit frac 26.7%; cap-40 supplementary (nboot 100): CI [14.85, 40.0] hit 60%.\n\nLEDGER CATCH (disclosed): ROLE-SWAPPED OPTIMUM at caps 10/20 \u2014 b_bulk rides its own bound (~30) acting as the near-boundary spike while b_edge absorbs the smooth part (~.83); chi2 within ~2 AICc of the edge-spike solution = a SECOND unidentified direction beyond cap-riding. Low-cap interior=True is not identification.\n\nCONTROL CLEAN: no kernel at any cap \u2014 dAICc +4.85 at all four caps, edge weight ~8.3e-7 (vs .47-.55 treatment), b_single .0838 ~ uniform; control prediction confirmed everywhere.\n\nAMENDMENT to paper 238's canonical description: registered delta=10 was a HARD CENSOR \u2014 profile must be stated as 'flat bulk (.57 paper-238 pipeline / .88 here) + left-edge spike with b_edge >~15 LOWER BOUND ONLY, exact steepness unidentified at n=9594'; only exclusion that holds anywhere is b_edge != single-law value; upper limit unbounded by data. Paper-238 posthoc 22.5 vs this ~40.5: estimator-dependent absolutes under one invariant diagnosis (steep/censored/cap-sensitive). Future pinning requires more pooled hits or a parametric-family choice \u2014 not another cap raise alone.\n\nRELATION TO PAPERS 239/240: both STAND. exp594 speaks to pooled-SHAPE identifiability (unconditional positions); 239/240 resolved the CARRIER (tiny-v composition + truncation-boundary geometry among size-matched strata). Map entry 'no independent positional kernel component' unchanged.\n\nHONEST NOTES: non-best-cap CIs nboot=100 supplementary (declared pre-fit); geometric 28-bin choice \u2014 steep-spike ID binning-sensitive (mass fractions differ across pipelines: w_edge 8.6% paper 238 vs rho~.48 here); amplitudes normalized out (effective k=1/3); data provenance inherits exp581 regen lineage (balanced-96-bit exchangeability conditional).\n\nBarrier framing: identifiability audit INSIDE the positional shape layer \u2014 residue cap 4/3, position 5.19x, external-hint laws, quantum frontier, four-class closure, papers 228-230 layering untouched; paper 238's .2346 provenance flag still travels; #391 single-seed-unconfirmed stands. Open: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4074",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T23:37:37.758360+00:00",
     "title": "FACT round-88 #2 \u2014 EDGE-CAP (exp 594 FINAL): H0 \u2014 SPIKE STEEPNESS UNIDENTIFIABLE AT THIS DATA SIZE (kernel itself MASSIVELY CONFIRMED) \u2014 cap ladder dAICc -99.6/-99.6/-101.3/-101.3 at caps 10/20/40/80 retains paper-238 two-component kernel beyond doubt (single-law b=1.160 replicates papers 229/238 ~1.104), BUT b_edge climbs .833*/.833*/40.000(=cap)/40.46 with boot CI [15.2, 80.0] hitting successive caps (cap-80 hit 26.7%, cap-40 hit 60%) \u2014 paper 238's registered delta=10 was a HARD CENSOR: canonical wording AMENDED to flat bulk + left-edge spike b_edge >~15 LOWER BOUND ONLY; controls clean (+4.85, w~8e-7)"
   },
@@ -2562,6 +2533,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T19:47:12.970255+00:00",
     "title": "FACT round-95 #5 \u2014 STRATIFIED-DAYZERO (exp 607): SCREEN_NEGATIVE AS AMENDED \u2014 dial-only screen fires everywhere but EVERY alert sits on the K axis (= paper-257 law replicated cell-wise in FOUR independent populations); absorbing \u03ba erases all of it (verified non-mechanical) \u21d2 exp602 pooled null upgrades to stratified-strength: dial+\u03ba exhausts detectable rate structure at these resolutions; Bet#1 main run not funded"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 73 (compact probe closing NET-97's open lower bracket).\n\n| k | retained | verdict |\n|---|---|---|\n| 4 | 0.92560 | FAIL (-5.4 pts) |\n| 6 | 0.96247 | FAIL (-1.75 pts) |\n| 8 | 0.98056 | PASS (NET-97) |\n\nBoth pre-registered horns REFUTED: the knee is neither at six (P1) nor at/below four (P2). k*(Qwen2.5-7B@512) = 8 EXACTLY, bracketed from both sides with a strictly monotone seven-point curve {4:0.926, 8:0.981, 12:0.989, 16:0.989, 20:0.992, 24:0.995}. NET-97's '<=8' tightens to '=8': the size-shrink at 14x scale is an exact HALVING of the small-model knee ({16 -> 8}), not a collapse. Gate bit-exact again; baseline reproduced NET-97 exactly (third consecutive deterministic run).\n\nHonest limits: sub-4 unmeasured (curve shape makes it low-value); n=6 windows; single family.\n\nSetup identical to NET-97 (validated bf16-CPU Runner port). Script ResearchOutput/exp_net98_kneeprobe.py.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4206",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T23:41:04.199731+00:00",
+    "title": "NET-98 THE-KNEE-IS-EIGHT-EXACTLY: both sub-8 horns refuted \u2014 k=4 fails (0.926) and k=6 fails (0.962), so k*(7B@512)=8 precisely; the 14x-scale shrink is an exact halving {16->8}"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Round-96 #1 \u00b7 exp 608 CONIC-ORDER-RIGIDITY v2 \u00b7 verdicts: CL1_WEAK_CONFIRMED \u00b7 CL1_STRONG_REFUTED \u00b7 CL2_CONFIRMED \u00b7 CL3_CONTAINED (rate-parity fails in the sealing direction)**\n\nFleet Bet #2 empirical legs, positive-control gated. **Six defects caught pre-evidence by the control gates** \u2014 including the v1 generator family itself (3\u00d73 triple-space matrices: det 5, no integral invariant Q, mod-p BFS blew 8.6 GB \u2192 withdrawn; correct object = GL\u2082(Z) moves on (m,n), tree-generation verified exact).\n\n## Results\n\n| leg | result |\n|---|---|\n| CL1 weak | \u2705 ZERO violations of ord(w) \\| p(p\u00b2\u22121) across 550 primes \u00d7 40 words \u2014 ONE shared modulus caps ALL words \u21d2 a tree-word method gets a SINGLE smoothness draw per prime |\n| CL1 strong | \u274c REFUTED: 4,973/22,000 word orders divide neither p(p\u22121) nor p(p+1) individually (tori mix) |\n| CL2 | \u2705 \u27e8M\u2081,M\u2082,M\u2083\u27e9 \u2245 PGL\u2082(F_p) exactly at all 17 primes \u2264 60 |\n| Micro-audit | pm1 **225**/600, pp1 **292**/600, tree-word raw traces **0**/600 at matched per-N mpz-mul budgets; strata flat across (2/p); zero tree-only successes |\n\nZero is exactly what mechanics predicts for untargeted traces (~2/p \u21d2 ~0.003 expected). Caveat disclosed: the registered design omitted the stage-1 targeting step tr(W^E); the seal predicts even that analogue behaves as ONE Williams draw at worse constants.\n\n## The six-defect ledger (positive-control gate validation)\n(1) v1 wrong generators; (2) stream bands under-crediting exp606's \u00d710\u2078 strides (assertion fired pre-data); (3) control constants invalid on the exponent lattice twice \u2192 controls now searched with exact divisibility; (4) scalar exponentiation double-counting the MSB; (5) matrix ladder missing its R-squaring (k=5 passed BY ACCIDENT, k=13 exposed it); (6) Williams live-seed requirement booked (needs legendre(a\u00b2\u22124,p)=\u22121). **PROCESS LAW UPGRADED: positive controls are mandatory gates on factoring-machinery experiments.**\n\n## Consequence\nBet #2's triad closes the tree-matrix-ECM-analogue genre BY MECHANISM: genus-0 order structure carries no Hasse-interval variety. Falsifiable follow-up pre-stated: a targeted tr(W^E) variant at matched budgets must land within Poisson noise of one Williams draw's success count \u2014 beating it would be refutation-class news.\n\nArtifacts: `ResearchOutput/scripts/2026-08-25-round75/exp608_*`, paper `ResearchOutput/NewMathematics/259_ConicOrderRigidity.md`.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4207",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T23:41:04.201767+00:00",
+    "title": "FACT round-96 #1 \u2014 CONIC ORDER-RIGIDITY (exp 608): THE SEAL HOLDS \u2014 every Berggren-word order divides K_p = p(p\u00b2\u22121) (zero violations, 550 primes \u00d7 40 words), strong individual-torus variant REFUTED (4,973 mix), tree generates exactly PGL\u2082(F_p), and a tree-word arm scores 0/600 vs 225\u2013292 for matched-budget p\u00b11 methods \u2014 genre closed by mechanism; six-defect ledger caught by new positive-control gates"
   },
   {
     "consumed_by_exp_id": "",
@@ -4312,22 +4311,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some metric). Show: the 'copycat' analogy (Hofstadter's model) is a special case where A = B = the concept lattice. Conjecture: every creative mathematical insight can be decomposed into a sequence of analogy operations. Explore: can we formalize 'making a good analogy' as an optimization problem?",
-    "domains": [
-      "Novelty",
-      "Bridges",
-      "MachineLearning"
-    ],
-    "id": "seed_404",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
   },
   {
     "consumed_by_exp_id": "",
@@ -13344,6 +13327,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Divergence of the ridge-penalised logistic estimator as the penalty vanishes on a separated design is now proved, together with the envelope log(1/delta_lambda)/||x_i|| <= ||beta_hat(lambda)|| <= sqrt(n log 2 / lambda). What remains is to collapse that envelope to a single logarithmic rate by optimising the competitor along the separating ray, which is the quantity that determines how meaningless a clipped odds ratio is.\n\nOn a separated design there are constants 0 < c1 <= c2, depending only on the separation margin and the design norms, with c1 * log(1/lambda) <= ||beta_hat(lambda)|| <= c2 * log(1/lambda) for all sufficiently small lambda > 0; consequently every fitted odds ratio diverges like a power of 1/lambda.\n\nSharpen penalized_deficiency_le by taking t = log(1/lambda)/margin to prove delta_lambda = O(lambda log(1/lambda)^2), feed the result into log_deficiency_lower_bound for the lower bound, prove the matching upper bound by comparing the maximiser with that same ray point, and check the predicted log-scaling numerically on the flagged control-arm design.\n\nAny control-arm odds ratio reported from a separated design is a function of the stopping rule alone, and the ledger flag becomes a quantitative rule for discarding such fits.\n\nThe escape is slower than logarithmic, so mild penalisation stabilises the fit and design B can be salvaged with a fixed penalty.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4200",
+    "priority_score": 0.6715714285714287,
+    "research_mode": "team",
+    "source_exp_id": "e645a8ec",
+    "status": "available",
+    "timestamp": "2026-08-25T23:40:01.381898+00:00",
+    "title": "Sharp Logarithmic Rate for the Ridge Escape on Separated Designs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The least leaf number h(k) forcing k binary trees to share a quartet is proved here to lie between 3^((k-2)/4) and 3^(2^k)+1. Exhaustive and local-search data (h(2)=6, h(3)=10, and 19, 23, 29 for k=4,5,6) indicate a single exponential rate near 1.7. The direction is to prove h(k) = Theta(c^k) and identify c.\n\nThere is a constant c > 1 with h(k) = Theta(c^k); in particular h(k) <= C * c^k, replacing the doubly exponential Erdos-Szekeres bound.\n\nFormalize a 4-uniform hypergraph Ramsey bound for three colours and derive an exponential upper bound on h(k); check the predicted values against h(2)=6 (proved here) and the computed h(3)=10.\n\nThe quartet agreement threshold has a well-defined exponential rate, and the coding-theoretic packing rate is its logarithm.\n\nEither the truth is doubly exponential, in which case the small-case data is misleading, or h(k) is not of pure exponential type and a second parameter governs it.",
     "domains": [
       "Combinatorics"
@@ -14924,6 +14921,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Replace the unstructured interaction alternative by the first nontrivial one: an occupancy table that is a rank-one product plus a single scaled outer product. The formal equivalence between no interaction and rank one shows this is the minimal departure, and it reduces a 49-degree-of-freedom test to a one-parameter test with far greater power.\n\nFor the exp-578 occupancy table there is no direction (u, v) and no epsilon with |epsilon| bounded away from 0 such that occ = rate \u2297 prof + epsilon \u00b7 u \u2297 v fits significantly better than the rank-one fit; equivalently the second singular value of the centred occupancy table is consistent with sampling noise.\n\nFormalise the rank-two model as a TwoLayer perturbation, prove that its Pearson statistic is monotone in |epsilon|, then fit the leading singular direction of the observed centred table and compare with a permutation null.\n\nThe positional layer is law-complete to second order, and the search for the overdispersion carrier can be restricted to scalar per-N statistics.\n\nA single interaction direction exists and names the carrier explicitly (which deciles move with rate).",
+    "domains": [],
+    "id": "fd_4198",
+    "priority_score": 0.5937804878048781,
+    "research_mode": "team",
+    "source_exp_id": "e645a8ec",
+    "status": "available",
+    "timestamp": "2026-08-25T23:40:00.350947+00:00",
+    "title": "Rank-Two Occupancy Alternative for Positional\u2013Rate Interaction"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Pooling a seed family can only lower a positive reading, and the exact worst case is now known to be the Kantorovich constant. The conjecture is that the upper bound (the seed maximum) and the lower bound (the Kantorovich value) are jointly attained by a single explicit family, so the envelope is a complete description of pooling.\n\nFor every window [alpha, beta] with 0 < alpha <= beta and every rho in [0,1] there is a two-block family with per-seed readings exactly rho, ratios in [alpha, beta], and pooled reading any prescribed value in [rho*2*sqrt(alpha*beta)/(alpha+beta), rho].\n\nConstruct the family explicitly in Fin 2 blocks of dimension 2 and verify both endpoints and an interpolation parameter in Lean.\n\nPooled readings can be inverted into exact per-seed intervals, upgrading the two-spread criterion from a sufficient test to a characterisation.\n\nThere is an unnoticed obstruction between the two envelopes, and the interval of achievable pooled values is a proper subset that must be computed.",
     "domains": [],
     "id": "fd_4105",
@@ -15077,6 +15086,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T14:05:22.674761+00:00",
     "title": "Moment Fingerprint Classification"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The edge-decile mass is now proved to be a strictly increasing bijection from the window ratios (1, infinity) onto (1/10, 1), so each tercile identifies one ratio. To convert the exp-580 non-rejection into a positive equivalence claim, the inverse map needs an explicit modulus of continuity on the observed range of masses.\n\nOn any compact subinterval [m0, m1] of (1/10, 1) the inverse of m -> decileMass r 0 is Lipschitz with an explicit constant C(m0, m1), and applying it to the measured masses 0.229 / 0.245 / 0.230 yields window-ratio intervals that overlap pairwise.\n\nBound the derivative of r -> harmCDF r (1/10) from below on the relevant ratio range, invoke the inverse function bound, and propagate bootstrap intervals for the three tercile masses through the resulting Lipschitz constant.\n\nPositional universality is upgraded from a failure to reject into a quantified equivalence claim about one identified parameter.\n\nThe inverse is too steep at the observed masses to certify equivalence, so a larger sample or a second shape parameter is required.",
+    "domains": [],
+    "id": "fd_4201",
+    "priority_score": 0.5933333333333334,
+    "research_mode": "team",
+    "source_exp_id": "e645a8ec",
+    "status": "available",
+    "timestamp": "2026-08-25T23:40:01.946589+00:00",
+    "title": "Lipschitz Inversion of the Edge-Decile Map into a Ratio Equivalence Test"
   },
   {
     "consumed_by_exp_id": "",
@@ -15971,6 +15992,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The permutation p-value is exactly super-uniform in finite samples, whereas the chi-square approximation to the interaction likelihood-ratio statistic relies on asymptotics that fail on sparse occupancy tables. The conjecture is that on tables of the exp-578 sparsity the chi-square p-value is anti-conservative by a quantifiable amount.\n\nFor occupancy tables with expected cell counts below a fixed threshold, the chi-square p-value of the interaction statistic has null rejection probability strictly exceeding the nominal level, while the permutation p-value does not.\n\nSimulate null tables at the observed sparsity, compare empirical rejection rates of both rules against the proved bound permPValue_valid, and formalise the union of both decisions with the Bonferroni theorem.\n\nAll round-80 family-B decisions should be re-expressed in permutation terms, strengthening the null result.\n\nThe chi-square calibration is adequate at this sparsity and the two analyses can be reported interchangeably.",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_4202",
+    "priority_score": 0.56469362728281,
+    "research_mode": "team",
+    "source_exp_id": "e645a8ec",
+    "status": "available",
+    "timestamp": "2026-08-25T23:40:02.450505+00:00",
+    "title": "Exact Calibration Dominance of Permutation over Asymptotic Chi-Square"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved lower bound spends one tree per 3^{1/4} leaves because it is a union bound over all ordered quadruples. Since the agreement probability is exactly 3^{-(k-1)} by the ternary balance theorem and quartets sharing at most two leaves are nearly independent, the Lovasz Local Lemma should improve the exponential base.\n\nThere are avoiding families of k random caterpillars on n leaves whenever k >= 3 log_3 n + O(1), improving the constant 4 in exponential_lower_bound, hence h(k) >= 3^{k/3 - O(1)}.\n\nFormalize the symmetric Lovasz Local Lemma for the events 'all k trees agree on quartet Q', with dependency degree O(n^3) and probability 3^{-(k-1)}, and re-derive the avoidance statement in the Lean framework of exists_quartet_avoiding_family.\n\nThe exponential lower bound base rises from 3^{1/4} = 1.316 toward the empirically observed 1.7, narrowing the gap with the upper bound.\n\nThe quartet agreement events are more strongly dependent than their pairwise leaf overlap suggests, indicating a hidden global constraint in tree space.",
     "domains": [
       "Computation",
@@ -16013,6 +16049,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T09:52:40.667119+00:00",
     "title": "Prime-Window Capture Spectrum for Quadratic-Residue Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The law of total variance shows the unexplained dispersion lives entirely in the variance of the per-modulus rate. Conjecture that this variance is generated by an arithmetic mixing variable, namely the small-prime divisor structure of the sieve polynomial values, and not by anything positional.\n\nThere is a scalar arithmetic statistic s(N), computable from the factorisation of the sieve base value v(0) = b^2 - N over the factor base, such that conditioning on s(N) reduces the residual dispersion index of the hit counts to 1 + o(1).\n\nCompute s(N) for the exp-578 family, regress the hit counts on s(N), and check whether the conditional dispersion index drops to 1; formalise the reduction as an instance of law_total_variance with the conditional variances equal to the conditional means.\n\nThe overdispersion is fully explained arithmetically, closing the round-80 open problem.\n\nThe carrier is not divisor-structural and must be sought in the geometry of the scan window.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4199",
+    "priority_score": 0.5645856408166897,
+    "research_mode": "team",
+    "source_exp_id": "e645a8ec",
+    "status": "available",
+    "timestamp": "2026-08-25T23:40:00.859524+00:00",
+    "title": "Divisor-Mixture Carrier of Between-Modulus Rate Variance"
   },
   {
     "consumed_by_exp_id": "",
@@ -38178,14 +38229,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The two-sided score metrises the \"distance from equivalence\""
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "efa7685f",
     "description": "In the setting of `softMin_sandwich_of_gap`, let `m` be the number of pivotal voters, `\u0394`\nthe gap to the next-best cost and `m\u2081` the number of voters attaining that next-best cost.\nThen\n\n`t \u00b7 e^{t\u0394} \u00b7 [ (min y \u2212 log m / t) \u2212 softMin s t y ] \u2192 m\u2081 / m` as `t \u2192 \u221e`.\n\nEvidence: the two-sided bound `0 \u2264 error \u2264 (q/m) e^{\u2212t\u0394}/t` is proved\n(`softMin_sandwich_of_gap`), with `q = #(s \\ pivotal)` the total number of non-pivotal\nvoters; the conjecture replaces `q` by the number `m\u2081 \u2264 q` of *second-best* voters and\nasserts that the bound is asymptotically attained.\n\nFalsifiable: a profile for which the limit exists and differs from `m\u2081 / m`, or fails to\nexist.  Note `softMin_eq_of_pivotal_eq_self` already gives the degenerate case `q = 0`\nexactly.",
     "domains": [],
     "id": "fd_2920",
+    "phase": "A",
     "priority_score": 0.4386666666666666,
     "research_mode": "team",
     "source_exp_id": "10a6c20b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:55.926599+00:00",
     "title": "Conjecture D (Exact asymptotics of the dequantisation error)"
   },
@@ -39566,6 +39618,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The sole remaining open item on the empirical thread is the rate layer's dependence on stratum size.\nBecause the shape layer is now closed as a theorem, a covariate model at the rate layer can be\nestimated without contaminating the shape conclusion: the two layers have been formally separated by\nthe decomposition above.",
+    "domains": [],
+    "id": "fd_4205",
+    "priority_score": 0.4197017543859649,
+    "research_mode": "team",
+    "source_exp_id": "0dec095c",
+    "status": "available",
+    "timestamp": "2026-08-25T23:40:27.708495+00:00",
+    "title": "Direction 3 \u2014 Rate-layer covariates"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The two-parameter case is now fully formal, including the exact\nmechanism (`repPair_unique`) responsible for the bound and a proved example\n(`coeff_frameGeom_two_four`) showing the mechanism failing as soon as the\nuniqueness hypothesis is dropped.  The remaining work is to build the ternary\nanalogue of `frameGeom` and to compute one multiplicity-2 plane.",
     "domains": [],
     "id": "fd_1746",
@@ -39934,6 +39998,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:54.646076+00:00",
     "title": "Freiman's `3k-4` theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the endpoint-matched tilt cancels the mismatch size $d$ from the\nstationarity equation $d/(1+x) + b = 0$, leaving $1 + x^\\star = (u-l)/(\\log(1+u)-\\log(1+l))$, the\nlogarithmic mean \u2014 a *universal* location depending only on the window. **Why now?** The present\ncycle proves the two-sided trap GM < LM < AM, and also proves the *existence* half for an arbitrary\nstrictly convex curvature excess; what remains is to show the same *location* pinning survives when\nthe baseline mismatch is an arbitrary smooth curvature excess rather than a pure exponent shift,\nwhich would turn \"peak in the right half\" into a decisive, model-free falsifier for any leakage\nexplanation.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4203",
+    "priority_score": 0.41107073074926503,
+    "research_mode": "team",
+    "source_exp_id": "0dec095c",
+    "status": "available",
+    "timestamp": "2026-08-25T23:40:26.728668+00:00",
+    "title": "Direction 1 \u2014 Log-mean pinning of curvature-leakage artefacts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the sign of the second-derivative mismatch, not its size, decides\nwhether an endpoint-matched residual bumps or dips. An over-curved baseline yields a strictly\nconcave residual with exactly one interior maximum; an under-curved baseline yields a convex\nresidual with no interior maximum for any tilt whatsoever; a matched baseline yields a residual that\nis flat after edge calibration. Turning this into a full dichotomy theorem \u2014 with the mirror\nstatement for interior minima \u2014 would classify the first-order pathologies of residual shapes\ncompletely and give a one-line sign test on residual curvature as a diagnostic for baseline\nmisspecification.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4204",
+    "priority_score": 0.41107073074926503,
+    "research_mode": "team",
+    "source_exp_id": "0dec095c",
+    "status": "available",
+    "timestamp": "2026-08-25T23:40:27.241771+00:00",
+    "title": "Direction 2 \u2014 Curvature-signed dichotomy for residual shapes"
   },
   {
     "consumed_by_exp_id": "",
@@ -44562,15 +44654,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Universe dependence"
   },
   {
-    "consumed_by_exp_id": "2b4263a2",
+    "consumed_by_exp_id": "",
     "description": "`ThreeWorld.lean` proves residuation for an explicit three-element Heyting chain and exhibits failure of ordinary excluded middle.",
     "domains": [],
     "id": "fd_2212",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "25709a4b",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:23:07.281563+00:00",
     "title": "Intuitionistic semantics"
   },

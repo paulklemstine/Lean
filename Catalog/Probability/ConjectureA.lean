@@ -19,8 +19,8 @@ The single statement `ParityGap.conjectureA` packages all three assertions.
 -/
 
 import Mathlib
-import Catalog.Probability.ParityGap.Chebotarev
-import Catalog.Probability.ParityGap.CoxeterLength
+import Probability.Chebotarev
+import Probability.CoxeterLength
 
 open Finset PrimeUncertainty
 
