@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "147eac16",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — after TDIAL-U52 (round-58 #1, exp 528)\n\nThree Lean files were added this cycle, all `sorry`-free:\n\n* `Catalog/MachineLearning/ZeroFitDialUnif52.lean` — the tie geometry of the **",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-23T19:35:56",
-      "title": "FACT round-58 #1 — TDIAL-U52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
-    },
-    {
       "cycle_id": "3a849502",
       "domain": "Computation",
       "key_insight": "# Future Directions — from the median breakdown theorem outward\n\nThis cycle closed the assignment (the sharpness half of the breakdown theorem on\nthe two measured normalised distributions) and then ke",
@@ -499,19 +489,19 @@
       "theorem_count": 94,
       "timestamp": "2026-08-25T11:45:16",
       "title": "Both endpoints are formalised and the numerics of Section 4 of"
+    },
+    {
+      "cycle_id": "2111d025",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — after Paper 227 (exp 577 / verifyL7b formalisation)\n\nThe cycle just closed established four formal pillars:\n\n1. **Reciprocity-flip dichotomy** (`Catalog/Algebra/ReciprocityFlipDi",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-25T11:45:32",
+      "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED — H1 s"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2afe0ce6",
-      "domain": "Applications",
-      "key_insight": "# Future directions: the subset spectrum of a finite action\n\nThe assigned conjecture — *for every finite action the spectrum is log-concave,\n`t_r² ≥ t_{r-1}·t_{r+1}` for `1 ≤ r < |X|`* — is **false**,",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-18T15:47:25",
-      "title": "For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` for\n`1 ≤ r < |X|`."
-    },
     {
       "cycle_id": "5792b548",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 94,
       "timestamp": "2026-08-25T11:45:16",
       "title": "Both endpoints are formalised and the numerics of Section 4 of"
+    },
+    {
+      "cycle_id": "2111d025",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — after Paper 227 (exp 577 / verifyL7b formalisation)\n\nThe cycle just closed established four formal pillars:\n\n1. **Reciprocity-flip dichotomy** (`Catalog/Algebra/ReciprocityFlipDi",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-25T11:45:32",
+      "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED — H1 s"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2a9ba724",
-      "domain": "NumberTheory",
-      "name": "satF_imp",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "969a5dc4",
-      "domain": "Cryptography",
-      "name": "six_le_qOf",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "969a5dc4",
-      "domain": "Cryptography",
-      "name": "two_dvd_qOf",
-      "quality": 0.85
-    },
     {
       "cycle_id": "969a5dc4",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "affine_collision_count_five",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "2111d025",
+      "domain": "Algebra",
+      "name": "about",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2111d025",
+      "domain": "Algebra",
+      "name": "norm_sq_of_orthonormal",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2111d025",
+      "domain": "Algebra",
+      "name": "R2_of_orthonormal",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-25T11:45:16",
+  "last_updated": "2026-08-25T11:45:32",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "9e83a721",
-        "quality": 0.88,
-        "theorems": 103,
-        "title": "reinforcement learning"
-      },
-      {
         "cycle_id": "16cb59c0",
         "quality": 0.86,
         "theorems": 123,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 88,
         "title": "Parallel residual blocks obey a tensor-product certificate"
+      },
+      {
+        "cycle_id": "2111d025",
+        "quality": 0.78,
+        "theorems": 68,
+        "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGE"
       }
     ],
     "Applications": [

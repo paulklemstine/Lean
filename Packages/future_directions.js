@@ -2117,16 +2117,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-76 #1 \u2014 GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' \u2014 extremal order = population mass-sort (window-ascending beats descending 1.58x\u00b10.03 n=2400; sign-flip crossover E[\u221ar]=1.1716); master inequality S \u2264 (4/3)\u00b7T1-cap/\u039b zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) \u2192 keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078\u00d7 vs 1.08\u00d7); L7-a measure deployed generator tilt named next"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed5e2340",
     "description": "**Verdict: H1 REFUTED DECISIVELY / MIXED-PARTIAL by literal rules.** Paper 221's named follow-up L7-a (measure the real generator tilt of deployed populations) is CLOSED; the \u039b-channel scope question is settled ADVERSARIALLY.\n\n**Setup:** 4 pools \u00d7 n=600, b=15, fixed seed 20260824, exact-uniform sieve-index prime sampling, touch-count costs verbatim from verifyL7_sim.py, 8-batch bootstrap SEs.\n\n**Per-pool results:**\n\n| pool | window | z_mean [CI95] | win_asc/desc S \u00b1 SE | in_win |\n|---|---|---|---|---|\n| HARD_BAL (control) | canonical | 0.4114 [0.3887,0.4341] | 1.5896 \u00b1 0.0538 | 1.000 |\n| RSA_INDEP (deployed-style) | canonical | 0.6356 [0.6150,0.6562] | 0.5578 \u00b1 0.0217 | 1.000 |\n| RATIO4 | adapted r_max=4.5 | 0.0558 [0.0530,0.0586] | 17.345 \u00b1 0.4654 | 0.000 canon |\n| UNIFORM_WIDE | adapted r_max=8.0 | 0.5979 [0.5765,0.6194] | 0.5505 \u00b1 0.0230 | 0.582 canon |\n\n**Three-way control replication:** HARD_BAL z=0.4114 matches analytic 0.414 AND independent verifier BAL_prime 0.4095\u20130.4148 / S=1.5785\u00b10.029 at shifted bitlen b=11\u219215 (measured S=1.5896\u00b10.0538). Machinery sound.\n\n**The inversion:** on independent same-bitlen primes the within-window divisor mass is TOP-heavy \u2014 ratio concentration near 1 (effective median r\u22481.25) pushes min(p,q) HIGH into (\u221a(N/2),\u221aN]. Window-ascending is always well-defined there (in_win=1.000 vs paper-137's 21.6% undefined) yet LOSES ~44% to sqrt-descending. Tilt-only predictor (1\u2212z)/z tracks measured S on all honest windows.\n\n**Consequence (plain):** \u039b-dominance is CONFINED TO ARTIFICIAL HARD-BALANCE POOLS; real generator classes tilt ADVERSARially. No deployable reorder-class gain without ENFORCED q<2p balance at key-generation time \u2014 no deployed generator enforces it. Paper-221 caveat upgraded from \"tilt unmeasured\" to \"tilt adversarial off-balance\" \u2014 final word. Scoped reorder-class fact, no speed prescription.\n\n**Caveats:** RATIO4's 17x = narrow-stratum pinning artifact (needs N-invisible declared-support knowledge), not deployable. b=15 lab scale, scale-free transfer assumed (Mertens/Dickman) not verified; real deployed filters only narrow the ratio band further (worsen the tilt).\n\n**Ledger catches disclosed:** findings.md filename pre-existed \u2192 exp575_findings.md written instead; descriptive sign readout added post-smoke with pre-registered decision rules unmodified (in JSON honest_notes); sieve-index sampling replaced randprime rejection loop (identical in law).\n\n**Barrier validation:** factor-local/scan-order frontier row; completes L7-a; reorder-class map now has measured scope boundaries end-to-end; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 223 \u00b7 assessment v329\u2192v330 \u00b7 count 563\u2192564 \u00b7 artifacts ResearchOutput/scripts/2026-08-24-round74/exp575_*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3999",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T13:15:17.263405+00:00",
     "title": "FACT round-77 #1 \u2014 GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY \u2014 RSA-style pools read z=0.6356 [0.6150,0.6562] TOP-HEAVY and window-ascending LOSES ~44% (S=0.5578\u00b10.0217); \u039b-dominance CONFINED to artificial hard-balance pools; paper-221 L7-a CLOSED"
   },
@@ -2172,21 +2173,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-24T15:58:32.184828+00:00",
     "title": "FACT round-79 #2 \u2014 HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNITUDE \u2014 pooled KS D=0.09519 p=6.9e-76 (9565 hits/127 hit-rich Ns, paired control null); stratified check decisive: conditioning on all 8 v-cells RAISES D to 0.10423, 7/8 cells fire, permutation p<0.0005 \u2014 real within-N geometry in the smooth locus of j\u00b2\u2212N; first positive carrier candidate for the ~39\u201361% residual"
-  },
-  {
-    "consumed_by_exp_id": "2111d025",
-    "description": "Paper 227. exp 577 (+ independent verification verifyL7b). Sources: ResearchOutput/scripts/2026-08-24-round74/exp577_product_dial.py (pre-registration in header BEFORE data generation; post-verification REVISION annotated in-script) -> exp577_result.json + smoke pair + diagnostics; verifyL7b_exp577_check.py -> verifyL7b_result.json.\n\nVERDICT (pre-registered): WINDOW-STRONGER-NOT-SHIFTED \u2014 H1 scale-shift REFUTED on all four shift candidates (both legs fail, R2 margins to abs bar -0.132..-0.160); H0 blocked by the disclosed branch (D-red@400 = 33.4% >= 30%).\n\nSWEEP (cumulative QR-count dial vs log-rate): B=400 R2=.3207/D-red 33.43% | 4000 .0241/2.40% | 4e4 .0150/1.68% | 1e5 .0000/0.0% | 1e6 .0277/4.11%. Extension DILUTES: equal-weight counting buries primes informative ~1/l. B* = 400 \u2014 paper-136/139 window location CONFIRMED scale-independent.\n\nWEIGHTED DIAL IS THE LAW: W(B)=sum_{QR l<=B} 1/l: W400 R2=.4731/D-red 48.11%, W1e6 .4786/48.51% (z~16.8); corr(W1e6,W400)=0.999 (independent verifier population 0.9991/0.9985) \u2014 signal SATURATES BY 400 once harmonically weighted. ADOPTED as canonical scale-smoothness covariate.\n\nVERIFIED THREE-PART DIAGNOSIS OF PAPER 226 (erratum-grade for SECONDARY conclusions): (1) S_prod/S139@400 rows are composite-bottom dials with reciprocity sign flipping iff l=3 mod 4 AND N=3 mod 4 (52.3% of N; conditional flip 100%, 2680/2680, zero violations; unconditional 27.19% predicted=measured to 2nd decimal) \u2014 published weakness (.0781/14.22%, .0565/9.07%) is DIAL-FORM ARTIFACT, reproduced under flipped forms (.030/4.11%, .0456/5.46%) while clean C100 Legendre is STRONG (.3728/34.45%) \u2014 RETRACTED-AS-ARTIFACT; (2) PRIMARY S_indiv null REPLICATES as true null here too (.0019/0.09%, z=0.72; flip mechanism inapplicable) \u2014 consistent null, only secondary retracted; (3) exp576-vs-exp577 S400 discrepancy (0.078 vs 0.32) traced to form difference + estimator spread (C400==recorded S400 on 128/128 rows; C100-clean strong in both populations 34.45%/34.75%) \u2014 documented, not a reproducibility failure.\n\nDISPERSION BOOKKEEPING both readings: count@400 = 33.4% of raw (=42.1% of excess-above-Poisson); W1e6 = 48.5% raw (=61.0% excess); residual ~51.4% raw / ~39.0% excess still overdispersed (D_cond>1). Paper 226's '>=86% new structure' shrinks to ~39-58% residual non-QR (dial/reading dependent).\n\nLEDGER CATCHES (adversarial BOTH directions): first-draft '(signs cancel)' orthogonality claim RETRACTED by verification (r(flipP100,C400)=0.058 stands FOR THE FLIPPED FORM via label-swap clarification); verifier addendum 'removing l=2 rescues formA' REJECTED empirically (.0322/4.34% without l=2); l=2 even-modulus Jacobi crash caught in smoke; first-draft T1 bound mismatch + missing-/n correlation self-caught pre-ledger; pre-reg header error annotated in-script; smoke n=16 spuriously fired H1 \u2014 marked NON-EVIDENTIARY. Lineage: four master-seed hashes reproduced/asserted pairwise disjoint.\n\nBarrier validation: closes paper 226's named follow-up under fixed bars; canonical-covariate upgrade count->weighted; papers 136/139 stand at their own scale with location vindicated and form upgraded; residue cap 4/3 untouched; no complexity claim; no breakthrough claimed.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4023",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T15:58:32.186714+00:00",
-    "title": "FACT round-79 #1 \u2014 PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED \u2014 H1 scale-shift REFUTED (no QR window past 400; B*=400 confirms papers-136/139 location), 1/\u2113-weighted dial is the law (48% D-red, saturates by 400, corr .999) \u2014 paper-226 SECONDARIES erratum-grade (reciprocity-flip dial-form artifacts, flip 100%-on-condition), its PRIMARY null stands"
   },
   {
     "consumed_by_exp_id": "e645a8ec",
@@ -4333,21 +4319,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
-    "domains": [
-      "MachineLearning",
-      "Logic"
-    ],
-    "id": "seed_375",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -15189,6 +15160,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The raw and excess readings of a dispersion reduction differ by the exact factor (D-1)/D, so both published columns encode one number. Conjecture that the residual dispersion left after the harmonic dial is itself explained by a single conditional parameter, testable by refitting on the conditioned population.\n\nThere is a constant c such that the conditional dispersion after removing the harmonic dial equals 1 + c uniformly across the population strata used in exp 577.\n\nRefit the dispersion model stratum by stratum, converting all reported reductions through reading_ratio before comparison.\n\nThe residual structure is one parameter, not a new arithmetic phenomenon.\n\nThe residual is stratum-dependent and a further arithmetic covariate exists.",
+    "domains": [],
+    "id": "fd_4157",
+    "priority_score": 0.5931481481481482,
+    "research_mode": "team",
+    "source_exp_id": "2111d025",
+    "status": "available",
+    "timestamp": "2026-08-25T11:45:24.206392+00:00",
+    "title": "Single-Parameter Residual Dispersion After Harmonic Weighting"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The finite-size correction to the p-adic ceiling decays like p^{-2b}, uniformly in the base. Hence every valuation-type dial saturates well before the bitlens used in the FACT rounds, and any residual bitlen dependence is diagnostic of a non-tie mechanism.\n\nFor all p >= 2 and b >= 40, rho^2(p,b) - 3p/(p^2+p+1) < 10^{-24}.\n\nStrengthen padic_ceiling_close to a uniform numeric statement and instantiate at b = 40.\n\nProvides a one-line falsification test for every future bitlen sweep in the programme.\n\nSome base has anomalously slow saturation, contradicting the closed form.",
     "domains": [],
     "id": "fd_3826",
@@ -16837,6 +16820,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Saturation of the weighted dial is exactly the smallness of the tail mass of the squared amplitude profile. Conjecture that for the arithmetic profile the tail decays like 1/B, so that the window needed for a given accuracy is inversely proportional to the tolerance and independent of the population size.\n\nFor the arithmetic amplitude profile a_l comparable to 1/l on primes, 1 - weightedR2 over a window of cutoff B is Theta(1/log B), matching the Theta(1/n) law already proved for the index model.\n\nTransfer the proved model bounds (harmonic_weightedR2_ge and harmonic_weightedR2_le) to the prime-indexed profile using Mertens' theorem for the tail of sum 1/l^2 over primes.\n\nWindow size is a tolerance parameter, not a scale parameter: B* is universal.\n\nSaturation depends on the population and the B*=400 location is population-specific.",
+    "domains": [
+      "NumberTheory",
+      "Physics"
+    ],
+    "id": "fd_4155",
+    "priority_score": 0.5634281608829629,
+    "research_mode": "team",
+    "source_exp_id": "2111d025",
+    "status": "available",
+    "timestamp": "2026-08-25T11:45:23.416747+00:00",
+    "title": "Spectral Tail Law for Dial Saturation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Extend the binary lattice-point model to ternary orders: the coefficient of X^n in the frame geometry of (p,q,r) counts lattice points of a box on the plane ip+jq+kr=n. The conjecture is that the resulting count deviates from its mean by at most p-1, which is Bang's theorem. This turns a classical polynomial statement into a counting problem already half-formalised in the catalog.\n\nFor odd primes p < q < r and all k, |coeff k (cyclotomic (p*q*r) \u2124)| \u2264 p - 1.\n\nFormalise the ternary frame geometry as the product of three truncated geometric series, prove a box-uniqueness lemma modulo p, and bound the alternating differences; test numerically on all p*q*r \u2264 10^4 first.\n\nBang's theorem enters the catalog and globalises to all orders with three odd prime divisors via height reduction.\n\nA concrete counterexample triple would contradict a classical theorem, indicating a modelling error to be localised.",
     "domains": [
       "Geometry",
@@ -17224,6 +17222,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T07:48:27.233108+00:00",
     "title": "Sublinear Knee Growth under Context Doubling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both the class-group residue dial and the weighted product dial collapse the PP and NN factorisation types. Conjecture a single obstruction theorem: any readout that factors through a group homomorphism from the multiplicative monoid of integers to a finite abelian group is blind to that distinction. This would close a family of proposed factoring covariates at once.\n\nIf f is a monoid homomorphism from integers coprime to m into a finite abelian group G, and f(p) = f(q) = g while f(p') = f(q') = g^{-1}, then f(pq) = f(p'q').\n\nState and prove the homomorphism version in Lean, then derive both the Jacobi dial and the class-group dial collapses as instances.\n\nA whole class of proposed dials is provably factor-blind, independent of window size.\n\nSome non-multiplicative readout escapes the collapse, which would be the first genuinely new covariate.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4156",
+    "priority_score": 0.5629688434489444,
+    "research_mode": "team",
+    "source_exp_id": "2111d025",
+    "status": "available",
+    "timestamp": "2026-08-25T11:45:23.816196+00:00",
+    "title": "Abstract Factor-Blindness Obstruction for Multiplicative Readouts"
   },
   {
     "consumed_by_exp_id": "",
@@ -26505,6 +26518,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T10:51:00.026827+00:00",
     "title": "Sublinear Residual Exponent Family"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The flatness factorisation shows that a window's explained variance is the amplitude profile's Rayleigh quotient against the covariate. Conjecture that among all arithmetically computable weight profiles the harmonic profile is optimal up to a bounded factor. Testing this settles whether 1/l is canonical or merely convenient.\n\nFor every weight profile w supported on primes below B, the explained variance R2(w) is at most C times R2(1/l) with an absolute constant C, whenever the signal amplitudes satisfy a_l = Theta(1/l).\n\nFormalise R2 for arbitrary weights in the orthonormal model (already available as R2_of_orthonormal) and prove the comparison by Cauchy-Schwarz plus a two-sided amplitude hypothesis; verify numerically on the exp 577 population.\n\nThe 1/l dial is canonical: no reweighting can improve it beyond a constant.\n\nThere is a strictly better computable dial, and the covariate upgrade is not finished.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4153",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "2111d025",
+    "status": "available",
+    "timestamp": "2026-08-25T11:45:22.626141+00:00",
+    "title": "Rayleigh-Optimal Weight Profiles for Residue Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The flipped dial is the clean dial multiplied by the twist character chi4(l)chi4(N). Conjecture that the covariance of the flipped dial with any fixed target is bounded by a Polya-Vinogradov-type character sum, hence negligible relative to the clean dial's covariance. This would upgrade the erratum from empirical to provable.\n\nFor a window P of odd primes and a target bounded by 1, the covariance of the flipped dial with the target is O(sqrt(N) log N) uniformly, while the clean dial's covariance is of order |P|.\n\nExpress the covariance as a sum of chi4-twisted Jacobi symbols over the window using jacobi_eq_twist_mul, then apply a character-sum bound.\n\nThe paper-226 secondary weakness is provably a form artifact, not arithmetic.\n\nThe flipped form carries genuine signal and the erratum must be narrowed.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4154",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "2111d025",
+    "status": "available",
+    "timestamp": "2026-08-25T11:45:23.020026+00:00",
+    "title": "Character-Sum Cancellation for the Reciprocity Twist"
   },
   {
     "consumed_by_exp_id": "",
@@ -36773,6 +36814,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Status update.**  The composite-`m` attainment conjectured earlier in this\nthread is now a theorem (`extremal_collision_value_general`): the mixture of a\nuniformly random bijection (mass `1 - 1/m`) with a uniformly random constant\n(mass `1/m`) is *exactly* `2`-universal for every `m` and attains `1/m`.  What\nremains open is whether the extremal family is *strongly* `2`-universal.\n\n**Conjecture.**  For every `m \u2265 2` the bijection\u2013constant mixture is pairwise\nindependent: `P(h x = u, h y = v) = 1/m\u00b2` for all `u, v` and all distinct keys\n`x, y`.  Consequently the extremal value `1/m` is attained inside the class of\nstrongly `2`-universal families for every `m`, not only for primes.\n\nThe key insight is that pairwise independence for the mixture reduces to the\npermutation count `|{\u03c3 : \u03c3 x = u, \u03c3 y = v}| = (m-2)!` for `u \u2260 v` together with\nthe vanishing of the bijection branch on the diagonal, i.e. to elementary\ncounting rather than to field structure; the prime hypothesis in\n`affine_pairwiseIndependent` is an artefact of the construction.\n\n**Why now?**  `mix_exactly2Universal` and `mixLaw_prob_constant_branch` already\nreduce every mixture probability to a pair of `Finset` cardinalities, so only\nthe permutation counts are missing.\n\n---",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4149",
+    "priority_score": 0.4427468586250435,
+    "research_mode": "team",
+    "source_exp_id": "539def03",
+    "status": "available",
+    "timestamp": "2026-08-25T11:45:02.099128+00:00",
+    "title": "Strong universality of the extremal mixture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  For a `k`-wise independent family (`k \u2265 3`) and `n` keys, the\nprobability that some `k` keys land in the same bucket is at least\n`1/m^{k-1}`, and this is sharp \u2014 attained by the degree-`(k-1)` polynomial\nfamily over `ZMod p`.\n\nThe key insight is that the reverse Markov argument survives verbatim once\n`X` counts ordered `k`-tuples: the expectation is `n^{\\underline{k}}/m^{k-1}`\nand the trivial bound is `X \u2264 n^{\\underline{k}}`, so the ratio is again\nindependent of `n`; only the sharpness construction changes.\n\n**Why now?**  `collisionProb_ge_of_pairwise_lower` is already stated with an\nabstract per-pair lower bound `\u03b4`, so the `k`-tuple version needs only a\n`Finset` of `k`-tuples in place of `offDiag`.\n\n---",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4150",
+    "priority_score": 0.44258253139399084,
+    "research_mode": "team",
+    "source_exp_id": "539def03",
+    "status": "available",
+    "timestamp": "2026-08-25T11:45:02.514803+00:00",
+    "title": "A converse union bound for `k`-wise universality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize conservative and faithful interpretations between theories. This would distinguish expressive convenience, uniform abstraction, and genuine proof-theoretic strength.",
     "domains": [
       "Logic"
@@ -36826,6 +36897,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T23:37:03.078698+00:00",
     "title": "Direction 4 \u2014 Singer Obstruction for Greedy Sidon Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  A uniformly weighted exactly 2-universal family on at least\ntwo keys and `m` buckets has size `N` divisible by `m` (proved:\n`card_dvd_card_of_uniform_exactly2Universal`), and moreover `N \u2265 m\u00b2` whenever\nthe family is exactly 2-universal on `m` keys; the affine family (`N = p\u00b2`) is\ntherefore size-optimal.\n\nThe key insight is that the `m` fibres of the collision event must each be\nrealised by a positive number of indices while the `m\u00b2` pairs of prescribed\nvalues `(u,v)` must be equidistributed, forcing `m\u00b2 \u2223 N` for strongly\n2-universal families and `m \u2223 N` in general.\n\n**Why now?**  The divisibility half is already a theorem, and the pairwise\nindependence of the affine family (`affine_pairwiseIndependent`) provides the\nequidistribution statement that the lower bound `N \u2265 m\u00b2` needs.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Degenerate Second Moment of Extremal Universal Families\",\n    \"domain\": \"Probability\",\n    \"description\": \"The affine family minimises the collision probability of a 2-universal family, and its collision counter is two-valued. We conjecture that minimising the collision probability and minimising the second moment of the collision counter are achieved at the same extremal point of the universality polytope. This would explain the tightness of the reverse Markov step rather than merely exhibiting it.\",\n    \"conjecture\": \"Among exactly 2-universal families on n >= 3 keys and m buckets, the minimiser of P(Coll) also minimises E[X^2], where X counts colliding ordered pairs; equality in the reverse Markov inequality P(X>0) >= E[X]/max X characterises the minimisers as those with X supported on {0, n(n-1)}.\",\n    \"test\": \"Formalise E[X^2] for the affine family, compare with the Chung-Erdos bound collisionProb_ge_second_moment, and enumerate the vertices of the universality polytope for (n,m) in {(3,3),(3,4),(4,4)} in exact rational arithmetic.\",\n    \"if_true\": \"Gives a structural characterisation of extremal universal families: they are exactly the two-valued ones, i.e. mixtures of injective maps with a totally collapsing map.\",\n    \"if_false\": \"There exist universal families with strictly smaller second moment than the affine one, and the Chung-Erdos route would then yield a strictly better converse than 1/m for some n.\",\n    \"proof_strategy\": \"Show equality in reverse Markov forces X in {0, C} almost surely; then classify laws on functions whose collision counter is two-valued using the exactness constraints.\",\n    \"catalog_references\": [\"Pythagorean.UnionBoundConverse.FiniteLaw\", \"Pythagorean.UnionBoundConverse.UniversalCollision\"]\n  },\n  {\n    \"title\": \"Strong Universality of the Bijection-Constant Mixture\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"The prime-free attainment of the extremal value 1/m is now proved via the bijection-constant mixture, but only exact 2-universality of that mixture was needed. We conjecture the stronger statement that the mixture is pairwise independent for every",
+    "domains": [
+      "Combinatorics",
+      "NumberTheory"
+    ],
+    "id": "fd_4152",
+    "priority_score": 0.4410214226989911,
+    "research_mode": "team",
+    "source_exp_id": "539def03",
+    "status": "available",
+    "timestamp": "2026-08-25T11:45:03.486866+00:00",
+    "title": "Arithmetic classification of uniform universal families"
   },
   {
     "consumed_by_exp_id": "",
@@ -37746,6 +37832,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:10.728376+00:00",
     "title": "Inclusion--exclusion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  Every exactly 2-universal family on `n = m` keys has\n`P(max bucket load \u2265 2) \u2265 1/m`, and moreover\n`E[max load] \u2265 1 + (m-1)/m\u00b2`; the affine family attains both, so a 2-universal\nfamily cannot be \"balanced with high probability\" in a stronger sense than the\ncollision bound already dictates.\n\nThe key insight is that the maximum-load event contains the collision event,\nso the converse bound transfers, while the expectation statement needs the\nfibre-square inequality `fiber_sq_lower_bound`, which is already available and\ngives the deterministic floor `\u2211_v c_v\u00b2 \u2265 n\u00b2/m`.\n\n**Why now?**  Both ingredients (`Collides` and `fiber_sq_lower_bound`) exist in\nthe development; the missing piece is only a definition of the load random\nvariable and its comparison with `X`.\n\n---",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_4151",
+    "priority_score": 0.4385195406062151,
+    "research_mode": "team",
+    "source_exp_id": "539def03",
+    "status": "available",
+    "timestamp": "2026-08-25T11:45:02.931520+00:00",
+    "title": "Load-balancing converse: the maximum bucket load"
   },
   {
     "consumed_by_exp_id": "",
@@ -41413,19 +41514,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "All the moving parts \u2014 honest uniqueness decoding"
   },
   {
-    "consumed_by_exp_id": "539def03",
-    "description": "Both endpoints are formalised and the numerics of Section 4 of\n`ComputationalEvidence.md` sit on the conjectured value to the digit; the open\npart is a lower bound over *all* 2-universal families, i.e. a converse to the\nunion bound rather than yet another application of it.",
-    "domains": [],
-    "id": "fd_1567",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "512ab986",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T01:53:32.832554+00:00",
-    "title": "Both endpoints are formalised and the numerics of Section 4 of"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "*Honesty is free* \u2014 `AlmostLossless.exists_scanScheme_of_code`: every code is\n  matched on its correct set by a uniqueness-scan code that is honest by\n  construction and whose decoder probes at most **one** candidate; the only\n  price is one extra alphabet symbol.",
     "domains": [],
@@ -41489,14 +41577,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The additivity theorem is now available for arbitrary finite index"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6247b80f",
     "description": "The reduction is proved, and the 194 values `c_g(1)` are tabulated\ndata; the conjecture is now a finite, checkable arithmetic statement that could\nbe discharged in Lean by `decide` once the table is entered.",
     "domains": [],
     "id": "fd_1579",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3da67f84",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T05:14:48.013697+00:00",
     "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
   },
