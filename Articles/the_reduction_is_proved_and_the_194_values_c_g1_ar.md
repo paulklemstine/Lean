@@ -1,246 +1,308 @@
-# Multiplying 194 Infinite Series Without Doing Any Multiplication
+# The Monster in a Single Coefficient
 
-## A finite arithmetic shadow of Monstrous Moonshine
+## How a 194-fold product of mysterious series turns out to remember everything
 
-### The largest sporadic object, and its 194 fingerprints
+In 1978 the mathematician John McKay noticed something that should not have
+happened. He was reading about two utterly unrelated subjects. On one side sat
+the **modular function** $j$, an object from nineteenth-century complex
+analysis whose expansion in a variable $q$ begins
 
-In the classification of finite simple groups there is one object that refuses to
-belong to any family: the Monster, a group with
+$$j(q) \;=\; \frac{1}{q} + 744 + 196884\,q + 21493760\,q^{2} + 864299970\,q^{3} + \cdots$$
 
-$$|\mathbb{M}| = 808{,}017{,}424{,}794{,}512{,}875{,}886{,}459{,}904{,}961{,}710{,}757{,}005{,}754{,}368{,}000{,}000{,}000$$
+On the other side sat the **Monster**, the largest of the twenty-six sporadic
+finite simple groups — a single, exceptional symmetry object with roughly
+$8 \times 10^{53}$ elements, so large that it took decades to prove it exists at
+all. The smallest way the Monster can act nontrivially on a vector space, other
+than doing nothing, is in dimension $196883$.
 
-elements. It has exactly $194$ conjugacy classes, and one of the strangest facts in
-mathematics is that each of those classes carries an attached *function of a complex
-variable*. Write $q = e^{2\pi i \tau}$ for a point $\tau$ in the upper half-plane. To
-each class $[g]$ one attaches a series
+McKay's observation was the arithmetic of a schoolchild:
 
-$$T_g(\tau) = \frac{1}{q} + c_g(1)\,q + c_g(2)\,q^2 + c_g(3)\,q^3 + \cdots,$$
+$$196884 \;=\; 196883 + 1.$$
 
-with integer coefficients $c_g(n)$. These are the McKay–Thompson series. The
-normalization is chosen so that the pole $1/q$ is simple and the constant term is
-zero — the series starts at $q^{-1}$ and then jumps straight to $q^1$. For the
-identity element of the group one recovers the classical modular function
-$j(\tau) - 744 = q^{-1} + 196884\,q + 21493760\,q^2 + \cdots$, whose coefficients are
-sums of dimensions of Monster representations. That coincidence — number theory's
-modular functions knowing the representation theory of an enormous sporadic group —
-is Monstrous Moonshine.
+That could be coincidence. It was not. The next coefficient obeys
 
-This article is about a much more modest, but completely precise, question. What
-happens if you *multiply all $194$ of them together*?
+$$21493760 \;=\; 1 + 196883 + 21296876,$$
 
-$$P(\tau) \;=\; \prod_{[g]} T_g(\tau).$$
+where $21296876$ is the next smallest dimension in which the Monster can act.
+And the one after that,
 
-Each factor has a simple pole, so the product has a pole of order $194$: it begins
-with $q^{-194}$. What comes next? A naive attempt to expand the product is hopeless
-by hand: multiplying $194$ infinite series generates, degree by degree, an explosion
-of cross terms indexed by all the ways of distributing a total degree among $194$
-factors. Even a computer, handed the general problem, must confront that
-combinatorics.
+$$864299970 \;=\; 2 \cdot 1 + 2\cdot 196883 + 21296876 + 842609326.$$
 
-The main point of what follows is that near the pole, the explosion never happens.
-The first three coefficients after the leading one are not complicated symmetric
-functions of the $c_g(n)$; they are *plain sums*:
+Every coefficient of a function from analysis turned out to be a sum of
+dimensions of representations of a gigantic finite group. John Conway and Simon
+Norton christened the phenomenon **Monstrous Moonshine** — "moonshine" being
+British slang for something illicit, delusional, or too good to be true.
 
-$$\text{coefficient of } q^{-193} = 0, \qquad
-\text{coefficient of } q^{-192} = \sum_{[g]} c_g(1), \qquad
-\text{coefficient of } q^{-191} = \sum_{[g]} c_g(2).$$
+This article is about a different, quieter question hiding inside moonshine:
+**how much of the phenomenon can be pinned down by a finite amount of
+arithmetic?** The answer turns out to be: much more than one might expect, and
+in a very precise sense, *all* of it — at the level of the crucial first
+coefficients.
 
-Nothing else survives. An identity about a product of $194$ transcendental functions
-becomes the addition of $194$ integers.
+---
 
-### The reason: a gap in the series creates a gap in the interactions
+## The 194 series
 
-The mechanism behind that collapse is elementary, and once you see it you cannot
-unsee it. Multiply the pole away: set $F_g = q\,T_g$, so
+Conway and Norton's conjecture is not just about $j$. To every conjugacy class
+$g$ of the Monster — there are exactly $194$ of them — moonshine attaches a
+series called the **McKay–Thompson series**,
 
-$$F_g = 1 + 0\cdot q + c_g(1)\,q^2 + c_g(2)\,q^3 + \cdots.$$
+$$T_g(q) \;=\; \frac{1}{q} + 0 + c_g(1)\,q + c_g(2)\,q^{2} + \cdots$$
 
-Now $F_g$ is an ordinary power series with constant term $1$, and — crucially — its
-coefficient in degree $1$ *vanishes*. In congruence language, $F_g \equiv 1
-\pmod{q^2}$: the series agrees with the constant $1$ up to and including degree $1$.
-Call such a series **one-like to depth $d$** when it has constant term $1$ and no
-terms at all in degrees $1, \dots, d-1$. Our $F_g$ are one-like to depth $2$.
+The identity class gives back $j$ minus its constant: $T_{1A} = j - 744$, so
+that $c_{1A}(1) = 196884$. For every other class, $T_g$ is a genuinely
+different series, and moonshine predicts that each of them is again a very
+special modular function. All $194$ share a rigid shape: a simple pole
+$q^{-1}$, no constant term, and integer coefficients from then on.
 
-Suppose $f$ and $g$ are both one-like to depth $d$, and ask for the coefficient of
-$q^k$ in $fg$. That coefficient is a sum over ways of writing $k = p + r$ of
-(coefficient of $q^p$ in $f$) times (coefficient of $q^r$ in $g$). A term survives
-only if neither factor contributes a vanishing coefficient. Either $p = 0$ — and
-then $f$ contributes its constant $1$, leaving the coefficient of $g$ — or $r = 0$
-symmetrically, or *both* $p$ and $r$ are at least $d$, which forces $k \ge 2d$.
+The list of first coefficients
+$$c_{1A}(1),\; c_{2A}(1),\; \dots,\; c_{\text{last}}(1)$$
+is what we shall call the **head table**: $194$ integers, one for each class.
+Moonshine predicts every one of them, because it predicts
+$c_g(1) = 1 + \chi(g)$, where $\chi$ is the character of the $196883$-dimensional
+representation. In particular, $|c_g(1) - 1| \le 196883$ for all $g$, with
+equality exactly at the identity class, where $\chi(1A) = 196883$.
 
-So below degree $2d$, the two series simply cannot interact. Every cross term is
-killed by the gap. Iterating over all the factors of a product gives what deserves a
-name.
+Now form the product of all $194$ series at once:
 
-> **Stable-Range Additivity Theorem.** Let $f_1, \dots, f_m$ be power series each of
-> which is one-like to depth $d$. Then for every degree $k$ with $1 \le k < 2d$,
-> $$[q^k]\bigl(f_1 f_2 \cdots f_m\bigr) \;=\; \sum_{i=1}^m [q^k] f_i.$$
-> The elementary symmetric corrections one expects from a product all vanish in this
-> range, no matter how many factors there are.
+$$P \;=\; \prod_{g} T_g(q) \;=\; T_{1A}(q)\,T_{2A}(q)\cdots$$
 
-The range $k < 2d$ is not an artifact of the argument. At $k = 2d$ additivity
-genuinely breaks, and the smallest counterexample is a one-liner: take $f = g = 1 +
-q^2$, both one-like to depth $2$. Their product is $1 + 2q^2 + q^4$, whose degree-$4$
-coefficient is $1$ — while the sum of the individual degree-$4$ coefficients is $0$.
+Each factor blows up like $1/q$ near $q = 0$, so the product blows up like
+$q^{-194}$. This single object is the hero of the story.
 
-Because the McKay–Thompson series have depth $d = 2$, the stable range is $k = 1, 2,
-3$, and translating back through $P = q^{-194}\prod_g F_g$ these three degrees are
-exactly the three Laurent coefficients quoted above. The vanishing of the
-$q^{-193}$ coefficient is the case $k = 1$: it is the sum of the constant terms of
-the $T_g$, which is $0$ by normalization.
+---
 
-### One step past the cliff
+## Why a product?
 
-What happens at the boundary degree $k = 2d = 4$? Not chaos — exactly one new term.
-For series one-like to depth $2$,
+The reason to multiply is a familiar one from high-school algebra. If you take
+a polynomial and multiply out its linear factors,
 
-$$[q^4]\prod_{i} f_i \;=\; \sum_i [q^4]f_i \;+\; \sum_{i < j} \bigl([q^2]f_i\bigr)\bigl([q^2]f_j\bigr),$$
+$$(x + a_1)(x + a_2)\cdots(x + a_n) = x^n + e_1 x^{n-1} + e_2 x^{n-2} + \cdots + e_n,$$
 
-the second sum being the second elementary symmetric function $e_2$ of the
-degree-$2$ coefficients. Since $e_2(x) = \tfrac12\bigl((\sum x_i)^2 - \sum
-x_i^2\bigr)$, this is still finite arithmetic: it needs the sum of the head
-coefficients and the sum of their squares, and nothing else. For the Monster product
-it computes the fourth coefficient after the pole:
+the coefficients you get are the **elementary symmetric functions**
+$e_1 = \sum a_i$, $e_2 = \sum_{i<j} a_i a_j$, and so on: Vieta's formulas. The
+individual $a_i$ get scrambled, but the collection of them is faithfully
+recorded in the coefficients.
 
-$$[q^{-190}]P = \sum_g c_g(3) + \sum_{g<h} c_g(1)c_h(1).$$
+The same thing happens for the moonshine product, and the computation is
+prettier than one might guess. Multiply the polar part away: $q\,T_g$ is an
+ordinary power series with constant term $1$. If we keep only the head of each
+series — that is, if we replace $T_g$ by the "toy" series
+$q^{-1} + c_g(1)\,q$, which has the right pole, no constant term, and the right
+first coefficient — then
 
-There is a clear conjectural pattern here: in degrees between $jd$ and $(j+1)d - 1$
-the correction should involve exactly the elementary symmetric functions up to
-$e_j$, because a factor can only contribute to degree $k$ through its terms of
-degree $\ge d$, so at most $k/d$ factors can be simultaneously active. The
-combinatorics is that of partitions of $k$ into parts of size at least $d$ — a small,
-controlled object, not the full partition lattice.
+$$q\left(\frac{1}{q} + c_g(1)\,q\right) = 1 + c_g(1)\,q^{2},$$
 
-### From an analytic identity to a decidable one
+and therefore
 
-Here is the punchline in its sharpest form. Fix any integer $N$ and consider the
-statement
+$$q^{194}\,P \;=\; \prod_{g}\bigl(1 + c_g(1)\,q^{2}\bigr).$$
 
-$$[q^{-192}]\ \prod_{[g]} T_g \;=\; N .$$
+Expanding the right-hand side is exactly Vieta again, with $q^2$ in place of a
+formal variable. The result is a clean statement:
 
-On its face this is analysis: an assertion about the Laurent expansion of a product
-of $194$ meromorphic functions on the upper half-plane. Stable-range additivity
-converts it, with no loss and no approximation, into
+> **Vieta for the moonshine product.** For every $k$, the coefficient of
+> $q^{2k-194}$ in the $194$-fold product is the $k$-th elementary symmetric
+> function $e_k$ of the head table.
 
-$$\sum_{[g]} c_g(1) \;=\; N,$$
+The case $k = 0$ says the leading term is exactly $q^{-194}$ with coefficient
+$1$: the pole has order exactly $194$, no accidental cancellation. The case
+$k=1$ is the one that matters most:
 
-an assertion about $194$ integers. Analytic questions are, in general, not
-mechanically checkable; the addition of $194$ integers is. Once the table of head
-coefficients is written down, the identity is *decided* — either the sum equals $N$
-or it does not, and finding out is a finite computation with no error term, no
-truncation, no numerics. This is the sense in which a statement about the Monster's
-$194$ modular functions has been reduced to arithmetic.
+> **The reduction.** The coefficient of $q^{-192}$ in the $194$-fold product
+> equals $\sum_g c_g(1)$, the plain sum of the head table.
 
-### But where does the table come from?
+---
 
-A reduction to a table is only as good as the table. For a large family of Monster
-classes, the McKay–Thompson series is (up to an additive constant) the reciprocal of
-a Dedekind eta quotient. Recall $\eta(\tau) = q^{1/24}\prod_{m\ge1}(1 - q^m)$. To a
-class $g$ one attaches a *frame shape*: a finitely supported family of integers
-$a_k$, recorded as the formal symbol $\prod_k k^{a_k}$ and coming from the
-characteristic polynomial of $g$ acting on the $24$-dimensional Leech lattice. It is
-*balanced* when $\sum_k k\,a_k = 24$. The associated eta quotient is $\eta_g(\tau) =
-\prod_k \eta(k\tau)^{a_k}$, and the moonshine function is $1/\eta_g$ plus a constant.
+## From transcendence to arithmetic
 
-For these classes the head coefficient is not data at all. Gathering the factors of
-$\prod_k \prod_{n \ge 1} (1 - q^{kn})^{-a_k}$ by total degree $m = kn$, one gets
+That last statement deserves a moment of appreciation. On the left is an
+analytic-looking quantity: a Laurent coefficient of an infinite product of
+modular functions attached to the largest sporadic simple group. On the right
+is a sum of $194$ integers.
 
-$$q\cdot\frac{1}{\eta_g} \;=\; \prod_{m \ge 1} (1 - q^m)^{-b_m}, \qquad
-b_m = \sum_{k \mid m} a_k,$$
+So a statement like *"the coefficient of $q^{-192}$ in the moonshine product is
+$S$"* — which sounds like it needs modular forms, Hauptmoduln, genus-zero
+subgroups of $\mathrm{SL}_2(\mathbb{R})$ and the whole apparatus — is
+**exactly equivalent** to the schoolroom assertion
 
-and expanding this product to second order gives a closed formula:
+$$c_{1A}(1) + c_{2A}(1) + \cdots \;=\; S.$$
 
-> **Frame-Shape Head Formula.** For an eta-quotient class with frame shape $(a_k)$,
-> $$c_g(1) = \frac{a_1(a_1+3)}{2} + a_2 .$$
+Nothing has been lost and nothing has been added: it is an "if and only if".
+And an equation between two integers is *checkable*. You add up $194$ numbers
+and compare. There is no approximation, no truncation error, no analytic
+subtlety left.
 
-The division is always exact, because $a_1(a_1+3)$ is even for every integer $a_1$.
-The next coefficient has a similarly clean shape,
-$$c_g(2) = \frac{b_1(b_1+1)(b_1+2) + 6\,b_1b_2 + 6\,b_3}{6},$$
-now in terms of the divisor sums $b_m$ rather than the raw exponents.
+The same collapse happens one level deeper. The next coefficient of a general
+product of such series is governed by a Newton-type identity: for $m$ series
+with heads $a_0^{(i)}, a_1^{(i)}, a_2^{(i)}$, the coefficient of $q^{3-m}$ in
+the product is
 
-Computing each successive coefficient this way costs a longer hand expansion, and it
-is not obvious the pattern continues. It does, and the reason is a classical trick
-worth knowing: take the logarithmic derivative. If $F = \prod_m (1-q^m)^{-b_m}$ then
-$q F' = F \cdot L$ where
+$$\sum_i a_2^{(i)} \;+\; \Bigl[\Bigl(\sum_i a_0^{(i)}\Bigr)\Bigl(\sum_i a_1^{(i)}\Bigr) - \sum_i a_0^{(i)}a_1^{(i)}\Bigr] \;+\; \frac{p_1^3 - 3p_1p_2 + 2p_3}{6},$$
 
-$$L = \sum_{m\ge1} \frac{m\,b_m\,q^m}{1 - q^m} = \sum_{r \ge 1} \sigma_a(r)\,q^r,
-\qquad \sigma_a(r) = \sum_{d \mid r} d\,b_d .$$
+where $p_r = \sum_i (a_0^{(i)})^r$ are power sums of the constant terms. For
+McKay–Thompson series all the constant terms vanish, every correction term dies,
+and the whole expression collapses to $\sum_g c_g(2)$: the coefficient of
+$q^{-191}$ in the product is the sum of the *second* column of the head table.
 
-Comparing coefficients of $q^r$ on both sides gives, with $c_0 = 1$,
+---
 
-$$r\,c_r \;=\; \sum_{k=0}^{r-1} c_k\,\sigma_a(r-k).$$
+## The worry, and the answer
 
-That is the whole story: a triangular recursion, one line long, that produces *every*
-coefficient of the eta quotient from the finitely many frame-shape exponents. The
-divisor sums $\sigma_a$ play the role that power sums play in Newton's identities for
-symmetric functions, and the recursion has exactly the shape of Newton's. Re-deriving
-the degree-$2$ and degree-$3$ formulas from it, by a route sharing no step with the
-original hand expansions, gives the same answers — an honest consistency check.
+Here is the obvious objection to celebrating too early. A single number —
+the sum of $194$ integers — is a very coarse fingerprint. Trillions of
+different tables have the same sum. If somebody handed you a scrambled or
+subtly wrong table, the sum would happily agree, and the check would pass.
+Isn't the reduction *lossy*?
 
-### The eight balanced shapes, and a table that computes itself
+The surprising answer is: **the full product is not lossy at all.**
 
-The recursion becomes concrete on the family of frame shapes $1^{-e}n^{e}$, i.e.
-$\eta_g = \eta(n\tau)^e/\eta(\tau)^e$. Balance requires $e(n-1) = 24$, so $n - 1$
-must divide $24$ and there are exactly eight admissible pairs. For them the head
-formula collapses to $c_g(1) = e(e-3)/2$ (with an extra $+e$ when $n = 2$, because
-then $a_2 = e$), and the recursion fills in the rest:
+> **Rigidity of the head table.** Two integral head tables produce the same
+> $194$-fold product if and only if they are rearrangements of each other. In
+> other words, the product determines the multiset $\{c_g(1)\}$ exactly.
 
-| $n$ | $e$ | $c_g(1)$ | $c_g(2)$ | $c_g(3)$ |
-|---:|---:|---:|---:|---:|
-| $2$ | $24$ | $276$ | $-2048$ | $11202$ |
-| $3$ | $12$ | $54$ | $-76$ | $-243$ |
-| $4$ | $8$ | $20$ | $0$ | $-62$ |
-| $5$ | $6$ | $9$ | $10$ | $-30$ |
-| $7$ | $4$ | $2$ | $8$ | $-5$ |
-| $9$ | $3$ | $0$ | $5$ | $0$ |
-| $13$ | $2$ | $-1$ | $2$ | $1$ |
-| $25$ | $1$ | $-1$ | $0$ | $0$ |
+So while any *one* coefficient of the product is a coarse invariant, the
+product as a whole is a **complete** invariant of the table up to relabelling —
+which is the best any product can possibly do, since multiplication does not
+know the order of its factors.
 
-The columns sum to $359$, $-2099$ and $10863$. So the eight-fold product
-$T_1 \cdots T_8$ of these classes has a pole of order $8$ and Laurent expansion
-beginning
+The proof is Vieta run backwards. Equal products force equal coefficients in
+every degree $2k - 194$, hence equal elementary symmetric functions $e_k$ for
+all $k$. But the $e_k$ are precisely the coefficients of the monic polynomial
 
-$$q^{-8} + 0\cdot q^{-7} + 359\,q^{-6} - 2099\,q^{-5} + 35514\,q^{-4} + \cdots,$$
+$$\Phi(X) \;=\; \prod_g \bigl(X + c_g(1)\bigr) \;=\; X^{194} + e_1X^{193} + \cdots + e_{194},$$
 
-and the reader can check the fourth entry against the boundary formula: the sum of
-the squares of the head column is $79579$, so
-$e_2 = \tfrac12(359^2 - 79579) = 24651$, and $10863 + 24651 = 35514$. Every one of
-these numbers is a consequence of the eight *frame shapes* alone — eight pairs of
-small integers $(n, e)$ — with no analytic input whatsoever.
+and over the complex numbers a monic polynomial factors into linear factors in
+essentially one way. So the two tables give the same polynomial, hence the same
+multiset of roots, hence the same multiset of entries. Turning the argument
+around, two tables that are rearrangements obviously give the same product,
+since a product does not care about the order of its factors.
 
-One more thing falls out of the closed formula. Since $e(e-3)/2 + 1 = (e-1)(e-2)/2
-\ge 0$ for every integer $e$, we get a uniform bound with no case analysis:
+Two consequences follow immediately, both practical.
 
-> For every balanced shape $1^{-e}n^{e}$ with $n > 2$, the head coefficient satisfies
-> $c_g(1) \ge -1$, with equality exactly at $e = 1$ and $e = 2$ (that is, $n = 25$
-> and $n = 13$); for $n = 2$ one has $c_g(1) \ge 0$.
+First, the **contrapositive that a checker actually uses**: if two candidate
+tables have different sums, then already their products differ. Perturb any
+entry of a proposed table and the product notices.
 
-Monstrous Moonshine is famous for its positivity: the coefficients of $j - 744$ are
-dimensions of vector spaces, hence non-negative, and much conjectural structure in
-the subject is about non-negativity of similar quantities. The bound above is a
-small provable shadow of that phenomenon, obtained not from representation theory but
-from the fact that a certain quadratic in $e$ has no room to be very negative.
+Second, **decidability**: comparing two Monster-sized Laurent products —
+infinite objects, built from $194$ transcendental-looking series — reduces to
+comparing two multisets of $194$ integers, which a computer settles in
+microseconds. An equality that looks like a question in analysis is, provably,
+a question in finite combinatorics.
 
-### What the collapse really says
+---
 
-There is a temptation to read the additivity theorem as a computational trick. It is
-better read as a statement about *where information lives*. A product of many series
-carries, in high degrees, information about all the interactions between its factors.
-Near the top — in the first few coefficients below the leading pole — it carries only
-the sum of the individual contributions. The factors are, in that range, invisible to
-each other. The depth $d$ of the gap in each factor measures exactly how far this
-independence extends: to degree $2d - 1$, and no further.
+## Where the numbers come from
 
-For the Monster this means the head of the $194$-fold product knows nothing about the
-Monster's group structure beyond three integer sums. That is a limitation and an
-opportunity at once. It is a limitation because one cannot hope to extract deep
-moonshine from the top of the product. It is an opportunity because those three sums
-are exactly the kind of statement one can nail down completely: not estimated, not
-verified numerically to some precision, but settled, as one settles whether a column
-of integers adds up.
+A reduction is only as good as its input. It is easy to say "add up the $194$
+entries"; it is a different matter to *know* an entry rather than copy it from a
+table in a book. So it is worth asking what it costs to establish even one.
 
-And, going the other way, the frame-shape recursion says the table itself is
-generated by a handful of small integers per class. Two finite objects — a list of
-frame shapes and a one-line recursion — determine the analytic head of a product of
-$194$ transcendental functions. Reduction is the whole art: the Monster is vast, the
-functions are infinite, and the answer, in the end, fits on a napkin.
+Take the identity class. Its entry is the coefficient of $q$ in $j - 744$, and
+$j$ is built from two classical series,
+
+$$E_4 = 1 + 240\sum_{n \ge 1}\sigma_3(n)\,q^n, \qquad \Delta = q\prod_{k \ge 1}(1-q^k)^{24}, \qquad j = \frac{E_4^{3}}{\Delta},$$
+
+where $\sigma_3(n)$ is the sum of the cubes of the divisors of $n$. Remarkably,
+one can determine the coefficients of $j$ without any analysis whatsoever, by
+pure formal algebra with integer coefficients. Three ideas make it work.
+
+**Truncation stability.** The infinite product $\prod_{k\ge1}(1-q^k)^{24}$ looks
+like it needs a convergence theorem to make sense. It does not: because
+$(1-q^k)^{24}$ differs from $1$ only in degrees $\ge k$, the coefficients of the
+partial product $\prod_{k \le m}(1-q^k)^{24}$ below degree $N$ stop changing as
+soon as $m \ge N-1$. The infinite product is well defined coefficient by
+coefficient, for free.
+
+**Unit-ness.** That product has constant term $1$, so it is invertible in the
+ring of integer power series. Hence the equation $\Delta/q \cdot f = E_4^3$ has
+one and only one solution $f$, and its coefficients are automatically integers.
+No denominators ever appear; the integrality of the $j$-coefficients is a
+triviality of formal algebra, not a theorem about modular forms.
+
+**A congruence calculus.** Working "modulo $q^N$" is working in the quotient by
+the ideal generated by $q^N$; congruences multiply, take powers, and — because
+of unit-ness — allow cancellation. A finite convolution of integer lists then
+establishes the truncated identity
+
+$$E_4^{3} \;\equiv\; \Bigl(\prod_{k \le 11}(1-q^{k})^{24}\Bigr)\cdot\bigl(1 + 744q + 196884q^{2} + 21493760q^{3} + \cdots\bigr) \pmod{q^{12}},$$
+
+and cancellation upgrades it from "one solution has these coefficients" to
+"**every** solution has these coefficients". The head entry
+$c_{1A}(1) = 196884$ is then *forced*, not assumed — and McKay's
+$196884 = 196883 + 1$ is a statement about a number one has derived.
+
+The same computation hands over a bonus. The coefficients of
+$\prod_{k\ge1}(1-q^k)^{24}$ are the Ramanujan tau values
+
+$$\tau = 1,\, -24,\, 252,\, -1472,\, 4830,\, -6048,\, -16744,\, 84480,\, -113643,\, -115920,\, 534612,\, -370944,$$
+
+and on these derived numbers one can *observe* the deep structural facts rather
+than quote them: multiplicativity $\tau(2)\tau(3) = \tau(6)$, the prime-power
+recursions $\tau(4) = \tau(2)^2 - 2^{11}$, $\tau(9) = \tau(3)^2 - 3^{11}$,
+$\tau(8) = \tau(2)\tau(4) - 2^{11}\tau(2)$, Ramanujan's congruence
+$\tau(n) \equiv \sigma_{11}(n) \pmod{691}$, and the non-vanishing of $\tau(n)$
+in this range — the first window of Lehmer's still-open conjecture that
+$\tau(n)$ never vanishes.
+
+---
+
+## What this buys, and what it does not
+
+Put the pieces together and the picture is this. The moonshine head statement —
+an assertion about the Laurent expansion of a product of $194$ modular-looking
+series — is *equivalent* to a sum of $194$ integers taking a specific value.
+The full product, moreover, is a complete invariant: it remembers the entire
+table up to relabelling, so the arithmetic reformulation throws nothing away.
+And the table entries are the sort of thing that can be computed from
+first principles, as the identity class demonstrates.
+
+There is even a cheap sanity check that requires no modular input at all. If
+moonshine is right, then every entry satisfies $|c_g(1) - 1| \le 196883$,
+because $c_g(1) - 1$ is a character value of a $196883$-dimensional
+representation and character values are bounded by the dimension. Summing over
+$194$ classes,
+
+$$\bigl|\textstyle\sum_g c_g(1) - 194\bigr| \;\le\; 194 \cdot 196883 = 38195302,$$
+
+so the check must land in the interval $[-38195108,\, 38195496]$. A proposed
+table violating that is refuted instantly — no modular forms required. And the
+identity class is precisely the extreme case, $|c_{1A}(1) - 1| = 196883$: the
+numerical fingerprint of the fact that the character of a representation attains
+its maximum modulus at the identity.
+
+What the story does *not* do is prove moonshine. Conway and Norton's conjecture
+— proved in 1992 by Richard Borcherds, work for which he received the Fields
+Medal — is a statement about *all* the coefficients of *all* $194$ series and
+their modularity, and no finite check reaches that. What the reduction does is
+carve out a well-defined, finite, self-contained fragment: the head layer, which
+is exactly the layer McKay first noticed. Within that layer, an infinite,
+analytic-looking question has been converted, without loss, into arithmetic on
+$194$ integers.
+
+That conversion is the point. Mathematics is full of statements that look
+transcendental and are secretly finite. Finding the boundary — the exact place
+where the infinite collapses into the countable, and then into the finitely
+checkable — is one of the most useful things one can do with a hard theorem. In
+moonshine, that boundary sits precisely one Vieta formula deep.
+
+---
+
+## Coda: a symmetric-function spectrum
+
+Vieta gives more than the sum. Every coefficient of the moonshine product in
+degree $2k - 194$ is the elementary symmetric function $e_k$ of the head table —
+a whole spectrum of invariants, $195$ of them, interpolating between the
+leading $1$ and the giant product $e_{194} = \prod_g c_g(1)$.
+
+That spectrum invites a question one can actually attack. Newton's inequalities
+say that for a polynomial with all real roots, the normalized coefficients
+$e_k/\binom{n}{k}$ form a log-concave sequence:
+$e_{k-1}e_{k+1} \le e_k^2$ after normalization. The polynomial
+$\prod_g (X + c_g(1))$ has all real roots by construction, since its roots are
+minus the head entries. So the moonshine spectrum is subject to Newton's and
+Maclaurin's inequalities — a rigid analytic-looking constraint on the Laurent
+expansion of a Monster-sized product, arrived at with nothing but symmetric
+function theory.
+
+The Monster, in other words, has left a shadow that is entirely elementary. You
+just have to multiply everything together and read off the coefficients.

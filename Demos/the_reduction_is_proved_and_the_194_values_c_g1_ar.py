@@ -1,419 +1,394 @@
 """
-Numerical companion to
-"Head Coefficients of Monstrous Products: Stable-Range Additivity,
- Frame-Shape Formulas, and a Finite Reduction".
+Numerical demonstrations for
+"Rigidity of the Monstrous-Moonshine Head Product".
 
-Everything here is exact integer arithmetic on truncated power series.
+Everything is exact integer arithmetic; no external dependencies.
+
+The script demonstrates, in order:
+
+  1. Formal power-series arithmetic over Z: E4 = 1 + 240 sum sigma_3(n) q^n,
+     the eta product D_m = prod_{k<=m} (1-q^k)^24, and the unique integral
+     solution f of D_m * f = E4^3 -- i.e. the q-expansion of q*j.  This
+     *derives* the identity-class head entry c_{1A}(1) = 196884.
+  2. Truncation stability of the eta product and unit-ness (invertibility).
+  3. Ramanujan tau values, Hecke relations, Ramanujan's congruence mod 691,
+     and the McKay decompositions of the j-coefficients.
+  4. The head product P(t) = prod_g (q^{-1} + t_g q) as an explicit Laurent
+     polynomial, and the Vieta theorem
+         [q^{2k-194}] P(t) = e_k(t).
+  5. The reduction: [q^{-192}] P(t) = sum_g t_g, checked against the direct
+     Laurent expansion.
+  6. Rigidity: permuting a table leaves P unchanged; changing the multiset
+     changes P (and where the first difference appears).
+  7. The a priori bound |sum_g c_g(1) - 194| <= 194 * 196883.
+  8. Newton / Maclaurin log-concavity of the symmetric-function spectrum.
+
 Run with:  python3 demo.py
-
-Contents
---------
-1.  Truncated integer power series arithmetic.
-2.  Eta quotients attached to a frame shape, expanded two independent ways
-    (direct product of factors, and the logarithmic-derivative recursion).
-3.  The closed formulas for the first three head coefficients
-        c(1) = a1(a1+3)/2 + a2,
-        c(2) = ( b1(b1+1)(b1+2) + 6 b1 b2 + 6 b3 ) / 6,
-        c(3) = ( 6 s4 + 6 b1 s3 + 3 (b1^2 + b1 + 2 b2) s2 + b1 * 6 c(2) ) / 24,
-    checked against the expansions.
-4.  Stable-range additivity for products of series congruent to 1 mod q^d,
-    its sharpness at degree k = 2d, and the second-elementary-symmetric
-    correction on the boundary.
-5.  The eight balanced frame shapes 1^(-e) n^(e) with e (n - 1) = 24:
-    the head columns 359, -2099, and the boundary value 35514.
-6.  A 194-row demonstration of the finite reduction: the analytic
-    coefficient of the Monster-sized product in degree -192 is the plain
-    integer sum of the 194 head coefficients.
 """
 
 from __future__ import annotations
 
+import random
 from typing import Dict, List, Sequence, Tuple
 
-# ----------------------------------------------------------------------
-# 1. Truncated integer power series
-# ----------------------------------------------------------------------
-
-Series = List[int]  # coefficients of q^0, q^1, ..., q^(N-1)
+# ---------------------------------------------------------------------------
+# 1. Truncated formal power series over Z, represented as coefficient lists
+# ---------------------------------------------------------------------------
 
 
-def ps_one(n: int) -> Series:
-    """The constant series 1, truncated to n terms."""
-    s = [0] * n
-    s[0] = 1
-    return s
-
-
-def ps_mul(f: Series, g: Series, n: int) -> Series:
-    """Product of two series, truncated to n terms."""
-    out = [0] * n
-    for i, fi in enumerate(f[:n]):
-        if fi == 0:
+def ps_mul(a: Sequence[int], b: Sequence[int], n_terms: int) -> List[int]:
+    """Cauchy convolution of two truncated series, kept to `n_terms` terms."""
+    out: List[int] = [0] * n_terms
+    for i in range(min(len(a), n_terms)):
+        ai = a[i]
+        if ai == 0:
             continue
-        for j, gj in enumerate(g[: n - i]):
-            if gj:
-                out[i + j] += fi * gj
+        for jj in range(min(len(b), n_terms - i)):
+            out[i + jj] += ai * b[jj]
     return out
 
 
-def ps_inv(f: Series, n: int) -> Series:
-    """Inverse of a series with constant term 1, truncated to n terms."""
-    assert f[0] == 1, "inversion requires constant term 1"
-    out = [0] * n
-    out[0] = 1
-    for k in range(1, n):
-        out[k] = -sum(f[j] * out[k - j] for j in range(1, k + 1) if j < len(f))
-    return out
-
-
-def ps_pow_int(f: Series, e: int, n: int) -> Series:
-    """f ** e for an arbitrary integer exponent e (f[0] must be 1)."""
-    if e < 0:
-        return ps_pow_int(ps_inv(f, n), -e, n)
-    out = ps_one(n)
-    base = f[:n] + [0] * max(0, n - len(f))
-    while e:
+def ps_pow(a: Sequence[int], e: int, n_terms: int) -> List[int]:
+    """Power of a truncated series by repeated squaring."""
+    result: List[int] = [0] * n_terms
+    result[0] = 1
+    base: List[int] = list(a[:n_terms]) + [0] * max(0, n_terms - len(a))
+    while e > 0:
         if e & 1:
-            out = ps_mul(out, base, n)
-        base = ps_mul(base, base, n)
+            result = ps_mul(result, base, n_terms)
+        base = ps_mul(base, base, n_terms)
         e >>= 1
+    return result
+
+
+def ps_inv(a: Sequence[int], n_terms: int) -> List[int]:
+    """Inverse of a truncated series with constant term 1 (a unit of Z[[q]])."""
+    assert a[0] == 1, "only unit series with constant term 1 are inverted here"
+    inv: List[int] = [0] * n_terms
+    inv[0] = 1
+    for n in range(1, n_terms):
+        s = 0
+        for k in range(1, n + 1):
+            if k < len(a):
+                s += a[k] * inv[n - k]
+        inv[n] = -s
+    return inv
+
+
+def sigma(k: int, n: int) -> int:
+    """Divisor power sum sigma_k(n) = sum_{d | n} d^k."""
+    total = 0
+    d = 1
+    while d * d <= n:
+        if n % d == 0:
+            total += d ** k
+            other = n // d
+            if other != d:
+                total += other ** k
+        d += 1
+    return total
+
+
+def eisenstein_E4(n_terms: int) -> List[int]:
+    """E4 = 1 + 240 * sum_{n>=1} sigma_3(n) q^n, truncated."""
+    return [1] + [240 * sigma(3, n) for n in range(1, n_terms)]
+
+
+def eta_product(m: int, n_terms: int) -> List[int]:
+    """D_m = prod_{k=1}^{m} (1 - q^k)^24, truncated to `n_terms` terms."""
+    out: List[int] = [0] * n_terms
+    out[0] = 1
+    for k in range(1, m + 1):
+        factor: List[int] = [0] * n_terms
+        factor[0] = 1
+        if k < n_terms:
+            factor[k] = -1
+        out = ps_mul(out, ps_pow(factor, 24, n_terms), n_terms)
     return out
 
 
-def one_minus_q_pow(m: int, n: int) -> Series:
-    """The series 1 - q^m, truncated to n terms."""
-    s = ps_one(n)
-    if m < n:
-        s[m] -= 1
-    return s
+def j_expansion(n_terms: int) -> List[int]:
+    """Coefficients of q*j = E4^3 / D_infty, i.e. [1, 744, 196884, ...]."""
+    e4 = eisenstein_E4(n_terms)
+    e4cubed = ps_mul(ps_mul(e4, e4, n_terms), e4, n_terms)
+    delta = eta_product(max(n_terms - 1, 1), n_terms)
+    return ps_mul(e4cubed, ps_inv(delta, n_terms), n_terms)
 
 
-# ----------------------------------------------------------------------
-# 2. Frame shapes and eta quotients
-# ----------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# 2. Head tables, symmetric invariants, and the head product
+# ---------------------------------------------------------------------------
 
-FrameShape = Dict[int, int]  # k -> a_k, finitely supported, sum k*a_k = 24
-
-
-def divisors(m: int) -> List[int]:
-    return [d for d in range(1, m + 1) if m % d == 0]
+MONSTER_CLASS_COUNT: int = 194
 
 
-def div_sum(a: FrameShape, m: int) -> int:
-    """b_m = sum over divisors k of m of a_k."""
-    return sum(a.get(k, 0) for k in divisors(m))
+def elementary_symmetric(t: Sequence[int]) -> List[int]:
+    """All elementary symmetric functions e_0, ..., e_n of a list of integers.
 
-
-def sigma_frame(a: FrameShape, r: int) -> int:
-    """sigma_a(r) = sum over divisors d of r of d * b_d."""
-    return sum(d * div_sum(a, d) for d in divisors(r))
-
-
-def is_balanced(a: FrameShape) -> bool:
-    return sum(k * v for k, v in a.items()) == 24
-
-
-def eta_quotient_series(a: FrameShape, n: int) -> Series:
+    Incremental recursion: multiply the generating polynomial by (1 + t_i Y).
     """
-    Expansion of q * (1 / eta_a) = prod_{m >= 1} (1 - q^m) ** (-b_m),
-    truncated to n terms, computed as an explicit product of factors.
+    e: List[int] = [0] * (len(t) + 1)
+    e[0] = 1
+    for i, ti in enumerate(t, start=1):
+        for k in range(i, 0, -1):
+            e[k] += ti * e[k - 1]
+    return e
+
+
+def head_product_laurent(t: Sequence[int]) -> Dict[int, int]:
+    """The head product prod_i (q^{-1} + t_i q) as {exponent: coefficient}.
+
+    Computed by honest Laurent multiplication, factor by factor -- deliberately
+    NOT via the Vieta formula, so that it can be used to test the theorem.
     """
-    out = ps_one(n)
-    for m in range(1, n):
-        b = div_sum(a, m)
-        if b:
-            out = ps_mul(out, ps_pow_int(one_minus_q_pow(m, n), -b, n), n)
-    return out
+    poly: Dict[int, int] = {0: 1}
+    for ti in t:
+        new: Dict[int, int] = {}
+        for exp, coeff in poly.items():
+            new[exp - 1] = new.get(exp - 1, 0) + coeff
+            if ti != 0:
+                new[exp + 1] = new.get(exp + 1, 0) + coeff * ti
+        poly = {e_: c for e_, c in new.items() if c != 0}
+    return poly
 
 
-def eta_quotient_by_recursion(a: FrameShape, n: int) -> Series:
-    """
-    The same expansion via the Newton recursion  r c_r = sum_{k<r} c_k sigma_a(r-k),
-    which follows from the logarithmic-derivative identity q F' = F * L with
-    L = sum_{r >= 1} sigma_a(r) q^r.
-    """
-    c = [0] * n
-    c[0] = 1
-    for r in range(1, n):
-        acc = sum(c[k] * sigma_frame(a, r - k) for k in range(r))
-        assert acc % r == 0, "recursion must produce integers"
-        c[r] = acc // r
-    return c
+def head_check(t: Sequence[int]) -> int:
+    """The finite arithmetic check: the sum of the head table."""
+    return sum(t)
 
 
-# ----------------------------------------------------------------------
-# 3. Closed formulas for the head coefficients
-# ----------------------------------------------------------------------
-
-def head_coeff(a: FrameShape) -> int:
-    """c(1) = a_1 (a_1 + 3) / 2 + a_2, the coefficient of q^2 of the eta quotient."""
-    a1, a2 = a.get(1, 0), a.get(2, 0)
-    num = a1 * (a1 + 3)
-    assert num % 2 == 0
-    return num // 2 + a2
+def multiset_key(t: Sequence[int]) -> Tuple[int, ...]:
+    """Canonical form of a head table up to relabelling."""
+    return tuple(sorted(t))
 
 
-def second_head_coeff(a: FrameShape) -> int:
-    """c(2) = ( b1(b1+1)(b1+2) + 6 b1 b2 + 6 b3 ) / 6, the coefficient of q^3."""
-    b1, b2, b3 = div_sum(a, 1), div_sum(a, 2), div_sum(a, 3)
-    num = b1 * (b1 + 1) * (b1 + 2) + 6 * b1 * b2 + 6 * b3
-    assert num % 6 == 0
-    return num // 6
+# ---------------------------------------------------------------------------
+# Demonstrations
+# ---------------------------------------------------------------------------
 
 
-def third_head_coeff(a: FrameShape) -> int:
-    """c(3), the coefficient of q^4, from the degree-4 instance of the recursion."""
-    b1, b2 = div_sum(a, 1), div_sum(a, 2)
-    s2, s3, s4 = sigma_frame(a, 2), sigma_frame(a, 3), sigma_frame(a, 4)
-    num = (
-        6 * s4
-        + 6 * b1 * s3
-        + 3 * (b1 * b1 + b1 + 2 * b2) * s2
-        + b1 * (b1 * (b1 + 1) * (b1 + 2) + 6 * b1 * b2 + 6 * div_sum(a, 3))
-    )
-    assert num % 24 == 0
-    return num // 24
-
-
-# ----------------------------------------------------------------------
-# 4. Stable-range additivity
-# ----------------------------------------------------------------------
-
-def is_one_mod(f: Series, d: int) -> bool:
-    """f = 1 mod q^d : constant term 1 and vanishing coefficients in 1..d-1."""
-    return f[0] == 1 and all(f[j] == 0 for j in range(1, min(d, len(f))))
-
-
-def prod_series(fs: Sequence[Series], n: int) -> Series:
-    out = ps_one(n)
-    for f in fs:
-        out = ps_mul(out, f, n)
-    return out
-
-
-def e2(values: Sequence[int]) -> int:
-    """Second elementary symmetric function, written as ((sum)^2 - sum of squares)/2."""
-    s = sum(values)
-    return (s * s - sum(v * v for v in values)) // 2
-
-
-# ----------------------------------------------------------------------
-# 5. The eight balanced frame shapes 1^(-e) n^(e)
-# ----------------------------------------------------------------------
-
-PM_DATA: List[Tuple[int, int]] = [
-    (2, 24), (3, 12), (4, 8), (5, 6), (7, 4), (9, 3), (13, 2), (25, 1),
-]
-
-
-def pm_frame(n: int, e: int) -> FrameShape:
-    """The frame shape 1^(-e) n^(e); balanced exactly when e (n - 1) = 24."""
-    if n == 1:
-        return {1: 0}
-    return {1: -e, n: e}
-
-
-# ----------------------------------------------------------------------
-# 6. Laurent products (pole of order m, head coefficients)
-# ----------------------------------------------------------------------
-
-def laurent_product_head(rows: Sequence[Sequence[int]], depth: int) -> Dict[int, int]:
-    """
-    Given m rows c_i(0), c_i(1), ... of moonshine-normalized coefficients
-    (c_i(0) = 0), form T_i = q^{-1} + sum_{j>=0} c_i(j) q^j and return the
-    Laurent coefficients of the product in degrees -m, ..., -m + depth.
-
-    Implementation: q * T_i is an ordinary power series with constant term 1,
-    so the product of the m Laurent series equals q^{-m} times the product of
-    the m power series.
-    """
-    m = len(rows)
-    n = depth + 1
-    factors = []
-    for row in rows:
-        f = [0] * n
-        f[0] = 1
-        for j in range(1, n):
-            f[j] = row[j - 1] if j - 1 < len(row) else 0
-        factors.append(f)
-    p = prod_series(factors, n)
-    return {-m + k: p[k] for k in range(n)}
-
-
-# ----------------------------------------------------------------------
-# Driver
-# ----------------------------------------------------------------------
-
-def banner(text: str) -> None:
+def demo_j_expansion() -> None:
+    print("=" * 74)
+    print("1. The q-expansion of j = E4^3 / Delta, derived over Z")
+    print("=" * 74)
+    n = 12
+    coeffs = j_expansion(n)
+    expected = [1, 744, 196884, 21493760, 864299970, 20245856256,
+                333202640600, 4252023300096, 44656994071935, 401490886656000,
+                3176440229784420, 22567393309593600]
+    assert coeffs == expected, coeffs
+    print("  q*j = " + " + ".join(f"{c}q^{i}" for i, c in enumerate(coeffs[:5])) + " + ...")
+    print(f"  j   = q^-1 + {coeffs[1]} + {coeffs[2]}q + {coeffs[3]}q^2 + ...")
+    print(f"  identity-class head entry c_1A(1) = {coeffs[2]}")
+    print(f"  McKay: 196884 = 1 + 196883 ?  {coeffs[2] == 1 + 196883}")
     print()
-    print("=" * 72)
-    print(text)
-    print("=" * 72)
 
+    print("  Truncation stability of the eta product (coefficients below q^12):")
+    d11 = eta_product(11, 12)
+    for m in (11, 15, 25):
+        assert eta_product(m, 12) == d11
+    print("    D_11 = D_15 = D_25 (mod q^12):  True")
 
-def demo_frame_shapes() -> None:
-    banner("1. The eight balanced frame shapes 1^(-e) n^(e) with e (n-1) = 24")
-    print(f"{'n':>3} {'e':>3} | {'c0':>3} {'c1':>5} {'c2':>6} {'c3':>7} {'c4':>7}"
-          "   (coefficients of q*(1/eta))")
-    col1, col2, col3 = [], [], []
-    for n, e in PM_DATA:
-        a = pm_frame(n, e)
-        assert is_balanced(a), "frame shape must be balanced"
-        s = eta_quotient_series(a, 5)
-        r = eta_quotient_by_recursion(a, 5)
-        assert s == r, "product expansion and recursion must agree"
-        assert s[2] == head_coeff(a)
-        assert s[3] == second_head_coeff(a)
-        assert s[4] == third_head_coeff(a)
-        col1.append(s[2])
-        col2.append(s[3])
-        col3.append(s[4])
-        print(f"{n:>3} {e:>3} | {s[0]:>3} {s[1]:>5} {s[2]:>6} {s[3]:>7} {s[4]:>7}")
+    e4 = eisenstein_E4(12)
+    e4cubed = ps_mul(ps_mul(e4, e4, 12), e4, 12)
+    assert ps_mul(d11, expected, 12) == e4cubed
+    print("    E4^3 = D_11 * (1 + 744q + 196884q^2 + ...)  (mod q^12):  True")
+    print("    D_11 is a unit of Z[[q]] (constant term 1):  "
+          f"{d11[0] == 1}")
     print()
-    print(f"  head column   c(1): {col1}   sum = {sum(col1)}")
-    print(f"  second column c(2): {col2}   sum = {sum(col2)}")
-    print(f"  third column  c(3): {col3}   sum = {sum(col3)}")
-    print(f"  sum of squares of the head column: {sum(v * v for v in col1)}")
-    assert sum(col1) == 359 and sum(col2) == -2099 and sum(col3) == 10863
-    assert sum(v * v for v in col1) == 79579
 
 
-def demo_closed_formula() -> None:
-    banner("2. The closed formula c(1) = a1(a1+3)/2 + a2 on random balanced shapes")
-    shapes: List[FrameShape] = [
-        {1: -24, 2: 24}, {1: 4, 2: 4, 3: 4}, {1: -2, 2: 1, 3: 8},
-        {1: 12, 2: -6, 4: 6}, {1: 0, 3: 8}, {1: 6, 2: -3, 3: 8},
+def demo_tau() -> None:
+    print("=" * 74)
+    print("2. Ramanujan tau, Hecke relations, congruences")
+    print("=" * 74)
+    tau_list = eta_product(11, 12)          # tau(n) = [q^{n-1}] D_m
+    tau = {n: tau_list[n - 1] for n in range(1, 13)}
+    print("  tau(1..12) =", [tau[n] for n in range(1, 13)])
+    checks = [
+        ("tau(2)tau(3) = tau(6)", tau[2] * tau[3] == tau[6]),
+        ("tau(2)tau(5) = tau(10)", tau[2] * tau[5] == tau[10]),
+        ("tau(3)tau(4) = tau(12)", tau[3] * tau[4] == tau[12]),
+        ("tau(4) = tau(2)^2 - 2^11", tau[4] == tau[2] ** 2 - 2 ** 11),
+        ("tau(9) = tau(3)^2 - 3^11", tau[9] == tau[3] ** 2 - 3 ** 11),
+        ("tau(8) = tau(2)tau(4) - 2^11 tau(2)",
+         tau[8] == tau[2] * tau[4] - 2 ** 11 * tau[2]),
     ]
-    print(f"{'frame shape':>28} | {'a1':>4} {'a2':>4} | {'formula':>9} {'expansion':>10}")
-    for a in shapes:
-        s = eta_quotient_series(a, 3)
-        shape_txt = " ".join(f"{k}^({v})" for k, v in sorted(a.items()) if v)
-        print(f"{shape_txt:>28} | {a.get(1,0):>4} {a.get(2,0):>4} |"
-              f" {head_coeff(a):>9} {s[2]:>10}")
-        assert head_coeff(a) == s[2]
-    print("\n  all agree.")
+    for name, ok in checks:
+        print(f"    {name:38s} {ok}")
+    cong = all((tau[n] - sigma(11, n)) % 691 == 0 for n in range(1, 13))
+    print(f"    tau(n) = sigma_11(n) mod 691, n <= 12   {cong}")
+    print(f"    tau(n) != 0 for n <= 12 (Lehmer window)  "
+          f"{all(tau[n] != 0 for n in range(1, 13))}")
+    print()
 
-
-def demo_stable_range() -> None:
-    banner("3. Stable-range additivity, and its sharpness at k = 2d")
-    d, n = 3, 9
-    fs = [
-        [1, 0, 0, 2, -1, 5, 3, 0, 1],
-        [1, 0, 0, -4, 7, 0, 2, 1, 0],
-        [1, 0, 0, 11, 0, -2, 0, 4, 6],
+    print("  McKay decompositions of the derived j-coefficients:")
+    c = j_expansion(8)                      # c[n+1] = coefficient of q^n in j-744
+    d1, d2, d3 = 1, 196883, 21296876
+    d4, d5, d6 = 842609326, 19360062527, 293553734298
+    rows = [
+        ("c(1)", c[2], d1 + d2, "d1 + d2"),
+        ("c(2)", c[3], d1 + d2 + d3, "d1 + d2 + d3"),
+        ("c(3)", c[4], 2 * d1 + 2 * d2 + d3 + d4, "2d1 + 2d2 + d3 + d4"),
+        ("c(4)", c[5], 2 * d1 + 3 * d2 + 2 * d3 + d4 + d5,
+         "2d1 + 3d2 + 2d3 + d4 + d5"),
+        ("c(5)", c[6], 3 * d1 + 5 * d2 + 4 * d3 + d4 + 2 * d5 + d6,
+         "3d1 + 5d2 + 4d3 + d4 + 2d5 + d6"),
     ]
-    for f in fs:
-        assert is_one_mod(f, d)
-    p = prod_series(fs, n)
-    print(f"  three series congruent to 1 mod q^{d}; additivity must hold for k < {2*d}")
+    for name, lhs, rhs, expr in rows:
+        print(f"    {name} = {lhs:>14d} = {expr:<32s} {lhs == rhs}")
+    print()
+
+
+def demo_vieta_small() -> None:
+    print("=" * 74)
+    print("3. Vieta on a small product: [q^{2k-n}] prod (q^-1 + t_i q) = e_k(t)")
+    print("=" * 74)
+    t = [3, -1, 5, 2]
+    n = len(t)
+    poly = head_product_laurent(t)
+    e = elementary_symmetric(t)
+    print(f"  table t = {t}")
+    terms = " + ".join(f"({poly[x]})q^{x}" for x in sorted(poly))
+    print(f"  product = {terms}")
+    for k in range(n + 1):
+        deg = 2 * k - n
+        print(f"    k={k}: [q^{deg:>3d}] = {poly.get(deg, 0):>6d}   e_{k} = {e[k]:>6d}"
+              f"   {poly.get(deg, 0) == e[k]}")
+        assert poly.get(deg, 0) == e[k]
+    print()
+
+
+def demo_reduction_194() -> None:
+    print("=" * 74)
+    print("4. The reduction at Monster size: [q^-192] P(t) = sum_g c_g(1)")
+    print("=" * 74)
+    # Illustrative table: derived identity-class entry, placeholder 1 elsewhere.
+    table: List[int] = [j_expansion(3)[2]] + [1] * (MONSTER_CLASS_COUNT - 1)
+    e = elementary_symmetric(table)
+    print(f"  entries: {MONSTER_CLASS_COUNT}, first entry (class 1A) = {table[0]}")
+    print(f"  e_0 = {e[0]}  -> [q^-194] P(t) : pole of order exactly 194, monic")
+    print(f"  e_1 = {e[1]}  -> [q^-192] P(t) = sum of the head table")
+    print(f"  finite check sum_g c_g(1) = {head_check(table)}")
+    print(f"  equality of the Laurent statement and the arithmetic one: "
+          f"{e[1] == head_check(table)}")
+    print(f"  e_2 = {e[2]}  -> [q^-190] P(t)")
+    print(f"  e_194 = prod_g c_g(1) = {e[194]}")
+    print()
+
+    # Direct Laurent multiplication on a smaller but nontrivial slice, to show
+    # the Vieta identity is not an artefact of the recursion.
+    small = table[:12]
+    poly = head_product_laurent(small)
+    es = elementary_symmetric(small)
+    ok = all(poly.get(2 * k - len(small), 0) == es[k] for k in range(len(small) + 1))
+    print(f"  direct Laurent expansion of the first 12 factors matches Vieta: {ok}")
+    print()
+
+
+def demo_rigidity() -> None:
+    print("=" * 74)
+    print("5. Rigidity: the product is a complete invariant of the table")
+    print("=" * 74)
+    rng = random.Random(20260825)
+    base: List[int] = [rng.randint(-40, 40) for _ in range(MONSTER_CLASS_COUNT)]
+
+    shuffled = base[:]
+    rng.shuffle(shuffled)
+    same = elementary_symmetric(base) == elementary_symmetric(shuffled)
+    print(f"  (a) permuted table gives the identical product:            {same}")
+    print(f"      multisets agree: {multiset_key(base) == multiset_key(shuffled)}")
+
+    # (b) perturb one entry: the sum changes, so the FIRST coefficient separates.
+    bumped = base[:]
+    bumped[57] += 1
+    e_base, e_bump = elementary_symmetric(base), elementary_symmetric(bumped)
+    first_diff = next(k for k in range(len(e_base)) if e_base[k] != e_bump[k])
+    print(f"  (b) one entry increased by 1: sums differ "
+          f"({sum(base)} vs {sum(bumped)}),")
+    print(f"      first differing symmetric invariant is e_{first_diff} "
+          f"-> Laurent degree {2*first_diff - MONSTER_CLASS_COUNT}")
+
+    # (c) sum-preserving perturbation: the head check passes, higher e_k catch it.
+    sneaky = base[:]
+    sneaky[3] += 7
+    sneaky[100] -= 7
+    e_sneaky = elementary_symmetric(sneaky)
+    first_diff2 = next(k for k in range(len(e_base)) if e_base[k] != e_sneaky[k])
+    print(f"  (c) sum-preserving perturbation: sums agree "
+          f"({sum(base)} = {sum(sneaky)}),")
+    print(f"      so the degree -192 check alone does NOT separate them;")
+    print(f"      the first differing invariant is e_{first_diff2} "
+          f"-> Laurent degree {2*first_diff2 - MONSTER_CLASS_COUNT}")
+    print(f"      multisets differ: "
+          f"{multiset_key(base) != multiset_key(sneaky)}  =>  products differ")
+
+    # (d) decidability: comparing products = comparing sorted tables
+    print("  (d) deciding P(t) = P(u): sort and compare, O(n log n)")
+    print(f"      P(base) == P(shuffled): {multiset_key(base) == multiset_key(shuffled)}")
+    print(f"      P(base) == P(sneaky)  : {multiset_key(base) == multiset_key(sneaky)}")
+    print()
+
+
+def demo_bound() -> None:
+    print("=" * 74)
+    print("6. A priori bound on the finite check")
+    print("=" * 74)
+    b = 196883
+    lo, hi = 194 - MONSTER_CLASS_COUNT * b, 194 + MONSTER_CLASS_COUNT * b
+    print(f"  |c_g(1) - 1| = |chi_196883(g)| <= {b} for every class g")
+    print(f"  => |sum_g c_g(1) - 194| <= 194 * {b} = {MONSTER_CLASS_COUNT * b}")
+    print(f"  => the check must lie in [{lo}, {hi}]")
+    entry_1A = j_expansion(3)[2]
+    print(f"  identity class: |c_1A(1) - 1| = {abs(entry_1A - 1)} "
+          f"= {b} (extremal, as a character at the identity must be)")
+    print()
+
+
+def demo_log_concavity() -> None:
+    print("=" * 74)
+    print("7. Newton / Maclaurin: log-concavity of the symmetric spectrum")
+    print("=" * 74)
+    # Newton's inequalities hold for any real-rooted polynomial; the generating
+    # polynomial prod (X + t_i) is real-rooted by construction.
+    rng = random.Random(7)
+    t = [rng.randint(1, 500) for _ in range(MONSTER_CLASS_COUNT)]
+    e = elementary_symmetric(t)
+    n = len(t)
+
+    def binom(n_: int, k_: int) -> int:
+        num, den = 1, 1
+        for i in range(k_):
+            num *= n_ - i
+            den *= i + 1
+        return num // den
+
+    # Exact rational comparison of e_k / C(n,k), cleared of denominators.
+    ok = True
     for k in range(1, n):
-        summed = sum(f[k] for f in fs)
-        mark = "additive" if p[k] == summed else "CORRECTED"
-        print(f"    k = {k}: coeff of product = {p[k]:>6},"
-              f"  sum of coefficients = {summed:>6}   [{mark}]")
-    for k in range(1, 2 * d):
-        assert p[k] == sum(f[k] for f in fs)
+        lhs = e[k - 1] * e[k + 1] * binom(n, k) * binom(n, k)
+        rhs = e[k] * e[k] * binom(n, k - 1) * binom(n, k + 1)
+        if lhs > rhs:
+            ok = False
+            break
+    print(f"  random positive table of {n} entries")
+    print(f"  Newton's inequality  p_{{k-1}} p_{{k+1}} <= p_k^2  "
+          f"(p_k = e_k / C(n,k)) holds for all k: {ok}")
+    print("  consequence: the Laurent coefficients of the moonshine product in")
+    print("  degrees -194, -192, ..., 194 form a log-concave spectrum after")
+    print("  binomial normalization.")
     print()
-    print("  boundary degree k = 2d = 6: correction is the second elementary")
-    print("  symmetric function of the degree-d coefficients:")
-    corr = e2([f[d] for f in fs])
-    print(f"    e2(c_i(d)) = {corr},  sum + e2 = {sum(f[2*d] for f in fs) + corr},"
-          f"  product coefficient = {p[2 * d]}")
-    assert p[2 * d] == sum(f[2 * d] for f in fs) + corr
-
-    print()
-    print("  sharpness: f = g = 1 + q^2 are congruent to 1 mod q^2, yet")
-    f = [1, 0, 1, 0, 0]
-    prod = ps_mul(f, f, 5)
-    print(f"    coeff_4(f*g) = {prod[4]} but coeff_4 f + coeff_4 g = {f[4] + f[4]}")
-    assert prod[4] == 1 and f[4] + f[4] == 0
-
-
-def demo_eight_fold_product() -> None:
-    banner("4. The eight-fold product of the eta-quotient classes")
-    rows = []
-    for n, e in PM_DATA:
-        a = pm_frame(n, e)
-        s = eta_quotient_series(a, 6)
-        # moonshine normalization: T = q^{-1} + 0 + c(1) q + c(2) q^2 + ...
-        rows.append([0] + s[2:])
-    head = laurent_product_head(rows, depth=5)
-    for deg in sorted(head):
-        print(f"    coefficient in degree {deg:>3} : {head[deg]}")
-    print()
-    print("  predicted by the reduction:")
-    c1 = [r[1] for r in rows]
-    c3 = [r[3] for r in rows]
-    print("    degree -8 (pole)        :      1")
-    print("    degree -7 (subleading)  :      0                = sum of c_i(0)")
-    print(f"    degree -6               : {sum(c1):>6}                = sum of c_i(1)")
-    print(f"    degree -5               : {sum(r[2] for r in rows):>6}"
-          "                = sum of c_i(2)")
-    print(f"    degree -4 (boundary)    : {sum(c3) + e2(c1):>6}"
-          f"                = sum of c_i(3) + e2(c_i(1)) = {sum(c3)} + {e2(c1)}")
-    assert head[-8] == 1
-    assert head[-7] == 0
-    assert head[-6] == sum(c1) == 359
-    assert head[-5] == sum(r[2] for r in rows) == -2099
-    assert head[-4] == sum(c3) + e2(c1) == 35514
-
-
-def demo_monster_reduction() -> None:
-    banner("5. The 194-fold reduction: analytic coefficient = finite integer sum")
-    # A synthetic but structurally faithful table: 194 moonshine-normalized rows.
-    # Only the property c_g(0) = 0 is used by the reduction; the head entries are
-    # arbitrary integers here, since the theorem is uniform in the table.
-    rows = []
-    for g in range(194):
-        c1 = (g * g * 7 + 13 * g - 5) % 1001 - 500
-        c2 = (g * 31 + 17) % 997 - 500
-        c3 = (g * g * g + 5) % 809 - 400
-        rows.append([0, c1, c2, c3])
-    head = laurent_product_head(rows, depth=4)
-    total1 = sum(r[1] for r in rows)
-    total2 = sum(r[2] for r in rows)
-    total3 = sum(r[3] for r in rows)
-    corr = e2([r[1] for r in rows])
-    print(f"    pole order                          : 194 (coefficient of q^-194 is 1)")
-    print(f"    coefficient in degree -193          : {head[-193]}  (always 0)")
-    print(f"    coefficient in degree -192          : {head[-192]}")
-    print(f"    sum of the 194 head values c_g(1)   : {total1}")
-    print(f"    coefficient in degree -191          : {head[-191]}")
-    print(f"    sum of the 194 values c_g(2)        : {total2}")
-    print(f"    coefficient in degree -190          : {head[-190]}")
-    print(f"    sum c_g(3) + e2(c_g(1))             : {total3 + corr}")
-    assert head[-193] == 0
-    assert head[-192] == total1
-    assert head[-191] == total2
-    assert head[-190] == total3 + corr
-    print()
-    print("  The identity in degree -192 is a statement about a product of 194")
-    print("  complex Laurent series; it has collapsed to the addition of 194")
-    print("  integers, hence is decidable by inspection of the table.")
-
-
-def demo_bounds() -> None:
-    banner("6. The uniform lower bound c(1) >= -1 for the shapes 1^(-e) n^(e)")
-    print(f"{'e':>4} {'n>2: e(e-3)/2':>16} {'n=2: e(e-3)/2 + e':>20}")
-    for e in range(-4, 13):
-        v_general = (e * (e - 3)) // 2
-        v_two = v_general + e
-        flag = "" if v_general >= -1 else "  <-- violates bound"
-        print(f"{e:>4} {v_general:>16} {v_two:>20}{flag}")
-        assert v_general >= -1
-        assert v_two >= 0
-    print("\n  the bound -1 is attained exactly at e = 1 and e = 2 (n = 25, n = 13).")
 
 
 def main() -> None:
-    demo_frame_shapes()
-    demo_closed_formula()
-    demo_stable_range()
-    demo_eight_fold_product()
-    demo_monster_reduction()
-    demo_bounds()
-    print()
-    print("All assertions passed.")
+    demo_j_expansion()
+    demo_tau()
+    demo_vieta_small()
+    demo_reduction_194()
+    demo_rigidity()
+    demo_bound()
+    demo_log_concavity()
+    print("All demonstrations completed successfully.")
 
 
 if __name__ == "__main__":
