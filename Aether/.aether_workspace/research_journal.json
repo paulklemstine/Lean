@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6f1d7e50",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Cut-indexed defects\n\nThis cycle introduced finite tensor-network **cut data** (`CutData n q`), proved\nthe **cut-wise Singleton inequality** in three progressively sharper forms\n(",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-08-23T17:35:52",
-      "title": "Cut-indexed defects"
-    },
-    {
       "cycle_id": "86b92df3",
       "domain": "Combinatorics",
       "key_insight": "# FUTURE DIRECTIONS — after NET-70 / MATH-READS-AS-PROSE\n\n## What this cycle established (formally)\n\nThree sorry-free Lean files develop a *demand-multiset calculus* for\nbudget/quality knees and apply",
@@ -499,19 +489,19 @@
       "theorem_count": 88,
       "timestamp": "2026-08-25T09:53:08",
       "title": "Parallel residual blocks obey a tensor-product certificate"
+    },
+    {
+      "cycle_id": "9b3c75c4",
+      "domain": "Applications",
+      "key_insight": "# Future directions — positional-stratum measure framework (GAP-L4)\n\nWhat this cycle established, in one paragraph: the *universal object* of the\npositional-stratum framework is the exact r̄-identity",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-25T09:53:25",
+      "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ed687362",
-      "domain": "Logic",
-      "key_insight": "# Future directions: edge-decomposition into two triangular forests\n\nFive falsifiable conjectures distilled from the verified development in\n`Catalog/Logic/TriangularForest/` (definitions, sparsity, d",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 82,
-      "timestamp": "2026-08-18T13:08:27",
-      "title": "ArXiv paper: Edge-decomposition into Two Triangular Forests is NP-complete"
-    },
     {
       "cycle_id": "3eeb9235",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 88,
       "timestamp": "2026-08-25T09:53:08",
       "title": "Parallel residual blocks obey a tensor-product certificate"
+    },
+    {
+      "cycle_id": "9b3c75c4",
+      "domain": "Applications",
+      "key_insight": "# Future directions — positional-stratum measure framework (GAP-L4)\n\nWhat this cycle established, in one paragraph: the *universal object* of the\npositional-stratum framework is the exact r̄-identity",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-25T09:53:25",
+      "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a3cbf41f",
-      "domain": "Novelty",
-      "name": "net87_code_knee_bracket",
-      "quality": 0.81
-    },
-    {
-      "cycle_id": "a3cbf41f",
-      "domain": "Novelty",
-      "name": "net87_fine_grid_needed",
-      "quality": 0.81
-    },
-    {
-      "cycle_id": "d4951edd",
-      "domain": "Cryptography",
-      "name": "below",
-      "quality": 0.82
-    },
     {
       "cycle_id": "d4951edd",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "idBlock_toFun",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9b3c75c4",
+      "domain": "Applications",
+      "name": "denom_pos",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "9b3c75c4",
+      "domain": "Applications",
+      "name": "certifiedValue_pos",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "9b3c75c4",
+      "domain": "Applications",
+      "name": "certifiedValue_of_blockEC",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-25T09:53:08",
+  "last_updated": "2026-08-25T09:53:25",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "42f28947",
-        "quality": 0.85,
-        "theorems": 68,
-        "title": "EML Neural Network Expressiveness: Depth vs Width"
-      },
-      {
         "cycle_id": "11e84a32",
         "quality": 0.87,
         "theorems": 118,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 61,
         "title": "The Category Theory of Jokes: Universal Properties of Humor"
+      },
+      {
+        "cycle_id": "9b3c75c4",
+        "quality": 0.82,
+        "theorems": 93,
+        "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measur"
       }
     ],
     "Bridges": [

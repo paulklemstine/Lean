@@ -2174,36 +2174,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-76 #2 \u2014 U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip \u2014 fresh seed 20260825 reads r=1.1536 SURPLUS where the 20260824 family read deficit; randomness stands through u\u224811 with a measured \u00b15\u201315% single-run fluctuation envelope"
   },
   {
-    "consumed_by_exp_id": "5223d87b",
-    "description": "VERDICT: NEW-STRUCTURE-MAP-ENTRY (pre-registered H0 fires; H1 rejected).\n\n**Setup**: 128 balanced bitlen-96 semiprimes, FRESH master seed 20260826, stream-distinctness asserted+recorded vs 20260824/20260825 (pairwise-disjoint N sets, hashes e8d89a29a03779d5 / 9cb9cc800ee45a38 / 81acc9b5e1be619b). 150k j-samples/N (19.2M total), exp569 gcd-chain tester verbatim, cut 1e6; wall 368.9 s; sympy.jacobi_symbol.\n\n**Phenomenon replicates fresh-seed**: mean 76.7 hits/N, Var/mean D_raw = 7.27 (Poisson ~1), range 29\u2013172, top-3 clusters 172/151/130 = paper-220 envelope rescaled exactly.\n\n**Dial regressions (per-N log-rates)** \u2014 ALL far below H1 bars (R\u00b2\u22650.25 AND D-red\u226530%):\n- PRIMARY S_indiv (\u03a3 Jac(\u2113,p)+Jac(\u2113,q)=+1, \u2113\u2264100): R\u00b2_log=0.0127, slope NEGATIVE z=\u22122.82, D-reduction **0.88%** \u2014 H0 fires on BOTH legs.\n- Mechanistic S_prod (=#{\u2113\u2264100: N QR mod \u2113}): R\u00b2=0.0781, slope + z=10.9, D-red **14.22%**, \u03c6 7.33\u21926.07.\n- Tertiary S139@400 (recorded paper-136/139 form): R\u00b2=0.0565, z=8.7, D-red **9.07%**.\n\n**Analytic orthogonality catch (robustness)**: Cov(S_indiv,S_prod)=0 EXACTLY by multinomial algebra under independent characters; measured r=\u22120.01. Primary dial orthogonal-by-construction to the divisibility carrier (\u2113 | x\u00b2\u2212N iff Jac(\u2113,N)=+1); verdict robust either way since secondaries also miss H1.\n\n**Consequence**: the \u2264400 QR dial explains \u2264~14% of u\u224810 overdispersion; \u226586% is N-structure beyond every recorded mechanism \u2014 papers 136/139 line does not extend to scale. Scale-shift hypothesis: informative prime window moved past 400 into 400..1e6 at bitlen 96 (pools span ~2\u2074\u2079\u20132\u2075\u00b9); papers 136/139 calibrated at bitlen 40\u201348. NAMED FOLLOW-UP: product-form dial over ALL \u2113\u22641e6 (~78k symbols, cheap) \u2014 capture \u21d2 papers 136/139 + 220 unify with a scale-dependent dial bound; miss \u21d2 genuinely new N-structure at u\u224810.\n\n**Ledger catches**: (1) first-smoke GLM divergence fixed pre-full (Fisher scoring + deviance step-halving); (2) smoke/full S_indiv slope-sign instability flagged (n=16 +, n=128 \u2212, pseudo-R\u00b2\u2248\u22120.001) \u2014 negative direction NOT citable as paper-139 reversal without replication; (3) monitor double-fire \u2014 verified from JSON directly, no data impact.\n\n---\n\n**RIDER \u2014 P\u0302 RESOLUTION-LIMIT NOTE (paper 225 erratum thread, action (a))**: archival dig (pthat_extraction.md) finds NO raw P_hit in any papers-137/143 artifact \u2014 exp467 stored mean costs only (no hit indicator, orderings are full reorderings with no committed window R); exp474's P_hit was a DESIGNED oracle \u03b1=1.0 exactly at the 29.1\u00d7 cell (exact enum M=300). All four booked P\u0302 are drafted-law inversions recovered to \u22642e-4. Full-precision anchors extracted: 5.193592154916 (n=30000) / 6.914724537168 (n=6732) / 4.353075657862 (n=9651) / 29.125436718134 (exact enum M=300). Certified-law-implied P\u0302 = 0.841617/0.894868/0.800308/**0.985068** \u2014 booked 0.9853 overstates by ~2.3e-4 \u2192 printed 29.3152 overstates the certified reading ~0.19. Paper 225's corrected-table arithmetic EXACT at all four loci; feasibility margins hold \u00d74 (\u03bc\u22641/S_raw true; S_A@booked\u2265S_raw margins +0.212/+0.242/+0.183/+0.190). Recommendation: book all four anchors \"at resolution limit\" not \"at stored P\u0302\" per p225's own admissibility rule (raw-P\u0302-stored clause NOT met).\n\nBarrier framing: scale-smoothness frontier \u2014 opens the mechanism question \"what carries per-N clustering at u\u226510\"; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 226 \u00b7 assessment v332\u2192v333 \u00b7 count 564\u2192565.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4006",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T14:04:28.338872+00:00",
-    "title": "FACT round-78 #2 \u2014 QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY \u2014 small-prime QR dial does NOT explain u\u224810 overdispersion (best D-red 14.2% vs H1 bar 30%); \u226586% is N-structure beyond every recorded mechanism; papers-136/139 line does not extend to scale; + P\u0302 RESOLUTION-LIMIT rider on paper 225's erratum thread"
-  },
-  {
-    "consumed_by_exp_id": "9b3c75c4",
-    "description": "Round-78 #1, theory deliverable (no new physics). GAP-L4 of paper 219's roadmap CLOSED by the positional-stratum measure framework, recorded with fixes applied from an independent adversarial verifier.\n\nFORMULATIONS RANKED F1>F2>F3:\n- F1 (RECOMMENDED): worst-case with explicit bookings \u0398=E_\u03c0C/K_booked, \u03bc_eff=|R_eff|/M, k_bits, \u039b=C_sort/C_desc. Universal object = exact r\u0304-identity EC_A=P\u00b7r\u0304_R+(1\u2212P)\u00b7r\u0304_C (MC-validated max rel err 0.23%, 8 cells); T1a's certified form emerges exactly at uniform-within-cells (\u0398\u22611 iff uniform). Master inequality PROVEN unconditional: S_vs_desc \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^{k_bits}/(\u039b\u00b7\u0398)), proof chain = r\u0304-identity \u21d2 majorization C_sort\u2264C\u2080 \u21d2 \u039b-chain. No constant cap; D survives as inequality chain (cost-side 4/3 untouched), loses pathwise product.\n- F2: scale\u00d7balance prior \u2014 balance IS position (s=r^{\u22121/2}); canonical kernel b\u221dr^{\u22123/2} (= uniform-in-x positional prior, T1a's exact kernel); capture curve P(\u03bc)=\u03bc/(1\u2212R_max^{\u22121/2}) exact, linear iff canonical; all four anchors demand ultra-balanced populations (required-R 1.04\u20131.14) \u2192 witnesses demoted to generator shape estimators.\n- F3 BASELINE-CONDITIONAL (verifier caught unstated payoff convention): simultaneous-commitment value = certified law EXACTLY only vs full-scan-M baseline; HALVES vs T1a's own C\u2080=(M+1)/2; same-prior-descending adversary UNDERCUTS certified (5.365<5.4054); corner-is-max-EC brute-force confirmed.\n\nVALUE-universality FALSE off uniform cells: A3 sweep M=64\u00d74000 tilts violation rate .4395 concentrated at HEAD placements (.60/.37/.34 head/mid/tail), max S/S_A=1.54, witness S=62 vs booked 21.3.\n\nWITNESS RE-READS: 5.19 explained structurally \u2014 sits in (drafted 5.1948, certified 5.4054) window pinning \u03c1_R\u22480.59 mild adverse loading, not a corner identity; 29.1 AT RESOLUTION LIMIT (P_implied=0.98504, lives in P\u0302's 4th decimal).\n\nERRATUM to recorded paper 219 (genuine D-witness-table error caught by L4 verification): row prints (0.02,0.9853)|29.0698 but that value was computed at ROUNDED P=0.985 \u2014 certified law at stored P\u0302=0.9853 gives 29.3152. Rows 5.19/6.91/4.35 still print SUPERSEDED drafted-form values (certified there: 5.4054/7.1567/4.536); prose 4.649 belongs to stale locus (.115,.87). Feasibility conclusions of ALL FOUR anchors UNAFFECTED (\u03bc\u22641/S holds regardless).\n\nCONVENTION ADOPTED: state positional-stratum laws as the r\u0304-identity with bookings (\u03bc_eff, P_eff, \u03c1_R, \u03c1_C; \u039b) \u2014 never bare-(\u03bc,P) closed forms; canonical reporting prior b\u221dr^{\u22123/2}; admissibility rule requires raw-P\u0302 stored and \u03ba_desc reported; baseline named wherever a guarantee is claimed.\n\nROADMAP NOW EMPTY OF OPEN GAPS: T1/T2 verified \u00b7 D witnessed \u00b7 L7\u2032 proven-sketch \u00b7 L8 closed \u00b7 L4 closed by this framework.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/gapL4_measure.md (post-REVISION), gapL4_check.py/.json, verifyL4_verdict.md, verifyL4_recheck.py/.json. Paper 225, assessment v332 (papers-only bump, count unchanged at 564).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4007",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T14:04:28.340349+00:00",
-    "title": "FACT round-78 #1 \u2014 GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3 \u2014 r\u0304-identity universal object (MC err 0.23%), master inequality S \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^k_bits/(\u039b\u00b7\u0398)) PROVEN via majorization; F3 baseline-conditional after verifier (5.365<5.4054 undercut); table error 29.0698\u219229.3152 at stored P\u0302=0.9853, feasibility unaffected; converse roadmap EMPTY"
-  },
-  {
     "consumed_by_exp_id": "ea4eae2e",
     "description": "Paper 228. exp 578. Sources: ResearchOutput/scripts/2026-08-24-round74/exp578_hit_position.py (pre-registration in header BEFORE any data generation) + exp578_stratified_check.py (confound check, rule pre-stated BEFORE running) -> exp578_result.json (+ magnitude_confound_check block), exp578_positions.npz, wall 363 s full / 21.8 s smoke.\n\nVERDICT: POSITIONAL-STRUCTURE-REAL, amended BEYOND-MAGNITUDE-POSITIONAL-STRUCTURE \u2014 the FIRST POSITIVE carrier candidate for the ~39-61% unexplained per-N overdispersion (papers 220/222/226/227 thread).\n\nPOPULATION: 128 balanced bitlen-96 semiprimes, FRESH seed 20260828 hash 06931068f8f3ca9b, lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 REPRODUCED exactly, five-seed family pairwise disjoint; exp569 tester verbatim 150k j-samples/N cut 1e6, every hit position persisted. Overdispersion REPLICATED 4th time: mean 74.95 hits/N, D_raw 6.37, range 29-136.\n\nPRIMARY LEGS (treatment | paired non-hit control): (a) pooled KS u vs U[0,1], 9565 hits / 127 HITRICH Ns: D=0.09519 p=6.9e-76 FIRES | control D=0.00693 p=0.744 null. (b) lag-1..10 autocorr rho=+0.00283 CI [0.00112,0.00475] excludes 0 but below 0.05 bar -> no fire | repaired control -0.00112 null. (c) edge frac 0.2346 p=1.1e-16 vs 0.20 but < 0.25 bar -> no fire | control 0.1935 null.\n\nSTRATIFIED ANSWER (decisive): confound = v=j^2-N monotone => pure decay skews small-u; rule pre-stated before running. All 8 (bitlen(v) x mantissa-octant) cells contain every hit; vs size-matched non-hits per cell: 7/8 fire at p<0.01 (median cell p=1.86e-5), pooled stratified D=0.10423 EXCEEDS unstratified 0.09519, within-cell permutation p<0.0005 (0/2000), stratified-edge z=10.08. Deciles [.162,.123,.109,.097,.091,.091,.090,.084,.081,.072] monotone-declining vs flat control: hits cluster toward small-j ~10x stronger than magnitude predicts => structure fully survives size-conditioning = BEYOND-MAGNITUDE.\n\nCONSEQUENCE: real WITHIN-N positional geometry in the smooth locus of j^2-N opens POLYNOMIAL-SEQUENCE LOCAL STRUCTURE as carrier candidate for the ~39-61% residual. Named follow-ups: (a) functional form of the small-j profile; (b) does j-local clustering predict WHICH N are hit-rich (positional <-> rate link).\n\nLEDGER CATCHES (disclosed): run-1 control-arm leg-b mirrored treatment (acf read hit arrays unconditionally) - repaired from npz BEFORE verdicts, fired nowhere either way; confound-check order on record (pre-stated by coordinator, labeled post-hoc everywhere); legs a/c overlap registered up front.\n\nBarrier framing: scale-smoothness mechanism frontier - opens rather than closes; H0-route also cleanly closed (control nulls). Residue cap untouched; no breakthrough claimed.",
     "domains": [
@@ -2264,16 +2234,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-80 #1 \u2014 PROFILE-FORM (exp 579): positional layer gets a LAW \u2014 small-j hit profile = POWER LAW T(x)\u22480.0295\u00b7(1+x)^\u22121.104 (b boot95 [0.991,1.218], Akaike weight 0.987; \u0394AICc exp +9.2 / logistic +11.5 degenerate / linear +16.9) \u2014 harmonic decline whose bulk IS the Dickman gradient; beyond-Dickman residual PEAKED not monotone: \u00b120% concave mid-window hump max 1.23 @ x\u22480.67 between end deficits 0.80/0.90 (quadratic dAICc 50.5, c-CI [\u22120.62,\u22120.14], vertex 0.59 interior), invariant across all three r-brackets; paper-228 follow-up (a) closed"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "128c5007",
     "description": "Completes paper 231's named probe (bin-width permutation x u-grid shift on the mid-window hump in R=T/M). 30-cell grid = 6 widths {10,20,33,50,66,100} x 5 circular shifts {-0.25..+0.25} (task said 15; named sets multiply to 30 \u2014 disclosed, full product run). Anchor (nb=50,sh=0) reproduces paper 231 exactly: raw_max 1.22636 vs 1.2227 (diff .004), bins 2..49 <=.005 (edge diff = center-vs-integrated M convention only). DATA: raw-max hump present 30/30 cells (range 1.0706\u20131.2960, never below noise ceiling); ABSOLUTE vertex SHIFT-INVARIANT \u2014 label vx drifts by construction but vx+sh pins 0.6482\u20130.6492 across all five shifts at nb=100 (rigid transport; erratic precondition unmet at far fraction 3.45%, vanish precondition unmet 0/30 below 1.03); sole erratic item one degenerate nb=33 quadratic fit (vertex off 0.19 while argmax bin center sits 0.01 from median). CONTROLS: three cells breach the nb-agnostic 1.02 bar at amp 1.0215\u20131.0305 \u2014 exactly the measured multinomial extreme-value ceiling z +3.05/\u22123.45 two-sided (widths 50/66/100 only), inside the nb-aware ceiling 1.05; hence the mechanical registered precedence chain outputs ARTIFACT-CONTAMINATED \u2014 RETAINED VERBATIM in the JSON as an audit record, NEVER the headline: its leak semantics falsified by persistence + rigid transport. H1 failed AS OPERATIONALIZED: fitted-peak amp >=1.10 in only 7/30 local-quadratic fits (estimator-stricter-than-phenomenon, same gap class as exp581's ~1.03-vs-1.05; marginals amp 7 / vx 5 / sig 21 / raw>=1.10 22; 0/30 survive all three bars vs 80% required). VERDICT MIXED-INCONCLUSIVE: STABLE GEOMETRIC WINDOW FEATURE at u*\u22480.65 \u2014 polynomial/window-geometry channel stays OPEN; what failed is ONE operationalization of hump significance. NAMED FOLLOW-UP: binning-independent shape test (nonparametric density-regression or wavelet-free curvature test with analytic SEs). LEDGER: two PRE-GRID smoke-caught amendments disclosed (treatment M := exp579 mixture-Dickman after fake bin0 edge peak R=1.49; control denominator := uniform sampling null after manufactured control shape amp 1.3611); reporting-addendum timing disclosed, no registered bar changed; deterministic re-run 6.1 s post-reconciliation; cluster bootstrap 2000 reps seed 20260901 (single seed noted). Pure reanalysis of hash-verified exp581_regen_positions.npz + exp579 M curve; no sampling/factoring. Barrier framing: prevents a wrong closure of the geometry channel from either a mechanical-string headline or an unprobed sole-survivor assumption; residue cap untouched; no breakthrough claimed. Paper 232, assessment v338\u2192v339, count 570\u2192571.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4036",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T19:01:09.723130+00:00",
     "title": "FACT round-82 #1 \u2014 BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE \u2014 STABLE GEOMETRIC WINDOW FEATURE at u*\u22480.65; paper 232"
   },
@@ -2686,20 +2657,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 4578ca8c (Q=0.860), which proved 45 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define\n   `accelerated n = Real.eulerMascheroniSeq n + 1 / (2*(n+1 : \u211d))` and prove an\n   explicit `O(n\u207b\u00b2)` error bound, for example\n   `|Real.eulerMascheroniConstant - accelerated n| \u2264 1 / (12*(n+1 : \u211d)^2)`\n   for all sufficiently large `n` (with the exact threshold stated and checked).",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_4578ca8c_b864f716",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "4578ca8c",
-    "status": "available",
-    "timestamp": "2026-08-25T08:00:48.683572+00:00",
-    "title": "Deepening: Midpoint-corrected acceleration"
   },
   {
     "consumed_by_exp_id": "",
@@ -3414,6 +3371,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d3d53c1e (Q=0.820), which proved 88 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the cartesian monoidal category of real normed spaces and Lipschitz maps, parallel residual blocks with residual constants `K\u2081` and `K\u2082` have Lipschitz constant at most `max (1 + K\u2081) (1 + K\u2082)` for the max product norm, and this bound is attained for every `K\u2081,K\u2082 \u2265 0`. A counterexample to either t",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_d3d53c1e_15bc37ed",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "d3d53c1e",
+    "status": "available",
+    "timestamp": "2026-08-25T09:53:09.353358+00:00",
+    "title": "Deepening: Parallel residual blocks obey a tensor-product certificate"
   },
   {
     "consumed_by_exp_id": "",
@@ -15803,6 +15774,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Strict majorization says a non-flat descending weight beats the baseline strictly, but says nothing about how much. The Chebyshev double sum is a quadratic form, suggesting the defect is bounded below by a squared distance to flatness.\n\nFor antitone normalised w on positions M, C_0 - EC >= c * M * (sum_i |w_i - 1/M|)^2 for an absolute constant c > 0.\n\nFormalise via the double-sum identity, comparing the pairwise sum with the L1 distance by Cauchy-Schwarz; test the constant numerically over random antitone weights.\n\nThe master chain gains a quantitative, distribution-free margin, upgrading strict inequalities into usable gaps.\n\nThe defect degenerates for weights concentrated at the extremes, and only a weighted (position-dependent) distance can control it.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4143",
+    "priority_score": 0.5648061131850186,
+    "research_mode": "team",
+    "source_exp_id": "9b3c75c4",
+    "status": "available",
+    "timestamp": "2026-08-25T09:53:18.075697+00:00",
+    "title": "Quadratic Stability of the Majorization Defect"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The density of ECM stage-1 orders firing in the last tau-fraction of the prime schedule should equal log(1/(1-tau))/log B1 asymptotically. The trace law turns the positional question into a Mertens sum over primes in ((1-tau)B1, B1]. It replaces the pre-registered constant-tail hypothesis by a decaying law.\n\nFor fixed tau in (0,1), the density of n <= M with pi(maxPF n) > (1-tau) pi(B1) and maxPF n <= B1 equals (log(1/(1-tau))/log B1)(1+o(1)) as B1 -> infinity.\n\nFormalize Mertens' second theorem with explicit error, combine with lateCount_le_primeContribution and a matching Bonferroni lower bound; check against the sieve table for N = 10^3..10^7.\n\nThe late tail of any stage-1 trace is predictable from B1 alone, giving a parameter-free null for future ECM accounting audits.\n\nThe union bound is lossy at the top of the schedule, indicating correlations between large-prime divisibility events that themselves need explanation.",
     "domains": [
       "NumberTheory",
@@ -15815,6 +15801,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:50:38.543793+00:00",
     "title": "Mertens Firing-Tail Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The reciprocal certified value is a Bernoulli agreement probability, and composing strata is strictly submultiplicative. The conjecture identifies the exact submultiplicativity slack as an information-theoretic quantity rather than a mere algebraic remainder.\n\nThe slack D(mu1*mu2, P1*P2) - D(mu1,P1)*D(mu2,P2) equals the probability that the two AND-products agree while some coordinate pair disagrees, and this quantity is monotone in the mutual information between the two filter indicators.\n\nThe identity half is already proved (coupling_slack_identity); formalise the monotonicity half against a mutual-information functional and test numerically.\n\nComposed guarantees can be reported with a quantified conservatism, not just an inequality.\n\nThe slack is not an information functional, and composition must be handled locus by locus.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4144",
+    "priority_score": 0.5647746171324002,
+    "research_mode": "team",
+    "source_exp_id": "9b3c75c4",
+    "status": "available",
+    "timestamp": "2026-08-25T09:53:18.553288+00:00",
+    "title": "Information Defect of Stratum Composition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The reading 'D = 1 + betweenVar/mean' is valid only if the within-cell law is Poisson-calibrated. The conjecture is that the residual within-cell dispersion at bitlen 96 is itself strictly above 1, i.e. the excess is not purely latent-rate heterogeneity but includes within-N clustering of gcd-chain hits.\n\nFor the exp-576 ensemble, withinVar > avg after conditioning on every recorded dial, with the gap growing in the number of j-samples per N.\n\nMeasure D_within at two j-sample budgets and compare with Logic.QRDial.poisson_mixture_disp, whose hypothesis withinVar = avg is exactly the calibration being audited.\n\nThe mixed-Poisson framing must be replaced by a self-exciting model, changing every published dispersion reading in the line.\n\nHeterogeneity is confirmed as the sole source, and the carrier is a per-N latent rate \u2014 a purely arithmetic object.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4136",
+    "priority_score": 0.5647412683708043,
+    "research_mode": "team",
+    "source_exp_id": "5223d87b",
+    "status": "available",
+    "timestamp": "2026-08-25T09:52:41.696428+00:00",
+    "title": "Within-Cell Poisson Calibration Audit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The booked envelope over (m, M, P) is sharp but wide. Adding the within-cell shape booking Theta should collapse it to an identity up to a second-order term. The conjecture quantifies how much shape information a single scalar booking carries.\n\nFor every weight honouring bookings (m, M, P) with within-cell factors Theta_R, Theta_C, the expected scan cost equals P*Theta_R*centre(R) + (1-P)*Theta_C*centre(C), and constraining Theta_R, Theta_C to an interval [1-e, 1+e] shrinks the admissible cost interval to width O(e*M).\n\nFormalise the width bound as a corollary of booked_law_theta_form plus explicit bounds on centre(R), centre(C); test numerically on random weights with controlled Theta.\n\nBookings with Theta become a complete reporting convention: a two-sided guarantee, not just a point estimate.\n\nSome other shape statistic (e.g. the second moment) is the minimal sufficient booking, and Theta alone is not enough.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4141",
+    "priority_score": 0.5647412683708043,
+    "research_mode": "team",
+    "source_exp_id": "9b3c75c4",
+    "status": "available",
+    "timestamp": "2026-08-25T09:53:17.111413+00:00",
+    "title": "Theta-Refined Booked Envelope"
   },
   {
     "consumed_by_exp_id": "",
@@ -15878,6 +15909,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For balanced semiprimes N, define the capture spectrum C(X) = \u03a3_{\u2113 \u2264 X} r_\u2113\u00b2, where r_\u2113 is the sample correlation between the per-N log hit rate and the product-form Legendre indicator at prime \u2113. The conjecture is that C(X) stays below the pre-registered 0.30 bar for every X up to 10\u2076 at bitlen 96, so the overdispersion carrier is not a small-prime residue effect at any window. The family capture bound turns this into a finite scalar computation with a proved stopping rule.\n\nFor bitlen-96 balanced semiprimes, sup_{X \u2264 10\u2076} \u03a3_{\u2113 \u2264 X} r_\u2113\u00b2 < 0.30, hence no affine recalibration of the \u2113 \u2264 X product-form dial family attains a 30% dispersion reduction.\n\nCompute the 78k per-prime correlations and partial sums; compare against Logic.QRDial.family_bar_missed, whose hypothesis is exactly \u03a3_j corrSq y (s j) < 3/10.\n\nThe papers-136/139 dial line does not extend to bitlen 96 at any prime window; the carrier of u \u2248 10 clustering is a genuinely new N-structure.\n\nPapers 136/139, 220 and 226 unify under a scale-dependent dial bound, with the crossing point of C(X) giving the calibration scale.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4134",
+    "priority_score": 0.5645856408166897,
+    "research_mode": "team",
+    "source_exp_id": "5223d87b",
+    "status": "available",
+    "timestamp": "2026-08-25T09:52:40.667119+00:00",
+    "title": "Prime-Window Capture Spectrum for Quadratic-Residue Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Because the x-coordinate detector is invariant under the elliptic involution, the detected orders are the divisors of the sumset J+J together with the difference set J-J of the visited multiple set J. Conjecture: the sequential run is far from optimal and a Sidon-complement construction detects many more orders at equal cost.\n\nThe advantage already proved at k = 4 (the set {1,2,4,8} detects orders 9, 10 and 12 that {1,2,3,4} misses) persists and grows: the ratio of detected-order counts between the best J of size k and the sequential set tends to infinity with k.\n\nExhaustive or randomized search over J for small k, then a Lean certificate for the winning set using the divisibility characterization xEq_iff_dvd.\n\nA cheap redesign of stage one improves the constant of every lite-style method.\n\nThe sequential run is combinatorially optimal for involution detectors, a satisfying rigidity statement.",
     "domains": [
       "NumberTheory",
@@ -15890,6 +15936,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T05:46:13.353320+00:00",
     "title": "Involution-Optimal Visiting Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Spreading the 0.1578 of squared correlation that the extension window 400 < \u2113 \u2264 10\u2076 would have to supply over at most 78498 primes forces some single Legendre-symbol dial to reach r\u00b2 \u2265 2\u00b710\u207b\u2076. The conjecture is that no symbol in that window reaches the floor at bitlen 96, so the scale-shift hypothesis fails and the carrier lies outside the QR dial family. The test is a single pass over 78k per-prime correlations with a proved threshold.\n\nFor bitlen-96 balanced semiprimes, max_{400 < \u2113 \u2264 10\u2076} r_\u2113\u00b2 < 2\u00b710\u207b\u2076 for the per-N log hit rate, hence \u03a3_{400 < \u2113 \u2264 10\u2076} r_\u2113\u00b2 < 0.1578 and the \u2113 \u2264 10\u2076 family misses the 0.30 bar.\n\nCompute the per-prime squared correlations over the extension window and compare with the hypotheses of Logic.QRDial.exp576_window_extension_target; a single symbol above the floor is required for the scale-shift reading to survive.\n\nThe QR dial family is exhausted at bitlen 96 and the u \u2248 10 carrier is structure outside every recorded mechanism.\n\nThe informative window has genuinely moved past 400, and the crossing prime calibrates a scale-dependent dial bound unifying papers 136/139 and 220.",
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_4139",
+    "priority_score": 0.5644911526588344,
+    "research_mode": "team",
+    "source_exp_id": "5223d87b",
+    "status": "available",
+    "timestamp": "2026-08-25T09:52:43.267154+00:00",
+    "title": "Per-Symbol Detection Floor for Extended Prime Windows"
   },
   {
     "consumed_by_exp_id": "",
@@ -16565,6 +16626,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:02:36.410763+00:00",
     "title": "p-Adic Inversion Threshold Function"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved inequality r\u00b2 \u2264 \u03b7\u00b2 quantifies how much a dial loses by being fitted affinely. The conjecture is that the deficit \u03b7\u00b2 \u2212 r\u00b2 is bounded below by a universal constant fraction for monotone-but-convex dials such as the product-form Legendre count, so all previously published R\u00b2 legs understate dial strength by a predictable factor.\n\nFor the product-form dial at bitlen 96, \u03b7\u00b2 \u2265 1.5\u00b7r\u00b2, and this ratio is stable across prime cuts.\n\nRecompute the recorded dials cellwise (level sets) and compare with their linear fits, using disp_reduction_eq_eta_sq to express both legs in the same units.\n\nAll prior R\u00b2-based dial verdicts should be re-read cellwise; some may cross their bars.\n\nThe dial is effectively linear in the log-rate, and the R\u00b2 leg is a faithful summary \u2014 simplifying the whole comparison line.",
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_4137",
+    "priority_score": 0.5636407592381372,
+    "research_mode": "team",
+    "source_exp_id": "5223d87b",
+    "status": "available",
+    "timestamp": "2026-08-25T09:52:42.207214+00:00",
+    "title": "Linear-Fit Deficit of Recorded Dials"
   },
   {
     "consumed_by_exp_id": "",
@@ -26361,6 +26437,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T09:01:46.167935+00:00",
     "title": "Distinct-Draw Floor as a Pre-Registration Requirement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If an orthogonal family of m dials misses the H1 bar, then every member has squared correlation below 0.30/m. Read contrapositively, explaining a dispersion index of 7.27 requires at least one mechanism of strength r\u00b2 \u2265 (D\u22121)/(m\u00b7D). The conjecture is that the true carrier is concentrated: a single mechanism with r\u00b2 \u2265 0.25, not a diffuse sum of weak ones.\n\nAny orthogonal explanatory family for the exp-576 log-rates that meets \u03a3_j r_j\u00b2 \u2265 0.30 contains a member with r_j\u00b2 \u2265 0.25.\n\nOrthogonalize the recorded dials plus candidate structural covariates (p\u2212q gap, class-number proxies, smoothness of p\u00b11) and inspect the largest individual share against Logic.QRDial.family_capture_bound.\n\nThe search for the carrier can be restricted to single strong covariates, drastically shrinking the mechanism space.\n\nThe carrier is diffuse, and only high-dimensional joint models can reach the bar \u2014 which itself constrains the mechanism.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4135",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5223d87b",
+    "status": "available",
+    "timestamp": "2026-08-25T09:52:41.189046+00:00",
+    "title": "Carrier-Strength Pigeonhole for Overdispersed Hit Counts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Paper 225's clause 'book at stored P\u0302 only if raw P\u0302 was stored' is a special case of a quantitative criterion: booking at a point value is admissible exactly when the inversion cell diameter 2\u03b4/m is below the booking precision. The conjecture is that this criterion reclassifies a positive fraction of ledger anchors, while leaving every feasibility margin intact.\n\nFor every anchor in the ledger with storage precision \u03b4 and local slope bound m, the booking is point-admissible iff 2\u03b4/m < 10\u207b\u2074; under this rule all recorded feasibility inequalities S_raw \u2264 S_A survive.\n\nInstantiate Logic.AnchorResolution.cell_diam_le and cell_mem_of_close with the recorded (\u03b4, m, L) per anchor, and check the feasibility conclusion with p225_four_margins_hold.\n\nThe ledger gains a uniform, checkable admissibility rule replacing case-by-case clauses.\n\nSome anchors are resolution-limited beyond their recorded margins, and those loci need re-derivation rather than rebooking.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4138",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5223d87b",
+    "status": "available",
+    "timestamp": "2026-08-25T09:52:42.729711+00:00",
+    "title": "Uniform Resolution-Limit Admissibility Criterion for Booked Anchors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 2^k branch of the master inequality uses pigeonhole, which is tight only for balanced filters. Replacing the bucket count by an entropy of the bucket-size distribution should give a strictly stronger bound for unbalanced filters, with equality exactly at the uniform filter.\n\nFor a filter assigning M slots to buckets with size distribution p, the worst-case speedup satisfies S <= 2^{H_infinity(p)}/(Lambda*Theta), where H_infinity is the min-entropy, and this refines the 2^k bound since H_infinity(p) <= k.\n\nProve the min-entropy version in Lean as a replacement for exists_large_bucket, then check that master_inequality_of_filter still composes.\n\nThe master chain becomes sensitive to filter quality, giving nontrivial bounds for skewed hash functions.\n\nWorst-case bucket size, not entropy, is the right complexity measure, and the pigeonhole bound is already optimal.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4142",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9b3c75c4",
+    "status": "available",
+    "timestamp": "2026-08-25T09:53:17.595308+00:00",
+    "title": "Entropy Refinement of the k-Bits Branch"
   },
   {
     "consumed_by_exp_id": "",
@@ -36726,19 +36844,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multidimensional Surprise and Non-Uniqueness of the Scale"
   },
   {
-    "consumed_by_exp_id": "d3d53c1e",
-    "description": "In the cartesian monoidal category of real normed spaces and Lipschitz maps, parallel residual blocks with residual constants `K\u2081` and `K\u2082` have Lipschitz constant at most `max (1 + K\u2081) (1 + K\u2082)` for the max product norm, and this bound is attained for every `K\u2081,K\u2082 \u2265 0`. A counterexample to either the upper bound or attainability falsifies the conjecture.",
-    "domains": [],
-    "id": "fd_2784",
-    "phase": "A",
-    "priority_score": 0.44083333333333335,
-    "research_mode": "team",
-    "source_exp_id": "dd55976d",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:26:06.564079+00:00",
-    "title": "Parallel residual blocks obey a tensor-product certificate"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Add the Poincar\u00e9 distance and prove the exact distance of `z_n` from the origin, relating cusp escape to logarithmic growth in `|n|`.",
     "domains": [
@@ -39550,14 +39655,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cycle 1 \u2014 the bound and its arithmetic input"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a32bc1e4",
     "description": "Represent verification as a state transition that returns both a verdict and a residual dish. This would formally separate nondestructive certificates, destructive tests, and repeatable verification without assigning any of them an unsupported hardness label.",
     "domains": [],
     "id": "fd_1892",
+    "phase": "A",
     "priority_score": 0.4077254901960784,
     "research_mode": "team",
     "source_exp_id": "12b45ad4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:40.624927+00:00",
     "title": "Destructive verification"
   },
@@ -45320,5 +45426,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T17:48:19.120689+00:00",
     "title": "Failed \u2014 needs a different definition."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Non-cartesian monoidal products.** The theory is developed for cartesian products. What is\n  the analogous certificate for the projective and injective tensor products of normed spaces,\n  where the identity is not a coordinatewise object?",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4140",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "d3d53c1e",
+    "status": "available",
+    "timestamp": "2026-08-25T09:53:03.688613+00:00",
+    "title": "Non-cartesian monoidal products."
   }
 ];
