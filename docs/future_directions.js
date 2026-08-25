@@ -2064,17 +2064,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-75 #2 \u2014 COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry \u2014 low-B1 success sits far above the collision floor (65.0%/62.5% vs 16.47%, cross-bitlen z p=0.82); hits fire near step ZERO at high B1 (median 0.09\u20130.10, final-20% tail 0/55, binom p\u22480.004) \u2014 paper-159 amendment-candidate REJECTED as stated; new early-fire trace law added"
   },
   {
-    "consumed_by_exp_id": "3f160cc7",
+    "consumed_by_exp_id": "",
     "description": "Exp 572 \u00b7 paper 217 \u00b7 assessment v324 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp572_ma1_signed.py \u00b7 seed 572 \u00b7 wall 6.96 s.\n\n**Question.** Paper 213/exp566 closed the MAGNITUDE route of MA-1 effectivity (|L(1,\u03c7)| does not predict |AP deviations|, R\u00b2=0.019) but preserved the SIGNED route: do signs of character-twisted prime-count deviations align with signs predicted by computable character data? A yes would be the first computable handle on AP-deviation structure.\n\n**Key structural disclosure** (post-smoke, pre-full-data): L(1,\u03c7)>0 for EVERY real non-principal \u03c7 (class-number formula) \u21d2 sign(w)\u2261+1 identically (n_cells_w_negative=0 at full scale), so registered criterion C1 reduces exactly to Pr[c_\u03c7>0] and could only fire if prime twists were majority-positive. Working identity asserted exact (<1e-9): c_\u03c7 = \u03a3_a d_a\u00b7\u03c7(a) = \u03a3_{p\u2264x} \u03c7(p); the uniform-li theory term vanishes identically by orthogonality, so signed L(1,\u03c7) is the only computable x-independent theory weight.\n\n**Design.** x=2\u00b2\u2076 full (\u03c0(x)=3,957,809); 287 moduli (squarefree [3,300] \u222a primes [307,997]); 491 real-char cells; 86,882 unit classes; machinery verbatim from exp566 (class-number exact D<0 |D|\u2264400, truncated-L otherwise, median rel err 1.8e-5); CP95 intervals + within-modulus d-shuffle null (2000 draws \u2014 MEANINGFUL here unlike exp566 since sign(c) is not permutation-invariant in a).\n\n**Result H0 \u2014 both criteria fail, both levels.** Cell agreement 15.07% over 491 cells (74 agree), CP95 [0.1202, 0.1855], circular-sum z=\u221252.72 (C2 needs >3). Class level 48.74% over 86,882 classes, CP95 [0.4841, 0.4907], permutation z=\u22127.74 \u2014 significantly BELOW chance (mild anti-alignment). Breakdowns all CIs wholly below 50%: prime-modulus quadratics 26.9% (167), product chars \u03c9\u22652 8.95% (324), exact-L 12.8% (226), truncated-L 17.0% (265), drop-|w|<1e-3 robustness unchanged.\n\n**Named byproduct** (labeled exploratory, not pre-registered): prime twists NEGATIVE in 84.7% of cells (CP95 [0.8123, 0.8779]; smoke x=2\u00b2\u00b2 read 91.7%) \u2014 the universal Chebyshev/Rubinstein\u2013Sarnak low bias, independently confirmed inside the lab's own AP-deviation machinery at x=2\u00b2\u2076. Deviation signs are one-directional across moduli and zero-driven, NOT carried by any computable L-value \u2014 precisely why no L-based predictor can track them.\n\n**Ledger.** (1) m=6 orthogonality assert exposed the raw-primitive-twist \u00b11 correction for primes p|m, p\u2224cond(\u03c7) (max corr 3, 0 sign flips induced \u2014 disclosed, not corrected); (2) class-z scale mix-up fixed (\u2212310 \u2192 single-scale \u22127.74); (3) exp566's 'within-modulus shuffle vacuous' caveat verified NOT to transfer here.\n\n**Barrier framing.** Closes barrier-map residual 'MA-1 effectivity' as a named question: no computable criterion via quadratic-character structure on either route (magnitude paper 213, sign here) at toy scale; the averaging identity's effective scope remains non-computable from N; consistent with barriers 4/5. No breakthrough.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3960",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T09:06:21.851457+00:00",
     "title": "FACT round-75 #1 \u2014 MA1-SIGNED: signed route of MA-1 effectivity dies at both registered criteria (cell agreement 15.07%, CS_z=-52.7; class 48.74% below chance z=-7.74) \u2014 MA-1 computable-effectivity program CLOSED on both routes; Chebyshev/Rubinstein\u2013Sarnak negative skew 84.7% confirmed as named byproduct"
   },
@@ -2266,16 +2265,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-78 #2 \u2014 QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY \u2014 small-prime QR dial does NOT explain u\u224810 overdispersion (best D-red 14.2% vs H1 bar 30%); \u226586% is N-structure beyond every recorded mechanism; papers-136/139 line does not extend to scale; + P\u0302 RESOLUTION-LIMIT rider on paper 225's erratum thread"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9b3c75c4",
     "description": "Round-78 #1, theory deliverable (no new physics). GAP-L4 of paper 219's roadmap CLOSED by the positional-stratum measure framework, recorded with fixes applied from an independent adversarial verifier.\n\nFORMULATIONS RANKED F1>F2>F3:\n- F1 (RECOMMENDED): worst-case with explicit bookings \u0398=E_\u03c0C/K_booked, \u03bc_eff=|R_eff|/M, k_bits, \u039b=C_sort/C_desc. Universal object = exact r\u0304-identity EC_A=P\u00b7r\u0304_R+(1\u2212P)\u00b7r\u0304_C (MC-validated max rel err 0.23%, 8 cells); T1a's certified form emerges exactly at uniform-within-cells (\u0398\u22611 iff uniform). Master inequality PROVEN unconditional: S_vs_desc \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^{k_bits}/(\u039b\u00b7\u0398)), proof chain = r\u0304-identity \u21d2 majorization C_sort\u2264C\u2080 \u21d2 \u039b-chain. No constant cap; D survives as inequality chain (cost-side 4/3 untouched), loses pathwise product.\n- F2: scale\u00d7balance prior \u2014 balance IS position (s=r^{\u22121/2}); canonical kernel b\u221dr^{\u22123/2} (= uniform-in-x positional prior, T1a's exact kernel); capture curve P(\u03bc)=\u03bc/(1\u2212R_max^{\u22121/2}) exact, linear iff canonical; all four anchors demand ultra-balanced populations (required-R 1.04\u20131.14) \u2192 witnesses demoted to generator shape estimators.\n- F3 BASELINE-CONDITIONAL (verifier caught unstated payoff convention): simultaneous-commitment value = certified law EXACTLY only vs full-scan-M baseline; HALVES vs T1a's own C\u2080=(M+1)/2; same-prior-descending adversary UNDERCUTS certified (5.365<5.4054); corner-is-max-EC brute-force confirmed.\n\nVALUE-universality FALSE off uniform cells: A3 sweep M=64\u00d74000 tilts violation rate .4395 concentrated at HEAD placements (.60/.37/.34 head/mid/tail), max S/S_A=1.54, witness S=62 vs booked 21.3.\n\nWITNESS RE-READS: 5.19 explained structurally \u2014 sits in (drafted 5.1948, certified 5.4054) window pinning \u03c1_R\u22480.59 mild adverse loading, not a corner identity; 29.1 AT RESOLUTION LIMIT (P_implied=0.98504, lives in P\u0302's 4th decimal).\n\nERRATUM to recorded paper 219 (genuine D-witness-table error caught by L4 verification): row prints (0.02,0.9853)|29.0698 but that value was computed at ROUNDED P=0.985 \u2014 certified law at stored P\u0302=0.9853 gives 29.3152. Rows 5.19/6.91/4.35 still print SUPERSEDED drafted-form values (certified there: 5.4054/7.1567/4.536); prose 4.649 belongs to stale locus (.115,.87). Feasibility conclusions of ALL FOUR anchors UNAFFECTED (\u03bc\u22641/S holds regardless).\n\nCONVENTION ADOPTED: state positional-stratum laws as the r\u0304-identity with bookings (\u03bc_eff, P_eff, \u03c1_R, \u03c1_C; \u039b) \u2014 never bare-(\u03bc,P) closed forms; canonical reporting prior b\u221dr^{\u22123/2}; admissibility rule requires raw-P\u0302 stored and \u03ba_desc reported; baseline named wherever a guarantee is claimed.\n\nROADMAP NOW EMPTY OF OPEN GAPS: T1/T2 verified \u00b7 D witnessed \u00b7 L7\u2032 proven-sketch \u00b7 L8 closed \u00b7 L4 closed by this framework.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/gapL4_measure.md (post-REVISION), gapL4_check.py/.json, verifyL4_verdict.md, verifyL4_recheck.py/.json. Paper 225, assessment v332 (papers-only bump, count unchanged at 564).",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4007",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T14:04:28.340349+00:00",
     "title": "FACT round-78 #1 \u2014 GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3 \u2014 r\u0304-identity universal object (MC err 0.23%), master inequality S \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^k_bits/(\u039b\u00b7\u0398)) PROVEN via majorization; F3 baseline-conditional after verifier (5.365<5.4054 undercut); table error 29.0698\u219229.3152 at stored P\u0302=0.9853, feasibility unaffected; converse roadmap EMPTY"
   },
@@ -2656,6 +2656,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T04:01:30.584391+00:00",
     "title": "FACT round-94 #2 \u2014 EDGE-CAP-RAISED (exp 603 FINAL): H0 \u2014 SPIKE STEEPNESS FORMALLY UNIDENTIFIABLE AT THIS DATA SIZE; LOWER-BOUND LADDER FINAL"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Paper 254** (`ResearchOutput/NewMathematics/254_ProfileGenerality.md`) \u00b7 artifacts `ResearchOutput/scripts/2026-08-24-round74/exp605_*` \u00b7 notebook Part 296 \u00b7 assessment v360 \u2192 v361 \u00b7 count 590 \u2192 591.\n\n## Question\nIs the j\u00b2\u2212N positional smoothness profile (papers 228/229: power-law decline + left-edge spike) universal across polynomial families?\n\n## Pre-registration (script header, before analysis)\nH1 (universal): same normalized profile shape for ALL of {j\u00b2\u2212N, j\u00b3\u2212N, j\u2074\u2212N} at matched sample sizes \u2014 all pairwise profile r > 0.8 after normalization.\nH0 (family-specific): profiles diverge materially; report which family differs and how.\nBars fixed: (a) all pairwise r > 0.8; (b) every family left-decile > overall with boot P > 0.95; (c) every family Spearman \u03c1 < 0 at p < 0.01. Overrides: <150 hits/arm \u21d2 INCONCLUSIVE-LOWPOWER; control non-flatness (\u03c7\u00b2 p \u2264 0.01) \u21d2 INVALID-CONTROL.\n\n## Method\n128-member npz-lineage population (exp581_regen_positions.npz); windows [r_k, 3r_k\u22124] anchored at the integer k-th root (k=2 reproduces [jlo, 3jlo\u22123] exactly); matched CRN grids L=3000/N/arm with tilt IDENTICAL across arms (paired); exact 1e6-cut gcd-chain B-smooth tester (unit-tested); controls C=1000/N/arm; 50-bin pooled profiles, WLS ln-rate fit on bins \u22653 hits, cluster bootstrap B=800 over the 128 Ns; sq2d dither probe (seeded dither \u2208 [1, 2\u00b7jlo], isqrt preserved). Seeds 20260901 / 20260902. Wall 181 s.\n\n## Result \u2014 VERDICT: H0-SIDE (family-specific)\n| Bar | Observed | Pass |\n|---|---|---|\n| pair r > 0.8 | max 0.781 | **FAIL** |\n| edge concentration | 4/4 arms P(ld>ov)=1.0 | PASS |\n| monotone decline | cu3 Spearman +0.019, p=.92 | **FAIL** |\n\nPer family (384k draws each):\n- **sq2** (j\u00b2\u2212N_rec): 8639 hits, rate .0225 \u2014 b\u0302 **+0.157 \u00b1 0.008**, ld/ov 1.24\u00d7, Spearman \u22120.802 (p=2.5e\u221212)\n- **qu4** (j\u2074\u2212N_rec): 7603 hits, .0198 \u2014 b\u0302 **+0.188 \u00b1 0.013**, ld/ov 1.29\u00d7, Spearman \u22120.856 (2.4e\u221215)\n- **cu3** (j\u00b3\u2212N_rec): 287 hits, .00075 \u2014 b\u0302 +0.065 \u00b1 0.037 [CI covers 0], Spearman +0.019 (p=.92) **FLAT**\n- **sq2d** (dither probe): 248 hits, .00065 \u2014 b\u0302 +0.168 \u00b1 0.038, ld/ov 1.47\u00d7, shallow shape-consistent\n\nPairwise normalized-profile r: **sq2|qu4 = 0.781 [0.565, 0.767]** \u2014 close to but below the pre-registered 0.8 bar; sq2|cu3 0.385; cu3|qu4 0.477; sq2~sq2d 0.495. Controls flat 4/4 (\u03c7\u00b2 p .08\u2013.65). No override fires.\n\n## THE DIFFERENCE-OF-SQUARES GATE (mechanism named)\nRate hierarchy **sq2 \u2248 qu4 (~2\u00d710\u207b\u00b2) \u226b sq2d \u2248 cu3 (~7\u00d710\u207b\u2074) \u2014 \u224830\u00d7 lower (29\u201334\u00d7 across pairings)** is EXACTLY tracked by difference-of-squares factorability: N_rec = jlo\u00b2 makes v_k = (j^(k/2)\u2212jlo)(j^(k/2)+jlo) split for **EVEN k only**. Even powers share the small-factor route (b\u0302 .16/.19, \u03c1 \u2212.80/\u2212.86, r .78); odd degree admits no integer split \u2192 baseline rate + flat profile. The sq2d arm confirms from inside the quadratic family: knock N off the exact-square locus and the rate collapses ~35\u00d7 (~97% of mass gone) onto the cu3/sq2d level with only a shallow tilt left. The gate variable is ARITHMETIC (algebraic factorability of f(j)\u2212N given N's form), not polynomial degree per se.\n\n## Consequence\n- Papers 228/229's profile law (with 238/245/253's bulk+spike decomposition) is a **QUADRATIC-FAMILY law, not a universal sequence law**; barrier-map entries citing it inherit the scope restriction.\n- **Extension prediction pre-stated**: even degrees j^{2m}\u2212N share the structure via repeated difference-of-squares for square N (k=4 confirms). Falsifiable follow-up: j\u2076\u2212N / j\u2078\u2212N at matched grids should land in the ~0.16\u20130.19 b\u0302 band with pairwise r > 0.8 vs sq2/qu4.\n- Practical asymmetry booked: the strong structure lives on the perfect-square-N slice where trial division from jlo is already optimal \u2014 no scanning advantage transfers to general-N populations.\n\n## Ledger catches / honest limits\n- **Lineage APPROXIMATE, disclosed**: npz stores positions+bounds only (no N) \u2014 reconstruction N_rec=jlo\u00b2 pins anchors exactly (residual \u0394N < 2\u00b7jlo shifts effective left edge <1 integer step, profiling-invariant). Applicable check via N-independent v\u2082=(j\u2212jlo)(j+jlo): stored npz hits classify smooth at .0226 \u2248 ctl .0198 \u21d2 **original N NON-SQUARE**; sq2/qu4 RATE LEVELS do not transfer to the general-N population of 228/229 \u2014 flagged for follow-up.\n- cu3/sq2d thin (287/248 hits, just above the registered 150 low-power floor): their null-ish shapes are UNDERPOWERED, disclosed (used only for bar (c)).\n- Smoke caught t-mat broadcast bug + key-name bug; both fixed pre-full-run. No commits mid-run; only exp605_* touched.\n\n## Barrier framing\nCloses the generality question the closed positional thread (250\u2013253) left implicit; answer REDUCES exposure \u2014 the structure is scan-order geometry of the square-N slice, consistent with the standing method law (scan-order structure reflects proposal geometry, not N-information). Open frontier unchanged: u \u2265 6\u201314 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, external-hint laws; quantum closed.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4096",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-25T04:55:43.455184+00:00",
+    "title": "FACT round-95 #1 \u2014 PROFILE-GENERALITY (exp 605): H0-SIDE (FAMILY-SPECIFIC) WITH THE MECHANISM NAMED \u2014 positional smoothness structure GATED BY DIFFERENCE-OF-SQUARES FACTORABILITY; papers 228/229's profile law is a QUADRATIC-FAMILY law, not universal"
   },
   {
     "consumed_by_exp_id": "",
@@ -4390,20 +4404,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 80241759 (Q=0.790), which proved 110 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For concrete `B` and threshold `T`, define and\n   compute the largest supported depth, proving maximality rather than only a\n   selected numerical instance.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_80241759_7d4f35bd",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "80241759",
-    "status": "available",
-    "timestamp": "2026-08-25T03:14:24.715872+00:00",
-    "title": "Deepening: Parameter-derived depth"
   },
   {
     "consumed_by_exp_id": "",
@@ -36291,14 +36291,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multidimensional Surprise and Non-Uniqueness of the Scale"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3d53c1e",
     "description": "In the cartesian monoidal category of real normed spaces and Lipschitz maps, parallel residual blocks with residual constants `K\u2081` and `K\u2082` have Lipschitz constant at most `max (1 + K\u2081) (1 + K\u2082)` for the max product norm, and this bound is attained for every `K\u2081,K\u2082 \u2265 0`. A counterexample to either the upper bound or attainability falsifies the conjecture.",
     "domains": [],
     "id": "fd_2784",
+    "phase": "A",
     "priority_score": 0.44083333333333335,
     "research_mode": "team",
     "source_exp_id": "dd55976d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:06.564079+00:00",
     "title": "Parallel residual blocks obey a tensor-product certificate"
   },
@@ -41428,15 +41429,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cycle 3's `coeff_prod_normalized_general` already provides the exact"
   },
   {
-    "consumed_by_exp_id": "51076c67",
+    "consumed_by_exp_id": "",
     "description": "Positivity is already formalized as a propagating predicate\n(`PoleOrderValuation.IsNonnegReal`, `isNonnegReal_coeff_prod`), so the strictness statement\nis a matter of exhibiting two more antidiagonal terms and bounding them below \u2014 no new\ninfrastructure needed.",
     "domains": [],
     "id": "fd_1625",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "ab33dc9e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-19T17:41:07.905567+00:00",
     "title": "Positivity is already formalized as a propagating predicate"
   },
