@@ -2235,16 +2235,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-81 #1 \u2014 HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE \u2014 no decomposition family met the HUMP bars (pooled fitted-peak boot95-lo 1.0094 vs bar 1.05; raw max still bin 33), but composition carriers die arithmetically: observed LPF masses [0,0,.0007,.9993] \u2014 99.93% of hits share ONE band (>1e4) so H1a single-band-carrier is impossible; inside it concavity replicates in ALL THREE descriptive LPF terciles (c=-0.18/-0.25/-0.44), pooled vertex x=0.5901 == exp579's independent 0.5896 (raw max bin33 exact); k100 conditioning does NOT remove the excess (t2/t3 flat \u00b12% vs pooled +4.8%); controls clean everywhere; sole-survivor channel = H0 window/polynomial geometry of j\u00b2\u2212N itself; named probe: direct j-grid/v-size sensitivity (bin-width permutation, u-grid shift); REGENERATION PASS sha256 55729f1c99c0b5d2 byte-exact 9594/9594 hits + full controls + grids + lineage quartet + master hash"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7b0f4515",
     "description": "## Round-83 #1 \u00b7 SYNTHESIS-R73-80 \u00b7 Paper 234 \u00b7 papers-only (count unchanged at 572) \u00b7 assessment v340 \u2192 v341\n\nConsolidation synthesis of recorded papers 208\u2013233 (rounds 73\u201380 plus flight-recorded 81\u201382). Read-only; no compute; no new experiment id.\n\n### Five closures confirmed\n| # | Closure | Load-bearing numbers |\n|---|---|---|\n| C1 | Berggren triplet-tree ALL faces incl. realizability | oracle peak 0.4798 bits @B=22758 bit-exact yet unrealized; N-only policy \u22640.50% of within-strata core; orbit max\\|z\\|=2.29/48 cells |\n| C2 | MA-1 computable-effectivity, both routes | magnitude R\u00b2=0.019 / 0.0785 far under bars; sign 15.07% [0.120,0.186] z=\u22127.74; Chebyshev 84.7% negative-twist byproduct |\n| C3 | u\u224810 deviation gate REJECTION | fresh seed r=1.1536 [1.0540,1.2611] UPWARD vs the 20260824 family's 0.95\u20130.99 deficit \u2192 \u00b15\u201315% measured single-run envelope; multi-seed pooling mandatory henceforth |\n| C4 | Positional converse roadmap EMPTY | S \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^k_bits/(\u039b\u00b7\u0398)) PROVEN via majorization chain; EC_A MC err 0.23% |\n| C5 | Canonical covariate fixed | 1/\u2113-weighted product dial saturates by \u2113=400: W400 .4731/48.1% vs W1e6 .4786/48.5%, corr=0.999 |\n\n### Two record corrections (mechanisms named)\n- **Paper 159's destruction-wall sentence REJECTED** (papers 215+218): zero dead outcomes/600 trials; success persists at B1/p=1.05 exactly where 159 records infinite-E[T]. Replaced by early-fire trace law + subdominant collision floor (65.0%/62.5% vs baseline 16.5%, z p=0.82) + structural identity B1 \u2265 Hasse-max \u27f9 order \\| lcm(1..B1).\n- **Paper 226 SECONDARIES retracted** as reciprocity-flip dial-form artifacts (flip 100% iff \u2113\u22613 mod 4 AND N\u22613 mod 4, 2680/2680); primary S_indiv null NOT retracted (fresh-seed true null R\u00b2=.0019). **Paper 229 RESIDUAL-PEAKED-MID-WINDOW retracted** as baseline-curvature leakage; power-law headline T\u22480.0295\u00b7(1+x)^\u22121.104 STANDS AND IS STRENGTHENED.\n\n### Three new laws entering the map\n1. Early-fire trace law (hit position ~ step ZERO; median index 0.09\u20130.10; final-tail 0/55 binom p\u22480.004).\n2. \u039b prior-shape channel WITH measured scope boundaries: hard-balance ascending 1.58\u00d7\u00b10.03 but deployed RSA pools top-heavy (z=0.6356) where ascending LOSES ~44% \u2014 no deployable gain without enforced q<2p at keygen; paper 137 refined not contradicted.\n3. Harmonic-weight dial saturation: primes informative \u221d1/\u2113; equal-weight counting manufactures apparent window movement.\n\n### Contradiction scan (headline value)\n7 same-quantity pairs checked \u2192 **4 clean, 2 resolved each covering BOTH readings**:\n- 227-saturation-vs-226-\u226414%: dial-form difference (unweighted null vs 1/\u2113-weighted product).\n- 232-u*\u22480.65-vs-229-.67: numerically confirmed agreement then resolved as **AGREEMENT-ABOUT-A-GHOST** \u2014 229/231/232 share ONE M_pred construction so the baseline-curvature leakage is CORRELATED across all three; stability across shifts/bins was stability of the artifact.\n\n**+ 1 UNRESOLVED MINOR TENSION carried forward**: power-law bulk exponent \u22121.10 vs a STEEPER-THAN-HARMONIC LEFT EDGE (edge frac .2346 implied \u2248.22, z=10.08 stratified; first decile .162 implied \u2248.14; peak/end 2.54 [2.24,2.80] implied \u22482.10). Named open refinement: harmonic bulk \u00d7 steeper-edge kernel.\n\nBookkeeping ledger items (not verdict conflicts): D-red identity mismatch GLM-deviance vs Var-ratio conventions (226/227/230); 230 control-arm-B spurious fire (perm p=0.012, quasi-separation) flagged fragile.\n\n### Open items ranked by asymptotic-class value\n1. **Rate-layer N-covariate** \u2014 sole survivor on the live thread; \u226586% of u\u224810 overdispersion is N-structure beyond QR; pure-reanalysis infra exists.\n2. Formal converse sketches beyond the residue-dial stratum (positional witnesses, Siegel-ineffectivity).\n3. Larger-p ECM tracing (early-fire transfer past bitlen-32; cheap hygiene).\nMid-window excess DISSOLVED (revival only as baseline-mis-specification claim); shape confirmation closed by 233.\n\nBarrier framing: consolidation that prevents synthesizing around a contradiction \u2014 caught the correlated-artifact chain 229/231/232 that would otherwise have read as robust triangulation; corrections sealed WITH mechanisms; one quantitative residue named honestly rather than smoothed over. Residue cap 4/3 untouched; no breakthrough claimed.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4042",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T19:46:36.813358+00:00",
     "title": "FACT round-83 #1 \u2014 SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION \u2014 five closures confirmed (Berggren all-faces, MA-1 both routes, u~10 gate rejection = +-5-15% envelope, converse roadmap EMPTY master inequality proven, canonical 1/l dial saturates by 400 corr .999); two record corrections mechanism-named (paper-159 wall rejected by early-fire trace law; 226-secondaries reciprocity-flip artifact + 229 residual baseline leakage \u2014 power law STANDS strengthened); three new laws (early-fire trace; Lambda prior-shape channel WITH scope boundaries: hard-balance 1.58x does NOT deploy, RSA pools ascending LOSES ~44%; harmonic-weight saturation); CONTRADICTION SCAN 7 pairs -> 4 clean + 2 resolved covering both readings (226-vs-227 dial-form difference; 232-vs-229 agreement-about-a-ghost via shared M_pred) + 1 UNRESOLVED MINOR TENSION carried forward: bulk exponent -1.10 vs steeper-than-harmonic LEFT EDGE (.2346/.162/2.54) \u2014 named refinement harmonic-bulk x steeper-edge kernel"
   },
@@ -4319,21 +4320,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "seed_380",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -14575,6 +14561,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The equal-volume peeling has maximal thickness exactly R N^{-1/d}, attained at the innermost shell. The conjecture is that this is optimal among equal-volume peelings and quantifies the loss relative to the equally spaced peeling.\n\nmin over equal-volume peelings of max_k (r_k - r_{k+1}) equals R N^{-1/d}, while min over all peelings equals R/N; the ratio is N^{1-1/d}.\n\nFormalise the two optimisation problems for finite N and small d; the equal-volume constraint fixes the radii, so the first claim is a uniqueness statement.\n\nEqual-volume peelings are the canonical worst case for thickness, justifying their use as a benchmark.\n\nSome non-uniform volume allocation beats the ratio N^{1-1/d}, giving a better peeling ladder.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4160",
+    "priority_score": 0.6691538461538463,
+    "research_mode": "team",
+    "source_exp_id": "d59c6a1a",
+    "status": "available",
+    "timestamp": "2026-08-25T13:12:57.386071+00:00",
+    "title": "Extremality of the Equal-Volume Peeling"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Completeness of the invariant reduces the question of which finite gap sets are realisable by machines to the arithmetic classification of numerical semigroups by genus, an actively studied counting problem.\n\nA finite set G \u2286 \u2115 is the gap set of some machine iff G is the gap set of a numerical semigroup; consequently the number of machines with exactly g gaps, up to bisimulation, is the number of numerical semigroups of genus g.\n\nEnumerate numerical semigroups of small genus and match with gap sets computed from chain machines.\n\nMachine-realisability of gap patterns is exactly the genus classification, importing its asymptotics into computation theory.\n\nMachines realise gap patterns not coming from numerical semigroups, so the invariant sees more than arithmetic.",
     "domains": [
       "Algebra"
@@ -15183,19 +15183,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniform Bitlen Saturation for Valuation Statistics"
   },
   {
-    "consumed_by_exp_id": "d59c6a1a",
-    "description": "Fix a thickness budget \u03b4. Only the innermost shells of an equal-volume peeling can violate it, and the sandwich for general k quantifies exactly when. The conjecture is that the number of shells thicker than \u03b4 is O(d log(R/\u03b4)) while the number of thinner ones grows exponentially in d.\n\nFor fixed \u03b4 \u2208 (0,R), #{k < N : shellRadius R d N k - shellRadius R d N (k+1) > \u03b4} = O(d log(R/\u03b4)) uniformly in N, and the maximal N with all shells of thickness \u2264 \u03b4 grows like (1-\u03b4/R)^{-d}.\n\nCombine shell_depth_sandwich with the dichotomy to bound the index range where the thickness exceeds \u03b4, then count.\n\nA sharp structural description of equal-volume peelings: exponentially many skins plus boundedly many thick layers.\n\nThe thick layers are more numerous than expected, which would contradict the observed collapse onto the boundary sphere.",
-    "domains": [],
-    "id": "fd_3974",
-    "phase": "A",
-    "priority_score": 0.5930769230769232,
-    "research_mode": "team",
-    "source_exp_id": "93d08ac5",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T10:05:30.736330+00:00",
-    "title": "Thin-Shell Counting under a Thickness Budget"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The proved estimate franel(2m+1)*(3m+1) <= 8^(2m+1) is off by a factor of about 2.7 from the true asymptotics franel(n) ~ 2*sqrt(3)*8^n/(3*pi*n). Sharpening it would make the inversion threshold provable uniformly in parity with no finite case check.\n\nFor all n >= 1, 2*franel(n)*n <= 8^n, with the constant 2 asymptotically optimal up to sqrt(3)/pi.\n\nInduction on n using the Franel recurrence (n+1)^2 F(n+1) = (7n^2+7n+2) F(n) + 8 n^2 F(n-1), verified numerically for n <= 40 by exact evaluation.\n\nOne clean estimate replaces both parity cases and the small-bitlen checks in the threshold theorem.\n\nThe crude max-times-total bound is essentially the only elementary route, and thresholds must stay case-split.",
     "domains": [],
@@ -15614,6 +15601,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T03:16:56.741583+00:00",
     "title": "Kernel of the Sign Invariant and Double-Minus Moves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The thick shells form a terminal block, so the volume they carry is exactly (thickCount)/N times the volume of the ball. The conjecture converts the count bound into a volume statement and locates the regime where the thick block is negligible.\n\nsup over N >= (R/delta)^d / 2 of thickCount R d N delta / N tends to 0 exponentially in d, while the supremum over all N equals 1.\n\nCombine thickCount_le with all_thin_iff_card; the exponential decay follows from N >= (R/delta)^d/2 and thickCount <= 1 + R/(d delta).\n\nBoundary concentration is quantified at the level of volume, not just of radii.\n\nThere is an intermediate range of N where thick shells carry a constant volume fraction, contradicting the counting bound.",
+    "domains": [],
+    "id": "fd_4159",
+    "priority_score": 0.5915517241379311,
+    "research_mode": "team",
+    "source_exp_id": "d59c6a1a",
+    "status": "available",
+    "timestamp": "2026-08-25T13:12:56.909442+00:00",
+    "title": "Volume Fraction of the Thick Block"
   },
   {
     "consumed_by_exp_id": "",
@@ -16955,6 +16954,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "After reindexing from the centre, shell thickness is the discrete derivative of j^{1/d} scaled by R N^{-1/d}. Counting shells thicker than a budget therefore becomes counting lattice points under a power curve. The conjecture is an exact closed form for the count, refining the Theta(R/(d delta)) bounds proved in this cycle.\n\nthickCount R d N delta = max{m <= N : R N^{-1/d} (m^{1/d} - (m-1)^{1/d}) > delta}, and for d >= 2 this equals min(N, floor((R/(d delta))^{d/(d-1)} N^{-1/(d-1)}) + O(1)).\n\nThe two-sided bounds peeling_thick_decay and peeling_thick_lower already pin the count to two consecutive integers (thickCount_pinned); test the exact value numerically at the boundary j^{d-1} N = (R/(d delta))^d and formalise the tie-break.\n\nThe uniform bound 1 + R/(d delta) becomes an exact asymptotic, and the peak location N* = Theta(R/(2 d delta)) is explained.\n\nThe discrete derivative must fail to be squeezed by its endpoints, indicating a genuinely arithmetic obstruction at small m.",
+    "domains": [
+      "Geometry",
+      "Cryptography"
+    ],
+    "id": "fd_4158",
+    "priority_score": 0.5633481507492952,
+    "research_mode": "team",
+    "source_exp_id": "d59c6a1a",
+    "status": "available",
+    "timestamp": "2026-08-25T13:12:56.431845+00:00",
+    "title": "Lattice-Point Formula for the Thick-Shell Count"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The bound capacity <= log2 of the product of moduli is sharp only for pairwise coprime moduli. For general batteries the joint alphabet of residue dials on a cyclic population is the lcm, not the product. We conjecture the exact ceiling is log2 lcm and that it is attained on the population Z/lcm.\n\nFor dials reading n mod m_i on a population contained in Z/L, the joint capacity is at most log2 lcm(m_1,...,m_k), with equality when the population is all of Z/lcm.\n\nRefine TraceBattery.capacity_le_logb_prod by replacing the piFinset bound with the image of the CRT map, and instantiate capacity_eq_logb_pop_of_injective on ZMod (lcm).\n\nThe reported ceilings 713 / 6417 / 51336 are correct exactly because 31, 23, 9, 8 are pairwise coprime; any future battery with repeated prime factors must use the lcm ceiling.\n\nSome population would exceed the lcm ceiling, contradicting the pigeonhole structure of residue dials.",
     "domains": [
       "NumberTheory",
@@ -17177,6 +17191,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T16:44:16.022851+00:00",
     "title": "Explicit Lipschitz Modulus for the Douady\u2013Hubbard Potential"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the ball the exact thin-shell threshold is (R/delta)^d, which is the volume ratio between the body and a delta-ball. The conjecture is that this is the correct general statement for arbitrary convex bodies, up to Banach-Mazur distortion.\n\nFor a convex body K and budget delta, the least N whose equal-volume peeling of K has all shells of thickness at most delta equals vol(K)/vol(delta B) up to a factor depending only on the Banach-Mazur distance from K to the ball.\n\nNumerically peel cubes and simplices in dimensions 2-5 and compare the observed threshold to the volume ratio; then formalise the ball case as a lower bound for general K.\n\nThe thin-shell threshold is a volumetric invariant, not a spherical accident.\n\nAnisotropy changes the exponent, and the threshold sees the isotropic constant of K rather than its volume alone.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4161",
+    "priority_score": 0.5630738302910058,
+    "research_mode": "team",
+    "source_exp_id": "d59c6a1a",
+    "status": "available",
+    "timestamp": "2026-08-25T13:12:57.870840+00:00",
+    "title": "Volume-Ratio Threshold for General Convex Bodies"
   },
   {
     "consumed_by_exp_id": "",
@@ -45010,14 +45039,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "General negative radix"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7b6f9981",
     "description": "Develop injective subfamilies of the Vieta identity\n   `a\u00b3+b\u00b3+(-a-b)\u00b3=-3ab(a+b)` and derive quantitative lower bounds for the\n   number of represented integers, preferably without padded zero cubes.",
     "domains": [],
     "id": "fd_2705",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "972f5eac",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:38.674015+00:00",
     "title": "Parametric families"
   },

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3a849502",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — from the median breakdown theorem outward\n\nThis cycle closed the assignment (the sharpness half of the breakdown theorem on\nthe two measured normalised distributions) and then ke",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 107,
-      "timestamp": "2026-08-23T20:40:20",
-      "title": "The breakdown theorem is formalised and the two measured normalised distributions"
-    },
-    {
       "cycle_id": "4be48a30",
       "domain": "Shared",
       "key_insight": "# Future directions — the attention-budget knee\n\n## What is now established\n\nA model-free theory of the measured object — the top-$k$ retained attention mass, its knee\n$k^*(n)$, and the context sensit",
@@ -499,19 +489,19 @@
       "theorem_count": 68,
       "timestamp": "2026-08-25T11:45:32",
       "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED — H1 s"
+    },
+    {
+      "cycle_id": "d59c6a1a",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — equal-volume peelings under a thickness budget\n\n## What this cycle established\n\nLet `shellRadius R d N k = R (1 - k/N)^{1/d}` be the equal-volume peeling of `B(0,R) ⊆ ℝ^d`\ninto `",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-08-25T13:13:10",
+      "title": "Thin-Shell Counting under a Thickness Budget"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5792b548",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — power-sum rigidity, sharpness, and what lies past the boundary\n\nDerived from the verified results in `Catalog/Shared/PowerSumSharpness.lean`\n(rigidity `powerSums_determine`, shar",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-18T17:43:35",
-      "title": "Sharpness"
-    },
     {
       "cycle_id": "ef01dce6",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 68,
       "timestamp": "2026-08-25T11:45:32",
       "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED — H1 s"
+    },
+    {
+      "cycle_id": "d59c6a1a",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — equal-volume peelings under a thickness budget\n\n## What this cycle established\n\nLet `shellRadius R d N k = R (1 - k/N)^{1/d}` be the equal-volume peeling of `B(0,R) ⊆ ℝ^d`\ninto `",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-08-25T13:13:10",
+      "title": "Thin-Shell Counting under a Thickness Budget"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "969a5dc4",
-      "domain": "Cryptography",
-      "name": "three_dvd_qOf",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "886e75dc",
-      "domain": "Combinatorics",
-      "name": "windowPoint_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "886e75dc",
-      "domain": "Combinatorics",
-      "name": "energy_eq_zero_iff",
-      "quality": 0.82
-    },
     {
       "cycle_id": "886e75dc",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "R2_of_orthonormal",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "d59c6a1a",
+      "domain": "Cryptography",
+      "name": "inv_natCast_le_one",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "d59c6a1a",
+      "domain": "Cryptography",
+      "name": "rpow_inv_sub_ge",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "d59c6a1a",
+      "domain": "Cryptography",
+      "name": "shellRadius_le_self",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-25T11:45:32",
+  "last_updated": "2026-08-25T13:13:10",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "254383ec",
-        "quality": 0.78,
-        "theorems": 67,
-        "title": "All the machinery — honesty, guarding, bounded search, the"
-      },
-      {
         "cycle_id": "315472d4",
         "quality": 0.82,
         "theorems": 115,
@@ -3389,6 +3383,12 @@
         "quality": 0.78,
         "theorems": 58,
         "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ f"
+      },
+      {
+        "cycle_id": "d59c6a1a",
+        "quality": 0.85,
+        "theorems": 37,
+        "title": "Thin-Shell Counting under a Thickness Budget"
       }
     ],
     "Geometry": [

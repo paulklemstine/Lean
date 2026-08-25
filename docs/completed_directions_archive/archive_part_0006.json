@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-25T11:45:24Z",
-  "count": 183,
+  "archived_at": "2026-08-25T13:12:58Z",
+  "count": 184,
   "directions": [
     {
       "ambition_level": "extension",
@@ -7264,6 +7264,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 226
+    },
+    {
+      "id": "fd_3542",
+      "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum, universal cap 4/3 (paper 132)",
+      "description": "Round-37 #4 (exp 466, assessment v241). FRONTIER (i) UPGRADED: the empirical converse curve of paper 88 is now a THEOREM for the entire congruence stratum.\n\n**Universal exact law**: Speedup(K,c) = 1/(1 − θ + θ²), θ = |K_c|/φ(M) — independent of the reading, the modulus's structure, character content, and the number of composed dials. **Universal cap 4/3**, attained exactly at θ=1/2; trivial filters give exactly 1.\n\nConsequences:\n- n=3/n=5 caps are ALSO 4/3, attained at ANY half-density subset — Lemma B2 kills all internal structure (mixing character fibers cannot beat it).\n- **Batteries compose for free (CRT): battery cap still 4/3 < 2** — the 12.7235 measured battery bits buy ≤ log2(4/3) = 0.41504 work-bits. Capacity bits and work bits are different currencies.\n- Corollary A2: which-factor blindness of residues (papers 93/102) becomes an IDENTITY under MA-1.\n\nMachine verification: Claim-A MC 1,065,538 samples max dev 0.000294 (χ² z=−1.67); exhaustive enumeration m=3/4/7/11 + batteries M=12/15/21/33 (all 2^20 subsets) — every max exactly 1.3333333333; real-semiprime sims within ±0.006 incl. structure-blindness controls; beat-the-cap attempt over top-40 sets: nothing approaches 2×.\n\nResidual gap to the FULL converse, precise: (1) positional/interval witnesses (paper 88 arms empirically); (2) superconstant-cost tests (factor-local methods escape scan-order framing); (3) effectivizing MA-1 at cryptographic sizes.\n\nProofs: ResearchOutput/scripts/2026-08-21-resume/proofs.md; machine checks verify.py/result.json; ledger of 5 self-caught errors incl. nearly reporting the asked ≤2 instead of the provable 4/3.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "113c03c3",
+      "timestamp": "2026-08-22T01:52:37.374850+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.1,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-22T07:01:22.136654+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 228
     }
   ]
 }

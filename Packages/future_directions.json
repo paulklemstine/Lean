@@ -49828,7 +49828,7 @@
       "depth_estimate": 3,
       "description": "the conjecture predicts that no finite non-lattice `S ⊆ ℤ` (e.g. `{0,1,4}`)\nadmits such a formula; test numerically with Gaussians.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -51581,7 +51581,7 @@
       "depth_estimate": 3,
       "description": "**RG fixed points (cycle 2).** The claim that only `S = ∅` and `S = univ` are\n  fixed by the scale-halving flow is **false**: `latticeSet_two_mul_eq_iff`\n  proves the fixed lattice foams are exactly those of spacing `0`, i.e. the\n  single-branch-point foam `S = {0}`, and\n  `iInter_latticeSet_eq_singleton_zero` shows the tower of a nonzero lattice\n  converges to that foam rather than to the smooth one.  The limit is genuinely\n  non-Hausdorff (`not_t2Space_foam_latticeSet_zero`), with metric defect exactly\n  `2`.  Wheeler foam is therefore **RG-persistent**: coarse graining a lattice\n  foam never removes all branching.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -53033,7 +53033,7 @@
       "depth_estimate": 3,
       "description": "The master inequality is already formalised with `S` as a free parameter, so this\nis a purely arithmetic monotonicity statement about a formula that is in the library today;\nproving it converts \"the all-translate choice is best\" from an observation about two data\npoints into a theorem about the whole lattice of marginal choices.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -54424,7 +54424,7 @@
       "depth_estimate": 3,
       "description": "The same analysis applies to any Möbius-type tree of arithmetic objects: the Stern–Brocot tree of\nrationals, the Markov triple tree, and trees of solutions to other Pell-like and Vieta-jumping\nequations. In each case one may ask whether the branching/growth heuristic gives the right abscissa.\nThe prediction implied by the present work is that it never does when the tree bijects onto a\nlattice of full dimension.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -57769,7 +57769,7 @@
       "depth_estimate": 3,
       "description": "Formalize normal fans and prove that vertices of a full-dimensional lattice polytope correspond to maximal cones of its normal fan.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -63499,7 +63499,7 @@
       "depth_estimate": 3,
       "description": "Formalize a stream-cipher interface and show that observing an orbit suffix beginning at time `n` leaves at least `2^n` candidate exact-real seeds for every interior observed state.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -78026,7 +78026,7 @@
       "depth_estimate": 3,
       "description": "The lattice-point enumerator of a generalized parking-function polytope satisfies a\ndelete-and-contract recursion over cumulative profiles, and this recursion extends to\na valuative invariant on the associated generalized permutohedral subdivision.\n\nThe key insight is that coordinate slicing is a discrete valuation operation, while\nrank deletion identifies its chamberwise contraction rule.\n\nWhy now? Small-case slice tables already display a stable recursive stratification;\nan explicit gluing theorem would turn that evidence into a precise valuation formula.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -81606,7 +81606,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Among all monotone self-observation operators on a fixed complete\nlattice, those whose emergent state equals their least fixed point are precisely\nthe continuous ones; equivalently, \"finite rounds of observation suffice\" is not\nmerely sufficient but *characterises* continuity on lattices rich enough to\ncarry a limit level.\n\nThe key insight is that the discontinuous witness fails the finite-suffices\nproperty in the sharpest possible way — its emergent state is a fixed point of no\niterate — suggesting that the implication \"finite-suffices ⇒ continuous\" holds in\nfull generality, upgrading a one-directional theorem to an equivalence.\n\nWhy now? Having both the positive theorem (continuous ⇒ finite-suffices) and an\nexplicit failure in the discontinuous case, the remaining converse is the natural\nand testable completion of the picture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -84642,7 +84642,7 @@
       "depth_estimate": 3,
       "description": "Define key generation,\n   encryption, and decryption over `ZMod q`; connect the existing noise and\n   rounding lemmas to a full correctness theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -88161,7 +88161,7 @@
       "depth_estimate": 3,
       "description": "Add block-length-dependent confidence, smoothing, authentication, and leakage terms. These distinguish the proved asymptotic threshold from the lower tolerable QBER of practical finite blocks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -90089,11 +90089,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7b6f9981",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -90103,7 +90103,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_2705",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-25T13:15:04.501763+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -90118,7 +90118,7 @@
       "source": "",
       "source_exp_id": "972f5eac",
       "source_path": "resplit_migration",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-21T06:25:38.674015+00:00",
       "title": "Parametric families"
@@ -92869,7 +92869,7 @@
       "depth_estimate": 3,
       "description": "Add tensor-product multiplication,\n   relinearization/key switching, and prove the corresponding phase and noise\n   formulas.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -97478,7 +97478,7 @@
       "depth_estimate": 3,
       "description": "prove the sharp bound `R_min ≥ 1/2`.  A promising route is a *strip* argument: for\n  `R < 1/2` consecutive cells of a path are king-neighbours and each crossing of a\n  lattice line `x = K` forces both endpoints within `R` of the line; a counting argument\n  in a two-row strip gives `2` cells per column against the `1/R > 2` hops per column\n  needed to advance one column.  The difficulty is to rule out paths that drift in both\n  coordinates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -109148,7 +109148,7 @@
       "depth_estimate": 3,
       "description": "*For every base `b` and every digit length `n ≥ 2`, the kernel of the digit\nfunctional `w ↦ Σ w_{ij} b^{i+j}` on `n × n` integer matrices contains\n`(n-1)²`-many independent vectors of squared norm `2`, and consequently every\nrank-one target has a non-rank-one companion solution at squared distance `≤ 8`.*\n\n**The key insight is** that the `2 × 2` commutator `[[0,1],[-1,0]]` generalises to\nall \"anti-diagonal transpositions\" `E_{i,j+1} - E_{i+1,j}`, whose count grows\nquadratically while their norm stays constant — the target's norm grows, the\nnoise does not.\n**Why now?** The `2 × 2` case is fully proved in `Round7DigitLattice`\n(`exists_spurious_solution`); the general case is the same identity indexed by a\nlarger family, and it would turn the \"target sits at the Gaussian heuristic\"\nmeasurement into a theorem for all dimensions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -134780,7 +134780,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3 refuted the truncation explanation by computing the capped ceiling exactly, so the remaining structural freedom is non-nested (crossing) block structures. The conjecture is that the nested law acquires an explicit defect term governed by the crossing mass of the two set partitions. It matters because only crossing pairs can now produce a dial as low as 0.648 from two individually high-ceiling profiles.\n\nFor crossing block structures the squared Spearman coefficient equals the nested value minus a nonnegative defect determined by the meet of the two partitions in the partition lattice, and readings near 0.648 require crossing mass above 0.3.\n\nFormalise the coefficient for an arbitrary pair of set partitions of the rank set, expand the covariance over meet blocks, and evaluate on small crossing examples exactly in Lean.\n\nEvery low dial reading with high individual ceilings certifies a crossing dependence between statistic and response.\n\nThe nested law extends verbatim and the partition lattice plays no role.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -136600,7 +136600,7 @@
       "depth_estimate": 3,
       "description": "**The key insight is** that `V r k` is the number of microstates covered after `k`\nrenormalisation steps with block-growth law `r`, so the threshold says that a coarse-graining\nscheme reaches system size `n` in `O(log* n)` steps exactly when its block growth is at least\nexponential — a sharp separation between \"exponentially blocking\" and \"polynomially blocking\"\nhierarchies. **Why now?** The formal statement is schedule-agnostic\n(`radix_growth_threshold`), so instantiating it with block-growth laws of concrete hierarchical\nmodels (Migdal–Kadanoff style decimations, hierarchical lattices) requires only checking\nmonotonicity and one growth bound.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Fixed-Height Tower Barrier for Quasi-Polynomial Radix Schedules\",\n    \"domain\": \"Computation\",\n    \"description\": \"The master transfer lemma needs only that log* of the weights grows sublinearly in the level index. This suggests that every schedule whose weights remain inside an iterated exponential of bounded height — quasi-polynomial schedules included — fails to give O(log* n) radix height. The conjecture converts a growth-rate question into a bounded arithmetic estimate on Nat.log.\",\n    \"conjecture\": \"If r is monotone, r ≥ 2 and r x ≤ 2 ^ (Nat.log 2 x) ^ C for all large x, then for every c and N there is n ≥ N with c * (logStar n + 1) < radixHeight r n.\",\n    \"test\": \"Prove V r k ≤ expIter 3 (M + E * k) for suitable M, E and apply not_bigO_of_iterated_exponential_bound in Catalog/Physics/RadixGrowthThreshold.lean.\",\n    \"if_true\": \"The slow side of the threshold covers everything below genuine exponential growth, so the dichotomy becomes exhaustive on all natural schedule families.\",\n    \"if_false\": \"There is an intermediate regime with O(log* n) height but sub-exponential radices, which would refute the intrinsic characterization's intuition and force a finer scale than the tower.\",\n    \"proof_strategy\": \"Iterate the recursion twice to get log log V r (k+1) ≤ C · log log V r k + O(1), conclude a triple-exponential bound in k, then feed it to the fixed-height transfer theorem.\",\n    \"catalog_references\": [\"Physics.RadixGrowthThreshold\"]\n  },\n  {\n    \"title\": \"Exact Additive Constant for the Pure Tower Schedule\",\n    \"domain\": \"Computation\",\n    \"description\": \"For the exponential schedule the proved bounds are logStar n ≤ 2 * radixHeight and radixHeight ≤ logStar n + 1. The factor two comes from a single crude doubling step. The conjecture is that the truth is an exact additive constant.\",\n    \"conjecture\": \"For expSchedule x = max 2 (2 ^ x) there is a constant c₀ ≤ 2 with logStar n ≤ radixHeight expSchedule n + c₀ for all n.\",\n    \"test\": \"Strengthen V_le_tower_two_mul to V r k ≤ tower (k + c₀) and rerun the logStar_tower argument; check numerically against the table in ComputationalEvidence.md.\",\n    \"if_true\": \"radixHeight for exponential schedules equals log* up to an additive constant, making it a faithful implementation of the iterated logarith",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -139967,7 +139967,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** A layer-wise pruning budget is safe (per-layer accounting is\nvalid) **iff** the induced path system satisfies the merge axiom up to an additive\nslack $\\delta$, and the total super-additivity of a network is bounded by\n(number of layers) $\\cdot\\ \\delta$.\n\nThe key insight is that the per-layer budgeting bound upgrades a *local* two-path\nexchange property into a *global* bound on every subset at once, so a finite\ncertificate implies a statement over the whole Boolean lattice.\n\n**Why now?** The $\\delta$-relaxed merge axiom is checkable from pairwise data\nalready collected, and would give the first certificate of safe per-layer\nbudgeting rather than a heuristic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography",
         "Logic"
@@ -141686,7 +141686,7 @@
       "depth_estimate": 3,
       "description": "The effective channel pool of the zero-fit dial ladder, measured by the reciprocal excess 1/rho^2 - 1, is fitted to within 0.027 by a quadratic law with a positive floor, but the residuals drift monotonically with bitlen. We conjecture a genuine change of growth exponent from 2 to 3 above some b0 between 96 and 160. Deciding this fixes the asymptotic shape of the erosion and hence every extrapolated band prediction.\n\nThere exists b0 in [96,160] such that e(b) = 1/rho^2(b) - 1 satisfies: e(b)/b^2 is strictly increasing for b > b0, and e(b) = Theta(b^3).\n\nRun the uniform ladder at bitlens 96, 112, 128, 160 with the existing exp536 harness and three seeds each; fit e(b) = kappa*b^g + c and test g = 2 against g > 2 by likelihood ratio. Formalize the discriminating inequality in Lean as an exact rational comparison, as in quadratic_retrodiction.\n\nThe dial's usable range is bounded: the band floor is crossed permanently and the ladder cannot be rescued by larger samples, only by changing the statistic.\n\nThe quadratic-with-floor law extends, and the crossing bitlen of 84.4 is the permanent boundary; extrapolation to cryptographic bit widths becomes reliable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -143993,11 +143993,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7b0f4515",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -144009,7 +144009,7 @@
       ],
       "github_issue": 382,
       "id": "fd_4042",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-25T13:14:55.998697+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -144024,7 +144024,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-24T19:46:36.813358+00:00",
       "title": "FACT round-83 #1 — SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION — five closures confirmed (Berggren all-faces, MA-1 both routes, u~10 gate rejection = +-5-15% envelope, converse roadmap EMPTY master inequality proven, canonical 1/l dial saturates by 400 corr .999); two record corrections mechanism-named (paper-159 wall rejected by early-fire trace law; 226-secondaries reciprocity-flip artifact + 229 residual baseline leakage — power law STANDS strengthened); three new laws (early-fire trace; Lambda prior-shape channel WITH scope boundaries: hard-balance 1.58x does NOT deploy, RSA pools ascending LOSES ~44%; harmonic-weight saturation); CONTRADICTION SCAN 7 pairs -> 4 clean + 2 resolved covering both readings (226-vs-227 dial-form difference; 232-vs-229 agreement-about-a-ghost via shared M_pred) + 1 UNRESOLVED MINOR TENSION carried forward: bulk exponent -1.10 vs steeper-than-harmonic LEFT EDGE (.2346/.162/2.54) — named refinement harmonic-bulk x steeper-edge kernel"
@@ -146054,7 +146054,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The number of sum-free subsets of lattice cubes' and formalize its key results. Abstract: A subset of the $d$-dimensional lattice cube $[n]^d$ is sum-free if it contains no solution to the equation $x+y=z$. We study the total number of such subsets. For $d=1$, Cameron and Erdős conjectured that the number of sum-free subsets of $[n]$ is $O(2^{n/2})$, and this was proved independently by Green and Sapozhenko. A recent work by Ghosal solved the case $d = 2$. In this paper, we consider all remaining dimensions and prove that for every fixed integer $d \\geqslant 3$, the number of sum-free subsets of $[n]^d$ is $2^{M([n]^d) + O_d(n^{d-1})}$, where $M([n]^d)$ is the maximum possible size of a sum-free subset of $[n]^d$. This verifies a conjecture of Elsholtz and Rackham. Our proof combines the dual weights constructed by Keevash and Lim in their work for $M([n]^d)$, a one-dimensional counting estimate due to Ghosal, a bipartite swapping lemma of Zhao, and a strong fractional entropy inequality of Madiman and Tetali, and it avoids the use of the container lemma or deriving a stabi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -148905,7 +148905,7 @@
       "depth_estimate": 3,
       "description": "After reindexing from the centre, shell thickness is the discrete derivative of j^{1/d} scaled by R N^{-1/d}. Counting shells thicker than a budget therefore becomes counting lattice points under a power curve. The conjecture is an exact closed form for the count, refining the Theta(R/(d delta)) bounds proved in this cycle.\n\nthickCount R d N delta = max{m <= N : R N^{-1/d} (m^{1/d} - (m-1)^{1/d}) > delta}, and for d >= 2 this equals min(N, floor((R/(d delta))^{d/(d-1)} N^{-1/(d-1)}) + O(1)).\n\nThe two-sided bounds peeling_thick_decay and peeling_thick_lower already pin the count to two consecutive integers (thickCount_pinned); test the exact value numerically at the boundary j^{d-1} N = (R/(d delta))^d and formalise the tie-break.\n\nThe uniform bound 1 + R/(d delta) becomes an exact asymptotic, and the peak location N* = Theta(R/(2 d delta)) is explained.\n\nThe discrete derivative must fail to be squeezed by its endpoints, indicating a genuinely arithmetic obstruction at small m.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -173918,14 +173918,14 @@
       "parent_direction": "",
       "priority_score": 0.84,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Ill-defined and mathematically unsound: 'the universe's computational capacity is bounded by the polynomial hierarchy' has no formal content, since there is no rigorous definition of a 'physical process' as a complexity class inhabitant; the Extended Church-Turing thesis is a physical thesis, not a theorem, so it cannot be proved. The stated implication 'P = NP implies the second law of thermodynamics is violated' is false as stated: Maxwell's demon is defeated by Landauer erasure cost, which is an information-theoretic bound independent of time complexity, so an efficient demon algorithm would not break entropy accounting. The direction admits no faithful nontrivial Lean statement and would collapse to either vacuous or false formalizations.",
+      "pruned_at": "2026-08-25T13:13:12Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Speculative: Computational Complexity as Physical Law"
