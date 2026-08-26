@@ -18,7 +18,7 @@ This file collects the second-cycle consequences of the previous three files.
 -/
 
 import Mathlib
-import MachineLearning.PrimeUncertainty.Chebotarev
+import Catalog.MachineLearning.PrimeUncertainty.Chebotarev
 
 open Finset Polynomial FourierFA FourierCyclic
 open scoped Real

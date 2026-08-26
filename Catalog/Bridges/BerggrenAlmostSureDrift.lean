@@ -1,5 +1,5 @@
-import Bridges.BerggrenWalkDrift
-import Bridges.BerggrenShiftErgodicity
+import Catalog.Bridges.BerggrenWalkDrift
+import Catalog.Bridges.BerggrenShiftErgodicity
 
 /-!
 # Almost sure escape of the Berggren random walk to the boundary

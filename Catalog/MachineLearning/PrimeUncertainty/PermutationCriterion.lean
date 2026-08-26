@@ -20,7 +20,7 @@ permutation realising its exponent uniquely) that settles the `2 × 2` and `3 ×
 -/
 
 import Mathlib
-import MachineLearning.PrimeUncertainty.Chebotarev3
+import Catalog.MachineLearning.PrimeUncertainty.Chebotarev3
 
 open Finset Polynomial FourierFA FourierCyclic
 open scoped Real

@@ -1,4 +1,4 @@
-import Bridges.BerggrenHarmonicMeasure
+import Catalog.Bridges.BerggrenHarmonicMeasure
 
 /-!
 # The transfer operator of the Berggren walk and its spectrum

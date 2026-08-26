@@ -17,7 +17,7 @@ and is strictly stronger than the Donoho–Stark product bound `|supp f| · |sup
 -/
 
 import Mathlib
-import MachineLearning.PrimeUncertainty.SumBound
+import Catalog.MachineLearning.PrimeUncertainty.SumBound
 
 open Finset Polynomial FourierFA FourierCyclic
 open scoped Real

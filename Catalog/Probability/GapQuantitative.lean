@@ -21,7 +21,7 @@ Main results:
 -/
 
 import Mathlib
-import Probability.Chebotarev
+import Catalog.Probability.ParityGap.Chebotarev
 
 open Finset PrimeUncertainty
 

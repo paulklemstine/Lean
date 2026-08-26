@@ -37,7 +37,7 @@ for even moduli: the gap closes at width `n ≥ 2` over an even modulus `m ≥ 4
 -/
 
 import Mathlib
-import Probability.GapQuantitative
+import Catalog.Probability.ParityGap.GapQuantitative
 
 open Finset PrimeUncertainty
 

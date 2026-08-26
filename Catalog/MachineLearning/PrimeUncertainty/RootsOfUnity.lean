@@ -20,7 +20,7 @@ Main contents:
 -/
 
 import Mathlib
-import Shared.FourierCyclic
+import Catalog.Shared.FourierCyclic
 
 open Finset Polynomial FourierFA FourierCyclic
 open scoped Real

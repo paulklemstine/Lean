@@ -21,7 +21,7 @@ Main results: `ParityGap.pi_pow_dvd_det_zetaPow`, `ParityGap.pi_pow_dvd_det_zpow
 -/
 
 import Mathlib
-import Probability.Chebotarev
+import Catalog.Probability.ParityGap.Chebotarev
 
 open Finset Matrix
 

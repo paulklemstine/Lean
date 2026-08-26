@@ -1,5 +1,5 @@
-import Bridges.BerggrenHarmonicMeasure
-import Novelty.HyperbolicBerggrenSilverGrowth
+import Catalog.Bridges.BerggrenHarmonicMeasure
+import Catalog.Novelty.HyperbolicBerggrenSilverGrowth
 
 /-!
 # The hyperbolic drift of the Berggren random walk and the silver ratio

@@ -22,8 +22,8 @@ Main results:
 -/
 
 import Mathlib
-import Probability.Chebotarev
-import Probability.CoxeterLength
+import Catalog.Probability.ParityGap.Chebotarev
+import Catalog.Probability.ParityGap.CoxeterLength
 
 open Finset FourierFA FourierCyclic PrimeUncertainty
 

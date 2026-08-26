@@ -24,7 +24,7 @@ Everything is stated for the classical DFT `FourierCyclic.dftZMod` of the shared
 -/
 
 import Mathlib
-import MachineLearning.PrimeUncertainty.RootsOfUnity
+import Catalog.MachineLearning.PrimeUncertainty.RootsOfUnity
 
 open Finset Polynomial FourierFA FourierCyclic
 open scoped Real

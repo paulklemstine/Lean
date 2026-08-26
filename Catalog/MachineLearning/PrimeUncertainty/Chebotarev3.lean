@@ -20,7 +20,7 @@ be an arithmetic progression).
 -/
 
 import Mathlib
-import MachineLearning.PrimeUncertainty.Synthesis
+import Catalog.MachineLearning.PrimeUncertainty.Synthesis
 
 open Finset Polynomial FourierFA FourierCyclic
 open scoped Real

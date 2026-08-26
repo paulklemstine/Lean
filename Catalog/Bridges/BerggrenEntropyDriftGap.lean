@@ -1,5 +1,5 @@
-import Bridges.BerggrenBoundaryEntropy
-import Bridges.BerggrenWalkDrift
+import Catalog.Bridges.BerggrenBoundaryEntropy
+import Catalog.Bridges.BerggrenWalkDrift
 
 /-!
 # The entropy–metric gap: silver never catches up with `log 3`

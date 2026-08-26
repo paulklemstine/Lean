@@ -1,4 +1,4 @@
-import Bridges.BerggrenChernoffSeparation
+import Catalog.Bridges.BerggrenChernoffSeparation
 
 /-!
 # A converse to Chernoff separation: the Bhattacharyya speed limit

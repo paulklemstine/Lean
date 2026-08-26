@@ -1,4 +1,4 @@
-import Bridges.BerggrenHarmonicSingularity
+import Catalog.Bridges.BerggrenHarmonicSingularity
 
 /-!
 # Ray rigidity: the Berggren walk is reconstructible from a single typical ray
