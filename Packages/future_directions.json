@@ -54388,7 +54388,7 @@
       "depth_estimate": 3,
       "description": "The same analysis applies to any Möbius-type tree of arithmetic objects: the Stern–Brocot tree of\nrationals, the Markov triple tree, and trees of solutions to other Pell-like and Vieta-jumping\nequations. In each case one may ask whether the branching/growth heuristic gives the right abscissa.\nThe prediction implied by the present work is that it never does when the tree bijects onto a\nlattice of full dimension.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -57695,7 +57695,7 @@
       "depth_estimate": 3,
       "description": "Formalize normal fans and prove that vertices of a full-dimensional lattice polytope correspond to maximal cones of its normal fan.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -63387,7 +63387,7 @@
       "depth_estimate": 3,
       "description": "Formalize a stream-cipher interface and show that observing an orbit suffix beginning at time `n` leaves at least `2^n` candidate exact-real seeds for every interior observed state.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -77876,7 +77876,7 @@
       "depth_estimate": 3,
       "description": "The lattice-point enumerator of a generalized parking-function polytope satisfies a\ndelete-and-contract recursion over cumulative profiles, and this recursion extends to\na valuative invariant on the associated generalized permutohedral subdivision.\n\nThe key insight is that coordinate slicing is a discrete valuation operation, while\nrank deletion identifies its chamberwise contraction rule.\n\nWhy now? Small-case slice tables already display a stable recursive stratification;\nan explicit gluing theorem would turn that evidence into a precise valuation formula.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -81456,7 +81456,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Among all monotone self-observation operators on a fixed complete\nlattice, those whose emergent state equals their least fixed point are precisely\nthe continuous ones; equivalently, \"finite rounds of observation suffice\" is not\nmerely sufficient but *characterises* continuity on lattices rich enough to\ncarry a limit level.\n\nThe key insight is that the discontinuous witness fails the finite-suffices\nproperty in the sharpest possible way — its emergent state is a fixed point of no\niterate — suggesting that the implication \"finite-suffices ⇒ continuous\" holds in\nfull generality, upgrading a one-directional theorem to an equivalence.\n\nWhy now? Having both the positive theorem (continuous ⇒ finite-suffices) and an\nexplicit failure in the discontinuous case, the remaining converse is the natural\nand testable completion of the picture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -84492,7 +84492,7 @@
       "depth_estimate": 3,
       "description": "Define key generation,\n   encryption, and decryption over `ZMod q`; connect the existing noise and\n   rounding lemmas to a full correctness theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -88011,7 +88011,7 @@
       "depth_estimate": 3,
       "description": "Add block-length-dependent confidence, smoothing, authentication, and leakage terms. These distinguish the proved asymptotic threshold from the lower tolerable QBER of practical finite blocks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -92681,7 +92681,7 @@
       "depth_estimate": 3,
       "description": "Add tensor-product multiplication,\n   relinearization/key switching, and prove the corresponding phase and noise\n   formulas.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -97214,7 +97214,7 @@
       "depth_estimate": 3,
       "description": "prove the sharp bound `R_min ≥ 1/2`.  A promising route is a *strip* argument: for\n  `R < 1/2` consecutive cells of a path are king-neighbours and each crossing of a\n  lattice line `x = K` forces both endpoints within `R` of the line; a counting argument\n  in a two-row strip gives `2` cells per column against the `1/R > 2` hops per column\n  needed to advance one column.  The difficulty is to rule out paths that drift in both\n  coordinates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -101795,44 +101795,6 @@
       "thread_id": "",
       "timestamp": "2026-08-21T06:27:29.915819+00:00",
       "title": "Cardinality-constrained subset sums (corrected)"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "5e9b52ad",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "*Let `v_1, …, v_k` be pairwise independent\n   directions in `F_p²` and `S_i ⊆ F_p` with `0 ∈ S_i`.  If\n   `Σ_i (p - |S_i|) ≤ (k-2)(p-1)`, then `Σ_i S_i v_i = F_p²`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `Σ_i (p-|S_i|) < p`); the general statement would immediately give a\n   `k`-auxiliary-class spread exclusion and, at `p = 5`, would remove the\n   profile `(8,2,2,2,2,2)`.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [],
-      "github_issue": 0,
-      "id": "fd_3013",
-      "last_attempt_time": "2026-08-25T21:46:24.712183+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.4468333333333333,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "6e948588",
-      "source_path": "resplit_migration",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-08-21T06:27:30.175988+00:00",
-      "title": "Kneser input for many lines"
     },
     {
       "ambition_level": "extension",
@@ -108884,7 +108846,7 @@
       "depth_estimate": 3,
       "description": "*For every base `b` and every digit length `n ≥ 2`, the kernel of the digit\nfunctional `w ↦ Σ w_{ij} b^{i+j}` on `n × n` integer matrices contains\n`(n-1)²`-many independent vectors of squared norm `2`, and consequently every\nrank-one target has a non-rank-one companion solution at squared distance `≤ 8`.*\n\n**The key insight is** that the `2 × 2` commutator `[[0,1],[-1,0]]` generalises to\nall \"anti-diagonal transpositions\" `E_{i,j+1} - E_{i+1,j}`, whose count grows\nquadratically while their norm stays constant — the target's norm grows, the\nnoise does not.\n**Why now?** The `2 × 2` case is fully proved in `Round7DigitLattice`\n(`exists_spurious_solution`); the general case is the same identity indexed by a\nlarger family, and it would turn the \"target sits at the Gaussian heuristic\"\nmeasurement into a theorem for all dimensions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -134078,7 +134040,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3 refuted the truncation explanation by computing the capped ceiling exactly, so the remaining structural freedom is non-nested (crossing) block structures. The conjecture is that the nested law acquires an explicit defect term governed by the crossing mass of the two set partitions. It matters because only crossing pairs can now produce a dial as low as 0.648 from two individually high-ceiling profiles.\n\nFor crossing block structures the squared Spearman coefficient equals the nested value minus a nonnegative defect determined by the meet of the two partitions in the partition lattice, and readings near 0.648 require crossing mass above 0.3.\n\nFormalise the coefficient for an arbitrary pair of set partitions of the rank set, expand the covariance over meet blocks, and evaluate on small crossing examples exactly in Lean.\n\nEvery low dial reading with high individual ceilings certifies a crossing dependence between statistic and response.\n\nThe nested law extends verbatim and the partition lattice plays no role.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -139265,7 +139227,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** A layer-wise pruning budget is safe (per-layer accounting is\nvalid) **iff** the induced path system satisfies the merge axiom up to an additive\nslack $\\delta$, and the total super-additivity of a network is bounded by\n(number of layers) $\\cdot\\ \\delta$.\n\nThe key insight is that the per-layer budgeting bound upgrades a *local* two-path\nexchange property into a *global* bound on every subset at once, so a finite\ncertificate implies a statement over the whole Boolean lattice.\n\n**Why now?** The $\\delta$-relaxed merge axiom is checkable from pairwise data\nalready collected, and would give the first certificate of safe per-layer\nbudgeting rather than a heuristic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Logic"
@@ -140984,7 +140946,7 @@
       "depth_estimate": 3,
       "description": "The effective channel pool of the zero-fit dial ladder, measured by the reciprocal excess 1/rho^2 - 1, is fitted to within 0.027 by a quadratic law with a positive floor, but the residuals drift monotonically with bitlen. We conjecture a genuine change of growth exponent from 2 to 3 above some b0 between 96 and 160. Deciding this fixes the asymptotic shape of the erosion and hence every extrapolated band prediction.\n\nThere exists b0 in [96,160] such that e(b) = 1/rho^2(b) - 1 satisfies: e(b)/b^2 is strictly increasing for b > b0, and e(b) = Theta(b^3).\n\nRun the uniform ladder at bitlens 96, 112, 128, 160 with the existing exp536 harness and three seeds each; fit e(b) = kappa*b^g + c and test g = 2 against g > 2 by likelihood ratio. Formalize the discriminating inequality in Lean as an exact rational comparison, as in quadratic_retrodiction.\n\nThe dial's usable range is bounded: the band floor is crossed permanently and the ladder cannot be rescued by larger samples, only by changing the statistic.\n\nThe quadratic-with-floor law extends, and the crossing bitlen of 84.4 is the permanent boundary; extrapolation to cryptographic bit widths becomes reliable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -145352,7 +145314,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The number of sum-free subsets of lattice cubes' and formalize its key results. Abstract: A subset of the $d$-dimensional lattice cube $[n]^d$ is sum-free if it contains no solution to the equation $x+y=z$. We study the total number of such subsets. For $d=1$, Cameron and Erdős conjectured that the number of sum-free subsets of $[n]$ is $O(2^{n/2})$, and this was proved independently by Green and Sapozhenko. A recent work by Ghosal solved the case $d = 2$. In this paper, we consider all remaining dimensions and prove that for every fixed integer $d \\geqslant 3$, the number of sum-free subsets of $[n]^d$ is $2^{M([n]^d) + O_d(n^{d-1})}$, where $M([n]^d)$ is the maximum possible size of a sum-free subset of $[n]^d$. This verifies a conjecture of Elsholtz and Rackham. Our proof combines the dual weights constructed by Keevash and Lim in their work for $M([n]^d)$, a one-dimensional counting estimate due to Ghosal, a bipartite swapping lemma of Zhao, and a strong fractional entropy inequality of Madiman and Tetali, and it avoids the use of the container lemma or deriving a stabi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -148203,7 +148165,7 @@
       "depth_estimate": 3,
       "description": "After reindexing from the centre, shell thickness is the discrete derivative of j^{1/d} scaled by R N^{-1/d}. Counting shells thicker than a budget therefore becomes counting lattice points under a power curve. The conjecture is an exact closed form for the count, refining the Theta(R/(d delta)) bounds proved in this cycle.\n\nthickCount R d N delta = max{m <= N : R N^{-1/d} (m^{1/d} - (m-1)^{1/d}) > delta}, and for d >= 2 this equals min(N, floor((R/(d delta))^{d/(d-1)} N^{-1/(d-1)}) + O(1)).\n\nThe two-sided bounds peeling_thick_decay and peeling_thick_lower already pin the count to two consecutive integers (thickCount_pinned); test the exact value numerically at the boundary j^{d-1} N = (R/(d delta))^d and formalise the tie-break.\n\nThe uniform bound 1 + R/(d delta) becomes an exact asymptotic, and the peak location N* = Theta(R/(2 d delta)) is explained.\n\nThe discrete derivative must fail to be squeezed by its endpoints, indicating a genuinely arithmetic obstruction at small m.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -151231,7 +151193,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Common tiling functions with small support' and formalize its key results. Abstract: For $N$ lattices in $\\R^d$ with volume $1$ and pairwise trivial intersections, every nonzero common tiling function has support diameter $Ω(N^{1/d})$, while for lattice families whose fundamental domains have uniformly bounded diameters, the standard convolution construction gives an $O(N)$ upper bound, leaving a gap that has remained open since the work of Kolountzakis and Wolff \\cite{kolwolff-1999Mathematika}. We close this gap by constructing, for every $d\\geq 2$ and all sufficiently large $N$, lattice families satisfying the same volume and intersection conditions that admit a nonnegative common tiling function with support diameter $O(N^{1/d})$, thereby also answering Question 1 of Kolountzakis and Papageorgiou \\cite{kolPapageorgiou-functions-2022jfaa}. We also obtain the optimal $O(\\sqrt N)$ upper bound by constructing, for any prescribed family of plane lattices whose volumes lie in a fixed bounded set independent of $N$, a pairwise trivially intersecting family with the same re",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -151788,7 +151750,7 @@
       "depth_estimate": 3,
       "description": "Cut-offs below 0.1123 are provably degenerate for all 96-bit moduli and 0.2072 is provably not. We conjecture the exact supremum of universally degenerate cut-offs is the infimum of the crossing curve, (sqrt 6 - 2)/4, approached as N tends to 2^96 from below.\n\nsup {c : for all 96-bit N and all j with u(j) <= c one has j^2 - N < 2^95} = (sqrt 6 - 2)/4, and the supremum is not attained.\n\nSharpen sharp_degeneracy from the rational 2246/20000 to arbitrary c < (sqrt 6 - 2)/4, and construct for each epsilon a modulus below 2^96 with a full-size residue at position (sqrt 6 - 2)/4 + epsilon.\n\nThe degeneracy phenomenon is characterised by a single quadratic irrationality.\n\nThe discrete threshold is strictly below the continuum infimum, which would mean lattice effects survive at 96 bits and contradict fraction_bridge.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -151942,6 +151904,178 @@
       "thread_id": "",
       "timestamp": "2026-08-26T07:09:58.872713+00:00",
       "title": "Dickman Smoothness Boost as the Source of the Fifty-Fifty Split"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Catalog.Computation.KneserManyLines",
+        "Catalog.Computation.KneserManyLinesSharpness"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For fixed p and k, decide exactly which deficiency profiles (d_1,...,d_k) admit a pairwise independent configuration whose reach misses a point. The proved triple criterion shows that the three smallest deficiencies must sum to at least p; enumeration shows this is not sufficient. The conjecture asks for the exact list of exceptions, which appears to be governed by a projective (cross-ratio) obstruction rather than a numerical one.\n\nA profile d_1 <= ... <= d_k admits a failing configuration iff d_1+d_2+d_3 >= p and the profile is not in an explicitly describable exceptional list (at p=5,k=4 the exceptions are (0,2,3,3),(1,2,2,2),(2,2,2,2); at p=7,k=4 one exception is (1,3,3,4)).\n\nExhaustive enumeration over normalised direction tuples and sets of prescribed cardinality for p=5,7,11 and k=4,5; then formalise the resulting characterisation as a decidable predicate and prove both directions in Lean against KneserLines.reach_eq_univ_of_triple.\n\nGives a complete, checkable criterion for when sum_i S_i v_i = F_p^2, superseding all deficiency-sum bounds and yielding the k-auxiliary-class spread exclusion directly.\n\nThe set of failing profiles is not determined by the profile alone in a simple way, which would indicate a genuine dependence on the projective configuration of the directions and redirect effort to Direction 2.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_4247",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5648162265964098,
+      "proof_strategy": "Necessity is the contrapositive of reach_eq_univ_of_triple. For sufficiency, build failing configurations profile-by-profile from the harmonic quadruple by enlarging the two co-singleton sets and shrinking the two short sets; handle the exceptional profiles by the full-set Cauchy-Davenport theorem reach_eq_univ_of_exists_full and by a refined union bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "5e9b52ad",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/5e9b52ad",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T07:10:20.437753+00:00",
+      "title": "Profile Dichotomy for Planar Spanning Sumsets"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Catalog.Computation.KneserManyLinesNullstellensatz"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The Combinatorial Nullstellensatz reduces the whole problem to a coefficient nonvanishing statement for L_1^{p-1} L_2^{p-1} in characteristic p, where L_1, L_2 are the two coordinate forms of the direction family. The degree budget matches the conjectured threshold exactly; the counterexamples show that with zero slack all admissible coefficients can vanish simultaneously. The conjecture is that one unit of slack already forces a nonzero coefficient.\n\nIf v_1,...,v_k are pairwise independent and sum_i (p-|S_i|) <= (k-2)(p-1) - 1, then some e with e_i <= |S_i|-1 and |e| = 2(p-1) satisfies coeff_e(L_1^{p-1} L_2^{p-1}) != 0 in F_p.\n\nSymbolic computation of the coefficient sums over F_p for p=5,7 and k=4,5 for all admissible exponent vectors; then a Lean proof of the multinomial identity plus a Lucas-type nonvanishing argument.\n\nProves the corrected sharp threshold (k-2)(p-1)-1 for all k, completing the problem and giving a purely algebraic proof of the triple criterion as a special case.\n\nThe polynomial method is not tight for this problem and the corrected threshold must come from a combinatorial (Kneser / Pollard) route instead.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_4248",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.7105609756097562,
+      "proof_strategy": "Write coeff_e as sum over splittings e = f+g with |f|=|g|=p-1 of multinomial(p-1;f) multinomial(p-1;g) prod a_i^{f_i} b_i^{g_i}. Use the slack to choose e so that exactly one splitting has both multinomials nonzero mod p (Lucas), which makes the sum a single nonzero monomial in the pairwise determinants.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "5e9b52ad",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/5e9b52ad",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T07:10:21.058851+00:00",
+      "title": "Slack-One Nonvanishing for Bilinear Power Coefficients"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Catalog.Computation.KneserManyLines",
+        "Catalog.Computation.KneserManyLinesSharpness",
+        "Catalog.Computation.KneserManyLinesQuotient"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Upgrade the yes/no triple criterion into a quantitative bound on the set of unreachable points. The union bound behind the criterion already counts unreachable targets, so optimising over admissible triples should bound the miss set by a small union of lines, degenerating to a single point in the extremal case.\n\nFor pairwise independent v_i and sets S_i containing 0, the complement of sum_i S_i v_i in F_p^2 is contained in a union of at most min over admissible triples of (d_i + d_j) lines in the direction v_l; in particular if sum_i d_i = (k-2)(p-1) and the reach is not full then the miss set is a single point.\n\nCompute the exact miss sets for all failing configurations at p=5 (k=4,5) and for the harmonic family at p=7,11,13,17; compare with the predicted line bound. Then formalise the counting version of reach_eq_univ_of_triple in Lean.\n\nYields a Kneser-type stability theorem for iterated sumsets along lines, strictly stronger than the spanning criterion and usable for spread exclusions where a small exceptional set is tolerable.\n\nThe miss set can be large even near the threshold, indicating that the failure mode is global rather than a bounded local defect.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_4249",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.6715000000000002,
+      "proof_strategy": "Refine the fibre bound in the union argument: for a fixed target t the number of admissible tuples is prod_{m != i,j} |S_m| and each bad residue removes at most that product divided by |S_l|. Counting targets rather than tuples turns the strict inequality into a bound on the number of targets that can be bad.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "5e9b52ad",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/5e9b52ad",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T07:10:21.585481+00:00",
+      "title": "Quantitative Kneser Stability for the Miss Set"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Catalog.Computation.KneserManyLines",
+        "Catalog.Computation.KneserManyLinesSharpness"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The original motivation for the assigned conjecture was to exclude the p=5 spread profile (8,2,2,2,2,2) via a k-auxiliary-class argument. That route is dead as stated, since the conjecture is false exactly at (k-2)(p-1). The conjecture here is that the profile is still excluded, using the proved triple criterion together with the profile dichotomy.\n\nEvery configuration of six auxiliary classes at p=5 realising the profile (8,2,2,2,2,2) has a triple of indices with deficiency sum less than 5, hence spans F_5^2 and is excluded.\n\nEnumerate all deficiency profiles compatible with (8,2,2,2,2,2) at p=5 and check the triple criterion against each; for the profiles where the criterion is silent, run the exhaustive failing-configuration search of Direction 1.\n\nRestores the intended exclusion with a formally proved criterion, and shows the exclusion never needed the false (k-2)(p-1) bound.\n\nThe profile survives, and a genuinely new invariant beyond deficiency sums is required to exclude it.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_4250",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5927272727272728,
+      "proof_strategy": "Translate the class sizes into deficiencies, apply KneserLines.reach_eq_univ_of_triple to the three classes of smallest deficiency, and for the residual profiles invoke reach_eq_univ_of_exists_full or a direct finite check formalised by decide.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "5e9b52ad",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/5e9b52ad",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T07:10:22.101781+00:00",
+      "title": "Auxiliary-Class Spread Exclusion at p = 5"
     },
     {
       "ambition_level": "extension",
@@ -179954,7 +180088,7 @@
     "formal": 4,
     "formalize": 16.0,
     "formalized": 9,
-    "general": 5,
+    "general": 6,
     "geometry": 12.0,
     "groupoid": 4,
     "groups": 4.0,
@@ -179963,10 +180097,10 @@
     "holds": 6,
     "hyperbolic": 6.0,
     "i(joint": 2,
+    "immediately": 1,
     "iteration": 12,
     "itself": 13.0,
     "limited-memory": 9,
-    "lineage": 1,
     "log(1+√2": 4.0,
     "lorentz": 5.0,
     "lorentz-preserving": 5.0,
