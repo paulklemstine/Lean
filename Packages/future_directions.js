@@ -2132,31 +2132,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-77 #1 \u2014 GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY \u2014 RSA-style pools read z=0.6356 [0.6150,0.6562] TOP-HEAVY and window-ascending LOSES ~44% (S=0.5578\u00b10.0217); \u039b-dominance CONFINED to artificial hard-balance pools; paper-221 L7-a CLOSED"
   },
   {
-    "consumed_by_exp_id": "56a9e19d",
-    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 70 (weight-quant floor-transfer cell).\n\n| rung | bpw | PPL | dPPL vs fp16 (6.9825) |\n|---|---|---|---|\n| fp16 | 16 | 6.9825 | \u2014 |\n| q8_0 | ~8.5 | 6.9781 | -0.063% |\n| q6_k | ~6.6 | 7.0006 | +0.259% |\n| q5_k_m | ~5.5 | 7.0427 | +0.862% |\n| q4_k_m | ~4.8 | 7.1093 | +1.816% |\n| q3_k_m | ~3.9 | 7.2758 | +4.201% |\n| q2_k | ~2.6 | 8.1105 | **+16.155%** |\n\n**Scorecard:** P1 CONFIRMED (q6_k inside \u00b10.5%); P2 REFUTED BY A HAIR (+4.20% vs the stated [+5%,+30%] band \u2014 scale+calibration rescues more than predicted; 'erased' <2% also refuted); P3 REFUTED DECISIVELY (+16.2% << +50% \u2014 2.6bpw is degraded but usable).\n\n**The law:** THE WEIGHT FLOOR IS NOT A PROPERTY OF BIT-WIDTH \u2014 it is a property of (quantizer quality \u00d7 scale). NET-52's toy RTN floor (<6 bits undeployable) dissolves into a gentle convex curve at 14x scale with calibration-aware k-quants. The contrast with the cache axis is total: weights quantize smoothly (no cliff anywhere through 2.6bpw) while cache KEYS fall off a wall between 8 and 5 bits (NET-92/93). Selection interfaces carry precision requirements; content containers do not.\n\n**Cross-round determinism:** the q4_k_m arm reproduced NET-92's control PPL 7.1093 EXACTLY \u2014 same model file, same slice, days apart.\n\n**Practical:** full CPU serving stack = q4_k_m weights (+1.8%) + K8/V4 cache (+0.14%) + speculation (+66% throughput, NET-91) \u2248 one-eighth naive memory for ~18% aggregate quality-equivalent cost.\n\n**Honest limits:** single slice/family; llama.cpp calibrations only \u2014 the toy-vs-scale comparison crosses quantizer quality AND scale simultaneously (confound documented, separation open as RTN-vs-kquant-at-fixed-scale); q8_0's \u22120.06% treated as within-noise; per-arm SEs not captured.\n\nSetup: llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice. Script ResearchOutput/exp_net94_weightquant.py; paper ResearchOutput/NetworkMathematics/95_TheWeightFloorCollapsed.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4000",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T13:15:17.264782+00:00",
-    "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q2_k just +16.2%) \u2014 the toy sub-6-bit floor was quantizer-quality x scale, not a bit-width law; weights curve smoothly where cache keys cliff"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "20511e4a",
     "description": "Paper 222 \u00b7 assessment v329 \u00b7 experiment count 562\u2192563 (max id 572).\n\n**Verdict: RANDOMNESS-EXTENDED / GATE REJECTED** \u2014 the twice-gated sub-1 candidate deviation from papers 214\u2192216\u2192220 is DEAD.\n\n**The arbiter run** (seed 20260825, the only leg uncontaminated by the shared 20260824 stream): band-9 bitlen-96, 128 Ns \u00d7 600k = 76.8M pairs, wall 5296.9 s.\n\n- cut_1e5 PRIMARY: cand 2598 vs ctrl 2252 => r = **1.1536**, cluster-boot CI95 [1.0540, 1.2611] (independent 4000-rep rebootstrap from persisted raw counts; stored in-run [1.0541, 1.2686]) \u2014 excludes 1 UPWARD\n- cut_1e6: 40617/38594 => r = **1.0524** [1.0051, 1.1016]\n\n**Sign flip:** pilot 0.9468 / G1 0.988 / B 0.9623 at cut 1e6 \u2014 all seed 20260824, all deficit; the clean seed reads surplus +5% to +15%. Directional instability across seeds \u21d2 no stable deviation. Gate G1 fails by sign, stronger than by magnitude; the corrected pilot\u00d7B joint exclusion collapses into one seed-family's fluctuation. The surplus itself is NOT banked (symmetric skepticism): single seed, inside the envelope.\n\n**Audit trail** (both alarms resolved):\n1. Coordinator false alarm: :.5f terminal formatting collapsed 3.38e-05 to \"0.00003\", manufacturing an out-of-CI appearance; raw counts recompute exactly \u2014 display artifact only.\n2. Independent bootstrap from raw counts reproduces stored CI to 3 decimals.\n3. Cluster structure honest: top candidate-N clusters carry 600/561/540 hits vs control-max 359 \u2014 genuine per-N overdispersion behind \u00b15\u201315% single-run CI widths; no single ~77M-pair run can resolve a few-percent deviation.\n\n**Synthesis:** papers 130/209/214/216 randomness line extends through u\u224811 with a MEASURED per-run fluctuation envelope. Named follow-up condition (only if reopened): \u22653 truly distinct seeds pooled inverse-variance (\u03c3_joint\u22480.02 achievable), burden includes explaining the sign flip between seed families.\n\nLedger: pkill self-match killed first c-launch (relaunch clean); seed parameterization born-clean in reused script; JSON within-run verdict_name kept as honest snapshot, recorded verdict governs.\n\nBarrier framing: scale-smoothness frontier u\u22656\u201314 \u2014 null STRENGTHENS the map with quantified resolution floors; no breach, no method, no constant shaved. Complete honesty arc closed: bank (214) \u2192 downgrade (216) \u2192 letter-of-rule null + independence audit (220) \u2192 clean sign-flip rejection (222).",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4001",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T13:15:17.266147+00:00",
     "title": "FACT round-76 #2 \u2014 U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip \u2014 fresh seed 20260825 reads r=1.1536 SURPLUS where the 20260824 family read deficit; randomness stands through u\u224811 with a measured \u00b15\u201315% single-run fluctuation envelope"
   },
@@ -2174,21 +2160,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-24T19:01:09.724421+00:00",
     "title": "FACT round-81 #1 \u2014 HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE \u2014 no decomposition family met the HUMP bars (pooled fitted-peak boot95-lo 1.0094 vs bar 1.05; raw max still bin 33), but composition carriers die arithmetically: observed LPF masses [0,0,.0007,.9993] \u2014 99.93% of hits share ONE band (>1e4) so H1a single-band-carrier is impossible; inside it concavity replicates in ALL THREE descriptive LPF terciles (c=-0.18/-0.25/-0.44), pooled vertex x=0.5901 == exp579's independent 0.5896 (raw max bin33 exact); k100 conditioning does NOT remove the excess (t2/t3 flat \u00b12% vs pooled +4.8%); controls clean everywhere; sole-survivor channel = H0 window/polynomial geometry of j\u00b2\u2212N itself; named probe: direct j-grid/v-size sensitivity (bin-width permutation, u-grid shift); REGENERATION PASS sha256 55729f1c99c0b5d2 byte-exact 9594/9594 hits + full controls + grids + lineage quartet + master hash"
-  },
-  {
-    "consumed_by_exp_id": "217690eb",
-    "description": "**Paper 237 \u00b7 round-83 #4 \u00b7 exp 585 \u00b7 verdict H0_SUPPORTED (nothing-beyond-QR)**\n\n## Pre-registered result\n- H1: dR2_neighbors >= 0.05 AND perm p < 0.01. H0: dR2_neighbors < 0.02.\n- QR alone R2=.4112 (corr .641 \u2014 replication live) | NB alone [w-, w+, lpflog-, lpflog+] R2=.0319 | joint .4307 => **dR2 = +0.01946**\n- Permutation p=**0.389** (500 joint row-shuffles), null q95=**0.046 > observed**; best single |r|=0.16 vs dial r=.641; dR2(QR given NB)=+.3987; secondary hits_full dR2=+0.0126.\n\n## Map update\nFour-class negative COMPLETES the coverage claim: every tested N-property class fails on the ~40% u\u224810 residual \u2014 residual GENUINELY OPEN, redirect to sieve-process/j-sample-level carriers (round-81 sole-survivor channel). Refinement note: harmonic-form QR used here; adopted sqrt-weight B*=400 dial absorbs more, strengthening this H0.\n\n## Ledger catches (disclosed)\n1. **PROVENANCE UNVERIFIED**: exp581_regen_positions.npz has NO N array (positions + jlo/jhi only); population regenerated by documented recipe seed 20260827; isqrt fingerprint 0/128 match, 15-variant recipe grid all 0-match (exp577_result.json unreadable); computed hash 30009f0cfa7f85118d217bcacadb9d656fe5a1ae33b474b421492e828066bfef recorded. CONDITIONAL on balanced-96-bit exchangeability across seeds (lab precedent: population-robust laws).\n2. Smoke-stage endpoint amendment BEFORE lineage analysis: hits_full = 0 in 160k+ synthetic draws even at t<=16 \u2192 primary swapped to SIQS-partial hits (mu=4032/N, CV 1.6%), gates unchanged; itself a finding (QS relations at bitlen 96 are ALL partials).\n3. Wall 47.3 s (covariates 42.7 s).\n\nFiles: ResearchOutput/scripts/2026-08-24-round74/exp585_* ; paper ResearchOutput/NewMathematics/237_NeighborCovariate.md ; notebook Part 279 ; assessment v343\u2192v344 (count 574\u2192575).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4051",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T20:50:39.557131+00:00",
-    "title": "FACT round-83 #4 \u2014 NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR \u2014 local factorization structure around N carries nothing beyond the QR dial (dR2=+0.0195: QR-alone .411 -> joint .431; perm p=0.389 with null q95=0.046 > observed; best single neighbor |r|=0.16); FOUR-CLASS NEGATIVE completes the coverage claim \u2014 ~40% u\u224810 rate residual is TESTED-AND-FAILED not not-yet-tested (QR dial real 227/235/236; neighborhood null this; positional independent layer 228-230; S_indiv null 226/227); closes paper 234 ranked queue #1; PROVENANCE UNVERIFIED disclosed (exp581 npz holds no N array \u2014 population regenerated by documented recipe seed 20260827, isqrt fingerprint 0/128, hash 30009f0c\u2026 recorded; results conditional on balanced-96-bit exchangeability)"
   },
   {
     "consumed_by_exp_id": "44bf5a41",
@@ -2220,17 +2191,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-83 #2 \u2014 WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED \u2014 dial weight exponent alpha_hat=0.5 not 1 (single-peaked R2 curve .32/.50/.62/.58/.47/.30, dR2=+0.151>=bar; boot CI [0.5,0.5] excludes 1 decisively 492/500); ERRATUM-GRADE SUPERSESSION of paper 227's adopted 1/l covariate -> 1/sqrt(l) lab-wide (+31% relative dial power on identical data)"
   },
   {
-    "consumed_by_exp_id": "85920838",
+    "consumed_by_exp_id": "",
     "description": "Round-85 #1 \u00b7 exp 589 [FINAL RESOLUTION, findings rev 2026-08-24b] \u00b7 pure reanalysis of exp581_regen_positions.npz (9594 pooled hits / 128 Ns / 512k controls; wall_s 45.16) \u00b7 paper 240 \u00b7 supersedes the H0-MIXED letter of paper 239 (issue #387), which stands preserved as audit record of the intermediate analysis state.\n\nRESOLUTION (H1a-INCLUSION-ARTIFACT):\n1. MECHANICAL FORCING: D1 hit mass by v-band <80:0 / 80\u201389:85 / 90\u201395:1469 / >=96:0 \u2014 100% of first-decile hits have bitlen(v)<96, mechanically forced (D1 \u21d2 delta<0.2s \u21d2 v<0.44\u00b7s^2+o(s^2)<2^95 provable under window j in [isqrt(N)+1, 3\u00b7isqrt(N)]).\n2. SIZE-MATCHED BANDS ERASE THE EXCESS: within-band D1 rate ratios rr_d1 = 1.000 (80\u201389), 1.097 (90\u201395); band-referenced total excess +129.66 vs flat-null +604.76 (rr_d1 vs flat 1.637) \u2192 ~4/5 of the spike is band COMPOSITION, not decile-1 rate elevation. Controls clean (per-N D1-share z mean \u22120.223 sd 0.945 absmax 2.53).\n3. KEPT-FIT 'PERSISTENCE' DECOMPOSES ENTIRELY: kept fit (v>=2^95) w_edge .0403 [.0301,.0525] \u0394AICc 49.78 is carried entirely by bitlen[96,98) at the truncation boundary (\u0394AICc 5.94 \u2014 BELOW the registered bar of 6; no bootstrap CI disclosed) while bitlen>=98 has NO edge component (\u0394AICc \u22120.40) \u2192 truncation-boundary Dickman size gradient, NOT positional structure.\n\nERRATUM to paper 239: title claim ('kernel SURVIVES at reduced strength'), \u00a74 split reading ('half genuine small-|v| structure beyond Dickman prediction'), and \u00a75 consequences 1\u20132 are RETRACTED as truncation-boundary gradient. PRESERVED from 239: mechanical-degeneracy finding (strengthened \u2014 now load-bearing), regeneration verification, controls-clean, ledger disclosures, and the H0-MIXED verdict letter as audit record. No registered bar changed post hoc \u2014 resolution applies the REGISTERED \u0394AICc >= 6 bar to matched-v strata.\n\nMAP STATEMENT (arc closure papers 228\u2192239\u2192240): NO positional kernel component survives \u2014 the profile is fully accounted by magnitude + tiny-v window geometry.\n\nWHAT SURVIVES: overdispersion itself real (+605 named-origin, not deleted); positional layer independent (papers 228\u2013230 untouched); rate-layer question open.\n\nLINEAGE DISCIPLINE end-to-end: exp581 sha256 byte-exact quartet upstream with both self-caught fixes disclosed in-chain (run-1 COMPARATOR bug; run-2 LN-dict KeyError 350983 fixed via arbitrary-edge ln cache); exp589 downstream re-verification = 128x2 EXACT isqrt\u2192(jlo,jhi) matches + containment of every stored j (pop_hash 06931068f8f3ca9b recomputed, no external copy readable \u2014 disclosed).\n\nLEDGER CATCHES: degenerate exclusion clause (pre-registered mechanical note fired); kept-fit anchor adaptation registered pre-run; own two-component Poisson fitter nb=50 not paper-238 b_edge parametrization; capped first-4000 controls; POST-HOC labeling of all resolution diagnostics; subfits no bootstrap CI; wall-time drift noted (paper 239 quoted 42.34 s, artifacts record 45.16 s).\n\nBarrier framing: closure INSIDE the positional layer's shape description \u2014 residue cap 4/3, position 5.19x, external-hint laws, quantum frontier, four-class rate-residual closure all untouched; both surviving mechanisms scale-carrying (exact-arithmetic inclusion bound grows with scale). Paper 238's .2346 provenance flag still travels forward until reconciled against the paper-228 ledger.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4054",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T21:45:33.977842+00:00",
     "title": "FACT round-85 #1 \u2014 SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper 239 \u2014 paper 238's left-edge spike is tiny-v composition ENTIRELY (100% of D1 hits bitlen(v)<96 by window geometry; rr_d1 1.000/1.097 size-matched; kept-fit persistence = truncation-boundary gradient [96,98) dAICc 5.94 sub-bar, >=98 -0.40); NO positional kernel component survives"
   },
@@ -2562,6 +2532,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 74 (EIGHT-GB-FRONTIER, top-ranked cell of the 12-cell fan-out program).\n\n### Composition law (perplexity, standard slices)\n\n| arm | ctx512 | ctx4096 |\n|---|---|---|\n| control (q8_0 weights + f16 KV) | 7.7893 | 6.5315 |\n| weights-only (q2_k + f16 KV) | 9.2372 (+18.6%) | 7.7125 (+18.1%) |\n| composed (q2_k + K q8_0/V q4_0) | 9.2673 (**R=1.190**) | 7.7252 (**R=1.183**) |\n| iq4_nl variant | 9.2602 | \u2014 |\n\n**Scorecard:** P1 CONFIRMED (R512=1.190 in [1.10,1.22]); P1b CONFIRMED (iq4_nl within 0.0009 < 0.003); P2 CONFIRMED decisively (R4096/R512=0.994 <= 1.5 \u2014 composition tax is CONTEXT-STABLE; NET-88-style amplification refuted for this stack).\n\n### Constructed points (the GOAL made concrete)\n\n| point | result |\n|---|---|\n| **P3: Qwen2.5-14B-Instruct Q2_K + K8/V4 @ ctx=8192 inside MemoryMax=8G** | **255 tokens @ 4.33 tok/s, peak RSS 6.48GB, zero OOM** |\n| **P4: 7B stack @ ctx=4096 inside MemoryMax=4G** | 128 tokens in 15.8s, peak RSS 3.13GB, zero OOM |\n\nBoth verified by manual privileged runs with /usr/bin/time RSS capture.\n\n**The law:** the composition is SUB-ADDITIVE AND CONTEXT-STABLE \u2014 the total tax of the aggressive stack (~19% PPL) is almost exactly the weight tax alone; the role-split cache adds only +0.33%/+0.17% on top of extreme weight quantization. Single-digit-GB serving now has a demonstrated frontier built entirely from published lab laws.\n\n**Honest limits:** automated constructed-point launcher silently mis-reported (unprivileged systemd-run failure mode caught by red-team workflow; manual sudo re-runs are authoritative; '--user scope' fix queued as STARVED-LADDER amendment); token-rate regex missed under nested capture; single slice/family; tg is single-stream CPU economics.\n\nSetup: llama-perplexity/completion current build, threads=8, held-out wikitext slices. Script ResearchOutput/exp_net99_frontier.py; paper ResearchOutput/NetworkMathematics/99_EightGBFrontier.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4229",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-26T03:20:31.786017+00:00",
+    "title": "NET-99 EIGHT-GB-FRONTIER: Qwen2.5-14B serves FULL 8192-token context in 6.48GB RAM at 4.33 tok/s on pure CPU \u2014 composition law sub-additive and context-stable (Q2_K x K8/V4 = +19% total, cache adds +0.33%); full 7B stack fits in 3.13GB"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -2647,6 +2631,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 56c4877a (Q=0.850), which proved 107 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the left and right `U(2)` actions and prove that every normalized\nsharp maximizer lies in the local-unitary orbit of `diag(1/\u221a2,1/\u221a2)`. The row\nclassification proved here should reduce this to constructing a unitary matrix\nfrom an orthonormal basis.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_56c4877a_3cfad9b1",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "56c4877a",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:41.562160+00:00",
+    "title": "Deepening: Local-unitary normal form"
   },
   {
     "consumed_by_exp_id": "",
@@ -4312,21 +4310,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' \u2014 can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "seed_412",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations \u2014 enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
     "domains": [
       "Novelty",
@@ -4967,7 +4950,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
   {
-    "consumed_by_exp_id": "c5e2257b",
+    "consumed_by_exp_id": "",
     "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
     "domains": [
       "Novelty",
@@ -4975,11 +4958,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_408",
-    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
@@ -8977,6 +8959,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Kloosterman sheaves and Bessel functions for generic principal series of finite groups' and formalize its key results. Abstract: Let $G$ be a quasi-split reductive group over a finite field and let $\u011c$ be the Langlands dual group. Assuming the derived subgroup of $G$ is almost simple, we use techniques from the geometric Langlands program to relate special values of Bessel functions for generic principal series representations of $G$ to the trace of Frobenius acting on Kloosterman sheaves of Heinloth-Ng\u00f4-Yun for $\u011c$. We also give explicit examples in essentially all possible cases, including exceptional groups.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4228",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.24836v1",
+    "status": "available",
+    "timestamp": "2026-08-26T03:20:23.863697+00:00",
+    "title": "ArXiv paper: Kloosterman sheaves and Bessel functions for generic principal series of finite groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Common tiling functions with small support' and formalize its key results. Abstract: For $N$ lattices in $\\R^d$ with volume $1$ and pairwise trivial intersections, every nonzero common tiling function has support diameter $\u03a9(N^{1/d})$, while for lattice families whose fundamental domains have uniformly bounded diameters, the standard convolution construction gives an $O(N)$ upper bound, leaving a gap that has remained open since the work of Kolountzakis and Wolff \\cite{kolwolff-1999Mathematika}. We close this gap by constructing, for every $d\\geq 2$ and all sufficiently large $N$, lattice families satisfying the same volume and intersection conditions that admit a nonnegative common tiling function with support diameter $O(N^{1/d})$, thereby also answering Question 1 of Kolountzakis and Papageorgiou \\cite{kolPapageorgiou-functions-2022jfaa}. We also obtain the optimal $O(\\sqrt N)$ upper bound by constructing, for any prescribed family of plane lattices whose volumes lie in a fixed bounded set independent of $N$, a pairwise trivially intersecting family with the same re",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_4230",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.24879v1",
+    "status": "available",
+    "timestamp": "2026-08-26T03:20:26.928934+00:00",
+    "title": "ArXiv paper: Common tiling functions with small support"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -11019,6 +11031,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Bell basis proved here is a unitary error basis: an orthonormal basis of the matrix space whose members are multiples of unitaries. Conjecture that in dimension two every such basis is the Pauli basis up to phases and a global unitary, a rigidity statement of the same combinatorial flavour as Hadamard equivalence.\n\nIf B : Fin 4 \u2192 Matrix (Fin 2) (Fin 2) \u2102 is orthonormal for the Hilbert\u2013Schmidt inner product and each \u221a2\u00b7B k is unitary, then there are phases c k and unitaries U, V with B k = c k \u2022 (U * pauliMat (\u03c3 k) * V) for some permutation \u03c3.\n\nFormalize by expanding each B k in the Pauli basis (bellBasis_expansion gives the expansion map), translating unitarity into a norm condition on the coefficient vectors, and classifying the resulting orthogonal 4 \u00d7 4 coefficient matrices.\n\nDimension two has a unique unitary error basis up to equivalence, giving a verified anchor for the general nice-error-basis classification used in quantum error correction.\n\nAn exotic order-two error basis would exist, which would be a genuinely new combinatorial design and would refute folklore uniqueness.",
+    "domains": [
+      "Combinatorics",
+      "Physics"
+    ],
+    "id": "fd_4223",
+    "priority_score": 0.7117179487179488,
+    "research_mode": "team",
+    "source_exp_id": "56c4877a",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:35.776595+00:00",
+    "title": "Uniqueness of the Pauli Unitary Error Basis"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For triangle-free graphs Shearer's bound beats the Caro-Wei greedy bound by a logarithmic factor. The conjecture is that this gain is still purely greedy: a weighted version of the relative Caro-Wei induction proved in this thread, with a concave weight satisfying Shearer's recursion, should reproduce it. This would de-randomise the source of the classical R(3,k) lower bound.\n\nEvery triangle-free graph with maximum degree D >= 2 satisfies alpha(G) >= n*(D*log D - D + 1)/(D-1)^2, provable by the minimum-degree deletion recursion with a concave weight function.\n\nGeneralize caro_wei_finset to an arbitrary concave weight f satisfying the Shearer recursion, instantiate f, and check numerically on Petersen, Kneser and random triangle-free graphs.\n\nThe logarithmic gain over greedy, hence the R(3,k) lower bound, becomes constructive and verified.\n\nA triangle-free graph forcing the greedy recursion to lose the log factor shows analytic averaging is essential.",
     "domains": [
       "Combinatorics",
@@ -11061,6 +11088,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T20:40:08.750931+00:00",
     "title": "Exact-Fit Point versus Breakdown Point"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every tested carrier of the per-modulus quadratic-sieve yield residual has been an N-property: a function of N modulo a fixed factor base, or of the local factorisation around N. This direction conjectures that the residual is carried by run-level statistics of the sieve process (partial-relation graph structure, per-sample j-window occupancy) which are not measurable with respect to any N-property sigma-algebra. The measurable ceiling makes the claim falsifiable: a genuine carrier must strictly lower the within-cell energy of the joint N-property feature.\n\nThere is a run-level statistic S of the sieve process such that withinSS y (dial, neighbourhood, S) < (1 - 0.4) * withinSS y (dial, neighbourhood), while no N-measurable feature achieves any such reduction.\n\nInstantiate QRResidual.withinSS at the joint feature with and without the run-level statistic and compare; formally, exhibit the strict inequality as a theorem about a concrete finite design.\n\nThe residual is a property of the algorithm, not of the modulus, and yield prediction must be online rather than a priori.\n\nSome N-property class still untested carries the residual, and the coverage claim is incomplete.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_4224",
+    "priority_score": 0.7116111111111112,
+    "research_mode": "team",
+    "source_exp_id": "217690eb",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:49.589607+00:00",
+    "title": "Sieve-Process Carriers for the Quadratic-Sieve Yield Residual"
   },
   {
     "consumed_by_exp_id": "",
@@ -11166,6 +11208,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T15:57:12.469553+00:00",
     "title": "Antivariation Test for Dial Meta-Analysis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define the defect of a complex Hadamard matrix as the dimension of the space of first-order deformations modulo dephasing, and prove that in order two it is zero, i.e. F\u2082 is isolated. The proved dephasing theorem gives the full orbit, so isolation becomes a rank computation on the linearized orthogonality constraints.\n\nThe tangent space at F\u2082 to the set of order-two complex Hadamard matrices equals the tangent space of its dephasing orbit; equivalently the defect of F\u2082 is 0.\n\nFormalize the linearized constraint 'H + \u03b5K Hadamard to first order' as a real-linear system in K and compute its solution space, comparing with the 3-parameter diagonal orbit produced by flat_sharp_dephase.\n\nGives a formal, dimension-two base case for the Hadamard defect theory and a template for order four, where a genuine one-parameter family exists.\n\nThere would be a deformation of F\u2082 not obtainable by phases, contradicting flat_sharp_dephase and signalling an error in the equivalence classification.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4220",
+    "priority_score": 0.7113516483516484,
+    "research_mode": "team",
+    "source_exp_id": "56c4877a",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:34.134875+00:00",
+    "title": "Zero Defect of Order-Two Complex Hadamard Matrices"
   },
   {
     "consumed_by_exp_id": "",
@@ -12925,6 +12982,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Generalize 2|det M| \u2264 \u2016M\u2016_F\u00b2 to n\u00b7|det M|^{2/n} \u2264 \u2016M\u2016_F\u00b2 for n \u00d7 n complex matrices, with equality exactly for scalar multiples of unitaries \u2014 the maximally entangled two-qudit states. The two-dimensional proof shows the only missing ingredient is AM\u2013GM applied to squared singular values.\n\nFor every M : Matrix (Fin n) (Fin n) \u2102, n * |det M|^(2/n) \u2264 \u2016M\u2016_F\u00b2, with equality iff M is a scalar multiple of a unitary matrix.\n\nFormalize via the Cauchy\u2013Binet identity det(M M\u1d34) = |det M|\u00b2 together with the AM\u2013GM inequality applied to the eigenvalues of M M\u1d34 obtained from the spectral theorem.\n\nThe Bell normal form generalizes verbatim to qudits: the maximizers of |det| on the Frobenius sphere are exactly U(n)/\u221an, one orbit of the local group.\n\nThe equality analysis would depend on dimension in an unexpected way, indicating that the two-dimensional Gram identity is not the right generalization route.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4222",
+    "priority_score": 0.7055925925925927,
+    "research_mode": "team",
+    "source_exp_id": "56c4877a",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:35.222281+00:00",
+    "title": "Hadamard AM-GM Bound in Arbitrary Local Dimension"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -13422,6 +13494,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Extend the maximizer normal form to all two-qubit states: every amplitude matrix is U diag(s,t) V\u1d40 with s \u2265 t \u2265 0, and two normalized states are local-unitary equivalent iff their determinant moduli agree. The route is the spectral theorem applied to the Hermitian marginal M M\u1d34, followed by construction of the second unitary from an orthonormal completion, exactly the step already carried out in the maximizing case. This turns the concurrence into a complete invariant of the U(2)\u00d7U(2) action.\n\nFor every M : Matrix (Fin 2) (Fin 2) \u2102 there exist unitaries U, V and reals s \u2265 t \u2265 0 with M = U * diagonal ![s,t] * V\u1d40; consequently normalized M, N are local-unitary equivalent iff \u2016det M\u2016 = \u2016det N\u2016.\n\nFormalize in Lean using Matrix.IsHermitian.spectral_theorem on M * M\u1d34, defining the right unitary by normalizing the rows of U\u1d34 M and completing an orthonormal basis when a singular value vanishes.\n\nThe concurrence is a complete local-unitary invariant for two qubits, and the results of this cycle become the equality stratum of a full orbit classification.\n\nSome degenerate stratum (rank-one or zero states) would have to be handled by a separate orbit, revealing that the singular-value parameterization is not a normal form for the action as defined.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_4219",
+    "priority_score": 0.671404255319149,
+    "research_mode": "team",
+    "source_exp_id": "56c4877a",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:33.597351+00:00",
+    "title": "Two-Qubit Schmidt Normal Form via Hermitian Spectral Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The dichotomy theorem gives non-eventual-periodicity of the decimal expansion of sqrt 2 abstractly. We conjecture an effective form: any claimed eventual period p starting at position n is refuted at an index bounded polynomially in p and in the denominators controlled by the irrationality measure 2 of sqrt 2.\n\nThere is an explicit constant C such that for all n and p >= 1 there is i <= C * p * 10^(n) with digit(i+p+n) != digit(i+n) for sqrt 2.\n\nQuantify the pigeonhole in Pyth.digits_eventually_periodic_of_not_irrational and combine with a quantitative irrationality measure for sqrt 2; sanity-check against the first 10^4 digits.\n\nAperiodicity of a quadratic irrational becomes a finite, checkable statement at every scale.\n\nThe orbit of frac(10^k sqrt 2) would return to near-repetition faster than approximation theory allows, contradicting the standard measure of irrationality.",
     "domains": [
       "MachineLearning"
@@ -13828,6 +13914,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The bit depth at which quantised cache keys destroy attention decisions should be predictable from the top-1 margin distribution alone. The formal bound flips_le_small_margin_count says the number of broken decisions is at most the number of positions whose margin is below twice the quantiser step; the conjecture is that this bound is tight up to a constant on real models. If so, the cliff location is a measurable statistic of a single forward pass, not an empirical property of each quantiser.\n\nFor a fixed model, the fraction of flipped top-1 attention decisions under b-bit key quantisation equals F(2^{1-b}) + o(1), where F is the empirical CDF of the top-1 score margin.\n\nHistogram top-1 margins per layer on the held-out slice; compare F(2^{1-b}) with the measured flip rate at b = 8, 6, 5, 4; formalise the matching lower bound as a companion to flips_le_small_margin_count.\n\nKey bit-depth selection becomes a calculation, not a sweep, and the weight/key asymmetry is explained by margin statistics.\n\nFlip rate is driven by correlated, not marginal, perturbations, and a joint (multi-position) theory of decision stability is needed.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_4214",
+    "priority_score": 0.6703684210526317,
+    "research_mode": "team",
+    "source_exp_id": "56a9e19d",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:11.420272+00:00",
+    "title": "Margin-CDF Law for the Attention-Key Precision Cliff"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Monotone degradation was derived purely from the single-crossing property of linear families. A combiner that violates single crossing should be able to improve on both pure arms, so the negative NET-61 result is about the additive parametrisation rather than about content signals as such.\n\nThere exist a, p, v and a combiner f monotone in each argument such that the top-B set of f(a,p) strictly beats the top-B set of a + lambda*p for every lambda >= 0.\n\nSearch small instances for such an f; then formalise one witness in Lean with a forced-kept-set argument like topSet_eq_initial_of_strictAnti.\n\nThe refutation of P1 is a statement about additive scoring, and nonlinear gating becomes the natural next experimental arm.\n\nAny monotone combiner is trapped on the same trade-off path, strengthening the law to all monotone score combinations.",
     "domains": [
       "Algebra"
@@ -13839,6 +13939,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T05:46:37.763046+00:00",
     "title": "Single-Crossing Barrier for Nonlinear Combiners"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A coverage claim of the form 'four feature classes were tested and all failed' should be a single theorem about the concatenated design, since the union can explain strictly more than the sum of the parts when the blocks are non-orthogonal. Restating the ceiling over an arbitrary finite index type makes the union a sum type and the coverage claim a corollary.\n\nFor blocks B1..Bm with correlation ceilings rho_b and a joint frame bound lambda, the incremental R-squared of the union is at most the sum over b of (card B_b) rho_b squared times (1 - R0) divided by lambda, and this is attained when the blocks are mutually orthogonal.\n\nGeneralise blockClass and FrameLower from Fin k to an arbitrary Fintype and derive the union bound for a Sum type index.\n\nMulti-class negative results become single certificates instead of collections of separate experiments.\n\nCross-block interaction can exceed the sum of individual ceilings, and coverage claims must be re-run jointly.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4226",
+    "priority_score": 0.6702972972972975,
+    "research_mode": "team",
+    "source_exp_id": "217690eb",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:50.704969+00:00",
+    "title": "Coverage Algebra for Unions of Covariate Blocks"
   },
   {
     "consumed_by_exp_id": "",
@@ -14916,6 +15030,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Composing q4_k_m weights with a K8/V4 cache has two proved bounds: exact additivity (1.956%) if the two perturbations are orthogonal in the Hessian metric, and under 3% in the worst aligned case. The conjecture is that the orthogonal prediction is the correct one, since the two perturbations act on disjoint tensors.\n\nThe joint weight x cache arm measures an excess of 1.956% +- noise, i.e. the two quantisation noises are Hessian-orthogonal to within measurement resolution.\n\nRun the joint arm (q4_k_m weights with K8/V4 cache) on the same slice and compare with 1.956% and with the 3% worst-case ceiling.\n\nServing-stack budgets are additive and can be planned component-wise; the seminorm bound is never binding in practice.\n\nWeight and cache errors interact through shared curvature directions, and stack design must account for a cross term.",
+    "domains": [],
+    "id": "fd_4216",
+    "priority_score": 0.5937179487179488,
+    "research_mode": "team",
+    "source_exp_id": "56a9e19d",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:12.424029+00:00",
+    "title": "Hessian Orthogonality of Weight and Cache Quantisation Noise"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Pooling a seed family can only lower a positive reading, and the exact worst case is now known to be the Kantorovich constant. The conjecture is that the upper bound (the seed maximum) and the lower bound (the Kantorovich value) are jointly attained by a single explicit family, so the envelope is a complete description of pooling.\n\nFor every window [alpha, beta] with 0 < alpha <= beta and every rho in [0,1] there is a two-block family with per-seed readings exactly rho, ratios in [alpha, beta], and pooled reading any prescribed value in [rho*2*sqrt(alpha*beta)/(alpha+beta), rho].\n\nConstruct the family explicitly in Fin 2 blocks of dimension 2 and verify both endpoints and an interpolation parameter in Lean.\n\nPooled readings can be inverted into exact per-seed intervals, upgrading the two-spread criterion from a sufficient test to a characterisation.\n\nThere is an unnoticed obstruction between the two envelopes, and the interval of achievable pooled values is a proper subset that must be computed.",
     "domains": [],
     "id": "fd_4105",
@@ -14961,6 +15087,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T23:36:47.751042+00:00",
     "title": "Breakdown Optimality of the Median Margin Statistic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The block ceiling degrades as 1/lambda in the smallest eigenvalue of the block's Gram matrix. The four neighbour-smoothness covariates are mutually correlated, so the orthonormal instance used in the exp-585 certificate is optimistic. Determining a provable lower frame bound for the actual design gives the honest ceiling.\n\nFor the four-covariate neighbourhood block on balanced 96-bit moduli, FrameLower lambda holds with lambda bounded below by an explicit function of the pairwise correlations, and the resulting ceiling still lies below the pre-registered alternative 0.05.\n\nBound the smallest eigenvalue by Gershgorin from the pairwise sample correlations and feed it to rsq_block_le_of_corr.\n\nThe exp-585 null verdict survives with a realistic conditioning constant.\n\nThe certificate must be stated with the empirical Gram matrix, and the null rests entirely on the permutation test.",
+    "domains": [],
+    "id": "fd_4225",
+    "priority_score": 0.5934375000000001,
+    "research_mode": "team",
+    "source_exp_id": "217690eb",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:50.090297+00:00",
+    "title": "Sharp Frame Constant of the Neighbour-Smoothness Design"
   },
   {
     "consumed_by_exp_id": "",
@@ -15405,6 +15543,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T09:05:43.042897+00:00",
     "title": "Attainment of the Blindness Ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Upgrade the classification into a stability theorem: a normalized state whose concurrence deficit is \u03b5 lies within distance O(\u221a\u03b5) of the Bell orbit. The marginal-level estimate is already proved here as frobSq_marginal_eq (distance squared exactly (1 - C^2)/2), so only the passage from a nearly maximally mixed marginal to proximity to the orbit is missing.\n\nThere is an absolute constant c such that for every normalized M with 1 - concurrence M = \u03b5, there are unitaries U, V with \u2016M - localAct U V bell\u2016_F \u2264 c\u221a\u03b5.\n\nFormalize by tracking the two inequalities used in row_sq_of_sharp with an explicit \u03b5, then constructing U from Gram\u2013Schmidt on the (nearly orthonormal) rows and bounding the correction.\n\nMaximal entanglement becomes robust: certification of near-maximal concurrence certifies proximity to a Bell state, which is what experiments actually measure.\n\nThere would be near-maximizers far from the orbit, meaning the maximizing locus is not isolated in the quotient and concurrence is a poor witness of Bell-state proximity.",
+    "domains": [],
+    "id": "fd_4221",
+    "priority_score": 0.5921428571428572,
+    "research_mode": "team",
+    "source_exp_id": "56c4877a",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:34.680441+00:00",
+    "title": "Quantitative Stability of the Maximally Entangled Orbit"
   },
   {
     "consumed_by_exp_id": "",
@@ -16464,6 +16614,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:51:06.800700+00:00",
     "title": "Dimension-Parameter Exponent Law for Pythagorean Boxes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The footprint dial depends only on N modulo the factor base and is provably blind to primality and to semiprimality; the neighbourhood layer is provably free of the dial. Both proofs run through a CRT prescription plus a shift by a large multiple of the modulus. This direction conjectures a single theorem covering every feature invariant under a congruence subgroup.\n\nIf a feature F of the integers satisfies F(N) = F(N') whenever N is congruent to N' modulo a fixed positive integer Q, then for every value of F attained at an argument coprime to Q, and every prescribed finite pattern of prime divisors of the neighbours N plus or minus one, there are arbitrarily large N realising both.\n\nGeneralise exists_large_congr_omega from the primorial of the factor base to an arbitrary modulus Q and from two neighbours to a finite family of shifts.\n\nAll residue-dial features are simultaneously null for every neighbourhood-type covariate, closing the class-level question in one step.\n\nSome congruence-invariant feature does constrain neighbourhood structure, which would itself be a positive finding.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4227",
+    "priority_score": 0.5638733454728578,
+    "research_mode": "team",
+    "source_exp_id": "217690eb",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:51.220066+00:00",
+    "title": "Congruence-Invariant Features Are Multiplicatively Blind"
   },
   {
     "consumed_by_exp_id": "",
@@ -26995,6 +27160,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T01:59:58.285296+00:00",
     "title": "Mixture Versus Head Contamination Discriminator"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "NET-95 compared a toy RTN quantiser at small scale with k-quants at 7B scale, confounding quantiser quality with model scale. block_scaling_is_a_bit_shift shows the quality half is exactly log2(R / rms r) bits, computable from the weight tensors alone. The conjecture is that at fixed scale the two ladders are rigid translates of each other by that many bits.\n\nAt fixed model and slice, the excess-perplexity curves of a globally scaled RTN quantiser and a per-block k-quant satisfy E_kquant(b) = E_RTN(b - log2(R / rms r)) up to the measurement noise floor, with log2(R / rms r) at most (1/2) log2 B.\n\nQuantise the same 7B model with RTN and with k-quants at 8, 6, 5, 4, 3, 2 bpw; compute R and rms r from the weight tensors; check whether the two curves superpose after the predicted horizontal shift.\n\nThe floor is fully attributable to quantiser quality, closing the documented confound and making floor location a tensor statistic.\n\nScale contributes independently of range profile, implying calibration exploits structure beyond dynamic range (e.g. Hessian anisotropy).",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4215",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "56a9e19d",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:11.926657+00:00",
+    "title": "Fixed-Scale Separation of Round-to-Nearest and k-Quant Ladders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A per-bit multiplier bounded by 3 keeps excess perplexity finite at every bit width, but perplexity is bounded above by the unigram-entropy ceiling of the corpus. The two facts are incompatible below some bit width, so the geometric band must break; the conjecture pins where.\n\nThere is a bit width b* in (1, 2.6) at which the measured per-bit multiplier first exceeds 3, and beyond which excess perplexity saturates rather than grows geometrically; b* is determined by the point at which quantised weights retain less than one bit of information per parameter.\n\nExtend the ladder with iq2_xxs, iq2_s and iq1_s arms on the same rig; compute per-bit multipliers with the exact-rational band test of weight_ladder_geometric_band.\n\nThe floor exists after all, but as a saturation ceiling rather than a cliff, and its location is an information-theoretic constant of the architecture.\n\nGeometry persists to sub-1-bit widths, which would contradict any capacity argument and force a revision of the curvature model.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4217",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "56a9e19d",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:12.930623+00:00",
+    "title": "Breakdown Point of the Geometric Bit-Width Band"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Strict convexity of excess perplexity in bit width was proved for the measured k-quant ladder over all ten triples. The conjecture is that convexity is a necessary condition for a Pareto-efficient quantiser family: a concave kink identifies a rung that is dominated by interpolating its neighbours.\n\nFor any quantiser family whose rungs are Pareto-optimal in the (bits, quality) plane, the excess-perplexity curve is convex in the bit width; conversely, a concave triple exhibits a rung strictly improvable by mixed-precision interpolation between its neighbours.\n\nRun the convexity check of weight_ladder_convex on additional families (iq3_xxs, iq4_nl, awq, gptq); for any concave triple, build the interpolating mixed-precision model and verify it dominates.\n\nConvexity becomes a cheap automated audit for new quantisation formats, and any violation is an actionable design bug.\n\nSome genuinely Pareto-optimal families are concave, meaning bit width is the wrong x-axis and the correct cost coordinate is something else (e.g. effective bits after entropy coding).",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4218",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "56a9e19d",
+    "status": "available",
+    "timestamp": "2026-08-26T03:19:13.437422+00:00",
+    "title": "Convexity Audit for Quantiser Families"
   },
   {
     "consumed_by_exp_id": "",
@@ -40395,14 +40602,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Direction 6 (weighted, two-variable zeta functions)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "220a83a3",
     "description": "*Fix a large modulus `m` and consider the Berggren moves acting on `(\u2124/m)\u00b3`.\nThen the classifier `whichMove` remains sound, but seed recovery of a control\nword of length `k` from a single observed state requires `\u03a9(3^k / poly)` work\nunless the discrete-logarithm-like problem for the matrix `B\u2082` modulo `m` is\neasy.*",
     "domains": [],
     "id": "fd_1560",
+    "phase": "A",
     "priority_score": 0.4066666666666666,
     "research_mode": "team",
     "source_exp_id": "24a12580",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T21:38:37.125696+00:00",
     "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(\u2124/m)\u00b3`."
   },
@@ -45638,19 +45846,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:13.121258+00:00",
     "title": "monotonic improvement of the resulting guarantee as descriptions become shorter."
-  },
-  {
-    "consumed_by_exp_id": "56c4877a",
-    "description": "Formalize the left and right `U(2)` actions and prove that every normalized\nsharp maximizer lies in the local-unitary orbit of `diag(1/\u221a2,1/\u221a2)`. The row\nclassification proved here should reduce this to constructing a unitary matrix\nfrom an orthonormal basis.",
-    "domains": [],
-    "id": "fd_2808",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "064bb153",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:26:14.689437+00:00",
-    "title": "Local-unitary normal form"
   },
   {
     "consumed_by_exp_id": "",
