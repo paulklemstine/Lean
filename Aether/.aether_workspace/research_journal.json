@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ed1b07dd",
-      "domain": "Computation",
-      "key_insight": "# FUTURE DIRECTIONS — E3 thread, after four cycles\n\n## What this cycle settled\n\nThe conjecture was: *the median held-out logit margin is the same at `d = 4, 8,\n16` to within `±10 %`, and equals `128·L",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-24T23:36:54",
-      "title": "E3.  The margin does not"
-    },
-    {
       "cycle_id": "eef05184",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Greedy difference avoidance and the `B_h` tower\n\nDerived from the verified results in `Catalog/Novelty/GreedyDifferenceSidon.lean`,\n`Catalog/Novelty/GreedyDifferenceCubic.lean`,",
@@ -499,19 +489,19 @@
       "theorem_count": 110,
       "timestamp": "2026-08-26T17:00:47",
       "title": "Strengthen certified computation"
+    },
+    {
+      "cycle_id": "1a774383",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\nDerived from the formal results in `Catalog/Probability/Spike*.lean`. Each\ndirection is stated so that it can be refuted by a single computation or a\nsingle counterexample.\n\n## St",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-08-26T19:20:52",
+      "title": "FACT round-85 #1 — SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d11810a4",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## What this cycle established\n\nAll results are in `Catalog/Geometry/`, are `sorry`-free, and use only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`).\n\n* `Funda",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-08-19T21:42:07",
-      "title": "Derived from the three files of this line of work:"
-    },
     {
       "cycle_id": "2e28602b",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 110,
       "timestamp": "2026-08-26T17:00:47",
       "title": "Strengthen certified computation"
+    },
+    {
+      "cycle_id": "1a774383",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\nDerived from the formal results in `Catalog/Probability/Spike*.lean`. Each\ndirection is stated so that it can be refuted by a single computation or a\nsingle counterexample.\n\n## St",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-08-26T19:20:52",
+      "title": "FACT round-85 #1 — SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "56a9e19d",
-      "domain": "Novelty",
-      "name": "rms_nonneg",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "56a9e19d",
-      "domain": "Novelty",
-      "name": "rms_le_global",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "56a9e19d",
-      "domain": "Novelty",
-      "name": "one_le_scaleGain",
-      "quality": 0.79
-    },
     {
       "cycle_id": "56c4877a",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "reachesOne_one",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "1a774383",
+      "domain": "Probability",
+      "name": "flatExcess_eq",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "1a774383",
+      "domain": "Probability",
+      "name": "flatExcess_eq_composition_of_matched",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "1a774383",
+      "domain": "Probability",
+      "name": "composition_eq_zero_of_homogeneous",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-26T17:00:47",
+  "last_updated": "2026-08-26T19:20:52",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "f2707534",
-        "quality": 0.92,
-        "theorems": 115,
-        "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
-      },
-      {
         "cycle_id": "0f0bd7f8",
         "quality": 0.9,
         "theorems": 152,
@@ -3823,6 +3817,12 @@
         "quality": 0.84,
         "theorems": 13,
         "title": "FACT round-83 #1 — SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION "
+      },
+      {
+        "cycle_id": "1a774383",
+        "quality": 0.78,
+        "theorems": 103,
+        "title": "FACT round-85 #1 — SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT"
       }
     ],
     "Pythagorean": [
