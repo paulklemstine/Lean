@@ -2985,7 +2985,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9524045a",
     "description": "**exp 595 LARGER-P-ECM-TRACE · round-88 #1 · paper 244 · assessment v351 (count 582)**\n\nFresh seed **20260903** (disjoint from all prior ECM lineages), exp570 machinery VERBATIM,\nn=40/bitlen × 3 B1fracs {0.125 ceil, 0.5 ceil, 0.9 floor} × 3 curves, stage-1 only.\nWall **1.5 s** full (240 cells). Pre-registration in module docstring before any data; no amendments.\n\n## Pre-registered verdict\n\n- **H1(a) RATE scale-stability — FIRES at every fraction**, not just the named 0.125 leg:\n  bitlen 26: 0.65 [.495,.779] / 0.75 [.598,.858] / 0.60 [.446,.736]\n  bitlen 32: 0.75 [.598,.858] / 0.775 [.625,.877] / 0.75 [.598,.858]\n  z-tests p = .329 / .793 / .152; Wilson CIs overlap ×3. Rates FLAT in B1frac (0.60–0.775) —\n  no dose-response of the collision term anywhere.\n- **H1(b) GEOMETRY early-fire preserved — FIRES**: KS-vs-Uniform[0,1] REJECTS in all six cells\n  (p ≤ .002); medians .073–.293 (≪ .5); tail(norm ≥ .8) ≤ 13% (≪ .3); shape deepens with dose\n  exactly as at bitlen 26. <10-hit exclusion clause never triggered in the full run.\n- **H0 REFUTED on both legs** — registered alternative (rate drop toward per-curve baseline\n  1−exp(−1.44·B1/p) with disjoint CIs, or uniformity/late-fire emerging) did not occur.\n\n## Collision floor subdominant — two independent attributions\n\n1. First-curve found_p rate at (32, .125) = **.425 [.285,.578] = 2.58×** the per-curve constant\n   baseline .1647 ((26,.125): 1.97×).\n2. Pure-collision cross-check: found_q counts **9–16** vs found_p **24–31** per cell (B1<p≪q makes\n   order completion impossible for q) — order-hits carry the excess.\n\n## Ledger catches (disclosed)\n\n- The (32,.125) cell CI technically CONTAINS the exact per-N 3-curve baseline mean **0.6124**\n  (flag value \"contains\"); attributed to order-hits not luck via first-curve view + found_q.\n- Verdict-flag KEY names the constant-formula baseline 0.4191 while the CODE tests 0.6124\n  (label/code mismatch, `exp595_largep_trace.py` line 346) — runs AGAINST the headline since\n  0.4191 IS excluded by the same CI.\n- Catalog-numbering slip in findings header (\"chain 215→236→238\") — shifted numbers; true lineage\n  by title/exp_id is **215 → 218 → 244**, corrected in paper 244.\n- Early-fire operationalization fixed pre-data from exp570's qualitative result only; raw norms\n  shipped for re-reads. Smoke correctly read insufficient_hits (plumbing only).\n\n## Consequence — chain CLOSED\n\nPapers **215 (ECM-STAGE2-WALL) → 218 (COLLISION-VS-ORDER-TRACE) → 244 (this)** complete the arc:\nthe recorded destruction wall does not exist under outcome-separated accounting; low-B1 success is\nnot collision luck but order-completion firing early; and now that picture is SCALE-STABLE with no\ncollapse toward the collision baseline through bitlen 32. Practical reading: useful firing inside\nthe first ~10–30% of the schedule (medians ≤ .29).\n\n## Barrier validation\n\nNo breakthrough claimed — mechanism-attribution chain closed on the METHOD side. Untouched: residue\ncap 4/3; position 5.19×; external-hint laws; quantum frontier closed; four-class closure;\nspike-origin arc; .2346 provenance flag still travels; paper 242 entry single-seed-unconfirmed (#391).\nNamed next honest question: early-fire persistence where B1/p must shrink (u ≥ 6–14 directive).\nOpen frontiers unchanged: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1\neffectivity.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp595_{largep_trace.py, smoke.log,\nsmoke_result.json, result.json}` + `exp595_findings.md`; paper\n`ResearchOutput/NewMathematics/244_LargePTrace.md`; notebook Part 286.",
     "domain_bridges": [],
     "domains": [
@@ -2997,7 +2997,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T23:37:37.760304+00:00",
     "title": "FACT round-88 #1 — LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED — exp570's picture REPLICATES at bitlen 32 — cell found_p rates scale-stable at EVERY fraction (26: .65/.75/.60 vs 32: .75/.775/.75; z p=.33/.79/.15, CIs overlap), KS rejects uniformity ALL SIX cells (p≤.002; medians .073–.293, late-tail ≤13%) — collision floor SUBDOMINANT quantified (first-curve 2.6× baseline at (32,.125); found_q 9–16 vs found_p 24–31) — CHAIN CLOSED papers 215→218→244: low-B1 guarded-affine success = scale-stable order-completion firing early, no collapse toward 1−exp(−1.44·B1/p) through bitlen 32"
   },
@@ -3437,6 +3437,25 @@
     "status": "available",
     "timestamp": "2026-08-26T08:01:41.410582+00:00",
     "title": "NET-103 ENGINE-INVARIANCE CONFIRMED AND THE 30B MoE RUNS AT GOAL SPEED: ik_llama.cpp matches mainline quality to 0.039% while delivering 2.33x MoE prompt processing — Qwen3-30B-A3B IQ4_XS sustains 13.28-13.89 tok/s single-stream on pure CPU"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 79 (STARVED-LADDER methodology cell).\n\n**Ladder results:**\n\n| cap | 7B-q2_k | |\n|---|---|---|\n| 2500M | completes, **0.61 tok/s** | STARVED-STREAMING regime |\n| 3000M | **8.82 tok/s** | full residency begins |\n| 3500M-8000M | 8.81-8.82 flat | placebo (<1% delta) |\n\n1.5B-q4_k_m: flat 25.2 tok/s across {1250M..2000M}. All eight arms COMPLETED with zero OOM kills; sha256 corruption canaries clean pre/post on both models.\n\n**Scorecard:** P2 streaming-regime CONFIRMED; P3 placebo-cheap CONFIRMED (<1% << 5%); P1 formula-validation deferred to offline computation against the measured (2500M, 3000M] bracket (the naive file+KV+overhead estimate over-predicted the threshold — mmap file-backed pages are reclaimable before OOM, so the survivable threshold sits BELOW the residency threshold).\n\n**The law:** below the RAM wall there is a REAL, usable-if-slow streaming regime carried entirely by mmap page reclamation — the params_max formula predicts the RESIDENT threshold, not the SURVIVABLE one; deployment planning needs both numbers.\n\n**Also verified:** the '--user --scope' launcher fix works in production across all arms (the unprivileged-systemd-run bug class stays closed).\n\nSetup: systemd-run --user --scope MemoryMax ladder, llama-completion ctx=2048 n=128 threads=8, sha256 canaries. Script ResearchOutput/exp_net104_starvedladder.py.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4265",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-26T09:04:00.706227+00:00",
+    "title": "NET-104 THE-THREE-REGIME-MAP: mmap streaming is a real fallback below the RAM wall (7B-q2_k completes @2500M cap at 0.61 tok/s = 14x slowdown, zero OOM) — resident/full-speed/placebo regimes cleanly separated"
   },
   {
     "ambition_level": "grand_challenge",
@@ -4477,6 +4496,25 @@
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 220a83a3 (Q=0.820), which proved 145 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`.\nThen the classifier `whichMove` remains sound, but seed recovery of a control\nword of length `k` from a single observed state requires `Ω(3^k / poly)` work\nunless the discrete-logarithm-like problem for the matrix `B₂` modu",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_220a83a3_18633493",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "220a83a3",
+    "status": "available",
+    "timestamp": "2026-08-26T09:03:40.453973+00:00",
+    "title": "Deepening: Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -5278,26 +5316,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Prove the invariant subspace theorem for compact operators on Hilbert spaces (Aronszajn-Smith). Formalize Lomonosov's theorem: operators commuting with a nonzero compact operator have invariant subspaces. Explore the Enflo-Read counterexample structure.",
-    "domain_bridges": [],
-    "domains": [
-      "Analysis",
-      "Algebra"
-    ],
-    "id": "fd_0661",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697771+00:00",
-    "title": "Invariant Subspace Problem: Special Cases"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cramér-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
     "domain_bridges": [],
     "domains": [
@@ -5790,6 +5808,25 @@
     "title": "Close Proofs: The Bell defect, counted exactly"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle a0dce043 (Q=0.780) proved 50 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future directions\n\nFive bold, testable conjectures generated by this cycle's analysis of denominator primes of\nmultiples of points on Mordell curves `E_N : y² = x³ + N`.  Layers 2 and 3 are now theo",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_a0dce043_141322d0",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a0dce043",
+    "status": "available",
+    "timestamp": "2026-08-20T17:46:20.509434+00:00",
+    "title": "Close Proofs: Five bold, testable conjectures generated by this cycle's analysis of "
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -5810,25 +5847,6 @@
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle a0dce043 (Q=0.780) proved 50 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future directions\n\nFive bold, testable conjectures generated by this cycle's analysis of denominator primes of\nmultiples of points on Mordell curves `E_N : y² = x³ + N`.  Layers 2 and 3 are now theo",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "sorry_fill_a0dce043_141322d0",
-    "lineage_refs": [],
-    "priority_score": 0.8300000000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a0dce043",
-    "status": "available",
-    "timestamp": "2026-08-20T17:46:20.509434+00:00",
-    "title": "Close Proofs: Five bold, testable conjectures generated by this cycle's analysis of "
   },
   {
     "ambition_level": "extension",
@@ -22627,6 +22645,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Cryptography.BerggrenModular.SilverOrbit",
+      "Cryptography.BerggrenModular.Hardness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The B₂ orbit was shown to be the Pell ladder, so its discrete logarithm modulo p should be the discrete logarithm in the norm-one torus of 𝔽_p(√2). Establishing the isomorphism would give the exact period of the B₂ spine (p∓1 depending on the quadratic character of 2) and replace pigeonhole period bounds by sharp ones.\n\nFor odd prime p the cyclic group generated by B₂ in GL₃(ℤ/p) is isomorphic to the norm-one subgroup of 𝔽_p(√2)^×, of order p−1 if 2 is a square mod p and p+1 otherwise.\n\nConstruct the explicit ring map ℤ[√2] → Mat₃ sending 1+√2 to a square root of B₂ on the Pell plane, then compute orders for a range of primes and compare with p∓1.\n\nThe 'discrete-logarithm-like problem for B₂' becomes a torus discrete logarithm with known index-calculus behaviour, giving a concrete hardness assumption.\n\nThe B₂ spine has a smaller period than the torus predicts, giving an unexpected shortcut attack on the seed-recovery problem.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4263",
+    "lineage_refs": [],
+    "priority_score": 0.565064112764978,
+    "proof_strategy": "Diagonalise B₂ over 𝔽_p(√2) using the proved factorisation (B₂+I)(B₂²−6B₂+I)=0; identify the two-dimensional block with multiplication by 3+2√2; compute the order of that unit.",
+    "research_mode": "team",
+    "source_exp_id": "220a83a3",
+    "status": "available",
+    "timestamp": "2026-08-26T09:03:27.231702+00:00",
+    "title": "Norm-One Torus Model of the B2 Discrete Logarithm"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Computation.SpectralPairCorrelationStaircase",
       "Computation.SpectralUnfoldingGapStatistics"
     ],
@@ -22691,6 +22732,29 @@
     "status": "available",
     "timestamp": "2026-08-26T05:51:59.300346+00:00",
     "title": "Uniform Filtration Recipe for Sahlqvist Interaction Conditions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.BerggrenModular.Core",
+      "Cryptography.BerggrenModular.SilverOrbit"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Berggren monoid is free over ℤ, so all relations modulo m come from reduction. Empirically the number of distinct length-k states jumps from 3^k to a constant with no intermediate polynomial regime; the conjecture asserts this cutoff is sharp and that all relations are long.\n\nFor m coprime to 6 the image of the Berggren monoid in GL₃(ℤ/m) admits only relations of length ≥ c·log m, and #{states of length k} = min(3^k, |image|)(1+o(1)) with a sharp cutoff.\n\nEnumerate states of each length for m up to a few hundred and fit the transition width; formalise the lower bound on relation length via the hypotenuse growth estimate 5^{t+1} ≤ c_t.\n\nThe Berggren congruence monoid behaves like a random expander quotient of the free monoid, an attractive source of hash-like constructions.\n\nShort relations exist, giving explicit collisions and hence a structural attack on any Berggren-based commitment.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_4264",
+    "lineage_refs": [],
+    "priority_score": 0.5648909102497606,
+    "proof_strategy": "Use applyWord_injective for freeness over ℤ and pellC_lower_bound-style growth to show any relation forces a large integer state, hence a large modulus.",
+    "research_mode": "team",
+    "source_exp_id": "220a83a3",
+    "status": "available",
+    "timestamp": "2026-08-26T09:03:27.801167+00:00",
+    "title": "Sharp Cutoff for the Berggren Congruence Monoid"
   },
   {
     "ambition_level": "extension",
@@ -23352,6 +23416,29 @@
     "status": "available",
     "timestamp": "2026-08-26T08:00:47.148646+00:00",
     "title": "Dickman Convexity Beyond the First Branch"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.BerggrenModular.NullCone",
+      "Cryptography.BerggrenModular.Hardness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The set of Pythagorean states reachable modulo m from (3,4,5) appears to have exactly ½m²∏(1−p⁻²) elements, i.e. half of the punctured null cone modulo a prime. Proving it would replace the crude 2p² upper bound used in the current hardness theorems by the exact (p²−1)/2 and make every ambiguity bound tight. The approach is to identify the Berggren monoid image with an index-two subgroup of the modular orthogonal group of a²+b²−c².\n\nFor all m ≥ 3 the Berggren orbit of (3,4,5) in (ℤ/m)³ has cardinality ½ m² ∏_{p|m} (1 − p⁻²); for prime p this is (p²−1)/2, exactly half the punctured null cone.\n\nFormalise the count of zeros of the ternary form a²+b²−c² over 𝔽_p via the substitution (x,y,z)=(c−a,c+a,b) reducing to xy=z², then show the orbit is one of the two cosets of the index-two subgroup generated by the three moves.\n\nAll ambiguity and impossibility thresholds sharpen from 2p² to (p²−1)/2, and the observation space of the adversary is completely determined.\n\nThe orbit is a proper subset of the half-cone, revealing an additional arithmetic invariant beyond the Lorentz form and primitivity.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4261",
+    "lineage_refs": [],
+    "priority_score": 0.5644911526588344,
+    "proof_strategy": "Prove #{v ∈ 𝔽_p³ : v₁²+v₂²=v₃²} = p² by the xy=z² count; prove the Berggren generators lie in SO(Q) and generate an index-two subgroup; transitivity on the coset by lifting the integer classifier.",
+    "research_mode": "team",
+    "source_exp_id": "220a83a3",
+    "status": "available",
+    "timestamp": "2026-08-26T09:03:26.078988+00:00",
+    "title": "Half-Cone Orbit Count for Berggren Moves mod m"
   },
   {
     "ambition_level": "extension",
@@ -38641,6 +38728,28 @@
     "status": "available",
     "timestamp": "2026-08-26T07:09:57.867965+00:00",
     "title": "Sharp Threshold 36483 for the Scale-Free 0.44 Constant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.BerggrenModular.Threshold",
+      "Cryptography.BerggrenModular.Hardness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Recovery of a length-k Berggren control word from one state in (ℤ/m)³ is possible for very large m and impossible for small m; this cycle brackets the transition between 3^{k/3} and 5·7^k. The conjecture is that the true transition is at m ≍ 7^{αk} with α = log 3 / log 7. The route is an average-case growth estimate for the hypotenuse along a random branch.\n\nThere is α = log 3 / log 7 such that modular seed recovery of length-k words is possible for m ≥ 7^{(α+ε)k} and impossible for m ≤ 7^{(α−ε)k}, for every ε > 0 and all large k.\n\nCompute the distribution of log c after k random moves (a random walk with three explicit multiplicative steps) and compare the resulting typical modulus with the counting obstruction 3^k.\n\nThe security parameter of any Berggren-based construction is pinned exactly: modulus size must be sub-7^{αk} to be safe.\n\nThe transition is governed by the worst-case rather than the typical branch, meaning rare heavy branches dominate the recoverability question.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4262",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Upgrade hyp_applyWord_le to a per-branch estimate; use a large-deviation bound for the sum of the three log-factors; combine with mod_ambiguity_lower_bound on the other side.",
+    "research_mode": "team",
+    "source_exp_id": "220a83a3",
+    "status": "available",
+    "timestamp": "2026-08-26T09:03:26.659304+00:00",
+    "title": "Silver-Ratio Phase Transition for Modular Seed Recovery"
   },
   {
     "ambition_level": "extension",
@@ -56858,23 +56967,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "220a83a3",
-    "description": "*Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`.\nThen the classifier `whichMove` remains sound, but seed recovery of a control\nword of length `k` from a single observed state requires `Ω(3^k / poly)` work\nunless the discrete-logarithm-like problem for the matrix `B₂` modulo `m` is\neasy.*",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1560",
-    "lineage_refs": [],
-    "priority_score": 0.4066666666666666,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "24a12580",
-    "status": "in_progress",
-    "timestamp": "2026-08-18T21:38:37.125696+00:00",
-    "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Construct a finite list of all fundamental\n   discriminants satisfying `|D| ≤ 1000`, prove soundness and completeness of that list,\n   and derive the exact count in Lean. This is the missing part of the proposed bounded test;\n   no unchecked count is asserted here.",
     "domain_bridges": [],
@@ -62430,7 +62522,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3980a1a",
     "description": "The included evidence kernel-checks inputs `1..20`. Larger bounds can be certified with efficient arrays and reflection, but no finite bound proves the universal conjecture.",
     "domain_bridges": [],
     "domains": [],
@@ -62440,7 +62532,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "20c9506b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:24.089590+00:00",
     "title": "Strengthen certified computation"
   },

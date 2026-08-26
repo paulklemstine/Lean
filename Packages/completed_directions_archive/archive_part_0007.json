@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-08-26T08:01:09Z",
-  "count": 6,
+  "archived_at": "2026-08-26T09:03:28Z",
+  "count": 7,
   "directions": [
     {
       "id": "fd_3695",
@@ -238,6 +238,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 306
+    },
+    {
+      "id": "fd_1560",
+      "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`.",
+      "description": "*Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`.\nThen the classifier `whichMove` remains sound, but seed recovery of a control\nword of length `k` from a single observed state requires `Ω(3^k / poly)` work\nunless the discrete-logarithm-like problem for the matrix `B₂` modulo `m` is\neasy.*",
+      "source_exp_id": "24a12580",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/24a12580",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4066666666666666,
+      "status": "completed",
+      "consumed_by_exp_id": "220a83a3",
+      "timestamp": "2026-08-18T21:38:37.125696+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-26T03:21:31.955061+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

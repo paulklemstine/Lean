@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-26T08:01:22.262870+00:00",
+  "last_updated": "2026-08-26T09:03:44.353232+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -68829,6 +68829,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-26T08:01:22.026667+00:00",
       "title": "FACT round-88 #2 \u2014 EDGE-CAP (exp 594 FINAL): H0 \u2014 SPIKE STEEPNESS UNIDENTIFIABLE AT THIS DATA SIZE ("
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Cryptography",
+      "duration_seconds": 3675.658098220825,
+      "end_time": 1787734956.2140634,
+      "files_integrated": 4,
+      "job_id": "220a83a3",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787731280.5559652,
+      "strategy_count": 0,
+      "theorem_count": 145,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 106,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-26T09:03:43.939412+00:00",
+      "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(\u2124/m)\u00b3`."
     }
   ]
 }

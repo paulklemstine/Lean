@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a331ba56",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — complementation symmetry of framed puzzles\n\nThis cycle settled the mission conjecture in a stronger and sharper form.  What\nwas proved (all sorry-free, in `Catalog/Novelty/`):\n\n*",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 117,
-      "timestamp": "2026-08-24T15:58:01",
-      "title": "Complementation as a free involution"
-    },
-    {
       "cycle_id": "194ffa72",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — from the exact off-resonance window formula\n\nAll results referenced below live in `Catalog/NumberTheory/OffResonanceWindow.lean`,\nwhich compiles with **zero `sorry`** and only th",
@@ -499,19 +489,19 @@
       "theorem_count": 50,
       "timestamp": "2026-08-26T08:01:16",
       "title": "FACT round-88 #2 — EDGE-CAP (exp 594 FINAL): H0 — SPIKE STEEPNESS UNIDENTIFIABLE AT THIS DATA SIZE ("
+    },
+    {
+      "cycle_id": "220a83a3",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Berggren moves on `(ℤ/m)³`\n\nThis cycle established, with complete Lean proofs in\n`Catalog/Cryptography/BerggrenModular/`:\n\n* the exact linear classifier `whichMove (a,b,c) = [5a<",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 145,
+      "timestamp": "2026-08-26T09:03:40",
+      "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6bc62e41",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures growing out of this cycle.  Each is stated against the\ndefinitions now in `Catalog/Applications/PoissonSummationConverse.lean`,\n`Catalog/Applications/",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-19T15:46:51",
-      "title": "Both sides of the identity are already available as Lean theorems"
-    },
     {
       "cycle_id": "b8ad3057",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 50,
       "timestamp": "2026-08-26T08:01:16",
       "title": "FACT round-88 #2 — EDGE-CAP (exp 594 FINAL): H0 — SPIKE STEEPNESS UNIDENTIFIABLE AT THIS DATA SIZE ("
+    },
+    {
+      "cycle_id": "220a83a3",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Berggren moves on `(ℤ/m)³`\n\nThis cycle established, with complete Lean proofs in\n`Catalog/Cryptography/BerggrenModular/`:\n\n* the exact linear classifier `whichMove (a,b,c) = [5a<",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 145,
+      "timestamp": "2026-08-26T09:03:40",
+      "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a32bc1e4",
-      "domain": "Combinatorics",
-      "name": "residue_apply",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a32bc1e4",
-      "domain": "Combinatorics",
-      "name": "test_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6247b80f",
-      "domain": "Shared",
-      "name": "coeff_traceLaurent_natCast",
-      "quality": 0.82
-    },
     {
       "cycle_id": "6247b80f",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "truncExpCDF_pos",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "220a83a3",
+      "domain": "Cryptography",
+      "name": "card_move",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "220a83a3",
+      "domain": "Cryptography",
+      "name": "lorentz_applyMove",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "220a83a3",
+      "domain": "Cryptography",
+      "name": "lorentz_invMove",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-26T08:01:16",
+  "last_updated": "2026-08-26T09:03:40",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "f87f1170",
-        "quality": 0.86,
-        "theorems": 69,
-        "title": "Sharper threshold certification"
-      },
-      {
         "cycle_id": "ba827ea4",
         "quality": 0.88,
         "theorems": 154,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 47,
         "title": "FACT round-84 #2 — SPIKE-ORIGIN (exp 589): H0-MIXED — paper 238's left-edge spik"
+      },
+      {
+        "cycle_id": "220a83a3",
+        "quality": 0.82,
+        "theorems": 145,
+        "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
       }
     ],
     "Geometry": [
