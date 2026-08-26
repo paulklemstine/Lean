@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a3cbf41f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThree strands of theory were developed in this cycle:\n\n* **The narrowing law.** The bracket that a fail/pass pair licenses; protection\n  as head dominance of retention curves; the",
-      "quality_score": 0.81,
-      "sorry_count": 0,
-      "theorem_count": 51,
-      "timestamp": "2026-08-24T17:48:26",
-      "title": "NET-87: CODE-AT-4096-IS-PROTECTED — code knee @4096 is 32 vs prose 40; domain factor narrows at long"
-    },
-    {
       "cycle_id": "d4951edd",
       "domain": "Cryptography",
       "key_insight": "# Future directions — the adic anatomy of Pythagorean trees\n\nDerived from the results proved in `Catalog/Cryptography/Price2Adic/`:\n`Tree.lean` (uniqueness, completeness, depth squeeze), `Letters.lean",
@@ -499,19 +489,19 @@
       "theorem_count": 137,
       "timestamp": "2026-08-26T10:53:16",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    },
+    {
+      "cycle_id": "837a61ec",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — the weight-exponent layer of the QR product dial\n\nThis cycle formalized the mathematics underlying exp-586's refinement `1/ℓ → 1/√ℓ`:\nthe weight family and its log-convexity, the",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-08-26T10:53:39",
+      "title": "FACT round-83 #2 — WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED — dial weight exponent alpha_h"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0f708106",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nDerived from the Stage 3/4 analysis of this cycle.  Each conjecture is falsifiable, and each\ncomes with the precise statement one would formalise next.\n\nEstablished this cycle (al",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 109,
-      "timestamp": "2026-08-19T17:41:03",
-      "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
-    },
     {
       "cycle_id": "ab33dc9e",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 137,
       "timestamp": "2026-08-26T10:53:16",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    },
+    {
+      "cycle_id": "837a61ec",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — the weight-exponent layer of the QR product dial\n\nThis cycle formalized the mathematics underlying exp-586's refinement `1/ℓ → 1/√ℓ`:\nthe weight family and its log-convexity, the",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-08-26T10:53:39",
+      "title": "FACT round-83 #2 — WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED — dial weight exponent alpha_h"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a08d5a50",
-      "domain": "NumberTheory",
-      "name": "windowMass_eq_log",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "a08d5a50",
-      "domain": "NumberTheory",
-      "name": "windowMass_tendsto_finite",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "7b6f9981",
-      "domain": "NumberTheory",
-      "name": "SumOfThreeNonzeroCubes_of_positive",
-      "quality": 0.79
-    },
     {
       "cycle_id": "7b6f9981",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "ofBool_false",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "837a61ec",
+      "domain": "Tropical",
+      "name": "dialWeight_pos",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "837a61ec",
+      "domain": "Tropical",
+      "name": "dialSum_pos",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "837a61ec",
+      "domain": "Tropical",
+      "name": "dialWeight_strictAnti",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-26T10:53:16",
+  "last_updated": "2026-08-26T10:53:39",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "43e7ffcb",
-        "quality": 0.72697,
-        "theorems": 37,
-        "title": "The Factor3 Program: A Definitive Synthesis of the Barrier Framework"
-      },
-      {
         "cycle_id": "9c680c24",
         "quality": 0.78,
         "theorems": 86,
@@ -4009,6 +4003,12 @@
         "quality": 0.83,
         "theorems": 63,
         "title": "C3. The even/odd dichotomy of the one-bit cap"
+      },
+      {
+        "cycle_id": "837a61ec",
+        "quality": 0.72,
+        "theorems": 58,
+        "title": "FACT round-83 #2 — WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED — dial wei"
       }
     ]
   }
