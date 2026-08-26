@@ -1,0 +1,50 @@
+[
+ {
+  "size": 60,
+  "arm": "fixed_11k",
+  "s": 0.0,
+  "ok": true
+ },
+ {
+  "size": 60,
+  "arm": "fixed_250k",
+  "s": 0.0,
+  "ok": true
+ },
+ {
+  "size": 60,
+  "arm": "adaptive",
+  "s": 0.0,
+  "ok": true
+ },
+ {
+  "size": 60,
+  "arm": "oracle",
+  "s": 0.0,
+  "ok": true
+ },
+ {
+  "size": 70,
+  "arm": "fixed_11k",
+  "s": 0.2,
+  "ok": true
+ },
+ {
+  "size": 70,
+  "arm": "fixed_250k",
+  "s": 0.7,
+  "ok": false
+ },
+ {
+  "size": 70,
+  "arm": "adaptive",
+  "s": 0.5,
+  "ok": true
+ },
+ {
+  "size": 70,
+  "arm": "oracle",
+  "s": 2.2,
+  "ok": true
+ }
+]
