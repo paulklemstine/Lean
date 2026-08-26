@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "886e75dc",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — after the magnitude-mirror seal (round 70, #6)\n\nThree cycles of the loop produced: (1) the structural identity that kills the\nenergy-ascent sensors, (2) an exact *characterisatio",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-24T22:45:54",
-      "title": "FACT round-70 #6 — MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all re"
-    },
-    {
       "cycle_id": "51837664",
       "domain": "Probability",
       "key_insight": "# Future Directions — after the Two-Adic Price Law\n\nThis cycle closed the Price tree's 2-adic question in the exact form it was posed: the\naddress letters at positions 0 and 1 (counted from the leaf)",
@@ -499,19 +489,19 @@
       "theorem_count": 127,
       "timestamp": "2026-08-26T14:08:32",
       "title": "Kernel patterns"
+    },
+    {
+      "cycle_id": "1bcec21a",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — canonical α-connections, after the analytic core\n\nThis cycle turned the catalog's *algebraic* α-connection identities\n(`Probability/InformationGeometryContrarian.lean`: `((1-α)/2",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-26T15:55:04",
+      "title": "Canonical alpha-connections"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a985d45a",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — after Cycle 5 (frame definability for `ModalSystem`)\n\nCycle 5 added the missing definability layer over the Cycle-1 `KFrame`/`sat` apparatus:\naxiom-to-relation correspondences (`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-19T20:46:03",
-      "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
-    },
     {
       "cycle_id": "c442a26f",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 127,
       "timestamp": "2026-08-26T14:08:32",
       "title": "Kernel patterns"
+    },
+    {
+      "cycle_id": "1bcec21a",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — canonical α-connections, after the analytic core\n\nThis cycle turned the catalog's *algebraic* α-connection identities\n(`Probability/InformationGeometryContrarian.lean`: `((1-α)/2",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-26T15:55:04",
+      "title": "Canonical alpha-connections"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0dec095c",
-      "domain": "Novelty",
-      "name": "rateT_continuousOn",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "0dec095c",
-      "domain": "Novelty",
-      "name": "rateT_blockMean_strictAnti",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "7b0f4515",
-      "domain": "Probability",
-      "name": "product_bound_does_not_imply_sum_bound",
-      "quality": 0.84
-    },
     {
       "cycle_id": "7b0f4515",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "card_patterns_eq_sum_blocks",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "1bcec21a",
+      "domain": "Combinatorics",
+      "name": "score_add_smul",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "1bcec21a",
+      "domain": "Combinatorics",
+      "name": "partitionFn_pos",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "1bcec21a",
+      "domain": "Combinatorics",
+      "name": "partitionFn_ne_zero",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-26T14:08:32",
+  "last_updated": "2026-08-26T15:55:04",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "a3ad9f21",
-        "quality": 0.82,
-        "theorems": 63,
-        "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
-      },
-      {
         "cycle_id": "d7470f1b",
         "quality": 0.86,
         "theorems": 101,
@@ -3265,6 +3259,12 @@
         "quality": 0.72,
         "theorems": 111,
         "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfe"
+      },
+      {
+        "cycle_id": "1bcec21a",
+        "quality": 0.78,
+        "theorems": 68,
+        "title": "Canonical alpha-connections"
       }
     ],
     "Computation": [

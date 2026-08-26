@@ -2966,7 +2966,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "706f4225",
     "description": "Paper 249 (ResearchOutput/NewMathematics/249_ConsecutiveVDependency.md). Executes exp 598's pre-registered H0 route.\n\n**Design** (pre-registered before analysis): hit-indicator autocorrelation lags 1–20 in mid-window u ∈ [0.55,0.75], nb=1000 (robustness 500/2000); Amendment 0 pre-data — PRIMARY = per-batch quadratic-detrended ρ + MC-calibrated runs Z against pooled density curve p̂(u); SECONDARY literal global-mean; H1 iff |ρ| > 0.05 AND cluster-over-Ns CI excludes 0 at some lag, OR runs |Z| > 3.2905 (p < 0.001). Controls pre-committed: C1 ctl null both variants; C2 synthetic smooth-hump iid at rate curve; C3 injected lag-1 dependence must detect. Data: exp581_regen_positions.npz (sha256 0b1afa50…36a38; 128 batches, 9,594 hits, no N stored — purely positional). Boot/MC 2000 reps each, seed 599_20260828; wall 31.4 s.\n\n**Verdict H0_PURE_DENSITY**: detrended ρ(lag) ∈ [−0.0199, −0.0023] (max |ρ| = 0.020 << 0.05), flat/slightly negative — no refractory dip, no excitation bump; per-lag MC-vs-density-curve p ∈ [0.128, 0.969]; SECONDARY even more null (ρ_raw ∈ [−0.0103, +0.0046]); runs null BOTH readings (textbook Z = +0.850 p≈0.40; MC-calibrated Z = +0.894 p≈0.37; ctl Z = −0.454). Robustness nb500 max|ρ_det| = 0.036, nb2000 0.016.\n\n**Controls all met**: C1 null (.009 raw/.020 det); C2 synthetic-hump ALSO null on secondary (max .014 @lag17, pooled_Z +0.60) ⇒ curvature confound quantitatively immaterial — conditioned and literal readings AGREE, verdict not amendment-dependent; C3 injected lag-1 DETECTED MASSIVELY (ρ_det(lag1)=0.337, argmax exactly 1, pooled_Z −57.4) ⇒ null means \"no dependency\", not \"test blind\".\n\n**CONSEQUENCE (terminal characterization)**: given position, neighboring hits carry NO information about each other — the u* ≈ 0.65 excess is pure density/rate heterogeneity along the scan axis. Thread closure chain: excess real on home seed (papers 239/241) → divisibility a rate dial not position dial (242) → no j-arithmetic carrier (248) → no sequence structure (HERE). Hit-position thread papers 228–230 → 231 → 238/240 → 241–242 → 248 CLOSES COMPLETELY. Operational law: future gains come from modeling the positional DENSITY CURVE itself, never Markov/neighborhood structure. Scope honest: holds where the excess manifests (seed-20260828 lineage); exp592/#391 ≥3-pooled-seed amplitude test remains open — machinery transfers unchanged if an excess re-establishes elsewhere.\n\n**Ledger catches**: seed-20260828 ctl regeneration via two canonical recipes BOTH mismatch ctl_0 — recipe not recoverable from allowed reads; provenance rests on sha256 (disclosed). RECORD-TIME CORRECTION: findings' \"every CI straddles 0\" overstates — result.json shows 12/20 detrended CIs exclude zero on the NEGATIVE side, upper ends ≤ 0.0083 (raw 19/20 straddle; uniform ~−0.01 offset mirrored ~+0.01 on controls — opposite-sign shared-magnitude artifact, not structure); verdict unaffected (H1 required |ρ| > 0.05 AND CI exclusion JOINTLY).\n\nBarrier framing: none — terminal characterization inside the mapped positional stratum. Open unchanged: u ≥ 6–14 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, external-hint laws, quantum closed; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling.",
     "domain_bridges": [],
     "domains": [
@@ -2978,7 +2978,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-25T01:54:45.653750+00:00",
     "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-window hits INDEPENDENT given position — lag profile lags 1–20 flat/slightly negative ρ ∈ [−0.020, −0.002] vs 0.05 bar (MC p 0.128–0.969), runs null both readings (Z +0.85 textbook / +0.89 density-calibrated vs 3.29), POWER CONFIRMED (injected lag-1 ρ_det = 0.337 detected at argmax exactly lag 1) — u* ≈ 0.65 excess = PURE DENSITY / rate heterogeneity, NO sequence structure — POSITIONAL THREAD CLOSES COMPLETELY (228–230 → 231 → 238/240 → 241–242 → 248)"
   },
@@ -5221,47 +5221,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} ≥ vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "fd_0669",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697791+00:00",
-    "title": "Convex Geometry: Brunn-Minkowski Theory"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cramér-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Probability",
-      "Bridges"
-    ],
-    "id": "fd_0695",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697848+00:00",
-    "title": "Information Geometry: Fisher Metric on Statistical Models"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domain_bridges": [],
     "domains": [
@@ -5736,6 +5695,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 1bcec21a (Q=0.780), which proved 68 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Lower-index natural-coordinate coefficients\n   are defined by `((1 - α) / 2) C`, where `C` is the Amari–Chentsov cubic\n   tensor. The development proves e-flatness at `α = 1`, the dual\n   expectation-coordinate m-flatness at `α = -1`, opposite-alpha duality, and\n   the Levi–Civita midpoint identity.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_1bcec21a_5ad84941",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1bcec21a",
+    "status": "available",
+    "timestamp": "2026-08-26T15:55:04.748606+00:00",
+    "title": "Deepening: Canonical alpha-connections"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
     "domain_bridges": [],
     "domains": [
@@ -5753,26 +5731,6 @@
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Study the topology of real algebraic curves and surfaces. Formalize the Harnack bound, classify real algebraic curves by arrangement of ovals, and connect to the second part on limit cycles of planar polynomial ODEs.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Topology"
-    ],
-    "id": "seed_023",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hilbert 16: Topology of Algebraic Curves"
   },
   {
     "ambition_level": "extension",
@@ -52866,6 +52824,66 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** On the simplex of a finite sample space, a totally symmetric\n3-tensor field that is (i) natural under all Markov embeddings and (ii) annihilated\nat every point admitting a weight-preserving sign-reversing involution is a\nconstant multiple of the Amari–Chentsov tensor.\n\nThe key insight is that our involution theorem produces an explicit, purely\ncombinatorial family of *zeros* of any admissible tensor, and zeros at a\nZariski-dense set of symmetric points plus naturality should be enough to pin the\ntensor down without the usual representation-theoretic machinery.\n\n**Why now?** `amariCubic_eq_zero_of_involution` gives the zero set in closed\nform, and finite Markov embeddings are combinatorial maps between finite index\nsets — the whole statement lives in a category the catalog can already express.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4289",
+    "lineage_refs": [],
+    "priority_score": 0.4421827738030648,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1bcec21a",
+    "status": "available",
+    "timestamp": "2026-08-26T15:54:49.637081+00:00",
+    "title": "Chentsov uniqueness from the involution collapse"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For a binary graphical model on a graph `G` with pairwise\nfeatures, the Amari–Chentsov tensor component `C_{eee}` for an edge feature `e`\nfactors as `p_e (1 − p_e)(1 − 2 p_e)` and the *mixed* component `C_{ef g}`\nvanishes whenever the features `e, f, g` lie in three distinct connected\ncomponents — with the converse failing precisely at triangles.\n\nThe key insight is that `cum3_binary_feature` and `cum3_mixed_product_eq_zero`\nare the two extreme cases (one feature; independent blocks) of a single\ninclusion–exclusion statement about third cumulants of indicator features, whose\ncombinatorics is governed by the cycle structure of `G`.\n\n**Why now?** Both extremes are now formal theorems with a shared proof\n(`cum3_expand` plus factorisation), so the interpolating statement is a\ncombinatorial bookkeeping problem over subgraphs rather than new analysis.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_4290",
+    "lineage_refs": [],
+    "priority_score": 0.4421827738030648,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1bcec21a",
+    "status": "available",
+    "timestamp": "2026-08-26T15:54:50.193458+00:00",
+    "title": "Skewness dichotomy for graphical (Ising-type) models"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The mean map `θ ↦ (∂_i ψ(θ))_i` of a finite exponential family is\ninjective with image an open convex set, and the induced dual coordinates make the\n`α = −1` connection flat, yielding a fully formal generalised Pythagorean theorem\nfor the Kullback–Leibler divergence on finite models.\n\nThe key insight is that injectivity is exactly strict convexity of `ψ`, which our\nsecond-derivative theorem identifies with positive definiteness of the Fisher\nmetric — already available in the catalog as `featureFisher_null_iff`.\n\n**Why now?** The first two derivatives of `ψ` are formalised and the null-space\ncriterion for the Fisher form is in the catalog, so the convexity argument closes\nwithout new analytic input.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Quadratic Curvature Pencil of Alpha-Connections\",\n    \"domain\": \"Geometry\",\n    \"description\": \"The lower-index alpha-coefficients are affine in alpha, but curvature is quadratic in the connection. We conjecture that the alpha-curvature of a finite exponential family is a parabola in alpha with roots exactly at the dually flat endpoints alpha = 1 and alpha = -1, whose leading coefficient is a Gauss-type quadratic expression in the Amari-Chentsov tensor. This would explain dual flatness as a root phenomenon rather than a coincidence.\",\n    \"conjecture\": \"For a finite exponential family with Fisher metric g and Amari-Chentsov tensor C, the alpha-curvature tensor satisfies R^{(alpha)} = ((1 - alpha^2)/4) * Q(C, g) for a fixed quadratic expression Q, so R^{(alpha)} = 0 exactly at alpha = 1 and alpha = -1 when Q(C,g) is nonzero.\",\n    \"test\": \"Differentiate the Fisher metric twice using the existing hasDerivAt_covar machinery to obtain the fourth-cumulant identity, then assemble the curvature from the natural-coordinate coefficients and verify the quadratic dependence in alpha symbolically for the Bernoulli and Rademacher families first.\",\n    \"if_true\": \"Dual flatness at alpha = +/-1 becomes a corollary of a single algebraic identity, and the whole pencil is determined by two cumulant tensors.\",\n    \"if_false\": \"The alpha-family carries curvature information beyond the third and fourth cumulants, forcing a genuinely higher-order invariant.\",\n    \"proof_strategy\": \"Extend cum3_expand to a fourth-order polarisation lemma, differentiate hasDerivAt_fisher once more to get the fourth cumulant, then compute the curvature of the coefficient family and factor the resulting polynomial in alpha.\",\n    \"catalog_references\": [\"Combinatorics.AlphaConnectionCanonical\", \"Probability.InformationGeometryContrarian\"]\n  },\n  {\n    \"title\": \"Involution Zero Sets and Chentsov Uniqueness\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"A weight-preserving sign-reversing involution forces the cubic tensor to vanish at the origin of natural coordinates. We conjecture that this combinatorial zero set, together with naturality under Markov embeddings, characterises the Amari-Chentsov tensor up to scale on finit",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4291",
+    "lineage_refs": [],
+    "priority_score": 0.4420425990633894,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1bcec21a",
+    "status": "available",
+    "timestamp": "2026-08-26T15:54:51.022629+00:00",
+    "title": "Dual affine coordinates and a finite Pythagorean theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize conservative and faithful interpretations between theories. This would distinguish expressive convenience, uniform abstraction, and genuine proof-theoretic strength.",
     "domain_bridges": [],
     "domains": [
@@ -56063,23 +56081,6 @@
     "status": "available",
     "timestamp": "2026-08-19T22:41:46.891152+00:00",
     "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "1bcec21a",
-    "description": "Lower-index natural-coordinate coefficients\n   are defined by `((1 - α) / 2) C`, where `C` is the Amari–Chentsov cubic\n   tensor. The development proves e-flatness at `α = 1`, the dual\n   expectation-coordinate m-flatness at `α = -1`, opposite-alpha duality, and\n   the Levi–Civita midpoint identity.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_2764",
-    "lineage_refs": [],
-    "priority_score": 0.421,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "645d6476",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:59.443380+00:00",
-    "title": "Canonical alpha-connections"
   },
   {
     "ambition_level": "extension",
@@ -62050,7 +62051,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6834b885",
     "description": "The `m = 2` case is proved, the stability estimate needed for the\ninduction (`|y| ≤ 25/24` propagating to `|h y| ≤ 1`) is explicit in the file, and\nthe missing ingredient is a clean statement of the invariant, not new analysis.",
     "domain_bridges": [],
     "domains": [],
@@ -62060,7 +62061,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "42f28947",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T23:41:38.064157+00:00",
     "title": "The `m = 2` case is proved, the stability estimate needed for the"
   },
