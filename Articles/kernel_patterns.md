@@ -1,126 +1,169 @@
 # The Shape of Sameness
 
-## What a word remembers when it forgets its letters
+## How one three-word question — *which entries agree?* — builds a geometry counted by the Bell numbers
 
-Look at the word **BANANA**. Now look at the word **LOLOLO**. They share no letters, they mean nothing alike, and yet something about them is the same. Write down, for each, only *which positions agree with which*:
+Take a list of five things. Maybe five coloured beads:
 
-- In BANANA, positions $1$ stands alone; positions $2,4,6$ agree; positions $3,5$ agree.
-- In LOLOLO, positions $1,3,5$ agree; positions $2,4,6$ agree.
+$$\text{red},\ \text{blue},\ \text{red},\ \text{green},\ \text{blue}.$$
 
-Not the same after all. Try **BANANA** against **SUSUSU**? No. Try **BANANA** against **XYZYZY**? Positions $2,4,6$ carry $Y$... no, $X,Y,Z,Y,Z,Y$ has $1$ alone, $2,4,6$ agreeing, $3,5$ agreeing. Yes: **BANANA** and **XYZYZY** have exactly the same *shape of sameness*.
+Now forget the colours. Do not forget everything — keep exactly one fact: *which positions carry the same thing as which*. Position $1$ matches position $3$; position $2$ matches position $5$; position $4$ is alone. Write that down as a shorthand: replace each entry by the **first position where its value appeared**. Red first appeared at position $1$, blue at position $2$, green at position $4$, so our bead string collapses to
 
-This shape has a name. Given a finite list — a tuple $x = (x_1, \dots, x_n)$ with entries drawn from some alphabet $\alpha$ — its **kernel** (or **equality pattern**) is the relation
-$$ i \sim_x j \iff x_i = x_j $$
-on the index positions $\{1, \dots, n\}$. It is an equivalence relation: it is reflexive, symmetric and transitive for free, because equality is. It records everything about which slots repeat and nothing at all about *what* is in them.
+$$(1,\,2,\,1,\,4,\,2).$$
 
-This article is about a single, sharp claim: **the kernel is exactly the information that survives renaming**, and about the surprising amount of classical combinatorics that falls out once you take that claim seriously and make it computational.
+This little tuple is what we will call the **kernel pattern** of the list. It is a remarkably economical object: it throws away the colours entirely but keeps every fact about coincidences. And it turns out to be the hinge of three quite different-looking pieces of mathematics — a classification theorem about symmetry, a counting sequence that mathematicians have loved for three centuries, and the geometry of a famous family of hyperplanes in high-dimensional space.
 
-## Renaming is the whole story
+This article is about how those three things are the same thing.
 
-Suppose you have a machine that relabels letters: a bijection $\sigma$ of the alphabet with itself — a permutation. Feed it BANANA with the substitution $B \mapsto X$, $A \mapsto Y$, $N \mapsto Z$ and out comes XYZYZY. Obviously renaming can't change which positions agree, since a bijection sends equals to equals and unequals to unequals. So the kernel is an **invariant** of the renaming action.
+---
 
-The interesting direction is the converse. Is the kernel a *complete* invariant — does sameness of kernel force the two tuples to be renamings of one another?
+## Part I. A complete invariant
 
-**Completeness Theorem.** *Let $x$ and $y$ be $n$-tuples with entries in the same alphabet $\alpha$ (of any cardinality whatsoever, finite or infinite). Then $x$ and $y$ have the same kernel if and only if there exists a permutation $\sigma$ of $\alpha$ with $\sigma(x_i) = y_i$ for every $i$.*
+Here is the first observation, and it is the one everything rests on.
 
-The proof is the natural one, done carefully. Same kernel means the assignment $x_i \mapsto y_i$ is well defined (if $x_i = x_j$ then $y_i = y_j$) and injective (if $y_i = y_j$ then $x_i = x_j$) as a map between the two finite sets of values actually used. That is a bijection between two finite subsets of $\alpha$ of the same size. To promote it to a permutation of *all* of $\alpha$, you must match up the leftovers: the complements of the two value sets. When $\alpha$ is finite the complements have equal size, so any bijection between them will do. When $\alpha$ is infinite, removing a finite set doesn't change the cardinality — the complements are each of size $|\alpha|$ — so again a bijection exists. Glue and you have your $\sigma$.
+Suppose you took the original bead string and applied some universal recolouring: every red becomes purple, every blue becomes orange, every green becomes yellow — but crucially, *different colours must stay different*. The recoloured string is
 
-Small example, infinite alphabet: over the natural numbers, $(0,0,1)$ and $(5,5,7)$ have the same kernel, so some permutation of $\mathbb{N}$ carries one to the other. It cannot be a "nice" formula, but it exists, and the theorem hands it to you.
+$$\text{purple},\ \text{orange},\ \text{purple},\ \text{yellow},\ \text{orange},$$
 
-So: **two lists are renamings of each other precisely when they repeat in the same places.** Everything below is an exploration of the consequences of taking that as a definition of "shape".
+and its kernel pattern is, of course, still $(1,2,1,4,2)$. The pattern cannot see the recolouring, because the recolouring did not create or destroy any coincidence.
 
-## Giving the shape a name you can compute with
+Formally: let $x = (x_1,\dots,x_n)$ be a tuple with entries in a set $X$, and define its kernel pattern by
 
-An equivalence relation is a fine mathematical object, but a clumsy thing to store or to compare. The trick is to pick a *canonical representative* of each shape. For a tuple $x$, define
-$$ \operatorname{can}(x)_i \;=\; \min\{\, j : x_j = x_i \,\}, $$
-the earliest position carrying the same value. BANANA $\mapsto (1,2,3,2,3,2)$; XYZYZY $\mapsto (1,2,3,2,3,2)$; identical, as promised. Computer scientists know these strings under the name **restricted growth strings**; the process is exactly the "first-occurrence renaming" used to hash variable names or to normalise database queries up to renaming of constants.
+$$\operatorname{pat}(x)_i \;=\; \min\{\,j : x_j = x_i\,\}.$$
 
-Two facts make $\operatorname{can}$ the right object.
+If $f : X \to Y$ is any injective map, then $\operatorname{pat}(f\circ x) = \operatorname{pat}(x)$. In particular, if $\sigma$ is a permutation of $X$ — a relabelling of the alphabet — the pattern is unchanged. The pattern is an **invariant** of the action of the symmetric group $\operatorname{Sym}(X)$ that acts on tuples by relabelling all entries simultaneously.
 
-*It is a complete encoding.* Two tuples have the same kernel if and only if their canonical forms are literally equal, and $\operatorname{can}(f \circ x) = \operatorname{can}(x)$ for **any injection** $f$ of the alphabet into any other alphabet — not merely for permutations. So canonical form is a stable name for the shape, comparable across alphabets.
+Invariants are cheap; *complete* invariants are the prize. An invariant tells you that two objects in the same orbit look alike. A complete invariant tells you the converse: if they look alike, they *are* in the same orbit. That is the first theorem.
 
-*Its image is describable.* Call a map $p: \{1,\dots,n\} \to \{1,\dots,n\}$ a **pattern** if
-$$ p(i) \le i \quad\text{and}\quad p(p(i)) = p(i) \quad\text{for all } i. $$
-That is: $p$ is *contracting* (it never points forward) and *idempotent* (its values are fixed points). These two little conditions are exactly the image of $\operatorname{can}$: every canonical form is a pattern, and every pattern is its own canonical form, $\operatorname{can}(p) = p$. So $\operatorname{can}$ is an idempotent retraction of the set of all tuples onto a small, explicitly checkable set of normal forms. Because the conditions are decidable inequalities, a computer can enumerate all patterns on $n$ letters by brute force — a fact we will cash in shortly.
+> **Completeness Theorem.** Let $X$ be a finite set and let $x,y$ be $n$-tuples with entries in $X$. There exists a permutation $\sigma$ of $X$ with $\sigma \circ x = y$ **if and only if** $\operatorname{pat}(x) = \operatorname{pat}(y)$.
 
-## The count: Bell numbers
+One direction we have already seen. The other direction is a genuinely constructive argument: if the patterns agree, the map "$x_i \mapsto y_i$" is well defined and injective on the set of values actually used by $x$, because $x_i = x_j$ exactly when $y_i = y_j$. That gives a bijection between the *used* values of $x$ and the used values of $y$. The two unused parts have the same size, since $X$ is finite and the used parts match up; pick any bijection between them, glue, and you have your permutation $\sigma$.
 
-How many shapes are there?
+Notice how much that argument depends on finiteness, and on having the whole symmetric group available. Both dependencies are real. Shrink the group and the theorem dies: over the two-element alphabet $\{0,1\}$, the one-entry tuples $(0)$ and $(1)$ have the same pattern — namely $(1)$, since in a one-entry list the first occurrence of the only value is at position $1$ — yet if you are only allowed the identity permutation, no group element carries one to the other. Sameness of pattern is exactly sameness of orbit for the *full* symmetric group, and for nothing less.
 
-**Classification Theorem.** *Patterns on $n$ letters are in canonical bijection with equivalence relations on an $n$-element set: a pattern $p$ goes to the relation $i \sim j \iff p(i) = p(j)$, and an equivalence relation goes to the canonical form of its own quotient map.*
+There is a pleasing fixed-point characterisation lurking here. Which tuples $p$ are patterns? Exactly the ones that are their own pattern: $\operatorname{pat}(p) = p$. Equivalently, $p$ is a pattern precisely when $p_i \le i$ for every $i$ and $p_{p_i} = p_i$ — a tuple of "first representatives", weakly pointing backwards and stable under a second application. Applying $\operatorname{pat}$ twice is the same as applying it once; the pattern map is a canonical-form operator, a retraction of the space of tuples onto its own image.
 
-Counting equivalence relations on a finite set is counting *set partitions*, and set partitions are counted by the **Bell numbers** $B_n$:
-$$ B_0, B_1, B_2, B_3, B_4, B_5, \dots \;=\; 1,\, 1,\, 2,\, 5,\, 15,\, 52, \dots $$
-This is one of the most famous integer sequences in mathematics (catalogued as A000110). The Bell numbers satisfy the binomial recurrence
-$$ B_{n+1} \;=\; \sum_{k=0}^{n} \binom{n}{k} B_{n-k}, $$
-which you prove by asking: how many of the other $n$ points share a block with a distinguished point? Choose those $k$ partners in $\binom{n}{k}$ ways, then partition the remaining $n-k$ points arbitrarily. Making that argument airtight is more delicate than it sounds — you have to exhibit the fibres of the "which points sit with the distinguished point" map as genuinely being the equivalence relations on the complement, gluing a subset and a relation back into a single relation and checking transitivity across all the cases — but it works, and it yields:
+One more consequence, small but structurally important: as soon as the alphabet has at least $n$ letters, the set of achievable patterns of $n$-tuples stops depending on the alphabet at all. With $n$ positions you can create at most $n$ distinct values, so a larger alphabet buys nothing. The theory **stabilises**.
 
-**Counting Theorem.** *There are exactly $B_n$ patterns on $n$ letters, hence exactly $B_n$ possible kernels of an $n$-tuple.*
+---
 
-And now the punchline that ties the invariant to the count:
+## Part II. Counting: the Bell numbers appear
 
-**Orbit Theorem.** *If the alphabet $\alpha$ is finite with at least $n$ letters, then the group of all permutations of $\alpha$ has exactly $B_n$ orbits on the set of $n$-tuples over $\alpha$, and the complete invariant separating those orbits is the equality pattern.*
+Once you know that patterns classify orbits, counting orbits becomes counting patterns. And counting patterns is a classical problem in disguise.
 
-For instance the symmetric group on five letters has exactly $52$ orbits on the $5^5 = 3125$ quintuples over a five-letter alphabet. There is nothing to check about the group: $52$ is $B_5$, and every quintuple is nothing more than its shape.
+A kernel pattern is nothing more nor less than a way of splitting the positions $\{1,\dots,n\}$ into groups — a **set partition**. Positions $1$ and $3$ together, positions $2$ and $5$ together, position $4$ alone: that is the partition $\{\{1,3\},\{2,5\},\{4\}\}$, and the pattern $(1,2,1,4,2)$ is just the same data written by naming each group after its smallest member. The correspondence is a bijection: every partition gives a pattern, every pattern gives a partition, and the two constructions undo each other.
 
-Because patterns are defined by decidable conditions on a finite set of maps, the values $1, 1, 2, 5, 15, 52$ can be obtained by direct exhaustive computation over the finite set of patterns, and then transported back to the Bell numbers by the Classification Theorem — a rare instance where a famous sequence is verified by literally listing the objects it counts.
+The number of set partitions of an $n$-element set is the $n$-th **Bell number** $B_n$. The sequence begins
 
-## Refining by the number of blocks: Stirling
+$$1,\ 1,\ 2,\ 5,\ 15,\ 52,\ 203,\ 877,\ 4140,\ \dots$$
 
-A pattern has **blocks** — the classes of the relation, equivalently the fixed points of $p$, equivalently the distinct values of the original tuple. Sorting the $B_n$ patterns by their number of blocks refines the Bell count into the **Stirling numbers of the second kind** $S(n,k)$, defined by the recurrence
-$$ S(n+1, k+1) = (k+1)\,S(n,k+1) + S(n,k), \qquad S(0,0)=1, $$
-with $S(0,k+1) = S(n+1,0) = 0$.
+For $n=3$, the five partitions of $\{1,2,3\}$ are: everything separate; $\{1,2\}$ together; $\{1,3\}$ together; $\{2,3\}$ together; everything together. Five patterns, five orbits.
 
-**Refinement Theorem.** *The number of patterns on $n$ letters with exactly $k$ blocks is $S(n,k)$; consequently $\sum_{k=0}^{n} S(n,k) = B_n$.*
+So the count of orbits, the count of patterns, and the Bell numbers are one sequence. But there are two ways to *prove* it, and they have very different characters.
 
-The proof is the "last letter" fibration and is genuinely pretty. Delete the last coordinate of a pattern on $n+1$ letters: you get a pattern on $n$ letters. Conversely, to extend a pattern $q$ on $n$ letters you must choose the value at the new last coordinate, and there are exactly two kinds of legal choice: either point at one of the existing block representatives of $q$ (joining an old block, block count unchanged — and if $q$ has $k+1$ blocks there are $k+1$ such choices), or point at the new coordinate itself (starting a fresh block, raising the count from $k$ to $k+1$, one choice). Count the fibre and the Stirling recurrence appears on the page. The row $n=5$ reads $0, 1, 15, 25, 10, 1$, and indeed $1 + 15 + 25 + 10 + 1 = 52$.
+The first is brute confirmation. For $n$ up to $5$ one can simply enumerate all $n^n$ candidate tuples, keep those that satisfy the fixed-point condition $\operatorname{pat}(p)=p$, and count: $1, 1, 2, 5, 15, 52$. That is an exhaustive check, and for $n=5$ it inspects $3125$ tuples. Reassuring, and completely finite — but it says nothing about $n = 6$.
 
-## When the alphabet runs out
+The second is a recursion, and it is the real theorem.
 
-The Orbit Theorem assumed the alphabet had at least $n$ letters. What if it doesn't? A three-letter word over a two-letter alphabet can never realise the shape "all three positions different". The general answer is exactly this obstruction and nothing more:
+> **Bell Counting Theorem.** For every $n$, the number of kernel patterns of $n$-tuples is the Bell number $B_n$; equivalently, the number of equivalence relations on an $n$-element set is $B_n$.
 
-**Realisability Theorem.** *A pattern occurs as the pattern of some tuple over a finite alphabet $\alpha$ if and only if its number of blocks is at most $|\alpha|$.*
+The proof is the classical "look at the block containing the last element" argument, run carefully. Given a partition of $\{1,\dots,n+1\}$, look at the block $S \cup \{n+1\}$ containing the final index, where $S \subseteq \{1,\dots,n\}$. Delete that whole block. What is left is an arbitrary partition of the complement of $S$ — and *arbitrary* is the crucial word: any partition of the complement can be re-attached, and the construction is reversible. So the total count over all $n+1$-element partitions is
 
-**General Orbit Theorem.** *For every finite alphabet $\alpha$ and every $n$, the permutation group of $\alpha$ has exactly*
-$$ \sum_{k=0}^{|\alpha|} S(n,k) $$
-*orbits on the $n$-tuples over $\alpha$ — a truncated Stirling row, with no relation assumed between $n$ and $|\alpha|$.*
+$$B_{n+1} \;=\; \sum_{S\subseteq\{1,\dots,n\}} B_{\,n - |S|} \;=\; \sum_{i=0}^{n} \binom{n}{i} B_{n-i},$$
 
-Truncated rows can be summed in closed form for tiny alphabets, and the answers are charming.
+grouping the subsets $S$ by their size. That is exactly the defining recursion of the Bell numbers, so induction closes the argument.
 
-**Binary alphabet.** Bit strings of length $n+1$ fall into exactly $2^{n}$ classes up to swapping $0$ and $1$. (Reason: $S(m,0)+S(m,1)+S(m,2) = 0 + 1 + (2^{m-1}-1) = 2^{m-1}$.) This is the classical count of "necklaces up to colour swap" for linear strings: half of the $2^{n+1}$ strings, as one would expect from a free involution — and the theorem proves it as a corollary of a partition-counting statement rather than by the parity argument.
+The same delete-the-last-index technique, run one level finer, resolves the count by the number of groups. Write $S(n,k)$ for the number of partitions of $\{1,\dots,n\}$ into exactly $k$ nonempty blocks — the **Stirling numbers of the second kind**. Deleting the last index does one of two things: either that index was alone in its block, and we are left with a partition of $n$ elements into $k-1$ blocks; or it sat inside one of the $k$ existing blocks, and we are left with a partition of $n$ elements into $k$ blocks, together with a choice of which of the $k$ blocks the deleted index came from. That is the recursion
 
-**Ternary alphabet.** Strings of length $n+1$ over three letters fall into $(3^{n}+1)/2$ classes; the theorem is stated in the clean integral form $2 \cdot (\text{number of classes}) = 3^{n}+1$.
+$$S(n+1,k+1) \;=\; (k+1)\,S(n,k+1) \;+\; S(n,k),$$
 
-And from length $3$ onwards the binary count $2^{n-1}$ is *strictly* below the Bell number $B_n$: a two-letter alphabet is genuinely too poor to realise every shape. Concretely, the $3$-bit strings fall into $4$ classes, while $B_3 = 5$; the missing shape is "three distinct letters".
+and it yields:
 
-## A power identity for free
+> **Refined Counting Theorem.** The number of kernel patterns of $n$-tuples using exactly $k$ distinct values is $S(n,k)$, and summing over $k$ recovers the identity $B_n = \sum_{k=0}^{n} S(n,k)$.
 
-Here is the payoff that turns the classification into an algebraic identity. Fix a finite alphabet of size $a$. Every tuple over it factors *uniquely* as a shape plus an injective labelling of the shape's blocks by letters. So the tuples with a prescribed pattern $p$ with $k$ blocks are in bijection with the injections of a $k$-element set into an $a$-element set, of which there are the falling factorial $a^{\underline{k}} = a(a-1)\cdots(a-k+1)$ many. Summing over all patterns and grouping by block count:
+That last identity is worth pausing on. The Bell numbers and the Stirling numbers are each defined by a recursion of their own, and neither recursion mentions the other. The identity linking them is not formal bookkeeping; it is the statement that two different recursions are counting the same objects in two different ways. The kernel pattern is the object they are both counting.
 
-**Connection Formula.** *For every $a$ and $n$,*
-$$ a^{n} \;=\; \sum_{k=0}^{n} S(n,k)\, a^{\underline{k}}, \qquad a^{\underline{k}} = a(a-1)\cdots(a-k+1). $$
+---
 
-This is the classical change of basis between ordinary powers and falling factorials — usually proved by manipulating generating functions or by induction on the recurrence — obtained here as pure bookkeeping: *count the same finite set two ways*. It also explains the truncation phenomenon above without any extra work: when $k > a$, the falling factorial $a^{\underline{k}}$ is zero, so the terms beyond the alphabet size simply vanish. Check it at $a=3$, $n=4$: $81 = 0\cdot 1 + 1\cdot 3 + 7\cdot 6 + 6\cdot 6 + 1\cdot 0 = 3 + 42 + 36 = 81$. 
+## Part III. The same story, in geometry
 
-## Symmetric functions, counted
+Now change the picture entirely and put yourself in $\mathbb{R}^n$. Consider the family of hyperplanes
 
-One last reformulation, for readers who like linear algebra. Fix a field $K$ and consider the $K$-valued functions $f$ of an $n$-tuple over an alphabet $\beta$ that are *invariant under relabelling*: $f(\sigma \circ x) = f(x)$ for every permutation $\sigma$ of $\beta$. These form a vector space. What is its dimension?
+$$H_{ij} = \{v \in \mathbb{R}^n : v_i = v_j\}, \qquad 1 \le i < j \le n.$$
 
-An invariant function is precisely a function on the orbit space, and a function on a finite set is a free choice of one value per point. Hence:
+This is the **braid arrangement**, one of the most-studied objects in the theory of hyperplane arrangements. It is the reflection arrangement of the symmetric group: each $H_{ij}$ is the mirror of the transposition swapping coordinates $i$ and $j$.
 
-**Dimension Theorem.** *If $n \le |\beta| < \infty$, the space of relabelling-invariant $K$-valued functions of an $n$-tuple over $\beta$ has dimension exactly $B_n$.*
+An arrangement of hyperplanes cuts space into pieces, and it also generates a lattice of subspaces — the **flats**, obtained by intersecting subfamilies of the hyperplanes. What is a flat of the braid arrangement? Intersecting $H_{13}$ and $H_{25}$ inside $\mathbb{R}^5$ gives $\{v : v_1 = v_3,\ v_2 = v_5\}$: the set of vectors that are *constant on the blocks of a partition*. And every flat has this form, because the equations $v_i = v_j$ that hold on a flat are automatically transitive.
 
-So "a symmetric function of $n$ arguments drawn from a large enough alphabet" is *nothing more* than a function of the equality pattern, and the Bell numbers measure how much such a function can possibly know. For $n = 5$ that is $52$ degrees of freedom, no matter how large the alphabet.
+So a flat is a partition, and a partition is a kernel pattern, and now the whole of Part I comes for free. Given any tuple $x$ (with entries anywhere at all), define
 
-## Why this matters outside the page
+$$L(x) \;=\; \{v \in \mathbb{R}^n : x_i = x_j \implies v_i = v_j\}.$$
 
-The kernel of a tuple is one of those ideas that keeps being reinvented under different names because it is genuinely fundamental:
+> **Geometric Classification Theorem.** $L(x) = L(y)$ if and only if $\operatorname{pat}(x)=\operatorname{pat}(y)$. Moreover $L(x) \subseteq L(y)$ if and only if the partition of $y$ refines to the partition of $x$ — inclusion of flats is reverse refinement of kernels — and the dimension of $L(x)$ equals the number of blocks of $x$.
 
-- **Databases.** Query answers must not depend on the names of constants; the shape of a tuple is exactly the part of it that a name-independent query can see. The truncated Stirling counts tell you how many distinguishable tuples exist over a bounded domain.
-- **Programming languages.** Alpha-equivalence — the doctrine that bound variable names don't matter — is the kernel idea; canonical forms like de Bruijn indices are cousins of the restricted growth string.
-- **Statistics and machine learning.** Permutation-invariant models over a set of tokens can only depend on which tokens coincide; the Dimension Theorem is a hard ceiling on the expressivity of such a model in terms of the Bell numbers.
-- **Combinatorics of hashing and collision patterns.** The pattern of a list of hash values is its collision structure; the Connection Formula is the exact count of how many value-assignments realise each collision structure.
+The dimension statement is a one-line matter once you see the coordinates: a vector constant on blocks is precisely a free choice of one real number per block, so $L(x) \cong \mathbb{R}^{\#\text{blocks}}$. The extreme cases sit at the two ends of the lattice: a tuple with all entries distinct imposes no equations and gives the whole space $\mathbb{R}^n$, while a constant tuple gives the line of constant vectors, of dimension $1$.
 
-The moral, if there is one, is that the humblest question you can ask about a list — *which entries are equal?* — has a complete, computable answer, a canonical name, a classical count, and enough structure to reproduce the Bell numbers, the Stirling numbers, and the change of basis between powers and falling factorials, all from the single act of forgetting what the letters are called.
+Combining with Part II:
 
-BANANA and XYZYZY, it turns out, know quite a lot.
+> **The intersection lattice of the braid arrangement in $\mathbb{R}^n$ has exactly $B_n$ elements, of which $S(n,k)$ have dimension $k$.**
+
+In $\mathbb{R}^5$: $52$ flats. One of dimension $1$ (the constant line), $15$ of dimension $2$, $25$ of dimension $3$, $10$ of dimension $4$, and $1$ of dimension $5$ (all of $\mathbb{R}^5$) — and indeed $1+15+25+10+1 = 52$.
+
+---
+
+## Part IV. Adding order: faces, chambers, and a second famous sequence
+
+The kernel pattern remembers *which* coordinates agree. Deliberately, it forgets everything else — including the fact that real numbers come in an order. What happens if we remember the order too?
+
+Given a real vector $v$, define its **ordered pattern** by
+
+$$\operatorname{rank}(v)_i \;=\; \#\{\text{distinct values of } v \text{ that are} < v_i\}.$$
+
+For $v = (3.1,\, 7.0,\, 3.1,\, -2.0,\, 7.0)$ the distinct values are $-2.0 < 3.1 < 7.0$, so $\operatorname{rank}(v) = (1,2,1,0,2)$: each coordinate is labelled by how many distinct values sit below it. This records the full weak order on the coordinates — every fact of the form $v_i < v_j$ and every fact of the form $v_i = v_j$ — and nothing more. It is invariant under any strictly increasing reparametrisation of the value line: rescale, translate, apply $\tanh$, and the ordered pattern does not move. Applying $\operatorname{pat}$ to $\operatorname{rank}(v)$ returns $\operatorname{pat}(v)$: the ordered pattern refines the unordered one, exactly as it should.
+
+Geometrically, the ordered pattern is the invariant of the **face**. Where flats are the subspaces the arrangement generates, faces are the relatively open cones the arrangement carves out — the pieces you get by choosing, for each pair $i<j$, one of $v_i<v_j$, $v_i=v_j$, $v_i>v_j$ consistently. Define the face of $v$ as the set of all $w$ satisfying the same strict comparisons as $v$:
+
+$$F(v) = \{w : v_i < v_j \iff w_i < w_j \text{ for all } i,j\}.$$
+
+> **Face Classification Theorem.** $F(v) = F(w)$ if and only if $\operatorname{rank}(v) = \operatorname{rank}(w)$. Every face is convex, hence connected.
+
+The top-dimensional faces are the **chambers**: the pieces of the complement of the arrangement, where no two coordinates are equal. A chamber is precisely the open cone
+
+$$C_\sigma = \{v : v_{\sigma(1)} < v_{\sigma(2)} < \cdots < v_{\sigma(n)}\}$$
+
+for a permutation $\sigma$, and distinct permutations give distinct chambers. They are pairwise disjoint, and together they cover exactly the injective vectors. Hence:
+
+> **The braid arrangement in $\mathbb{R}^n$ has exactly $n!$ chambers.**
+
+That is the classical, very satisfying reason the symmetric group has $n!$ elements when you look at it geometrically: its reflection arrangement has one chamber per element.
+
+And now the counting of *all* faces. Here is the beautiful bookkeeping step:
+
+> **Fibre Theorem.** A flat with $k$ blocks carries exactly $k!$ faces.
+
+The reason is that a face lying over a given flat is the flat's partition *together with a linear ordering of its blocks*, and a $k$-element set has $k!$ linear orders. Summing over flats and grouping by block count gives the **Fubini formula**:
+
+$$\#\{\text{faces}\} \;=\; \sum_{k=0}^{n} S(n,k)\, k!.$$
+
+These are the **ordered Bell numbers**, also called the Fubini numbers:
+
+$$1,\ 1,\ 3,\ 13,\ 75,\ 541,\ 4683,\ \dots$$
+
+They count *weak orderings* of $n$ items — the number of ways a race with $n$ runners can finish if ties are allowed. In $\mathbb{R}^5$ the braid arrangement has $52$ flats, $120$ chambers, and $541$ faces. The three counts are locked together by two inequalities that fall straight out of the Fubini formula: the number of chambers $n! = S(n,n)\cdot n!$ is a single term of the sum, so chambers never outnumber faces; and each term $S(n,k)$ of the Bell sum is at most $S(n,k)\cdot k!$, so flats never outnumber faces either. Every chamber is a face; every flat carries at least one face.
+
+---
+
+## Why this is more than an accounting exercise
+
+The pattern of the argument — and it is a pattern in the same sense as everything else here — is *coincidence structure first, everything else afterwards*. Three separate classification problems, in three separate parts of mathematics, turned out to have the same answer because they were secretly asking one question:
+
+- **Algebra:** classify the orbits of the symmetric group acting on tuples by relabelling. Answer: the kernel patterns.
+- **Combinatorics:** enumerate the set partitions of a finite set. Answer: the Bell numbers, refined by the Stirling numbers.
+- **Geometry:** describe the intersection lattice and the face poset of the braid arrangement. Answer: the flats are the patterns (counted by $B_n$), the faces are the ordered patterns (counted by the ordered Bell numbers), the chambers are the total orders ($n!$ of them), and dimension is block count.
+
+The pivot in each case is that "which entries agree" is the only datum that survives the relevant symmetry — permuting the alphabet, in the first case; sliding along a flat, in the second; deforming within a face, in the third. Whenever you find yourself asking a question that is blind to the identity of values but sensitive to their coincidences, this machinery applies verbatim.
+
+That happens far more often than it sounds. Databases group rows by equal keys — set partitions. Clustering algorithms output partitions and are compared by partition-lattice metrics. Statistical models over exchangeable data — the Chinese restaurant process and its relatives — are literally probability distributions on the $B_n$ patterns, with the Bell recursion as their normalisation. Phylogenetics, coalescent theory, and the theory of exchangeable random partitions all live in this lattice. And in every one of these settings the flat's dimension — the number of blocks — is the number of free parameters left after the coincidences are imposed, which is exactly the geometric statement above.
+
+There is also a lesson about *sharpness*. The completeness theorem is not a soft fact; it fails immediately if you shrink the group, and it needs the finiteness of the alphabet to build the missing bijection. The theory is exactly as strong as its hypotheses allow, and no stronger. That is what one wants from a classification theorem: not that it is true, but that you know precisely why it stops being true.
+
+Finally, a remark about the two proofs of the Bell count. The exhaustive check for $n \le 5$ and the recursion for all $n$ are both valid, and they are not redundant: the finite check is a specification, the recursion is the theorem, and the agreement of the two at $1, 1, 2, 5, 15, 52$ is the sanity condition that says the recursion was set up right. Good mathematics usually has both — a hard-edged small case you can hold in your hand, and a general argument you can believe. The kernel pattern gives you a place to stand where both are visible at once.
