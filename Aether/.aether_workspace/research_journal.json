@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "93d08ac5",
-      "domain": "Shared",
-      "key_insight": "# Future directions — equal-volume shell peelings of Euclidean balls\n\nDerived from the three cycles formalised in\n`Catalog/Shared/ShellThicknessSharp.lean`,\n`Catalog/Shared/ShellThicknessMonotone.lean",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-08-24T10:05:36",
-      "title": "For `d ≥ 1`, `N ≥ 2`, the thickness of the outermost equal-volume"
-    },
-    {
       "cycle_id": "95bfbbbf",
       "domain": "Novelty",
       "key_insight": "# Future directions — after the NET-78 audit\n\nThree research cycles were run on the NET-78 verdict\n*THE-INCREMENT-ACCELERATES-AT-4096*. What survived, what failed, and what each\nfailure teaches:\n\n* **",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-08-26T02:00:14",
       "title": "FACT round-83 #1 — SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION — five closures conf"
+    },
+    {
+      "cycle_id": "56a9e19d",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — NET-95 thread (weight floor collapsed)\n\nWhat this cycle established formally (all in `Catalog/Novelty/`, 0 sorries):\n\n1. **The ladder is a one-parameter geometric law.**  Over *a",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-26T03:19:25",
+      "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8a3962f5",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nFive bold, testable conjectures produced by the analysis/critique stages of this cycle.\nEach is stated so that it can be falsified by a single counterexample or settled by a\nLean",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 120,
-      "timestamp": "2026-08-19T07:54:38",
-      "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive see"
-    },
     {
       "cycle_id": "18f8232d",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-08-26T02:00:14",
       "title": "FACT round-83 #1 — SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION — five closures conf"
+    },
+    {
+      "cycle_id": "56a9e19d",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — NET-95 thread (weight floor collapsed)\n\nWhat this cycle established formally (all in `Catalog/Novelty/`, 0 sorries):\n\n1. **The ladder is a one-parameter geometric law.**  Over *a",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-26T03:19:25",
+      "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9b3c75c4",
-      "domain": "Applications",
-      "name": "certifiedValue_pos",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "9b3c75c4",
-      "domain": "Applications",
-      "name": "certifiedValue_of_blockEC",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a22e921b",
-      "domain": "Cryptography",
-      "name": "here",
-      "quality": 0.78
-    },
     {
       "cycle_id": "539def03",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "sub2_one",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "56a9e19d",
+      "domain": "Novelty",
+      "name": "rms_nonneg",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "56a9e19d",
+      "domain": "Novelty",
+      "name": "rms_le_global",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "56a9e19d",
+      "domain": "Novelty",
+      "name": "one_le_scaleGain",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-26T02:00:14",
+  "last_updated": "2026-08-26T03:19:25",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "499e80a3",
-        "quality": 0.78,
-        "theorems": 81,
-        "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT — 1.5B knee at 2048 is 18 not 20; bot"
-      },
-      {
         "cycle_id": "9f4b7d2b",
         "quality": 0.84,
         "theorems": 81,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 64,
         "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=1"
+      },
+      {
+        "cycle_id": "56a9e19d",
+        "quality": 0.79,
+        "theorems": 14,
+        "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays d"
       }
     ],
     "NumberTheory": [
