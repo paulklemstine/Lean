@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "969a5dc4",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — after the depth-decay theorems\n\nThis cycle pinned the reach of a fixed-precision magnitude sensor on the Berggren\n(Pythagorean) tree, in three independent registers:\n\n* **exists*",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-08-24T20:50:14",
-      "title": "FACT round-70 #4 — DEPTH-DECAY: the magnitude channel sees only the first steps (paper 195)"
-    },
-    {
       "cycle_id": "886e75dc",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — after the magnitude-mirror seal (round 70, #6)\n\nThree cycles of the loop produced: (1) the structural identity that kills the\nenergy-ascent sensors, (2) an exact *characterisatio",
@@ -499,19 +489,19 @@
       "theorem_count": 96,
       "timestamp": "2026-08-26T13:18:20",
       "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style pools read z=0.6356 ["
+    },
+    {
+      "cycle_id": "6ca543a1",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Kernel Patterns and the Braid Arrangement\n\nTwo full research cycles were run on the topic *\"kernel patterns are complete\n`G`-invariants of a tuple, counted by the Bell numbers\"*.",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 127,
+      "timestamp": "2026-08-26T14:08:32",
+      "title": "Kernel patterns"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6d98445d",
-      "domain": "Physics",
-      "key_insight": "# Future directions (thread `th_482524af`, cycle 2)\n\nThe results proved in this cycle live in\n\n* `Catalog/Physics/CollatzTwoStepSpectrum.lean` — the depth-two spectrum,\n* `Catalog/Physics/CollatzSpect",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-08-19T19:40:40",
-      "title": "Future directions from cycle 4c2c71e5"
-    },
     {
       "cycle_id": "a985d45a",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 96,
       "timestamp": "2026-08-26T13:18:20",
       "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style pools read z=0.6356 ["
+    },
+    {
+      "cycle_id": "6ca543a1",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Kernel Patterns and the Braid Arrangement\n\nTwo full research cycles were run on the topic *\"kernel patterns are complete\n`G`-invariants of a tuple, counted by the Bell numbers\"*.",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 127,
+      "timestamp": "2026-08-26T14:08:32",
+      "title": "Kernel patterns"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e645a8ec",
-      "domain": "Probability",
-      "name": "tendsto_harmonic_diff",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "e645a8ec",
-      "domain": "Probability",
-      "name": "tendsto_discrete_decile_harmCDF",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "0dec095c",
-      "domain": "Novelty",
-      "name": "block_integral_strictAnti",
-      "quality": 0.72
-    },
     {
       "cycle_id": "0dec095c",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "ratioArea_two",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "6ca543a1",
+      "domain": "Geometry",
+      "name": "patterns_self_eq_filter",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6ca543a1",
+      "domain": "Geometry",
+      "name": "orbit_card_eq_card_patterns",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6ca543a1",
+      "domain": "Geometry",
+      "name": "card_patterns_eq_sum_blocks",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-26T13:18:20",
+  "last_updated": "2026-08-26T14:08:32",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "be7c0bd7",
-        "quality": 0.82,
-        "theorems": 84,
-        "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-      },
-      {
         "cycle_id": "308f24be",
         "quality": 0.82,
         "theorems": 113,
@@ -3451,6 +3445,12 @@
         "quality": 0.79,
         "theorems": 46,
         "title": "FACT round-42 #1 — ECM-COMPLETION: the lite variant scales like rho (paper 155)"
+      },
+      {
+        "cycle_id": "6ca543a1",
+        "quality": 0.82,
+        "theorems": 127,
+        "title": "Kernel patterns"
       }
     ],
     "Logic": [

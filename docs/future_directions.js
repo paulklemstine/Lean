@@ -2090,16 +2090,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #5 \u2014 SCALE-U9-LIFT: randomness extends through u\u224811 toward the Dickman leading-term regime (H1-consistent null with sub-1 tension); paper 209 D-death amended to indicator starvation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f8c29e6",
     "description": "Round-75 #4 \u00b7 THEORY deliverable (no new experiment id) \u00b7 paper 219 \u00b7 assessment v326.\n\n**What was recorded.** The verified draft of the POSITIONAL/MAGNITUDE stratum of the barrier-4 converse (`ResearchOutput/scripts/2026-08-24-round74/barrier4_positional_converse_draft.md`), independently rechecked per `verify_t1_t2_recheck.json` against the author's own finite checks `exp574b_saturation_check.py`/`exp574b_result.json`. Recorded as DRAFT-WITH-CAVEATS per verifier recommendation \u2014 NOT a sealed theorem.\n\n**T1 (fixed-window oracle).** CERTIFIED-SILENCE law S_A = 1/[\u03bc\u00b7P_hit + (1\u2212P_hit)(1\u2212\u03bc)] exact for protocol A committed policy (finite-M rational, 0 recheck failures). The DRAFTED fire-or-silent form 1/(1\u2212(1\u2212\u03bc)P_hit) is SUPERSEDED \u2014 non-certifying silence wastefully re-scans R; 14 algebra consistency failures caught. Protocol B optimal response S_B = 1/(1+\u03bc\u2212P_hit) \u2264 S_A; block-first dominance UNCONDITIONAL for protocol A, RESTRICTED to P_hit \u2265 \u03bc for protocol B (exhaustive orders + insertion sweep M\u2208{16,33,64}; all 12 counterexamples have P<\u03bc). Cap = 1/\u03bc at P_hit=1; NO constant cap exists.\n\n**T2 (adaptive saturation).** V(W) = log\u2082W + \u00bd EXACT on every dyadic W \u2208 [2,4096] (independent DP reproduction); general-L closed form an upper bound never crossing \u2212\u00bd to L=4096 (deepest undercut \u22120.499349 @ L=3073); cost-offset bracket corrected to [.415,.5011]; marginal-value identity rewritten as exact NET form cost(k)\u2212cost(k+1)=W/2^(k+2)\u22121 (250/250 cells) after drafted GROSS form failed 231 cells; census C*=19.5@2^19 / 20.5@2^20, argmin offsets {\u22122,\u22121} \u2260 k_pin=log\u2082W \u2014 and exp563's economic optimum is a THIRD convention ~1 query above k_opt: three distinct k's must stay distinguished.\n\n**Conjecture D (SET/COST dichotomy).** S(\u03a0)=S(R\u2218F)=S(R)\u00b7S(F), sup_F S(F)=4/3 (\u03b8=1/2), S(R) \u2264 min(1/\u03bc_eff, 2^k_bits). Residue cap 4/3 governs COST-class actions; position works the SET-class tail. All four measured anchors feasible under \u03bc \u2264 1/S: 5.19\u00d7 \u2261 (.05,.85), 6.91\u00d7 \u2261 (.05,.9003), 4.35\u00d7 \u2261 (.05,.8106), 29.1\u00d7 \u2261 (.02,.9853); identity check: paper-138 master law at uninformative point \u2261 paper-132 formula exactly. 5.19\u00d7 > 4/3 is CLASS-CROSSING, NOT cap-breaking \u2014 barrier map internally consistent.\n\n**Verification census.** Zero arithmetic errors across all numeric claims (stored-value discrepancies: none); ~60% of PROVEN upgraded to VERIFIED where independently recomputed. Named GAPs remain, load-bearing: L4 stratum measure \u0394(\u03c0,R), L7 extremality of sqrt-descending among N-computable orders (Siegel-type ineffectivity expected), L8 k-naming. These are the formal program's next work.\n\nCount unchanged by experiment (papers-only bump, convention stated in addendum): still 561 experiments (max id 572), papers now 219, assessment v325 \u2192 v326.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3981",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T10:55:32.772786+00:00",
     "title": "FACT round-75 #4 \u2014 BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of the barrier-4 converse recorded as DRAFT-WITH-CAVEATS \u2014 certified-silence law S_A=1/[\u03bcP+(1\u2212P)(1\u2212\u03bc)] supersedes drafted fire-or-silent form (14 algebra failures caught by independent verification); T2 saturation V=log\u2082W+\u00bd exact on dyadic W\u2208[2,4096]; Conjecture D factors S(R\u2218F)=S(R)\u00b7S(F) with sup_F=4/3 \u2014 residue cap 4/3 governs COST-class actions while position works the SET-class tail: 5.19\u00d7>4/3 is class-crossing not cap-breaking; zero arithmetic errors in recheck; named GAPs L4/L7/L8 are the next work"
   },
@@ -4250,21 +4251,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_012",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Sums of Three Cubes"
   },
   {
     "consumed_by_exp_id": "",
@@ -37970,6 +37956,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  The poset of ordered patterns of `Fin n`, ordered by\n\"coarsening the block order\", is isomorphic to the face poset of the Coxeter\ncomplex of type `A_{n-1}` (a triangulation of the `(n-2)`-sphere); in particular\nits proper part has reduced Euler characteristic `(-1)^{n-2}(n-1)!` and its\n`f`-vector is `f_{k-1} = S(n,k)\u00b7k!` for `1 \u2264 k \u2264 n`.\n\nThe key insight is that the `f`-vector claim is *already proved* \u2014 it is exactly\n`card_ordPatternsWith` \u2014 so the conjecture reduces to identifying the order\nrelation, i.e. to showing that `rank`-refinement is the face relation, after\nwhich the sphere statement follows from `chamber_convex` and `iUnion_chamber`.\n\n**Why now?**  `Faces.lean` proves faces are convex and that the ordered pattern\nis a complete invariant, and `Chambers.lean` proves the chambers partition the\ninjective locus; the missing ingredient is only the order-theoretic comparison\nlemma between `rank` and `pat`, for which `pat_rank` is the base case.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Signed Kernel Patterns for Hyperoctahedral Arrangements\",\n    \"domain\": \"Geometry\",\n    \"description\": \"Extend the kernel-pattern classification from the braid arrangement (type A) to the hyperoctahedral arrangement (type B), where hyperplanes x_i = \u00b1x_j and x_i = 0 appear. The invariant should be the kernel of i \u21a6 |x_i| decorated with a sign vector, and the resulting counts should be the type-B Dowling partition numbers rather than the Bell numbers. This tests whether the completeness proof is genuinely group-theoretic rather than an accident of the symmetric group.\",\n    \"conjecture\": \"The signed kernel pattern is a complete invariant of the orbits of the hyperoctahedral group acting diagonally on n-tuples, and the number of flats of the type-B arrangement in R^n equals the Dowling number sum_k C(n,k) * D(k), giving 1, 2, 6, 24, 116, 648.\",\n    \"test\": \"Define signedPat on Fin n -> X with an involution, prove a signedPat_congr analogue, and verify the counts 1, 2, 6, 24, 116 by decide for n <= 4 before proving the general Dowling recursion by the delete-last-index method of Stirling.lean.\",\n    \"if_true\": \"Kernel patterns become a uniform combinatorial model for the intersection lattices of all classical reflection arrangements, and the Bell/Dowling dichotomy is explained by the invariance argument alone.\",\n    \"if_false\": \"Completeness genuinely depends on the full symmetric group, isolating the failure to the sign action and pinpointing the extra invariant needed.\",\n    \"proof_strategy\": \"Reuse pat_congr and pat_comp_injective verbatim for the induced equivalence relation; then re-run the card_patternsWith_succ_succ recursion with the Dowling recursion in place of the Stirling recursion.\",\n    \"catalog_references\": [\"Geometry.KernelPatterns.Core\", \"Geometry.KernelPatterns.Stirling\", \"Geometry.KernelPatterns.BraidFlats\"]\n  },\n  {\n    \"title\": \"Mobius Rigidity of the Kernel Lattice\",\n    \"domain\": \"Combinatorics\",\n    \"descrip",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_4288",
+    "priority_score": 0.44291601900995053,
+    "research_mode": "team",
+    "source_exp_id": "6ca543a1",
+    "status": "available",
+    "timestamp": "2026-08-26T14:08:11.700523+00:00",
+    "title": "Faces as a Simplicial Complex: the Coxeter Complex"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Status update.**  The composite-`m` attainment conjectured earlier in this\nthread is now a theorem (`extremal_collision_value_general`): the mixture of a\nuniformly random bijection (mass `1 - 1/m`) with a uniformly random constant\n(mass `1/m`) is *exactly* `2`-universal for every `m` and attains `1/m`.  What\nremains open is whether the extremal family is *strongly* `2`-universal.\n\n**Conjecture.**  For every `m \u2265 2` the bijection\u2013constant mixture is pairwise\nindependent: `P(h x = u, h y = v) = 1/m\u00b2` for all `u, v` and all distinct keys\n`x, y`.  Consequently the extremal value `1/m` is attained inside the class of\nstrongly `2`-universal families for every `m`, not only for primes.\n\nThe key insight is that pairwise independence for the mixture reduces to the\npermutation count `|{\u03c3 : \u03c3 x = u, \u03c3 y = v}| = (m-2)!` for `u \u2260 v` together with\nthe vanishing of the bijection branch on the diagonal, i.e. to elementary\ncounting rather than to field structure; the prime hypothesis in\n`affine_pairwiseIndependent` is an artefact of the construction.\n\n**Why now?**  `mix_exactly2Universal` and `mixLaw_prob_constant_branch` already\nreduce every mixture probability to a pair of `Finset` cardinalities, so only\nthe permutation counts are missing.\n\n---",
     "domains": [
       "Combinatorics",
@@ -40836,6 +40837,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  Refining `ordPatterns n` by the number of *descents* of the\nordered pattern (positions where the block order drops) refines the Fubini\nnumber into the Eulerian-like triangle `\u2211_j A(n,j)\u00b72^j`-style statistics; more\nprecisely `#{r \u2208 ordPatterns n | r has exactly j distinct values} = S(n,j)\u00b7j!`\n(proved) refines further, over the descent statistic of the induced word, into\nthe second-order Eulerian numbers.\n\nThe key insight is that `card_fibre_ordPatterns` identifies each fibre with\n`Equiv.Perm (Fin k)` *canonically*, so any permutation statistic on `Perm (Fin\nk)` transports to a statistic on faces, turning the Fubini identity into a\n`q`-analogue with no new geometry required.\n\n**Why now?**  The fibre bijection is already constructed and proved bijective in\n`Fubini.lean` (`card_fibre_ordPatterns`); adding a statistic only requires\nchecking that the bijection is statistic-preserving, which is a pointwise\ncomputation on `rank`.\n\n---",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4286",
+    "priority_score": 0.4106355879170369,
+    "research_mode": "team",
+    "source_exp_id": "6ca543a1",
+    "status": "available",
+    "timestamp": "2026-08-26T14:08:10.454736+00:00",
+    "title": "Eulerian Refinement of the Fubini Fibration"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every `A/B \u2208 \u211d(x)` is a finite sum of a polynomial and\n   terms `(\u03b1x+\u03b2)/F\u1d4f` with `F` monic irreducible of degree `\u2264 2`. Combined with\n   `RischIrred.quadratic_pow_has_log_arctan_primitive` and\n   `RischSplit.singlePole_integrable` this immediately yields Conjecture A\u2032.",
     "domains": [],
     "id": "fd_2986",
@@ -40857,6 +40872,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T09:01:32.349835+00:00",
     "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  Let `G \u2264 Sym(X)` act diagonally on `X\u207f`. Then the kernel\npattern is a complete invariant of the `G`-orbits *for every* `n \u2265 1` if and\nonly if `G` is `|X|`-transitive, i.e. `G = Sym(X)` (for finite `X`); for\n`t`-transitive `G` the pattern is complete exactly on tuples with at most `t`\nblocks.\n\nThe key insight is that `exists_perm_of_pat_eq` builds the required permutation\nby extending a bijection between the two value ranges, and the number of values\nthat must be matched is precisely the number of blocks \u2014 so transitivity degree\nand block count are the same parameter viewed from two sides.\n\n**Why now?**  `pat_not_complete_of_trivial_group` already proves the extreme\ncase, and the general statement needs only the block-count bookkeeping supplied\nby `card_reps` and `patternsWith`.\n\n---",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4287",
+    "priority_score": 0.41024395936803154,
+    "research_mode": "team",
+    "source_exp_id": "6ca543a1",
+    "status": "available",
+    "timestamp": "2026-08-26T14:08:10.986174+00:00",
+    "title": "Kernel Completeness Beyond the Symmetric Group"
   },
   {
     "consumed_by_exp_id": "",
@@ -41763,19 +41792,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T13:54:05.015488+00:00",
     "title": "Extremes"
-  },
-  {
-    "consumed_by_exp_id": "6ca543a1",
-    "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
-    "domains": [],
-    "id": "fd_1431",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "286b3a0e",
-    "status": "in_progress",
-    "timestamp": "2026-08-17T13:54:05.239324+00:00",
-    "title": "Kernel patterns"
   },
   {
     "consumed_by_exp_id": "",
@@ -45356,14 +45372,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Weighted and directed connectomes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "033e68c2",
     "description": "The current finite-memory theorem proves that a collision exists. A sharper development could restrict streams to length at most `n`, count them for a finite alphabet, and prove lower bounds on the largest indistinguishability class in terms of the number of memory states.",
     "domains": [],
     "id": "fd_2188",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "2d8c7907",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:00.935124+00:00",
     "title": "Quantitative collision bounds"
   },

@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-08-26T13:18:11Z",
-  "count": 12,
+  "archived_at": "2026-08-26T14:08:12Z",
+  "count": 13,
   "directions": [
     {
       "id": "fd_3695",
@@ -476,6 +476,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 300
+    },
+    {
+      "id": "fd_1431",
+      "title": "Kernel patterns",
+      "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
+      "source_exp_id": "286b3a0e",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/286b3a0e",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4,
+      "status": "completed",
+      "consumed_by_exp_id": "6ca543a1",
+      "timestamp": "2026-08-17T13:54:05.239324+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 5,
+      "last_attempt_time": "2026-08-26T05:53:58.858065+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }
