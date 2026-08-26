@@ -2019,16 +2019,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae05145b",
     "description": "Exp 572 \u00b7 paper 217 \u00b7 assessment v324 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp572_ma1_signed.py \u00b7 seed 572 \u00b7 wall 6.96 s.\n\n**Question.** Paper 213/exp566 closed the MAGNITUDE route of MA-1 effectivity (|L(1,\u03c7)| does not predict |AP deviations|, R\u00b2=0.019) but preserved the SIGNED route: do signs of character-twisted prime-count deviations align with signs predicted by computable character data? A yes would be the first computable handle on AP-deviation structure.\n\n**Key structural disclosure** (post-smoke, pre-full-data): L(1,\u03c7)>0 for EVERY real non-principal \u03c7 (class-number formula) \u21d2 sign(w)\u2261+1 identically (n_cells_w_negative=0 at full scale), so registered criterion C1 reduces exactly to Pr[c_\u03c7>0] and could only fire if prime twists were majority-positive. Working identity asserted exact (<1e-9): c_\u03c7 = \u03a3_a d_a\u00b7\u03c7(a) = \u03a3_{p\u2264x} \u03c7(p); the uniform-li theory term vanishes identically by orthogonality, so signed L(1,\u03c7) is the only computable x-independent theory weight.\n\n**Design.** x=2\u00b2\u2076 full (\u03c0(x)=3,957,809); 287 moduli (squarefree [3,300] \u222a primes [307,997]); 491 real-char cells; 86,882 unit classes; machinery verbatim from exp566 (class-number exact D<0 |D|\u2264400, truncated-L otherwise, median rel err 1.8e-5); CP95 intervals + within-modulus d-shuffle null (2000 draws \u2014 MEANINGFUL here unlike exp566 since sign(c) is not permutation-invariant in a).\n\n**Result H0 \u2014 both criteria fail, both levels.** Cell agreement 15.07% over 491 cells (74 agree), CP95 [0.1202, 0.1855], circular-sum z=\u221252.72 (C2 needs >3). Class level 48.74% over 86,882 classes, CP95 [0.4841, 0.4907], permutation z=\u22127.74 \u2014 significantly BELOW chance (mild anti-alignment). Breakdowns all CIs wholly below 50%: prime-modulus quadratics 26.9% (167), product chars \u03c9\u22652 8.95% (324), exact-L 12.8% (226), truncated-L 17.0% (265), drop-|w|<1e-3 robustness unchanged.\n\n**Named byproduct** (labeled exploratory, not pre-registered): prime twists NEGATIVE in 84.7% of cells (CP95 [0.8123, 0.8779]; smoke x=2\u00b2\u00b2 read 91.7%) \u2014 the universal Chebyshev/Rubinstein\u2013Sarnak low bias, independently confirmed inside the lab's own AP-deviation machinery at x=2\u00b2\u2076. Deviation signs are one-directional across moduli and zero-driven, NOT carried by any computable L-value \u2014 precisely why no L-based predictor can track them.\n\n**Ledger.** (1) m=6 orthogonality assert exposed the raw-primitive-twist \u00b11 correction for primes p|m, p\u2224cond(\u03c7) (max corr 3, 0 sign flips induced \u2014 disclosed, not corrected); (2) class-z scale mix-up fixed (\u2212310 \u2192 single-scale \u22127.74); (3) exp566's 'within-modulus shuffle vacuous' caveat verified NOT to transfer here.\n\n**Barrier framing.** Closes barrier-map residual 'MA-1 effectivity' as a named question: no computable criterion via quadratic-character structure on either route (magnitude paper 213, sign here) at toy scale; the averaging identity's effective scope remains non-computable from N; consistent with barriers 4/5. No breakthrough.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3960",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T09:06:21.851457+00:00",
     "title": "FACT round-75 #1 \u2014 MA1-SIGNED: signed route of MA-1 effectivity dies at both registered criteria (cell agreement 15.07%, CS_z=-52.7; class 48.74% below chance z=-7.74) \u2014 MA-1 computable-effectivity program CLOSED on both routes; Chebyshev/Rubinstein\u2013Sarnak negative skew 84.7% confirmed as named byproduct"
   },
@@ -2116,36 +2117,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-24T11:45:45.217604+00:00",
     "title": "FACT round-76 #1 \u2014 GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' \u2014 extremal order = population mass-sort (window-ascending beats descending 1.58x\u00b10.03 n=2400; sign-flip crossover E[\u221ar]=1.1716); master inequality S \u2264 (4/3)\u00b7T1-cap/\u039b zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) \u2192 keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078\u00d7 vs 1.08\u00d7); L7-a measure deployed generator tilt named next"
-  },
-  {
-    "consumed_by_exp_id": "5260665b",
-    "description": "**Verdict: H1 REFUTED DECISIVELY / MIXED-PARTIAL by literal rules.** Paper 221's named follow-up L7-a (measure the real generator tilt of deployed populations) is CLOSED; the \u039b-channel scope question is settled ADVERSARIALLY.\n\n**Setup:** 4 pools \u00d7 n=600, b=15, fixed seed 20260824, exact-uniform sieve-index prime sampling, touch-count costs verbatim from verifyL7_sim.py, 8-batch bootstrap SEs.\n\n**Per-pool results:**\n\n| pool | window | z_mean [CI95] | win_asc/desc S \u00b1 SE | in_win |\n|---|---|---|---|---|\n| HARD_BAL (control) | canonical | 0.4114 [0.3887,0.4341] | 1.5896 \u00b1 0.0538 | 1.000 |\n| RSA_INDEP (deployed-style) | canonical | 0.6356 [0.6150,0.6562] | 0.5578 \u00b1 0.0217 | 1.000 |\n| RATIO4 | adapted r_max=4.5 | 0.0558 [0.0530,0.0586] | 17.345 \u00b1 0.4654 | 0.000 canon |\n| UNIFORM_WIDE | adapted r_max=8.0 | 0.5979 [0.5765,0.6194] | 0.5505 \u00b1 0.0230 | 0.582 canon |\n\n**Three-way control replication:** HARD_BAL z=0.4114 matches analytic 0.414 AND independent verifier BAL_prime 0.4095\u20130.4148 / S=1.5785\u00b10.029 at shifted bitlen b=11\u219215 (measured S=1.5896\u00b10.0538). Machinery sound.\n\n**The inversion:** on independent same-bitlen primes the within-window divisor mass is TOP-heavy \u2014 ratio concentration near 1 (effective median r\u22481.25) pushes min(p,q) HIGH into (\u221a(N/2),\u221aN]. Window-ascending is always well-defined there (in_win=1.000 vs paper-137's 21.6% undefined) yet LOSES ~44% to sqrt-descending. Tilt-only predictor (1\u2212z)/z tracks measured S on all honest windows.\n\n**Consequence (plain):** \u039b-dominance is CONFINED TO ARTIFICIAL HARD-BALANCE POOLS; real generator classes tilt ADVERSARially. No deployable reorder-class gain without ENFORCED q<2p balance at key-generation time \u2014 no deployed generator enforces it. Paper-221 caveat upgraded from \"tilt unmeasured\" to \"tilt adversarial off-balance\" \u2014 final word. Scoped reorder-class fact, no speed prescription.\n\n**Caveats:** RATIO4's 17x = narrow-stratum pinning artifact (needs N-invisible declared-support knowledge), not deployable. b=15 lab scale, scale-free transfer assumed (Mertens/Dickman) not verified; real deployed filters only narrow the ratio band further (worsen the tilt).\n\n**Ledger catches disclosed:** findings.md filename pre-existed \u2192 exp575_findings.md written instead; descriptive sign readout added post-smoke with pre-registered decision rules unmodified (in JSON honest_notes); sieve-index sampling replaced randprime rejection loop (identical in law).\n\n**Barrier validation:** factor-local/scan-order frontier row; completes L7-a; reorder-class map now has measured scope boundaries end-to-end; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 223 \u00b7 assessment v329\u2192v330 \u00b7 count 563\u2192564 \u00b7 artifacts ResearchOutput/scripts/2026-08-24-round74/exp575_*",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3999",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T13:15:17.263405+00:00",
-    "title": "FACT round-77 #1 \u2014 GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY \u2014 RSA-style pools read z=0.6356 [0.6150,0.6562] TOP-HEAVY and window-ascending LOSES ~44% (S=0.5578\u00b10.0217); \u039b-dominance CONFINED to artificial hard-balance pools; paper-221 L7-a CLOSED"
-  },
-  {
-    "consumed_by_exp_id": "20511e4a",
-    "description": "Paper 222 \u00b7 assessment v329 \u00b7 experiment count 562\u2192563 (max id 572).\n\n**Verdict: RANDOMNESS-EXTENDED / GATE REJECTED** \u2014 the twice-gated sub-1 candidate deviation from papers 214\u2192216\u2192220 is DEAD.\n\n**The arbiter run** (seed 20260825, the only leg uncontaminated by the shared 20260824 stream): band-9 bitlen-96, 128 Ns \u00d7 600k = 76.8M pairs, wall 5296.9 s.\n\n- cut_1e5 PRIMARY: cand 2598 vs ctrl 2252 => r = **1.1536**, cluster-boot CI95 [1.0540, 1.2611] (independent 4000-rep rebootstrap from persisted raw counts; stored in-run [1.0541, 1.2686]) \u2014 excludes 1 UPWARD\n- cut_1e6: 40617/38594 => r = **1.0524** [1.0051, 1.1016]\n\n**Sign flip:** pilot 0.9468 / G1 0.988 / B 0.9623 at cut 1e6 \u2014 all seed 20260824, all deficit; the clean seed reads surplus +5% to +15%. Directional instability across seeds \u21d2 no stable deviation. Gate G1 fails by sign, stronger than by magnitude; the corrected pilot\u00d7B joint exclusion collapses into one seed-family's fluctuation. The surplus itself is NOT banked (symmetric skepticism): single seed, inside the envelope.\n\n**Audit trail** (both alarms resolved):\n1. Coordinator false alarm: :.5f terminal formatting collapsed 3.38e-05 to \"0.00003\", manufacturing an out-of-CI appearance; raw counts recompute exactly \u2014 display artifact only.\n2. Independent bootstrap from raw counts reproduces stored CI to 3 decimals.\n3. Cluster structure honest: top candidate-N clusters carry 600/561/540 hits vs control-max 359 \u2014 genuine per-N overdispersion behind \u00b15\u201315% single-run CI widths; no single ~77M-pair run can resolve a few-percent deviation.\n\n**Synthesis:** papers 130/209/214/216 randomness line extends through u\u224811 with a MEASURED per-run fluctuation envelope. Named follow-up condition (only if reopened): \u22653 truly distinct seeds pooled inverse-variance (\u03c3_joint\u22480.02 achievable), burden includes explaining the sign flip between seed families.\n\nLedger: pkill self-match killed first c-launch (relaunch clean); seed parameterization born-clean in reused script; JSON within-run verdict_name kept as honest snapshot, recorded verdict governs.\n\nBarrier framing: scale-smoothness frontier u\u22656\u201314 \u2014 null STRENGTHENS the map with quantified resolution floors; no breach, no method, no constant shaved. Complete honesty arc closed: bank (214) \u2192 downgrade (216) \u2192 letter-of-rule null + independence audit (220) \u2192 clean sign-flip rejection (222).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4001",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T13:15:17.266147+00:00",
-    "title": "FACT round-76 #2 \u2014 U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip \u2014 fresh seed 20260825 reads r=1.1536 SURPLUS where the 20260824 family read deficit; randomness stands through u\u224811 with a measured \u00b15\u201315% single-run fluctuation envelope"
   },
   {
     "consumed_by_exp_id": "1a774383",
@@ -3880,6 +3851,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
+    "domains": [
+      "Geometry",
+      "Analysis"
+    ],
+    "id": "fd_0669",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697791+00:00",
+    "title": "Convex Geometry: Brunn-Minkowski Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cram\u00e9r-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
     "domains": [
       "Geometry",
@@ -4264,37 +4250,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "fd_0669",
-    "priority_score": 0.83,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697791+00:00",
-    "title": "Convex Geometry: Brunn-Minkowski Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Analysis"
-    ],
-    "id": "fd_0686",
-    "priority_score": 0.83,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697834+00:00",
-    "title": "Attention Mechanisms: Mathematical Properties"
   },
   {
     "consumed_by_exp_id": "",
@@ -15321,6 +15276,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The complementarity law asc + desc = L + 2 is a conservation law over the window. The conjecture is the matching minimax statement: no deterministic scan order can be uniformly better than the better of the two endpoint orders, up to a 1+o(1) factor, because an adversary can place the divisor where the order looks last.\n\nFor every deterministic order sigma of a window of length L there is a pool on which sigma's mean cost is at least (L+2)/2 - o(L), whereas the better endpoint order costs min(zbar, 1-zbar)*L + 1.\n\nFormalise a scan order as a bijection Fin (L+1) -> window and the cost as the position of the divisor; the adversary picks the divisor in the top half of sigma's schedule.\n\nThe two orders studied here are not an arbitrary pair but the extreme points of the whole reorder class.\n\nSome interleaved order dominates both endpoints, which would reopen the reorder-class question with a genuinely new candidate.",
+    "domains": [],
+    "id": "fd_4285",
+    "priority_score": 0.5931481481481482,
+    "research_mode": "team",
+    "source_exp_id": "5260665b",
+    "status": "available",
+    "timestamp": "2026-08-26T13:18:10.916568+00:00",
+    "title": "Minimax Optimality of Endpoint Scan Orders"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The finite-size correction to the p-adic ceiling decays like p^{-2b}, uniformly in the base. Hence every valuation-type dial saturates well before the bitlens used in the FACT rounds, and any residual bitlen dependence is diagnostic of a non-tie mechanism.\n\nFor all p >= 2 and b >= 40, rho^2(p,b) - 3p/(p^2+p+1) < 10^{-24}.\n\nStrengthen padic_ceiling_close to a uniform numeric statement and instantiate at b = 40.\n\nProvides a one-line falsification test for every future bitlen sweep in the programme.\n\nSome base has anomalously slow saturation, contradicting the closed form.",
     "domains": [],
     "id": "fd_3826",
@@ -16255,6 +16222,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T17:46:43.713995+00:00",
     "title": "Eta-Quotient Certificates for the Full Monster Head Table"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact predictor identity shows the analytic speedup is (1-z)/z up to O(1/L). Enumeration at bit length 12 gives 0.5441 against the analytic 0.55529, a gap consistent with a single half-step rounding term. The conjecture makes that correction explicit and equidistribution-driven.\n\nFor same-bit-length pools at bit length b, Sum(desc)/Sum(asc) = (1-zbar)/zbar + c/sqrt(N) + O(1/N) with c determined by the equidistribution of the fractional parts of sqrt(N/2) and sqrt(N).\n\nEnumerate bit lengths 12 through 18, fit the residual against 1/sqrt(N), and formalise the leading term using descCost_lt_ascCost_of_real_margin together with an equidistribution input.\n\nThe finite-size gap between theory and simulation is fully explained, closing the last modelling caveat.\n\nA second-order effect (prime correlations inside the window) contributes at order 1/sqrt(N), which would be of independent interest.",
+    "domains": [
+      "NumberTheory",
+      "Cryptography"
+    ],
+    "id": "fd_4284",
+    "priority_score": 0.5647238473759407,
+    "research_mode": "team",
+    "source_exp_id": "5260665b",
+    "status": "available",
+    "timestamp": "2026-08-26T13:18:10.421794+00:00",
+    "title": "Lattice Correction to the Tilt-Only Predictor"
   },
   {
     "consumed_by_exp_id": "",
@@ -17455,6 +17437,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:02:37.889796+00:00",
     "title": "Majorisation Criterion for Tie Ceilings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The scan-order contest factors through the single functional E[z(r)] of the generator's ratio law. For the one-parameter family of densities proportional to r^{-theta} on the balance band, the mean tilt should be strictly decreasing in theta with a unique crossing of 1/2. This would classify all power-law generators by one number.\n\nFor mu_theta with density proportional to r^{-theta} on [1,2], the map theta -> E_{mu_theta}[zOfRatio] is strictly decreasing and crosses 1/2 at a unique theta*, computable in closed form in terms of sqrt(2).\n\nEvaluate the closed-form rpow integrals for E[z] under mu_theta using the same antiderivative technique as tiltAntideriv, then prove strict monotonicity in theta by differentiating under the integral sign.\n\nAny power-law generator can be certified adversarial or favourable to window-ascending by a single scalar comparison.\n\nThe mean tilt is non-monotone in the concentration parameter, so the scope boundary is not a threshold phenomenon and per-generator analysis is unavoidable.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_4282",
+    "priority_score": 0.5635033219176204,
+    "research_mode": "team",
+    "source_exp_id": "5260665b",
+    "status": "available",
+    "timestamp": "2026-08-26T13:18:09.444704+00:00",
+    "title": "Tilt Spectrum of Power-Law Ratio Generators"
   },
   {
     "consumed_by_exp_id": "",
@@ -27703,6 +27700,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T11:46:20.437917+00:00",
     "title": "Grid Resolution Limits for Saturation Locations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generators that draw the two primes from different bit lengths push the ratio past 2, so the small factor exits the canonical window. The conjecture is that this is total rather than gradual: with a skew of k bits the in-window fraction is exactly zero and no admissible window multiplier below 2^k restores it.\n\nIf 2^(b-1) <= p < 2^b and 2^(b+k-1) <= q < 2^(b+k) with k >= 1, then p*q >= 2*p*p, so the small factor is never in the canonical window; and the R-window contains it only if R >= 2^k.\n\nFormalise directly from window_iff_balanced (an inequality on naturals), then generalise the R-window membership criterion to q < R*p and instantiate.\n\nThe in_win column is a pure function of bit-length skew, and the ascending order is undefined (not merely slower) for skewed generators.\n\nSome skewed pairs remain in-window, so window membership depends on finer arithmetic than bit lengths.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4283",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5260665b",
+    "status": "available",
+    "timestamp": "2026-08-26T13:18:09.936715+00:00",
+    "title": "Bit-Length Skew and Window Extinction"
   },
   {
     "consumed_by_exp_id": "",
@@ -38266,6 +38277,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "`share_sub_inv_card_le_relClusterSD` is a deterministic bound at a fixed profile.  What a\nfuture gate needs is the *typical* floor when clusters are drawn from the hypotenuse\ndistribution.  **The key insight is** that the max/mean ratio of hypotenuse cluster sizes\ngrows like a divisor-type function, so the design effect should grow like a power of\n`log`, not stay bounded.  **Why now?** The exact bootstrap variance identity is proved, so\na distributional statement can be phrased as a statement about `\u2211 (x\u1d62 \u2212 x\u0304)\u00b2` alone.",
+    "domains": [],
+    "id": "fd_4281",
+    "priority_score": 0.43999999999999995,
+    "research_mode": "team",
+    "source_exp_id": "20511e4a",
+    "status": "available",
+    "timestamp": "2026-08-26T13:17:46.906141+00:00",
+    "title": "Distributional floor, not just worst-case floor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For any finite family of context-stable heads the merged budget equals the maximum\nof the per-head budgets exactly \u2014 not merely up to the sandwich between the smallest and largest\nper-head knee \u2014 and is therefore independent of the number of heads.\n\n**Test.** Measure per-head knees separately and check that the model-level knee coincides with the\nworst head's, across head counts and context lengths.",
     "domains": [],
     "id": "fd_3888",
@@ -40834,6 +40857,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T09:01:32.349835+00:00",
     "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The construction `C_k = \u220f_{v<k}((v+2)\u00b2+1)` provably delivers `k` hits but measurably\ndelivers far more (`C_3 = 850` carries `14`).  **The key insight is** that the scaled\nfamily only sees one primitive triple per factor, while the true count is multiplicative\nin the primes `\u2261 1 mod 4` dividing `C_k`, so the gap between the proved and true bound is\nitself a clean arithmetic function.  **Why now?** `exists_hypotenuse_multiplicity` gives a\nformal skeleton into which a Gaussian-integer factorisation count can be dropped without\nredoing the distinctness argument.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4280",
+    "priority_score": 0.41007860509178495,
+    "research_mode": "team",
+    "source_exp_id": "20511e4a",
+    "status": "available",
+    "timestamp": "2026-08-26T13:17:46.428301+00:00",
+    "title": "Sharp multiplicity growth for the scaling construction"
   },
   {
     "consumed_by_exp_id": "",
@@ -46015,14 +46052,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berlekamp\u2013Massey"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7ae2917a",
     "description": "Define a committed local-oracle protocol and prove that perfect hiding of unopened coordinates plus perfect simulation of opened coordinates yields perfect honest-verifier zero knowledge for the full constant-query verifier transcript.",
     "domains": [],
     "id": "fd_2630",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "132832ee",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:14.436028+00:00",
     "title": "Composition of PCP locality with commitment hiding"
   },

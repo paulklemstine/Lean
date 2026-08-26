@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2a9ba724",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — after \"per-tag reflection depths are freely realizable\"\n\n## What this cycle settled\n\nThe conjecture, read literally (the theory `S` ranges over the common refinement of\n`capC` an",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 98,
-      "timestamp": "2026-08-24T20:49:57",
-      "title": "Per-tag reflection depths are freely realizable"
-    },
-    {
       "cycle_id": "969a5dc4",
       "domain": "Cryptography",
       "key_insight": "# Future directions — after the depth-decay theorems\n\nThis cycle pinned the reach of a fixed-precision magnitude sensor on the Berggren\n(Pythagorean) tree, in three independent registers:\n\n* **exists*",
@@ -499,19 +489,19 @@
       "theorem_count": 31,
       "timestamp": "2026-08-26T13:18:02",
       "title": "FACT round-76 #2 — U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip — fresh seed 20260825 reads "
+    },
+    {
+      "cycle_id": "5260665b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — scan-order tilt, after three cycles\n\n## What this cycle settled\n\nThe scan-order question (\"does scanning the balance window upward beat scanning down from\n`√N`?\") has been reduce",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-08-26T13:18:20",
+      "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style pools read z=0.6356 ["
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "252d7c91",
-      "domain": "Algebra",
-      "key_insight": "# Future directions (thread `th_1d82f8a0`, cycle 2)\n\n## What this cycle proved\n\nTwo self-contained files in `Catalog/Algebra/`, both compiling with no `sorry` and using only\n`propext`, `Classical.choi",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 114,
-      "timestamp": "2026-08-19T19:40:27",
-      "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
-    },
     {
       "cycle_id": "6d98445d",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 31,
       "timestamp": "2026-08-26T13:18:02",
       "title": "FACT round-76 #2 — U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip — fresh seed 20260825 reads "
+    },
+    {
+      "cycle_id": "5260665b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — scan-order tilt, after three cycles\n\n## What this cycle settled\n\nThe scan-order question (\"does scanning the balance window upward beat scanning down from\n`√N`?\") has been reduce",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-08-26T13:18:20",
+      "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style pools read z=0.6356 ["
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "acd2f64e",
-      "domain": "Pythagorean",
-      "name": "ker_pos",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "acd2f64e",
-      "domain": "Pythagorean",
-      "name": "ker_cont",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e645a8ec",
-      "domain": "Probability",
-      "name": "harmonic_window_sum",
-      "quality": 0.85
-    },
     {
       "cycle_id": "e645a8ec",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "bootstrap_variance_identity",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "5260665b",
+      "domain": "Novelty",
+      "name": "ratioArea_eq",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "5260665b",
+      "domain": "Novelty",
+      "name": "ratioArea_one",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "5260665b",
+      "domain": "Novelty",
+      "name": "ratioArea_two",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-26T13:18:02",
+  "last_updated": "2026-08-26T13:18:20",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "33808f71",
-        "quality": 0.78,
-        "theorems": 61,
-        "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL — probes recover only R2=0.32 on co"
-      },
-      {
         "cycle_id": "95bfbbbf",
         "quality": 0.82,
         "theorems": 81,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 137,
         "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+      },
+      {
+        "cycle_id": "5260665b",
+        "quality": 0.83,
+        "theorems": 96,
+        "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style p"
       }
     ],
     "NumberTheory": [
