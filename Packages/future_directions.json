@@ -53356,7 +53356,7 @@
       "depth_estimate": 3,
       "description": "Both halves exist and are proved: the exact power law\n(`frac_pow_of_independent_repetition`) and the sharp one-shot threshold\n(`exists_two_accepting_challenges` together with\n`frac_eq_one_div_card_of_unique`).  What is missing is only the identification of\n`(R ×ˢ C)^k` with `R^k ×ˢ C^k`, which is a `Fintype.piFinset` reindexing and is\nthe natural next brick.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -53514,7 +53514,7 @@
       "depth_estimate": 3,
       "description": "scale `√l` rather than on the scale `√m` produced by bounded\ndifferences, so the only thing separating the current theorem from the full\nfluctuation statement is the *location* of the median.  *Why now?*  Locating the\nmedian is a counting problem about weakly increasing subsequences with no\nprobabilistic content left, and the Lean development already provides the exact\ncombinatorial definition (`Talagrand.lis`) together with the API needed to\nmanipulate it (`Talagrand.card_le_lis`, `Talagrand.exists_incr_card_eq_lis`,\n`Talagrand.lis_eq_one_of_decreasing`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -58818,7 +58818,7 @@
       "depth_estimate": 3,
       "description": "Specify whether symmetry concerns a component as a planar set, an orbit portrait, or an abstract combinatorial model before testing any dihedral classification.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -60308,7 +60308,7 @@
       "depth_estimate": 3,
       "description": "Connect the analytic divergence hypothesis to the combinatorial hypotheses needed for\n   completeness of every tail. The theorem `stronglyComplete_iff_eventually_complete_tails`\n   then turns this into strong completeness directly.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -60983,7 +60983,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of theorem reuse remains within a narrow interval when dependencies are measured under three distinct policies: direct constant references, transitive references, and references after collapsing definitional expansions.\n\nThe key insight is that a scale-free claim is scientifically meaningful only if it is stable under reasonable choices of graph extraction. **Why now?** The structural results separate universal consequences of acyclicity from corpus-dependent statistics, making extraction sensitivity the first falsifiable obstacle.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -61185,7 +61185,7 @@
       "depth_estimate": 3,
       "description": "Construct the complete multipartite `SimpleGraph` associated to a finite vertex partition and identify its actual `s`-cliques with `multipartiteCliqueCount`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -61305,7 +61305,7 @@
       "depth_estimate": 3,
       "description": "Formalize color-critical graphs, disjoint unions, subgraph containment, and `F`-freeness. Prove the embedding lemmas needed for a disjoint family `F₁, …, Fₜ` of chromatic number `r + 1`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -61424,7 +61424,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** If a finite graph contains a complete graph on `t` vertices as a minor, then its chromatic counting function vanishes at every nonnegative palette size below `t`. Conversely, determine natural minor-closed graph classes on which this vanishing pattern forces a complete `t`-minor.\n\nThe key insight is that Hadwiger-type structure can be phrased as an interval of forced zeros rather than only as a lower bound on a chromatic number.\n\n**Why now?** The exact minimal-positive-value characterization isolates the zero interval that must be controlled, while deletion–contraction offers a natural mechanism for tracking it through graph reductions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -61823,7 +61823,7 @@
       "depth_estimate": 3,
       "description": "For a partition `λ ⊢ n`, compare the number of\nsquarefree monic polynomials with irreducible-factor degrees `λ` to the number of\npermutations with cycle type `λ`, and derive a quantitative `O_n(1/q)` discrepancy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -62511,7 +62511,7 @@
       "depth_estimate": 3,
       "description": "For each explicitly specified rounding rule and each word size \\(p\\), determine the\nentire cycle-length spectrum of the resulting finite logistic map and test whether its\nmaximum cycle is exponentially large while its median cycle remains substantially\nsmaller.\n\nThe key insight is that state-space cardinality supplies only an upper bound on first\nrepetition; arithmetic rounding determines the actual functional graph.\n\nWhy now? The universal lower-bound conjecture is ruled out by short exceptional orbits,\nso the meaningful replacement is a rounding-sensitive distributional classification.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -64262,7 +64262,7 @@
       "depth_estimate": 3,
       "description": "Define finite alternatives, strict linear orders, voter profiles, social welfare functions, Pareto unanimity, independence of irrelevant alternatives, and dictatorship. Prove Arrow's theorem combinatorially on that domain.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -65265,7 +65265,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** In every diagram-local signed path model, Alexander reciprocity is induced by an involution on admissible paths that preserves sign and sends area `a` to `c-a` for a diagram-dependent constant `c`.\n\nThe key insight is that palindromicity of a signed generating function follows from an area-reversing, sign-preserving involution; this converts a polynomial identity into a concrete combinatorial symmetry.\n\n**Why now?** The abstract involution criterion is established, so the conjecture has a precise falsifiable target: construct the involution from crossing data and check compatibility with the forbidden region.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -65551,7 +65551,7 @@
       "depth_estimate": 3,
       "description": "Formalize the finite directed dependency graph of a morphism. For ordinary morphic words over a finite alphabet, symbol occurrence should reduce to reachability among letters; this must be stated carefully before treating it as an open problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -65591,7 +65591,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** One may take `N₀(k) ≤ 2k²` in uniform half-canonical existence.\n\nThe key insight is that `2k²` already guarantees non-negativity of the relevant Brill–Noether number with one unit of arithmetic slack. **Why now?** This is the first explicit scale singled out by the exact regular-graph calculation, so it is a falsifiable target for exhaustive tests and structural estimates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -65872,7 +65872,7 @@
       "depth_estimate": 3,
       "description": "Prove bounds on the number of cells in each dimension from network architecture. The activation-pattern count `2^(sum widths)` is valid as a coarse combinatorial ceiling, but a proposed binomial bigrading needs a definition of the bigraded invariant before it is a meaningful theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -66913,7 +66913,7 @@
       "depth_estimate": 3,
       "description": "For an alphabet of size `q`, determine the largest word length for which one can avoid two disjoint, order-isomorphic occurrences of the same scattered word of length `m`. The conjecture is that the extremal function has an exponential main term in `m`, but with a base strictly smaller than the naive `q^m` once arbitrary scattered occurrences, rather than aligned blocks, are counted.\n\nThe key insight is that aligned-block coding supplies a universal benchmark while overlap constraints among scattered words should create additional entropy loss. **Why now?** The collision and disjointness bounds isolate the exact structural point where ordinary pigeonhole counting stops, making the missing overlap estimate sharply testable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -67031,7 +67031,7 @@
       "depth_estimate": 3,
       "description": "Define `U_g(m,r)` as the least window length such that every window in a finite genome `g` contains some length-`m` word with at least `r` disjoint occurrences. Conjecture that, after controlling for local GC content and assembly gaps, human chromosomes have `U_g(4,2)` separated by a constant factor from matched first-order Markov surrogates.\n\nThe key insight is that a window-uniform statistic turns the informal phrase “any consecutive bases” into a reproducible extremal observable, while disjointness prevents a homopolymer overlap from being counted ambiguously. **Why now?** A universal upper benchmark is available, so empirical comparisons can report both absolute values and normalized compression ratios.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -67590,7 +67590,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Among profiles with fixed endpoints and fixed minimum value, strictly single-valley profiles uniquely minimize total variation; every additional reversal incurs a variation penalty equal to twice the total height of the added excursions.\n\nThe key insight is that the exact descent-plus-recovery identity turns visual “wiggles” into an additive combinatorial penalty.\n\n**Why now?** The single-valley variation law provides the baseline needed to define and test an excess-variation statistic on survey data.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -68754,7 +68754,7 @@
       "depth_estimate": 3,
       "description": "Separate the population space from the score space and add\n   graph-derived topologies, local aggregation operators, fairness constraints, and\n   perturbation metrics. This would make claims about social structure explicit rather\n   than encoding all dynamics in a score-space self-map.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -70235,7 +70235,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** On a graph with `n` vertices and `k` cops, backward search stabilizes after at most `n^(k+1)` strict updates; moreover, there are families for which the necessary number of updates grows polynomially in the number of game states.\n\nThe key insight is that the winning tables form an increasing chain in a finite state space, so every non-stable update must add a state. **Why now?** The established monotonicity and fixed-point characterization reduce termination to a quantitative chain-length problem, and implementations can record the exact stabilization depth across graph families.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -70597,7 +70597,7 @@
       "depth_estimate": 3,
       "description": "The present development does not decide paracompactness. A promising route is to study whether the clopen finite-step partitions generated by infinitesimals refine arbitrary open covers locally finitely. Conversely, a counterexample may come from a proper-class-like hierarchy of cofinality levels represented inside the fixed universe.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -74803,7 +74803,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Let a finite hypergraph index subfamilies of phylogenetic trees, with each hyperedge carrying a common induced subtree on the same leaf set. If the intersection graph of the hyperedges is connected, then the union of all indexed trees has that common induced subtree. Conversely, disconnectedness is the only obstruction valid for arbitrary split systems.\n\nThe key insight is that equality of restriction witnesses propagates along overlaps exactly as a locally constant function propagates on a connected space.\n\n**Why now?** Chain gluing establishes the path case. Recasting the result for arbitrary connected overlap graphs would create a reusable local-to-global principle and clarify its relation to sheaf-style consistency.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -76960,7 +76960,7 @@
       "depth_estimate": 3,
       "description": "For each finite semantic set `B`, classify the largest family of endomorphisms `F ⊆ (B → B)` for which a single presentation can represent every diagonal composite associated with `F`. Conjecture that maximal families are controlled by the directed graph of fixed points of the transformation monoid generated by `F`.\n\nThe key insight is that Boolean negation fails because it is fixed-point-free, suggesting that obstruction is governed by transformation-monoid structure rather than cardinality alone.\n\nWhy now? The universal Boolean impossibility theorem supplies the first sharp negative case, and finite transformation monoids make exhaustive testing and structural classification feasible.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -79935,7 +79935,7 @@
       "depth_estimate": 3,
       "description": "For fixed `s` and forbidden path order `P`, determine the exact maximum number of copies of `C_{2s+1}` and characterize every extremizer. Conjecture that an endpoint version of the core–periphery charging map yields a finite family of extremal templates, with parity corrections analogous to the exceptional edge in the bounded-circumference construction.\n\nThe key insight is that a path has two boundary positions, so successor charging should lose control only at controlled endpoints rather than at an exceptional cyclic transition.\n\nWhy now? The cyclic argument cleanly separates the injective combinatorial mechanism from the graph-specific construction, making its linear-order analogue precise and testable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -80736,7 +80736,7 @@
       "depth_estimate": 3,
       "description": "Encode strongly regular graph parameters and derive the\n   parameter equations imposed by an MPF, culminating in the `C₅` classification.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -81056,7 +81056,7 @@
       "depth_estimate": 3,
       "description": "Attach nonnegative weights to concepts and to preserved relations, and maximise\nthe weighted count over all admissible analogies. **Conjecture:** the optimal\none-sided analogy is computed by a maximum-weight partial injection (an\nassignment problem), so the optimum is attained, is polynomial-time computable,\nand is monotone and submodular in the weight vector.\n\n*The key insight is* that a one-sided maximiser only needs its forward map to be\ninjective on the fixed set, turning fidelity maximisation into a bipartite\nmatching whose value is the optimum of a totally unimodular program. *Why now?*\nMonotonicity in the weights is already proved, which is the hypothesis that lets\nthe greedy/matching machinery certify global optimality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -81134,7 +81134,7 @@
       "depth_estimate": 3,
       "description": "For finite metric carriers, replace the fixed-point count by the maximal\ndisplacement `max_a d(bwd(fwd(a)), a)` of the round trip. **Conjecture:** a\nminimiser exists over any finite family of candidate analogies, the minimal\ndisplacement is zero exactly for the perfect analogies of the discrete model, and\ndisplacements compose subadditively: the round-trip displacement of `ψ ∘ φ` is\nbounded by a Lipschitz-weighted sum of the individual displacements.\n\n*The key insight is* that the discrete perfect analogies are the zero-displacement\ncore, so the metric theory is a continuous relaxation whose minimum recovers the\ncombinatorial optimum. *Why now?* Finiteness gives existence of minimisers for\nfree, and the composition law for perfect analogies is the exact `displacement =\n0` case of the conjectured inequality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -81215,7 +81215,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** On a chordal interference graph with nonnegative vertex spill costs\nand a fixed register budget `k`, a minimum-cost spill set can be computed by a\ndynamic program over any clique tree, with per-node state space bounded by a\nfunction of the maximum clique size.\n\nThe key insight is that the clique spill lower bound is already tight on a single\nclique, so the only remaining difficulty is bookkeeping how adjacent cliques share\nvertices — exactly the overlap information a clique tree records. **Why now?** With\nthe local constraint proved exactly tight, the open problem is purely the global\nassembly, and a clique tree turns that assembly into a bounded-width recursion.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -81296,7 +81296,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** The clique spill lower bound `ω - k` is globally tight exactly on the\nchordal graphs: for every non-chordal graph there is a register budget forcing\nstrictly more than `ω - k` spills, and for every chordal graph the bound is\nachievable for all budgets.\n\nThe key insight is that an induced chordless cycle raises the chromatic demand above\nthe clique number, creating spill obstructions that no single clique can witness —\nthe `C_5` case already separates the two quantities. **Why now?** The lower bound is\nnow a theorem for all graphs, so the live question is precisely characterizing when\nit is *achievable*, and chordality is the natural candidate boundary.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -81863,7 +81863,7 @@
       "depth_estimate": 3,
       "description": "Proved as `choose_sq_bound`\n   + `ramsey_lower_bound_exp`: `k ≥ 3` and `n^2 ≤ 2^k` imply the criterion, hence\n   `R(k,k) > 2^{k/2}`. The remaining refinement is a purely cosmetic restatement over\n   the reals using `⌊Real.sqrt (2^k)⌋₊` instead of the integer condition `n^2 ≤ 2^k`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -83090,7 +83090,7 @@
       "depth_estimate": 3,
       "description": "**Expected traces → Catalan.** For a Wigner ensemble, prove\n  `lim_{N→∞} E[(1/N) tr(W_N^{2k})] = C_k` and the odd traces `→ 0` by the\n  non-crossing pair-partition enumeration; the recurrence `scMoment_recurrence`\n  is the target identity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -84333,7 +84333,7 @@
       "depth_estimate": 3,
       "description": "For all `P,Q` with more than one element,\n   \\[\n   \\dim(P^+\\times Q_+)\\le \\dim(P\\times Q)+1.\n   \\]\n   The formal theorem `proposition_2_2_uniform` shows that this bound, together with its order-dual application and bounded-poset additivity, implies Conjecture 1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -84889,7 +84889,7 @@
       "depth_estimate": 3,
       "description": "Package `LocalSection` as a\n   presheaf on the poset of column subsets, prove the identity and composition\n   laws for restrictions, and derive the sheaf condition from the concrete\n   gluing theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -84929,7 +84929,7 @@
       "depth_estimate": 3,
       "description": "Pairwise overlap events commonly share columns\n   and therefore need not be independent. Formalize the dependency graph and\n   derive exact probabilities or rigorous upper/lower bounds instead of an\n   unconditional product formula.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -85676,7 +85676,7 @@
       "depth_estimate": 3,
       "description": "Add the shift map on streams, its induced map on compatible threads, and a conjugacy theorem. Extend from the full binary shift to subshifts of finite type presented by finite transition graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -86426,7 +86426,7 @@
       "depth_estimate": 3,
       "description": "Replace the one-vertex feasibility model by a cost\n   function on variables and minimize total cost subject to `k`-colourability of the induced\n   graph on unspilled vertices. The counterexample shows that degree alone cannot solve this\n   optimization problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -86466,7 +86466,7 @@
       "depth_estimate": 3,
       "description": "The present theorem assumes a\n   chordal graph via an explicit perfect elimination order. A compiler-facing development\n   could define dominance, SSA live ranges, and prove that the resulting interference graph\n   admits such an order.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -86585,7 +86585,7 @@
       "depth_estimate": 3,
       "description": "Exhaustively classify the smallest chordal graphs for which a\n   maximum-degree spill fails, with the exhaustive search reflected by a kernel-checked finite\n   theorem rather than an external computation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -86625,7 +86625,7 @@
       "depth_estimate": 3,
       "description": "For SSA/chordal interference graphs, test `χ = ω`, not\n   `χ = max(Δ+1,ω)`. Record maximum degree separately as a general upper-bound parameter; it\n   does not determine the exact chromatic number.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -87732,7 +87732,7 @@
       "depth_estimate": 3,
       "description": "Formalize `R^[n](g) = g^(2^n)` and prove that\n   every physical coupling `0 ≤ g < 1` converges to zero. Transport this result\n   through inverse stereography to obtain a convergence theorem on the unit\n   circle.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -87772,7 +87772,7 @@
       "depth_estimate": 3,
       "description": "Formalize the transfer-matrix\n   or spin-summation derivation of `tanh K' = (tanh K)²`, rather than taking this\n   standard exact recursion as the definition of `isingRG`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -89275,7 +89275,7 @@
       "depth_estimate": 3,
       "description": "Implement the de Bruijn-graph product\n   criterion for injectivity and surjectivity.  This gives a finite decision\n   procedure that scales better than enumerating all global configurations and\n   is the appropriate next step for binary radius two and nonbinary alphabets.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -90885,7 +90885,7 @@
       "depth_estimate": 3,
       "description": "Formalize finite connected simple regular graphs and prove\n   `2(g-1)=n(k-2)` from the handshaking lemma.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -91123,7 +91123,7 @@
       "depth_estimate": 3,
       "description": "There is no function `f : ℝ → ℝ` such that the inverse-stereographic chordal distance equals `f (‖x-y‖)` for every pair `x,y : ℝⁿ` when `n ≥ 1`. This can be falsified by exhibiting such a function, or proved using two translated pairs with equal Euclidean separation and unequal chordal distance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -91204,7 +91204,7 @@
       "depth_estimate": 3,
       "description": "If a graph predicate is reconstructible from `SameDeck`, then the predicate obtained by applying it to graph complements is also reconstructible. This should be formalized as a general theorem and instantiated for every reconstructed class in the catalog.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -93039,7 +93039,7 @@
       "depth_estimate": 3,
       "description": "construct a grid or partition-of-unity interpolant with mesh size comparable to\n   `(ε/C)^(1/α)`;",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -93963,7 +93963,7 @@
       "depth_estimate": 3,
       "description": "For a bipartite coefficient matrix of arbitrary finite dimensions, normalize\nthe Hilbert norm of its second exterior power. Conjecture that its zero locus\nis exactly rank one and that its sharp maximizers are precisely matrices with\nequal nonzero singular values on their support. The two-row Lagrange identity\nproved in this cycle is the first nontrivial case.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -95560,7 +95560,7 @@
       "depth_estimate": 3,
       "description": "`LongestPathExchange` supplies the\n   extension lemma and the freeness exchange step; what is missing is the rotation argument\n   showing that in a `2`-connected graph a longest path can be closed into a cycle, after\n   which `IsLongestPath.card_lt_of_indepSet_off` bounds the vertices off the path.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -96329,7 +96329,7 @@
       "depth_estimate": 3,
       "description": "(Exclusivity is automatic when the target has maximum degree at most one —\n   `isExclusive_of_deg_le_one` — and all optimal splits computed in this project are exclusive.)\n   For every finite graph `G`, the minimum number of splits producing a cograph equals the\n   minimum number of *exclusive* splits producing a cograph.\n   Falsifiable by a graph whose exclusive cograph splitting number is strictly larger than its\n   unrestricted one.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -96369,7 +96369,7 @@
       "depth_estimate": 3,
       "description": "For every finite `G`, `split_IsChordal(G) ≤ |E| − |V| + c(G)`, where `c(G)` is the number of\n   connected components; i.e. one split per independent cycle suffices.  The case of a single\n   cycle is proved for `C₄` (`chordal_split_cycleC4_exact`), where unfolding the cycle at one\n   vertex produces the path `P₅` (`isSplit_pathP5_cycleC4`).  Falsifiable by a graph needing more\n   splits than its cyclomatic number.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -97096,7 +97096,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For `p = (1-ε)/n` with `0 < ε < 1` there is `A = A(ε)` such that\n`Prob p {s | largestComponent s ≤ A · log n} → 1`, and the explicit choice\n`A = 3/(ε - log(1+ε))` works.\n\nThe natural Lean route avoids branching processes entirely: a first-moment bound on the\nnumber of *connected* vertex sets of size `k` — `C(n,k) k^{k-2} p^{k-1}` for trees —\ncombined with the cut machinery of `ErdosRenyiConnectivityUpper` (`cutEdges`,\n`sum_over_small_sets`).  Falsifiable numerically: simulate `G(n,(1-ε)/n)` and check\nwhether the largest component exceeds `A log n` with non-vanishing frequency.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -97136,7 +97136,7 @@
       "depth_estimate": 3,
       "description": "`card_comp_set_cyc` proves\n   `|(E ∘ C)[n]| = n!` analytically.  The bijection `S ≅ E ∘ C` itself (a permutation is\n   the set of its cycles) is the natural next target; `blockSigmaEquiv` (a partition\n   decomposes the underlying set) is the tool for transporting the cyclic structures.\n   The same remark applies to `D ≅ E ∘ C₂`, proved here only at the level of counts.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -97448,7 +97448,7 @@
       "depth_estimate": 3,
       "description": "Formalize \"many nearly-periodic\n   components\": a partition of the vertex set into parts each with small\n   periodicity ratio, with guarantees in terms of the higher eigenvalues of the\n   rotated Laplacian.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -97930,7 +97930,7 @@
       "depth_estimate": 3,
       "description": "**Walls are flats of the support matroid.**  Since the walls are the loci\n  `x i − x j = δ j − δ i`, the arrangement is a weighted braid (type `A_{n−1}`)\n  arrangement, whose matroid is the graphic matroid of the complete graph on\n  `S`.  `closedCell_subset_wallSet_iff` proves that the walls containing the\n  cell of `T` are exactly the pairs `(i, j)` with `i, j ∈ T`, i.e. the edge set\n  of `K_T`: the flat spanned by the cell.  `closedCell_eq_star_inter` exhibits\n  the star of any `i₀ ∈ T` — the `|T| − 1` equations `x i + δ i = x i₀ + δ i₀`,\n  `i ∈ T` — as a spanning set of that flat, cutting the cell out of the chamber\n  of `i₀`; by `closedCell_ssubset` no proper subcoalition suffices, so the star\n  is a basis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -98572,7 +98572,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** If $\\mathcal F$ is weak $B_d$-free and $\\mathcal G$ is weak $B_e$-free, then\n$\\mathcal F \\cup \\mathcal G$ is weak $B_{d+e}$-free; likewise for strong freeness.\n\n*Status.* The case $e = 1$ is the Antichain Union Theorem proved this cycle (a weak $B_1$-free\nfamily is exactly an antichain). Exhaustively verified with no counterexample for $n = 3$ and\n$(d,e) \\in \\{(1,1),(1,2),(2,1)\\}$, and for $n = 4$ with $d = e = 1$. Equivalently, in poset\nform: for every subset $A \\subseteq B_{d+e}$ containing no weak copy of $B_e$, there is an\norder embedding $B_d \\hookrightarrow B_{d+e}$ whose image avoids $A$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -98612,7 +98612,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** $\\mathrm{La}(n,B_{d+1}) - \\mathrm{La}(n,B_d) \\ge \\binom{n}{\\lfloor n/2\\rfloor}$\nfor all $n \\ge d+1$.\n\n*Status.* Open. The pigeonhole bound above gives $2^n/(n+1)$, short by a factor of order\n$\\sqrt n$ exactly in the regime where the extremal number is already a constant times the\ncentral binomial coefficient. For the level-restricted problem the quantitative form is a\ntheorem: the level optima for consecutive $d$ differ by exactly one central binomial\ncoefficient. *Falsifiable* by one pair $(n,d)$ with a smaller gain.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -98730,7 +98730,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every $d \\ge 2$ there is $n_0$ with\n$\\mathrm{La}(n,B_d) < \\mathrm{La}^*(n,B_d)$ for all $n \\ge n_0$: the proved inequality\n$\\mathrm{La} \\le \\mathrm{La}^*$ is eventually strict, even though the layer invariants coincide.\n\n*Status.* Open; the first cases go the other way. Equality is proved for $n = d$, for\n$n = d+1$, for all $n$ when $d = 1$, and on level families for all $n$ and $d$. So any such\n$n_0$ must exceed $d+1$, and the separating families cannot be level families. *Falsifiable*\nby showing that some extremal strong $B_d$-free family is always weak $B_d$-free.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -100007,7 +100007,7 @@
       "depth_estimate": 3,
       "description": "**Status of part (b) of the previous version of this conjecture:** *proved*.\nThe three-poset bound `U(n) ≥ 3n - ⌈n/2⌉ - 3` (asymptotically `5n/2`) is now\n`three_poset_le_minUniversalSize`, obtained by playing the `n`-chain, the\n`n`-antichain and the disjoint union of two chains against each other.  What\nremains open is the following pair of statements.\n\n**Statement.**  (a) `U(4) = 8`; equivalently, no seven-point poset contains all\nfour-element posets (all 219 labelled partial orders on four points).  (b) The overlap method is *exhausted* at order `n log n`: for every\nfamily `P₁, …, P_k` of `n`-element posets, `kn - Σ_{i<j} s_{ij} = O(n log n)`,\nwhere `s_{ij}` is the size of the largest common induced subposet of `Pᵢ` and\n`Pⱼ`.  Hence every improvement of the lower bound beyond `n log n` must come\nfrom counting, not from overlaps.\n\n**Status.**  The matching *lower* half of (b) is now proved: some family attains\norder `n log n` (`log_mul_le_six_mul_minUniversalSize`).  What is open is the\nupper half — that no family does better — and part (a).\n\n**The key insight is** that by Dilworth/Erdős–Szekeres any two `n`-element\nposets have a common induced subposet on `Ω(log n)` points (a chain or an\nantichain of that size occurs in both), so the pairwise overlaps grow at least\nlogarithmically while the family contributes only `n` per poset — the\noptimisation therefore saturates at `k ≈ n / log n`.\n\n**Why now?**  `CommonInducedBound`, `card_inter_images_le` and the three-poset\ninstance are formalised, so (b) is a statement purely about the extremal\nquantity `s_{ij}`, and (a) has its upper half `U(4) ≤ 8` already kernel-verified\nin `FourPoints.lean`; only the nonexistence half is open.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -100129,7 +100129,7 @@
       "depth_estimate": 3,
       "description": "The convolution of two log-concave finitely\n   supported sequences of nonnegative integers with no internal zeros is log-concave.  (The\n   combinatorial core of Conjecture 2, and reusable well beyond this thread.)",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -100526,7 +100526,7 @@
       "depth_estimate": 3,
       "description": "**uniqueness, proved without irreducibility** (`tropEigenvalueBot_unique`,\n  `IsTropEigenBot.isGreatest_suppCycleMean`): any eigenvalue with a finite eigenvector is\n  the greatest mean weight of a closed walk in the support digraph.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -100566,7 +100566,7 @@
       "depth_estimate": 3,
       "description": "**necessity, refuted** (`not_stronglyConnected_of_isTropEigenBot_false`): `diag(0,0)` with\n  `⊥` off the diagonal has the finite eigenvector `(0,0)` and a disconnected support\n  digraph.  So the correct statement is the implication, not the equivalence, and the\n  sharp characterisation of *which* reducible matrices admit a finite eigenvector is\n  conjecture **D4**.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -100884,7 +100884,7 @@
       "depth_estimate": 3,
       "description": "The failure set of *any* width-`m`\n   two-layer ReLU network probed along a ray has at most `⌈m/2⌉ + 1` connected\n   components, and the comb network of `WidthLawsAndRelapses.lean` is extremal.\n   *The key insight is* that the ramped output is piecewise linear with at most\n   `m` breakpoints, so the number of sign changes is bounded by the number of\n   slope reversals; the comb realizes one reversal per three units, and the\n   conjecture is that no configuration does better than one per two.\n   *Why now?* The lower bound is proved for every `k`, so only a counting\n   argument on breakpoints — entirely finite and combinatorial — is missing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -101768,7 +101768,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Define, for an injective description scheme on `2^N` statements, the\n*search profile* `s(x) =` number of candidates examined before `x`'s description is found.\nConjecture that `s` obeys a tiling law dual to `complete_code_tiles`: the descriptions\nenumerated before position `t` occupy disjoint cylinders of total measure `t · 2^{-N}`, and\nthat `mean_searchWork_ge` follows from this measure identity together with\n`card_compressible_le`, unifying the two counting laws the thread has kept separate.\n\n*The key insight is that* `kraft_inequality` and `card_compressible_le` are one counting fact\nseen through `2^{-|w|}` and through `#{|w| ≤ m}`; completeness turns the first into an exact\npartition (`complete_code_tiles`), so the search order should inherit an exact measure\nidentity rather than only an inequality.\n\n*Why now?* The tiling statement proved in the previous cycle is precisely the missing\nexactness; the earlier formulation of this conjecture (a bound on `∑ 2^{-searchWork}`) was not\nstable under re-enumeration, and the measure-theoretic form removes that defect while\nremaining cheap to falsify by machine at `N = 4`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -102247,7 +102247,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** `N₀(5) > 6` and `N₀(7) > 8` — no `5`-regular graph on `6` vertices\nand no `7`-regular graph on `8` vertices carries a divisor of degree `g − 1` of rank\n`k − 1` — while both thresholds are finite and at most `2k + 7`.\n\n*The key insight is* that the two residual degrees are exactly those where\n`m = ⌊(k−2)/2⌋ ∈ {1, 2}`, i.e. where the now-proved exact value `m(m+3)/2 ∈ {2, 5}`\nof the uniform witness is *below* `k − 1`; for every larger `m` the quadratic growth\nof `m(m+3)/2` overtakes the linear `k − 1`, which is precisely why `k ≥ 6, k ≠ 7`\nwas provable and these two were not.\n\n*Why now.*  `rank_thetaChar_K_odd_ge_regularity` makes the crossover explicit:\n`m(m+3)/2 ≥ 2m + 1 = k − 1` exactly when `m ≥ 2`, with equality at `m = 2` (`k = 6`,\n`K₇`) — so `K₇` is the unique tight case, and `K₆`, `K₈` fail by exactly the amount\nthe formula predicts (`2 < 4` and `5 < 6`).  Combined with Conjecture 1 this becomes\na theorem, and the remaining content is the *existence* of the finite thresholds,\nfor which the `bnNumber_regular_pos_iff` criterion already gives the linear scale.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -104511,7 +104511,7 @@
       "depth_estimate": 3,
       "description": "`Catalog/Combinatorics/B3FreeWeakStrongGap.lean` settles the weak-versus-strong question\nin the negative, and much earlier than predicted: the first counterexample has `|P| = 2`,\nnot `|P| = 4`.  For the two-element **antichain** `A₂` we prove\n\n* `La(n, A₂) = 1` (`La_antiPoset_two`; more generally `La(n, Aₘ₊₁) = m`, `La_antiPoset`),\n* `La*(n, A₂) = n + 1` (`LaStar_antiPoset_two`),\n\nhence `La*(n, A₂) − La(n, A₂) = n` (`LaStar_sub_La_antiPoset_two`) and\n`La* = (n+1)·La`.  So no bound `La* ≤ c·La` holds with `c` independent of `n`, and the\ncatalog inequality `La_le_LaStar` is never an equality in general.  The mechanism is\nidentified exactly: a *weak* copy of an antichain is merely an injection\n(`weakFree_antiPoset_iff`), whereas a *strong* copy must be an **induced** — i.e.\nincomparable — pair, so strong `A₂`-freeness is literally the statement that the family is\na chain (`strongFree_antiPoset_two_iff`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -104551,7 +104551,7 @@
       "depth_estimate": 3,
       "description": "`La*(n, Aₘ) = Σ_{i<m−1} (n + 1 − 2i)` for `m − 1 ≤ ⌈(n+1)/2⌉`: a strong `Aₘ`-free family\nis, by Dilworth's theorem, a union of `m − 1` chains, and the maximum union of `k` chains\nin `2^[n]` should be the total length of the `k` longest chains of a symmetric chain\ndecomposition.  The cases `m = 2` (`LaStar_antiPoset_two`, value `n + 1`) and `m = 3`\n(`LaStar_antiPoset_three`, value `2n`) are now **proved**, the latter in\n`Catalog/Combinatorics/B3FreeAntichainThree.lean` and *without* Dilworth or\nGreene–Kleitman: the upper bound is a pure layer count (a strong `Aₘ`-free family meets\nevery layer in fewer than `m` sets, `card_filter_card_lt_of_strongFree`, giving the general\nbound `La*(n, Aₘ) ≤ Σ_i min(m − 1, C(n,i))`, `LaStar_antiPoset_le_sum_min`), and the lower\nbound is an explicit union of two disjoint chains.\n*The key insight is* that for small `m` the naive layer bound `Σ_i min(m − 1, C(n,i))`\nalready coincides with the Greene–Kleitman value, because near the ends of the cube the\nbinomial coefficients are smaller than `m − 1`; the first `m` where the two quantities\ndiverge is `m = 4` at `n = 4`, which is therefore the decisive test case.\n*Why now?*  With `m = 2, 3` closed exactly and the general layer bound proved, the\nconjecture reduces to a single finite comparison per `(m, n)` plus a chain construction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -105120,7 +105120,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Let `T g : Matrix (Cell × Cell) (Cell × Cell) ℕ` have entry\n`T[(a,b),(b',c)] = 1` iff `b = b'` and `g a b c = b`, and `0` otherwise.  Then for all\n`n ≥ 1`,\n`#V(g,n) = trace (T g ^ n)`.\nConsequently `n ↦ #V(g,n)` satisfies a linear recurrence of order at most `4` with\ninteger coefficients, and is a sum of `n`-th powers of the eigenvalues of a `4×4`\n`0/1`-matrix.  In particular the sequences `1,1,4,1,1,4,…` (rule 90), `2,4,2,4,…`\n(rule 150) and `1,3,1,3,…` (rule 30), each now proved individually, would become\ninstances of one eigenvalue phenomenon rather than three separate arguments.\n\n*The key insight is* that a fixed configuration on `ZMod n` is precisely a closed walk\nof length `n` in the fixed-edge de Bruijn graph, so counting is a trace, and the\narithmetic periodicity observed for rules 90, 150 and 30 comes from roots of unity in\nthe spectrum.\n\n*Why now?*  The descent theorem `ncard_fixed_eq_of_periodic` already proves the\nspecial case where the graph is a disjoint union of cycles; the general case only\nneeds the \"matrix power counts walks\" lemma, which is the missing infrastructure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -113607,7 +113607,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Let a source be supported on a set `A ⊆ {0,1}^n` and let `G` be\na generator with `s`-bit seeds. The optimal expected code length using `G` is\n`H_0(A ∩ range G) + Pr[A ∖ range G]·n ± 1`; in particular the PRNG's dividend\nequals exactly `Pr[x ∈ range G]·(n - s)` bits and vanishes for any source whose\nsupport is not correlated with `range G`.\n\n*The key insight is* that `prng_dichotomy` splits every source into a\n\"generated\" part (compressible to `s` bits, by `exists_code_of_small_set`) and a\n\"free\" part (incompressible, by `exists_KC_ge`); the conjecture says these two\nregimes are the whole story with no interaction term.\n*Why now?* Both halves of the split are already theorems; what remains is the\nexpectation bookkeeping over a `Finset`-supported distribution.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -114487,7 +114487,7 @@
       "depth_estimate": 3,
       "description": "*A subset `S ⊆ HyperNat` is internal if and only if both quantifier transfer\nlaws hold for it, i.e. iff `S` and its complement satisfy the conclusion of\n`forall_internalMem_iff`/`exists_internalMem_iff` relative to every internal\nfamily.*  Combined with `standard_not_internal` and `unlimited_not_internal`\nthis would give a purely combinatorial test for internality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -116344,7 +116344,7 @@
       "depth_estimate": 3,
       "description": "**Statement.** With `C(N)` the proved counting function, the fractional discrepancy\n`θ(N) = C(N) - √(2N) ∈ [0,3)` is equidistributed in `[0,1)` after the natural\nnormalisation `θ(N) mod 1`.\n\n**The key insight is** that `C(N) = ⌊(√(8N-7)+1)/2⌋ + 1` exactly (proved), so `θ(N)` is a\ndeterministic function of the fractional part of `√(8N-7)/2`, and equidistribution of\n`√n mod 1` is a classical Weyl-type result.\n\n**Why now?** The exact closed form removes all combinatorial noise; what remains is a\npure equidistribution statement about `√n`, for which Mathlib now has Weyl-criterion\ninfrastructure.\n\n**Falsifiable:** compute the empirical distribution of `θ(N)` for `N ≤ 10⁸`; a visible\nbias refutes it.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics"
       ],
@@ -119840,7 +119840,7 @@
       "depth_estimate": 3,
       "description": "Unary Moore machines have eventually periodic behaviours, so the shortest distinguishing word is the first mismatch of two eventually periodic words. We conjecture the exact bound max(p1,p2) + q1 + q2 - gcd(q1,q2) - 1 in terms of preperiods and periods, refining the coarse |S|+|T|-2 estimate. This ties automata testing to word combinatorics.\n\nFor unary machines with rho-shapes (p1,q1) and (p2,q2), inequivalent initial states are separated by a word of length at most max(p1,p2) + q1 + q2 - gcd(q1,q2) - 1, and some pair attains it.\n\nFormalise a rho-decomposition of unary machines, then prove the bound by Fine-Wilf; validate by exhaustive enumeration for n,m <= 5 as in ComputationalEvidence.md.\n\nA tight, gcd-sensitive refinement of the Moore bound for unary alphabets, strictly stronger than |S|+|T|-2 whenever gcd(q1,q2) > 1.\n\nThe extremal pairs must use preperiods in an essential way, isolating a new combinatorial obstruction beyond Fine-Wilf.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -120570,7 +120570,7 @@
       "depth_estimate": 3,
       "description": "The exchange distance from a chamber to a cell is |T \\\\ {i}|, a quantity in which the weights do not appear. We conjecture that the exchange metric therefore remembers only the support, in sharp contrast with the aggregator (which remembers everything) and the labelling (which remembers the weights modulo a constant).\n\nFor any two weight systems delta, delta' on the same support S, the exchange metrics of the two complexes are isometric via the identity on labels; and bounded-size exchange metrics already recover delta modulo a constant.\n\nProve the first half from exchange_distance; for the second half, restrict to moves of size at most one voter with a prescribed budget and compute which walls are reachable.\n\nCompletes a three-level hierarchy of invariants: metric < labelling < function, with exactly identified loss at each level.\n\nThe exchange metric secretly encodes numerical data, which would be surprising given its combinatorial formula.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -122716,7 +122716,7 @@
       "depth_estimate": 3,
       "description": "Ask when a single structural invariant generates all recoverable interpretations of a finite graph. The conjecture is that the degree interpretation is complete exactly for graphs whose automorphism orbits coincide with degree classes. This connects the definability boundary to graph reconstruction questions.\n\nFor a finite graph Γ, every recoverable interpretation factors through the degree map iff any two vertices of equal degree lie in the same Aut(Γ)-orbit.\n\nFormalise the two partitions (degree classes and orbits) as Setoids and prove the factorisation equivalence; test on the 3-path (positive) and on a vertex-transitive-looking but asymmetric regular graph (negative).\n\nDegree becomes a certified complete invariant for a precisely delimited class of graphs.\n\nThere are graphs where degree classes equal orbits yet some recoverable interpretation is not a function of degree, contradicting the orbit factorisation and forcing a re-examination of the orbit quotient.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -122758,7 +122758,7 @@
       "depth_estimate": 3,
       "description": "Quantify how far an arbitrary interpretation is from being recoverable. The conjecture is that the minimal number of reassignments equals the sum over orbits of the orbit size minus the largest value multiplicity, achieved by majority vote within each orbit. This yields an approximate version of the classification theorem.\n\nFor finite M and I : M → V, min over recoverable J of |{x : I x ≠ J x}| equals Σ_{orbits O} (|O| − max_v |{x ∈ O : I x = v}|).\n\nFormalise the repair distance as a Finset.card minimum over the recoverable subtype and prove matching upper and lower bounds orbit by orbit.\n\nThe definability boundary becomes robust: near-recoverable interpretations are quantitatively characterised.\n\nGlobal correlations between orbits would allow cheaper repairs than the orbit-local bound, revealing hidden structure in the orbit quotient.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -123019,7 +123019,7 @@
       "depth_estimate": 3,
       "description": "Invisible vectors obey two independent extremal bounds: at least K+1 nodes, and total mass at least 2K. Their extremisers differ (binomial vectors versus PTE pairs), suggesting a quantitative trade-off between narrow support and small mass.\n\nThere is c > 0 such that every nonzero window-K invisible vector satisfies (number of nonzero nodes) * log(mass) >= c K^2; in particular minimal-support vectors have mass at least 2^{cK}.\n\nProve the special case: a window-K invisible vector supported on exactly K+1 nodes has mass at least 2^K, using the divided-difference rigidity already formalised in InvisibleWeightsRigidity.\n\nThe two extremal problems of the catalog are unified by a single inequality and the binomial basis becomes provably optimal in the narrow-support regime.\n\nThere exist narrow, light invisible vectors, which would immediately improve the growth base via the convolution engine.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -123343,7 +123343,7 @@
       "depth_estimate": 3,
       "description": "For (q+1)-regular graphs the matrices counting non-backtracking walks of length m between vertices should satisfy a three-term recursion A_{m+1} = A A_m - q A_{m-1}, making them Chebyshev-like polynomials in the adjacency matrix. This turns the dart-indexed Hashimoto matrix into a vertex-indexed polynomial calculus. It would give closed formulas for trace(B^n) in terms of the adjacency spectrum.\n\nFor a (q+1)-regular graph, A_1 = A, A_2 = A^2 - (q+1)I and A_{m+1} = A A_m - q A_{m-1}, where A_m counts non-backtracking walks of length m between vertices.\n\nFormalise A_m as a counting matrix using the vertex characterisation already proved, then prove the recursion by splitting a walk of length m+1 at its last step and correcting the single forbidden backtracking pattern.\n\ntrace(B^n) becomes computable from the adjacency spectrum alone for regular graphs, and Ramanujan bounds follow from Chebyshev estimates.\n\nThe correction term is not local, meaning non-backtracking counts genuinely need the dart-level matrix even in the regular case.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -123430,7 +123430,7 @@
       "depth_estimate": 3,
       "description": "The first nonzero term of the trace sequence sits exactly at the girth, and computations on the pentagon, hexagon and Petersen graph show its value is 2*girth times the number of shortest cycles. The lower bound of this equality is proved; the upper bound needs a uniqueness statement for non-backtracking walks in 2-regular graphs.\n\nIf G contains a cycle then trace(B^{girth}) = 2 * girth * (number of cycles of length girth).\n\nShow that a closed non-backtracking walk of length equal to the girth spans exactly a shortest cycle, and that a non-backtracking walk in a 2-regular graph is determined by its first dart; then count fibres.\n\nThe Hashimoto trace sequence determines the girth and the number of shortest cycles.\n\nSome graph admits a cyclic non-backtracking word of girth length that is not a rotation or reversal of a shortest cycle, which would be a new combinatorial phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -123728,7 +123728,7 @@
       "depth_estimate": 3,
       "description": "For eventually periodic grade counts the residue spectrum at the m-th roots of unity is now proved to be a complete invariant of the grade germ. The conjecture extends this to quasi-polynomial grade counts, where each singularity carries a whole principal part instead of a single residue, and the section polynomials should be recoverable from those principal parts.\n\nTwo grade counts that are eventually quasi-polynomial mod m agree in all sufficiently large grades if and only if their partition functions have the same principal part at every m-th root of unity.\n\nTransport the laurentMoment computation along the twist q -> w q to obtain the moments at each pole, then invert the discrete Fourier transform coefficientwise as in eventuallyEq_of_residueSpectrum_eq.\n\nThe singularity divisor with principal parts becomes a complete classifying invariant of quasi-polynomial graded G-sets up to finitely many grades.\n\nSome nonzero quasi-polynomial grade count has vanishing principal parts everywhere on the unit circle, which would produce an entire partition function with quasi-polynomial coefficients.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -123772,7 +123772,7 @@
       "depth_estimate": 3,
       "description": "This thread proves that eventually quasi-polynomial grade counts give partition functions with finitely many, completely described singularities on the unit circle. The conjecture is the converse dichotomy: any other orbit-counting sequence of polynomial growth produces a function for which the unit circle is a natural boundary, so there is no intermediate behaviour.\n\nFor a grade count of polynomial growth, the generating function continues analytically past some arc of the unit circle if and only if the grade count is eventually quasi-polynomial.\n\nFormalise a lacunary family (for example grade counts supported on powers of two) and prove non-continuability by an Ostrowski-Hadamard gap argument; combine with the proved quasi-polynomial direction.\n\nAnalytic continuability becomes an exact characterisation of quasi-polynomial orbit growth, upgrading the residue calculus of this thread into a classification theorem.\n\nThere is an orbit-counting sequence that is not quasi-polynomial yet has a meromorphic continuation, which would reveal a new class of graded G-sets with computable residues.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -125262,7 +125262,7 @@
       "depth_estimate": 3,
       "description": "The least number of switches sw(P) needed to represent a finite bounded poset P as a bounded morphic image of a Boolean cube is not determined by cardinality and height. We conjecture an exact formula in terms of a cover-branching profile counting the points that must be entered by a dedicated switch. This would turn the proved upper bound |P|-1 and the two lower bounds into a single exact invariant.\n\nsw(P) equals the maximum over maximal chains C of (|C| - 1) plus the number of points that must be entered from C by a single extra switch; in particular sw is not a function of (|P|, height P).\n\nExhaustively compute sw for all bounded posets on at most 7 points with the openness-pruned assignment search, and compare with the candidate formula; formalise the resulting upper bound as a refinement of representable_card_sub_one.\n\nThe greedy climb is optimal for every finite bounded poset and sw becomes a computable order invariant.\n\nThe gap between the cardinality and height bounds hides a genuinely new obstruction, most likely of width type.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -125463,46 +125463,6 @@
       "thread_id": "",
       "timestamp": "2026-08-22T07:46:19.104511+00:00",
       "title": "Complexity Dichotomy for Bounded-Morphism Search"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "aa2d71a2",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Round-43 #2, cron iteration (exp 493, assessment v271). Paper 154's noted follow-up.\n\n**DIAL-IS-DRAW-INVARIANT**: the per-N yield dial shows no variance-share dilution under genuinely unbalanced draws — augmented R² = 0.5202 uniform vs 0.5251 balanced (identical within noise); Spearman(w, rate) = 0.666 vs 0.696; footprint weighting beats plain count by +0.16/+0.18 in both regimes. H2's dilution refuted in the good direction.\n\nThe QS triage form holds for realistic key-shape mix. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp492_uniform_dial.py + exp492_result.json, seed 20260924.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Novelty"
-      ],
-      "github_issue": 264,
-      "id": "fd_3613",
-      "last_attempt_time": "2026-08-22T16:42:26.168639+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.74,
-      "parent_direction": "",
-      "priority_score": 1000.0,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "github_injection",
-      "source_exp_id": "github",
-      "source_path": "github",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "2026-08-22T07:46:53.277507+00:00",
-      "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper 162)"
     },
     {
       "ambition_level": "grand_challenge",
@@ -126064,7 +126024,7 @@
       "depth_estimate": 3,
       "description": "The sufficient-statistic bound Cₛ ≤ #σ is saturated exactly when every fibre of the statistic carries a full unit of maximum-likelihood mass. For memoryless sources this would require a parameter making the law uniform on a whole type class, which product laws cannot do for several types at once. Proving non-saturation would show the (n+1)^{#A} bound is never tight.\n\nFor #A ≥ 2 and n ≥ 1 the memoryless class satisfies Cₛ(n) < (n+1)^{#A}, with at least one unsaturated type fibre.\n\nUse shtarkovSum_eq_card_statistic_iff with T the empirical type map and exhibit one fibre whose maximum-likelihood mass is < 1.\n\nThe method-of-types upper bound is never attained, so the true constant in the Rissanen rate is strictly smaller.\n\nSome exotic class saturates all fibres, giving a new extremal family for universal coding.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics"
       ],
@@ -127659,7 +127619,7 @@
       "depth_estimate": 3,
       "description": "The proved chord bound says the Euclidean chord of the square-root embedding is at most half the Fisher–Rao length. The conjecture upgrades chord to arc: twice the Bhattacharyya angle is at most the length. This would identify the Fisher–Rao distance on the simplex with the spherical distance of the square-root embedding, completing the classical picture inside a formal library.\n\nFor every C¹ curve of strictly positive probability vectors on [a,b], 2·arccos(∑ᵢ √(p_a i · p_b i)) ≤ fisherRaoLength p v a b.\n\nFormalize by partitioning [a,b], applying sqrt_chord_le_half_fisherRao_length on each piece, converting chords to angles via 2·arcsin(chord/2), and passing to the limit with additivity (fisherRaoLength_add).\n\nThe Fisher–Rao geodesic distance formula becomes available formally, and every divergence bounded by the angle inherits a length bound.\n\nSome curve would beat the spherical geodesic, contradicting the isometry of the square-root embedding; a failure would have to come from a defect in the length functional's definition.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -127789,7 +127749,7 @@
       "depth_estimate": 3,
       "description": "Aggregation rules on the simplex become maps of the positive orthant of a sphere under the square-root embedding. Combining the spherical contraction lemma of the Arrow–Curvature file with the length functional proved here should show that Fisher-Lipschitz unanimous aggregators are strictly L¹-contractive unless dictatorial.\n\nEvery continuous unanimous aggregation rule that does not increase Fisher–Rao length is L¹-contractive on pairs of distinct profiles, with contraction constant strictly below 1 unless the rule is a coordinate projection.\n\nFormalize Fisher-Lipschitz aggregation on the open simplex, apply l1_le_fisherRao_length to the image of a geodesic, and use cos_midpoint_ge_avg for the strict contraction.\n\nProvides a metric, curvature-driven version of Arrow-type impossibility inside the catalog.\n\nPositive curvature alone would not obstruct fair aggregation, isolating the combinatorial content of Arrow's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics"
       ],
@@ -128482,7 +128442,7 @@
       "depth_estimate": 3,
       "description": "**Status of the ambient problem.** The *finiteness* of the test is no longer open: this\ncycle proves in Lean that cycle-bijectivity over an alphabet with `q` letters is decided by\nthe cycle lengths `1, …, q⁴` (`cycleBijectiveA_iff_upTo`, ternary form\n`cycleBijective_iff_upTo_81`).  What remains open is the sharp constant.\n\n**Conjecture.** The bound can be lowered from `q⁴` to `q²`: a radius-one rule is bijective\non every finite cycle as soon as its global map is injective on the cycles of length\n`1, 2, …, q²`; and `q²` is attained for `q = 2`.\n\nExhaustive computation gives maximal first-failure length `4 = 2²` for `q = 2` and `8` for\n`q = 3` (`ComputationalEvidence.md`, §3), against the proved bound `q⁴ = 81`.  The affine\nsharpness theorem `affine_eight_test_sharp` realises the value `8` in Lean, so for `q = 3`\nthe truth is pinched between `8` and `9`.\n\n*The key insight is* that in the splicing argument the pigeonhole is currently run over all\n`q⁴` pair-graph states, whereas a difference between the two configurations can only be\ntransported through the states that are *reachable while the difference persists*; counting\nthose states — a pair `(x,x')` with `x ≠ x'` together with one shared context letter —\ngives roughly `q²` instead of `q⁴`, which is exactly the conjectured bound.\n\n*Why now?* The whole infrastructure is in place and machine-checked: `HasCollision`\nconverts an injectivity failure into a periodic pair of sequences, `periodic_loop` and\n`collision_of_loop` perform the splice, and `exists_small_collision` runs the induction.\nImproving the constant is a matter of replacing the pigeonhole set, not of redoing the\nargument, and it would make the exhaustive `q = 4` classification computationally\nrealistic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -132858,7 +132818,7 @@
       "depth_estimate": 3,
       "description": "Extremal serving values are exactly the quantised pairs: beta = c(c-1)/(k(k-1)) and M = c/k for an integer c, necessary by saturation_quantised and sufficient by the complete c-design of quantised_values_are_exactly_realised. Conjecture: the bound degrades continuously in the distance delta from beta to that finite set, giving a strictly better bound than the capacity curve for generic budgets such as the measured 0.8327.\n\nIf dist(beta, {c(c-1)/(k(k-1)) : c <= k}) = delta > 0 then every shared model satisfies M <= capacityCurve k beta - f(delta, k) with f(delta,k) of order delta/(k(1-beta)).\n\nRelax the constancy of matchCount in saturation_quantised to a near-constancy estimate and track the resulting Cauchy-Schwarz defect quantitatively.\n\nGeneric families obey a strictly sharper serving bound, and the sharpening is computable from beta alone.\n\nThe curve is asymptotically attained even at non-quantised budgets, and quantisation is a measure-zero phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -132987,7 +132947,7 @@
       "depth_estimate": 3,
       "description": "The capacity curve (1 + sqrt(1 + 4k(k-1)beta))/(2k) is now proved to be the exact extremal serving value, attained only by hub families. Conjecture: measured multi-adapter degradation tracks it, and the gap to the curve measures the family's distance from hub geometry.\n\nFor a family of k fine-tunes with pairwise agreement beta, the best achievable mean agreement is at most (1 + sqrt(1 + 4k(k-1)beta))/(2k), tends to sqrt(beta) as k grows, and at beta = 0.8327 no family of twelve fine-tunes attains it.\n\nMeasure pairwise agreement of a family of adapters, then measure the best shared model's mean agreement as k grows, and compare with meanAgree_le_capacityCurve, capacityCurve_tendsto_sqrt and net54_no_saturating_family_of_twelve.\n\nServing capacity is a measurable, certified quantity with a design rule for how many fine-tunes to co-locate.\n\nReal families sit far inside the extremal curve, and the gap itself becomes the object of study.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -133032,7 +132992,7 @@
       "depth_estimate": 3,
       "description": "The cross-channel discrepancy of a population decouples into the oscillation of a single per-level functional over the window box, turning the sharp-constant question into a one-dimensional extremal problem. Cycle 4 solved it for the exponent pair (1, 1/2) via the Kantorovich inequality, obtaining log2((4+3*sqrt2)/8) and matching it to within 5% by an explicit two-point population. The conjecture extrapolates the exponent dependence found numerically.\n\nFor pointwise costs a*p^s and c*p^t on a window of spread 2^sigma, max |t*slope_s - s*slope_t| = (ln2/8)*s*t*|s-t|*sigma^2/Dk to leading order, attained by a two-atom population whose x^t-mean equals the harmonic mean of the window endpoints.\n\nExtend the doubling-ray result (s = 2t, already proved with constant log2((1+2^t)^2/(4*2^t))) to a general power-mean version between exponents t < s, compute the oscillation of the per-level functional in closed form, and compare with the grid search (coefficient 0.0862 +- 0.0002 at sigma = 1 versus ln2/8 = 0.08664).\n\nEvery multi-channel benchmark gets an exact internal-consistency tolerance, and the (0.84, 0.52) refutation generalises to arbitrary cost exponents.\n\nThe oscillation is not governed by the two-atom endpoint configuration and the sharp constant depends on more than the window spread.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -133547,7 +133507,7 @@
       "depth_estimate": 3,
       "description": "When the connection set is a union of conjugacy classes the adjacency operator is central in the group algebra, so its powers are class sums. The conjecture is that in this regime no census coincidences beyond the forced ones occur. This would identify exactly when the orbit bound card_census_image_le is sharp.\n\nIf S is closed under conjugation and inversion, then walkCount S n g = walkCount S n h for all n implies that g and h are census-equivalent.\n\nFormalise the class-sum expansion of adj S in the group algebra and compare with character-theoretic separation; check computationally on all normal connection sets in groups of order ≤ 24.\n\ncard_census_image_le is an equality for normal Cayley graphs, giving an exact orbit count.\n\nEven central connection sets admit hidden symmetry, sharpening the ℤ/8 phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -133590,7 +133550,7 @@
       "depth_estimate": 3,
       "description": "The trace formula turns the return sequence walkCount S n 1 into the moment sequence of the adjacency spectrum. For abelian G that spectrum is the multiset of character sums over S, so reconstructing S becomes a Fourier-uniqueness question. The non-abelian case is expected to fail, with a small explicit counterexample.\n\nFor finite abelian G, two inversion-closed connection sets with equal return sequences are related by an automorphism of G; for non-abelian G this fails for some group of order at most 16.\n\nCompute return sequences for all inversion-closed subsets of small abelian groups and search for collisions; formalise the abelian direction using the discrete Fourier transform.\n\nThe identity column of a census determines the connection set up to symmetry, so censuses are a faithful fingerprint for abelian Cayley graphs.\n\nThere are cospectral non-isomorphic circulant graphs whose spectra coincide as multisets, recovering classical circulant cospectrality inside this framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -133634,7 +133594,7 @@
       "depth_estimate": 3,
       "description": "Return dominance says the identity maximises the census at even lengths. The conjecture is a quantitative strengthening: the gap between the identity and any other element grows monotonically in the even length. The odd-length behaviour is genuinely different, as a D3 counterexample at length three shows.\n\nFor inversion-closed S, the sequence n ↦ walkCount S (2n) 1 − walkCount S (2n) g is nondecreasing for every g.\n\nVerify by direct computation on dihedral and cyclic groups up to order 12 and lengths up to 12, then attempt a proof by iterated Cauchy–Schwarz on the convolution identity walkCount_add.\n\nThe census admits a Lyapunov-type monotone quantity, giving mixing-time estimates for random walks on Cayley graphs directly from counting data.\n\nEven-length return dominance is not a monotone phenomenon and the ℓ²-decay of the walk is not uniform in the target element.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -133765,7 +133725,7 @@
       "depth_estimate": 3,
       "description": "The threshold 1/27 is the AM-GM maximum of the product of a three-point probability vector, so the concavity boundary coincides with the entropy maximiser. The conjecture is that this is a general phenomenon: on the k-simplex, the functional p -> sigma_k(prod p) is strictly Schur-concave, so its level sets are majorisation classes and the uniform distribution is its unique maximiser.\n\nFor p in the k-simplex, sigma_k(prod_i p_i) <= 1/k with equality iff p is uniform, and p majorises q implies sigma_k(prod p) <= sigma_k(prod q).\n\nFormalise the k = 3 Schur-concavity first (a two-variable transfer/Robin Hood step with the third coordinate fixed), then use Finset induction and Mathlib's weighted AM-GM for the general bound.\n\nThe concavity guard 1/27 is revealed as an entropy-theoretic quantity, bridging convex analysis and majorisation theory, and gives a monotone growth-rate functional on the simplex.\n\nSchur-concavity fails near the boundary where the product vanishes and sigma is in its convex regime, which would localise the bridge to the interior of the simplex.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -133892,7 +133852,7 @@
       "depth_estimate": 3,
       "description": "The alternating witness has lag-1 autocorrelation 0 and lag-2 autocorrelation 1 while sharing any prescribed prefix. We conjecture that the set of achievable autocorrelation profiles of irrational numbers equals the set of profiles of periodic words, transported by a lacunary perturbation that is invisible to densities.\n\nA function A from positive lags to {0,1} is the autocorrelation profile of an irrational number with prescribed decimal prefix if and only if it is the profile of some periodic word.\n\nFormalise the profile of a periodic word combinatorially, then transport it with Pyth.card_exceptional_le, which already bounds the exceptional sets uniformly in the lag.\n\nAutocorrelation laws of real constants are combinatorial shadows of periodic words, never arithmetic facts.\n\nSome profile is realisable only by rationals, which would give the first arithmetic obstruction of this kind.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -134236,7 +134196,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3 refuted the truncation explanation by computing the capped ceiling exactly, so the remaining structural freedom is non-nested (crossing) block structures. The conjecture is that the nested law acquires an explicit defect term governed by the crossing mass of the two set partitions. It matters because only crossing pairs can now produce a dial as low as 0.648 from two individually high-ceiling profiles.\n\nFor crossing block structures the squared Spearman coefficient equals the nested value minus a nonnegative defect determined by the meet of the two partitions in the partition lattice, and readings near 0.648 require crossing mass above 0.3.\n\nFormalise the coefficient for an arbitrary pair of set partitions of the rank set, expand the covariance over meet blocks, and evaluate on small crossing examples exactly in Lean.\n\nEvery low dial reading with high individual ceilings certifies a crossing dependence between statistic and response.\n\nThe nested law extends verbatim and the partition lattice plays no role.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -134279,7 +134239,7 @@
       "depth_estimate": 3,
       "description": "The tie-attenuation functional is built from the power sum p_3 of a partition, which is Schur-convex, so the dial should be strictly order-reversing for the dominance order on partitions. This bridges rank-correlation attenuation with symmetric-function theory.\n\nIf lambda dominates mu as partitions of n then rho^2(lambda) <= rho^2(mu), with equality iff the partitions have equal third power sum; the refinement order case is already proved.\n\nProve Schur-convexity of Sum lambda_i^3 and combine with the closed form of spearmanSq_eq; check all partitions of n <= 9 by exact enumeration in Lean.\n\nTie profiles are totally ordered by a classical combinatorial invariant, giving sharp best and worst case dials for any fixed number of classes.\n\nDominance is too coarse and the dial requires the full multiset of block sizes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -134367,7 +134327,7 @@
       "depth_estimate": 3,
       "description": "The dominant-block law bounds the Spearman ceiling by the largest tie class alone. We conjecture that the bound is attained exactly by the profile consisting of one block of size M and n-M singletons, making the inequality an equality case theorem over integer partitions.\n\nFor all n >= 2 and 1 <= M <= n, the minimum of rho^2 over tie profiles of n with maximal block M equals 1 - (M^3-M)/(n^3-n), attained uniquely at [M,1,...,1].\n\nExhaustive search over partitions for n <= 60, then a Lean exchange argument using superadditivity of m -> m^3 - m.\n\nGives the exact attainable dial range for every statistic, sharpening every exclusion result in the catalog.\n\nSome intermediate profile beats the singleton completion, revealing a second-order term in the attenuation law.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics"
       ],
@@ -135379,7 +135339,7 @@
       "depth_estimate": 3,
       "description": "The cost of a heterogeneous workload was proved to be the join of its cells, attained at one cell, monotone and submodular; cycle 3 added the quota budget, its adjunction, its agreement with the cover cost at full quota, and the concrete 7-of-8 saving on the round-24 workload. The conjecture is that the quota cost remains submodular below full coverage, giving greedy-optimal multilingual budgets.\n\nFor every quota m, the least cache serving at least m cells of a finite workload equals 12 + 4 times the m-th smallest rank sum, and this cost function is submodular in the workload.\n\nStarting from Catalog.NET71.quotaCost (already proved to agree with coverCost at m = card), attempt the submodularity inequality for general m by the interlacing inequalities for order statistics of a union.\n\nMultilingual deployments can trade a measured fraction of cells for a strictly smaller cache, with a certificate for the chosen budget.\n\nPartial coverage is genuinely combinatorial, and cache sizing under service-level targets is not solvable greedily.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics"
       ],
@@ -135463,7 +135423,7 @@
       "depth_estimate": 3,
       "description": "The feedback recursion proved here gives the harmonic value H_u for a deck of distinct cards. For a deck with repeated card types we conjecture that stagewise fair odds still give value zero, and that under unit scoring the greedy 'call a most-frequent remaining type' strategy is optimal with an explicit stagewise value. This covers real card counting, where suits repeat.\n\nFor a deck given by a multiset of multiplicities r_1,...,r_m, the stagewise-fair-odds value is 0 for every admissible strategy, and the greedy strategy maximises the unit-scoring value, whose value is the expected sum over stages of (max remaining multiplicity)/(cards remaining).\n\nGeneralise expScore from Finset alpha to a multiset state, reprove expScore_step, and check optimality by exhaustive dynamic programming for all multiplicity vectors with total size at most 7.\n\nCard counting with repeated ranks is fully solved at the level of exact expectations, and the fair-odds invariance is confirmed to be independent of deck composition.\n\nGreedy is not optimal, which would mean that deliberately naming a rarer type buys information worth more than the immediate hit probability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -135595,7 +135555,7 @@
       "depth_estimate": 3,
       "description": "Prove that the number of equivalence relations on Fin n satisfies the Bell recurrence, hence equals Mathlib's Nat.bell n. The approach decomposes a partition of Fin (n+1) by the block containing the last element, matching the recurrence's binomial sum. This closes an explicit TODO in Mathlib and upgrades all Bell-number results here to statements about Nat.bell.\n\nNat.card (Setoid (Fin n)) = Nat.bell n for all n.\n\nFormalise the bijection Setoid (Fin (n+1)) ≃ Σ (s : Finset (Fin n)), Setoid ((Fin n) \\ s) and compare cardinalities with Nat.bell_succ.\n\npartitionCount_log_convex becomes log-convexity of Nat.bell, and sum_fixedPoints_perm_pow becomes the classical Poisson moment theorem in Mathlib's own vocabulary.\n\nMathlib's Nat.bell would not count partitions, indicating an indexing mismatch in its definition that must be documented.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -136100,7 +136060,7 @@
       "depth_estimate": 3,
       "description": "The cut rank of a codebook is provably not submodular, while Shannon entropy always is. Formalising submodularity of the cut entropy would separate the two invariants sharply and explain why the entropic Singleton bound dominates the counting one.\n\ncutEntropy C S + cutEntropy C T ≥ cutEntropy C (S ∪ T) + cutEntropy C (S ∩ T) for every finite codebook and all cuts.\n\nProve it in Lean from a conditional grouping inequality; cross-check numerically against the 24 rank-violating codebooks on three bits.\n\nThe entropy profile is a polymatroid and the counting profile is a strictly coarser shadow of it.\n\nMarginals of uniform code distributions would violate a basic information inequality, which would indicate an error in the fibre model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -136385,7 +136345,7 @@
       "depth_estimate": 3,
       "description": "Unison lags of an infinite digit melody are closed under gcd. On a finite window of length n this fails below the Fine-Wilf threshold p + q - gcd(p,q). We conjecture the sharp finite-window statement and its extremal examples for digit alphabets.\n\nIf a window of n consecutive digits has periods p and q and n >= p + q - gcd(p,q), then it has period gcd(p,q); for n = p + q - gcd(p,q) - 1 there is a decimal counterexample.\n\nState periodicity relative to a window in Lean and adapt IsPeriod.sub with index-range side conditions; construct the extremal words explicitly for small p, q and verify by decide.\n\nEmpirical periodicity claims about finite digit samples acquire an exact sample-size threshold.\n\nFinite-window periodicity is strictly weaker than expected and needs a different invariant, e.g. the windowed lag spectrum.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -137116,7 +137076,7 @@
       "depth_estimate": 3,
       "description": "A sweep sees a curve only through the ceiling of its knee in the grid. This direction upgrades that pointwise factorisation to a statement about equivalence relations: the poset of grids under refinement should embed isomorphically into the poset of indistinguishability relations on retention curves.\n\nFor grids G subset H, the relation 'same H-reading at every gate' refines 'same G-reading at every gate', strictly whenever H\\G contains a realisable knee; the map G -> (~_G) is an order isomorphism onto its image.\n\nDefine ~_G in Lean, prove monotonicity and strictness using the step-curve witnesses of grid_reading_underdetermines_knee.\n\nExperiment design becomes a lattice problem with a canonical minimal experiment for each distinguishability requirement.\n\nDistinct grids can be experimentally equivalent, which itself sharpens the design question.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -137246,7 +137206,7 @@
       "depth_estimate": 3,
       "description": "Cycle 6 proved that the exact s-point capacity of a sweep with tolerance a below and b above is geoSum (a*b) s, so only the product matters. Deployment ratios are rarely integers, so the question is whether the product law survives rational tolerances, where the peeling step acquires a floor.\n\nFor rational a, b >= 1 the exact s-point capacity is the integer part of the geometric sum in the single variable a*b, with extremal grid given by the same offset recursion rounded down; in particular capacity is still a function of the product alone.\n\nRestate AsymLocalises over the rationals, redo the peeling induction with Nat.floor, and either prove the floor-geometric formula or exhibit an accumulating-rounding counterexample at a = b = 3/2.\n\nThe one-dimensional cost model for sweeps extends to realistic (non-integer) memory-headroom ratios.\n\nRounding accumulates across sweep points and the capacity depends on a and b separately, making asymmetric designs strictly preferable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -137569,7 +137529,7 @@
       "depth_estimate": 3,
       "description": "Combines the tie-attenuation ceiling of the dyadic profile with the parity threshold: two decorrelated tied statistics should obey a threshold equal to the geometric mean of their tie ceilings times 1/sqrt(2). This is the first bound in the thread that the recorded 0.605 would come close to.\n\nFor decorrelated statistics with tie profiles L1, L2 and shared response, the common reading satisfies rho^2 <= (spearmanSq L1 + spearmanSq L2)/2; for the dyadic dial this gives rho <= sqrt(6/7)*sqrt(2)/2 ≈ 0.655.\n\nCompose the midrank collapse identity sp_eq_ssR with bessel_corr, then evaluate at dyadicBlocks 72 and the binomial profile of the count baseline.\n\nThe recorded 0.605 sits within 8% of a proved ceiling, making the dial a near-extremal configuration.\n\nTie attenuation and Gram attenuation interact non-multiplicatively and a genuinely two-dimensional analysis is required.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -139382,7 +139342,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a depth-$L$ transformer the epistasis order at a fixed\ntolerance grows like the width of the *deepest* co-adapted block, and this block\nis an interval of layers: there is a partition of $\\{0,\\dots,L-1\\}$ into intervals\nsuch that the near-optimal path hypergraph is the union of the \"all-of-a-block\"\nhyperedges of the partition.\n\nThe key insight is that a co-adapted unit is not a statistical cluster but a\n*minimal transversal* of the near-optimal path family, and the block-realization\ntheorem shows minimal transversals of any size are tropically realizable — the\nempirical question is only whether the realized ones are contiguous.\n\n**Why now?** The hitting-set characterization turns a costly ablation sweep into a\nhypergraph-covering question that can be tested with $O(L^2)$ pair ablations plus\na single fit, instead of $2^L$ subsets.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -139747,7 +139707,7 @@
       "depth_estimate": 3,
       "description": "Generalise the bottom-merged and tip-merged blindness ceilings from an interval of dyadic tie blocks to an arbitrary union of 2-adic valuation classes. For each blindness pattern S the surviving between-group sum of squares is an explicit sum over the retained blocks, so the recorded dial value cuts out a down-set of admissible patterns. This upgrades a one-parameter threshold into a full classification of what the response must resolve.\n\nFor every S ⊆ {0,…,b-1}, the response constant on the merged classes outside S satisfies ρ² = (Σ over the retained blocks of an explicit block term)/((8^b − 1)/14), and the set of S compatible with ρ² ≥ 0.7192² is an up-set under inclusion.\n\nFormalise ssR of a general block-merge partition of dyadicBlocks b (generalising ssR_bottom_merged_gen and ssR_tip_merged), then prove monotonicity in S via ssR_coarse_le.\n\nThe recorded dial certifies a precise minimal set of valuation classes the statistic must separate.\n\nBlindness cost is not additive over classes, which would mean the coarsening order and the dial order genuinely disagree.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -139791,7 +139751,7 @@
       "depth_estimate": 3,
       "description": "The attainable dial depends on a tie profile only through the scalar ratio ssR/((n^3-n)/12), so asking which response shape is hardest to fit becomes an extremal problem for one functional over compositions of n. The geometric family is now solved in closed form, which fixes one axis of the problem; the conjecture is that the extremes are the equal-block and maximally-skewed profiles.\n\nAmong all tie profiles of n items with exactly k blocks, ssR is maximised by the profile with k equal blocks and minimised by the maximally skewed profile (one block of size n-k+1 and k-1 singletons); consequently the relation-rate ceiling is smallest for the equal-block profile.\n\nFormalise an exchange argument: moving one unit of mass from a smaller to a larger block changes ssR by an explicit sign-definite amount, computed with ssR_append and ssR_shift_parallel.\n\nThe recorded dyadic regime can be located exactly inside the order of all tie spectra, not just the geometric ones.\n\nThe dial ceiling is not monotone under mass transfer between blocks, so no single scalar summary of a tie profile controls it.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -140462,7 +140422,7 @@
       "depth_estimate": 3,
       "description": "The optimal constant log(N/(N-1))/d for the outer shell of an equal-volume peeling should depend only on the dimension and the number of shells, not on the body, as long as the peeling is by dilates. For peelings by parallel bodies the constant should strictly increase unless the body is a ball, giving a new rigidity characterisation of the ball.\n\nFor a convex body K with 0 in its interior, the dilate peeling has outer gauge-thickness exactly 1-(1-1/N)^{1/d}; among all peelings by parallel bodies the ball uniquely minimises the outer thickness at fixed volume fractions.\n\nProve the dilate case from Measure.addHaar_smul, then attempt the rigidity case for K + εB using Brunn-Minkowski.\n\nThe concentration bound proved here is a statement about homogeneity alone, and the ball is characterised by extremal peeling geometry.\n\nSome non-ball body peels more efficiently, exposing a new extremal problem in convex geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -140972,7 +140932,7 @@
       "depth_estimate": 3,
       "description": "The forced displacement of the dial is now proved to equal 3/28 - 31/(10b) under the fitted law, hence to saturate at 10.7 percent and to cross the floor budget 3/40 exactly at bitlen 97. What remains open is whether the actual mechanism attains this lower bound up to a constant, which would make the observed dial a near-extremal rank perturbation.\n\nThe displaced fraction |A|/n of the recorded exp-538 rank vectors is bounded above by C times reqFrac (rhoModel b) for an absolute constant C and every measured bitlen b.\n\nInstrument the exp-538 script to emit rank vectors, compute the displaced set exactly, and compare |A|/n against reqFrac rho for bitlens 44 to 92.\n\nThe erosion mechanism is near-extremal: it moves few observations very far, a checkable fingerprint that identifies the mechanism class.\n\nThe mechanism is diffuse and the crude per-coordinate bound is far from tight, so a second-moment refinement of the budget is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -141058,7 +141018,7 @@
       "depth_estimate": 3,
       "description": "The corruption budget gives |A| >= (1-rho)n/6 from a crude per-coordinate bound. Block reversals realise a reading rho with displacement of order (1-rho)n/2, so the sharp constant is bracketed between 1/6 and 1/2. Pinning it converts the budget from a lower bound into a certificate.\n\nThe optimal constant c with |A| >= c(1-rho)n for every rank mechanism achieving reading rho satisfies 1/6 <= c <= 1/2, and the extremal mechanism is a contiguous block reversal.\n\nCompute sumSqD exactly for the reversal of the top m ranks, optimise m for a target rho, and compare with reading_corruption_budget.\n\nMeasured readings translate into two-sided quantitative statements about the underlying mechanism, not just lower bounds.\n\nSome non-reversal mechanism beats block reversal, revealing a richer extremal structure for Spearman perturbations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -141142,7 +141102,7 @@
       "depth_estimate": 3,
       "description": "The effective channel pool of the zero-fit dial ladder, measured by the reciprocal excess 1/rho^2 - 1, is fitted to within 0.027 by a quadratic law with a positive floor, but the residuals drift monotonically with bitlen. We conjecture a genuine change of growth exponent from 2 to 3 above some b0 between 96 and 160. Deciding this fixes the asymptotic shape of the erosion and hence every extrapolated band prediction.\n\nThere exists b0 in [96,160] such that e(b) = 1/rho^2(b) - 1 satisfies: e(b)/b^2 is strictly increasing for b > b0, and e(b) = Theta(b^3).\n\nRun the uniform ladder at bitlens 96, 112, 128, 160 with the existing exp536 harness and three seeds each; fit e(b) = kappa*b^g + c and test g = 2 against g > 2 by likelihood ratio. Formalize the discriminating inequality in Lean as an exact rational comparison, as in quadratic_retrodiction.\n\nThe dial's usable range is bounded: the band floor is crossed permanently and the ladder cannot be rescued by larger samples, only by changing the statistic.\n\nThe quadratic-with-floor law extends, and the crossing bitlen of 84.4 is the permanent boundary; extrapolation to cryptographic bit widths becomes reliable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -141403,7 +141363,7 @@
       "depth_estimate": 3,
       "description": "C3 fails on the odd side, but only barely: the supremum of the odd primary contributions is about 1.0655, and its partial sums over increasing odd primes first exceed 1 at the eighth odd prime q = 23. The conjecture is that this is sharp, so an odd cyclic order can break the one-bit cap only if it has at least eight distinct prime factors. This converts the failed dichotomy into a precise combinatorial threshold.\n\nIf n is odd and Ipair n > 1 then omega(n) >= 8; and there exists an odd n with omega(n) = 8 and Ipair n > 1.\n\nStrengthen Ipair_odd_le_omega to a weighted bound sum over p in primeFactors n of G(p), prove G is decreasing, verify the eight smallest odd primes numerically inside Lean with explicit logarithm bounds, and bound the tail sum for q > 23 by a Mertens-type estimate.\n\nThe even/odd dichotomy is replaced by a clean quantitative statement: evenness OR at least eight odd primary components.\n\nEither an odd cap breaker with omega <= 7 exists (contradicting the numerics), or the supremum G(q) is not attained in the limit k -> infinity, indicating the primary law is not geometric.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -141823,7 +141783,7 @@
       "depth_estimate": 3,
       "description": "This cycle proved max over events equals min over couplings by exhibiting both optima. The conjecture is that the identity is an instance of finite LP duality, with complementary slackness forcing the maximal coupling's support. A duality proof would generalize the statement from the Hamming cost to arbitrary costs, i.e. to a finite Kantorovich-Rubinstein theorem.\n\nFor every cost c : X x X -> R the minimum of sum c(x,y) k(x,y) over the transport polytope of (p,q) equals the maximum of sum phi p - sum psi q over the dual polytope {phi x - psi y <= c(x,y)}, and for c = indicator of inequality the dual optimum is attained at phi = psi = indicator of {q <= p}.\n\nFormalize the two polytopes as Finset-indexed linear systems and prove duality by Farkas / Fourier-Motzkin elimination in the finite case, then specialize to c = 1 - delta and compare with isLeast_disagreeProb.\n\nThe catalog gains a reusable finite optimal-transport toolkit; total variation, Wasserstein and Kantorovich distances become one theorem.\n\nA degeneracy in the transport polytope would show that attainment needs the explicit construction, isolating exactly which vertices are missed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -142837,7 +142797,7 @@
       "depth_estimate": 3,
       "description": "The exact limit ||S_N(1/(2N))||/N -> 2/pi is proved, so the Jordan bound is asymptotically optimal at the lobe edge. What remains is that the edge is the actual minimizer over the whole main lobe, a monotonicity statement for the Dirichlet ratio. Together the two give a complete description of the Weyl sum on its main lobe.\n\nFor every N and every 0 <= a < b <= 1/(2N), |sin(pi N b)|/(N |sin(pi b)|) < |sin(pi N a)|/(N |sin(pi a)|); consequently min over |alpha| <= 1/(2N) of ||S_N(alpha)||/N equals ||S_N(1/(2N))||/N and tends to 2/pi.\n\nDifferentiate the logarithm of the ratio to get pi N cot(pi N alpha) - pi cot(pi alpha) and prove it is negative on the main lobe; then combine with norm_weylSum_endpoint_ratio_tendsto.\n\nnorm_weylSum_ge_jordan is optimal in the strongest sense: the constant 2/pi and the extremal frequency are both identified.\n\nAn interior critical point of the Dirichlet ratio exists inside the main lobe, which would be a genuinely new feature of the kernel.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -142921,7 +142881,7 @@
       "depth_estimate": 3,
       "description": "The classical bound ||S_N(alpha)|| <= 1/(2||alpha||) proved here is precisely the kernel estimate feeding the Erdos-Turan inequality. Formalizing that inequality would convert the file's qualitative Weyl cancellation into a quantitative discrepancy bound for the sequence {n alpha}.\n\nFor every alpha and every H >= 1, the discrepancy of {n alpha : n < N} satisfies D_N <= C(1/H + (1/N) sum_{h <= H} 1/(h ||h alpha||)) with an absolute constant C.\n\nFormalize the Erdos-Turan inequality via Selberg polynomials built from the Fejer kernel, then substitute the proved bound norm_weylSum_le_intDist.\n\nExplicit equidistribution rates for badly approximable alpha follow, e.g. D_N << (log N)^2/N for quadratic irrationals.\n\nThe constant structure of Erdos-Turan would need revision, which would be a major surprise.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -142963,7 +142923,7 @@
       "depth_estimate": 3,
       "description": "Peak height 2T and sidelobe decay 2/|omega| are the two halves of a time-bandwidth statement. The conjecture is that no window supported on [-T,T] with unit sup-norm can simultaneously beat the rectangular peak and its sidelobe decay by more than bounded factors.\n\nIf w is supported in [-T,T] with |w| <= 1 then |w-hat(0)| <= 2T and the integral of |w-hat|^2 is at most 4 pi T, with equality in both iff w is the rectangular window almost everywhere.\n\nProve the two inequalities from the triangle inequality and Plancherel, then characterize the equality case via strict convexity of the L2 norm on the unit ball of L-infinity.\n\nThe rectangular window is the unique extremizer, so the sinc law is the universal model for windowed resonance.\n\nSome window beats the rectangle in both peak and energy, contradicting Plancherel; more likely the equality case is non-unique, revealing a family of extremal windows.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -143174,7 +143134,7 @@
       "depth_estimate": 3,
       "description": "Depth is squeezed between log_3(m+n) - 1 and (m+n-3)/2, both tight only on extremal words. The conjecture asks for the typical constant, testing the reported slope 1.211 against the circulating 1.4.\n\nFor nodes drawn uniformly from those with m+n <= X, depth / log_2 X converges to a constant c with c in [1.12, 1.31]; in particular c is not 1.4.\n\nEnumerate nodes with m+n <= X for growing X, regress depth on log_2 X, and formalise a two-sided bound of the form a log_2 X <= depth <= b log_2 X on an explicit density-one subfamily.\n\nThe corrected dP law gets a proof-backed constant and the 1.4 folklore value is formally excluded.\n\nDepth is not concentrated and the dP law must be restated as a distributional, not a pointwise, statement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -143377,7 +143337,7 @@
       "depth_estimate": 3,
       "description": "`no_binaryProduct_of_disjoint` shows products fail precisely when setups share no\nreading. Conjecture: the failure is classified by a `Čech`-style obstruction — the\ncategory of setups over a fixed universe has all limits iff the nerve of the covering\nfamily is connected, and the number of connected components of that nerve equals the\nnumber of distinct \"incompatible interpretive frames\" of the joke.\n\n**The key insight is** that the existence of a limit is a *connectivity* statement\nabout the intersection pattern of the setups, so limit-failure is a combinatorial\ninvariant (a nerve) rather than a categorical accident.\n**Why now?** The nonexistence proof given here already runs through\n`prod.fst`/`prod.snd` and disjointness; upgrading disjointness to nerve-connectivity is\na finite combinatorial induction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -143628,7 +143588,7 @@
       "depth_estimate": 3,
       "description": "The image principle proved here says reflection depth only depends on, and is monotone in, the accessibility image of a tag. The conjecture upgrades this to an exact formula: the reflection depth is the least modal depth at which the image fails to realize all types of the model, turning a proof-theoretic invariant into a model-theoretic one and explaining every bound obtained so far.\n\nFor a finite frame theory frameSys R V N, the reflection depth of tag i equals the least k such that some world of the model has a depth-k modal type not realized in the image Im_i; moreover any monotone assignment of depths to the inclusion poset of images, bounded by the heights, is realizable by a suitable valuation.\n\nDefine depth-k types in Lean as the truth-set classes of the finitely many formulas of box depth <= k, prove that each type of a finite model is definable by a formula of that depth, and derive the equality; then attempt the realizability half on small posets by explicit construction.\n\nAll bounds on reflection depth become corollaries of a single counting principle, and the invariant is manifestly bisimulation-invariant.\n\nDefinability of types fails at some depth, revealing a genuinely proof-theoretic residue in DepthReflection that is not captured by the semantics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -143844,7 +143804,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.82,
       "parent_direction": "",
       "priority_score": 1000.0,
       "proof_strategy": "",
@@ -143855,7 +143815,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-08-24T20:50:39.557131+00:00",
       "title": "FACT round-83 #4 — NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR — local factorization structure around N carries nothing beyond the QR dial (dR2=+0.0195: QR-alone .411 -> joint .431; perm p=0.389 with null q95=0.046 > observed; best single neighbor |r|=0.16); FOUR-CLASS NEGATIVE completes the coverage claim — ~40% u≈10 rate residual is TESTED-AND-FAILED not not-yet-tested (QR dial real 227/235/236; neighborhood null this; positional independent layer 228-230; S_indiv null 226/227); closes paper 234 ranked queue #1; PROVENANCE UNVERIFIED disclosed (exp581 npz holds no N array — population regenerated by documented recipe seed 20260827, isqrt fingerprint 0/128, hash 30009f0c… recorded; results conditional on balanced-96-bit exchangeability)"
@@ -144122,7 +144082,7 @@
       "depth_estimate": 3,
       "description": "Since an exact conditional null characterises mirrors, define a transfer functional as the supremum of residual dependence over conditioning partitions and conjecture that it vanishes exactly on mirrors. This replaces z-scores against row-shuffle nulls with a single well-defined quantity.\n\nFor a feature Phi and magnitude M, T(Phi) := sup over partitions refining M of the residual joint-fibre discrepancy is zero if and only if Phi is a deterministic function of M; moreover the supremum is attained at the finest partition.\n\nFormalise partitions as Finset-valued quotients, prove monotonicity of residual discrepancy under refinement, and combine with mirror_iff_conditional_zeroInfo.\n\nExperiments can report one number whose vanishing is a proof of determinism.\n\nThere are features with vanishing coarse-partition residual but nonzero fine-partition residual, i.e. genuinely partition-dependent channels.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -144421,7 +144381,7 @@
       "depth_estimate": 3,
       "description": "The experimental claim 'conditional permutation nulls have zero variance at t >= 2' is the statistical shadow of a combinatorial fact: the prefix of a Price address determines N mod 8 exactly and nothing finer. Half of this is proved (positions 0 and 1 are constant on any 2-adic cell); the conjecture is the converse counting statement about cell sizes. It matters because it removes the last non-deterministic step from the death-at-position-2 claim.\n\nFor every prefix word w of length at least 2, the set of depth-d nodes whose address ends with w has, as d tends to infinity, an asymptotically uniform distribution over the residues N mod 2^k compatible with the first two letters of w, for every k >= 3.\n\nCount, for each prefix of length 2 and 3 and each k = 3,4,5, the empirical distribution of N mod 2^k over depth-d nodes; then formalize the asymptotics via the transfer operator of the descent.\n\nThe permutation-null variance is exactly zero for structural reasons, and the mutual information I(N mod 2^k ; address) is exactly log 4 for every k >= 3.\n\nSome prefix cells are biased at higher moduli, so a longer address prefix does leak more than three bits of N.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -144715,7 +144675,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** The greedy `B_h` sequence satisfies `a_h(n) = Θ(n^{2h−1})`, so the proved\nsandwich (degree `h` below, degree `2h+1` above) is off by exactly one unit of degree at\neach end, and the truth is the arithmetic mean.\n\nThe key insight is that the weighted obstruction set `bhBad` has `≍ n^{2h}` elements but\nonly `≍ n^{2h−1}` distinct values, because the weight-`d` families for `d ≥ 2` are\nlower-dimensional; counting *values* rather than *tuples* should move the exponent.\n\n**Why now?** `bhBad` and `card_bhBad_le` are formalised with the weight parameter explicit,\nso the refinement is a purely combinatorial recount inside an existing definition rather\nthan a new development. The numerical data (A046185, A046186) is consistent with\n`n^{2h−1}` in the accessible range.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -145205,7 +145165,7 @@
       "depth_estimate": 3,
       "description": "Tensoring budgets is additive on depth up to two levels, and both ends are attained. We conjecture an exact arithmetic criterion for the excess and a positive limiting density for the extremal case, tying composition to the deficit statistics.\n\nfoamDepth B (T1*T2) - foamDepth B T1 - foamDepth B T2 = 2 iff both T1 and T2 lie in the lossy part of their scale blocks and T1*T2 >= foamCells B (d1+d2+2); the set of such pairs has positive density.\n\nCross the interval descriptions of Deficit.lossy_filter_eq for the two factors with the multiplicative bounds foamCells_add_le_mul and foamCells_mul_le; verify exhaustively for B <= 5 and budgets up to 10^4.\n\nComposition of holographic budgets gets a complete combinatorial classification, sharpening the +2 into an exact rule.\n\nThe excess depends on finer arithmetic of T1, T2 than block position, suggesting a genuinely two-dimensional phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -145249,7 +145209,7 @@
       "depth_estimate": 3,
       "description": "Viewing the maximal depth as an entropy budget, its discrete derivative in log-scale is a susceptibility that is almost always 1. We conjecture a fluctuation law: the exceptional scales where the susceptibility jumps have density controlled by the same 1/(B-1)^2 constant.\n\nFor every cost in the geometric universality class, maxDepth cost (B*T) - maxDepth cost T is 1 for all T outside a set of density 0 in each scale block, and the exceptional set is exactly the lossy set of Deficit.\n\nFormalise the susceptibility as a function of T, express it through the block decomposition, and bound the exceptional set by the lossy interval.\n\nThe depth behaves like a thermodynamic potential with computable fluctuations, connecting the arithmetic of repunits to extensivity of holographic entropy.\n\nThe susceptibility fluctuates at positive density, showing that depth is not asymptotically linear in log T even in an averaged sense.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -145339,7 +145299,7 @@
       "depth_estimate": 3,
       "description": "The least leaf number h(k) forcing k binary trees to share a quartet is proved here to lie between 3^((k-2)/4) and 3^(2^k)+1. Exhaustive and local-search data (h(2)=6, h(3)=10, and 19, 23, 29 for k=4,5,6) indicate a single exponential rate near 1.7. The direction is to prove h(k) = Theta(c^k) and identify c.\n\nThere is a constant c > 1 with h(k) = Theta(c^k); in particular h(k) <= C * c^k, replacing the doubly exponential Erdos-Szekeres bound.\n\nFormalize a 4-uniform hypergraph Ramsey bound for three colours and derive an exponential upper bound on h(k); check the predicted values against h(2)=6 (proved here) and the computed h(3)=10.\n\nThe quartet agreement threshold has a well-defined exponential rate, and the coding-theoretic packing rate is its logarithm.\n\nEither the truth is doubly exponential, in which case the small-case data is misleading, or h(k) is not of pure exponential type and a second parameter governs it.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -145470,7 +145430,7 @@
       "depth_estimate": 3,
       "description": "Our upper bounds are proved for caterpillar trees, encoded as leaf orders, while the lower bounds hold for arbitrary split systems. The direction is to transfer the upper bounds to all binary phylogenetic trees by extracting an inherited caterpillar on a logarithmic number of leaves from any binary tree.\n\nEvery binary phylogenetic tree on n leaves contains a subset of at least log_2 n leaves whose induced subtree is a caterpillar; consequently the common-quartet upper bounds for caterpillars imply upper bounds for arbitrary binary trees with n replaced by 2^n.\n\nFormalize the extraction (a longest root-to-leaf path plus its pendant leaves) and combine it with caterpillar_family_common_quartet via commonAgreement_subset.\n\nIsAgreementThreshold m k 4 becomes provable for explicit m for all binary trees, closing the theory on the upper side.\n\nCaterpillars are not representative of general trees for quartet agreement, and balanced trees form a genuinely harder extremal family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -145510,7 +145470,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The number of sum-free subsets of lattice cubes' and formalize its key results. Abstract: A subset of the $d$-dimensional lattice cube $[n]^d$ is sum-free if it contains no solution to the equation $x+y=z$. We study the total number of such subsets. For $d=1$, Cameron and Erdős conjectured that the number of sum-free subsets of $[n]$ is $O(2^{n/2})$, and this was proved independently by Green and Sapozhenko. A recent work by Ghosal solved the case $d = 2$. In this paper, we consider all remaining dimensions and prove that for every fixed integer $d \\geqslant 3$, the number of sum-free subsets of $[n]^d$ is $2^{M([n]^d) + O_d(n^{d-1})}$, where $M([n]^d)$ is the maximum possible size of a sum-free subset of $[n]^d$. This verifies a conjecture of Elsholtz and Rackham. Our proof combines the dual weights constructed by Keevash and Lim in their work for $M([n]^d)$, a one-dimensional counting estimate due to Ghosal, a bipartite swapping lemma of Zhao, and a strong fractional entropy inequality of Madiman and Tetali, and it avoids the use of the container lemma or deriving a stabi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -145799,7 +145759,7 @@
       "depth_estimate": 3,
       "description": "Identify the minimizing and maximizing m-dimensional central sections of a diagonal ellipsoid. The Gram determinant governing the section volume is, by Cauchy-Binet, a weighted sum of squared m x m minors of A^{-1} iota, so the extremal subspaces should be spanned by the extreme semiaxes. The codimension-one case, including its equality case, is now proved and serves as the base case.\n\nFor A = diag(d) with 0 < d_0 <= ... <= d_{n-1}, the minimum of vol_m(E A ∩ V) over m-dimensional subspaces V equals (prod_{j<m} d_j) vol(B^m) and the maximum equals (prod_{j>=n-m} d_j) vol(B^m), both attained at coordinate subspaces, and only there up to multiplicities.\n\nProve Cauchy-Binet for det((A^{-1} iota)^T (A^{-1} iota)) in Lean, compare the resulting sum of squared minors against the extreme coordinate terms, and sample random orthonormal frames numerically for n <= 5, m <= 3.\n\nUpgrades volume_centralSection_sandwich from crude lo^m/hi^m bounds to the exact extremal values, with explicit extremizers and uniqueness.\n\nSome non-coordinate subspace beats every coordinate one, revealing that the compound matrix of A^{-1} is not diagonally extremal and requiring a genuinely new majorization argument.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -146575,7 +146535,7 @@
       "depth_estimate": 3,
       "description": "RLHF.audit_invariant_of_cov_zero shows that an audit statistic uncorrelated with the reward has o(1/β) drift. The conjecture computes the next term: a third-moment (skewness) pairing, giving a hierarchy of orthogonality conditions that a statistic must satisfy to be robust to alignment pressure at every order.\n\nIf Cov_p(r,f) = 0 then β²(𝔼_{π_β}f − 𝔼_p f) → 𝔼_p[(r − 𝔼_p r)²(f − 𝔼_p f)]/2, and f is unmovable at all orders iff f is p-a.s. constant on each level set of r.\n\nExpand RLHF.audit_gap_eq_centred to third order using Real.exp_bound with n = 3, exactly as in RLHF.abs_tiltNorm_sub_quad; verify numerically on a 3-point space with an audit statistic orthogonal to the reward.\n\nAlignment robustness of a monitor is a checkable finite hierarchy of moment conditions, not a single correlation test.\n\nThe second-order term is not a pure third moment, meaning normalisation effects (W_β) survive at second order and audits can be hacked through the partition function.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -146619,7 +146579,7 @@
       "depth_estimate": 3,
       "description": "The Cauchy–Schwarz slack in the covariance bound for audit drift and the Pinsker slack in the total-variation bound are conjectured to be the same quantity: the deviation defect σ_p(r) − MAD_p(r). This would make a single scalar functional of the reward the exact measure of how much worst-case bounds overstate actual drift.\n\nsup over audit statistics f of the normalised drift equals σ_p(r)/β asymptotically, while the policy's own total-variation drift equals MAD_p(r)/β; the two agree iff σ_p(r) − MAD_p(r) = 0, i.e. iff |r − 𝔼_p r| is p-a.s. constant.\n\nFormalize the extremal problem sup_f Cov_p(r,f)/σ_p(f) = σ_p(r) (attained at f = r) in Lean, and combine with RLHF.pinsker_defect_tendsto and RLHF.mad_eq_sqrt_variance_iff.\n\nA one-number diagnostic, computable from the reference policy and reward alone, that predicts the gap between worst-case and realised reward hacking.\n\nThe two slacks are governed by different functionals, so worst-case audit hacking and policy drift are not comparable through a single index.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -146661,7 +146621,7 @@
       "depth_estimate": 3,
       "description": "The proved non-asymptotic law has remainders 2·Var/β² (upper) and 3·Var/β² (lower). The conjecture is that both optimal constants are 1, because the Taylor remainder and the normalisation shift partially cancel rather than adding. Random search shows the current bounds are never violated but are not far from tight.\n\nFor β ≥ range r, |‖π_β − p‖₁ − MAD_p(r)/β| ≤ Var_p(r)/β².\n\nRe-run the proof of RLHF.abs_l1_numerator_sub_mad keeping the sign of (W_β − 1) instead of taking absolute values, and test the resulting constant numerically over random instances with β/range near 1.\n\nA clean, memorable non-asymptotic drift law with all constants equal to 1.\n\nThere is a genuine instance forcing a constant above 1, which would identify the extremal reward shape for finite temperature.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -147049,7 +147009,7 @@
       "depth_estimate": 3,
       "description": "Among all corrections of a fixed rational degree added to eulerMascheroniSeq, the Bernoulli truncation should be the unique minimiser of the asymptotic error constant. This would upgrade the sharp constants proved here from statements about one particular corrector to an extremal characterisation.\n\nFor every rational function P/Q with deg Q - deg P = 2, limsup m^2 |gamma - eulerMascheroniSeq n - P(m)/Q(m)| >= 1/12, with equality iff P/Q = 1/(2m) + O(m^{-3}) matches the Bernoulli truncation to leading order.\n\nFormalize the asymptotic expansion of gamma - eulerMascheroniSeq n to order m^{-3} (already available from the proved two-sided bounds) and compare against an arbitrary rational corrector using the sharpness theorems tendsto_scaled_error and tendsto_scaled_error2.\n\nThe midpoint correction is provably the best possible correction of its degree, not just a convenient one.\n\nSome non-Bernoulli rational corrector beats the Euler-Maclaurin truncation, which would be a genuinely surprising acceleration scheme.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -147981,7 +147941,7 @@
       "depth_estimate": 3,
       "description": "**Status update.**  The composite-`m` attainment conjectured earlier in this\nthread is now a theorem (`extremal_collision_value_general`): the mixture of a\nuniformly random bijection (mass `1 - 1/m`) with a uniformly random constant\n(mass `1/m`) is *exactly* `2`-universal for every `m` and attains `1/m`.  What\nremains open is whether the extremal family is *strongly* `2`-universal.\n\n**Conjecture.**  For every `m ≥ 2` the bijection–constant mixture is pairwise\nindependent: `P(h x = u, h y = v) = 1/m²` for all `u, v` and all distinct keys\n`x, y`.  Consequently the extremal value `1/m` is attained inside the class of\nstrongly `2`-universal families for every `m`, not only for primes.\n\nThe key insight is that pairwise independence for the mixture reduces to the\npermutation count `|{σ : σ x = u, σ y = v}| = (m-2)!` for `u ≠ v` together with\nthe vanishing of the bijection branch on the diagonal, i.e. to elementary\ncounting rather than to field structure; the prime hypothesis in\n`affine_pairwiseIndependent` is an artefact of the construction.\n\n**Why now?**  `mix_exactly2Universal` and `mixLaw_prob_constant_branch` already\nreduce every mixture probability to a pair of `Finset` cardinalities, so only\nthe permutation counts are missing.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -148022,7 +147982,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For a `k`-wise independent family (`k ≥ 3`) and `n` keys, the\nprobability that some `k` keys land in the same bucket is at least\n`1/m^{k-1}`, and this is sharp — attained by the degree-`(k-1)` polynomial\nfamily over `ZMod p`.\n\nThe key insight is that the reverse Markov argument survives verbatim once\n`X` counts ordered `k`-tuples: the expectation is `n^{\\underline{k}}/m^{k-1}`\nand the trivial bound is `X ≤ n^{\\underline{k}}`, so the ratio is again\nindependent of `n`; only the sharpness construction changes.\n\n**Why now?**  `collisionProb_ge_of_pairwise_lower` is already stated with an\nabstract per-pair lower bound `δ`, so the `k`-tuple version needs only a\n`Finset` of `k`-tuples in place of `offDiag`.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -148104,7 +148064,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  A uniformly weighted exactly 2-universal family on at least\ntwo keys and `m` buckets has size `N` divisible by `m` (proved:\n`card_dvd_card_of_uniform_exactly2Universal`), and moreover `N ≥ m²` whenever\nthe family is exactly 2-universal on `m` keys; the affine family (`N = p²`) is\ntherefore size-optimal.\n\nThe key insight is that the `m` fibres of the collision event must each be\nrealised by a positive number of indices while the `m²` pairs of prescribed\nvalues `(u,v)` must be equidistributed, forcing `m² ∣ N` for strongly\n2-universal families and `m ∣ N` in general.\n\n**Why now?**  The divisibility half is already a theorem, and the pairwise\nindependence of the affine family (`affine_pairwiseIndependent`) provides the\nequidistribution statement that the lower bound `N ≥ m²` needs.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Degenerate Second Moment of Extremal Universal Families\",\n    \"domain\": \"Probability\",\n    \"description\": \"The affine family minimises the collision probability of a 2-universal family, and its collision counter is two-valued. We conjecture that minimising the collision probability and minimising the second moment of the collision counter are achieved at the same extremal point of the universality polytope. This would explain the tightness of the reverse Markov step rather than merely exhibiting it.\",\n    \"conjecture\": \"Among exactly 2-universal families on n >= 3 keys and m buckets, the minimiser of P(Coll) also minimises E[X^2], where X counts colliding ordered pairs; equality in the reverse Markov inequality P(X>0) >= E[X]/max X characterises the minimisers as those with X supported on {0, n(n-1)}.\",\n    \"test\": \"Formalise E[X^2] for the affine family, compare with the Chung-Erdos bound collisionProb_ge_second_moment, and enumerate the vertices of the universality polytope for (n,m) in {(3,3),(3,4),(4,4)} in exact rational arithmetic.\",\n    \"if_true\": \"Gives a structural characterisation of extremal universal families: they are exactly the two-valued ones, i.e. mixtures of injective maps with a totally collapsing map.\",\n    \"if_false\": \"There exist universal families with strictly smaller second moment than the affine one, and the Chung-Erdos route would then yield a strictly better converse than 1/m for some n.\",\n    \"proof_strategy\": \"Show equality in reverse Markov forces X in {0, C} almost surely; then classify laws on functions whose collision counter is two-valued using the exactness constraints.\",\n    \"catalog_references\": [\"Pythagorean.UnionBoundConverse.FiniteLaw\", \"Pythagorean.UnionBoundConverse.UniversalCollision\"]\n  },\n  {\n    \"title\": \"Strong Universality of the Bijection-Constant Mixture\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"The prime-free attainment of the extremal value 1/m is now proved via the bijection-constant mixture, but only exact 2-universality of that mixture was needed. We conjecture the stronger statement that the mixture is pairwise independent for every",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "NumberTheory"
@@ -148446,7 +148406,7 @@
       "depth_estimate": 3,
       "description": "The equal-volume peeling has maximal thickness exactly R N^{-1/d}, attained at the innermost shell. The conjecture is that this is optimal among equal-volume peelings and quantifies the loss relative to the equally spaced peeling.\n\nmin over equal-volume peelings of max_k (r_k - r_{k+1}) equals R N^{-1/d}, while min over all peelings equals R/N; the ratio is N^{1-1/d}.\n\nFormalise the two optimisation problems for finite N and small d; the equal-volume constraint fixes the radii, so the first claim is a uniqueness statement.\n\nEqual-volume peelings are the canonical worst case for thickness, justifying their use as a benchmark.\n\nSome non-uniform volume allocation beats the ratio N^{1-1/d}, giving a better peeling ladder.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -148999,7 +148959,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For the group `Γ(t,a) ≤ SL(2,ℝ)` generated by `transMat t` and the\nelliptic rotation `rotMat a` (the Cayley conjugate of `spbMat a`), there is an explicit\nreal-algebraic threshold `T(a)` such that `Γ(t,a)` is discrete and free of rank 2\nexactly when `|t| ≥ T(a)`, and `T(a)` is the root of a polynomial whose coefficients\nare the entries of `cayleyMat * rotMat a * cayleyMat⁻¹`.\n\n**The key insight is** that after the Cayley transform both generators act on the unit\ndisc, where `discHoro` supplies a *single* scalar Lyapunov function: horocycle height\nis exactly invariant under the parabolic and strictly monotone under the elliptic away\nfrom the fixed point, so the classical ping-pong sets can be defined by inequalities\non `discHoro` rather than by ad-hoc fundamental domains.\n\n**Why now?** `discHoro_cayleyC`, `discPar_preserves_discHoro` and\n`normSq_cayleyC_lt_one` are already formalised with zero sorries, which is precisely\nthe analytic input a ping-pong argument needs; the remaining work is combinatorial\nbookkeeping rather than new analysis.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -149163,7 +149123,7 @@
       "depth_estimate": 3,
       "description": "The formalised bound says n runs of a test decide whether two dishes are observationally equivalent, but exhaustive enumeration for n <= 4 and a 5-dish Fine-Wilf extremal witness both indicate that n-1 runs suffice. The conjecture is that n-1 is the exact threshold. It matters because it converts a linear bound into an exact query complexity for repeated destructive testing.\n\nFor every finite dish type D with n = card D >= 2, every test t : D -> Bool x D and all dishes d, e: if transcript t d j = transcript t e j for all j < n - 1, then transcript t d m = transcript t e m for all m; and there exist D, t, d, e realising first disagreement at index n - 2.\n\nStarting from the formalised orbit dichotomy and the proved threshold n, tighten the window estimate by one, e.g. by showing that when both transients are nonempty the two orbits cannot both saturate the dish space; verify the extremal side by extending clockTest to coprime cycle pairs p + q = n.\n\nObservational equivalence under destructive testing has exact query complexity n - 1, matching the destruction-depth bound and making the two sharp constants of the theory equal.\n\nThere is a family of tests whose dishes stay indistinguishable for at least n - 1 runs; such a family would be a new extremal object interpolating between rho shapes and coprime cycle pairs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -149206,7 +149166,7 @@
       "depth_estimate": 3,
       "description": "Every test on a finite dish space has a batch length N > 0 whose residue map is idempotent, so verification stabilises. The current proof yields a quadratic N. The conjecture asks for the sharp bound in terms of the functional graph of the residue map, where the relevant quantity is the least common multiple of the cycle lengths beyond the longest tail.\n\nFor every finite D and test t there is N with residue-iterate^N idempotent and N at most g(n) + n, where g is Landau's function and n = card D; and N <= n cannot be improved to a sublinear bound.\n\nFormalise tail length and cycle decomposition of an endofunction on a Fintype, define N as lcm of cycle lengths rounded above the tail length, and prove idempotence; then evaluate the minimal N by exhaustive enumeration for n <= 6 and compare with Landau's function.\n\nStabilisation of repeated verification has an explicit, essentially optimal cost, and the plain bound N <= n is exposed as false whenever Landau's function exceeds n.\n\nSome endofunction has idempotent power strictly beyond lcm of its cycle lengths plus tail, contradicting the standard functional-graph picture and indicating an error in the tail analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "Tropical"
@@ -149755,7 +149715,7 @@
       "depth_estimate": 3,
       "description": "The ternary case admits exactly three trees because the density budget 1 = sum of 1/(a(a+b)) has three admissible solutions, one of which mixes Berggren and Price branches. For general arity k the same budget equation plus the power-of-two determinant constraint bounds the search space. Determining t(k), the number of k-ary trees, would show whether hybridisation is an accident of arity three or a general phenomenon.\n\nFor every k >= 2 the number t(k) of k-ary trees on the node set {1 <= n < m, gcd(m,n)=1, m+n odd} with root (2,1) is finite, with t(2) = 0, t(3) = 3 and t(k) >= 3 for k >= 3, and every branch of every such tree satisfies |det| <= 2.\n\nExtend the finite search of evidence.py from triples to k-tuples of admissible matrices with |entries| <= 8, checking that the images partition the non-root nodes with first coordinate at most 200; then formalise the arity-k analogue of TernaryTree.no_branch_det_ge_three using the same root-child forcing argument.\n\nThe bound |det| <= 2 is a structural property of the node cone rather than of arity three, and the classification method generalises to a uniform theorem.\n\nA k-ary branch with |det| = 4 exists, showing that the power-of-two spectrum is genuinely realised beyond 2 and that the ternary bound is a low-arity coincidence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -150970,7 +150930,7 @@
       "depth_estimate": 3,
       "description": "Define the defect of a complex Hadamard matrix as the dimension of the space of first-order deformations modulo dephasing, and prove that in order two it is zero, i.e. F₂ is isolated. The proved dephasing theorem gives the full orbit, so isolation becomes a rank computation on the linearized orthogonality constraints.\n\nThe tangent space at F₂ to the set of order-two complex Hadamard matrices equals the tangent space of its dephasing orbit; equivalently the defect of F₂ is 0.\n\nFormalize the linearized constraint 'H + εK Hadamard to first order' as a real-linear system in K and compute its solution space, comparing with the 3-parameter diagonal orbit produced by flat_sharp_dephase.\n\nGives a formal, dimension-two base case for the Hadamard defect theory and a template for order four, where a genuine one-parameter family exists.\n\nThere would be a deformation of F₂ not obtainable by phases, contradicting flat_sharp_dephase and signalling an error in the equivalence classification.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -151053,7 +151013,7 @@
       "depth_estimate": 3,
       "description": "Generalize 2|det M| ≤ ‖M‖_F² to n·|det M|^{2/n} ≤ ‖M‖_F² for n × n complex matrices, with equality exactly for scalar multiples of unitaries — the maximally entangled two-qudit states. The two-dimensional proof shows the only missing ingredient is AM–GM applied to squared singular values.\n\nFor every M : Matrix (Fin n) (Fin n) ℂ, n * |det M|^(2/n) ≤ ‖M‖_F², with equality iff M is a scalar multiple of a unitary matrix.\n\nFormalize via the Cauchy–Binet identity det(M Mᴴ) = |det M|² together with the AM–GM inequality applied to the eigenvalues of M Mᴴ obtained from the spectral theorem.\n\nThe Bell normal form generalizes verbatim to qudits: the maximizers of |det| on the Frobenius sphere are exactly U(n)/√n, one orbit of the local group.\n\nThe equality analysis would depend on dimension in an unexpected way, indicating that the two-dimensional Gram identity is not the right generalization route.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -151097,7 +151057,7 @@
       "depth_estimate": 3,
       "description": "The Bell basis proved here is a unitary error basis: an orthonormal basis of the matrix space whose members are multiples of unitaries. Conjecture that in dimension two every such basis is the Pauli basis up to phases and a global unitary, a rigidity statement of the same combinatorial flavour as Hadamard equivalence.\n\nIf B : Fin 4 → Matrix (Fin 2) (Fin 2) ℂ is orthonormal for the Hilbert–Schmidt inner product and each √2·B k is unitary, then there are phases c k and unitaries U, V with B k = c k • (U * pauliMat (σ k) * V) for some permutation σ.\n\nFormalize by expanding each B k in the Pauli basis (bellBasis_expansion gives the expansion map), translating unitarity into a norm condition on the coefficient vectors, and classifying the resulting orthogonal 4 × 4 coefficient matrices.\n\nDimension two has a unique unitary error basis up to equivalence, giving a verified anchor for the general nice-error-basis classification used in quantum error correction.\n\nAn exotic order-two error basis would exist, which would be a genuinely new combinatorial design and would refute folklore uniqueness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Physics"
@@ -151123,6 +151083,176 @@
       "thread_id": "",
       "timestamp": "2026-08-26T03:19:35.776595+00:00",
       "title": "Uniqueness of the Pauli Unitary Error Basis"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "MachineLearning.QRResidual.MeasurableCeiling",
+        "MachineLearning.QRResidual.NeighborNull"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every tested carrier of the per-modulus quadratic-sieve yield residual has been an N-property: a function of N modulo a fixed factor base, or of the local factorisation around N. This direction conjectures that the residual is carried by run-level statistics of the sieve process (partial-relation graph structure, per-sample j-window occupancy) which are not measurable with respect to any N-property sigma-algebra. The measurable ceiling makes the claim falsifiable: a genuine carrier must strictly lower the within-cell energy of the joint N-property feature.\n\nThere is a run-level statistic S of the sieve process such that withinSS y (dial, neighbourhood, S) < (1 - 0.4) * withinSS y (dial, neighbourhood), while no N-measurable feature achieves any such reduction.\n\nInstantiate QRResidual.withinSS at the joint feature with and without the run-level statistic and compare; formally, exhibit the strict inequality as a theorem about a concrete finite design.\n\nThe residual is a property of the algorithm, not of the modulus, and yield prediction must be online rather than a priori.\n\nSome N-property class still untested carries the residual, and the coverage claim is incomplete.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_4224",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.7116111111111112,
+      "proof_strategy": "Use rss_measurableClass to reduce both sides to within-cell energies, then refinement monotonicity (withinSS_mono_of_refines) to isolate the extra explanatory power of the run-level statistic.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "217690eb",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/217690eb",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T03:19:49.589607+00:00",
+      "title": "Sieve-Process Carriers for the Quadratic-Sieve Yield Residual"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "MachineLearning.QRResidual.BlockCeiling"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The block ceiling degrades as 1/lambda in the smallest eigenvalue of the block's Gram matrix. The four neighbour-smoothness covariates are mutually correlated, so the orthonormal instance used in the exp-585 certificate is optimistic. Determining a provable lower frame bound for the actual design gives the honest ceiling.\n\nFor the four-covariate neighbourhood block on balanced 96-bit moduli, FrameLower lambda holds with lambda bounded below by an explicit function of the pairwise correlations, and the resulting ceiling still lies below the pre-registered alternative 0.05.\n\nBound the smallest eigenvalue by Gershgorin from the pairwise sample correlations and feed it to rsq_block_le_of_corr.\n\nThe exp-585 null verdict survives with a realistic conditioning constant.\n\nThe certificate must be stated with the empirical Gram matrix, and the null rests entirely on the permutation test.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_4225",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5934375000000001,
+      "proof_strategy": "Prove a Gershgorin-type lemma that diagonal dominance of the Gram matrix implies FrameLower, then instantiate.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "217690eb",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/217690eb",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T03:19:50.090297+00:00",
+      "title": "Sharp Frame Constant of the Neighbour-Smoothness Design"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "MachineLearning.QRResidual.BlockCeiling"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "A coverage claim of the form 'four feature classes were tested and all failed' should be a single theorem about the concatenated design, since the union can explain strictly more than the sum of the parts when the blocks are non-orthogonal. Restating the ceiling over an arbitrary finite index type makes the union a sum type and the coverage claim a corollary.\n\nFor blocks B1..Bm with correlation ceilings rho_b and a joint frame bound lambda, the incremental R-squared of the union is at most the sum over b of (card B_b) rho_b squared times (1 - R0) divided by lambda, and this is attained when the blocks are mutually orthogonal.\n\nGeneralise blockClass and FrameLower from Fin k to an arbitrary Fintype and derive the union bound for a Sum type index.\n\nMulti-class negative results become single certificates instead of collections of separate experiments.\n\nCross-block interaction can exceed the sum of individual ceilings, and coverage claims must be re-run jointly.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_4226",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.6702972972972975,
+      "proof_strategy": "Reindex the block by a sum type, transport the frame bound, and apply the existing Cauchy-Schwarz plus AM-GM core unchanged.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "217690eb",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/217690eb",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T03:19:50.704969+00:00",
+      "title": "Coverage Algebra for Unions of Covariate Blocks"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "MachineLearning.QRResidual.NeighborNull",
+        "MachineLearning.QRResidual.Blindness"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The footprint dial depends only on N modulo the factor base and is provably blind to primality and to semiprimality; the neighbourhood layer is provably free of the dial. Both proofs run through a CRT prescription plus a shift by a large multiple of the modulus. This direction conjectures a single theorem covering every feature invariant under a congruence subgroup.\n\nIf a feature F of the integers satisfies F(N) = F(N') whenever N is congruent to N' modulo a fixed positive integer Q, then for every value of F attained at an argument coprime to Q, and every prescribed finite pattern of prime divisors of the neighbours N plus or minus one, there are arbitrarily large N realising both.\n\nGeneralise exists_large_congr_omega from the primorial of the factor base to an arbitrary modulus Q and from two neighbours to a finite family of shifts.\n\nAll residue-dial features are simultaneously null for every neighbourhood-type covariate, closing the class-level question in one step.\n\nSome congruence-invariant feature does constrain neighbourhood structure, which would itself be a positive finding.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_4227",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5638733454728578,
+      "proof_strategy": "Chinese remainder over the coprime pair (Q, product of prescribed large primes), then a shift by a multiple of the joint modulus to push the solution past any bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "217690eb",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/217690eb",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T03:19:51.220066+00:00",
+      "title": "Congruence-Invariant Features Are Multiplicatively Blind"
     },
     {
       "ambition_level": "extension",
@@ -154643,6 +154773,46 @@
       "thread_id": "",
       "timestamp": "2026-08-25T05:49:54.837772+00:00",
       "title": "Deepening: Ellipsoids"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 56c4877a (Q=0.850), which proved 107 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the left and right `U(2)` actions and prove that every normalized\nsharp maximizer lies in the local-unitary orbit of `diag(1/√2,1/√2)`. The row\nclassification proved here should reduce this to constructing a unitary matrix\nfrom an orthonormal basis.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "push_56c4877a_3cfad9b1",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.95,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "56c4877a",
+      "source_path": "Local-unitary normal form",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T03:19:41.562160+00:00",
+      "title": "Deepening: Local-unitary normal form"
     },
     {
       "ambition_level": "extension",
@@ -179006,7 +179176,7 @@
     "Computation": 2,
     "Geometry": 2,
     "Logic": 2,
-    "Novelty": 76.0,
+    "Novelty": 77.0,
     "NumberTheory": 2,
     "SetTheory": 1,
     "Speculative": 2
@@ -179022,17 +179192,16 @@
     "0.0001": 2,
     "3-adic": 3,
     "acting": 2,
-    "actions": 1,
     "algebraic": 2.0,
     "already": 18,
-    "assessment": 34,
+    "assessment": 35,
     "a²+b²−c²": 3,
     "barriers": 11,
     "becomes": 6,
     "berggren": 13.0,
     "boundary": 11,
     "cantor": 2,
-    "carries": 12,
+    "carries": 13,
     "catalog": 5,
     "computable": 6.0,
     "compute": 8,
@@ -179062,11 +179231,11 @@
     "groups": 4.0,
     "growth": 10.0,
     "here": 3,
-    "holds": 5,
+    "holds": 6,
     "hyperbolic": 6.0,
     "i(joint": 2,
     "iteration": 12,
-    "itself": 11.0,
+    "itself": 12.0,
     "limited-memory": 9,
     "log(1+√2": 4.0,
     "lorentz": 5.0,
@@ -179081,7 +179250,7 @@
     "now**": 9.0,
     "number": 15.0,
     "opening": 2,
-    "paper": 51,
+    "paper": 52,
     "positive": 7,
     "precise": 5,
     "preserving": 4,
@@ -179094,13 +179263,14 @@
     "reduces": 3,
     "represent": 2,
     "residue": 14,
-    "result": 23,
+    "result": 24,
     "round-32": 2,
+    "row-shuffles": 1,
     "semiprime": 3,
     "silver": 4.0,
     "silver-ratio": 5,
     "spectral": 4,
-    "structure": 22.0,
+    "structure": 23.0,
     "ternary": 8.0,
     "theorem": 17,
     "theory": 15.0,

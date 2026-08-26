@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "95bfbbbf",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — after the NET-78 audit\n\nThree research cycles were run on the NET-78 verdict\n*THE-INCREMENT-ACCELERATES-AT-4096*. What survived, what failed, and what each\nfailure teaches:\n\n* **",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 81,
-      "timestamp": "2026-08-24T10:55:10",
-      "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 — knee jumps to k*=40 (increment +16/doubling vs prior +4)"
-    },
-    {
       "cycle_id": "59651b5d",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — after TDIAL-U92 (round-69 #1, exp 538)\n\nTwo cycles of the loop were run in this session.\n\n**Cycle 1** (`Catalog/MachineLearning/ZeroFitDialFloor92.lean`) asked what could produce",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-08-26T03:19:25",
       "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q"
+    },
+    {
+      "cycle_id": "56c4877a",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — from the local-unitary normal form\n\nThe cycle just completed proved, in `Catalog/Combinatorics/LocalUnitaryNormalForm.lean`:\n\n* the sharp Hadamard-type bound `2‖det M‖ ≤ ‖M‖_F²`",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 107,
+      "timestamp": "2026-08-26T03:19:41",
+      "title": "Local-unitary normal form"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "18f8232d",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — the price of universality (Phase A, Question 1)\n\nFinal state of the thread.  Two exact theories sit side by side:\n\n* **worst case (pointwise)**: minimax redundancy `= log₂ Cₛ`, t",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-08-19T08:55:24",
-      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
-    },
     {
       "cycle_id": "5bad6114",
       "domain": "Probability",
@@ -2501,15 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-08-26T03:19:25",
       "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q"
+    },
+    {
+      "cycle_id": "56c4877a",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — from the local-unitary normal form\n\nThe cycle just completed proved, in `Catalog/Combinatorics/LocalUnitaryNormalForm.lean`:\n\n* the sharp Hadamard-type bound `2‖det M‖ ≤ ‖M‖_F²`",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 107,
+      "timestamp": "2026-08-26T03:19:41",
+      "title": "Local-unitary normal form"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "539def03",
-      "domain": "Pythagorean",
-      "name": "affine_collision_count_two",
-      "quality": 0.83
-    },
     {
       "cycle_id": "539def03",
       "domain": "Pythagorean",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "one_le_scaleGain",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "56c4877a",
+      "domain": "Combinatorics",
+      "name": "localAct_eq",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-26T03:19:25",
+  "last_updated": "2026-08-26T03:19:41",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "df44f621",
-        "quality": 0.82,
-        "theorems": 52,
-        "title": "The exact ensemble dichotomy"
-      },
-      {
         "cycle_id": "1632a2eb",
         "quality": 0.79,
         "theorems": 102,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 111,
         "title": "Destructive verification"
+      },
+      {
+        "cycle_id": "56c4877a",
+        "quality": 0.85,
+        "theorems": 107,
+        "title": "Local-unitary normal form"
       }
     ],
     "Computation": [
