@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-25T23:40:28Z",
-  "count": 196,
+  "archived_at": "2026-08-26T01:59:58Z",
+  "count": 197,
   "directions": [
     {
       "ambition_level": "extension",
@@ -7774,6 +7774,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 253
+    },
+    {
+      "id": "fd_3604",
+      "title": "FACT round-42 #1 — ECM-COMPLETION: the lite variant scales like rho (paper 155)",
+      "description": "Round-42 #1, cron iteration (exp 487, assessment v264). Paper 154's deferred ECM arm.\n\n**ECM-LITE-BIRTHDAY-SCALING**: sequential multiples j=3..B1=50 over random curves (explicitly NOT lcm-based true ECM) find 1200/1200 at k=16 and 1163/1200 at k=20 (3.1% censoring); across-k slope = **0.48 per log₂p** — birthday-bound scaling exactly as the lite structure predicts. H1's [0.6, 0.8] refuted FOR THE LITE VARIANT; true lcm-based ECM deferred.\n\nThe unified plane now holds FOUR methods on one population: td **0.84** / rho **0.52** / Fermat **0.50** / ECM-lite **0.48**.\n\nLedger: v1 instant-degenerate bug (j=2 running point equals base → zero denominator → every curve dead); fixed with explicit doubling.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp487_ecm_only.py + exp487_result.json, seed 20260921.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "9b10b60b",
+      "timestamp": "2026-08-22T07:00:59.863573+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.79,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-22T14:39:38.718982+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 257
     }
   ]
 }

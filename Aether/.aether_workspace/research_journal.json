@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c293906f",
-      "domain": "Probability",
-      "key_insight": "# Future directions — NET-76, after the dilation / merging / token-matching cycles\n\nFour formal files were added in this thread, all sorry-free and using only the standard\naxioms:\n\n* `Catalog/Probabil",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 95,
-      "timestamp": "2026-08-24T10:05:21",
-      "title": "NET-76: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE — complete 5-domain × 2-context table: each domain's ent"
-    },
-    {
       "cycle_id": "93d08ac5",
       "domain": "Shared",
       "key_insight": "# Future directions — equal-volume shell peelings of Euclidean balls\n\nDerived from the three cycles formalised in\n`Catalog/Shared/ShellThicknessSharp.lean`,\n`Catalog/Shared/ShellThicknessMonotone.lean",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-25T23:40:36",
       "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=100.6 df=3 p=1.17e-21"
+    },
+    {
+      "cycle_id": "7b0f4515",
+      "domain": "Probability",
+      "key_insight": "# Future directions — harmonic bulk × steeper-edge kernels\n\nThe thread turned the carried-forward \"bulk exponent −1.10 versus steeper-than-harmonic left\nedge\" tension into a proved structural mechanis",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-26T02:00:14",
+      "title": "FACT round-83 #1 — SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION — five closures conf"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c0dccdf7",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\nConjecture A (the parity-gap conjecture) is now a theorem: `ParityGap.conjectureA` in\n`Catalog/Probability/ParityGap/ConjectureA.lean`, together with its equivalent analytic forms",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 89,
-      "timestamp": "2026-08-19T07:05:43",
-      "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin n → ZMod p`, the pa"
-    },
     {
       "cycle_id": "8a3962f5",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-25T23:40:36",
       "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=100.6 df=3 p=1.17e-21"
+    },
+    {
+      "cycle_id": "7b0f4515",
+      "domain": "Probability",
+      "key_insight": "# Future directions — harmonic bulk × steeper-edge kernels\n\nThe thread turned the carried-forward \"bulk exponent −1.10 versus steeper-than-harmonic left\nedge\" tension into a proved structural mechanis",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-26T02:00:14",
+      "title": "FACT round-83 #1 — SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION — five closures conf"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d3d53c1e",
-      "domain": "Algebra",
-      "name": "lipschitz",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d3d53c1e",
-      "domain": "Algebra",
-      "name": "idBlock_toFun",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "9b3c75c4",
-      "domain": "Applications",
-      "name": "denom_pos",
-      "quality": 0.82
-    },
     {
       "cycle_id": "9b3c75c4",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "rateT_blockMean_strictAnti",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "7b0f4515",
+      "domain": "Probability",
+      "name": "product_bound_does_not_imply_sum_bound",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "7b0f4515",
+      "domain": "Probability",
+      "name": "sub2_zero",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "7b0f4515",
+      "domain": "Probability",
+      "name": "sub2_one",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-25T23:40:36",
+  "last_updated": "2026-08-26T02:00:14",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "5bad6114",
-        "quality": 0.91,
-        "theorems": 17,
-        "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is op"
-      },
-      {
         "cycle_id": "f2707534",
         "quality": 0.92,
         "theorems": 115,
@@ -3823,6 +3817,12 @@
         "quality": 0.85,
         "theorems": 124,
         "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-r"
+      },
+      {
+        "cycle_id": "7b0f4515",
+        "quality": 0.84,
+        "theorems": 13,
+        "title": "FACT round-83 #1 — SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION "
       }
     ],
     "Pythagorean": [

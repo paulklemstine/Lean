@@ -2176,21 +2176,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-81 #1 \u2014 HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE \u2014 no decomposition family met the HUMP bars (pooled fitted-peak boot95-lo 1.0094 vs bar 1.05; raw max still bin 33), but composition carriers die arithmetically: observed LPF masses [0,0,.0007,.9993] \u2014 99.93% of hits share ONE band (>1e4) so H1a single-band-carrier is impossible; inside it concavity replicates in ALL THREE descriptive LPF terciles (c=-0.18/-0.25/-0.44), pooled vertex x=0.5901 == exp579's independent 0.5896 (raw max bin33 exact); k100 conditioning does NOT remove the excess (t2/t3 flat \u00b12% vs pooled +4.8%); controls clean everywhere; sole-survivor channel = H0 window/polynomial geometry of j\u00b2\u2212N itself; named probe: direct j-grid/v-size sensitivity (bin-width permutation, u-grid shift); REGENERATION PASS sha256 55729f1c99c0b5d2 byte-exact 9594/9594 hits + full controls + grids + lineage quartet + master hash"
   },
   {
-    "consumed_by_exp_id": "7b0f4515",
-    "description": "## Round-83 #1 \u00b7 SYNTHESIS-R73-80 \u00b7 Paper 234 \u00b7 papers-only (count unchanged at 572) \u00b7 assessment v340 \u2192 v341\n\nConsolidation synthesis of recorded papers 208\u2013233 (rounds 73\u201380 plus flight-recorded 81\u201382). Read-only; no compute; no new experiment id.\n\n### Five closures confirmed\n| # | Closure | Load-bearing numbers |\n|---|---|---|\n| C1 | Berggren triplet-tree ALL faces incl. realizability | oracle peak 0.4798 bits @B=22758 bit-exact yet unrealized; N-only policy \u22640.50% of within-strata core; orbit max\\|z\\|=2.29/48 cells |\n| C2 | MA-1 computable-effectivity, both routes | magnitude R\u00b2=0.019 / 0.0785 far under bars; sign 15.07% [0.120,0.186] z=\u22127.74; Chebyshev 84.7% negative-twist byproduct |\n| C3 | u\u224810 deviation gate REJECTION | fresh seed r=1.1536 [1.0540,1.2611] UPWARD vs the 20260824 family's 0.95\u20130.99 deficit \u2192 \u00b15\u201315% measured single-run envelope; multi-seed pooling mandatory henceforth |\n| C4 | Positional converse roadmap EMPTY | S \u2264 min(1/(\u039b\u00b7\u0398\u00b7q\u0302), 2^k_bits/(\u039b\u00b7\u0398)) PROVEN via majorization chain; EC_A MC err 0.23% |\n| C5 | Canonical covariate fixed | 1/\u2113-weighted product dial saturates by \u2113=400: W400 .4731/48.1% vs W1e6 .4786/48.5%, corr=0.999 |\n\n### Two record corrections (mechanisms named)\n- **Paper 159's destruction-wall sentence REJECTED** (papers 215+218): zero dead outcomes/600 trials; success persists at B1/p=1.05 exactly where 159 records infinite-E[T]. Replaced by early-fire trace law + subdominant collision floor (65.0%/62.5% vs baseline 16.5%, z p=0.82) + structural identity B1 \u2265 Hasse-max \u27f9 order \\| lcm(1..B1).\n- **Paper 226 SECONDARIES retracted** as reciprocity-flip dial-form artifacts (flip 100% iff \u2113\u22613 mod 4 AND N\u22613 mod 4, 2680/2680); primary S_indiv null NOT retracted (fresh-seed true null R\u00b2=.0019). **Paper 229 RESIDUAL-PEAKED-MID-WINDOW retracted** as baseline-curvature leakage; power-law headline T\u22480.0295\u00b7(1+x)^\u22121.104 STANDS AND IS STRENGTHENED.\n\n### Three new laws entering the map\n1. Early-fire trace law (hit position ~ step ZERO; median index 0.09\u20130.10; final-tail 0/55 binom p\u22480.004).\n2. \u039b prior-shape channel WITH measured scope boundaries: hard-balance ascending 1.58\u00d7\u00b10.03 but deployed RSA pools top-heavy (z=0.6356) where ascending LOSES ~44% \u2014 no deployable gain without enforced q<2p at keygen; paper 137 refined not contradicted.\n3. Harmonic-weight dial saturation: primes informative \u221d1/\u2113; equal-weight counting manufactures apparent window movement.\n\n### Contradiction scan (headline value)\n7 same-quantity pairs checked \u2192 **4 clean, 2 resolved each covering BOTH readings**:\n- 227-saturation-vs-226-\u226414%: dial-form difference (unweighted null vs 1/\u2113-weighted product).\n- 232-u*\u22480.65-vs-229-.67: numerically confirmed agreement then resolved as **AGREEMENT-ABOUT-A-GHOST** \u2014 229/231/232 share ONE M_pred construction so the baseline-curvature leakage is CORRELATED across all three; stability across shifts/bins was stability of the artifact.\n\n**+ 1 UNRESOLVED MINOR TENSION carried forward**: power-law bulk exponent \u22121.10 vs a STEEPER-THAN-HARMONIC LEFT EDGE (edge frac .2346 implied \u2248.22, z=10.08 stratified; first decile .162 implied \u2248.14; peak/end 2.54 [2.24,2.80] implied \u22482.10). Named open refinement: harmonic bulk \u00d7 steeper-edge kernel.\n\nBookkeeping ledger items (not verdict conflicts): D-red identity mismatch GLM-deviance vs Var-ratio conventions (226/227/230); 230 control-arm-B spurious fire (perm p=0.012, quasi-separation) flagged fragile.\n\n### Open items ranked by asymptotic-class value\n1. **Rate-layer N-covariate** \u2014 sole survivor on the live thread; \u226586% of u\u224810 overdispersion is N-structure beyond QR; pure-reanalysis infra exists.\n2. Formal converse sketches beyond the residue-dial stratum (positional witnesses, Siegel-ineffectivity).\n3. Larger-p ECM tracing (early-fire transfer past bitlen-32; cheap hygiene).\nMid-window excess DISSOLVED (revival only as baseline-mis-specification claim); shape confirmation closed by 233.\n\nBarrier framing: consolidation that prevents synthesizing around a contradiction \u2014 caught the correlated-artifact chain 229/231/232 that would otherwise have read as robust triangulation; corrections sealed WITH mechanisms; one quantitative residue named honestly rather than smoothed over. Residue cap 4/3 untouched; no breakthrough claimed.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4042",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T19:46:36.813358+00:00",
-    "title": "FACT round-83 #1 \u2014 SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION \u2014 five closures confirmed (Berggren all-faces, MA-1 both routes, u~10 gate rejection = +-5-15% envelope, converse roadmap EMPTY master inequality proven, canonical 1/l dial saturates by 400 corr .999); two record corrections mechanism-named (paper-159 wall rejected by early-fire trace law; 226-secondaries reciprocity-flip artifact + 229 residual baseline leakage \u2014 power law STANDS strengthened); three new laws (early-fire trace; Lambda prior-shape channel WITH scope boundaries: hard-balance 1.58x does NOT deploy, RSA pools ascending LOSES ~44%; harmonic-weight saturation); CONTRADICTION SCAN 7 pairs -> 4 clean + 2 resolved covering both readings (226-vs-227 dial-form difference; 232-vs-229 agreement-about-a-ghost via shared M_pred) + 1 UNRESOLVED MINOR TENSION carried forward: bulk exponent -1.10 vs steeper-than-harmonic LEFT EDGE (.2346/.162/2.54) \u2014 named refinement harmonic-bulk x steeper-edge kernel"
-  },
-  {
     "consumed_by_exp_id": "217690eb",
     "description": "**Paper 237 \u00b7 round-83 #4 \u00b7 exp 585 \u00b7 verdict H0_SUPPORTED (nothing-beyond-QR)**\n\n## Pre-registered result\n- H1: dR2_neighbors >= 0.05 AND perm p < 0.01. H0: dR2_neighbors < 0.02.\n- QR alone R2=.4112 (corr .641 \u2014 replication live) | NB alone [w-, w+, lpflog-, lpflog+] R2=.0319 | joint .4307 => **dR2 = +0.01946**\n- Permutation p=**0.389** (500 joint row-shuffles), null q95=**0.046 > observed**; best single |r|=0.16 vs dial r=.641; dR2(QR given NB)=+.3987; secondary hits_full dR2=+0.0126.\n\n## Map update\nFour-class negative COMPLETES the coverage claim: every tested N-property class fails on the ~40% u\u224810 residual \u2014 residual GENUINELY OPEN, redirect to sieve-process/j-sample-level carriers (round-81 sole-survivor channel). Refinement note: harmonic-form QR used here; adopted sqrt-weight B*=400 dial absorbs more, strengthening this H0.\n\n## Ledger catches (disclosed)\n1. **PROVENANCE UNVERIFIED**: exp581_regen_positions.npz has NO N array (positions + jlo/jhi only); population regenerated by documented recipe seed 20260827; isqrt fingerprint 0/128 match, 15-variant recipe grid all 0-match (exp577_result.json unreadable); computed hash 30009f0cfa7f85118d217bcacadb9d656fe5a1ae33b474b421492e828066bfef recorded. CONDITIONAL on balanced-96-bit exchangeability across seeds (lab precedent: population-robust laws).\n2. Smoke-stage endpoint amendment BEFORE lineage analysis: hits_full = 0 in 160k+ synthetic draws even at t<=16 \u2192 primary swapped to SIQS-partial hits (mu=4032/N, CV 1.6%), gates unchanged; itself a finding (QS relations at bitlen 96 are ALL partials).\n3. Wall 47.3 s (covariates 42.7 s).\n\nFiles: ResearchOutput/scripts/2026-08-24-round74/exp585_* ; paper ResearchOutput/NewMathematics/237_NeighborCovariate.md ; notebook Part 279 ; assessment v343\u2192v344 (count 574\u2192575).",
     "domains": [
@@ -2206,7 +2191,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-83 #4 \u2014 NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR \u2014 local factorization structure around N carries nothing beyond the QR dial (dR2=+0.0195: QR-alone .411 -> joint .431; perm p=0.389 with null q95=0.046 > observed; best single neighbor |r|=0.16); FOUR-CLASS NEGATIVE completes the coverage claim \u2014 ~40% u\u224810 rate residual is TESTED-AND-FAILED not not-yet-tested (QR dial real 227/235/236; neighborhood null this; positional independent layer 228-230; S_indiv null 226/227); closes paper 234 ranked queue #1; PROVENANCE UNVERIFIED disclosed (exp581 npz holds no N array \u2014 population regenerated by documented recipe seed 20260827, isqrt fingerprint 0/128, hash 30009f0c\u2026 recorded; results conditional on balanced-96-bit exchangeability)"
   },
   {
-    "consumed_by_exp_id": "01dd911f",
+    "consumed_by_exp_id": "44bf5a41",
     "description": "**Round-83 #3 \u00b7 exp 587 BSTAR-TRANSFER \u00b7 Paper 236 \u00b7 assessment v343 (count 573\u2192574)**\n\nVERDICT: **H1_BSTAR_TRANSFERS** \u2014 closes paper 235 \u00a73's named owed-check affirmatively: paper 227's window-saturation location B*=400 TRANSFERS to exp586's corrected 1/\u221a\u2113 weight. Pure reanalysis of exp577's per-N hit counts (no new j-sampling, wall 0.13 s), population regenerated VERBATIM seed 20260827, hash-match 128/128 hard-assert.\n\nDual-curve table (log((hits+0.5)/total) ~ S_w,B OLS, n=128 bitlen 96, odd primes 3..1600):\n\n| B | R\u00b2(\u221a-weight) | R\u00b2(harmonic) | \u0394R\u00b2 |\n|---|---|---|---|\n| 100 | .5279 | .4388 | +0.0891 |\n| 200 | .5976 | .4621 | +0.1355 |\n| **400** | **.6242** | .4731 | **+0.1511** |\n| 800 | .5913 | .4748 | +0.1165 |\n| 1600 | .6137 | .4795 | +0.1342 |\n\n- H1 fires per pre-registered rule: argmax_set under \u221a-weight = {400}, unique interior max.\n- Secondary PLATEAU_RAISED_EVERYWHERE fires: \u0394R\u00b2 > 0 at ALL five windows, no weight\u00d7window interaction.\n- ADOPTED lab-wide: canonical product dial **S_\u221a,B\\*, B\\* = 400** \u2014 location pinned to (200,800] at factor-2 grid steps. Refinement chain complete: 227 inspect (1/\u2113, B*=400) \u2192 235 \u03b1\u0302=0.5 \u2192 236 B* transfers.\n\n**Bimodal-tail caveat (honest):** bootstrap argmax {400:276, 1600:178, 200:37, 800:9}/500 \u2014 1600 sits only 0.0105 below the peak. Robust reading: \"saturation reached by B=400, no further gain through 1600\", NOT a sharp 400-vs-1600 separation. Single-seed caveat on the argmax LOCATION.\n\n**Ledger catches:**\n1. Recomputed harmonic curve peaks at EDGE 1600 not 400 (+0.006 vs 400, noise-level) \u2014 flat plateau above B=200; the interior-window signal is \u221a-WEIGHT-SPECIFIC on this dataset/grid; superseded weight saturates without locating an interior B*.\n2. exp577's stored S400 column IDENTIFIED as the UNWEIGHTED QR-count dial over odd primes \u2264400 (exact-0 diff at correct window; resolves the S400 cross-check discrepancy in paper 227's lineage).\n3. Crosscheck code window bug disclosed: result.json structured `S400_stored_crosscheck` fields compare stored S400 against count over ALL primes \u22641600 instead of masked B\u2264400 \u2014 artifact only, verdicts untouched.\n\nLimits: factor-2 grid resolution; single seed; bootstrap softness of location; log-rate Poisson attenuation uniform within-grid. Barrier framing: instrument hardening completing the paper-235 correction chain; residue cap 4/3, position 5.19\u00d7, quantum frontier untouched; strengthens queue #1 (rate-layer N-covariate structure at u\u224810); no breakthrough claimed.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp587_{bstar_transfer.py,result.json,smoke.log,full.log,findings.md}` \u00b7 Paper `ResearchOutput/NewMathematics/236_BstarTransfer.md` \u00b7 Notebook Part 278.",
     "domains": [
       "Novelty"
@@ -2221,17 +2206,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-83 #3 \u2014 BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS \u2014 B*=400 transfers to the sqrt-weight (R2 .528/.598/.624/.591/.614 over B=100/200/400/800/1600, unique interior argmax); closes paper 235 \u00a73's named owed-check; dR2(sqrt-harm) positive at all 5 windows (+0.089..+0.151) no weight-x-window interaction; harmonic recomputed = flat plateau w/ edge peak 1600 (+0.006 noise) so interior-window signal is sqrt-specific; boot {400:276,1600:178} \u2014 saturation by 400, no gain through 1600; S400 stored column identified as unweighted count dial"
   },
   {
-    "consumed_by_exp_id": "3f447886",
+    "consumed_by_exp_id": "",
     "description": "**Round-83 #2 \u00b7 exp 586 WEIGHT-EXPONENT-FIT \u00b7 Paper 235 \u00b7 assessment v342 (count 572\u2192573)**\n\nVERDICT: **H1_HARMONIC_REFINED (\u221a-WEIGHT)** \u2014 paper 227 adopted the 1/\u2113-harmonic product-dial weight BY INSPECTION; exp586 fit the optimal exponent \u03b1 properly on the SAME data (pure reanalysis of exp577's per-N hit counts, no new j-sampling).\n\n\u03b1-curve (n=128, bitlen 96, odd primes 3..400, c_\u2113=[jacobi(N mod \u2113,\u2113)=+1], log-rate ~ S_\u03b1 OLS):\n\n| \u03b1 | 0.0 | 0.25 | **0.5** | 0.75 | 1.0 | 1.25 | 1.5 | 2.0 |\n|---|---|---|---|---|---|---|---|---|\n| R\u00b2 | .3207 | .4985 | **.6242** | .5752 | .4731 | .3969 | .3479 | .2944 |\n\n- SINGLE-PEAKED INTERIOR MAX at \u03b1\u0302=0.5; harmonic sits on the FALLING limb.\n- \u0394R\u00b2(\u03b1\u0302)\u2212R\u00b2(1) = **+0.15114** \u2265 0.03 pre-registered bar \u2192 H1 fires.\n- Bootstrap CI95 = **[0.5, 0.5]** (492/500 reps pick 0.5, 8/500 pick 0.75, mean 0.504) \u2014 EXCLUDES 1 DECISIVELY.\n- Sanity anchors: even harmonic beats unweighted **+0.152** (227 right that weighting matters); best beats unweighted **+0.304** (wrong about the exponent).\n\n**ERRATUM-GRADE SUPERSESSION of recorded paper 227's adopted parameter**: canonical scale-smoothness covariate refined **1/\u2113 \u2192 1/\u221a\u2113 lab-wide**. Large primes carry ~\u221a\u2113\u00d7 more relative weight than the inspection-chosen form assumed (at \u2113=400: 1/11.5 vs 1/133 of \u2113=3's weight); the fix lifts dial explanatory power R\u00b2=.473 \u2192 .624 (**+31% relative**) on identical data. Every future dial computation uses \u221a-weight. NAMED OPEN CHECK: window-location saturation B\\*=400 was measured UNDER 1/\u2113 (papers 136/139/227) \u2014 transfer to \u221a-weight UNVERIFIED before reuse.\n\nIntegrity: 128/128 Ns regenerated byte-identical from recipe seed 20260827; odd-prime QR counts match stored S400 EXACTLY (diff 0.0, corr \u22481.0 \u2014 exp577's dial effectively excluded \u2113=2 despite config ambiguity). Limits disclosed: discrete grid \u00b10.25 resolution (fine structure near 0.5 not fit per pre-registration); one seed, pure reanalysis; log-rate Poisson attenuation uniform across \u03b1 (argmax robust, absolute R\u00b2s attenuated); smoke n=16 grid-edge 0.25 was small-n noise. Ledger catch: task-brief schema drift only (raw_counts keys vs rows layout) \u2014 no data issue.\n\nBarrier framing: instrument hardening of the map's canonical covariate \u2014 residue cap 4/3 untouched; no breakthrough claimed; directly strengthens ranked-queue #1 (rate-layer N-covariate at u\u224810) by raising the ceiling on QR-dial-absorbable N-structure.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/exp586_{weight_exponent.py, smoke.log, full.log, result.json} + exp586_findings.md; source data exp577_result.json rows. Notebook Part 277; assessment addendum v342.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4053",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T20:50:39.560667+00:00",
     "title": "FACT round-83 #2 \u2014 WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED \u2014 dial weight exponent alpha_hat=0.5 not 1 (single-peaked R2 curve .32/.50/.62/.58/.47/.30, dR2=+0.151>=bar; boot CI [0.5,0.5] excludes 1 decisively 492/500); ERRATUM-GRADE SUPERSESSION of paper 227's adopted 1/l covariate -> 1/sqrt(l) lab-wide (+31% relative dial power on identical data)"
   },
@@ -2561,6 +2545,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T23:41:04.201767+00:00",
     "title": "FACT round-96 #1 \u2014 CONIC ORDER-RIGIDITY (exp 608): THE SEAL HOLDS \u2014 every Berggren-word order divides K_p = p(p\u00b2\u22121) (zero violations, 550 primes \u00d7 40 words), strong individual-torus variant REFUTED (4,973 mix), tree generates exactly PGL\u2082(F_p), and a tree-word arm scores 0/600 vs 225\u2013292 for matched-budget p\u00b11 methods \u2014 genre closed by mechanism; six-defect ledger caught by new positive-control gates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Round-96 #2 \u00b7 exp 609 CF-CASCADE EVASION SHOT \u00b7 verdict: INVALID_CONTROLS(PC2) with PRIMARY-NULL SUPPORT + FULLY-ABSORBED SECONDARY**\n\nThree-layer record from the geodesic face (\u221aN continued-fraction cascade), positive-control gated, pre-registration pinned before data:\n\n1. **Primary**: zero replicated non-SQUFOF sensor events (both populations \u00d7 8 depths \u00d7 8 features; one non-replicated 0.011-bit blip \u2192 dead). The CF-prefix layer carries no detectable information about the Fermat oracle d \u2264 B before the SQUFOF zone.\n2. **Secondary twist**: max_nu2Q \u2194 v\u2082(p+q) carries ~0.99 bits plain (MI 0.998 vs null q99 0.017, replicated) \u2014 then drops to **EXACTLY 0.0 conditioned on N mod 8**. Fully absorbed by trivial modular arithmetic \u21d2 **paper 198's mod-8 cap STANDS**; no new adic content. (mod-64 numbers degenerate from stratum starvation \u2014 disclosed.)\n3. **PC2 erratum**: registered control targeted the wrong association (first-square-index vs Fermat-oracle d\u2264B \u2014 unrelated quantities); estimator validity served by \u00a72's detectability. PC2\u2032 pre-stated requiring mechanistic targets.\n\nLedger catches: PC2 censoring by own depth cap; wrong-target control; signature/indexing defects \u2014 all pre-evidence via gates/crashes; pinned-seed determinism makes reruns bit-reproducible. Head-to-head arm deferred/open.\n\nFalsifiable follow-ups: PC2\u2032-gated rerun at bits {56,64}; matched-budget head-to-head vs direct E(a) sampling; class-group linkage test (the fleet's one unreached mechanism).\n\nArtifacts: `ResearchOutput/scripts/2026-08-25-round75/exp609_*`, paper `ResearchOutput/NewMathematics/260_CFCascadeEvasion.md`.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4213",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-26T02:01:23.407535+00:00",
+    "title": "FACT round-96 #2 \u2014 CF-CASCADE EVASION SHOT (exp 609): primary-null SUPPORTED (zero replicated non-SQUFOF sensor events) and the \u03bd\u2082(Q_j) \u2194 v\u2082(p+q) signal (~0.99 bits plain) is FULLY ABSORBED by N mod 8 (exactly 0.0 conditioned) \u2014 paper-198 mod-8 cap STANDS; geodesic-sensor face seals at toy strength; PC2 erratum carried"
   },
   {
     "consumed_by_exp_id": "",
@@ -4311,21 +4309,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts \u2014 enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "seed_406",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
   {
     "consumed_by_exp_id": "",
@@ -15773,6 +15756,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The truncation scaling of the head dial is now pinned for every pure power law with exponent at most one. The conjecture is that for a bulk times edge mixture the same scaling is governed by the bulk exponent alone, so the ratio of dials at two truncations estimates the bulk exponent and is blind to the edge. Combined with the window law, which sees the edge and not the bulk, this separates the two parameters.\n\nFor a mixture with weights w in (0,1) and exponents a < 1 < b, the mixture head mass times n^{1-a} tends to (1-a) times the mixture head sum at window m, with no dependence on b.\n\nSplit the mixture head sum by the mediant identity of HarmonicBulkSteeperEdge, apply headSum_sandwich_lower and headSum_sandwich_upper to the shallow component and boundedness to the steep one, then squeeze.\n\nRecorded dials at two truncations yield the bulk exponent directly, and the window statistics then yield the edge parameters.\n\nThe truncation scaling mixes both exponents, and dial levels at different truncations cannot be compared without knowing the edge.",
+    "domains": [],
+    "id": "fd_4211",
+    "priority_score": 0.5901612903225807,
+    "research_mode": "team",
+    "source_exp_id": "7b0f4515",
+    "status": "available",
+    "timestamp": "2026-08-26T01:59:57.780019+00:00",
+    "title": "Bulk-Exponent Readout from Two Truncations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The tree discrepancy theorem charges exactly one unit per splitting level, so minimising discrepancy over splitting trees is a weighted-path-length problem. Huffman trees should therefore beat balanced trees on skewed profiles, replacing the log2(k) bound by an entropy bound.\n\nFor every positive rate profile there is a splitting tree whose recursive Bresenham schedule has normalised discrepancy at most 1 + H(r)/log 2, where H is the entropy of the normalised rates.\n\nDefine Huffman trees over STree in Lean, prove the weighted-path-length identity, and combine it with STree.tree_disc; compare numerically against bal_isFair on skewed profiles such as (1,1,1,100).\n\nScheduling discrepancy is bounded by an information-theoretic quantity, bridging source coding and fair queueing.\n\nPer-client discrepancy is not governed by average depth, so the level-charging bound of tree_disc must be non-uniform across clients.",
     "domains": [],
     "id": "fd_3571",
@@ -15929,6 +15924,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T09:53:17.111413+00:00",
     "title": "Theta-Refined Booked Envelope"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The strict window law is now proved for every finite positive combination of power laws with two distinct exponents. The conjecture extends it to a continuous mixing measure over exponents, whose kernel-to-power-law ratio is a Laplace transform in the logarithmic variable and hence convex.\n\nFor any finite nonnegative measure mu on exponents that is not a point mass, and any c, the ratio k -> (integral k^{-x} dmu(x)) / k^{-c} is strictly convex in log k, and the induced window-implied exponent is strictly antitone in the window width.\n\nReplace the finite-sum convexity lemma genRatio_strict_log_convex by its integral analogue and re-run genHeadMass_strict_single_crossing with the integral kernel.\n\nAntitone window curves are a universal signature of exponent heterogeneity, never of a single law.\n\nSome heterogeneous kernel produces an increasing window curve, which would be a genuinely new phenomenon worth isolating.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4210",
+    "priority_score": 0.5647412683708043,
+    "research_mode": "team",
+    "source_exp_id": "7b0f4515",
+    "status": "available",
+    "timestamp": "2026-08-26T01:59:57.271611+00:00",
+    "title": "Continuous Mixing Measures and the Window Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -26946,6 +26956,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The mixture weight is now provably identifiable from a single head window, and the window-implied exponent curve is strictly antitone. The conjecture is that the remaining coordinate, the edge exponent b, is recovered by a second window, making the full mixture identifiable. This turns the recorded edge statistics into parameter estimates rather than a paradox.\n\nFor fixed a and n, the map (w, b) -> (impliedExp(m1), impliedExp(m2)) is injective on (0,1) x (a, infinity) for any 1 <= m1 < m2 < n.\n\nBuilding on mixHeadMass_strictMono_weight, determine the sign of the head mass derivative in b and apply a two-dimensional monotone-map injectivity criterion.\n\nEdge fraction plus first decile determine the edge component; the recorded triple becomes an over-determined consistency check.\n\nDistinct edge components are observationally equivalent on two windows, and a third statistic is mandatory.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4208",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "7b0f4515",
+    "status": "available",
+    "timestamp": "2026-08-26T01:59:56.224101+00:00",
+    "title": "Edge-Exponent Recovery from Two Head Windows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The window-implied exponent of a bulk x edge mixture is now known to be strictly decreasing in the window width, but with no modulus. The conjecture supplies one, converting a qualitative diagnostic into a test with power: it states how far apart two recorded window exponents must lie before a second component is certified.\n\nThere is kappa(w, b-a) > 0 with c(m1) - c(m2) >= kappa(w, b-a) * log(m2/m1) / log n for all 1 <= m1 < m2 < n.\n\nReplace the strict convexity input by its quantitative form (the exp-convexity defect on an interval of length L is at least a constant times L^2) and propagate the defect through the prefix-sum argument.\n\nRecorded window exponents can be converted into a lower bound on the mixture weight and on the edge-bulk exponent gap.\n\nThe gap degenerates for extreme weights, and window statistics detect a second component only qualitatively.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4209",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "7b0f4515",
+    "status": "available",
+    "timestamp": "2026-08-26T01:59:56.724855+00:00",
+    "title": "Quantitative Gap for the Strict Window Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A finitely supported perturbation of the head of a pure power law also inflates narrow-window exponents. The conjecture is that the two mechanisms are separated by the eventual shape of the implied-exponent curve: eventually constant for a contamination, strictly decreasing at every width for a mixture.\n\nIf the kernel is a pure power law outside a finite head set, the window-implied exponent is eventually constant in m; for a genuine two-component mixture it is strictly decreasing for all m.\n\nFormalise the contamination claim for the discrete kernel family (finite support of the discrepancy makes prefix sums stabilise) and combine it with implied_exponent_strictAnti.\n\nThe recorded edge statistics can be classified as mixture-like or contamination-like without any new experiment.\n\nHead statistics cannot separate the two mechanisms and a tail-side statistic is required.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4212",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "7b0f4515",
+    "status": "available",
+    "timestamp": "2026-08-26T01:59:58.285296+00:00",
+    "title": "Mixture Versus Head Contamination Discriminator"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -37587,15 +37639,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "C3. Multiplicativity of the visible bits over composita"
   },
   {
-    "consumed_by_exp_id": "a15951bd",
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** Conjugation by `cayleyMat` carries `SL(2,\u211d)` isomorphically onto\n`SU(1,1)`, and under this isomorphism the trace trichotomy `|tr| < 2 / = 2 / > 2`\nmatches exactly the three normal forms `discPar t`, the diagonal rotation\n`diag(e^{i\u03b8}, e^{-i\u03b8})`, and the hyperbolic `!![cosh r, sinh r; sinh r, cosh r]`,\nwith the parabolic case characterised intrinsically by `discHoro`-invariance.\n\n**The key insight is** that `discPar_normSq_key` (`|den|\u00b2 - |num|\u00b2 = 1 - |w|\u00b2`) is the\ndefining `SU(1,1)` form identity written for one element; promoting it from the\nparabolic family to all of `SU(1,1)` turns three separate case analyses into one\nquadratic-form statement.\n\n**Why now?** `discriminant_dichotomy` already separates the elliptic and parabolic\ncases in the disc model; only the hyperbolic branch is missing, and its normal form is\na two-line matrix computation of the same shape as `discPar`.\n\n---",
     "domains": [],
     "id": "fd_4175",
-    "phase": "A",
     "priority_score": 0.43949999999999995,
     "research_mode": "team",
     "source_exp_id": "4c991400",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-25T16:02:11.580933+00:00",
     "title": "Full trichotomy in the SU(1,1) picture"
   },
@@ -37989,15 +38040,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Temporal-lag and pitch-interval separation"
   },
   {
-    "consumed_by_exp_id": "1f4ec4fd",
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching search language, and suppose `N(n+m) \u2264 N(n)N(m)` with `N(n) \u2265 1`. Then the normalized logarithmic growth rate exists and equals the infimum of the finite-scale rates. Under a compatible ultrametric and a finite-type extension condition, this rate also equals the Hausdorff dimension of the infinite successful-path boundary.\n\nThe key insight is that the exact additivity proved for finite profiles should be replaced by subadditivity, while the relative-entropy normalization remains unchanged. **Why now?** The finite multiscale composition law identifies precisely which quantity must survive when exact self-similarity is weakened.",
     "domains": [],
     "id": "fd_1947",
-    "phase": "A",
     "priority_score": 0.43887499999999996,
     "research_mode": "team",
     "source_exp_id": "115a4ee3",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:21:54.774147+00:00",
     "title": "Entropy dimension for genuinely submultiplicative search languages"
   },
@@ -38506,15 +38556,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "C2. The 2-adic root explosion is governed by `v\u2082(p \u2212 q)`"
   },
   {
-    "consumed_by_exp_id": "f48fd4dd",
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** A single seed-2 run at `ctx = 4096` reports a knee in `[416, 448]`. A\nreport `\u2264 384` instead refutes the `ctx = 2048` amplitude window, and a report `\u2265 480`\nrefutes both seed-2 windows in favour of the seed-1 amplitude.\n\n*The key insight is* that the three surviving amplitude hypotheses have predictions at the\nnext rung that are pairwise separated by at least one full grid step\n(`KneeAmplitude.next_rung_three_way_separation`) \u2014 unlike the `224`-vs-`256` reading,\nwhich is not robust at its own resolution (`KneeDrift.net46_seed2_knee_not_robust`). This\nis the first cell of the programme where the grid can actually adjudicate.\n\n*Why now?* The separation theorem is proved and needs no new theory; only the run is\nmissing.\n\n---",
     "domains": [],
     "id": "fd_3358",
-    "phase": "A",
     "priority_score": 0.4378333333333333,
     "research_mode": "team",
     "source_exp_id": "4f1ff831",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:29:45.996442+00:00",
     "title": "C2. The decisive-context conjecture"
   },
@@ -39555,14 +39604,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1bcec21a",
     "description": "Lower-index natural-coordinate coefficients\n   are defined by `((1 - \u03b1) / 2) C`, where `C` is the Amari\u2013Chentsov cubic\n   tensor. The development proves e-flatness at `\u03b1 = 1`, the dual\n   expectation-coordinate m-flatness at `\u03b1 = -1`, opposite-alpha duality, and\n   the Levi\u2013Civita midpoint identity.",
     "domains": [],
     "id": "fd_2764",
+    "phase": "A",
     "priority_score": 0.421,
     "research_mode": "team",
     "source_exp_id": "645d6476",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:59.443380+00:00",
     "title": "Canonical alpha-connections"
   },
@@ -45554,15 +45604,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "formalize H\u00f6lder classes on compact subsets of `\u211d\u207f`;"
   },
   {
-    "consumed_by_exp_id": "dabb3404",
+    "consumed_by_exp_id": "",
     "description": "Formalize the order isomorphism between the fixed points of `u \u2218 l` and those of `l \u2218 u`, and prove that it transports arbitrary meets and joins.",
     "domains": [],
     "id": "fd_2792",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "ef4982e9",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:26:09.665712+00:00",
     "title": "Fixed-point duality"
   },
@@ -45689,15 +45738,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "prove *soundness* \u2014 every DP value is realised by some labelling;"
   },
   {
-    "consumed_by_exp_id": "5020a9e7",
+    "consumed_by_exp_id": "",
     "description": "Prove that the perfect-ZK property of\n   `viewProb` is preserved under `k`-fold sequential repetition by showing that the\n   product view distribution factorizes, i.e. `viewProb^{\u2297k} = simProb^{\u2297k}`.",
     "domains": [],
     "id": "fd_2865",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "6a4657f8",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:26:35.426665+00:00",
     "title": "Sequential and concurrent composition"
   },
