@@ -43238,11 +43238,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ff88fece",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43252,7 +43252,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_1478",
-      "last_attempt_time": "2026-08-18T15:48:38.479042+00:00",
+      "last_attempt_time": "2026-08-26T07:13:06.624465+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43267,7 +43267,7 @@
       "source": "",
       "source_exp_id": "be7c0bd7",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/be7c0bd7",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-18T03:09:00.743392+00:00",
       "title": "Both endpoints of the trade-off are now formal theorems in this"
@@ -55530,7 +55530,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Let a finitely supported state have finite hyperreal amplitudes and appreciable nonzero squared norm. Then taking the standard part of every normalized Born weight produces a nonnegative real probability distribution of total mass one. Its support is exactly the set of branches whose normalized weights are appreciable and have positive standard part.\n\nThe key insight is that standard part should commute with finite sums once all summands are finite, while appreciability of the norm prevents normalization from magnifying an infinitesimal numerator into a visible weight.\n\n**Why now?** Normalization and the disappearance of one infinitesimal branch have been established separately; the finite-support theorem would unify them into a complete measurement law.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -57574,7 +57574,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For natural oracle-complete targets arising from arithmetic evaluation, every level of a suitably encoded polynomial hierarchy admits a uniform bounded-query reduction, while no corresponding unrelativized complexity-class separation follows without an oracle-elimination theorem.\n\nThe key insight is that completeness and reduction composition transfer oracle access through a class, but do not erase the oracle or imply an absolute separation such as `P ≠ NP`.\n\n**Why now?** The one-query transfer theorem supplies the structural base on which query counts, uniformity, and oracle elimination can be studied independently.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -58017,7 +58017,7 @@
       "depth_estimate": 3,
       "description": "For finite-state Markov pruning with transition probabilities bounded away from zero, a path-sampling estimator recovers the successful-set dimension with exponentially decaying error probability, uniformly over model size after an explicit mixing-time correction.\n\nThe key insight is that successful-prefix growth becomes an additive functional of a finite-state chain. **Why now?** Exact periodic benchmarks expose bias directly and provide calibration cases before moving to large theorem corpora.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -58298,7 +58298,7 @@
       "depth_estimate": 3,
       "description": "Model cooking and verification costs as nonnegative random variables. Prove expectation and concentration analogues under an almost-sure positive lower bound on total verification cost; explicitly distinguish the expectation of a ratio from the ratio of expectations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -60348,7 +60348,7 @@
       "depth_estimate": 3,
       "description": "Formalize a finite probability space and prove the union bound directly for arbitrary civilization events. The present product formula specifically encodes independence, while Markov’s inequality only needs a nonnegative count.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -60861,7 +60861,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For fixed wolf density below one half, there is a critical signal-to-noise ratio in an exchangeable voting-channel model above which Bayesian villagers have win probability bounded away from zero uniformly in population size, while below it their win probability converges to the information-free baseline.\n\nThe key insight is that posterior concentration, rather than posterior ranking alone, should control whether information overcomes the wolves' elimination rate. **Why now?** The exact information-free recurrence supplies a null model, and likelihood channels can be compared against it through posterior concentration inequalities.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -62670,7 +62670,7 @@
       "depth_estimate": 3,
       "description": "Conjecture that two locally permutation-invariant clue ensembles can have asymptotically distinct satisfiability thresholds even when they have the same expected clue density and the same one-cell marginals. A concrete comparison should use independently assigned locally consistent clues versus clues generated by perturbing a random completed grid.\n\nThe key insight is that density forgets correlations, whereas Sudoku constraints are dominated by correlated row, column, and block collisions. **Why now?** Restrictions of completed grids are solvable at every density, providing an exact endpoint against which genuinely random-value models can be compared.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -62751,7 +62751,7 @@
       "depth_estimate": 3,
       "description": "In the ensemble obtained by retaining each entry of a uniformly sampled completed grid independently with probability `p`, conjecture a sharp threshold for uniqueness of completion, despite existence having probability one for every `p`. Determine whether the uniqueness threshold is governed by the smallest nontrivial trade (a finite set of entries that can be exchanged between two completions).\n\nThe key insight is that solution-generated clues eliminate the existence transition but preserve a nontrivial transition in the number of completions. **Why now?** The exact solvability-at-every-density theorem redirects the phase-transition question toward a monotone observable that can genuinely change in this ensemble.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -63985,7 +63985,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every distribution on permutations, there is a comparison sorter whose\nexpected comparison count is within an additive constant times `n` of the Shannon entropy,\nand whose reversible history can be compressed to the same scale.\n\nThe key insight is that factorial entropy is merely the uniform-prior case; biased input\norders should admit both shorter decision paths and smaller retained histories. **Why now?**\nThe present synthesis separates worst-case tree capacity from erased information, making a\nprior-sensitive formulation both natural and experimentally testable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -64462,7 +64462,7 @@
       "depth_estimate": 3,
       "description": "The included evidence kernel-checks inputs `1..20`. Larger bounds can be certified with efficient arrays and reflection, but no finite bound proves the universal conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [],
       "github_issue": 0,
       "id": "fd_2052",
@@ -64903,7 +64903,7 @@
       "depth_estimate": 3,
       "description": "Equip invariant patterns with probability distributions and prove Shannon-entropy bounds. The current exact cardinality theorem gives the uniform-capacity value but does not formalize probabilistic musical entropy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -66392,7 +66392,7 @@
       "depth_estimate": 3,
       "description": "Define parameter count and bit complexity, then prove the construction uses width one, depth `n`, hidden weights `2`, and one binary bias per layer.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -66991,7 +66991,7 @@
       "depth_estimate": 3,
       "description": "For a stationary ergodic source of entropy rate `h < log q`, conjecture that the typical waiting time for a repeated length-`m` block scales as `exp(hm/2)` up to subexponential factors, and that low-complexity mixtures exhibit a detectable downward deviation governed by their lowest-entropy component.\n\nThe key insight is that cardinality `q^m` should be replaced probabilistically by the effective typical-set size `exp(hm)`, after which birthday-type collision behavior predicts a square-root threshold. **Why now?** The worst-case coding theorem clarifies which part of the claimed genomic compression is universal and which part must be attributed to source entropy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -67266,7 +67266,7 @@
       "depth_estimate": 3,
       "description": "Missing rate zero lies in this range, and complete data forces a tie between methods that preserve observations. Any valid performance theorem must specify a stochastic model and should use non-strict or expected-risk comparisons.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -67550,7 +67550,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For bounded independent survey responses whose population mean has minimum margin `δ` over `m` tested rigor levels, empirical averaging identifies the true minimum with probability at least `1-η` once the sample size is on the order of `δ⁻² log(m/η)`, and this dependence is optimal up to constants.\n\nThe key insight is that deterministic stability below error `δ/2` converts any uniform concentration inequality directly into a sample-complexity theorem.\n\n**Why now?** The sharp deterministic boundary is known, so the remaining question is an experimentally testable concentration problem with explicit parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -71311,7 +71311,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** If two machine substrates simulate one another with polynomially bounded overhead and polynomially related encodings of input size, then their polynomial-time and polynomial-witness language classes coincide, even when the simulations are not resource-exact.\n\nThe key insight is that exact simulations are stronger than complexity theory normally requires: polynomial classes should absorb polynomial distortion while still preserving the deterministic-versus-witness question.\n\n**Why now?** The exact-overhead theory identifies every point where costs enter the transport argument, making the polynomial closure conditions explicit and testable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -72113,7 +72113,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is polynomial but whose workspace is\nreused across instances must dissipate at least a constant times the conditional\nentropy of the discarded computation history. A matching reversible construction\nshould attain the bound up to polylogarithmic overhead.\n\nThe key insight is that time complexity and dissipation become coupled only after\none specifies which intermediate information is irreversibly discarded, rather\nthan merely classifying the final decision problem. **Why now?** The finite\npushforward entropy inequality and the positive one-bit work bound isolate exactly\nthe local information-loss quantity that a family-level theorem must aggregate.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -72235,7 +72235,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For finite-memory demons obeying a Crooks-type fluctuation relation,\nthe probability of observing total work below the Landauer threshold decays\nexponentially in the number of independently erased bits, uniformly over every\npolynomial-time control strategy.\n\nThe key insight is that rare negative-work trajectories need not contradict the\nsecond law; the physically testable obstruction is an exponential concentration\nbound on repeated erasure. **Why now?** The expectation-level Jarzynski argument\nalready supplies the correct threshold, while repeated finite systems provide a\nconcrete setting in which to seek sharp tail estimates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -73484,7 +73484,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** In a sparse random corpus with bounded expected document size and theorem degrees converging to a nondegenerate distribution, each fixed-dimensional normalized Betti number has a deterministic limit, while the unnormalized Betti number is bounded above by the corresponding binomial face count and is typically of strictly smaller order.\n\nThe key insight is that the universal binomial ceiling controls the available chain generators, but boundary ranks—not simplex counts alone—determine the surviving topology.\n\n**Why now?** The structural ceiling and dimension-vanishing theorem identify exactly which asymptotic claims are possible; specifying a random incidence model is the missing ingredient needed to replace an unsupported power law by a falsifiable limit theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -73804,7 +73804,7 @@
       "depth_estimate": 3,
       "description": "Define probability simplices for both players and worlds and prove that the zero guaranteed value is attained by the uniform distribution on complementary world pairs.  The present no-free-lunch theorem already proves the difficult upper-bound obstruction without normalization assumptions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -74165,7 +74165,7 @@
       "depth_estimate": 3,
       "description": "For a genuine Chaitin-style direction, define prefix-free machines, halting domains, and finite Omega approximants. Prove monotonicity and convergence first; machine-dependent randomness or uncomputability requires substantial computability and algorithmic-information infrastructure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -74602,7 +74602,7 @@
       "depth_estimate": 3,
       "description": "Enumerate small finite unital magmas and classify their associativity defects. For the present infinite example, the relevant small calculation is already kernel-checked in `left_bracketing_value` and `right_bracketing_value`, so a separate empirical evidence stage would add no confidence to the proved claim.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [],
       "github_issue": 0,
       "id": "fd_2309",
@@ -75156,7 +75156,7 @@
       "depth_estimate": 3,
       "description": "The development uses binary code length under an injective encoding, which captures the counting core of incompressibility but is computable rather than genuine prefix-free Kolmogorov complexity. A stronger continuation should define a prefix-free universal machine, partial evaluation, shortest-program complexity, and the invariance theorem up to an additive constant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -75359,7 +75359,7 @@
       "depth_estimate": 3,
       "description": "Put probability distributions on candidates and prove the Landauer lower bound from Shannon entropy loss. The current `2^n - 1` figure counts reset flags; it is not itself the Shannon information of choosing one item from `2^n` possibilities, which is `n` bits under the uniform distribution.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -76802,7 +76802,7 @@
       "depth_estimate": 3,
       "description": "Extend `no_injective_observed_orbit` from natural-valued observations to arbitrary codomains and prove that every observed trace of a finite deterministic system is eventually periodic. Derive impossibility results for traces known to be aperiodic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [],
       "github_issue": 0,
       "id": "fd_2365",
@@ -78194,7 +78194,7 @@
       "depth_estimate": 3,
       "description": "Generalize the linear preparation model to bounded-rate synthesis, copying, routing, and readout. Identify assumptions under which constant-factor, polynomial, or larger speedups are possible.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -79288,7 +79288,7 @@
       "depth_estimate": 3,
       "description": "To approach a two-resource hierarchy, define cyclic implementations whose work registers and memory size are bounded as functions of input length. Seek explicit families with polynomial runtime and superlogarithmic entropy export, and separately families with long runtime implemented by nearly reversible transitions. Any impossibility theorem must state the reset, cyclicity, and bounded-memory assumptions explicitly.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -79328,7 +79328,7 @@
       "depth_estimate": 3,
       "description": "The finite-size theorem already gives a one-run exponential lower-tail bound. For independent repeated resets, tensorize the fluctuation relation and derive concentration around the extensive threshold. For dependent trials, identify mixing or martingale hypotheses sufficient for a comparable bound.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -79854,7 +79854,7 @@
       "depth_estimate": 3,
       "description": "For each `r ≥ 0`, classify and enumerate cyclic binary words in which at most `r` peripheral symbols are followed by peripheral symbols, with weights recording core and peripheral vertex choices. Conjecture that, for fixed word length, the resulting weighted enumerator is the trace of a `2(r+1) × 2(r+1)` transfer matrix and satisfies a linear recurrence whose characteristic polynomial factors according to the allowed defect states.\n\nThe key insight is that deleting at most `r` exceptional peripheral positions restores an injective rotation map, while a finite-state automaton records where those deletions occur.\n\nWhy now? The one-defect circumference theorem supplies the base case `r=1`, and the finite-state formulation can simultaneously control circumference and exact cycle counts.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -83050,7 +83050,7 @@
       "depth_estimate": 3,
       "description": "**Uniqueness via moments (Carleman).** Formalize that a probability measure on\n  a bounded interval is determined by its moments, then combine with\n  `scMoment_le_four_pow` to conclude the semicircle law is the unique measure\n  with these moments.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -84532,7 +84532,7 @@
       "depth_estimate": 3,
       "description": "Replace explicit finite mass functions by\n   Mathlib probability kernels, proving that pushforward and product\n   constructions agree with the finite model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -86147,7 +86147,7 @@
       "depth_estimate": 3,
       "description": "State a simulation relation linking machine configurations to Life configurations and prove that `T` machine steps are simulated with explicit initialization, time, and spatial overhead bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -87931,7 +87931,7 @@
       "depth_estimate": 3,
       "description": "Formalize random sampling without replacement and finite-key concentration bounds connecting observed test-bit QBER to the unobserved phase-error rate.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -88479,7 +88479,7 @@
       "depth_estimate": 3,
       "description": "Let `qₙ` be the probability that two uniform elements of `Sₙ` generate either `Aₙ` or `Sₙ`. Then\n   \\[\n   \\lim_{n\\to\\infty} q_n=1\n   \\quad\\text{and}\\quad\n   \\exists C>0\\;\\exists N\\;\\forall n\\ge N,\\;1-q_n\\le C/n.\n   \\]\n   Formalizing `qₙ` would connect the catalog's `Sₙ`-only count to the standard random-permutation formulation of Dixon's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -92012,7 +92012,7 @@
       "depth_estimate": 3,
       "description": "For each finite\n   alphabet size `q ≥ 2`, determine whether there is a number `B(q)` such that\n   any radius-one rule reversible on cycles `1,…,B(q)` is reversible on every\n   finite cycle. A first concrete target is to prove or refute `B(3) ≤ 8` by\n   exhaustive computation followed by a Lean certificate.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -92092,7 +92092,7 @@
       "depth_estimate": 3,
       "description": "On configurations `ℤ → α`, formalize\n   radius-one global maps and prove that every single-coordinate permutative\n   rule has an inverse which is again a radius-one cellular automaton, with the\n   same explicit opposite-shift formula established here for finite cycles.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -92525,7 +92525,7 @@
       "depth_estimate": 3,
       "description": "Couple the rigidity result to Bennett embeddings and\n   construct an explicit enlarged-state process whose computational debit vanishes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -92923,7 +92923,7 @@
       "depth_estimate": 3,
       "description": "For every finite transcript type, replacing\n   deterministic Boolean distinguishers by Markov kernels to `Bool` preserves the\n   exact-advantage theorem for every `PerfectReduction`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -93401,7 +93401,7 @@
       "depth_estimate": 3,
       "description": "For all finite--cofinite events `A` and `B`, prove\n   `probability (A ∪ B) + probability (A ∩ B) = probability A + probability B`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -96491,7 +96491,7 @@
       "depth_estimate": 3,
       "description": "`FSAccepts` hashes `(pub, a, m)`.  Conjecture: if the message is dropped from the hash input\n(oracle of the form `H : G × G → ZMod q`), then there is an explicit adversary that, given a\nsingle valid signature on `m₀`, produces a valid signature on every message `m`, i.e.\nuniversal forgery with probability `1`; whereas with the message included, the `Q/q` bound of\n`rom_union_bound` continues to hold.  This is a concrete, checkable separation between the\ntwo hashing conventions inside the present formalization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -97292,7 +97292,7 @@
       "depth_estimate": 3,
       "description": "Neither direction relating `β_p` to the\n   smallest eigenvalue `λ_min` of the rotated Laplacian is formalized here (the\n   eigenvalue itself is not yet defined in these files; see item 5).  The easy\n   direction `λ_min ≤ β_p` is immediate once `λ_min` is introduced as an infimum\n   of Rayleigh quotients, since phase vectors are particular test vectors; the\n   substantial content of the paper is a Trevisan-style bound `β_p ≤ C √λ_min`\n   obtained by rounding.\n   Formalizing the rounding argument (a random threshold on the phase of the\n   eigenvector) is the natural next target, and needs a Lean development of the\n   `p`-phase sweep cut.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -97652,7 +97652,7 @@
       "depth_estimate": 3,
       "description": "No periodic construction can work: our\n   `not_avoidsSumsets_of_ap` shows any set containing an AP of length `2k-1`\n   fails, and periodic sets of positive density contain arbitrarily long APs.\n   A derandomized construction would have to be built from, e.g., quadratic\n   phases or an explicit Sidon-like layered structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -98889,7 +98889,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** As `β → ∞` with `ΔF = k_B T log 2` fixed at the Landauer value, the exponent\n`β(ΔF - w)` tends to `-βw`, so the bound is vacuous for every fixed `w > 0` and informative\nonly for `w ≤ 0`.  Consequently an apparent zero-work erasing demon obtained in the `T → 0`\nlimit must have diverging resources: with `w = 0`, `FluctDemon.stopping_reliability_bound`\ngives `m ≤ log(1/δ)/log 2`, a *`β`-independent constant* on the number of erasures the\ndemon can complete at fixed success probability — and by `FluctDemon.stopping_wald` the\nexpected work still grows like `ΔF·E[N]`, so the only escape is `E[N] → ∞`.\n\nThis turns the \"Zero-Temperature Boundary Classification\" conjecture of the original\ndirection into a quantitative dichotomy: at `T → 0` the loophole closes as a divergence of\nthe *resource* `E[N]`, not of the exponent.\n\n*Falsifiable:* a family of finite stopping strategies, parameterised by `β`, with `w = 0`,\n`ΔF = k_B T log 2`, deficit probability bounded below, bounded `E[N]`, and outcome-space\nsize `O(poly)`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -99409,7 +99409,7 @@
       "depth_estimate": 3,
       "description": "Between the exponential `2^n`\n   (independent) and linear `n + 1` (chain) baselines, the number of usable\n   sub-libraries of a random dependency DAG with edge density `p` is conjectured\n   to be `exp(Θ(n / (1 + pn)))`, with the crossover at `p ≍ 1/n`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -100926,7 +100926,7 @@
       "depth_estimate": 3,
       "description": "Under a second-moment hypothesis on\n   the hidden units, `√m (m τ_m − |c|/E[a g])` converges in distribution to a\n   centred Gaussian with variance `|c|² Var(a g) / E[a g]⁴`, i.e. the grokking\n   delay of a random wide network satisfies a central limit theorem.\n   *The key insight is* that `unitDelay_width_law` writes the delay as the\n   smooth function `x ↦ |c|/x` of the empirical mean, so the delta method turns\n   Mathlib's CLT into a CLT for the delay.\n   *Why now?* The almost-sure law (`iid_width_law_ae`) is proved with exactly\n   the i.i.d. hypotheses Mathlib's CLT machinery uses, so only the delta method\n   has to be supplied.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -102049,7 +102049,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every divisor `D` on `Kₙ` and every `r`, if `r(D) < r` then the\nfailure is witnessed by a *monotone staircase*: there is an effective divisor `E` of\ndegree `r` whose value multiset is `{c, c−1, …}` in the sorted order of `D` (at most\n`n` such `E` up to relabelling) with `D − E` not equivalent to an effective divisor.\nConsequently the rank of a divisor on `Kₙ` is computable in `O(n log n)`.\n\n*The key insight is* that the deficiency `d` is monotone under the dominance order\non sorted value vectors, so among all test divisors of a fixed degree the ones\nmaximising `d(D − E)` are the extreme points of the dominance order — exactly the\nstaircases, which is why the single explicit divisor `stairE` already realises the\nupper bound `m(m+3)/2`.\n\n*Why now.*  `stairE`/`isReduced_stairF` show a staircase realises the obstruction for\nuniform `D`, and the `K₈` computation of §1 found that a filter using only the `22`\nmonotone staircase test divisors of degree `6` already eliminated all but `28` of\nthe `262144` classes — no non-staircase witness was ever needed.  Proving this would\ngive the first polynomial-time *certified* rank algorithm for a nontrivial family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -104759,7 +104759,7 @@
       "depth_estimate": 3,
       "description": "**Graded modalities do not close the resolution gap** — a *refutation*\n  (`Catalog/Probability/GradedResolution.lean`).  With the counting semantics\n  `gsat` (\"at least `k` successors of positive probability satisfy `φ`\"), graded\n  truth is invariant under exact analogies (`gsat_transport`), but it is *blind on\n  deterministic systems*: any two deterministic constant-atom systems, on arbitrary\n  finite world sets and with arbitrary successor functions, satisfy exactly the same\n  graded formulas at every pair of worlds (`det_graded_iff`).  Hence \"two self-loops\"\n  and \"one 2-cycle\" are graded-equivalent yet non-isomorphic (`gap_persists`): a\n  finite language of graded modalities does **not** classify finite pointed models up\n  to isomorphism, refuting Conjecture 1 of the root direction and the `k = 1`\n  separation claim of Conjecture 4.  What does separate the pair is the\n  self-reference observation `0 < step s s` (`loopObs`), which is itself invariant\n  under exact analogies (`loopObs_transport`, `loop_separates`) — the missing\n  resolution is a fixed-point phenomenon, not a multiplicity phenomenon.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -106942,7 +106942,7 @@
       "depth_estimate": 3,
       "description": "> **Conjecture.** The information-theoretic bound `K ≥ r` for *linear* Fourier\n> sampling degrades to `K = Θ(√r)` — and no further — for *adaptive*\n> measurements that may depend on earlier outcomes; i.e. adaptivity buys exactly\n> a birthday-square-root and never more.\n\n*The key insight is* that `dft_sample_count_ge_period` is proved by a pure\ndimension count, which is insensitive to adaptivity, whereas Pollard rho's\n`Θ(N^{1/4})` is exactly a birthday bound; the conjecture says these two numbers\nare the two ends of a single interpolation and that the randomness barrier\n(barrier 8) *is* the adaptive shadow of the DFT bound.\n\n*Why now?* Both endpoints are formalised in this cycle — the dimension bound in\n`DFTSampleBound.lean`, the exponential barrier `exp(x/4)` in\n`ResourceClassification.lean`, and the worst-case blindness statement\n`arithmetic_trajectory_blind` in `RandomnessBarrier.lean`, which already\nseparates the provable worst case (`√N`) from the birthday heuristic\n(`N^{1/4}`) — so the missing piece is a single interpolation theorem rather than\ntwo independent lower bounds.\n\n**Falsifier.** An adaptive sampling scheme determining the period of every\nperiod-`r` signal with `o(√r)` measurements.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -107303,7 +107303,7 @@
       "depth_estimate": 3,
       "description": "For a random `F ∈ ℤ[X]` of degree `d` with\n   coefficients bounded by `H`, the specialized polynomial `Ψ_F(·, N)` is\n   nonconstant with probability `1 − O(H^{-1})`; so \"almost every\" polynomial\n   invariant is on the *recovery* side of the dichotomy, and the `N`-only side\n   is a measure-zero coincidence — the structural reason so few of the 284\n   tested invariants were informative is that the informative ones are exactly\n   the circular ones.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -108765,7 +108765,7 @@
       "depth_estimate": 3,
       "description": "*Let `D` be any distribution on `[1, N)` whose density is computable from `N` in\n`polylog N` time and is `ε`-close to uniform in total variation. Then a single\nsample from `D` reveals a nontrivial factor with probability at most\n`2/min(p,q) + ε`.*\n\n**The key insight is** that `Round7ZDG.atomic_uniform_success_le` already proves\nthe uniform case with the exact constant `2/p`, and the perturbation term is\nforced by the total-variation bound; the content is that `polylog`-computability\nprevents any density from concentrating on the `p + q - 2` zero divisors.\n**Why now?** The uniform bound is formalised and the vertex set is exactly\ncharacterised, so only the TV-perturbation layer remains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -112935,7 +112935,7 @@
       "depth_estimate": 3,
       "description": "Formally: for i.i.d. symmetric coefficients, `P(cure | E) = 1 − 2^{-E}` for\n`E ≤ D` and `1` for `E > D`, so no `E` in the fragile range has probability `0`\nor `1`.\n**The key insight is** that `separable_eosOf_iff` makes the cure event a\n*maximum-of-coefficients* event, and maxima of independent coordinates are\nmonotone in the number of coordinates — the shift is a max-stability phenomenon,\nnot a capacity phenomenon.\n**Why now?** `separable_eosOf_iff` and `margin_bound_sharp` already pin the\nevent exactly; only the product-measure bookkeeping remains, and the untested\n`E = 24` arm is a direct empirical test of the predicted strict monotonicity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -114168,7 +114168,7 @@
       "depth_estimate": 3,
       "description": "**N2 (sharp two-sided threshold) — CLOSED, with a corrected parameter.** The\n  conjectured parameter `k²(1−r)²` is wrong in the dense regime (it diverges\n  while the failure probability saturates at `1`).  The correct parameter is the\n  binomial tail `tail(k,r) = P[Bin(k,1−r) ≥ 2] = 1 − r^k − k(1−r)r^{k−1}`, and\n  the two-sided bound is proved exactly:\n  `(1−1/q)·tail ≤ 1 − base(k,q,r) ≤ tail` (`one_sub_base_ge_tail`,\n  `one_sub_base_le_tail`), hence\n  `(1 − tail)^n ≤ P(sheaf) ≤ (1 − (1−1/q)·tail)^n` (`sheafProb_sandwich`),\n  `P(sheaf) ≤ exp(−n(1−1/q)·tail)` and `P(sheaf) ≥ 1 − n·tail`.  The transition\n  therefore happens at `n·tail(k,r) ≍ 1`, and in the sparse regime\n  `C(k,2)(1−r)²r^{k−2} ≤ tail ≤ C(k,2)(1−r)²` recovers the pair bound.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -116827,7 +116827,7 @@
       "depth_estimate": 3,
       "description": "Each conjecture below is falsifiable by a finite computation for any fixed small `p`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [],
       "github_issue": 0,
       "id": "fd_3393",
@@ -120787,7 +120787,7 @@
       "depth_estimate": 3,
       "description": "The formal construction yields doubly exponentially sparse hits, but numerics show 242 hits among 72871 small triples. The conjecture is that hits have polynomial density in the tree.\n\n#{Berggren nodes with hypotenuse <= X and quality > 1} >> X^{theta} for some theta > 0.\n\nReduce, via the formal hit criterion, to counting n <= Y with rad(n(n+1)) <= n / (log n)^{A}, and formalize a lower bound for that count using powerful-number constructions.\n\nThe tree is a dense reservoir of abc hits, giving a structured search space for record hunting.\n\nHits are sparse in the tree, so structured families cannot beat random search for abc records.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation"
       ],
@@ -122379,7 +122379,7 @@
       "depth_estimate": 3,
       "description": "The three Berggren generators split into one parabolic and two hyperbolic directions, which makes the ternary tree exponentially unbalanced. The maximal depth reachable inside a hypotenuse box should be governed purely by the parabolic spine and hence grow like sqrt(H), while a typical node sits at logarithmic depth. This quantifies how far the tree is from a balanced ternary tree.\n\nThe maximal Berggren word length among triples with hypotenuse at most H satisfies D(H) = (1/2 + o(1)) * sqrt(H), while the average depth is Theta(log H).\n\nProve that a word containing k non-parabolic letters has hypotenuse at least 5^k, deduce k = O(log H), and combine with the closed form 4(j+1)^2+1 for parabolic runs; compare with the measured D(10^5) = 222.\n\nThe tree has a canonical thin spine, giving a seed-independent sqrt(H) lower bound for any single-orbit count and an explicit height function for enumeration algorithms.\n\nMixed words would have to beat pure parabolic runs, contradicting the multiplicative growth of the hyperbolic generators.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation"
       ],
@@ -123910,7 +123910,7 @@
       "depth_estimate": 3,
       "description": "Two-client Bresenham service times realise the classical two-gap (Sturmian) structure. Composing Bresenham splittings along a tree of depth d should yield a gap spectrum of bounded size, quantifying how much regularity survives recursion.\n\nFor a splitting tree of depth d, the set of gaps between consecutive services of any fixed client has at most 2^d + 1 elements; for d = 1 it is exactly {floor(R/r), ceil(R/r)}.\n\nProve the d = 1 case in Lean from the existing waiting-window theorems, then induct on the tree using schedCnt_node_left/right; test the general bound by enumeration for d = 2, 3.\n\nRecursive Bresenham schedules are quasi-Sturmian, giving strong burstiness guarantees on top of the discrepancy bound.\n\nThe gap spectrum blows up, showing that low discrepancy does not imply bounded gap complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation"
       ],
@@ -124938,7 +124938,7 @@
       "depth_estimate": 3,
       "description": "Measured joint capacities sit far below their CRT ceilings. We conjecture the shortfall is governed by the occupancy of a random table: with N samples and M joint cells, the attained alphabet is concentrated around M(1-(1-1/M)^N), and the capacity is within o(1) of log2 of that quantity. This turns the observed gap into a predictable law rather than an artefact.\n\nFor a battery whose joint reading is uniform on M cells and a sample of N i.i.d. individuals, the empirical capacity satisfies log2(M(1-(1-1/M)^N)) - o(1) <= I <= min(log2 N, log2 M) with probability tending to 1.\n\nFormalise the occupancy expectation and a Chernoff bound for the number of occupied cells, then combine with TraceBattery.H_le_log_card_img and a matching lower bound on H for near-uniform distributions.\n\nThe measured values 7.9455 / 10.4462 / 12.1080 become predictions of N alone, giving an independent estimate of the population size.\n\nThe shortfall encodes structure of the trace statistics (non-uniformity of dial readings), which would be a stronger and more interesting finding.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation"
       ],
@@ -131145,7 +131145,7 @@
       "depth_estimate": 3,
       "description": "After reconciliation the key is uniform on a coset of the code. We conjecture a leftover-hash statement relative to that coset: hashing to ℓ bits leaves guessing probability at most 2^(ℓ-(n-m)) for perfect schemes. This makes the reconciliation-then-amplification pipeline end-to-end verifiable.\n\nFor a perfect separating scheme and a 2-universal linear hash family G to ℓ bits, max over strategies of the probability of guessing G(a) from (transcript, hash description) is at most 2^(ℓ-(n-m)) + ε with ε the usual smoothing term.\n\nInstantiate exists_large_fiber_pair with the hash as second component and count collisions within a single coset using Scheme.card_consistent_transcript.\n\nGives a fully formal secret-key-rate theorem n - m - O(log 1/ε) for syndrome reconciliation.\n\nCoset structure interacts badly with universal hashing, forcing extra entropy loss in QKD post-processing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation"
       ],
@@ -131904,7 +131904,7 @@
       "depth_estimate": 3,
       "description": "Curvature saturates at 1 as soon as the pool has more models than the alphabet has messages, so nontrivial curvature lives only below the capacity threshold |Omega| <= |X|. The conjecture is a matching construction: for every kappa in [0,1] and every pool size below the threshold there is a pool of probability mass functions realising exactly that curvature.\n\nFor all n <= |X| and all kappa in [0,1] there exists a pool Omega of n probability mass functions on X with curvature exactly kappa, and no such pool exists when n > |X|.\n\nThe impossibility half is the proved theorem curvature_eq_one_of_card_lt and the case n = 2 of the realisation half is the proved theorem exists_pool_curvature_eq; formalise the remaining sizes by an explicit family interpolating between disjointly supported models (kappa = 0) and duplicated models (kappa = 1).\n\nCurvature becomes a complete invariant of pool geometry below the capacity threshold, and low-curvature library design is exactly a coding problem.\n\nSome curvature values are unreachable, revealing a hidden quantisation of the achievable marginal ratios.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Computation"
@@ -132032,7 +132032,7 @@
       "depth_estimate": 3,
       "description": "Curvature equal to 1 certifies that some model in the pool adds nothing on top of the others, and duplicated models force curvature 1. The conjecture is a quantitative converse making curvature a statistical test for model copying in a deployed pool, with sample complexity governed by the proved bound kappa >= 1 - (|Omega| - 1) delta.\n\nThere are constants such that any pool whose curvature is at most 1 - epsilon contains no pair of sources at total-variation distance below epsilon/(|Omega| - 1), and epsilon-accurate curvature estimation from samples requires O(|X| / epsilon^2) samples per model.\n\nThe exact two-source law curvature_pair (kappa = 1 - delta) already gives the pairwise statement; add an empirical-Shtarkov concentration bound to turn it into a sample-complexity claim.\n\nCurvature becomes an auditable statistic for detecting duplicated or distilled models in a pool.\n\nCurvature conflates duplication with other degeneracies, and a finer invariant separating them is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation"
       ],
@@ -133141,7 +133141,7 @@
       "depth_estimate": 3,
       "description": "A one-parameter additive score family visits few distinct top-B sets. Each unordered pair of slots crosses at most once as the weight grows, and only kept/evicted pairs can change the set, so the sweep should visit at most B(n-B)+1 distinct kept sets. This bounds the number of genuinely distinct policies any lambda-grid can test.\n\nFor scores a + lambda*p on n slots with budget B, the number of distinct sets S admitting IsTopSet (hybrid a p lambda) B S for some lambda >= 0 is at most B*(n-B)+1.\n\nFormalise the breakpoint set {(a i - a j)/(p j - p i)} and show the kept set is constant between consecutive breakpoints, then count boundary pairs; test numerically by dense sweeps for n <= 9.\n\nAny lambda-grid finer than B(n-B) points is provably redundant, bounding the cost of every future sweep experiment.\n\nAdditive families are richer than the crossing picture suggests, and grid design must be instance-dependent.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation"
       ],
@@ -134128,7 +134128,7 @@
       "depth_estimate": 3,
       "description": "Model the observed dial as a 2-adic statistic seen through a random rank-corruption channel of intensity theta. The p-adic ceiling law then predicts an effective base p(theta) that grows from 2 as theta increases, and the measured 6.97 fixes theta. This would convert the descriptive effective base into a generative mechanism.\n\nThere is a strictly increasing map p : [0,1) -> [2, infinity) with p(0) = 2 such that the expected Spearman coefficient of a 2-adic statistic under a Bernoulli(theta) transposition channel equals 3p(theta)/(p(theta)^2+p(theta)+1), and p(theta) = 2/(1-theta)^2 + O(theta^3).\n\nFormalise the channel as a distribution over rank vectors, compute E[Sigma d^2] exactly using the transposition increment identity, and compare with the p-adic ceiling law.\n\nThe dial becomes a calibrated thermometer for corruption intensity, and the base-7 finding acquires a mechanism.\n\nRank corruption is the wrong channel and the attenuation must come from response noise correlated with the statistic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation"
       ],
@@ -135612,7 +135612,7 @@
       "depth_estimate": 3,
       "description": "Upgrade the proved continuity of G_M on {‖c‖ > 2} to a Lipschitz estimate with an explicit constant on each region {‖c‖ ≥ R}, R > 2. The uniform 2^{-n} truncation bound reduces this to differentiating the finite polynomial c ↦ z_{n+2}(c). The result would be the first quantitative formal control of the exterior geometry of the Mandelbrot set.\n\nFor every R > 2 there is K_R with |G_M(c) - G_M(c')| ≤ K_R ‖c - c'‖ for all ‖c‖,‖c'‖ ≥ R, and |G_M(c) - log‖c‖| ≤ C/‖c‖.\n\nCombine abs_potentialSeq_sub_le (error 2^{-n}) with a derivative bound for the polynomial c ↦ critOrbit c (n+2) on the region, then optimise n ≈ log₂(1/‖c-c'‖).\n\nYields effective bounds on the harmonic measure and a certified numerical algorithm for G_M with rigorous error bars.\n\nWould reveal that the doubly exponential growth of derivatives defeats the truncation trade-off, pointing to Hölder rather than Lipschitz behaviour.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Computation"
@@ -136666,7 +136666,7 @@
       "depth_estimate": 3,
       "description": "The median-of-medians selection algorithm is conjectured to have breakdown number exactly ceil(b/2)*ceil(s/2) on n = b*s points, asymptotically n/4. Since the universal equivariant ceiling is n/2, the algorithm pays a factor-two robustness tax intrinsic to its two-layer structure. The approach applies the proved single-layer robustness and sharpness results independently within blocks and then across blocks.\n\nFor n = b*s, the breakdown number of the median-of-block-medians estimator equals ceil(b/2) * ceil(s/2).\n\nDefine blockMedian in Lean over List (List Q), prove the lower bound by two nested applications of median_robust_quant_le and the upper bound by contaminating ceil(s/2) entries in each of ceil(b/2) blocks; sanity check with #eval on 16 = 4*4.\n\nThe first formal proof that a widely used selection algorithm is strictly less robust than the statistic it approximates.\n\nEither the tax is smaller (some blocks can be shared) or larger (block interactions compound), and the failure pinpoints how corruption budgets combine across composition layers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -136963,7 +136963,7 @@
       "depth_estimate": 3,
       "description": "The deterministic replication law says eps-close curves with margins above eps have equal knees, and the sharpness theorem shows no bound holds without margins. The probabilistic version should give the agreement probability in terms of the ratio of measured margin to sweep noise.\n\nFor sub-Gaussian per-budget noise of scale sigma around a common curve with gate margins at least m, the two knees agree with probability at least 1 - 2 exp(-m^2/(2 sigma^2)).\n\nFormalise sub-Gaussian noise on the retention curve and combine a union bound over the two critical budgets with the deterministic replication law.\n\nReplication experiments can be powered in advance: the measured margins decide whether an agreement is informative.\n\nKnee agreement is dominated by correlated rather than independent noise, and joint models are needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Computation"
@@ -140222,7 +140222,7 @@
       "depth_estimate": 3,
       "description": "For X uniform on the unit ball of R^d, the rescaled boundary distance d(1-|X|) should converge in distribution to Exp(1) with an explicit O(1/d) Kolmogorov rate. All tail probabilities are already computed as (1-u/d)^d; what remains is to phrase them as a statement about the pushforward measure and to make the error uniform in u. This turns a geometric concentration fact into a probabilistic limit theorem.\n\nIf X_d ~ Uniform(B(0,1) in R^d) then d(1-‖X_d‖) converges in distribution to Exp(1), and sup_u |P(d(1-‖X_d‖) > u) - e^{-u}| = O(1/d).\n\nFormalise the pushforward of volume under x ↦ d(1-‖x‖) and compare its CDF to 1-e^{-u} using peel_volume_fraction_tendsto plus a uniform version of shell_thickness_rate.\n\nEqual-volume peelings of balls become a source of exponential random variables, linking the peeling programme to concentration of measure.\n\nThe convergence fails to be uniform, isolating a boundary regime u ≍ d where the profile is not exponential.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Computation"
@@ -141449,11 +141449,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5260665b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -141465,7 +141465,7 @@
       ],
       "github_issue": 370,
       "id": "fd_3999",
-      "last_attempt_time": "2026-08-25T11:47:07.112746+00:00",
+      "last_attempt_time": "2026-08-26T07:12:58.058396+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -141480,7 +141480,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-24T13:15:17.263405+00:00",
       "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style pools read z=0.6356 [0.6150,0.6562] TOP-HEAVY and window-ascending LOSES ~44% (S=0.5578±0.0217); Λ-dominance CONFINED to artificial hard-balance pools; paper-221 L7-a CLOSED"
@@ -141583,7 +141583,7 @@
       "depth_estimate": 3,
       "description": "The geometric coupling bound 1 - (1 - d_TV)^n is provably valid but never tight for 0 < d_TV < 1. Replacing total variation by the Hellinger affinity, which is exactly multiplicative over products, should give matching upper and lower amplification laws. This turns n-sample indistinguishability from an inequality into an asymptotically exact rate.\n\nFor finite laws p, q with affinity rho = sum_x sqrt(p x * q x), one has 1 - rho^n <= d_TV(p^{otimes n}, q^{otimes n}) <= sqrt(1 - rho^{2n}), and both are strictly sharper than 1 - (1 - d_TV)^n when 0 < d_TV < 1.\n\nDefine hellingerAffinity in the TotalVariation namespace, prove multiplicativity by the same Fintype.prod_sum route used for sum_diag_powCoupling, then prove the Le Cam sandwich 1 - rho <= d_TV <= sqrt(1 - rho^2) pointwise and tensorize.\n\nSample-complexity bounds in the catalog become tight up to constants and the vacuous linear hybrid bound can be retired everywhere.\n\nSome pair violates the lower sandwich, which would identify a new obstruction to multiplicative amplification and force a per-coordinate correction term.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Computation"
@@ -141715,7 +141715,7 @@
       "depth_estimate": 3,
       "description": "This cycle proved that the optimal m-ary Bayes error equals 1 - Cs/m, identifying the universal-coding Shtarkov sum with the multi-hypothesis testing optimum. The conjecture extends the identity to list decoding: outputting k candidate hypotheses should cost 1 - Cs^(k)/m, where Cs^(k) sums the k largest likelihoods at each message. This would give a full interpolation between perfect identification and pure guessing.\n\nFor a finite source class with m members and uniform prior, the least average error of a rule outputting k hypotheses equals 1 - Cs^(k)/m with Cs^(k) = sum over x of the sum of the k largest values of p_theta x; the sequence k -> Cs^(k) is concave with Cs^(1) = Cs and Cs^(m) = m.\n\nDefine the top-k envelope by sorting the finite family of likelihoods at each x, mirror the argmax exchange used in isLeast_mAryError, and check the endpoints against shtarkovSum_le_card and shtarkovSum_eq_card_iff_mutuallySingular.\n\nUniversal-coding rigidity theorems transfer wholesale to list-decoding and top-k classification error, a directly practical machine-learning quantity.\n\nThe failure point would identify ties in the order statistics as a genuine obstruction, isolating where randomized list rules beat deterministic ones.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -142011,7 +142011,7 @@
       "depth_estimate": 3,
       "description": "The sensitivity lower bound on tasting time proved in this cycle is conjectured to be polynomially tight: deterministic query complexity of a dish is at most the fourth power of its maximal pivotal-set size. The approach chains the formalised bound s(f) ≤ D(f) with a block-sensitivity layer and the already proved product bound D ≤ C0·C1. It would make 'find one pivotal ingredient' a complete design principle for tasting protocols.\n\nFor every dish f : Pantry n → Bool, tasteCost f ≤ (max over x of (pivotalSet f x).card) ^ 4.\n\nFormalise block sensitivity bs(f), prove C(f) ≤ s(f)·bs(f) and bs(f) ≤ s(f)^2, then combine with the existing tasteCost_le_cert_mul.\n\nKitchen verification time is controlled by a purely local quantity, computable from single-ingredient swaps.\n\nThere is a dish with tiny local sensitivity but expensive global tasting, i.e. a genuinely non-local recipe.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation"
       ],
@@ -142097,7 +142097,7 @@
       "depth_estimate": 3,
       "description": "Tasting at random with two-sided error should save at most a cubic factor over deterministic tasting. The approach is to average the deterministic covering argument that already proves D ≤ C0·C1 in this cycle. It quantifies how much a cook gains by guessing where to taste.\n\nFor every dish f, tasteCost f ≤ c · R_{1/3}(f)^3 for an absolute constant c.\n\nDefine randomised taste trees as PMFs over Taste n, prove the certificate-overlap lemma survives averaging, and check the bound numerically on the exhaustive n ≤ 3 census.\n\nRandomness is essentially useless in the kitchen, matching the classical polynomial-equivalence phenomenon.\n\nThere is a recipe where random tasting is superpolynomially better, an unexpected culinary use of randomness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Computation"
@@ -142141,7 +142141,7 @@
       "depth_estimate": 3,
       "description": "Almost every dish should be evasive, with the non-evasive fraction shrinking doubly exponentially in the number of ingredients. The approach sharpens the counting recursion c_{d+1} ≤ 2 + n c_d^2 proved here by tracking subcube refinements instead of raw trees. It would make 'C = V for a random recipe' a probability-one statement.\n\n#{f : Dish n | tasteCost f ≤ n - 1} ≤ 2^(2^n) / 2^(2^(n-1)) for all n ≥ 2.\n\nExhaustive verification for n ≤ 4 with the brute-force solver, then a refined induction on the counting recursion in KitchenGenericHardness.\n\nThe kitchen is generically break-even; the interesting recipes are a measure-zero accident.\n\nNon-evasive dishes are far more common than tree counting suggests, indicating strong structure among Boolean dishes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation"
       ],
@@ -142227,7 +142227,7 @@
       "depth_estimate": 3,
       "description": "Every subset of the Boolean cube is realised as an assembly space by a framed puzzle with 2^n - |S| clause pieces, which is far from minimal. The conjecture is that the minimum equals the CNF clause complexity of the indicator, and that for complement-stable S a minimal realisation can be chosen complement-stable. This turns the free involution into a symmetrisation operator on the space of realisations.\n\nFor complement-stable S there is a minimum-size framed puzzle P with assemblySet P = S such that compPuzzle P is a permutation of P.\n\nFormalise clause complexity of the indicator and prove a symmetrisation lemma; verify by enumeration for n = 2, 3 that minimal realisations of stable sets can be paired up under complementation.\n\nComplementation becomes a normalisation procedure for puzzle descriptions, giving canonical forms for self-dual instances.\n\nThere are stable spaces whose economical realisations are all asymmetric, exhibiting a symmetry-versus-size tradeoff.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation"
       ],
@@ -143517,7 +143517,7 @@
       "depth_estimate": 3,
       "description": "The original form of this direction — \"a base-3 window sees deeper than a base-2 window\" —\nwas **refuted inside this cycle**: `universal_depth_null` shows that *every* rational-scale\ntruncation `⌊(a/b)(m/n)⌋` fails at the very first letter past the inversion, because the\nboundary `5/2 + 2k` is *attained* by an admissible state and truncation is right-continuous.\nSo the surviving question is about a different sensor class.\n\n**The key insight is** that what a sensor really needs is not finer scaling but *Euclidean\nsteps*: the pair `(⌊m/n⌋, m mod n)` is one step of the Euclidean algorithm and already\ndetermines strictly more letters than any single truncation.  **Why now?** The universal\nnull fixes the exact failure mode (attained boundaries), and a `t`-step Euclidean sensor is\nprecisely what resolves them, so the conjectured hierarchy \"`t` steps ↔ `Θ(t)` letters\" is\nnow the sharp question — and it is the one that prices an attack, since `t` full Euclidean\nsteps already cost the scan.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation"
       ],
@@ -143557,7 +143557,7 @@
       "depth_estimate": 3,
       "description": "**The key insight is** that the same argument — translation branch transparent, inversion\nbranch opaque, boundaries non-dyadic — should transfer verbatim to any tree of\n`GL₂(ℤ)`-type descents, in particular the Markoff triple tree and the Pythagorean quadruple\ntree already in the catalog.  **Why now?** Those trees are formalized in\n`Catalog/Cryptography/MarkoffTransfer/` and `Catalog/Shared/HigherPythagorean/`, so the\nstatements can be instantiated rather than rebuilt.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Dyadic-Boundary Criterion for Window Readability\",\n    \"domain\": \"Cryptography\",\n    \"description\": \"A descent letter is readable by a fixed dyadic-truncation sensor precisely when the branch boundary separating its alternatives is dyadic. The depth-t boundaries are Möbius pullbacks of {2,3} along the preceding letters; they are dyadic exactly along the all-C spine. This would upgrade the two ad-hoc computations of this cycle into one criterion.\",\n    \"conjecture\": \"For an admissible state s and depth t, letterAt t s is determined by probe W s for some finite W if and only if the depth-t branch boundary of s (the pullback of {2,3} under the first t descent maps) is a dyadic rational; equivalently, if and only if letterAt j s = C for all j < t.\",\n    \"test\": \"Formalize the pullback boundaries as explicit Möbius maps of the ratio, prove dyadicity along C-words and non-dyadicity otherwise, then combine with the existing straddling construction generalized to arbitrary prefixes.\",\n    \"if_true\": \"The reach of any dyadic magnitude sensor on the Berggren tree is completely characterized, closing the exists/limited/null trilogy with an iff.\",\n    \"if_false\": \"Some non-dyadic boundary is nevertheless resolvable, revealing an arithmetic coincidence between the branch geometry and binary expansions worth exploiting.\",\n    \"proof_strategy\": \"Compute the pullback of {2,3} under the inverse Berggren Möbius maps; C acts by r ↦ r+2 (preserves dyadicity), A and B by r ↦ 2 ± 1/r (destroys it, sending 3 to 7/3 and 5/2). Then repeat the straddling-pair construction with an arbitrary readable prefix.\",\n    \"catalog_references\": [\"Cryptography.DepthDecay.WindowSensor\", \"Cryptography.DepthDecay.NullBeyondInversion\"]\n  },\n  {\n    \"title\": \"Euclidean-Step Hierarchy for Descent Sensors\",\n    \"domain\": \"Cryptography\",\n    \"description\": \"Rescaling the magnitude does not help: universal_depth_null kills every truncation sensor ⌊(a/b)(m/n)⌋ one letter past the first inversion, because the boundary 5/2+2k is attained by an admissible state. The right currency is Euclidean steps: a sensor returning the first t quotient/remainder pairs of m/n should read Theta(t) letters, and no more.\",\n    \"conjecture\": \"Let E_t (m,n) be the first t quotient-remainder pairs of the Euclidean algorithm on (m,n). There are constants c1, c2 > 0 such that E_t determines letterAt j for all j ≤ c1·t, and for every t there are two admissible states with equal E_t whose letters differ ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Computation"
@@ -144182,7 +144182,7 @@
       "depth_estimate": 3,
       "description": "Depth-augmented sealing is now a theorem at every position: the word family A^(t-1) B A^t versus C A^(t-3) C A^(t+1) gives, for each t >= 2, two Price nodes of equal odd leg and equal depth that split at position t. That family is rigid, producing exactly one pair per position, while at t = 2 a second family C A^j C A^2 versus B A^(j+3) gives infinitely many. The conjecture is that infinitude holds at every position, indeed with a positive proportion of odd legs carrying such a pair.\n\nFor every t >= 3 the set of odd legs N admitting two valid Price nodes of odd leg N, of equal address length, agreeing at all positions below t and splitting at t, is infinite (it is proved infinite for t = 2); quantitatively its counting function below X is at least c_t * X / log X.\n\nSearch for a two-parameter word family: pairs of Price words of equal length whose leaves have equal odd legs, using the closed forms eval(A^i B A^t) = (2^(i+1) + 2^t + 1, 2^t) and eval(C A^j C A^(t+1)); then formalize the resulting family as in Probability.PriceTwoAdicDepthSealing. Numerically, count equal-depth splitting pairs below X with scripts/price_two_adic_depth_family_check.py.\n\nNo classifier reading the pair (odd leg, depth) is even eventually correct at any position t >= 2, upgrading no_eventual_oddLeg_classifier to its depth-augmented form.\n\nEqual-depth coincidences are sparse, and a (N, depth) classifier correct for all large N could exist despite the proved counterexample family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation"
       ],
@@ -144923,7 +144923,7 @@
       "depth_estimate": 3,
       "description": "A disordered refinement cascade with level-dependent branching r(k) has a maximal supported depth trapped between two logarithms. We conjecture that the true depth is governed by the Birkhoff average of log r, not by the endpoints of the quench window. This would make the depth of a random foam a genuinely ergodic-theoretic quantity.\n\nIf (1/k)·∑_{j<k} log r j → m > 0 then maxDepth (schedCells r) T = (log T)/m + O(1) uniformly in T.\n\nFormalise schedWeight r k = exp(∑_{j<k} log r j), replace the constant base in Universality.maxDepth_sandwich by schedWeight, and prove matching upper/lower bounds from the Birkhoff average; test numerically on periodic and Sturmian schedules.\n\nThe logarithmic depth law becomes a statement about ergodic averages, unifying homogeneous, periodic and random foams.\n\nDepth is sensitive to the fluctuation, not just the mean, of the branching schedule, which would identify a new disorder-driven correction term.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation"
       ],
@@ -145229,7 +145229,7 @@
       "depth_estimate": 3,
       "description": "The proved lower bound spends one tree per 3^{1/4} leaves because it is a union bound over all ordered quadruples. Since the agreement probability is exactly 3^{-(k-1)} by the ternary balance theorem and quartets sharing at most two leaves are nearly independent, the Lovasz Local Lemma should improve the exponential base.\n\nThere are avoiding families of k random caterpillars on n leaves whenever k >= 3 log_3 n + O(1), improving the constant 4 in exponential_lower_bound, hence h(k) >= 3^{k/3 - O(1)}.\n\nFormalize the symmetric Lovasz Local Lemma for the events 'all k trees agree on quartet Q', with dependency degree O(n^3) and probability 3^{-(k-1)}, and re-derive the avoidance statement in the Lean framework of exists_quartet_avoiding_family.\n\nThe exponential lower bound base rises from 3^{1/4} = 1.316 toward the empirically observed 1.7, narrowing the gap with the upper bound.\n\nThe quartet agreement events are more strongly dependent than their pairwise leaf overlap suggests, indicating a hidden global constraint in tree space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Computation",
         "Algebra"
@@ -145778,7 +145778,7 @@
       "depth_estimate": 3,
       "description": "Fiberwise dominance of conditional means is now proved to preserve both the optimal dial value and the best static value. The open half is the distributional one: conditional stochastic dominance on every fiber is weaker per fiber, and it is unclear whether it still licenses deletion or whether the variance tail defeats it as it defeats global mean comparison.\n\nIf member b stochastically dominates member a conditionally on every fiber of obs, then deleting b changes neither dialValue nor bestConstant; and unconditional stochastic dominance does not suffice.\n\nFormalise conditional stochastic dominance in the finite rational framework, derive fiberwise mean inequalities from ev_le_of_stochDom, feed them into dialValueOn_erase_of_fiberwise_dominates, and search small cost matrices for the separating counterexample in the unconditional case.\n\nPortfolio pruning gains a distribution-level certificate strictly weaker per fiber than the mean test now proved safe.\n\nOnly fiber-mean comparisons are safe, and distributional eliminations in the literature need re-auditing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation"
       ],
@@ -145821,7 +145821,7 @@
       "depth_estimate": 3,
       "description": "Winner shares are realisable arbitrarily by choice of sampler, so they carry no algorithm-intrinsic information. Conjecture that the pointwise dominance order on cost vectors is the complete invariant: two portfolios induce the same set of achievable share-and-ranking profiles across all samplers iff their cost matrices have the same dominance order.\n\nTwo finite cost matrices are sampler-equivalent (same achievable pairs of winner-share vector and static ranking over all weightings) if and only if they induce the same pointwise dominance preorder on members.\n\nFormalise sampler-equivalence in the framework of Probability.PortfolioShareRealizability and verify the equivalence by exhaustive search over small matrices before attempting the general proof.\n\nBenchmark claims must be re-stated relative to a named sampler or to the dominance order, sharpening the scope caveat recorded in the ledger.\n\nSome sampler-invariant statistic beyond dominance exists, and identifying it would give a genuinely algorithm-intrinsic benchmark.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Computation",
         "Algebra"
@@ -146465,7 +146465,7 @@
       "depth_estimate": 3,
       "description": "The proved non-asymptotic law has remainders 2·Var/β² (upper) and 3·Var/β² (lower). The conjecture is that both optimal constants are 1, because the Taylor remainder and the normalisation shift partially cancel rather than adding. Random search shows the current bounds are never violated but are not far from tight.\n\nFor β ≥ range r, |‖π_β − p‖₁ − MAD_p(r)/β| ≤ Var_p(r)/β².\n\nRe-run the proof of RLHF.abs_l1_numerator_sub_mad keeping the sign of (W_β − 1) instead of taking absolute values, and test the resulting constant numerically over random instances with β/range near 1.\n\nA clean, memorable non-asymptotic drift law with all constants equal to 1.\n\nThere is a genuine instance forcing a constant above 1, which would identify the extremal reward shape for finite temperature.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -146552,7 +146552,7 @@
       "depth_estimate": 3,
       "description": "The argmax of the cost law is decided by the sup-norm accuracy of the cumulative mean acceptance, and the stability theorem already converts accuracy into a margin condition. Conjecture: for a measured margin g between the best and second-best depth over a sweep of horizon D, n = O(D^2 log(D/delta) / g^2) prompts per cell suffice for the sweep argmax to equal the population argmax with probability at least 1 - delta. This replaces per-position instrumentation by a sample-size prescription on aggregates only.\n\nLet m_hat(d) be the empirical mean acceptance over n i.i.d. prompts with per-prompt accepted counts in [0, D]. If min over d != d0 of (gain(d0) - gain(d)) > 2 D epsilon and n >= D^2 log(2 D / delta) / (2 epsilon^2), then with probability at least 1 - delta the empirical argmax over {1..D} equals the population argmax.\n\nCombine a Hoeffding bound for each of the D cells with a union bound, then feed the resulting sup-norm accuracy into argmax_stable; instantiate with the measured prose margin 0.0764 and code margin 0.1468.\n\nThe NET-96 conclusion can be certified at a stated confidence from aggregate throughput alone, with an explicit prompt budget.\n\nAggregate concentration is too weak at realistic n, which would make direct per-position logging mandatory for any certified claim.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation"
       ],
@@ -146722,7 +146722,7 @@
       "depth_estimate": 3,
       "description": "The cost law uses only the mean accepted-run length, but realized throughput is a ratio of random variables. Using the tail-sum bridge, both the mean and the variance of the run length are determined by the survival curve. Conjecture: the flatness of measured throughput near the argmax is explained by a second-order term proportional to the run-length variance, and this term can shift the argmax by at most one when the survival curve is antitone.\n\nWith X the accepted-run length at depth d (tail probabilities s), E[X] = Σ_{i<d} s_i and Var(X) = Σ_{i<d} (2i+1) s_i - (Σ_{i<d} s_i)², and the variance-corrected objective E[X]/(1+cd) - κ Var(X)/(1+cd)² has an argmax within distance 1 of the mean-only argmax for small κ.\n\nDerive the variance tail-sum identity by the same Abel summation used in accept_eq_tailsum, then bound the perturbation with argmax_stable.\n\nLatency-tail-aware serving gets a closed-form depth rule from the same survival measurement.\n\nVariance effects can move the optimum arbitrarily far, so mean-throughput tuning is unsafe under tail-latency SLOs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Computation"
@@ -146937,7 +146937,7 @@
       "depth_estimate": 3,
       "description": "Every bound proved this cycle carries one unknown, the intra-modulus correlation rho of the drift-power readout. Conjecture that rho is positive and decays like C/u across the u = 9-14 band if the candidate-side deficit is a real weak scale effect, and is zero within error if the readout is pure randomness. It is estimable from the already recorded per-cluster counts.\n\nThe intra-modulus correlation of the band-9 drift-power readout satisfies rho(u) = C/u + o(1/u) with C > 0, and rho = 0 exactly under the randomness null.\n\nEstimate rho as the between-modulus variance component of the persisted per-cluster rates of exp569b, then substitute into var_grandMean and cov_legMean to price the retracted joints.\n\nThe cluster ceiling and the population covariance become numbers, and the mechanism note acquires a quantitative handle opposite in sign to the paper-136 sieve advantage.\n\nThe clustered bounds collapse to the i.i.d. case and the randomness line is strengthened rather than merely extended.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -147447,7 +147447,7 @@
       "depth_estimate": 3,
       "description": "The booked envelope over (m, M, P) is sharp but wide. Adding the within-cell shape booking Theta should collapse it to an identity up to a second-order term. The conjecture quantifies how much shape information a single scalar booking carries.\n\nFor every weight honouring bookings (m, M, P) with within-cell factors Theta_R, Theta_C, the expected scan cost equals P*Theta_R*centre(R) + (1-P)*Theta_C*centre(C), and constraining Theta_R, Theta_C to an interval [1-e, 1+e] shrinks the admissible cost interval to width O(e*M).\n\nFormalise the width bound as a corollary of booked_law_theta_form plus explicit bounds on centre(R), centre(C); test numerically on random weights with controlled Theta.\n\nBookings with Theta become a complete reporting convention: a two-sided guarantee, not just a point estimate.\n\nSome other shape statistic (e.g. the second moment) is the minimal sufficient booking, and Theta alone is not enough.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Computation"
@@ -147490,7 +147490,7 @@
       "depth_estimate": 3,
       "description": "The 2^k branch of the master inequality uses pigeonhole, which is tight only for balanced filters. Replacing the bucket count by an entropy of the bucket-size distribution should give a strictly stronger bound for unbalanced filters, with equality exactly at the uniform filter.\n\nFor a filter assigning M slots to buckets with size distribution p, the worst-case speedup satisfies S <= 2^{H_infinity(p)}/(Lambda*Theta), where H_infinity is the min-entropy, and this refines the 2^k bound since H_infinity(p) <= k.\n\nProve the min-entropy version in Lean as a replacement for exists_large_bucket, then check that master_inequality_of_filter still composes.\n\nThe master chain becomes sensitive to filter quality, giving nontrivial bounds for skewed hash functions.\n\nWorst-case bucket size, not entropy, is the right complexity measure, and the pigeonhole bound is already optimal.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation"
       ],
@@ -147532,7 +147532,7 @@
       "depth_estimate": 3,
       "description": "Strict majorization says a non-flat descending weight beats the baseline strictly, but says nothing about how much. The Chebyshev double sum is a quadratic form, suggesting the defect is bounded below by a squared distance to flatness.\n\nFor antitone normalised w on positions M, C_0 - EC >= c * M * (sum_i |w_i - 1/M|)^2 for an absolute constant c > 0.\n\nFormalise via the double-sum identity, comparing the pairwise sum with the L1 distance by Cauchy-Schwarz; test the constant numerically over random antitone weights.\n\nThe master chain gains a quantitative, distribution-free margin, upgrading strict inequalities into usable gaps.\n\nThe defect degenerates for weights concentrated at the extremes, and only a weighted (position-dependent) distance can control it.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Computation"
@@ -147576,7 +147576,7 @@
       "depth_estimate": 3,
       "description": "The reciprocal certified value is a Bernoulli agreement probability, and composing strata is strictly submultiplicative. The conjecture identifies the exact submultiplicativity slack as an information-theoretic quantity rather than a mere algebraic remainder.\n\nThe slack D(mu1*mu2, P1*P2) - D(mu1,P1)*D(mu2,P2) equals the probability that the two AND-products agree while some coordinate pair disagrees, and this quantity is monotone in the mutual information between the two filter indicators.\n\nThe identity half is already proved (coupling_slack_identity); formalise the monotonicity half against a mutual-information functional and test numerically.\n\nComposed guarantees can be reported with a quantified conservatism, not just an inequality.\n\nThe slack is not an information functional, and composition must be handled locus by locus.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Computation"
@@ -147785,7 +147785,7 @@
       "depth_estimate": 3,
       "description": "**Status update.**  The composite-`m` attainment conjectured earlier in this\nthread is now a theorem (`extremal_collision_value_general`): the mixture of a\nuniformly random bijection (mass `1 - 1/m`) with a uniformly random constant\n(mass `1/m`) is *exactly* `2`-universal for every `m` and attains `1/m`.  What\nremains open is whether the extremal family is *strongly* `2`-universal.\n\n**Conjecture.**  For every `m ≥ 2` the bijection–constant mixture is pairwise\nindependent: `P(h x = u, h y = v) = 1/m²` for all `u, v` and all distinct keys\n`x, y`.  Consequently the extremal value `1/m` is attained inside the class of\nstrongly `2`-universal families for every `m`, not only for primes.\n\nThe key insight is that pairwise independence for the mixture reduces to the\npermutation count `|{σ : σ x = u, σ y = v}| = (m-2)!` for `u ≠ v` together with\nthe vanishing of the bijection branch on the diagonal, i.e. to elementary\ncounting rather than to field structure; the prime hypothesis in\n`affine_pairwiseIndependent` is an artefact of the construction.\n\n**Why now?**  `mix_exactly2Universal` and `mixLaw_prob_constant_branch` already\nreduce every mixture probability to a pair of `Finset` cardinalities, so only\nthe permutation counts are missing.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -147826,7 +147826,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For a `k`-wise independent family (`k ≥ 3`) and `n` keys, the\nprobability that some `k` keys land in the same bucket is at least\n`1/m^{k-1}`, and this is sharp — attained by the degree-`(k-1)` polynomial\nfamily over `ZMod p`.\n\nThe key insight is that the reverse Markov argument survives verbatim once\n`X` counts ordered `k`-tuples: the expectation is `n^{\\underline{k}}/m^{k-1}`\nand the trivial bound is `X ≤ n^{\\underline{k}}`, so the ratio is again\nindependent of `n`; only the sharpness construction changes.\n\n**Why now?**  `collisionProb_ge_of_pairwise_lower` is already stated with an\nabstract per-pair lower bound `δ`, so the `k`-tuple version needs only a\n`Finset` of `k`-tuples in place of `offDiag`.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -147867,7 +147867,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Every exactly 2-universal family on `n = m` keys has\n`P(max bucket load ≥ 2) ≥ 1/m`, and moreover\n`E[max load] ≥ 1 + (m-1)/m²`; the affine family attains both, so a 2-universal\nfamily cannot be \"balanced with high probability\" in a stronger sense than the\ncollision bound already dictates.\n\nThe key insight is that the maximum-load event contains the collision event,\nso the converse bound transfers, while the expectation statement needs the\nfibre-square inequality `fiber_sq_lower_bound`, which is already available and\ngives the deterministic floor `∑_v c_v² ≥ n²/m`.\n\n**Why now?**  Both ingredients (`Collides` and `fiber_sq_lower_bound`) exist in\nthe development; the missing piece is only a definition of the load random\nvariable and its comparison with `X`.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "Geometry"
@@ -148380,7 +148380,7 @@
       "depth_estimate": 3,
       "description": "The unfolded quadratic spectrum has two-level density exactly 2 floor(t), a staircase with plateaus, while Poisson and GUE densities are continuous. Conjecture that a plateau in the limiting two-level density is an absolute obstruction to being the limit of a determinantal or Poisson process.\n\nIf the limiting normalized two-level density of a sequence of finite spectra is constant on some interval of positive length, then that sequence is not the empirical spectrum of any determinantal or Poisson point process with continuous correlation kernel.\n\nProve that determinantal and Poisson two-level densities are strictly increasing, then combine with picket_pairCorr_density_tendsto.\n\nGives a one-line certificate of non-randomness for deterministic spectra.\n\nSome determinantal process has a plateau, which would be a new and surprising kernel degeneracy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation"
       ],
@@ -149054,7 +149054,7 @@
       "depth_estimate": 3,
       "description": "A verifier holding several destructive tests may schedule them adaptively, choosing the next test after seeing the current verdict. The conjecture is that this adaptivity buys nothing beyond reachability in the induced deterministic automaton, so the number of distinct achievable verdict streams stays polynomially bounded in the number of dishes.\n\nFor a finite dish type D with n dishes and any battery t_1, ..., t_k of tests, the set of verdict streams obtainable by adaptive schedules has cardinality at most n times the number of dishes reachable from the start, hence at most n^2, with equality only when the residue maps generate a transitive submonoid of End D.\n\nModel schedules as words over the battery alphabet, define the reachable-state automaton, and bound the number of distinct stream functions by the number of reachable Myhill-Nerode classes; check small cases by enumeration for n <= 4 and k <= 3.\n\nDestructive multi-test verification has the same coarse information content as single-test verification, giving a clean composition law for verification batteries.\n\nAdaptive scheduling extracts strictly more information than reachability allows, which would identify a genuinely new resource in destructive verification.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -149140,7 +149140,7 @@
       "depth_estimate": 3,
       "description": "Sequential composition of tests multiplies verdict functions with a twist by the residue map, which is precisely a semidirect-product cocycle. The conjecture is that the verification monoid is isomorphic to the Boolean verdict monoid extended by the opposite transformation monoid, which would explain the commutation of certificates and yield the counting theorems as corollaries.\n\nFor every type D there is a monoid isomorphism between (Test D, seq, one) and the semidirect product of (D -> Bool, pointwise and) by the opposite of End D acting by precomposition; under it the nondestructive tests correspond to the first factor and the reversible tests to the preimage of Perm D.\n\nDefine the semidirect-product monoid structure on (D -> Bool) x (End D)^op in Lean, construct the map t |-> (verdict t, residue t), prove multiplicativity from seq's definition, and derive card_nondestructive and card_reversible as corollaries.\n\nThe taxonomy becomes an algebraic classification: certificates are a submonoid isomorphic to a Boolean lattice, reversible tests are the preimage of the unit group, and non-commutation is a cocycle phenomenon.\n\nThe twist fails to satisfy the semidirect-product axioms for some D, which would mean the verdict-residue pairing carries strictly more structure than the state transition suggests.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Computation"
@@ -150026,7 +150026,7 @@
       "depth_estimate": 3,
       "description": "The permutation p-value is exactly super-uniform in finite samples, whereas the chi-square approximation to the interaction likelihood-ratio statistic relies on asymptotics that fail on sparse occupancy tables. The conjecture is that on tables of the exp-578 sparsity the chi-square p-value is anti-conservative by a quantifiable amount.\n\nFor occupancy tables with expected cell counts below a fixed threshold, the chi-square p-value of the interaction statistic has null rejection probability strictly exceeding the nominal level, while the permutation p-value does not.\n\nSimulate null tables at the observed sparsity, compare empirical rejection rates of both rules against the proved bound permPValue_valid, and formalise the union of both decisions with the Bonferroni theorem.\n\nAll round-80 family-B decisions should be re-expressed in permutation terms, strengthening the null result.\n\nThe chi-square calibration is adequate at this sparsity and the two analyses can be reported interchangeably.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -151574,7 +151574,7 @@
       "depth_estimate": 3,
       "description": "The accessibility relation of every canonical temporal GL model is a strict order graded by the number of realised boxed subformulas. We conjecture that the minimal countermodel size is exactly one more than the longest chain in this graded poset, making it an order-theoretic rather than a logical quantity. This bridges modal completeness theory with finite poset combinatorics.\n\nThe minimal number of worlds in a TempFrame countermodel of a non-derivable A equals 1 + d(A), where d(A) is the longest strictly boxCount-increasing chain in the boxed subformulas of A.\n\nDefine minCountermodelSize by Nat.find over finite_model_property_sharp, compute both sides on the six sample formulas of ComputationalEvidence.md, then attempt induction on d(A).\n\nCountermodel size becomes computable from the box skeleton alone, independently of propositional content, giving an exact complexity measure for TGL refutation.\n\nPropositional content genuinely contributes to countermodel size, and the extra contribution isolates the non-order-theoretic part of Löb refutation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -151878,7 +151878,7 @@
       "depth_estimate": 3,
       "description": "The positional layer is deterministic, so the only stochastic ingredient is the smoothness of a residue of known bit length. A residue of half size is smooth with probability rho(alpha/2) rather than rho(alpha), which should quantitatively reproduce the observed roughly equal split between the inclusion artifact and the residual edge component.\n\nThe inclusion-channel share of the left-edge weight equals the ratio of Dickman-weighted band masses computed from card_band_formula, and for 96-bit moduli it lies in [0.45, 0.55].\n\nEvaluate the band populations exactly for a sample of 96-bit moduli, weight them by a Dickman table, and compare the predicted share with the reported edge-weight drop.\n\nThe observed split needs no positional kernel at all beyond the deterministic band geometry.\n\nA genuine positional kernel independent of residue size survives, which would be new structure in the window.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Geometry"
@@ -156089,6 +156089,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, …, v_k` be pairwise independent\n   directions in `F_p²` and `S_i ⊆ F_p` with `0 ∈ S_i`.  If\n   `Σ_i (p - |S_i|) ≤ (k-2)(p-1)`, then `Σ_i S_i v_i = F_p²`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `Σ_i (p-|S_i|) < p`); the general statement",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "push_5e9b52ad_a75a993b",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "5e9b52ad",
+      "source_path": "Kneser input for many lines",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-26T07:10:28.798674+00:00",
+      "title": "Deepening: Kneser input for many lines"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 603eb18a (Q=0.780), which proved 59 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** Network/LLM lab — round-net-24 (performance axis; recurrence / stateful-carry-cell test of the carry-chain length wall). Machine-verified (ALL_DONE_NET24). Paper: ResearchOutput/NetworkMathematics/24_StatefulCarryCell.md (paper 68). Script /tmp/exp_net_stateful.py, log /tmp/net24.log.\n\n",
       "domain_bridges": [],
       "domain_quality_penalty": 0.5,
@@ -160225,14 +160265,14 @@
       "parent_direction": "",
       "priority_score": 0.95,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: The stated conjecture is strictly weaker than the standard result it would be proved from: the classical filtration construction for temporal/modal calculi already yields a countermodel on at most 2^(subformulaCount A) worlds (the set of subformula-closed atoms), so the claimed 2^(2*subformulaCount A) bound is an immediate slack corollary rather than a new theorem. The 'exhaustive bounded model search' component is likewise a decidability restatement of finite model property, redundant with the completeness/filtration machinery presumably already established in the cited cycle, and yields no sharper quantitative content (no matching lower bound is proposed, so nothing pins down the exponent).",
+      "pruned_at": "2026-08-26T07:10:30Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "c2e74b6a",
       "source_path": "Finite model property with an explicit bound",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-26T05:52:12.232236+00:00",
       "title": "Deepening: Finite model property with an explicit bound"

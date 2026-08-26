@@ -2117,16 +2117,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-76 #1 \u2014 GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' \u2014 extremal order = population mass-sort (window-ascending beats descending 1.58x\u00b10.03 n=2400; sign-flip crossover E[\u221ar]=1.1716); master inequality S \u2264 (4/3)\u00b7T1-cap/\u039b zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) \u2192 keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078\u00d7 vs 1.08\u00d7); L7-a measure deployed generator tilt named next"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5260665b",
     "description": "**Verdict: H1 REFUTED DECISIVELY / MIXED-PARTIAL by literal rules.** Paper 221's named follow-up L7-a (measure the real generator tilt of deployed populations) is CLOSED; the \u039b-channel scope question is settled ADVERSARIALLY.\n\n**Setup:** 4 pools \u00d7 n=600, b=15, fixed seed 20260824, exact-uniform sieve-index prime sampling, touch-count costs verbatim from verifyL7_sim.py, 8-batch bootstrap SEs.\n\n**Per-pool results:**\n\n| pool | window | z_mean [CI95] | win_asc/desc S \u00b1 SE | in_win |\n|---|---|---|---|---|\n| HARD_BAL (control) | canonical | 0.4114 [0.3887,0.4341] | 1.5896 \u00b1 0.0538 | 1.000 |\n| RSA_INDEP (deployed-style) | canonical | 0.6356 [0.6150,0.6562] | 0.5578 \u00b1 0.0217 | 1.000 |\n| RATIO4 | adapted r_max=4.5 | 0.0558 [0.0530,0.0586] | 17.345 \u00b1 0.4654 | 0.000 canon |\n| UNIFORM_WIDE | adapted r_max=8.0 | 0.5979 [0.5765,0.6194] | 0.5505 \u00b1 0.0230 | 0.582 canon |\n\n**Three-way control replication:** HARD_BAL z=0.4114 matches analytic 0.414 AND independent verifier BAL_prime 0.4095\u20130.4148 / S=1.5785\u00b10.029 at shifted bitlen b=11\u219215 (measured S=1.5896\u00b10.0538). Machinery sound.\n\n**The inversion:** on independent same-bitlen primes the within-window divisor mass is TOP-heavy \u2014 ratio concentration near 1 (effective median r\u22481.25) pushes min(p,q) HIGH into (\u221a(N/2),\u221aN]. Window-ascending is always well-defined there (in_win=1.000 vs paper-137's 21.6% undefined) yet LOSES ~44% to sqrt-descending. Tilt-only predictor (1\u2212z)/z tracks measured S on all honest windows.\n\n**Consequence (plain):** \u039b-dominance is CONFINED TO ARTIFICIAL HARD-BALANCE POOLS; real generator classes tilt ADVERSARially. No deployable reorder-class gain without ENFORCED q<2p balance at key-generation time \u2014 no deployed generator enforces it. Paper-221 caveat upgraded from \"tilt unmeasured\" to \"tilt adversarial off-balance\" \u2014 final word. Scoped reorder-class fact, no speed prescription.\n\n**Caveats:** RATIO4's 17x = narrow-stratum pinning artifact (needs N-invisible declared-support knowledge), not deployable. b=15 lab scale, scale-free transfer assumed (Mertens/Dickman) not verified; real deployed filters only narrow the ratio band further (worsen the tilt).\n\n**Ledger catches disclosed:** findings.md filename pre-existed \u2192 exp575_findings.md written instead; descriptive sign readout added post-smoke with pre-registered decision rules unmodified (in JSON honest_notes); sieve-index sampling replaced randprime rejection loop (identical in law).\n\n**Barrier validation:** factor-local/scan-order frontier row; completes L7-a; reorder-class map now has measured scope boundaries end-to-end; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 223 \u00b7 assessment v329\u2192v330 \u00b7 count 563\u2192564 \u00b7 artifacts ResearchOutput/scripts/2026-08-24-round74/exp575_*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3999",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T13:15:17.263405+00:00",
     "title": "FACT round-77 #1 \u2014 GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY \u2014 RSA-style pools read z=0.6356 [0.6150,0.6562] TOP-HEAVY and window-ascending LOSES ~44% (S=0.5578\u00b10.0217); \u039b-dominance CONFINED to artificial hard-balance pools; paper-221 L7-a CLOSED"
   },
@@ -2189,21 +2190,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-24T21:45:33.977842+00:00",
     "title": "FACT round-85 #1 \u2014 SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper 239 \u2014 paper 238's left-edge spike is tiny-v composition ENTIRELY (100% of D1 hits bitlen(v)<96 by window geometry; rr_d1 1.000/1.097 size-matched; kept-fit persistence = truncation-boundary gradient [96,98) dAICc 5.94 sub-bar, >=98 -0.40); NO positional kernel component survives"
-  },
-  {
-    "consumed_by_exp_id": "55b01213",
-    "description": "## exp589 SPIKE-ORIGIN \u2014 round-84 #2 \u00b7 paper 239 \u00b7 assessment v345 \u2192 v346 \u00b7 count 576 \u2192 577\n\nResolves paper 238's spike-origin follow-up: is the left-edge spike (b_edge \u2265 ~10.6, 8.6% mass in the first decile) carried by TINY-v hits? Pure reanalysis of `exp581_regen_positions.npz`; Ns regenerated verbatim exp578 recipe, seed 20260828; lineage = 128\u00d72 EXACT isqrt\u2192(jlo,jhi) matches + containment of every stored j; pop_hash 06931068f8f3ca9b recomputed with no external copy readable to compare (disclosed); wall 42.34 s.\n\n### Verdict: H0-MIXED \u2014 the spike splits into two quantitatively named parts\nThe registered fraction clause and refit clause DISAGREE; both reported honestly. Neither registered arm fires (H1a false, H1b false).\n\n### Pre-registered mechanical note FIRED \u2014 the exclusion clause is degenerate\nD1 \u21d2 delta = j\u2212s < 0.2s+1 \u21d2 v = j\u00b2\u2212N \u2264 0.44\u00b7s\u00b2 + o(s\u00b2) < 2^95 provably (window j \u2208 [s+1, 3s], s = isqrt(N), N 96-bit). EVERY first-decile hit has bitlen(v) \u2264 95: band table shows ZERO D1 hits among the 7221 full-size hits and zero among 426525 full-size controls. So \"exclude v < 96-bit\" removes 100% of the D1 mass BY GEOMETRY (fraction_removed_primary = 1.000, flat-secondary 2.21) \u2014 that clause cannot discriminate H1a from H1b; per the pre-run adaptation, the verdict rode on the REFIT clause.\n\n### Refit clause (the informative one)\nTwo-component Poisson bin fit (nb=50 equal-width u-bins per exp582 anchor, control-shape bulk exposure, half-Gaussian edge), cluster-over-Ns bootstrap 2000, seed 20260902:\n- ALL hits (n=9594): **w_edge = .0794** [.0702,.0908], **\u0394AICc = 374.77**\n- KEPT (v \u2265 2^95, n=7221): **w_edge = .0403** [.0301,.0525], **\u0394AICc = 49.78**\n\nKept CI EXCLUDES zero \u2192 an edge component PERSISTS among full-size hits at the kept population's own left edge u\u2080 = .110 (kept support starts at u \u2248 .114 where v crosses 2^95; anchor adaptation registered pre-run). Split reading: ~half the spike weight is tiny-v INCLUSION ARTIFACT (sub-2^95 hits, v as small as ~2\u221aN \u2248 2^50, vastly smoother than full-size draws); ~half GENUINE elevated small-|v| smoothness beyond Dickman prediction.\n\nBand corroboration: hit mass by band <80 = 0, 80\u201389 = .0089, 90\u201395 = .2385, \u226596 = .7527; within-band D1 fractions 1.000/.642/**0.000** (RR vs window 1.097 in 90\u201395). Controls clean: per-N D1-share z mean \u22120.223 sd 0.945 absmax 2.53 over 128 Ns.\n\n### Consequence\nPaper 238's kernel SURVIVES at reduced strength on legitimate full-size hits (.0794 \u2192 .0403, both decisive \u0394AICc) \u2014 nothing overturned, interpretation CORRECTED: the quoted 8.6% spike conflates two objects. Any future positional-shape model needs BOTH the kernel AND a bitlen(v)-band stratification at the left edge \u2014 the spike is not one object. The tiny-v mechanism is exact arithmetic at every scale, so the inclusion channel is a falsifiable constraint for downstream models.\n\n### Ledger catches (all disclosed)\n(1) Degenerate exclusion clause \u2014 pre-registered mechanical note fired exactly as deduced. (2) Kept-fit edge anchor adapted to kept-left-edge u\u2080=.110 instead of 0 \u2014 registered pre-run (support truncation; without it no exposed edge to test). (3) Own fitter (nb=50 Poisson bin fit), NOT paper-238's b_edge parametrization \u2014 amplitudes not numerically comparable across papers; comparisons internal to this experiment. (4) Controls = capped first-4000 non-hit j per N (position-uniform reference), not the paper-238 construction. (5) pop_hash recomputed without an external copy to compare \u2014 lineage rests on exact jlo/jhi reproduction. Smoke preceded full run; no commits during run; only exp589_* touched.\n\n### Barrier validation\nNo breakthrough claimed \u2014 reanalysis INSIDE the positional layer (papers 228\u2013230, 238). Residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, paper 237's four-class closure untouched. Paper 238's erratum-grade .2346 provenance flag still travels forward until reconciled against the paper-228 ledger.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp589_spike_origin.py`, `exp589_smoke.log`, `exp589_run.log`, `exp589_result.json`, `exp589_findings.md`. Paper: `ResearchOutput/NewMathematics/239_SpikeOrigin.md`.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4055",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T21:45:33.979668+00:00",
-    "title": "FACT round-84 #2 \u2014 SPIKE-ORIGIN (exp 589): H0-MIXED \u2014 paper 238's left-edge spike DECOMPOSES into ~half tiny-v inclusion artifact + half GENUINE small-|v| structure persisting among full-size v\u22652^95 hits (w_edge .0794 \u2192 .0403 kept-CI-excludes-0); exclusion clause PROVABLY DEGENERATE (D1 \u21d2 v<2^95 by arithmetic); kernel SURVIVES at reduced strength"
   },
   {
     "consumed_by_exp_id": "",
@@ -2658,20 +2644,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c2e74b6a (Q=0.880), which proved 114 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture: every\n   non-derivable formula `A` of the calculus above has a `TempFrame` countermodel with\n   at most `2^(2 * subformulaCount A)` worlds. This can be tested by filtration and\n   exhaustive bounded model search.",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_c2e74b6a_265a281b",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "c2e74b6a",
-    "status": "available",
-    "timestamp": "2026-08-26T05:52:12.232236+00:00",
-    "title": "Deepening: Finite model property with an explicit bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -3358,6 +3330,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_5e9b52ad_a75a993b",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "5e9b52ad",
+    "status": "available",
+    "timestamp": "2026-08-26T07:10:28.798674+00:00",
+    "title": "Deepening: Kneser input for many lines"
   },
   {
     "consumed_by_exp_id": "",
@@ -11597,6 +11583,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Combinatorial Nullstellensatz reduces the whole problem to a coefficient nonvanishing statement for L_1^{p-1} L_2^{p-1} in characteristic p, where L_1, L_2 are the two coordinate forms of the direction family. The degree budget matches the conjectured threshold exactly; the counterexamples show that with zero slack all admissible coefficients can vanish simultaneously. The conjecture is that one unit of slack already forces a nonzero coefficient.\n\nIf v_1,...,v_k are pairwise independent and sum_i (p-|S_i|) <= (k-2)(p-1) - 1, then some e with e_i <= |S_i|-1 and |e| = 2(p-1) satisfies coeff_e(L_1^{p-1} L_2^{p-1}) != 0 in F_p.\n\nSymbolic computation of the coefficient sums over F_p for p=5,7 and k=4,5 for all admissible exponent vectors; then a Lean proof of the multinomial identity plus a Lucas-type nonvanishing argument.\n\nProves the corrected sharp threshold (k-2)(p-1)-1 for all k, completing the problem and giving a purely algebraic proof of the triple criterion as a special case.\n\nThe polynomial method is not tight for this problem and the corrected threshold must come from a combinatorial (Kneser / Pollard) route instead.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4248",
+    "priority_score": 0.7105609756097562,
+    "research_mode": "team",
+    "source_exp_id": "5e9b52ad",
+    "status": "available",
+    "timestamp": "2026-08-26T07:10:21.058851+00:00",
+    "title": "Slack-One Nonvanishing for Bilinear Power Coefficients"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Classical sequential growth builds a causal set one event at a time subject to Bell causality and discrete general covariance. The Berggren tree is a deterministic 3-fold growth process whose labelled invariants are now all exactly known, making it a concrete test case for the covariance axioms.\n\nThe Berggren growth process, viewed as a labelled sequential growth with birth rates supported on the three Berggren moves, satisfies discrete general covariance (the induced measure on unlabelled posets is independent of the labelling order) if and only if the three branch weights are equal.\n\nFormalise finite labelled growth histories to depth k as words, define the induced measure, and compare the measures of relabelled histories; the free-monoid theorem wordMat_injective makes the history space explicitly a ternary tree.\n\nA fully formalised, exactly solvable example of a covariant sequential growth model with computable interval and antichain statistics.\n\nAn explicit obstruction showing that tree-like growth is incompatible with discrete general covariance, which sharpens why physical growth models produce non-tree posets.",
     "domains": [
       "Combinatorics",
@@ -13418,6 +13419,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T03:14:29.634485+00:00",
     "title": "Exponential Rate of the Common-Quartet Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Upgrade the yes/no triple criterion into a quantitative bound on the set of unreachable points. The union bound behind the criterion already counts unreachable targets, so optimising over admissible triples should bound the miss set by a small union of lines, degenerating to a single point in the extremal case.\n\nFor pairwise independent v_i and sets S_i containing 0, the complement of sum_i S_i v_i in F_p^2 is contained in a union of at most min over admissible triples of (d_i + d_j) lines in the direction v_l; in particular if sum_i d_i = (k-2)(p-1) and the reach is not full then the miss set is a single point.\n\nCompute the exact miss sets for all failing configurations at p=5 (k=4,5) and for the harmonic family at p=7,11,13,17; compare with the predicted line bound. Then formalise the counting version of reach_eq_univ_of_triple in Lean.\n\nYields a Kneser-type stability theorem for iterated sumsets along lines, strictly stronger than the spanning criterion and usable for spread exclusions where a small exceptional set is tolerable.\n\nThe miss set can be large even near the threshold, indicating that the failure mode is global rather than a bounded local defect.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4249",
+    "priority_score": 0.6715000000000002,
+    "research_mode": "team",
+    "source_exp_id": "5e9b52ad",
+    "status": "available",
+    "timestamp": "2026-08-26T07:10:21.585481+00:00",
+    "title": "Quantitative Kneser Stability for the Miss Set"
   },
   {
     "consumed_by_exp_id": "",
@@ -15413,6 +15428,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The window of a 2k-bit modulus contains residues from about k+1 bits up to about 2k+3 bits, and the exact band populations are square-root differences. We conjecture the occupied bands are contiguous and the histogram is unimodal with mode at the top band.\n\nFor N with bitlen N = 2k, the set of occupied bands is an interval of integers containing k+1 and 2k+3 as approximate endpoints, and b -> #{j : bitlen v(j) = b} is unimodal.\n\nApply card_band_formula for all b, use resid_left_end_le for the bottom endpoint and j = 3s for the top, and prove monotonicity of b -> floor(sqrt(N + 2^b - 1)).\n\nBand-stratified models need no fitted band weights and no support assumptions.\n\nSome band is empty between two occupied bands, contradicting monotonicity of the residue.",
+    "domains": [],
+    "id": "fd_4245",
+    "priority_score": 0.5929166666666668,
+    "research_mode": "team",
+    "source_exp_id": "55b01213",
+    "status": "available",
+    "timestamp": "2026-08-26T07:09:58.368323+00:00",
+    "title": "Lowest Occupied Band and Histogram Unimodality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 4 proved that any quadratic-pool law matching the 44- and 88-rungs must carry a strictly positive constant c. We conjecture c is a property of the rank-correlation estimator at a given sample size, not of the sampled population, and that it scales as 1/N. This would identify the floor as finite-sample attenuation and remove it from the structural model.\n\nFor ladders on uniform integers, Pythagorean even legs, and Pell spines run with the same sample size N and tie handling, the fitted floors agree within their confidence intervals, and c(N) * N is constant in N.\n\nRefit c on each ladder family; rerun one rung at N/4 and 4N and compare c*N. In Lean, state the invariance as a two-sided rational bound on the ratio of fitted floors and discharge it by norm_num once the numbers are recorded.\n\nThe structural model becomes the floorless quadratic pool, and the odds-law falsification at the 84-rung must be revisited as an artefact of sample size.\n\nThe floor is population-dependent and encodes a genuine non-channel source of correlation, which is a new object to characterise.",
     "domains": [],
     "id": "fd_3988",
@@ -15446,6 +15473,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T15:37:26.067421+00:00",
     "title": "Stirling Transform of the Orbit Hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The original motivation for the assigned conjecture was to exclude the p=5 spread profile (8,2,2,2,2,2) via a k-auxiliary-class argument. That route is dead as stated, since the conjecture is false exactly at (k-2)(p-1). The conjecture here is that the profile is still excluded, using the proved triple criterion together with the profile dichotomy.\n\nEvery configuration of six auxiliary classes at p=5 realising the profile (8,2,2,2,2,2) has a triple of indices with deficiency sum less than 5, hence spans F_5^2 and is excluded.\n\nEnumerate all deficiency profiles compatible with (8,2,2,2,2,2) at p=5 and check the triple criterion against each; for the profiles where the criterion is silent, run the exhaustive failing-configuration search of Direction 1.\n\nRestores the intended exclusion with a formally proved criterion, and shows the exclusion never needed the false (k-2)(p-1) bound.\n\nThe profile survives, and a genuinely new invariant beyond deficiency sums is required to exclude it.",
+    "domains": [],
+    "id": "fd_4250",
+    "priority_score": 0.5927272727272728,
+    "research_mode": "team",
+    "source_exp_id": "5e9b52ad",
+    "status": "available",
+    "timestamp": "2026-08-26T07:10:22.101781+00:00",
+    "title": "Auxiliary-Class Spread Exclusion at p = 5"
   },
   {
     "consumed_by_exp_id": "",
@@ -16043,6 +16082,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For fixed p and k, decide exactly which deficiency profiles (d_1,...,d_k) admit a pairwise independent configuration whose reach misses a point. The proved triple criterion shows that the three smallest deficiencies must sum to at least p; enumeration shows this is not sufficient. The conjecture asks for the exact list of exceptions, which appears to be governed by a projective (cross-ratio) obstruction rather than a numerical one.\n\nA profile d_1 <= ... <= d_k admits a failing configuration iff d_1+d_2+d_3 >= p and the profile is not in an explicitly describable exceptional list (at p=5,k=4 the exceptions are (0,2,3,3),(1,2,2,2),(2,2,2,2); at p=7,k=4 one exception is (1,3,3,4)).\n\nExhaustive enumeration over normalised direction tuples and sets of prescribed cardinality for p=5,7,11 and k=4,5; then formalise the resulting characterisation as a decidable predicate and prove both directions in Lean against KneserLines.reach_eq_univ_of_triple.\n\nGives a complete, checkable criterion for when sum_i S_i v_i = F_p^2, superseding all deficiency-sum bounds and yielding the k-auxiliary-class spread exclusion directly.\n\nThe set of failing profiles is not determined by the profile alone in a simple way, which would indicate a genuine dependence on the projective configuration of the directions and redirect effort to Direction 2.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_4247",
+    "priority_score": 0.5648162265964098,
+    "research_mode": "team",
+    "source_exp_id": "5e9b52ad",
+    "status": "available",
+    "timestamp": "2026-08-26T07:10:20.437753+00:00",
+    "title": "Profile Dichotomy for Planar Spanning Sumsets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Strict majorization says a non-flat descending weight beats the baseline strictly, but says nothing about how much. The Chebyshev double sum is a quadratic form, suggesting the defect is bounded below by a squared distance to flatness.\n\nFor antitone normalised w on positions M, C_0 - EC >= c * M * (sum_i |w_i - 1/M|)^2 for an absolute constant c > 0.\n\nFormalise via the double-sum identity, comparing the pairwise sum with the L1 distance by Cauchy-Schwarz; test the constant numerically over random antitone weights.\n\nThe master chain gains a quantitative, distribution-free margin, upgrading strict inequalities into usable gaps.\n\nThe defect degenerates for weights concentrated at the extremes, and only a weighted (position-dependent) distance can control it.",
     "domains": [
       "Algebra",
@@ -16130,6 +16184,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T01:59:57.271611+00:00",
     "title": "Continuous Mixing Measures and the Window Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The positional layer is deterministic, so the only stochastic ingredient is the smoothness of a residue of known bit length. A residue of half size is smooth with probability rho(alpha/2) rather than rho(alpha), which should quantitatively reproduce the observed roughly equal split between the inclusion artifact and the residual edge component.\n\nThe inclusion-channel share of the left-edge weight equals the ratio of Dickman-weighted band masses computed from card_band_formula, and for 96-bit moduli it lies in [0.45, 0.55].\n\nEvaluate the band populations exactly for a sample of 96-bit moduli, weight them by a Dickman table, and compare the predicted share with the reported edge-weight drop.\n\nThe observed split needs no positional kernel at all beyond the deterministic band geometry.\n\nA genuine positional kernel independent of residue size survives, which would be new structure in the window.",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_4246",
+    "priority_score": 0.5647412683708043,
+    "research_mode": "team",
+    "source_exp_id": "55b01213",
+    "status": "available",
+    "timestamp": "2026-08-26T07:09:58.872713+00:00",
+    "title": "Dickman Smoothness Boost as the Source of the Fifty-Fifty Split"
   },
   {
     "consumed_by_exp_id": "",
@@ -16310,6 +16379,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T23:40:00.859524+00:00",
     "title": "Divisor-Mixture Carrier of Between-Modulus Rate Variance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cut-offs below 0.1123 are provably degenerate for all 96-bit moduli and 0.2072 is provably not. We conjecture the exact supremum of universally degenerate cut-offs is the infimum of the crossing curve, (sqrt 6 - 2)/4, approached as N tends to 2^96 from below.\n\nsup {c : for all 96-bit N and all j with u(j) <= c one has j^2 - N < 2^95} = (sqrt 6 - 2)/4, and the supremum is not attained.\n\nSharpen sharp_degeneracy from the rational 2246/20000 to arbitrary c < (sqrt 6 - 2)/4, and construct for each epsilon a modulus below 2^96 with a full-size residue at position (sqrt 6 - 2)/4 + epsilon.\n\nThe degeneracy phenomenon is characterised by a single quadratic irrationality.\n\nThe discrete threshold is strictly below the continuum infimum, which would mean lattice effects survive at 96 bits and contradict fraction_bridge.",
+    "domains": [
+      "Geometry",
+      "Cryptography"
+    ],
+    "id": "fd_4243",
+    "priority_score": 0.5645856408166897,
+    "research_mode": "team",
+    "source_exp_id": "55b01213",
+    "status": "available",
+    "timestamp": "2026-08-26T07:09:57.369076+00:00",
+    "title": "Exact Universal Degeneracy Constant (sqrt 6 - 2)/4"
   },
   {
     "consumed_by_exp_id": "",
@@ -27348,6 +27432,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The scale-free bound 100 (j^2 - N) < 45 N for first-decile points is proved for N >= 2^16 and fails at N = 36482. We conjecture 36483 is the exact threshold, making the size hypothesis optimal.\n\nFor every N >= 36483 and every j with s < j and 5(j - s) < s + 5 one has 100 (j^2 - N) < 45 N, and N = 36482 admits a first-decile j violating it.\n\nProve the inequality for N >= 36931 by the existing 192 sqrt N + 64 < N route and close [36483, 36930] by an explicit decidable enumeration over s = floor(sqrt N).\n\nThe degeneracy mechanism is optimal and fully characterised at every scale.\n\nA second exceptional modulus above 36482 exists, revealing an extra rounding phenomenon in the decile definition.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4244",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "55b01213",
+    "status": "available",
+    "timestamp": "2026-08-26T07:09:57.867965+00:00",
+    "title": "Sharp Threshold 36483 for the Scale-Free 0.44 Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -37452,19 +37550,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "(counting sumsets)"
   },
   {
-    "consumed_by_exp_id": "5e9b52ad",
-    "description": "*Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement would immediately give a\n   `k`-auxiliary-class spread exclusion and, at `p = 5`, would remove the\n   profile `(8,2,2,2,2,2)`.",
-    "domains": [],
-    "id": "fd_3013",
-    "phase": "A",
-    "priority_score": 0.4468333333333333,
-    "research_mode": "team",
-    "source_exp_id": "6e948588",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:27:30.175988+00:00",
-    "title": "Kneser input for many lines"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Define key generation,\n   encryption, and decryption over `ZMod q`; connect the existing noise and\n   rounding lemmas to a full correctness theorem.",
     "domains": [
@@ -41746,14 +41831,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff88fece",
     "description": "Both endpoints of the trade-off are now formal theorems in this\nrepository (`decode_cost` + `failSet_prob_le` at one end,\n`blockDecode_cost` + `blockFail_prob_le` at the other); only the interpolation\nand its converse are missing.",
     "domains": [],
     "id": "fd_1478",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "be7c0bd7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T03:09:00.743392+00:00",
     "title": "Both endpoints of the trade-off are now formal theorems in this"
   },

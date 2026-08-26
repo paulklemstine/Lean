@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7934932a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — sharp total-variation normalization\n\nThis cycle replaced the deliberately crude `ℓ¹` distinguishing bound by the\nattained factor-`1/2` characterization\n\n`d_TV(p, q) = max_{A ⊆ X}",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-24T14:04:04",
-      "title": "Sharper normalization"
-    },
-    {
       "cycle_id": "9d509f0a",
       "domain": "Algebra",
       "key_insight": "# Future Directions — after TDIAL-U64B (round-68 #3, exp 543)\n\n## What this thread established\n\nThe record under study is `U64B-DIAL-HOLDS-COUNT-PARITY`: pooled `ρ(T, rate) = 0.641`\n(CI `[0.619, 0.660",
@@ -499,19 +489,19 @@
       "theorem_count": 47,
       "timestamp": "2026-08-26T07:10:12",
       "title": "FACT round-84 #2 — SPIKE-ORIGIN (exp 589): H0-MIXED — paper 238's left-edge spike DECOMPOSES into ~h"
+    },
+    {
+      "cycle_id": "5e9b52ad",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Kneser input for many lines\n\nThis cycle settled the assigned conjecture (negatively) and replaced it with a\n*sharp* positive criterion together with a matching family of extremal",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-26T07:10:28",
+      "title": "Kneser input for many lines"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4ba8c40c",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: emergent spacetime from entanglement\n\nFive bold, testable conjectures distilled from this cycle.  Each is stated so\nthat a counterexample would be a finite object, and each is phr",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-19T13:09:17",
-      "title": "Emergent Spacetime from Quantum Entanglement"
-    },
     {
       "cycle_id": "7299371d",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 47,
       "timestamp": "2026-08-26T07:10:12",
       "title": "FACT round-84 #2 — SPIKE-ORIGIN (exp 589): H0-MIXED — paper 238's left-edge spike DECOMPOSES into ~h"
+    },
+    {
+      "cycle_id": "5e9b52ad",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Kneser input for many lines\n\nThis cycle settled the assigned conjecture (negatively) and replaced it with a\n*sharp* positive criterion together with a matching family of extremal",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-26T07:10:28",
+      "title": "Kneser input for many lines"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ea4eae2e",
-      "domain": "NumberTheory",
-      "name": "card_filter_dvd",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "ea4eae2e",
-      "domain": "NumberTheory",
-      "name": "harmonic_block_decline",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "128c5007",
-      "domain": "Computation",
-      "name": "binAvg_translate",
-      "quality": 0.74
-    },
     {
       "cycle_id": "128c5007",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "scalefree_bound_needs_size_hypothesis",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "5e9b52ad",
+      "domain": "Computation",
+      "name": "det_swap",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5e9b52ad",
+      "domain": "Computation",
+      "name": "det_add",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5e9b52ad",
+      "domain": "Computation",
+      "name": "det_smul",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-26T07:10:12",
+  "last_updated": "2026-08-26T07:10:28",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "85ca8e3d",
-        "quality": 0.86,
-        "theorems": 58,
-        "title": "The invariant is now defined and proven to be a submonoid"
-      },
-      {
         "cycle_id": "663f5de8",
         "quality": 0.89,
         "theorems": 112,
@@ -3327,6 +3321,12 @@
         "quality": 0.74,
         "theorems": 30,
         "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE "
+      },
+      {
+        "cycle_id": "5e9b52ad",
+        "quality": 0.82,
+        "theorems": 48,
+        "title": "Kneser input for many lines"
       }
     ],
     "Cryptography": [
