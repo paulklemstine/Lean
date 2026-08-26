@@ -1,0 +1,326 @@
+{
+ "rows": [
+  {
+   "size": 18,
+   "trial": 0,
+   "arm": "fixed_low",
+   "s": 0.016,
+   "ok": false
+  },
+  {
+   "size": 18,
+   "trial": 0,
+   "arm": "fixed_high",
+   "s": 0.122,
+   "ok": false
+  },
+  {
+   "size": 18,
+   "trial": 0,
+   "arm": "oracle",
+   "s": 0.015,
+   "ok": false
+  },
+  {
+   "size": 18,
+   "trial": 0,
+   "arm": "adaptive",
+   "s": 0.006,
+   "ok": true
+  },
+  {
+   "size": 24,
+   "trial": 0,
+   "arm": "fixed_low",
+   "s": 0.014,
+   "ok": false
+  },
+  {
+   "size": 24,
+   "trial": 0,
+   "arm": "fixed_high",
+   "s": 0.08,
+   "ok": false
+  },
+  {
+   "size": 24,
+   "trial": 0,
+   "arm": "oracle",
+   "s": 0.012,
+   "ok": true
+  },
+  {
+   "size": 24,
+   "trial": 0,
+   "arm": "adaptive",
+   "s": 0.02,
+   "ok": true
+  },
+  {
+   "size": 30,
+   "trial": 0,
+   "arm": "fixed_low",
+   "s": 0.011,
+   "ok": false
+  },
+  {
+   "size": 30,
+   "trial": 0,
+   "arm": "fixed_high",
+   "s": 0.122,
+   "ok": true
+  },
+  {
+   "size": 30,
+   "trial": 0,
+   "arm": "oracle",
+   "s": 0.017,
+   "ok": true
+  },
+  {
+   "size": 30,
+   "trial": 0,
+   "arm": "adaptive",
+   "s": 0.008,
+   "ok": true
+  },
+  {
+   "size": 36,
+   "trial": 0,
+   "arm": "fixed_low",
+   "s": 0.012,
+   "ok": true
+  },
+  {
+   "size": 36,
+   "trial": 0,
+   "arm": "fixed_high",
+   "s": 0.118,
+   "ok": false
+  },
+  {
+   "size": 36,
+   "trial": 0,
+   "arm": "oracle",
+   "s": 0.011,
+   "ok": false
+  },
+  {
+   "size": 36,
+   "trial": 0,
+   "arm": "adaptive",
+   "s": 0.003,
+   "ok": true
+  },
+  {
+   "size": 42,
+   "trial": 0,
+   "arm": "fixed_low",
+   "s": 0.013,
+   "ok": true
+  },
+  {
+   "size": 42,
+   "trial": 0,
+   "arm": "fixed_high",
+   "s": 0.087,
+   "ok": true
+  },
+  {
+   "size": 42,
+   "trial": 0,
+   "arm": "oracle",
+   "s": 0.006,
+   "ok": true
+  },
+  {
+   "size": 42,
+   "trial": 0,
+   "arm": "adaptive",
+   "s": 0.027,
+   "ok": true
+  },
+  {
+   "size": 18,
+   "trial": 1,
+   "arm": "fixed_low",
+   "s": 0.01,
+   "ok": true
+  },
+  {
+   "size": 18,
+   "trial": 1,
+   "arm": "fixed_high",
+   "s": 0.123,
+   "ok": false
+  },
+  {
+   "size": 18,
+   "trial": 1,
+   "arm": "oracle",
+   "s": 0.012,
+   "ok": false
+  },
+  {
+   "size": 18,
+   "trial": 1,
+   "arm": "adaptive",
+   "s": 0.006,
+   "ok": true
+  },
+  {
+   "size": 24,
+   "trial": 1,
+   "arm": "fixed_low",
+   "s": 0.014,
+   "ok": false
+  },
+  {
+   "size": 24,
+   "trial": 1,
+   "arm": "fixed_high",
+   "s": 0.128,
+   "ok": false
+  },
+  {
+   "size": 24,
+   "trial": 1,
+   "arm": "oracle",
+   "s": 0.012,
+   "ok": true
+  },
+  {
+   "size": 24,
+   "trial": 1,
+   "arm": "adaptive",
+   "s": 0.011,
+   "ok": true
+  },
+  {
+   "size": 30,
+   "trial": 1,
+   "arm": "fixed_low",
+   "s": 0.012,
+   "ok": true
+  },
+  {
+   "size": 30,
+   "trial": 1,
+   "arm": "fixed_high",
+   "s": 0.13,
+   "ok": true
+  },
+  {
+   "size": 30,
+   "trial": 1,
+   "arm": "oracle",
+   "s": 0.008,
+   "ok": true
+  },
+  {
+   "size": 30,
+   "trial": 1,
+   "arm": "adaptive",
+   "s": 0.009,
+   "ok": true
+  },
+  {
+   "size": 36,
+   "trial": 1,
+   "arm": "fixed_low",
+   "s": 0.03,
+   "ok": true
+  },
+  {
+   "size": 36,
+   "trial": 1,
+   "arm": "fixed_high",
+   "s": 0.201,
+   "ok": true
+  },
+  {
+   "size": 36,
+   "trial": 1,
+   "arm": "oracle",
+   "s": 0.04,
+   "ok": true
+  },
+  {
+   "size": 36,
+   "trial": 1,
+   "arm": "adaptive",
+   "s": 0.006,
+   "ok": true
+  },
+  {
+   "size": 42,
+   "trial": 1,
+   "arm": "fixed_low",
+   "s": 0.007,
+   "ok": true
+  },
+  {
+   "size": 42,
+   "trial": 1,
+   "arm": "fixed_high",
+   "s": 0.527,
+   "ok": true
+  },
+  {
+   "size": 42,
+   "trial": 1,
+   "arm": "oracle",
+   "s": 0.011,
+   "ok": false
+  },
+  {
+   "size": 42,
+   "trial": 1,
+   "arm": "adaptive",
+   "s": 0.013,
+   "ok": true
+  }
+ ],
+ "summary": {
+  "fixed_low": {
+   "medians": {
+    "18": 0.01,
+    "30": 0.01,
+    "36": 0.02,
+    "42": 0.01
+   },
+   "solved": "6/10",
+   "total_s": 0.1
+  },
+  "fixed_high": {
+   "medians": {
+    "30": 0.13,
+    "36": 0.2,
+    "42": 0.31
+   },
+   "solved": "5/10",
+   "total_s": 1.1
+  },
+  "oracle": {
+   "medians": {
+    "24": 0.01,
+    "30": 0.01,
+    "36": 0.04,
+    "42": 0.01
+   },
+   "solved": "6/10",
+   "total_s": 0.1
+  },
+  "adaptive": {
+   "medians": {
+    "18": 0.01,
+    "24": 0.02,
+    "30": 0.01,
+    "36": 0.0,
+    "42": 0.02
+   },
+   "solved": "10/10",
+   "total_s": 0.1
+  }
+ }
+}
