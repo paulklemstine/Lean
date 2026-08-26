@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "eef05184",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Greedy difference avoidance and the `B_h` tower\n\nDerived from the verified results in `Catalog/Novelty/GreedyDifferenceSidon.lean`,\n`Catalog/Novelty/GreedyDifferenceCubic.lean`,",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 112,
-      "timestamp": "2026-08-24T23:37:08",
-      "title": "Weighted / signed sums"
-    },
-    {
       "cycle_id": "80241759",
       "domain": "Physics",
       "key_insight": "# Future Directions — Parameter-derived depth (Physics, cycle v19c)\n\n## What this cycle established\n\nFor a concrete branching number `B` and a concrete information threshold `T`, the largest\nsupported",
@@ -499,19 +489,19 @@
       "theorem_count": 103,
       "timestamp": "2026-08-26T19:20:52",
       "title": "FACT round-85 #1 — SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper "
+    },
+    {
+      "cycle_id": "95a534e1",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — the κ rate-dial layer\n\nThe cycle closed the two-run-surviving part of the composition layer as exact theorems: the\ndivisibility pattern controls the *rate* of a cell exactly and",
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-26T19:21:10",
+      "title": "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES — feature DOES NOT REPLICATE "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2e28602b",
-      "domain": "Physics",
-      "key_insight": "# Future directions — inverse stereographic neural field theory\n\nDerived from the analysis and adversarial review of the results now proved in\n`Catalog/Physics/StereoNeuralFieldCalculus.lean`,\n`…Harmo",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 158,
-      "timestamp": "2026-08-19T22:42:00",
-      "title": "Inverse Stereographic Neural Field Theory"
-    },
     {
       "cycle_id": "a23b48bf",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 103,
       "timestamp": "2026-08-26T19:20:52",
       "title": "FACT round-85 #1 — SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper "
+    },
+    {
+      "cycle_id": "95a534e1",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — the κ rate-dial layer\n\nThe cycle closed the two-run-surviving part of the composition layer as exact theorems: the\ndivisibility pattern controls the *rate* of a cell exactly and",
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-26T19:21:10",
+      "title": "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES — feature DOES NOT REPLICATE "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "56c4877a",
-      "domain": "Combinatorics",
-      "name": "localAct_eq",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "217690eb",
-      "domain": "MachineLearning",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "217690eb",
-      "domain": "MachineLearning",
-      "name": "sqNorm_sub",
-      "quality": 0.82
-    },
     {
       "cycle_id": "217690eb",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "composition_eq_zero_of_homogeneous",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "95a534e1",
+      "domain": "Combinatorics",
+      "name": "and",
+      "quality": 0.81
+    },
+    {
+      "cycle_id": "95a534e1",
+      "domain": "Combinatorics",
+      "name": "dvd_iff_dvd_of_mod_eq",
+      "quality": 0.81
+    },
+    {
+      "cycle_id": "95a534e1",
+      "domain": "Combinatorics",
+      "name": "card_range_residue",
+      "quality": 0.81
     }
   ],
-  "last_updated": "2026-08-26T19:20:52",
+  "last_updated": "2026-08-26T19:21:10",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "d7470f1b",
-        "quality": 0.86,
-        "theorems": 101,
-        "title": "Filtration lemma"
-      },
-      {
         "cycle_id": "aa2d71a2",
         "quality": 0.74,
         "theorems": 56,
@@ -3265,6 +3259,12 @@
         "quality": 0.78,
         "theorems": 68,
         "title": "Canonical alpha-connections"
+      },
+      {
+        "cycle_id": "95a534e1",
+        "quality": 0.81,
+        "theorems": 63,
+        "title": "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES — feature"
       }
     ],
     "Computation": [

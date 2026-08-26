@@ -2034,16 +2034,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-75 #1 \u2014 MA1-SIGNED: signed route of MA-1 effectivity dies at both registered criteria (cell agreement 15.07%, CS_z=-52.7; class 48.74% below chance z=-7.74) \u2014 MA-1 computable-effectivity program CLOSED on both routes; Chebyshev/Rubinstein\u2013Sarnak negative skew 84.7% confirmed as named byproduct"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3f8792a",
     "description": "Exp 569 \u00b7 paper 216 \u00b7 assessment v323 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp569_u9_drift_power.py (precision-patched POST-run; stored exp569_result.json is the pre-patch output) \u00b7 seed 20260824 \u00b7 wall 1467.4 s at 76.4 \u00b5s/value.\n\n**Question.** Paper 214 banked a direction-stable sub-1 drift in x\u00b2\u2212N smoothness at band 9 (bitlen-96 balanced semiprimes): \u22125.3% at its primary 1e6 LPF-CDF cut and \u221213.6% at the 1e5 cut, every CI covering 1 but every split-half pointing the same way. Does a fresh independent seed/population at higher pair count replicate the drift downward?\n\n**Role honesty.** Throughput reality (76.4 \u00b5s/val) caps the night at ~1\u00d7 the paper-214 pilot power, NOT the aspirational 10\u201330\u00d7; role reframed PRE-RUN as scoping (documented in-script): this run IS gate G1 (fresh-seed replication) of paper 214's own confirmation protocol; G2 control integrity is satisfied by construction (paired matching + identical tester code path).\n\n**Design.** 128 distinct N (seed 20260824), v = j\u00b2\u2212N for j \u2208 (s, 3s], 150k samples/N \u2192 exactly 19.2M candidate/control pairs. Tester: cumulative segment-primorial gcd chains (strip primes \u22641e5 then \u22641e6). Controls PAIRED per draw \u2014 same bit length, same 3-bit mantissa head, random low bits \u2014 through the IDENTICAL classify() code path. Cluster bootstrap NB=2000 percentile CIs over N-clusters / size-matched pseudo-clusters. Decision cut stays 1e5 per header pre-registration; 1e6 secondary (higher event rate \u2192 better powered, weight disclosed).\n\n**VERDICT: RANDOMNESS-EXTENDED (pre-registered H0 branch), no gate armed:**\n- PRIMARY cut 1e5: ratio CI95 [0.8571, 1.1488], excludes_1 FALSE \u21d2 H0.\n- Secondary cut 1e6 (best powered): r = 0.0005/0.000506 \u2248 0.99, cluster-boot CI95 [0.919, 1.010] over 128 clusters on 19.2M pairs \u2014 tightest interval yet above u\u22489; max CI-edge |r\u22121| = 0.081 tightens paper 214's 0.137 deliverable (H0 deliverable met).\n- POOLED with paper 214's pilot at matched conditions: @1e6 pilot 0.947 [0.8630, 1.0389] vs this 0.99 [0.919, 1.0101] \u2014 mutually consistent, joint point \u2248 0.97 (\u221a2-tightened). The sub-1 drift does NOT replicate downward; residual tension DOWNGRADED from \"banked\" to \"open at reduced weight\". Decisive resolution still needs the 10\u201330\u00d7 power run (queued named follow-up).\n\n**DISPLAY DEFECT disclosed prominently:** the pre-patch writer stored round(r,4), so the ~3e-5 candidate rate prints as stored \"r_cand\": 0.0 and raw hit counts were NOT persisted (unrecoverable post-hoc). True value is CI-pinned to [2.66e-5, 3.56e-5] (= CI \u00d7 rate_ctrl 3.1e-5). Cite CI-implied bounds everywhere; NEVER the stored 0.0. Script precision-patched post-run (raw-count persistence added for any rerun).\n\n**Other ledger catches:** wall overshoot 1467 s vs ~1104 s estimate (candidate j\u00b2\u2212N strips slower than random strips); smoke-leg verdict field is a NaN artifact of the starved-regime bootstrap (<100 non-degenerate resamples \u2192 NaN bounds \u2192 excludes_1 trivially True) \u2014 non-canonical, full-run verdict governs.\n\n**Barrier framing:** scale-smoothness frontier u \u2265 6\u201314; an H0 here STRENGTHENS papers 130/209/214 randomness into the Dickman approach zone through u\u224811.7. No barrier breached, no constant shaved.\n\nArtifacts: exp569_u9_drift_power.py, exp569_result.json (pre-patch canonical), exp569_smoke_result.json, exp569_full.log, exp569_findings.md.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3961",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T09:06:21.852886+00:00",
     "title": "FACT round-74 #7 \u2014 U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut-1e6 r=0.99 CI [0.919,1.010] covers 1); pooled with paper 214 pilot joint point ~0.97 \u2014 banked tension downgraded to open at reduced weight"
   },
@@ -2105,47 +2106,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-75 #4 \u2014 BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of the barrier-4 converse recorded as DRAFT-WITH-CAVEATS \u2014 certified-silence law S_A=1/[\u03bcP+(1\u2212P)(1\u2212\u03bc)] supersedes drafted fire-or-silent form (14 algebra failures caught by independent verification); T2 saturation V=log\u2082W+\u00bd exact on dyadic W\u2208[2,4096]; Conjecture D factors S(R\u2218F)=S(R)\u00b7S(F) with sup_F=4/3 \u2014 residue cap 4/3 governs COST-class actions while position works the SET-class tail: 5.19\u00d7>4/3 is class-crossing not cap-breaking; zero arithmetic errors in recheck; named GAPs L4/L7/L8 are the next work"
   },
   {
-    "consumed_by_exp_id": "2f8653ca",
+    "consumed_by_exp_id": "",
     "description": "Round-76 #1 THEORY deliverable (no new experiment id; papers-only bump convention as in paper 219: experiment count unchanged at 562, max id 572; papers -> 221; assessment v327 -> v328).\n\nFalsification + replacement of GAP-L7 from paper 219's lemma ledger.\n\n**Action space formalized**: REORDER-class policy Pi emits enumeration a_k = f(k,N) of I(N) with uniformity (one computable f for all N), test-blindness (order commits ex ante; comparison queries only at T2 pricing), polylog overhead charging. N-independent orders satisfy all three \u2014 the corner L7-as-drafted missed. Clause 3 unrestricted is vacuous; under polylog it needs a sublinear-time factoring separation (L7-e, likely permanent).\n\n**Failure 1 \u2014 prior-shape channel Lambda**: static-order optimality is mass-sorting by divisor-mass; whether that sort is sqrt-descending is a POPULATION property. Hard-balanced generators (q<2p): bottom-heavy tilt z=0.4095\u20130.4148 vs analytic 0.414; window-ascending beats descending **1.58x\u00b10.03** (BAL_prime 1.5785\u00b10.029, BAL_intsnap 1.6114\u00b10.033, n=2400 each; analytic two-stage 0.138v/0.219v=1.587). The attempt's quoted 1.71\u20131.91 was its own n=150 sampling inflation \u2014 its ANALYTIC prediction 1.59 was right all along. Sign-flip law: crossover **E[\u221ar]=2/(1+1/\u221a2)=1.1716**; narrow bands top-heavy z=0.6466, descending extremal (Lambda=1.0 argmin win_desc, win_asc S=0.5682); P137 pool z=0.5588 between.\n\n**Failure 2 \u2014 interaction term**: sigma\u2218delta factorization definitional/vacuous (singleton blocks); coupled residue orders gain only off-MLR as prior-shape leakage.\n\n**Corrected master inequality L7'**: S(Pi) <= (4/3)\u00b7min(1/mu_eff, 2^k_bits)/Lambda(pop), mu_eff structural keep-fraction. **ZERO violations** across all policy arms x four pools (BAL_prime/BAL_intsnap n=2400, BAL_narrow n=1600, P137 n=500; verifier recomputed incl. hybrid filter x reorder stress arm). Wheel calibration hits the T1 protocol-A law exactly: mu=phi(30)/30=4/15 => predicted 30/phi(30)=3.750, measured 3.7331\u20133.7496 (headline 3.741 vs 3.750), gap 0.25\u20130.31%. CAVEAT load-bearing: pure-permutation cells satisfy the cap tautologically at mu_booked=1; hybrid window+wheel reaches S=4.06 on P137 vs a 1.77 cap if mu booked 1 \u2014 structural mu extraction (L7-d) makes the cap non-vacuous.\n\n**Witness corrections (ledger items)**: Jacobi witness RETRACTED \u2014 (N|x)=0 identically at x=p since N\u22610 mod p (100% draws, jacobi_p_is_zero=1.0; promoted share among coprime 0.5036/0.5015 fair coin): algebraic degeneracy measuring 'p divides N', not prior shape. Replaced by **keyed-vs-fixed mod-3 control**: N-keyed vs fixed-key promotion statistically identical (S 0.6366/0.6537 BAL_prime, 0.684/0.660 P137), hit-enrichment \u22481/2 BOTH arms \u2014 residue couplings carry ZERO information; apparent gains are prior-shape leakage on non-MLR marginals only (factor-blind law replicated with proper control; strengthens papers 130/136). exp570 early-fire transfer bounded honestly: early-fire is an ECM completion law, TD has none \u2014 what transfers is front-loading => head-domination, NOT sqrt-descending dominance without the centering axiom (surrogate K=4096: front-at-\u221aN desc 948 < aligned 1493 < naive 3149; front-at-low-end flips; ladder-aligned \u2248 descending S=0.990, ladder-naive collapses 0.27).\n\n**Paper 137 REFINED not contradicted**: verifier replicated descending winning on 137's own pool \u2014 trunc_asc S=0.9278 i.e. asc/desc=1.078x vs recorded 1.08x; window policy UNDEFINED on 21.6% of draws (win_asc_miss_frac=0.216). Lambda-dominance ONLY under hard q<2p balance; deployable gains require verifying the deployed generator enforces balance first (policy undefined otherwise).\n\n**Status**: L7' PROVEN-SKETCH (zero-violation finite audit + classical analytic core). Ranked lemmas: **L7-a HIGHEST VALUE next step (hours): measure the DEPLOYED generator's r-law and restate L7' with measured Lambda_lab** (without it Lambda is unmeasured and the MLR premise unchecked); L7-b exchange theorem write-out; L7-c master-inequality proof from touch-floor accounting; L7-d structural mu_eff/k_bits extraction (load-bearing NOW); L7-e unconditional factor-blindness of polylog-computable f (open, likely permanent \u2014 adopt hardness-relative or oracle-relativize).\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/ \u2014 gapL7_extremality.md (post-revision), gapL7_check.py/.json (author first pass n=150/pop, seed 20260824, 0.99 s), verifyL7_sim.py/verifyL7_sim_out.json (independent verification set, re-derived from scratch, no code reuse, distinct seeds; n=2400/2400/1600/500 four pools), verifyL7_unif.py (uniform proxy cross-check: asc ~2.13 outright, win_asc undefined on most draws). Paper: ResearchOutput/NewMathematics/221_L7Falsification.md.\n\nNo breakthrough claimed: falsification-and-replacement inside the barrier map; barrier-4 positional stratum gains a measurable sign-flipping channel, residue cap 4/3 untouched.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3986",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T11:45:45.217604+00:00",
     "title": "FACT round-76 #1 \u2014 GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' \u2014 extremal order = population mass-sort (window-ascending beats descending 1.58x\u00b10.03 n=2400; sign-flip crossover E[\u221ar]=1.1716); master inequality S \u2264 (4/3)\u00b7T1-cap/\u039b zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) \u2192 keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078\u00d7 vs 1.08\u00d7); L7-a measure deployed generator tilt named next"
   },
   {
-    "consumed_by_exp_id": "1a774383",
-    "description": "Round-85 #1 \u00b7 exp 589 [FINAL RESOLUTION, findings rev 2026-08-24b] \u00b7 pure reanalysis of exp581_regen_positions.npz (9594 pooled hits / 128 Ns / 512k controls; wall_s 45.16) \u00b7 paper 240 \u00b7 supersedes the H0-MIXED letter of paper 239 (issue #387), which stands preserved as audit record of the intermediate analysis state.\n\nRESOLUTION (H1a-INCLUSION-ARTIFACT):\n1. MECHANICAL FORCING: D1 hit mass by v-band <80:0 / 80\u201389:85 / 90\u201395:1469 / >=96:0 \u2014 100% of first-decile hits have bitlen(v)<96, mechanically forced (D1 \u21d2 delta<0.2s \u21d2 v<0.44\u00b7s^2+o(s^2)<2^95 provable under window j in [isqrt(N)+1, 3\u00b7isqrt(N)]).\n2. SIZE-MATCHED BANDS ERASE THE EXCESS: within-band D1 rate ratios rr_d1 = 1.000 (80\u201389), 1.097 (90\u201395); band-referenced total excess +129.66 vs flat-null +604.76 (rr_d1 vs flat 1.637) \u2192 ~4/5 of the spike is band COMPOSITION, not decile-1 rate elevation. Controls clean (per-N D1-share z mean \u22120.223 sd 0.945 absmax 2.53).\n3. KEPT-FIT 'PERSISTENCE' DECOMPOSES ENTIRELY: kept fit (v>=2^95) w_edge .0403 [.0301,.0525] \u0394AICc 49.78 is carried entirely by bitlen[96,98) at the truncation boundary (\u0394AICc 5.94 \u2014 BELOW the registered bar of 6; no bootstrap CI disclosed) while bitlen>=98 has NO edge component (\u0394AICc \u22120.40) \u2192 truncation-boundary Dickman size gradient, NOT positional structure.\n\nERRATUM to paper 239: title claim ('kernel SURVIVES at reduced strength'), \u00a74 split reading ('half genuine small-|v| structure beyond Dickman prediction'), and \u00a75 consequences 1\u20132 are RETRACTED as truncation-boundary gradient. PRESERVED from 239: mechanical-degeneracy finding (strengthened \u2014 now load-bearing), regeneration verification, controls-clean, ledger disclosures, and the H0-MIXED verdict letter as audit record. No registered bar changed post hoc \u2014 resolution applies the REGISTERED \u0394AICc >= 6 bar to matched-v strata.\n\nMAP STATEMENT (arc closure papers 228\u2192239\u2192240): NO positional kernel component survives \u2014 the profile is fully accounted by magnitude + tiny-v window geometry.\n\nWHAT SURVIVES: overdispersion itself real (+605 named-origin, not deleted); positional layer independent (papers 228\u2013230 untouched); rate-layer question open.\n\nLINEAGE DISCIPLINE end-to-end: exp581 sha256 byte-exact quartet upstream with both self-caught fixes disclosed in-chain (run-1 COMPARATOR bug; run-2 LN-dict KeyError 350983 fixed via arbitrary-edge ln cache); exp589 downstream re-verification = 128x2 EXACT isqrt\u2192(jlo,jhi) matches + containment of every stored j (pop_hash 06931068f8f3ca9b recomputed, no external copy readable \u2014 disclosed).\n\nLEDGER CATCHES: degenerate exclusion clause (pre-registered mechanical note fired); kept-fit anchor adaptation registered pre-run; own two-component Poisson fitter nb=50 not paper-238 b_edge parametrization; capped first-4000 controls; POST-HOC labeling of all resolution diagnostics; subfits no bootstrap CI; wall-time drift noted (paper 239 quoted 42.34 s, artifacts record 45.16 s).\n\nBarrier framing: closure INSIDE the positional layer's shape description \u2014 residue cap 4/3, position 5.19x, external-hint laws, quantum frontier, four-class rate-residual closure all untouched; both surviving mechanisms scale-carrying (exact-arithmetic inclusion bound grows with scale). Paper 238's .2346 provenance flag still travels forward until reconciled against the paper-228 ledger.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4054",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T21:45:33.977842+00:00",
-    "title": "FACT round-85 #1 \u2014 SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper 239 \u2014 paper 238's left-edge spike is tiny-v composition ENTIRELY (100% of D1 hits bitlen(v)<96 by window geometry; rr_d1 1.000/1.097 size-matched; kept-fit persistence = truncation-boundary gradient [96,98) dAICc 5.94 sub-bar, >=98 -0.40); NO positional kernel component survives"
-  },
-  {
-    "consumed_by_exp_id": "a9ac7df3",
+    "consumed_by_exp_id": "",
     "description": "**FACT round-87 #1 \u2014 exp 588c MIXTURE-BASELINE [FINAL] \u00b7 paper 242 \u00b7 closes paper 241's routed branch with a negative that converts to a NEW MAP ENTRY**\n\nVERDICT: **H0 \u2014 EXCESS SURVIVES THE DIVISIBILITY MIXTURE** (registered rule: H0 iff amp_mix >= 2\u00b7SE_mix; fired as registered).\n\n- Residual mid-window peak **amp_mix = 0.1774 \u00b1 0.0432 (z = 4.11 \u2265 registered bar of 2), peak at t = 0.65 exactly**; removal vs single-\u03b1 baseline = **0%** (pre-named corroboration).\n- Model: 16 cells = divisibility pattern (2|v, 3|v, 5|v, 7|v) of v = j\u00b2\u2212N; PRED(b) = \u03a3_c \u03ba_c\u00b7S_c(b); S_c = Dickman-weighted reference sums; \u03ba_c flank-only fit (score window excluded), \u03bb=5 shrinkage toward global flank rate.\n- **WHY the mixture couldn't absorb it:** class composition measured FLAT in t (max cell drift 0.269%) \u2014 the mixture had no positional freedom; per-cell rates ARE real (\u03ba/g spread **0.645\u20131.406**, ~2.2\u00d7 rate modulation, top cells 3|v&5|v combos) but t-INDEPENDENT by construction. Formulation: **DIVISIBILITY IS A RATE DIAL, NOT A POSITION DIAL.**\n- Bit 0 (2|v) \u2261 j-parity since N odd \u2014 parity merged into the grid and equally failed \u2192 closes paper 241's residual parity reading too.\n\n**CONTROLS + CAVEAT (disclosed per registration):** CTRL-A machinery null PASS (amp 0.0271 \u00b1 0.0102, max-dev all bins 0.0342). CTRL-B parametric Poisson estimator-null amp_sim 0.0860 \u00b1 0.0411 measures max-over-bins positive bias inside the raw amplitude \u2192 **null-calibrated z_cal = 1.53 < 2**; registered raw-amplitude rule stays verdict-bearing, disagreement flagged not silently resolved. Follow-ups power against the calibrated scale.\n\n**PROVENANCE:** Regen EXACT_MATCH on the proven exp588b-A3 lineage (population/windows int64-equal, stream order-walk 128/128, smoothness spot-check hits-smooth/controls-nonsmooth all pass), statistics gated on it; wall 12.6 s; npz sha256 df4830ed\u2026fbb74 re-recorded at load.\n\n**LEDGER CATCHES:** A1 amendment \u2014 original single control (count halves vs \u03c1-weighted prediction) had a NON-FLAT NULL BY CONSTRUCTION (counts carry no \u03c1(t) gradient); caught AT SMOKE (amp 0.47 from ~290 counts/bin), control split CTRL-A/CTRL-B PRE-FULL-RUN, registered rule unchanged, NO treatment number entered any verdict through the amendment.\n\n**THREE-PASS CHAIN CLOSED (232 \u2192 241 \u2192 242):** feature found/stable (232) \u2192 real over exact Dickman baseline, no single binary carrier, routed to mixture model (241) \u2192 mixture fails, removal 0% (242).\n\n**NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM** \u2014 third orthogonal layer beside positional (228\u2013230) and left-edge composition (238\u2013240): REAL (241), STABLE (shift-invariant since 232), NON-DIVISIBILITY (here).\n\n**NAMED FOLLOW-UP: identify the non-divisibility carrier.** Pre-named candidates: (i) j-arithmetic beyond small-prime divisibility \u2014 higher-order residues of v, bit structure near the truncation boundary, quadratic-character/Legendre patterns mod p > 7; (ii) polynomial-sequence correlations \u2014 values-of-(j\u00b2\u2212N) smoothness biases beyond divisibility.\n\nBarrier framing: map-entry addition INSIDE the rate layer's baseline-shape question \u2014 residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, four-class rate closure, spike-origin arc untouched; refuted family (divisibility-rate mixtures as a positional explanation) removed from the search space at every scale; entry defined at fixed data geometry so its test transfers across bit lengths unchanged. Open unchanged: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity; PLUS the named follow-up; .2346 provenance flag still traveling.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp588c_{mixbase.py, smoke.log, full.log, result.json}`; paper `ResearchOutput/NewMathematics/242_MixtureBaseline.md`; notebook Part 284; assessment v349.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4061",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T22:46:21.540196+00:00",
     "title": "FACT round-87 #1 \u2014 MIXTURE-BASELINE (exp 588c FINAL): H0 \u2014 u*\u22480.65 excess SURVIVES full divisibility mixture (amp .177\u00b1.043 z=4.11\u2265bar, peak t=0.65 exact, removal 0%) \u2014 composition FLAT in t, rates real but t-independent \u2192 DIVISIBILITY IS A RATE DIAL NOT A POSITION DIAL; NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM; chain 232\u2192241\u2192242 complete; CTRL-B caveat z_cal=1.53<2 disclosed; named follow-up: find the non-divisibility carrier"
   },
@@ -2163,21 +2147,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-24T23:37:37.760304+00:00",
     "title": "FACT round-88 #1 \u2014 LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED \u2014 exp570's picture REPLICATES at bitlen 32 \u2014 cell found_p rates scale-stable at EVERY fraction (26: .65/.75/.60 vs 32: .75/.775/.75; z p=.33/.79/.15, CIs overlap), KS rejects uniformity ALL SIX cells (p\u2264.002; medians .073\u2013.293, late-tail \u226413%) \u2014 collision floor SUBDOMINANT quantified (first-curve 2.6\u00d7 baseline at (32,.125); found_q 9\u201316 vs found_p 24\u201331) \u2014 CHAIN CLOSED papers 215\u2192218\u2192244: low-B1 guarded-affine success = scale-stable order-completion firing early, no collapse toward 1\u2212exp(\u22121.44\u00b7B1/p) through bitlen 32"
-  },
-  {
-    "consumed_by_exp_id": "95a534e1",
-    "description": "Paper 243 \u00b7 round-87 #2 \u00b7 exp 592 U065-FRESH-SEED-GATE [FINAL] + AMENDMENT to paper 242.\n\nTonight's fresh-seed-gating lab rule applied to tonight's own newest output: paper 242's NEW MAP ENTRY (non-divisibility positional mechanism) rested on ONE seed lineage, so the identical pipeline (statistics verbatim exp588c, generation verbatim exp578 code path) was rerun on FRESH MASTER SEED 20260902.\n\n**Pipeline exonerated before statistics** (all gated checks passed; abort armed, never fired):\n- Generator regression vs STORED exp581/exp588c lineage: EXACT_MATCH \u2014 population windows int64-exact 128/128 Ns + chunk-0 stream membership/order walk.\n- Freshness ALL_DISJOINT vs ALL SIX prior lineages (20260824..28, 20260831), each regenerated in full; pairwise N-set disjointness asserted; sha256[:16] hashes recorded for every lineage.\n- CTRL-A machinery null clean at full size: amp 0.0221\u00b10.0092, maxdev all bins 0.0336.\n- Volumes matched: 9840 hits / 512k refs, mean 76.88 hits/N, g=34.44.\n\n**Verdict GATE-H0 FIRES \u2014 THE FEATURE DOES NOT REPLICATE** (pre-registered tree H1\u2192H0\u2192PARTIAL, units fixed pre-data):\n- amp_mix = 0.0742 \u00b1 0.0377; registered raw z_mix = 1.97; bootstrap CI95 [0.0451, 0.1959].\n- CTRL-B estimator-null amp_sim = 0.1398 \u00b1 0.0478 \u2192 calibrated excess \u22120.066 \u00b1 0.061 \u2192 **z_cal = \u22121.08** vs original z_cal +1.53 / raw 4.11 (paper 242).\n- H1 fails (z_cal < 2); H0 fires on registered second clause (z_cal < 1); CI-includes-0 clause NOT met \u2014 flagged, never resolved.\n- Decisive internal reading: fresh RAW amplitude SMALLER THAN THE FRESH MEASURED NULL BIAS (0.074 < 0.140) \u2014 a pure null draw produces amplitudes of the observed size. Even the UNMIXED peak vanishes (amp_orig 0.0148 vs 0.1163).\n\n**AMENDMENT to paper 242:**\n1. NEW MAP ENTRY (non-divisibility positional mechanism) AMENDED TO SINGLE-SEED-UNCONFIRMED.\n2. Original raw z = 4.11 FLAGGED POSSIBLY MAX-STATISTIC-SWEEP-INFLATED \u2014 paper 232's ~30-cell discovery sweep was itself a selection surface; two seeds bracket zero on the calibrated scale (+1.53 \u2192 \u22121.08) exactly as selection-plus-max-bias predicts. Flag, not proof; original stands as recorded lineage history.\n3. WHAT SURVIVES TWO-SEED: the \u03ba composition layer \u2014 top cell IDENTICAL (2|v\u22273|v\u22275|v\u22277\u2224v, 1.4315 vs 1.406), bottom cell IDENTICAL (all-cleared, 0.6491 vs 0.645), spread 0.649\u20131.432 vs 0.645\u20131.406 (~2% match, ~2.2\u00d7 modulation), composition FLAT in t both seeds (drift 0.204% vs 0.269%). **\"Divisibility is a RATE DIAL, not a position dial\" STANDS two-seed**; only its positional corollary is downgraded. Chain history 232\u2192241\u2192242 intact as lineage records.\n\n**Named reopens-condition (only door back in):** pre-registered SINGLE-HYPOTHESIS test at FIXED vertex u* = 0.65 \u2014 no sweep, no post-hoc vertex selection \u2014 on \u22653 POOLED independent fresh seeds, powered against the CTRL-B-calibrated scale.\n\n**Ledger catches:** smoke-grid CTRL-A maxdev trips on small-sample noise ALONE (smoke 0.1238 > 0.10 bar at 24 Ns\u00d720k/N \u2192 smoke correctly read ARTIFACT-CONTAMINATED/inconclusive per registered order; full-run 0.0336 passes; bar unchanged, disclosed). Smoothness spot-validation dropped as VACUOUS in-process (hits DEFINED by the validating tester). Hash-convention change disclosed (sha256[:16]-of-sorted-N-repr; disjointness rests on set disjointness). Regression direction scoped: validates the CODE PATH not the fresh data \u2014 correct for a freshness gate. findings.md ABSENT though brief listed it \u2014 result.json authoritative (inline-findings policy).\n\nWall 350.8 s; boot 2000 reps seed 20260901; positions npz sha256 a3aae281\u2026d146.\n\nBarrier framing: NEGATIVE replication gate REMOVES an entry rather than adding one \u2014 honest-map discipline applied to same-day output within hours of recording it; residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, four-class rate closure, spike-origin arc untouched; the surviving rate-dial law is scale-carrying (composition transfers across bit lengths unchanged). Open unchanged: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity; non-divisibility-carrier follow-up CLOSED unless the reopens protocol fires; paper 238's .2346 provenance flag still traveling.\n\nCount 580 \u2192 581; assessment v349 \u2192 v350. Artifacts: ResearchOutput/scripts/2026-08-24-round74/exp592_* ; paper ResearchOutput/NewMathematics/243_U065Gate.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4076",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T23:37:37.762080+00:00",
-    "title": "FACT round-87 #2 \u2014 U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES \u2014 feature DOES NOT REPLICATE on fresh seed 20260902 (amp .074\u00b1.038 raw z=1.97; null-calibrated z_cal=-1.08 vs original z_cal+1.53/raw 4.11); pipeline EXONERATED (generator EXACT_MATCH vs stored lineage, ALL_DISJOINT vs all six prior seeds, CTRL-A clean maxdev .034) \u2014 PAPER 242 ENTRY AMENDED SINGLE-SEED-UNCONFIRMED, z=4.11 flagged possibly max-statistic-sweep-inflated; kappa composition layer SURVIVES two-seed (top cell 2,3,5|v&7\u2224v and all-cleared bottom coincide, spread .649\u20131.432 vs .645\u20131.406); named reopen: single-hypothesis u*=0.65 test on >=3 pooled seeds"
   },
   {
     "consumed_by_exp_id": "10b0e429",
@@ -3280,20 +3249,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle b3980a1a (Q=0.820), which proved 110 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The included evidence kernel-checks inputs `1..20`. Larger bounds can be certified with efficient arrays and reflection, but no finite bound proves the universal conjecture.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_b3980a1a_a6b18868",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "b3980a1a",
-    "status": "available",
-    "timestamp": "2026-08-26T17:00:47.992792+00:00",
-    "title": "Deepening: Strengthen certified computation"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domains": [
       "NumberTheory"
@@ -4250,23 +4205,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Topology",
-      "Analysis"
-    ],
-    "id": "seed_121",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
     "consumed_by_exp_id": "",
@@ -10622,16 +10560,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Hilbert 12: Kronecker-Weber Generalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60d30491",
     "description": "Cycle 17b35eaf (Q=0.680) proved 3 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of",
     "domains": [
       "Novelty"
     ],
     "id": "sorry_fill_17b35eaf_0ca3803e",
+    "phase": "A",
     "priority_score": 0.73012,
     "research_mode": "team",
     "source_exp_id": "17b35eaf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T23:21:01.004895+00:00",
     "title": "Close Proofs: Temporal Logic of Proofs: When You Prove Something Matters"
   },
@@ -10789,6 +10728,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The single-modulus quantile law of the rescaled residue is now a theorem with an explicit O(1/M) Kolmogorov rate. The conjecture lifts it to a pool of moduli: the pooled law stays within 1/(2 s_min) of the same limit c.d.f., uniformly in the pool composition. It matters because it converts the degeneracy statement into a quantitative budget for every pooled positional test.\n\nFor any finite pool of moduli with smallest integer square root s_min, the pooled empirical c.d.f. of v/s^2 on the windows is within Kolmogorov distance 1/(2 s_min) of y -> (sqrt(1+y)-1)/2; hence any pooled positional-versus-magnitude separation statistic is O(1/s_min).\n\nAverage the per-modulus bound over the pool in Lean and check numerically on the 128 moduli of exp581 that the pooled deviation stays below 1/(2 s_min).\n\nNo pooled experiment at cryptographic scale can separate a positional from a magnitude kernel; positional claims need a different design entirely.\n\nPool composition creates deviations beyond the per-modulus rate, and cross-modulus mixing is itself a source of apparent structure that must be modelled.",
+    "domains": [
+      "Pythagorean",
+      "Combinatorics"
+    ],
+    "id": "fd_4296",
+    "priority_score": 0.711901098901099,
+    "research_mode": "team",
+    "source_exp_id": "1a774383",
+    "status": "available",
+    "timestamp": "2026-08-26T19:20:33.072984+00:00",
+    "title": "Cross-Modulus Mixture Law for Sieve Window Residues"
   },
   {
     "consumed_by_exp_id": "",
@@ -11179,6 +11133,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T07:48:07.547340+00:00",
     "title": "Autocorrelation Profile Realisation Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Within one modulus, position and magnitude coincide; identification comes only from cross-modulus variation. The conjecture quantifies that variation and predicts it vanishes exponentially in the bit length, so positional kernels are asymptotically unidentifiable at fixed bit length. It matters because it sets a hard information-theoretic limit on the whole positional-layer programme.\n\nFor a pooled design of M moduli of common bit length b, the Fisher information for a positional kernel parameter, orthogonalised against all magnitude kernels, is O(M 2^{-b/2}).\n\nCompute the orthogonalised Fisher information numerically for b = 24, 32, 40 and fit the exponent; then formalise the O(2^{-b/2}) upper bound.\n\nNo experiment at cryptographic bit lengths can detect a positional kernel; the layer must be probed at small b.\n\nPositional structure is detectable at scale and the search should be re-opened with larger M.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_4299",
+    "priority_score": 0.7111481481481482,
+    "research_mode": "team",
+    "source_exp_id": "1a774383",
+    "status": "available",
+    "timestamp": "2026-08-26T19:20:34.495105+00:00",
+    "title": "Exponential Decay of Positional Identification Power in Bit Length"
   },
   {
     "consumed_by_exp_id": "",
@@ -15096,6 +15065,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T11:46:18.899057+00:00",
     "title": "Quantitative Mismatch Angle from Peak Height"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Pooling constrains the alternative but also the null; only the latter is unbounded. The conjecture lower-bounds the null misspecification gap by a divergence between stratum nulls, implying pooled AICc can be inflated arbitrarily by refining strata while every stratum stays sub-bar. It matters because it turns an apparent paradox into a quantitative diagnostic.\n\nFor nested fits over B strata, pooled dAICc - sum of stratum dAICc >= G - 2(B-1), and G is at least the sum of chi-square divergences between each stratum null and the pooled null.\n\nFormalise the divergence lower bound for exponential-family nulls and instantiate it on simulated two-band Poisson data.\n\nPooled dAICc alone can never certify a component; matched strata become mandatory.\n\nPooled evidence carries stratum-level information after all, and the retraction of the persistence reading would need revisiting.",
+    "domains": [],
+    "id": "fd_4297",
+    "priority_score": 0.5932758620689657,
+    "research_mode": "team",
+    "source_exp_id": "1a774383",
+    "status": "available",
+    "timestamp": "2026-08-26T19:20:33.603178+00:00",
+    "title": "Null-Heterogeneity Dominance in Pooled Model Selection"
   },
   {
     "consumed_by_exp_id": "",
@@ -27716,6 +27697,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a geometric local density the relative edge weight of a band of 2m cells is exactly tanh(m log(1/r)/2). The conjecture extends this to regularly varying densities with local log-slope alpha, predicting exponential decay of the apparent edge component away from a truncation boundary. It matters because it predicts the observed sub-bar/absent pattern quantitatively rather than qualitatively.\n\nFor a density with local log-slope alpha at the truncation point, the relative edge weight of the adjacent band of width 2m satisfies w = tanh(alpha m / 2) (1 + o(1)), hence decays like exp(-alpha m).\n\nSandwich the density between geometric majorants and minorants with slopes alpha +- epsilon and formalise the two-sided bound.\n\nA closed-form null prediction for edge weights at any truncation, removing the need for post-hoc fits.\n\nThe boundary effect is not slope-local, and edge weights must be modelled globally.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4298",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "1a774383",
+    "status": "available",
+    "timestamp": "2026-08-26T19:20:34.045987+00:00",
+    "title": "Tanh Scaling of Truncation-Boundary Edge Weight"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -38029,6 +38024,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The criterion itself was closed during the cycle: a sweep attains the maximal effective\ndimension $2^{|P \\setminus \\{2\\}|}$ **iff** the numbers $p - 1$ over the odd primes of $P$ have\npairwise distinct subset products, and the prime set $\\{3,7,13\\}$ shows that the criterion bites,\nsince $(3-1)(7-1) = 13-1$. What remains open is the arithmetic classification. **The key insight\nis** that the effective dimension of a divisibility sweep is not a property of $P$ at all but of\nthe multiset $\\{p-1\\}$ as a *multiplicative Sidon system*, so the question becomes: for which\nsets of odd primes are the subset products of $p-1$ distinct, and what is the density of such\nsets among all $k$-subsets of the first $n$ primes? **Why now?** Selection-corrected inference\nover cell sweeps needs the effective count, and with the criterion settled the remaining question\nis a clean multiplicative-combinatorics problem, testable exhaustively for small $k$.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4300",
+    "priority_score": 0.44258253139399084,
+    "research_mode": "team",
+    "source_exp_id": "95a534e1",
+    "status": "available",
+    "timestamp": "2026-08-26T19:20:59.131375+00:00",
+    "title": "A. Which prime sets have distinct subset products?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All exact statements above concern *whole* periods. In a truncated window $[0, N)$ with $N$ not a\nmultiple of $L$, the count deviates from $N\\kappa(\\sigma)/L$ by a boundary term. **The key insight\nis** that inclusion\u2013exclusion writes the deviation as a signed sum of at most $2^{|P|}$ fractional\nparts, so the discrepancy is bounded by a constant depending only on $|P|$ \u2014 never on $N$ \u2014 and\nthe sharp constant should be $2^{|P|-1}$, attained at a window end aligned with the extremal cell.\n**Why now?** Every finite-sample estimate of a cell rate uses truncated windows, so the sharp\nboundary constant is exactly the deterministic part of the error budget that a calibrated null\nmust not absorb.\n\n(The no-go direction proposed for this slot in-cycle \u2014 exact independence of a cell from every\ncoprime-measurable statistic \u2014 was closed during the cycle and now appears above as an established\ntheorem rather than a conjecture.)",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4301",
+    "priority_score": 0.44258253139399084,
+    "research_mode": "team",
+    "source_exp_id": "95a534e1",
+    "status": "available",
+    "timestamp": "2026-08-26T19:20:59.601242+00:00",
+    "title": "B. Sharp discrepancy of cell counts in partial windows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The named condition for reopening the downgraded positional entry is a pre-registered\n**single-hypothesis** test at one fixed vertex \u2014 no sweep, no post-hoc vertex selection \u2014 on at\nleast three pooled independent fresh populations, powered against the estimator's own calibrated\nbaseline rather than against zero. The theorems specify exactly where such a claim could survive:\nat scales sharing a factor with the period, or through a carrier that is not a divisibility\nstatistic at all.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4303",
+    "priority_score": 0.4424880432361356,
+    "research_mode": "team",
+    "source_exp_id": "95a534e1",
+    "status": "available",
+    "timestamp": "2026-08-26T19:21:00.470325+00:00",
+    "title": "D. The reopening protocol for a positional carrier"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** The map `\u03b2(g, z) = log (discHoro (g \u2022 w) / discHoro w)` with\n`w = cayleyC z` defines a genuine `\u211d`-valued cocycle on `SL(2,\u211d) \u00d7 \u210d` whose\ncoboundary class is trivial exactly on the parabolic subgroup fixing `\u221e`, i.e. the\nkernel of the class is precisely the set `{\u00b1 transMat t}` identified by\n`horocycle_preserving_iff_translation`.\n\n**The key insight is** that `horocycle_preserving_iff_translation` is really the\nstatement `\u03b2 \u2261 0 \u2194 g = \u00b1 transMat t`, so the theorem already computes the kernel of a\ncocycle that has not yet been named; naming it converts a matrix identity into a\ncohomological invariant.\n\n**Why now?** The formalisation gives the kernel exactly (both directions), which is the\nhard half of any cocycle-class computation; the cocycle identity itself follows from\n`mobius_mul`, also already proved.\n\n---",
     "domains": [
       "Algebra",
@@ -40802,6 +40842,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The valuation ladder is the first step past squarefree periods: refining $p \\mid v$ to\n$v_p(v) = e_p$ leaves the numerator $\\prod (p-1)$ frozen and multiplies the denominator by a pure\npower. The natural next question is the analogue of the coprime no-go theorem for valuation cells\nat auxiliary scales that are *not* coprime to the refined period, where the interaction is\nexpected to be governed entirely by the greatest common divisor of the two periods \u2014 quantifying\nexactly how much positional information a divisibility statistic can carry when the scales are\nallowed to interact.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4302",
+    "priority_score": 0.4119610999290549,
+    "research_mode": "team",
+    "source_exp_id": "95a534e1",
+    "status": "available",
+    "timestamp": "2026-08-26T19:21:00.041660+00:00",
+    "title": "C. Valuation cells at non-coprime auxiliary scales"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "over `\u2124`: if `|A+A| \u2264 3|A| - 4` then `A` lies in an\n   arithmetic progression of length `|A+A| - |A| + 1`.  This alone would upgrade the main\n   theorem from \"`A`, `B` progressions\" to \"`A`, `B` of doubling `< 3`\", which is the\n   regime where the union bound is genuinely tight.",
     "domains": [],
     "id": "fd_2916",
@@ -42587,15 +42641,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Open here; NP-membership is *proved* in the sense that the problem has a succinct"
   },
   {
-    "consumed_by_exp_id": "ec22ae02",
+    "consumed_by_exp_id": "",
     "description": "The finite-state class and its bound were constructed this cycle\n(`fsmClass`, `shtarkovSum_fsmClass_le`), so the family `k(n)` is definable\ninside the framework, and `shtarkovSum_ge_packing` is exactly the tool needed\nfor the lower bound.",
     "domains": [],
     "id": "fd_1530",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3eeb9235",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T13:57:41.361758+00:00",
     "title": "The finite-state class and its bound were constructed this cycle"
   },
