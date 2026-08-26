@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-08-26T19:21:00Z",
-  "count": 17,
+  "archived_at": "2026-08-26T23:34:11Z",
+  "count": 18,
   "directions": [
     {
       "id": "fd_3695",
@@ -670,6 +670,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 297
+    },
+    {
+      "id": "fd_3729",
+      "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*) = -0.40, R2 = 0.004; code highest TPW lowest knee, French near-English TPW highest knee",
+      "description": "## NET-73 — limited-memory axis, round 26 (paper 158, ResearchOutput/exp_net73_tpw.py, /tmp/net73.log)\n\n**Verdict name: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT.**\n\n### Result\nTokens-per-word across 5 domains (Qwen's own BPE, 5000-word samples) correlated with known knees:\n\n| domain | TPW | k\\*@512 | expected from TPW |\n|---|---|---|---|\n| code | **1.950** | **12** | should be HIGHEST ✗ |\n| prose-de | 1.885 | 20 | second-highest ✓ |\n| prose-fr | 1.246 | **>32** | should be near-English ✗ |\n| math | 1.214 | 16 | near-English ✓ |\n| prose-en | 1.173 | 16 | lowest ✓ |\n\nSpearman ρ = **−0.40** (wrong sign); linear fit R² = **0.004**.\n\n- **P1 REFUTED**: rank correlation is negative, not ≥0.9.\n- **P2 REFUTED**: R² is zero, not ≥0.8.\n- **P3 CONFIRMED decisively**: TPW is insufficient — the mechanism is NOT tokenization density.\n\nFrench extended grid: k\\*(fr@512) ≤ 32 (the knee exists, just far above the original ceiling).\n\n### The law\nThe strongest counterexample kills the tokenization hypothesis: code has 1.66× English's TPW yet needs FEWER keys; French has ~1.07× English's TPW yet needs ≥2× more keys. The domain mechanism is NOT surface-level token counting — it is the RELATIONAL/SEMANTIC structure of attention patterns within each domain. NET-58/69 already bound those explanations as relational, not intrinsic to key identity.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean — first mechanism-test for the domain shift; (c) confronted — 5 domains, 5000-word samples, one tokenizer stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET73; (g) fair; (h) DIRECT.\n\n### Next\nAttention-pattern structural analysis (what IS the domain mechanism?); sub-32 French @1024; 0.5B @4096; 7B cell.\n\nNow 73 network experiments. Assessment v73. Paper 158.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "0c164125",
+      "timestamp": "2026-08-22T19:36:57.211750+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.1,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-23T02:02:03.493205+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 313
     }
   ]
 }

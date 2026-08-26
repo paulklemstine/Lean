@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "80241759",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Parameter-derived depth (Physics, cycle v19c)\n\n## What this cycle established\n\nFor a concrete branching number `B` and a concrete information threshold `T`, the largest\nsupported",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 110,
-      "timestamp": "2026-08-25T03:14:24",
-      "title": "Parameter-derived depth"
-    },
-    {
       "cycle_id": "22848dce",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Quartet Codes and Common Agreement\n\nThis cycle formalized the coding-theoretic reformulation of the common-quartet problem: a\nphylogenetic tree becomes a word in the ternary cube",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-26T19:21:10",
       "title": "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES — feature DOES NOT REPLICATE "
+    },
+    {
+      "cycle_id": "40d19005",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Square-core stack polyominoes\n\nThe formalized development (`Catalog/Physics/StackSquareCore*.lean`) establishes:\nthe combinatorial decomposition `a(n) = Σ_{k²≤n} Σ_{i+j=n-k²} p_{",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 122,
+      "timestamp": "2026-08-26T23:34:23",
+      "title": "OEIS sequence: Stack polyominoes with square core."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a23b48bf",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — after closing the converse of finite Poisson summation\n\nThis cycle closed the open converse: the exact Poisson identity\n`|G| ∑_{x∈S} f = |S| ∑_{ψ∈S^⊥} f̂` holds for all `f` **iff",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-08-19T23:36:56",
-      "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
-    },
     {
       "cycle_id": "daf80a32",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-26T19:21:10",
       "title": "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES — feature DOES NOT REPLICATE "
+    },
+    {
+      "cycle_id": "40d19005",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Square-core stack polyominoes\n\nThe formalized development (`Catalog/Physics/StackSquareCore*.lean`) establishes:\nthe combinatorial decomposition `a(n) = Σ_{k²≤n} Σ_{i+j=n-k²} p_{",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 122,
+      "timestamp": "2026-08-26T23:34:23",
+      "title": "OEIS sequence: Stack polyominoes with square core."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "217690eb",
-      "domain": "MachineLearning",
-      "name": "dot_sub_left",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "733effba",
-      "domain": "Algebra",
-      "name": "sample_midpoint",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "733effba",
-      "domain": "Algebra",
-      "name": "midpoint_concave",
-      "quality": 0.82
-    },
     {
       "cycle_id": "733effba",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "card_range_residue",
       "quality": 0.81
+    },
+    {
+      "cycle_id": "40d19005",
+      "domain": "Physics",
+      "name": "stackSC_strictMono",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "40d19005",
+      "domain": "Physics",
+      "name": "sqrt_lt_natSqrt_add_one",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "40d19005",
+      "domain": "Physics",
+      "name": "log_stackSC_ge",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-26T19:21:10",
+  "last_updated": "2026-08-26T23:34:23",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "db2f2b2f",
-        "quality": 0.9,
-        "theorems": 426,
-        "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonan"
-      },
-      {
         "cycle_id": "63d0d6e2",
         "quality": 0.82,
         "theorems": 118,
@@ -3761,6 +3755,12 @@
         "quality": 0.86,
         "theorems": 5,
         "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagore"
+      },
+      {
+        "cycle_id": "40d19005",
+        "quality": 0.84,
+        "theorems": 122,
+        "title": "OEIS sequence: Stack polyominoes with square core."
       }
     ],
     "Probability": [

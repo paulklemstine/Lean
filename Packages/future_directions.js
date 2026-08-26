@@ -2019,7 +2019,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
   },
   {
-    "consumed_by_exp_id": "ae05145b",
+    "consumed_by_exp_id": "feee5d03",
     "description": "Exp 572 \u00b7 paper 217 \u00b7 assessment v324 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp572_ma1_signed.py \u00b7 seed 572 \u00b7 wall 6.96 s.\n\n**Question.** Paper 213/exp566 closed the MAGNITUDE route of MA-1 effectivity (|L(1,\u03c7)| does not predict |AP deviations|, R\u00b2=0.019) but preserved the SIGNED route: do signs of character-twisted prime-count deviations align with signs predicted by computable character data? A yes would be the first computable handle on AP-deviation structure.\n\n**Key structural disclosure** (post-smoke, pre-full-data): L(1,\u03c7)>0 for EVERY real non-principal \u03c7 (class-number formula) \u21d2 sign(w)\u2261+1 identically (n_cells_w_negative=0 at full scale), so registered criterion C1 reduces exactly to Pr[c_\u03c7>0] and could only fire if prime twists were majority-positive. Working identity asserted exact (<1e-9): c_\u03c7 = \u03a3_a d_a\u00b7\u03c7(a) = \u03a3_{p\u2264x} \u03c7(p); the uniform-li theory term vanishes identically by orthogonality, so signed L(1,\u03c7) is the only computable x-independent theory weight.\n\n**Design.** x=2\u00b2\u2076 full (\u03c0(x)=3,957,809); 287 moduli (squarefree [3,300] \u222a primes [307,997]); 491 real-char cells; 86,882 unit classes; machinery verbatim from exp566 (class-number exact D<0 |D|\u2264400, truncated-L otherwise, median rel err 1.8e-5); CP95 intervals + within-modulus d-shuffle null (2000 draws \u2014 MEANINGFUL here unlike exp566 since sign(c) is not permutation-invariant in a).\n\n**Result H0 \u2014 both criteria fail, both levels.** Cell agreement 15.07% over 491 cells (74 agree), CP95 [0.1202, 0.1855], circular-sum z=\u221252.72 (C2 needs >3). Class level 48.74% over 86,882 classes, CP95 [0.4841, 0.4907], permutation z=\u22127.74 \u2014 significantly BELOW chance (mild anti-alignment). Breakdowns all CIs wholly below 50%: prime-modulus quadratics 26.9% (167), product chars \u03c9\u22652 8.95% (324), exact-L 12.8% (226), truncated-L 17.0% (265), drop-|w|<1e-3 robustness unchanged.\n\n**Named byproduct** (labeled exploratory, not pre-registered): prime twists NEGATIVE in 84.7% of cells (CP95 [0.8123, 0.8779]; smoke x=2\u00b2\u00b2 read 91.7%) \u2014 the universal Chebyshev/Rubinstein\u2013Sarnak low bias, independently confirmed inside the lab's own AP-deviation machinery at x=2\u00b2\u2076. Deviation signs are one-directional across moduli and zero-driven, NOT carried by any computable L-value \u2014 precisely why no L-based predictor can track them.\n\n**Ledger.** (1) m=6 orthogonality assert exposed the raw-primitive-twist \u00b11 correction for primes p|m, p\u2224cond(\u03c7) (max corr 3, 0 sign flips induced \u2014 disclosed, not corrected); (2) class-z scale mix-up fixed (\u2212310 \u2192 single-scale \u22127.74); (3) exp566's 'within-modulus shuffle vacuous' caveat verified NOT to transfer here.\n\n**Barrier framing.** Closes barrier-map residual 'MA-1 effectivity' as a named question: no computable criterion via quadratic-character structure on either route (magnitude paper 213, sign here) at toy scale; the averaging identity's effective scope remains non-computable from N; consistent with barriers 4/5. No breakthrough.",
     "domains": [
       "Novelty"
@@ -2091,17 +2091,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #5 \u2014 SCALE-U9-LIFT: randomness extends through u\u224811 toward the Dickman leading-term regime (H1-consistent null with sub-1 tension); paper 209 D-death amended to indicator starvation"
   },
   {
-    "consumed_by_exp_id": "5f8c29e6",
+    "consumed_by_exp_id": "",
     "description": "Round-75 #4 \u00b7 THEORY deliverable (no new experiment id) \u00b7 paper 219 \u00b7 assessment v326.\n\n**What was recorded.** The verified draft of the POSITIONAL/MAGNITUDE stratum of the barrier-4 converse (`ResearchOutput/scripts/2026-08-24-round74/barrier4_positional_converse_draft.md`), independently rechecked per `verify_t1_t2_recheck.json` against the author's own finite checks `exp574b_saturation_check.py`/`exp574b_result.json`. Recorded as DRAFT-WITH-CAVEATS per verifier recommendation \u2014 NOT a sealed theorem.\n\n**T1 (fixed-window oracle).** CERTIFIED-SILENCE law S_A = 1/[\u03bc\u00b7P_hit + (1\u2212P_hit)(1\u2212\u03bc)] exact for protocol A committed policy (finite-M rational, 0 recheck failures). The DRAFTED fire-or-silent form 1/(1\u2212(1\u2212\u03bc)P_hit) is SUPERSEDED \u2014 non-certifying silence wastefully re-scans R; 14 algebra consistency failures caught. Protocol B optimal response S_B = 1/(1+\u03bc\u2212P_hit) \u2264 S_A; block-first dominance UNCONDITIONAL for protocol A, RESTRICTED to P_hit \u2265 \u03bc for protocol B (exhaustive orders + insertion sweep M\u2208{16,33,64}; all 12 counterexamples have P<\u03bc). Cap = 1/\u03bc at P_hit=1; NO constant cap exists.\n\n**T2 (adaptive saturation).** V(W) = log\u2082W + \u00bd EXACT on every dyadic W \u2208 [2,4096] (independent DP reproduction); general-L closed form an upper bound never crossing \u2212\u00bd to L=4096 (deepest undercut \u22120.499349 @ L=3073); cost-offset bracket corrected to [.415,.5011]; marginal-value identity rewritten as exact NET form cost(k)\u2212cost(k+1)=W/2^(k+2)\u22121 (250/250 cells) after drafted GROSS form failed 231 cells; census C*=19.5@2^19 / 20.5@2^20, argmin offsets {\u22122,\u22121} \u2260 k_pin=log\u2082W \u2014 and exp563's economic optimum is a THIRD convention ~1 query above k_opt: three distinct k's must stay distinguished.\n\n**Conjecture D (SET/COST dichotomy).** S(\u03a0)=S(R\u2218F)=S(R)\u00b7S(F), sup_F S(F)=4/3 (\u03b8=1/2), S(R) \u2264 min(1/\u03bc_eff, 2^k_bits). Residue cap 4/3 governs COST-class actions; position works the SET-class tail. All four measured anchors feasible under \u03bc \u2264 1/S: 5.19\u00d7 \u2261 (.05,.85), 6.91\u00d7 \u2261 (.05,.9003), 4.35\u00d7 \u2261 (.05,.8106), 29.1\u00d7 \u2261 (.02,.9853); identity check: paper-138 master law at uninformative point \u2261 paper-132 formula exactly. 5.19\u00d7 > 4/3 is CLASS-CROSSING, NOT cap-breaking \u2014 barrier map internally consistent.\n\n**Verification census.** Zero arithmetic errors across all numeric claims (stored-value discrepancies: none); ~60% of PROVEN upgraded to VERIFIED where independently recomputed. Named GAPs remain, load-bearing: L4 stratum measure \u0394(\u03c0,R), L7 extremality of sqrt-descending among N-computable orders (Siegel-type ineffectivity expected), L8 k-naming. These are the formal program's next work.\n\nCount unchanged by experiment (papers-only bump, convention stated in addendum): still 561 experiments (max id 572), papers now 219, assessment v325 \u2192 v326.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3981",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T10:55:32.772786+00:00",
     "title": "FACT round-75 #4 \u2014 BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of the barrier-4 converse recorded as DRAFT-WITH-CAVEATS \u2014 certified-silence law S_A=1/[\u03bcP+(1\u2212P)(1\u2212\u03bc)] supersedes drafted fire-or-silent form (14 algebra failures caught by independent verification); T2 saturation V=log\u2082W+\u00bd exact on dyadic W\u2208[2,4096]; Conjecture D factors S(R\u2218F)=S(R)\u00b7S(F) with sup_F=4/3 \u2014 residue cap 4/3 governs COST-class actions while position works the SET-class tail: 5.19\u00d7>4/3 is class-crossing not cap-breaking; zero arithmetic errors in recheck; named GAPs L4/L7/L8 are the next work"
   },
@@ -2164,17 +2163,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-92 #1 \u2014 F1-TIGHTNESS-CONNECTION (THEORY, no new physics): BOUND-SLACK-BY-X = 1.15 [1.10, 1.22] ON MEASURED DATA; EQUALITY PROVABLY UNATTAINABLE \u2014 paper-225 F1 master inequality connected to measured positional profile: Lam=0.766 (verified 0.765671), Theta_asc=0.867 [0.8193,0.9076], qhat unidentified; pi-flat equality REFUTED three ways (KS p=7e-76 / LRT p=9e-10 / binning-free p=1e-21) => no realizable policy attains the bound; gap X=C0/C_sort=1.15302 [1.10175,1.22054] policy-independent via identity chain; TIGHTNESS-CIRCULARITY CATCH: all four legacy anchors' P_hat are law inversions with Lam*Theta~=1.00-1.04 BY CONSTRUCTION \u2014 anchor tightness not-currently-decidable; DECIDABLE CLOSER named: scan-simulation on exp578 npz predicts S~=1.31 vs bound 1.51 (two-sided); independent verifier PASS 3/3, 0 discrepancies"
   },
   {
-    "consumed_by_exp_id": "706f4225",
+    "consumed_by_exp_id": "",
     "description": "Paper 249 (ResearchOutput/NewMathematics/249_ConsecutiveVDependency.md). Executes exp 598's pre-registered H0 route.\n\n**Design** (pre-registered before analysis): hit-indicator autocorrelation lags 1\u201320 in mid-window u \u2208 [0.55,0.75], nb=1000 (robustness 500/2000); Amendment 0 pre-data \u2014 PRIMARY = per-batch quadratic-detrended \u03c1 + MC-calibrated runs Z against pooled density curve p\u0302(u); SECONDARY literal global-mean; H1 iff |\u03c1| > 0.05 AND cluster-over-Ns CI excludes 0 at some lag, OR runs |Z| > 3.2905 (p < 0.001). Controls pre-committed: C1 ctl null both variants; C2 synthetic smooth-hump iid at rate curve; C3 injected lag-1 dependence must detect. Data: exp581_regen_positions.npz (sha256 0b1afa50\u202636a38; 128 batches, 9,594 hits, no N stored \u2014 purely positional). Boot/MC 2000 reps each, seed 599_20260828; wall 31.4 s.\n\n**Verdict H0_PURE_DENSITY**: detrended \u03c1(lag) \u2208 [\u22120.0199, \u22120.0023] (max |\u03c1| = 0.020 << 0.05), flat/slightly negative \u2014 no refractory dip, no excitation bump; per-lag MC-vs-density-curve p \u2208 [0.128, 0.969]; SECONDARY even more null (\u03c1_raw \u2208 [\u22120.0103, +0.0046]); runs null BOTH readings (textbook Z = +0.850 p\u22480.40; MC-calibrated Z = +0.894 p\u22480.37; ctl Z = \u22120.454). Robustness nb500 max|\u03c1_det| = 0.036, nb2000 0.016.\n\n**Controls all met**: C1 null (.009 raw/.020 det); C2 synthetic-hump ALSO null on secondary (max .014 @lag17, pooled_Z +0.60) \u21d2 curvature confound quantitatively immaterial \u2014 conditioned and literal readings AGREE, verdict not amendment-dependent; C3 injected lag-1 DETECTED MASSIVELY (\u03c1_det(lag1)=0.337, argmax exactly 1, pooled_Z \u221257.4) \u21d2 null means \"no dependency\", not \"test blind\".\n\n**CONSEQUENCE (terminal characterization)**: given position, neighboring hits carry NO information about each other \u2014 the u* \u2248 0.65 excess is pure density/rate heterogeneity along the scan axis. Thread closure chain: excess real on home seed (papers 239/241) \u2192 divisibility a rate dial not position dial (242) \u2192 no j-arithmetic carrier (248) \u2192 no sequence structure (HERE). Hit-position thread papers 228\u2013230 \u2192 231 \u2192 238/240 \u2192 241\u2013242 \u2192 248 CLOSES COMPLETELY. Operational law: future gains come from modeling the positional DENSITY CURVE itself, never Markov/neighborhood structure. Scope honest: holds where the excess manifests (seed-20260828 lineage); exp592/#391 \u22653-pooled-seed amplitude test remains open \u2014 machinery transfers unchanged if an excess re-establishes elsewhere.\n\n**Ledger catches**: seed-20260828 ctl regeneration via two canonical recipes BOTH mismatch ctl_0 \u2014 recipe not recoverable from allowed reads; provenance rests on sha256 (disclosed). RECORD-TIME CORRECTION: findings' \"every CI straddles 0\" overstates \u2014 result.json shows 12/20 detrended CIs exclude zero on the NEGATIVE side, upper ends \u2264 0.0083 (raw 19/20 straddle; uniform ~\u22120.01 offset mirrored ~+0.01 on controls \u2014 opposite-sign shared-magnitude artifact, not structure); verdict unaffected (H1 required |\u03c1| > 0.05 AND CI exclusion JOINTLY).\n\nBarrier framing: none \u2014 terminal characterization inside the mapped positional stratum. Open unchanged: u \u2265 6\u201314 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, external-hint laws, quantum closed; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4078",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-25T01:54:45.653750+00:00",
     "title": "FACT round-91 #2 \u2014 CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY \u2014 mid-window hits INDEPENDENT given position \u2014 lag profile lags 1\u201320 flat/slightly negative \u03c1 \u2208 [\u22120.020, \u22120.002] vs 0.05 bar (MC p 0.128\u20130.969), runs null both readings (Z +0.85 textbook / +0.89 density-calibrated vs 3.29), POWER CONFIRMED (injected lag-1 \u03c1_det = 0.337 detected at argmax exactly lag 1) \u2014 u* \u2248 0.65 excess = PURE DENSITY / rate heterogeneity, NO sequence structure \u2014 POSITIONAL THREAD CLOSES COMPLETELY (228\u2013230 \u2192 231 \u2192 238/240 \u2192 241\u2013242 \u2192 248)"
   },
@@ -4205,39 +4203,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Analysis",
-      "Logic"
-    ],
-    "id": "seed_126",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "seed_155",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
     "consumed_by_exp_id": "",
@@ -12852,19 +12817,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723)."
   },
   {
-    "consumed_by_exp_id": "40d19005",
-    "description": "Investigate the sequence Stack polyominoes with square core. with terms 1,1,0,0,1,2,3,4,5,7,9,13,17,24,31,42,54,71,90,117,147,188,236,298,371,466,576,716,882,1088,1331,1633. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
-    "domains": [],
-    "id": "fd_3896",
-    "phase": "A",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "oeis:188674",
-    "status": "in_progress",
-    "timestamp": "2026-08-23T23:38:07.786000+00:00",
-    "title": "OEIS sequence: Stack polyominoes with square core."
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domains": [
@@ -14982,15 +14934,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sub-Step Tokenizer Tax Below the Grid Resolution"
   },
   {
-    "consumed_by_exp_id": "f7aa6fdd",
+    "consumed_by_exp_id": "",
     "description": "With both ceilings known, define a statistic's efficiency as reading^2 divided by its tie ceiling. At bitlen 52 the dial has efficiency 0.58 and the count baseline 0.41. Conjecture that this efficiency gap lower-bounds the extra mutual information the 2-adic valuation carries about the response, via a Fano-type inequality for rank correlations.\n\nFor any response Y and statistics T, C on the same sample, eff(T) - eff(C) <= c * (I(T;Y) - I(C;Y)) for an absolute constant c, where eff denotes squared Spearman reading divided by tie ceiling.\n\nFormalise efficiency in the existing tie-profile framework, prove the data-processing direction first (C a function of T implies eff(C) <= eff(T)), and calibrate c on the recorded bitlen-52 pair.\n\nThe dial's advantage becomes a certified information statement rather than a correlational one, and the validation band acquires an information-theoretic meaning.\n\nRank efficiency and mutual information are not comparable, so dial advantages must be reported strictly as rank statistics.",
     "domains": [],
     "id": "fd_3879",
-    "phase": "A",
     "priority_score": 0.593360655737705,
     "research_mode": "team",
     "source_exp_id": "147eac16",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-23T19:35:41.958035+00:00",
     "title": "Efficiency Gap as an Information Lower Bound"
   },
@@ -16160,6 +16111,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "It is proved that log a(n)/n \u2192 0, in contrast with the exponential growth of unrestricted polyomino counts. This places square-core stacks in the Hardy\u2013Ramanujan class of one-dimensional interface models and suggests the constrained ensemble has the classical partition limit shape after \u221an scaling.\n\nThe rescaled column-height profile of a uniformly random square-core stack of area n converges, after dividing both coordinates by \u221an, to the Vershik curve e^{-cx} + e^{-cy} = 1 with c = \u03c0/\u221a6, symmetrized about the core.\n\nCombine the proved layer decomposition with known limit-shape results for partitions with bounded parts, conditioned on the two slopes having parts \u2264 k-1 with k \u2248 0.5404\u221an.\n\nThe square-core constraint is asymptotically invisible at the level of the limit shape, confirming universality of the Vershik curve for constrained interfaces.\n\nThe core imposes a macroscopic plateau, producing a genuinely new limit shape with a flat segment of length proportional to \u221an.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4308",
+    "priority_score": 0.5647412683708043,
+    "research_mode": "team",
+    "source_exp_id": "40d19005",
+    "status": "available",
+    "timestamp": "2026-08-26T23:34:11.102829+00:00",
+    "title": "Zero Entropy Density and Limit Shape of Constrained Interfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every McKay-Thompson head coefficient should be derivable, like the 1A entry proved here, from an eta-quotient q-expansion checked by the Lean kernel. The pipeline uses only unit-ness of eta products in Z[[X]], never modularity. Completing it would convert the 194-entry head table from quoted data into verified data.\n\nFor each of the 194 conjugacy classes g of the Monster there is an integral exponent vector r with (prod_d eta(d tau)^{r_d}) + const having q-coefficient c_g(1), and the truncation identity mod q^8 is kernel-decidable.\n\nDefine etaQuotient for an arbitrary exponent vector, reprove unit-ness and truncation stability by the existing AgreeBelow calculus, and discharge class 2A end to end before looping over all classes.\n\nThe head conjecture becomes a single decide over 194 verified integers via head_check_iff.\n\nThe classes without eta-quotient hauptmoduln isolate where genuinely modular input is unavoidable.",
     "domains": [
       "Algebra",
@@ -16337,6 +16303,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T08:01:09.317927+00:00",
     "title": "Censoring Threshold as a Pre-Registration Design Rule"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Numerically a(n) \u2264 p(n) for all n \u2264 200. The Durfee square identity expresses p(n) as the same layered sum as a(n) but with Euler products truncated one step later, giving coefficientwise domination. Formalizing this would also produce a Lean proof of the Durfee square identity itself.\n\nFor every n, a(n) \u2264 p(n); more precisely p(n) = \u03a3_{k\u00b2\u2264n} \u03a3_{i+j=n-k\u00b2} p_{\u2264k}(i) p_{\u2264k}(j), and a(n) is the same sum with p_{\u2264k-1} in place of p_{\u2264k}.\n\nFormalize the Durfee square bijection between partitions of n and triples (k, \u03bb, \u03bc) with \u03bb, \u03bc partitions with parts \u2264 k and |\u03bb|+|\u03bc| = n-k\u00b2, then compare layer by layer using the already proved pb b m \u2264 pb (b+1) m.\n\nSquare-core stacks embed quantitatively inside partitions, and every upper bound for p(n) transfers to a(n).\n\nSome layer of the stack decomposition overshoots its Durfee counterpart, which would reveal an unexpected overcounting in the stack model.",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_4305",
+    "priority_score": 0.5646552636698462,
+    "research_mode": "team",
+    "source_exp_id": "40d19005",
+    "status": "available",
+    "timestamp": "2026-08-26T23:34:09.433346+00:00",
+    "title": "Durfee-Square Domination by the Partition Function"
   },
   {
     "consumed_by_exp_id": "",
@@ -16697,6 +16678,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T08:01:08.486267+00:00",
     "title": "Binning-Invariant Spike Functional"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved bounds give log a(n) \u224d \u221an with constants 0.34 and 30. The data and a saddle-point computation both predict the exact asymptotic log a(n) ~ \u03c0\u221a(2n/3), the same constant as for the unrestricted partition function. Establishing it would identify the universality class of the model exactly.\n\nlog a(n) / \u221an \u2192 \u03c0 \u221a(2/3) as n \u2192 \u221e, where a(n) is the number of stack polyominoes of area n with square core.\n\nStrengthen the two-regime estimate of \u03a3_{i=1}^b -log(1-x^i) in StackSquareCoreSharp.lean to the integral bound \u03c0\u00b2/(6t) at x = e^{-t}, then optimize t = \u03c0/\u221a(6n); for the lower bound, restrict the layer sum to k \u2248 0.5404\u221an and bound below by a single Euler-product term.\n\na(n) is asymptotically as large as p(n) on the exponential scale, so the square-core constraint costs only a subexponential factor.\n\nThe core constraint changes the free energy, and the constant would identify a new universality class for shape-constrained interfaces.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4304",
+    "priority_score": 0.564048239418888,
+    "research_mode": "team",
+    "source_exp_id": "40d19005",
+    "status": "available",
+    "timestamp": "2026-08-26T23:34:08.888780+00:00",
+    "title": "Hardy\u2013Ramanujan Constant for Square-Core Stacks"
   },
   {
     "consumed_by_exp_id": "",
@@ -27708,6 +27704,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T19:20:34.045987+00:00",
     "title": "Tanh Scaling of Truncation-Boundary Edge Weight"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The higher-order convexity guess of the previous cycle is refuted: the third core layer conv 2 is an exact quasi-polynomial of degree 3 and period 2, whose third difference equals -(t+2) at 2t and +(t+3) at 2t+1, and a itself fails 3-convexity at n = 7. The data instead show a rigid parity law for the sign of the third difference of a, which is the natural replacement conjecture.\n\nFor every odd n \u2265 7, a(n+3) + 3a(n+1) < 3a(n+2) + a(n), and for every even n \u2265 8 the reverse strict inequality holds; equivalently sign(\u0394\u00b3a(n)) = (-1)^n for n \u2265 7.\n\nExtend the exact quasi-polynomial computation from conv 2 to conv b via the b-step peeling recurrence generalizing conv_two_step, isolate the period-2 component of each layer, and bound the contribution of layers with k \u2265 C n^{1/2} by the uniform Rankin estimate; check the pattern numerically far beyond the 32-term table.\n\nThe counting function has an exactly periodic third-difference sign law, a strong rigidity statement for a sequence with no product formula.\n\nThe first n where the parity law fails marks the point where a layer of period > 2 overtakes the period-2 component, quantifying the arithmetic depth of the model.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4306",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "40d19005",
+    "status": "available",
+    "timestamp": "2026-08-26T23:34:10.015238+00:00",
+    "title": "Parity-Alternating Third Differences of Square-Core Counts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The layer decomposition makes the core size k a random variable under the uniform measure on square-core stacks of area n. Saddle-point analysis predicts concentration at k \u2248 (log 2)\u221a(6n)/\u03c0 with fluctuations of order n^{1/4}, matching the observed maximizing layers at n = 100 and 200.\n\nUnder the uniform measure on square-core stacks of area n, k/\u221an \u2192 (log 2)\u221a6/\u03c0 \u2248 0.5404 in probability, and (k - c\u221an)/n^{1/4} converges to a centered Gaussian.\n\nProve exponentially small tail bounds for layers with k \u2265 C\u221an and k \u2264 \u03b5\u221an using the uniform bound log p_{\u2264b}(m) \u2264 8\u221am + 12, then a local expansion of the layer free energy.\n\nThe square core behaves as a sharply concentrated order parameter, giving a genuine limit theorem for a shape-constrained polyomino ensemble.\n\nThe measure spreads over many core sizes, which would signal a degenerate or first-order transition instead of the predicted smooth saddle.",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_4307",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "40d19005",
+    "status": "available",
+    "timestamp": "2026-08-26T23:34:10.556176+00:00",
+    "title": "Core-Size Concentration and Its Fluctuation Scale"
   },
   {
     "consumed_by_exp_id": "",
@@ -41550,14 +41575,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cram\u00e9r\u2013Rao as Mathlib Cauchy\u2013Schwarz* (previously Conjecture 3)."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86a4e9bb",
     "description": "If `F` has an abundant element `x` and `x \u2208 F.sup id`, then `x` remains abundant after adjoining `F.sup id` to `F`. The parity of `F.card` makes this claim directly falsifiable and should reveal the exact additional hypothesis needed if it fails.",
     "domains": [],
     "id": "fd_2690",
+    "phase": "A",
     "priority_score": 0.4024871794871795,
     "research_mode": "team",
     "source_exp_id": "7edbd52d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:33.397781+00:00",
     "title": "Adjoining the top member preserves a witness"
   },
@@ -42230,15 +42256,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`."
   },
   {
-    "consumed_by_exp_id": "ff88fece",
+    "consumed_by_exp_id": "",
     "description": "Both endpoints of the trade-off are now formal theorems in this\nrepository (`decode_cost` + `failSet_prob_le` at one end,\n`blockDecode_cost` + `blockFail_prob_le` at the other); only the interpolation\nand its converse are missing.",
     "domains": [],
     "id": "fd_1478",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "be7c0bd7",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T03:09:00.743392+00:00",
     "title": "Both endpoints of the trade-off are now formal theorems in this"
   },
@@ -44383,15 +44408,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "S3 (resolved during this cycle)"
   },
   {
-    "consumed_by_exp_id": "a9db64dd",
+    "consumed_by_exp_id": "",
     "description": "The exact count along the self-similar scale `X = d\u00b7\u2113^m` is already proved\n(`QKummer.sum_card_row_not_dvd_qBinom`), so what remains is purely the interpolation between\nconsecutive scales \u2014 the classical oscillating-constant phenomenon, with no `q`-dependence.",
     "domains": [],
     "id": "fd_1717",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "18b02a30",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T14:00:14.828607+00:00",
     "title": "The exact count along the self-similar scale `X = d\u00b7\u2113^m` is already proved"
   },
@@ -44782,15 +44806,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The `n = 4` instance is proved (`no_outcome_both_confirms_and_calibrates`,"
   },
   {
-    "consumed_by_exp_id": "6834b885",
+    "consumed_by_exp_id": "",
     "description": "The `m = 2` case is proved, the stability estimate needed for the\ninduction (`|y| \u2264 25/24` propagating to `|h y| \u2264 1`) is explicit in the file, and\nthe missing ingredient is a clean statement of the invariant, not new analysis.",
     "domains": [],
     "id": "fd_1763",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "42f28947",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T23:41:38.064157+00:00",
     "title": "The `m = 2` case is proved, the stability estimate needed for the"
   },
@@ -45458,15 +45481,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Weighted and directed connectomes"
   },
   {
-    "consumed_by_exp_id": "033e68c2",
+    "consumed_by_exp_id": "",
     "description": "The current finite-memory theorem proves that a collision exists. A sharper development could restrict streams to length at most `n`, count them for a finite alphabet, and prove lower bounds on the largest indistinguishability class in terms of the number of memory states.",
     "domains": [],
     "id": "fd_2188",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "2d8c7907",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:23:00.935124+00:00",
     "title": "Quantitative collision bounds"
   },
