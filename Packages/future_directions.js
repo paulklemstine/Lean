@@ -2192,48 +2192,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-85 #1 \u2014 SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper 239 \u2014 paper 238's left-edge spike is tiny-v composition ENTIRELY (100% of D1 hits bitlen(v)<96 by window geometry; rr_d1 1.000/1.097 size-matched; kept-fit persistence = truncation-boundary gradient [96,98) dAICc 5.94 sub-bar, >=98 -0.40); NO positional kernel component survives"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9ac7df3",
     "description": "**FACT round-87 #1 \u2014 exp 588c MIXTURE-BASELINE [FINAL] \u00b7 paper 242 \u00b7 closes paper 241's routed branch with a negative that converts to a NEW MAP ENTRY**\n\nVERDICT: **H0 \u2014 EXCESS SURVIVES THE DIVISIBILITY MIXTURE** (registered rule: H0 iff amp_mix >= 2\u00b7SE_mix; fired as registered).\n\n- Residual mid-window peak **amp_mix = 0.1774 \u00b1 0.0432 (z = 4.11 \u2265 registered bar of 2), peak at t = 0.65 exactly**; removal vs single-\u03b1 baseline = **0%** (pre-named corroboration).\n- Model: 16 cells = divisibility pattern (2|v, 3|v, 5|v, 7|v) of v = j\u00b2\u2212N; PRED(b) = \u03a3_c \u03ba_c\u00b7S_c(b); S_c = Dickman-weighted reference sums; \u03ba_c flank-only fit (score window excluded), \u03bb=5 shrinkage toward global flank rate.\n- **WHY the mixture couldn't absorb it:** class composition measured FLAT in t (max cell drift 0.269%) \u2014 the mixture had no positional freedom; per-cell rates ARE real (\u03ba/g spread **0.645\u20131.406**, ~2.2\u00d7 rate modulation, top cells 3|v&5|v combos) but t-INDEPENDENT by construction. Formulation: **DIVISIBILITY IS A RATE DIAL, NOT A POSITION DIAL.**\n- Bit 0 (2|v) \u2261 j-parity since N odd \u2014 parity merged into the grid and equally failed \u2192 closes paper 241's residual parity reading too.\n\n**CONTROLS + CAVEAT (disclosed per registration):** CTRL-A machinery null PASS (amp 0.0271 \u00b1 0.0102, max-dev all bins 0.0342). CTRL-B parametric Poisson estimator-null amp_sim 0.0860 \u00b1 0.0411 measures max-over-bins positive bias inside the raw amplitude \u2192 **null-calibrated z_cal = 1.53 < 2**; registered raw-amplitude rule stays verdict-bearing, disagreement flagged not silently resolved. Follow-ups power against the calibrated scale.\n\n**PROVENANCE:** Regen EXACT_MATCH on the proven exp588b-A3 lineage (population/windows int64-equal, stream order-walk 128/128, smoothness spot-check hits-smooth/controls-nonsmooth all pass), statistics gated on it; wall 12.6 s; npz sha256 df4830ed\u2026fbb74 re-recorded at load.\n\n**LEDGER CATCHES:** A1 amendment \u2014 original single control (count halves vs \u03c1-weighted prediction) had a NON-FLAT NULL BY CONSTRUCTION (counts carry no \u03c1(t) gradient); caught AT SMOKE (amp 0.47 from ~290 counts/bin), control split CTRL-A/CTRL-B PRE-FULL-RUN, registered rule unchanged, NO treatment number entered any verdict through the amendment.\n\n**THREE-PASS CHAIN CLOSED (232 \u2192 241 \u2192 242):** feature found/stable (232) \u2192 real over exact Dickman baseline, no single binary carrier, routed to mixture model (241) \u2192 mixture fails, removal 0% (242).\n\n**NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM** \u2014 third orthogonal layer beside positional (228\u2013230) and left-edge composition (238\u2013240): REAL (241), STABLE (shift-invariant since 232), NON-DIVISIBILITY (here).\n\n**NAMED FOLLOW-UP: identify the non-divisibility carrier.** Pre-named candidates: (i) j-arithmetic beyond small-prime divisibility \u2014 higher-order residues of v, bit structure near the truncation boundary, quadratic-character/Legendre patterns mod p > 7; (ii) polynomial-sequence correlations \u2014 values-of-(j\u00b2\u2212N) smoothness biases beyond divisibility.\n\nBarrier framing: map-entry addition INSIDE the rate layer's baseline-shape question \u2014 residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, four-class rate closure, spike-origin arc untouched; refuted family (divisibility-rate mixtures as a positional explanation) removed from the search space at every scale; entry defined at fixed data geometry so its test transfers across bit lengths unchanged. Open unchanged: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity; PLUS the named follow-up; .2346 provenance flag still traveling.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp588c_{mixbase.py, smoke.log, full.log, result.json}`; paper `ResearchOutput/NewMathematics/242_MixtureBaseline.md`; notebook Part 284; assessment v349.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4061",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T22:46:21.540196+00:00",
     "title": "FACT round-87 #1 \u2014 MIXTURE-BASELINE (exp 588c FINAL): H0 \u2014 u*\u22480.65 excess SURVIVES full divisibility mixture (amp .177\u00b1.043 z=4.11\u2265bar, peak t=0.65 exact, removal 0%) \u2014 composition FLAT in t, rates real but t-independent \u2192 DIVISIBILITY IS A RATE DIAL NOT A POSITION DIAL; NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM; chain 232\u2192241\u2192242 complete; CTRL-B caveat z_cal=1.53<2 disclosed; named follow-up: find the non-divisibility carrier"
-  },
-  {
-    "consumed_by_exp_id": "3b9c1eb4",
-    "description": "Paper 241 (ResearchOutput/NewMathematics/241_U065Mechanism.md). Completes paper 232's named mechanism probe.\n\nVERDICT: MIXED-PARTIAL per registered tree (zero winners; H0 strict letter also unmet via 5|v yes-stratum z=1.84).\n\nRESULTS\n- Exact Dickman baseline rho(ln v / ln 1e6), alpha flank-fit: amp 0.1163 \u00b1 0.0360 (z=3.23) over t in [0.45,0.85]; paired-random control 0.0269 \u00b1 0.0109 NULL.\n- Removal table (win bar removal>=60% AND all strata z<2): parity z 3.51/4.16; 3|v 4.36/2.38; 5|v 4.56/1.84; 7|v 3.91/2.44; omega_100 tercile 4.14/2.49/4.19; gcd(j,N)>1 stratum structurally EMPTY at bitlen 96 (p~2^48 cannot divide j<=8.4e14) \u2014 vacuous, not tested. removal_pct = 0.0 for every candidate.\n- Reading: m|v conditioning consistently absorbs ~45\u201360% of yes-stratum point-amplitude while parity/omega absorb none \u2192 excess distributed across the small-prime divisibility structure of v=j\u00b2\u2212N (arithmetic-internal). CONSEQUENCE: route to divisibility-mixture baseline model (mixture over v mod small primes), NOT per-hit binary covariates.\n\nTWO-PASS HISTORY (amendment log A1\u2013A3 timed in script+json)\n- A1: coordinator brief restricted reads to npz+exp582_findings.md \u2192 blind recipe reconstruction (window-law discriminator r_i=jlo/isqrt(N)); 13 recipes, ALL NO_MATCH.\n- A2 (post-smoke, PRE-verdict): hit density peaked at t~0 \u21d2 window above sqrt(N) \u21d2 surrogate flank baseline MISPECIFIED \u2192 VOIDed before any conditioned statistic entered a verdict.\n- A3 (coordinator-directed): restriction lifted; exact seed-20260828 exp578 lineage verbatim; lnB fixed ln(1e6); registered grid-fit retired (disclosed). EXACT REGENERATION VERIFIED: population/window int64-equal all samples; stream order-walk EXACT 128/128; stored hits re-validated smooth / controls non-smooth under exact N via verbatim exp569 tester B=1e6. Disclosed limit: no full 150k-draw rescan-and-reclassify (budget) \u2014 strictly weaker than byte-level reproduction.\n\nDEGRADED ARM: retained in json labeled DEGRADED (statistical N-mod-{3,5,7} labels from residue-enrichment argmax, attenuation noted); strongest read z=1.22 vs exact-baseline 3.23 \u2014 the blind path would have reported sub-bar noise; exactness load-bearing for DETECTION.\n\nLEDGER CATCHES: coordinator-brief over-restriction disclosed BOTH ways (lesson: grant recipe-lineage access up front when the population is procedurally reproducible); surrogate baseline voided pre-verdict (clean catch, zero contamination); grid-fit retirement information-forced; control-bar restatement pre-full-run disclosed; gcd vacuous; omega_100 ignores factors >100 by definition.\n\nBARRIER VALIDATION: no breakthrough claimed \u2014 closure INSIDE the rate layer's baseline-shape question. Untouched: residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, four-class rate closure, papers 238\u2013240 spike-origin arc. Carrier class identified (v-divisibility distribution) is SCALE-CARRYING; per-hit binary family removed from search space. Open: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity; paper-238 .2346 provenance flag still traveling.\n\nSources: ResearchOutput/scripts/2026-08-24-round74/exp588b_{u065_mechanism.py, smoke.log, full.log, result.json, findings.md}; data exp581_regen_positions.npz sha256 df4830ed\u2026fbb74. Wall 15.1 s; boot seed 20260901; 9594 hits / 512k controls / 128 Ns.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4062",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T22:46:21.541735+00:00",
-    "title": "FACT round-86 #1 \u2014 U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL \u2014 hump REAL over exact Dickman baseline (amp .116\u00b1.036 z=3.23, control null) but NO single carrier \u2014 parity/3|v/5|v/7|v/omega100/gcd ALL remove 0% (worst strata z 2.4\u20134.6); excess ARITHMETIC-INTERNAL, divisibility-distributed (~45\u201360% absorbed by m|v conditioning) \u2192 routes paper 232 feature to DIVISIBILITY-MIXTURE BASELINE model not per-hit binary covariates; TWO-PASS: blind arm 13 recipes NO_MATCH \u2192 surrogate baseline VOIDed pre-verdict (A2) \u2192 coordinator amendment A3 exact regeneration (order-walk 128/128, hits re-validated exp569 tester)"
-  },
-  {
-    "consumed_by_exp_id": "92ebc5bc",
-    "description": "Round-88 #2 \u00b7 exp 594 [FINAL] \u00b7 pure reanalysis of exp581_regen_positions.npz (9594 pooled hits / 128 trials; wall_s 5.95) \u00b7 paper 245 \u00b7 pre-registration fixed in script header BEFORE any fit; amendment log none.\n\nVERDICT H0_SPIKE_STEEPNESS_UNIDENTIFIABLE (flags: traj_ok False, excl_single True, excl_degeneracy False, caps_ridden=[40], ci_caps_hit=[40,80]).\n\nLADDER (treatment): dAICc vs single -99.57 / -99.57 / -101.28 / -101.33 at caps 10/20/40/80 \u2014 kernel existence never wavers (chi2 158.2 -> 52-54, bar -6); single-law b=1.1596 replicates papers 229/238 (~1.104). b_edge points .8326 / .8326 / 40.000 (=cap, interior False) / 40.4635; edge mass rho .545/.545/.475/.476. Bootstrap best cap 80 (nboot 300, 0 fail): b_edge CI [15.25, 80.0], cap-hit frac 26.7%; cap-40 supplementary (nboot 100): CI [14.85, 40.0] hit 60%.\n\nLEDGER CATCH (disclosed): ROLE-SWAPPED OPTIMUM at caps 10/20 \u2014 b_bulk rides its own bound (~30) acting as the near-boundary spike while b_edge absorbs the smooth part (~.83); chi2 within ~2 AICc of the edge-spike solution = a SECOND unidentified direction beyond cap-riding. Low-cap interior=True is not identification.\n\nCONTROL CLEAN: no kernel at any cap \u2014 dAICc +4.85 at all four caps, edge weight ~8.3e-7 (vs .47-.55 treatment), b_single .0838 ~ uniform; control prediction confirmed everywhere.\n\nAMENDMENT to paper 238's canonical description: registered delta=10 was a HARD CENSOR \u2014 profile must be stated as 'flat bulk (.57 paper-238 pipeline / .88 here) + left-edge spike with b_edge >~15 LOWER BOUND ONLY, exact steepness unidentified at n=9594'; only exclusion that holds anywhere is b_edge != single-law value; upper limit unbounded by data. Paper-238 posthoc 22.5 vs this ~40.5: estimator-dependent absolutes under one invariant diagnosis (steep/censored/cap-sensitive). Future pinning requires more pooled hits or a parametric-family choice \u2014 not another cap raise alone.\n\nRELATION TO PAPERS 239/240: both STAND. exp594 speaks to pooled-SHAPE identifiability (unconditional positions); 239/240 resolved the CARRIER (tiny-v composition + truncation-boundary geometry among size-matched strata). Map entry 'no independent positional kernel component' unchanged.\n\nHONEST NOTES: non-best-cap CIs nboot=100 supplementary (declared pre-fit); geometric 28-bin choice \u2014 steep-spike ID binning-sensitive (mass fractions differ across pipelines: w_edge 8.6% paper 238 vs rho~.48 here); amplitudes normalized out (effective k=1/3); data provenance inherits exp581 regen lineage (balanced-96-bit exchangeability conditional).\n\nBarrier framing: identifiability audit INSIDE the positional shape layer \u2014 residue cap 4/3, position 5.19x, external-hint laws, quantum frontier, four-class closure, papers 228-230 layering untouched; paper 238's .2346 provenance flag still travels; #391 single-seed-unconfirmed stands. Open: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4074",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T23:37:37.758360+00:00",
-    "title": "FACT round-88 #2 \u2014 EDGE-CAP (exp 594 FINAL): H0 \u2014 SPIKE STEEPNESS UNIDENTIFIABLE AT THIS DATA SIZE (kernel itself MASSIVELY CONFIRMED) \u2014 cap ladder dAICc -99.6/-99.6/-101.3/-101.3 at caps 10/20/40/80 retains paper-238 two-component kernel beyond doubt (single-law b=1.160 replicates papers 229/238 ~1.104), BUT b_edge climbs .833*/.833*/40.000(=cap)/40.46 with boot CI [15.2, 80.0] hitting successive caps (cap-80 hit 26.7%, cap-40 hit 60%) \u2014 paper 238's registered delta=10 was a HARD CENSOR: canonical wording AMENDED to flat bulk + left-edge spike b_edge >~15 LOWER BOUND ONLY; controls clean (+4.85, w~8e-7)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2559,6 +2530,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 78.\n\n### Throughput (llama-bench, threads=8, identical quant files)\n\n| model | engine | pp512 tok/s | tg128 tok/s |\n|---|---|---|---|\n| 7B dense Q4_K_M | mainline (c060ca9) | 53.53 | 5.87 |\n| 7B dense Q4_K_M | ik (08b500b9) | **79.94 (+49%)** | 5.91 |\n| **30B-A3B MoE IQ4_XS** | mainline | 56.13 | **13.28** |\n| **30B-A3B MoE IQ4_XS** | ik | **130.81 (+133%)** | **13.89** |\n\n### Quality (perplexity, identical quant + slice)\n\nmainline 6.9781 vs ik 6.9762 \u2014 **delta 0.039%**, deep inside the \u00b11% pre-registration.\n\n**Scorecard:** P1 REFUTED FAVORABLY (dense tg parity held but dense PP +49%); P2 CONFIRMED (2.33x >= 2x); P3 CONFIRMED (goal-grade >= 10 tok/s); P4 CONFIRMED (engine-invariance of quality).\n\n**The laws:** (1) ENGINE-INVARIANCE OF QUALITY \u2014 identical quant files produce near-identical perplexity across independent engines: our published quality laws are MODEL+QUANT properties, not kernel artifacts. (2) ENGINE-VARIANCE OF SPEED \u2014 +133% MoE prompt processing from the fork alone at zero quality cost; serving speed claims must name their engine. (3) GOAL-GRADE: a resident 30.5B sparse model sustains >13 tok/s single-stream pure CPU, and the fork's gains land exactly where full-context serving pays (prefill).\n\n**Honest limits:** synthetic pp512/tg128 bench; one MoE family; eagle3 x engine interaction unexplored (gpt-oss eagle3 segfault documented in NET-102); two instrumentation bugs caught mid-round via raw-capture discipline.\n\nSetup: llama-bench -p512 -n128 -t8; llama-perplexity standard 250KB slice @ctx2048; engines pinned by commit. Scripts ResearchOutput/exp_net103_engineik.py + exp_net103b_benchredo.py + exp_net103c_ikppl.py.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4260",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-26T08:01:41.410582+00:00",
+    "title": "NET-103 ENGINE-INVARIANCE CONFIRMED AND THE 30B MoE RUNS AT GOAL SPEED: ik_llama.cpp matches mainline quality to 0.039% while delivering 2.33x MoE prompt processing \u2014 Qwen3-30B-A3B IQ4_XS sustains 13.28-13.89 tok/s single-stream on pure CPU"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -2616,20 +2601,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 4bf66c09 (Q=0.880), which proved 41 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irred",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_4bf66c09_d16fba54",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "4bf66c09",
-    "status": "available",
-    "timestamp": "2026-08-18T05:46:10.947071+00:00",
-    "title": "Deepening: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
   },
   {
     "consumed_by_exp_id": "",
@@ -13618,6 +13589,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cap-riding is the integral form of an exponentially vanishing Fisher information. Quantifying the collapse turns the qualitative 'lower bound only' amendment into a sample-size requirement for pinning the steepness.\n\nFor the binned flat-plus-spike model with edge-bin width t, the Fisher information for the steepness b behaves as I(b) = Theta(rho^2 t^2 exp(-2 b t) / (p(1-p))); consequently a finite upper confidence limit at level alpha exists if and only if n is of order exp(2 B t) / (rho t)^2.\n\nDifferentiate the binned log-likelihood twice in b, bound the result above and below by constants times exp(-2 b t), and compare with the exp(-b t) envelope already proved in EdgeSpike.cap_gain_le.\n\nGives a closed-form sample size for identifying spike steepness; predicts that the audited n = 9594 cannot bound the steepness above regardless of cap.\n\nSome other quantity (for example the mixture weight) would carry the information, and re-parameterisation rather than more data would fix identifiability.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4256",
+    "priority_score": 0.6713870967741937,
+    "research_mode": "team",
+    "source_exp_id": "92ebc5bc",
+    "status": "available",
+    "timestamp": "2026-08-26T08:01:08.074938+00:00",
+    "title": "Fisher-Information Collapse Rate for Censored Spikes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The cross-channel discrepancy of a population decouples into the oscillation of a single per-level functional over the window box, turning the sharp-constant question into a one-dimensional extremal problem. Cycle 4 solved it for the exponent pair (1, 1/2) via the Kantorovich inequality, obtaining log2((4+3*sqrt2)/8) and matching it to within 5% by an explicit two-point population. The conjecture extrapolates the exponent dependence found numerically.\n\nFor pointwise costs a*p^s and c*p^t on a window of spread 2^sigma, max |t*slope_s - s*slope_t| = (ln2/8)*s*t*|s-t|*sigma^2/Dk to leading order, attained by a two-atom population whose x^t-mean equals the harmonic mean of the window endpoints.\n\nExtend the doubling-ray result (s = 2t, already proved with constant log2((1+2^t)^2/(4*2^t))) to a general power-mean version between exponents t < s, compute the oscillation of the per-level functional in closed form, and compare with the grid search (coefficient 0.0862 +- 0.0002 at sigma = 1 versus ln2/8 = 0.08664).\n\nEvery multi-channel benchmark gets an exact internal-consistency tolerance, and the (0.84, 0.52) refutation generalises to arbitrary cost exponents.\n\nThe oscillation is not governed by the two-atom endpoint configuration and the sharp constant depends on more than the window spread.",
     "domains": [
       "Combinatorics"
@@ -16112,6 +16097,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The log-convexity defect separates a flat-plus-spike mixture from every single truncated-exponential law by a margin independent of the spike steepness. The per-index k-bin version is already proved in this cycle (defect_mixK_ge, single_law_separationK); what remains is the summed invariant, uniformity for r near 1, and sharpness of the constant.\n\nFor k equal bins the summed second log-differences of the flat-bulk plus edge-spike mixture satisfy sum_j (p_j p_{j+2} - p_{j+1}^2) >= c * rho (1 - rho) / k with c absolute and no restriction on r in (0,1), and the proved per-index constant 1/(8k) is sharp up to a factor 2, attained at r = 1/2.\n\nSum the closed form of EdgeSpikeDefect.defect_mixK_eq over j, bound the resulting geometric sum below uniformly in r, and exhibit the extremal configuration at r = 1/2 to test sharpness.\n\nModel selection for edge kernels becomes a distance computation with explicit constants, valid at every optimiser cap and independent of the unidentified steepness.\n\nThe margin must degrade with the number of bins, which would mean fine binning genuinely destroys the evidence for a second component and would explain cross-pipeline disagreement.",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_4255",
+    "priority_score": 0.5648061131850186,
+    "research_mode": "team",
+    "source_exp_id": "92ebc5bc",
+    "status": "available",
+    "timestamp": "2026-08-26T08:01:07.666824+00:00",
+    "title": "Defect-Margin Identifiability Principle"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The density of ECM stage-1 orders firing in the last tau-fraction of the prime schedule should equal log(1/(1-tau))/log B1 asymptotically. The trace law turns the positional question into a Mertens sum over primes in ((1-tau)B1, B1]. It replaces the pre-registered constant-tail hypothesis by a decaying law.\n\nFor fixed tau in (0,1), the density of n <= M with pi(maxPF n) > (1-tau) pi(B1) and maxPF n <= B1 equals (log(1/(1-tau))/log B1)(1+o(1)) as B1 -> infinity.\n\nFormalize Mertens' second theorem with explicit error, combine with lateCount_le_primeContribution and a matching Bonferroni lower bound; check against the sieve table for N = 10^3..10^7.\n\nThe late tail of any stage-1 trace is predictable from B1 alone, giving a parameter-free null for future ECM accounting audits.\n\nThe union bound is lossy at the top of the schedule, indicating correlations between large-prime divisibility events that themselves need explanation.",
     "domains": [
       "NumberTheory",
@@ -16247,6 +16247,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The two-component parameter space carries an exact involution exchanging the components and complementing the weight. Off the diagonal the action is free, so critical points of any observable-based criterion come in pairs, which is exactly the role-swapped optimum reported in the ledger.\n\nFor a two-component mixture of truncated exponentials the involution (rho, b1, b2) -> (1 - rho, b2, b1) acts freely off the diagonal b1 = b2, and every non-diagonal critical point of a criterion computed from the bin probabilities occurs in an orbit of size two joined by a ridge along which the criterion varies by a bounded amount.\n\nFormalise the involution as a group action on the parameter space minus the diagonal, prove freeness, and analyse the criterion on the quotient via a Morse-theoretic count for a fixed synthetic data set.\n\nExplains role-swapped optima as a structural feature; optimisers should be run on the quotient (for example by imposing b1 <= b2) rather than being restarted.\n\nThe observed role swap is data specific and would indicate a genuine second mode rather than a symmetry artefact.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4258",
+    "priority_score": 0.5647058984721419,
+    "research_mode": "team",
+    "source_exp_id": "92ebc5bc",
+    "status": "available",
+    "timestamp": "2026-08-26T08:01:08.907858+00:00",
+    "title": "Role-Swap Quotient Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Because the firing threshold equals the largest prime factor, the median normalized firing index is pi(B1^rho)/pi(B1) with rho the Golomb-Dickman constant. This explains the measured medians 0.09-0.10 as a Dickman phenomenon rather than an elliptic-curve one.\n\nmedian_{n <= B1} pi(maxPF n)/pi(B1) = Theta(B1^(rho-1) log B1) with rho = 0.6243299885...\n\nProve the two-sided smooth-number bounds needed for the median of log maxPF n / log n, then apply Chebyshev bounds on pi; validate against the sieve table (medians 0.083, 0.034, 0.020, 0.005 for N = 10^3..10^6).\n\nEarly firing is universal across all stage-1 implementations and carries no curve-specific information, closing the trace channel as a factorization side channel.\n\nSome arithmetic of elliptic-curve orders biases the largest prime factor away from Dickman, which would be a genuinely new statement about #E(F_p).",
     "domains": [
       "Pythagorean",
@@ -16337,6 +16352,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Everything in this cycle is controlled by the dimensionless product of steepness and edge-bin width. Turning that into a design rule fixes the edge bin before any fit and forbids reporting point estimates above a computable ceiling.\n\nAt sample size n, tolerance level alpha and edge-bin width t, the largest steepness admitting a finite upper confidence limit is b* = (1/t) log(sqrt(n) rho t / z_alpha) up to absolute constants; choosing the edge bin so that b t is approximately 1 maximises the identifiable range.\n\nCombine the Fisher-information conjecture with the ray theorem EdgeSpike.identified_ray, then check the resulting formula against bootstrap cap-hit fractions on synthetic data at several n.\n\nYields a pre-registration rule: report steepness as a lower bound whenever the fitted value exceeds b*, and choose bins so that b t is of order one.\n\nThe censoring threshold depends on more than the product b t, so bin geometry cannot be optimised in advance.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4259",
+    "priority_score": 0.5646683179548131,
+    "research_mode": "team",
+    "source_exp_id": "92ebc5bc",
+    "status": "available",
+    "timestamp": "2026-08-26T08:01:09.317927+00:00",
+    "title": "Censoring Threshold as a Pre-Registration Design Rule"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The energy dynamics is a\n   piecewise-M\u00f6bius interval map conjugated by `log`. Studying the invariant\n   measure of the induced map on `(0,\u221e)` (or on `r \u2208 (1,\u221e)`) would quantify how\n   the \"energy spectrum\" of level-`k` nodes distributes as `k \u2192 \u221e`, connecting\n   the tree to Gauss-map / continued-fraction ergodic theory: the inverse\n   branches `r \u21a6 1/(2\u2212r)`, `1/(r\u22122)`, `r\u22122` are exactly continued-fraction-type\n   maps.",
     "domains": [
       "Computation",
@@ -16349,6 +16379,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:58.072300+00:00",
     "title": "Iterated dynamics and equidistribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replace v = j^2 - N by v = f(j) - N for a sieve polynomial f of degree d. Mean preservation of the root count is pure fibre counting and still holds, so a mixture excess persists; what changes is the distribution of the root count, which is governed by the factorisation type of f mod q and hence by the Galois group of f.\n\nFor a separable f of degree d and odd prime q, the variance of the root count over targets N mod q equals the number of non-identity elements of the Galois group of f fixing a root, up to O(1/q); consequently the mixture excess for the multiplicative proxy is p*c + V_f*(c-1)^2/2 + O((c-1)^3) with V_f a Galois invariant.\n\nFormalise rootCountM for the fibres of a general polynomial map on ZMod q, enumerate cubics and quartics with decide for q up to a few hundred, and compare the measured variance with the orbit count predicted by Frobenius cycle types.\n\nThe divisibility-mixture baseline extends to number field sieve style polynomials, where the predicted hump amplitude becomes a Galois-theoretic quantity.\n\nThe excess depends on more than the Galois data, indicating that the quadratic case is special and the mechanism is tied to the two-point structure of quadratic residues.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4252",
+    "priority_score": 0.5646283128879792,
+    "research_mode": "team",
+    "source_exp_id": "3b9c1eb4",
+    "status": "available",
+    "timestamp": "2026-08-26T08:00:46.745766+00:00",
+    "title": "Mixture Spectrum of Higher-Degree Sieve Polynomials"
   },
   {
     "consumed_by_exp_id": "",
@@ -16397,6 +16442,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Extend the exact two-point root-count mixture from primes to prime powers. For odd p and k >= 1 the number of solutions of x^2 = a mod p^k depends on the p-adic valuation of a, and the induced variance controls how much of a smoothness hump a prime power can carry. This fixes the size of the effect for composite moduli, where the current work proves strict positivity but not the exact amplitude.\n\nFor odd p and k >= 1, the exact identity sum over a mod p^k of c^{X(a)} equals p^k*c + E_{p,k}(c) where E_{p,k} is an explicit polynomial vanishing to second order at c = 1, and the variance sum over a of (X(a)-1)^2 equals an explicit function of p and k asymptotic to p^k(1-1/p).\n\nFormalise rootCountM for m = p^k, enumerate 3^5, 5^3, 7^3 with decide to fix the pattern, then prove by stratifying a by v_p(a) and Hensel lifting each stratum.\n\nThe divisibility-mixture baseline becomes fully explicit for every smooth modulus, so the predicted hump amplitude of a sieve is computable from the factor base alone.\n\nPrime powers carry a different share than primes, separating the m|v conditioning strata and identifying a new covariate family.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_4251",
+    "priority_score": 0.5645856408166897,
+    "research_mode": "team",
+    "source_exp_id": "3b9c1eb4",
+    "status": "available",
+    "timestamp": "2026-08-26T08:00:46.322666+00:00",
+    "title": "Mixture Spectrum for Prime Powers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Because the x-coordinate detector is invariant under the elliptic involution, the detected orders are the divisors of the sumset J+J together with the difference set J-J of the visited multiple set J. Conjecture: the sequential run is far from optimal and a Sidon-complement construction detects many more orders at equal cost.\n\nThe advantage already proved at k = 4 (the set {1,2,4,8} detects orders 9, 10 and 12 that {1,2,3,4} misses) persists and grows: the ratio of detected-order counts between the best J of size k and the sequential set tends to infinity with k.\n\nExhaustive or randomized search over J for small k, then a Lean certificate for the winning set using the divisibility characterization xEq_iff_dvd.\n\nA cheap redesign of stage one improves the constant of every lite-style method.\n\nThe sequential run is combinatorially optimal for involution detectors, a satisfying rigidity statement.",
     "domains": [
       "NumberTheory",
@@ -16424,6 +16484,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T09:52:43.267154+00:00",
     "title": "Per-Symbol Detection Floor for Extended Prime Windows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The hump calculus uses the exact first Dickman branch rho(u) = 1 - log u on [1,2], where convexity is elementary. The measured regime is u about 2.5, on the second branch, so the calibration needs convexity of rho on all of [1, infinity), which follows from the delay equation but is absent from Mathlib.\n\nThe Dickman function rho is convex on [1, infinity), and the two-point mixture excess (rho(u) + rho(u-delta))/2 - rho(u - delta/2) is positive and strictly increasing in delta for all u > delta > 0.\n\nDefine rho by the delay equation with rho = 1 on [0,1], prove positivity and monotone decrease by branch induction, then derive that rho'(u) = -rho(u-1)/u is increasing.\n\nThe amplitude-to-spread inversion applies at the measured u about 2.5, making the calibration directly usable on sieve data.\n\nConvexity fails on a later branch, so a mixture can lower the smoothness rate there - a qualitatively new and testable prediction.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_4253",
+    "priority_score": 0.5644911526588344,
+    "research_mode": "team",
+    "source_exp_id": "3b9c1eb4",
+    "status": "available",
+    "timestamp": "2026-08-26T08:00:47.148646+00:00",
+    "title": "Dickman Convexity Beyond the First Branch"
   },
   {
     "consumed_by_exp_id": "",
@@ -16604,6 +16679,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T13:14:27.184190+00:00",
     "title": "Geometric Self-Similarity of Primary Type-Pair Towers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mixture weights are binning-dependent, which is why two pipelines report 8.6 percent and 48 percent edge mass for the same profile. The total log-convexity defect, suitably normalised, should converge to a functional of the underlying profile and therefore agree across pipelines.\n\nFor flat-plus-spike profiles the limit of k times the sum of the k-bin second log-differences exists as k tends to infinity, depends only on the profile (not on the grid), and vanishes exactly on single-law profiles.\n\nCompute the normalised defect for the truncated exponential and for the mixture at k = 3, 6, 12, 28 in Lean using exact rational or Float arithmetic, then prove convergence via a Riemann-sum estimate for the second derivative of log density.\n\nProvides a pipeline-independent scalar for reporting edge kernels, removing the mass-fraction ambiguity flagged in the audit.\n\nEdge-kernel strength is intrinsically grid-relative and any cross-paper comparison must fix the grid first.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_4257",
+    "priority_score": 0.564062659849956,
+    "research_mode": "team",
+    "source_exp_id": "92ebc5bc",
+    "status": "available",
+    "timestamp": "2026-08-26T08:01:08.486267+00:00",
+    "title": "Binning-Invariant Spike Functional"
   },
   {
     "consumed_by_exp_id": "",
@@ -18359,6 +18449,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T07:02:28.744714+00:00",
     "title": "Inflection-Image Threshold for General Real Cubics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Summing the per-prime shares over all odd primes up to B turns the mixture amplitude into an explicit function of the smoothness bound. Mertens-type estimates should give a log-log law, which is directly falsifiable by measuring the hump at several bounds B.\n\nFor fixed weight c with X = (c-1)^2/(2c), the total amplitude A(B) = sum over odd primes q <= B of log(1 + (1 - 1/q)X) satisfies A(B) = X * log log B + C(X) + o(1) as B tends to infinity, with C explicit.\n\nCombine the sandwich bounds on each share with Mertens' second theorem for sum of 1/q, then compare the prediction with amplitudes measured at several smoothness bounds.\n\nThe hump amplitude becomes a predicted function of the sieve parameters, converting the mechanism into a quantitative forecast rather than a post hoc explanation.\n\nThe measured amplitude scales differently in B, which would show the carrier set is not the full factor base but a bounded subset of small primes.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4254",
+    "priority_score": 0.5613730434496113,
+    "research_mode": "team",
+    "source_exp_id": "3b9c1eb4",
+    "status": "available",
+    "timestamp": "2026-08-26T08:00:47.551803+00:00",
+    "title": "Factor-Base Amplitude Law in the Smoothness Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -43984,14 +44089,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "S3 (resolved during this cycle)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9db64dd",
     "description": "The exact count along the self-similar scale `X = d\u00b7\u2113^m` is already proved\n(`QKummer.sum_card_row_not_dvd_qBinom`), so what remains is purely the interpolation between\nconsecutive scales \u2014 the classical oscillating-constant phenomenon, with no `q`-dependence.",
     "domains": [],
     "id": "fd_1717",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "18b02a30",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T14:00:14.828607+00:00",
     "title": "The exact count along the self-similar scale `X = d\u00b7\u2113^m` is already proved"
   },
