@@ -2139,5 +2139,6 @@
   "20511e4a": "fact_round_76_2__u9_drift_gate_exp_569c_gate_rejec.json",
   "5260665b": "fact_round_77_1__generator_tilt_exp_575_h1_refuted.json",
   "6ca543a1": "kernel_patterns.json",
-  "1bcec21a": "canonical_alpha_connections.json"
+  "1bcec21a": "canonical_alpha_connections.json",
+  "b3980a1a": "strengthen_certified_computation.json"
 }
