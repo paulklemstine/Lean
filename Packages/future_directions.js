@@ -2210,16 +2210,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-91 #2 \u2014 CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY \u2014 mid-window hits INDEPENDENT given position \u2014 lag profile lags 1\u201320 flat/slightly negative \u03c1 \u2208 [\u22120.020, \u22120.002] vs 0.05 bar (MC p 0.128\u20130.969), runs null both readings (Z +0.85 textbook / +0.89 density-calibrated vs 3.29), POWER CONFIRMED (injected lag-1 \u03c1_det = 0.337 detected at argmax exactly lag 1) \u2014 u* \u2248 0.65 excess = PURE DENSITY / rate heterogeneity, NO sequence structure \u2014 POSITIONAL THREAD CLOSES COMPLETELY (228\u2013230 \u2192 231 \u2192 238/240 \u2192 241\u2013242 \u2192 248)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b58ee289",
     "description": "Paper 248. Sources: ResearchOutput/scripts/2026-08-24-round74/exp598_* + exp598_findings.md.\n\nDESIGN (pre-registered in script header before analysis): 8 j-feature families \u2014 j mod 4/3/5/7, j mod 105 (CRT joint), omega_small(j) terciles, smoothness of |j\u2212nearest square| (exact 1e6, registered degenerate-skip), exact 10^6-smoothness of j \u2014 on exp581_regen_positions.npz (sha256 0b1afa50\u2026 recorded; generator not re-run, disclosed): mid u\u2208[0.55,0.75] n=104,200, flank [0.05,0.40)+(0.90,1.00] n=235,003, 9,594 hits/128 windows. Bars: R\u22651.15 vs complement in-mid, family-wise max-statistic permutation (500, stratum-preserving) p<0.01 \u00d7 Bonferroni K=8, DiD sign-consistent; 300 fake-hit global-permutation null draws.\n\nVERDICT H0_CARRIER_OPEN \u2014 no class clears the bar (all p_adj=1.0):\nF1 mod4 cell 1 R=1.0748 pR=.369 | F2 mod3 cell 1 R=1.0314 pR=.743 | F3 mod5 cell 3 R=1.0785 pR=.475 | F4 mod7 cell 0 R=1.1111 pR=.359 | F5 mod105 cell 73 R=1.5578 pR=.884 | F6 omega cell 0 R=1.0107 pR=.978 | F7 dsq-smooth cell 1 R=1.0224 pR=.771 | F8 jsmooth cell 0 R=1.0232 pR=.767.\nCoarse families all flat DiD (+0.001\u20130.002).\n\nEXTREME-VALUE DEMONSTRATION: F5's raw max (cell 73, n=1022, 26 hits) sits BELOW the null's own median max-of-105-ratios (med 1.6334, p95 1.8516); 226/300 null draws beat it \u21d2 global_perm_p=0.754 \u2014 pure selection noise from scanning 105 cells; canonical local example of why coarse maxima need max-statistic calibration.\n\nCONSEQUENCE: paper-242 excess carrier is NOT any tested j-marginal \u21d2 route to consecutive-v POLYNOMIAL-SEQUENCE DEPENDENCY STUDY (adjacent-position smoothness correlation via shared small-prime divisibility of y_v=(isqrt(N)+v)^2\u2212N), invisible to marginal-on-j tests.\n\nLEDGER: smoke caught invalid smoothness early-exit rule (post-fix random-int smooth fraction 0.1355 matches Dickman \u03c1(2.45)) + F5 gate-starve crash; F7 non-degenerate at full scale (82.7% smooth); RECORDER CATCH: registered View B (per-N enrichment) never computed in result.json \u2014 harmless under H0, must be implemented or formally dropped on H1-side reuse. Wall 271 s, rng 20260908.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4079",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-25T01:54:45.655508+00:00",
     "title": "FACT round-91 #1 \u2014 J-FEATURE-SWEEP (exp 598): H0_CARRIER_OPEN \u2014 no j-arithmetic feature carries the mid-window excess \u2014 all 8 registered families honest R\u22641.11 (mod-7 best p=0.36), F5 raw max j\u226173 mod 105 R=1.558 BELOW null median-max 1.633 (global perm p=0.754, extreme-value noise over 105 cells) \u2014 j-arithmetic class ELIMINATED \u2192 consecutive-v polynomial-sequence dependency study per pre-registration"
   },
@@ -3279,6 +3280,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b3980a1a (Q=0.820), which proved 110 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The included evidence kernel-checks inputs `1..20`. Larger bounds can be certified with efficient arrays and reflection, but no finite bound proves the universal conjecture.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_b3980a1a_a6b18868",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "b3980a1a",
+    "status": "available",
+    "timestamp": "2026-08-26T17:00:47.992792+00:00",
+    "title": "Deepening: Strengthen certified computation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domains": [
       "NumberTheory"
@@ -4165,6 +4180,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 1bcec21a (Q=0.780), which proved 68 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Lower-index natural-coordinate coefficients\n   are defined by `((1 - \u03b1) / 2) C`, where `C` is the Amari\u2013Chentsov cubic\n   tensor. The development proves e-flatness at `\u03b1 = 1`, the dual\n   expectation-coordinate m-flatness at `\u03b1 = -1`, opposite-alpha duality, and\n   the Levi\u2013Civita midpoint identity.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_1bcec21a_5ad84941",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "1bcec21a",
+    "status": "available",
+    "timestamp": "2026-08-26T15:55:04.748606+00:00",
+    "title": "Deepening: Canonical alpha-connections"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
     "domains": [
       "Algebra"
@@ -4207,20 +4236,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 1bcec21a (Q=0.780), which proved 68 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Lower-index natural-coordinate coefficients\n   are defined by `((1 - \u03b1) / 2) C`, where `C` is the Amari\u2013Chentsov cubic\n   tensor. The development proves e-flatness at `\u03b1 = 1`, the dual\n   expectation-coordinate m-flatness at `\u03b1 = -1`, opposite-alpha duality, and\n   the Levi\u2013Civita midpoint identity.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_1bcec21a_5ad84941",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "1bcec21a",
-    "status": "available",
-    "timestamp": "2026-08-26T15:55:04.748606+00:00",
-    "title": "Deepening: Canonical alpha-connections"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
     "domains": [
       "Algebra",
@@ -4235,36 +4250,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the gap between consecutive primes p_n satisfies p_{n+1} - p_n = O((log p_n)\u00b2). Formalize probabilistic models of primes and known unconditional bounds.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_037",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Cram\u00e9r's Conjecture on Prime Gaps"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
-    "domains": [
-      "EML",
-      "Physics",
-      "MachineLearning"
-    ],
-    "id": "seed_072",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "EML Quantum Activation Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -13457,6 +13442,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The scale-k sieve examines exactly the residues in noncontracting k. The conjecture is that this is optimal: every non-contracting class really contains arbitrarily large non-descending inputs, so no smaller residue set is sound, and the true density is Theta(1/sqrt k) rather than the proved O(1/k).\n\nFor every k and every r with 2^k <= 3^(s_k(r)) there are arbitrarily large n with n mod 2^k = r and not (T^[k] n < n); moreover |noncontracting k| / 2^k = Theta(1/sqrt k).\n\nFormalise the lower bound via the parity-word bijection and a local central limit estimate for the binomial count s_k; check k <= 12 by exhaustive computation.\n\nThe certification workload of any residue-based sieve is pinned down exactly, giving a sharp cost model for certified evidence.\n\nA strictly smaller sound sieve exists, i.e. some non-contracting classes descend anyway, which would sharpen the descent theory itself.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4292",
+    "priority_score": 0.6713870967741937,
+    "research_mode": "team",
+    "source_exp_id": "b3980a1a",
+    "status": "available",
+    "timestamp": "2026-08-26T17:00:33.162683+00:00",
+    "title": "Optimality of the Scale-k Residue Sieve"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The cross-channel discrepancy of a population decouples into the oscillation of a single per-level functional over the window box, turning the sharp-constant question into a one-dimensional extremal problem. Cycle 4 solved it for the exponent pair (1, 1/2) via the Kantorovich inequality, obtaining log2((4+3*sqrt2)/8) and matching it to within 5% by an explicit two-point population. The conjecture extrapolates the exponent dependence found numerically.\n\nFor pointwise costs a*p^s and c*p^t on a window of spread 2^sigma, max |t*slope_s - s*slope_t| = (ln2/8)*s*t*|s-t|*sigma^2/Dk to leading order, attained by a two-atom population whose x^t-mean equals the harmonic mean of the window endpoints.\n\nExtend the doubling-ray result (s = 2t, already proved with constant log2((1+2^t)^2/(4*2^t))) to a general power-mean version between exponents t < s, compute the oscillation of the per-level functional in closed form, and compare with the grid search (coefficient 0.0862 +- 0.0002 at sigma = 1 versus ln2/8 = 0.08664).\n\nEvery multi-channel benchmark gets an exact internal-consistency tolerance, and the (0.84, 0.52) refutation generalises to arbitrary cost exponents.\n\nThe oscillation is not governed by the two-atom endpoint configuration and the sharp constant depends on more than the window spread.",
     "domains": [
       "Combinatorics"
@@ -15014,14 +15013,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sub-Step Tokenizer Tax Below the Grid Resolution"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f7aa6fdd",
     "description": "With both ceilings known, define a statistic's efficiency as reading^2 divided by its tie ceiling. At bitlen 52 the dial has efficiency 0.58 and the count baseline 0.41. Conjecture that this efficiency gap lower-bounds the extra mutual information the 2-adic valuation carries about the response, via a Fano-type inequality for rank correlations.\n\nFor any response Y and statistics T, C on the same sample, eff(T) - eff(C) <= c * (I(T;Y) - I(C;Y)) for an absolute constant c, where eff denotes squared Spearman reading divided by tie ceiling.\n\nFormalise efficiency in the existing tie-profile framework, prove the data-processing direction first (C a function of T implies eff(C) <= eff(T)), and calibrate c on the recorded bitlen-52 pair.\n\nThe dial's advantage becomes a certified information statement rather than a correlational one, and the validation band acquires an information-theoretic meaning.\n\nRank efficiency and mutual information are not comparable, so dial advantages must be reported strictly as rank statistics.",
     "domains": [],
     "id": "fd_3879",
+    "phase": "A",
     "priority_score": 0.593360655737705,
     "research_mode": "team",
     "source_exp_id": "147eac16",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T19:35:41.958035+00:00",
     "title": "Efficiency Gap as an Information Lower Bound"
   },
@@ -15866,15 +15866,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Huffman-Shaped Splitting Trees"
   },
   {
-    "consumed_by_exp_id": "a3d63049",
+    "consumed_by_exp_id": "",
     "description": "Shtarkov sums tensorise under independent repetition of the experiment. The conjecture is that the curvature of the k-fold product pool tends to zero exponentially in k at a rate given by the Chernoff separation of the sources, so greedy library design becomes asymptotically optimal for long blocks even for pools where it is not optimal per symbol.\n\nIf the sources of Omega are pairwise distinct then curvature of the k-fold product pool is at most C * exp(-c k) for constants depending only on the pool, hence the greedy gap is at most (|Omega| - 1) * C * exp(-c k) times the optimum.\n\nCombine the catalog tensorisation lemmas for Shtarkov sums with greedy_low_curvature_gap; verify the predicted rate numerically for two-source pools before formalising.\n\nGreedy universal decompressor libraries are asymptotically optimal in the block length, a strong practical guarantee.\n\nCurvature is not tensor-stable, which would identify a genuinely single-letter obstruction to greedy library design.",
     "domains": [],
     "id": "fd_3773",
-    "phase": "A",
     "priority_score": 0.5896428571428572,
     "research_mode": "team",
     "source_exp_id": "f49038d4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T23:36:22.757901+00:00",
     "title": "Curvature Decay for Tensor-Power Pools"
   },
@@ -15907,6 +15906,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:55.304733+00:00",
     "title": "Empirical encoding conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Neither acceleration proved here is specific to 3n+1: drop-below soundness needs only well-founded descent, and the scale-k sieve needs only sparsity of non-descending residues, which follows from an affine transport formula on Z/m^k. The conjecture is that certified sublinear verification transfers to every such map below the critical exponent.\n\nFor an integer map that is affine on residue classes mod m^k with transport slope q^s / m^k, the drop-below plus residue sieve certifies [1,B] with examined-input density tending to zero precisely when log q / log m < 1.\n\nInstantiate sieve_scale for the 5n+1 and 3n+1-analogue maps, compute non-descending densities at k <= 10, and check the predicted phase transition at log q / log m = 1.\n\nA single certified verification engine covers a whole family of dynamical conjectures, with a proved cost model.\n\nSome sub-critical map resists sieving, isolating an arithmetic obstruction invisible to the density heuristic.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_4295",
+    "priority_score": 0.5650902270617312,
+    "research_mode": "team",
+    "source_exp_id": "b3980a1a",
+    "status": "available",
+    "timestamp": "2026-08-26T17:00:34.604147+00:00",
+    "title": "Transport Sieves for General qn+r Dynamics"
   },
   {
     "consumed_by_exp_id": "",
@@ -16747,6 +16761,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T18:49:46.247435+00:00",
     "title": "Joint Realizability at Coprime Lags"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the unrestricted class the version space after any finite sample has cardinality continuum; for the period-T class T samples identify the hypothesis and T-1 do not. The conjecture interpolates: for a class closed under a shift structure with T orbits, T samples collapse the version space to a point and T-1 never do.\n\nIf H is closed under a finitely generated shift monoid acting on the positive integers with exactly T orbits, then the version space of any target after sampling one point per orbit is a singleton, and there is a sample of size T-1 leaving at least two hypotheses.\n\nFormalise for cyclic groups first (already done for periodicity), then for products of shifts; falsify by exhibiting a shift-closed class needing more than T samples.\n\nSample complexity for structured Boolean classes is a purely orbit-counting quantity, computable from the symmetry rather than from VC arguments.\n\nOrbit count is not the right invariant, and the correct one would be a new combinatorial parameter for exact identification.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4294",
+    "priority_score": 0.5639882318186371,
+    "research_mode": "team",
+    "source_exp_id": "b3980a1a",
+    "status": "available",
+    "timestamp": "2026-08-26T17:00:34.116280+00:00",
+    "title": "Orbit-Count Threshold for Version-Space Collapse"
   },
   {
     "consumed_by_exp_id": "",
@@ -27669,6 +27698,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T13:18:09.936715+00:00",
     "title": "Bit-Length Skew and Window Extinction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Descent certificates form a complete proof system for statements of the form forall n >= 1, p n, while finite checking alone is unsound. Defining the certificate complexity as the least admissible window N, the conjecture is that it is finite for every true statement but not computable, relocating open conjectures from unbounded verification to the search for one reduction function.\n\nThe function taking a decidable predicate p with forall n >= 1, p n to the least N admitting a descent certificate is total but not computable; for the Collatz predicate it is finite iff the Collatz conjecture holds.\n\nFormalise the totality from descentCertificate_nonempty_iff and derive non-computability by reduction from the halting problem for fuelled checkers.\n\nBounded verification effort can be reported as a lower bound on certificate complexity, giving a principled stopping rule for certified search.\n\nCertificate complexity would be computable, yielding a decision procedure for a large family of universal arithmetic statements.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_4293",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b3980a1a",
+    "status": "available",
+    "timestamp": "2026-08-26T17:00:33.633716+00:00",
+    "title": "Certificate Complexity of Universal Statements"
   },
   {
     "consumed_by_exp_id": "",
@@ -45191,19 +45235,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:22:22.544130+00:00",
     "title": "Prove the mesh-diameter estimate turning a fully labelled simplex for `T` into an `\u03b5`-fixed point."
-  },
-  {
-    "consumed_by_exp_id": "b3980a1a",
-    "description": "The included evidence kernel-checks inputs `1..20`. Larger bounds can be certified with efficient arrays and reflection, but no finite bound proves the universal conjecture.",
-    "domains": [],
-    "id": "fd_2052",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "20c9506b",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:22:24.089590+00:00",
-    "title": "Strengthen certified computation"
   },
   {
     "consumed_by_exp_id": "",

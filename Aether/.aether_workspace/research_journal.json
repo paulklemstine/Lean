@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "51837664",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — after the Two-Adic Price Law\n\nThis cycle closed the Price tree's 2-adic question in the exact form it was posed: the\naddress letters at positions 0 and 1 (counted from the leaf)",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 153,
-      "timestamp": "2026-08-24T23:36:39",
-      "title": "FACT round-71 #1 — TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exact v2(p+q) mechanism"
-    },
-    {
       "cycle_id": "ed1b07dd",
       "domain": "Computation",
       "key_insight": "# FUTURE DIRECTIONS — E3 thread, after four cycles\n\n## What this cycle settled\n\nThe conjecture was: *the median held-out logit margin is the same at `d = 4, 8,\n16` to within `±10 %`, and equals `128·L",
@@ -499,19 +489,19 @@
       "theorem_count": 68,
       "timestamp": "2026-08-26T15:55:04",
       "title": "Canonical alpha-connections"
+    },
+    {
+      "cycle_id": "b3980a1a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of this cycle.  The cycle\nestablished three things, and each conjecture below pushes on one of them:\n\n1. **Reflection is free** —",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-08-26T17:00:47",
+      "title": "Strengthen certified computation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c442a26f",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — after Conjecture D (q-series rigidity / Molien-type dichotomy)\n\nCycle status.  Conjecture D is **settled** in `Catalog/Bridges/MolienQSeriesRigidity.lean`,\nin a form sharper than",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-08-19T21:41:53",
-      "title": "Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the or"
-    },
     {
       "cycle_id": "d11810a4",
       "domain": "Geometry",
@@ -2501,21 +2491,19 @@
       "theorem_count": 68,
       "timestamp": "2026-08-26T15:55:04",
       "title": "Canonical alpha-connections"
+    },
+    {
+      "cycle_id": "b3980a1a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of this cycle.  The cycle\nestablished three things, and each conjecture below pushes on one of them:\n\n1. **Reflection is free** —",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-08-26T17:00:47",
+      "title": "Strengthen certified computation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7b0f4515",
-      "domain": "Probability",
-      "name": "sub2_zero",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "7b0f4515",
-      "domain": "Probability",
-      "name": "sub2_one",
-      "quality": 0.84
-    },
     {
       "cycle_id": "56a9e19d",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Combinatorics",
       "name": "partitionFn_ne_zero",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "b3980a1a",
+      "domain": "MachineLearning",
+      "name": "reachesOne_of_T",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b3980a1a",
+      "domain": "MachineLearning",
+      "name": "reachesOne_one",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-26T15:55:04",
+  "last_updated": "2026-08-26T17:00:47",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "ef4f9365",
-        "quality": 0.83,
-        "theorems": 181,
-        "title": "The Berggren Tree and the Langlands Program — Automorphic Forms on the 3-adic Bo"
-      },
-      {
         "cycle_id": "e82f11a2",
         "quality": 0.82,
         "theorems": 48,
@@ -3575,6 +3569,12 @@
         "quality": 0.78,
         "theorems": 50,
         "title": "FACT round-88 #2 — EDGE-CAP (exp 594 FINAL): H0 — SPIKE STEEPNESS UNIDENTIFIABLE"
+      },
+      {
+        "cycle_id": "b3980a1a",
+        "quality": 0.82,
+        "theorems": 110,
+        "title": "Strengthen certified computation"
       }
     ],
     "Novelty": [
