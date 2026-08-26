@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9d509f0a",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after TDIAL-U64B (round-68 #3, exp 543)\n\n## What this thread established\n\nThe record under study is `U64B-DIAL-HOLDS-COUNT-PARITY`: pooled `ρ(T, rate) = 0.641`\n(CI `[0.619, 0.660",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-24T15:57:28",
-      "title": "FACT round-68 #3 — TDIAL-U64B: fresh-seed replication confirms the dial at bitlen 64 (paper 190)"
-    },
-    {
       "cycle_id": "99ec0ece",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Computational Complexity of Recipes\n\nDerived from three research cycles on the query (\"tasting\") model of recipe complexity in\n`Catalog/Novelty/KitchenQueryComplexity.lean`,\n`Cat",
@@ -499,19 +489,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-26T07:10:28",
       "title": "Kneser input for many lines"
+    },
+    {
+      "cycle_id": "3b9c1eb4",
+      "domain": "Computation",
+      "key_insight": "# FUTURE DIRECTIONS — U065 mechanism, after five research cycles\n\n## What these cycles established (formally, 0 sorries, standard axioms only)\n\n* **Mean preservation, any modulus.** `sum_rootCountM`:",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-08-26T08:01:01",
+      "title": "FACT round-86 #1 — U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL — hump REAL over exact Dic"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7299371d",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Erdős–Graham: exact coverings by distinct unit fractions\n\nThe formal development in `Catalog/Combinatorics/ErdosGraham*.lean` establishes:\nthe cardinality spectrum of exact Egypt",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-19T14:54:22",
-      "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
-    },
     {
       "cycle_id": "57212186",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-26T07:10:28",
       "title": "Kneser input for many lines"
+    },
+    {
+      "cycle_id": "3b9c1eb4",
+      "domain": "Computation",
+      "key_insight": "# FUTURE DIRECTIONS — U065 mechanism, after five research cycles\n\n## What these cycles established (formally, 0 sorries, standard axioms only)\n\n* **Mean preservation, any modulus.** `sum_rootCountM`:",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-08-26T08:01:01",
+      "title": "FACT round-86 #1 — U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL — hump REAL over exact Dic"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "128c5007",
-      "domain": "Computation",
-      "name": "binVal_translate",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "128c5007",
-      "domain": "Computation",
-      "name": "binCenter_translate",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "4c991400",
-      "domain": "Shared",
-      "name": "cx_apply",
-      "quality": 0.8
-    },
     {
       "cycle_id": "4c991400",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "det_smul",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "3b9c1eb4",
+      "domain": "Computation",
+      "name": "rhoOne_dickman_ode",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "3b9c1eb4",
+      "domain": "Computation",
+      "name": "rhoOne_delay",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "3b9c1eb4",
+      "domain": "Computation",
+      "name": "rhoOne_convexOn",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-26T07:10:28",
+  "last_updated": "2026-08-26T08:01:01",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "663f5de8",
-        "quality": 0.89,
-        "theorems": 112,
-        "title": "The corrected-product operation is now a proved closure property"
-      },
-      {
         "cycle_id": "3fdce232",
         "quality": 0.82,
         "theorems": 141,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 48,
         "title": "Kneser input for many lines"
+      },
+      {
+        "cycle_id": "3b9c1eb4",
+        "quality": 0.84,
+        "theorems": 84,
+        "title": "FACT round-86 #1 — U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL — hump"
       }
     ],
     "Cryptography": [
