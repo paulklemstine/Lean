@@ -1,4 +1,4 @@
-import Catalog.Geometry.HyperbolicBerggrenTreeDepth
+import Geometry.HyperbolicBerggrenTreeDepth
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle IX: the silver growth rate of the Berggren tree

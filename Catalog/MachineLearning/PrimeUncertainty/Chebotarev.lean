@@ -19,7 +19,7 @@ equivalence formal and unconditional in the modulus:
 -/
 
 import Mathlib
-import Catalog.MachineLearning.PrimeUncertainty.Boundary
+import MachineLearning.PrimeUncertainty.Boundary
 
 open Finset Polynomial FourierFA FourierCyclic
 open scoped Real

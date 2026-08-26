@@ -36,9 +36,9 @@ Main results:
 -/
 
 import Mathlib
-import Catalog.Probability.ParityGap.SupportMultiplicity
-import Catalog.Probability.ParityGap.CyclotomicRing
-import Catalog.MachineLearning.PrimeUncertainty.PermutationCriterion
+import Probability.SupportMultiplicity
+import Probability.CyclotomicRing
+import MachineLearning.PrimeUncertainty.PermutationCriterion
 
 open Polynomial Finset
 
