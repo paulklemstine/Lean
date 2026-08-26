@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "194ffa72",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — from the exact off-resonance window formula\n\nAll results referenced below live in `Catalog/NumberTheory/OffResonanceWindow.lean`,\nwhich compiles with **zero `sorry`** and only th",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-24T17:48:11",
-      "title": "Exact off-resonance window formula"
-    },
-    {
       "cycle_id": "a3cbf41f",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThree strands of theory were developed in this cycle:\n\n* **The narrowing law.** The bracket that a fail/pass pair licenses; protection\n  as head dominance of retention curves; the",
@@ -499,19 +489,19 @@
       "theorem_count": 145,
       "timestamp": "2026-08-26T09:03:40",
       "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
+    },
+    {
+      "cycle_id": "8eac1b6d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — ECA fixed-point varieties after five research cycles\n\n## What the cycles established\n\nThe starting conjecture — *\"the dimension of the fixed-point variety\n`V(f) = {s : f(s) = s}`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 137,
+      "timestamp": "2026-08-26T10:53:16",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b8ad3057",
-      "domain": "Shared",
-      "key_insight": "# FUTURE DIRECTIONS — Sidon sets, after three research cycles\n\nThree cycles of the scientific-method loop produced, in `Catalog/Shared/`:\n\n* `SidonSetsErdosTuran.lean` — the Erdős–Turán sandwich `√(N/",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-08-19T15:47:00",
-      "title": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpac"
-    },
     {
       "cycle_id": "0f708106",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 145,
       "timestamp": "2026-08-26T09:03:40",
       "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
+    },
+    {
+      "cycle_id": "8eac1b6d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — ECA fixed-point varieties after five research cycles\n\n## What the cycles established\n\nThe starting conjecture — *\"the dimension of the fixed-point variety\n`V(f) = {s : f(s) = s}`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 137,
+      "timestamp": "2026-08-26T10:53:16",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6247b80f",
-      "domain": "Shared",
-      "name": "normalizedPart_headSeries",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6247b80f",
-      "domain": "Shared",
-      "name": "coeff_prod_one_add_C_X_sq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a08d5a50",
-      "domain": "NumberTheory",
-      "name": "windowMass_eq",
-      "quality": 0.86
-    },
     {
       "cycle_id": "a08d5a50",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "lorentz_invMove",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "8eac1b6d",
+      "domain": "Novelty",
+      "name": "zmod2_eq_zero_or_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "8eac1b6d",
+      "domain": "Novelty",
+      "name": "ofBool_true",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "8eac1b6d",
+      "domain": "Novelty",
+      "name": "ofBool_false",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-26T09:03:40",
+  "last_updated": "2026-08-26T10:53:16",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9f4b7d2b",
-        "quality": 0.84,
-        "theorems": 81,
-        "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitle"
-      },
-      {
         "cycle_id": "33808f71",
         "quality": 0.78,
         "theorems": 61,
@@ -3637,6 +3631,12 @@
         "quality": 0.79,
         "theorems": 14,
         "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays d"
+      },
+      {
+        "cycle_id": "8eac1b6d",
+        "quality": 0.82,
+        "theorems": 137,
+        "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
       }
     ],
     "NumberTheory": [
