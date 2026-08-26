@@ -1,0 +1,38 @@
+[
+ {
+  "trial": 0,
+  "arm": "bayes",
+  "s": 0.2,
+  "ok": true
+ },
+ {
+  "trial": 0,
+  "arm": "escalate",
+  "s": 1.5,
+  "ok": true
+ },
+ {
+  "trial": 1,
+  "arm": "bayes",
+  "s": 0.9,
+  "ok": true
+ },
+ {
+  "trial": 1,
+  "arm": "escalate",
+  "s": 0.4,
+  "ok": true
+ },
+ {
+  "trial": 2,
+  "arm": "bayes",
+  "s": 4.5,
+  "ok": true
+ },
+ {
+  "trial": 2,
+  "arm": "escalate",
+  "s": 4.5,
+  "ok": false
+ }
+]
