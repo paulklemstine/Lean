@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-26T04:57:09.489196+00:00",
+  "last_updated": "2026-08-26T05:52:15.912098+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -68614,6 +68614,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-26T04:57:09.174947+00:00",
       "title": "FACT round-81 #1 \u2014 HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE \u2014 n"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Logic",
+      "duration_seconds": 3222.6852128505707,
+      "end_time": 1787723450.7508867,
+      "files_integrated": 5,
+      "job_id": "c2e74b6a",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.88,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.571,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.88,
+        "novelty": 0.88,
+        "proof_depth": 0.88,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787720228.0656738,
+      "strategy_count": 0,
+      "theorem_count": 114,
+      "theorem_novelty_disproof": 9,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 71,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-26T05:52:15.595639+00:00",
+      "title": "Finite model property with an explicit bound"
     }
   ]
 }

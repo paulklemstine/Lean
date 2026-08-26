@@ -2176,16 +2176,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-83 #2 \u2014 WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED \u2014 dial weight exponent alpha_hat=0.5 not 1 (single-peaked R2 curve .32/.50/.62/.58/.47/.30, dR2=+0.151>=bar; boot CI [0.5,0.5] excludes 1 decisively 492/500); ERRATUM-GRADE SUPERSESSION of paper 227's adopted 1/l covariate -> 1/sqrt(l) lab-wide (+31% relative dial power on identical data)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1a774383",
     "description": "Round-85 #1 \u00b7 exp 589 [FINAL RESOLUTION, findings rev 2026-08-24b] \u00b7 pure reanalysis of exp581_regen_positions.npz (9594 pooled hits / 128 Ns / 512k controls; wall_s 45.16) \u00b7 paper 240 \u00b7 supersedes the H0-MIXED letter of paper 239 (issue #387), which stands preserved as audit record of the intermediate analysis state.\n\nRESOLUTION (H1a-INCLUSION-ARTIFACT):\n1. MECHANICAL FORCING: D1 hit mass by v-band <80:0 / 80\u201389:85 / 90\u201395:1469 / >=96:0 \u2014 100% of first-decile hits have bitlen(v)<96, mechanically forced (D1 \u21d2 delta<0.2s \u21d2 v<0.44\u00b7s^2+o(s^2)<2^95 provable under window j in [isqrt(N)+1, 3\u00b7isqrt(N)]).\n2. SIZE-MATCHED BANDS ERASE THE EXCESS: within-band D1 rate ratios rr_d1 = 1.000 (80\u201389), 1.097 (90\u201395); band-referenced total excess +129.66 vs flat-null +604.76 (rr_d1 vs flat 1.637) \u2192 ~4/5 of the spike is band COMPOSITION, not decile-1 rate elevation. Controls clean (per-N D1-share z mean \u22120.223 sd 0.945 absmax 2.53).\n3. KEPT-FIT 'PERSISTENCE' DECOMPOSES ENTIRELY: kept fit (v>=2^95) w_edge .0403 [.0301,.0525] \u0394AICc 49.78 is carried entirely by bitlen[96,98) at the truncation boundary (\u0394AICc 5.94 \u2014 BELOW the registered bar of 6; no bootstrap CI disclosed) while bitlen>=98 has NO edge component (\u0394AICc \u22120.40) \u2192 truncation-boundary Dickman size gradient, NOT positional structure.\n\nERRATUM to paper 239: title claim ('kernel SURVIVES at reduced strength'), \u00a74 split reading ('half genuine small-|v| structure beyond Dickman prediction'), and \u00a75 consequences 1\u20132 are RETRACTED as truncation-boundary gradient. PRESERVED from 239: mechanical-degeneracy finding (strengthened \u2014 now load-bearing), regeneration verification, controls-clean, ledger disclosures, and the H0-MIXED verdict letter as audit record. No registered bar changed post hoc \u2014 resolution applies the REGISTERED \u0394AICc >= 6 bar to matched-v strata.\n\nMAP STATEMENT (arc closure papers 228\u2192239\u2192240): NO positional kernel component survives \u2014 the profile is fully accounted by magnitude + tiny-v window geometry.\n\nWHAT SURVIVES: overdispersion itself real (+605 named-origin, not deleted); positional layer independent (papers 228\u2013230 untouched); rate-layer question open.\n\nLINEAGE DISCIPLINE end-to-end: exp581 sha256 byte-exact quartet upstream with both self-caught fixes disclosed in-chain (run-1 COMPARATOR bug; run-2 LN-dict KeyError 350983 fixed via arbitrary-edge ln cache); exp589 downstream re-verification = 128x2 EXACT isqrt\u2192(jlo,jhi) matches + containment of every stored j (pop_hash 06931068f8f3ca9b recomputed, no external copy readable \u2014 disclosed).\n\nLEDGER CATCHES: degenerate exclusion clause (pre-registered mechanical note fired); kept-fit anchor adaptation registered pre-run; own two-component Poisson fitter nb=50 not paper-238 b_edge parametrization; capped first-4000 controls; POST-HOC labeling of all resolution diagnostics; subfits no bootstrap CI; wall-time drift noted (paper 239 quoted 42.34 s, artifacts record 45.16 s).\n\nBarrier framing: closure INSIDE the positional layer's shape description \u2014 residue cap 4/3, position 5.19x, external-hint laws, quantum frontier, four-class rate-residual closure all untouched; both surviving mechanisms scale-carrying (exact-arithmetic inclusion bound grows with scale). Paper 238's .2346 provenance flag still travels forward until reconciled against the paper-228 ledger.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4054",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T21:45:33.977842+00:00",
     "title": "FACT round-85 #1 \u2014 SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper 239 \u2014 paper 238's left-edge spike is tiny-v composition ENTIRELY (100% of D1 hits bitlen(v)<96 by window geometry; rr_d1 1.000/1.097 size-matched; kept-fit persistence = truncation-boundary gradient [96,98) dAICc 5.94 sub-bar, >=98 -0.40); NO positional kernel component survives"
   },
@@ -2657,6 +2658,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c2e74b6a (Q=0.880), which proved 114 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture: every\n   non-derivable formula `A` of the calculus above has a `TempFrame` countermodel with\n   at most `2^(2 * subformulaCount A)` worlds. This can be tested by filtration and\n   exhaustive bounded model search.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_c2e74b6a_265a281b",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "c2e74b6a",
+    "status": "available",
+    "timestamp": "2026-08-26T05:52:12.232236+00:00",
+    "title": "Deepening: Finite model property with an explicit bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -4319,22 +4334,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations \u2014 enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
-    "domains": [
-      "Novelty",
-      "Physics",
-      "Logic"
-    ],
-    "id": "seed_415",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -16014,6 +16013,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Three interaction axioms relate the provability box to the temporal box. One is sound on the catalog frame class; the other two are proved non-derivable here by explicit two-world and one-world separating frames. We conjecture the separation is structural: adding either of the other two collapses the provability modality entirely.\n\nAdding \u25fcA \u27f9 \u25fbA or \u25fbA \u27f9 \u25fcA to TGL yields a system deriving \u25fb\u22a5, hence unsound on every frame with non-empty accessibility.\n\nExtend the Derivable inductive with each candidate axiom and attempt to derive \u25fb\u22a5 using reflexivity of T together with converse well-foundedness of R; check soundness against rigidTimeFrame.\n\nThe catalog's choice of the persistence axiom \u25fbA \u27f9 \u25fc\u25fbA is canonically forced, not a modelling convention, and the frame class is rigid.\n\nThere is a second consistent bimodal L\u00f6b logic over the same frame skeleton, worth axiomatising and comparing.",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_4241",
+    "priority_score": 0.5649405475559509,
+    "research_mode": "team",
+    "source_exp_id": "c2e74b6a",
+    "status": "available",
+    "timestamp": "2026-08-26T05:51:58.739552+00:00",
+    "title": "Interaction-Axiom Trichotomy for Bimodal L\u00f6b Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Preserving the frame condition T w w' \u2192 R w' v \u2192 R w v under filtration required adding a box-persistence clause to the filtered temporal relation. We conjecture this is an instance of a general recipe covering every Sahlqvist interaction axiom of that shape, yielding filtration and finite model theorems for a whole family of bimodal logics at once.\n\nFor any bimodal frame condition of the form T w w' \u2192 R w' v \u2192 R w v, the filtration of T strengthened by persistence of R-boxed closure formulas preserves the condition, and the resulting truth lemma holds verbatim.\n\nParameterise filtR and filtT over abstract modal constructors and a condition witness, re-derive filtT_filtR_compat, filtR_measure_lt and the truth lemma, then instantiate at the temporal case and check that all existing theorems still typecheck.\n\nA reusable filtration library covering the catalog's provability-logic and poset-theory directories, with finite model properties obtained by instantiation rather than by re-proof.\n\nThe temporal case exploits reflexivity of T in a way not shared by general interaction conditions, isolating exactly which conditions are filtration-stable.",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_4242",
+    "priority_score": 0.5649163493691831,
+    "research_mode": "team",
+    "source_exp_id": "c2e74b6a",
+    "status": "available",
+    "timestamp": "2026-08-26T05:51:59.300346+00:00",
+    "title": "Uniform Filtration Recipe for Sahlqvist Interaction Conditions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Strict majorization says a non-flat descending weight beats the baseline strictly, but says nothing about how much. The Chebyshev double sum is a quadratic form, suggesting the defect is bounded below by a squared distance to flatness.\n\nFor antitone normalised w on positions M, C_0 - EC >= c * M * (sum_i |w_i - 1/M|)^2 for an absolute constant c > 0.\n\nFormalise via the double-sum identity, comparing the pairwise sum with the L1 distance by Cauchy-Schwarz; test the constant numerically over random antitone weights.\n\nThe master chain gains a quantitative, distribution-free margin, upgrading strict inequalities into usable gaps.\n\nThe defect degenerates for weights concentrated at the extremes, and only a weighted (position-dependent) distance can control it.",
     "domains": [
       "Algebra",
@@ -16179,6 +16208,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The catalog's TempProv structure axiomatises provability indexed by a discovery time but is so far witnessed only by the degenerate model that proves nothing. We conjecture that TGL is complete for TempProv models, and that the finite canonical worlds constructed here provide the missing non-degenerate witnesses, bypassing Solovay-style fixed points.\n\nA formula A is TGL-derivable iff every TempProv model validates its translation under every interpretation of the atoms.\n\nBuild a translation from CanWorld (subformulas A) to TempProv, verify persist, K, sigma1 and loeb against the canonical relations, and check that the resulting model refutes exactly the non-derivable formulas.\n\nThe semantic and algebraic layers of the catalog's temporal G\u00f6del\u2013L\u00f6b development are reconciled, and godel_second_at_time becomes a corollary of a single completeness theorem.\n\nThe TempProv axioms are strictly stronger than TGL, and the surplus identifies precisely which arithmetical facts are not modally expressible.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4240",
+    "priority_score": 0.56469362728281,
+    "research_mode": "team",
+    "source_exp_id": "c2e74b6a",
+    "status": "available",
+    "timestamp": "2026-08-26T05:51:58.197783+00:00",
+    "title": "Arithmetical Completeness of Time-Stamped Provability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved lower bound spends one tree per 3^{1/4} leaves because it is a union bound over all ordered quadruples. Since the agreement probability is exactly 3^{-(k-1)} by the ternary balance theorem and quartets sharing at most two leaves are nearly independent, the Lovasz Local Lemma should improve the exponential base.\n\nThere are avoiding families of k random caterpillars on n leaves whenever k >= 3 log_3 n + O(1), improving the constant 4 in exponential_lower_bound, hence h(k) >= 3^{k/3 - O(1)}.\n\nFormalize the symmetric Lovasz Local Lemma for the events 'all k trees agree on quartet Q', with dependency degree O(n^3) and probability 3^{-(k-1)}, and re-derive the avoidance statement in the Lean framework of exists_quartet_avoiding_family.\n\nThe exponential lower bound base rises from 3^{1/4} = 1.316 toward the empirically observed 1.7, narrowing the gap with the upper bound.\n\nThe quartet agreement events are more strongly dependent than their pairwise leaf overlap suggests, indicating a hidden global constraint in tree space.",
     "domains": [
       "Computation",
@@ -16206,6 +16250,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T04:56:49.046170+00:00",
     "title": "Curvature Dichotomy for Chord-Referenced Vertices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The accessibility relation of every canonical temporal GL model is a strict order graded by the number of realised boxed subformulas. We conjecture that the minimal countermodel size is exactly one more than the longest chain in this graded poset, making it an order-theoretic rather than a logical quantity. This bridges modal completeness theory with finite poset combinatorics.\n\nThe minimal number of worlds in a TempFrame countermodel of a non-derivable A equals 1 + d(A), where d(A) is the longest strictly boxCount-increasing chain in the boxed subformulas of A.\n\nDefine minCountermodelSize by Nat.find over finite_model_property_sharp, compute both sides on the six sample formulas of ComputationalEvidence.md, then attempt induction on d(A).\n\nCountermodel size becomes computable from the box skeleton alone, independently of propositional content, giving an exact complexity measure for TGL refutation.\n\nPropositional content genuinely contributes to countermodel size, and the extra contribution isolates the non-order-theoretic part of L\u00f6b refutation.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4239",
+    "priority_score": 0.5646683179548131,
+    "research_mode": "team",
+    "source_exp_id": "c2e74b6a",
+    "status": "available",
+    "timestamp": "2026-08-26T05:51:57.600292+00:00",
+    "title": "L\u00f6b Depth as an Exact Complexity Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -27272,6 +27331,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T04:56:49.881530+00:00",
     "title": "Jensen Gap of the Smoothness Density across a Bin"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved bound 2^(2n) on countermodel size for the temporal G\u00f6del\u2013L\u00f6b calculus is exponential, but the filtration measure shows all depth is linear in the number of boxed subformulas. We conjecture that a selective canonical model, generated only from the worlds actually demanded by the existence lemmas, has polynomially many worlds. This would turn a decision procedure that is currently doubly exponential in the search space into a tractable one.\n\nFor every non-derivable A there is a TempFrame countermodel with at most p(subformulaCount A) worlds for a fixed polynomial p; and at most subformulaCount A + 1 worlds when A has no implication nested under a box.\n\nReplace CanW by the closure of the refuting world under exists_box_succ and exists_glob_succ, bound its cardinality by the recursion depth, and compare with the verified minimal countermodels of size 1 and 2 recorded in ComputationalEvidence.md.\n\nfinite_model_property_sharp upgrades from an exponential to a polynomial bound, and bounded model search for TGL becomes practical.\n\nAn explicit formula family with exponentially large minimal countermodels exists, proving the 2^n bound essentially tight and closing the tightness question.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4238",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c2e74b6a",
+    "status": "available",
+    "timestamp": "2026-08-26T05:51:57.053110+00:00",
+    "title": "Polynomial Width Collapse for Temporal L\u00f6b Countermodels"
   },
   {
     "consumed_by_exp_id": "",
@@ -38556,15 +38629,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The two-sided score metrises the \"distance from equivalence\""
   },
   {
-    "consumed_by_exp_id": "efa7685f",
+    "consumed_by_exp_id": "",
     "description": "In the setting of `softMin_sandwich_of_gap`, let `m` be the number of pivotal voters, `\u0394`\nthe gap to the next-best cost and `m\u2081` the number of voters attaining that next-best cost.\nThen\n\n`t \u00b7 e^{t\u0394} \u00b7 [ (min y \u2212 log m / t) \u2212 softMin s t y ] \u2192 m\u2081 / m` as `t \u2192 \u221e`.\n\nEvidence: the two-sided bound `0 \u2264 error \u2264 (q/m) e^{\u2212t\u0394}/t` is proved\n(`softMin_sandwich_of_gap`), with `q = #(s \\ pivotal)` the total number of non-pivotal\nvoters; the conjecture replaces `q` by the number `m\u2081 \u2264 q` of *second-best* voters and\nasserts that the bound is asymptotically attained.\n\nFalsifiable: a profile for which the limit exists and differs from `m\u2081 / m`, or fails to\nexist.  Note `softMin_eq_of_pivotal_eq_self` already gives the degenerate case `q = 0`\nexactly.",
     "domains": [],
     "id": "fd_2920",
-    "phase": "A",
     "priority_score": 0.4386666666666666,
     "research_mode": "team",
     "source_exp_id": "10a6c20b",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:26:55.926599+00:00",
     "title": "Conjecture D (Exact asymptotics of the dequantisation error)"
   },
@@ -41324,14 +41396,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ca543a1",
     "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
     "domains": [],
     "id": "fd_1431",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:05.239324+00:00",
     "title": "Kernel patterns"
   },
@@ -45928,19 +46001,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:18.372689+00:00",
     "title": "scaling theorems for Euler bricks and hypothetical perfect cuboids;"
-  },
-  {
-    "consumed_by_exp_id": "c2e74b6a",
-    "description": "Conjecture: every\n   non-derivable formula `A` of the calculus above has a `TempFrame` countermodel with\n   at most `2^(2 * subformulaCount A)` worlds. This can be tested by filtration and\n   exhaustive bounded model search.",
-    "domains": [],
-    "id": "fd_2817",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "17b35eaf",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:26:19.038154+00:00",
-    "title": "Finite model property with an explicit bound"
   },
   {
     "consumed_by_exp_id": "",

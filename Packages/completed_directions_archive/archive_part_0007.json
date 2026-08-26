@@ -1,7 +1,7 @@
 {
-  "part": 7,
-  "archived_at": "2026-08-26T04:56:50Z",
-  "count": 1,
+  "part": "7",
+  "archived_at": "2026-08-26T05:51:59Z",
+  "count": 2,
   "directions": [
     {
       "id": "fd_3695",
@@ -42,6 +42,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 296
+    },
+    {
+      "id": "fd_2817",
+      "title": "Finite model property with an explicit bound",
+      "description": "Conjecture: every\n   non-derivable formula `A` of the calculus above has a `TempFrame` countermodel with\n   at most `2^(2 * subformulaCount A)` worlds. This can be tested by filtration and\n   exhaustive bounded model search.",
+      "source_exp_id": "17b35eaf",
+      "source_path": "resplit_migration",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4,
+      "status": "completed",
+      "consumed_by_exp_id": "c2e74b6a",
+      "timestamp": "2026-08-21T06:26:19.038154+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.88,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-25T16:04:04.947032+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

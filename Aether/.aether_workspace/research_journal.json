@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6f277833",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — after C3 (the even/odd dichotomy of the one-bit cap)\n\n## What this cycle settled\n\nWorking with the catalogue channel\n`Ipair n = I( {T(p), T(q)} ; (p+q) mod n )`, `T(a) = n / gcd(",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-24T13:14:33",
-      "title": "C3. The even/odd dichotomy of the one-bit cap"
-    },
-    {
       "cycle_id": "f45042dc",
       "domain": "Pythagorean",
       "key_insight": "# Future directions from the NET-79 Pythagorean knee round\n\nFive files were added under `Catalog/Pythagorean/`, all compiling with zero `sorry`s:\n\n* `NET79GeometricRatioKnee.lean` — retained mass is a",
@@ -499,19 +489,19 @@
       "theorem_count": 74,
       "timestamp": "2026-08-26T04:57:04",
       "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE — n"
+    },
+    {
+      "cycle_id": "c2e74b6a",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Temporal Gödel–Löb logic after the finite model property\n\n## What this cycle established\n\nThe assignment conjectured that every non-derivable formula `A` of the temporal\nGödel–Lö",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-26T05:52:11",
+      "title": "Finite model property with an explicit bound"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f46e1405",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — the price of universality as a submodular functional\n\nThis cycle closed the quantitative half of the mission: the Shtarkov sum's\nincrement under adding one model is exactly the m",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-19T10:47:13",
-      "title": "The qualitative half is now proved: `Cₛ = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`),"
-    },
     {
       "cycle_id": "f1fd8ff1",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 74,
       "timestamp": "2026-08-26T04:57:04",
       "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE — n"
+    },
+    {
+      "cycle_id": "c2e74b6a",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Temporal Gödel–Löb logic after the finite model property\n\n## What this cycle established\n\nThe assignment conjectured that every non-derivable formula `A` of the temporal\nGödel–Lö",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-26T05:52:11",
+      "title": "Finite model property with an explicit bound"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d59c6a1a",
-      "domain": "Cryptography",
-      "name": "rpow_inv_sub_ge",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "d59c6a1a",
-      "domain": "Cryptography",
-      "name": "shellRadius_le_self",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "05a687ab",
-      "domain": "Computation",
-      "name": "gapRatio_affine",
-      "quality": 0.82
-    },
     {
       "cycle_id": "05a687ab",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "midpoint_strictConcave",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "c2e74b6a",
+      "domain": "Logic",
+      "name": "closed_subformulas",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "c2e74b6a",
+      "domain": "Logic",
+      "name": "mem_gammaList_pos",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "c2e74b6a",
+      "domain": "Logic",
+      "name": "mem_gammaList_neg",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-26T04:57:04",
+  "last_updated": "2026-08-26T05:52:11",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "ed687362",
-        "quality": 0.72,
-        "theorems": 82,
-        "title": "ArXiv paper: Edge-decomposition into Two Triangular Forests is NP-complete"
-      },
-      {
         "cycle_id": "3eeb9235",
         "quality": 0.84,
         "theorems": 59,
@@ -3513,6 +3507,12 @@
         "quality": 0.75,
         "theorems": 94,
         "title": "FACT round-78 #2 — QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY — sma"
+      },
+      {
+        "cycle_id": "c2e74b6a",
+        "quality": 0.88,
+        "theorems": 114,
+        "title": "Finite model property with an explicit bound"
       }
     ],
     "MachineLearning": [
