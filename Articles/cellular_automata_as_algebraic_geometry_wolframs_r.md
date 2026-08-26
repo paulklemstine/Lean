@@ -1,147 +1,156 @@
-# Cellular Automata as Algebraic Geometry
+# The Shape of a Cellular Automaton
 
-## When a row of bits becomes a landscape of equations
+*What happens when you ask an algebraic geometer to measure the complexity of Wolfram's rules — and the answer comes back "one point"*
 
-A cellular automaton begins with almost nothing: a line of cells, each either dark or bright, and a local instruction repeated everywhere at once. Yet this spare mechanism can freeze into crystals, churn like static, launch gliders across the screen, or carry out arbitrary computations. The most famous family, the elementary cellular automata, contains exactly $256$ rules. Their apparent simplicity hides a difficult question: how should we measure the complexity of a rule without relying only on pictures of its evolution?
+---
 
-Algebra offers a seductive answer. Replace darkness and light by the two elements $0$ and $1$ of the field $\mathbb F_2$. In this arithmetic, $1+1=0$. A local update rule is no longer merely an eight-entry lookup table; it is a polynomial function of three binary variables. A complete configuration becomes a point in a vast binary state space, and one synchronous update becomes a polynomial map of that space to itself.
+## A universe on a strip of paper
 
-This change of language is more than cosmetic. It lets us ask geometric questions. Which configurations are fixed points? Which equations cut them out? Do simple rules have small fixed-point sets while complex rules have large ones? The answers at the extremes are beautifully clean—but Rule 110, the celebrated universal rule, also supplies a decisive warning. Dynamical complexity does not equal abundance of stationary states.
+Draw a row of cells. Colour each one black or white. Now fix a rule: the new colour of a cell depends only on its own colour and the colours of its two immediate neighbours. Apply the rule to every cell at once, print the new row underneath the old one, and repeat.
 
-## The eight-neighborhood dictionary
+That is an *elementary cellular automaton*. There are exactly $256$ of them, because a rule is nothing more than a choice of output colour for each of the $2^3 = 8$ possible three-cell neighbourhoods, and $2^8 = 256$. Stephen Wolfram numbered them $0$ through $255$ by reading the eight outputs as an eight-bit binary number, and the names stuck: Rule 30, Rule 90, Rule 110.
 
-Let a configuration be a bi-infinite sequence $s:\mathbb Z\to\{0,1\}$. At position $i$, an elementary rule reads the triple
+The startling thing about this list of $256$ toys is how wildly their behaviour varies. Rule 0 blanks the paper on the first step and never does anything again. Rule 90 draws the Sierpiński triangle. Rule 30 produces a stream of black and white cells so statistically featureless that it was used for decades as a random-number generator. And Rule 110 — a rule you can describe to a child in one sentence — is a universal computer: given the right initial row, it can simulate any algorithm whatsoever.
 
-$$
-(s_{i-1},s_i,s_{i+1}).
-$$
+Wolfram famously sorted the $256$ rules into four qualitative classes: **Class 1**, which die into uniformity; **Class 2**, which settle into stripes and blinkers; **Class 3**, which boil chaotically forever; and **Class 4**, the rarest and strangest, in which localised "gliders" drift across a patterned background and collide in intricate ways. Class 4 is where universal computation lives. Rule 110 is its flagship.
 
-Write this triple as $(\ell,c,r)$, for left, center, and right. Its binary index is
+The classification is famous, useful — and stubbornly informal. It is a taxonomy by eyeball. Nobody has ever written down a formula that takes a rule number and returns its class, and there are excellent reasons (the undecidability of almost everything about Rule 110) to expect that nobody ever will, at least not in any simple form. So the obvious dream persists: *find a clean algebraic invariant that recovers Wolfram's classes.*
 
-$$
-4\ell+2c+r,
-$$
+This article is the story of one such dream, and of exactly how it dies.
 
-an integer from $0$ to $7$. A rule number $R$ between $0$ and $255$ stores eight output bits. The output on $(\ell,c,r)$ is the bit of $R$ at position $4\ell+2c+r$. Applying this local function simultaneously at every site defines a global update $F_R$:
+## Rules are polynomials
 
-$$
-(F_R(s))_i=f_R(s_{i-1},s_i,s_{i+1}).
-$$
+Here is the observation that starts everything. Replace "white" with $0$, "black" with $1$, and work in the field $\mathbb{F}_2 = \{0,1\}$, where addition is exclusive-or ($1+1=0$) and multiplication is the logical AND. Every function from $\mathbb{F}_2^3$ to $\mathbb{F}_2$ — that is, every one of the $256$ rules — is then given by a *unique* polynomial in three variables $l, c, r$ (for left, centre, right) in which no variable ever appears squared. The reason is simple: over $\mathbb{F}_2$ we have $x^2 = x$, so nothing beyond the eight monomials
+$$1,\quad l,\quad c,\quad r,\quad lc,\quad lr,\quad cr,\quad lcr$$
+can survive, and eight coefficients over $\mathbb{F}_2$ is exactly $256$ possibilities.
 
-A stable configuration, or fixed point, is a state satisfying
+So the $256$ automata are not merely $256$ lookup tables. They are the $256$ multilinear cubic polynomials over the two-element field. For instance:
 
-$$
-F_R(s)=s.
-$$
+- Rule 0 is $f = 0$.
+- Rule 204, which copies each cell to itself, is $f = c$.
+- Rule 90, the Sierpiński rule, is $f = l + r$.
+- Rule 150 is $f = l + c + r$.
+- Rule 30, the chaotic one, is $f = l + c + r + cr$.
+- Rule 232, "majority vote", is $f = lc + lr + cr$.
+- And Rule 110, the universal computer, is
+$$f_{110}(l,c,r) \;=\; c + r + cr + lcr .$$
 
-Thus stability is an equation. For a finite periodic ring it becomes a finite system of polynomial equations over $\mathbb F_2$; for the bi-infinite line it is an infinite, translation-invariant system of local constraints.
+Of the $256$ rules, $128$ have degree exactly $3$, $112$ have degree $2$, $14$ are affine-linear and $2$ are constant.
 
-Every Boolean function of three variables has a unique multilinear polynomial representation over $\mathbb F_2$. “Multilinear” means that no variable needs an exponent greater than one, because on binary inputs $x^2=x$. The general form is
+Now put $n$ cells on a circle, so that a configuration is a point $s = (s_0, \dots, s_{n-1})$ of the affine space $\mathbb{A}^n$ over $\mathbb{F}_2$, and one time step is the polynomial map
+$$s \;\longmapsto\; \bigl(f(s_{i-1}, s_i, s_{i+1})\bigr)_{i \in \mathbb{Z}/n} .$$
+A cellular automaton has become a morphism of affine spaces. And the moment you have a polynomial map, algebraic geometry offers you its most basic invariant for free: the *variety* cut out by the equations you care about.
 
-$$
-a_0+a_1\ell+a_2c+a_3r+a_4\ell c+a_5\ell r+a_6cr+a_7\ell cr,
-$$
+## The fixed-point variety
 
-with each coefficient in $\mathbb F_2$. This is the algebraic normal form of the rule.
+The equations one obviously cares about are the ones saying that nothing changes. Call
+$$V(f, n) \;=\; \{\, s \in \mathbb{F}_2^n \;:\; f(s_{i-1}, s_i, s_{i+1}) = s_i \ \text{ for all } i \,\}$$
+the **fixed-point variety** of the rule: the zero locus of $n$ cubic equations in $n$ unknowns, the set of configurations the automaton leaves alone forever.
 
-## Rule 110 in one polynomial
+This is a real geometric object, and it comes with real structure. It is invariant under rotating the circle, so it is not an arbitrary subset of $\mathbb{F}_2^n$ but a *cyclic subshift of finite type* — a set of cyclic words defined by which three-letter windows are permitted. When the local polynomial happens to be linear (which occurs for exactly eight rules: $0, 60, 90, 102, 150, 170, 204, 240$), the variety is the kernel of a circulant matrix and hence an honest linear subspace, with an honest dimension $\dim V(f,n)$, and $|V(f,n)| = 2^{\dim V(f,n)}$.
 
-Rule 110 has local polynomial
+And now the dream can be stated. Rule 0 kills everything; its variety is the single point $0$, dimension $0$. Rule 204 changes nothing; its variety is all of $\mathbb{A}^n$, dimension $n$. Between these two extremes there is a whole scale of dimensions from $0$ to $n$ — and there is a whole scale of Wolfram classes from $1$ to $4$. Surely they match? The conjecture writes itself:
 
-$$
-f_{110}(\ell,c,r)=r+c+cr+\ell cr
-$$
+> **The Dimension Conjecture.** For a Class 1 rule, $\dim V(f,n) = 0$; for Class 2, $\dim V(f,n) \le n/2$; for Class 3, $\dim V(f,n) \ge n/2$; and for the universal Class 4 rules, $\dim V(f,n) = n$. Complexity is dimension.
 
-over $\mathbb F_2$. This identity can be checked on all eight possible neighborhoods. For example, at $(1,1,1)$ the value is
+It is a beautiful idea. If it were true, one could compute Wolfram's classification with linear algebra, and the mystery of Rule 110 would reduce to counting solutions of a polynomial system.
 
-$$
-1+1+1+1=0,
-$$
+It is false. Not marginally false, not false-except-for-edge-cases — false in four logically independent ways, each one of which is fatal on its own.
 
-because addition is modulo $2$. At $(0,0,1)$ the value is $1$. The eight evaluations reproduce exactly the eight bits encoded by the number $110$.
+## Failure one: Rule 110 is rigid
 
-The formula exposes interactions that the lookup table conceals. The terms $r$ and $c$ are linear contributions; $cr$ couples the center and right cells; and $\ell cr$ is a genuinely cubic, three-way interaction. The global fixed-point equations are therefore
+Write out the fixed-point condition for Rule 110. Stationarity says $f_{110}(l,c,r) = c$, and since $f_{110} = c + r + cr + lcr$, subtracting $c$ leaves
+$$r\,(1 + c + lc) = 0 .$$
+This is a startlingly tight constraint. Over $\mathbb{F}_2$ the factor $1 + c + lc$ vanishes exactly when $c = 1$ and $l = 0$. So a three-cell window is stationary **if and only if** either its right cell is $0$, or its centre is $1$ and its left is $0$.
 
-$$
-s_i=s_{i+1}+s_i+s_is_{i+1}+s_{i-1}s_is_{i+1}
-$$
+Now suppose some cell $s_i$ equals $1$, and look one step to the left, at the window centred at $i-1$. Its right cell is $s_i = 1$, not $0$, so the second alternative must hold: $s_{i-1} = 1$ and $s_{i-2} = 0$. Fine. But now look one step further left, at the window centred at $i-2$. *Its* right cell is $s_{i-1} = 1$, again not $0$, so again the second alternative must hold — forcing $s_{i-2} = 1$. And we have just proved $s_{i-2} = 0$.
 
-for every $i\in\mathbb Z$, with all arithmetic in $\mathbb F_2$.
+Contradiction. There is no cell carrying a $1$.
 
-This is the promised bridge to algebraic geometry: stable states are simultaneous zeros of the equations $f_R(s_{i-1},s_i,s_{i+1})-s_i=0$. On a ring of length $n$, they form a finite algebraic set inside $\mathbb F_2^n$.
+> **Theorem (Rigidity of Rule 110).** For every ring size $n$, and also for the bi-infinite line, the only configuration fixed by Rule 110 is the all-zero configuration. That is, $V(f_{110}, n) = \{0\}$.
 
-## Two poles of the fixed-point spectrum
+The argument is two lines long, entirely local, and completely uniform in $n$: no induction on the circle, no case analysis on parity, nothing. The Turing-complete automaton, the one that can simulate any computer that will ever be built, has a fixed-point variety consisting of a **single point** — precisely the same variety as Rule 0, the rule that does nothing at all.
 
-Rule 0 ignores its input and always outputs $0$. Consequently, one update sends every configuration to the all-zero state. A configuration can be fixed only if every one of its cells was already zero.
+The consequence is not that the Dimension Conjecture predicted the wrong number. It is far worse:
 
-**Rule 0 Fixed-Point Theorem.** A bi-infinite binary configuration is fixed by Rule 0 if and only if it is identically zero. In particular, Rule 0 has exactly one fixed configuration.
+> **Theorem (Total blindness).** $V(f_{110}, n) = V(f_0, n)$ for every $n$. Consequently, *any* property whatsoever of the fixed-point variety — its dimension, its cardinality, its scheme structure, its sheaf of sections, its cohomology — holds for Rule 110 if and only if it holds for Rule 0.
 
-The proof is immediate but instructive. If $F_0(s)=s$, then at each site $i$ the left-hand side has value $0$, so $s_i=0$. Conversely, the all-zero configuration plainly remains all zero.
+No invariant of $V$, however sophisticated, can ever distinguish a universal computer from a rule that erases the tape. This closes not just one conjecture but an entire genre of them.
 
-At the opposite pole stands Rule 204. Its output is simply the center cell:
+The rigidity is also not a coincidence of one rule number. The $256$ rules carry a natural symmetry group of order four, generated by *reflection* (swap left and right) and *colour inversion* (swap black and white); Wolfram's classes are constant on the orbits. The fixed-point variety turns out to transform covariantly: reflecting the rule reflects the variety, inverting the colours translates the variety by the all-ones configuration. Rule 110's orbit is $\{110, 124, 137, 193\}$, and covariance immediately gives $V(f_{124}) = \{0\}$, $V(f_{137}) = \{1\}$, $V(f_{193}) = \{1\}$. The entire universal orbit has a one-point variety.
 
-$$
-f_{204}(\ell,c,r)=c.
-$$
+## Failure two: maximal dimension means *nothing happens*
 
-**Rule 204 Identity Theorem.** Every bi-infinite binary configuration is fixed by Rule 204.
+The conjecture's boldest clause is the Class 4 prediction $\dim V = n$, i.e. that the variety fills the whole space. Which rules actually do that? All of them, exactly one.
 
-Indeed, $(F_{204}(s))_i=s_i$ at every site. Rule 204 therefore has the largest possible fixed-point locus: the entire configuration space. On a periodic ring of length $n$, it has all $2^n$ states as fixed points, whereas Rule 0 has only one.
+> **Theorem (Maximality classifies triviality).** Fix $n \ge 3$. Among the $256$ elementary rules, $V(f,n)$ is all of $\mathbb{A}^n$ — equivalently $\dim V(f,n) = n$ — if and only if the rule is Rule 204, the identity.
 
-These two examples validate part of the geometric intuition. A rule that erases all information has the smallest possible stable set, while a rule that changes nothing has the largest. But they also reveal the essential distinction: a large fixed set can arise from complete dynamical inactivity.
+The proof is a two-step affair. First, on a circle of three or more cells, any prescribed three-cell window occurs in some configuration; so if every configuration is stationary, the local polynomial must satisfy $f(l,c,r) = c$ for all eight inputs, i.e. it must be the centre projection. Second, reading off the eight bits of the truth table of the centre projection gives exactly the binary number $11001100 = 204$.
 
-## The Rule 110 surprise
+So "maximal dimension" is not a certificate of maximal complexity. It is a certificate of *no dynamics whatsoever* — the automaton that sits perfectly still. The conjecture had the scale exactly upside down.
 
-Rule 110 is famous not because it leaves many states untouched, but because its evolving patterns can support universal computation. If complexity were literally the size or “dimension” of the fixed-point locus, one might predict that every state should be fixed by Rule 110, or at least that its stationary set should be maximal. A single configuration refutes the strongest version of that prediction.
+## Failure three: usually there is no dimension at all
 
-Take the all-one configuration $\mathbf 1$, defined by $s_i=1$ for every $i$. Every neighborhood is $(1,1,1)$. The polynomial calculation above gives
+Talking about $\dim V$ presupposes that $V$ *has* a dimension: that it is a linear subspace, or at the very least a translate of one (an affine subvariety). For most rules it is neither, and there are two independent reasons.
 
-$$
-f_{110}(1,1,1)=0.
-$$
+The first is trivial once noticed. A linear subspace contains the origin, and the all-zero configuration is stationary exactly when the rule maps the all-white neighbourhood to white — that is, exactly when the rule number is **even**. So for all $128$ odd rules, on every ring size, the fixed-point variety misses the origin and is not a linear subspace.
 
-So one update sends every cell to zero. In particular,
+The second reason is a counting argument of Lagrange type. If $V$ is an affine subvariety — a translate $v + W$ of a linear subspace $W$ of $\mathbb{F}_2^n$ — then $|V| = |W|$, and $W$ is a subgroup of the additive group $\mathbb{F}_2^n$ of order $2^n$, so $|V|$ must divide $2^n$: it must be a power of two. Any rule whose stationary configurations number something else has a locus that is not affine, hence carries no dimension in any reasonable sense.
 
-$$
-F_{110}(\mathbf 1)\ne\mathbf 1.
-$$
+This happens constantly. The majority rule (Rule 232) has exactly $6$ stationary configurations on the ring of size $4$ — the two constants and four domain-wall patterns — and $6$ is not a power of two. Rule 45 has exactly $3$ on the ring of size $3$. On the ring of size $6$, an exhaustive check shows that only $91$ of the $256$ rules have a fixed-point variety that is a linear subspace at all.
 
-**Rule 110 Nonmaximality Theorem.** Not every configuration is fixed by Rule 110; specifically, the all-one configuration is not fixed.
+## Failure four: Rule 30's three points, forever
 
-There is also a fixed state at hand.
+The sharpest version of the third failure comes from the most celebrated chaotic rule of all. Rule 30 is $f = l + c + r + cr$, so its stationarity equation is $l + r + cr = 0$, which decomposes into two crisp implications:
+$$s_i = 0 \implies s_{i-1} = s_{i+1}, \qquad\qquad s_i = 1 \implies s_{i-1} = 0 .$$
+Either way, knowing two consecutive cells determines the next; chasing the implications shows that **every stationary configuration of Rule 30 has spatial period two**. The rest is arithmetic. On a circle of odd size, a period-two pattern is forced to be constant, and among the constants only all-white is stationary. On a circle of even size, period-two patterns come in exactly four flavours — all-white, all-black, and the two alternating waves $0101\ldots$ and $1010\ldots$ — and all-black fails the equation.
 
-**Rule 110 Zero-State Theorem.** The all-zero configuration is fixed by Rule 110.
+> **Theorem (Rule 30's locus).** For odd $n$, $V(f_{30}, n) = \{0\}$. For even $n \ge 2$, $V(f_{30},n)$ consists of exactly three configurations: the all-white configuration and the two alternating waves.
 
-For the neighborhood $(0,0,0)$, every term in $r+c+cr+\ell cr$ vanishes. Thus the zero state remains zero.
+Three is never a power of two. So on *every even ring simultaneously*, the fixed-point locus of the canonical chaotic automaton is not an affine subvariety and has no dimension. What began as a lucky counterexample at one ring size becomes an infinite family — and it strikes the very rule the conjecture placed at $\dim \ge n/2$.
 
-Together these results locate Rule 110 strictly between the two elementary extremes: its fixed-point locus is nonempty, but it is not the whole state space. More importantly, they overturn the proposed equation “universal computation equals maximal fixed-point dimension.” Rule 204, whose dynamics are trivial, has the maximal fixed set; Rule 110, whose dynamics are computationally universal, does not.
+## What the variety actually measures
 
-## Why “dimension” needs care
+If the fixed-point variety is not measuring complexity, what *is* it measuring? The additive rules answer that question cleanly, because for them the variety really is a linear subspace and one can compute.
 
-The word dimension carries several meanings here, and confusing them can produce false conclusions. For a finite ring of length $n$, the fixed configurations are a finite subset of $\mathbb F_2^n$. If one regards only those rational points as a finite topological space in the usual algebraic-geometric sense, its Krull dimension is typically $0$ whenever it is nonempty. That invariant cannot distinguish one fixed point from $2^n$ fixed points.
+Rule 90 is $f = l+r$, so stationarity reads $s_{i-1} + s_i + s_{i+1} = 0$, i.e. $s_{i+1} = s_{i-1} + s_i$: a two-term linear recurrence over $\mathbb{F}_2$ whose characteristic polynomial $x^2 + x + 1$ has roots of multiplicative order three. Every stationary configuration therefore has spatial period three, and when $3$ is invertible modulo $n$ that period collapses to period one, forcing the configuration to be constant — and then the equation $s+s+s = 0$ forces it to be zero.
 
-Other quantities can distinguish them. One may count fixed points. One may study the quotient ring obtained from the fixed-point equations and measure its vector-space dimension over $\mathbb F_2$. One may count periodic fixed configurations as $n$ grows and extract an entropy. Or one may enlarge the object being studied—from stationary configurations to whole spacetime histories—and then investigate components, recurrence, propagation, and computational structure.
+> **Theorem (Rule 90's mod-3 dichotomy).** If $3 \nmid n$ then $V(f_{90},n) = \{0\}$. If $3 \mid n$ then $V(f_{90},n)$ also contains the period-three wave $011011\ldots$ and so is strictly larger. In all cases $\dim V(f_{90},n) \le 2$.
 
-The lesson is not that geometry is the wrong language. It is that the geometric object and its invariant must match the dynamical question. Fixed points describe perfect stillness. Universal computation depends on long evolution, moving signals, collisions, memory, and unbounded time. A photograph cannot by itself measure the complexity of a film.
+The dimension cap comes from a general principle worth isolating: if a stationary configuration is determined by its values at two seed cells — as it is whenever the stationarity relation is a two-term recurrence — then the variety injects linearly into a plane, so its dimension is at most $2$, no matter how enormous $n$ is. Rule 90 is Wolfram Class 3 and so should have had $\dim \ge n/2$; instead it is stuck at $2$ forever.
 
-## A practical experimental program
+Rule 45, also Class 3, does something even less compatible with an $n$-independent classification:
 
-The algebraic viewpoint nevertheless gives a powerful computational pipeline. For a periodic ring of length $n$:
+> **Theorem (Rule 45's existence criterion).** $V(f_{45},n)$ is non-empty if and only if $3 \mid n$. When $3 \mid n$ it contains the pulse train $100100\ldots$.
 
-1. enumerate the $2^n$ binary states;
-2. update each state according to the chosen rule, with indices taken modulo $n$;
-3. retain the states satisfying $F_R(s)=s$;
-4. compare fixed-point counts across rules and ring sizes;
-5. derive each rule’s algebraic normal form by a Möbius transform of its truth table.
+So this rule's fixed-point variety is *empty* two thirds of the time. Its "class" would have to depend on the size of the circle. Rule 150, $f = l+c+r$, tells the same story one prime down: stationarity says $s_{i-1} = s_{i+1}$, the variety is the space of period-two configurations, and so it equals $\{0, 1\}$ (dimension $1$) for odd $n$ and jumps to four elements (dimension $2$) for even $n$.
 
-For Rule 0, this experiment always returns one fixed state. For Rule 204, it returns $2^n$. For Rule 110, it returns at least the zero state but excludes the all-one state. These are not merely numerical patterns: they are consequences of exact local identities and therefore hold for every ring length as well as for the bi-infinite line.
+The pattern is unmistakable. The fixed-point variety of an elementary cellular automaton is a **number-theoretic** object. Its size is governed by $n$ modulo a small integer determined by the order of the roots of a characteristic polynomial — three for Rules 90 and 45, two for Rules 30 and 150. A Wolfram class is a property of the rule alone, blind to $n$. These two things cannot possibly be equal, and now we know precisely why.
 
-The next step is a systematic census of all $256$ rules and many periods. Yet fixed-point count should be treated as one coordinate in a larger complexity profile, not as a universal ranking. The profile might include growth rates of periodic solutions, cycle lengths, transient depths, sensitivity to perturbations, polynomial degree, and invariants of spacetime constraint systems.
+There is an appealing structural reason behind all of this. Stationary configurations on a circle of size $n$ are exactly the closed walks of length $n$ in a four-vertex graph: the vertices are the possible pairs $(s_{i-1}, s_i)$, and an arrow runs from $(a,b)$ to $(b,c)$ precisely when the window $(a,b,c)$ is stationary. Counting closed walks of length $n$ in a graph is counting the trace of the $n$-th power of its adjacency matrix, so one expects
+$$|V(f,n)| \;=\; \operatorname{tr}\bigl(T_f^{\,n}\bigr)$$
+for a $4 \times 4$ matrix of zeros and ones read directly off the rule's truth table. Exhaustive computation confirms this for all $256$ rules and all ring sizes up to $12$. It explains everything we have seen: the counts obey a linear recurrence of order at most four, so they are eventually periodic modulo any modulus and are governed by the eigenvalues of a tiny integer matrix — a spectrum with four numbers in it cannot possibly encode the undecidable question of whether a rule is universal.
 
-## The larger idea
+## Where complexity actually lives
 
-Elementary cellular automata sit at a rare crossroads. They are discrete dynamical systems, Boolean circuits, symbolic shifts, polynomial maps over finite fields, and generators of spacetime geometry. Each language illuminates a different feature. The polynomial for Rule 110 compresses eight cases into four monomials. The fixed-point equations turn stability into an algebraic set. The comparison of Rules 0, 204, and 110 then draws a sharp conceptual boundary.
+Is the whole algebraic-geometric programme therefore doomed? No — the diagnosis points straight at the cure. The fixed-point variety fails because it looks at a single instant of time. Complexity is not a property of the automaton's stationary states; it is a property of its *orbits*. So climb one level up and consider, for each $k \ge 1$, the **temporal variety**
+$$\mathrm{Per}_k(f,n) \;=\; \{\, s \;:\; f^{\,k}(s) = s \,\},$$
+the zero locus of the $k$-fold composite — a polynomial map of degree $3^k$. The bottom of this tower, $\mathrm{Per}_1$, is the old fixed-point variety; the whole tower is the sequence of coefficients of the dynamical zeta function.
 
-Algebraic geometry can organize the stationary configurations of cellular automata. It can reveal interaction terms, formulate constraint varieties, and support exact counting algorithms. But the richness of a computation is not captured by how many states refuse to move. Rule 204 owns every state as a fixed point and does nothing; Rule 110 fails to fix even the uniform one-state and can nevertheless compute.
+The tower is genuinely structured. If a configuration returns to itself after $k$ steps and after $\ell$ steps, then it returns after $\gcd(k,\ell)$ steps — a small exercise in the Euclidean algorithm — which says exactly that
+$$\mathrm{Per}_k(f,n) \cap \mathrm{Per}_\ell(f,n) \;=\; \mathrm{Per}_{\gcd(k,\ell)}(f,n) .$$
+The levels form a lattice indexed by divisibility, and the automaton acts *bijectively* on each level, with inverse $f^{k-1}$.
 
-That contrast is the real discovery. The geometry of stillness is valuable, but computation lives in motion. A successful Grothendieck-style theory of cellular automata will therefore need not only the variety of fixed points, but a geometry of histories: an algebraic account of signals traveling, colliding, persisting, and transforming through time.
+And it does the job the fixed-point variety could not. For Rule 0, every level of the tower collapses to the single point $0$. For Rule 110 it does not: on the ring of size four the configuration $1110$ maps to $1011$ and back, an honest two-cycle. Hence
+$$\mathrm{Per}_1(f_{110},4) = \mathrm{Per}_1(f_0,4) = \{0\}, \qquad \mathrm{Per}_2(f_{110},4) \ne \mathrm{Per}_2(f_0,4),$$
+and the tower separates the universal rule from the null rule at the very first opportunity.
+
+A caution comes with the cure, and it is instructive. $\mathrm{Per}_2(f_{110},4)$ has exactly five points — the origin plus a single two-cycle's worth of four rotations — and five does not divide sixteen. So the repaired invariant is not a *dimension* either. Whatever measures the complexity of a cellular automaton, it is a counting function, not a dimension: something like a zeta function $\zeta_f(t) = \exp\bigl(\sum_k |\mathrm{Per}_k| \, t^k / k\bigr)$, whose growth rate is the topological entropy, rather than a single integer read off a linear space.
+
+## The moral
+
+The failure here is not "the dimension approximately tracks the class". It is total: the variety of the universal rule is literally identical to the variety of the rule that does nothing. And the reason is structural. The fixed-point variety of an elementary cellular automaton is a subshift of finite type on four states, and four states cannot hold a universal computer; its point counts are traces of powers of a $4 \times 4$ integer matrix, and such sequences are as far from undecidable as a sequence can be.
+
+The lesson generalises well beyond these $256$ toys. An invariant of a dynamical system that ignores time can only see time-independent things. If you want to see computation, you must look at trajectories — at the whole tower $\mathrm{Per}_1 \subseteq \mathrm{Per}_2 \subseteq \cdots$, at how the counts grow, at the zeta function. The single snapshot, no matter how elegantly you geometrise it, will always show you a still photograph of a machine standing still.
+
+And there is a consolation prize. Along the way, the fixed-point loci of some of the most famous automata in the subject have been determined completely, for all ring sizes at once: Rule 110 and its whole universal orbit fix exactly one configuration; Rule 30 fixes three on even circles and one on odd; Rule 90 sees the prime $3$; Rule 45 exists only when $3$ divides $n$; Rule 150 sees the prime $2$; and Rule 204 alone fills the space. These are small, exact, permanent facts about objects that usually resist exact statements — and each was uncovered while chasing an idea that turned out to be wrong.

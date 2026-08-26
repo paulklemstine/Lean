@@ -1,512 +1,458 @@
-# Cellular Automata as Algebraic Geometry: Polynomial Models, Fixed-Point Loci, and the Limits of Stationary Complexity
+# Fixed-Point Varieties of Elementary Cellular Automata: A Complete Refutation of the Dimension–Complexity Correspondence
 
-**Aristotle**  
-**July 28, 2026**
+**Aristotle**
+
+---
 
 ## Abstract
 
-Elementary cellular automata are the $256$ synchronous binary dynamical systems whose local update depends on a cell and its two nearest neighbors. This paper develops a self-contained algebraic description of these systems over the field $\mathbb F_2$. Every local rule is represented by a unique multilinear polynomial in three variables, and the global dynamics become a translation-invariant polynomial map on binary configurations. Fixed configurations are consequently solutions of polynomial equations.
+Every elementary cellular automaton (ECA) is a polynomial map over the field $\mathbb{F}_2$ with two elements: on a cyclic array of $n$ cells the synchronous update is the morphism $\mathbb{A}^n \to \mathbb{A}^n$ whose $i$-th coordinate is a multilinear cubic $f(s_{i-1}, s_i, s_{i+1})$. This makes available the most basic invariant of algebraic geometry, the **fixed-point variety**
+$$V(f,n) = \{\, s \in \mathbb{F}_2^n : f(s_{i-1},s_i,s_{i+1}) = s_i \ \forall i \,\},$$
+the zero locus of $n$ cubic equations in $n$ unknowns, and it suggests an attractive conjecture: that $\dim V(f,n)$ recovers Wolfram's four-fold complexity classification, with the Turing-complete Class 4 rules attaining the maximal dimension $n$.
 
-Three representative rules clarify both the power and the limitation of this viewpoint. Rule 110 has algebraic normal form
+We refute this conjecture completely, and identify precisely what the fixed-point variety does measure. Our principal results are: (i) a **rigidity theorem** showing that for every ring size $n$, and on the bi-infinite line, the Turing-complete Rule 110 fixes only the zero configuration, so that $V(f_{110},n) = V(f_0,n)$ and *no* invariant of the fixed-point variety can distinguish a universal automaton from the null automaton; (ii) a **maximality classification** showing that for $n \ge 3$ the equality $\dim V(f,n) = n$ holds for exactly one of the $256$ rules, namely the identity Rule 204, so maximal dimension certifies the *absence* of dynamics; (iii) two independent **non-existence obstructions** — a parity obstruction eliminating all $128$ odd rules and a Lagrange divisibility obstruction eliminating any rule with $|V| \nmid 2^n$ — under which the dimension is undefined for the majority of rules, including Rule 30 on every even ring; and (iv) an **arithmetic characterisation** showing that for the additive rules the variety is the kernel of a circulant matrix whose size depends on $n$ modulo a small integer ($3$ for Rules 90 and 45, $2$ for Rules 30 and 150), whereas a Wolfram class is by definition independent of $n$.
 
-$$
-f_{110}(\ell,c,r)=r+c+cr+\ell cr.
-$$
+We further establish the **symmetry covariance** of the fixed-point variety under the Klein four-group of reflection and colour inversion, which propagates the Rule 110 rigidity to the entire Class 4 orbit $\{110, 124, 137, 193\}$. Finally we propose and develop a replacement invariant: the tower of **temporal varieties** $\mathrm{Per}_k(f,n) = \{s : f^k(s) = s\}$. We prove that this tower is a lattice under divisibility, $\mathrm{Per}_k \cap \mathrm{Per}_\ell = \mathrm{Per}_{\gcd(k,\ell)}$, that the automaton acts bijectively on each level, that the tower of Rule 0 collapses to a point, and that it does separate Rule 110 from Rule 0 — while also showing that even the repaired invariant is not a dimension.
 
-Rule 0 has exactly one fixed bi-infinite configuration, the constant-zero state. Rule 204 is the center projection and fixes every configuration. Rule 110 fixes the constant-zero state but does not fix the constant-one state, so its fixed-point locus is nonempty and nonmaximal. This last result disproves the strongest proposed identification of computational universality with a maximal fixed-point locus: Rule 204 has maximal stationary freedom but trivial dynamics, whereas Rule 110 supports universal computation without fixing all states.
+**Keywords:** elementary cellular automata, fixed-point variety, Rule 110, Rule 30, affine space over $\mathbb{F}_2$, subshift of finite type, Wolfram classification, dynamical zeta function, transfer matrix.
 
-We present algorithms for truth-table evaluation, algebraic-normal-form extraction, and exhaustive fixed-point enumeration on periodic rings. We then distinguish fixed-point count, Krull dimension, coordinate-algebra dimension, and asymptotic entropy, explaining why “dimension” cannot be used ambiguously for finite Boolean state spaces. The results motivate a broader algebraic geometry of spacetime histories rather than a theory based only on stationary configurations.
+---
 
 ## 1. Introduction
 
-An elementary cellular automaton acts on a one-dimensional array of binary cells. Time is discrete. At each time step every cell is updated simultaneously by the same function of its left neighbor, itself, and its right neighbor. Since there are $2^3=8$ possible neighborhoods and two possible outputs for each neighborhood, there are
+### 1.1 Two languages for one object
 
-$$
-2^8=256
-$$
+An elementary cellular automaton is specified by a local map $f : \{0,1\}^3 \to \{0,1\}$; there are $2^8 = 256$ of them, indexed by Wolfram's convention in which the number's binary digits list the outputs on the eight neighbourhoods $(l,c,r)$ read as $4l + 2c + r$. Despite the triviality of the specification, the family contains a universal computer (Rule 110), a rule whose output columns pass most statistical tests for randomness (Rule 30), and rules that reproduce the Sierpiński gasket (Rules 90 and 150). Wolfram's empirical classification sorts the $256$ rules into four classes: uniform (1), periodic (2), chaotic (3), and complex/computational (4).
 
-distinct elementary rules.
+The classification is qualitative, and there is no known algorithm producing it — indeed for Class 4 rules most natural formulations are undecidable. It is therefore natural to look for a computable algebraic invariant which reproduces the classification, and one candidate presents itself immediately.
 
-Despite this tiny rule space, the resulting dynamics range from immediate collapse to uniform states, through periodic and chaotic-looking patterns, to persistent localized structures and universal computation. Rule 110 is the standard emblem of the last phenomenon: a fixed local table can sustain dynamics rich enough to simulate arbitrary computation.
+Over $\mathbb{F}_2$, where $x^2 = x$, every function $\mathbb{F}_2^3 \to \mathbb{F}_2$ has a unique representation as a multilinear polynomial
+$$f(l,c,r) = a_\emptyset + a_l\,l + a_c\,c + a_r\,r + a_{lc}\,lc + a_{lr}\,lr + a_{cr}\,cr + a_{lcr}\,lcr,$$
+the *algebraic normal form*, obtained from the truth table by the Reed–Müller (Möbius) transform $a_S = \sum_{T \subseteq S} f(T)$. The eight coefficients over $\mathbb{F}_2$ account for all $256$ rules; $128$ of them have degree $3$, $112$ degree $2$, $14$ degree $1$ and $2$ degree $0$. Some standard examples:
 
-A natural research program seeks static algebraic invariants that predict this dynamical complexity. The binary alphabet suggests the field $\mathbb F_2=\{0,1\}$, whose addition and multiplication are performed modulo $2$. A Boolean state then becomes a vector over $\mathbb F_2$, and every Boolean local function becomes a polynomial. For a finite periodic ring, the global update is a polynomial self-map of $\mathbb F_2^n$. Fixed configurations satisfy polynomial equations, so they can be treated as an algebraic set.
+| Rule | Algebraic normal form | Degree |
+|---|---|---|
+| $0$ | $0$ | $0$ |
+| $204$ | $c$ | $1$ |
+| $90$ | $l + r$ | $1$ |
+| $150$ | $l + c + r$ | $1$ |
+| $30$ | $l + c + r + cr$ | $2$ |
+| $45$ | $1 + l + r + cr$ | $2$ |
+| $232$ | $lc + lr + cr$ | $2$ |
+| $110$ | $c + r + cr + lcr$ | $3$ |
 
-This program immediately raises a conjectural analogy: perhaps dynamically simple rules have small fixed-point loci, while computationally rich rules have large or high-dimensional ones. The analogy is attractive, but it needs precise definitions and decisive tests. The central conclusions of this paper are:
+Thus an automaton on a cyclic array of $n$ cells is a morphism of affine $n$-space over $\mathbb{F}_2$ to itself, of degree at most three, and the object of study of this paper is the variety of its fixed points.
 
-1. the polynomial representation is exact and particularly concise for Rule 110;
-2. Rule 0 and Rule 204 realize the minimum and maximum possible fixed-point sets;
-3. Rule 110 has at least one fixed configuration but not all configurations are fixed;
-4. maximal stationary freedom is not a measure of computational power;
-5. several inequivalent invariants have been conflated under the word “dimension,” and they must be separated before any complexity correlation can be meaningfully tested.
+### 1.2 The conjecture under test
 
-The treatment uses bi-infinite configurations for structural theorems and finite periodic rings for algorithms. All definitions and arguments are given below.
+**The Dimension Conjecture.** *Let $f$ be an elementary rule and $V(f,n)$ its fixed-point variety on the ring of $n$ cells. Then $\dim V(f,n) = 0$ for Wolfram Class 1, $\dim V(f,n) \le n/2$ for Class 2, $\dim V(f,n) \ge n/2$ for Class 3, and $\dim V(f,n) = n$ for Class 4.*
 
-## 2. Elementary rules and global dynamics
+The conjecture has considerable surface plausibility: Rule 0 (Class 1) has $V = \{0\}$, dimension $0$, and Rule 204 (a trivially periodic rule) has $V = \mathbb{A}^n$, dimension $n$. Additionally, one might hope that the sheaf-theoretic refinement — regarding each automaton as defining a sheaf on configuration space whose global sections classify stable configurations — would give an even finer invariant, with Rule 110's sheaf having the richest section structure.
 
-### 2.1 Configurations
+Every clause of the conjecture is false, and the sheaf-theoretic refinement is false *a fortiori*, since by Theorem 3.4 the underlying varieties of Rules 110 and 0 coincide as sets.
 
-Let $B=\{0,1\}=\mathbb F_2$. A **bi-infinite binary configuration** is a function
+### 1.3 Results and organisation
 
-$$
-s:\mathbb Z\longrightarrow B.
-$$
+Section 2 sets up definitions and the elementary structural properties of $V(f,n)$: shift invariance, additivity, dimension, and the cardinality formula. Section 3 proves the rigidity of Rule 110 and the resulting total blindness of the invariant. Section 4 proves the maximality classification. Section 5 develops the two non-existence obstructions. Section 6 determines the loci of Rules 30, 90, 45 and 150 exactly, exhibiting their arithmetic nature. Section 7 proves symmetry covariance and propagates the Rule 110 result to the whole Class 4 orbit. Section 8 develops the replacement invariant, the temporal tower. Section 9 gives algorithms and computational data. Section 10 discusses consequences and open problems.
 
-The value at site $i$ is denoted $s_i$. A **periodic configuration of period $n$** is a vector
+---
 
-$$
-s=(s_0,\ldots,s_{n-1})\in B^n,
-$$
+## 2. The fixed-point variety
 
-with indices interpreted modulo $n$. Thus the left neighbor of site $0$ is site $n-1$ and the right neighbor of site $n-1$ is site $0$.
+### 2.1 Definitions
 
-### 2.2 Wolfram encoding
+Throughout, $\mathbb{F}_2 = \mathbb{Z}/2$ and $n \ge 0$ is an integer. We index cells by $\mathbb{Z}/n$; the degenerate case $n = 0$ is read as $\mathbb{Z}$, so that all statements quantified over $n$ include the bi-infinite line.
 
-For a neighborhood $(\ell,c,r)\in B^3$, define its index by
+**Definition 2.1 (Configuration space).** The *configuration space of size $n$* is $\mathrm{Cfg}(n) = \{ s : \mathbb{Z}/n \to \mathbb{F}_2\}$, i.e. the set of $\mathbb{F}_2$-points of affine $n$-space $\mathbb{A}^n_{\mathbb{F}_2}$.
 
-$$
-\iota(\ell,c,r)=4\ell+2c+r.
-$$
+**Definition 2.2 (Local rule and update).** For $0 \le \rho < 256$ let $f_\rho : \mathbb{F}_2^3 \to \mathbb{F}_2$ be the function whose value at $(l,c,r)$ is bit number $4\,l + 2\,c + r$ of $\rho$. The *global update* is $F_\rho : \mathrm{Cfg}(n) \to \mathrm{Cfg}(n)$, $(F_\rho s)_i = f_\rho(s_{i-1}, s_i, s_{i+1})$.
 
-The indices $0,1,\ldots,7$ correspond respectively to
+**Definition 2.3 (Fixed-point variety).** $V(\rho, n) = \{ s \in \mathrm{Cfg}(n) : F_\rho(s) = s\}$. Equivalently, $s \in V(\rho,n)$ if and only if $f_\rho(s_{i-1},s_i,s_{i+1}) = s_i$ for every $i$; this is the $\mathbb{F}_2$-point set of the affine subscheme of $\mathbb{A}^n$ cut out by the $n$ cubics $f_\rho(x_{i-1},x_i,x_{i+1}) - x_i$.
 
-$$
-000,001,010,011,100,101,110,111.
-$$
+### 2.2 First structural properties
 
-For a rule number $R\in\{0,\ldots,255\}$, write
+**Proposition 2.4 (Shift invariance).** *If $s \in V(\rho,n)$ and $k \in \mathbb{Z}/n$, then the rotated configuration $i \mapsto s_{i+k}$ also lies in $V(\rho,n)$.*
 
-$$
-R=\sum_{j=0}^7 b_j2^j,
-$$
+*Proof.* The defining condition at position $i$ for the rotate is the defining condition at position $i+k$ for $s$. $\square$
 
-where each $b_j\in B$. The **local rule** $f_R:B^3\to B$ is
+Thus $V(\rho,n)$ is not an arbitrary subset of $\mathbb{F}_2^n$ but a *cyclic subshift of finite type*: a set of cyclic words determined by a list of admissible three-letter windows. This is the structural fact behind almost everything that follows, and in particular behind Theorem 9.1.
 
-$$
-f_R(\ell,c,r)=b_{\iota(\ell,c,r)}.
-$$
+**Definition 2.5 (Additive rule).** A rule $\rho$ is *additive* if $f_\rho$ is $\mathbb{F}_2$-linear in its three arguments, i.e. $f_\rho(l+l', c+c', r+r') = f_\rho(l,c,r) + f_\rho(l',c',r')$ for all arguments. Equivalently, the algebraic normal form of $\rho$ has no constant term and no monomial of degree $\ge 2$. There are exactly eight additive rules: $0, 60, 90, 102, 150, 170, 204, 240$.
 
-This convention says that neighborhood $000$ reads the least significant bit and neighborhood $111$ reads the most significant bit.
+**Proposition 2.6.** *If $\rho$ is additive then $f_\rho(0,0,0) = 0$ and $V(\rho,n)$ is an $\mathbb{F}_2$-linear subspace of $\mathrm{Cfg}(n)$.*
 
-### 2.3 Synchronous global update
+*Proof.* Setting all six arguments to $0$ in the additivity relation gives $f_\rho(0,0,0) = 2 f_\rho(0,0,0) = 0$, so $0 \in V(\rho,n)$. If $a, b \in V(\rho,n)$ then, at each $i$, additivity gives $f_\rho(a_{i-1}+b_{i-1}, a_i+b_i, a_{i+1}+b_{i+1}) = f_\rho(a_{i-1},a_i,a_{i+1}) + f_\rho(b_{i-1},b_i,b_{i+1}) = a_i + b_i$, so $a + b \in V(\rho,n)$. Closure under the two scalars $0$ and $1$ is trivial. $\square$
 
-The **global update** on bi-infinite configurations is the map $F_R:B^{\mathbb Z}\to B^{\mathbb Z}$ defined by
+**Definition 2.7 (Dimension).** We say *$V(\rho,n)$ has dimension $d$*, written $\dim V(\rho,n) = d$, if there exists an $\mathbb{F}_2$-subspace $W \subseteq \mathrm{Cfg}(n)$ with $W = V(\rho,n)$ as sets and $\dim_{\mathbb{F}_2} W = d$.
 
-$$
-(F_R(s))_i=f_R(s_{i-1},s_i,s_{i+1}).
-$$
+**Proposition 2.8 (Well-definedness and cardinality).** *The dimension, when it exists, is unique; and if $\dim V(\rho,n) = d$ with $n \ge 1$ then $|V(\rho,n)| = 2^d$.*
 
-All sites use the old state $s$ and change simultaneously. For a periodic ring of length $n$, define $F_{R,n}:B^n\to B^n$ by the same formula with subscripts reduced modulo $n$.
+*Proof.* Two subspaces with the same underlying set are equal, so their dimensions agree. A $d$-dimensional $\mathbb{F}_2$-space has $2^d$ elements. $\square$
 
-A configuration $s$ is a **fixed point** if
+We record one general dimension bound, used repeatedly in Section 6.
 
-$$
-F_R(s)=s
-$$
+**Theorem 2.9 (Seed rigidity caps the dimension at two).** *Let $n \ge 1$ and suppose that every $s \in V(\rho,n)$ with $s_0 = s_1 = 0$ is identically zero. Then $\dim V(\rho,n) \le 2$ whenever the dimension exists, however large $n$ is.*
 
-in the bi-infinite setting, or $F_{R,n}(s)=s$ on a ring. Equivalently, it satisfies the local equations
+*Proof.* The evaluation map $\pi : \mathrm{Cfg}(n) \to \mathbb{F}_2^2$, $s \mapsto (s_0,s_1)$, is $\mathbb{F}_2$-linear. Its restriction to the subspace $W = V(\rho,n)$ has trivial kernel by hypothesis, so $\pi|_W$ is injective and $\dim W \le \dim \mathbb{F}_2^2 = 2$. $\square$
 
-$$
-f_R(s_{i-1},s_i,s_{i+1})=s_i
-$$
+The hypothesis of Theorem 2.9 holds whenever the stationarity constraint is a two-term recurrence determining $s_{i+1}$ from $(s_{i-1}, s_i)$, which is the case for all additive rules with a nonzero $l$-coefficient.
 
-at every site.
+### 2.3 Periodicity transfer
 
-## 3. Boolean polynomial representation
+Several of the exact determinations below run through a common mechanism, which we isolate.
 
-### 3.1 Algebraic normal form
+**Lemma 2.10 (Period transfer).** *Let $n \ge 1$ and let $s \in \mathrm{Cfg}(n)$ satisfy $s_{i+p} = s_i$ for all $i$, where $\gcd(p,n) = 1$. Then $s$ is constant.*
 
-A function $g:B^3\to B$ can be represented by a polynomial over $\mathbb F_2$. Because $x^2=x$ for $x\in B$, all powers can be reduced, giving a multilinear expression
+*Proof.* Iterating the hypothesis gives $s_{i + pk} = s_i$ for every $k \ge 0$. Since $p$ is invertible modulo $n$, choose $k$ with $pk \equiv 1 \pmod n$; then $s_{i+1} = s_i$ for all $i$, and an induction along $i = 0, 1, 2, \dots$ gives $s_i = s_0$ for all $i$. $\square$
 
-$$
-g(\ell,c,r)=a_\varnothing+a_\ell\ell+a_cc+a_rr+a_{\ell c}\ell c+a_{\ell r}\ell r+a_{cr}cr+a_{\ell cr}\ell cr,
-$$
+**Lemma 2.11 (Period-two seeds).** *Let $n \ge 1$ and let $s, t \in \mathrm{Cfg}(n)$ both satisfy $x_{i+2} = x_i$ for all $i$. If $s_0 = t_0$ and $s_1 = t_1$, then $s = t$.*
 
-where every coefficient lies in $\mathbb F_2$.
+*Proof.* A simultaneous induction on $k$ shows $s_k = t_k$ and $s_{k+1} = t_{k+1}$ for all natural $k$; every residue is of the form $k \bmod n$. $\square$
 
-**Algebraic Normal Form Theorem.** Every Boolean function $g:B^3\to B$ has a unique representation in the multilinear form above.
+---
 
-**Proof sketch.** The eight square-free monomials are functions on the eight-element set $B^3$. Order subsets of $\{\ell,c,r\}$ by inclusion. Evaluating a monomial indexed by $A$ at the indicator vector of a subset $S$ gives $1$ exactly when $A\subseteq S$. The resulting $8\times8$ evaluation matrix is triangular with diagonal entries $1$ under any order refining inclusion. It is therefore invertible over $\mathbb F_2$. Existence and uniqueness follow. Equivalently, the coefficients are recovered from truth-table values by the Boolean Möbius transform
+## 3. Rigidity of Rule 110
 
-$$
-a_A=\sum_{T\subseteq A}g(\mathbf 1_T),
-$$
+### 3.1 The local constraint
 
-where the sum is in $\mathbb F_2$ and $\mathbf 1_T$ is the input whose coordinates in $T$ are $1$.
+Rule 110 has algebraic normal form $f_{110} = c + r + cr + lcr$, so the stationarity condition $f_{110}(l,c,r) = c$ becomes
+$$r + cr + lcr = 0, \qquad\text{i.e.}\qquad r\,(1 + c + lc) = 0. \tag{3.1}$$
 
-The maximal degree is $3$, not because every rule is genuinely cubic, but because three input variables suffice and square-free reduction removes higher powers.
+**Lemma 3.1 (Local rigidity).** *For $l,c,r \in \mathbb{F}_2$ we have $f_{110}(l,c,r) = c$ if and only if $r = 0$, or ($c = 1$ and $l = 0$).*
 
-### 3.2 Algebraic normal form of Rule 110
+*Proof.* Over $\mathbb{F}_2$, $(3.1)$ holds iff $r = 0$ or $1 + c + lc = 0$. The polynomial $1 + c + lc = 1 + c(1+l)$ vanishes iff $c(1+l) = 1$, i.e. iff $c = 1$ and $l = 0$. (Equivalently: check the eight cases.) $\square$
 
-The binary expansion of $110$ is
+### 3.2 Backward rigidity
 
-$$
-110=0\cdot2^7+1\cdot2^6+1\cdot2^5+0\cdot2^4+1\cdot2^3+1\cdot2^2+1\cdot2^1+0\cdot2^0.
-$$
+**Theorem 3.2 (Rigidity of Rule 110).** *For every $n \ge 0$ — including $n = 0$, i.e. the bi-infinite configuration space $\mathbb{Z} \to \mathbb{F}_2$ — we have*
+$$V(110, n) = \{0\}.$$
 
-Under the ascending index convention, its outputs on $000,001,010,011,100,101,110,111$ are
+*Proof.* The zero configuration is stationary since $f_{110}(0,0,0) = 0$. Conversely suppose $s \in V(110,n)$ and, for a contradiction, that $s_i = 1$ for some $i$.
 
-$$
-0,1,1,1,0,1,1,0.
-$$
+Apply Lemma 3.1 to the window centred at $i-1$, namely $(s_{i-2}, s_{i-1}, s_i)$. Its right entry is $s_i = 1 \ne 0$, so the second alternative must hold:
+$$s_{i-1} = 1 \quad\text{and}\quad s_{i-2} = 0. \tag{3.2}$$
+Now apply Lemma 3.1 to the window centred at $i-2$, namely $(s_{i-3}, s_{i-2}, s_{i-1})$. Its right entry is $s_{i-1} = 1 \ne 0$ by $(3.2)$, so again the second alternative must hold, giving in particular
+$$s_{i-2} = 1,$$
+contradicting $(3.2)$. Hence no cell carries a $1$ and $s = 0$. $\square$
 
-**Theorem 1 (Rule 110 Polynomial Theorem).** For every $(\ell,c,r)\in B^3$, the local function of Rule 110 is
+The argument uses only two applications of a purely local constraint; it is uniform in $n$, requires no induction on the ring size, and applies verbatim on $\mathbb{Z}$.
 
-$$
-f_{110}(\ell,c,r)=r+c+cr+\ell cr
-$$
+**Corollary 3.3.** *Rule 110 fixes exactly one configuration on every ring; $\dim V(110,n) = 0$; and $\dim V(110,n) \ne n$ for every $n \ge 1$. In particular $2\dim V(110,n) < n$ for all $n \ge 1$, so Rule 110 fails not only the Class 4 prediction $\dim = n$ but even the weaker Class 3 prediction $\dim \ge n/2$.*
 
-over $\mathbb F_2$.
+### 3.3 Total blindness
 
-**Proof sketch.** There are eight inputs. Evaluating the polynomial gives:
+**Theorem 3.4 (The fixed-point variety cannot detect universality).** *For every $n$, $V(110,n) = V(0,n)$. Consequently, for every predicate $P$ on subsets of $\mathrm{Cfg}(n)$,*
+$$P\bigl(V(110,n)\bigr) \iff P\bigl(V(0,n)\bigr).$$
 
-| $(\ell,c,r)$ | $r+c+cr+\ell cr$ | Rule 110 output |
-|---|---:|---:|
-| $(0,0,0)$ | $0$ | $0$ |
-| $(0,0,1)$ | $1$ | $1$ |
-| $(0,1,0)$ | $1$ | $1$ |
-| $(0,1,1)$ | $1+1+1=1$ | $1$ |
-| $(1,0,0)$ | $0$ | $0$ |
-| $(1,0,1)$ | $1$ | $1$ |
-| $(1,1,0)$ | $1$ | $1$ |
-| $(1,1,1)$ | $1+1+1+1=0$ | $0$ |
+*Proof.* $V(0,n) = \{0\}$ because $f_0 \equiv 0$, so $F_0(s) = 0$ for every $s$ and $F_0(s) = s$ forces $s = 0$. Combine with Theorem 3.2 and substitute. $\square$
 
-All sums are modulo $2$. Equality on all elements of $B^3$ proves equality of the functions.
+This is the decisive obstruction. It is not merely that dimension fails to separate the Turing-complete rule from the null rule: *no* invariant of the fixed-point variety can separate them, because the two varieties are equal as sets — hence equal as schemes, equal as ringed spaces, with the same sheaves and the same cohomology. Every conceivable refinement of the Dimension Conjecture along these lines is refuted simultaneously.
 
-Consequently, the Rule 110 fixed-point equations are
+---
 
-$$
-s_i=s_{i+1}+s_i+s_is_{i+1}+s_{i-1}s_is_{i+1}
-$$
+## 4. Maximal dimension classifies the identity automaton
 
-for all $i$. Moving $s_i$ to the right and using $s_i+s_i=0$ yields the equivalent equations
+The Dimension Conjecture's boldest clause is that Class 4 rules attain $\dim V = n$, i.e. $V(\rho,n) = \mathbb{A}^n$. We determine exactly which rules do so.
 
-$$
-s_{i+1}+s_is_{i+1}+s_{i-1}s_is_{i+1}=0.
-$$
+**Lemma 4.1 (Independence of local windows).** *Let $n \ge 3$. For any prescribed $(l,c,r) \in \mathbb{F}_2^3$ there is a configuration $s \in \mathrm{Cfg}(n)$ with $s_0 = l$, $s_1 = c$, $s_2 = r$.*
 
-This simplification is specific to characteristic $2$.
+*Proof.* On a ring of size at least $3$ the residues $0, 1, 2$ are pairwise distinct, so the assignment is consistent; extend by $0$. $\square$
 
-## 4. Fixed-point loci as algebraic sets
+**Proposition 4.2.** *Let $n \ge 3$. Then $V(\rho,n) = \mathbb{A}^n$ if and only if $f_\rho(l,c,r) = c$ for all $(l,c,r) \in \mathbb{F}_2^3$.*
 
-For a periodic ring of length $n$, introduce the polynomial ring
+*Proof.* ($\Leftarrow$) Immediate from the definition. ($\Rightarrow$) Given $(l,c,r)$, choose $s$ as in Lemma 4.1. Since $s$ is stationary, the constraint at cell $1$ reads $f_\rho(s_0,s_1,s_2) = s_1$, i.e. $f_\rho(l,c,r) = c$. $\square$
 
-$$
-A_n=\mathbb F_2[x_0,\ldots,x_{n-1}].
-$$
+**Proposition 4.3.** *For $\rho < 256$, $f_\rho$ is the centre projection $(l,c,r) \mapsto c$ if and only if $\rho = 204$.*
 
-To encode Boolean values algebraically, include the field equations
+*Proof.* The truth table of the centre projection assigns $1$ exactly to the four neighbourhoods with $c = 1$, i.e. to indices $4l + 2c + r$ with $c = 1$: indices $2, 3, 6, 7$. Hence the Wolfram number is $2^2 + 2^3 + 2^6 + 2^7 = 4 + 8 + 64 + 128 = 204$. Conversely $204 = 11001100_2$ has precisely these bits set. Since a rule number below $256$ is determined by its eight low bits, the two conditions are equivalent. $\square$
 
-$$
-x_i^2-x_i=0
-$$
+**Theorem 4.4 (Maximality classification).** *Let $n \ge 3$ and $\rho < 256$. Then*
+$$\dim V(\rho,n) = n \iff \rho = 204 .$$
 
-for every $i$. Let $p_R(\ell,c,r)$ be the algebraic normal form of the local rule. The fixed-point ideal is
+*Proof.* If $\dim V(\rho,n) = n$ then the witnessing subspace $W \subseteq \mathrm{Cfg}(n)$ has full dimension $n = \dim \mathrm{Cfg}(n)$, hence $W = \mathrm{Cfg}(n)$ and $V(\rho,n) = \mathbb{A}^n$; apply Propositions 4.2 and 4.3. Conversely for $\rho = 204$ we have $V = \mathbb{A}^n$, a subspace of dimension $n$. $\square$
 
-$$
-I_{R,n}=\left\langle x_i^2-x_i,\;p_R(x_{i-1},x_i,x_{i+1})-x_i:0\le i<n\right\rangle,
-$$
+**Corollary 4.5.** *None of the Class 4 rules $110, 124, 137, 193$ has $\dim V = n$ for any $n \ge 3$. The unique rule satisfying the conjecture's Class 4 prediction is the identity automaton, which has no dynamics at all.*
 
-where indices are modulo $n$. The fixed-point set is
+The conjecture's scale is thus inverted: maximal dimension of the fixed-point variety is a certificate of *triviality*, not of complexity.
 
-$$
-\operatorname{Fix}(R,n)=\{x\in\mathbb F_2^n:F_{R,n}(x)=x\}=V(I_{R,n})(\mathbb F_2).
-$$
+---
 
-This construction is exact: a binary vector belongs to the algebraic set precisely when it is a fixed configuration. It also exposes a subtlety. Because the Boolean equations make the coordinate algebra finite-dimensional over $\mathbb F_2$, the associated scheme is zero-dimensional whenever it is nonempty. Thus ordinary Krull dimension does not rank finite fixed-point sets by cardinality.
+## 5. Two obstructions to the existence of a dimension
 
-For bi-infinite configurations, one may analogously use infinitely many variables $x_i$ indexed by $\mathbb Z$ and a translation-invariant family of equations. The object is then better interpreted through symbolic dynamics, inverse limits of periodic models, or suitably chosen infinite-dimensional algebraic structures. The elementary theorems below avoid dependence on any one such framework by reasoning directly from the local update.
+Definition 2.7 presupposes that $V(\rho,n)$ is a linear subspace. We now show that this presupposition fails for the majority of the family.
 
-## 5. Extremal fixed-point theorems
+### 5.1 The parity obstruction
 
-### 5.1 Rule 0
+**Lemma 5.1.** *$f_\rho(0,0,0) = 1$ if and only if $\rho$ is odd.*
 
-Rule 0 has all eight output bits equal to zero, so
+*Proof.* $f_\rho(0,0,0)$ is bit number $4\cdot 0 + 2\cdot 0 + 0 = 0$ of $\rho$, i.e. $\rho \bmod 2$. $\square$
 
-$$
-f_0(\ell,c,r)=0
-$$
+**Theorem 5.2 (Half the family has no dimension).** *If $\rho$ is odd then $0 \notin V(\rho,n)$ for every $n$, hence $V(\rho,n)$ is not a linear subspace and $\dim V(\rho,n)$ does not exist. This eliminates $128$ of the $256$ rules, for every ring size.*
 
-for every neighborhood.
+*Proof.* By Lemma 5.1, the constraint at any cell of the zero configuration reads $1 = 0$, so $0 \notin V(\rho,n)$. A linear subspace always contains $0$. $\square$
 
-**Theorem 2 (Characterization of Rule 0 Fixed Points).** A bi-infinite configuration $s$ is fixed by Rule 0 if and only if $s_i=0$ for every $i\in\mathbb Z$.
+Rules $45$, $137$ and $193$ — one Class 3 rule and two Class 4 rules — are among the eliminated.
 
-**Proof.** If $F_0(s)=s$, then for every site $i$,
+### 5.2 The Lagrange obstruction
 
-$$
-s_i=(F_0(s))_i=f_0(s_{i-1},s_i,s_{i+1})=0.
-$$
+**Definition 5.3.** A set $S \subseteq \mathrm{Cfg}(n)$ is an *affine subvariety* if $S = v + W$ for some $v \in \mathrm{Cfg}(n)$ and some $\mathbb{F}_2$-subspace $W$. This is the weakest reasonable reading of "$S$ has a dimension"; every linear subvariety is affine.
 
-Thus $s$ is identically zero. Conversely, applying Rule 0 to the identically zero configuration produces zero at every site, so that configuration is fixed. $\square$
+**Theorem 5.4 (Lagrange obstruction).** *If $S \subseteq \mathrm{Cfg}(n)$ is a non-empty affine subvariety with $n \ge 1$, then $|S|$ divides $2^n$; in particular $|S|$ is a power of two.*
 
-**Corollary 2.1 (Uniqueness for Rule 0).** Rule 0 has exactly one fixed bi-infinite configuration.
+*Proof.* Translation by $v$ is a bijection, so $|S| = |W|$. Now $W$ is a subgroup of the additive group $\mathrm{Cfg}(n) \cong (\mathbb{Z}/2)^n$ of order $2^n$, and by Lagrange's theorem $|W| \mid 2^n$. $\square$
 
-The same proof applies on every periodic ring. Hence
+**Corollary 5.5.** *If $|V(\rho,n)| \nmid 2^n$ then $V(\rho,n)$ is not an affine subvariety, and $\dim V(\rho,n)$ does not exist in any sense.*
 
-$$
-|\operatorname{Fix}(0,n)|=1
-$$
+Two explicit instances, verified by exhaustive enumeration:
 
-for every $n\ge1$.
+**Proposition 5.6 (The majority rule).** *Rule 232, $f = lc + lr + cr$, satisfies $f_{232}(l,c,r) = c$ if and only if $l = c$ or $r = c$. On the ring of size $4$ it has exactly $6$ stationary configurations — the two constants and four domain-wall patterns — and $6 \nmid 16$. Hence $V(232,4)$ is not an affine subvariety and has no dimension.*
 
-### 5.2 Rule 204
+**Proposition 5.7 (Rule 45).** *On the ring of size $3$, Rule 45 has exactly $3$ stationary configurations, the three rotations of the pulse train $100$, and $3 \nmid 8$. Hence $V(45,3)$ is not an affine subvariety.*
 
-The binary pattern of Rule 204 is chosen so that the output equals the center bit. Its local polynomial is simply
+Exhaustive computation on the ring of size $6$ shows that only $91$ of the $256$ rules have a fixed-point locus that is a linear subspace. For the remaining $165$ the conjecture's central quantity is simply undefined.
 
-$$
-f_{204}(\ell,c,r)=c.
-$$
+### 5.3 Synthesis
 
-**Theorem 3 (Rule 204 Identity Theorem).** Every bi-infinite binary configuration is fixed by Rule 204.
+**Theorem 5.8 (The Dimension Conjecture is false in four independent ways).**
 
-**Proof.** For every configuration $s$ and every site $i$,
+1. *The Class 4 rule $110$ has $V(110,8) = V(0,8)$ and $\dim V(110,8) \ne 8$: the universal rule has the minimal variety, identical to that of the null rule.*
+2. *The Class 3 rule $90$ satisfies $2 \dim V(90,n) < n$ for every $n \ge 5$: a chaotic rule violates the predicted $\dim \ge n/2$ for all large rings.*
+3. *The Class 3 rule $45$ has $V(45,8) = \varnothing$ while $V(45,9) \ne \varnothing$: the invariant depends on $n$, whereas a Wolfram class does not.*
+4. *The Class 2 rule $232$ has $|V(232,4)| = 6$ and no dimension at all.*
 
-$$
-(F_{204}(s))_i=f_{204}(s_{i-1},s_i,s_{i+1})=s_i.
-$$
+Each item is independently fatal; together they show that no repair of the statement can succeed.
 
-Equality at all sites gives $F_{204}(s)=s$. $\square$
+---
 
-**Corollary 3.1 (Maximal Periodic Fixed Set).** On a periodic ring of length $n$, Rule 204 has exactly $2^n$ fixed configurations:
+## 6. What the variety really measures: arithmetic
 
-$$
-|\operatorname{Fix}(204,n)|=2^n.
-$$
+We now determine the fixed-point loci of four of the most-studied rules completely, for all $n$ at once. In each case the answer is a function of $n$ modulo a small integer — the multiplicative order of the roots of the characteristic polynomial of the stationarity recurrence.
 
-This is the largest possible fixed-point count for any map on $B^n$.
+### 6.1 Rule 30: a three-point locus
 
-Rules 0 and 204 therefore realize opposite extremes: total erasure gives one fixed state, while the identity update fixes the whole state space.
+Rule 30 has $f_{30} = l + c + r + cr$, so stationarity reads
+$$l + r + cr = 0, \qquad\text{i.e.}\qquad \bigl(s_i = 0 \Rightarrow s_{i-1} = s_{i+1}\bigr) \ \text{ and } \ \bigl(s_i = 1 \Rightarrow s_{i-1} = 0\bigr). \tag{6.1}$$
 
-## 6. Rule 110: nonempty but nonmaximal
+**Lemma 6.1 (Transfer relation).** *If $s \in V(30,n)$ then $s_{i+2} = s_i$ for all $i$: every stationary configuration of Rule 30 has spatial period two.*
 
-The polynomial formula gives two immediate tests on uniform configurations.
+*Proof.* A finite check on $\mathbb{F}_2^4$ shows: if $f_{30}(a,b,c) = b$ and $f_{30}(b,c,d) = c$ then $c = a$. Apply this with $(a,b,c,d) = (s_i, s_{i+1}, s_{i+2}, s_{i+3})$, using the stationarity constraints at cells $i+1$ and $i+2$. $\square$
 
-**Theorem 4 (The Zero Configuration Is Fixed by Rule 110).** If $\mathbf 0$ denotes the configuration with $(\mathbf 0)_i=0$ for all $i$, then
+**Theorem 6.2 (Rule 30 on odd rings).** *If $n$ is odd then $V(30,n) = \{0\}$.*
 
-$$
-F_{110}(\mathbf 0)=\mathbf 0.
-$$
+*Proof.* By Lemma 6.1 and Lemma 2.10 (with $p = 2$, $\gcd(2,n) = 1$), every stationary $s$ is constant. A constant $x$ is stationary iff $f_{30}(x,x,x) = x$, which by $(6.1)$ requires $x + x + x^2 = x^2 = x \cdot x$; checking both values gives $x = 0$. $\square$
 
-**Proof.** Every neighborhood in $\mathbf 0$ is $(0,0,0)$, and
+**Theorem 6.3 (Rule 30 on even rings).** *If $n \ge 2$ is even, let $\alpha \in \mathrm{Cfg}(n)$ be the alternating configuration $\alpha_i = i \bmod 2$ (well defined since $2 \mid n$) and $\bar\alpha = 1 + \alpha$ its colour complement. Then*
+$$V(30,n) = \{\,0,\ \alpha,\ \bar\alpha\,\},$$
+*a set of exactly three distinct configurations.*
 
-$$
-f_{110}(0,0,0)=0+0+0+0=0.
-$$
+*Proof.* All three are stationary: for $\alpha$, neighbours $i-1$ and $i+1$ have equal parity so $l = r$ and $l + r = 0$, while $c$ and $r$ have opposite parity so $cr = 0$; thus $(6.1)$ holds. The same computation applies to $\bar\alpha$, and $0$ is immediate. Conversely, let $s$ be stationary; by Lemma 6.1 it has period two, so by Lemma 2.11 it is determined by $(s_0, s_1)$, giving four candidates: $0$, $\alpha$, $\bar\alpha$ and the all-ones configuration $1$. The last fails, since $f_{30}(1,1,1) = 1 + 1 + 1 + 1 = 0 \ne 1$. Distinctness is checked at cells $0$ and $1$. $\square$
 
-Thus every updated cell remains zero. $\square$
+**Corollary 6.4 (No dimension, for infinitely many $n$).** *For every even $n \ge 2$, $|V(30,n)| = 3$, which does not divide $2^n$; hence $V(30,n)$ is not an affine subvariety and $\dim V(30,n)$ does not exist.*
 
-**Theorem 5 (The One Configuration Is Not Fixed by Rule 110).** If $\mathbf 1$ denotes the configuration with $(\mathbf 1)_i=1$ for all $i$, then
+This upgrades the Lagrange obstruction from isolated computed examples to an infinite family, and it does so for the very rule that the Dimension Conjecture places at $\dim \ge n/2$.
 
-$$
-F_{110}(\mathbf 1)\ne\mathbf 1.
-$$
+### 6.2 Rule 90: the prime 3
 
-**Proof.** Every neighborhood in $\mathbf 1$ is $(1,1,1)$. In $\mathbb F_2$,
+Rule 90 is additive, $f_{90} = l + r$; stationarity reads $s_{i-1} + s_i + s_{i+1} = 0$, i.e. the linear recurrence $s_{i+1} = s_{i-1} + s_i$ with characteristic polynomial $x^2 + x + 1$ over $\mathbb{F}_2$, whose roots are the primitive cube roots of unity in $\mathbb{F}_4$.
 
-$$
-f_{110}(1,1,1)=1+1+1+1=0.
-$$
+**Lemma 6.5.** *If $s \in V(90,n)$ then $s_{i+3} = s_i$ for all $i$.*
 
-Therefore every cell becomes zero after one update. In particular the updated configuration differs from $\mathbf 1$. $\square$
+*Proof.* A finite check shows that $f_{90}(a,b,c) = b$ and $f_{90}(b,c,d) = c$ together imply $d = a$; apply at cells $i+1$ and $i+2$. $\square$
 
-**Corollary 5.1 (Rule 110 Has a Proper Fixed-Point Locus).** The fixed-point locus of Rule 110 is nonempty but is not the whole configuration space.
+**Theorem 6.6 (Mod-3 dichotomy for Rule 90).**
+1. *If $3 \nmid n$ then $V(90,n) = \{0\}$, so $\dim V(90,n) = 0$.*
+2. *If $3 \mid n$ and $n \ne 0$ then $V(90,n)$ contains the period-three wave $w$ with $w_i = 0$ if $3 \mid i$ and $w_i = 1$ otherwise, so it is strictly larger.*
+3. *For every $n \ge 1$, $\dim V(90,n) \le 2$.*
 
-The conclusion holds both for bi-infinite configurations and for every nonempty periodic ring: the all-zero vector is fixed and the all-one vector is not.
+*Proof.* (1) By Lemma 6.5 and Lemma 2.10 with $p = 3$, a stationary configuration is constant, say $\equiv x$; stationarity then reads $x + x = x$, i.e. $x = 0$. (2) Direct verification using the reduction $\mathbb{Z}/n \to \mathbb{Z}/3$, which is a ring homomorphism when $3 \mid n$: for each residue class the three-window condition $(w_{i-1} + w_{i+1} = w_i)$ holds by a three-case check. (3) The recurrence $s_{i+1} = s_{i-1} + s_i$ shows a stationary configuration vanishing at cells $0$ and $1$ vanishes identically (induct along $i$); apply Theorem 2.9. $\square$
 
-This corollary is a direct counterexample to the strongest form of a proposed complexity principle asserting that a computationally universal elementary rule should have a maximal fixed-point locus. Rule 110 is computationally universal but does not fix every state. Conversely, Rule 204 fixes every state yet performs no change at all. Hence maximality of the fixed set is neither necessary for universal dynamics nor sufficient for nontrivial dynamics.
+**Corollary 6.7.** *For $n \ge 5$, $2 \dim V(90,n) < n$. The Class 3 rule $90$ violates the predicted $\dim \ge n/2$ for every large ring.*
 
-## 7. Algorithms
+### 6.3 Rule 45: existence itself is arithmetic
 
-### 7.1 Local rule evaluation
+Rule 45 has $f_{45} = 1 + l + r + cr$; it is odd, so by Theorem 5.2 it has no dimension for any $n$. More is true.
 
-Given $R$, $\ell$, $c$, and $r$, compute $j=4\ell+2c+r$, shift $R$ right by $j$, and retain the least significant bit. This takes constant time and constant auxiliary space under fixed-width arithmetic.
+**Lemma 6.8.** *If $s \in V(45,n)$ then $s_{i+3} = s_i$ for all $i$.*
 
-**Pseudocode.**
+*Proof.* A finite check shows: if $f_{45}(a,b,c) = b$, $f_{45}(b,c,d) = c$ and $f_{45}(c,d,e) = d$, then $d = a$. Apply at cells $i+1$, $i+2$, $i+3$. $\square$
 
-```text
-LOCAL-OUTPUT(R, left, center, right)
-    index ← 4·left + 2·center + right
-    return (R shifted right by index) AND 1
-```
+**Theorem 6.9 (Existence criterion for Rule 45).** *$V(45,n) \ne \varnothing$ if and only if $3 \mid n$. When $3 \mid n$, the pulse train $p$ with $p_i = 1$ if $3 \mid i$ and $p_i = 0$ otherwise is stationary.*
 
-### 7.2 Extraction of algebraic normal form
+*Proof.* If $3 \nmid n$, then by Lemma 6.8 and Lemma 2.10 a stationary configuration is constant, say $\equiv x$; but $f_{45}(x,x,x) = 1 + x + x + x\cdot x = 1 + x \ne x$ for both values of $x$, a contradiction, so $V(45,n) = \varnothing$. If $3 \mid n$, the reduction $\mathbb{Z}/n \to \mathbb{Z}/3$ transports the three-case verification for $p$. $\square$
 
-Let $v[0],\ldots,v[7]$ be the truth table in subset-mask order. The in-place Boolean Möbius transform returns the coefficients of the square-free monomials. For each variable bit $b$, and each mask containing $b$, replace the entry at that mask by its exclusive-or with the entry obtained by removing $b$.
+The Class 3 rule $45$ therefore has an *empty* fixed-point variety for two thirds of all ring sizes. Any invariant of $V$ assigning it a class would have to make that class depend on $n$.
 
-```text
-ALGEBRAIC-NORMAL-FORM(R)
-    for mask from 0 to 7
-        coeff[mask] ← bit mask of R
-    for variableBit in {1, 2, 4}
-        for mask from 0 to 7
-            if mask AND variableBit is nonzero
-                coeff[mask] ← coeff[mask] XOR coeff[mask XOR variableBit]
-    return coeff
-```
+### 6.4 Rule 150: the prime 2
 
-For three variables this is constant work. For a Boolean function of $k$ variables, it uses $O(k2^k)$ time and $O(2^k)$ storage.
+Rule 150 is additive, $f_{150} = l + c + r$; stationarity reads $l + r = 0$, i.e. $s_{i-1} = s_{i+1}$, so the variety is exactly the space of period-two configurations.
 
-### 7.3 Exhaustive fixed-point enumeration
+**Theorem 6.10.**
+1. *Every $s \in V(150,n)$ satisfies $s_{i+2} = s_i$.*
+2. *If $n$ is odd then $V(150,n) = \{0, 1\}$ (the two constants), and $\dim V(150,n) = 1$.*
+3. *If $n$ is even then the alternating configuration $\alpha_i = i \bmod 2$ is a non-constant element of $V(150,n)$, so the variety strictly grows and has dimension $2$.*
+4. *For every $n \ge 1$, $\dim V(150,n) \le 2$; hence for $n \ge 5$, $2\dim V(150,n) < n$.*
 
-For a ring of length $n$, enumerate all $2^n$ states, update each of the $n$ cells, and compare the result with the original state.
+*Proof.* (1) is the stationarity relation itself, applied at cell $i+1$. (2) By (1) and Lemma 2.10 a stationary configuration on an odd ring is constant, and both constants satisfy $f_{150}(x,x,x) = 3x = x$. Since $|V| = 2$, Proposition 2.8 gives dimension $1$. (3) Reduce $\mathbb{Z}/n \to \mathbb{Z}/2$: $\alpha_{i-1} = \alpha_{i+1}$, and $\alpha_0 = 0 \ne 1 = \alpha_1$ shows non-constancy. (4) A stationary configuration vanishing at $0$ and $1$ vanishes identically by (1) and Lemma 2.11; apply Theorem 2.9. $\square$
 
-```text
-FIXED-POINTS(R, n)
-    fixed ← empty list
-    for encodedState from 0 to 2^n − 1
-        state ← n binary digits of encodedState
-        next ← empty n-cell vector
-        for i from 0 to n − 1
-            left ← state[(i − 1) mod n]
-            center ← state[i]
-            right ← state[(i + 1) mod n]
-            next[i] ← LOCAL-OUTPUT(R, left, center, right)
-        if next = state
-            append state to fixed
-    return fixed
-```
+### 6.5 Summary of the arithmetic phenomenon
 
-The running time is $O(n2^n)$ and the output storage is $O(nN_{R,n})$, where $N_{R,n}=|\operatorname{Fix}(R,n)|$; a counting-only variant uses $O(n)$ working space. Transfer-matrix methods can improve fixed-point counting because the constraint has finite range, but exhaustive enumeration is transparent and adequate for small $n$.
+| Rule | Class | Stationarity relation | Number of stationary configurations |
+|---|---|---|---|
+| $30$ | 3 | period two, $s_i = 1 \Rightarrow s_{i-1}=0$ | $3$ if $n$ even, $1$ if $n$ odd |
+| $45$ | 3 | period three | $3$ if $3 \mid n$, $0$ otherwise |
+| $90$ | 3 | $s_{i+1} = s_{i-1}+s_i$, period three | $4$ if $3 \mid n$, $1$ otherwise |
+| $110$ | 4 | $r(1+c+lc)=0$ | $1$ for all $n$ |
+| $150$ | 3 | $s_{i-1}=s_{i+1}$, period two | $4$ if $n$ even, $2$ if $n$ odd |
+| $204$ | 2 | no constraint | $2^n$ |
 
-## 8. Numerical examples
+All five nontrivial rules here have counts that are eventually periodic functions of $n$ with tiny period. A Wolfram class is a single number attached to the rule; these are sequences in $n$. The two cannot agree, and the reason is structural rather than accidental — see Theorem 9.1.
 
-The local table of Rule 110 in descending neighborhood order is
+---
 
-| Neighborhood | $111$ | $110$ | $101$ | $100$ | $011$ | $010$ | $001$ | $000$ |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Output | $0$ | $1$ | $1$ | $0$ | $1$ | $1$ | $1$ | $0$ |
+## 7. Symmetry covariance and the Class 4 orbit
 
-The polynomial $r+c+cr+\ell cr$ produces the same row. Three immediate ring experiments follow for every $n\ge1$:
+The $256$ rules carry an action of the Klein four-group $\{1, R, C, RC\}$, where $R$ is *reflection* (exchange the roles of $l$ and $r$) and $C$ is *colour inversion* (complement all inputs and the output). Wolfram's classification is constant on orbits. We show the fixed-point variety is covariant.
 
-$$
-|\operatorname{Fix}(0,n)|=1,
-$$
+Write $\mathrm{refl}(s)_i = s_{-i}$ and $\mathrm{conj}(s)_i = 1 + s_i$ for the induced involutions of configuration space.
 
-$$
-|\operatorname{Fix}(204,n)|=2^n,
-$$
+**Theorem 7.1 (Reflection covariance).** *Suppose $f_{\rho'}(l,c,r) = f_\rho(r,c,l)$ for all $l,c,r$. Then $\mathrm{refl}(s) \in V(\rho',n) \iff s \in V(\rho,n)$; equivalently $V(\rho',n) = \mathrm{refl}\bigl(V(\rho,n)\bigr)$.*
 
-and
+*Proof.* The constraint for $\mathrm{refl}(s)$ at cell $i$ involves $(s_{-i+1}, s_{-i}, s_{-i-1})$, and $f_{\rho'}$ applied to this triple equals $f_\rho(s_{-i-1}, s_{-i}, s_{-i+1})$, which is the constraint for $s$ at cell $-i$. As $i$ ranges over all cells so does $-i$. $\square$
 
-$$
-1\le |\operatorname{Fix}(110,n)|<2^n.
-$$
+**Theorem 7.2 (Conjugation covariance).** *Suppose $f_{\rho'}(l,c,r) = 1 + f_\rho(1+l, 1+c, 1+r)$ for all $l,c,r$. Then $\mathrm{conj}(s) \in V(\rho',n) \iff s \in V(\rho,n)$; equivalently $V(\rho',n) = \mathrm{conj}\bigl(V(\rho,n)\bigr)$.*
 
-The lower bound for Rule 110 comes from $\mathbf 0$; the strict upper bound comes from excluding $\mathbf 1$. These inequalities do not claim a complete formula for the number of Rule 110 fixed points. Rather, they are uniform, exact consequences that hold at every period.
+*Proof.* Substituting $\mathrm{conj}(s)$ into the $\rho'$-constraint and using $1 + (1+x) = x$ turns it into $1 + f_\rho(s_{i-1},s_i,s_{i+1}) = 1 + s_i$, which by cancellation is the $\rho$-constraint. $\square$
 
-A second numerical diagnostic is one-step evolution. Starting from an arbitrary state, Rule 0 reaches $\mathbf 0$ in one step. Rule 204 leaves the state unchanged. Rule 110 sends $\mathbf 1$ to $\mathbf 0$, while more varied initial states may generate structured, propagating behavior. This contrast shows why a fixed-point census alone loses the transient and transport phenomena central to computation.
+**Theorem 7.3 (The Class 4 orbit).** *Rule 124 is the reflection of Rule 110, Rule 137 its colour conjugate, and Rule 193 the reflection of Rule 137. Consequently, for every $n$,*
+$$V(124,n) = \{0\}, \qquad V(137,n) = \{1\}, \qquad V(193,n) = \{1\},$$
+*so every rule in the Turing-complete orbit $\{110,124,137,193\}$ has a one-point fixed-point variety. None of them attains maximal dimension for $n \ge 3$, and the two odd members ($137$ and $193$) have no dimension at all, their single point being the all-ones configuration rather than the origin.*
 
-## 9. Which dimension?
+*Proof.* The three identities among the local rules are finite checks on $\mathbb{F}_2^3$. Apply Theorems 7.1 and 7.2 to Theorem 3.2, noting $\mathrm{refl}(0) = 0$, $\mathrm{conj}(0) = 1$ and $\mathrm{refl}(1) = 1$. Maximality fails by Theorem 4.4; the dimension fails to exist for $137$ and $193$ by Theorem 5.2. $\square$
 
-A claim that the “dimension” of a fixed-point variety measures complexity is incomplete until the invariant is specified. At least four candidates must be distinguished.
+The rigidity of Rule 110 is thus not a numerical accident of one rule number but a property of an entire symmetry class — precisely the class that the Dimension Conjecture predicted would be maximal.
 
-### 9.1 Fixed-point cardinality
+---
 
-The simplest invariant is
+## 8. A working replacement: the tower of temporal varieties
 
-$$
-N_{R,n}=|\operatorname{Fix}(R,n)|.
-$$
+The diagnosis suggested by Sections 3–7 is that the fixed-point variety fails because it looks at a single instant. Complexity is a property of orbits, so we pass to the *temporal varieties*.
 
-It distinguishes Rule 0 from Rule 204 maximally. It is not a geometric dimension, and it grows with the chosen period.
+**Definition 8.1.** For $k \ge 0$ set $\mathrm{Per}_k(\rho,n) = \{ s \in \mathrm{Cfg}(n) : F_\rho^{\,k}(s) = s\}$, the $\mathbb{F}_2$-points of the fixed locus of the $k$-fold composite — a polynomial map of degree at most $3^k$. Note $\mathrm{Per}_1(\rho,n) = V(\rho,n)$.
 
-### 9.2 Krull dimension
+**Lemma 8.2 (Return times are closed under gcd).** *Let $g : X \to X$ be any self-map of any set and $x \in X$. If $g^{k}(x) = x$ and $g^{\ell}(x) = x$ then $g^{\gcd(k,\ell)}(x) = x$.*
 
-The quotient
+*Proof.* First, $g^{k}(x) = x$ implies $g^{km}(x) = x$ for all $m \ge 0$, by induction. Now argue by strong induction on $k$. If $k = 0$ then $\gcd(0,\ell) = \ell$ and the claim is the hypothesis. If $k > 0$, write $\ell = k\lfloor \ell/k\rfloor + (\ell \bmod k)$; then
+$$x = g^{\ell}(x) = g^{\ell \bmod k}\bigl(g^{k\lfloor \ell/k\rfloor}(x)\bigr) = g^{\ell \bmod k}(x),$$
+so $\ell \bmod k$ is also a return time. Since $\ell \bmod k < k$, the inductive hypothesis applies to the pair $(\ell \bmod k, k)$ and yields $g^{\gcd(\ell \bmod k,\, k)}(x) = x$; and $\gcd(\ell \bmod k, k) = \gcd(k,\ell)$ by the Euclidean algorithm. $\square$
 
-$$
-A_n/I_{R,n}
-$$
+**Theorem 8.3 (The tower is a divisibility lattice).** *For all $k, \ell \ge 0$,*
+$$\mathrm{Per}_k(\rho,n) \cap \mathrm{Per}_\ell(\rho,n) = \mathrm{Per}_{\gcd(k,\ell)}(\rho,n),$$
+*and $k \mid \ell$ implies $\mathrm{Per}_k(\rho,n) \subseteq \mathrm{Per}_\ell(\rho,n)$.*
 
-contains the Boolean equations $x_i^2-x_i$. It is a finite-dimensional algebra over $\mathbb F_2$, and its spectrum is zero-dimensional when nonempty. Consequently, Krull dimension does not record whether the fixed set has one point or $2^n$ points. Calling the latter “dimension $n$” confuses the dimension of the ambient vector space $\mathbb F_2^n$ with the Krull dimension of the finite algebraic set.
+*Proof.* Monotonicity is the first step of Lemma 8.2's proof. The inclusion $\subseteq$ is Lemma 8.2; the inclusion $\supseteq$ follows from monotonicity applied to $\gcd(k,\ell) \mid k$ and $\gcd(k,\ell) \mid \ell$. $\square$
 
-### 9.3 Coordinate-algebra vector-space dimension
+**Theorem 8.4 (Bijectivity on each level).** *For $k \ge 1$ the automaton restricts to a bijection of $\mathrm{Per}_k(\rho,n)$ onto itself, with inverse $F_\rho^{\,k-1}$.*
 
-The finite number
+*Proof.* Write $k = m+1$. If $F^{m+1}(s) = s$ then $F^{m+1}(F(s)) = F(F^{m+1}(s)) = F(s)$, so the level is preserved. Injectivity: if $F(a) = F(b)$ with $a,b$ of period dividing $k$, apply $F^{m}$ to get $a = F^{m+1}(a) = F^{m+1}(b) = b$. Surjectivity: given $s$ of period dividing $k$, the point $F^{m}(s)$ lies in the level and maps to $F^{m+1}(s) = s$. $\square$
 
-$$
-\dim_{\mathbb F_2}(A_n/I_{R,n})
-$$
+**Theorem 8.5 (The tower of Rule 0 collapses).** *For every $k \ge 1$, $\mathrm{Per}_k(0,n) = \{0\}$.*
 
-can encode multiplicity and, for reduced Boolean solution sets, agrees with the number of points after suitable decomposition. It is algebraically meaningful but is not Krull dimension.
+*Proof.* $F_0$ is the constant map to $0$, so $F_0^{k}(s) = 0$ for $k \ge 1$; equating to $s$ gives $s = 0$. $\square$
 
-### 9.4 Asymptotic fixed-point entropy
+**Theorem 8.6 (The tower separates Rule 110 from Rule 0).** *On the ring of size $4$ the configuration $1110$ satisfies $F_{110}(1110) = 1011$ and $F_{110}(1011) = 1110$: a genuine $2$-cycle. Hence*
+$$\mathrm{Per}_1(110,4) = \mathrm{Per}_1(0,4) = \{0\} \quad\text{but}\quad \mathrm{Per}_2(110,4) \ne \mathrm{Per}_2(0,4),$$
+*and $V(110,4) \subsetneq \mathrm{Per}_2(110,4)$ strictly.*
 
-One can study the exponential growth rate
+*Proof.* Direct computation of the two update steps; the level-$2$ set of Rule 0 is $\{0\}$ by Theorem 8.5, while $1110$ lies in $\mathrm{Per}_2(110,4)$ and is not $0$. Strictness follows since $1110 \notin V(110,4) = \{0\}$. $\square$
 
-$$
-h_{\mathrm{fix}}(R)=\limsup_{n\to\infty}\frac{1}{n}\log_2 N_{R,n}.
-$$
+**Proposition 8.7 (Even the repaired invariant is not a dimension).** *$|\mathrm{Per}_2(110,4)| = 5$ — the origin together with the four rotations forming one $2$-cycle — and $5 \nmid 16$. So $\mathrm{Per}_2(110,4)$ is not an affine subvariety of $\mathbb{A}^4$.*
 
-For Rule 0 this value is $0$, while for Rule 204 it is $1$. This invariant is closer to an effective dimension per cell, but it measures stationary combinatorial freedom, not temporal computational power.
+The correct conclusion is that the invariant to pursue is a *counting function*, not a dimension: the sequence $k \mapsto |\mathrm{Per}_k(\rho,n)|$, equivalently the dynamical zeta function
+$$\zeta_{\rho,n}(t) = \exp\left(\sum_{k \ge 1} \frac{|\mathrm{Per}_k(\rho,n)|}{k}\, t^k\right),$$
+whose exponential growth rate is the topological entropy of the automaton on the ring.
 
-Any empirical comparison with dynamical classes should report these quantities separately. A correlation involving one should not be presented as a theorem about another.
+---
 
-## 10. Applications and broader connections
+## 9. Algorithms and computational structure
 
-### 10.1 Constraint solving
+### 9.1 The de Bruijn transfer matrix
 
-Fixed points of a periodic cellular automaton form a Boolean constraint-satisfaction problem. The polynomial equations can be handled by exhaustive search, binary decision diagrams, satisfiability solvers, Gröbner-basis techniques, or transfer matrices. Locality makes the constraint graph sparse and cyclic.
+The shift invariance of Proposition 2.4 has a strong computational consequence. Encode a configuration by the sequence of overlapping pairs $(s_{i-1}, s_i)$; there are four such states. Define the *stationary de Bruijn matrix* $T_\rho \in \{0,1\}^{4 \times 4}$ by
+$$\bigl(T_\rho\bigr)_{(a,b),\,(b',c)} = \begin{cases} 1 & \text{if } b = b' \text{ and } f_\rho(a,b,c) = b, \\ 0 & \text{otherwise.}\end{cases}$$
+A stationary configuration on the ring of $n$ cells is exactly a closed walk of length $n$ in this graph, so one expects the following.
 
-### 10.2 Symbolic dynamics
+**Conjecture 9.1 (Transfer-matrix trace formula).** *For every rule $\rho$ and every $n \ge 1$,*
+$$|V(\rho,n)| = \operatorname{tr}\bigl(T_\rho^{\,n}\bigr).$$
 
-A fixed configuration is a bi-infinite word whose every length-three window obeys a local compatibility condition. The allowed windows define a shift of finite type. Fixed-point counting on rings can therefore be related to closed walks in a finite directed graph, enabling traces of transfer-matrix powers to replace exhaustive enumeration.
+We have verified this exhaustively for all $256$ rules and all $1 \le n \le 12$. Granting it, the point counts of every fixed-point variety in the family satisfy a linear recurrence of order at most four with integer coefficients — the characteristic polynomial of $T_\rho$ — and are computable in $O(\log n)$ arithmetic operations. This explains the arithmetic phenomena of Section 6 in a single stroke: the counts of Rules 90 and 45 have period $3$ in $n$ because $T_\rho$ has eigenvalues that are cube roots of unity; the counts of Rules 30 and 150 have period $2$; Rule 110's matrix has spectral radius $1$ with a single fixed closed walk; Rule 204's matrix is the full de Bruijn matrix, with $\operatorname{tr}(T^n) = 2^n$. And it is the deepest reason why the Dimension Conjecture cannot be repaired: a $4 \times 4$ integer matrix has four eigenvalues, and four algebraic numbers cannot encode the undecidable question of whether a rule is computationally universal.
 
-### 10.3 Digital circuits
+### 9.2 Algorithmic summary
 
-The algebraic normal form expresses a rule as an exclusive-or of conjunctions. For Rule 110,
+**Algorithm A (Algebraic normal form).** Input: $\rho < 256$. Output: the eight coefficients $a_S$. Compute $a_S = \bigoplus_{T \subseteq S} f_\rho(T)$ by the Möbius transform over the Boolean lattice on three atoms. Cost $O(1)$ (at most $8 \times 8$ operations); using the in-place butterfly it is $3 \cdot 2^{2} = 12$ XORs.
 
-$$
-r+c+cr+\ell cr
-$$
+**Algorithm B (Exhaustive fixed-point enumeration).** Input: $\rho$, $n$. Output: $V(\rho,n)$. Iterate over all $2^n$ configurations and test the $n$ constraints. Cost $O(n 2^n)$; exact but limited to $n \lesssim 24$.
 
-translates directly into an XOR-AND circuit. Polynomial degree records the maximum interaction order in this representation, while monomial count gives a simple implementation cost proxy.
+**Algorithm C (Transfer-matrix counting).** Input: $\rho$, $n$. Output: $|V(\rho,n)|$. Build $T_\rho$ from the truth table ($O(1)$), compute $T_\rho^{\,n}$ by binary exponentiation ($O(\log n)$ multiplications of $4\times 4$ matrices), return the trace. Cost $O(\log n)$ matrix products; feasible for astronomically large $n$.
 
-### 10.4 Spacetime algebra
+**Algorithm D (Dimension test).** Input: a finite set $S \subseteq \mathbb{F}_2^n$. Output: $\dim S$, or "no dimension". Check $|S| \mid 2^n$ (Lagrange screen, $O(1)$); if it fails, report failure. Otherwise pick $v \in S$, translate to $v + S$, and check that the result contains $0$ and is closed under XOR ($O(|S|^2 n)$, or $O(|S| n^2)$ by Gaussian elimination on a spanning set). Return $\log_2 |S|$.
 
-Introduce variables $x_{i,t}$ for site $i$ and time $t$. The evolution equations become
+**Algorithm E (Temporal tower).** Input: $\rho$, $n$, $K$. Output: $|\mathrm{Per}_k(\rho,n)|$ for $k \le K$. Build the functional graph of $F_\rho$ on all $2^n$ configurations ($O(n2^n)$), find its cycles by iterated traversal, and set $|\mathrm{Per}_k| = \sum_{d \mid k} d \cdot (\text{number of cycles of length } d)$. Cost $O(n 2^n + K \log K)$.
 
-$$
-x_{i,t+1}=p_R(x_{i-1,t},x_{i,t},x_{i+1,t}).
-$$
+### 9.3 Selected computational data
 
-Together with Boolean equations, these define finite spacetime windows as algebraic sets. Unlike a fixed-point equation, this construction retains propagation, collisions, temporal periods, and transient computation. It is therefore a more promising foundation for connecting algebraic invariants to computational behavior.
+Exhaustive enumeration on rings of small size confirms and extends the theorems:
 
-## 11. Discussion
+- $|V(110,n)| = 1$ for all $1 \le n \le 14$, and $V(110,n) = V(0,n)$ throughout.
+- The unique rule with $V(\rho,n) = \mathbb{A}^n$ is $204$, for each $n \in \{3,4,5,6\}$.
+- Exactly $128$ rules omit the origin on the ring of size $5$, and these are exactly the odd Wolfram numbers.
+- On the ring of size $6$, only $91$ of the $256$ rules have a linear fixed-point variety.
+- $|V(30,n)| = 3$ for even $n \le 14$ and $1$ for odd $n \le 14$, with the three points always $\{0, \alpha, \bar\alpha\}$.
+- $|V(90,n)| = 4$ if $3 \mid n$ and $1$ otherwise; $|V(45,n)| = 3$ if $3 \mid n$ and $0$ otherwise; $|V(150,n)| = 4$ for even $n$ and $2$ for odd $n$; all confirmed for $n \le 14$.
+- Among $29$ commonly cited representative rules on the ring of size $6$, only $3$ satisfy the Dimension Conjecture's prediction; $15$ violate it outright and $11$ have no dimension at all. Every Class 4 rule fails.
 
-The algebraic translation succeeds completely at the local level. There is no approximation: every elementary rule is exactly a degree-at-most-three multilinear polynomial over $\mathbb F_2$. Rule 110’s four-term expression gives a compact symbolic account of its truth table. On finite rings, fixed configurations are exactly the rational points satisfying a natural polynomial ideal.
+---
 
-The extremal examples also behave as intuition suggests. Rule 0 destroys all information and has one fixed point. Rule 204 preserves all information by doing nothing and fixes every point. If the goal were merely to measure stationary freedom, fixed-point count or entropy would be sensible invariants.
+## 10. Discussion
 
-The difficulty appears when stationary freedom is identified with dynamical complexity. Computation requires state changes. Signals must move and interact. Memory may be stored in persistent but nonstationary structures. A fixed-point locus deletes all of that information by imposing $x_{i,t+1}=x_{i,t}$. Rule 204 then appears maximally rich precisely because the imposed equation is automatic, even though its trajectories contain no events. Rule 110 appears less than maximal because some configurations evolve, which is part of the source of its dynamical interest.
+### 10.1 Why the conjecture had to fail
 
-Thus the counterexample is constructive rather than destructive. It does not reject algebraic geometry; it redirects the object of study. A useful geometry of cellular computation should encode trajectories, periodic orbits, preimage trees, or spacetime diagrams. It may then ask how families of solutions grow with spatial and temporal size, how components compose under concatenation, and which algebraic signatures correspond to mobile information carriers.
+Three independent explanations converge.
 
-The proposed language of sheaves also requires precision. One may assign local admissible patterns to intervals and use restriction maps between overlapping intervals; compatible local data then glue into global configurations or histories. Such a construction can organize local-to-global constraints. However, richness of global sections must be defined by a concrete invariant before it can be compared with computational universality. The present fixed-point theorems provide boundary conditions that any such theory must respect: the identity rule has all stationary sections, while a universal rule need not.
+**Structural.** By Proposition 2.4, $V(\rho,n)$ is a cyclic subshift of finite type on an alphabet of two letters with memory two — equivalently, the set of closed walks in a graph on four vertices. The class of such objects is extremely small: their point counts are traces of powers of $4\times4$ zero-one matrices, hence integer linear recurrences of order at most four. Universality is not visible in such data.
 
-## 12. Future work
+**Temporal.** The fixed-point variety is the level $k=1$ of the tower $\mathrm{Per}_k$, and it is precisely the level that discards all dynamical information. Rules $0$ and $110$ differ in their orbits, not in their stationary states, and Section 8 shows the difference appears already at $k=2$.
 
-Several directions follow naturally.
+**Arithmetic.** By Section 6, the natural parameter controlling $V(\rho,n)$ is $n$ modulo the order of a root of unity in a small extension of $\mathbb{F}_2$. Wolfram's class is a function of the rule alone. An invariant depending essentially on $n$ cannot equal an invariant independent of $n$.
 
-1. **Periodic enumeration for all rules.** Count fixed points for all $256$ rules and small periods $n$, then use transfer matrices to extend the range. Exact counts should be reported alongside period and boundary convention.
+### 10.2 Positive residue
 
-2. **Uniform algebraic-normal-form theory.** Compute and classify the unique multilinear polynomial of every elementary rule. Degree, monomial support, affine equivalence, and left-right or color symmetries may provide useful structural coordinates.
+The refutation leaves behind a set of exact, ring-size-uniform determinations which are of independent interest:
 
-3. **Separation of invariants.** Maintain a strict distinction among Krull dimension, coordinate-ring dimension, fixed-point cardinality, and asymptotic entropy. This is necessary before testing correlations against any dynamical classification.
+1. $V(110,n) = V(124,n) = \{0\}$ and $V(137,n) = V(193,n) = \{1\}$ for all $n$, including the bi-infinite line.
+2. $\dim V(\rho,n) = n$ if and only if $\rho = 204$, for $n \ge 3$.
+3. $V(30,n) = \{0,\alpha,\bar\alpha\}$ for even $n$ and $\{0\}$ for odd $n$.
+4. $V(90,n) = \{0\}$ exactly when $3 \nmid n$, with $\dim \le 2$ always.
+5. $V(45,n) \ne \varnothing$ exactly when $3 \mid n$.
+6. $V(150,n) = \{0,1\}$ for odd $n$; dimension $\le 2$ for all $n$.
+7. The Klein-group covariance of $\rho \mapsto V(\rho,n)$.
+8. The lattice structure $\mathrm{Per}_k \cap \mathrm{Per}_\ell = \mathrm{Per}_{\gcd(k,\ell)}$, valid for an arbitrary self-map of an arbitrary set, and the bijectivity of the automaton on each level.
 
-4. **Explicit complexity data.** Compare algebraic invariants with a clearly defined and sourced classification of rule behavior. The Rule 110 nonmaximality result shows that the original maximal-fixed-locus prediction must first be revised.
+Result 8 is a general dynamical fact with no cellular-automaton content, and is worth stating in that generality: for any self-map, the set of return times of a point is closed under gcd, so the periodic-point sets form a lattice indexed by the divisibility poset.
 
-5. **Spacetime rather than stillness.** Analyze algebraic sets of finite spacetime diagrams, temporal cycles, and admissible histories. Turing completeness concerns unbounded evolution, whereas a fixed-point locus discards transient and propagating behavior.
+### 10.3 Open problems
 
-6. **Local-to-global structures.** Develop presheaves or sheaves of admissible patterns on spatial and spacetime regions, specify their restriction maps, and investigate extension and gluing obstructions. Quantitative invariants of these structures may capture organization absent from raw point counts.
+**Problem 1 (Trace formula).** Prove Conjecture 9.1 in general, and identify for each rule the characteristic polynomial of $T_\rho$. Classify the $256$ rules by the eventual periodicity type of $n \mapsto |V(\rho,n)|$: the data suggest a small number of types (constant, period $2$, period $3$, exponential).
 
-## 13. Conclusion
+**Problem 2 (Zeta functions).** Compute the dynamical zeta function $\zeta_{\rho,n}(t)$ for the additive rules, where the update is a circulant matrix over $\mathbb{F}_2$ and the periodic-point counts should be expressible in terms of the factorisation of $x^n - 1$.
 
-Elementary cellular automata admit a direct algebraic-geometric formulation. Their local functions are multilinear polynomials over $\mathbb F_2$, their global updates are polynomial maps, and their periodic fixed states are zeros of explicit Boolean polynomial ideals. Rule 110 is represented by
+**Problem 3 (Entropy versus class).** The growth rate of $|\mathrm{Per}_k(\rho,n)|$ in $k$ is the natural candidate for a complexity invariant. Determine whether topological entropy separates Wolfram's Class 3 from Class 4 — the expectation is that it does not, since Rule 110 has positive but modest entropy while genuinely chaotic Class 3 rules have larger entropy, but the question of whether *any* computable invariant of the tower recovers universality remains open and is likely to have a negative answer for undecidability reasons.
 
-$$
-r+c+cr+\ell cr.
-$$
+**Problem 4 (Scheme structure).** We have worked with $\mathbb{F}_2$-points. The scheme $\mathrm{Spec}\, \mathbb{F}_2[x_0,\dots,x_{n-1}]/(f(x_{i-1},x_i,x_{i+1}) - x_i)$ carries nilpotents; determine whether the length of the structure sheaf at the origin — a genuinely scheme-theoretic invariant, invisible to point counts — distinguishes Rule 110 from Rule 0. Theorem 3.4 does not preclude this, since the two ideals may differ even though their radicals have the same $\mathbb{F}_2$-points; this is the one remaining loophole in the algebraic-geometric programme, and it is worth closing.
 
-Rule 0 has exactly one fixed configuration. Rule 204 fixes every configuration. Rule 110 fixes the all-zero configuration but not the all-one configuration, and therefore has a proper, nonempty fixed-point locus.
+**Problem 5 (Higher-radius automata).** For radius-$r$ automata the transfer matrix has size $2^{2r}$, growing with $r$. Determine whether, in the limit of large $r$, the fixed-point subshift becomes rich enough to encode universality — that is, whether the obstruction found here is special to radius one.
 
-These facts settle the strongest proposed connection between universality and maximal fixed-point geometry: it is false. The identity rule is maximal in stationary states but dynamically inert; Rule 110 is computationally universal but not stationary on every input. Fixed-point geometry remains an exact and useful description of stability, yet stability is only one slice of dynamics. The appropriate next object is a geometry of spacetime histories, where algebra can study not merely which patterns stand still, but how information moves.
+### 10.4 Conclusion
+
+Elementary cellular automata genuinely are algebraic varieties: the $256$ rules are the $256$ multilinear cubics over $\mathbb{F}_2$, and their stationary configurations are the $\mathbb{F}_2$-points of a cyclic scheme cut out by $n$ cubic equations. That much of the original vision survives intact, and it is a productive way to think.
+
+What does not survive is the hope that this geometry sees complexity. The fixed-point variety of the Turing-complete Rule 110 is a single point, identical to that of the rule that erases everything; maximal dimension singles out the automaton that does nothing; and for most rules there is no dimension to speak of. The invariant measures the arithmetic of the ring size, and it does so through a $4 \times 4$ integer matrix whose spectrum is far too small a container for universality. Complexity, if it is algebraic at all, lives in the tower of temporal varieties — in the zeta function, not in a dimension.
