@@ -2222,16 +2222,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-88 #1 \u2014 LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED \u2014 exp570's picture REPLICATES at bitlen 32 \u2014 cell found_p rates scale-stable at EVERY fraction (26: .65/.75/.60 vs 32: .75/.775/.75; z p=.33/.79/.15, CIs overlap), KS rejects uniformity ALL SIX cells (p\u2264.002; medians .073\u2013.293, late-tail \u226413%) \u2014 collision floor SUBDOMINANT quantified (first-curve 2.6\u00d7 baseline at (32,.125); found_q 9\u201316 vs found_p 24\u201331) \u2014 CHAIN CLOSED papers 215\u2192218\u2192244: low-B1 guarded-affine success = scale-stable order-completion firing early, no collapse toward 1\u2212exp(\u22121.44\u00b7B1/p) through bitlen 32"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "95a534e1",
     "description": "Paper 243 \u00b7 round-87 #2 \u00b7 exp 592 U065-FRESH-SEED-GATE [FINAL] + AMENDMENT to paper 242.\n\nTonight's fresh-seed-gating lab rule applied to tonight's own newest output: paper 242's NEW MAP ENTRY (non-divisibility positional mechanism) rested on ONE seed lineage, so the identical pipeline (statistics verbatim exp588c, generation verbatim exp578 code path) was rerun on FRESH MASTER SEED 20260902.\n\n**Pipeline exonerated before statistics** (all gated checks passed; abort armed, never fired):\n- Generator regression vs STORED exp581/exp588c lineage: EXACT_MATCH \u2014 population windows int64-exact 128/128 Ns + chunk-0 stream membership/order walk.\n- Freshness ALL_DISJOINT vs ALL SIX prior lineages (20260824..28, 20260831), each regenerated in full; pairwise N-set disjointness asserted; sha256[:16] hashes recorded for every lineage.\n- CTRL-A machinery null clean at full size: amp 0.0221\u00b10.0092, maxdev all bins 0.0336.\n- Volumes matched: 9840 hits / 512k refs, mean 76.88 hits/N, g=34.44.\n\n**Verdict GATE-H0 FIRES \u2014 THE FEATURE DOES NOT REPLICATE** (pre-registered tree H1\u2192H0\u2192PARTIAL, units fixed pre-data):\n- amp_mix = 0.0742 \u00b1 0.0377; registered raw z_mix = 1.97; bootstrap CI95 [0.0451, 0.1959].\n- CTRL-B estimator-null amp_sim = 0.1398 \u00b1 0.0478 \u2192 calibrated excess \u22120.066 \u00b1 0.061 \u2192 **z_cal = \u22121.08** vs original z_cal +1.53 / raw 4.11 (paper 242).\n- H1 fails (z_cal < 2); H0 fires on registered second clause (z_cal < 1); CI-includes-0 clause NOT met \u2014 flagged, never resolved.\n- Decisive internal reading: fresh RAW amplitude SMALLER THAN THE FRESH MEASURED NULL BIAS (0.074 < 0.140) \u2014 a pure null draw produces amplitudes of the observed size. Even the UNMIXED peak vanishes (amp_orig 0.0148 vs 0.1163).\n\n**AMENDMENT to paper 242:**\n1. NEW MAP ENTRY (non-divisibility positional mechanism) AMENDED TO SINGLE-SEED-UNCONFIRMED.\n2. Original raw z = 4.11 FLAGGED POSSIBLY MAX-STATISTIC-SWEEP-INFLATED \u2014 paper 232's ~30-cell discovery sweep was itself a selection surface; two seeds bracket zero on the calibrated scale (+1.53 \u2192 \u22121.08) exactly as selection-plus-max-bias predicts. Flag, not proof; original stands as recorded lineage history.\n3. WHAT SURVIVES TWO-SEED: the \u03ba composition layer \u2014 top cell IDENTICAL (2|v\u22273|v\u22275|v\u22277\u2224v, 1.4315 vs 1.406), bottom cell IDENTICAL (all-cleared, 0.6491 vs 0.645), spread 0.649\u20131.432 vs 0.645\u20131.406 (~2% match, ~2.2\u00d7 modulation), composition FLAT in t both seeds (drift 0.204% vs 0.269%). **\"Divisibility is a RATE DIAL, not a position dial\" STANDS two-seed**; only its positional corollary is downgraded. Chain history 232\u2192241\u2192242 intact as lineage records.\n\n**Named reopens-condition (only door back in):** pre-registered SINGLE-HYPOTHESIS test at FIXED vertex u* = 0.65 \u2014 no sweep, no post-hoc vertex selection \u2014 on \u22653 POOLED independent fresh seeds, powered against the CTRL-B-calibrated scale.\n\n**Ledger catches:** smoke-grid CTRL-A maxdev trips on small-sample noise ALONE (smoke 0.1238 > 0.10 bar at 24 Ns\u00d720k/N \u2192 smoke correctly read ARTIFACT-CONTAMINATED/inconclusive per registered order; full-run 0.0336 passes; bar unchanged, disclosed). Smoothness spot-validation dropped as VACUOUS in-process (hits DEFINED by the validating tester). Hash-convention change disclosed (sha256[:16]-of-sorted-N-repr; disjointness rests on set disjointness). Regression direction scoped: validates the CODE PATH not the fresh data \u2014 correct for a freshness gate. findings.md ABSENT though brief listed it \u2014 result.json authoritative (inline-findings policy).\n\nWall 350.8 s; boot 2000 reps seed 20260901; positions npz sha256 a3aae281\u2026d146.\n\nBarrier framing: NEGATIVE replication gate REMOVES an entry rather than adding one \u2014 honest-map discipline applied to same-day output within hours of recording it; residue cap 4/3, position 5.19\u00d7, external-hint laws, quantum frontier, four-class rate closure, spike-origin arc untouched; the surviving rate-dial law is scale-carrying (composition transfers across bit lengths unchanged). Open unchanged: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity; non-divisibility-carrier follow-up CLOSED unless the reopens protocol fires; paper 238's .2346 provenance flag still traveling.\n\nCount 580 \u2192 581; assessment v349 \u2192 v350. Artifacts: ResearchOutput/scripts/2026-08-24-round74/exp592_* ; paper ResearchOutput/NewMathematics/243_U065Gate.md.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4076",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T23:37:37.762080+00:00",
     "title": "FACT round-87 #2 \u2014 U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES \u2014 feature DOES NOT REPLICATE on fresh seed 20260902 (amp .074\u00b1.038 raw z=1.97; null-calibrated z_cal=-1.08 vs original z_cal+1.53/raw 4.11); pipeline EXONERATED (generator EXACT_MATCH vs stored lineage, ALL_DISJOINT vs all six prior seeds, CTRL-A clean maxdev .034) \u2014 PAPER 242 ENTRY AMENDED SINGLE-SEED-UNCONFIRMED, z=4.11 flagged possibly max-statistic-sweep-inflated; kappa composition layer SURVIVES two-seed (top cell 2,3,5|v&7\u2224v and all-cleared bottom coincide, spread .649\u20131.432 vs .645\u20131.406); named reopen: single-hypothesis u*=0.65 test on >=3 pooled seeds"
   },
@@ -3316,20 +3317,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 220a83a3 (Q=0.820), which proved 145 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Fix a large modulus `m` and consider the Berggren moves acting on `(\u2124/m)\u00b3`.\nThen the classifier `whichMove` remains sound, but seed recovery of a control\nword of length `k` from a single observed state requires `\u03a9(3^k / poly)` work\nunless the discrete-logarithm-like problem for the matrix `B\u2082` modu",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_220a83a3_18633493",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "220a83a3",
-    "status": "available",
-    "timestamp": "2026-08-26T09:03:40.453973+00:00",
-    "title": "Deepening: Fix a large modulus `m` and consider the Berggren moves acting on `(\u2124/m)\u00b3`."
   },
   {
     "consumed_by_exp_id": "",
@@ -13059,14 +13046,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723)."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40d19005",
     "description": "Investigate the sequence Stack polyominoes with square core. with terms 1,1,0,0,1,2,3,4,5,7,9,13,17,24,31,42,54,71,90,117,147,188,236,298,371,466,576,716,882,1088,1331,1633. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [],
     "id": "fd_3896",
+    "phase": "A",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:188674",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T23:38:07.786000+00:00",
     "title": "OEIS sequence: Stack polyominoes with square core."
   },
