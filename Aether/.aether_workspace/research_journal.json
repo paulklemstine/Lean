@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ed2d0af8",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Universal Properties of Humor (v19c thread)\n\nThis cycle established, sorry-free, in `Catalog/Applications/`:\n\n* **surprise is an exactly submodular valuation** on the refinement",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-08-24T19:46:15",
-      "title": "The Category Theory of Jokes: Universal Properties of Humor"
-    },
-    {
       "cycle_id": "2a9ba724",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — after \"per-tag reflection depths are freely realizable\"\n\n## What this cycle settled\n\nThe conjecture, read literally (the theory `S` ranges over the common refinement of\n`capC` an",
@@ -499,19 +489,19 @@
       "theorem_count": 111,
       "timestamp": "2026-08-26T11:46:34",
       "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfers to the sqrt-weigh"
+    },
+    {
+      "cycle_id": "20511e4a",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — after the U9-DRIFT-GATE rejection (paper 222)\n\nThe round closed a gate by *sign flip*: two seed families disagree on the direction of a\nfew-percent deviation, so nothing is banke",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-08-26T13:18:02",
+      "title": "FACT round-76 #2 — U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip — fresh seed 20260825 reads "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "843dbe86",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — scan schemes after the exact optimum\n\nThe cycle just closed produced, with zero `sorry`s:\n\n* honest uniqueness decoding through an explicitly constructed **intra-bucket index**",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-19T17:41:23",
-      "title": "All the moving parts — honest uniqueness decoding"
-    },
     {
       "cycle_id": "252d7c91",
       "domain": "Algebra",
@@ -2501,21 +2491,19 @@
       "theorem_count": 111,
       "timestamp": "2026-08-26T11:46:34",
       "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfers to the sqrt-weigh"
+    },
+    {
+      "cycle_id": "20511e4a",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — after the U9-DRIFT-GATE rejection (paper 222)\n\nThe round closed a gate by *sign flip*: two seed families disagree on the direction of a\nfew-percent deviation, so nothing is banke",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-08-26T13:18:02",
+      "title": "FACT round-76 #2 — U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip — fresh seed 20260825 reads "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7af52a9c",
-      "domain": "Physics",
-      "name": "app_snd",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "acd2f64e",
-      "domain": "Pythagorean",
-      "name": "ker_zero_arg",
-      "quality": 0.78
-    },
     {
       "cycle_id": "acd2f64e",
       "domain": "Pythagorean",
@@ -2803,9 +2791,21 @@
       "domain": "Combinatorics",
       "name": "dot_e3_y3",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "20511e4a",
+      "domain": "Pythagorean",
+      "name": "bootstrap_centred_sum_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "20511e4a",
+      "domain": "Pythagorean",
+      "name": "bootstrap_variance_identity",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-26T11:46:34",
+  "last_updated": "2026-08-26T13:18:02",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "1a7b47b1",
-        "quality": 0.82,
-        "theorems": 58,
-        "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
-      },
-      {
         "cycle_id": "018e116a",
         "quality": 0.86,
         "theorems": 62,
@@ -3885,6 +3879,12 @@
         "quality": 0.78,
         "theorems": 39,
         "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's "
+      },
+      {
+        "cycle_id": "20511e4a",
+        "quality": 0.78,
+        "theorems": 31,
+        "title": "FACT round-76 #2 — U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip — fresh "
       }
     ],
     "Shared": [
