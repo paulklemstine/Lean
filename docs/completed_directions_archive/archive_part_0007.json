@@ -1,0 +1,47 @@
+{
+  "part": 7,
+  "archived_at": "2026-08-26T04:56:50Z",
+  "count": 1,
+  "directions": [
+    {
+      "id": "fd_3695",
+      "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP — hybrid z(acc)+lambda*z(probe) monotonically worse with probe weight; all four cheap signal families bounded >=5.7pts below oracle",
+      "description": "## NET-61 — limited-memory axis, round 14 (paper 146, ResearchOutput/exp_net61_hybrid.py, /tmp/net61.log)\n\n**Verdict name: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP.**\n\n### Result\nHybrid eviction score = z(accumulated usage) + λ·z(static probe score), Qwen2.5-0.5B ctx=1024 (gate exact 1.0000; probes train-side):\n\n| B | λ | retained |\n|---|---|---|\n| 64 | **0.0** | **0.9384** |\n| 64 | 0.25 | 0.9383 |\n| 64 | 1.0 | 0.9365 |\n| 64 | 4.0 | 0.9344 |\n| 32 | 1.0 | 0.9189 |\n| 128 | 1.0 | 0.9544 |\n\n- **P1 REFUTED**: no λ > 0 beats λ = 0 — the response is monotonically DECREASING in probe weight.\n- **P2 CONFIRMED**: λ = 0 is optimal.\n- **P3 CONFIRMED**: best hybrid trails oracle@64 by 5.7 points.\n\nConsistency anchor: the λ=0 arm reproduces NET-56's hybrid to FOUR DECIMALS (0.9384).\n\n### The law\nWith NET-56 (accumulation), NET-58 (content alone), and now content-additive hybrids, every cheap eviction-signal family is bounded ≥5.7 pts below oracle at matched budget: **the policy gap is robust to accumulation, recency, content, and their linear combinations.** Remaining routes are structural (usage-tracking quality, learned online predictors at scale — themselves bounded by NET-58's weak-probe ceiling) or accepting oracle-only claims as upper bounds.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. the refuted P1; (b) confronted — score-combination hybrids exist in H2O variants; NEW = the measured monotone-degradation law + four-family bounding of the gap; (c) confronted — one model/context, linear probes, fixed recency window; (d) clean — train-side probes; (e) deterministic, λ-grid pre-stated; (f) clean — ALL_DONE_NET61; (g) fair — identical harness/budgets/windows as NET-56/58; (h) DIRECT.\n\n### Next\nSub-16 addendum @1024 (running next); domain-jump corpora; 1.5B tail map; 7B quantized-offload cell.\n\nNow 61 network experiments. Assessment v61. Paper 146.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "a303e67d",
+      "timestamp": "2026-08-22T17:37:32.032369+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-22T20:42:22.141042+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 296
+    }
+  ]
+}

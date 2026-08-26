@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c96b94a8",
-      "domain": "Pythagorean",
-      "key_insight": "# FUTURE_DIRECTIONS — TDIAL-U88 (FACT round-68 #1, exp 536)\n\nFour research cycles were run on the round-68 finding: the uniform ladder of the zero-fit dial\nmisses the `0.55` band for the first time at",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 188,
-      "timestamp": "2026-08-24T13:14:21",
-      "title": "FACT round-68 #1 — TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
-    },
-    {
       "cycle_id": "6f277833",
       "domain": "Tropical",
       "key_insight": "# Future directions — after C3 (the even/odd dichotomy of the one-bit cap)\n\n## What this cycle settled\n\nWorking with the catalogue channel\n`Ipair n = I( {T(p), T(q)} ; (p+q) mod n )`, `T(a) = n / gcd(",
@@ -499,19 +489,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-26T03:19:58",
       "title": "FACT round-83 #4 — NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR — local factorizati"
+    },
+    {
+      "cycle_id": "733effba",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — after the H0 window-geometry cycle (exp 581 / paper 231)\n\n## What this cycle established\n\nThree Lean files (`Catalog/Algebra/HumpWindowGeometry.lean`,\n`Catalog/Algebra/HumpFitted",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-08-26T04:57:04",
+      "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE — n"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "60572a3f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions (after cycle 4: the Bell defect, graded by blocks)\n\n## What this cycle settled\n\n| conjecture | outcome |\n|---|---|\n| **E′**, block-graded half: *`m_P = 1` for all `P` with `j` bloc",
-      "quality_score": 0.85,
-      "sorry_count": 8,
-      "theorem_count": 75,
-      "timestamp": "2026-08-19T09:49:59",
-      "title": "The Bell defect, counted exactly"
-    },
     {
       "cycle_id": "f46e1405",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-26T03:19:58",
       "title": "FACT round-83 #4 — NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR — local factorizati"
+    },
+    {
+      "cycle_id": "733effba",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — after the H0 window-geometry cycle (exp 581 / paper 231)\n\n## What this cycle established\n\nThree Lean files (`Catalog/Algebra/HumpWindowGeometry.lean`,\n`Catalog/Algebra/HumpFitted",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-08-26T04:57:04",
+      "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE — n"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2111d025",
-      "domain": "Algebra",
-      "name": "norm_sq_of_orthonormal",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "2111d025",
-      "domain": "Algebra",
-      "name": "R2_of_orthonormal",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "d59c6a1a",
-      "domain": "Cryptography",
-      "name": "inv_natCast_le_one",
-      "quality": 0.85
-    },
     {
       "cycle_id": "d59c6a1a",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "dot_sub_left",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "733effba",
+      "domain": "Algebra",
+      "name": "sample_midpoint",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "733effba",
+      "domain": "Algebra",
+      "name": "midpoint_concave",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "733effba",
+      "domain": "Algebra",
+      "name": "midpoint_strictConcave",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-26T03:19:58",
+  "last_updated": "2026-08-26T04:57:04",
   "open_questions": [
     {
       "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "16cb59c0",
-        "quality": 0.86,
-        "theorems": 123,
-        "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n"
-      },
-      {
         "cycle_id": "bb070ee4",
         "quality": 0.88,
         "theorems": 140,
@@ -3079,6 +3073,12 @@
         "quality": 0.78,
         "theorems": 68,
         "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGE"
+      },
+      {
+        "cycle_id": "733effba",
+        "quality": 0.82,
+        "theorems": 74,
+        "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUC"
       }
     ],
     "Applications": [

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-26T03:20:05.787856+00:00",
+  "last_updated": "2026-08-26T04:57:09.489196+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -68571,6 +68571,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-26T03:20:05.387296+00:00",
       "title": "FACT round-83 #4 \u2014 NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR \u2014 local factorizati"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Algebra",
+      "duration_seconds": 5754.104681491852,
+      "end_time": 1787720157.547216,
+      "files_integrated": 4,
+      "job_id": "733effba",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787714403.4425344,
+      "strategy_count": 0,
+      "theorem_count": 74,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 73,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-26T04:57:09.174947+00:00",
+      "title": "FACT round-81 #1 \u2014 HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE \u2014 n"
     }
   ]
 }
