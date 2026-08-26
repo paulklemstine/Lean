@@ -2103,16 +2103,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-75 #4 \u2014 BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of the barrier-4 converse recorded as DRAFT-WITH-CAVEATS \u2014 certified-silence law S_A=1/[\u03bcP+(1\u2212P)(1\u2212\u03bc)] supersedes drafted fire-or-silent form (14 algebra failures caught by independent verification); T2 saturation V=log\u2082W+\u00bd exact on dyadic W\u2208[2,4096]; Conjecture D factors S(R\u2218F)=S(R)\u00b7S(F) with sup_F=4/3 \u2014 residue cap 4/3 governs COST-class actions while position works the SET-class tail: 5.19\u00d7>4/3 is class-crossing not cap-breaking; zero arithmetic errors in recheck; named GAPs L4/L7/L8 are the next work"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f8653ca",
     "description": "Round-76 #1 THEORY deliverable (no new experiment id; papers-only bump convention as in paper 219: experiment count unchanged at 562, max id 572; papers -> 221; assessment v327 -> v328).\n\nFalsification + replacement of GAP-L7 from paper 219's lemma ledger.\n\n**Action space formalized**: REORDER-class policy Pi emits enumeration a_k = f(k,N) of I(N) with uniformity (one computable f for all N), test-blindness (order commits ex ante; comparison queries only at T2 pricing), polylog overhead charging. N-independent orders satisfy all three \u2014 the corner L7-as-drafted missed. Clause 3 unrestricted is vacuous; under polylog it needs a sublinear-time factoring separation (L7-e, likely permanent).\n\n**Failure 1 \u2014 prior-shape channel Lambda**: static-order optimality is mass-sorting by divisor-mass; whether that sort is sqrt-descending is a POPULATION property. Hard-balanced generators (q<2p): bottom-heavy tilt z=0.4095\u20130.4148 vs analytic 0.414; window-ascending beats descending **1.58x\u00b10.03** (BAL_prime 1.5785\u00b10.029, BAL_intsnap 1.6114\u00b10.033, n=2400 each; analytic two-stage 0.138v/0.219v=1.587). The attempt's quoted 1.71\u20131.91 was its own n=150 sampling inflation \u2014 its ANALYTIC prediction 1.59 was right all along. Sign-flip law: crossover **E[\u221ar]=2/(1+1/\u221a2)=1.1716**; narrow bands top-heavy z=0.6466, descending extremal (Lambda=1.0 argmin win_desc, win_asc S=0.5682); P137 pool z=0.5588 between.\n\n**Failure 2 \u2014 interaction term**: sigma\u2218delta factorization definitional/vacuous (singleton blocks); coupled residue orders gain only off-MLR as prior-shape leakage.\n\n**Corrected master inequality L7'**: S(Pi) <= (4/3)\u00b7min(1/mu_eff, 2^k_bits)/Lambda(pop), mu_eff structural keep-fraction. **ZERO violations** across all policy arms x four pools (BAL_prime/BAL_intsnap n=2400, BAL_narrow n=1600, P137 n=500; verifier recomputed incl. hybrid filter x reorder stress arm). Wheel calibration hits the T1 protocol-A law exactly: mu=phi(30)/30=4/15 => predicted 30/phi(30)=3.750, measured 3.7331\u20133.7496 (headline 3.741 vs 3.750), gap 0.25\u20130.31%. CAVEAT load-bearing: pure-permutation cells satisfy the cap tautologically at mu_booked=1; hybrid window+wheel reaches S=4.06 on P137 vs a 1.77 cap if mu booked 1 \u2014 structural mu extraction (L7-d) makes the cap non-vacuous.\n\n**Witness corrections (ledger items)**: Jacobi witness RETRACTED \u2014 (N|x)=0 identically at x=p since N\u22610 mod p (100% draws, jacobi_p_is_zero=1.0; promoted share among coprime 0.5036/0.5015 fair coin): algebraic degeneracy measuring 'p divides N', not prior shape. Replaced by **keyed-vs-fixed mod-3 control**: N-keyed vs fixed-key promotion statistically identical (S 0.6366/0.6537 BAL_prime, 0.684/0.660 P137), hit-enrichment \u22481/2 BOTH arms \u2014 residue couplings carry ZERO information; apparent gains are prior-shape leakage on non-MLR marginals only (factor-blind law replicated with proper control; strengthens papers 130/136). exp570 early-fire transfer bounded honestly: early-fire is an ECM completion law, TD has none \u2014 what transfers is front-loading => head-domination, NOT sqrt-descending dominance without the centering axiom (surrogate K=4096: front-at-\u221aN desc 948 < aligned 1493 < naive 3149; front-at-low-end flips; ladder-aligned \u2248 descending S=0.990, ladder-naive collapses 0.27).\n\n**Paper 137 REFINED not contradicted**: verifier replicated descending winning on 137's own pool \u2014 trunc_asc S=0.9278 i.e. asc/desc=1.078x vs recorded 1.08x; window policy UNDEFINED on 21.6% of draws (win_asc_miss_frac=0.216). Lambda-dominance ONLY under hard q<2p balance; deployable gains require verifying the deployed generator enforces balance first (policy undefined otherwise).\n\n**Status**: L7' PROVEN-SKETCH (zero-violation finite audit + classical analytic core). Ranked lemmas: **L7-a HIGHEST VALUE next step (hours): measure the DEPLOYED generator's r-law and restate L7' with measured Lambda_lab** (without it Lambda is unmeasured and the MLR premise unchecked); L7-b exchange theorem write-out; L7-c master-inequality proof from touch-floor accounting; L7-d structural mu_eff/k_bits extraction (load-bearing NOW); L7-e unconditional factor-blindness of polylog-computable f (open, likely permanent \u2014 adopt hardness-relative or oracle-relativize).\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/ \u2014 gapL7_extremality.md (post-revision), gapL7_check.py/.json (author first pass n=150/pop, seed 20260824, 0.99 s), verifyL7_sim.py/verifyL7_sim_out.json (independent verification set, re-derived from scratch, no code reuse, distinct seeds; n=2400/2400/1600/500 four pools), verifyL7_unif.py (uniform proxy cross-check: asc ~2.13 outright, win_asc undefined on most draws). Paper: ResearchOutput/NewMathematics/221_L7Falsification.md.\n\nNo breakthrough claimed: falsification-and-replacement inside the barrier map; barrier-4 positional stratum gains a measurable sign-flipping channel, residue cap 4/3 untouched.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3986",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T11:45:45.217604+00:00",
     "title": "FACT round-76 #1 \u2014 GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' \u2014 extremal order = population mass-sort (window-ascending beats descending 1.58x\u00b10.03 n=2400; sign-flip crossover E[\u221ar]=1.1716); master inequality S \u2264 (4/3)\u00b7T1-cap/\u039b zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) \u2192 keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078\u00d7 vs 1.08\u00d7); L7-a measure deployed generator tilt named next"
   },
@@ -2145,21 +2146,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-24T13:15:17.266147+00:00",
     "title": "FACT round-76 #2 \u2014 U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip \u2014 fresh seed 20260825 reads r=1.1536 SURPLUS where the 20260824 family read deficit; randomness stands through u\u224811 with a measured \u00b15\u201315% single-run fluctuation envelope"
-  },
-  {
-    "consumed_by_exp_id": "44bf5a41",
-    "description": "**Round-83 #3 \u00b7 exp 587 BSTAR-TRANSFER \u00b7 Paper 236 \u00b7 assessment v343 (count 573\u2192574)**\n\nVERDICT: **H1_BSTAR_TRANSFERS** \u2014 closes paper 235 \u00a73's named owed-check affirmatively: paper 227's window-saturation location B*=400 TRANSFERS to exp586's corrected 1/\u221a\u2113 weight. Pure reanalysis of exp577's per-N hit counts (no new j-sampling, wall 0.13 s), population regenerated VERBATIM seed 20260827, hash-match 128/128 hard-assert.\n\nDual-curve table (log((hits+0.5)/total) ~ S_w,B OLS, n=128 bitlen 96, odd primes 3..1600):\n\n| B | R\u00b2(\u221a-weight) | R\u00b2(harmonic) | \u0394R\u00b2 |\n|---|---|---|---|\n| 100 | .5279 | .4388 | +0.0891 |\n| 200 | .5976 | .4621 | +0.1355 |\n| **400** | **.6242** | .4731 | **+0.1511** |\n| 800 | .5913 | .4748 | +0.1165 |\n| 1600 | .6137 | .4795 | +0.1342 |\n\n- H1 fires per pre-registered rule: argmax_set under \u221a-weight = {400}, unique interior max.\n- Secondary PLATEAU_RAISED_EVERYWHERE fires: \u0394R\u00b2 > 0 at ALL five windows, no weight\u00d7window interaction.\n- ADOPTED lab-wide: canonical product dial **S_\u221a,B\\*, B\\* = 400** \u2014 location pinned to (200,800] at factor-2 grid steps. Refinement chain complete: 227 inspect (1/\u2113, B*=400) \u2192 235 \u03b1\u0302=0.5 \u2192 236 B* transfers.\n\n**Bimodal-tail caveat (honest):** bootstrap argmax {400:276, 1600:178, 200:37, 800:9}/500 \u2014 1600 sits only 0.0105 below the peak. Robust reading: \"saturation reached by B=400, no further gain through 1600\", NOT a sharp 400-vs-1600 separation. Single-seed caveat on the argmax LOCATION.\n\n**Ledger catches:**\n1. Recomputed harmonic curve peaks at EDGE 1600 not 400 (+0.006 vs 400, noise-level) \u2014 flat plateau above B=200; the interior-window signal is \u221a-WEIGHT-SPECIFIC on this dataset/grid; superseded weight saturates without locating an interior B*.\n2. exp577's stored S400 column IDENTIFIED as the UNWEIGHTED QR-count dial over odd primes \u2264400 (exact-0 diff at correct window; resolves the S400 cross-check discrepancy in paper 227's lineage).\n3. Crosscheck code window bug disclosed: result.json structured `S400_stored_crosscheck` fields compare stored S400 against count over ALL primes \u22641600 instead of masked B\u2264400 \u2014 artifact only, verdicts untouched.\n\nLimits: factor-2 grid resolution; single seed; bootstrap softness of location; log-rate Poisson attenuation uniform within-grid. Barrier framing: instrument hardening completing the paper-235 correction chain; residue cap 4/3, position 5.19\u00d7, quantum frontier untouched; strengthens queue #1 (rate-layer N-covariate structure at u\u224810); no breakthrough claimed.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp587_{bstar_transfer.py,result.json,smoke.log,full.log,findings.md}` \u00b7 Paper `ResearchOutput/NewMathematics/236_BstarTransfer.md` \u00b7 Notebook Part 278.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4052",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T20:50:39.558996+00:00",
-    "title": "FACT round-83 #3 \u2014 BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS \u2014 B*=400 transfers to the sqrt-weight (R2 .528/.598/.624/.591/.614 over B=100/200/400/800/1600, unique interior argmax); closes paper 235 \u00a73's named owed-check; dR2(sqrt-harm) positive at all 5 windows (+0.089..+0.151) no weight-x-window interaction; harmonic recomputed = flat plateau w/ edge peak 1600 (+0.006 noise) so interior-window signal is sqrt-specific; boot {400:276,1600:178} \u2014 saturation by 400, no gain through 1600; S400 stored column identified as unweighted count dial"
   },
   {
     "consumed_by_exp_id": "1a774383",
@@ -4278,36 +4264,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove the Jacobian conjecture for polynomial maps of degree 2 in all dimensions. Formalize the reduction to degree 3 (Dru\u017ckowski's theorem). Construct explicit counterexample candidates and verify they fail. Prove the conjecture implies the Dixmier conjecture.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0658",
-    "priority_score": 0.83,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697764+00:00",
-    "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
-    "domains": [
-      "Analysis",
-      "Algebra"
-    ],
-    "id": "fd_0664",
-    "priority_score": 0.83,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697777+00:00",
-    "title": "Fourier Analysis on Finite Groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -15221,6 +15177,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The interior-argmax certificate is currently qualitative: an interior peak proves the weight is not matched. The conjecture upgrades it to a quantitative lower bound on the angle between the weight and the matched direction, in terms of the observed drop from the peak to the edge window.\n\nIf R2(w,m) + delta <= R2(w,t) for some t < m, then the cosine between w and the matched filter in the s-weighted inner product is at most 1 - c*delta, with c depending only on R2(w,t).\n\nProve the equality case of Cauchy-Schwarz for the weighted sums used in R2_le_matched, then combine with peak_margin_eq to produce the explicit constant.\n\nThe observed peak height becomes a calibrated measurement of weight suboptimality, usable to rank candidate weights without refitting.\n\nPeak height carries no metric information about the weight and only the binary certificate survives.",
+    "domains": [],
+    "id": "fd_4276",
+    "priority_score": 0.5933333333333334,
+    "research_mode": "team",
+    "source_exp_id": "44bf5a41",
+    "status": "available",
+    "timestamp": "2026-08-26T11:46:18.899057+00:00",
+    "title": "Quantitative Mismatch Angle from Peak Height"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Mirrors contribute nothing and each Boolean oracle bit contributes at most a factor two. Conjecture that any battery of mirrors plus L factor-derived bits leaves at least |Omega|/2^L indistinguishable instances, and that this is tight for well-chosen thresholds.\n\nFor any finite family of magnitude mirrors together with L Boolean factor-derived probes, the largest class of instances agreeing on all readings has cardinality at least |Omega| / 2^L, with equality achievable.\n\nCombine mirror_conditional_zeroInfo (mirrors are constant on cells) with multi_oracle_pigeonhole, then construct a tight family from dyadic factor thresholds.\n\nThe surviving positional channel is quantitatively capped: no amplification beyond one bit per threshold read.\n\nSome interleaving of mirrors and oracle bits amplifies, which would be the first realized amplification in the round-70 programme.",
     "domains": [],
     "id": "fd_4060",
@@ -16170,6 +16138,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Extend the window-score calculus from exactly orthogonal columns to columns whose Gram matrix is diagonally dominant. The conjecture is that dilution, matched-filter dominance and the peak-margin identity survive with a multiplicative 1 + O(eps) loss. This matters because real indicator columns are only approximately orthogonal.\n\nIf the Gram matrix G of the window columns satisfies ||G - D|| <= eps * lambda_min(D) with D the diagonal part, then for every weight w and window B one has R2(w,B) <= (1+C*eps) * R2(matched,B), and appending a column orthogonal to the response decreases R2 by at least (1-C*eps) times the orthogonal-model amount.\n\nFormalise a Gram-perturbation version of Model in Lean, with the orthogonality field replaced by a bound on off-diagonal inner products, and re-derive R2_le_matched and noise_dilutes with explicit constants.\n\nAll conclusions of the orthogonal theory transfer to realistic column families, so an observed interior argmax remains a certificate of weight mismatch.\n\nInterior maxima can be produced by column correlation alone, and no conclusion about the weight can be drawn from the shape of the window curve.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4275",
+    "priority_score": 0.5647905869618969,
+    "research_mode": "team",
+    "source_exp_id": "44bf5a41",
+    "status": "available",
+    "timestamp": "2026-08-26T11:46:18.388160+00:00",
+    "title": "Near-Orthogonal Window Calculus"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The density of ECM stage-1 orders firing in the last tau-fraction of the prime schedule should equal log(1/(1-tau))/log B1 asymptotically. The trace law turns the positional question into a Mertens sum over primes in ((1-tau)B1, B1]. It replaces the pre-registered constant-tail hypothesis by a decaying law.\n\nFor fixed tau in (0,1), the density of n <= M with pi(maxPF n) > (1-tau) pi(B1) and maxPF n <= B1 equals (log(1/(1-tau))/log B1)(1+o(1)) as B1 -> infinity.\n\nFormalize Mertens' second theorem with explicit error, combine with lateCount_le_primeContribution and a matching Bonferroni lower bound; check against the sieve table for N = 10^3..10^7.\n\nThe late tail of any stage-1 trace is predictable from B1 alone, giving a parameter-free null for future ECM accounting audits.\n\nThe union bound is lossy at the top of the schedule, indicating correlations between large-prime divisibility events that themselves need explanation.",
     "domains": [
       "NumberTheory",
@@ -16662,6 +16645,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T10:54:53.096960+00:00",
     "title": "Optimal Probe Design for Knee Brackets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prefix R-squared curves were shown not to be unimodal even for sorted signals of equal mass. The natural next question is how bad it can get: how many strict local maxima can such a curve have, as a function of the number of columns.\n\nFor m columns of equal mass with nonincreasing nonnegative signals, the curve k -> A_k^2/k has at most floor(log2 m) + 1 strict local maxima, and a geometric signal profile attains this bound.\n\nDecide small cases m <= 8 by exhaustive rational search in Lean, and formalise the geometric lower-bound family; attack the upper bound by induction on blocks between consecutive maxima.\n\nBootstrap argmax distributions may legitimately have several modes, and their number is bounded, which calibrates how many modes are worth reporting.\n\nA single window curve can have arbitrarily many modes, so grid-based argmax reporting is unstable in principle and should be replaced by matched-weight scoring.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4277",
+    "priority_score": 0.5642076881852688,
+    "research_mode": "team",
+    "source_exp_id": "44bf5a41",
+    "status": "available",
+    "timestamp": "2026-08-26T11:46:19.408282+00:00",
+    "title": "Local Maximum Count for Prefix R-Squared Curves"
   },
   {
     "consumed_by_exp_id": "",
@@ -27677,6 +27675,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T10:53:31.462116+00:00",
     "title": "Argmax Consistency Under Poisson Attenuation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Realisability of a single interior argmax was proved this cycle (interior_argmax_realizable). The successor conjecture asks for control of the entire argmax landscape: any admissible pattern of local maxima should be realisable by a suitable response, which would mean that multi-modal bootstrap argmax distributions carry no structural information at all.\n\nFor orthogonal columns of equal mass and any subset T of {1,...,m} containing no two consecutive integers, there is a response whose unit-weight window curve has exactly T as its set of strict local maxima.\n\nConcatenate the formalised dip witness a = (3,1,1) into blocks, one per element of T, and verify the resulting curve pattern in Lean by the exact step law.\n\nThe shape of an observed window curve constrains only the response, so no number of modes should be read as structure of the column family.\n\nSome patterns of local maxima are impossible, and the observed pattern does constrain the underlying signal profile.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4278",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "44bf5a41",
+    "status": "available",
+    "timestamp": "2026-08-26T11:46:19.923189+00:00",
+    "title": "Prescribed Local-Maximum Sets for Window Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Saturation locations are read off a factor-two grid. The conjecture makes precise what such a grid can resolve: the continuous argmax is pinned only to within one grid cell, and any two locations inside a cell are indistinguishable from grid values.\n\nGiven the values of a signal-then-noise window curve at the grid points B_0 < 2B_0 < 4B_0 < ..., for any two candidate continuous argmax locations lying in the same cell there exist two models reproducing all grid values exactly and having those two argmax locations.\n\nFormalise a continuous-window version of the model (mass measure on the index axis) and construct the two matching models explicitly, verifying equality of grid values by the peak-margin identity.\n\nReported saturation locations must always be quoted as cells, and refinement claims below one factor-two step are unsupported by the data.\n\nGrid values do constrain the location beyond the cell, and a finer estimator can be extracted from the same measurements.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4279",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "44bf5a41",
+    "status": "available",
+    "timestamp": "2026-08-26T11:46:20.437917+00:00",
+    "title": "Grid Resolution Limits for Saturation Locations"
   },
   {
     "consumed_by_exp_id": "",
@@ -42463,14 +42489,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Open here; NP-membership is *proved* in the sense that the problem has a succinct"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec22ae02",
     "description": "The finite-state class and its bound were constructed this cycle\n(`fsmClass`, `shtarkovSum_fsmClass_le`), so the family `k(n)` is definable\ninside the framework, and `shtarkovSum_ge_packing` is exactly the tool needed\nfor the lower bound.",
     "domains": [],
     "id": "fd_1530",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3eeb9235",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T13:57:41.361758+00:00",
     "title": "The finite-state class and its bound were constructed this cycle"
   },

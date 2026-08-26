@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-26T10:53:43.532546+00:00",
+  "last_updated": "2026-08-26T11:46:44.727143+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -68958,6 +68958,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-26T10:53:43.147733+00:00",
       "title": "FACT round-83 #2 \u2014 WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED \u2014 dial weight exponent alpha_h"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Combinatorics",
+      "duration_seconds": 3131.1756896972656,
+      "end_time": 1787744707.341852,
+      "files_integrated": 4,
+      "job_id": "44bf5a41",
+      "outcome_quality": 0.72,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "sorry_density": 0.009009009009009009,
+      "start_time": 1787741576.1661623,
+      "strategy_count": 0,
+      "theorem_count": 111,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 89,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-26T11:46:44.391292+00:00",
+      "title": "FACT round-83 #3 \u2014 BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS \u2014 B*=400 transfers to the sqrt-weigh"
     }
   ]
 }

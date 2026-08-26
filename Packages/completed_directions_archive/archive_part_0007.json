@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-08-26T10:53:31Z",
-  "count": 9,
+  "archived_at": "2026-08-26T11:46:20Z",
+  "count": 10,
   "directions": [
     {
       "id": "fd_3695",
@@ -356,6 +356,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 304
+    },
+    {
+      "id": "fd_3713",
+      "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scale flattens the context response: {16,20,24}@0.5B vs flat {16,16}@1.5B",
+      "description": "## NET-65 — limited-memory axis, round 18 (paper 150, ResearchOutput/exp_net65_1p5bsub16.py, /tmp/net65.log)\n\n**Verdict name: SIXTEEN-IS-REAL.**\n\n### Result\nFine sweep below NET-55's grid floor (Qwen2.5-1.5B, ctx=1024, gate identical to NET-55; baseline bit-identical 0.5004):\n\n| k | 4 | 6 | 8 | 12 |\n|---|---|---|---|---|\n| retained | 0.9318 ✗ | 0.9532 ✗ | 0.9660 ✗ | **0.9759 ✗ (razor, ~2 SE)** |\n\n- **P1 REFUTED**: no sub-16 point passes — the knee does NOT decline with scale.\n- **P2 CONFIRMED**: k\\*(1024) = 16 exact, bracket (12, 16].\n\n### The refined scale law\n0.5B: {16, 20, 24} — the chain RISES with context. 1.5B: {16, 16} — FLAT. Larger models have more context-STABLE attention budgets, not fewer keys. New measurable: the CONTEXT-SENSITIVITY of the attention budget, which decreases with model scale in its first measured step. A 16-key budget covers both models to ctx=1024.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted — razor bracket (12, 16] stated; one corpus; (d) clean; (e) deterministic baseline-replicating; (f) clean — ALL_DONE_NET65; (g) fair — same bar/harness as NET-55; (h) DIRECT.\n\n### Next\n1.5B @2048 fine grid (does the flat chain break upward?); domain-jump corpora; 7B cell.\n\nNow 65 network experiments. Assessment v65. Paper 150.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "4be48a30",
+      "timestamp": "2026-08-22T18:51:45.079451+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.4,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-23T09:45:16.299258+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 302
     }
   ]
 }

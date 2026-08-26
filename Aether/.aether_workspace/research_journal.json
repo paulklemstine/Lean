@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d4951edd",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — the adic anatomy of Pythagorean trees\n\nDerived from the results proved in `Catalog/Cryptography/Price2Adic/`:\n`Tree.lean` (uniqueness, completeness, depth squeeze), `Letters.lean",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-24T17:48:45",
-      "title": "FACT round-70 #5 — PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adics; Gauss magnitudes"
-    },
-    {
       "cycle_id": "ed2d0af8",
       "domain": "Applications",
       "key_insight": "# Future Directions — Universal Properties of Humor (v19c thread)\n\nThis cycle established, sorry-free, in `Catalog/Applications/`:\n\n* **surprise is an exactly submodular valuation** on the refinement",
@@ -499,19 +489,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-26T10:53:39",
       "title": "FACT round-83 #2 — WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED — dial weight exponent alpha_h"
+    },
+    {
+      "cycle_id": "44bf5a41",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nDerived from the three cycles in `Catalog/Combinatorics/WindowSaturation*.lean`:\n(1) the OLS window calculus and the matched-filter dominance theorem, (2) the\nexact step law, the",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 111,
+      "timestamp": "2026-08-26T11:46:34",
+      "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfers to the sqrt-weigh"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ab33dc9e",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions: bold, testable conjectures from the pole-order programme\n\nThe formal results of this phase live in `Catalog/Cryptography/PoleOrderSplitting.lean`,\n`PoleOrderValuationRigidity.lean",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-19T17:41:12",
-      "title": "Pole-order obstruction"
-    },
     {
       "cycle_id": "843dbe86",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-26T10:53:39",
       "title": "FACT round-83 #2 — WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED — dial weight exponent alpha_h"
+    },
+    {
+      "cycle_id": "44bf5a41",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nDerived from the three cycles in `Catalog/Combinatorics/WindowSaturation*.lean`:\n(1) the OLS window calculus and the matched-filter dominance theorem, (2) the\nexact step law, the",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 111,
+      "timestamp": "2026-08-26T11:46:34",
+      "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfers to the sqrt-weigh"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7b6f9981",
-      "domain": "NumberTheory",
-      "name": "posRepSet_finite",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "7b6f9981",
-      "domain": "NumberTheory",
-      "name": "posRepSet_mono",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "7af52a9c",
-      "domain": "Physics",
-      "name": "app_fst",
-      "quality": 0.86
-    },
     {
       "cycle_id": "7af52a9c",
       "domain": "Physics",
@@ -2803,17 +2785,28 @@
       "domain": "Tropical",
       "name": "dialWeight_strictAnti",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "44bf5a41",
+      "domain": "Combinatorics",
+      "name": "of",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "44bf5a41",
+      "domain": "Combinatorics",
+      "name": "dot_e3_e3",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "44bf5a41",
+      "domain": "Combinatorics",
+      "name": "dot_e3_y3",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-26T10:53:39",
+  "last_updated": "2026-08-26T11:46:34",
   "open_questions": [
-    {
-      "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
-      "cycle_id": "2c38bc1a",
-      "domain": "Cryptography",
-      "sorry_count": 2,
-      "timestamp": "2026-08-07T05:10:38"
-    },
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
       "cycle_id": "f3cf4755",
@@ -3016,6 +3009,13 @@
       "domain": "Bridges",
       "sorry_count": 4,
       "timestamp": "2026-08-24T05:02:27"
+    },
+    {
+      "context": "Everything is proved from scratch over `Mathlib`; no `sorry`.",
+      "cycle_id": "44bf5a41",
+      "domain": "Combinatorics",
+      "sorry_count": 1,
+      "timestamp": "2026-08-26T11:46:34"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "1632a2eb",
-        "quality": 0.79,
-        "theorems": 102,
-        "title": "General codiscrete construction"
-      },
-      {
         "cycle_id": "a3ad9f21",
         "quality": 0.82,
         "theorems": 63,
@@ -3265,6 +3259,12 @@
         "quality": 0.85,
         "theorems": 107,
         "title": "Local-unitary normal form"
+      },
+      {
+        "cycle_id": "44bf5a41",
+        "quality": 0.72,
+        "theorems": 111,
+        "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfe"
       }
     ],
     "Computation": [
