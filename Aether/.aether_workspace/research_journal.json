@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "22848dce",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Quartet Codes and Common Agreement\n\nThis cycle formalized the coding-theoretic reformulation of the common-quartet problem: a\nphylogenetic tree becomes a word in the ternary cube",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 112,
-      "timestamp": "2026-08-25T03:14:34",
-      "title": "Exponential lower bound via quartet codes"
-    },
-    {
       "cycle_id": "569bc76d",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Ellipsoids as Positive-Definite Images of Balls\n\n## What the thread has established\n\nEight Lean files in `Catalog/Bridges/` now carry a complete, `sorry`-free development.\n\n* `El",
@@ -499,19 +489,19 @@
       "theorem_count": 122,
       "timestamp": "2026-08-26T23:34:23",
       "title": "OEIS sequence: Stack polyominoes with square core."
+    },
+    {
+      "cycle_id": "7ae2917a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nDerived from this cycle's analysis of *committed local-oracle protocols* — the\ncompilation of a constant-query (PCP-style) verifier with a hiding commitment —\nformalized in\n\n* `Ca",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-27T09:50:06",
+      "title": "Composition of PCP locality with commitment hiding"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "daf80a32",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — kernel patterns\n\nEach conjecture below is falsifiable, is stated so that it can be formalised directly on\ntop of the definitions in `Catalog/Algebra/KernelPatterns/`, and is *not",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 142,
-      "timestamp": "2026-08-20T01:52:21",
-      "title": "Kernel patterns"
-    },
     {
       "cycle_id": "9e83a721",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 122,
       "timestamp": "2026-08-26T23:34:23",
       "title": "OEIS sequence: Stack polyominoes with square core."
+    },
+    {
+      "cycle_id": "7ae2917a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nDerived from this cycle's analysis of *committed local-oracle protocols* — the\ncompilation of a constant-query (PCP-style) verifier with a hiding commitment —\nformalized in\n\n* `Ca",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-27T09:50:06",
+      "title": "Composition of PCP locality with commitment hiding"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "733effba",
-      "domain": "Algebra",
-      "name": "midpoint_strictConcave",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c2e74b6a",
-      "domain": "Logic",
-      "name": "closed_subformulas",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "c2e74b6a",
-      "domain": "Logic",
-      "name": "mem_gammaList_pos",
-      "quality": 0.88
-    },
     {
       "cycle_id": "c2e74b6a",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "log_stackSC_ge",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "7ae2917a",
+      "domain": "MachineLearning",
+      "name": "still",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "7ae2917a",
+      "domain": "MachineLearning",
+      "name": "proved",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "7ae2917a",
+      "domain": "MachineLearning",
+      "name": "restrictTo_eq_iff",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-26T23:34:23",
+  "last_updated": "2026-08-27T09:50:06",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "e82f11a2",
-        "quality": 0.82,
-        "theorems": 48,
-        "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure)"
-      },
-      {
         "cycle_id": "43b197e4",
         "quality": 0.89,
         "theorems": 171,
@@ -3575,6 +3569,12 @@
         "quality": 0.82,
         "theorems": 110,
         "title": "Strengthen certified computation"
+      },
+      {
+        "cycle_id": "7ae2917a",
+        "quality": 0.82,
+        "theorems": 63,
+        "title": "Composition of PCP locality with commitment hiding"
       }
     ],
     "Novelty": [
