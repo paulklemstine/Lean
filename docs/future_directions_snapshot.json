@@ -2605,7 +2605,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5be8ecbc",
     "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 68 (the NET-92 rescue/discriminator cell).\n\n| arm | PPL | dPPL vs control |\n|---|---|---|\n| K q4_1 / V q4_1 | 3,158.07 | +44,322% |\n| K iq4_nl / V iq4_nl | 1,627.35 | +22,790% |\n| **K q4_0 / V f16** | **2,537.80** | **+35,597%** |\n| **K f16 / V q4_0** | **7.1211** | **+0.166%** |\n\n**Scorecard:** P1 REFUTED decisively (block scale+offset does not rescue — q4_1 marginally WORSE than raw q4_0); P2 CONFIRMED BEYOND ALL PREDICTION (predicted >=5x K-vs-V asymmetry; measured ~214,000x damage ratio); P3 technically true but meaningless (iq4_nl ranks best among three collapsed formats).\n\n**The law:** THE ENTIRE KV CLIFF LIVES IN THE KEYS. Values tolerate raw 4-bit quantization free; keys cannot survive 4 bits in ANY tested representation. Mechanism: keys feed every softmax selection boundary and amplify through layers (NET-83 path); value errors perturb only retrieved content — linear, local, benign.\n\n**Deployment consequence:** split the cache budget by role — keys >=8 bits, values accept 4. Given K8/V16 (+0.09%) and K16/V4 (+0.17%) are both individually free, a combined K8/V4 (~6 average bits) should be quality-free; direct confirmation is the immediate follow-up.\n\n**Honest limits:** three collapsed key formats triangulate but share one implementation family inside llama.cpp (fundamentality not proven); single slice/model/context; K8/V4 combined cell untested; per-arm SEs not captured.\n\nSetup identical to NET-92 (llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice). Script ResearchOutput/exp_net93_kvrescue.py; paper ResearchOutput/NetworkMathematics/93_KeysOwnTheCliff.md.",
     "domain_bridges": [],
     "domains": [
@@ -2617,7 +2617,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T07:22:53.229455+00:00",
     "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES alone are free (+0.17%) — a four-order-of-magnitude asymmetry; no block-scaling format rescues keys"
   },
@@ -2776,7 +2776,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "e0c0f360",
+    "consumed_by_exp_id": "497c96d6",
     "description": "**Paper 215 · exp 568 · round-74 #6 · assessment v322**\n\nVERDICT: **H3 CONFIRMED (strong form)** — H1/H0 moot-by-absence.\n\nPaper 159 headlines an ECM self-destruction wall: \"when B1 ≳ min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] infinite\", with a validity edge B1 ≲ min(p,q)/2. Exp568 tests that boundary under outcome-separated accounting {found_p, found_q, dead, nothing}.\n\n**Design.** Bitlen-26 q≫p stratum (generator nextprime(3p+U[1,200))), n_N=40/cell, grid B1/p ∈ {0.125, 0.25, 0.5, 0.9, 1.05} × arms B2/B1 ∈ {1 (control), 4, 16}; guarded affine EC ops reused VERBATIM from exp488_true_ecm.py (validated there 10/10 ladder + 100/100 mod-12); true-lcm stage-1 schedule; NEW true difference-stage stage-2. Pre-registration verbatim before any data: H1 slope(log w* vs log(B2/B1)) CI covers 1 / H0 covers 0 / MIXED; H3 ADDED after reading the mechanism sentence, BEFORE data (timing disclosed): the wall is a detection/accounting artifact — gcd(den,N)==N 'dead' events or missing p-vs-q separation — not method failure.\n\n**Results (600 trials).**\n- ZERO 'dead' outcomes in the entire grid.\n- Success 1.000 in every cell at B1/p ≥ 0.25; **6/6 cells at 1.000 at B1/p = 0.9 AND 1.05** — exactly where paper 159 records uncapped E[T] infinite.\n- Only misses: two low-edge cells at B1/p = 0.125 (arm-4 0.875, arm-16 0.95), all misses 'nothing', never 'dead'.\n- No w* exists anywhere → H1/H0 never arm.\n\n**Mechanism (pre-data note, vindicated).** B1 ≥ p+1+2√p ⇒ every Hasse-window order n ≤ B1 ⇒ every prime power l^e ‖ n has l^e ≤ B1 ⇒ n | lcm(1..B1) ⇒ [L]P = O mod p on EVERY curve ⇒ first guarded inversion with vanishing denominator returns gcd = p: GUARANTEED SUCCESS, not death. Simultaneous degeneracy mod q impossible for q ≫ B1. \"All curves degenerate\" can only have read as death if accounting conflated gcd=p wins with gcd=N losses or lacked p-vs-q separation.\n\n**Structural insight (ledger-grade).** Guarded-affine accounting carries a scale-independent random-collision baseline ≈ 1 − exp(−c·B1/p) (#ops ~ 1.44·B1, per-op hit ~1/p): ~17% predicted at B1/p = 0.125 vs 68% observed found-p share (collision-luck + order-divisibility mixed). Any historical success/E[T] accounting that did not separate collision-hits from order-hits could have manufactured the wall sentence. Named follow-up BEFORE amending paper 159 either way: larger-p rerun with per-op outcome tracing (order-hit vs collision-hit).\n\n**Honest disclosures.** (a) toy bitlen 26; (b) stage-2 arms UNTESTED DEAD CODE this run — stage 1 succeeded first everywhere, zero s2 outcomes; new difference-stage machinery validated only by smoke buckets + sign-convention note; cross-arm differences at fixed B1 are per-cell RNG drift; (c) inline coordinator implementation after 3× agent-channel failures (stall watchdog ×2, silent no-write ×1); (d) recorder catch: findings.md says \"14/15 cells at 1.000\" but canonical result.json shows TWO sub-1.000 cells (both at B1/p = 0.125) — JSON canonical, verdict unaffected.\n\n**Barrier framing.** Barrier-8 adjacency (known-method bookkeeping); self-audit genre — precedent: paper 91 stands / paper 99 retraction handled by side-by-side reconstruction. If the independent follow-up confirms, paper 159's wall sentence gets an AMENDMENT, not a silent rewrite; until then 159 stands as recorded with this audit appended.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/exp568_* ; paper ResearchOutput/NewMathematics/215_EcmStage2Wall.md.",
     "domain_bridges": [],
     "domains": [
@@ -2795,7 +2795,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d0b9c50",
     "description": "Exp 567 · paper 214 · assessment v321 · script ResearchOutput/scripts/2026-08-24-round74/exp567_scale_u9_lift.py · seed 20260824 · honest partial (disclosed).\n\n**Question.** Does x²−N stay size-matched-random in smoothness at u ∈ [9, 11.x] — the approach zone of the Dickman leading-term regime (~u ≈ 14.75) — where raw B-smoothness testing starves (ρ(9)=1.0e-9 … ρ(11)=6.5e-13)? Frontier item: scale-smoothness deviations u ≥ 6–14.\n\n**Design.** Balanced semiprimes bitlen {96,104,112} → u-bands {9,10,11}, v=(s+j)²−N, j ≤ 3s; LPF-CDF cut ladder {500,1e3,1e4,1e5,1e6} via cumulative segment-primorial gcd chains batch-amortized by product-tree remainder descent (12×: 87→7 µs/value); exact (bitlen, mantissa-octant) matched controls, shared code path; per-N cluster bootstrap + built-in A/B split-halves. Pre-registered verbatim: H1 r_cut(u)=1 everywhere; H2 maximal-skepticism confirmation protocol; L1-vs-L2 overdispersion fork; B=500/1000 cuts pre-declared as ~zero-yield continuity carriers.\n\n**Status: HONEST PARTIAL.** An intermittent multiprocessing throughput collapse at full geometry (root-caused via preserved faulthandler dump: ready()-starved feed loop + slow completions) ate the headline runs; statistical weight rests on the completed pilot (band 9, bitlen 96, 24-N pool, 35.7M cand+ctrl pairs); three-band leg shipped at 45k pairs/band under the time-cap convention.\n\n**Achieved u:** band 9 [9.83,10.13] mean 9.89; band 10 [10.64,10.94]; band 11 [11.44,11.74]. No coverage in (10.94,11.44) — integer u=11 sits in a half-notch gap of grid geometry (disclosed pre-run).\n\n**Result — VERDICT RANDOM-EXTENDS / NULL-WITH-TENSION, deviation status NONE:**\n- Primary LPF-CDF-1e6 cut, band 9: r = 0.9468, cluster-boot CI [0.8630, 1.0389] (12,493 vs 13,195 events); splits A 0.939 / B 0.955.\n- 1e5 cut: r = 0.864, CI [0.7190, 1.0302] (667 vs 772); splits 0.848 / 0.881.\n- Three-band leg: every CI covers 1 (band 10 @1e6 r=2.0 [0.25,7.0] on 4-vs-2; band 11 kc=2 vs kctrl=0 undefined). Tightest |r−1| bound 0.137 (pilot primary).\n- B=500/1000: exactly zero events everywhere, as designed.\n- H2 never armed — no CI excludes 1 in any cell; per pre-registration this is a null.\n\n**Tension banked, NOT claimed:** points run 5–14% below 1 at both powered cuts, direction-stable across split-halves and cuts. Flagged as motivation for a future higher-power run (~30× more pairs at the 1e5 cut). Explicitly not a discovery per pre-registration.\n\n**OVERDISPERSION AMENDMENT to paper 209's secondary claim** ('D=1.61 persists at bin 5 then DIES by u≈7; residue-dial correlation gone'): at u=9.85 under the healthy-rate 1e6 lens, exposure-corrected D_cand = **28.87 [14.27, 44.08]** vs D_ctrl = 1.84 [0.90, 2.84] (exposures flat ±0.14%) — per-N clustering is ALIVE at u ≈ 10; Spearman(per-N rate, qr_frac) = 0.533 (perm p 0.006) @1e4 and 0.437 (p 0.033) @1e6 where 209 read ~0.04 'gone'. What died by u ≈ 7 was the B-smoothness INDICATOR starving (rate/threshold artifact, L1 direction), not clustering — consistent with paper 136's QR-bite = per-N variance law. Caveat recorded honestly: the formal L1 gate required ≥2 powered bins; only one survived the shrinkage, so this stands on the pilot's internal contrast as directionally confirmed / formally unmet.\n\n**Ledger catches (all disclosed):** mixed-segment checker bug gave 39/40 false mismatches — shipped tester proven EXACT vs exhaustive zero-early-exit strip of all primes ≤1e6 (368 cases full / 218 pilot incl. deep-window quadratics, 0 mismatches); backpressure watchdog false-trip terminated one attempt as 'calibration hung'; faulthandler SIGUSR1 re-raise killed one instrumented rerun; throughput collapse shrank the headline run from ~130M-value/band quotas to 45k pairs/band (an interim sub-powered write had flashed DEVIATION-UNCONFIRMED before supersession; canonical artifacts are final).\n\n**Barrier framing:** no barrier breached — a null here STRENGTHENS papers 130/209 randomness into new territory; variance-side accounting upgraded (variance N-covariant, means matched); constant-shaving risk none.\n\nArtifacts: exp567_scale_u9_lift.py, exp567_pilot_result.json (powered leg), exp567_result.json (three-band), exp567_full.log / exp567_pilot.log / exp567_smoke.log, exp567_stderr.txt (faulthandler snapshots from a healthy run, not a crash).",
     "domain_bridges": [],
     "domains": [
@@ -2807,7 +2807,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T09:06:21.857114+00:00",
     "title": "FACT round-74 #5 — SCALE-U9-LIFT: randomness extends through u≈11 toward the Dickman leading-term regime (H1-consistent null with sub-1 tension); paper 209 D-death amended to indicator starvation"
   },
@@ -2871,25 +2871,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "10b0e429",
-    "description": "Round-92 #1, THEORY deliverable (papers-only bump; experiment count UNCHANGED at 587). Paper 250.\n\nConnects paper 225's PROVEN F1 master inequality S <= min(1/(Lam*Theta*qhat), 2^k_bits/(Lam*Theta)) to the measured positional profile (papers 228-242 chain).\n\nPARAMETER MAP: Lambda_meas = 0.766 [independently verified 0.765671] = prior shape itself (b_bulk=.573 [.412,.767], w=.086 [.064,.108], b_edge>=15) -> ascending beats descending 1/Lam ~= 1.306; Theta_asc ~= 0.867 [0.8193, 0.9076]; qhat NOT identified by any recorded number in the chain (full-window scans => qhat=1 trivially); k_bits=0 test-blind => arm 1 binds everywhere.\n\nEQUALITY REFUTED THREE WAYS (E1: pi flat within cells; controls flat in all three): KS D=.09519 p=6.9e-76 (paper 228/exp578); two-component LRT p=9.3e-10, spike weight and b_bulk CIs exclude flatness (paper 238/exp588, exp594 cap ladder); binning-free conditional-logistic LRT p=1.17e-21 (paper 233). E1 fails POOL-SIDE, beyond policy choice => NO realizable policy attains the bound on this data.\n\nGAP FACTOR X := bound/S_asc = C0/C_sort = 1.15302 [27-cell CI 1.10175-1.22054]; policy/baseline-independent via verified identity chain C0/c_asc = bound/S = (M+1)/(2M*E_x+1); hump-insensitive (dX=-0.019 at +20% amplitude).\n\nTIGHTNESS-CIRCULARITY CATCH: all four legacy anchors' P_hat satisfy Lam*Theta ~= 1.00-1.04 BY CONSTRUCTION (inverted through S_A=1/qhat, the bound at Lam=Theta=1); identity machine-zero (verifier resid 0.0, band [0.99999,1.0422]); anchor 4 exact self-consistent inversion (P matches booked to 4.9e-7) -> zero evidential weight for attainment; truncation/witness anchor tightness NOT-CURRENTLY-DECIDABLE without a raw non-inverted P_eff under a named committed R_eff (none exists).\n\nVERDICT BOUND-SLACK-BY-X: proven inequality overshoots every realizable test-blind policy on the measured profile by >=10% and <=22%; slack PROFILE-FORCED and POLICY-INDEPENDENT. Does not weaken the theorem - LOCATES the open work.\n\nDECIDABLE CLOSER: scan-simulation joint S/Lam/Theta/qhat measurement on exp578_positions.npz (window-ascending policy); map predicts S~=1.31 vs bound 1.51; observing S>1.51 would FALSIFY the mapping - genuine two-sided test, ~1 session, no heavy compute. Theorem-side closer: sharpness must be posed over the prior class, never as tightness-on-this-pool.\n\nVERIFICATION: verifyf1_recompute.py reimplemented from md definitions ONLY (no import of f1tight_check), Gauss-Legendre continuum + M=40k discrete cross-check (disc spread 5.2e-6): ALL THREE claims PASS, discrepancies=0. Cosmetic corrections folded per verifier: bulk-alone Lam=0.8769/gain 1.140/spike log-share 50.8% (draft ~1/3); Theta floor 0.8193 (draft ~0.83).\n\nScope: exp597 dial plateau concerns RATE layer, orthogonal to shape layer consumed by Lam/Theta; round-91 closure (#396/#397 pure density, no sequence structure) consistent - this consumes only the density shape. Barrier framing: none - prices one side of barrier-4's converse program (F1 sharpness) inside the already-mapped positional stratum.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/{f1tight_connection.md, f1tight_check.py, f1tight_result.json, verifyf1_recompute.py, verifyf1_result.json}; paper ResearchOutput/NewMathematics/250_F1Tightness.md.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4077",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-25T01:54:45.651685+00:00",
-    "title": "FACT round-92 #1 — F1-TIGHTNESS-CONNECTION (THEORY, no new physics): BOUND-SLACK-BY-X = 1.15 [1.10, 1.22] ON MEASURED DATA; EQUALITY PROVABLY UNATTAINABLE — paper-225 F1 master inequality connected to measured positional profile: Lam=0.766 (verified 0.765671), Theta_asc=0.867 [0.8193,0.9076], qhat unidentified; pi-flat equality REFUTED three ways (KS p=7e-76 / LRT p=9e-10 / binning-free p=1e-21) => no realizable policy attains the bound; gap X=C0/C_sort=1.15302 [1.10175,1.22054] policy-independent via identity chain; TIGHTNESS-CIRCULARITY CATCH: all four legacy anchors' P_hat are law inversions with Lam*Theta~=1.00-1.04 BY CONSTRUCTION — anchor tightness not-currently-decidable; DECIDABLE CLOSER named: scan-simulation on exp578 npz predicts S~=1.31 vs bound 1.51 (two-sided); independent verifier PASS 3/3, 0 discrepancies"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Paper 249 (ResearchOutput/NewMathematics/249_ConsecutiveVDependency.md). Executes exp 598's pre-registered H0 route.\n\n**Design** (pre-registered before analysis): hit-indicator autocorrelation lags 1–20 in mid-window u ∈ [0.55,0.75], nb=1000 (robustness 500/2000); Amendment 0 pre-data — PRIMARY = per-batch quadratic-detrended ρ + MC-calibrated runs Z against pooled density curve p̂(u); SECONDARY literal global-mean; H1 iff |ρ| > 0.05 AND cluster-over-Ns CI excludes 0 at some lag, OR runs |Z| > 3.2905 (p < 0.001). Controls pre-committed: C1 ctl null both variants; C2 synthetic smooth-hump iid at rate curve; C3 injected lag-1 dependence must detect. Data: exp581_regen_positions.npz (sha256 0b1afa50…36a38; 128 batches, 9,594 hits, no N stored — purely positional). Boot/MC 2000 reps each, seed 599_20260828; wall 31.4 s.\n\n**Verdict H0_PURE_DENSITY**: detrended ρ(lag) ∈ [−0.0199, −0.0023] (max |ρ| = 0.020 << 0.05), flat/slightly negative — no refractory dip, no excitation bump; per-lag MC-vs-density-curve p ∈ [0.128, 0.969]; SECONDARY even more null (ρ_raw ∈ [−0.0103, +0.0046]); runs null BOTH readings (textbook Z = +0.850 p≈0.40; MC-calibrated Z = +0.894 p≈0.37; ctl Z = −0.454). Robustness nb500 max|ρ_det| = 0.036, nb2000 0.016.\n\n**Controls all met**: C1 null (.009 raw/.020 det); C2 synthetic-hump ALSO null on secondary (max .014 @lag17, pooled_Z +0.60) ⇒ curvature confound quantitatively immaterial — conditioned and literal readings AGREE, verdict not amendment-dependent; C3 injected lag-1 DETECTED MASSIVELY (ρ_det(lag1)=0.337, argmax exactly 1, pooled_Z −57.4) ⇒ null means \"no dependency\", not \"test blind\".\n\n**CONSEQUENCE (terminal characterization)**: given position, neighboring hits carry NO information about each other — the u* ≈ 0.65 excess is pure density/rate heterogeneity along the scan axis. Thread closure chain: excess real on home seed (papers 239/241) → divisibility a rate dial not position dial (242) → no j-arithmetic carrier (248) → no sequence structure (HERE). Hit-position thread papers 228–230 → 231 → 238/240 → 241–242 → 248 CLOSES COMPLETELY. Operational law: future gains come from modeling the positional DENSITY CURVE itself, never Markov/neighborhood structure. Scope honest: holds where the excess manifests (seed-20260828 lineage); exp592/#391 ≥3-pooled-seed amplitude test remains open — machinery transfers unchanged if an excess re-establishes elsewhere.\n\n**Ledger catches**: seed-20260828 ctl regeneration via two canonical recipes BOTH mismatch ctl_0 — recipe not recoverable from allowed reads; provenance rests on sha256 (disclosed). RECORD-TIME CORRECTION: findings' \"every CI straddles 0\" overstates — result.json shows 12/20 detrended CIs exclude zero on the NEGATIVE side, upper ends ≤ 0.0083 (raw 19/20 straddle; uniform ~−0.01 offset mirrored ~+0.01 on controls — opposite-sign shared-magnitude artifact, not structure); verdict unaffected (H1 required |ρ| > 0.05 AND CI exclusion JOINTLY).\n\nBarrier framing: none — terminal characterization inside the mapped positional stratum. Open unchanged: u ≥ 6–14 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, external-hint laws, quantum closed; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling.",
     "domain_bridges": [],
@@ -2905,25 +2886,6 @@
     "status": "available",
     "timestamp": "2026-08-25T01:54:45.653750+00:00",
     "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-window hits INDEPENDENT given position — lag profile lags 1–20 flat/slightly negative ρ ∈ [−0.020, −0.002] vs 0.05 bar (MC p 0.128–0.969), runs null both readings (Z +0.85 textbook / +0.89 density-calibrated vs 3.29), POWER CONFIRMED (injected lag-1 ρ_det = 0.337 detected at argmax exactly lag 1) — u* ≈ 0.65 excess = PURE DENSITY / rate heterogeneity, NO sequence structure — POSITIONAL THREAD CLOSES COMPLETELY (228–230 → 231 → 238/240 → 241–242 → 248)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "b58ee289",
-    "description": "Paper 248. Sources: ResearchOutput/scripts/2026-08-24-round74/exp598_* + exp598_findings.md.\n\nDESIGN (pre-registered in script header before analysis): 8 j-feature families — j mod 4/3/5/7, j mod 105 (CRT joint), omega_small(j) terciles, smoothness of |j−nearest square| (exact 1e6, registered degenerate-skip), exact 10^6-smoothness of j — on exp581_regen_positions.npz (sha256 0b1afa50… recorded; generator not re-run, disclosed): mid u∈[0.55,0.75] n=104,200, flank [0.05,0.40)+(0.90,1.00] n=235,003, 9,594 hits/128 windows. Bars: R≥1.15 vs complement in-mid, family-wise max-statistic permutation (500, stratum-preserving) p<0.01 × Bonferroni K=8, DiD sign-consistent; 300 fake-hit global-permutation null draws.\n\nVERDICT H0_CARRIER_OPEN — no class clears the bar (all p_adj=1.0):\nF1 mod4 cell 1 R=1.0748 pR=.369 | F2 mod3 cell 1 R=1.0314 pR=.743 | F3 mod5 cell 3 R=1.0785 pR=.475 | F4 mod7 cell 0 R=1.1111 pR=.359 | F5 mod105 cell 73 R=1.5578 pR=.884 | F6 omega cell 0 R=1.0107 pR=.978 | F7 dsq-smooth cell 1 R=1.0224 pR=.771 | F8 jsmooth cell 0 R=1.0232 pR=.767.\nCoarse families all flat DiD (+0.001–0.002).\n\nEXTREME-VALUE DEMONSTRATION: F5's raw max (cell 73, n=1022, 26 hits) sits BELOW the null's own median max-of-105-ratios (med 1.6334, p95 1.8516); 226/300 null draws beat it ⇒ global_perm_p=0.754 — pure selection noise from scanning 105 cells; canonical local example of why coarse maxima need max-statistic calibration.\n\nCONSEQUENCE: paper-242 excess carrier is NOT any tested j-marginal ⇒ route to consecutive-v POLYNOMIAL-SEQUENCE DEPENDENCY STUDY (adjacent-position smoothness correlation via shared small-prime divisibility of y_v=(isqrt(N)+v)^2−N), invisible to marginal-on-j tests.\n\nLEDGER: smoke caught invalid smoothness early-exit rule (post-fix random-int smooth fraction 0.1355 matches Dickman ρ(2.45)) + F5 gate-starve crash; F7 non-degenerate at full scale (82.7% smooth); RECORDER CATCH: registered View B (per-N enrichment) never computed in result.json — harmless under H0, must be implemented or formally dropped on H1-side reuse. Wall 271 s, rng 20260908.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4079",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-25T01:54:45.655508+00:00",
-    "title": "FACT round-91 #1 — J-FEATURE-SWEEP (exp 598): H0_CARRIER_OPEN — no j-arithmetic feature carries the mid-window excess — all 8 registered families honest R≤1.11 (mod-7 best p=0.36), F5 raw max j≡73 mod 105 R=1.558 BELOW null median-max 1.633 (global perm p=0.754, extreme-value noise over 105 cells) — j-arithmetic class ELIMINATED → consecutive-v polynomial-sequence dependency study per pre-registration"
   },
   {
     "ambition_level": "grand_challenge",
@@ -4363,7 +4325,7 @@
     "title": "Deepening: Kneser input for many lines"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7ae2917a (Q=0.820), which proved 63 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define a committed local-oracle protocol and prove that perfect hiding of unopened coordinates plus perfect simulation of opened coordinates yields perfect honest-verifier zero knowledge for the full constant-query verifier transcript.",
@@ -5674,27 +5636,6 @@
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_193",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "Define tropical arithmetic: a oplus b = min(a, b), a otimes b = a + b. Tropical matrix multiplication: (A otimes B)_{ij} = min_k (A_{ik} + B_{kj}). Tropical matrix power: A^{otimes k} = A otimes A otimes ... otimes A (k times). This is equivalent to the k-th power in the min-plus semiring, which is also the all-pairs shortest path matrix for k steps. Tropical eigenvalue: lambda is a tropical eigenvalue of A if there exists v != infinity such that min_j (A_{ij} + v_j) = lambda + v_i for all i. The tropical eigenvalue exists and is unique for irreducible matrices (by the tropical Perron-Frobenius theorem). Key exchange: Alice and Bob agree on a public tropical matrix A. Alice picks a secret a and computes A^{otimes a}. Bob picks a secret b and computes A^{otimes b}. They exchange, and both compute the shared key (A^{otimes a})^{otimes b} = A^{otimes ab} = (A^{otimes b})^{otimes a}. Security: Eve sees A, A^{otimes a}, A^{otimes b} and needs to compute A^{otimes ab}. The tropical eigenvalue gives: lambda(A^{otimes a}) = a * lambda(A), so a = lambda(A^{otimes a}) / lambda(A). This breaks the key exchange! Unless we hide the eigenvalue. Defense: add noise to the matrix before computing the power. A^{otimes k} + noise (in the tropical sense) changes the eigenvalue unpredictably. Conjecture: with noise, the TDLP is hard for n >= 10. Test: implement noisy tropical DH, measure key generation time, attempt to break with eigenvalue attack.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
     "ambition_level": "extension",
@@ -17837,6 +17778,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Probability.F1TightnessDispersion",
+      "Probability.F1TightnessQuantitative"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The refined inequality 1 + ||p - flat||_1/(2 c_asc) <= X is now proved, and it is an identity on two-cell profiles, which shows the constant 1 is optimal. The conjecture is that two-cell support is not only sufficient but necessary for equality, so the equality locus is exactly the union of the two-atom faces of the simplex.\n\nAn antitone profile on M cells satisfies C_0 - c_asc = ||p - flat||_1/2 if and only if its mass is carried by at most two cells.\n\nTrack the discarded factor |i - j| in the pairwise Chebyshev expansion of scanCost_le_baseCost_sub_flatDist and characterise when every discarded term vanishes; check the resulting criterion on explicit three-cell profiles.\n\nThe dispersion correction is exactly computable on its extremal set and the residual slack of a measured profile decomposes into a two-cell part and a strictly positive remainder.\n\nA larger equality face exists and the L1 dispersion functional is degenerate on it, so a finer (index-weighted) functional is needed.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4320",
+    "lineage_refs": [],
+    "priority_score": 0.6721379310344829,
+    "proof_strategy": "Equality forces |p_i - p_j| = (j - i)|p_i - p_j| for all pairs, hence p_i = p_j whenever j > i + 1; combine with antitonicity and the mass constraint.",
+    "research_mode": "team",
+    "source_exp_id": "10b0e429",
+    "status": "available",
+    "timestamp": "2026-08-27T20:31:43.808427+00:00",
+    "title": "Equality Locus of the Sharp Dispersion Inequality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Computation.MarginProtocolDesign",
       "Catalog.Computation.MarginDepthInvariance"
     ],
@@ -18078,6 +18041,29 @@
     "status": "available",
     "timestamp": "2026-08-25T08:00:41.877531+00:00",
     "title": "Optimality of Bernoulli Truncations Among Rational Correctors"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.F1TightnessRefinement",
+      "Probability.F1TightnessDiscretisation",
+      "Probability.F1TightnessHarmonic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Cell merging on a front-loaded profile lowers the measured slack by an exact amount. The conjecture upgrades this from the dyadic step to arbitrary refinements of a fixed continuum density, so that the finite-grid slack increases monotonically along any refinement sequence and converges to 1/(2E). The approach is to iterate the proved dyadic identity and control the residual by a Riemann-sum estimate.\n\nFor a monotone decreasing density on the window with continuum mean position E < 1/2, the cell-averaged M-cell profiles satisfy X_M strictly increasing in M along refinements, with limit 1/(2E).\n\nFormalise cell-averaging of a monotone density into Fin M profiles, iterate meanPos_coarseFn along a refinement sequence, and combine with gapXofM_tendsto.\n\nThe booked X = 1.15302 on a 27-cell grid is a lower bound for the profile-forced slack and the CI can be re-read one-sidedly.\n\nGrid choice is a confounder of the slack estimate and the CI must absorb a discretisation term.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4319",
+    "lineage_refs": [],
+    "priority_score": 0.6715915492957748,
+    "proof_strategy": "The proved identity meanPos_coarseFn plus gapX_eq_meanPos handle one refinement step; the limit follows from Riemann sums of the density against the harmonic CDF of F1TightnessHarmonic.",
+    "research_mode": "team",
+    "source_exp_id": "10b0e429",
+    "status": "available",
+    "timestamp": "2026-08-27T20:31:43.289658+00:00",
+    "title": "Continuum Refinement Limit of the Slack Factor"
   },
   {
     "ambition_level": "extension",
@@ -18560,6 +18546,28 @@
     "status": "available",
     "timestamp": "2026-08-23T09:44:09.129157+00:00",
     "title": "Two-Sided Corruption Optimality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.F1TightnessPolytope",
+      "Probability.F1TightnessFibration"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a single tail constraint the reachable slack interval is now exactly [(M+1)/(2M), (M+1)/(2Km+2)], with the upper endpoint attained by a two-atom profile. The conjecture extends this to the family of nested constraints in which the measured bulk exponent, spike weight and edge mass are actually booked, and predicts that two-atom profiles remain extremal.\n\nFor nested cuts K_1 < ... < K_r with required masses m_1, ..., m_r, the reachable mean positions form an interval whose endpoints are attained by profiles supported on at most two cells, and the maximal slack is (M+1)/(2*max_j K_j m_j + 2) whenever the constraints are consistent.\n\nFormalise a finite family of edgeMass constraints, prove the analogue of meanPos_ge_of_edgeMass by summing the active constraints, and search for a three-constraint counterexample by exact rational enumeration on small M.\n\nThe measured tail statistics determine the admissible slack interval outright, making the booked CI a derived quantity.\n\nInteractions between constraints matter and the polytope has vertices with three or more atoms, so the LP must be solved in full.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4321",
+    "lineage_refs": [],
+    "priority_score": 0.6712758620689657,
+    "proof_strategy": "Linear programming on the simplex: meanPos and each edgeMass are linear, so the optimum is at a vertex; bound the number of active constraints at a vertex by the dimension count.",
+    "research_mode": "team",
+    "source_exp_id": "10b0e429",
+    "status": "available",
+    "timestamp": "2026-08-27T20:31:44.332552+00:00",
+    "title": "Nested Tail Constraints on the Mean-Position Polytope"
   },
   {
     "ambition_level": "extension",
@@ -21067,6 +21075,27 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Probability.F1TightnessDispersion",
+      "Probability.F1TightnessUniqueness",
+      "Probability.F1TightnessCore"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The parameter map predicts a realizable speed-up of 1/Lambda = 1.306 while the proven bound is 1.506, and the dispersion refinement lowers the threshold further. Formalising the predicted value as a two-sided interval turns the planned simulation into a genuine test rather than a consistency check.\n\nAny window-ascending policy on the measured profile has speed-up in [1/Lambda - eps, 1/Lambda + eps] with eps determined by the profile CI, and never exceeds bound/(1 + ||p - flat||_1/(2 c_asc)).\n\nProve a stability bound for S_asc in the L1 distance on profiles (the analogue of gapX_stability) and instantiate it at the measured CI endpoints together with speedup_mul_le_bound_dispersion.\n\nAn observation above the refined threshold refutes the mapping; an observation inside the window confirms it, with no free parameters.\n\nThe speed-up is not determined by the shape layer alone and a rate-layer coupling must be admitted.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4322",
+    "lineage_refs": [],
+    "priority_score": 0.5932758620689657,
+    "proof_strategy": "Combine policy_speedup_le_Sasc with a Lipschitz estimate for revCost/scanCost in the profile and the proved dispersion refinement.",
+    "research_mode": "team",
+    "source_exp_id": "10b0e429",
+    "status": "available",
+    "timestamp": "2026-08-27T20:31:44.842120+00:00",
+    "title": "Falsification Window for the Scan-Simulation Closer"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Combinatorics.MagnitudeMirrorTreeBridge",
       "Combinatorics.DialThresholdNoAmplification"
     ],
@@ -21387,7 +21416,7 @@
     "catalog_references": [
       "Catalog.Combinatorics.HybridEvictionAdditiveLaw"
     ],
-    "consumed_by_exp_id": "70cece6b",
+    "consumed_by_exp_id": "",
     "description": "Budget monotonicity is proved; the missing quantitative law is concavity, i.e. that oracle retention gains are the sorted utilities and hence diminishing. This converts a fixed policy gap into an equivalent multiplicative budget, making 'x points below oracle' comparable across budgets.\n\nWith nonnegative utilities the oracle retention f(B) satisfies f(B+1) - f(B) >= f(B+2) - f(B+1) for all B < n, and f(B+1) - f(B) equals the (B+1)-st largest utility.\n\nProve that oracle value at budget B equals the sum of the B largest utilities by iterating the exchange kernel, then read off increments; test against the measured 32/64/128 retention rows.\n\nThe policy gap can be quoted as an equivalent budget multiplier, a scale-free way to compare cheap policies.\n\nRetention gains are not governed by the utility order statistics, so per-budget measurement cannot be extrapolated.",
     "domain_bridges": [],
     "domains": [],
@@ -21397,7 +21426,7 @@
     "proof_strategy": "Show any top set by v of size B+1 contains a top set of size B, then induct; concavity follows from monotonicity of the order statistics.",
     "research_mode": "team",
     "source_exp_id": "a303e67d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-23T05:46:38.789608+00:00",
     "title": "Concavity of Oracle Retention in the Budget"
   },
@@ -21521,6 +21550,27 @@
     "status": "available",
     "timestamp": "2026-08-26T07:10:22.101781+00:00",
     "title": "Auxiliary-Class Spread Exclusion at p = 5"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Logic.JFeatureLagSpectrum",
+      "Logic.JFeatureMaxStatistic",
+      "Logic.JFeatureMarginalBlindness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Quantify when the calibrated pair-statistic test can see the proved -4/q^2 deficit. Combining the exact covariance at every lag with the exact finite-sample validity of the permutation p-value should give an explicit sample-size threshold above which the test has power above any prescribed level, while every marginal test remains exactly at its nominal level. Flatness of the lag spectrum means averaging over lags accumulates signal at a known rate.\n\nThere is an absolute constant c such that for n >= c q^4 / rate^2 the max-calibrated lag-averaged pair test detects the deficit at level 0.01 with power at least 0.8, whereas every marginal test has power exactly equal to its level.\n\nDerive a Chebyshev or Bernstein bound for the pair-count statistic using cov_lag_eq, and combine with perm_pval_valid; validate by simulation at q = 5, 7, 11.\n\nThe pre-registered consecutive-v study gets a concrete sample-size design rather than an exploratory scan.\n\nThe deficit is undetectable at feasible sample sizes, which would retire the consecutive-v route as decisively as the j-marginal route.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4323",
+    "lineage_refs": [],
+    "priority_score": 0.5925806451612904,
+    "proof_strategy": "Second-moment bound on the pair-count using the exact lag covariance, then invert the resulting tail bound against the calibrated critical value.",
+    "research_mode": "team",
+    "source_exp_id": "b58ee289",
+    "status": "available",
+    "timestamp": "2026-08-27T20:32:07.156011+00:00",
+    "title": "Power Threshold for the Lag-Averaged Pair Statistic"
   },
   {
     "ambition_level": "extension",
@@ -21929,7 +21979,7 @@
     "catalog_references": [
       "Combinatorics.TraceBatteryEntropy"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "11cbb92a",
     "description": "Subadditivity gives an upper budget but no explanation of why a 0.04-bit dial can add two bits to a joint reading. A chain rule, with conditional entropies defined fibrewise, would give matching lower bounds and quantify the redundancy between dials.\n\nH(joint over insert a S) = H(joint over S) + sum over fibres of the conditional entropy of dial a, and consequently H(joint) >= max_i H(dial i) with equality iff every other dial is a function of dial i.\n\nDefine conditional entropy by the fibrewise sum already isolated in H_split_fiberwise and prove the identity by rearranging that sum; derive the equality case from the equality case of data processing.\n\nPer-dial spread stops being paradoxical: joint gains are conditional, not marginal, informations.\n\nThe fibrewise decomposition is not additive, which would indicate an error in the empirical-measure model of capacity.",
     "domain_bridges": [],
     "domains": [],
@@ -21939,7 +21989,7 @@
     "proof_strategy": "Expand both sides through H_split_fiberwise; the difference telescopes to a sum of per-fibre entropies with weights equal to fibre probabilities.",
     "research_mode": "team",
     "source_exp_id": "a3ad9f21",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T07:00:24.493294+00:00",
     "title": "Chain Rule Lower Bound for Heterogeneous Dial Batteries"
   },
@@ -22835,6 +22885,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Logic.JFeatureLagSpectrum",
+      "Logic.JFeatureConsecutiveDependency"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Lift the proved lag spectrum from a prime modulus to a prime power. The obstruction argument uses only invertibility of k and 2, which survives in the local ring, while the two-root count becomes Hensel's lemma. Summing over prime powers would give the adjacent covariance of the full smoothness indicator rather than only its squarefree part.\n\nOver ZMod (q^e) with q an odd prime and N a unit square, the divisibility set has exactly two elements, the lag-k double-hit set is empty unless 4N = k^2 in ZMod (q^e), and the non-exceptional lag covariance is exactly -4/q^(2e).\n\nRedo four_mul_eq_sq_of_lag with units in ZMod (q^e), obtain the two-root count from Hensel lifting, and recompute cov_lag_eq; cross-check by decide at q^e = 9, 25, 27.\n\nThe deficit law extends to full smoothness, so the factor-base sum becomes a sum over prime powers with a geometrically convergent tail.\n\nHigher prime powers interact with the polynomial structure, revealing a genuinely new local obstruction beyond the field case.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4326",
+    "lineage_refs": [],
+    "priority_score": 0.5647412683708043,
+    "proof_strategy": "Replace field nonzero-divisor steps by unit hypotheses; use ZMod.isUnit_iff_coprime for invertibility of k and 2, and Hensel lifting for the root count.",
+    "research_mode": "team",
+    "source_exp_id": "b58ee289",
+    "status": "available",
+    "timestamp": "2026-08-27T20:32:08.777678+00:00",
+    "title": "Prime-Power Lag Spectrum via Hensel Lifting"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Shared.MoonshineJExpansion",
       "Catalog.Shared.MoonshineHeadTable"
     ],
@@ -23018,6 +23091,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Logic.PhaseRouteANOVA",
+      "Logic.JFeatureSweepSynthesis"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The ANOVA degree-one ceiling and the contingency enrichment ratio agree in the extreme case already proved. The conjecture is that they are two readings of the same orthogonal decomposition, so the maximal marginal enrichment is an explicit function of the variance of the additive part of the hit indicator.\n\nFor any hit indicator f on a product space, the supremum over marginal cells of the enrichment ratio is a monotone function of varr (addPart f) / varr f, equal to 1 exactly when addPart f is constant.\n\nExpress the cell enrichment as an affine functional of f, project onto the additive subspace using addPart, and compare with Rsq_additive_le_ceiling.\n\nOne invariant governs both the regression and the contingency view, so a single diagnostic number certifies that no marginal analysis can succeed.\n\nThe two views are genuinely inequivalent and a sweep could be flat in one and informative in the other, which would itself be a useful methodological warning.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_4325",
+    "lineage_refs": [],
+    "priority_score": 0.5646811030792651,
+    "proof_strategy": "Write the cell mean of f as an inner product with a cell indicator, decompose the indicator into additive and interaction parts, and use the orthogonality already proved in PhaseRouteANOVA.",
+    "research_mode": "team",
+    "source_exp_id": "b58ee289",
+    "status": "available",
+    "timestamp": "2026-08-27T20:32:08.258751+00:00",
+    "title": "Shared Degree-One Invariant for Enrichment and R-Squared"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Combinatorics.QuartetCodes",
       "Combinatorics.QuartetCodesSmallCases"
     ],
@@ -23132,6 +23228,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Logic.JFeatureConsecutiveDependency",
+      "Logic.JFeatureFactorBase",
+      "Logic.JFeatureSmallCases"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The primes at which consecutive sieve positions are positively rather than negatively correlated are exactly the prime divisors of 4N-1, which is already proved. Counting them bounds the positive contribution to the total adjacent covariance and would show that the aggregate sign is negative for every N.\n\nThe number of exceptional primes is omega(4N-1) = O(log N / log log N), and the sum of 1/q over them is strictly smaller than the sum of 4/q^2 over the factor base, so the total adjacent covariance is negative for every N.\n\nFormalise the omega bound for 4N-1 and compare the two finite sums for the standard quadratic-sieve factor bases; the comparison is a finite computation for any concrete N.\n\nThe sign of the consecutive-position effect is universal, giving a one-sided pre-registered hypothesis.\n\nFor some N the exceptional primes dominate, making the effect sign N-dependent and requiring a two-sided test.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4324",
+    "lineage_refs": [],
+    "priority_score": 0.5646683179548131,
+    "proof_strategy": "Use the proved divisor characterisation four_mul_eq_one_iff_dvd, then a standard bound on the number of distinct prime factors, then compare the two explicit sums.",
+    "research_mode": "team",
+    "source_exp_id": "b58ee289",
+    "status": "available",
+    "timestamp": "2026-08-27T20:32:07.743853+00:00",
+    "title": "Divisor-Count Bound for the Exceptional Locus"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Physics.StackSquareCoreStacks",
       "Physics.StackSquareCoreBasic",
       "Physics.StackSquareCorePartitions"
@@ -23195,6 +23315,29 @@
     "status": "available",
     "timestamp": "2026-08-26T08:00:46.745766+00:00",
     "title": "Mixture Spectrum of Higher-Degree Sieve Polynomials"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Logic.JFeatureLagSpectrum",
+      "Logic.JFeatureFactorBase"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Because the lag spectrum is flat, the variance of the number of factor-base hits in a window of L consecutive positions is the independence value minus a correction that is L times one explicit constant, up to a bounded remainder from the two exceptional lags. This turns the proved covariance into a directly usable statement about sieve yield variance.\n\nFor a window of L consecutive positions the hit-count variance equals L p (1-p) - 4 L sum_i 1/q_i^2 plus a remainder bounded by a constant times L / q_min^3, so the independence model always overstates the variance.\n\nExpand the variance of a window sum into single-position variances and pairwise lag covariances, substitute lag_spectrum_flat and card_exceptionalLags, and bound the exceptional terms; check numerically for small q and L.\n\nSieve yield estimates based on independence are conservatively biased by a computable amount, which can be corrected in practice.\n\nCross-prime or long-range effects not captured by the pairwise lag covariance dominate, indicating higher-order dependencies worth their own study.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4327",
+    "lineage_refs": [],
+    "priority_score": 0.5646283128879792,
+    "proof_strategy": "Bilinearity of the empirical covariance over the window sum, then the flat-spectrum substitution, then a counting bound on how often an exceptional lag occurs among the L(L-1)/2 pairs.",
+    "research_mode": "team",
+    "source_exp_id": "b58ee289",
+    "status": "available",
+    "timestamp": "2026-08-27T20:32:09.301040+00:00",
+    "title": "Window-Variance Correction for Sieve Yield Estimates"
   },
   {
     "ambition_level": "extension",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4aeadf94",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after the U120 floor cycle (exp 554)\n\nSix cycles of the scientific loop were run in this session.\n\n* **Cycle 1** built the missing *pooling* layer of the `T`-dial thread: `pooled",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 77,
-      "timestamp": "2026-08-25T05:50:30",
-      "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypothesized floor (paper"
-    },
-    {
       "cycle_id": "9061d61f",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — ECM stage-1 firing trace (paper 218 / exp 570 thread)\n\n## What this cycle established (all formal, 0 sorries)\n\nThree new Lean files in `Catalog/Novelty/`:\n\n* **`EcmStageOneTraceL",
@@ -499,19 +489,19 @@
       "theorem_count": 136,
       "timestamp": "2026-08-27T20:31:59",
       "title": "FACT round-92 #1 — F1-TIGHTNESS-CONNECTION (THEORY, no new physics): BOUND-SLACK-BY-X = 1.15 [1.10, "
+    },
+    {
+      "cycle_id": "b58ee289",
+      "domain": "Logic",
+      "key_insight": "# Future directions — after the j-feature sweep (paper 248)\n\n## What the formal cycles established\n\nThe eight-family marginal sweep returned `H0_CARRIER_OPEN`. The Lean development\nin `Catalog/Logic/J",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-27T20:32:18",
+      "title": "FACT round-91 #1 — J-FEATURE-SWEEP (exp 598): H0_CARRIER_OPEN — no j-arithmetic feature carries the "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "94e7c481",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions: bold, testable conjectures from the Beal cycle\n\nThe formalisation in `Catalog/NumberTheory/BealConjecture.lean`,\n`Catalog/NumberTheory/BealStructure.lean` and `Catalog/NumberTheor",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-20T03:58:56",
-      "title": "Beal's Conjecture"
-    },
     {
       "cycle_id": "17d131fb",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 136,
       "timestamp": "2026-08-27T20:31:59",
       "title": "FACT round-92 #1 — F1-TIGHTNESS-CONNECTION (THEORY, no new physics): BOUND-SLACK-BY-X = 1.15 [1.10, "
+    },
+    {
+      "cycle_id": "b58ee289",
+      "domain": "Logic",
+      "key_insight": "# Future directions — after the j-feature sweep (paper 248)\n\n## What the formal cycles established\n\nThe eight-family marginal sweep returned `H0_CARRIER_OPEN`. The Lean development\nin `Catalog/Logic/J",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-27T20:32:18",
+      "title": "FACT round-91 #1 — J-FEATURE-SWEEP (exp 598): H0_CARRIER_OPEN — no j-arithmetic feature carries the "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5e9b52ad",
-      "domain": "Computation",
-      "name": "det_add",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5e9b52ad",
-      "domain": "Computation",
-      "name": "det_smul",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3b9c1eb4",
-      "domain": "Computation",
-      "name": "rhoOne_dickman_ode",
-      "quality": 0.84
-    },
     {
       "cycle_id": "3b9c1eb4",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "card_mul_sum_lt_sum_mul_sum",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "b58ee289",
+      "domain": "Logic",
+      "name": "makes",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "b58ee289",
+      "domain": "Logic",
+      "name": "card_prod_equiv",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "b58ee289",
+      "domain": "Logic",
+      "name": "avg_comp_fst_equiv",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-27T20:31:59",
+  "last_updated": "2026-08-27T20:32:18",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "3eeb9235",
-        "quality": 0.84,
-        "theorems": 59,
-        "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
-      },
-      {
         "cycle_id": "512ab986",
         "quality": 0.85,
         "theorems": 104,
@@ -3513,6 +3507,12 @@
         "quality": 0.88,
         "theorems": 114,
         "title": "Finite model property with an explicit bound"
+      },
+      {
+        "cycle_id": "b58ee289",
+        "quality": 0.86,
+        "theorems": 124,
+        "title": "FACT round-91 #1 — J-FEATURE-SWEEP (exp 598): H0_CARRIER_OPEN — no j-arithmetic "
       }
     ],
     "MachineLearning": [
