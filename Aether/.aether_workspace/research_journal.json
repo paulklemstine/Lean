@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "569bc76d",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Ellipsoids as Positive-Definite Images of Balls\n\n## What the thread has established\n\nEight Lean files in `Catalog/Bridges/` now carry a complete, `sorry`-free development.\n\n* `El",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 156,
-      "timestamp": "2026-08-25T05:49:54",
-      "title": "Ellipsoids"
-    },
-    {
       "cycle_id": "40fe72ea",
       "domain": "Probability",
       "key_insight": "# Future directions — portfolio scheduling over an invisible channel\n\nDerived from the eight proof cycles in `Catalog/Probability/Portfolio*.lean`.\n\n## What survived, what failed, and why\n\n**Survived",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-27T09:50:06",
       "title": "Composition of PCP locality with commitment hiding"
+    },
+    {
+      "cycle_id": "9524045a",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after the stage-1 order-completion / collision separation\n\n## What this cycle settled\n\nThe mechanism question behind the experimental chain (\"is low-`B1` success a collision\nacci",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 67,
+      "timestamp": "2026-08-27T09:50:25",
+      "title": "FACT round-88 #1 — LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED — exp570's picture REPLICATES"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9e83a721",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\nDerived from the nine verified files of this run:\n\n* `Catalog/Algebra/RLHFTiltTorsorPTX.lean` — the alignment torsor, the Bregman identity\n  `F(s) − F(r) − 𝔼_{π_r}[s−r] = β·KL(π_r",
-      "quality_score": 0.88,
-      "sorry_count": 8,
-      "theorem_count": 103,
-      "timestamp": "2026-08-20T03:10:39",
-      "title": "reinforcement learning"
-    },
     {
       "cycle_id": "0750e9d7",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-27T09:50:06",
       "title": "Composition of PCP locality with commitment hiding"
+    },
+    {
+      "cycle_id": "9524045a",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after the stage-1 order-completion / collision separation\n\n## What this cycle settled\n\nThe mechanism question behind the experimental chain (\"is low-`B1` success a collision\nacci",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 67,
+      "timestamp": "2026-08-27T09:50:25",
+      "title": "FACT round-88 #1 — LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED — exp570's picture REPLICATES"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c2e74b6a",
-      "domain": "Logic",
-      "name": "mem_gammaList_neg",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "55b01213",
-      "domain": "Cryptography",
-      "name": "firstDecile_two_mul_resid_lt",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "55b01213",
-      "domain": "Cryptography",
-      "name": "firstDecile_size_lt_size",
-      "quality": 0.82
-    },
     {
       "cycle_id": "55b01213",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "restrictTo_eq_iff",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9524045a",
+      "domain": "Shared",
+      "name": "stage1Scalar_dvd_of_le",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "9524045a",
+      "domain": "Shared",
+      "name": "gcd_stage1Scalar_dvd_of_le",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "9524045a",
+      "domain": "Shared",
+      "name": "gcd_stage1Scalar_le_of_le",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-27T09:50:06",
+  "last_updated": "2026-08-27T09:50:25",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "6a8ae4e1",
-        "quality": 0.85,
-        "theorems": 76,
-        "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is"
-      },
-      {
         "cycle_id": "3d7df1d3",
         "quality": 0.82,
         "theorems": 156,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 101,
         "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
+      },
+      {
+        "cycle_id": "9524045a",
+        "quality": 0.78,
+        "theorems": 67,
+        "title": "FACT round-88 #1 — LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED — exp570'"
       }
     ],
     "Tropical": [

@@ -2019,22 +2019,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
   },
   {
-    "consumed_by_exp_id": "feee5d03",
-    "description": "Exp 572 \u00b7 paper 217 \u00b7 assessment v324 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp572_ma1_signed.py \u00b7 seed 572 \u00b7 wall 6.96 s.\n\n**Question.** Paper 213/exp566 closed the MAGNITUDE route of MA-1 effectivity (|L(1,\u03c7)| does not predict |AP deviations|, R\u00b2=0.019) but preserved the SIGNED route: do signs of character-twisted prime-count deviations align with signs predicted by computable character data? A yes would be the first computable handle on AP-deviation structure.\n\n**Key structural disclosure** (post-smoke, pre-full-data): L(1,\u03c7)>0 for EVERY real non-principal \u03c7 (class-number formula) \u21d2 sign(w)\u2261+1 identically (n_cells_w_negative=0 at full scale), so registered criterion C1 reduces exactly to Pr[c_\u03c7>0] and could only fire if prime twists were majority-positive. Working identity asserted exact (<1e-9): c_\u03c7 = \u03a3_a d_a\u00b7\u03c7(a) = \u03a3_{p\u2264x} \u03c7(p); the uniform-li theory term vanishes identically by orthogonality, so signed L(1,\u03c7) is the only computable x-independent theory weight.\n\n**Design.** x=2\u00b2\u2076 full (\u03c0(x)=3,957,809); 287 moduli (squarefree [3,300] \u222a primes [307,997]); 491 real-char cells; 86,882 unit classes; machinery verbatim from exp566 (class-number exact D<0 |D|\u2264400, truncated-L otherwise, median rel err 1.8e-5); CP95 intervals + within-modulus d-shuffle null (2000 draws \u2014 MEANINGFUL here unlike exp566 since sign(c) is not permutation-invariant in a).\n\n**Result H0 \u2014 both criteria fail, both levels.** Cell agreement 15.07% over 491 cells (74 agree), CP95 [0.1202, 0.1855], circular-sum z=\u221252.72 (C2 needs >3). Class level 48.74% over 86,882 classes, CP95 [0.4841, 0.4907], permutation z=\u22127.74 \u2014 significantly BELOW chance (mild anti-alignment). Breakdowns all CIs wholly below 50%: prime-modulus quadratics 26.9% (167), product chars \u03c9\u22652 8.95% (324), exact-L 12.8% (226), truncated-L 17.0% (265), drop-|w|<1e-3 robustness unchanged.\n\n**Named byproduct** (labeled exploratory, not pre-registered): prime twists NEGATIVE in 84.7% of cells (CP95 [0.8123, 0.8779]; smoke x=2\u00b2\u00b2 read 91.7%) \u2014 the universal Chebyshev/Rubinstein\u2013Sarnak low bias, independently confirmed inside the lab's own AP-deviation machinery at x=2\u00b2\u2076. Deviation signs are one-directional across moduli and zero-driven, NOT carried by any computable L-value \u2014 precisely why no L-based predictor can track them.\n\n**Ledger.** (1) m=6 orthogonality assert exposed the raw-primitive-twist \u00b11 correction for primes p|m, p\u2224cond(\u03c7) (max corr 3, 0 sign flips induced \u2014 disclosed, not corrected); (2) class-z scale mix-up fixed (\u2212310 \u2192 single-scale \u22127.74); (3) exp566's 'within-modulus shuffle vacuous' caveat verified NOT to transfer here.\n\n**Barrier framing.** Closes barrier-map residual 'MA-1 effectivity' as a named question: no computable criterion via quadratic-character structure on either route (magnitude paper 213, sign here) at toy scale; the averaging identity's effective scope remains non-computable from N; consistent with barriers 4/5. No breakthrough.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3960",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T09:06:21.851457+00:00",
-    "title": "FACT round-75 #1 \u2014 MA1-SIGNED: signed route of MA-1 effectivity dies at both registered criteria (cell agreement 15.07%, CS_z=-52.7; class 48.74% below chance z=-7.74) \u2014 MA-1 computable-effectivity program CLOSED on both routes; Chebyshev/Rubinstein\u2013Sarnak negative skew 84.7% confirmed as named byproduct"
-  },
-  {
-    "consumed_by_exp_id": "c3f8792a",
+    "consumed_by_exp_id": "523b9317",
     "description": "Exp 569 \u00b7 paper 216 \u00b7 assessment v323 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp569_u9_drift_power.py (precision-patched POST-run; stored exp569_result.json is the pre-patch output) \u00b7 seed 20260824 \u00b7 wall 1467.4 s at 76.4 \u00b5s/value.\n\n**Question.** Paper 214 banked a direction-stable sub-1 drift in x\u00b2\u2212N smoothness at band 9 (bitlen-96 balanced semiprimes): \u22125.3% at its primary 1e6 LPF-CDF cut and \u221213.6% at the 1e5 cut, every CI covering 1 but every split-half pointing the same way. Does a fresh independent seed/population at higher pair count replicate the drift downward?\n\n**Role honesty.** Throughput reality (76.4 \u00b5s/val) caps the night at ~1\u00d7 the paper-214 pilot power, NOT the aspirational 10\u201330\u00d7; role reframed PRE-RUN as scoping (documented in-script): this run IS gate G1 (fresh-seed replication) of paper 214's own confirmation protocol; G2 control integrity is satisfied by construction (paired matching + identical tester code path).\n\n**Design.** 128 distinct N (seed 20260824), v = j\u00b2\u2212N for j \u2208 (s, 3s], 150k samples/N \u2192 exactly 19.2M candidate/control pairs. Tester: cumulative segment-primorial gcd chains (strip primes \u22641e5 then \u22641e6). Controls PAIRED per draw \u2014 same bit length, same 3-bit mantissa head, random low bits \u2014 through the IDENTICAL classify() code path. Cluster bootstrap NB=2000 percentile CIs over N-clusters / size-matched pseudo-clusters. Decision cut stays 1e5 per header pre-registration; 1e6 secondary (higher event rate \u2192 better powered, weight disclosed).\n\n**VERDICT: RANDOMNESS-EXTENDED (pre-registered H0 branch), no gate armed:**\n- PRIMARY cut 1e5: ratio CI95 [0.8571, 1.1488], excludes_1 FALSE \u21d2 H0.\n- Secondary cut 1e6 (best powered): r = 0.0005/0.000506 \u2248 0.99, cluster-boot CI95 [0.919, 1.010] over 128 clusters on 19.2M pairs \u2014 tightest interval yet above u\u22489; max CI-edge |r\u22121| = 0.081 tightens paper 214's 0.137 deliverable (H0 deliverable met).\n- POOLED with paper 214's pilot at matched conditions: @1e6 pilot 0.947 [0.8630, 1.0389] vs this 0.99 [0.919, 1.0101] \u2014 mutually consistent, joint point \u2248 0.97 (\u221a2-tightened). The sub-1 drift does NOT replicate downward; residual tension DOWNGRADED from \"banked\" to \"open at reduced weight\". Decisive resolution still needs the 10\u201330\u00d7 power run (queued named follow-up).\n\n**DISPLAY DEFECT disclosed prominently:** the pre-patch writer stored round(r,4), so the ~3e-5 candidate rate prints as stored \"r_cand\": 0.0 and raw hit counts were NOT persisted (unrecoverable post-hoc). True value is CI-pinned to [2.66e-5, 3.56e-5] (= CI \u00d7 rate_ctrl 3.1e-5). Cite CI-implied bounds everywhere; NEVER the stored 0.0. Script precision-patched post-run (raw-count persistence added for any rerun).\n\n**Other ledger catches:** wall overshoot 1467 s vs ~1104 s estimate (candidate j\u00b2\u2212N strips slower than random strips); smoke-leg verdict field is a NaN artifact of the starved-regime bootstrap (<100 non-degenerate resamples \u2192 NaN bounds \u2192 excludes_1 trivially True) \u2014 non-canonical, full-run verdict governs.\n\n**Barrier framing:** scale-smoothness frontier u \u2265 6\u201314; an H0 here STRENGTHENS papers 130/209/214 randomness into the Dickman approach zone through u\u224811.7. No barrier breached, no constant shaved.\n\nArtifacts: exp569_u9_drift_power.py, exp569_result.json (pre-patch canonical), exp569_smoke_result.json, exp569_full.log, exp569_findings.md.\n",
     "domains": [
       "Novelty"
@@ -2049,30 +2034,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #7 \u2014 U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut-1e6 r=0.99 CI [0.919,1.010] covers 1); pooled with paper 214 pilot joint point ~0.97 \u2014 banked tension downgraded to open at reduced weight"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94eeec9f",
     "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 69 (compact cell completing the NET-92/93/94 KV trilogy).\n\n| arm | PPL | dPPL vs f16 control |\n|---|---|---|\n| **K q8_0 / V q4_0** | **7.1194** | **+0.142%** |\n| K q5_1 / V q5_1 | 68.7963 | +867.694% |\n\n**Findings:** (1) The NET-93 role-split prescription is DIRECTLY CONFIRMED: keys @8 bits + values @raw 4 bits = quality-free while halving KV memory (~6 avg bits/element) \u2014 the CPU serving default (-ctk q8_0 -ctv q4_0). (2) The key-side cliff is a TWO-STAGE FALL: free at 8 bits, severely broken (+868%) already at 5 bits, annihilated (+38,000%) at 4; values remain free at every width tested down to raw 4-bit. Key floor bracketed (5, 8]; llama.cpp offers no q6 cache type.\n\nSetup identical to NET-92/93 (llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice). Script ResearchOutput/exp_net94_rolesplit.py; results in ~/f3cache/net94_results.json.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3962",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T09:06:21.854276+00:00",
     "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits \u2014 the serving default; key-side cliff is a two-stage fall (free @8b, +868% @5b, +38,000% @4b) while values stay free to raw 4-bit"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e0c0f360",
     "description": "**Paper 215 \u00b7 exp 568 \u00b7 round-74 #6 \u00b7 assessment v322**\n\nVERDICT: **H3 CONFIRMED (strong form)** \u2014 H1/H0 moot-by-absence.\n\nPaper 159 headlines an ECM self-destruction wall: \"when B1 \u2273 min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] infinite\", with a validity edge B1 \u2272 min(p,q)/2. Exp568 tests that boundary under outcome-separated accounting {found_p, found_q, dead, nothing}.\n\n**Design.** Bitlen-26 q\u226bp stratum (generator nextprime(3p+U[1,200))), n_N=40/cell, grid B1/p \u2208 {0.125, 0.25, 0.5, 0.9, 1.05} \u00d7 arms B2/B1 \u2208 {1 (control), 4, 16}; guarded affine EC ops reused VERBATIM from exp488_true_ecm.py (validated there 10/10 ladder + 100/100 mod-12); true-lcm stage-1 schedule; NEW true difference-stage stage-2. Pre-registration verbatim before any data: H1 slope(log w* vs log(B2/B1)) CI covers 1 / H0 covers 0 / MIXED; H3 ADDED after reading the mechanism sentence, BEFORE data (timing disclosed): the wall is a detection/accounting artifact \u2014 gcd(den,N)==N 'dead' events or missing p-vs-q separation \u2014 not method failure.\n\n**Results (600 trials).**\n- ZERO 'dead' outcomes in the entire grid.\n- Success 1.000 in every cell at B1/p \u2265 0.25; **6/6 cells at 1.000 at B1/p = 0.9 AND 1.05** \u2014 exactly where paper 159 records uncapped E[T] infinite.\n- Only misses: two low-edge cells at B1/p = 0.125 (arm-4 0.875, arm-16 0.95), all misses 'nothing', never 'dead'.\n- No w* exists anywhere \u2192 H1/H0 never arm.\n\n**Mechanism (pre-data note, vindicated).** B1 \u2265 p+1+2\u221ap \u21d2 every Hasse-window order n \u2264 B1 \u21d2 every prime power l^e \u2016 n has l^e \u2264 B1 \u21d2 n | lcm(1..B1) \u21d2 [L]P = O mod p on EVERY curve \u21d2 first guarded inversion with vanishing denominator returns gcd = p: GUARANTEED SUCCESS, not death. Simultaneous degeneracy mod q impossible for q \u226b B1. \"All curves degenerate\" can only have read as death if accounting conflated gcd=p wins with gcd=N losses or lacked p-vs-q separation.\n\n**Structural insight (ledger-grade).** Guarded-affine accounting carries a scale-independent random-collision baseline \u2248 1 \u2212 exp(\u2212c\u00b7B1/p) (#ops ~ 1.44\u00b7B1, per-op hit ~1/p): ~17% predicted at B1/p = 0.125 vs 68% observed found-p share (collision-luck + order-divisibility mixed). Any historical success/E[T] accounting that did not separate collision-hits from order-hits could have manufactured the wall sentence. Named follow-up BEFORE amending paper 159 either way: larger-p rerun with per-op outcome tracing (order-hit vs collision-hit).\n\n**Honest disclosures.** (a) toy bitlen 26; (b) stage-2 arms UNTESTED DEAD CODE this run \u2014 stage 1 succeeded first everywhere, zero s2 outcomes; new difference-stage machinery validated only by smoke buckets + sign-convention note; cross-arm differences at fixed B1 are per-cell RNG drift; (c) inline coordinator implementation after 3\u00d7 agent-channel failures (stall watchdog \u00d72, silent no-write \u00d71); (d) recorder catch: findings.md says \"14/15 cells at 1.000\" but canonical result.json shows TWO sub-1.000 cells (both at B1/p = 0.125) \u2014 JSON canonical, verdict unaffected.\n\n**Barrier framing.** Barrier-8 adjacency (known-method bookkeeping); self-audit genre \u2014 precedent: paper 91 stands / paper 99 retraction handled by side-by-side reconstruction. If the independent follow-up confirms, paper 159's wall sentence gets an AMENDMENT, not a silent rewrite; until then 159 stands as recorded with this audit appended.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/exp568_* ; paper ResearchOutput/NewMathematics/215_EcmStage2Wall.md.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3963",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T09:06:21.855664+00:00",
     "title": "FACT round-74 #6 \u2014 ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separated accounting \u2014 B1 \u2265 p+1+2\u221ap makes every curve succeed, not die (self-audit of paper 159)"
   },
@@ -2131,21 +2118,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T22:46:21.540196+00:00",
     "title": "FACT round-87 #1 \u2014 MIXTURE-BASELINE (exp 588c FINAL): H0 \u2014 u*\u22480.65 excess SURVIVES full divisibility mixture (amp .177\u00b1.043 z=4.11\u2265bar, peak t=0.65 exact, removal 0%) \u2014 composition FLAT in t, rates real but t-independent \u2192 DIVISIBILITY IS A RATE DIAL NOT A POSITION DIAL; NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM; chain 232\u2192241\u2192242 complete; CTRL-B caveat z_cal=1.53<2 disclosed; named follow-up: find the non-divisibility carrier"
-  },
-  {
-    "consumed_by_exp_id": "9524045a",
-    "description": "**exp 595 LARGER-P-ECM-TRACE \u00b7 round-88 #1 \u00b7 paper 244 \u00b7 assessment v351 (count 582)**\n\nFresh seed **20260903** (disjoint from all prior ECM lineages), exp570 machinery VERBATIM,\nn=40/bitlen \u00d7 3 B1fracs {0.125 ceil, 0.5 ceil, 0.9 floor} \u00d7 3 curves, stage-1 only.\nWall **1.5 s** full (240 cells). Pre-registration in module docstring before any data; no amendments.\n\n## Pre-registered verdict\n\n- **H1(a) RATE scale-stability \u2014 FIRES at every fraction**, not just the named 0.125 leg:\n  bitlen 26: 0.65 [.495,.779] / 0.75 [.598,.858] / 0.60 [.446,.736]\n  bitlen 32: 0.75 [.598,.858] / 0.775 [.625,.877] / 0.75 [.598,.858]\n  z-tests p = .329 / .793 / .152; Wilson CIs overlap \u00d73. Rates FLAT in B1frac (0.60\u20130.775) \u2014\n  no dose-response of the collision term anywhere.\n- **H1(b) GEOMETRY early-fire preserved \u2014 FIRES**: KS-vs-Uniform[0,1] REJECTS in all six cells\n  (p \u2264 .002); medians .073\u2013.293 (\u226a .5); tail(norm \u2265 .8) \u2264 13% (\u226a .3); shape deepens with dose\n  exactly as at bitlen 26. <10-hit exclusion clause never triggered in the full run.\n- **H0 REFUTED on both legs** \u2014 registered alternative (rate drop toward per-curve baseline\n  1\u2212exp(\u22121.44\u00b7B1/p) with disjoint CIs, or uniformity/late-fire emerging) did not occur.\n\n## Collision floor subdominant \u2014 two independent attributions\n\n1. First-curve found_p rate at (32, .125) = **.425 [.285,.578] = 2.58\u00d7** the per-curve constant\n   baseline .1647 ((26,.125): 1.97\u00d7).\n2. Pure-collision cross-check: found_q counts **9\u201316** vs found_p **24\u201331** per cell (B1<p\u226aq makes\n   order completion impossible for q) \u2014 order-hits carry the excess.\n\n## Ledger catches (disclosed)\n\n- The (32,.125) cell CI technically CONTAINS the exact per-N 3-curve baseline mean **0.6124**\n  (flag value \"contains\"); attributed to order-hits not luck via first-curve view + found_q.\n- Verdict-flag KEY names the constant-formula baseline 0.4191 while the CODE tests 0.6124\n  (label/code mismatch, `exp595_largep_trace.py` line 346) \u2014 runs AGAINST the headline since\n  0.4191 IS excluded by the same CI.\n- Catalog-numbering slip in findings header (\"chain 215\u2192236\u2192238\") \u2014 shifted numbers; true lineage\n  by title/exp_id is **215 \u2192 218 \u2192 244**, corrected in paper 244.\n- Early-fire operationalization fixed pre-data from exp570's qualitative result only; raw norms\n  shipped for re-reads. Smoke correctly read insufficient_hits (plumbing only).\n\n## Consequence \u2014 chain CLOSED\n\nPapers **215 (ECM-STAGE2-WALL) \u2192 218 (COLLISION-VS-ORDER-TRACE) \u2192 244 (this)** complete the arc:\nthe recorded destruction wall does not exist under outcome-separated accounting; low-B1 success is\nnot collision luck but order-completion firing early; and now that picture is SCALE-STABLE with no\ncollapse toward the collision baseline through bitlen 32. Practical reading: useful firing inside\nthe first ~10\u201330% of the schedule (medians \u2264 .29).\n\n## Barrier validation\n\nNo breakthrough claimed \u2014 mechanism-attribution chain closed on the METHOD side. Untouched: residue\ncap 4/3; position 5.19\u00d7; external-hint laws; quantum frontier closed; four-class closure;\nspike-origin arc; .2346 provenance flag still travels; paper 242 entry single-seed-unconfirmed (#391).\nNamed next honest question: early-fire persistence where B1/p must shrink (u \u2265 6\u201314 directive).\nOpen frontiers unchanged: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1\neffectivity.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp595_{largep_trace.py, smoke.log,\nsmoke_result.json, result.json}` + `exp595_findings.md`; paper\n`ResearchOutput/NewMathematics/244_LargePTrace.md`; notebook Part 286.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4075",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T23:37:37.760304+00:00",
-    "title": "FACT round-88 #1 \u2014 LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED \u2014 exp570's picture REPLICATES at bitlen 32 \u2014 cell found_p rates scale-stable at EVERY fraction (26: .65/.75/.60 vs 32: .75/.775/.75; z p=.33/.79/.15, CIs overlap), KS rejects uniformity ALL SIX cells (p\u2264.002; medians .073\u2013.293, late-tail \u226413%) \u2014 collision floor SUBDOMINANT quantified (first-curve 2.6\u00d7 baseline at (32,.125); found_q 9\u201316 vs found_p 24\u201331) \u2014 CHAIN CLOSED papers 215\u2192218\u2192244: low-B1 guarded-affine success = scale-stable order-completion firing early, no collapse toward 1\u2212exp(\u22121.44\u00b7B1/p) through bitlen 32"
   },
   {
     "consumed_by_exp_id": "10b0e429",
@@ -3247,6 +3219,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7ae2917a (Q=0.820), which proved 63 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define a committed local-oracle protocol and prove that perfect hiding of unopened coordinates plus perfect simulation of opened coordinates yields perfect honest-verifier zero knowledge for the full constant-query verifier transcript.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_7ae2917a_803a078f",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "7ae2917a",
+    "status": "available",
+    "timestamp": "2026-08-27T09:50:06.745956+00:00",
+    "title": "Deepening: Composition of PCP locality with commitment hiding"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domains": [
       "NumberTheory"
@@ -4203,38 +4189,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Algebra"
-    ],
-    "id": "seed_170",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "NumberTheory"
-    ],
-    "id": "seed_181",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -8670,6 +8624,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Multi-graded generic initial ideals, regularity, and the optimal colorful fractional Helly theorem for $d$-Leray complexes' and formalize its key results. Abstract: A celebrated result of Bayer and Stillman from 1987 states that for a homogeneous ideal $I$ of a polynomial ring $S$, the regularities of $S/I$ and $S/\\textrm{GIN}(I)$ are the same under the reverse lexicographic monomial ordering, where $\\textrm{GIN}(I)$ is the generic initial ideal. If $R$ is a polynomial ring whose variables are subdivided into disjoint blocks of variables $X_1,\\dots,X_c$, there is a natural multi-grading on $R$, and one can analogously define a multi-graded version of the generic initial ideal for any multi-homogeneous ideal $I$ of $R$. However, the full strength of the Bayer--Stillman Theorem fails in the multi-graded setting; there are multi-homogeneous ideals $I$ such that the regularities are not preserved after passing to the multi-graded generic initial ideal no matter the choice of monomial ordering. We prove lower bounds on the regularity of $R/I$ in terms of almost regular sequences of the multi-graded generic initial ideal of $I$ restricted to each block ",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4317",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.25891v1",
+    "status": "available",
+    "timestamp": "2026-08-27T09:50:36.531119+00:00",
+    "title": "ArXiv paper: Multi-graded generic initial ideals, regularity, and the optimal colorful fractional Helly theorem for $d$-Leray complexes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Asymptotic enumeration of minimally transitive permutation groups' and formalize its key results. Abstract: We prove that Pyber's upper bound $2^{O(n\\log(n))}$ for the number of minimally transitive subgroups of $S_n$ is best possible along the powers of every fixed prime, even when the groups are counted up to permutational isomorphism. As a byproduct, our construction shows that, along the powers of every fixed prime, the maximum order of a minimally transitive permutation group of degree $n$ is $2^{\u0398(n)}$. For completeness, we also present Pyber's previously unpublished proof of his upper bound. We further deduce that the numbers of labelled vertex-transitive graphs and digraphs of order $n$ are both $2^{\u0398(n\\log(n))}$, and discuss the implications of our results for approaches to the McKay--Praeger conjecture.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4318",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.25792v1",
+    "status": "available",
+    "timestamp": "2026-08-27T09:50:39.695105+00:00",
+    "title": "ArXiv paper: Asymptotic enumeration of minimally transitive permutation groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -10525,17 +10509,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Hilbert 12: Kronecker-Weber Generalization"
   },
   {
-    "consumed_by_exp_id": "60d30491",
+    "consumed_by_exp_id": "",
     "description": "Cycle 17b35eaf (Q=0.680) proved 3 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of",
     "domains": [
       "Novelty"
     ],
     "id": "sorry_fill_17b35eaf_0ca3803e",
-    "phase": "A",
     "priority_score": 0.73012,
     "research_mode": "team",
     "source_exp_id": "17b35eaf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-02T23:21:01.004895+00:00",
     "title": "Close Proofs: Temporal Logic of Proofs: When You Prove Something Matters"
   },
@@ -15222,14 +15205,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Depth-Hypotenuse Bracket for the Berggren Tree"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70cece6b",
     "description": "Budget monotonicity is proved; the missing quantitative law is concavity, i.e. that oracle retention gains are the sorted utilities and hence diminishing. This converts a fixed policy gap into an equivalent multiplicative budget, making 'x points below oracle' comparable across budgets.\n\nWith nonnegative utilities the oracle retention f(B) satisfies f(B+1) - f(B) >= f(B+2) - f(B+1) for all B < n, and f(B+1) - f(B) equals the (B+1)-st largest utility.\n\nProve that oracle value at budget B equals the sum of the B largest utilities by iterating the exchange kernel, then read off increments; test against the measured 32/64/128 retention rows.\n\nThe policy gap can be quoted as an equivalent budget multiplier, a scale-free way to compare cheap policies.\n\nRetention gains are not governed by the utility order statistics, so per-budget measurement cannot be extrapolated.",
     "domains": [],
     "id": "fd_3805",
+    "phase": "A",
     "priority_score": 0.5929166666666668,
     "research_mode": "team",
     "source_exp_id": "a303e67d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T05:46:38.789608+00:00",
     "title": "Concavity of Oracle Retention in the Budget"
   },
@@ -16306,6 +16290,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a semiprime N = pq with B below p, hits at q cannot come from order completion; the exact rate there is 1/m per point. We conjecture the total stage-1 success rate decomposes as the order-completion rate plus an additive error bounded by c B / q, making the collision floor a rigorously controlled term rather than a heuristic.\n\nThere is an absolute constant c such that for all semiprimes N = pq with B < p < q, |success rate - order-completion rate| <= c B / q.\n\nFormalize the two-modulus firing event as a product count over Z/m_p x Z/m_q and bound the q-side contribution using firing_count_eq_one_of_all_prime_factors_gt.\n\nThe collision model is retired as an explanatory mechanism at low B1, with an explicit error bar.\n\nThere is a regime where collisions contribute at the same order as order completion, and the mechanism attribution must be made scale-dependent.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4316",
+    "priority_score": 0.5646683179548131,
+    "research_mode": "team",
+    "source_exp_id": "9524045a",
+    "status": "available",
+    "timestamp": "2026-08-27T09:50:16.821480+00:00",
+    "title": "Additive Bound on the Collision Floor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Numerically a(n) \u2264 p(n) for all n \u2264 200. The Durfee square identity expresses p(n) as the same layered sum as a(n) but with Euler products truncated one step later, giving coefficientwise domination. Formalizing this would also produce a Lean proof of the Durfee square identity itself.\n\nFor every n, a(n) \u2264 p(n); more precisely p(n) = \u03a3_{k\u00b2\u2264n} \u03a3_{i+j=n-k\u00b2} p_{\u2264k}(i) p_{\u2264k}(j), and a(n) is the same sum with p_{\u2264k-1} in place of p_{\u2264k}.\n\nFormalize the Durfee square bijection between partitions of n and triples (k, \u03bb, \u03bc) with \u03bb, \u03bc partitions with parts \u2264 k and |\u03bb|+|\u03bc| = n-k\u00b2, then compare layer by layer using the already proved pb b m \u2264 pb (b+1) m.\n\nSquare-core stacks embed quantitatively inside partitions, and every upper bound for p(n) transfers to a(n).\n\nSome layer of the stack decomposition overshoots its Durfee counterpart, which would reveal an unexpected overcounting in the stack model.",
     "domains": [
       "Combinatorics",
@@ -16516,6 +16515,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For E(F_p) isomorphic to Z/n1 x Z/n2 the stage-1 firing count is the product of the two smooth parts, which is at least the cyclic count. We conjecture the average multiplicative gain is exactly the torsion Euler factor over the primes dividing gcd(n1,n2).\n\nAveraged over curves with point group Z/n1 x Z/n2 of fixed order m, the gain gcd(n1,k)gcd(n2,k)/gcd(m,k) tends to the product over primes q dividing gcd(n1,n2) of (1 + 1/q).\n\nCompute the gain exactly for all factorizations m = n1 n2 with n1 dividing n2, weighted by the number of curves realizing each group; compare with the conjectured Euler product.\n\nCurve selection favouring small-prime torsion has a quantified, provable stage-1 advantage.\n\nThe rank-two advantage is not captured by torsion primes alone and depends on finer curve statistics.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4314",
+    "priority_score": 0.5643821278613091,
+    "research_mode": "team",
+    "source_exp_id": "9524045a",
+    "status": "available",
+    "timestamp": "2026-08-27T09:50:15.770887+00:00",
+    "title": "Torsion Gain of Rank-Two Point Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved two-sided bounds 2*m*j <= k^2 + 2*m and k^2 <= 2(u+k)*j pin the Fermat frontier offset at Theta(k^2/sqrt N). Promote this to an exponent law in terms of k = N^alpha, making the stipulated oracle cost laws into theorems.\n\nFor N = u(u+2k) with k = N^alpha, the anchored ascent offset satisfies j = Theta(N^(2*alpha - 1/2)) for 1/4 < alpha < 1/2, and j = O(1) for alpha <= 1/4.\n\nWrap the two proved inequalities with Nat.sqrt asymptotics and instantiate at k = N^alpha; verify numerically on semiprime families with prescribed imbalance.\n\nFermat-window cost becomes a theorem-level baseline against which any claimed channel must be measured.\n\nOne of the two inequalities is not tight, revealing extra structure in the anchor correction N - m^2.",
     "domains": [
       "Pythagorean",
@@ -16606,6 +16620,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The firing position equals pi(largest prime factor of the powersmooth part). We conjecture that the expected normalized position decays like 1/u where u = log p / log B, so early fire survives arbitrarily large smoothness deficits. This is the named open question of the experimental chain.\n\nFor orders m in the Hasse interval of p with nontrivial B-powersmooth part, the mean of pi(lpf(gcd(m,k(B))))/pi(B) is O(1/u) with u = log p / log B.\n\nCensus the exact position functional over Hasse intervals for growing p at fixed u (the definitions of ECMStage1FiringRate are computable), then formalize the upper bound conditional on a Dickman-type input for the largest part of a smooth number.\n\nLow-B1 ECM success is early-firing at every scale, justifying schedule truncation as a practical stage-1 optimization.\n\nEarly fire is a small-u artefact and truncation loses success probability at cryptographic scales.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4313",
+    "priority_score": 0.5641315335505794,
+    "research_mode": "team",
+    "source_exp_id": "9524045a",
+    "status": "available",
+    "timestamp": "2026-08-27T09:50:15.273380+00:00",
+    "title": "Early-Fire Persistence at Large Smoothness Deficit"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The image principle proved here says reflection depth only depends on, and is monotone in, the accessibility image of a tag. The conjecture upgrades this to an exact formula: the reflection depth is the least modal depth at which the image fails to realize all types of the model, turning a proof-theoretic invariant into a model-theoretic one and explaining every bound obtained so far.\n\nFor a finite frame theory frameSys R V N, the reflection depth of tag i equals the least k such that some world of the model has a depth-k modal type not realized in the image Im_i; moreover any monotone assignment of depths to the inclusion poset of images, bounded by the heights, is realizable by a suitable valuation.\n\nDefine depth-k types in Lean as the truth-set classes of the finitely many formulas of box depth <= k, prove that each type of a finite model is definable by a formula of that depth, and derive the equality; then attempt the realizability half on small posets by explicit construction.\n\nAll bounds on reflection depth become corollaries of a single counting principle, and the invariant is manifestly bisimulation-invariant.\n\nDefinability of types fails at some depth, revealing a genuinely proof-theoretic residue in DepthReflection that is not captured by the semantics.",
     "domains": [
       "Combinatorics",
@@ -16633,6 +16662,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T17:46:45.270387+00:00",
     "title": "Certificate Complexity of the Moonshine Product Equation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The firing-position CDF of ECM stage 1 is the gcd staircase, a step function with at most omega(m) jumps, while the uniform comparison on the prime schedule has pi(B) steps. We conjecture an explicit sup-distance floor forced purely by the jump budget. This converts the experimental KS rejections into an unconditional inequality.\n\nFor m nonzero and B with pi(B) > omega(m), sup_L |gcd(m,k(B,L))/gcd(m,k(B,B)) - pi(L)/pi(B)| >= (pi(B) - omega(m)) / (2 pi(B) (omega(m)+1)).\n\nUpgrade ECMStage1.exists_flat_run from a flat fibre to a flat interval of the schedule, bound the sup-distance on that interval from below by half its uniform increment, and verify sharpness numerically on orders with evenly spread prime divisors.\n\nKS rejection of uniformity for stage-1 firing positions becomes a theorem rather than a statistical finding, for every order and every bound.\n\nThere exist orders whose gcd staircase tracks the uniform schedule closely, and the observed non-uniformity is a property of the smooth-order distribution rather than of the staircase mechanism.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4312",
+    "priority_score": 0.5641046101948811,
+    "research_mode": "team",
+    "source_exp_id": "9524045a",
+    "status": "available",
+    "timestamp": "2026-08-27T09:50:14.770182+00:00",
+    "title": "Kolmogorov\u2013Smirnov Floor for GCD Staircases"
   },
   {
     "consumed_by_exp_id": "",
@@ -17413,6 +17457,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T13:18:09.444704+00:00",
     "title": "Tilt Spectrum of Power-Law Ratio Generators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The firing count saturates at m exactly when m is B-powersmooth, and the exact jump formula makes the whole staircase explicit. We conjecture that reaching half the maximum requires only a square-root-sized bound for almost all orders, quantifying the diminishing return of raising B1.\n\nFor all but O(x / log x) of the m <= x, the least B with 2 gcd(m,k(B)) >= m satisfies B <= sqrt(max prime power divisor of m).\n\nCompute the half-saturation bound directly from the exponent vector using gcd_stage1_jump for all m up to a few million, and measure the exceptional set.\n\nStage-1 bounds well below the powersmoothness threshold already capture half the achievable success, a concrete cost-model statement.\n\nHalf-saturation is governed by the top prime power itself and there is no cheap partial regime.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4315",
+    "priority_score": 0.5635033219176204,
+    "research_mode": "team",
+    "source_exp_id": "9524045a",
+    "status": "available",
+    "timestamp": "2026-08-27T09:50:16.266534+00:00",
+    "title": "Half-Saturation Threshold of the Smoothness Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -38004,6 +38063,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that `fiberCount_congr` is the only place perfection is\nused; replacing the randomness bijection by an `\u03b5`-approximate matching should\ngive `\u03b5\u00b7|Q|`-closeness of transcripts, the standard \"hiding \u21d2 ZK\" reduction, but\nwith an explicit, verified constant. **Why now?** With the perfect case proven,\nthe approximate case is a purely quantitative perturbation of one lemma.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Locality-Graded Leakage Bound for Constant-Query Commitments\",\n    \"domain\": \"Cryptography\",\n    \"description\": \"Quantify how much a committed local-oracle protocol can leak in terms of its query complexity. The fibrewise count of a transcript depends on the proof string only through its q-marginal, so the statistical distance between real and simulated transcripts is bounded by the distance between q-marginals of the proof distribution. This interpolates continuously between perfect zero knowledge and full leakage.\",\n    \"conjecture\": \"For a committed local-oracle protocol with perfectly hiding commitment, the total variation distance between the real transcript distribution and the simulated one equals the maximum over verifier coins r of the total variation distance between the distribution of proof|_{Q r} and the simulator's opened view.\",\n    \"test\": \"Replace the equality in PerfectlySimulatesOpened by an l1 bound and re-run the fibrewise argument of realCount_mul_card_sim, summing |real - sim| over transcripts.\",\n    \"if_true\": \"Gives a verified, tight 'locality implies bounded leakage' theorem and an exact criterion for approximate zero knowledge of PCP compilers.\",\n    \"if_false\": \"The commitment must contribute additional leakage beyond the q-marginal, which would expose a gap in the fibre decomposition.\",\n    \"proof_strategy\": \"Sum the fibrewise identity over transcripts with absolute values; the hiding bijection preserves the commitment fibres, so only the marginal terms survive.\",\n    \"catalog_references\": [\"Catalog.MachineLearning.CommittedLocalOracleZK\", \"Catalog.Shared.ZeroKnowledge.PCPBridge\"]\n  },\n  {\n    \"title\": \"Sharp Transitivity Criterion for Alphabet Rerandomization\",\n    \"domain\": \"Cryptography\",\n    \"description\": \"Characterize exactly which prover rerandomization groups yield perfect zero knowledge for a q-query constraint PCP. The 3-colouring case works because S3 acts sharply transitively on ordered pairs of distinct colours, and cyclic shifts provably fail. The conjecture upgrades these two data points to an iff.\",\n    \"conjecture\": \"Let a q-query PCP over a finite alphabet A have constraints with satisfying-assignment sets R_r. Prover rerandomization by a subgroup G of Sym(A) gives perfect HVZK (with a witness-independent simulator) if and only if G acts transitively on R_r for every constraint r.\",\n    \"test\": \"Formalize the general oracle with prover randomness G and prove both directions with the fibre-counting machinery; instantiate at 3-colouring (S3, transitive: proved) and c",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4311",
+    "priority_score": 0.44291601900995053,
+    "research_mode": "team",
+    "source_exp_id": "7ae2917a",
+    "status": "available",
+    "timestamp": "2026-08-27T09:49:52.889604+00:00",
+    "title": "From perfect to computational hiding: a quantitative compiler"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Status update.**  The composite-`m` attainment conjectured earlier in this\nthread is now a theorem (`extremal_collision_value_general`): the mixture of a\nuniformly random bijection (mass `1 - 1/m`) with a uniformly random constant\n(mass `1/m`) is *exactly* `2`-universal for every `m` and attains `1/m`.  What\nremains open is whether the extremal family is *strongly* `2`-universal.\n\n**Conjecture.**  For every `m \u2265 2` the bijection\u2013constant mixture is pairwise\nindependent: `P(h x = u, h y = v) = 1/m\u00b2` for all `u, v` and all distinct keys\n`x, y`.  Consequently the extremal value `1/m` is attained inside the class of\nstrongly `2`-universal families for every `m`, not only for primes.\n\nThe key insight is that pairwise independence for the mixture reduces to the\npermutation count `|{\u03c3 : \u03c3 x = u, \u03c3 y = v}| = (m-2)!` for `u \u2260 v` together with\nthe vanishing of the bijection branch on the diagonal, i.e. to elementary\ncounting rather than to field structure; the prime hypothesis in\n`affine_pairwiseIndependent` is an artefact of the construction.\n\n**Why now?**  `mix_exactly2Universal` and `mixLaw_prob_constant_branch` already\nreduce every mixture probability to a pair of `Finset` cardinalities, so only\nthe permutation counts are missing.\n\n---",
     "domains": [
       "Combinatorics",
@@ -38106,6 +38180,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T16:02:11.059531+00:00",
     "title": "Horocycle height as a group cocycle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the product of two committed local-oracle protocols\nhas transcript counts equal to the product of the counts, so the counting proof\ncomposes without any hybrid argument or slack. **Why now?** The `Fintype.piFinset`\ncomputation `prodAccept_card` in `Shared/ZeroKnowledge/PCPBridge.lean` already\nsupplies exact parallel repetition for *soundness*; pairing it with `perfect_hvzk`\nwould give a single theorem \"k-fold repetition: soundness `exp(-k/|E|)`, query\ncomplexity `2k`, and still perfect zero knowledge\".",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4310",
+    "priority_score": 0.44226757086780666,
+    "research_mode": "team",
+    "source_exp_id": "7ae2917a",
+    "status": "available",
+    "timestamp": "2026-08-27T09:49:52.178971+00:00",
+    "title": "Zero knowledge is preserved by parallel repetition, exactly"
   },
   {
     "consumed_by_exp_id": "",
@@ -41575,15 +41664,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cram\u00e9r\u2013Rao as Mathlib Cauchy\u2013Schwarz* (previously Conjecture 3)."
   },
   {
-    "consumed_by_exp_id": "86a4e9bb",
+    "consumed_by_exp_id": "",
     "description": "If `F` has an abundant element `x` and `x \u2208 F.sup id`, then `x` remains abundant after adjoining `F.sup id` to `F`. The parity of `F.card` makes this claim directly falsifiable and should reveal the exact additional hypothesis needed if it fails.",
     "domains": [],
     "id": "fd_2690",
-    "phase": "A",
     "priority_score": 0.4024871794871795,
     "research_mode": "team",
     "source_exp_id": "7edbd52d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:25:33.397781+00:00",
     "title": "Adjoining the top member preserves a witness"
   },
@@ -46177,19 +46265,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berlekamp\u2013Massey"
   },
   {
-    "consumed_by_exp_id": "7ae2917a",
-    "description": "Define a committed local-oracle protocol and prove that perfect hiding of unopened coordinates plus perfect simulation of opened coordinates yields perfect honest-verifier zero knowledge for the full constant-query verifier transcript.",
-    "domains": [],
-    "id": "fd_2630",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "132832ee",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:14.436028+00:00",
-    "title": "Composition of PCP locality with commitment hiding"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Parameterize the coefficients by `N` and prove the standard first terms of the critical exponents uniformly in the admissible range of `N`.",
     "domains": [],
@@ -46867,5 +46942,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T09:53:03.688613+00:00",
     "title": "Non-cartesian monoidal products."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that `zkSim_perfectly_simulates` used nothing about\ncolourings except that a group `G \u2264 Sym(A)` acts *sharply transitively on the set\nof admissible opened views*; conversely `cyclic_not_simulatable` shows failure of\nthat hypothesis kills simulation. **Why now?** Both halves are formalized in this\ncycle for `A = ZMod 3`, `q = 2`; the general conjecture is that a `q`-query\nconstraint PCP over alphabet `A` with prover rerandomization by `G` is perfect\nHVZK **iff** `G` is transitive on each constraint's satisfying-assignment set \u2014\nan exact iff, provable with the same fibre machinery.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4309",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "7ae2917a",
+    "status": "available",
+    "timestamp": "2026-08-27T09:49:51.698341+00:00",
+    "title": "Group-theoretic characterization of alphabet rerandomization"
   }
 ];
