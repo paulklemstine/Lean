@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-08-28T14:27:26Z",
-  "count": 25,
+  "archived_at": "2026-08-28T18:43:50Z",
+  "count": 26,
   "directions": [
     {
       "id": "fd_3695",
@@ -988,6 +988,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 307
+    },
+    {
+      "id": "fd_3741",
+      "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-44 fails); acceleration amplifies with scale (19x vs 4x); size relationship INVERTS past phase transition",
+      "description": "## NET-79 — limited-memory axis, round 30 (paper 163, ResearchOutput/exp_net79_1p5b4096.py, /tmp/net79.log)\n\n**Verdict name: THE-ACCELERATION-IS-UNIVERSAL.**\n\n### Result\nThe 1.5B's first ctx=4096 cell (fine grid; gate identical to NET-55/65/66):\n\n| k | 16 | 20 | 24 | 28 | 36 | 44 | 56 |\n|---|---|---|---|---|---|---|---|\n| retained | 0.960 ✗ | 0.966 ✗ | 0.972 ✗ | 0.974 ✗ | 0.977 ✗ | 0.980 ✗ | **0.985 ✓** |\n\n**k\\*(1.5B@4096) = 56.**\n\n- **P1 REFUTED**: the shift does not delay the acceleration.\n- **P2 CONFIRMED dramatically**: the acceleration hits all scales — 56 ≥ 48.\n- **P3 REFUTED**: no intermediate landing.\n\n### The complete two-scale × four-context table\n\n| scale | @512 | @1024 | @2048 | @4096 | increments |\n|---|---|---|---|---|---|\n| 0.5B | 16 | 20 | 24 | **40** | +4, +4, **+16** |\n| 1.5B | 16 | 16 | 18 | **56** | 0, +2, **+38** |\n\nThe increments tell the story: the 0.5B accelerates from +4 to +16 (4×), while the 1.5B accelerates from +2 to +38 (**19×**). Scale doesn't just fail to delay the acceleration — it AMPLIFIES it. At short contexts the 1.5B needs fewer or equal keys; at 4096 it needs MORE (56 vs 40). The size relationship INVERTS past the phase transition.\n\n### Deployment consequence\nFor agentic workloads: bigger models are more memory-efficient per key at ≤2048 context but LESS efficient at ≥4096. Budget tables must include both scale AND context as independent parameters with a non-monotone interaction.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean — first 1.5B 4096 cell; (c) confronted — limits: 2 windows (VRAM-bound), bf16 numerics, one corpus stated; (d) clean; (e) deterministic baseline-replicating (0.4937); (f) clean — ALL_DONE_NET79; (g) fair — same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nFine grid between 44 and 56; crossover localization; domain-jump @4096; 7B quantized-offload cell.\n\nNow 79 network experiments. Assessment v79. Paper 163.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "f45042dc",
+      "timestamp": "2026-08-22T20:41:46.046363+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.5,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-24T02:01:06.569848+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 321
     }
   ]
 }

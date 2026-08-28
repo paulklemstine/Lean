@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-28T14:27:38.323020+00:00",
+  "last_updated": "2026-08-28T18:44:14.506109+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -69646,6 +69646,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-28T14:27:37.996933+00:00",
       "title": "FACT round-74 #6 \u2014 ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separ"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 15348.16453576088,
+      "end_time": 1787942559.4834797,
+      "files_integrated": 4,
+      "job_id": "523b9317",
+      "outcome_quality": 0.76,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.76,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.517,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.76,
+        "novelty": 0.76,
+        "proof_depth": 0.76,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787927211.318944,
+      "strategy_count": 0,
+      "theorem_count": 153,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 135,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-28T18:44:14.197669+00:00",
+      "title": "FACT round-74 #7 \u2014 U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut"
     }
   ]
 }

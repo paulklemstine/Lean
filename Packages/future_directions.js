@@ -1966,16 +1966,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #2 \u2014 ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor information (max |z| +2.29, MI \u2264 0.09 bits vs 1\u20133-bit residue dials); its 2.0\u00d7 read beats the 4/3 cap ONLY as the N-invariant parity skip (paired z vs fixed dial = 0.0) \u2014 constant-shave, not a barrier event; triplet-tree campaign CLOSED"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46eb6b5a",
     "description": "**FACT round-74 #1 \u00b7 exp 565 \u00b7 paper 210 \u00b7 seeds 20260824/20260825 \u00b7 wall 55.8 s**\n\nQuestion: is the oracle navigation-sensor peak of paper 197 \u2014 I(1{d\u2264B}; b\u2081) = 0.479797 bits at B = 22758 (hit-rate 0.2053) \u2014 realizable by any N-computable query policy, or only by factor-conditioned posteriors (barrier 6)?\n\nFrame reused verbatim from exp549; budget = distinct information-bearing queries over a 295-item menu; discriminative policies fit on a labeled train split, evaluated test-time N-only; two seeds; MI bias-corrected.\n\n**Reproduction gate: PASS BIT-EXACTLY.** Seed-20260824 population regenerated from exp549's code path matches all 11 published fine-grid points to the last digit (peak delta = 0.000000). Fresh seed B: peak 0.4948 at the same B = 22758.\n\n**Pre-registered verdict (rules verbatim from exp565_prereg.json): H1 false, H2 not triggered \u2192 GAP-PARTIAL.**\n- Lenient pooled crediting: ADAPTIVE-NB/BATTERY realize 0.167\u20130.172 bits = **33.8\u201335.9% of peak**, credited on seed A only.\n- STRICT within-logN-strata crediting: **0% for EVERY N-only policy on BOTH seeds.**\n- No policy \u2265 50% anywhere; sham clean (max raw 0.0020 bits, credited 0).\n\n**Mechanism \u2014 disclosed post-hoc amendment A1 (documented separately from the pre-registered verdicts):** the entire lenient signal is the between-magnitude-strata population base-rate channel created by the population design (support-edge coupling in indep/unilog, q \u2264 2\u00b2\u00b2 truncation in ratio), read out by parabola-mirror ensembles: PARONLY-battery \u2248 full battery (0.161\u20130.167 vs 0.164\u20130.172); MODONLY residues \u2248 0 (0.0008\u20130.0032 \u2014 paper 81's seal holds jointly); pooled z +118..+128 stable but dead within strata (z_within32 \u2264 2.3); flat in B past ~64 queries (class exhausts at 295).\n\nDecisive split: within-strata geometric excess carried by the ORACLE = **0.3634\u20130.3687 bits = 73.5\u201376.8% of peak** (z 82\u201390); best N-only policy = **\u2264 0.0018 bits = 0.25\u20130.50%** of it. FULL-ORACLE anchor hint=b\u2081: 0.9563\u20130.9627 bits \u2248 200% of peak.\n\n**Answer: the peak remains UNREALIZED.** It splits into ~74\u201377% within-strata geometry + ~23\u201326% population-prior slice; realizing 1{d \u2264 B} requires d = M \u2212 isqrt(N) (median d = 215782 against menu exhaustion at 295 queries; a full Fermat scan at peak budget misses 79.5% of samples).\n\n**Barriers:** #6 CIRCULARITY CONFIRMED AND QUANTIFIED (gap = 73\u201377% of peak \u2014 first quantified circularity measurement). #2 does NOT seal b\u2081 a priori (p\u2194q-symmetric via max/min; residue null EMPIRICAL, extends paper 81 to joint NB resolution). #4/#5 consistent. #1/#3/#7/#8 unengaged.\n\nLedger: one disclosed amendment cycle, none adverse; pre-registered rules still evaluated verbatim. Honest limit: the ~24% between-strata slice is a property of this lab population's size-ratio coupling, not of semiprimes generally.\n\nThis closes the \"unrealized 0.48-bit oracle bound\" face of the Berggren triplet-tree \u00d7 energy-spectrum campaign (rounds 70\u201372, papers 192\u2013197) \u2014 a strengthening of closure, not a breakthrough. Paper: ResearchOutput/NewMathematics/210_OracleRealizationGap.md.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3951",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T07:22:53.235459+00:00",
     "title": "FACT round-74 #1 \u2014 ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-computable policy (strict crediting 0% both seeds); barrier-6 circularity quantified at 73-77% of peak"
   },
@@ -2006,21 +2007,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T07:22:53.238419+00:00",
     "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
-  },
-  {
-    "consumed_by_exp_id": "523b9317",
-    "description": "Exp 569 \u00b7 paper 216 \u00b7 assessment v323 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp569_u9_drift_power.py (precision-patched POST-run; stored exp569_result.json is the pre-patch output) \u00b7 seed 20260824 \u00b7 wall 1467.4 s at 76.4 \u00b5s/value.\n\n**Question.** Paper 214 banked a direction-stable sub-1 drift in x\u00b2\u2212N smoothness at band 9 (bitlen-96 balanced semiprimes): \u22125.3% at its primary 1e6 LPF-CDF cut and \u221213.6% at the 1e5 cut, every CI covering 1 but every split-half pointing the same way. Does a fresh independent seed/population at higher pair count replicate the drift downward?\n\n**Role honesty.** Throughput reality (76.4 \u00b5s/val) caps the night at ~1\u00d7 the paper-214 pilot power, NOT the aspirational 10\u201330\u00d7; role reframed PRE-RUN as scoping (documented in-script): this run IS gate G1 (fresh-seed replication) of paper 214's own confirmation protocol; G2 control integrity is satisfied by construction (paired matching + identical tester code path).\n\n**Design.** 128 distinct N (seed 20260824), v = j\u00b2\u2212N for j \u2208 (s, 3s], 150k samples/N \u2192 exactly 19.2M candidate/control pairs. Tester: cumulative segment-primorial gcd chains (strip primes \u22641e5 then \u22641e6). Controls PAIRED per draw \u2014 same bit length, same 3-bit mantissa head, random low bits \u2014 through the IDENTICAL classify() code path. Cluster bootstrap NB=2000 percentile CIs over N-clusters / size-matched pseudo-clusters. Decision cut stays 1e5 per header pre-registration; 1e6 secondary (higher event rate \u2192 better powered, weight disclosed).\n\n**VERDICT: RANDOMNESS-EXTENDED (pre-registered H0 branch), no gate armed:**\n- PRIMARY cut 1e5: ratio CI95 [0.8571, 1.1488], excludes_1 FALSE \u21d2 H0.\n- Secondary cut 1e6 (best powered): r = 0.0005/0.000506 \u2248 0.99, cluster-boot CI95 [0.919, 1.010] over 128 clusters on 19.2M pairs \u2014 tightest interval yet above u\u22489; max CI-edge |r\u22121| = 0.081 tightens paper 214's 0.137 deliverable (H0 deliverable met).\n- POOLED with paper 214's pilot at matched conditions: @1e6 pilot 0.947 [0.8630, 1.0389] vs this 0.99 [0.919, 1.0101] \u2014 mutually consistent, joint point \u2248 0.97 (\u221a2-tightened). The sub-1 drift does NOT replicate downward; residual tension DOWNGRADED from \"banked\" to \"open at reduced weight\". Decisive resolution still needs the 10\u201330\u00d7 power run (queued named follow-up).\n\n**DISPLAY DEFECT disclosed prominently:** the pre-patch writer stored round(r,4), so the ~3e-5 candidate rate prints as stored \"r_cand\": 0.0 and raw hit counts were NOT persisted (unrecoverable post-hoc). True value is CI-pinned to [2.66e-5, 3.56e-5] (= CI \u00d7 rate_ctrl 3.1e-5). Cite CI-implied bounds everywhere; NEVER the stored 0.0. Script precision-patched post-run (raw-count persistence added for any rerun).\n\n**Other ledger catches:** wall overshoot 1467 s vs ~1104 s estimate (candidate j\u00b2\u2212N strips slower than random strips); smoke-leg verdict field is a NaN artifact of the starved-regime bootstrap (<100 non-degenerate resamples \u2192 NaN bounds \u2192 excludes_1 trivially True) \u2014 non-canonical, full-run verdict governs.\n\n**Barrier framing:** scale-smoothness frontier u \u2265 6\u201314; an H0 here STRENGTHENS papers 130/209/214 randomness into the Dickman approach zone through u\u224811.7. No barrier breached, no constant shaved.\n\nArtifacts: exp569_u9_drift_power.py, exp569_result.json (pre-patch canonical), exp569_smoke_result.json, exp569_full.log, exp569_findings.md.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3961",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T09:06:21.852886+00:00",
-    "title": "FACT round-74 #7 \u2014 U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut-1e6 r=0.99 CI [0.919,1.010] covers 1); pooled with paper 214 pilot joint point ~0.97 \u2014 banked tension downgraded to open at reduced weight"
   },
   {
     "consumed_by_exp_id": "1d522b88",
@@ -4105,35 +4091,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that for any countable first-order theory, the number of countable models is either countable or 2^\u2135\u2080. Formalize Morley's theorem and the topological version.",
-    "domains": [
-      "Logic"
-    ],
-    "id": "seed_235",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Vaught's Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Characterize solutions to x\u2295y = z in the tropical semiring. Formalize tropical varieties and prove a Kapranov-type theorem for tropical Fermat curves.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "id": "seed_241",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Fermat's Last Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -27936,6 +27893,77 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The candidate values j^2 - N meet each odd prime p on 1 + chi_p(N) residues, so the per-modulus smoothness bias is a product of factors 2 or 0. Conjecture: stratifying the modulus population by its quadratic-character profile removes essentially all of the observed sub-1 drift and shrinks the cluster-bootstrap spread by the predicted factor. This turns a null result into a structural explanation.\n\nFor a population of moduli stratified by S(N) = sum over p <= 100 of chi_p(N), the within-stratum smoothness ratio of x^2 - N against size-matched controls tends to 1 with variance O(1/m), while the unstratified estimator has variance bounded below by (2^k - 1)/m.\n\nRe-run the 128-cluster design with strata. The structural half is already formalized: U9Drift.classCount_stratification_is_exact shows the class-count strata carry zero within-stratum dispersion of the multiplicative bias, so what remains is to persist per-cluster counts keyed by the class count and evaluate the stratified point estimate.\n\nThe band-9 drift is fully explained as a quadratic-class sampling fluctuation; no new smoothness phenomenon at u ~ 9.\n\nA residual deviation survives conditioning, which would be a genuine arithmetic effect beyond the local densities.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4343",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "523b9317",
+    "status": "available",
+    "timestamp": "2026-08-28T18:43:47.891678+00:00",
+    "title": "Quadratic-Class Stratification of the Smoothness Ratio"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Any true deviation of the smooth density from the Dickman model should carry the finite-size signature log log v / log v rather than a constant factor. Conjecture: the band-indexed ratio r(u) satisfies r(u) - 1 = c * log log v / log v + o(...), so a slope estimate across bands is better powered than a single-band ratio.\n\nThere is c such that across bands the measured ratio satisfies |r(u) - 1 - c * loglog v / log v| < epsilon uniformly on 6 <= u <= 14.\n\nEstimate the slope across bands 6-14 at fixed per-band precision; formalize the monotonicity and window bounds of the correction and the induced ordering of band ratios.\n\nThe drift question is answered by a one-parameter fit with far more power than any single band.\n\nDeviations are band-idiosyncratic, pointing to a modulus-population artifact rather than an analytic correction.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4344",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "523b9317",
+    "status": "available",
+    "timestamp": "2026-08-28T18:43:48.423389+00:00",
+    "title": "Logarithmic Slope Test for the Dickman Approach Zone"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Because the per-modulus bias has variance exponential in the number of small primes, the estimator's spread is governed by the number of distinct moduli and not by the number of candidate/control pairs. Conjecture: beyond a modest pairs-per-modulus threshold, the cluster-bootstrap half width is independent of the pair count.\n\nThe half width of the cluster-bootstrap interval is c/sqrt(m) + O(1/(m*sqrt(n_per))) with c determined by the between-modulus variance; in particular doubling n_per at fixed m cannot reduce the half width by more than the second-order term.\n\nTwo runs at equal m and 1x/4x pairs per modulus. The structural half is now closed: U9Drift.cluster_bootVar_eq proves the cluster-bootstrap variance is exactly betweenVar/m, with no within-cluster term, so what remains is to measure betweenVar from persisted per-cluster counts.\n\nFuture runs should buy moduli, not samples; the 10-30x ask becomes a 10-30x cluster ask.\n\nWithin-cluster noise still dominates at these rates, meaning the rare-event regime is not yet in the asymptotic zone.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4345",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "523b9317",
+    "status": "available",
+    "timestamp": "2026-08-28T18:43:48.965936+00:00",
+    "title": "Cluster-Count Power Law for Smoothness Ratio Studies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For indicator outcomes the gain from pairing is exactly twice the excess joint smooth rate over independence. Conjecture: in the band-9 design this excess is negligible, so the paired matching contributes no variance reduction and the design can be simplified without loss.\n\nThe empirical covariance of the candidate and control smoothness indicators satisfies |Cov| < 0.05 * sqrt(Var_cand * Var_ctrl) at band 9.\n\nPersist joint counts in the patched writer and evaluate Cov = r - p q directly; the Lean identities evar_sub_indicator and paired_design_gain_iff turn the counts into a decision.\n\nPairing is decorative at these rates; control integrity must be argued from the identical code path alone.\n\nPairing is load-bearing and any unpaired re-analysis of past rounds is anti-conservative.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4346",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "523b9317",
+    "status": "available",
+    "timestamp": "2026-08-28T18:43:49.495071+00:00",
+    "title": "Measurable Value of Paired Control Matching"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Banking a direction-stable observation is a sign test whose null probability is 2^(1-k) for k split-halves. Conjecture: adopting k >= 6 as a pre-registration gate removes essentially all historical banked-tension entries that later failed to replicate, at no additional compute cost.\n\nFor every banked direction-stable tension recorded with k <= 5 split-halves, the associated null probability exceeds 0.05; and a k >= 6 gate is achievable by re-partitioning existing samples.\n\nRecompute split-half depth for each banked entry and apply split_halves_needed_for_significance; formalize the multiple-comparison correction across the ledger.\n\nA cheap, purely statistical gate that prevents future over-banking.\n\nSome banked entries had genuine depth and their tensions deserve full-power follow-up.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4347",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "523b9317",
+    "status": "available",
+    "timestamp": "2026-08-28T18:43:50.019176+00:00",
+    "title": "Depth-Six Gate for Direction-Stable Observations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -46136,14 +46164,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hamming schemes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea5f6fbd",
     "description": "The odd-leg triples here are the \"consecutive\n   leg\u2013hypotenuse\" family. Investigate whether a modified greedy rule enumerates\n   other primitive-triple families (e.g. consecutive-leg triples via Pell).",
     "domains": [],
     "id": "fd_2507",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "b648d8e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:34.696244+00:00",
     "title": "Higher Pythagorean analogues"
   },

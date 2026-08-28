@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4578ca8c",
-      "domain": "Computation",
-      "key_insight": "# Future directions — Euler–Mascheroni acceleration by telescoping envelopes\n\n## What this cycle established\n\nThree Lean files in `Catalog/Computation/` develop a complete, sorry-free theory of\nmidpoi",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 45,
-      "timestamp": "2026-08-25T08:00:48",
-      "title": "Midpoint-corrected acceleration"
-    },
-    {
       "cycle_id": "7957a9f1",
       "domain": "Physics",
       "key_insight": "# Future directions — after the exp569b pooling audit (paper 220, round-75 #3)\n\nThe four files added this cycle turn the round's *procedural* finding (\"both poolings fail\nindependence\") into *theorems",
@@ -499,19 +489,19 @@
       "theorem_count": 88,
       "timestamp": "2026-08-28T14:27:33",
       "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separ"
+    },
+    {
+      "cycle_id": "523b9317",
+      "domain": "Probability",
+      "key_insight": "# Future directions — band-9 `x² − N` smoothness, after the round-74 replication\n\nThe formal results of this cycle live in `Catalog/Probability/U9DriftIntervals.lean`,\n`U9DriftPooling.lean`, `U9DriftP",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 153,
+      "timestamp": "2026-08-28T18:44:04",
+      "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "84bf9824",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Novelty/RLHFPinskerDrift.lean`, `RLHFPinskerSharp.lean`,\n`RLHFQuadraticDrift.lean`, `RLHFGainDriftBudge",
-      "quality_score": 0.85,
-      "sorry_count": 3,
-      "theorem_count": 93,
-      "timestamp": "2026-08-20T07:57:37",
-      "title": "reinforcement learning"
-    },
     {
       "cycle_id": "61305688",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 88,
       "timestamp": "2026-08-28T14:27:33",
       "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separ"
+    },
+    {
+      "cycle_id": "523b9317",
+      "domain": "Probability",
+      "key_insight": "# Future directions — band-9 `x² − N` smoothness, after the round-74 replication\n\nThe formal results of this cycle live in `Catalog/Probability/U9DriftIntervals.lean`,\n`U9DriftPooling.lean`, `U9DriftP",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 153,
+      "timestamp": "2026-08-28T18:44:04",
+      "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8eac1b6d",
-      "domain": "Novelty",
-      "name": "ofBool_true",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "8eac1b6d",
-      "domain": "Novelty",
-      "name": "ofBool_false",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "837a61ec",
-      "domain": "Tropical",
-      "name": "dialWeight_pos",
-      "quality": 0.72
-    },
     {
       "cycle_id": "837a61ec",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "card_deadSet",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "523b9317",
+      "domain": "Probability",
+      "name": "sum_resample_prod",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "523b9317",
+      "domain": "Probability",
+      "name": "sum_resample_eval",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "523b9317",
+      "domain": "Probability",
+      "name": "sum_resample_eval_pair",
+      "quality": 0.76
     }
   ],
-  "last_updated": "2026-08-28T14:27:33",
+  "last_updated": "2026-08-28T18:44:04",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "78e6d19a",
-        "quality": 0.9,
-        "theorems": 145,
-        "title": "NET-54: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE — bulk layers transplant between"
-      },
-      {
         "cycle_id": "d221a4de",
         "quality": 0.88,
         "theorems": 89,
@@ -3823,6 +3817,12 @@
         "quality": 0.87,
         "theorems": 136,
         "title": "FACT round-92 #1 — F1-TIGHTNESS-CONNECTION (THEORY, no new physics): BOUND-SLACK"
+      },
+      {
+        "cycle_id": "523b9317",
+        "quality": 0.76,
+        "theorems": 153,
+        "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-"
       }
     ],
     "Pythagorean": [
