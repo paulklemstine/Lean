@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9fb758b1",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — sharp geometry of RLHF alignment drift\n\n## Where this cycle left the thread\n\nConjecture **C1** (\"the drift constant is the standard deviation\") was carried as *proved\nup to an ab",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 54,
-      "timestamp": "2026-08-25T08:00:15",
-      "title": "C1 (drift constant is the standard deviation) — PROVED.*"
-    },
-    {
       "cycle_id": "16c9261f",
       "domain": "Computation",
       "key_insight": "# Future Directions — NET-96 thread (cost law for speculative decoding)\n\n## What this cycle established\n\nThree Lean files, all `sorry`-free:\n\n* `Catalog/Computation/SpeculativeSurvivalCostLaw.lean` —",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-08-28T05:25:55",
       "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits — the serving d"
+    },
+    {
+      "cycle_id": "5be8ecbc",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — NET-93 \"keys own the cliff\" thread\n\nThe four files added in this cycle\n(`Catalog/Novelty/KeysOwnTheCliff.lean`, `KVCliffExponent.lean`,\n`KVBitBudgetSplit.lean`, `KeyBitwidthSafet",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-08-28T14:27:15",
+      "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5c70a18c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions: quantum EML activations, cycle 7 (final)\n\nThroughout, `t*` denotes the **quantum EML scalar-log root**: the unique positive real\nwith `‖log (1 + t i)‖ = 1`, i.e. the unique positi",
-      "quality_score": 0.86,
-      "sorry_count": 3,
-      "theorem_count": 281,
-      "timestamp": "2026-08-20T05:47:28",
-      "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
-    },
     {
       "cycle_id": "52846ceb",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 46,
       "timestamp": "2026-08-28T05:25:55",
       "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits — the serving d"
+    },
+    {
+      "cycle_id": "5be8ecbc",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — NET-93 \"keys own the cliff\" thread\n\nThe four files added in this cycle\n(`Catalog/Novelty/KeysOwnTheCliff.lean`, `KVCliffExponent.lean`,\n`KVBitBudgetSplit.lean`, `KeyBitwidthSafet",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-08-28T14:27:15",
+      "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "92ebc5bc",
-      "domain": "MachineLearning",
-      "name": "one_sub_exp_neg_pos",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "92ebc5bc",
-      "domain": "MachineLearning",
-      "name": "truncExpCDF_pos",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "220a83a3",
-      "domain": "Cryptography",
-      "name": "card_move",
-      "quality": 0.82
-    },
     {
       "cycle_id": "220a83a3",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "softmaxW_two_snd",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "5be8ecbc",
+      "domain": "Novelty",
+      "name": "key_error_geometric",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5be8ecbc",
+      "domain": "Novelty",
+      "name": "key_error_unbounded_in_depth",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5be8ecbc",
+      "domain": "Novelty",
+      "name": "value_error_stays_le",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-28T05:25:55",
+  "last_updated": "2026-08-28T14:27:15",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "95bfbbbf",
-        "quality": 0.82,
-        "theorems": 81,
-        "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 — knee jumps to k*=40 (increment +16/d"
-      },
-      {
         "cycle_id": "99ec0ece",
         "quality": 0.82,
         "theorems": 100,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 96,
         "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style p"
+      },
+      {
+        "cycle_id": "5be8ecbc",
+        "quality": 0.82,
+        "theorems": 43,
+        "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%"
       }
     ],
     "NumberTheory": [
