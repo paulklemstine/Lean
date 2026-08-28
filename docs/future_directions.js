@@ -1936,16 +1936,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES alone are free (+0.17%) \u2014 a four-order-of-magnitude asymmetry; no block-scaling format rescues keys"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3596d147",
     "description": "**FACT round-74 #4 \u00b7 exp 566 \u00b7 paper 213 \u00b7 seed 566 \u00b7 walls 9.3 s + 247.7 s**\n\nAttacks the barrier-map residual item **MA-1 effectivity**: is there a COMPUTABLE per-modulus criterion for when the MA-1 averaging assumption (which-factor blindness as identity, papers 93/102/132) is realized? If AP-deviation magnitude were governed by quadratic-character L-values, one would exist. Pre-registered carrier: D(m) = max_a |\u03c0(x;m,a) \u2212 E|/\u221aE on P(m) = \u03a3|L(1,\u03c7)| over nontrivial real characters mod m; H1 R\u00b2 > 0.8 \u21d2 criterion armed; H0 R\u00b2 < 0.5 \u21d2 honest negative.\n\n**Pre-registered verdict rules evaluated verbatim \u2192 NULL-HONEST-NEGATIVE at TWO scales.**\n\n**(1) Registered stage A (x = 2^26 full, no shrinkage).** \u03c0(x) = 3,957,809, 287 moduli (squarefree [3,300] \u222a primes [307,997]), wall 9.3 s: log D ~ \u22120.0767\u00b7log P, slope CI95 (\u22120.136, \u22120.015), **R\u00b2 = 0.0187** [bootstrap 0.0007\u20130.065] \u2014 slope slightly NEGATIVE, opposite the effectivity story. Partial R\u00b2 controlling log \u03c6(m) = **0.0008** \u21d2 residual association purely a \u03c6(m) size effect. Secondary chi\u00b2 readout agrees (R\u00b2 = 0.025). Control cross-modulus pairing permutation (2000 draws) collapses to null (mean 0.0033 / max 0.0435); disclosed spec deviation: literal within-modulus count permutation is VACUOUS for max/\u03c7\u00b2 readouts (permutation-invariant).\n\n**(2) Final scaled artifact B (x = 2^28, \u03c0 = 14,630,843, 2489 moduli dense 2..1500 + primes beyond, wall 247.7 s).** Primary per-m carrier **R\u00b2 = 0.0785 \u2192 NULL**; cell-level secondary y ~ log(1/L), 1902 discriminant cells: R\u00b2 = 0.00052, theory-signed slope B = \u22120.034 [\u22120.101, +0.033] \u2014 not even positive. Baseline size control: OBS ~ log m alone explains **R\u00b2 = 0.790** \u2014 deviation magnitude is modulus-size-dominated; character-L mass adds nothing after size.\n\n**(3) Verification.** Exact class-number path validated: L(1, \u03c7\u208b\u2083) = \u03c0/(3\u221a3) exact (h(\u22123)=1, w=6); truncated series calibrated on 226 overlap discriminants, median rel err 1.8e-5; final-run truncation quality real-share median 8.7e-4, worst rel err 8.2e-2.\n\n> **SCOPING CAVEAT (prominent):** the registered readout D(m) is **SIGN-BLIND** and the predictor uses |L(1,\u03c7)| magnitudes \u2014 this bounds the MAGNITUDE route only. Signed character-alignment analysis is the required follow-up BEFORE killing the L-value route.\n\n**Barrier framing:** H0 here does NOT weaken the barrier program \u2014 it honestly bounds one computable-criterion route at toy scale. MA-1 stays axiomatic at practical scale; \"MA-1 effectivity\" stays an OPEN gap item.\n\nLedger catches, all disclosed: off-by-one corrupted non-exact L-values caught by spot check (\u03c7\u2085 gave 0.127 vs true 0.430), fixed + rerun before any recorded fit; smoke control gate failed at n = 29 (resolved at scale where the null collapses cleanly); Mertens gate FAIL per its own pre-stated rule (slope 0.9277 [0.9234, 0.9320], R\u00b2 = 0.9894 \u2014 near-proportional just outside the strict band; implied K\u0304 = \u22120.216 within theory bound |K| \u2264 0.756); scale-reconciliation disclosure (findings/digest describe stage A while canonical exp566_result.json holds the verdict-identical stage-B rerun that overwrote it mid-session; extended-rerun script variant not separately preserved); coordination disclosure \u2014 a parallel duplicate agent (coordinator double-dispatch after a stall) left an orphaned draft exp566_ma1_effectivity_alt_agentB.py with NO results attached; recorded artifact set solely from the completing agent, orphan left in place.\n\nPaper: ResearchOutput/NewMathematics/213_Ma1EffectivitySweep.md.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3948",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T07:22:53.231013+00:00",
     "title": "FACT round-74 #4 \u2014 MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-deviation effectivity at toy scale (clean H0 honest negative at two scales: R\u00b2=0.0187 registered x=2^26 / R\u00b2=0.0785 scaled x=2^28 vs 0.8/0.5 bars; deviation field modulus-size-dominated, baseline OBS~log m R\u00b2=0.79) \u2014 MA-1 stays axiomatic, SIGN-BLIND scope disclosed"
   },
@@ -2035,21 +2036,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #7 \u2014 U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut-1e6 r=0.99 CI [0.919,1.010] covers 1); pooled with paper 214 pilot joint point ~0.97 \u2014 banked tension downgraded to open at reduced weight"
   },
   {
-    "consumed_by_exp_id": "94eeec9f",
-    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 69 (compact cell completing the NET-92/93/94 KV trilogy).\n\n| arm | PPL | dPPL vs f16 control |\n|---|---|---|\n| **K q8_0 / V q4_0** | **7.1194** | **+0.142%** |\n| K q5_1 / V q5_1 | 68.7963 | +867.694% |\n\n**Findings:** (1) The NET-93 role-split prescription is DIRECTLY CONFIRMED: keys @8 bits + values @raw 4 bits = quality-free while halving KV memory (~6 avg bits/element) \u2014 the CPU serving default (-ctk q8_0 -ctv q4_0). (2) The key-side cliff is a TWO-STAGE FALL: free at 8 bits, severely broken (+868%) already at 5 bits, annihilated (+38,000%) at 4; values remain free at every width tested down to raw 4-bit. Key floor bracketed (5, 8]; llama.cpp offers no q6 cache type.\n\nSetup identical to NET-92/93 (llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice). Script ResearchOutput/exp_net94_rolesplit.py; results in ~/f3cache/net94_results.json.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3962",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T09:06:21.854276+00:00",
-    "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits \u2014 the serving default; key-side cliff is a two-stage fall (free @8b, +868% @5b, +38,000% @4b) while values stay free to raw 4-bit"
-  },
-  {
     "consumed_by_exp_id": "497c96d6",
     "description": "**Paper 215 \u00b7 exp 568 \u00b7 round-74 #6 \u00b7 assessment v322**\n\nVERDICT: **H3 CONFIRMED (strong form)** \u2014 H1/H0 moot-by-absence.\n\nPaper 159 headlines an ECM self-destruction wall: \"when B1 \u2273 min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] infinite\", with a validity edge B1 \u2272 min(p,q)/2. Exp568 tests that boundary under outcome-separated accounting {found_p, found_q, dead, nothing}.\n\n**Design.** Bitlen-26 q\u226bp stratum (generator nextprime(3p+U[1,200))), n_N=40/cell, grid B1/p \u2208 {0.125, 0.25, 0.5, 0.9, 1.05} \u00d7 arms B2/B1 \u2208 {1 (control), 4, 16}; guarded affine EC ops reused VERBATIM from exp488_true_ecm.py (validated there 10/10 ladder + 100/100 mod-12); true-lcm stage-1 schedule; NEW true difference-stage stage-2. Pre-registration verbatim before any data: H1 slope(log w* vs log(B2/B1)) CI covers 1 / H0 covers 0 / MIXED; H3 ADDED after reading the mechanism sentence, BEFORE data (timing disclosed): the wall is a detection/accounting artifact \u2014 gcd(den,N)==N 'dead' events or missing p-vs-q separation \u2014 not method failure.\n\n**Results (600 trials).**\n- ZERO 'dead' outcomes in the entire grid.\n- Success 1.000 in every cell at B1/p \u2265 0.25; **6/6 cells at 1.000 at B1/p = 0.9 AND 1.05** \u2014 exactly where paper 159 records uncapped E[T] infinite.\n- Only misses: two low-edge cells at B1/p = 0.125 (arm-4 0.875, arm-16 0.95), all misses 'nothing', never 'dead'.\n- No w* exists anywhere \u2192 H1/H0 never arm.\n\n**Mechanism (pre-data note, vindicated).** B1 \u2265 p+1+2\u221ap \u21d2 every Hasse-window order n \u2264 B1 \u21d2 every prime power l^e \u2016 n has l^e \u2264 B1 \u21d2 n | lcm(1..B1) \u21d2 [L]P = O mod p on EVERY curve \u21d2 first guarded inversion with vanishing denominator returns gcd = p: GUARANTEED SUCCESS, not death. Simultaneous degeneracy mod q impossible for q \u226b B1. \"All curves degenerate\" can only have read as death if accounting conflated gcd=p wins with gcd=N losses or lacked p-vs-q separation.\n\n**Structural insight (ledger-grade).** Guarded-affine accounting carries a scale-independent random-collision baseline \u2248 1 \u2212 exp(\u2212c\u00b7B1/p) (#ops ~ 1.44\u00b7B1, per-op hit ~1/p): ~17% predicted at B1/p = 0.125 vs 68% observed found-p share (collision-luck + order-divisibility mixed). Any historical success/E[T] accounting that did not separate collision-hits from order-hits could have manufactured the wall sentence. Named follow-up BEFORE amending paper 159 either way: larger-p rerun with per-op outcome tracing (order-hit vs collision-hit).\n\n**Honest disclosures.** (a) toy bitlen 26; (b) stage-2 arms UNTESTED DEAD CODE this run \u2014 stage 1 succeeded first everywhere, zero s2 outcomes; new difference-stage machinery validated only by smoke buckets + sign-convention note; cross-arm differences at fixed B1 are per-cell RNG drift; (c) inline coordinator implementation after 3\u00d7 agent-channel failures (stall watchdog \u00d72, silent no-write \u00d71); (d) recorder catch: findings.md says \"14/15 cells at 1.000\" but canonical result.json shows TWO sub-1.000 cells (both at B1/p = 0.125) \u2014 JSON canonical, verdict unaffected.\n\n**Barrier framing.** Barrier-8 adjacency (known-method bookkeeping); self-audit genre \u2014 precedent: paper 91 stands / paper 99 retraction handled by side-by-side reconstruction. If the independent follow-up confirms, paper 159's wall sentence gets an AMENDMENT, not a silent rewrite; until then 159 stands as recorded with this audit appended.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/exp568_* ; paper ResearchOutput/NewMathematics/215_EcmStage2Wall.md.",
     "domains": [
@@ -2065,7 +2051,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #6 \u2014 ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separated accounting \u2014 B1 \u2265 p+1+2\u221ap makes every curve succeed, not die (self-audit of paper 159)"
   },
   {
-    "consumed_by_exp_id": "4d0b9c50",
+    "consumed_by_exp_id": "bb8f0638",
     "description": "Exp 567 \u00b7 paper 214 \u00b7 assessment v321 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp567_scale_u9_lift.py \u00b7 seed 20260824 \u00b7 honest partial (disclosed).\n\n**Question.** Does x\u00b2\u2212N stay size-matched-random in smoothness at u \u2208 [9, 11.x] \u2014 the approach zone of the Dickman leading-term regime (~u \u2248 14.75) \u2014 where raw B-smoothness testing starves (\u03c1(9)=1.0e-9 \u2026 \u03c1(11)=6.5e-13)? Frontier item: scale-smoothness deviations u \u2265 6\u201314.\n\n**Design.** Balanced semiprimes bitlen {96,104,112} \u2192 u-bands {9,10,11}, v=(s+j)\u00b2\u2212N, j \u2264 3s; LPF-CDF cut ladder {500,1e3,1e4,1e5,1e6} via cumulative segment-primorial gcd chains batch-amortized by product-tree remainder descent (12\u00d7: 87\u21927 \u00b5s/value); exact (bitlen, mantissa-octant) matched controls, shared code path; per-N cluster bootstrap + built-in A/B split-halves. Pre-registered verbatim: H1 r_cut(u)=1 everywhere; H2 maximal-skepticism confirmation protocol; L1-vs-L2 overdispersion fork; B=500/1000 cuts pre-declared as ~zero-yield continuity carriers.\n\n**Status: HONEST PARTIAL.** An intermittent multiprocessing throughput collapse at full geometry (root-caused via preserved faulthandler dump: ready()-starved feed loop + slow completions) ate the headline runs; statistical weight rests on the completed pilot (band 9, bitlen 96, 24-N pool, 35.7M cand+ctrl pairs); three-band leg shipped at 45k pairs/band under the time-cap convention.\n\n**Achieved u:** band 9 [9.83,10.13] mean 9.89; band 10 [10.64,10.94]; band 11 [11.44,11.74]. No coverage in (10.94,11.44) \u2014 integer u=11 sits in a half-notch gap of grid geometry (disclosed pre-run).\n\n**Result \u2014 VERDICT RANDOM-EXTENDS / NULL-WITH-TENSION, deviation status NONE:**\n- Primary LPF-CDF-1e6 cut, band 9: r = 0.9468, cluster-boot CI [0.8630, 1.0389] (12,493 vs 13,195 events); splits A 0.939 / B 0.955.\n- 1e5 cut: r = 0.864, CI [0.7190, 1.0302] (667 vs 772); splits 0.848 / 0.881.\n- Three-band leg: every CI covers 1 (band 10 @1e6 r=2.0 [0.25,7.0] on 4-vs-2; band 11 kc=2 vs kctrl=0 undefined). Tightest |r\u22121| bound 0.137 (pilot primary).\n- B=500/1000: exactly zero events everywhere, as designed.\n- H2 never armed \u2014 no CI excludes 1 in any cell; per pre-registration this is a null.\n\n**Tension banked, NOT claimed:** points run 5\u201314% below 1 at both powered cuts, direction-stable across split-halves and cuts. Flagged as motivation for a future higher-power run (~30\u00d7 more pairs at the 1e5 cut). Explicitly not a discovery per pre-registration.\n\n**OVERDISPERSION AMENDMENT to paper 209's secondary claim** ('D=1.61 persists at bin 5 then DIES by u\u22487; residue-dial correlation gone'): at u=9.85 under the healthy-rate 1e6 lens, exposure-corrected D_cand = **28.87 [14.27, 44.08]** vs D_ctrl = 1.84 [0.90, 2.84] (exposures flat \u00b10.14%) \u2014 per-N clustering is ALIVE at u \u2248 10; Spearman(per-N rate, qr_frac) = 0.533 (perm p 0.006) @1e4 and 0.437 (p 0.033) @1e6 where 209 read ~0.04 'gone'. What died by u \u2248 7 was the B-smoothness INDICATOR starving (rate/threshold artifact, L1 direction), not clustering \u2014 consistent with paper 136's QR-bite = per-N variance law. Caveat recorded honestly: the formal L1 gate required \u22652 powered bins; only one survived the shrinkage, so this stands on the pilot's internal contrast as directionally confirmed / formally unmet.\n\n**Ledger catches (all disclosed):** mixed-segment checker bug gave 39/40 false mismatches \u2014 shipped tester proven EXACT vs exhaustive zero-early-exit strip of all primes \u22641e6 (368 cases full / 218 pilot incl. deep-window quadratics, 0 mismatches); backpressure watchdog false-trip terminated one attempt as 'calibration hung'; faulthandler SIGUSR1 re-raise killed one instrumented rerun; throughput collapse shrank the headline run from ~130M-value/band quotas to 45k pairs/band (an interim sub-powered write had flashed DEVIATION-UNCONFIRMED before supersession; canonical artifacts are final).\n\n**Barrier framing:** no barrier breached \u2014 a null here STRENGTHENS papers 130/209 randomness into new territory; variance-side accounting upgraded (variance N-covariant, means matched); constant-shaving risk none.\n\nArtifacts: exp567_scale_u9_lift.py, exp567_pilot_result.json (powered leg), exp567_result.json (three-band), exp567_full.log / exp567_pilot.log / exp567_smoke.log, exp567_stderr.txt (faulthandler snapshots from a healthy run, not a crash).",
     "domains": [
       "Novelty"
@@ -4161,20 +4147,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "seed_212",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Erd\u0151s-Faber-Lov\u00e1sz Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -8607,6 +8579,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-27T09:50:39.695105+00:00",
     "title": "ArXiv paper: Asymptotic enumeration of minimally transitive permutation groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Delta theory of Anderson Modules II: Hodge-Pink structure' and formalize its key results. Abstract: In this article, using the theory of $\u03b4$-geometry, we construct a canonical $z$-isocrystal $(\\mathbf{H}_\u03b4(E), \\mathfrak{f}^*)$ admitting a Hodge-Pink structure for any abelian Anderson module $E$. The Hodge-Pink structure on $\\mathbf{H}_\u03b4(E)$ induces a natural filtration $(\\mathbf{H}_\u03b4(E) \\supset \\mathbf{X}_{\\mathrm{prim}}(E) \\supset \\{0\\})$. The elements of $\\mathbf{X}_{\\mathrm{prim}}(E)$ are represented by primitive delta characters associated to $E$. We establish a natural morphism from $\\mathbf{H}_\u03b4(E)$ to the associated de Rham cohomology module $\\mathbf{H}^*_{\\mathrm{dR}}(E)$, which is strictly compatible with the aforementioned filtration and the classical Hodge filtration $(\\mathbf{H}^{*}_{\\mathrm{dR}}(E)\\supset {\\mathrm{Lie}(E)^{*}}\\supset \\{0\\})$ on $\\mathbf{H}^*_{\\mathrm{dR}}(E)$. Moreover, we show that the map induces an isomorphism between $\\mathbf{X}_{\\mathrm{prim}}(E)$ and $\\mathrm{Lie}(E)^*$. Hence our isomorphism provides an interesting interpretation of the invariant ",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4332",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.27375v1",
+    "status": "available",
+    "timestamp": "2026-08-28T05:26:11.041056+00:00",
+    "title": "ArXiv paper: Delta theory of Anderson Modules II: Hodge-Pink structure"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Graded Ehrhart theory for hypersimplices' and formalize its key results. Abstract: We prove that the $q$-Ehrhart series of a hyperplane slice of a cube is a rational function with an explicit denominator that satisfies $q$-reciprocity, confirming a conjecture of Reiner and Rhoades for these polytopes. To do this, we find a generating set for the orbit harmonics ideal, which also yields the Hilbert series and graded Frobenius characteristic of the associated quotient. We further show that the harmonic algebra of a hypersimplex $\u0394$ is generated as an algebra by the harmonic space of $\u0394$ using structural results on 2-factors of regular multigraphs. In particular, the harmonic algebra is finitely generated, giving a second proof of rationality.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4333",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.27438v1",
+    "status": "available",
+    "timestamp": "2026-08-28T05:26:14.128642+00:00",
+    "title": "ArXiv paper: Graded Ehrhart theory for hypersimplices"
   },
   {
     "consumed_by_exp_id": "",
@@ -14769,6 +14771,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The key logit error bound charges d*Q*eta because a shared block scale lets all d coordinate roundings align; independent roundings would give only sqrt(d)*Q*eta. Determine the true correlation exponent alpha in d^alpha from the position of the key bit floor. Depth has already been eliminated as the amplifier, so dimension is the remaining structural knob.\n\nThe effective key logit error scales as d^alpha * Q * eta with alpha strictly between 1/2 and 1, and the key bit floor satisfies b* = log2(d^alpha * Q * R / g) for the typical top-two logit gap g.\n\nSharpen logit_perturb_le under a correlation hypothesis on the rounding errors, and re-run the NET-94 sweep on models with different head dimensions to fit alpha.\n\nThe key bit floor is dimension dependent, so wide-head models need more key bits at the same quality target.\n\nRounding errors are effectively worst-case aligned and the crude d*Q*eta bound is tight, making the floor dimension linear.",
+    "domains": [],
+    "id": "fd_4329",
+    "priority_score": 0.594264705882353,
+    "research_mode": "team",
+    "source_exp_id": "94eeec9f",
+    "status": "available",
+    "timestamp": "2026-08-28T05:25:40.443553+00:00",
+    "title": "Correlated-Rounding Dimension Scaling"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Tropical Perron\u2013Frobenius in all dimensions**\n  (`exists_maxPlusMul_eigenvector` in\n  `Catalog/Speculative/AutoResearch/PerronTheorem.lean`, on the new core\n  `Catalog/Speculative/AutoResearch/TropicalPerronCore.lean`): the Cuninghame-Green\n  construction is formalised \u2014 maximal cycle mean, cycle removal by pigeonhole, and the\n  longest-path potential to a critical node \u2014 replacing the previous `1\u00d71`/`2\u00d72`-only\n  situation.",
     "domains": [
       "Tropical",
@@ -14877,6 +14891,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T20:49:41.242512+00:00",
     "title": "Cut-Point Formula for Multi-Valued Height Vectors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Model a key block quantiser by its max-abs scale rather than a fixed range, so the effective per-coordinate error carries the outlier ratio as a prefactor. Derive the per-bit shrink base of the resulting distortion law and compare it with the proved lower bound K > 18. This would replace the fitted response exponent by a derived one.\n\nFor a block quantiser with scale max|k| and heavy-tailed key coordinates, the effective distortion law is multiplicative in bit width with base at least 2^5, i.e. response exponent gamma >= 5.\n\nFormalise a max-abs block quantiser in Lean over Fin d, prove an error bound of the form (max/typ) * 2^(-b), and instantiate net94_forces_superbinary_shrink with it; empirically, measure the outlier ratio of key rows per bit width.\n\nThe NET-94 cliff has a derived mechanism, and key-cache schemes can be ranked a priori by their outlier ratio.\n\nThe cliff is not outlier driven and some other nonlinearity (rounding correlation, block-size interaction) carries the exponent.",
+    "domains": [],
+    "id": "fd_4328",
+    "priority_score": 0.5934126984126985,
+    "research_mode": "team",
+    "source_exp_id": "94eeec9f",
+    "status": "available",
+    "timestamp": "2026-08-28T05:25:39.929940+00:00",
+    "title": "Outlier-Scaled Block Quantisation Exponent"
   },
   {
     "consumed_by_exp_id": "",
@@ -15551,15 +15577,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Weighted Dichotomy for General Symmetric Ensembles"
   },
   {
-    "consumed_by_exp_id": "11cbb92a",
+    "consumed_by_exp_id": "",
     "description": "Subadditivity gives an upper budget but no explanation of why a 0.04-bit dial can add two bits to a joint reading. A chain rule, with conditional entropies defined fibrewise, would give matching lower bounds and quantify the redundancy between dials.\n\nH(joint over insert a S) = H(joint over S) + sum over fibres of the conditional entropy of dial a, and consequently H(joint) >= max_i H(dial i) with equality iff every other dial is a function of dial i.\n\nDefine conditional entropy by the fibrewise sum already isolated in H_split_fiberwise and prove the identity by rearranging that sum; derive the equality case from the equality case of data processing.\n\nPer-dial spread stops being paradoxical: joint gains are conditional, not marginal, informations.\n\nThe fibrewise decomposition is not additive, which would indicate an error in the empirical-measure model of capacity.",
     "domains": [],
     "id": "fd_3602",
-    "phase": "A",
     "priority_score": 0.5917741935483872,
     "research_mode": "team",
     "source_exp_id": "a3ad9f21",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T07:00:24.493294+00:00",
     "title": "Chain Rule Lower Bound for Heterogeneous Dial Batteries"
   },
@@ -16774,6 +16799,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:50:03.713980+00:00",
     "title": "Sampler-Invariant Content of a Factoring Portfolio"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replace the smooth Lipschitz response by a threshold response driven by the top-two logit gap: attention is intact while key noise stays below half the gap and its ranking is destroyed above it. Because noise halves per bit, the resulting transition window is at most one bit, matching the observed sharpness that the smooth law cannot produce.\n\nThe key bit floor equals ceil(log2(d*Q*R / g_typ)) where g_typ is the typical top-two logit gap, so it is predictable from a single forward pass without any perplexity sweep.\n\nMeasure the top-two logit gap distribution per head, compute the predicted floor, and compare with the bracketed floor in (5,8]; the Lean side (rank inversion, order-1 damage, one-bit critical band) is already proved in Algebra.KVCacheArgmaxThreshold.\n\nThe key floor is a gap statistic of the model, predictable without a perplexity sweep.\n\nDegradation is diffuse rather than argmax driven, and the exponent picture of cycle 2 is the correct one.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_4330",
+    "priority_score": 0.5640768584282383,
+    "research_mode": "team",
+    "source_exp_id": "94eeec9f",
+    "status": "available",
+    "timestamp": "2026-08-28T05:25:40.959813+00:00",
+    "title": "Argmax-Gap Threshold Law for Key Noise"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalise budget_neutral_split_better from a single reallocation step to the full optimisation over all allocations with a fixed total width, for a key term obeying the squaring law and a value term obeying the doubling law. The objective is a sum of a doubly exponential and a geometric term, so the optimum should be a corner allocation rather than a balanced one.\n\nFor fixed bK + bV = 2B and any positive constants, the minimiser of keyDist c bK + valDist R bV is attained at the largest feasible bK, i.e. the allocation is always maximally asymmetric until the value term saturates.\n\nFormalise the discrete optimisation over the finite ladder of allocations in Lean and prove the corner solution by a monotone exchange argument.\n\nThe serving default generalises: always spend bits on keys first, down to the value floor.\n\nThere is an interior optimum, and a genuinely mixed schedule beats both q8/q4 and q6/q6 at some budget.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4331",
+    "priority_score": 0.5640768584282383,
+    "research_mode": "team",
+    "source_exp_id": "94eeec9f",
+    "status": "available",
+    "timestamp": "2026-08-28T05:25:41.474583+00:00",
+    "title": "Optimal Bit Ladder for Mixed-Precision Caches"
   },
   {
     "consumed_by_exp_id": "",
@@ -43969,14 +44024,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "A closed form for `\u2211_{k \u2264 a} S(n,k)` for every fixed `a \u2265 4`."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28e35e31",
     "description": "`KL(q*_\u03b3 \u2016 \u03c0_\u03b2) \u2264 (\u03b3\u00b2/2\u03b2\u00b2)\u00b7Var_{\u03c0_\u03b2}(d/\u03c0_\u03b2)`, i.e. the\n   drift bound of `ptx_drift_le` can be replaced by a second-order quantity built from the score\n   function proved constant in `ptx_stationarity_iff`.",
     "domains": [],
     "id": "fd_1659",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "9e83a721",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T03:10:25.716782+00:00",
     "title": "Score variance controls drift"
   },

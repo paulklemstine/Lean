@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-08-27T20:32:09Z",
-  "count": 22,
+  "archived_at": "2026-08-28T05:25:41Z",
+  "count": 23,
   "directions": [
     {
       "id": "fd_3695",
@@ -868,6 +868,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 310
+    },
+    {
+      "id": "fd_3733",
+      "title": "NET-70: MATH-READS-AS-PROSE — mathematical text leaves knees exactly at prose values ({16,20}) despite 12-pt lower accuracy; three-domain table complete (prose=16, code=12, math=16)",
+      "description": "## NET-70 — limited-memory axis, round 23 (paper 155, ResearchOutput/exp_net70_mathdomain.py, /tmp/net70.log)\n\n**Verdict name: MATH-READS-AS-PROSE.**\n\n### Result\nDomain jump to mathematical text (Hardy + Hilbert, Gutenberg; gate exact):\n\n| ctx | math k\\* | prose k\\* | math full acc | prose full acc |\n|---|---|---|---|---|\n| 512 | **16** | 16 | 0.3262 | 0.4460 |\n| 1024 | **20** | 20 | 0.3418 | 0.4612 |\n\nMath sweeps @512: 4: 0.907 ✗, 8: 0.959 ✗, 12: 0.979 ✗ (~1 SE), **16: 0.987 ✓**, 20: 0.989, 24: 0.988. @1024: 8: 0.952 ✗, 12: 0.965 ✗, 16: 0.978 ✗ (~1.5 SE), **20: 0.983 ✓**, 24+: pass.\n\n- **P1 REFUTED**: math does NOT need more keys despite long-range symbolic references.\n- **P2 CONFIRMED trivially**: the chain is exactly prose's.\n- **P3 CONFIRMED**: knees match EXACTLY at both contexts despite a 12-point accuracy gap.\n\n### The three-domain deployment table\nbase(prose) = 16, base(code) = 12, base(math) = 16; increments set by scale (NET-67); shape preserved everywhere. THIRD+STRONGEST confirmation that prediction difficulty and attention-sparsity structure are independent: math is much harder to predict yet needs identical budgets. Deployment: prose+math workloads share one entry; only code shifts.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean; (c) confronted — limits: classic-mathematics prose only (no modern LaTeX notation), one corpus mix, 24 windows stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET70; (g) fair — byte-identical harness except text; (h) DIRECT.\n\n### Next\nModern LaTeX/math notation; non-English domains; increments at 4096; 7B cell.\n\nNow 70 network experiments. Assessment v70. Paper 155.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "86b92df3",
+      "timestamp": "2026-08-22T19:36:57.215710+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.2,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-23T07:04:01.833678+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 309
     }
   ]
 }

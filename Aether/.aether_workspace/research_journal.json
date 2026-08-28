@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9061d61f",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — ECM stage-1 firing trace (paper 218 / exp 570 thread)\n\n## What this cycle established (all formal, 0 sorries)\n\nThree new Lean files in `Catalog/Novelty/`:\n\n* **`EcmStageOneTraceL",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-25T05:50:48",
-      "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry — low-B1 "
-    },
-    {
       "cycle_id": "9fb758b1",
       "domain": "Algebra",
       "key_insight": "# Future directions — sharp geometry of RLHF alignment drift\n\n## Where this cycle left the thread\n\nConjecture **C1** (\"the drift constant is the standard deviation\") was carried as *proved\nup to an ab",
@@ -499,19 +489,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-27T20:32:18",
       "title": "FACT round-91 #1 — J-FEATURE-SWEEP (exp 598): H0_CARRIER_OPEN — no j-arithmetic feature carries the "
+    },
+    {
+      "cycle_id": "94eeec9f",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — after the NET-94 role-split algebra\n\nCycle 1 formalised *why* keys and values behave differently (`Algebra.KVCacheRoleSplit`)\nand *how fast* each side degrades with bit width (`A",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-08-28T05:25:55",
+      "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits — the serving d"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "17d131fb",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions: after the refutation of Conjecture D10\n\nConjecture D10 (\"the Molien invariant is exactly the Burnside mark vector modulo scaling\")\nis **false**, and the reason is now precisely lo",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-20T04:54:04",
-      "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)"
-    },
     {
       "cycle_id": "5c70a18c",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-27T20:32:18",
       "title": "FACT round-91 #1 — J-FEATURE-SWEEP (exp 598): H0_CARRIER_OPEN — no j-arithmetic feature carries the "
+    },
+    {
+      "cycle_id": "94eeec9f",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — after the NET-94 role-split algebra\n\nCycle 1 formalised *why* keys and values behave differently (`Algebra.KVCacheRoleSplit`)\nand *how fast* each side degrades with bit width (`A",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-08-28T05:25:55",
+      "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits — the serving d"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3b9c1eb4",
-      "domain": "Computation",
-      "name": "rhoOne_delay",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "3b9c1eb4",
-      "domain": "Computation",
-      "name": "rhoOne_convexOn",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "92ebc5bc",
-      "domain": "MachineLearning",
-      "name": "about",
-      "quality": 0.78
-    },
     {
       "cycle_id": "92ebc5bc",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "avg_comp_fst_equiv",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "94eeec9f",
+      "domain": "Algebra",
+      "name": "softmaxW_lt_iff",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "94eeec9f",
+      "domain": "Algebra",
+      "name": "softmaxW_rank_inversion",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "94eeec9f",
+      "domain": "Algebra",
+      "name": "softmaxW_two_snd",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-27T20:32:18",
+  "last_updated": "2026-08-28T05:25:55",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "bb070ee4",
-        "quality": 0.88,
-        "theorems": 140,
-        "title": "The one-parameter case is already a theorem here"
-      },
-      {
         "cycle_id": "c99dba13",
         "quality": 0.85,
         "theorems": 57,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 74,
         "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUC"
+      },
+      {
+        "cycle_id": "94eeec9f",
+        "quality": 0.83,
+        "theorems": 46,
+        "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg "
       }
     ],
     "Applications": [
