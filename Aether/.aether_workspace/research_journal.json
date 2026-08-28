@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "16c9261f",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — NET-96 thread (cost law for speculative decoding)\n\n## What this cycle established\n\nThree Lean files, all `sorry`-free:\n\n* `Catalog/Computation/SpeculativeSurvivalCostLaw.lean` —",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-25T08:00:33",
-      "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measu"
-    },
-    {
       "cycle_id": "4578ca8c",
       "domain": "Computation",
       "key_insight": "# Future directions — Euler–Mascheroni acceleration by telescoping envelopes\n\n## What this cycle established\n\nThree Lean files in `Catalog/Computation/` develop a complete, sorry-free theory of\nmidpoi",
@@ -499,19 +489,19 @@
       "theorem_count": 43,
       "timestamp": "2026-08-28T14:27:15",
       "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES"
+    },
+    {
+      "cycle_id": "497c96d6",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after the ECM wall audit\n\n## What this cycle settled\n\nWorking from the stage-1 order-completion theory already in the catalog\n(`Catalog/Shared/ECMStage1OrderCompletion.lean`, `…F",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-08-28T14:27:33",
+      "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separ"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "52846ceb",
-      "domain": "Applications",
-      "key_insight": "# Future directions — power-sum inversion\n\nFive falsifiable conjectures distilled from this cycle.  Each is stated so that it can be\nformalised directly on top of `Catalog/Applications/PowerSumInversi",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 242,
-      "timestamp": "2026-08-20T07:06:52",
-      "title": "Power-sum inversion"
-    },
     {
       "cycle_id": "84bf9824",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 43,
       "timestamp": "2026-08-28T14:27:15",
       "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES"
+    },
+    {
+      "cycle_id": "497c96d6",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after the ECM wall audit\n\n## What this cycle settled\n\nWorking from the stage-1 order-completion theory already in the catalog\n(`Catalog/Shared/ECMStage1OrderCompletion.lean`, `…F",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-08-28T14:27:33",
+      "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separ"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "220a83a3",
-      "domain": "Cryptography",
-      "name": "lorentz_applyMove",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "220a83a3",
-      "domain": "Cryptography",
-      "name": "lorentz_invMove",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "8eac1b6d",
-      "domain": "Novelty",
-      "name": "zmod2_eq_zero_or_one",
-      "quality": 0.82
-    },
     {
       "cycle_id": "8eac1b6d",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "value_error_stays_le",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "497c96d6",
+      "domain": "Physics",
+      "name": "firingSet_subset_range",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "497c96d6",
+      "domain": "Physics",
+      "name": "card_coFiringSet",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "497c96d6",
+      "domain": "Physics",
+      "name": "card_deadSet",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-28T14:27:15",
+  "last_updated": "2026-08-28T14:27:33",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "63d0d6e2",
-        "quality": 0.82,
-        "theorems": 118,
-        "title": "The low-tail experiment."
-      },
-      {
         "cycle_id": "3026c1dd",
         "quality": 0.82,
         "theorems": 101,
@@ -3761,6 +3755,12 @@
         "quality": 0.84,
         "theorems": 122,
         "title": "OEIS sequence: Stack polyominoes with square core."
+      },
+      {
+        "cycle_id": "497c96d6",
+        "quality": 0.82,
+        "theorems": 88,
+        "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist"
       }
     ],
     "Probability": [

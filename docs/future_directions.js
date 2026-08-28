@@ -1921,21 +1921,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates the model (PPL 7.11 -> 2714.6, +38000%) \u2014 the KV precision axis has no usable middle at ctx 2048"
   },
   {
-    "consumed_by_exp_id": "5be8ecbc",
-    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 68 (the NET-92 rescue/discriminator cell).\n\n| arm | PPL | dPPL vs control |\n|---|---|---|\n| K q4_1 / V q4_1 | 3,158.07 | +44,322% |\n| K iq4_nl / V iq4_nl | 1,627.35 | +22,790% |\n| **K q4_0 / V f16** | **2,537.80** | **+35,597%** |\n| **K f16 / V q4_0** | **7.1211** | **+0.166%** |\n\n**Scorecard:** P1 REFUTED decisively (block scale+offset does not rescue \u2014 q4_1 marginally WORSE than raw q4_0); P2 CONFIRMED BEYOND ALL PREDICTION (predicted >=5x K-vs-V asymmetry; measured ~214,000x damage ratio); P3 technically true but meaningless (iq4_nl ranks best among three collapsed formats).\n\n**The law:** THE ENTIRE KV CLIFF LIVES IN THE KEYS. Values tolerate raw 4-bit quantization free; keys cannot survive 4 bits in ANY tested representation. Mechanism: keys feed every softmax selection boundary and amplify through layers (NET-83 path); value errors perturb only retrieved content \u2014 linear, local, benign.\n\n**Deployment consequence:** split the cache budget by role \u2014 keys >=8 bits, values accept 4. Given K8/V16 (+0.09%) and K16/V4 (+0.17%) are both individually free, a combined K8/V4 (~6 average bits) should be quality-free; direct confirmation is the immediate follow-up.\n\n**Honest limits:** three collapsed key formats triangulate but share one implementation family inside llama.cpp (fundamentality not proven); single slice/model/context; K8/V4 combined cell untested; per-arm SEs not captured.\n\nSetup identical to NET-92 (llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice). Script ResearchOutput/exp_net93_kvrescue.py; paper ResearchOutput/NetworkMathematics/93_KeysOwnTheCliff.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3947",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T07:22:53.229455+00:00",
-    "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES alone are free (+0.17%) \u2014 a four-order-of-magnitude asymmetry; no block-scaling format rescues keys"
-  },
-  {
     "consumed_by_exp_id": "3596d147",
     "description": "**FACT round-74 #4 \u00b7 exp 566 \u00b7 paper 213 \u00b7 seed 566 \u00b7 walls 9.3 s + 247.7 s**\n\nAttacks the barrier-map residual item **MA-1 effectivity**: is there a COMPUTABLE per-modulus criterion for when the MA-1 averaging assumption (which-factor blindness as identity, papers 93/102/132) is realized? If AP-deviation magnitude were governed by quadratic-character L-values, one would exist. Pre-registered carrier: D(m) = max_a |\u03c0(x;m,a) \u2212 E|/\u221aE on P(m) = \u03a3|L(1,\u03c7)| over nontrivial real characters mod m; H1 R\u00b2 > 0.8 \u21d2 criterion armed; H0 R\u00b2 < 0.5 \u21d2 honest negative.\n\n**Pre-registered verdict rules evaluated verbatim \u2192 NULL-HONEST-NEGATIVE at TWO scales.**\n\n**(1) Registered stage A (x = 2^26 full, no shrinkage).** \u03c0(x) = 3,957,809, 287 moduli (squarefree [3,300] \u222a primes [307,997]), wall 9.3 s: log D ~ \u22120.0767\u00b7log P, slope CI95 (\u22120.136, \u22120.015), **R\u00b2 = 0.0187** [bootstrap 0.0007\u20130.065] \u2014 slope slightly NEGATIVE, opposite the effectivity story. Partial R\u00b2 controlling log \u03c6(m) = **0.0008** \u21d2 residual association purely a \u03c6(m) size effect. Secondary chi\u00b2 readout agrees (R\u00b2 = 0.025). Control cross-modulus pairing permutation (2000 draws) collapses to null (mean 0.0033 / max 0.0435); disclosed spec deviation: literal within-modulus count permutation is VACUOUS for max/\u03c7\u00b2 readouts (permutation-invariant).\n\n**(2) Final scaled artifact B (x = 2^28, \u03c0 = 14,630,843, 2489 moduli dense 2..1500 + primes beyond, wall 247.7 s).** Primary per-m carrier **R\u00b2 = 0.0785 \u2192 NULL**; cell-level secondary y ~ log(1/L), 1902 discriminant cells: R\u00b2 = 0.00052, theory-signed slope B = \u22120.034 [\u22120.101, +0.033] \u2014 not even positive. Baseline size control: OBS ~ log m alone explains **R\u00b2 = 0.790** \u2014 deviation magnitude is modulus-size-dominated; character-L mass adds nothing after size.\n\n**(3) Verification.** Exact class-number path validated: L(1, \u03c7\u208b\u2083) = \u03c0/(3\u221a3) exact (h(\u22123)=1, w=6); truncated series calibrated on 226 overlap discriminants, median rel err 1.8e-5; final-run truncation quality real-share median 8.7e-4, worst rel err 8.2e-2.\n\n> **SCOPING CAVEAT (prominent):** the registered readout D(m) is **SIGN-BLIND** and the predictor uses |L(1,\u03c7)| magnitudes \u2014 this bounds the MAGNITUDE route only. Signed character-alignment analysis is the required follow-up BEFORE killing the L-value route.\n\n**Barrier framing:** H0 here does NOT weaken the barrier program \u2014 it honestly bounds one computable-criterion route at toy scale. MA-1 stays axiomatic at practical scale; \"MA-1 effectivity\" stays an OPEN gap item.\n\nLedger catches, all disclosed: off-by-one corrupted non-exact L-values caught by spot check (\u03c7\u2085 gave 0.127 vs true 0.430), fixed + rerun before any recorded fit; smoke control gate failed at n = 29 (resolved at scale where the null collapses cleanly); Mertens gate FAIL per its own pre-stated rule (slope 0.9277 [0.9234, 0.9320], R\u00b2 = 0.9894 \u2014 near-proportional just outside the strict band; implied K\u0304 = \u22120.216 within theory bound |K| \u2264 0.756); scale-reconciliation disclosure (findings/digest describe stage A while canonical exp566_result.json holds the verdict-identical stage-B rerun that overwrote it mid-session; extended-rerun script variant not separately preserved); coordination disclosure \u2014 a parallel duplicate agent (coordinator double-dispatch after a stall) left an orphaned draft exp566_ma1_effectivity_alt_agentB.py with NO results attached; recorded artifact set solely from the completing agent, orphan left in place.\n\nPaper: ResearchOutput/NewMathematics/213_Ma1EffectivitySweep.md.\n",
     "domains": [
@@ -1951,30 +1936,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #4 \u2014 MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-deviation effectivity at toy scale (clean H0 honest negative at two scales: R\u00b2=0.0187 registered x=2^26 / R\u00b2=0.0785 scaled x=2^28 vs 0.8/0.5 bars; deviation field modulus-size-dominated, baseline OBS~log m R\u00b2=0.79) \u2014 MA-1 stays axiomatic, SIGN-BLIND scope disclosed"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "601f1720",
     "description": "**FACT round-74 #3 \u00b7 exp 563 \u00b7 paper 212 \u00b7 seed 20260824 \u00b7 wall 2.0 s**\n\nResolves the hint-pricing tension between paper 138's linear no-synergy law and the rounds-70/71 \"sequential hints compound\" observation by isolating **adaptivity** (posterior conditioning between queries). n = 800 bitlen-40 semiprimes in two strata (600 BALANCED \u03c1 \u2208 [1, 1.01] / 200 UNBALANCED \u03c1 \u2208 [7.5, 8.5]), k \u2208 {0,1,2,3,6,9,12,14,16,20,24}, idealized truthful `p \u2264 t?` oracle, downstream Fermat-order scan priced in divisibility tests; arms ADAPT (bisection) / NONADAPT (uniform battery) / ADAPTQ/NONADAPTQ (draw-law-calibrated) / SHAM (cost gate).\n\n**Pre-registered verdict rules evaluated verbatim \u2192 COMPOUND-CONFIRMED-HALVING-FAIL** (the UNBALANCED stratum alone reads GEOMETRIC-COMPOUND-ISOLATION-CAPPED \u2014 every prediction passes there including the strict slope).\n\n**(1) Compounding real + superlinear + pure adaptivity (H1a/H1c CONFIRMED).** s_adapt(12)/s_adapt(3) = 165.2\u00d7 unbalanced / 20.8\u00d7 balanced (CIs exclude linear 4\u00d7); premium over the matched fixed battery at k = 12 = **239.5\u00d7 [220.1, 261.0]** unbalanced / **20.8\u00d7 [19.5, 22.3]** balanced, with r(1) = **1.00 EXACTLY** in all four pairs \u2014 nothing to adapt to at one query.\n\n**(2) Hard isolation cap, zero barrier events (H1b CONFIRMED).** 100% of N pinned at k = 20 = \u2308log\u2082 W\u2309; s(\u226520) = T\u2080 exactly (1072.43 balanced / 2.862e5 unbalanced); max s \u2264 T\u2080 \u00d7 1.01 everywhere \u2192 NO barrier event. Pin sits at the integer-bits cap above the prime-isolation bound \u2248 17 \u2014 barriers 4/8 UPHELD and now PRICED: external position info pays ISOLATION-COST per query.\n\n**(3) Halving slope (the FAIL clause).** Aligned A10 test: \u22120.6589 PASS unbalanced; \u22120.5836 FAIL balanced, 16% off \u2212ln2 (band-entry phase correlation; the width-halving law itself is EXACT: V2a 720 deterministic steps, V2b closed form vs dense grid 1.9%).\n\n**(4) HEADLINE SURPRISE (ledger catch A5).** Balanced semiprimes pin min(p,q) against \u221aN \u2192 a uniform FIXED battery carries **LITERALLY ZERO BITS** (s \u2261 1.00 exactly at every k \u2264 24 across all 600 N): non-adaptive batteries are waste-proof in the balanced stratum, and the adaptivity premium grows from exactly 1 into the hundreds.\n\n**Net economics (H3 CONFIRMED).** k_opt = 10/18 measured vs log\u2082((T\u2080\u22121)\u00b7ln2/c_q) = 9.54/17.60 predicted; s_net_max = 89.0 / 14245. SHAM gate PASSED both strata (never helps, never inflates).\n\n**RECONCILIATION \u2014 one pricing structure, two faces.** Paper 138's linear no-synergy pricing holds for NON-adaptive batteries (zero usable bits \u21d2 zero speedup, exactly as the balanced collapse shows); sequential ADAPTIVE hints compound superlinearly but saturate EXACTLY at the isolation-cost ceiling. New hint-taxonomy entry: adaptive sequential hints price geometrically up to isolation cost. This resolves the tension flagged when rounds 70\u201371 noted \"sequential hints COMPOUND\" vs paper 138's linearity.\n\nBarriers: #4/#8 upheld + priced; #2 untouched (idealized external channel by design); no barrier event \u21d2 no re-verification triggered. Validations V0/V1/V4/V5 all clean; zero-parameter theory curve wins fit selection in both strata.\n\nLedger catches, none adverse post-fix: A5 uniform-prior zero-bit collapse (smoke-caught pre-full-run; uniform curves retained as reference diagnostics per AMENDMENT-1); even-median bisection stall (lower-median fix); V2 MC-noise \u2192 deterministic dense-grid enumeration; V5 expectation-vs-bound constant fix; sham luck/inflation clause split.\n\nPaper: ResearchOutput/NewMathematics/212_SeqhintCompoundLaw.md.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3949",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T07:22:53.232489+00:00",
     "title": "FACT round-74 #3 \u2014 SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3) = 165x unbalanced / 21x balanced, r(12) = 240x [220,261]) but saturate EXACTLY at the isolation ceiling (100% pinned at k=20, zero barrier events) while fixed batteries price linearly or carry literally ZERO bits in the balanced stratum \u2014 one pricing structure, two faces; paper-138 linearity reconciled"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6060f6d0",
     "description": "**FACT round-74 #2 \u00b7 exp 564 \u00b7 paper 211 \u00b7 seed 20260824 \u00b7 wall 76.4 s**\n\nThird face of the Berggren triplet-tree campaign: does the mod-N orbit's revealed residue set (exp555/paper 205's under-sampling) carry per-N factor information, and can an orbit dial beat the residues-cap-4/3 (barrier 4)? n = 800 bitlen-40 semiprimes (500 balanced / 300 ratio-4), moduli m \u2208 {3,4,5,7,8,16}, logN-decile-stratified permutation nulls, paper-132 filter accounting.\n\n**Pre-registered hypotheses (verbatim): H1** \"orbit revealed-set MI fully accounted for by ordinary residue-dial content; measured speedup \u2264 4/3 within CI; = matched-random dial\" \u2014 **CONFIRMED with one scope refinement. H2** (speedup > 4/3 surviving replication + sham + N-computability) \u2014 **gate false; no barrier event.**\n\n**Design amendments disclosed pre-run:** (1) the exp555 root-BFS never wraps mod N at bitlen-40 budgets (depth \u2248 9, coords ~10\u2074 \u226a N ~10\u00b9\u00b2) \u2192 root revealed set N-INVARIANT across all 800 N at all six moduli \u2014 the task premise (\"which subset varies with N\") fails for the root component; characterization arm only. (2) Live test = generic components (10 random Pythagorean seeds \u00d7 1500 nodes): supports saturate instantly (exactly m classes at every modulus, component length uniform), variation only in frequencies/orbit-length.\n\n**Information null (H1):** over 48 cells max |z| joint = +2.29 (topshare@16), max |z| conditional = +1.78; feature MI \u2264 0.09 bits vs ordinary residue-dial baselines I(N mod m; p mod m) = 1.00\u20133.00 bits. Nothing beyond ordinary residue content.\n\n**Filter law check at \u03b8 = \u00bd (sqrt-descending TD):**\n- RAND-MATCH 1.3387 CI[1.3008, 1.382] vs prediction 4/3 = 1.3333 \u2014 **cap law confirmed to ~0.4%**; SHAM co-inflation control clean CI[1.2717, 1.3579].\n- ORBIT reads 2.0000 CI[2.0, 2.0], failure rate 0.000 \u2014 BUT **paired z vs UNIV fixed dial = 0.0 EXACTLY**: it IS the parity skip (root-orbit legs always odd). An N-invariant universal exclusion table computable blind from N alone; exceeds 4/3 with zero per-N information \u21d2 constant-shave, NOT a barrier event.\n- NET-loaded: every arm < 1 (0.20\u20130.75) \u2014 paper-131 lesson replicated. Replication gate not triggered.\n\n**New scope note on barrier 4:** the cap law presumes P(p kept) = \u03b8 exchangeability; deterministic exclusions escape via P(p kept) = 1 \u2014 an N-invariant structural dial can exceed 4/3 without carrying any information. The cap bounds information-bearing dials; blind structural exclusions are worth exactly their constant factor.\n\n**Barriers:** #2 consistent; #4 UPHELD + scope note; #5 EXTENDED to mod-N orbit projections; #6 restated as primitive-triple congruences; #8 unchanged. N-computability audit recompute-identical 3/3 both arms (no factor in any code path).\n\nLedger: three catches all fixed BEFORE the full run (empty-walk BFS \u2014 children never enqueued, caught by timing probe; odd-multiplier population-split bug \u2014 empty train half; g-unbound \u00d72); none adverse post-run.\n\n**Campaign CLOSED.** With paper 199 (two-tree closure synthesis of the four-strength seal), paper 205 (modular dynamics), and paper 210 (oracle bound unrealized), ALL faces of the user's triplet-tree proposal are now measured. Paper: ResearchOutput/NewMathematics/211_OrbitDialCapTest.md.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3950",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T07:22:53.233965+00:00",
     "title": "FACT round-74 #2 \u2014 ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor information (max |z| +2.29, MI \u2264 0.09 bits vs 1\u20133-bit residue dials); its 2.0\u00d7 read beats the 4/3 cap ONLY as the N-invariant parity skip (paired z vs fixed dial = 0.0) \u2014 constant-shave, not a barrier event; triplet-tree campaign CLOSED"
   },
@@ -2036,22 +2023,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #7 \u2014 U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut-1e6 r=0.99 CI [0.919,1.010] covers 1); pooled with paper 214 pilot joint point ~0.97 \u2014 banked tension downgraded to open at reduced weight"
   },
   {
-    "consumed_by_exp_id": "497c96d6",
-    "description": "**Paper 215 \u00b7 exp 568 \u00b7 round-74 #6 \u00b7 assessment v322**\n\nVERDICT: **H3 CONFIRMED (strong form)** \u2014 H1/H0 moot-by-absence.\n\nPaper 159 headlines an ECM self-destruction wall: \"when B1 \u2273 min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] infinite\", with a validity edge B1 \u2272 min(p,q)/2. Exp568 tests that boundary under outcome-separated accounting {found_p, found_q, dead, nothing}.\n\n**Design.** Bitlen-26 q\u226bp stratum (generator nextprime(3p+U[1,200))), n_N=40/cell, grid B1/p \u2208 {0.125, 0.25, 0.5, 0.9, 1.05} \u00d7 arms B2/B1 \u2208 {1 (control), 4, 16}; guarded affine EC ops reused VERBATIM from exp488_true_ecm.py (validated there 10/10 ladder + 100/100 mod-12); true-lcm stage-1 schedule; NEW true difference-stage stage-2. Pre-registration verbatim before any data: H1 slope(log w* vs log(B2/B1)) CI covers 1 / H0 covers 0 / MIXED; H3 ADDED after reading the mechanism sentence, BEFORE data (timing disclosed): the wall is a detection/accounting artifact \u2014 gcd(den,N)==N 'dead' events or missing p-vs-q separation \u2014 not method failure.\n\n**Results (600 trials).**\n- ZERO 'dead' outcomes in the entire grid.\n- Success 1.000 in every cell at B1/p \u2265 0.25; **6/6 cells at 1.000 at B1/p = 0.9 AND 1.05** \u2014 exactly where paper 159 records uncapped E[T] infinite.\n- Only misses: two low-edge cells at B1/p = 0.125 (arm-4 0.875, arm-16 0.95), all misses 'nothing', never 'dead'.\n- No w* exists anywhere \u2192 H1/H0 never arm.\n\n**Mechanism (pre-data note, vindicated).** B1 \u2265 p+1+2\u221ap \u21d2 every Hasse-window order n \u2264 B1 \u21d2 every prime power l^e \u2016 n has l^e \u2264 B1 \u21d2 n | lcm(1..B1) \u21d2 [L]P = O mod p on EVERY curve \u21d2 first guarded inversion with vanishing denominator returns gcd = p: GUARANTEED SUCCESS, not death. Simultaneous degeneracy mod q impossible for q \u226b B1. \"All curves degenerate\" can only have read as death if accounting conflated gcd=p wins with gcd=N losses or lacked p-vs-q separation.\n\n**Structural insight (ledger-grade).** Guarded-affine accounting carries a scale-independent random-collision baseline \u2248 1 \u2212 exp(\u2212c\u00b7B1/p) (#ops ~ 1.44\u00b7B1, per-op hit ~1/p): ~17% predicted at B1/p = 0.125 vs 68% observed found-p share (collision-luck + order-divisibility mixed). Any historical success/E[T] accounting that did not separate collision-hits from order-hits could have manufactured the wall sentence. Named follow-up BEFORE amending paper 159 either way: larger-p rerun with per-op outcome tracing (order-hit vs collision-hit).\n\n**Honest disclosures.** (a) toy bitlen 26; (b) stage-2 arms UNTESTED DEAD CODE this run \u2014 stage 1 succeeded first everywhere, zero s2 outcomes; new difference-stage machinery validated only by smoke buckets + sign-convention note; cross-arm differences at fixed B1 are per-cell RNG drift; (c) inline coordinator implementation after 3\u00d7 agent-channel failures (stall watchdog \u00d72, silent no-write \u00d71); (d) recorder catch: findings.md says \"14/15 cells at 1.000\" but canonical result.json shows TWO sub-1.000 cells (both at B1/p = 0.125) \u2014 JSON canonical, verdict unaffected.\n\n**Barrier framing.** Barrier-8 adjacency (known-method bookkeeping); self-audit genre \u2014 precedent: paper 91 stands / paper 99 retraction handled by side-by-side reconstruction. If the independent follow-up confirms, paper 159's wall sentence gets an AMENDMENT, not a silent rewrite; until then 159 stands as recorded with this audit appended.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/exp568_* ; paper ResearchOutput/NewMathematics/215_EcmStage2Wall.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3963",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T09:06:21.855664+00:00",
-    "title": "FACT round-74 #6 \u2014 ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separated accounting \u2014 B1 \u2265 p+1+2\u221ap makes every curve succeed, not die (self-audit of paper 159)"
-  },
-  {
-    "consumed_by_exp_id": "bb8f0638",
+    "consumed_by_exp_id": "1d522b88",
     "description": "Exp 567 \u00b7 paper 214 \u00b7 assessment v321 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp567_scale_u9_lift.py \u00b7 seed 20260824 \u00b7 honest partial (disclosed).\n\n**Question.** Does x\u00b2\u2212N stay size-matched-random in smoothness at u \u2208 [9, 11.x] \u2014 the approach zone of the Dickman leading-term regime (~u \u2248 14.75) \u2014 where raw B-smoothness testing starves (\u03c1(9)=1.0e-9 \u2026 \u03c1(11)=6.5e-13)? Frontier item: scale-smoothness deviations u \u2265 6\u201314.\n\n**Design.** Balanced semiprimes bitlen {96,104,112} \u2192 u-bands {9,10,11}, v=(s+j)\u00b2\u2212N, j \u2264 3s; LPF-CDF cut ladder {500,1e3,1e4,1e5,1e6} via cumulative segment-primorial gcd chains batch-amortized by product-tree remainder descent (12\u00d7: 87\u21927 \u00b5s/value); exact (bitlen, mantissa-octant) matched controls, shared code path; per-N cluster bootstrap + built-in A/B split-halves. Pre-registered verbatim: H1 r_cut(u)=1 everywhere; H2 maximal-skepticism confirmation protocol; L1-vs-L2 overdispersion fork; B=500/1000 cuts pre-declared as ~zero-yield continuity carriers.\n\n**Status: HONEST PARTIAL.** An intermittent multiprocessing throughput collapse at full geometry (root-caused via preserved faulthandler dump: ready()-starved feed loop + slow completions) ate the headline runs; statistical weight rests on the completed pilot (band 9, bitlen 96, 24-N pool, 35.7M cand+ctrl pairs); three-band leg shipped at 45k pairs/band under the time-cap convention.\n\n**Achieved u:** band 9 [9.83,10.13] mean 9.89; band 10 [10.64,10.94]; band 11 [11.44,11.74]. No coverage in (10.94,11.44) \u2014 integer u=11 sits in a half-notch gap of grid geometry (disclosed pre-run).\n\n**Result \u2014 VERDICT RANDOM-EXTENDS / NULL-WITH-TENSION, deviation status NONE:**\n- Primary LPF-CDF-1e6 cut, band 9: r = 0.9468, cluster-boot CI [0.8630, 1.0389] (12,493 vs 13,195 events); splits A 0.939 / B 0.955.\n- 1e5 cut: r = 0.864, CI [0.7190, 1.0302] (667 vs 772); splits 0.848 / 0.881.\n- Three-band leg: every CI covers 1 (band 10 @1e6 r=2.0 [0.25,7.0] on 4-vs-2; band 11 kc=2 vs kctrl=0 undefined). Tightest |r\u22121| bound 0.137 (pilot primary).\n- B=500/1000: exactly zero events everywhere, as designed.\n- H2 never armed \u2014 no CI excludes 1 in any cell; per pre-registration this is a null.\n\n**Tension banked, NOT claimed:** points run 5\u201314% below 1 at both powered cuts, direction-stable across split-halves and cuts. Flagged as motivation for a future higher-power run (~30\u00d7 more pairs at the 1e5 cut). Explicitly not a discovery per pre-registration.\n\n**OVERDISPERSION AMENDMENT to paper 209's secondary claim** ('D=1.61 persists at bin 5 then DIES by u\u22487; residue-dial correlation gone'): at u=9.85 under the healthy-rate 1e6 lens, exposure-corrected D_cand = **28.87 [14.27, 44.08]** vs D_ctrl = 1.84 [0.90, 2.84] (exposures flat \u00b10.14%) \u2014 per-N clustering is ALIVE at u \u2248 10; Spearman(per-N rate, qr_frac) = 0.533 (perm p 0.006) @1e4 and 0.437 (p 0.033) @1e6 where 209 read ~0.04 'gone'. What died by u \u2248 7 was the B-smoothness INDICATOR starving (rate/threshold artifact, L1 direction), not clustering \u2014 consistent with paper 136's QR-bite = per-N variance law. Caveat recorded honestly: the formal L1 gate required \u22652 powered bins; only one survived the shrinkage, so this stands on the pilot's internal contrast as directionally confirmed / formally unmet.\n\n**Ledger catches (all disclosed):** mixed-segment checker bug gave 39/40 false mismatches \u2014 shipped tester proven EXACT vs exhaustive zero-early-exit strip of all primes \u22641e6 (368 cases full / 218 pilot incl. deep-window quadratics, 0 mismatches); backpressure watchdog false-trip terminated one attempt as 'calibration hung'; faulthandler SIGUSR1 re-raise killed one instrumented rerun; throughput collapse shrank the headline run from ~130M-value/band quotas to 45k pairs/band (an interim sub-powered write had flashed DEVIATION-UNCONFIRMED before supersession; canonical artifacts are final).\n\n**Barrier framing:** no barrier breached \u2014 a null here STRENGTHENS papers 130/209 randomness into new territory; variance-side accounting upgraded (variance N-covariant, means matched); constant-shaving risk none.\n\nArtifacts: exp567_scale_u9_lift.py, exp567_pilot_result.json (powered leg), exp567_result.json (three-band), exp567_full.log / exp567_pilot.log / exp567_smoke.log, exp567_stderr.txt (faulthandler snapshots from a healthy run, not a crash).",
     "domains": [
       "Novelty"
@@ -3177,20 +3149,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 7ae2917a (Q=0.820), which proved 63 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define a committed local-oracle protocol and prove that perfect hiding of unopened coordinates plus perfect simulation of opened coordinates yields perfect honest-verifier zero knowledge for the full constant-query verifier transcript.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_7ae2917a_803a078f",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "7ae2917a",
-    "status": "available",
-    "timestamp": "2026-08-27T09:50:06.745956+00:00",
-    "title": "Deepening: Composition of PCP locality with commitment hiding"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domains": [
       "NumberTheory"
@@ -4147,21 +4105,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that every convex body K in R\u207f of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "seed_219",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Bourgain's Slicing Problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -15781,14 +15724,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Log-Concavity of the Minimal Mass Invariant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "25df59ed",
     "description": "Binary capacity is a strictly monotone function of class imbalance, so a wall value is a sufficient statistic for the split. We conjecture that two independent populations whose walls agree within epsilon have imbalances agreeing within C epsilon, with an explicit C controlled by the derivative of binary entropy away from 1/2.\n\nFor p, q in [delta, 1/2], |binEntropy p - binEntropy q| >= c(delta) |p - q| with c(delta) = log((1-delta)/delta), hence |p-q| <= |I_1 - I_2| / c(delta).\n\nDifferentiate binEntropy (Mathlib provides the derivative) and apply the mean value theorem on [delta, 1/2]; combine with TraceBattery.binary_wall_inversion.\n\nThe reported 0.4677 becomes a testable claim about the split (about 9.96 percent) that any replication must reproduce.\n\nWall values would be insensitive to imbalance near 1/2, meaning the wall carries almost no information and should be dropped from the battery report.",
     "domains": [],
     "id": "fd_3603",
+    "phase": "A",
     "priority_score": 0.5906521739130436,
     "research_mode": "team",
     "source_exp_id": "a3ad9f21",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T07:00:24.941866+00:00",
     "title": "Which-Factor Wall as a Cross-Population Invariant"
   },
@@ -16082,6 +16026,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Lift the sharp stage-1 threshold theory to the difference stage. Stage 2 kills orders that are B1-powersmooth after removing a single prime factor in (B1, B2], so the criterion should become a two-parameter threshold and the firing count an exact product formula. The stage-2 arms of the audited experiment never executed, so a theorem is the only available validation.\n\nA point of order n is killed by the (B1,B2) difference stage iff n = s*r with maxPrimePow s <= B1 and r = 1 or r prime in (B1,B2]; the firing count in Z/m is gcd(m,lcm(1..B1)) times (1 + #{r prime in (B1,B2] : r divides m / gcd(m,lcm(1..B1)))}).\n\nFormalize the criterion by the same factorization argument as dvd_stage1Scalar_iff, then count the firing set as a disjoint union over the admissible prime r.\n\nExact stage-2 success rates replace the usual heuristic, and the B2/B1 scaling law of the pre-registered H1 hypothesis becomes computable in closed form.\n\nThe difference stage kills strictly more orders than the criterion allows, indicating that intermediate differences contribute extra collisions.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4342",
+    "priority_score": 0.5647581844092949,
+    "research_mode": "team",
+    "source_exp_id": "497c96d6",
+    "status": "available",
+    "timestamp": "2026-08-28T14:27:26.003881+00:00",
+    "title": "Stage-Two Difference-Stage Firing Criterion"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The reading 'D = 1 + betweenVar/mean' is valid only if the within-cell law is Poisson-calibrated. The conjecture is that the residual within-cell dispersion at bitlen 96 is itself strictly above 1, i.e. the excess is not purely latent-rate heterogeneity but includes within-N clustering of gcd-chain hits.\n\nFor the exp-576 ensemble, withinVar > avg after conditioning on every recorded dial, with the gap growing in the number of j-samples per N.\n\nMeasure D_within at two j-sample budgets and compare with Logic.QRDial.poisson_mixture_disp, whose hypothesis withinVar = avg is exactly the calibration being audited.\n\nThe mixed-Poisson framing must be replaced by a self-exciting model, changing every published dispersion reading in the line.\n\nHeterogeneity is confirmed as the sole source, and the carrier is a per-N latent rate \u2014 a purely arithmetic object.",
     "domains": [
       "Algebra",
@@ -16244,6 +16203,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T08:01:08.907858+00:00",
     "title": "Role-Swap Quotient Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Count how many integers in the Hasse window of p have largest prime power at most B = p^theta. The catalog now gives an exact firing criterion (maxPrimePow n <= B), so ECM stage-1 success over random curves reduces to this counting problem. A uniform Dickman-type asymptotic would replace the folklore smoothness heuristic by a theorem.\n\nFor B = p^theta with 0 < theta <= 1, the proportion of integers n in [p+1-2 sqrt p, p+1+2 sqrt p] with maxPrimePow n <= B equals rho(1/theta) + O(p^{-delta}) uniformly in theta, where rho is the Dickman function.\n\nFormalize the lower bound for theta close to 1 by counting window integers divisible by a prime power above B (inclusion-exclusion over primes in (B, p+1+2 sqrt p]); verify numerically for p up to 10^7 before formalizing.\n\nECM stage-1 success rates become theorems rather than heuristics, and the transition to certainty at theta = 1 is provably continuous, killing any wall-shaped claim.\n\nThe window distribution deviates from Dickman, which itself would be a significant statement about prime powers in short intervals.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4339",
+    "priority_score": 0.5647058984721419,
+    "research_mode": "team",
+    "source_exp_id": "497c96d6",
+    "status": "available",
+    "timestamp": "2026-08-28T14:27:24.269262+00:00",
+    "title": "Powersmooth-Order Density Threshold for Hasse Windows"
   },
   {
     "consumed_by_exp_id": "",
@@ -27932,6 +27906,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Guaranteed stage-1 success over the whole Hasse window requires the scalar to be divisible by every prime in the window, hence to have bit length of order p / log p. The conjecture asserts this is optimal over all schedules, so the wall region is exponential-cost certainty rather than failure.\n\nAny scalar k such that every integer in [p+1-2 sqrt p, p+1+2 sqrt p] divides k satisfies log2 k >= (1+o(1)) p / log p.\n\nFormalize: such a k is divisible by every prime in the window; then bound the product of those primes from below using a Chebyshev-type estimate for primes in a short interval.\n\nThe recorded wall is definitively reinterpreted as a cost law; no algorithmic exploitation of the certainty regime is possible.\n\nThere exists a sub-exponential certificate schedule, which would be a genuine algorithmic advance for ECM.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_4340",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "497c96d6",
+    "status": "available",
+    "timestamp": "2026-08-28T14:27:24.906822+00:00",
+    "title": "Cost-Certainty Tradeoff Law for lcm Schedules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalize the four-outcome ledger to moduli with k prime factors: each trial reveals the subset S of primes whose order completed. The conjecture is that these subsets behave as independent Bernoulli coordinates with the exact rates gcd(m_i, k(B))/m_i, giving closed-form multi-prime ECM success probabilities.\n\nFor N = p_1...p_k and a uniformly random point, the events {order completes mod p_i} are independent with probabilities gcd(m_i, lcm(1..B))/m_i, so P(reveal a proper factor) = 1 - prod(1-r_i) - prod(r_i).\n\nFormalize independence for the CRT product of cyclic groups (a direct product argument extending card_firingSet_prod), then verify the resulting formula numerically for k = 3.\n\nExact multi-prime ECM success formulas replace the single-prime heuristic, and the dead outcome gets an exact probability.\n\nCorrelations between group orders at distinct primes exist, which is itself a statement about curve-order distributions.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4341",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "497c96d6",
+    "status": "available",
+    "timestamp": "2026-08-28T14:27:25.456682+00:00",
+    "title": "Outcome Algebra of CRT-Guarded Inversions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -38215,6 +38219,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Allocating key bits per *attention head* according to that head's\n`log\u2082(\u2016q\u2016\u2081/m)` beats any uniform allocation at the same average bit-width, and\na small fraction of heads (`< 20%`) accounts for the entire cliff.\n\n*The key insight is* that `shift_bit_to_keys` is a local exchange argument: it\napplies to each head independently, so the optimum of a total budget equalises\nthe amplified marginal damage `A_h\u00b72^{-b_h}` across heads, which uniform\nallocation cannot do when the `A_h` vary by orders of magnitude.\n\n*Why now?* The exchange argument is already formal; per-head `\u2016q\u2016\u2081` is cheap to\ninstrument, and the resulting allocation is implementable in the existing\ncache-type plumbing.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Logarithmic Query-Norm Law for the Key Bit Cliff\",\n    \"domain\": \"MachineLearning\",\n    \"description\": \"The critical key bit-width should be logarithmic in the amplification ratio (query L1 norm times key range over decision margin). The proved margin criterion 2*L1*R/2^b < m says exactly this, so doubling the query norm must cost one extra key bit. Testing it converts a qualitative cliff into a calibrated design rule.\",\n    \"conjecture\": \"The critical key bit-width satisfies b* = log2(L1q * R / m) + Theta(1), with the constant independent of model and slice.\",\n    \"test\": \"Instrument the attention kernel for per-head query L1 norm and top-1 logit margin; sweep key bit-width and locate the departure from control perplexity; compare the measured b* with the predicted logarithm.\",\n    \"if_true\": \"Key bit-width becomes computable in advance from two cheap statistics, removing the need for a sweep per model.\",\n    \"if_false\": \"Some mechanism other than per-token decision flips dominates the cliff, and the margin certificate is not the operative bound.\",\n    \"proof_strategy\": \"Formal side is done (decision_preserved_of_key_bits, bits_suffice_for_margin, four_bits_destroy_the_decision); the remaining step is a matching lower bound showing a decision flip is forced once 2*L1*res exceeds the margin of a positive-mass set of tokens.\",\n    \"catalog_references\": [\"Novelty.KeyBitwidthSafety\", \"Novelty.KeysOwnTheCliff\", \"Novelty.KVDecisionDissociation\"]\n  },\n  {\n    \"title\": \"Margin-Mass Law for Quantisation Damage\",\n    \"domain\": \"Probability\",\n    \"description\": \"Aggregate perplexity damage should be proportional to the probability mass of tokens whose top-1 margin falls below the induced logit error. The per-token certificate and the per-token exponential damage bound are already theorems; only the aggregation over the margin distribution remains.\",\n    \"conjecture\": \"Relative perplexity damage equals C * P(margin < 2 * L1q * deltaK) + O(deltaV), with C independent of the model.\",\n    \"test\": \"Histogram the top-1 margins of a held-out slice, compute the predicted failure mass at each key bit-width, and regress measured dPPL against it.\",\n    \"if_true\": \"Damage becomes predictable from a single histogram, and cache for",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_4338",
+    "priority_score": 0.44288489349912763,
+    "research_mode": "team",
+    "source_exp_id": "5be8ecbc",
+    "status": "available",
+    "timestamp": "2026-08-28T14:27:02.032723+00:00",
+    "title": "Mixed-precision keys: protect the head, not the layer"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Status update.**  The composite-`m` attainment conjectured earlier in this\nthread is now a theorem (`extremal_collision_value_general`): the mixture of a\nuniformly random bijection (mass `1 - 1/m`) with a uniformly random constant\n(mass `1/m`) is *exactly* `2`-universal for every `m` and attains `1/m`.  What\nremains open is whether the extremal family is *strongly* `2`-universal.\n\n**Conjecture.**  For every `m \u2265 2` the bijection\u2013constant mixture is pairwise\nindependent: `P(h x = u, h y = v) = 1/m\u00b2` for all `u, v` and all distinct keys\n`x, y`.  Consequently the extremal value `1/m` is attained inside the class of\nstrongly `2`-universal families for every `m`, not only for primes.\n\nThe key insight is that pairwise independence for the mixture reduces to the\npermutation count `|{\u03c3 : \u03c3 x = u, \u03c3 y = v}| = (m-2)!` for `u \u2260 v` together with\nthe vanishing of the bijection branch on the diagonal, i.e. to elementary\ncounting rather than to field structure; the prime hypothesis in\n`affine_pairwiseIndependent` is an artefact of the construction.\n\n**Why now?**  `mix_exactly2Universal` and `mixLaw_prob_constant_branch` already\nreduce every mixture probability to a pair of `Finset` cardinalities, so only\nthe permutation counts are missing.\n\n---",
     "domains": [
       "Combinatorics",
@@ -38362,6 +38381,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T15:54:50.193458+00:00",
     "title": "Skewness dichotomy for graphical (Ising-type) models"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The per-layer key amplification factor `\u03b3` of\n`key_error_geometric` is a property of the *architecture*, not of the quantiser:\nthe same `\u03b3` (within measurement error) fits `q4_0`, `q4_1` and `iq4_nl` key\ncaches at every bit-width.\n\n*The key insight is* that `no_codebook_rescues_keys` shows the codebook enters\nonly through its cardinality, so any format dependence in the depth exponent\nwould have to come from a mechanism outside the collision picture.\n\n*Why now?* NET-93's honest limit is that its three collapsed formats share one\nimplementation family; measuring `\u03b3` per layer separates \"implementation family\"\nfrom \"architecture\" with the existing harness.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4336",
+    "priority_score": 0.44209119297314353,
+    "research_mode": "team",
+    "source_exp_id": "5be8ecbc",
+    "status": "available",
+    "timestamp": "2026-08-28T14:27:00.735371+00:00",
+    "title": "Depth-amplification exponent is measurable and format-independent"
   },
   {
     "consumed_by_exp_id": "",
@@ -38627,6 +38661,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Because the value bound `\u03b4_V` is additive and unamplified, value\ncaches remain quality-neutral (`< 1%` PPL) down to 2 bits, and the first\nsignificant loss appears at 1 bit, where `\u03b4_V` becomes comparable to `\u2016v\u2016_\u221e`.\n\n*The key insight is* that the proved value term never interacts with the query\nnorm or the depth, so the only scale it can be compared against is `\u2016v\u2016_\u221e`\nitself \u2014 the breakdown must occur at `\u03b4_V \u2248 \u2016v\u2016_\u221e`, i.e. at one bit.\n\n*Why now?* K16/V4 measured `+0.17%`, far below any plausible cliff; the model\npredicts the *next* two arms (V2, V1) exactly, and one of them must fail if the\ntheory is right.",
+    "domains": [],
+    "id": "fd_4337",
+    "priority_score": 0.44003921568627447,
+    "research_mode": "team",
+    "source_exp_id": "5be8ecbc",
+    "status": "available",
+    "timestamp": "2026-08-28T14:27:01.288610+00:00",
+    "title": "Value quantisation is free at 2 bits, and 1 bit is where it breaks"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "`share_sub_inv_card_le_relClusterSD` is a deterministic bound at a fixed profile.  What a\nfuture gate needs is the *typical* floor when clusters are drawn from the hypotenuse\ndistribution.  **The key insight is** that the max/mean ratio of hypotenuse cluster sizes\ngrows like a divisor-type function, so the design effect should grow like a power of\n`log`, not stay bounded.  **Why now?** The exact bootstrap variance identity is proved, so\na distributional statement can be phrased as a statement about `\u2211 (x\u1d62 \u2212 x\u0304)\u00b2` alone.",
     "domains": [],
     "id": "fd_4281",
@@ -38636,6 +38682,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T13:17:46.906141+00:00",
     "title": "Distributional floor, not just worst-case floor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Perplexity damage under key quantisation is governed not by the\nworst-case margin but by the *mass* of tokens whose margin is below\n`2\u2016q\u2016\u2081\u03b4_K`: `\u0394PPL/PPL \u2248 C \u00b7 P(margin < 2\u2016q\u2016\u2081\u03b4_K)` with a model-independent `C`.\n\n*The key insight is* that `strictTop_of_margin` is a per-token certificate, so the\naggregate loss is a measure of the certificate's failure set, and the softmax\n`\u2113\u00b9` bound `e^{2\u03b7} \u2212 1` controls the damage each failed token can contribute.\n\n*Why now?* The two ingredients (per-token certificate, per-token damage bound)\nare both formal theorems in this cycle; only the aggregation step is missing,\nand it is a statement about one measurable distribution.",
+    "domains": [],
+    "id": "fd_4335",
+    "priority_score": 0.43999999999999995,
+    "research_mode": "team",
+    "source_exp_id": "5be8ecbc",
+    "status": "available",
+    "timestamp": "2026-08-28T14:27:00.185339+00:00",
+    "title": "Margin-mass criterion replacing worst-case margin"
   },
   {
     "consumed_by_exp_id": "",
@@ -38729,6 +38787,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:27:01.730129+00:00",
     "title": "Almost-surely finite demons with no horizon at all"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The critical key bit-width `b*` at which perplexity departs\nfrom control satisfies `b* = log\u2082(\u2016q\u2016\u2081 R / m) + \u0398(1)`, where `m` is the median\ntop-1 logit margin of the model and `R` the key range; in particular `b*` shifts\nby exactly one bit when the query norm doubles.\n\n*The key insight is* that the proved criterion\n`2\u2016q\u2016\u2081R/2^b < m` is logarithmic in the amplification, so the cliff is a\n*threshold in bits*, not a smooth degradation \u2014 a doubling of `\u2016q\u2016\u2081` must be paid\nfor with exactly one extra key bit.\n\n*Why now?* `decision_preserved_of_key_bits` and `four_bits_destroy_the_decision`\nalready bracket the threshold from both sides at one scale; instrumenting\n`llama.cpp` for `\u2016q\u2016\u2081` and the margin distribution turns the bracket into a\nprediction that a single sweep can refute.",
+    "domains": [],
+    "id": "fd_4334",
+    "priority_score": 0.4393684210526315,
+    "research_mode": "team",
+    "source_exp_id": "5be8ecbc",
+    "status": "available",
+    "timestamp": "2026-08-28T14:26:59.631270+00:00",
+    "title": "Query-norm law for the cliff location"
   },
   {
     "consumed_by_exp_id": "",
@@ -44024,15 +44094,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "A closed form for `\u2211_{k \u2264 a} S(n,k)` for every fixed `a \u2265 4`."
   },
   {
-    "consumed_by_exp_id": "28e35e31",
+    "consumed_by_exp_id": "",
     "description": "`KL(q*_\u03b3 \u2016 \u03c0_\u03b2) \u2264 (\u03b3\u00b2/2\u03b2\u00b2)\u00b7Var_{\u03c0_\u03b2}(d/\u03c0_\u03b2)`, i.e. the\n   drift bound of `ptx_drift_le` can be replaced by a second-order quantity built from the score\n   function proved constant in `ptx_stationarity_iff`.",
     "domains": [],
     "id": "fd_1659",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "9e83a721",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T03:10:25.716782+00:00",
     "title": "Score variance controls drift"
   },
