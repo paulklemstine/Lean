@@ -487,3 +487,38 @@ class TestQualityGateSignals:
                              description=("This cycle deepened the theory. " * 10),
                              source_exp_id="t", source_path="t", domains=["Algebra"])
         assert mgr._is_quality_direction(fd) is False
+
+
+class TestIsValidParentTitle:
+    def test_long_github_issue_titles_pass(self):
+        from fd_splitter import is_valid_parent_title
+        assert is_valid_parent_title(
+            "FACT round-85 #1 — SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1 true at z=+8.02 across 3 datasets, zero baseline overlap; mechanism is leading-exponent crossover at gamma=1.38"
+        ) is True
+        assert is_valid_parent_title(
+            "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-1 PASS at 80% power on 6 new seeds; R^2=0.91 effectivity replicated, no degradation"
+        ) is True
+        assert is_valid_parent_title(
+            "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits — the serving default; key-side cliff is a two-stage fall (free @8b, +868% @5b, +38,000% @4b) while values stay free to raw 4-bit"
+        ) is True
+
+    def test_standard_math_titles_pass(self):
+        from fd_splitter import is_valid_parent_title
+        assert is_valid_parent_title("Composition of PCP locality with commitment hiding") is True
+        assert is_valid_parent_title("p-adic Dynamics of the Berggren Moves") is True
+        assert is_valid_parent_title("Score variance controls drift") is True
+
+    def test_junk_fragments_rejected(self):
+        from fd_splitter import is_valid_parent_title
+        assert is_valid_parent_title("is a finitely supported a : ℕ → ℤ with") is False
+        assert is_valid_parent_title("which was proved in section 3") is False
+        assert is_valid_parent_title("the file Catalog/Foo.lean consists of ten theorems") is False
+        assert is_valid_parent_title("Future Directions") is False
+        assert is_valid_parent_title("Next Steps") is False
+        assert is_valid_parent_title("Status:") is False
+        assert is_valid_parent_title("1.") is False
+        assert is_valid_parent_title("***") is False
+        assert is_valid_parent_title("(123)") is False
+        assert is_valid_parent_title("with equality when x = 0") is False
+        assert is_valid_parent_title("") is False
+        assert is_valid_parent_title(None) is False

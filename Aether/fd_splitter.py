@@ -224,6 +224,44 @@ def clean_title(t: Optional[str]) -> Optional[str]:
     return s
 
 
+def is_valid_parent_title(t: Optional[str]) -> bool:
+    """Validate a parent direction/concept title for follow-up and sorry-fill generation.
+
+    Rejects true junk fragments (sentence tails, empty strings, pure numbers/punctuation,
+    narration intros, generic headers) without falsely rejecting long, descriptive, or
+    technical research titles that came from completed cycles or GitHub issues.
+    """
+    if not t or not isinstance(t, str):
+        return False
+    s = t.strip()
+    s = re.sub(r'^(?:\*\*|\#+\s*|[-*•])\s*', '', s)
+    s = re.sub(r'[\*\#]\s*$', '', s)
+    s = re.sub(r'^\d{1,3}\.\s+', '', s).strip()
+    if len(s) < 4:
+        return False
+    if re.fullmatch(r'[\d\s.\-_()/]+', s):
+        return False
+    if re.fullmatch(r'[\w ()]+:', s):
+        return False
+    low = s.lower()
+    if any(low == g or low.startswith(g + ':') for g in GENERIC_DIR_HEADERS):
+        return False
+    if any(low.startswith(p) for p in NARRATION_PREFIXES):
+        return False
+    if any(low.startswith(p) for p in RECAP_LEADINS):
+        return False
+    if re.match(r'^(?:is|are|was|were|has|have|had|be|been|being|that|which|when|where|whose|then|thus|hence|while|and|or|but|with|without|such that|consisting of|derived from)\b', low):
+        return False
+    if re.match(r'^[a-z]', s) and len(s.split()) <= 5:
+        first_word = s.split()[0].lower().strip('`*')
+        if first_word in ('the', 'we', 'it', 'this', 'these', 'those', 'a',
+                          'an', 'our', 'its', 'their', 'one', 'two', 'some',
+                          'any', 'all', 'both', 'each', 'every', 'no', 'not',
+                          'he', 'she', 'they', 'there', 'here', 'such', 'is', 'are', 'was', 'were'):
+            return False
+    return True
+
+
 def split_directions_from_text(
     mgr,
     text: str,

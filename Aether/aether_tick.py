@@ -880,8 +880,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 
                 # Junk parent titles must not be amplified into 0.85+ children
                 # (audit 2026-08-21).
-                from fd_splitter import clean_title as _clean_title
-                if not _clean_title(title_clean):
+                from fd_splitter import is_valid_parent_title
+                if not is_valid_parent_title(title_clean):
                     raise ValueError(
                         f"parent title is a junk fragment: {title_clean[:60]!r}")
                 follow_up_title = f"Deepening: {title_clean[:80]}"
@@ -924,8 +924,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     else:
                         break
                 
-                from fd_splitter import clean_title as _clean_title
-                if not _clean_title(title_clean):
+                from fd_splitter import is_valid_parent_title
+                if not is_valid_parent_title(title_clean):
                     raise ValueError(
                         f"parent title is a junk fragment: {title_clean[:60]!r}")
                 fill_title = f"Close Proofs: {title_clean[:70]}"
