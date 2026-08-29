@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d59c6a1a",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — equal-volume peelings under a thickness budget\n\n## What this cycle established\n\nLet `shellRadius R d N k = R (1 - k/N)^{1/d}` be the equal-volume peeling of `B(0,R) ⊆ ℝ^d`\ninto `",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-08-25T13:13:10",
-      "title": "Thin-Shell Counting under a Thickness Budget"
-    },
-    {
       "cycle_id": "05a687ab",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results now formalized in\n`Catalog/Computation/SpectralUnfoldingGapStatistics.lean`,\n`Catalog/Computation/SpectralPoissonVs",
@@ -499,19 +489,19 @@
       "theorem_count": 50,
       "timestamp": "2026-08-29T18:30:40",
       "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates t"
+    },
+    {
+      "cycle_id": "3f9d41d2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — batch smoothness testing (round-73 #3, exp 561)\n\nDerived from the two research cycles formalised in\n`Catalog/Applications/BatchSmoothnessCorrectness.lean`,\n`Catalog/Applications/",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-29T18:30:57",
+      "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) b"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "18b02a30",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions: after the `q`-analogue of Kummer's theorem\n\n## What is now proved (all `sorry`-free, in `Catalog/NumberTheory/QKummer/`)\n\n*Valuation side.*\n\n* the exact factorisation `[k]_q! [n-k",
-      "quality_score": 0.88,
-      "sorry_count": 3,
-      "theorem_count": 294,
-      "timestamp": "2026-08-20T14:00:28",
-      "title": "C4.  A `q`-analogue of Kummer's theorem"
-    },
     {
       "cycle_id": "5be71780",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 50,
       "timestamp": "2026-08-29T18:30:40",
       "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates t"
+    },
+    {
+      "cycle_id": "3f9d41d2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — batch smoothness testing (round-73 #3, exp 561)\n\nDerived from the two research cycles formalised in\n`Catalog/Applications/BatchSmoothnessCorrectness.lean`,\n`Catalog/Applications/",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-29T18:30:57",
+      "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) b"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "95a534e1",
-      "domain": "Combinatorics",
-      "name": "and",
-      "quality": 0.81
-    },
-    {
-      "cycle_id": "95a534e1",
-      "domain": "Combinatorics",
-      "name": "dvd_iff_dvd_of_mod_eq",
-      "quality": 0.81
-    },
-    {
-      "cycle_id": "95a534e1",
-      "domain": "Combinatorics",
-      "name": "card_range_residue",
-      "quality": 0.81
-    },
     {
       "cycle_id": "40d19005",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "block_rescue_at_net92_scale",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "3f9d41d2",
+      "domain": "Applications",
+      "name": "primorial_pos",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "3f9d41d2",
+      "domain": "Applications",
+      "name": "primorial_ne_zero",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "3f9d41d2",
+      "domain": "Applications",
+      "name": "factorization_primorial",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-08-29T18:30:40",
+  "last_updated": "2026-08-29T18:30:57",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "11e84a32",
-        "quality": 0.87,
-        "theorems": 118,
-        "title": "Definability boundary for external interpretations"
-      },
-      {
         "cycle_id": "5f0e4f5e",
         "quality": 0.86,
         "theorems": 114,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 93,
         "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measur"
+      },
+      {
+        "cycle_id": "3f9d41d2",
+        "quality": 0.74,
+        "theorems": 55,
+        "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase ("
       }
     ],
     "Bridges": [

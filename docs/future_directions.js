@@ -1809,16 +1809,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-70 #1 \u2014 TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "342e465c",
     "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 66 (first round of the user-directed CPU pivot; doubles as the hardware-stability canary after the 2026-08-23 memory-fault fixes).\n\n**Claim:** Qwen2.5-7B-Instruct Q4_K_M executed entirely on CPU (llama.cpp, i9-9900K, threads=8, 5.79 tok/s greedy baseline) with same-family drafts:\n\n| config | prose speedup | prose accept | code speedup | code accept |\n|---|---|---|---|---|\n| 0.5B d=2 | 1.254x | 63.9% | 1.352x | 71.6% |\n| 0.5B d=4 | 1.416x | 47.7% | 1.616x | 63.0% |\n| 0.5B d=8 | **0.979x LOSS** | 30.9% | **1.661x BEST** | 56.0% |\n| 1.5B d=2 | 1.016x | 63.2% | 1.195x | 83.4% |\n| 1.5B d=4 | 1.153x | 51.9% | 1.395x | 74.8% |\n| 1.5B d=8 | 0.982x LOSS | 44.9% | 1.354x | 60.3% |\n\n**Scorecard:** P2 CONFIRMED dramatically (>1.05x predicted; up to 1.661x measured); P4 CONFIRMED (+17.8 pts code>prose acceptance, growing +14/+19/+20 with depth); P1 razor-thin REFUTED (47.72% vs >=50% horn); P3 REFUTED as stated \u2014 NO crossover: the 11.8%-of-target-cost 0.5B draft beats the 23.4%-cost 1.5B in ALL SIX head-to-heads even where 1.5B accepts more (code d=8: accept 60.3 vs 56.0 but speedup 1.354x vs 1.661x).\n\n**Laws:** (1) DRAFT-COST DOMINANCE ON CPU \u2014 acceptance advantages do not survive a 2x per-token cost disadvantage when proposal is sequential but verification amortizes; GPU folklore does not transfer. (2) OPTIMAL DEPTH IS DOMAIN-PARAMETERIZED \u2014 prose acceptance halves per doubling past d=2 and d=8 becomes a net loss; code decays gracefully and keeps paying through d=8; a static depth setting forfeits 25%+ throughput. (3) Practical: +66% free serving throughput from a 0.6GB side model; prescription = small q8_0 draft, d=8 for code, d=4 for prose.\n\n**Hardware note:** this round doubled as the stability canary after fixing the box's memory subsystem (XMP off + BIOS v1.F0 after uncorrected-MCE hard crashes) \u2014 ~55 minutes of sustained full-CPU llama.cpp load completed with zero incidents; the identical load profile hard-crashed the box three times pre-fix.\n\n**Honest limits:** one model family, one box, greedy sampling, ~500-token prompts, 12 configs x 8 runs; overall drafted-token acceptance (not per-position curves); absolute tok/s specific to post-fix JEDEC state (ratios within-round only). Catalog scan: no prior speculative-decoding/KV-quant work locally or in alethean index.\n\nScript ResearchOutput/exp_net91_specdec.py; paper ResearchOutput/NetworkMathematics/91_TheCheapDraftWins.md.\n\nOpen: per-position acceptance maps (why prose collapses past d=4); domain-adaptive draft depth; KV-cache quantization ladder on the same 7B; weight-quant floor transfer; knee-law transfer to 7B.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3917",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T03:18:15.573191+00:00",
     "title": "NET-91 THE-CHEAP-DRAFT-WINS-AND-CODE-DRAFTS-DEEP: speculative decoding of a 7B LLM entirely on CPU pays up to 1.66x \u2014 smaller draft wins every cell (cost dominance), optimal depth is domain-parameterized (code deep, prose collapses past d=4 into a net loss)"
   },
@@ -1906,36 +1907,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:03:28.425620+00:00",
     "title": "FACT round-73 #2 \u2014 ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; skip-flip wins deployment (paper 207)"
-  },
-  {
-    "consumed_by_exp_id": "f671dcbf",
-    "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 67 (first KV-cache quantization cell).\n\n**Setup:** Qwen2.5-7B-Instruct Q4_K_M entirely on CPU (llama-perplexity, threads=8, ctx=2048), held-out wikitext slice ~62K tokens, arms via --cache-type-k/--cache-type-v.\n\n| arm | PPL | dPPL vs control |\n|---|---|---|\n| K f16 / V f16 | 7.1093 | \u2014 |\n| K q8_0 / V f16 | 7.0924 | -0.238% |\n| K f16 / V q8_0 | 7.1160 | +0.094% |\n| K q8_0 / V q8_0 | 7.1162 | +0.097% |\n| **K q4_0 / V q4_0** | **2,714.6042** | **+38,084%** |\n\n**Scorecard:** P1 CONFIRMED (all q8_0 arms within \u00b10.25% of control \u2014 8-bit cache is free); P2 CONFIRMED with the largest margin in program history (predicted >5%, measured +38,000% \u2014 total collapse, perplexity 380x control); P3 honestly UNRESOLVED BY DESIGN (no measurable K-vs-V asymmetry at the 8-bit floor; no single-sided 4-bit arms in grid).\n\n**Laws:** (1) THE KV CLIFF IS A WALL \u2014 between 8 and 4 bits there is NO usable operating point: raw per-tensor q4_0 multiplies a small key error through every softmax boundary of every layer (direction matches NET-52 interface fragility and NET-83 selection amplification; the magnitude is new). (2) 8-BIT CACHE IS FREE \u2014 full-width q8_0 halves the KV buffer at +0.10% worst-case PPL; measured +16-26% pass-time tax means the trade is memory-vs-speed, never memory-vs-quality.\n\n**Honest limits:** single slice; point estimates without per-arm SEs; q4_1/iq4_nl block-scaled variants untested (does block-scaling rescue 4-bit? \u2014 immediate follow-up); one model/context/box; cliff position vs context length untested.\n\nScript ResearchOutput/exp_net92_kvquant.sh; paper ResearchOutput/NetworkMathematics/92_TheKVCliff.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3940",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T05:55:13.535981+00:00",
-    "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates the model (PPL 7.11 -> 2714.6, +38000%) \u2014 the KV precision axis has no usable middle at ctx 2048"
-  },
-  {
-    "consumed_by_exp_id": "3f9d41d2",
-    "description": "Round-73 #3, exp 561. **BATCH-WINS-TESTING.** Product-tree batch smoothness-testing vs solo trial division at fixed B=100, bitlen 40, pools k in {1,8,64,512}: best delta +0.104 (flat op model, k=512); batch beats solo at EVERY measured pool size in the flat model (no crossover below solo). The WORD model REVERSES at large k (delta \u221262.6 at k=512 \u2014 big-int intermediates dominate); word-model crossover vs solo at M* \u2248 1715 candidates. Exact-match audit PASS: batch-detected smooth set == per-item trial division on 500/500 samples (tree-vs-trial, direct-vs-trial, vector: 0 mismatches). E1 bound quantified: solo TESTING share of per-factor ops = 11.56%, so the saving is capped there even if testing were free \u2014 realized +0.104 sits just under. Finding phase strictly per-N (rho identical across arms by construction; qs_splits_total = 0 at bitlen 40/FB100 \u2014 yield far below quota).\n\nHonest placement: constant-shaving on a KNOWN method (batch smoothness testing is standard QS/NFS machinery, barrier 8) \u2014 engineering calibration of the method stratum, not an asymptotic result; zero class movement. Deployment caveat: GMP-level constant factors flip the sign past k\u22481715 candidates.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp561_batch.py + exp561_result.json.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3953",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T07:22:53.238419+00:00",
-    "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
   },
   {
     "consumed_by_exp_id": "68de46a5",
@@ -4006,36 +3977,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "seed_307",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Secure Multi-Party Computation: Theoretical Foundations"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "seed_320",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
   {
     "consumed_by_exp_id": "",
@@ -10582,6 +10523,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The quadratic sieve needs \u03c0(B)+1 smooth relations, which is proved sufficient here. The number of candidates needed is that quota divided by the smooth density \u03c1(u). We conjecture the required candidate count always exceeds the profitable batch size, so the testing phase can never be the bottleneck at cryptographic sizes.\n\nFor N \u2265 2^40 and every B \u2265 2, (\u03c0(B)+1)/\u03c1(log N / log B) > \u221a(A/q) for the empirically calibrated A, q of the product-tree cost model.\n\nCombine the proved quota BatchYield.exists_square_subproduct with a proved lower bound \u03c1(u) \u2265 u^(\u2212u) and the proved optimum BatchYield.blockCost_eq_opt_iff.\n\nBatch smoothness testing is permanently a constant-factor optimisation for QS at these sizes; effort should move to the finding phase.\n\nThere is a parameter window where batching changes the asymptotic balance of the sieve \u2014 a much stronger claim than the measured +0.104.",
+    "domains": [
+      "Pythagorean",
+      "Combinatorics"
+    ],
+    "id": "fd_4371",
+    "priority_score": 0.711360655737705,
+    "research_mode": "team",
+    "source_exp_id": "3f9d41d2",
+    "status": "available",
+    "timestamp": "2026-08-29T18:30:49.130199+00:00",
+    "title": "Yield-over-Quota Dominance for Bit-Length-40 Sieving"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Define the defect of a complex Hadamard matrix as the dimension of the space of first-order deformations modulo dephasing, and prove that in order two it is zero, i.e. F\u2082 is isolated. The proved dephasing theorem gives the full orbit, so isolation becomes a rank computation on the linearized orthogonality constraints.\n\nThe tangent space at F\u2082 to the set of order-two complex Hadamard matrices equals the tangent space of its dephasing orbit; equivalently the defect of F\u2082 is 0.\n\nFormalize the linearized constraint 'H + \u03b5K Hadamard to first order' as a real-linear system in K and compute its solution space, comparing with the 3-parameter diagonal orbit produced by flat_sharp_dephase.\n\nGives a formal, dimension-two base case for the Hadamard defect theory and a template for order four, where a genuine one-parameter family exists.\n\nThere would be a deformation of F\u2082 not obtainable by phases, contradicting flat_sharp_dephase and signalling an error in the equivalence classification.",
     "domains": [
       "Algebra",
@@ -12968,6 +12924,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The safe KV bit width is a function of bits minus log2 of the context length, because n logits inside a bounded window force a minimum consecutive gap of R/n. The formal criterion SafeBits A R n b is invariant under (n, b) -> (2n, b+1), so the cliff must translate along the context axis at exactly one bit per doubling. This turns an untested limit of NET-92 into a sharp prediction.\n\nFor a fixed model, the minimal quality-preserving KV bit width satisfies b*(2n) = b*(n) + 1 up to one bit, for all context lengths n in the trained range.\n\nRerun the NET-92 arm grid at ctx 4096, 8192 and 32768 and locate the free/annihilated bracket; compare with the theorem SafeBits_ctx_pow and minSafeBits_double.\n\nKV precision budgets must be specified per context length, and long-context deployments need 2-3 more KV bits than the ctx-2048 measurement suggests.\n\nThe logit window is not bounded independently of context (logit norms grow with n), which would itself be a strong structural finding about attention.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_4367",
+    "priority_score": 0.6714210526315791,
+    "research_mode": "team",
+    "source_exp_id": "f671dcbf",
+    "status": "available",
+    "timestamp": "2026-08-29T18:30:25.530386+00:00",
+    "title": "Crowding-Corrected Cliff Position"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The first- and second-order hacking coefficients proved in this cycle are the covariance and the skew covariance. Conjecture: the k-th order coefficient is the mixed cumulant kappa_k(r,...,r,f)/k!, so safety to order beta^-k is orthogonality of the audit statistic to the first k reward cumulant tensors. This would turn ad-hoc audit design into a linear-algebraic orthogonality condition.\n\nFor |r| <= R <= beta there are constants C_k with |E_{pi_beta} f - E_p f - sum_{j=1}^{k} kappa_j(r,...,r,f)/(j! beta^j)| <= C_k (R/beta)^{k+1} sigma_p(f), where kappa_j is the mixed cumulant with j-1 copies of r and one copy of f.\n\nFormalize the k = 3 case first: identify the coefficient by expanding e^{r/beta}/Z to third order and prove the oscillation bound |tilt - cubic model| <= C (R/beta)^4 with the same Taylor-plus-Cauchy-Schwarz route used in SecondOrder.lean.\n\nAudit statistics can be certified safe to any prescribed order by finitely many orthogonality checks against reward cumulants.\n\nThe expansion coefficients are not cumulants beyond order two, which would mean higher-order hacking is not captured by moment orthogonality and needs a genuinely non-polynomial invariant.",
     "domains": [
       "Algebra"
@@ -13119,6 +13089,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T02:12:58.247165+00:00",
     "title": "Ceiling-Phase Correction to the Minus-Log-Two Slope"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Testing is 11.56% of per-factor work, so its batching is capped at a 1.131\u00d7 end-to-end speedup, already nearly realised. We conjecture the exact composite ceiling when the finding phase is batched too, and that exceeding 1.5\u00d7 requires the finding phase's per-candidate ratio to drop below 0.28.\n\nWith phase shares 1 \u2212 f and f and per-candidate batch/solo ratios c_f/s_f and c/s, the end-to-end speedup ceiling is 1/((1\u2212f)c_f/s_f + f\u00b7c/s), which exceeds 3/2 iff (1\u2212f)c_f/s_f + f\u00b7c/s < 2/3.\n\nGeneralise BatchCost.phase_residual to a finite family of phases and instantiate at two phases with the measured f = 1156/10000.\n\nA quantitative roadmap: only the finding phase can deliver the next order of magnitude.\n\nPhase costs interact non-additively (shared memory traffic), invalidating the additive Amdahl split used to report the +0.104.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4373",
+    "priority_score": 0.6713870967741937,
+    "research_mode": "team",
+    "source_exp_id": "3f9d41d2",
+    "status": "available",
+    "timestamp": "2026-08-29T18:30:50.212556+00:00",
+    "title": "Multiplicative Amdahl Ceiling for Two-Phase Sieve Batching"
   },
   {
     "consumed_by_exp_id": "",
@@ -14589,6 +14573,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The crowding and codebook pigeonholes are worst-case over arrangements; the operational damage depends on the empirical distribution of top-two logit gaps. A distributional refinement should predict the expected fraction of inverted positions as a function of the quantisation error, closing the gap between 'some pair inverts' and 'perplexity moves by x'.\n\nThe excess log-perplexity of a KV-quantised model is, to first order, proportional to the mass of the top-two logit gap distribution below 2*eps, with a model-independent proportionality constant of order one.\n\nCollect the top-two gap histogram per head at ctx 2048, compute the mass below 2*eps for each arm, and regress the measured excess log-perplexity against it.\n\nA single cheap histogram predicts the safe KV width for any model, removing the need for a perplexity sweep.\n\nInversions are not exchangeable across heads and positions, and a correlated model of gap statistics is required.",
+    "domains": [],
+    "id": "fd_4369",
+    "priority_score": 0.5938764044943821,
+    "research_mode": "team",
+    "source_exp_id": "f671dcbf",
+    "status": "available",
+    "timestamp": "2026-08-29T18:30:26.553377+00:00",
+    "title": "Gap-Statistics Rescue Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Replace the unstructured interaction alternative by the first nontrivial one: an occupancy table that is a rank-one product plus a single scaled outer product. The formal equivalence between no interaction and rank one shows this is the minimal departure, and it reduces a 49-degree-of-freedom test to a one-parameter test with far greater power.\n\nFor the exp-578 occupancy table there is no direction (u, v) and no epsilon with |epsilon| bounded away from 0 such that occ = rate \u2297 prof + epsilon \u00b7 u \u2297 v fits significantly better than the rank-one fit; equivalently the second singular value of the centred occupancy table is consistent with sampling noise.\n\nFormalise the rank-two model as a TwoLayer perturbation, prove that its Pearson statistic is monotone in |epsilon|, then fit the leading singular direction of the observed centred table and compare with a permutation null.\n\nThe positional layer is law-complete to second order, and the search for the overdispersion carrier can be restricted to scalar per-N statistics.\n\nA single interaction direction exists and names the carrier explicitly (which deciles move with rate).",
     "domains": [],
     "id": "fd_4198",
@@ -14982,6 +14978,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T13:18:10.916568+00:00",
     "title": "Minimax Optimality of Endpoint Scan Orders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The per-candidate cost of batching a stream is A/k + c + q\u00b7k^(\u03bc\u22121) where \u03bc is the big-integer multiplication exponent. We conjecture a unique minimiser k* = (A/((\u03bc\u22121)q))^(1/\u03bc), degenerating to 'bigger is always better' as \u03bc \u2192 1. This explains the measured word-model reversal as a property of schoolbook arithmetic rather than of batching.\n\nFor A, q > 0 and 1 < \u03bc \u2264 2, the function k \u21a6 A/k + c + q\u00b7k^(\u03bc\u22121) on (0,\u221e) attains its infimum at exactly one point k* = (A/((\u03bc\u22121)q))^(1/\u03bc), and the infimum is c \u2212 q + \u03bc(\u03bc\u22121)^{(1\u2212\u03bc)/\u03bc}A^{(\u03bc\u22121)/\u03bc}q^{1/\u03bc}.\n\nFormalise with Real.rpow; differentiate or apply weighted AM-GM. The \u03bc = 2 case is already proved as BatchYield.blockCost_eq_opt_iff.\n\nCrossover thresholds for batch smoothness testing scale as a root of the setup/penalty ratio, so GMP-level constant factors relocate but never remove the optimum.\n\nThe optimum is not unique or not of root type, indicating additional structure (e.g. cache effects) in the cost model.",
+    "domains": [],
+    "id": "fd_4370",
+    "priority_score": 0.5931481481481482,
+    "research_mode": "team",
+    "source_exp_id": "3f9d41d2",
+    "status": "available",
+    "timestamp": "2026-08-29T18:30:48.485663+00:00",
+    "title": "Square-Root Law for Optimal Batch Size under Sub-Quadratic Multiplication"
   },
   {
     "consumed_by_exp_id": "",
@@ -18345,6 +18353,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T01:59:30.162763+00:00",
     "title": "Orthogonal Arithmetic Statistic Families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Existence of a square sub-product follows from an \ud835\udd3d\u2082 pigeonhole. We conjecture the exact count: r relations over a factor base of size d give 2^(r \u2212 rank) \u2212 1 nonempty square sub-products, so the observed zero splits at exp 561 are fully explained by r \u2264 d with no arithmetic obstruction.\n\nLet M \u2208 \ud835\udd3d\u2082^(r\u00d7d) be the parity matrix of r smooth relations. The number of nonempty subsets with square product is 2^(r \u2212 rank M) \u2212 1; in particular it is positive iff rank M < r, and rank M \u2264 d always.\n\nFormalise the parity map as a linear map (Fin r \u2192 ZMod 2) \u2192\u2097 (\u03ba \u2192 ZMod 2) and count its kernel with Module.finrank and Fintype.card of a subspace over ZMod 2.\n\nSieve yield analysis reduces entirely to rank statistics of random \ud835\udd3d\u2082 matrices, decoupled from N.\n\nSome square sub-products are missed by the parity map, meaning the exponent-vector encoding loses information \u2014 a definitional problem.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_4372",
+    "priority_score": 0.5625453372046967,
+    "research_mode": "team",
+    "source_exp_id": "3f9d41d2",
+    "status": "available",
+    "timestamp": "2026-08-29T18:30:49.679135+00:00",
+    "title": "Parity-Rank Kernel Count for Sieve Relations"
   },
   {
     "consumed_by_exp_id": "",
@@ -28000,6 +28023,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T09:03:54.238441+00:00",
     "title": "Optimal Perturbation Direction for the Additive Control"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Quantisation fails in two independent ways: resolution, which block scaling shifts by exactly log2(1/rho) bits, and distinctness, which no affine rescaling can restore because 16 codes cannot separate 32 block entries. The conjecture is that at 4 bits the binding constraint is distinctness, so block-scaled variants will not rescue the NET-92 cell.\n\nq4_1 and iq4_nl KV caches at block length 32 recover less than half of the q4_0 excess log-perplexity, while an 8-bit cache with the same block scaling recovers essentially all of it.\n\nRun the NET-92 grid with --cache-type-k/v in {q4_1, iq4_nl, q5_0, q8_0} and compare excess log-perplexities against the bit-shift prediction of block_scaling_is_bit_shift.\n\nNo 4-bit KV format at block length 32 is viable; the fix must increase the number of codes, not the number of scales.\n\nResolution was binding after all, and rescue_requires_16x_concentration bounds the dynamic-range concentration that the block format achieves.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4368",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f671dcbf",
+    "status": "available",
+    "timestamp": "2026-08-29T18:30:26.043400+00:00",
+    "title": "Resolution Versus Distinctness Thresholds"
   },
   {
     "consumed_by_exp_id": "",
@@ -45892,14 +45929,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "A wrong theory cannot uniformly dominate truth"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9b32ba78",
     "description": "Translation should transfer failure of first countability from zero to every surreal. Formalizing continuity of addition for the chosen order topology would yield this strengthening and show that no point has countable character.",
     "domains": [],
     "id": "fd_2209",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "cf6c2cd9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:06.481313+00:00",
     "title": "Local character at every point"
   },
