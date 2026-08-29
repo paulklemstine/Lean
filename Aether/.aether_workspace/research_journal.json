@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7957a9f1",
-      "domain": "Physics",
-      "key_insight": "# Future directions — after the exp569b pooling audit (paper 220, round-75 #3)\n\nThe four files added this cycle turn the round's *procedural* finding (\"both poolings fail\nindependence\") into *theorems",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-25T09:02:00",
-      "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pairs; both poolings fa"
-    },
-    {
       "cycle_id": "5223d87b",
       "domain": "Logic",
       "key_insight": "# Future directions — dial capture ceilings and the `u ≈ 10` overdispersion carrier\n\nThe formalization in `Catalog/Logic/QRDialDispersionLaws.lean`,\n`Catalog/Logic/QRDialOrthogonality.lean`, `Catalog/",
@@ -499,19 +489,19 @@
       "theorem_count": 153,
       "timestamp": "2026-08-28T18:44:04",
       "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut"
+    },
+    {
+      "cycle_id": "601f1720",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — sequential hint pricing (SEQHINT-COMPOUND-LAW)\n\nWhat the cycles so far established (all in `Catalog/Pythagorean/SeqHint/`, zero\n`sorry`, standard axioms only):\n\n* fixed compariso",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 125,
+      "timestamp": "2026-08-29T02:13:13",
+      "title": "FACT round-74 #3 — SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "61305688",
-      "domain": "Bridges",
-      "key_insight": "# Future directions: the domination–packing ratio\n\nThe verified results of this cycle (see `Catalog/Bridges/DominationPacking*.lean`) are:\n\n* `ρ(G) ≤ γ(G)` for all finite graphs, and the \"local cover\"",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 185,
-      "timestamp": "2026-08-20T08:57:23",
-      "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
-    },
     {
       "cycle_id": "5b26e37d",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 153,
       "timestamp": "2026-08-28T18:44:04",
       "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut"
+    },
+    {
+      "cycle_id": "601f1720",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — sequential hint pricing (SEQHINT-COMPOUND-LAW)\n\nWhat the cycles so far established (all in `Catalog/Pythagorean/SeqHint/`, zero\n`sorry`, standard axioms only):\n\n* fixed compariso",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 125,
+      "timestamp": "2026-08-29T02:13:13",
+      "title": "FACT round-74 #3 — SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "837a61ec",
-      "domain": "Tropical",
-      "name": "dialSum_pos",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "837a61ec",
-      "domain": "Tropical",
-      "name": "dialWeight_strictAnti",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "44bf5a41",
-      "domain": "Combinatorics",
-      "name": "of",
-      "quality": 0.72
-    },
     {
       "cycle_id": "44bf5a41",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "sum_resample_eval_pair",
       "quality": 0.76
+    },
+    {
+      "cycle_id": "601f1720",
+      "domain": "Pythagorean",
+      "name": "step_width_le",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "601f1720",
+      "domain": "Pythagorean",
+      "name": "mem_step",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "601f1720",
+      "domain": "Pythagorean",
+      "name": "halfIter_mono",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-28T18:44:04",
+  "last_updated": "2026-08-29T02:13:13",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "018e116a",
-        "quality": 0.86,
-        "theorems": 62,
-        "title": "Bound the length of distinguishing experiments"
-      },
-      {
         "cycle_id": "28aa3954",
         "quality": 0.82,
         "theorems": 49,
@@ -3885,6 +3879,12 @@
         "quality": 0.78,
         "theorems": 31,
         "title": "FACT round-76 #2 — U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip — fresh "
+      },
+      {
+        "cycle_id": "601f1720",
+        "quality": 0.85,
+        "theorems": 125,
+        "title": "FACT round-74 #3 — SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound supe"
       }
     ],
     "Shared": [
