@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9b3c75c4",
-      "domain": "Applications",
-      "key_insight": "# Future directions — positional-stratum measure framework (GAP-L4)\n\nWhat this cycle established, in one paragraph: the *universal object* of the\npositional-stratum framework is the exact r̄-identity",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-25T09:53:25",
-      "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3"
-    },
-    {
       "cycle_id": "a22e921b",
       "domain": "Cryptography",
       "key_insight": "# Future directions — from the k-taxonomy cycles\n\nThree sorry-free Lean files came out of this run:\n\n* `Catalog/Cryptography/KTaxonomyCensusEcon.lean` — the three budgets `k_pin`,\n  `k_opt^cost`, `k_o",
@@ -499,19 +489,19 @@
       "theorem_count": 66,
       "timestamp": "2026-08-29T09:04:06",
       "title": "FACT round-74 #4 — MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-de"
+    },
+    {
+      "cycle_id": "25df59ed",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — the which-factor wall\n\n## What this cycle settled\n\n1. **The proposed inverse-Lipschitz bound is false.** The constant\n   $c(\\delta) = \\log((1-\\delta)/\\delta)$ is the supremum of",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-29T09:04:19",
+      "title": "Which-Factor Wall as a Cross-Population Invariant"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "39c3166e",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from the three research cycles formalized in\n`Catalog/Combinatorics/RLHFTensorization.lean`,\n`Catalog/Combinatorics/RLHFBooleanLattice.lean`,\n`Catalog/Combinatorics/RLHFBo",
-      "quality_score": 0.74,
-      "sorry_count": 4,
-      "theorem_count": 65,
-      "timestamp": "2026-08-20T10:47:56",
-      "title": "reinforcement learning"
-    },
     {
       "cycle_id": "db2f2b2f",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 66,
       "timestamp": "2026-08-29T09:04:06",
       "title": "FACT round-74 #4 — MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-de"
+    },
+    {
+      "cycle_id": "25df59ed",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — the which-factor wall\n\n## What this cycle settled\n\n1. **The proposed inverse-Lipschitz bound is false.** The constant\n   $c(\\delta) = \\log((1-\\delta)/\\delta)$ is the supremum of",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-29T09:04:19",
+      "title": "Which-Factor Wall as a Cross-Population Invariant"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5260665b",
-      "domain": "Novelty",
-      "name": "ratioArea_two",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "6ca543a1",
-      "domain": "Geometry",
-      "name": "patterns_self_eq_filter",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6ca543a1",
-      "domain": "Geometry",
-      "name": "orbit_card_eq_card_patterns",
-      "quality": 0.82
-    },
     {
       "cycle_id": "6ca543a1",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "rsq_measurableClass_mul_tss",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "25df59ed",
+      "domain": "Algebra",
+      "name": "in",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "25df59ed",
+      "domain": "Algebra",
+      "name": "hasDerivAt_binEntropy_sub_lin",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "25df59ed",
+      "domain": "Algebra",
+      "name": "hasDerivAt_lin_sub_binEntropy",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-29T09:04:06",
+  "last_updated": "2026-08-29T09:04:19",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "c99dba13",
-        "quality": 0.85,
-        "theorems": 57,
-        "title": "The `L¹` bound integrates to a Fisher–Rao length bound* (previously\n  Conjecture"
-      },
-      {
         "cycle_id": "ccf34fd5",
         "quality": 0.8,
         "theorems": 91,
@@ -3079,6 +3073,12 @@
         "quality": 0.83,
         "theorems": 46,
         "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg "
+      },
+      {
+        "cycle_id": "25df59ed",
+        "quality": 0.86,
+        "theorems": 48,
+        "title": "Which-Factor Wall as a Cross-Population Invariant"
       }
     ],
     "Applications": [

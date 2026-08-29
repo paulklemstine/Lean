@@ -1907,33 +1907,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #2 \u2014 ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; skip-flip wins deployment (paper 207)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f671dcbf",
     "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 67 (first KV-cache quantization cell).\n\n**Setup:** Qwen2.5-7B-Instruct Q4_K_M entirely on CPU (llama-perplexity, threads=8, ctx=2048), held-out wikitext slice ~62K tokens, arms via --cache-type-k/--cache-type-v.\n\n| arm | PPL | dPPL vs control |\n|---|---|---|\n| K f16 / V f16 | 7.1093 | \u2014 |\n| K q8_0 / V f16 | 7.0924 | -0.238% |\n| K f16 / V q8_0 | 7.1160 | +0.094% |\n| K q8_0 / V q8_0 | 7.1162 | +0.097% |\n| **K q4_0 / V q4_0** | **2,714.6042** | **+38,084%** |\n\n**Scorecard:** P1 CONFIRMED (all q8_0 arms within \u00b10.25% of control \u2014 8-bit cache is free); P2 CONFIRMED with the largest margin in program history (predicted >5%, measured +38,000% \u2014 total collapse, perplexity 380x control); P3 honestly UNRESOLVED BY DESIGN (no measurable K-vs-V asymmetry at the 8-bit floor; no single-sided 4-bit arms in grid).\n\n**Laws:** (1) THE KV CLIFF IS A WALL \u2014 between 8 and 4 bits there is NO usable operating point: raw per-tensor q4_0 multiplies a small key error through every softmax boundary of every layer (direction matches NET-52 interface fragility and NET-83 selection amplification; the magnitude is new). (2) 8-BIT CACHE IS FREE \u2014 full-width q8_0 halves the KV buffer at +0.10% worst-case PPL; measured +16-26% pass-time tax means the trade is memory-vs-speed, never memory-vs-quality.\n\n**Honest limits:** single slice; point estimates without per-arm SEs; q4_1/iq4_nl block-scaled variants untested (does block-scaling rescue 4-bit? \u2014 immediate follow-up); one model/context/box; cliff position vs context length untested.\n\nScript ResearchOutput/exp_net92_kvquant.sh; paper ResearchOutput/NetworkMathematics/92_TheKVCliff.md.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3940",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-24T05:55:13.535981+00:00",
-    "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates the model (PPL 7.11 -> 2714.6, +38000%) \u2014 the KV precision axis has no usable middle at ctx 2048"
-  },
-  {
-    "consumed_by_exp_id": "3596d147",
-    "description": "**FACT round-74 #4 \u00b7 exp 566 \u00b7 paper 213 \u00b7 seed 566 \u00b7 walls 9.3 s + 247.7 s**\n\nAttacks the barrier-map residual item **MA-1 effectivity**: is there a COMPUTABLE per-modulus criterion for when the MA-1 averaging assumption (which-factor blindness as identity, papers 93/102/132) is realized? If AP-deviation magnitude were governed by quadratic-character L-values, one would exist. Pre-registered carrier: D(m) = max_a |\u03c0(x;m,a) \u2212 E|/\u221aE on P(m) = \u03a3|L(1,\u03c7)| over nontrivial real characters mod m; H1 R\u00b2 > 0.8 \u21d2 criterion armed; H0 R\u00b2 < 0.5 \u21d2 honest negative.\n\n**Pre-registered verdict rules evaluated verbatim \u2192 NULL-HONEST-NEGATIVE at TWO scales.**\n\n**(1) Registered stage A (x = 2^26 full, no shrinkage).** \u03c0(x) = 3,957,809, 287 moduli (squarefree [3,300] \u222a primes [307,997]), wall 9.3 s: log D ~ \u22120.0767\u00b7log P, slope CI95 (\u22120.136, \u22120.015), **R\u00b2 = 0.0187** [bootstrap 0.0007\u20130.065] \u2014 slope slightly NEGATIVE, opposite the effectivity story. Partial R\u00b2 controlling log \u03c6(m) = **0.0008** \u21d2 residual association purely a \u03c6(m) size effect. Secondary chi\u00b2 readout agrees (R\u00b2 = 0.025). Control cross-modulus pairing permutation (2000 draws) collapses to null (mean 0.0033 / max 0.0435); disclosed spec deviation: literal within-modulus count permutation is VACUOUS for max/\u03c7\u00b2 readouts (permutation-invariant).\n\n**(2) Final scaled artifact B (x = 2^28, \u03c0 = 14,630,843, 2489 moduli dense 2..1500 + primes beyond, wall 247.7 s).** Primary per-m carrier **R\u00b2 = 0.0785 \u2192 NULL**; cell-level secondary y ~ log(1/L), 1902 discriminant cells: R\u00b2 = 0.00052, theory-signed slope B = \u22120.034 [\u22120.101, +0.033] \u2014 not even positive. Baseline size control: OBS ~ log m alone explains **R\u00b2 = 0.790** \u2014 deviation magnitude is modulus-size-dominated; character-L mass adds nothing after size.\n\n**(3) Verification.** Exact class-number path validated: L(1, \u03c7\u208b\u2083) = \u03c0/(3\u221a3) exact (h(\u22123)=1, w=6); truncated series calibrated on 226 overlap discriminants, median rel err 1.8e-5; final-run truncation quality real-share median 8.7e-4, worst rel err 8.2e-2.\n\n> **SCOPING CAVEAT (prominent):** the registered readout D(m) is **SIGN-BLIND** and the predictor uses |L(1,\u03c7)| magnitudes \u2014 this bounds the MAGNITUDE route only. Signed character-alignment analysis is the required follow-up BEFORE killing the L-value route.\n\n**Barrier framing:** H0 here does NOT weaken the barrier program \u2014 it honestly bounds one computable-criterion route at toy scale. MA-1 stays axiomatic at practical scale; \"MA-1 effectivity\" stays an OPEN gap item.\n\nLedger catches, all disclosed: off-by-one corrupted non-exact L-values caught by spot check (\u03c7\u2085 gave 0.127 vs true 0.430), fixed + rerun before any recorded fit; smoke control gate failed at n = 29 (resolved at scale where the null collapses cleanly); Mertens gate FAIL per its own pre-stated rule (slope 0.9277 [0.9234, 0.9320], R\u00b2 = 0.9894 \u2014 near-proportional just outside the strict band; implied K\u0304 = \u22120.216 within theory bound |K| \u2264 0.756); scale-reconciliation disclosure (findings/digest describe stage A while canonical exp566_result.json holds the verdict-identical stage-B rerun that overwrote it mid-session; extended-rerun script variant not separately preserved); coordination disclosure \u2014 a parallel duplicate agent (coordinator double-dispatch after a stall) left an orphaned draft exp566_ma1_effectivity_alt_agentB.py with NO results attached; recorded artifact set solely from the completing agent, orphan left in place.\n\nPaper: ResearchOutput/NewMathematics/213_Ma1EffectivitySweep.md.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3948",
     "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-08-24T07:22:53.231013+00:00",
-    "title": "FACT round-74 #4 \u2014 MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-deviation effectivity at toy scale (clean H0 honest negative at two scales: R\u00b2=0.0187 registered x=2^26 / R\u00b2=0.0785 scaled x=2^28 vs 0.8/0.5 bars; deviation field modulus-size-dominated, baseline OBS~log m R\u00b2=0.79) \u2014 MA-1 stays axiomatic, SIGN-BLIND scope disclosed"
+    "timestamp": "2026-08-24T05:55:13.535981+00:00",
+    "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates the model (PPL 7.11 -> 2714.6, +38000%) \u2014 the KV precision axis has no usable middle at ctx 2048"
   },
   {
     "consumed_by_exp_id": "90e1e335",
@@ -1966,7 +1952,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #4 \u2014 SCALE-SMOOTHNESS-DEVIATION: x\u00b2\u2212N smoothness is random-level at u=6\u20138.5 (tightest bound |r\u22121|\u22640.217); per-N clustering and QR dial both die above u\u22487"
   },
   {
-    "consumed_by_exp_id": "9b428c01",
+    "consumed_by_exp_id": "3f9d41d2",
     "description": "Round-73 #3, exp 561. **BATCH-WINS-TESTING.** Product-tree batch smoothness-testing vs solo trial division at fixed B=100, bitlen 40, pools k in {1,8,64,512}: best delta +0.104 (flat op model, k=512); batch beats solo at EVERY measured pool size in the flat model (no crossover below solo). The WORD model REVERSES at large k (delta \u221262.6 at k=512 \u2014 big-int intermediates dominate); word-model crossover vs solo at M* \u2248 1715 candidates. Exact-match audit PASS: batch-detected smooth set == per-item trial division on 500/500 samples (tree-vs-trial, direct-vs-trial, vector: 0 mismatches). E1 bound quantified: solo TESTING share of per-factor ops = 11.56%, so the saving is capped there even if testing were free \u2014 realized +0.104 sits just under. Finding phase strictly per-N (rho identical across arms by construction; qs_splits_total = 0 at bitlen 40/FB100 \u2014 yield far below quota).\n\nHonest placement: constant-shaving on a KNOWN method (batch smoothness testing is standard QS/NFS machinery, barrier 8) \u2014 engineering calibration of the method stratum, not an asymptotic result; zero class movement. Deployment caveat: GMP-level constant factors flip the sign past k\u22481715 candidates.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp561_batch.py + exp561_result.json.",
     "domains": [
       "Novelty"
@@ -1981,16 +1967,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68de46a5",
     "description": "Round-75 #4 \u00b7 THEORY deliverable (no new experiment id) \u00b7 paper 219 \u00b7 assessment v326.\n\n**What was recorded.** The verified draft of the POSITIONAL/MAGNITUDE stratum of the barrier-4 converse (`ResearchOutput/scripts/2026-08-24-round74/barrier4_positional_converse_draft.md`), independently rechecked per `verify_t1_t2_recheck.json` against the author's own finite checks `exp574b_saturation_check.py`/`exp574b_result.json`. Recorded as DRAFT-WITH-CAVEATS per verifier recommendation \u2014 NOT a sealed theorem.\n\n**T1 (fixed-window oracle).** CERTIFIED-SILENCE law S_A = 1/[\u03bc\u00b7P_hit + (1\u2212P_hit)(1\u2212\u03bc)] exact for protocol A committed policy (finite-M rational, 0 recheck failures). The DRAFTED fire-or-silent form 1/(1\u2212(1\u2212\u03bc)P_hit) is SUPERSEDED \u2014 non-certifying silence wastefully re-scans R; 14 algebra consistency failures caught. Protocol B optimal response S_B = 1/(1+\u03bc\u2212P_hit) \u2264 S_A; block-first dominance UNCONDITIONAL for protocol A, RESTRICTED to P_hit \u2265 \u03bc for protocol B (exhaustive orders + insertion sweep M\u2208{16,33,64}; all 12 counterexamples have P<\u03bc). Cap = 1/\u03bc at P_hit=1; NO constant cap exists.\n\n**T2 (adaptive saturation).** V(W) = log\u2082W + \u00bd EXACT on every dyadic W \u2208 [2,4096] (independent DP reproduction); general-L closed form an upper bound never crossing \u2212\u00bd to L=4096 (deepest undercut \u22120.499349 @ L=3073); cost-offset bracket corrected to [.415,.5011]; marginal-value identity rewritten as exact NET form cost(k)\u2212cost(k+1)=W/2^(k+2)\u22121 (250/250 cells) after drafted GROSS form failed 231 cells; census C*=19.5@2^19 / 20.5@2^20, argmin offsets {\u22122,\u22121} \u2260 k_pin=log\u2082W \u2014 and exp563's economic optimum is a THIRD convention ~1 query above k_opt: three distinct k's must stay distinguished.\n\n**Conjecture D (SET/COST dichotomy).** S(\u03a0)=S(R\u2218F)=S(R)\u00b7S(F), sup_F S(F)=4/3 (\u03b8=1/2), S(R) \u2264 min(1/\u03bc_eff, 2^k_bits). Residue cap 4/3 governs COST-class actions; position works the SET-class tail. All four measured anchors feasible under \u03bc \u2264 1/S: 5.19\u00d7 \u2261 (.05,.85), 6.91\u00d7 \u2261 (.05,.9003), 4.35\u00d7 \u2261 (.05,.8106), 29.1\u00d7 \u2261 (.02,.9853); identity check: paper-138 master law at uninformative point \u2261 paper-132 formula exactly. 5.19\u00d7 > 4/3 is CLASS-CROSSING, NOT cap-breaking \u2014 barrier map internally consistent.\n\n**Verification census.** Zero arithmetic errors across all numeric claims (stored-value discrepancies: none); ~60% of PROVEN upgraded to VERIFIED where independently recomputed. Named GAPs remain, load-bearing: L4 stratum measure \u0394(\u03c0,R), L7 extremality of sqrt-descending among N-computable orders (Siegel-type ineffectivity expected), L8 k-naming. These are the formal program's next work.\n\nCount unchanged by experiment (papers-only bump, convention stated in addendum): still 561 experiments (max id 572), papers now 219, assessment v325 \u2192 v326.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3981",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T10:55:32.772786+00:00",
     "title": "FACT round-75 #4 \u2014 BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of the barrier-4 converse recorded as DRAFT-WITH-CAVEATS \u2014 certified-silence law S_A=1/[\u03bcP+(1\u2212P)(1\u2212\u03bc)] supersedes drafted fire-or-silent form (14 algebra failures caught by independent verification); T2 saturation V=log\u2082W+\u00bd exact on dyadic W\u2208[2,4096]; Conjecture D factors S(R\u2218F)=S(R)\u00b7S(F) with sup_F=4/3 \u2014 residue cap 4/3 governs COST-class actions while position works the SET-class tail: 5.19\u00d7>4/3 is class-crossing not cap-breaking; zero arithmetic errors in recheck; named GAPs L4/L7/L8 are the next work"
   },
@@ -4048,38 +4035,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Physics"
-    ],
-    "id": "seed_278",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Retrocausal Mathematics: Where Effects Precede Causes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Study near-misses to Fermat's Last Theorem: triples (a,b,c) where |a^n + b^n - c^n| is small. Prove that such near-misses exist for every n and characterize their distribution. Show that the density of near-misses decreases super-exponentially and connect to the ABC conjecture's effective version.",
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_287",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Fermat Near-Misses in the Twilight Zone"
   },
   {
     "consumed_by_exp_id": "",
@@ -12545,15 +12500,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "4fbe3435",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Initial term of sequence An. with terms 0,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,2,1,0,1,1,1,1,1,2,1,0,1,2,0,1,0,2,2,2,1,2,1,1,2,1,0,1,1,1,0,1,. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [],
     "id": "fd_3708",
-    "phase": "A",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:31214",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T18:51:43.217997+00:00",
     "title": "OEIS sequence: Initial term of sequence An."
   },
@@ -14436,7 +14390,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f5dbb89f",
     "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
     "domains": [
       "Novelty",
@@ -14444,10 +14398,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_150",
+    "phase": "A",
     "priority_score": 0.65,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   },
@@ -15264,6 +15219,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The signed carrier attaches to each modulus a whole vector of character alignments, so the scalar ANOVA ceiling must be upgraded to a trace inequality on the between-cell covariance before the follow-up experiment can quote a bound. Conjecture that the scalar ceiling holds verbatim along every probe direction, with the same constant, which the scalar equality case shows is unimprovable.\n\nFor a vector-valued response Y with cell means M_c and grand mean M, and any unit probe u with directional ceiling rho_u, one has (sum_c w_c <u, M_c - M>)^2 <= rho_u * tr(TSS) * sum_c w_c^2 / n_c, with equality attainable for every number of cells.\n\nFormalise the vector statement by applying multicell_contrast_le_of_rsq to the scalar response i -> <u, Y i> and taking a supremum over u; verify the equality case transfers from multicell_ceiling_sharp; then instantiate on simulated alignment vectors.\n\nThe signed follow-up experiment inherits a pre-proved, sharp ceiling, so a null there is quotable as a theorem rather than a p-value.\n\nVector-valued carriers have genuinely more separating power than any single probe direction, and multivariate criteria must be searched directly.",
+    "domains": [],
+    "id": "fd_4357",
+    "priority_score": 0.5922222222222223,
+    "research_mode": "team",
+    "source_exp_id": "3596d147",
+    "status": "available",
+    "timestamp": "2026-08-29T09:03:53.796757+00:00",
+    "title": "Multivariate Contrast Ceiling for Vector-Valued Carriers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Over a fixed smallest coordinate x the Markoff Vieta dynamics is linear, given by an SL2(Z) matrix of trace 3x. For x = 1 and x = 2 these are the golden and silver dynamics, and the x = 2 branch coincides exactly with the Berggren silver spine. The conjecture is that every Markoff fibre is realized by a Berggren-type Pythagorean spine.\n\nFor every x that is the smallest entry of some Markoff triple, the trace-3x element of SL2(Z) governing the fibre is realized by a product of Berggren generators acting on a Pythagorean spine.\n\nFormalize orbits of markoffFiberMat x and compare with evalPair products; begin with x = 5 (trace 15).\n\nThe failed global transfer is replaced by a complete fibrewise dictionary between Pythagorean spines and Markoff branches.\n\nThe x = 1, 2 coincidences are sporadic, isolating exactly which quadratic units are shared by the two trees.",
     "domains": [],
     "id": "fd_3394",
@@ -15633,19 +15600,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:07:55.119392+00:00",
     "title": "Log-Concavity of the Minimal Mass Invariant"
-  },
-  {
-    "consumed_by_exp_id": "25df59ed",
-    "description": "Binary capacity is a strictly monotone function of class imbalance, so a wall value is a sufficient statistic for the split. We conjecture that two independent populations whose walls agree within epsilon have imbalances agreeing within C epsilon, with an explicit C controlled by the derivative of binary entropy away from 1/2.\n\nFor p, q in [delta, 1/2], |binEntropy p - binEntropy q| >= c(delta) |p - q| with c(delta) = log((1-delta)/delta), hence |p-q| <= |I_1 - I_2| / c(delta).\n\nDifferentiate binEntropy (Mathlib provides the derivative) and apply the mean value theorem on [delta, 1/2]; combine with TraceBattery.binary_wall_inversion.\n\nThe reported 0.4677 becomes a testable claim about the split (about 9.96 percent) that any replication must reproduce.\n\nWall values would be insensitive to imbalance near 1/2, meaning the wall carries almost no information and should be dropped from the battery report.",
-    "domains": [],
-    "id": "fd_3603",
-    "phase": "A",
-    "priority_score": 0.5906521739130436,
-    "research_mode": "team",
-    "source_exp_id": "a3ad9f21",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:00:24.941866+00:00",
-    "title": "Which-Factor Wall as a Cross-Population Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -16627,6 +16581,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The correlation ratio of the partition of moduli into L-mass cells is an exact ceiling on every criterion measurable in the L-mass, and on every contrast such a criterion can form; the constant in that ceiling is now known to be unimprovable at every cell count. Conjecture that the ceiling is uniformly small: the deviation field has almost all of its energy within L-mass cells, at every threshold scale.\n\nFor every x and every partition of squarefree moduli m in [3, M] into level sets of the L-mass P(m) rounded to precision eps, the within-cell energy of log D(m) is at least (1 - o(1)) times its total energy as M tends to infinity.\n\nCompute withinSS/TSS directly over the discriminant cells for increasing M and decreasing eps; check for a floor. In Lean, instantiate lmass_nonlinear_floor and betweenSS_le_of_rsq with the measured theta.\n\nNo function of the L-mass, however nonlinear, can serve as an MA-1 criterion; the negative result becomes unconditional in the nonlinear class.\n\nA nonlinear criterion exists that the registered log-log fit could not see, and the sweep's linear protocol was underpowered.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4356",
+    "priority_score": 0.5642076881852688,
+    "research_mode": "team",
+    "source_exp_id": "3596d147",
+    "status": "available",
+    "timestamp": "2026-08-29T09:03:53.220500+00:00",
+    "title": "Between-Cell Energy Floor for Discriminant Partitions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every L-estimator (weighted average of order statistics) should have breakdown number equal to the tent profile min(j+1, n-j) evaluated at the extreme support points of its weight vector. The approach lifts the two count-based sandwich lemmas from single order statistics to finite convex combinations. It matters because it would compute the breakdown numbers of the trimmed mean, Winsorised mean and trimean as instances of one theorem.\n\nFor weights w on {0,...,n-1} with nonnegative entries summing to 1, the breakdown number of xs \\mapsto \\sum_j w_j \\cdot orderStat j xs equals min(jmin+1, n-jmax) where jmin and jmax are the smallest and largest indices with w_j > 0.\n\nFormalise trimmedMean alpha as an L-estimator in Lean and prove IsLeast {k | not EstBounded ...} = min(jmin+1, n-jmax); first check the alpha-trimmed mean on ratios16 for alpha = 1/8, 1/4, 3/8 by #eval on the profile formula.\n\nA single theorem yields the breakdown numbers of the whole classical L-estimator family, and shows no L-estimator beats the median.\n\nThere is an L-estimator whose interior weights create extra robustness, which would contradict the support-functional picture and force a genuinely new mechanism.",
     "domains": [
       "Geometry",
@@ -16669,6 +16638,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-27T09:50:15.273380+00:00",
     "title": "Early-Fire Persistence at Large Smoothness Deficit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replace the sign-blind magnitude readout by the signed pairing of the AP-deviation field with each real character mod m, and regress it on the signed L-value profile. The magnitude sweep is provably blind to this component, so the null it recorded transfers no information to the signed question. A criterion, if one exists, must live in the signed pairing.\n\nFor a suitable normalisation, the signed alignment A(m, chi) = sum_a (pi(x;m,a) - E) chi(a) satisfies a nontrivial linear relation with log(1/L(1,chi)) whose R^2 exceeds 0.5 on squarefree moduli, whereas the magnitude readout has R^2 below 0.1 on the same sample.\n\nCompute A(m, chi) for all real characters of moduli up to 1500 at x = 2^28; regress on log(1/L(1,chi)) at cell level; compare with the magnitude carrier on the identical sample. The invariance obstruction is already formalised (exp566_signed_route_unconstrained) and certifies that the two carriers are genuinely different instruments.\n\nMA-1 effectivity acquires a computable per-character criterion, and the barrier item is downgraded from axiomatic to conditional.\n\nThe L-value route is closed in both magnitude and sign, and MA-1 effectivity must be sought in a non-character invariant.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4355",
+    "priority_score": 0.5641315335505794,
+    "research_mode": "team",
+    "source_exp_id": "3596d147",
+    "status": "available",
+    "timestamp": "2026-08-29T09:03:52.780922+00:00",
+    "title": "Signed Character Alignment as the MA-1 Effectivity Carrier"
   },
   {
     "consumed_by_exp_id": "",
@@ -27989,6 +27973,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T02:13:21.676370+00:00",
     "title": "Loaded Cap Law with Dial Overhead"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The repaired additive control is strictly informative, with p-value exactly one half, on the amplitude window below 2|B|/A determined by the overlap B of the deviation field with the perturbation direction and the direction energy A. The width of that window is a Rayleigh quotient in the direction, so the control designer's choice of direction has a closed-form optimum which points back at the signed deviation field.\n\nThe width 2|<c - E, w>| / ||w||^2 of the informative window is maximised, over all nonzero directions w, exactly at w proportional to c - E, with maximal width 2 / ||c - E||, and the maximum is attained only there.\n\nProve the Rayleigh-quotient optimisation from Cauchy-Schwarz and its equality case, formalised alongside chiSq_twoPoint_pvalue_eq_half; then evaluate the resulting optimal direction on the exp-566 count fields and compare its empirical rejection rate with random directions.\n\nThe protocol gains a canonical, computable control direction, and its optimum coincides with the signed carrier, unifying the control design with the signed follow-up.\n\nWindow width is not the right power functional and the control must be calibrated against the full amplitude distribution instead.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4358",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "3596d147",
+    "status": "available",
+    "timestamp": "2026-08-29T09:03:54.238441+00:00",
+    "title": "Optimal Perturbation Direction for the Additive Control"
   },
   {
     "consumed_by_exp_id": "",
@@ -40708,6 +40707,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The constant\n   $c(\\delta) = \\log((1-\\delta)/\\delta)$ is the supremum of $|h'|$ on\n   $[\\delta, 1/2]$, hence a Lipschitz constant, not an inverse one. The exact\n   counterexample $\\delta = q = 1/4$, $p = 1/2$ reduces the claim to $4 \\le 3$,\n   and the inequality with its direction reversed is a theorem.",
+    "domains": [],
+    "id": "fd_4359",
+    "priority_score": 0.4245797101449275,
+    "research_mode": "team",
+    "source_exp_id": "25df59ed",
+    "status": "available",
+    "timestamp": "2026-08-29T09:04:13.743872+00:00",
+    "title": "The proposed inverse-Lipschitz bound is false"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Generalize from one-dimensional symmetry generators to Lie-group actions and prove equivariance of the momentum map.",
     "domains": [
       "Algebra"
@@ -47220,5 +47231,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-27T09:49:51.698341+00:00",
     "title": "Group-theoretic characterization of alphabet rerandomization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "On\n   $[0,1]$, $h(p) = h(q)$ iff $q = p$ or $q = 1-p$, so requiring the reported\n   fraction to lie in $[0,1/2]$ hides precisely one bit \u2014 which class is the\n   majority. The quantitative version drops the hypothesis altogether:\n   $\\min(|p-q|, |p+q-1|) \\le \\sqrt{\\varepsilon/2}$.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4360",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "25df59ed",
+    "status": "available",
+    "timestamp": "2026-08-29T09:04:14.153159+00:00",
+    "title": "The balanced-side hypothesis is exactly a label-swap convention"
   }
 ];
