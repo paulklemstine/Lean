@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a22e921b",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — from the k-taxonomy cycles\n\nThree sorry-free Lean files came out of this run:\n\n* `Catalog/Cryptography/KTaxonomyCensusEcon.lean` — the three budgets `k_pin`,\n  `k_opt^cost`, `k_o",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-08-25T10:51:17",
-      "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and "
-    },
-    {
       "cycle_id": "539def03",
       "domain": "Pythagorean",
       "key_insight": "# Future directions: converses to the union bound for universal hashing\n\nThis thread closed the open item of the assignment — a lower bound valid over\n*all* 2-universal families — and in fact determin",
@@ -499,19 +489,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-29T09:04:19",
       "title": "Which-Factor Wall as a Cross-Population Invariant"
+    },
+    {
+      "cycle_id": "90e1e335",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the oracle-realization gap\n\nFive Lean files were produced and are machine-checked without `sorry`:\n\n* `Catalog/Novelty/OracleRealizationGap.lean` — the sensor's statistic r",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-08-29T14:29:54",
+      "title": "FACT round-74 #1 — ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-compu"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "db2f2b2f",
-      "domain": "Physics",
-      "key_insight": "# FUTURE_DIRECTIONS — Quantum-Pythagorean-Walk\n\nDerived from what survived (and what failed) across the research cycles.\n\n**What survived.** The Berggren tree is a *complete, rigid* state space (bijec",
-      "quality_score": 0.9,
-      "sorry_count": 3,
-      "theorem_count": 426,
-      "timestamp": "2026-08-20T11:43:09",
-      "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
-    },
     {
       "cycle_id": "367abe49",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-29T09:04:19",
       "title": "Which-Factor Wall as a Cross-Population Invariant"
+    },
+    {
+      "cycle_id": "90e1e335",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the oracle-realization gap\n\nFive Lean files were produced and are machine-checked without `sorry`:\n\n* `Catalog/Novelty/OracleRealizationGap.lean` — the sensor's statistic r",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-08-29T14:29:54",
+      "title": "FACT round-74 #1 — ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-compu"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6ca543a1",
-      "domain": "Geometry",
-      "name": "card_patterns_eq_sum_blocks",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "1bcec21a",
-      "domain": "Combinatorics",
-      "name": "score_add_smul",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "1bcec21a",
-      "domain": "Combinatorics",
-      "name": "partitionFn_pos",
-      "quality": 0.78
-    },
     {
       "cycle_id": "1bcec21a",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "hasDerivAt_lin_sub_binEntropy",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "90e1e335",
+      "domain": "Novelty",
+      "name": "numLeaves_le_two_pow_depth",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "90e1e335",
+      "domain": "Novelty",
+      "name": "eval_eq_of_menu_agree",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "90e1e335",
+      "domain": "Novelty",
+      "name": "errs_of_menu_",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-08-29T09:04:19",
+  "last_updated": "2026-08-29T14:29:54",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "99ec0ece",
-        "quality": 0.82,
-        "theorems": 100,
-        "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
-      },
-      {
         "cycle_id": "a331ba56",
         "quality": 0.84,
         "theorems": 117,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 43,
         "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%"
+      },
+      {
+        "cycle_id": "90e1e335",
+        "quality": 0.8,
+        "theorems": 69,
+        "title": "FACT round-74 #1 — ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unreali"
       }
     ],
     "NumberTheory": [
