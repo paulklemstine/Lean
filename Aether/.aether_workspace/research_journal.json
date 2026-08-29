@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "05a687ab",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results now formalized in\n`Catalog/Computation/SpectralUnfoldingGapStatistics.lean`,\n`Catalog/Computation/SpectralPoissonVs",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-08-25T14:05:36",
-      "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
-    },
-    {
       "cycle_id": "ea4eae2e",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — positional geometry of the Fermat / quadratic-sieve polynomial\n\nDerived from this cycle's proofs (`Catalog/NumberTheory/FermatPosition{Geometry,Density,\nTerminal,Nonlocality}.lea",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-29T18:30:57",
       "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) b"
+    },
+    {
+      "cycle_id": "f5dbb89f",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Fermi occupancy, pigeonhole thresholds, and rare-event geometry\n\nDerived from the verified results in `Catalog/Pythagorean/FermiPigeonhole/`\n(`Model`, `DrakeFirstMoment`, `Contac",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-29T21:45:25",
+      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5be71780",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Neurosymbolic RLHF / PPO-ptx\n\nDerived from the four verified cycles in\n`Catalog/Shared/NeuroSymbolicRLHFObjective.lean`,\n`Catalog/Shared/NeuroSymbolicRLHFRobustness.lean`,\n`Catal",
-      "quality_score": 0.85,
-      "sorry_count": 6,
-      "theorem_count": 97,
-      "timestamp": "2026-08-20T14:00:42",
-      "title": "reinforcement learning"
-    },
     {
       "cycle_id": "69ffd40e",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-29T18:30:57",
       "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) b"
+    },
+    {
+      "cycle_id": "f5dbb89f",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Fermi occupancy, pigeonhole thresholds, and rare-event geometry\n\nDerived from the verified results in `Catalog/Pythagorean/FermiPigeonhole/`\n(`Model`, `DrakeFirstMoment`, `Contac",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-29T21:45:25",
+      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "40d19005",
-      "domain": "Physics",
-      "name": "stackSC_strictMono",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "40d19005",
-      "domain": "Physics",
-      "name": "sqrt_lt_natSqrt_add_one",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "40d19005",
-      "domain": "Physics",
-      "name": "log_stackSC_ge",
-      "quality": 0.84
-    },
     {
       "cycle_id": "7ae2917a",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "factorization_primorial",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "f5dbb89f",
+      "domain": "Pythagorean",
+      "name": "prb_two_sites",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f5dbb89f",
+      "domain": "Pythagorean",
+      "name": "prb_two_sites_epoch",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f5dbb89f",
+      "domain": "Pythagorean",
+      "name": "prb_sameEpoch_le",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-29T18:30:57",
+  "last_updated": "2026-08-29T21:45:25",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "28aa3954",
-        "quality": 0.82,
-        "theorems": 49,
-        "title": "single-voter exchange law."
-      },
-      {
         "cycle_id": "1210c28a",
         "quality": 0.82,
         "theorems": 81,
@@ -3885,6 +3879,12 @@
         "quality": 0.85,
         "theorems": 125,
         "title": "FACT round-74 #3 — SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound supe"
+      },
+      {
+        "cycle_id": "f5dbb89f",
+        "quality": 0.78,
+        "theorems": 64,
+        "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
       }
     ],
     "Shared": [
