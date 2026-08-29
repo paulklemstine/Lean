@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ea4eae2e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — positional geometry of the Fermat / quadratic-sieve polynomial\n\nDerived from this cycle's proofs (`Catalog/NumberTheory/FermatPosition{Geometry,Density,\nTerminal,Nonlocality}.lea",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 50,
-      "timestamp": "2026-08-25T14:05:54",
-      "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNIT"
-    },
-    {
       "cycle_id": "128c5007",
       "domain": "Computation",
       "key_insight": "# Future directions — binning-free geometry of window features\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What this cycle\nestablished (all machine-checked, 0 sorries):\n\n*",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-29T21:45:25",
       "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+    },
+    {
+      "cycle_id": "68de46a5",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — barrier-4 positional/magnitude converse\n\nThis cycle turned the recorded DRAFT-WITH-CAVEATS strata into four compiling, sorry-free Lean\nfiles:\n\n* `Catalog/Tropical/Barrier4FixedWi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-08-29T21:45:38",
+      "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of th"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "69ffd40e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial-review stages of this cycle.  Each conjecture is\nfalsifiable, is stated against definitions that already exist in\n`Catalog/Applications/I",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 127,
-      "timestamp": "2026-08-20T15:50:11",
-      "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
-    },
     {
       "cycle_id": "d37c9a15",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-29T21:45:25",
       "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+    },
+    {
+      "cycle_id": "68de46a5",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — barrier-4 positional/magnitude converse\n\nThis cycle turned the recorded DRAFT-WITH-CAVEATS strata into four compiling, sorry-free Lean\nfiles:\n\n* `Catalog/Tropical/Barrier4FixedWi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-08-29T21:45:38",
+      "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of th"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7ae2917a",
-      "domain": "MachineLearning",
-      "name": "still",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "7ae2917a",
-      "domain": "MachineLearning",
-      "name": "proved",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "7ae2917a",
-      "domain": "MachineLearning",
-      "name": "restrictTo_eq_iff",
-      "quality": 0.82
-    },
     {
       "cycle_id": "9524045a",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "prb_sameEpoch_le",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "68de46a5",
+      "domain": "Tropical",
+      "name": "dpVal_eq",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "68de46a5",
+      "domain": "Tropical",
+      "name": "dpVal_eq_netCost_pin",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "68de46a5",
+      "domain": "Tropical",
+      "name": "saturation_exact",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-29T21:45:25",
+  "last_updated": "2026-08-29T21:45:38",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "8da3e793",
-        "quality": 0.78,
-        "theorems": 73,
-        "title": "Compression Research A2: Learnable shared decompressors — model is free, model d"
-      },
-      {
         "cycle_id": "6ba84571",
         "quality": 0.85,
         "theorems": 120,
@@ -4009,6 +4003,12 @@
         "quality": 0.78,
         "theorems": 80,
         "title": "FACT round-74 #2 — ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO pe"
+      },
+      {
+        "cycle_id": "68de46a5",
+        "quality": 0.72,
+        "theorems": 76,
+        "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/mag"
       }
     ]
   }

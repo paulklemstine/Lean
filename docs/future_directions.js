@@ -1824,16 +1824,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-91 THE-CHEAP-DRAFT-WINS-AND-CODE-DRAFTS-DEEP: speculative decoding of a 7B LLM entirely on CPU pays up to 1.66x \u2014 smaller draft wins every cell (cost dominance), optimal depth is domain-parameterized (code deep, prose collapses past d=4 into a net loss)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9b9b2def",
     "description": "Round-72 #1, exp 557 (user-directed Pythagorean/Euler campaign). Euler's factorization method, fully priced.\n\n**EULER-LOSES.** Existence: \u22652 essentially distinct sum-of-two-squares representations \u27fa **both primes \u22611 mod 4 \u2014 exactly two reps there, zero in every other class** (750/750 per cell; eligible fraction of draws exactly 0.2500; r\u2082=4(d\u2081\u2212d\u2083) validated vs brute force). Algebra: the combination step reduces to gcd(|ad\u2212bc|,N) via Im(z\u2081\u00b7conj(z\u2082)) hitting exactly one prime norm (bounds proven); verified **500/500 synthetic + 750/750 real instances** \u2014 extraction ALWAYS works when reps are known. Cost face: rep-search median 81k iterations \u2248 **2.48\u00d7 one plain-Fermat scan**, and Euler needs two \u27f9 end-to-end **median 5.70\u00d7 worse than Fermat on identical instances** (q75 33.8\u00d7, catastrophic on balanced pairs where Fermat lands instantly).\n\nBarrier-8 consistent: the c=m\u00b2+n\u00b2 face of the triplet idea is a known method with worse constants. No new leverage.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp557_euler_two_squares.py + exp557_result.json + logs, seed 20260826.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3918",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T03:18:15.574536+00:00",
     "title": "FACT round-72 #1 \u2014 EULER-LOSES: two-squares route measured \u2014 algebra exact, class 25%, cost 5.7x Fermat (paper 201)"
   },
@@ -1907,21 +1908,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:03:28.425620+00:00",
     "title": "FACT round-73 #2 \u2014 ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; skip-flip wins deployment (paper 207)"
-  },
-  {
-    "consumed_by_exp_id": "68de46a5",
-    "description": "Round-75 #4 \u00b7 THEORY deliverable (no new experiment id) \u00b7 paper 219 \u00b7 assessment v326.\n\n**What was recorded.** The verified draft of the POSITIONAL/MAGNITUDE stratum of the barrier-4 converse (`ResearchOutput/scripts/2026-08-24-round74/barrier4_positional_converse_draft.md`), independently rechecked per `verify_t1_t2_recheck.json` against the author's own finite checks `exp574b_saturation_check.py`/`exp574b_result.json`. Recorded as DRAFT-WITH-CAVEATS per verifier recommendation \u2014 NOT a sealed theorem.\n\n**T1 (fixed-window oracle).** CERTIFIED-SILENCE law S_A = 1/[\u03bc\u00b7P_hit + (1\u2212P_hit)(1\u2212\u03bc)] exact for protocol A committed policy (finite-M rational, 0 recheck failures). The DRAFTED fire-or-silent form 1/(1\u2212(1\u2212\u03bc)P_hit) is SUPERSEDED \u2014 non-certifying silence wastefully re-scans R; 14 algebra consistency failures caught. Protocol B optimal response S_B = 1/(1+\u03bc\u2212P_hit) \u2264 S_A; block-first dominance UNCONDITIONAL for protocol A, RESTRICTED to P_hit \u2265 \u03bc for protocol B (exhaustive orders + insertion sweep M\u2208{16,33,64}; all 12 counterexamples have P<\u03bc). Cap = 1/\u03bc at P_hit=1; NO constant cap exists.\n\n**T2 (adaptive saturation).** V(W) = log\u2082W + \u00bd EXACT on every dyadic W \u2208 [2,4096] (independent DP reproduction); general-L closed form an upper bound never crossing \u2212\u00bd to L=4096 (deepest undercut \u22120.499349 @ L=3073); cost-offset bracket corrected to [.415,.5011]; marginal-value identity rewritten as exact NET form cost(k)\u2212cost(k+1)=W/2^(k+2)\u22121 (250/250 cells) after drafted GROSS form failed 231 cells; census C*=19.5@2^19 / 20.5@2^20, argmin offsets {\u22122,\u22121} \u2260 k_pin=log\u2082W \u2014 and exp563's economic optimum is a THIRD convention ~1 query above k_opt: three distinct k's must stay distinguished.\n\n**Conjecture D (SET/COST dichotomy).** S(\u03a0)=S(R\u2218F)=S(R)\u00b7S(F), sup_F S(F)=4/3 (\u03b8=1/2), S(R) \u2264 min(1/\u03bc_eff, 2^k_bits). Residue cap 4/3 governs COST-class actions; position works the SET-class tail. All four measured anchors feasible under \u03bc \u2264 1/S: 5.19\u00d7 \u2261 (.05,.85), 6.91\u00d7 \u2261 (.05,.9003), 4.35\u00d7 \u2261 (.05,.8106), 29.1\u00d7 \u2261 (.02,.9853); identity check: paper-138 master law at uninformative point \u2261 paper-132 formula exactly. 5.19\u00d7 > 4/3 is CLASS-CROSSING, NOT cap-breaking \u2014 barrier map internally consistent.\n\n**Verification census.** Zero arithmetic errors across all numeric claims (stored-value discrepancies: none); ~60% of PROVEN upgraded to VERIFIED where independently recomputed. Named GAPs remain, load-bearing: L4 stratum measure \u0394(\u03c0,R), L7 extremality of sqrt-descending among N-computable orders (Siegel-type ineffectivity expected), L8 k-naming. These are the formal program's next work.\n\nCount unchanged by experiment (papers-only bump, convention stated in addendum): still 561 experiments (max id 572), papers now 219, assessment v325 \u2192 v326.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3981",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T10:55:32.772786+00:00",
-    "title": "FACT round-75 #4 \u2014 BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of the barrier-4 converse recorded as DRAFT-WITH-CAVEATS \u2014 certified-silence law S_A=1/[\u03bcP+(1\u2212P)(1\u2212\u03bc)] supersedes drafted fire-or-silent form (14 algebra failures caught by independent verification); T2 saturation V=log\u2082W+\u00bd exact on dyadic W\u2208[2,4096]; Conjecture D factors S(R\u2218F)=S(R)\u00b7S(F) with sup_F=4/3 \u2014 residue cap 4/3 governs COST-class actions while position works the SET-class tail: 5.19\u00d7>4/3 is class-crossing not cap-breaking; zero arithmetic errors in recheck; named GAPs L4/L7/L8 are the next work"
   },
   {
     "consumed_by_exp_id": "",
@@ -3907,20 +3893,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 1bcec21a (Q=0.780), which proved 68 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Lower-index natural-coordinate coefficients\n   are defined by `((1 - \u03b1) / 2) C`, where `C` is the Amari\u2013Chentsov cubic\n   tensor. The development proves e-flatness at `\u03b1 = 1`, the dual\n   expectation-coordinate m-flatness at `\u03b1 = -1`, opposite-alpha duality, and\n   the Levi\u2013Civita midpoint identity.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_1bcec21a_5ad84941",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "1bcec21a",
-    "status": "available",
-    "timestamp": "2026-08-26T15:55:04.748606+00:00",
-    "title": "Deepening: Canonical alpha-connections"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
     "domains": [
       "Algebra"
@@ -3932,6 +3904,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T06:30:57.793286+00:00",
     "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "seed_331",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "",
+    "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -3977,36 +3964,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
-    "domains": [
-      "MachineLearning",
-      "Logic"
-    ],
-    "id": "seed_331",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Characterize all fields over which every element is a sum of two squares (Pythagorean fields). Prove that a field is Pythagorean iff it is formally real with a unique ordering. Show that Q(i) is not Pythagorean but R is.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "seed_343",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
     "consumed_by_exp_id": "",
@@ -14356,23 +14313,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },
   {
-    "consumed_by_exp_id": "f5dbb89f",
-    "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Speculative"
-    ],
-    "id": "seed_150",
-    "phase": "A",
-    "priority_score": 0.65,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 29ba074c (Q=0.600) proved 24 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
     "domains": [
@@ -15098,6 +15038,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T10:53:04.366477+00:00",
     "title": "Circulant Kernel Dictionary for Additive Rules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conditioning on our own existence forces one coordinate but leaves the others independent, by the cylinder factorisation. We conjecture that the conditional expected number of other civilizations is still at most N p, so observing our own existence cannot rescue a small Drake expectation.\n\nE[#civilizations \u2212 1 | site i civilized] = (N\u22121) p \u2264 N p in the finite product model.\n\nExact conditional computations by enumeration for N \u2264 4; formalise conditioning as a ratio of Prb values and reuse prb_cylinder for the independence step.\n\nAnthropic self-selection provides no evidential boost for cosmic neighbours within this model class.\n\nThe model's independence assumption is doing hidden anthropic work and must be replaced.",
+    "domains": [],
+    "id": "fd_4374",
+    "priority_score": 0.5928260869565218,
+    "research_mode": "team",
+    "source_exp_id": "f5dbb89f",
+    "status": "available",
+    "timestamp": "2026-08-29T21:45:14.549019+00:00",
+    "title": "No-Self-Selection Bound for Posterior Neighbour Counts"
   },
   {
     "consumed_by_exp_id": "",
@@ -16346,6 +16298,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The 4/3 residue cap was shown to be the maximum of the fire-or-silent law along its uninformative diagonal P = mu. This suggests every constant cap in the barrier map is the extremum of a slice of the same two-parameter cost surface, cut out by an informational budget curve. Proving this would replace a list of separate caps by one variational principle.\n\nFor every budget curve P = g(mu) with g(mu) >= mu and g concave on [0,1], sup_mu 1/(1 - (1-mu) g(mu)) is attained at the unique mu with g'(mu) = (1-g(mu))/(1-mu), and equals 4/3 exactly when g = id.\n\nFormalise the slice function in Lean over the existing costFireOrSilent, prove the first-order condition by differentiating, and check the g = id case against residue_cap_isGreatest.\n\nAll barrier-map caps become extrema of one surface; new caps can be read off from new budget curves.\n\nThe 4/3 cap is an accident of the diagonal and each cap needs its own derivation.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4376",
+    "priority_score": 0.5646283128879792,
+    "research_mode": "team",
+    "source_exp_id": "68de46a5",
+    "status": "available",
+    "timestamp": "2026-08-29T21:45:30.881015+00:00",
+    "title": "Diagonal Extremality of the Residue Cap"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "An oracle answering the sensor 1{gap <= B} at every threshold B reconstructs the factorisation. We conjecture that a single fixed threshold suffices, because multiplying N by small squares rescales the gap predictably, so binary search can be simulated by rescaling instead of by varying B.\n\nFor every fixed B >= 1 there is a polynomial-time algorithm that factors odd semiprimes using only queries of the form 'is gap(M) <= B' for integers M derived from N by multiplication by squares of small integers.\n\nFormalize the rescaling identity relating gap(N) and gap(t^2 N) for small t, then build the search in Lean on top of least_accepting_eq_gap.\n\nBarrier 6 becomes a completeness theorem: one bit of the navigation sensor is as hard as factoring.\n\nThe sensor family is strictly stronger than any single threshold, and the crediting framework must be indexed by B.",
     "domains": [
       "NumberTheory",
@@ -16613,6 +16580,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T09:03:53.220500+00:00",
     "title": "Between-Cell Energy Floor for Discriminant Partitions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The named gap L4 asks for a stratum measure Delta(pi, R) for scan orders. With the positional law now a single scalar function of the block measure, Delta can be defined as the integrated excess of costCert under the order pi over the identity order, making L4 and the L7 extremality claim precise.\n\nDelta(pi, R) >= 0 for every order pi with equality iff pi is measure preserving on the corner window, and Delta is maximised among N-computable orders by the sqrt-descending order, with extremal value 1/2 - o(1).\n\nDefine Delta as a finite sum over window cells in Lean, prove nonnegativity by convexity of costCert in mu, and evaluate the sqrt-descending order on small N.\n\nL4 is closed and L7 becomes a concrete extremal problem over computable orders.\n\nOrder effects are not captured by the block measure alone and the positional law needs a genuinely order-dependent refinement.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4379",
+    "priority_score": 0.5642076881852688,
+    "research_mode": "team",
+    "source_exp_id": "68de46a5",
+    "status": "available",
+    "timestamp": "2026-08-29T21:45:32.013391+00:00",
+    "title": "Stratum Measure as a Tropical Corner Defect"
   },
   {
     "consumed_by_exp_id": "",
@@ -17363,6 +17345,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T08:00:25.273322+00:00",
     "title": "Second-Order Cost Law from Run-Length Variance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "SET-class actions compose multiplicatively on measures while COST-class actions compose additively on queries, which are exactly the two operations of the min-plus semiring underlying the whole barrier thread. The conjecture is that a single graded cost algebra has the T1 law as its degree-zero part and the T2 curve as its degree-k part, so that T2 is generated by iterated T1 rather than being an independent stratum.\n\nThere is a graded cost algebra whose SET grade composes multiplicatively and whose COST grade composes additively, with the T1 law as degree 0 and the T2 curve W/2^(k+1) + k as degree k, and on which speedup is a homomorphism; the degree-k identity itself is already proved (halvingCost_eq_netCost).\n\nExtend the proved halving identity to mixed pipelines that interleave certified fixed-window stages and residue filters, and check that the residue cap and the bits cap are the extrema of the two grades.\n\nT1 and T2 collapse into one algebraic object and the barrier map has a single generating law.\n\nAdaptivity contributes structure not expressible by composing fixed-window oracles, and the two strata must stay separate.",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_4378",
+    "priority_score": 0.5636726988971306,
+    "research_mode": "team",
+    "source_exp_id": "68de46a5",
+    "status": "available",
+    "timestamp": "2026-08-29T21:45:31.596592+00:00",
+    "title": "Min-Plus Cost Algebra Unifying SET and COST Actions"
   },
   {
     "consumed_by_exp_id": "",
@@ -28037,6 +28034,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T18:30:26.043400+00:00",
     "title": "Resolution Versus Distinctness Thresholds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An observer monitoring k of T epochs detects at least one civilization with probability 1 \u2212 (1 \u2212 pk/T)^N up to quadratic corrections. We conjecture that this depends on the monitored set only through k, so no allocation of search effort beats uniform coverage.\n\nFor every S \u2286 Fin T with |S| = k, Prb{f | \u2203 i, f i \u2208 some '' S} lies between N p k/T \u2212 (N p k/T)\u00b2/2 and N p k/T.\n\nFormalise the event for general S, apply prb_cylinder and one_sub_pow_le, and verify exactly by enumeration for T \u2264 5.\n\nSETI-style search strategy is effort-limited, not strategy-limited, inside this model.\n\nNon-uniform epoch marginals exist and targeted search has provable advantage.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4375",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f5dbb89f",
+    "status": "available",
+    "timestamp": "2026-08-29T21:45:14.906865+00:00",
+    "title": "Linearity of Detection Probability in Search Effort"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "On dyadic windows the pinned cost exceeds the optimum by exactly one half query, and the general bracket log2 W +- 1/2 is now proved. The exact defect between the closed form and the optimised curve should be an explicit sawtooth on each dyadic period, which would pin the recorded cost-offset bracket to a formula.\n\nFor W = 2^m t with t in [1,2), (log2 W + 1/2) - min_k netCost W k = 1/2 - min(t/2 - log2 t, t/4 + 1 - log2 t), a sawtooth attaining 1/2 exactly on dyadic W.\n\nProve in Lean that the min over k is attained at one of the two scales floor(log2 W) and floor(log2 W) - 1, then compute the two branches.\n\nThe cost-offset bracket becomes a closed form and the three competing k conventions get a single reconciling formula.\n\nThe optimum wanders over more than two scales and the offset is not periodic in log2 W.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4377",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "68de46a5",
+    "status": "available",
+    "timestamp": "2026-08-29T21:45:31.231323+00:00",
+    "title": "Half-Query Pin Defect for Non-Dyadic Windows"
   },
   {
     "consumed_by_exp_id": "",
@@ -46674,14 +46700,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterize nonsingularity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b50cc5ce",
     "description": "Compute the Levi-Civita connection and Gaussian curvature of a concrete finite-support model. Constant negative curvature should be treated as a separate claim, not inferred from exponential sensitivity.",
     "domains": [],
     "id": "fd_2660",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "8aec96a6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:23.277055+00:00",
     "title": "Test curvature only after identifiability"
   },
