@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d3d53c1e",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — the residual certificate calculus\n\nThe cycle just completed established, with complete proofs:\n\n* the conjectured upper bound $\\max(1+K_1, 1+K_2)$ for parallel residual blocks in",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-08-25T09:53:08",
-      "title": "Parallel residual blocks obey a tensor-product certificate"
-    },
-    {
       "cycle_id": "9b3c75c4",
       "domain": "Applications",
       "key_insight": "# Future directions — positional-stratum measure framework (GAP-L4)\n\nWhat this cycle established, in one paragraph: the *universal object* of the\npositional-stratum framework is the exact r̄-identity",
@@ -499,19 +489,19 @@
       "theorem_count": 80,
       "timestamp": "2026-08-29T02:13:31",
       "title": "FACT round-74 #2 — ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor informati"
+    },
+    {
+      "cycle_id": "3596d147",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — MA-1 effectivity, after the magnitude null\n\nEverything referenced below is in `Catalog/Bridges/`, fully proved, zero sorries, standard\naxioms only (`propext`, `Classical.choice`,",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-08-29T09:04:06",
+      "title": "FACT round-74 #4 — MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-de"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4b03d5cc",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Planck-Foam Topology\n\n## Where the thread stands\n\nCycle 1 established the core theory (`Catalog/Physics/PlanckFoam*.lean`): a\ncomplete separation-axiom characterisation of Wheele",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 159,
-      "timestamp": "2026-08-20T10:47:46",
-      "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
-    },
     {
       "cycle_id": "39c3166e",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 80,
       "timestamp": "2026-08-29T02:13:31",
       "title": "FACT round-74 #2 — ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor informati"
+    },
+    {
+      "cycle_id": "3596d147",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — MA-1 effectivity, after the magnitude null\n\nEverything referenced below is in `Catalog/Bridges/`, fully proved, zero sorries, standard\naxioms only (`propext`, `Classical.choice`,",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-08-29T09:04:06",
+      "title": "FACT round-74 #4 — MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-de"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "20511e4a",
-      "domain": "Pythagorean",
-      "name": "bootstrap_variance_identity",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "5260665b",
-      "domain": "Novelty",
-      "name": "ratioArea_eq",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "5260665b",
-      "domain": "Novelty",
-      "name": "ratioArea_one",
-      "quality": 0.83
-    },
     {
       "cycle_id": "5260665b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "dialCost_exch",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "3596d147",
+      "domain": "Bridges",
+      "name": "betweenSS_nonneg",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "3596d147",
+      "domain": "Bridges",
+      "name": "tss_eq_withinSS_add_betweenSS",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "3596d147",
+      "domain": "Bridges",
+      "name": "rsq_measurableClass_mul_tss",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-08-29T02:13:31",
+  "last_updated": "2026-08-29T09:04:06",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "18f8232d",
-        "quality": 0.89,
-        "theorems": 17,
-        "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
-      },
-      {
         "cycle_id": "c442a26f",
         "quality": 0.88,
         "theorems": 91,
@@ -3203,6 +3197,12 @@
         "quality": 0.88,
         "theorems": 156,
         "title": "Ellipsoids"
+      },
+      {
+        "cycle_id": "3596d147",
+        "quality": 0.8,
+        "theorems": 66,
+        "title": "FACT round-74 #4 — MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude "
       }
     ],
     "Combinatorics": [
