@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "539def03",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: converses to the union bound for universal hashing\n\nThis thread closed the open item of the assignment — a lower bound valid over\n*all* 2-universal families — and in fact determin",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-25T11:45:16",
-      "title": "Both endpoints are formalised and the numerics of Section 4 of"
-    },
-    {
       "cycle_id": "2111d025",
       "domain": "Algebra",
       "key_insight": "# Future Directions — after Paper 227 (exp 577 / verifyL7b formalisation)\n\nThe cycle just closed established four formal pillars:\n\n1. **Reciprocity-flip dichotomy** (`Catalog/Algebra/ReciprocityFlipDi",
@@ -499,19 +489,19 @@
       "theorem_count": 69,
       "timestamp": "2026-08-29T14:29:54",
       "title": "FACT round-74 #1 — ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-compu"
+    },
+    {
+      "cycle_id": "062fc32a",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — after the RANDOM-AT-SCALE cycle\n\nThis cycle turned the experimental verdict — \"`x² − N` smoothness is random-level\nat `u = 6–8.5`, `|r − 1| ≤ 0.217`; per-`N` clustering and the Q",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-08-29T14:30:10",
+      "title": "FACT round-73 #4 — SCALE-SMOOTHNESS-DEVIATION: x²−N smoothness is random-level at u=6–8.5 (tightest "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "367abe49",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: next-cycle conjectures on PTX-augmented RLHF optima\n\nDerived from what survived and what failed in this cycle (see\n`Catalog/Novelty/RLHFPretrainingMixIn.lean` and `ComputationalEv",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-08-20T13:11:21",
-      "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
-    },
     {
       "cycle_id": "560d610e",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 69,
       "timestamp": "2026-08-29T14:29:54",
       "title": "FACT round-74 #1 — ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-compu"
+    },
+    {
+      "cycle_id": "062fc32a",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — after the RANDOM-AT-SCALE cycle\n\nThis cycle turned the experimental verdict — \"`x² − N` smoothness is random-level\nat `u = 6–8.5`, `|r − 1| ≤ 0.217`; per-`N` clustering and the Q",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-08-29T14:30:10",
+      "title": "FACT round-73 #4 — SCALE-SMOOTHNESS-DEVIATION: x²−N smoothness is random-level at u=6–8.5 (tightest "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1bcec21a",
-      "domain": "Combinatorics",
-      "name": "partitionFn_ne_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "b3980a1a",
-      "domain": "MachineLearning",
-      "name": "reachesOne_of_T",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b3980a1a",
-      "domain": "MachineLearning",
-      "name": "reachesOne_one",
-      "quality": 0.82
-    },
     {
       "cycle_id": "1a774383",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "errs_of_menu_",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "062fc32a",
+      "domain": "NumberTheory",
+      "name": "dial_def",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "062fc32a",
+      "domain": "NumberTheory",
+      "name": "three_le_of_ne_two",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "062fc32a",
+      "domain": "NumberTheory",
+      "name": "two_ne_zero_of_ne_two",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-29T14:29:54",
+  "last_updated": "2026-08-29T14:30:10",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "7f454a93",
-        "quality": 0.82,
-        "theorems": 98,
-        "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated"
-      },
-      {
         "cycle_id": "77469890",
         "quality": 0.82,
         "theorems": 55,
@@ -3699,6 +3693,12 @@
         "quality": 0.79,
         "theorems": 94,
         "title": "Parametric families"
+      },
+      {
+        "cycle_id": "062fc32a",
+        "quality": 0.78,
+        "theorems": 82,
+        "title": "FACT round-73 #4 — SCALE-SMOOTHNESS-DEVIATION: x²−N smoothness is random-level a"
       }
     ],
     "Physics": [

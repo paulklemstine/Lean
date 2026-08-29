@@ -1865,16 +1865,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT rounds 70\u201371 SYNTHESIS \u2014 THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exact laws + method laws consolidated (paper 199)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9c85c67",
     "description": "Round-72 #5, exp 555 \u2014 the last untested face of the triplet-tree proposal.\n\n**TRIAL-DIVISION-EQUIVALENT-GUIDANCE-NULL.** The mod-N Berggren tree: expansion multiplication-free (T-coefficients \u00b11..3), **collision-free at 200k nodes on every N**, residue-class-confined (~99.75% of orbit in two nz-histogram classes). Order-free dive factors 200/200: v* \u2248 **0.89\u00b7p_min, \u03b1 = 1.007\u00b10.088** \u2014 TD scaling, not \u03c1-like; ~11\u00d7 worse constants than plain trial division at matched compute; \u03c1 dominates by orders of magnitude. Ambient null: the orbit UNDER-SAMPLES factor-revealing residues ~5\u00d7 vs random Pythagorean points \u2014 projection erases the order structure that made the integer face tractable. Guidance: naive z=12\u201324 'improvements' were pure traversal-shape artifact (random-order control alone z=21.8); honest paired |z|<2 everywhere \u27f9 pre-stated null CONFIRMED.\n\n**Campaign close** \u2014 every face of the proposal now measured: exact-target circular; modular descent TD-class (this paper); combining invalid-as-stated (202); multi-target relaxation = TD-in-tree-clothing (203); Euler route 5.7\u00d7 Fermat (201). Barriers 2/5/8 unchanged throughout.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp555_modular_dynamics.py + exp555_result.json + identity addendum + logs, seed 20260826.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3926",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T04:10:59.496275+00:00",
     "title": "FACT round-72 #5 \u2014 MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-slow (alpha=1.007); guidance null (paper 205)"
   },
@@ -1920,36 +1921,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-24T05:55:13.535981+00:00",
     "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates the model (PPL 7.11 -> 2714.6, +38000%) \u2014 the KV precision axis has no usable middle at ctx 2048"
-  },
-  {
-    "consumed_by_exp_id": "90e1e335",
-    "description": "**FACT round-74 #1 \u00b7 exp 565 \u00b7 paper 210 \u00b7 seeds 20260824/20260825 \u00b7 wall 55.8 s**\n\nQuestion: is the oracle navigation-sensor peak of paper 197 \u2014 I(1{d\u2264B}; b\u2081) = 0.479797 bits at B = 22758 (hit-rate 0.2053) \u2014 realizable by any N-computable query policy, or only by factor-conditioned posteriors (barrier 6)?\n\nFrame reused verbatim from exp549; budget = distinct information-bearing queries over a 295-item menu; discriminative policies fit on a labeled train split, evaluated test-time N-only; two seeds; MI bias-corrected.\n\n**Reproduction gate: PASS BIT-EXACTLY.** Seed-20260824 population regenerated from exp549's code path matches all 11 published fine-grid points to the last digit (peak delta = 0.000000). Fresh seed B: peak 0.4948 at the same B = 22758.\n\n**Pre-registered verdict (rules verbatim from exp565_prereg.json): H1 false, H2 not triggered \u2192 GAP-PARTIAL.**\n- Lenient pooled crediting: ADAPTIVE-NB/BATTERY realize 0.167\u20130.172 bits = **33.8\u201335.9% of peak**, credited on seed A only.\n- STRICT within-logN-strata crediting: **0% for EVERY N-only policy on BOTH seeds.**\n- No policy \u2265 50% anywhere; sham clean (max raw 0.0020 bits, credited 0).\n\n**Mechanism \u2014 disclosed post-hoc amendment A1 (documented separately from the pre-registered verdicts):** the entire lenient signal is the between-magnitude-strata population base-rate channel created by the population design (support-edge coupling in indep/unilog, q \u2264 2\u00b2\u00b2 truncation in ratio), read out by parabola-mirror ensembles: PARONLY-battery \u2248 full battery (0.161\u20130.167 vs 0.164\u20130.172); MODONLY residues \u2248 0 (0.0008\u20130.0032 \u2014 paper 81's seal holds jointly); pooled z +118..+128 stable but dead within strata (z_within32 \u2264 2.3); flat in B past ~64 queries (class exhausts at 295).\n\nDecisive split: within-strata geometric excess carried by the ORACLE = **0.3634\u20130.3687 bits = 73.5\u201376.8% of peak** (z 82\u201390); best N-only policy = **\u2264 0.0018 bits = 0.25\u20130.50%** of it. FULL-ORACLE anchor hint=b\u2081: 0.9563\u20130.9627 bits \u2248 200% of peak.\n\n**Answer: the peak remains UNREALIZED.** It splits into ~74\u201377% within-strata geometry + ~23\u201326% population-prior slice; realizing 1{d \u2264 B} requires d = M \u2212 isqrt(N) (median d = 215782 against menu exhaustion at 295 queries; a full Fermat scan at peak budget misses 79.5% of samples).\n\n**Barriers:** #6 CIRCULARITY CONFIRMED AND QUANTIFIED (gap = 73\u201377% of peak \u2014 first quantified circularity measurement). #2 does NOT seal b\u2081 a priori (p\u2194q-symmetric via max/min; residue null EMPIRICAL, extends paper 81 to joint NB resolution). #4/#5 consistent. #1/#3/#7/#8 unengaged.\n\nLedger: one disclosed amendment cycle, none adverse; pre-registered rules still evaluated verbatim. Honest limit: the ~24% between-strata slice is a property of this lab population's size-ratio coupling, not of semiprimes generally.\n\nThis closes the \"unrealized 0.48-bit oracle bound\" face of the Berggren triplet-tree \u00d7 energy-spectrum campaign (rounds 70\u201372, papers 192\u2013197) \u2014 a strengthening of closure, not a breakthrough. Paper: ResearchOutput/NewMathematics/210_OracleRealizationGap.md.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3951",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T07:22:53.235459+00:00",
-    "title": "FACT round-74 #1 \u2014 ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-computable policy (strict crediting 0% both seeds); barrier-6 circularity quantified at 73-77% of peak"
-  },
-  {
-    "consumed_by_exp_id": "062fc32a",
-    "description": "Round-73 #4, exp 562, status 04_final_time_capped. **RANDOM-AT-SCALE.** First direct measurement of the standing directive's scale-smoothness frontier cell (u\u22656), the properly-controlled redo of round-26 #3's underpowered SUBEXP-STRATUM attempt: is x\u00b2\u2212N's B-smoothness (B=1000) different from size-matched randomness at u = log v/log B in {5,6,7,8}? Controls exactly histogram-matched on (bitlen, mantissa-octant); shared gcd-chain primorial code path both populations; assert pipeline 844 cases incl 24 adversarial vs exhaustive strip, 0 mismatches; ~1.49e9 candidates tested PER ARM across bins; 4000 N-clusters/bin; cluster bootstrap n=2000.\n\nResult r(u) = p_cand/p_ctrl: 1.011 [0.947,1.075] @ u\u22485.96; 0.949 [0.783,1.152] @ 6.95; 0.900 [0.455,1.700] @ 7.93; 1.200 [0.500,3.000] @ 8.26 \u2014 ALL CIs cover 1. Trend slope +0.036 log-r/u, CI [\u22120.255,+0.345], p=0.831 \u2014 FLAT. Tightest 95% bound |r\u22121| \u2264 0.2168 (bin u=6). All pre-stated deviation rules FALSE \u2192 RANDOM-AT-SCALE.\n\nSecondary structure (real, confined to the low-u face): N-level overdispersion D=1.61 [1.50,1.73] vs Poisson PERSISTS at bin 5 then DIES (~1.00 by bins 7\u20138); QR-dial grip decays with u: Spearman(per-N rate, QR frac) 0.32 (perm p=7e-4) \u2192 0.04.\n\nCross-check vs paper 130: its ratios 0.88\u20130.91 (u<4.75, scales to 2^44) were attributed to a finite-x Dickman correction SHARED WITH CONTROLS ('relation pool ensemble-equals unrestricted random'). This experiment extends that random-pool claim to u \u2264 8.5 \u2014 CONSISTENT, no novelty claimed against it. Honest placement: directly on the asymptotic-goal frontier; NULL within bound |r\u22121|\u22640.217 \u2014 no O(1) smoothness edge from quadratic-polynomial structure at these scales. Truncation disclosed: N\u22642^80 with x\u22644\u221aN tops out near u\u22488.5; production-scale u\u22659 stays open, as does why the dispersion dies between u\u22486 and 7. Time-capped: bins 7/8 event counts tiny (18v20, 12v10), CIs wide.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp562_scale_smoothness.py + exp562_result.json.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3952",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T07:22:53.236958+00:00",
-    "title": "FACT round-73 #4 \u2014 SCALE-SMOOTHNESS-DEVIATION: x\u00b2\u2212N smoothness is random-level at u=6\u20138.5 (tightest bound |r\u22121|\u22640.217); per-N clustering and QR dial both die above u\u22487"
   },
   {
     "consumed_by_exp_id": "3f9d41d2",
@@ -4035,37 +4006,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
-    "domains": [
-      "Novelty",
-      "Geometry",
-      "Topology"
-    ],
-    "id": "seed_292",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "The Mega-Sphere: All Dimensions at Once"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "id": "seed_298",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -12944,6 +12884,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The number of N <= X admitting a factorisation of Fermat gap at most B is proved to be O(sqrt(B) X^{3/4}). We conjecture the matching lower bound with an explicit constant, making the count asymptotically exact and pinning the vanishing rate of the sensor hit rate.\n\nThere are positive constants c1, c2 with c1 * sqrt(B) * X^(3/4) <= #{N <= X : exists odd p <= q, N = p q, gap p q <= B} <= c2 * sqrt(B) * X^(3/4) for all X >= X0(B).\n\nFormalize the lower bound by exhibiting the injective family N = a^2 - h^2 with a in [sqrt X / 2, sqrt X] and h <= sqrt(2 B a), and compare with the counts in ComputationalEvidence.md Table 3.\n\nThe reported 0.2053 hit rate is quantitatively explained as a finite-population effect with a computable correction term.\n\nPrimality constraints reduce the count below X^{3/4}, and the sensor population is even sparser than the parametrisation suggests.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4362",
+    "priority_score": 0.6714848484848487,
+    "research_mode": "team",
+    "source_exp_id": "90e1e335",
+    "status": "available",
+    "timestamp": "2026-08-29T14:29:39.508732+00:00",
+    "title": "Sharp Constant for Fermat-Close Counting"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A policy that reads k binary answers from a query menu is measurable with respect to a statistic with at most 2^k classes. Combining this with the exact crediting law bounds the realization achievable by any such policy in terms of k alone, independently of how the policy is fitted.\n\nFor any population P, target s and menu of binary queries, every policy using at most k queries has error at least the sum of class minorities of the coarsest partition refined by all 2^k answer patterns; in particular if every class of the answer statistic is balanced the error is exactly |P|/2.\n\nInstantiate StatisticRealization.isLeast_err with kappa = Bool^k and the answer-vector statistic, combine with the decision-tree indistinguishability theorem of AdaptiveMenuCapacity, and verify on the 295-item menu population by direct enumeration.\n\nThe empirical statement 'no policy reaches 50 percent of the peak' becomes a theorem about menu capacity rather than a fitted observation.\n\nAdaptivity (queries chosen depending on earlier answers) escapes the static statistic bound, and adaptive policies must be modelled by decision trees instead.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4364",
+    "priority_score": 0.6714615384615387,
+    "research_mode": "team",
+    "source_exp_id": "90e1e335",
+    "status": "available",
+    "timestamp": "2026-08-29T14:29:40.600611+00:00",
+    "title": "Menu Capacity Bound for Bounded-Query Policies"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Unison lags of an infinite digit melody are closed under gcd. On a finite window of length n this fails below the Fine-Wilf threshold p + q - gcd(p,q). We conjecture the sharp finite-window statement and its extremal examples for digit alphabets.\n\nIf a window of n consecutive digits has periods p and q and n >= p + q - gcd(p,q), then it has period gcd(p,q); for n = p + q - gcd(p,q) - 1 there is a decimal counterexample.\n\nState periodicity relative to a window in Lean and adapt IsPeriod.sub with index-range side conditions; construct the extremal words explicitly for small p, q and verify by decide.\n\nEmpirical periodicity claims about finite digit samples acquire an exact sample-size threshold.\n\nFinite-window periodicity is strictly weaker than expected and needs a different invariant, e.g. the windowed lag spectrum.",
     "domains": [
       "Combinatorics"
@@ -13756,6 +13724,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T20:49:40.772744+00:00",
     "title": "Full GL Realizability of Height-Depth Profiles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved minimum-error law gives the exact error of any statistic-measurable policy. We conjecture that it also controls the mutual information between the statistic and the target, turning the campaign's bit-valued reports and its percentage-credited reports into two readings of one functional.\n\nFor a finite population P, statistic T and Boolean target s, the mutual information I(T; s) is at most H(s) - H(irredError P T s / |P|), with equality iff every class of T is pure or balanced.\n\nFormalize empirical entropy on a Finset, prove the inequality from the class decomposition already used in err_eq_sum, and check it numerically on the populations of ComputationalEvidence.md Table 4.\n\nBits realized and percentage credited become formally interchangeable, and the 0 percent strict verdict becomes a zero-information theorem.\n\nError-based and information-based crediting are genuinely different functionals and the campaign must report both.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4365",
+    "priority_score": 0.6699230769230771,
+    "research_mode": "team",
+    "source_exp_id": "90e1e335",
+    "status": "available",
+    "timestamp": "2026-08-29T14:29:41.141679+00:00",
+    "title": "Fano-Type Crediting Inequality"
   },
   {
     "consumed_by_exp_id": "",
@@ -15666,6 +15648,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Fermat scan cost of an odd integer equals the minimum over its divisor pairs of the midpoint excess over the integer square root. We conjecture that this minimum is governed by the number of distinct prime factors, so that highly composite integers are strictly easier to navigate than semiprimes of the same size. This turns the 'navigation sensor' of the campaign into a multiplicative-structure statistic.\n\nFor odd N with omega(N) distinct prime factors, min over d | N, 1 < d < N of ((d + N/d)/2 - isqrt N) is at most C * N^(1/2) * 2^(-omega(N)) for an absolute constant C, and this is sharp up to constants.\n\nInstantiate scanHit_iff_exists_divisor and compute the minimum over Nat.divisors N for all odd N below 10^6, stratified by omega(N); then attempt the upper bound by a pigeonhole over the 2^omega(N) divisor pairs inside [1, sqrt N].\n\nThe navigation sensor is a multiplicative statistic and its hardness is concentrated exactly on semiprimes, sharpening barrier 6 to a statement about the divisor lattice.\n\nThe scan cost is dominated by the extreme divisor pair, and the sensor carries no more information than the least prime factor.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4361",
+    "priority_score": 0.5653161612013019,
+    "research_mode": "team",
+    "source_exp_id": "90e1e335",
+    "status": "available",
+    "timestamp": "2026-08-29T14:29:38.959819+00:00",
+    "title": "Divisor-Lattice Navigation Spectrum"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For a specified finite neural-state transition graph, assign each readout channel a topology generated by its distinguishable state subsets. Test whether adding a readout node strictly coarsens consensus exactly when that node excludes an open set shared by all previous readouts. A measured transition graph and readout table make this directly falsifiable by finite computation.",
     "domains": [
       "Combinatorics",
@@ -16338,6 +16335,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-27T20:32:09.301040+00:00",
     "title": "Window-Variance Correction for Sieve Yield Estimates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An oracle answering the sensor 1{gap <= B} at every threshold B reconstructs the factorisation. We conjecture that a single fixed threshold suffices, because multiplying N by small squares rescales the gap predictably, so binary search can be simulated by rescaling instead of by varying B.\n\nFor every fixed B >= 1 there is a polynomial-time algorithm that factors odd semiprimes using only queries of the form 'is gap(M) <= B' for integers M derived from N by multiplication by squares of small integers.\n\nFormalize the rescaling identity relating gap(N) and gap(t^2 N) for small t, then build the search in Lean on top of least_accepting_eq_gap.\n\nBarrier 6 becomes a completeness theorem: one bit of the navigation sensor is as hard as factoring.\n\nThe sensor family is strictly stronger than any single threshold, and the crediting framework must be indexed by B.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4363",
+    "priority_score": 0.5646073266234106,
+    "research_mode": "team",
+    "source_exp_id": "90e1e335",
+    "status": "available",
+    "timestamp": "2026-08-29T14:29:40.051352+00:00",
+    "title": "Single-Threshold Factoring Completeness of Sensor Oracles"
   },
   {
     "consumed_by_exp_id": "",
@@ -41950,14 +41962,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Adjoining the top member preserves a witness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "17477782",
     "description": "Prove `(Cantor, cantorDist)` is complete and totally bounded\n   (hence compact): every `AgreeTo`-class of radius `2\u207b\u207f` is covered by finitely many, and Cauchy\n   sequences stabilize coordinatewise. Then show the golden-mean subshift is a closed subset.",
     "domains": [],
     "id": "fd_2514",
+    "phase": "A",
     "priority_score": 0.4024509803921569,
     "research_mode": "team",
     "source_exp_id": "c760f6fc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:37.024398+00:00",
     "title": "Completeness / compactness"
   },
@@ -47245,5 +47258,17 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T09:04:14.153159+00:00",
     "title": "The balanced-side hypothesis is exactly a label-swap convention"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "the global structure correction has ensemble mean **exactly `1`** (both over\n  the residue data and, via the Chinese remainder theorem, averaged over\n  `N mod \u220fp`), so no `O(1)` smoothness edge can exist at any `u`;",
+    "domains": [],
+    "id": "fd_4366",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "062fc32a",
+    "status": "available",
+    "timestamp": "2026-08-29T14:30:02.707034+00:00",
+    "title": "the global structure correction has ensemble mean exactly `1`"
   }
 ];
