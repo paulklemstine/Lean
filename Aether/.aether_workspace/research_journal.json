@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2111d025",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after Paper 227 (exp 577 / verifyL7b formalisation)\n\nThe cycle just closed established four formal pillars:\n\n1. **Reciprocity-flip dichotomy** (`Catalog/Algebra/ReciprocityFlipDi",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-25T11:45:32",
-      "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED — H1 s"
-    },
-    {
       "cycle_id": "d59c6a1a",
       "domain": "Cryptography",
       "key_insight": "# Future directions — equal-volume peelings under a thickness budget\n\n## What this cycle established\n\nLet `shellRadius R d N k = R (1 - k/N)^{1/d}` be the equal-volume peeling of `B(0,R) ⊆ ℝ^d`\ninto `",
@@ -499,19 +489,19 @@
       "theorem_count": 82,
       "timestamp": "2026-08-29T14:30:10",
       "title": "FACT round-73 #4 — SCALE-SMOOTHNESS-DEVIATION: x²−N smoothness is random-level at u=6–8.5 (tightest "
+    },
+    {
+      "cycle_id": "f671dcbf",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — after the NET-92 KV-cliff cycle\n\nThis cycle added five self-contained Lean files to `Catalog/Logic/`:\n\n* `KVCliffCrowdingLaw.lean` — the crowding pigeonhole, the `SafeBits` crite",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 50,
+      "timestamp": "2026-08-29T18:30:40",
+      "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates t"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "560d610e",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — tropical Shtarkov sums of finite-state classes\n\nThe verified results of this cycle live in `Catalog/Tropical/Shtarkov/`:\n\n| file | content |\n|------|---------|\n| `Basic.lean` | `",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-20T13:11:32",
-      "title": "The finite-state class and its bound were constructed this cycle"
-    },
     {
       "cycle_id": "18b02a30",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 82,
       "timestamp": "2026-08-29T14:30:10",
       "title": "FACT round-73 #4 — SCALE-SMOOTHNESS-DEVIATION: x²−N smoothness is random-level at u=6–8.5 (tightest "
+    },
+    {
+      "cycle_id": "f671dcbf",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — after the NET-92 KV-cliff cycle\n\nThis cycle added five self-contained Lean files to `Catalog/Logic/`:\n\n* `KVCliffCrowdingLaw.lean` — the crowding pigeonhole, the `SafeBits` crite",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 50,
+      "timestamp": "2026-08-29T18:30:40",
+      "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates t"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1a774383",
-      "domain": "Probability",
-      "name": "flatExcess_eq",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "1a774383",
-      "domain": "Probability",
-      "name": "flatExcess_eq_composition_of_matched",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "1a774383",
-      "domain": "Probability",
-      "name": "composition_eq_zero_of_homogeneous",
-      "quality": 0.78
-    },
     {
       "cycle_id": "95a534e1",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "two_ne_zero_of_ne_two",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "f671dcbf",
+      "domain": "Logic",
+      "name": "block_scaling_is_bit_shift",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f671dcbf",
+      "domain": "Logic",
+      "name": "rescue_requires_16x_concentration",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f671dcbf",
+      "domain": "Logic",
+      "name": "block_rescue_at_net92_scale",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-29T14:30:10",
+  "last_updated": "2026-08-29T18:30:40",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "512ab986",
-        "quality": 0.85,
-        "theorems": 104,
-        "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-      },
-      {
         "cycle_id": "5e41571a",
         "quality": 0.82,
         "theorems": 67,
@@ -3513,6 +3507,12 @@
         "quality": 0.86,
         "theorems": 124,
         "title": "FACT round-91 #1 — J-FEATURE-SWEEP (exp 598): H0_CARRIER_OPEN — no j-arithmetic "
+      },
+      {
+        "cycle_id": "f671dcbf",
+        "quality": 0.78,
+        "theorems": 50,
+        "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-"
       }
     ],
     "MachineLearning": [
