@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5223d87b",
-      "domain": "Logic",
-      "key_insight": "# Future directions — dial capture ceilings and the `u ≈ 10` overdispersion carrier\n\nThe formalization in `Catalog/Logic/QRDialDispersionLaws.lean`,\n`Catalog/Logic/QRDialOrthogonality.lean`, `Catalog/",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-25T09:52:56",
-      "title": "FACT round-78 #2 — QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY — small-prime QR dial doe"
-    },
-    {
       "cycle_id": "d3d53c1e",
       "domain": "Algebra",
       "key_insight": "# Future directions — the residual certificate calculus\n\nThe cycle just completed established, with complete proofs:\n\n* the conjectured upper bound $\\max(1+K_1, 1+K_2)$ for parallel residual blocks in",
@@ -499,19 +489,19 @@
       "theorem_count": 125,
       "timestamp": "2026-08-29T02:13:13",
       "title": "FACT round-74 #3 — SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3"
+    },
+    {
+      "cycle_id": "6060f6d0",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — after the ORBIT-DIAL-CAP-TEST (Tropical cycle)\n\n## What this cycle settled\n\nFour formal files in `Catalog/Tropical/` (all 0 sorries) turn the experimental report\ninto theorems:",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 80,
+      "timestamp": "2026-08-29T02:13:31",
+      "title": "FACT round-74 #2 — ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor informati"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5b26e37d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Topology of Theorem Networks (cycle 1)\n\nThis cycle replaced four informal claims of the research thread by theorems, and in doing\nso refuted one of its readings.  What is now prov",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-20T08:57:36",
-      "title": "**Conjecture.** In a sparse random corpus with bounded expected document size an"
-    },
     {
       "cycle_id": "4b03d5cc",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 125,
       "timestamp": "2026-08-29T02:13:13",
       "title": "FACT round-74 #3 — SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3"
+    },
+    {
+      "cycle_id": "6060f6d0",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — after the ORBIT-DIAL-CAP-TEST (Tropical cycle)\n\n## What this cycle settled\n\nFour formal files in `Catalog/Tropical/` (all 0 sorries) turn the experimental report\ninto theorems:",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 80,
+      "timestamp": "2026-08-29T02:13:31",
+      "title": "FACT round-74 #2 — ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor informati"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "44bf5a41",
-      "domain": "Combinatorics",
-      "name": "dot_e3_e3",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "44bf5a41",
-      "domain": "Combinatorics",
-      "name": "dot_e3_y3",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "20511e4a",
-      "domain": "Pythagorean",
-      "name": "bootstrap_centred_sum_zero",
-      "quality": 0.78
-    },
     {
       "cycle_id": "20511e4a",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "halfIter_mono",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "6060f6d0",
+      "domain": "Tropical",
+      "name": "dialCost_one",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "6060f6d0",
+      "domain": "Tropical",
+      "name": "dialCost_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "6060f6d0",
+      "domain": "Tropical",
+      "name": "dialCost_exch",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-29T02:13:13",
+  "last_updated": "2026-08-29T02:13:31",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "9c680c24",
-        "quality": 0.78,
-        "theorems": 86,
-        "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a"
-      },
-      {
         "cycle_id": "8da3e793",
         "quality": 0.78,
         "theorems": 73,
@@ -4009,6 +4003,12 @@
         "quality": 0.72,
         "theorems": 58,
         "title": "FACT round-83 #2 — WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED — dial wei"
+      },
+      {
+        "cycle_id": "6060f6d0",
+        "quality": 0.78,
+        "theorems": 80,
+        "title": "FACT round-74 #2 — ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO pe"
       }
     ]
   }

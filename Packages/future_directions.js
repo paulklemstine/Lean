@@ -1936,37 +1936,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #4 \u2014 MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-deviation effectivity at toy scale (clean H0 honest negative at two scales: R\u00b2=0.0187 registered x=2^26 / R\u00b2=0.0785 scaled x=2^28 vs 0.8/0.5 bars; deviation field modulus-size-dominated, baseline OBS~log m R\u00b2=0.79) \u2014 MA-1 stays axiomatic, SIGN-BLIND scope disclosed"
   },
   {
-    "consumed_by_exp_id": "601f1720",
-    "description": "**FACT round-74 #3 \u00b7 exp 563 \u00b7 paper 212 \u00b7 seed 20260824 \u00b7 wall 2.0 s**\n\nResolves the hint-pricing tension between paper 138's linear no-synergy law and the rounds-70/71 \"sequential hints compound\" observation by isolating **adaptivity** (posterior conditioning between queries). n = 800 bitlen-40 semiprimes in two strata (600 BALANCED \u03c1 \u2208 [1, 1.01] / 200 UNBALANCED \u03c1 \u2208 [7.5, 8.5]), k \u2208 {0,1,2,3,6,9,12,14,16,20,24}, idealized truthful `p \u2264 t?` oracle, downstream Fermat-order scan priced in divisibility tests; arms ADAPT (bisection) / NONADAPT (uniform battery) / ADAPTQ/NONADAPTQ (draw-law-calibrated) / SHAM (cost gate).\n\n**Pre-registered verdict rules evaluated verbatim \u2192 COMPOUND-CONFIRMED-HALVING-FAIL** (the UNBALANCED stratum alone reads GEOMETRIC-COMPOUND-ISOLATION-CAPPED \u2014 every prediction passes there including the strict slope).\n\n**(1) Compounding real + superlinear + pure adaptivity (H1a/H1c CONFIRMED).** s_adapt(12)/s_adapt(3) = 165.2\u00d7 unbalanced / 20.8\u00d7 balanced (CIs exclude linear 4\u00d7); premium over the matched fixed battery at k = 12 = **239.5\u00d7 [220.1, 261.0]** unbalanced / **20.8\u00d7 [19.5, 22.3]** balanced, with r(1) = **1.00 EXACTLY** in all four pairs \u2014 nothing to adapt to at one query.\n\n**(2) Hard isolation cap, zero barrier events (H1b CONFIRMED).** 100% of N pinned at k = 20 = \u2308log\u2082 W\u2309; s(\u226520) = T\u2080 exactly (1072.43 balanced / 2.862e5 unbalanced); max s \u2264 T\u2080 \u00d7 1.01 everywhere \u2192 NO barrier event. Pin sits at the integer-bits cap above the prime-isolation bound \u2248 17 \u2014 barriers 4/8 UPHELD and now PRICED: external position info pays ISOLATION-COST per query.\n\n**(3) Halving slope (the FAIL clause).** Aligned A10 test: \u22120.6589 PASS unbalanced; \u22120.5836 FAIL balanced, 16% off \u2212ln2 (band-entry phase correlation; the width-halving law itself is EXACT: V2a 720 deterministic steps, V2b closed form vs dense grid 1.9%).\n\n**(4) HEADLINE SURPRISE (ledger catch A5).** Balanced semiprimes pin min(p,q) against \u221aN \u2192 a uniform FIXED battery carries **LITERALLY ZERO BITS** (s \u2261 1.00 exactly at every k \u2264 24 across all 600 N): non-adaptive batteries are waste-proof in the balanced stratum, and the adaptivity premium grows from exactly 1 into the hundreds.\n\n**Net economics (H3 CONFIRMED).** k_opt = 10/18 measured vs log\u2082((T\u2080\u22121)\u00b7ln2/c_q) = 9.54/17.60 predicted; s_net_max = 89.0 / 14245. SHAM gate PASSED both strata (never helps, never inflates).\n\n**RECONCILIATION \u2014 one pricing structure, two faces.** Paper 138's linear no-synergy pricing holds for NON-adaptive batteries (zero usable bits \u21d2 zero speedup, exactly as the balanced collapse shows); sequential ADAPTIVE hints compound superlinearly but saturate EXACTLY at the isolation-cost ceiling. New hint-taxonomy entry: adaptive sequential hints price geometrically up to isolation cost. This resolves the tension flagged when rounds 70\u201371 noted \"sequential hints COMPOUND\" vs paper 138's linearity.\n\nBarriers: #4/#8 upheld + priced; #2 untouched (idealized external channel by design); no barrier event \u21d2 no re-verification triggered. Validations V0/V1/V4/V5 all clean; zero-parameter theory curve wins fit selection in both strata.\n\nLedger catches, none adverse post-fix: A5 uniform-prior zero-bit collapse (smoke-caught pre-full-run; uniform curves retained as reference diagnostics per AMENDMENT-1); even-median bisection stall (lower-median fix); V2 MC-noise \u2192 deterministic dense-grid enumeration; V5 expectation-vs-bound constant fix; sham luck/inflation clause split.\n\nPaper: ResearchOutput/NewMathematics/212_SeqhintCompoundLaw.md.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3949",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T07:22:53.232489+00:00",
-    "title": "FACT round-74 #3 \u2014 SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3) = 165x unbalanced / 21x balanced, r(12) = 240x [220,261]) but saturate EXACTLY at the isolation ceiling (100% pinned at k=20, zero barrier events) while fixed batteries price linearly or carry literally ZERO bits in the balanced stratum \u2014 one pricing structure, two faces; paper-138 linearity reconciled"
-  },
-  {
-    "consumed_by_exp_id": "6060f6d0",
-    "description": "**FACT round-74 #2 \u00b7 exp 564 \u00b7 paper 211 \u00b7 seed 20260824 \u00b7 wall 76.4 s**\n\nThird face of the Berggren triplet-tree campaign: does the mod-N orbit's revealed residue set (exp555/paper 205's under-sampling) carry per-N factor information, and can an orbit dial beat the residues-cap-4/3 (barrier 4)? n = 800 bitlen-40 semiprimes (500 balanced / 300 ratio-4), moduli m \u2208 {3,4,5,7,8,16}, logN-decile-stratified permutation nulls, paper-132 filter accounting.\n\n**Pre-registered hypotheses (verbatim): H1** \"orbit revealed-set MI fully accounted for by ordinary residue-dial content; measured speedup \u2264 4/3 within CI; = matched-random dial\" \u2014 **CONFIRMED with one scope refinement. H2** (speedup > 4/3 surviving replication + sham + N-computability) \u2014 **gate false; no barrier event.**\n\n**Design amendments disclosed pre-run:** (1) the exp555 root-BFS never wraps mod N at bitlen-40 budgets (depth \u2248 9, coords ~10\u2074 \u226a N ~10\u00b9\u00b2) \u2192 root revealed set N-INVARIANT across all 800 N at all six moduli \u2014 the task premise (\"which subset varies with N\") fails for the root component; characterization arm only. (2) Live test = generic components (10 random Pythagorean seeds \u00d7 1500 nodes): supports saturate instantly (exactly m classes at every modulus, component length uniform), variation only in frequencies/orbit-length.\n\n**Information null (H1):** over 48 cells max |z| joint = +2.29 (topshare@16), max |z| conditional = +1.78; feature MI \u2264 0.09 bits vs ordinary residue-dial baselines I(N mod m; p mod m) = 1.00\u20133.00 bits. Nothing beyond ordinary residue content.\n\n**Filter law check at \u03b8 = \u00bd (sqrt-descending TD):**\n- RAND-MATCH 1.3387 CI[1.3008, 1.382] vs prediction 4/3 = 1.3333 \u2014 **cap law confirmed to ~0.4%**; SHAM co-inflation control clean CI[1.2717, 1.3579].\n- ORBIT reads 2.0000 CI[2.0, 2.0], failure rate 0.000 \u2014 BUT **paired z vs UNIV fixed dial = 0.0 EXACTLY**: it IS the parity skip (root-orbit legs always odd). An N-invariant universal exclusion table computable blind from N alone; exceeds 4/3 with zero per-N information \u21d2 constant-shave, NOT a barrier event.\n- NET-loaded: every arm < 1 (0.20\u20130.75) \u2014 paper-131 lesson replicated. Replication gate not triggered.\n\n**New scope note on barrier 4:** the cap law presumes P(p kept) = \u03b8 exchangeability; deterministic exclusions escape via P(p kept) = 1 \u2014 an N-invariant structural dial can exceed 4/3 without carrying any information. The cap bounds information-bearing dials; blind structural exclusions are worth exactly their constant factor.\n\n**Barriers:** #2 consistent; #4 UPHELD + scope note; #5 EXTENDED to mod-N orbit projections; #6 restated as primitive-triple congruences; #8 unchanged. N-computability audit recompute-identical 3/3 both arms (no factor in any code path).\n\nLedger: three catches all fixed BEFORE the full run (empty-walk BFS \u2014 children never enqueued, caught by timing probe; odd-multiplier population-split bug \u2014 empty train half; g-unbound \u00d72); none adverse post-run.\n\n**Campaign CLOSED.** With paper 199 (two-tree closure synthesis of the four-strength seal), paper 205 (modular dynamics), and paper 210 (oracle bound unrealized), ALL faces of the user's triplet-tree proposal are now measured. Paper: ResearchOutput/NewMathematics/211_OrbitDialCapTest.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3950",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T07:22:53.233965+00:00",
-    "title": "FACT round-74 #2 \u2014 ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor information (max |z| +2.29, MI \u2264 0.09 bits vs 1\u20133-bit residue dials); its 2.0\u00d7 read beats the 4/3 cap ONLY as the N-invariant parity skip (paired z vs fixed dial = 0.0) \u2014 constant-shave, not a barrier event; triplet-tree campaign CLOSED"
-  },
-  {
-    "consumed_by_exp_id": "46eb6b5a",
+    "consumed_by_exp_id": "90e1e335",
     "description": "**FACT round-74 #1 \u00b7 exp 565 \u00b7 paper 210 \u00b7 seeds 20260824/20260825 \u00b7 wall 55.8 s**\n\nQuestion: is the oracle navigation-sensor peak of paper 197 \u2014 I(1{d\u2264B}; b\u2081) = 0.479797 bits at B = 22758 (hit-rate 0.2053) \u2014 realizable by any N-computable query policy, or only by factor-conditioned posteriors (barrier 6)?\n\nFrame reused verbatim from exp549; budget = distinct information-bearing queries over a 295-item menu; discriminative policies fit on a labeled train split, evaluated test-time N-only; two seeds; MI bias-corrected.\n\n**Reproduction gate: PASS BIT-EXACTLY.** Seed-20260824 population regenerated from exp549's code path matches all 11 published fine-grid points to the last digit (peak delta = 0.000000). Fresh seed B: peak 0.4948 at the same B = 22758.\n\n**Pre-registered verdict (rules verbatim from exp565_prereg.json): H1 false, H2 not triggered \u2192 GAP-PARTIAL.**\n- Lenient pooled crediting: ADAPTIVE-NB/BATTERY realize 0.167\u20130.172 bits = **33.8\u201335.9% of peak**, credited on seed A only.\n- STRICT within-logN-strata crediting: **0% for EVERY N-only policy on BOTH seeds.**\n- No policy \u2265 50% anywhere; sham clean (max raw 0.0020 bits, credited 0).\n\n**Mechanism \u2014 disclosed post-hoc amendment A1 (documented separately from the pre-registered verdicts):** the entire lenient signal is the between-magnitude-strata population base-rate channel created by the population design (support-edge coupling in indep/unilog, q \u2264 2\u00b2\u00b2 truncation in ratio), read out by parabola-mirror ensembles: PARONLY-battery \u2248 full battery (0.161\u20130.167 vs 0.164\u20130.172); MODONLY residues \u2248 0 (0.0008\u20130.0032 \u2014 paper 81's seal holds jointly); pooled z +118..+128 stable but dead within strata (z_within32 \u2264 2.3); flat in B past ~64 queries (class exhausts at 295).\n\nDecisive split: within-strata geometric excess carried by the ORACLE = **0.3634\u20130.3687 bits = 73.5\u201376.8% of peak** (z 82\u201390); best N-only policy = **\u2264 0.0018 bits = 0.25\u20130.50%** of it. FULL-ORACLE anchor hint=b\u2081: 0.9563\u20130.9627 bits \u2248 200% of peak.\n\n**Answer: the peak remains UNREALIZED.** It splits into ~74\u201377% within-strata geometry + ~23\u201326% population-prior slice; realizing 1{d \u2264 B} requires d = M \u2212 isqrt(N) (median d = 215782 against menu exhaustion at 295 queries; a full Fermat scan at peak budget misses 79.5% of samples).\n\n**Barriers:** #6 CIRCULARITY CONFIRMED AND QUANTIFIED (gap = 73\u201377% of peak \u2014 first quantified circularity measurement). #2 does NOT seal b\u2081 a priori (p\u2194q-symmetric via max/min; residue null EMPIRICAL, extends paper 81 to joint NB resolution). #4/#5 consistent. #1/#3/#7/#8 unengaged.\n\nLedger: one disclosed amendment cycle, none adverse; pre-registered rules still evaluated verbatim. Honest limit: the ~24% between-strata slice is a property of this lab population's size-ratio coupling, not of semiprimes generally.\n\nThis closes the \"unrealized 0.48-bit oracle bound\" face of the Berggren triplet-tree \u00d7 energy-spectrum campaign (rounds 70\u201372, papers 192\u2013197) \u2014 a strengthening of closure, not a breakthrough. Paper: ResearchOutput/NewMathematics/210_OracleRealizationGap.md.\n",
     "domains": [
       "Novelty"
@@ -1981,47 +1951,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-74 #1 \u2014 ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-computable policy (strict crediting 0% both seeds); barrier-6 circularity quantified at 73-77% of peak"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "062fc32a",
     "description": "Round-73 #4, exp 562, status 04_final_time_capped. **RANDOM-AT-SCALE.** First direct measurement of the standing directive's scale-smoothness frontier cell (u\u22656), the properly-controlled redo of round-26 #3's underpowered SUBEXP-STRATUM attempt: is x\u00b2\u2212N's B-smoothness (B=1000) different from size-matched randomness at u = log v/log B in {5,6,7,8}? Controls exactly histogram-matched on (bitlen, mantissa-octant); shared gcd-chain primorial code path both populations; assert pipeline 844 cases incl 24 adversarial vs exhaustive strip, 0 mismatches; ~1.49e9 candidates tested PER ARM across bins; 4000 N-clusters/bin; cluster bootstrap n=2000.\n\nResult r(u) = p_cand/p_ctrl: 1.011 [0.947,1.075] @ u\u22485.96; 0.949 [0.783,1.152] @ 6.95; 0.900 [0.455,1.700] @ 7.93; 1.200 [0.500,3.000] @ 8.26 \u2014 ALL CIs cover 1. Trend slope +0.036 log-r/u, CI [\u22120.255,+0.345], p=0.831 \u2014 FLAT. Tightest 95% bound |r\u22121| \u2264 0.2168 (bin u=6). All pre-stated deviation rules FALSE \u2192 RANDOM-AT-SCALE.\n\nSecondary structure (real, confined to the low-u face): N-level overdispersion D=1.61 [1.50,1.73] vs Poisson PERSISTS at bin 5 then DIES (~1.00 by bins 7\u20138); QR-dial grip decays with u: Spearman(per-N rate, QR frac) 0.32 (perm p=7e-4) \u2192 0.04.\n\nCross-check vs paper 130: its ratios 0.88\u20130.91 (u<4.75, scales to 2^44) were attributed to a finite-x Dickman correction SHARED WITH CONTROLS ('relation pool ensemble-equals unrestricted random'). This experiment extends that random-pool claim to u \u2264 8.5 \u2014 CONSISTENT, no novelty claimed against it. Honest placement: directly on the asymptotic-goal frontier; NULL within bound |r\u22121|\u22640.217 \u2014 no O(1) smoothness edge from quadratic-polynomial structure at these scales. Truncation disclosed: N\u22642^80 with x\u22644\u221aN tops out near u\u22488.5; production-scale u\u22659 stays open, as does why the dispersion dies between u\u22486 and 7. Time-capped: bins 7/8 event counts tiny (18v20, 12v10), CIs wide.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp562_scale_smoothness.py + exp562_result.json.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3952",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-24T07:22:53.236958+00:00",
-    "title": "FACT round-73 #4 \u2014 SCALE-SMOOTHNESS-DEVIATION: x\u00b2\u2212N smoothness is random-level at u=6\u20138.5 (tightest bound |r\u22121|\u22640.217); per-N clustering and QR dial both die above u\u22487"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-73 #3, exp 561. **BATCH-WINS-TESTING.** Product-tree batch smoothness-testing vs solo trial division at fixed B=100, bitlen 40, pools k in {1,8,64,512}: best delta +0.104 (flat op model, k=512); batch beats solo at EVERY measured pool size in the flat model (no crossover below solo). The WORD model REVERSES at large k (delta \u221262.6 at k=512 \u2014 big-int intermediates dominate); word-model crossover vs solo at M* \u2248 1715 candidates. Exact-match audit PASS: batch-detected smooth set == per-item trial division on 500/500 samples (tree-vs-trial, direct-vs-trial, vector: 0 mismatches). E1 bound quantified: solo TESTING share of per-factor ops = 11.56%, so the saving is capped there even if testing were free \u2014 realized +0.104 sits just under. Finding phase strictly per-N (rho identical across arms by construction; qs_splits_total = 0 at bitlen 40/FB100 \u2014 yield far below quota).\n\nHonest placement: constant-shaving on a KNOWN method (batch smoothness testing is standard QS/NFS machinery, barrier 8) \u2014 engineering calibration of the method stratum, not an asymptotic result; zero class movement. Deployment caveat: GMP-level constant factors flip the sign past k\u22481715 candidates.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp561_batch.py + exp561_result.json.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3953",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-24T07:22:53.238419+00:00",
-    "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
-  },
-  {
-    "consumed_by_exp_id": "1d522b88",
-    "description": "Exp 567 \u00b7 paper 214 \u00b7 assessment v321 \u00b7 script ResearchOutput/scripts/2026-08-24-round74/exp567_scale_u9_lift.py \u00b7 seed 20260824 \u00b7 honest partial (disclosed).\n\n**Question.** Does x\u00b2\u2212N stay size-matched-random in smoothness at u \u2208 [9, 11.x] \u2014 the approach zone of the Dickman leading-term regime (~u \u2248 14.75) \u2014 where raw B-smoothness testing starves (\u03c1(9)=1.0e-9 \u2026 \u03c1(11)=6.5e-13)? Frontier item: scale-smoothness deviations u \u2265 6\u201314.\n\n**Design.** Balanced semiprimes bitlen {96,104,112} \u2192 u-bands {9,10,11}, v=(s+j)\u00b2\u2212N, j \u2264 3s; LPF-CDF cut ladder {500,1e3,1e4,1e5,1e6} via cumulative segment-primorial gcd chains batch-amortized by product-tree remainder descent (12\u00d7: 87\u21927 \u00b5s/value); exact (bitlen, mantissa-octant) matched controls, shared code path; per-N cluster bootstrap + built-in A/B split-halves. Pre-registered verbatim: H1 r_cut(u)=1 everywhere; H2 maximal-skepticism confirmation protocol; L1-vs-L2 overdispersion fork; B=500/1000 cuts pre-declared as ~zero-yield continuity carriers.\n\n**Status: HONEST PARTIAL.** An intermittent multiprocessing throughput collapse at full geometry (root-caused via preserved faulthandler dump: ready()-starved feed loop + slow completions) ate the headline runs; statistical weight rests on the completed pilot (band 9, bitlen 96, 24-N pool, 35.7M cand+ctrl pairs); three-band leg shipped at 45k pairs/band under the time-cap convention.\n\n**Achieved u:** band 9 [9.83,10.13] mean 9.89; band 10 [10.64,10.94]; band 11 [11.44,11.74]. No coverage in (10.94,11.44) \u2014 integer u=11 sits in a half-notch gap of grid geometry (disclosed pre-run).\n\n**Result \u2014 VERDICT RANDOM-EXTENDS / NULL-WITH-TENSION, deviation status NONE:**\n- Primary LPF-CDF-1e6 cut, band 9: r = 0.9468, cluster-boot CI [0.8630, 1.0389] (12,493 vs 13,195 events); splits A 0.939 / B 0.955.\n- 1e5 cut: r = 0.864, CI [0.7190, 1.0302] (667 vs 772); splits 0.848 / 0.881.\n- Three-band leg: every CI covers 1 (band 10 @1e6 r=2.0 [0.25,7.0] on 4-vs-2; band 11 kc=2 vs kctrl=0 undefined). Tightest |r\u22121| bound 0.137 (pilot primary).\n- B=500/1000: exactly zero events everywhere, as designed.\n- H2 never armed \u2014 no CI excludes 1 in any cell; per pre-registration this is a null.\n\n**Tension banked, NOT claimed:** points run 5\u201314% below 1 at both powered cuts, direction-stable across split-halves and cuts. Flagged as motivation for a future higher-power run (~30\u00d7 more pairs at the 1e5 cut). Explicitly not a discovery per pre-registration.\n\n**OVERDISPERSION AMENDMENT to paper 209's secondary claim** ('D=1.61 persists at bin 5 then DIES by u\u22487; residue-dial correlation gone'): at u=9.85 under the healthy-rate 1e6 lens, exposure-corrected D_cand = **28.87 [14.27, 44.08]** vs D_ctrl = 1.84 [0.90, 2.84] (exposures flat \u00b10.14%) \u2014 per-N clustering is ALIVE at u \u2248 10; Spearman(per-N rate, qr_frac) = 0.533 (perm p 0.006) @1e4 and 0.437 (p 0.033) @1e6 where 209 read ~0.04 'gone'. What died by u \u2248 7 was the B-smoothness INDICATOR starving (rate/threshold artifact, L1 direction), not clustering \u2014 consistent with paper 136's QR-bite = per-N variance law. Caveat recorded honestly: the formal L1 gate required \u22652 powered bins; only one survived the shrinkage, so this stands on the pilot's internal contrast as directionally confirmed / formally unmet.\n\n**Ledger catches (all disclosed):** mixed-segment checker bug gave 39/40 false mismatches \u2014 shipped tester proven EXACT vs exhaustive zero-early-exit strip of all primes \u22641e6 (368 cases full / 218 pilot incl. deep-window quadratics, 0 mismatches); backpressure watchdog false-trip terminated one attempt as 'calibration hung'; faulthandler SIGUSR1 re-raise killed one instrumented rerun; throughput collapse shrank the headline run from ~130M-value/band quotas to 45k pairs/band (an interim sub-powered write had flashed DEVIATION-UNCONFIRMED before supersession; canonical artifacts are final).\n\n**Barrier framing:** no barrier breached \u2014 a null here STRENGTHENS papers 130/209 randomness into new territory; variance-side accounting upgraded (variance N-covariant, means matched); constant-shaving risk none.\n\nArtifacts: exp567_scale_u9_lift.py, exp567_pilot_result.json (powered leg), exp567_result.json (three-band), exp567_full.log / exp567_pilot.log / exp567_smoke.log, exp567_stderr.txt (faulthandler snapshots from a healthy run, not a crash).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3964",
     "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-08-24T09:06:21.857114+00:00",
-    "title": "FACT round-74 #5 \u2014 SCALE-U9-LIFT: randomness extends through u\u224811 toward the Dickman leading-term regime (H1-consistent null with sub-1 tension); paper 209 D-death amended to indicator starvation"
+    "timestamp": "2026-08-24T07:22:53.236958+00:00",
+    "title": "FACT round-73 #4 \u2014 SCALE-SMOOTHNESS-DEVIATION: x\u00b2\u2212N smoothness is random-level at u=6\u20138.5 (tightest bound |r\u22121|\u22640.217); per-N clustering and QR dial both die above u\u22487"
+  },
+  {
+    "consumed_by_exp_id": "9b428c01",
+    "description": "Round-73 #3, exp 561. **BATCH-WINS-TESTING.** Product-tree batch smoothness-testing vs solo trial division at fixed B=100, bitlen 40, pools k in {1,8,64,512}: best delta +0.104 (flat op model, k=512); batch beats solo at EVERY measured pool size in the flat model (no crossover below solo). The WORD model REVERSES at large k (delta \u221262.6 at k=512 \u2014 big-int intermediates dominate); word-model crossover vs solo at M* \u2248 1715 candidates. Exact-match audit PASS: batch-detected smooth set == per-item trial division on 500/500 samples (tree-vs-trial, direct-vs-trial, vector: 0 mismatches). E1 bound quantified: solo TESTING share of per-factor ops = 11.56%, so the saving is capped there even if testing were free \u2014 realized +0.104 sits just under. Finding phase strictly per-N (rho identical across arms by construction; qs_splits_total = 0 at bitlen 40/FB100 \u2014 yield far below quota).\n\nHonest placement: constant-shaving on a KNOWN method (batch smoothness testing is standard QS/NFS machinery, barrier 8) \u2014 engineering calibration of the method stratum, not an asymptotic result; zero class movement. Deployment caveat: GMP-level constant factors flip the sign past k\u22481715 candidates.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp561_batch.py + exp561_result.json.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3953",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-24T07:22:53.238419+00:00",
+    "title": "FACT round-73 #3 \u2014 BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools"
   },
   {
     "consumed_by_exp_id": "",
@@ -4091,38 +4048,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize social credit systems as continuous maps from a population to a totally ordered set. Prove that any such map creates fixed-point attractors in the social graph topology. Show that under reasonable assumptions, credit scores converge to a Cantor set attractor where small perturbations cause phase transitions.",
-    "domains": [
-      "Novelty",
-      "Bridges",
-      "Computation"
-    ],
-    "id": "seed_262",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Social Credit Scores as Topological Invariants"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensions.",
-    "domains": [
-      "Novelty",
-      "Geometry",
-      "Topology"
-    ],
-    "id": "seed_268",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
     "consumed_by_exp_id": "",
@@ -12620,14 +12545,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4fbe3435",
     "description": "Investigate the sequence Initial term of sequence An. with terms 0,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,2,1,0,1,1,1,1,1,2,1,0,1,2,0,1,0,2,2,2,1,2,1,1,2,1,0,1,1,1,0,1,. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [],
     "id": "fd_3708",
+    "phase": "A",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:31214",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:43.217997+00:00",
     "title": "OEIS sequence: Initial term of sequence An."
   },
@@ -13106,6 +13032,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The wheel dials of modulus M give speedup M/phi(M) with zero per-target information. The conjecture pins their growth: the tropical weight of any information-free dial applicable in time T is log log T + O(1), so blind structural exclusions are worth a doubly-logarithmic amount, never a polynomial factor.\n\nlog(M/phi(M)) = log log M + gamma + o(1) along primorials M, hence sup over wheels applicable in time T of the tropical weight equals log log T + O(1).\n\nFormalise sum over p <= y of log(p/(p-1)) and compare with Mertens' third theorem; check the constant numerically against the primorial table in ComputationalEvidence.md.\n\nBarrier 4 is complemented by a doubly-logarithmic ceiling on the information-free regime, closing the classification of dial regimes.\n\nSome sparse family of structural exclusions grows faster than the wheel family, which would be a new sieving primitive.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "fd_4351",
+    "priority_score": 0.6714375000000001,
+    "research_mode": "team",
+    "source_exp_id": "6060f6d0",
+    "status": "available",
+    "timestamp": "2026-08-29T02:13:22.181206+00:00",
+    "title": "Mertens Ceiling for Blind Structural Sieving"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The first- and second-order hacking coefficients proved in this cycle are the covariance and the skew covariance. Conjecture: the k-th order coefficient is the mixed cumulant kappa_k(r,...,r,f)/k!, so safety to order beta^-k is orthogonality of the audit statistic to the first k reward cumulant tensors. This would turn ad-hoc audit design into a linear-algebraic orthogonality condition.\n\nFor |r| <= R <= beta there are constants C_k with |E_{pi_beta} f - E_p f - sum_{j=1}^{k} kappa_j(r,...,r,f)/(j! beta^j)| <= C_k (R/beta)^{k+1} sigma_p(f), where kappa_j is the mixed cumulant with j-1 copies of r and one copy of f.\n\nFormalize the k = 3 case first: identify the coefficient by expanding e^{r/beta}/Z to third order and prove the oscillation bound |tilt - cubic model| <= C (R/beta)^4 with the same Taylor-plus-Cauchy-Schwarz route used in SecondOrder.lean.\n\nAudit statistics can be certified safe to any prescribed order by finitely many orthogonality checks against reward cumulants.\n\nThe expansion coefficients are not cumulants beyond order two, which would mean higher-order hacking is not captured by moment orthogonality and needs a genuinely non-polynomial invariant.",
     "domains": [
       "Algebra"
@@ -13243,6 +13183,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T17:00:33.162683+00:00",
     "title": "Optimality of the Scale-k Residue Sieve"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The measured halving slope failed the -ln 2 test in the balanced stratum while the width-halving law is exact. The exact closed form halfIter k w = ceil(w / 2^k) makes the discrepancy a ceiling-phase artefact whose size is computable, predicting a shortfall that vanishes for large windows.\n\nFor w uniform on [W/2, W), the expectation of log(ceil(w / 2^k)) equals log w - k log 2 + Theta(2^k / W), so the fitted slope is -ln 2 (1 + Theta(2^k/W)); at the experiment's grid this yields a 10-20% shortfall for the balanced stratum and a negligible one for the unbalanced stratum.\n\nFormalise the error term of halfIter_eq_ceilDiv, sum it over a dense grid of w with Finset.sum, and compare to the measured -0.5836 / -0.6589 slopes.\n\nThe A10 FAIL clause is an artefact of the discretisation, and the halving law can be reported as universally exact.\n\nA genuine phase correlation between factor position and band entry exists, which would be a new structure in the distribution of min(p,q).",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4348",
+    "priority_score": 0.6713870967741937,
+    "research_mode": "team",
+    "source_exp_id": "601f1720",
+    "status": "available",
+    "timestamp": "2026-08-29T02:12:58.247165+00:00",
+    "title": "Ceiling-Phase Correction to the Minus-Log-Two Slope"
   },
   {
     "consumed_by_exp_id": "",
@@ -16088,6 +16042,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 1 shows that beating 4/3 requires soundness strictly above retention. This direction quantifies the price in bits: the soundness excess should be controlled by the square root of the mutual information between the target and the dial's kept set, making the cap an information inequality rather than an accounting identity.\n\nFor a uniform prior on the candidate pool and a kept set K(N) determined by N, s - theta <= sqrt(I(N; K)/2); consequently any dial with speedup above 4/3 has I(N; K) >= 2 (1-2theta)^4 / (16 (1-theta)^2).\n\nProve the total-variation form of the excess, then apply a formalised Pinsker inequality to the finite mutual information of Tropical.OrbitDialInformation.\n\nBarrier 4 upgrades from a cost statement to an information-theoretic obstruction, applying to every dial family at once.\n\nThere exist low-information, high-soundness dials on uniform priors, which would be a genuine new factoring primitive.",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_4352",
+    "priority_score": 0.5647412683708043,
+    "research_mode": "team",
+    "source_exp_id": "6060f6d0",
+    "status": "available",
+    "timestamp": "2026-08-29T02:13:22.689802+00:00",
+    "title": "Pinsker Price of Super-Exchangeability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every McKay-Thompson head coefficient should be derivable, like the 1A entry proved here, from an eta-quotient q-expansion checked by the Lean kernel. The pipeline uses only unit-ness of eta products in Z[[X]], never modularity. Completing it would convert the 194-entry head table from quoted data into verified data.\n\nFor each of the 194 conjugacy classes g of the Monster there is an integral exponent vector r with (prod_d eta(d tau)^{r_d}) + const having q-coefficient c_g(1), and the truncation identity mod q^8 is kernel-decidable.\n\nDefine etaQuotient for an arbitrary exponent vector, reprove unit-ness and truncation stability by the existing AgreeBelow calculus, and discharge class 2A end to end before looping over all classes.\n\nThe head conjecture becomes a single decide over 194 verified integers via head_check_iff.\n\nThe classes without eta-quotient hauptmoduln isolate where genuinely modular input is unavoidable.",
     "domains": [
       "Algebra",
@@ -16115,6 +16084,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T13:18:10.421794+00:00",
     "title": "Lattice Correction to the Tilt-Only Predictor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The root component reveals exactly two residue triples mod 4 and small explicit sets mod 3,5,7,8,16. The conjecture is that these are precisely the congruence-admissible triples: the tree reveals everything the local conditions allow, so the orbit dial can never contain more than the ordinary residue dials do.\n\nFor every modulus m the revealed set of the Berggren root component equals the set of (a,b,c) mod m with a^2+b^2 = c^2, a odd, 4 | b, 3 | ab, modulo the tree's symmetry group.\n\nFor each small m, enumerate both sets by decide and compare; then prove transitivity of the Berggren action on the primitive conic mod m for m coprime to 6.\n\nBarrier 5 extends to all mod-N orbit projections with a uniform proof, closing the triplet-tree campaign structurally.\n\nSome modulus exhibits an under-sampled orbit, reopening the question of orbit-specific residue content.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4353",
+    "priority_score": 0.5647238473759407,
+    "research_mode": "team",
+    "source_exp_id": "6060f6d0",
+    "status": "available",
+    "timestamp": "2026-08-29T02:13:23.197625+00:00",
+    "title": "Congruence Closure of the Berggren Revealed Spectrum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Stacking dials adds log-speedups and hedging takes minima, so dials live in Tropical R. The conjecture is that the exchangeable dials form the unique maximal bounded sub-semiring, so that barrier 4 is an algebraic property of the dial semiring rather than a feature of one cost model.\n\nThe set of achievable tropical weights is a sub-semiring of Tropical R; the weights of exchangeable dials form its unique maximal bounded sub-semiring, equal to the window [0, log(4/3)], and every soundness-preserving endomorphism acts by a positive scalar on weights.\n\nDefine the dial semiring on top of tropWeight, verify closure under stack and hedge, and characterise bounded sub-semirings by an extremality argument.\n\nThe two regimes (information-bearing and structural) are algebraically separated, giving a coordinate-free formulation of barrier 4.\n\nThere are exotic dial compositions outside the semiring, meaning the accounting is not compositional and each dial family needs separate treatment.",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_4354",
+    "priority_score": 0.5647238473759407,
+    "research_mode": "team",
+    "source_exp_id": "6060f6d0",
+    "status": "available",
+    "timestamp": "2026-08-29T02:13:23.709101+00:00",
+    "title": "Tropical Dial Semiring and Cap-Preserving Morphisms"
   },
   {
     "consumed_by_exp_id": "",
@@ -16760,6 +16759,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-28T05:25:41.474583+00:00",
     "title": "Optimal Bit Ladder for Mixed-Precision Caches"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Linear pricing for fixed comparison hints, geometric pricing for adaptive ones, r^k for r-ary oracles, and multiplicative pricing for coprime residues are all instances of one counting bound. The conjecture makes the equality case a characterisation of the channels in which adaptivity buys nothing at all.\n\nFor a hint channel given by a family Q of question maps into a finite alphabet A, the number of candidates separable by k queries is at most |A|^k, with equality attainable non-adaptively if and only if Q contains k questions whose joint answer map is injective on the window; in that case adaptivity yields no improvement for any k.\n\nGeneralise card_image_transcriptG_le to an arbitrary question family, prove the two directions of the equivalence, and test on the comparison channel (fails, premium 2^k/(k+1)), the bit-test channel (holds, premium 1) and the residue channel (holds).\n\nA single conservation law replaces the ad hoc hint taxonomy, and adaptivity premia become computable from channel structure alone.\n\nAdaptivity can outperform every non-adaptive selection even in channels with injective joint answer maps, implying genuine conditioning gains beyond counting.",
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_4349",
+    "priority_score": 0.5640768584282383,
+    "research_mode": "team",
+    "source_exp_id": "601f1720",
+    "status": "available",
+    "timestamp": "2026-08-29T02:12:58.874133+00:00",
+    "title": "Transcript Conservation and the Worthlessness of Adaptivity"
   },
   {
     "consumed_by_exp_id": "",
@@ -27961,6 +27975,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-28T18:43:50.019176+00:00",
     "title": "Depth-Six Gate for Direction-Stable Observations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Charge each dial its own evaluation cost kappa per candidate and re-derive the filter accounting. The conjecture is that the exchangeable cap degrades to 1/(kappa + 3/4) and that a critical overhead kappa* = 1/4 makes even the deterministic parity dial net-negative. This explains, deterministically, why every NET-loaded arm of the experiment read below 1.\n\nFor loadedSpeedup s theta kappa = (kappa + 1 - s + s*theta)^{-1}, one has loadedSpeedup theta theta kappa <= 1/(kappa + 3/4) for all theta, and loadedSpeedup 1 (1/2) kappa < 1 iff kappa > 1/2.\n\nExtend OrbitDialCap.dialCost with an additive overhead term and rerun the completed-square argument; verify the critical constants by norm_num.\n\nThe barrier-4 scope note becomes quantitative: structural shaves pay for themselves only below an explicit overhead threshold.\n\nThe unloaded cost model is not the right idealisation and the NET-loaded readings need a separate mechanism.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4350",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6060f6d0",
+    "status": "available",
+    "timestamp": "2026-08-29T02:13:21.676370+00:00",
+    "title": "Loaded Cap Law with Dial Overhead"
   },
   {
     "consumed_by_exp_id": "",
@@ -46164,15 +46192,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hamming schemes"
   },
   {
-    "consumed_by_exp_id": "ea5f6fbd",
+    "consumed_by_exp_id": "",
     "description": "The odd-leg triples here are the \"consecutive\n   leg\u2013hypotenuse\" family. Investigate whether a modified greedy rule enumerates\n   other primitive-triple families (e.g. consecutive-leg triples via Pell).",
     "domains": [],
     "id": "fd_2507",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "b648d8e5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:24:34.696244+00:00",
     "title": "Higher Pythagorean analogues"
   },
