@@ -1870,16 +1870,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-73 #2 \u2014 ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; skip-flip wins deployment (paper 207)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df74e96c",
     "description": "Round-76 #1 THEORY deliverable (no new experiment id; papers-only bump convention as in paper 219: experiment count unchanged at 562, max id 572; papers -> 221; assessment v327 -> v328).\n\nFalsification + replacement of GAP-L7 from paper 219's lemma ledger.\n\n**Action space formalized**: REORDER-class policy Pi emits enumeration a_k = f(k,N) of I(N) with uniformity (one computable f for all N), test-blindness (order commits ex ante; comparison queries only at T2 pricing), polylog overhead charging. N-independent orders satisfy all three \u2014 the corner L7-as-drafted missed. Clause 3 unrestricted is vacuous; under polylog it needs a sublinear-time factoring separation (L7-e, likely permanent).\n\n**Failure 1 \u2014 prior-shape channel Lambda**: static-order optimality is mass-sorting by divisor-mass; whether that sort is sqrt-descending is a POPULATION property. Hard-balanced generators (q<2p): bottom-heavy tilt z=0.4095\u20130.4148 vs analytic 0.414; window-ascending beats descending **1.58x\u00b10.03** (BAL_prime 1.5785\u00b10.029, BAL_intsnap 1.6114\u00b10.033, n=2400 each; analytic two-stage 0.138v/0.219v=1.587). The attempt's quoted 1.71\u20131.91 was its own n=150 sampling inflation \u2014 its ANALYTIC prediction 1.59 was right all along. Sign-flip law: crossover **E[\u221ar]=2/(1+1/\u221a2)=1.1716**; narrow bands top-heavy z=0.6466, descending extremal (Lambda=1.0 argmin win_desc, win_asc S=0.5682); P137 pool z=0.5588 between.\n\n**Failure 2 \u2014 interaction term**: sigma\u2218delta factorization definitional/vacuous (singleton blocks); coupled residue orders gain only off-MLR as prior-shape leakage.\n\n**Corrected master inequality L7'**: S(Pi) <= (4/3)\u00b7min(1/mu_eff, 2^k_bits)/Lambda(pop), mu_eff structural keep-fraction. **ZERO violations** across all policy arms x four pools (BAL_prime/BAL_intsnap n=2400, BAL_narrow n=1600, P137 n=500; verifier recomputed incl. hybrid filter x reorder stress arm). Wheel calibration hits the T1 protocol-A law exactly: mu=phi(30)/30=4/15 => predicted 30/phi(30)=3.750, measured 3.7331\u20133.7496 (headline 3.741 vs 3.750), gap 0.25\u20130.31%. CAVEAT load-bearing: pure-permutation cells satisfy the cap tautologically at mu_booked=1; hybrid window+wheel reaches S=4.06 on P137 vs a 1.77 cap if mu booked 1 \u2014 structural mu extraction (L7-d) makes the cap non-vacuous.\n\n**Witness corrections (ledger items)**: Jacobi witness RETRACTED \u2014 (N|x)=0 identically at x=p since N\u22610 mod p (100% draws, jacobi_p_is_zero=1.0; promoted share among coprime 0.5036/0.5015 fair coin): algebraic degeneracy measuring 'p divides N', not prior shape. Replaced by **keyed-vs-fixed mod-3 control**: N-keyed vs fixed-key promotion statistically identical (S 0.6366/0.6537 BAL_prime, 0.684/0.660 P137), hit-enrichment \u22481/2 BOTH arms \u2014 residue couplings carry ZERO information; apparent gains are prior-shape leakage on non-MLR marginals only (factor-blind law replicated with proper control; strengthens papers 130/136). exp570 early-fire transfer bounded honestly: early-fire is an ECM completion law, TD has none \u2014 what transfers is front-loading => head-domination, NOT sqrt-descending dominance without the centering axiom (surrogate K=4096: front-at-\u221aN desc 948 < aligned 1493 < naive 3149; front-at-low-end flips; ladder-aligned \u2248 descending S=0.990, ladder-naive collapses 0.27).\n\n**Paper 137 REFINED not contradicted**: verifier replicated descending winning on 137's own pool \u2014 trunc_asc S=0.9278 i.e. asc/desc=1.078x vs recorded 1.08x; window policy UNDEFINED on 21.6% of draws (win_asc_miss_frac=0.216). Lambda-dominance ONLY under hard q<2p balance; deployable gains require verifying the deployed generator enforces balance first (policy undefined otherwise).\n\n**Status**: L7' PROVEN-SKETCH (zero-violation finite audit + classical analytic core). Ranked lemmas: **L7-a HIGHEST VALUE next step (hours): measure the DEPLOYED generator's r-law and restate L7' with measured Lambda_lab** (without it Lambda is unmeasured and the MLR premise unchecked); L7-b exchange theorem write-out; L7-c master-inequality proof from touch-floor accounting; L7-d structural mu_eff/k_bits extraction (load-bearing NOW); L7-e unconditional factor-blindness of polylog-computable f (open, likely permanent \u2014 adopt hardness-relative or oracle-relativize).\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/ \u2014 gapL7_extremality.md (post-revision), gapL7_check.py/.json (author first pass n=150/pop, seed 20260824, 0.99 s), verifyL7_sim.py/verifyL7_sim_out.json (independent verification set, re-derived from scratch, no code reuse, distinct seeds; n=2400/2400/1600/500 four pools), verifyL7_unif.py (uniform proxy cross-check: asc ~2.13 outright, win_asc undefined on most draws). Paper: ResearchOutput/NewMathematics/221_L7Falsification.md.\n\nNo breakthrough claimed: falsification-and-replacement inside the barrier map; barrier-4 positional stratum gains a measurable sign-flipping channel, residue cap 4/3 untouched.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3986",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T11:45:45.217604+00:00",
     "title": "FACT round-76 #1 \u2014 GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' \u2014 extremal order = population mass-sort (window-ascending beats descending 1.58x\u00b10.03 n=2400; sign-flip crossover E[\u221ar]=1.1716); master inequality S \u2264 (4/3)\u00b7T1-cap/\u039b zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) \u2192 keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078\u00d7 vs 1.08\u00d7); L7-a measure deployed generator tilt named next"
   },
@@ -2264,20 +2265,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle b50cc5ce (Q=0.850), which proved 21 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Compute the Levi-Civita connection and Gaussian curvature of a concrete finite-support model. Constant negative curvature should be treated as a separate claim, not inferred from exponential sensitivity.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_b50cc5ce_331b5424",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "b50cc5ce",
-    "status": "available",
-    "timestamp": "2026-08-30T12:55:29.031428+00:00",
-    "title": "Deepening: Test curvature only after identifiability"
   },
   {
     "consumed_by_exp_id": "",
@@ -3938,21 +3925,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "seed_381",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
   {
     "consumed_by_exp_id": "",
@@ -44499,14 +44471,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Score variance controls drift"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "898d17cb",
     "description": "The constant in `ptx_no_starvation` cannot be improved beyond a factor\n   of `2`: there are instances with `q y \u2264 2\u03b3 d y / (\u03b2 log (1/p y) + M + \u03b3 \u2212 r y)`.",
     "domains": [],
     "id": "fd_1660",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "9e83a721",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T03:10:25.970261+00:00",
     "title": "The floor is sharp"
   },
