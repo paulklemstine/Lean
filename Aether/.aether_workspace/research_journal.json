@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "128c5007",
-      "domain": "Computation",
-      "key_insight": "# Future directions — binning-free geometry of window features\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What this cycle\nestablished (all machine-checked, 0 sorries):\n\n*",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-08-25T16:02:03",
-      "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE GEOMETRIC WINDOW FEA"
-    },
-    {
       "cycle_id": "4c991400",
       "domain": "Shared",
       "key_insight": "# Future Directions — Matrix-level modular action (Phase A, v19c)\n\nThis cycle established, in `Catalog/Shared/ModularCayley/MatrixModularAction.lean`:\n\n* translations `transMat t = !![1,t;0,1]` as an",
@@ -499,19 +489,19 @@
       "theorem_count": 76,
       "timestamp": "2026-08-29T21:45:38",
       "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of th"
+    },
+    {
+      "cycle_id": "c9c85c67",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — after the exp 555 formalisation\n\nThis cycle turned the three experimental findings of exp 555 into theorems:\n\n1. **Trial-division class (`α = 1`).**  In the finite sampling model",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-30T00:21:52",
+      "title": "FACT round-72 #5 — MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-sl"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d37c9a15",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Neurosymbolic RLHF (PPO-ptx) research thread\n\nDerived from the analysis and adversarial review of this cycle.  Each\nconjecture is falsifiable, formalisable in the same finite fra",
-      "quality_score": 0.85,
-      "sorry_count": 5,
-      "theorem_count": 61,
-      "timestamp": "2026-08-20T15:50:23",
-      "title": "reinforcement learning"
-    },
     {
       "cycle_id": "3b08d230",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 76,
       "timestamp": "2026-08-29T21:45:38",
       "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of th"
+    },
+    {
+      "cycle_id": "c9c85c67",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — after the exp 555 formalisation\n\nThis cycle turned the three experimental findings of exp 555 into theorems:\n\n1. **Trial-division class (`α = 1`).**  In the finite sampling model",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-30T00:21:52",
+      "title": "FACT round-72 #5 — MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-sl"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9524045a",
-      "domain": "Shared",
-      "name": "stage1Scalar_dvd_of_le",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "9524045a",
-      "domain": "Shared",
-      "name": "gcd_stage1Scalar_dvd_of_le",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "9524045a",
-      "domain": "Shared",
-      "name": "gcd_stage1Scalar_le_of_le",
-      "quality": 0.78
-    },
     {
       "cycle_id": "10b0e429",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "saturation_exact",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "c9c85c67",
+      "domain": "Cryptography",
+      "name": "hyp_not_even",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c9c85c67",
+      "domain": "Cryptography",
+      "name": "prime_not_dvd_leg",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c9c85c67",
+      "domain": "Cryptography",
+      "name": "prime_not_dvd_leg",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-29T21:45:38",
+  "last_updated": "2026-08-30T00:21:52",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "ba827ea4",
-        "quality": 0.88,
-        "theorems": 154,
-        "title": "Ternary radius-one finite-window classification"
-      },
-      {
         "cycle_id": "113c03c3",
         "quality": 0.82,
         "theorems": 84,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 145,
         "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
+      },
+      {
+        "cycle_id": "c9c85c67",
+        "quality": 0.82,
+        "theorems": 64,
+        "title": "FACT round-72 #5 — MODULAR-DYNAMICS: projected Berggren tree is collision-free b"
       }
     ],
     "Geometry": [

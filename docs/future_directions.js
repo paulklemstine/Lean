@@ -1839,16 +1839,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-72 #1 \u2014 EULER-LOSES: two-squares route measured \u2014 algebra exact, class 25%, cost 5.7x Fermat (paper 201)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "34024ef1",
     "description": "Round-71 #2, exp 553. The ladder turns.\n\n**U116-MIXED**: pooled Spearman(T, rate) = **0.4847** CI [0.4413, 0.5283] \u2014 fifth consecutive cell below the 0.55 band, but the step delta is **+0.0226, the FIRST POSITIVE step of the ladder** after five declines (0.5739 \u2192 .5436 \u2192 .5005 \u2192 .4880 \u2192 .4621 \u2192 .4847). T beats count by +0.1002 paired CI [+0.0481, +0.1461] \u2014 H2 restored decisively.\n\nThe QR-lottery dial's degradation is not a slide to zero \u2014 the shape reads as asymptotic fade with rebound noise toward a floor near ~0.46\u20130.49. Named follow-up: U120 tests the floor directly (under 0.46 \u2192 lower floor; in [0.46,0.53] \u2192 confirmed; above 0.55 \u2192 band re-entry).\n\nLedger: range correction documented PRE-DATA (brief \u00d716 typo family, binding rule applied); q-window overflow at exactly 2^64 fixed pre-data (uint64); stale exp540 ERROR artifact identified; rho-classifier spot-checks 0 mismatches.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp553_t_dial_unif_116.py + exp553_result.json + exp553_run.log, seeds 20261210\u201312.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3919",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T03:18:15.575758+00:00",
     "title": "FACT round-71 #2 \u2014 TDIAL-U116: the fade REBOUNDS, floor forming near 0.46\u20130.49 (paper 200)"
   },
@@ -1865,21 +1866,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T03:18:15.576963+00:00",
     "title": "FACT rounds 70\u201371 SYNTHESIS \u2014 THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exact laws + method laws consolidated (paper 199)"
-  },
-  {
-    "consumed_by_exp_id": "c9c85c67",
-    "description": "Round-72 #5, exp 555 \u2014 the last untested face of the triplet-tree proposal.\n\n**TRIAL-DIVISION-EQUIVALENT-GUIDANCE-NULL.** The mod-N Berggren tree: expansion multiplication-free (T-coefficients \u00b11..3), **collision-free at 200k nodes on every N**, residue-class-confined (~99.75% of orbit in two nz-histogram classes). Order-free dive factors 200/200: v* \u2248 **0.89\u00b7p_min, \u03b1 = 1.007\u00b10.088** \u2014 TD scaling, not \u03c1-like; ~11\u00d7 worse constants than plain trial division at matched compute; \u03c1 dominates by orders of magnitude. Ambient null: the orbit UNDER-SAMPLES factor-revealing residues ~5\u00d7 vs random Pythagorean points \u2014 projection erases the order structure that made the integer face tractable. Guidance: naive z=12\u201324 'improvements' were pure traversal-shape artifact (random-order control alone z=21.8); honest paired |z|<2 everywhere \u27f9 pre-stated null CONFIRMED.\n\n**Campaign close** \u2014 every face of the proposal now measured: exact-target circular; modular descent TD-class (this paper); combining invalid-as-stated (202); multi-target relaxation = TD-in-tree-clothing (203); Euler route 5.7\u00d7 Fermat (201). Barriers 2/5/8 unchanged throughout.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp555_modular_dynamics.py + exp555_result.json + identity addendum + logs, seed 20260826.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3926",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T04:10:59.496275+00:00",
-    "title": "FACT round-72 #5 \u2014 MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-slow (alpha=1.007); guidance null (paper 205)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3907,21 +3893,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
-    "domains": [
-      "MachineLearning",
-      "Logic"
-    ],
-    "id": "seed_331",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 18b02a30 (Q=0.880) proved 294 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` m",
     "domains": [
       "NumberTheory"
@@ -3964,36 +3935,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "id": "seed_346",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Bridge: Galois Connections Between Order Theory and Topology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Lob's theorem as a fixed-point result: if PA proves \u25a1A \u2192 A then PA proves A. Bridge this to category theory: the modal logic GL (Godel-Lob) is the internal logic of the category of provability predicates. Prove that Solovay's completeness theorem for GL follows from the diagonal lemma.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "seed_353",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Bridge: Logic of Provability and Fixed Points in Arithmetic"
   },
   {
     "consumed_by_exp_id": "",
@@ -14777,6 +14718,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The success count of an oblivious inspection schedule depends only on its size; the conjecture extends this to adaptive decision trees, up to a factor 1+o(1), unless the test predicates are pairwise correlated. This would make the guidance null a theorem about all heuristics, not just the ones measured.\n\nFor every adaptive decision tree of depth s over the sample space (Fin t -> ZMod N) whose queries are gcd tests, the number of accepted streams is at most s * r * N^(t-1), where r is the number of revealing residues.\n\nDefine depth-s adaptive decision trees over samples and prove the union bound by induction on depth; compare against hitSet_card_eq_scaled.\n\nEvery 'smart traversal' claim for gcd dives is refuted at the level of the model, so no experiment is needed to reject it.\n\nA correlated predicate family exists where adaptivity provably helps, which is the interesting design case.",
+    "domains": [],
+    "id": "fd_4381",
+    "priority_score": 0.5932758620689657,
+    "research_mode": "team",
+    "source_exp_id": "c9c85c67",
+    "status": "available",
+    "timestamp": "2026-08-30T00:21:35.798675+00:00",
+    "title": "Schedule-Independence Law for Oblivious Search"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Mirrors contribute nothing and each Boolean oracle bit contributes at most a factor two. Conjecture that any battery of mirrors plus L factor-derived bits leaves at least |Omega|/2^L indistinguishable instances, and that this is tight for well-chosen thresholds.\n\nFor any finite family of magnitude mirrors together with L Boolean factor-derived probes, the largest class of instances agreeing on all readings has cardinality at least |Omega| / 2^L, with equality achievable.\n\nCombine mirror_conditional_zeroInfo (mirrors are constant on cells) with multi_oracle_pigeonhole, then construct a tight family from dyadic factor thresholds.\n\nThe surviving positional channel is quantitatively capped: no amplification beyond one bit per threshold read.\n\nSome interleaving of mirrors and oracle bits amplifies, which would be the first realized amplification in the round-70 programme.",
     "domains": [],
     "id": "fd_4060",
@@ -16238,6 +16191,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Explains the empirical residue-class confinement of the mod-N orbit as an exact conservation law: the orbit is exactly the joint level set of the Lorentz form and the determinant character. Proving the inclusion is immediate; the content is the reverse inclusion.\n\nFor N coprime to 6, the mod-N Berggren orbit of (3,4,5) equals the set of primitive points of the null cone of the Lorentz form lying in a fixed coset of the image of the Berggren monoid in PGL_3(Z/N); the number of reachable nz-histogram classes is bounded independently of N.\n\nCompute orbit sizes against joint level-set sizes for small N; formalise the easy inclusion, then attempt transitivity on the null cone over Z/p.\n\nSharp reachable-state counts replace empirical percentages and improve the ambiguity bounds of Hardness.lean.\n\nA third independent invariant exists, which is new structure in the Berggren monoid.",
+    "domains": [
+      "NumberTheory",
+      "Physics"
+    ],
+    "id": "fd_4383",
+    "priority_score": 0.5646683179548131,
+    "research_mode": "team",
+    "source_exp_id": "c9c85c67",
+    "status": "available",
+    "timestamp": "2026-08-30T00:21:36.900939+00:00",
+    "title": "Joint Invariant Confinement of the Modular Berggren Orbit"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Numerically a(n) \u2264 p(n) for all n \u2264 200. The Durfee square identity expresses p(n) as the same layered sum as a(n) but with Euler products truncated one step later, giving coefficientwise domination. Formalizing this would also produce a Lean proof of the Durfee square identity itself.\n\nFor every n, a(n) \u2264 p(n); more precisely p(n) = \u03a3_{k\u00b2\u2264n} \u03a3_{i+j=n-k\u00b2} p_{\u2264k}(i) p_{\u2264k}(j), and a(n) is the same sum with p_{\u2264k-1} in place of p_{\u2264k}.\n\nFormalize the Durfee square bijection between partitions of n and triples (k, \u03bb, \u03bc) with \u03bb, \u03bc partitions with parts \u2264 k and |\u03bb|+|\u03bc| = n-k\u00b2, then compare layer by layer using the already proved pb b m \u2264 pb (b+1) m.\n\nSquare-core stacks embed quantitatively inside partitions, and every upper bound for p(n) transfers to a(n).\n\nSome layer of the stack decomposition overshoots its Durfee counterpart, which would reveal an unexpected overcounting in the stack model.",
     "domains": [
       "Combinatorics",
@@ -16940,6 +16908,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T23:36:25.791776+00:00",
     "title": "Positive Density of Sealed Odd Legs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalises the 1 mod 4 law for Pythagorean hypotenuses to arbitrary integral ternary forms of signature (2,1): the primes dividing a linear functional on a primitive orbit are confined to the classes where the restricted binary form is isotropic. This explains, structurally, why a tree dive under-samples factor-revealing residues. It converts an experimental null into an unconditional obstruction.\n\nFor an integral ternary quadratic form Q of signature (2,1), a primitive Q-orbit O and a linear functional l whose kernel carries a definite binary form of discriminant D, every prime p dividing l(v) for some v in O satisfies (D | p) = 1; in particular such primes have density at most 1/2.\n\nFormalise the binary case Q|ker l = a x^2 + b y^2 and derive p \u2223 l(v) \u27f9 (-ab/p) = 1 using ZMod legendre symbols; instantiate at Q = x^2+y^2-z^2, l = z to recover prime_dvd_hyp_mod_four.\n\nEvery hyperbolic-tree factoring proposal inherits a provable blind spot of density at least 1/2, closing barrier 2 unconditionally.\n\nSome functional has unrestricted divisor primes, giving the first candidate for a non-null tree dive.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4380",
+    "priority_score": 0.5639567524217843,
+    "research_mode": "team",
+    "source_exp_id": "c9c85c67",
+    "status": "available",
+    "timestamp": "2026-08-30T00:21:35.222180+00:00",
+    "title": "Anisotropy Obstruction for Orbit Divisor Primes"
   },
   {
     "consumed_by_exp_id": "",
@@ -28063,6 +28046,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T21:45:31.231323+00:00",
     "title": "Half-Query Pin Defect for Non-Dyadic Windows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Upgrades the injection used for the rho bound to a bijection, giving the exact count of collision-free streams modulo N = pq, and then the sharp threshold constant sqrt(2 ln 2 p). This makes the birthday heuristic a formal theorem over composite moduli.\n\nThe number of streams in (range (p*q))^t with pairwise distinct residues mod p equals descFactorial p t * q^t, and the least t with success probability at least 1/2 is ceil(sqrt(2 log 2 * p)) + O(1).\n\nReplace card_injMod_le by a Finset.card_bij' equality, then estimate the product of (1 - i/p) with Mathlib's Real.log machinery.\n\nA reusable formal birthday theorem for composite moduli, applicable to all collision-based cryptanalysis in the catalog.\n\nThe fibration x -> (x mod p, x div p) fails to be measure preserving and the rho heuristic needs another justification.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4382",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c9c85c67",
+    "status": "available",
+    "timestamp": "2026-08-30T00:21:36.351844+00:00",
+    "title": "Exact Birthday Constant over Composite Moduli"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Attaches an explicit bit-cost model to the multiplication-free Berggren expansion and shows that the cheaper node cost does not change the hit density, so trial division wins by a constant factor at every budget. This turns the measured constant-factor deficit into a theorem-shaped claim.\n\nWith per-node cost Theta(log N) for the Berggren expansion and per-trial cost Theta(log N) for trial division, the cost to reach success probability 1/2 satisfies cost_dive >= 4 * cost_TD for all semiprimes with p_min >= 5.\n\nDefine a bit-cost function on control words using the growth bound hyp_applyWord_le, and compare with the p_min/4 lower bound of trial_division_scaling.\n\nThe campaign headline 'TD-class with worse constants' becomes fully formal and cost-model explicit.\n\nThere is a cost model where the dive wins, which would be a genuine algorithmic finding.",
+    "domains": [
+      "Computation",
+      "NumberTheory"
+    ],
+    "id": "fd_4384",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c9c85c67",
+    "status": "available",
+    "timestamp": "2026-08-30T00:21:37.441357+00:00",
+    "title": "Cost-Normalised Dominance of Trial Division"
   },
   {
     "consumed_by_exp_id": "",
@@ -46028,14 +46041,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compact infinite-dimensional examples"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1c27141",
     "description": "Extend fixed-length libraries to infinite streams. Product spaces over finite discrete alphabets are Cantor-like: unlike the finite Library, they are compact and perfect while remaining totally disconnected.",
     "domains": [],
     "id": "fd_2285",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "fd569acd",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:28.406857+00:00",
     "title": "Extend fixed-length libraries to infinite streams."
   },

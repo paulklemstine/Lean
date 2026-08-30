@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-08-29T21:45:32Z",
-  "count": 36,
+  "archived_at": "2026-08-30T00:21:37Z",
+  "count": 37,
   "directions": [
     {
       "id": "fd_3695",
@@ -1426,6 +1426,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 340
+    },
+    {
+      "id": "fd_3907",
+      "title": "FACT round-70 #5 — PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adics; Gauss magnitudes proven residue dials (paper 196)",
+      "description": "Round-70 #5, exp 548.\n\n**PRICE-2ADIC-LETTERS-GAUSS-IS-RESIDUE-DIAL.**\n\nConstruction validated BEFORE measurement: brute-force 792 triples c≤5000 vs Price-tree BFS — 792 nodes, 0 duplicates/missing (uniqueness+completeness PASS); derived pair maps A:(m,n)→(m+n,2n), B:(2m,m−n), C:(2m,m+n) cross-checked on literature matrices; the brief's hinted matrix REFUTED pre-use ((3,4,5)→(6,6,14)).\n\n**dP law corrected**: slope on log₂(p+q) = **1.211 CI95 [1.120,1.301] — the circulating 1.4 constant is OUTSIDE the CI**; dP mean 24.52 sd 2.65 range [16,34]; R²=0.255. Contrast quantified: two population nodes take 4566/7230 Berggren steps vs dP≤34.\n\n**The discovery**: Price letters at positions 0–1 are MASSIVELY determined by N mod 4/8/16 (**|z| up to 1303**) while mod 2 is vacuous (N odd) — the halving alphabet lives exactly where Berggren's 3-adic seal doesn't look. Berggren b₁ stays blind (worst z=+4.57 FAILED fresh-seed replication ×3 → seed fluctuation). Placement: these are RESIDUE dials — symmetric, factor-blind by standing laws; both trees sealed, each at its own adic place.\n\n**GAUSS-DIAL-PROOF**: numeric Gauss sums = closed forms on ALL 7625 (a,b,M) cells; any |G|-magnitude feature ≡ pure function of N mod 720720 → residue dial, already sealed; on the standard lab range literally CONSTANT (I=0 bits where residues carry H=1.000 on p≡q mod 4).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp548_price_gauss.py + exp548_result.json + run.log.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "d4951edd",
+      "timestamp": "2026-08-24T02:00:10.715222+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.4,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-24T10:56:34.587812+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 339
     }
   ]
 }

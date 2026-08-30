@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-29T21:45:43.962344+00:00",
+  "last_updated": "2026-08-30T00:22:01.603417+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -70119,6 +70119,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-29T21:45:43.759014+00:00",
       "title": "FACT round-75 #4 \u2014 BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of th"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 9291.15652513504,
+      "end_time": 1788049233.5427706,
+      "files_integrated": 4,
+      "job_id": "c9c85c67",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1788039942.3862455,
+      "strategy_count": 0,
+      "theorem_count": 64,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 47,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-30T00:22:01.279097+00:00",
+      "title": "FACT round-72 #5 \u2014 MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-sl"
     }
   ]
 }
