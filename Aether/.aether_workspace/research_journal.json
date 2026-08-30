@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4c991400",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Matrix-level modular action (Phase A, v19c)\n\nThis cycle established, in `Catalog/Shared/ModularCayley/MatrixModularAction.lean`:\n\n* translations `transMat t = !![1,t;0,1]` as an",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-08-25T16:02:18",
-      "title": "Matrix-level modular action"
-    },
-    {
       "cycle_id": "a32bc1e4",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — destructive verification as a state transition\n\nThis cycle formalised verification as a state transition `t : D → Bool × D`\n(\"run the test, get a verdict and a residual dish\") an",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-30T00:21:52",
       "title": "FACT round-72 #5 — MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-sl"
+    },
+    {
+      "cycle_id": "9b32ba78",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — the surreal order topology\n\nThe cycle just completed established, for the order topology on `Surreal` (all statements\nformalised, zero `sorry`):\n\n1. `Surreal` is densely ordered,",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 80,
+      "timestamp": "2026-08-30T06:41:19",
+      "title": "Local character at every point"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3b08d230",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\nFive bold, falsifiable conjectures distilled from the verified results in\n`Catalog/Tropical/EtaQuotient*.lean`.  Throughout, `a : ℕ → ℤ` is a finitely\nsupported exponent vector, `",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 154,
-      "timestamp": "2026-08-20T16:51:24",
-      "title": "is a finitely supported `a : ℕ → ℤ` with"
-    },
     {
       "cycle_id": "a0dce043",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 64,
       "timestamp": "2026-08-30T00:21:52",
       "title": "FACT round-72 #5 — MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-sl"
+    },
+    {
+      "cycle_id": "9b32ba78",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — the surreal order topology\n\nThe cycle just completed established, for the order topology on `Surreal` (all statements\nformalised, zero `sorry`):\n\n1. `Surreal` is densely ordered,",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 80,
+      "timestamp": "2026-08-30T06:41:19",
+      "title": "Local character at every point"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "10b0e429",
-      "domain": "Probability",
-      "name": "sum_pairs_identity",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "10b0e429",
-      "domain": "Probability",
-      "name": "card_mul_sum_lt_sum_mul_sum",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "b58ee289",
-      "domain": "Logic",
-      "name": "makes",
-      "quality": 0.86
-    },
     {
       "cycle_id": "b58ee289",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "prime_not_dvd_leg",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9b32ba78",
+      "domain": "Cryptography",
+      "name": "exists_nhds_zero_not_subset_family",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "9b32ba78",
+      "domain": "Cryptography",
+      "name": "exists_nhds_zero_not_subset",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "9b32ba78",
+      "domain": "Cryptography",
+      "name": "exists_nhds_not_subset_family",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-30T00:21:52",
+  "last_updated": "2026-08-30T06:41:19",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "113c03c3",
-        "quality": 0.82,
-        "theorems": 84,
-        "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the r"
-      },
-      {
         "cycle_id": "f49038d4",
         "quality": 0.8,
         "theorems": 62,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 64,
         "title": "FACT round-72 #5 — MODULAR-DYNAMICS: projected Berggren tree is collision-free b"
+      },
+      {
+        "cycle_id": "9b32ba78",
+        "quality": 0.83,
+        "theorems": 80,
+        "title": "Local character at every point"
       }
     ],
     "Geometry": [
