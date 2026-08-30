@@ -2491,7 +2491,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "41032c64",
+    "consumed_by_exp_id": "be2e1d6c",
     "description": "Consolidation of papers 192–198 (issues #335–#341, exps 545–553).\n\n**THE TWO-TREE CLOSURE.** The energy-ascent question — can a magnitude spectrum computed from N climb the Berggren/Price trees toward the semiprime's node? — is answered NO, sealed at FOUR strengths: (1) residue dials blind (paper 81 replicated); (2) Gauss-sum magnitudes PROVEN residue dials (N mod 720720); (3) bracket/sign-count sensors structurally constant (MI=0.000000 exactly, identities proven); (4) spectral summaries RETRACTED to magnitude mirrors of |N| (exact null given log-N deciles). Only a factor-derived oracle bound remains (I peaks 0.4798 bits @ B≈22758), unrealized by every tested probe.\n\nExact laws banked: Price two-adic law (letter₀=A ⟺ N≡1 mod 4; letter₁=A ⟺ N mod 8 ∈{1,3}; bijection with N mod 8; v₂(p+q)-capped mechanism; provable death at position 2); ascent economics (restart E=h·α^(−h); branching base pinned at 3 ∀α<1; win-vs-Fermat needs α*≥0.85 & c≤3000); sequential hints COMPOUND where the class-hint master law saturates — new taxonomy entry. Corrections: dP slope 1.211 not 1.4; dB/Fermat anticorrelation stratum-dependent.\n\nMethod laws banked lab-wide: row-shuffle nulls are WRONG for deterministic functions of N (condition on magnitude instead); derivation-first validation; smoke-run checks as mechanism detectors.\n\nWhat would reopen it: a probe class none of the four sealed kinds, non-monotone in |N|, delivering per-step accuracy above α*≈0.85 at cost ≤3000 visit-equivalents. The geometry contains up to 0.48 bits of positional content; nothing cheap reads it.\n\nFull document: ResearchOutput/NewMathematics/199_TwoTreeClosure_Synthesis.md.",
     "domain_bridges": [],
     "domains": [
@@ -2510,7 +2510,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ecb169bf",
     "description": "**#2 exp556 TREE-SIEVE (paper 202):** the combining proposal is **INVALID AS STATED** — Π(mᵢ−nᵢ)(mᵢ+nᵢ)=Y² lives in ℤ, never reduces mod N; candidate pairs are N-independent ⟹ per-ticket success = generic gcd luck O(N^{−1/2}). End-to-end: 8/12000 splits vs baseline 4/12000 vs heuristic 6.55e-4 — CONSISTENT-LOTTERY. Smoothness boost real but modest: tree values 7.31× smoother than random (vs naive ~44× prediction); BFS starvation confirmed (50k nodes never reach the analysis window). Corrected variants forcing u≡v mod N collapse to Dixon/QS — barrier 8.\n\n**#3 exp558 MULTI-TARGET (paper 203):** relaxing exact a=N to gcd(a,N)>1 — blind FIFO stays broken (55% censored, α=1.17-finished); value-guided best-first wins 1500/1500 paired (median visit ratio 0.111, zero censoring) **but the mechanism is ascending-value sweep: 100% of first-hits land exactly at a=min(p,q), α=1.087 r²=1.0 = dead center of the TD band**. Honest headline: the relaxation turns an uncomputable search (~2^56 units) into a trial-division-class one (~2^16) — ~10^12× better than blind, yet still dominated by ρ (α=0.458). Every route through the tree's integer face ends in a known method.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp556_tree_sieve.py + exp558_multi_target.py + JSONs/logs, seed 20260826.",
     "domain_bridges": [],
     "domains": [
@@ -2522,14 +2522,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T04:10:59.499265+00:00",
     "title": "FACT round-72 #2/#3 — TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-TARGET relaxation lands at trial division (papers 202–203)"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4f754ac",
     "description": "Round-73 #2, exp 559. **ADAPT-NULL-EQUALIZER / SKIP-FLIP-WINS.** The QR(≤100) dial's calibration confirmed in fixed-FB regime (Spearman 0.739 vs oracle-dial 0.778; FB100 0.835; mechanism exact: (N|p)=−1 primes divide zero x²−N values). But sieve-length ∝ 1/rate LOSES (−17.6% — floor clip load-bearing, unclipped −146.7%); rate-concentrator +8.6%; realized oracle bound +74.8% = unclaimed headroom. Deployment flip works: θ=q20 skips 28.3% of work at 89.5% retention (+28.9% throughput); hard tail 40/400 unreachable → deferral is the instrument, not deeper sieving. End-to-end PASS (20/20 factored, 1350 relations independently reverified).\n\nConstants-layer result under the standing asymptotic-goal directive. Repro: ResearchOutput/scripts/2026-08-21-resume/exp559_adaptive_qs.py + exp559_result.json.",
     "domain_bridges": [],
     "domains": [
@@ -2541,7 +2541,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T05:03:28.425620+00:00",
     "title": "FACT round-73 #2 — ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; skip-flip wins deployment (paper 207)"
   },
@@ -3071,6 +3071,25 @@
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 17477782 (Q=0.900), which proved 22 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove `(Cantor, cantorDist)` is complete and totally bounded\n   (hence compact): every `AgreeTo`-class of radius `2⁻ⁿ` is covered by finitely many, and Cauchy\n   sequences stabilize coordinatewise. Then show the golden-mean subshift is a closed subset.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_17477782_7da5a313",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "17477782",
+    "status": "available",
+    "timestamp": "2026-08-30T12:55:12.007179+00:00",
+    "title": "Deepening: Completeness / compactness"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -3088,6 +3107,25 @@
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b50cc5ce (Q=0.850), which proved 21 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Compute the Levi-Civita connection and Gaussian curvature of a concrete finite-support model. Constant negative curvature should be treated as a separate claim, not inferred from exponential sensitivity.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_b50cc5ce_331b5424",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b50cc5ce",
+    "status": "available",
+    "timestamp": "2026-08-30T12:55:29.031428+00:00",
+    "title": "Deepening: Test curvature only after identifiability"
   },
   {
     "ambition_level": "grand_challenge",
@@ -4019,25 +4057,6 @@
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 9b32ba78 (Q=0.830), which proved 80 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Translation should transfer failure of first countability from zero to every surreal. Formalizing continuity of addition for the chosen order topology would yield this strengthening and show that no point has countable character.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_9b32ba78_4c5e8430",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "9b32ba78",
-    "status": "available",
-    "timestamp": "2026-08-30T06:41:19.607021+00:00",
-    "title": "Deepening: Local character at every point"
   },
   {
     "ambition_level": "grand_challenge",
@@ -5352,26 +5371,6 @@
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that for overparameterized neural networks, almost all critical points are saddle points, not local minima. Formalize the Hessian spectrum at critical points. Show that the loss landscape satisfies the strict saddle property: the Hessian has a negative eigenvalue at non-minimum critical points. Prove that SGD escapes strict saddles in polynomial time.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "seed_377",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "ML Loss Landscape: Critical Points and Saddle Points"
   },
   {
     "ambition_level": "extension",
@@ -17241,6 +17240,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "MachineLearning.GoldenMeanZeta",
+      "MachineLearning.GoldenMeanPeriodicCensus",
+      "MachineLearning.GoldenMeanRigidity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 11 proves the census #Fix(shift^n) = lucas n and cycle 12 upgrades it to the trace formula lucas n = trace (A^n) plus rationality of the ordinary generating series, det (1 - X A) * sum lucas n X^n = 2 - X. What is still open is the exponential form: that the Artin-Mazur zeta function exp (sum (lucas n / n) t^n) equals 1 / det (I - tA) = 1 / (1 - t - t^2), with 1/(1 - 2t) for the full shift. Closing it would make the conjugacy obstruction a single identity between rational functions.\n\nexp (sum over n of (lucas n / n) t^n) = 1 / (1 - t - t^2) as formal power series over the rationals, where lucas n = trace (A^n) for A = [[1,1],[1,0]] (proved in cycle 12) and exp (sum (trace A^n / n) t^n) = 1 / det (I - tA).\n\nBuild the exp/log calculus on rational power series with zero constant term, prove the logarithmic derivative identity t d/dt log (1/det (I - tA)) = sum (trace A^n) t^n for a 2x2 matrix, and specialise using the already-proved trace_transferMatrix_pow and det_one_sub_smul_transferMatrix.\n\nThe periodic census becomes a single rational invariant with the exponential normalisation used in dynamics, giving a reusable zeta-function framework for subshifts of finite type in this catalog.\n\nFailure could only come from the exp/log bookkeeping, since the trace formula and the ordinary generating function are already theorems; that would isolate a genuine obstruction in formalising the logarithmic derivative over power series.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4395",
+    "lineage_refs": [],
+    "priority_score": 0.6717179487179489,
+    "proof_strategy": "Cycle 12 already proves trace (A^n) = lucas n, det (1 - t A) = 1 - t - t^2 over any commutative ring, and det (1 - X A) * (sum of lucas n X^n) = 2 - X in the power series ring. The remaining step is the exponential form: build exp and log over the rationals, prove the logarithmic derivative identity t d/dt log (1/det (I - tA)) = sum (tr A^n) t^n, and combine with the ordinary generating function already established.",
+    "research_mode": "team",
+    "source_exp_id": "17477782",
+    "status": "available",
+    "timestamp": "2026-08-30T12:54:58.269476+00:00",
+    "title": "Exponential Artin-Mazur Zeta Function of the Golden-Mean Shift"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Pythagorean.DistinguishingWordExtremal",
       "Catalog.Pythagorean.DistinguishingWordMoore"
     ],
@@ -22322,6 +22344,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Combinatorics.FisherSimplexIdentifiability",
+      "Combinatorics.TiedTwoGroupCurvature",
+      "Bridges.FisherMonotonicity",
+      "Probability.InformationGeometryContrarian"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This cycle proves one quadrant outright: the trinomial simplex has exponentially decaying Hellinger affinity together with curvature +1/4. The conjecture is that sensitivity and curvature are completely decoupled, all four sign/decay combinations being realised by finite-support models. It matters because the folklore inference 'exponential sensitivity, therefore hyperbolic' would then be wrong in every direction, not just one.\n\nThere exist finite-support models realising each of the four combinations of {Hellinger affinity rho^n decaying exponentially, decaying only polynomially along some parameter curve} with {curvature strictly positive on the whole parameter set, curvature strictly negative on the whole parameter set}.\n\nReuse FisherIdentifiability.rho and hellinger_affinity_prod on the tied two-group model restricted to the region where its curvature is negative, and construct a degenerating family whose affinity tends to 1 at the boundary; formalise each of the four witnesses as a separate theorem.\n\nStatistical distinguishability and information-geometric curvature carry strictly independent information, so neither can be substituted for the other in identifiability arguments.\n\nA genuine implication between decay rate and curvature sign exists on finite supports, which would be a new and useful structural theorem.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4402",
+    "lineage_refs": [],
+    "priority_score": 0.5648641322293158,
+    "proof_strategy": "Use the product formula for Hellinger affinity to reduce decay to a single-observation quantity rho < 1; control rho by the chordal distance on the sphere of radius 2; then choose models whose second fundamental form prescribes the curvature sign independently of that distance.",
+    "research_mode": "team",
+    "source_exp_id": "b50cc5ce",
+    "status": "available",
+    "timestamp": "2026-08-30T12:55:22.662982+00:00",
+    "title": "Four-Quadrant Independence of Hellinger Decay and Curvature Sign"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Computation.KneserManyLines",
       "Catalog.Computation.KneserManyLinesSharpness"
     ],
@@ -22479,6 +22526,31 @@
     "status": "available",
     "timestamp": "2026-08-28T14:27:26.003881+00:00",
     "title": "Stage-Two Difference-Stage Firing Criterion"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.GoldenMeanChaos",
+      "MachineLearning.GoldenMeanEntropy",
+      "MachineLearning.GoldenMeanMistakeBound",
+      "MachineLearning.SubshiftLanguage"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Cycles 5, 6 and 7 all consume the same lemma: any two admissible words glue through one buffer letter. The conjecture is that the least buffer length g of a subshift of finite type simultaneously characterises Devaney chaos, the shift in the supermultiplicativity inequality, and the minimax mistake rate, so that a single combinatorial constant has a topological, a combinatorial and a learning-theoretic reading.\n\nFor a subshift of finite type X on {0,1} with specification constant g, (i) the shift on X is Devaney chaotic iff g is finite, (ii) #L(n) · #L(m) ≤ #L(n+m+g) with g least such, and (iii) the minimax mistake rate is 1 - 1/(g+1); the three characterisations of g agree.\n\nAbstract admissible_glue to a hypothesis `glue : ∀ v w ∈ L, ∃ u, |u| = g ∧ v ++ u ++ w ∈ L`, then re-run goldenMean_transitive, card_goldenWords_mul_le and exists_adversary_stream against that hypothesis and check each proof survives verbatim.\n\nA reusable Lean framework in which one combinatorial constant delivers chaos, entropy subadditivity and a learning bound for any subshift of finite type.\n\nAny of the three implications failing pinpoints an extra property of the golden-mean case that the current proofs use silently, which is exactly the kind of hidden hypothesis this abstraction is designed to expose.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Combinatorics"
+    ],
+    "id": "fd_4397",
+    "lineage_refs": [],
+    "priority_score": 0.5647526004742592,
+    "proof_strategy": "Replace the literal buffer `[false]` by an abstract gluing word of length g throughout; transitivity and supermultiplicativity are immediate reparameterisations, while the mistake bound needs the block induction of cycle 7 with block length g+1 instead of 2.",
+    "research_mode": "team",
+    "source_exp_id": "17477782",
+    "status": "available",
+    "timestamp": "2026-08-30T12:54:59.422830+00:00",
+    "title": "Specification Constant as a Trivalent Invariant of Constrained Truth Streams"
   },
   {
     "ambition_level": "extension",
@@ -23080,6 +23152,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "MachineLearning.CantorCompactness",
+      "MachineLearning.CantorSubshiftDimension",
+      "MachineLearning.GoldenMeanEntropy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Construct the Markov measure on the golden-mean subshift with transition weights 1/φ and 1/φ² and prove it is shift invariant with entropy log φ, matching the covering-number growth already established. The construction uses the clopen cylinder algebra and Carathéodory extension on the compact space proved compact in cycle 1. Cycle 6's Fekete inequalities supply the subadditivity that makes the entropy limit exist independently of the Fibonacci formula.\n\nThere is a shift-invariant Borel probability measure μ on GoldenMean with μ(cylinder w) = φ^{-|w|} up to boundary weights, and its measure-theoretic entropy equals log φ, which is the topological entropy computed by card_goldenWords.\n\nFormalise the Markov measure via Carathéodory extension on the clopen cylinder algebra isClopen_cylinder, then compute the entropy of the 2x2 Perron-Frobenius eigenvector and compare with tendsto_log_coveringNumber.\n\nThe variational principle for this subshift is fully formalised, and the box dimension result upgrades to a measure-theoretic dimension statement.\n\nThe failure would have to come from non-additivity on the cylinder algebra, indicating that the recursive definition of goldenWords does not match the Markov structure, which would be a surprising defect in the combinatorial model.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4393",
+    "lineage_refs": [],
+    "priority_score": 0.5646683179548131,
+    "proof_strategy": "Cylinders are clopen and form a semiring of sets; additivity reduces to fib(n+2) = fib(n+1) + fib(n) with the φ-weights, i.e. to 1/φ + 1/φ² = 1. Extend by Carathéodory, then use compactness for regularity.",
+    "research_mode": "team",
+    "source_exp_id": "17477782",
+    "status": "available",
+    "timestamp": "2026-08-30T12:54:57.177644+00:00",
+    "title": "Parry Measure of Maximal Entropy for the Golden-Mean Subshift"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Physics.StackSquareCoreStacks",
       "Physics.StackSquareCoreBasic",
       "Physics.StackSquareCorePartitions"
@@ -23120,6 +23216,30 @@
     "status": "available",
     "timestamp": "2026-08-21T06:26:58.072300+00:00",
     "title": "Iterated dynamics and equidistribution"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Combinatorics.FisherSimplexCurvature",
+      "Combinatorics.AlphaConnectionCanonical",
+      "Bridges.DifferentialGeometry.InformationGeometryOptimization"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "On the trinomial simplex the alpha-connection curvature is proved here to be exactly (1 - alpha^2)/4, a quadratic in alpha with vanishing linear term. The conjecture is that the vanishing of the linear term is universal, forced by the skew-symmetry of the Amari skewness tensor, so that every finite-support model satisfies K_alpha = A - B alpha^2 and in particular the two dually flat connections have equal curvature.\n\nFor every finite-support model, the Gauss curvature of Amari's alpha-connection satisfies K_alpha = K_0 - B alpha^2 for a function B depending only on the metric and the skewness tensor C; in particular K_{+1} = K_{-1}.\n\nExpand the Riemann tensor of Gamma - (alpha/2) C in powers of alpha; prove the coefficient of alpha^1 vanishes using the total symmetry of C and metric compatibility; verify numerically on the tied two-group and independence models before formalising.\n\nThe alpha-family curvature of any finite-support model is determined by two numbers, and the e- and m-connections are curvature-indistinguishable, sharpening the duality theory.\n\nThere is a finite-support model whose alpha-curvature has a genuine linear term, breaking the symmetry alpha ↦ -alpha and giving a new invariant separating the two dual connections.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_4401",
+    "lineage_refs": [],
+    "priority_score": 0.5646486329219266,
+    "proof_strategy": "Write R^{(alpha)} = R + alpha X + alpha^2 Y with X linear in the covariant derivative of C; contract with the metric and use the total symmetry C_{ijk} = C_{(ijk)} together with dg = -C to kill the alpha^1 contraction.",
+    "research_mode": "team",
+    "source_exp_id": "b50cc5ce",
+    "status": "available",
+    "timestamp": "2026-08-30T12:55:22.133974+00:00",
+    "title": "Universal Quadratic Law for Alpha-Connection Curvature"
   },
   {
     "ambition_level": "extension",
@@ -23671,6 +23791,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Combinatorics.FisherSimplexCurvature",
+      "Combinatorics.FisherSimplexIdentifiability",
+      "Combinatorics.TiedTwoGroupCurvature",
+      "Probability.InformationGeometryContrarian"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This cycle produced a finite-support model with negative Fisher curvature at one point and positive curvature at another, but no model with constant negative curvature. The conjecture is that constancy is the real obstruction: on a finite support the Gauss equation for the isometric embedding p ↦ 2√p into the sphere of radius 2 forces the intrinsic curvature to be 1/4 plus the determinant of a second fundamental form, and prescribing that determinant to be a negative constant is a Codazzi obstruction. It matters because it turns 'exponential sensitivity implies hyperbolic geometry' from a slogan into a provably false statement with an explicit boundary.\n\nThere is no two-parameter statistical model with finite support and strictly positive probabilities whose Fisher-Rao Gauss curvature equals a constant c < 0 on a nonempty open subset of the parameter space.\n\nFormalise the Gauss equation for surfaces in the round sphere of radius 2 in Lean on top of FisherIdentifiability.pullback_eq_fisher, then show det(II) = c - 1/4 with c < 0 is incompatible with the Codazzi equations for an immersion whose components are algebraic in the probabilities; test computationally first on all four- and five-outcome models with polynomial coordinates of degree at most 3.\n\nConstant negative Fisher curvature is a purely infinite-support (or non-algebraic) phenomenon, and every claim of 'hyperbolic statistical geometry' on a finite alphabet is false as stated.\n\nAn explicit finite-support hyperbolic model exists, which would give a finite combinatorial model of the hyperbolic plane with a statistical interpretation.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4398",
+    "lineage_refs": [],
+    "priority_score": 0.5641830391006109,
+    "proof_strategy": "Embed via p ↦ 2√p; apply the Gauss equation K = 1/4 + det(II); differentiate the Codazzi equations; use that the coordinates are algebraic to bound degrees and derive a contradiction from a leading-coefficient comparison.",
+    "research_mode": "team",
+    "source_exp_id": "b50cc5ce",
+    "status": "available",
+    "timestamp": "2026-08-30T12:55:20.460566+00:00",
+    "title": "Nonexistence of Constant-Negative Fisher Curvature on Finite Supports"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Shared.ECMStage1OrderCompletion",
       "Catalog.Shared.ECMStage1FiringRate"
     ],
@@ -23947,6 +24092,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Combinatorics.IndependenceFlatCurvature",
+      "Combinatorics.TiedTwoGroupCurvature",
+      "Bridges.FisherMonotonicity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The 2x2 independence model is proved here to be Fisher-flat, and the tied two-group model - which is the same model with the tie t ↦ t² breaking the product structure - is proved to be curved. The conjecture is that this is an equivalence: among finite-support two-parameter models with diagonal Fisher metric, vanishing curvature characterises local statistical independence. It would give curvature the status of an exact obstruction to factorisation.\n\nLet a finite-support two-parameter model have Fisher metric diag(a(u,v), b(u,v)) with a, b > 0 and smooth. Then the Gauss curvature vanishes identically if and only if there is a local reparametrisation in which the model is a product of two one-parameter models.\n\nFormalise the two-dimensional diagonal-metric curvature formula, prove K = 0 forces the mixed second derivatives of log a and log b to vanish, and integrate. The forward direction is already available as IndependenceModel.indepCurvature_eq_zero; the converse is a Frobenius integrability argument.\n\nGauss curvature becomes a computable certificate of statistical dependence, testable from the metric alone without touching the joint distribution.\n\nThere is a flat but genuinely non-product finite-support model, which would be a new source of exotic dually flat structures.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4399",
+    "lineage_refs": [],
+    "priority_score": 0.564048239418888,
+    "proof_strategy": "Write K for a diagonal metric explicitly; set it to zero; obtain a linear PDE system in log a and log b; apply Frobenius to construct the separating coordinates.",
+    "research_mode": "team",
+    "source_exp_id": "b50cc5ce",
+    "status": "available",
+    "timestamp": "2026-08-30T12:55:21.030765+00:00",
+    "title": "Flatness-Independence Equivalence for Diagonal Fisher Metrics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Novelty.KitchenQueryComplexity",
       "Novelty.KitchenGenericHardness"
     ],
@@ -23966,6 +24135,30 @@
     "status": "available",
     "timestamp": "2026-08-24T15:57:37.736595+00:00",
     "title": "Evasiveness of Symmetric Monotone Dishes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Combinatorics.TiedTwoGroupCurvature",
+      "Combinatorics.IndependenceFlatCurvature",
+      "Combinatorics.AlphaConnectionCanonical"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every curvature computation in this cycle is a fixed finite sequence of rational operations applied to polynomial probability coordinates, so the degree of the resulting curvature is determined by the input degree. The conjecture makes that explicit and deduces a degree bound for the sign-change locus. It matters because it converts 'does this model change curvature sign?' into a finite algebraic question with an a priori bound.\n\nIf a finite-support two-parameter model has probability coordinates that are polynomials of total degree at most d, then the Gauss curvature is a rational function whose numerator has total degree at most P(d) for an explicit polynomial P, and the locus {K = 0} is an algebraic curve of degree at most P(d).\n\nTrack degrees symbolically through fisher, dg, the inverse metric, chr, dchr and riemann for symbolic d; verify the resulting P against the tied model (d = 3) and the independence model (d = 2); then formalise the propagation lemmas in Lean.\n\nSign changes of Fisher curvature can be decided by a bounded-degree real quantifier elimination, making 'is this model somewhere negatively curved?' effectively decidable.\n\nCurvature degree can blow up beyond the naive count, indicating unexpected cancellation or growth in the Christoffel symbols worth isolating.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4400",
+    "lineage_refs": [],
+    "priority_score": 0.5640187118695582,
+    "proof_strategy": "Induct over the fixed operation sequence, bounding numerator and denominator degrees at each step, with the determinant of the metric as the only denominator; then apply Bezout to the numerator.",
+    "research_mode": "team",
+    "source_exp_id": "b50cc5ce",
+    "status": "available",
+    "timestamp": "2026-08-30T12:55:21.563268+00:00",
+    "title": "Degree Propagation Bound for Curvature of Algebraic Statistical Surfaces"
   },
   {
     "ambition_level": "extension",
@@ -39682,6 +39875,51 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.CantorSubshiftDimension",
+      "MachineLearning.CantorCompactness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Hausdorff dimension of the golden-mean subshift in the first-disagreement ultrametric equals its box dimension log φ / log 2. The upper bound follows from the exact covering already proved; the lower bound uses the mass distribution principle applied to the uniform cylinder measure. This is a genuine strengthening, since Hausdorff ≤ box always but equality can fail.\n\ndimH GoldenMean = Real.log Real.goldenRatio / Real.log 2 in the cantorDist metric.\n\nFormalise with Mathlib's Metric.dimH, using goldenMean_cover for the upper bound and a Frostman/mass-distribution lemma with the uniform measure on the fib(n+2) cylinders for the lower bound.\n\nThe golden-mean subshift becomes a fully quantified fractal in Lean, with matching Hausdorff, box and entropy dimensions.\n\nA strict inequality would signal that the cylinder measure is far from uniform at some scales, contradicting the sharp two-sided bound φ^n ≤ fib(n+2) ≤ φ^{n+1}.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4394",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Upper bound: the fib(n+2) cylinders of diameter 2^{-n} give a Hausdorff sum φ^{n+1} 2^{-ns} which tends to 0 for s > log φ / log 2. Lower bound: the uniform measure gives μ(B(x,2^{-n})) ≤ φ^{-n}, so the mass distribution principle applies.",
+    "research_mode": "team",
+    "source_exp_id": "17477782",
+    "status": "available",
+    "timestamp": "2026-08-30T12:54:57.728598+00:00",
+    "title": "Hausdorff-Box Dimension Coincidence for Golden-Mean Streams"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.GoldenMeanMistakeBound",
+      "MachineLearning.GoldenMeanEntropy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 7 proves the golden-mean subshift has minimax online mistake rate exactly 1/2 while its entropy is log φ ≈ 0.694 log 2, so the two quantities disagree. The conjecture is that the minimax rate of a constrained binary source is 1 - 1/k, where k is the longest run the constraint can force, and is therefore independent of topological entropy. This would show that counting complexity and online-prediction complexity are genuinely different resources.\n\nFor the k-constrained subshift on {0,1} forbidding k consecutive `true`s, the minimax number of mistakes in n rounds is (1 - 1/k) n + O(1), while the topological entropy is log of the largest root of x^k = x^{k-1} + ... + 1; the two are not functions of one another.\n\nParameterise advMove of cycle 7 from `last letter is true` to `last k-1 letters are true`, re-prove the `no k consecutive correct rounds` lemma, and pair it with the generalised density bound k · #{trues} ≤ (k-1)(n+1) for the upper bound.\n\nA clean separation theorem: entropy does not control online learnability for constrained sources, and the correct invariant is the forced-run length.\n\nIf the rate does track entropy, the adversary construction must be improvable, which would itself yield a new entropy-based online algorithm for constrained sources.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_4396",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Upper bound: the always-false predictor errs exactly on the `true`s, bounded by the generalised density bound. Lower bound: the adversary contradicts the prediction whenever free, and is forced at most one round in every k, giving at least (1-1/k) n mistakes by an induction in blocks of k.",
+    "research_mode": "team",
+    "source_exp_id": "17477782",
+    "status": "available",
+    "timestamp": "2026-08-30T12:54:58.847834+00:00",
+    "title": "Forced-Run Law for Minimax Online Prediction Rates"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : ℝ → ℝ` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k → ℝ` and `p q : ℝ`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r ≤ k` needs no convexity, no differentiability, and no\nsign pattern — only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
@@ -55319,7 +55557,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "181f9c07",
     "description": "**Conjecture.** The factor $2^d - 1$ in the chain bound is far from optimal:\n$\\mathrm{La}(n,B_d) \\le (d+c)\\binom{n}{\\lfloor n/2\\rfloor}$ for an absolute constant $c$\nindependent of $d$ and $n$. Concretely for $d = 3$:\n$\\mathrm{La}(n,B_3) \\le 4\\binom{n}{\\lfloor n/2\\rfloor}$ for all $n$.\n\n*Status.* Open. Proved: $\\le 7\\binom{n}{\\lfloor n/2\\rfloor}$ for $d = 3$, and the exact value\n$\\binom{n}{\\lfloor n/2\\rfloor}$ for $d = 1$. *Falsifiable* by a construction beating\n$4\\binom{n}{\\lfloor n/2\\rfloor}$ for some $n$; F3 only asks for $3+\\varepsilon$, so F3 and F4\nare compatible.",
     "domain_bridges": [],
     "domains": [],
@@ -55329,7 +55567,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "39ee2889",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:27:00.324260+00:00",
     "title": "F4. Sharpening the chain upper bound from $2^d - 1$ to $O(d)$"
   },
@@ -58784,23 +59022,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "17477782",
-    "description": "Prove `(Cantor, cantorDist)` is complete and totally bounded\n   (hence compact): every `AgreeTo`-class of radius `2⁻ⁿ` is covered by finitely many, and Cauchy\n   sequences stabilize coordinatewise. Then show the golden-mean subshift is a closed subset.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_2514",
-    "lineage_refs": [],
-    "priority_score": 0.4024509803921569,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c760f6fc",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:37.024398+00:00",
-    "title": "Completeness / compactness"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The Burnside mass formula is already formalised\n(`spec_mul_card_eq_sum_fixed`), and the data confirm the pattern for `n ≤ 10` with the\nviolation confined to `r ∈ {1, n−1}`; the conjecture cleanly separates the boundary\nphenomenon (which we proved is fatal in general) from the interior behaviour.",
     "domain_bridges": [],
@@ -60649,7 +60870,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e4060ea8",
+    "consumed_by_exp_id": "",
     "description": "The unique factorization theorem\n`exists_unique_unit_factorization` makes the \"vary the unit parts\" step a finite\nmanipulation in `1 + Xℂ⟦X⟧` rather than an analytic argument.",
     "domain_bridges": [],
     "domains": [],
@@ -60659,7 +60880,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3da67f84",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-19T05:14:47.469699+00:00",
     "title": "The unique factorization theorem"
   },
@@ -65216,23 +65437,6 @@
     "status": "available",
     "timestamp": "2026-08-21T06:25:23.022814+00:00",
     "title": "Characterize nonsingularity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "b50cc5ce",
-    "description": "Compute the Levi-Civita connection and Gaussian curvature of a concrete finite-support model. Constant negative curvature should be treated as a separate claim, not inferred from exponential sensitivity.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_2660",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "8aec96a6",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:23.277055+00:00",
-    "title": "Test curvature only after identifiability"
   },
   {
     "ambition_level": "extension",

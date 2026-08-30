@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a08d5a50",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — profile form and the beyond-Dickman residual\n\nDerived from the Stage-3 analysis and the Stage-4 adversarial review of this\ncycle (`Catalog/NumberTheory/ProfileForm{PowerLaw,Resid",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 119,
-      "timestamp": "2026-08-25T18:58:30",
-      "title": "FACT round-80 #1 — PROFILE-FORM (exp 579): positional layer gets a LAW — small-j hit profile = POWER"
-    },
-    {
       "cycle_id": "7b6f9981",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  What was\nproved (all `sorry`-free, in `Catalog/NumberTheory/`):\n\n* `VietaInjectiveFamilies.lean` — the six-element",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-08-30T12:55:11",
       "title": "Completeness / compactness"
+    },
+    {
+      "cycle_id": "b50cc5ce",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nDerived from the Stage-3 analysis and Stage-4 adversarial review of this cycle.\n\n## What this cycle established (formally, 0 sorries)\n\nFive Lean files in `Catalog/Combinatorics/`",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-30T12:55:28",
+      "title": "Test curvature only after identifiability"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3ec7eb1a",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — the marginal side of the Bonferroni machinery\n\nThe formalised results in `Catalog/Combinatorics/BonferroniMarginals.lean` isolate a clean\nseparation of concerns: the Bonferroni/C",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-08-20T17:46:40",
-      "title": "The Bonferroni machinery"
-    },
     {
       "cycle_id": "fc85d14f",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-08-30T12:55:11",
       "title": "Completeness / compactness"
+    },
+    {
+      "cycle_id": "b50cc5ce",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nDerived from the Stage-3 analysis and Stage-4 adversarial review of this cycle.\n\n## What this cycle established (formally, 0 sorries)\n\nFive Lean files in `Catalog/Combinatorics/`",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-30T12:55:28",
+      "title": "Test curvature only after identifiability"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5be8ecbc",
-      "domain": "Novelty",
-      "name": "key_error_unbounded_in_depth",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5be8ecbc",
-      "domain": "Novelty",
-      "name": "value_error_stays_le",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "497c96d6",
-      "domain": "Physics",
-      "name": "firingSet_subset_range",
-      "quality": 0.82
-    },
     {
       "cycle_id": "497c96d6",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "fiber_card_sum",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "b50cc5ce",
+      "domain": "Combinatorics",
+      "name": "sum_prob",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "b50cc5ce",
+      "domain": "Combinatorics",
+      "name": "hasDerivAt_log_prob_fst",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "b50cc5ce",
+      "domain": "Combinatorics",
+      "name": "hasDerivAt_log_prob_snd",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-30T12:55:11",
+  "last_updated": "2026-08-30T12:55:28",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "aa2d71a2",
-        "quality": 0.74,
-        "theorems": 56,
-        "title": "FACT round-43 #2 — UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper "
-      },
-      {
         "cycle_id": "a303e67d",
         "quality": 0.78,
         "theorems": 48,
@@ -3265,6 +3259,12 @@
         "quality": 0.81,
         "theorems": 63,
         "title": "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES — feature"
+      },
+      {
+        "cycle_id": "b50cc5ce",
+        "quality": 0.85,
+        "theorems": 21,
+        "title": "Test curvature only after identifiability"
       }
     ],
     "Computation": [
