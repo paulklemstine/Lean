@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7af52a9c",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — after C4 (classification of the ternary Pythagorean trees)\n\n## What this cycle established\n\nWorking with the node set `N = {1 ≤ n < m, gcd(m,n) = 1, m+n odd}` and root `(2,1)`, a",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-08-25T20:47:31",
-      "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagorean trees"
-    },
-    {
       "cycle_id": "acd2f64e",
       "domain": "Pythagorean",
       "key_insight": "# Future directions — edge-kernel refinement (positional profiles)\n\nThe two new files\n`Catalog/Pythagorean/EdgeKernelRefinement.lean` and\n`Catalog/Pythagorean/EdgeKernelSeparation.lean`\nestablish, wit",
@@ -499,19 +489,19 @@
       "theorem_count": 74,
       "timestamp": "2026-08-30T17:30:44",
       "title": "FACT round-72 #1 — EULER-LOSES: two-squares route measured — algebra exact, class 25%, cost 5.7x Fer"
+    },
+    {
+      "cycle_id": "9c1e5dc4",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after the U116 rebound / floor cycle\n\nFive cycles of the loop were run.  The fifth settled — negatively — the estimator question that\nthe fourth had opened: `Probability.TDialBlo",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-30T23:31:23",
+      "title": "FACT round-71 #2 — TDIAL-U116: the fade REBOUNDS, floor forming near 0.46–0.49 (paper 200)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4494e9cb",
-      "domain": "Applications",
-      "key_insight": "",
-      "quality_score": 0.664175,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-08-20T19:46:32",
-      "title": "Rigidity gap for shallow product coins"
-    },
     {
       "cycle_id": "254383ec",
       "domain": "Cryptography",
@@ -2501,6 +2491,16 @@
       "theorem_count": 74,
       "timestamp": "2026-08-30T17:30:44",
       "title": "FACT round-72 #1 — EULER-LOSES: two-squares route measured — algebra exact, class 25%, cost 5.7x Fer"
+    },
+    {
+      "cycle_id": "9c1e5dc4",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after the U116 rebound / floor cycle\n\nFive cycles of the loop were run.  The fifth settled — negatively — the estimator question that\nthe fourth had opened: `Probability.TDialBlo",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-30T23:31:23",
+      "title": "FACT round-71 #2 — TDIAL-U116: the fade REBOUNDS, floor forming near 0.46–0.49 (paper 200)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-30T17:30:44",
+  "last_updated": "2026-08-30T23:31:23",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "d221a4de",
-        "quality": 0.88,
-        "theorems": 89,
-        "title": "FACT round-41 #5 — FACTOR-LOCAL-ET: unified across-k scaling on one population ("
-      },
-      {
         "cycle_id": "c38d70d3",
         "quality": 0.85,
         "theorems": 141,
@@ -3823,6 +3817,12 @@
         "quality": 0.76,
         "theorems": 153,
         "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-"
+      },
+      {
+        "cycle_id": "9c1e5dc4",
+        "quality": 0.84,
+        "theorems": 101,
+        "title": "FACT round-71 #2 — TDIAL-U116: the fade REBOUNDS, floor forming near 0.46–0.49 ("
       }
     ],
     "Pythagorean": [
