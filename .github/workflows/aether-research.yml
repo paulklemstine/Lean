@@ -8,7 +8,7 @@ on:
       maxinflight:
         description: 'Max inflight Aristotle jobs'
         required: false
-        default: '6'
+        default: '9'
 permissions:
   contents: write
   actions: write
@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  AETHER_MAX_INFLIGHT: ${{ github.event.inputs.maxinflight || '6' }}
+  AETHER_MAX_INFLIGHT: ${{ github.event.inputs.maxinflight || '9' }}
   PYTHONUNBUFFERED: '1'
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
