@@ -240,6 +240,15 @@ theorem sorting_info_erased (n : ℕ) (hn : 1 ≤ n) :
   unfold infoErased sortingFunction; norm_num [Fintype.card_perm]
   rw [Finset.image_const] <;> aesop
 
+/-- The hypothesis `1 ≤ n` in `sorting_info_erased` is in fact unnecessary: the
+    identity permutation already makes `Equiv.Perm (Fin 0)` nonempty, so the image of
+    the constant sorting map is a singleton for every `n`.  This unconditional form is
+    what downstream files use. -/
+theorem sorting_info_erased_all (n : ℕ) :
+    infoErased (sortingFunction n) = Real.logb 2 (n.factorial) := by
+  unfold infoErased sortingFunction; norm_num [Fintype.card_perm]
+  rw [Finset.image_const] <;> aesop
+
 /-! ## Section 8: Bijection Reversibility -/
 
 /-- For a bijection, every fiber has size ≤ 1. -/
