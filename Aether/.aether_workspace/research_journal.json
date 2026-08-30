@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7b6f9981",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  What was\nproved (all `sorry`-free, in `Catalog/NumberTheory/`):\n\n* `VietaInjectiveFamilies.lean` — the six-element",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-25T18:58:46",
-      "title": "Parametric families"
-    },
-    {
       "cycle_id": "7af52a9c",
       "domain": "Physics",
       "key_insight": "# Future Directions — after C4 (classification of the ternary Pythagorean trees)\n\n## What this cycle established\n\nWorking with the node set `N = {1 ≤ n < m, gcd(m,n) = 1, m+n odd}` and root `(2,1)`, a",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-30T12:55:28",
       "title": "Test curvature only after identifiability"
+    },
+    {
+      "cycle_id": "b63aa142",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — after the Euler two-squares cycles\n\n## What is now established (all `sorry`-free, in `Catalog/Algebra/EulerTwoSquares*.lean`)\n\n1. **Extraction is unconditional, and needs no norm",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-08-30T17:30:44",
+      "title": "FACT round-72 #1 — EULER-LOSES: two-squares route measured — algebra exact, class 25%, cost 5.7x Fer"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fc85d14f",
-      "domain": "Shared",
-      "key_insight": "# Future directions — from the two-parameter ±-frame\n\nThe results proved in `Catalog/Shared/PMFrameTwoParameter.lean` reduce the\nquestion \"how negative can a coefficient of the ±-frame `Φ_n` be?\" to c",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 41,
-      "timestamp": "2026-08-20T19:00:17",
-      "title": "The one-parameter case is already a theorem here"
-    },
     {
       "cycle_id": "4494e9cb",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-30T12:55:28",
       "title": "Test curvature only after identifiability"
+    },
+    {
+      "cycle_id": "b63aa142",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — after the Euler two-squares cycles\n\n## What is now established (all `sorry`-free, in `Catalog/Algebra/EulerTwoSquares*.lean`)\n\n1. **Extraction is unconditional, and needs no norm",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-08-30T17:30:44",
+      "title": "FACT round-72 #1 — EULER-LOSES: two-squares route measured — algebra exact, class 25%, cost 5.7x Fer"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "497c96d6",
-      "domain": "Physics",
-      "name": "card_coFiringSet",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "497c96d6",
-      "domain": "Physics",
-      "name": "card_deadSet",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "523b9317",
-      "domain": "Probability",
-      "name": "sum_resample_prod",
-      "quality": 0.76
-    },
     {
       "cycle_id": "523b9317",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "hasDerivAt_log_prob_snd",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "b63aa142",
+      "domain": "Algebra",
+      "name": "quartic_barrier_gap",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "b63aa142",
+      "domain": "Algebra",
+      "name": "quartic_barrier",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "b63aa142",
+      "domain": "Algebra",
+      "name": "quartic_barrier_three",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-30T12:55:28",
+  "last_updated": "2026-08-30T17:30:44",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "ccf34fd5",
-        "quality": 0.8,
-        "theorems": 91,
-        "title": "Smooth windows"
-      },
-      {
         "cycle_id": "58176b8d",
         "quality": 0.82,
         "theorems": 60,
@@ -3079,6 +3073,12 @@
         "quality": 0.86,
         "theorems": 48,
         "title": "Which-Factor Wall as a Cross-Population Invariant"
+      },
+      {
+        "cycle_id": "b63aa142",
+        "quality": 0.87,
+        "theorems": 74,
+        "title": "FACT round-72 #1 — EULER-LOSES: two-squares route measured — algebra exact, clas"
       }
     ],
     "Applications": [

@@ -1767,16 +1767,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pure domains \u2014 the mixing-ratio response is a bump, not a line/dip/ramp"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00e162eb",
     "description": "Round-70 #3, exp 547. The pricing half of the energy-ascent round.\n\n**ASCENT-COST-LAW**: two exact cost laws under end-verification-only semantics \u2014 DFS-backtrack E = h\u00b7(1\u2212K/2) + K\u00b7(3^(h+1)\u22123)/4 with K=(1\u2212\u03b1)(2\u2212\u03b1); **restart-from-root E = h\u00b7\u03b1^(\u2212h), dominating DFS in 99.0% of cells**; beam never wins. **Effective-branching REFUTED**: the rate base stays pinned at exactly 3 for every \u03b1<1 \u2014 accuracy enters only through the prefactor until the \u03b1\u21921 exponential\u2192polynomial phase transition.\n\n**Breakeven vs EXACT Fermat scan** (median 183k steps): majority-win survives to c\u22643000 visit-equivalents/step, \u03b1* 0.85\u21920.96 over c\u2208[0,3000]; balanced stratum NEVER wins (Fermat already instant); the deep-dB tail is unwinnable even at \u03b1=0.9999. Barrier-8 probe computed: a \u221aN-cost per-step feature is excluded by only ~1.7 orders of magnitude \u2014 thin margin.\n\n**Master-law mapping REFUTED**: paper 138's class-hint law saturates at its 1/\u03b8=3 cap while empirical speedup diverges \u2014 1.01/1.30/1.98/3.56/10.10 at \u03b1=1/3\u20260.9. Branch hints compound sequentially (\u03b1^dB joint success) \u2014 NEW hint-taxonomy entry: sequential/geometric hints, priced by h\u00b7\u03b1^(\u2212h).\n\nSnaps together with paper 193: the measured magnitude channel (~19% of b\u2081 entropy, raw-b\u2081 accuracy \u2248 majority baseline) sits far below breakeven \u03b1*\u22650.85 \u2014 the channel exists but buys no ascent win today; gap quantified from both ends. Bonus ledger finding: Spearman(dB, Fermat-steps) = \u22120.364 pooled but **+0.443 within the main stratum** \u2014 exp391's anti-correlation is stratum-dependent.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp547_ascent_cost.py + exp547_result.json + run.log, seed 20260823. (Agent left status:\"running\" in the JSON post-completion \u2014 disclosed; validations all PASS in-file.)",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3909",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T02:00:10.718442+00:00",
     "title": "FACT round-70 #3 \u2014 ASCENT-COST: exact branch-oracle economics; effective branching refuted; master-law mapping refuted (paper 194)"
   },
@@ -1807,21 +1808,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T02:00:10.721551+00:00",
     "title": "FACT round-70 #1 \u2014 TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
-  },
-  {
-    "consumed_by_exp_id": "b63aa142",
-    "description": "Round-72 #1, exp 557 (user-directed Pythagorean/Euler campaign). Euler's factorization method, fully priced.\n\n**EULER-LOSES.** Existence: \u22652 essentially distinct sum-of-two-squares representations \u27fa **both primes \u22611 mod 4 \u2014 exactly two reps there, zero in every other class** (750/750 per cell; eligible fraction of draws exactly 0.2500; r\u2082=4(d\u2081\u2212d\u2083) validated vs brute force). Algebra: the combination step reduces to gcd(|ad\u2212bc|,N) via Im(z\u2081\u00b7conj(z\u2082)) hitting exactly one prime norm (bounds proven); verified **500/500 synthetic + 750/750 real instances** \u2014 extraction ALWAYS works when reps are known. Cost face: rep-search median 81k iterations \u2248 **2.48\u00d7 one plain-Fermat scan**, and Euler needs two \u27f9 end-to-end **median 5.70\u00d7 worse than Fermat on identical instances** (q75 33.8\u00d7, catastrophic on balanced pairs where Fermat lands instantly).\n\nBarrier-8 consistent: the c=m\u00b2+n\u00b2 face of the triplet idea is a known method with worse constants. No new leverage.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp557_euler_two_squares.py + exp557_result.json + logs, seed 20260826.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3918",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T03:18:15.574536+00:00",
-    "title": "FACT round-72 #1 \u2014 EULER-LOSES: two-squares route measured \u2014 algebra exact, class 25%, cost 5.7x Fermat (paper 201)"
   },
   {
     "consumed_by_exp_id": "9c1e5dc4",
@@ -2264,20 +2250,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 17477782 (Q=0.900), which proved 22 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove `(Cantor, cantorDist)` is complete and totally bounded\n   (hence compact): every `AgreeTo`-class of radius `2\u207b\u207f` is covered by finitely many, and Cauchy\n   sequences stabilize coordinatewise. Then show the golden-mean subshift is a closed subset.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_17477782_7da5a313",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "17477782",
-    "status": "available",
-    "timestamp": "2026-08-30T12:55:12.007179+00:00",
-    "title": "Deepening: Completeness / compactness"
   },
   {
     "consumed_by_exp_id": "",
@@ -4308,7 +4280,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e8ef44c2",
     "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
     "domains": [
       "Novelty",
@@ -4317,10 +4289,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_162",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
@@ -16353,6 +16326,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Determinism has been proved for the Brahmagupta pair: the subtractive gcd is exactly q and the additive one exactly p. The conjecture is that for an arbitrary pair of essentially distinct representations the extracted prime is read off the class bits, so no gcd computation is needed to know which factor appears.\n\nFor essentially distinct representations (a,b), (c,d) of N = pq, gcd(ad - bc, N) = q iff the two representations share their p-bit, and equals p iff they share their q-bit.\n\nCheck all eligible N < 10^6 by brute force, then formalise using the Z[i] factorisation supplied by gaussianInt_split.\n\nEuler's method becomes fully deterministic and gcd-free in its combination step.\n\nSome pair's extraction is not predicted by the bits, contradicting unique factorisation in Z[i] - a sharp falsifiability test.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4405",
+    "priority_score": 0.5646073266234106,
+    "research_mode": "team",
+    "source_exp_id": "b63aa142",
+    "status": "available",
+    "timestamp": "2026-08-30T17:30:29.104909+00:00",
+    "title": "Bit-Predicted Extraction for Arbitrary Representation Pairs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For balanced semiprimes N, define the capture spectrum C(X) = \u03a3_{\u2113 \u2264 X} r_\u2113\u00b2, where r_\u2113 is the sample correlation between the per-N log hit rate and the product-form Legendre indicator at prime \u2113. The conjecture is that C(X) stays below the pre-registered 0.30 bar for every X up to 10\u2076 at bitlen 96, so the overdispersion carrier is not a small-prime residue effect at any window. The family capture bound turns this into a finite scalar computation with a proved stopping rule.\n\nFor bitlen-96 balanced semiprimes, sup_{X \u2264 10\u2076} \u03a3_{\u2113 \u2264 X} r_\u2113\u00b2 < 0.30, hence no affine recalibration of the \u2113 \u2264 X product-form dial family attains a 30% dispersion reduction.\n\nCompute the 78k per-prime correlations and partial sums; compare against Logic.QRDial.family_bar_missed, whose hypothesis is exactly \u03a3_j corrSq y (s j) < 3/10.\n\nThe papers-136/139 dial line does not extend to bitlen 96 at any prime window; the carrier of u \u2248 10 clustering is a genuinely new N-structure.\n\nPapers 136/139, 220 and 226 unify under a scale-dependent dial bound, with the crossing point of C(X) giving the calibration scale.",
     "domains": [
       "NumberTheory",
@@ -16665,6 +16653,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T12:55:20.460566+00:00",
     "title": "Nonexistence of Constant-Negative Fisher Curvature on Finite Supports"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The quartic barrier says two distinct representations cannot both be shallow. With r representations the r large parts are r distinct integers below sqrt(N), which should sharpen the barrier quadratically in r. This would show that Euler-style methods get worse, not better, as the input acquires more eligible prime factors.\n\nIf N has r pairwise essentially distinct two-square representations, then the depth t at which an ascending scan has collected all of them satisfies t^4 > 2 (r-1)^2 N.\n\nThe case r = 3 is already proved (quartic_barrier_three: 8N < a3^4); formalise general r by induction on the sorted list of large parts and check the constant numerically for n = 1105 and n = 32045.\n\nEuler's route degrades as omega(n) grows; the cost barrier compounds.\n\nMany representations make the search shallow, cracking the cost barrier.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4403",
+    "priority_score": 0.5641446960800318,
+    "research_mode": "team",
+    "source_exp_id": "b63aa142",
+    "status": "available",
+    "timestamp": "2026-08-30T17:30:27.979866+00:00",
+    "title": "Representation-Count-Weighted Depth Barrier"
   },
   {
     "consumed_by_exp_id": "",
@@ -17025,6 +17028,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T00:21:35.222180+00:00",
     "title": "Anisotropy Obstruction for Orbit Divisor Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The class bit has been proved equal to divisibility by a chosen Gaussian prime above p. The remaining step is to identify that choice with a Frobenius/Artin symbol, turning the elementary counting theorem into a hand-computed instance of class field theory over Q(i).\n\nThe class map of the counting theorem is the restriction of the Artin map Cl(Z[i]/N) -> Gal(Q(i)/Q)^k to elements of norm N.\n\nProve that conjugating the representation of p flips the bit (immediate from gaussianInt_dvd_exactly_one) and match the involution with complex conjugation; compare with Mathlib's GaussianInt prime factorisation.\n\nThe counting theorem is a shadow of class field theory, with a purely computational handle on the Artin symbol.\n\nThe bit is strictly finer than the Frobenius symbol, which would be surprising and worth isolating.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4404",
+    "priority_score": 0.5639567524217843,
+    "research_mode": "team",
+    "source_exp_id": "b63aa142",
+    "status": "available",
+    "timestamp": "2026-08-30T17:30:28.587029+00:00",
+    "title": "Artin-Symbol Identification of the Representation Bits"
   },
   {
     "consumed_by_exp_id": "",

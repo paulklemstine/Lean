@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-08-30T12:55:22Z",
-  "count": 41,
+  "archived_at": "2026-08-30T17:30:29Z",
+  "count": 42,
   "directions": [
     {
       "id": "fd_3695",
@@ -1620,6 +1620,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_3917",
+      "title": "NET-91 THE-CHEAP-DRAFT-WINS-AND-CODE-DRAFTS-DEEP: speculative decoding of a 7B LLM entirely on CPU pays up to 1.66x — smaller draft wins every cell (cost dominance), optimal depth is domain-parameterized (code deep, prose collapses past d=4 into a net loss)",
+      "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 66 (first round of the user-directed CPU pivot; doubles as the hardware-stability canary after the 2026-08-23 memory-fault fixes).\n\n**Claim:** Qwen2.5-7B-Instruct Q4_K_M executed entirely on CPU (llama.cpp, i9-9900K, threads=8, 5.79 tok/s greedy baseline) with same-family drafts:\n\n| config | prose speedup | prose accept | code speedup | code accept |\n|---|---|---|---|---|\n| 0.5B d=2 | 1.254x | 63.9% | 1.352x | 71.6% |\n| 0.5B d=4 | 1.416x | 47.7% | 1.616x | 63.0% |\n| 0.5B d=8 | **0.979x LOSS** | 30.9% | **1.661x BEST** | 56.0% |\n| 1.5B d=2 | 1.016x | 63.2% | 1.195x | 83.4% |\n| 1.5B d=4 | 1.153x | 51.9% | 1.395x | 74.8% |\n| 1.5B d=8 | 0.982x LOSS | 44.9% | 1.354x | 60.3% |\n\n**Scorecard:** P2 CONFIRMED dramatically (>1.05x predicted; up to 1.661x measured); P4 CONFIRMED (+17.8 pts code>prose acceptance, growing +14/+19/+20 with depth); P1 razor-thin REFUTED (47.72% vs >=50% horn); P3 REFUTED as stated — NO crossover: the 11.8%-of-target-cost 0.5B draft beats the 23.4%-cost 1.5B in ALL SIX head-to-heads even where 1.5B accepts more (code d=8: accept 60.3 vs 56.0 but speedup 1.354x vs 1.661x).\n\n**Laws:** (1) DRAFT-COST DOMINANCE ON CPU — acceptance advantages do not survive a 2x per-token cost disadvantage when proposal is sequential but verification amortizes; GPU folklore does not transfer. (2) OPTIMAL DEPTH IS DOMAIN-PARAMETERIZED — prose acceptance halves per doubling past d=2 and d=8 becomes a net loss; code decays gracefully and keeps paying through d=8; a static depth setting forfeits 25%+ throughput. (3) Practical: +66% free serving throughput from a 0.6GB side model; prescription = small q8_0 draft, d=8 for code, d=4 for prose.\n\n**Hardware note:** this round doubled as the stability canary after fixing the box's memory subsystem (XMP off + BIOS v1.F0 after uncorrected-MCE hard crashes) — ~55 minutes of sustained full-CPU llama.cpp load completed with zero incidents; the identical load profile hard-crashed the box three times pre-fix.\n\n**Honest limits:** one model family, one box, greedy sampling, ~500-token prompts, 12 configs x 8 runs; overall drafted-token acceptance (not per-position curves); absolute tok/s specific to post-fix JEDEC state (ratios within-round only). Catalog scan: no prior speculative-decoding/KV-quant work locally or in alethean index.\n\nScript ResearchOutput/exp_net91_specdec.py; paper ResearchOutput/NetworkMathematics/91_TheCheapDraftWins.md.\n\nOpen: per-position acceptance maps (why prose collapses past d=4); domain-adaptive draft depth; KV-cache quantization ladder on the same 7B; weight-quant floor transfer; knee-law transfer to 7B.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "342e465c",
+      "timestamp": "2026-08-24T03:18:15.573191+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.9999999999999999,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-29T18:32:30.179093+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 345
     }
   ]
 }
