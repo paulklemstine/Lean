@@ -1782,16 +1782,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-70 #3 \u2014 ASCENT-COST: exact branch-oracle economics; effective branching refuted; master-law mapping refuted (paper 194)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "295b6c11",
     "description": "Round-70 #2, exp 546 + coordinator exp546b. H1 (residue-style blindness extends to magnitudes) REFUTED \u2014 with the mechanism landing squarely inside the barrier map.\n\n**ENERGY-ASCENT-SIGNAL**: the Fermat-window magnitude spectrum of E(a)=a\u00b2\u2212N (isqrt-anchored window W=4096) carries MI = **0.1836 bits about the first Berggren branch letter b\u2081** (19% of its entropy), permutation-null z +109\u2026+120 over 300 row-shuffles; 69/225 N-only cells flag z\u22653 (chance \u22480.3); joint (b\u2081,b\u2082) up to 0.2736 bits.\n\nHonesty first: on raw b\u2081 (78% letter-1) OOS accuracy only matches the majority baseline \u2014 the load-bearing evidence is dependence + minority-structure targets (dB-quartile beats chance AND majority OOS). **Coordinator scale control**: within-log(n)-bin shuffles give MI 0.2104 z=+100; within non-hit class MI 0.1139 vs null 0.006 \u2014 not scale, not strata, not just the threshold bit.\n\nControls: ratio-band\u2192b\u2081 exact 3000/3000; N mod 3^k null worst z=+1.97 (paper 81 seal replicated); Gauss-magnitude features null max z=1.30.\n\nMechanism: hit-in-window rate by letter {0.000, 0.019, 0.673}; corr(log(d+1), log \u03c1) = \u22120.917; d \u2248 n/(2\u03c1) \u2014 the spectrum is a fixed-window POSITIONAL sensor of the parabola zero-crossing. The tree letters are sealed against residues, OPEN to position \u2014 exactly what paper 132's residual-gap list predicted (positional witnesses) and paper 137 priced (5.19\u00d7). Value bounded (~19%; perfect W=4096 hit-detection worth 0.3035 bits; optimized window placement = named follow-up); cost economics deferred to exp547's (\u03b1,c) phase diagram.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp546_energy_ascent_oracle.py + exp546b_scale_control.py + exp546_result.json + exp546_data.npz, seed 20260823.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3910",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T02:00:10.720028+00:00",
     "title": "FACT round-70 #2 \u2014 ENERGY-ASCENT: a magnitude channel sees the Berggren branch letters; mechanism positional (paper 193)"
   },
@@ -1808,21 +1809,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T02:00:10.721551+00:00",
     "title": "FACT round-70 #1 \u2014 TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
-  },
-  {
-    "consumed_by_exp_id": "9c1e5dc4",
-    "description": "Round-71 #2, exp 553. The ladder turns.\n\n**U116-MIXED**: pooled Spearman(T, rate) = **0.4847** CI [0.4413, 0.5283] \u2014 fifth consecutive cell below the 0.55 band, but the step delta is **+0.0226, the FIRST POSITIVE step of the ladder** after five declines (0.5739 \u2192 .5436 \u2192 .5005 \u2192 .4880 \u2192 .4621 \u2192 .4847). T beats count by +0.1002 paired CI [+0.0481, +0.1461] \u2014 H2 restored decisively.\n\nThe QR-lottery dial's degradation is not a slide to zero \u2014 the shape reads as asymptotic fade with rebound noise toward a floor near ~0.46\u20130.49. Named follow-up: U120 tests the floor directly (under 0.46 \u2192 lower floor; in [0.46,0.53] \u2192 confirmed; above 0.55 \u2192 band re-entry).\n\nLedger: range correction documented PRE-DATA (brief \u00d716 typo family, binding rule applied); q-window overflow at exactly 2^64 fixed pre-data (uint64); stale exp540 ERROR artifact identified; rho-classifier spot-checks 0 mismatches.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp553_t_dial_unif_116.py + exp553_result.json + exp553_run.log, seeds 20261210\u201312.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3919",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T03:18:15.575758+00:00",
-    "title": "FACT round-71 #2 \u2014 TDIAL-U116: the fade REBOUNDS, floor forming near 0.46\u20130.49 (paper 200)"
   },
   {
     "consumed_by_exp_id": "be2e1d6c",
@@ -3925,35 +3911,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "seed_382",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: Mathematics as an Evolving Ecosystem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "seed_387",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
     "consumed_by_exp_id": "",
@@ -12388,6 +12345,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Since d+1 complete levels always contain a copy of B_d, any family beating d levels must be non-levelled. Quantifying the defect from being a level union should bound the possible excess and pin the absolute constant c in the conjecture.\n\nThere is an absolute constant c with La(n,B_d) <= (d+c) C(n,floor(n/2)) for all n and d, and near-extremal families differ from a union of d consecutive levels in o(C(n,floor(n/2))) sets.\n\nIntroduce a defect parameter counting incomplete layers of F and prove a bound of the form |F| <= d C + f(defect), then optimise over defect.\n\nThe main conjecture F4 is settled with an explicit structural description of the extremal families.\n\nThere exist genuinely non-levelled families beating d + c levels, which would be a striking new construction.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4413",
+    "priority_score": 0.6722063492063494,
+    "research_mode": "team",
+    "source_exp_id": "181f9c07",
+    "status": "available",
+    "timestamp": "2026-08-30T23:31:33.044064+00:00",
+    "title": "Nonlevelled Extremal Defect"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The refined inequality 1 + ||p - flat||_1/(2 c_asc) <= X is now proved, and it is an identity on two-cell profiles, which shows the constant 1 is optimal. The conjecture is that two-cell support is not only sufficient but necessary for equality, so the equality locus is exactly the union of the two-atom faces of the simplex.\n\nAn antitone profile on M cells satisfies C_0 - c_asc = ||p - flat||_1/2 if and only if its mass is carried by at most two cells.\n\nTrack the discarded factor |i - j| in the pairwise Chebyshev expansion of scanCost_le_baseCost_sub_flatDist and characterise when every discarded term vanishes; check the resulting criterion on explicit three-cell profiles.\n\nThe dispersion correction is exactly computable on its extremal set and the residual slack of a measured profile decomposes into a two-cell part and a strictly positive remainder.\n\nA larger equality face exists and the L1 dispersion functional is degenerate on it, so a finer (index-weighted) functional is needed.",
     "domains": [
       "Combinatorics"
@@ -12399,6 +12370,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-27T20:31:43.808427+00:00",
     "title": "Equality Locus of the Sharp Dispersion Inequality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The doubling lemma builds a B_{d+1} copy from two parallel B_d copies, suggesting that the asymptotic constant grows additively rather than doubling. A one-step comparison between B_{d+1}-free and B_d-free families would iterate to the linear bound demanded by F4.\n\nThere is an absolute constant c0 with La(n, B_{d+1}) <= La(n, B_d) + c0 * C(n, floor(n/2)) for all n and d.\n\nGiven a B_{d+1}-free family, peel off a bounded number of antichains so that the remainder is B_d-free, using hasBdCopy_succ_of_stacked to detect the forbidden doubled configuration.\n\nIterating gives La(n,B_d) <= (c0 d + O(1)) C(n, floor(n/2)), which is exactly the O(d) target of F4.\n\nThe Boolean poset constant grows superlinearly in d and the conjectured (d+c) form is wrong.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4411",
+    "priority_score": 0.6718235294117648,
+    "research_mode": "team",
+    "source_exp_id": "181f9c07",
+    "status": "available",
+    "timestamp": "2026-08-30T23:31:32.031455+00:00",
+    "title": "Doubling Recursion for the Boolean Poset Constant"
   },
   {
     "consumed_by_exp_id": "",
@@ -12623,6 +12608,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T03:14:29.634485+00:00",
     "title": "Exponential Rate of the Common-Quartet Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Lubell-mass theorem proved here is exactly the constraint of a fractional knapsack whose variables are the layer intersections of the family. Solving that knapsack greedily upgrades the counting bound to Erdos's exact theorem on chain-free families.\n\nIf F has no chain of k+1 sets then |F| is at most the sum of the k largest binomial coefficients C(n, i).\n\nFormalise the exchange argument: given layer sizes n_j <= C(n,j) with sum n_j / C(n,j) <= k, the total sum n_j is maximised by saturating the k largest layers.\n\nThe chain bound becomes exact for chain-free families, and every subsequent improvement for B_d must come from non-chain configurations.\n\nThe Lubell relaxation is strictly weaker than Erdos's theorem, indicating an obstruction invisible to LYM-type arguments.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4412",
+    "priority_score": 0.671529411764706,
+    "research_mode": "team",
+    "source_exp_id": "181f9c07",
+    "status": "available",
+    "timestamp": "2026-08-30T23:31:32.537421+00:00",
+    "title": "Erdos Layer Knapsack Optimisation"
   },
   {
     "consumed_by_exp_id": "",
@@ -14864,6 +14863,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Pooling across seeds never inflates a correlation, so a pooled ladder converging to a positive floor forces, at every rung, a seed whose reading is at least the pooled one. The conjecture upgrades this rung-wise statement to a single seed family whose own ladder has liminf at least the pooled floor, making a pooled floor a genuine per-seed phenomenon rather than a concatenation artefact.\n\nIf the pooled readings rho_k converge to L > 0 and the number of seeds is fixed and finite, then there is a seed index k0 with liminf of the per-seed readings for that seed at least L.\n\nCombine exists_seed_corr_gt_of_pooled_gt with a pigeonhole over the finitely many seed indices and a liminf argument along the resulting subsequence.\n\nA pooled floor certifies a per-seed floor, so the dial signal is intrinsic and the QR-lottery construction retains structure at all bitlens.\n\nPooled floors can arise from a rotating set of seeds with no individual floor, and the pooled protocol must be replaced by per-seed reporting.",
+    "domains": [],
+    "id": "fd_4409",
+    "priority_score": 0.5930000000000001,
+    "research_mode": "team",
+    "source_exp_id": "9c1e5dc4",
+    "status": "available",
+    "timestamp": "2026-08-30T23:31:09.238617+00:00",
+    "title": "Upward Inheritance of Floors Through Seed Pooling"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The two extreme spines of the tree are the centred-square spine A^n (hypotenuse 2n^2+6n+5) and the Pell/NSW spine B^n (hypotenuse 1,5,29,169,985,...). They should bracket the depth of every node: logarithmic below, square-root above. This converts the sharp hydra bound (k+1)^(depth+1) into an explicit bound in the hypotenuse.\n\nFor every primitive triple with odd first leg, log_{3+2sqrt2}(c) - 1 <= bergDepth (a,b,c) <= (sqrt(2c)-1)/2, with both bounds attained on the B- and A-spines respectively.\n\nProve c_parent >= (c-1)/6 and c_parent <= c - 2*sqrt(2c) + O(1) from the parent formula, then induct along the descent.\n\nAn effective, closed-form bound on the length of any Pythagorean battle in terms of the triple itself.\n\nThere are triples whose descent is anomalously long or short, revealing a new arithmetic invariant of the tree beyond the hypotenuse.",
     "domains": [],
     "id": "fd_3446",
@@ -15713,6 +15724,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Over a window of K rungs, the number of sign changes of the step sequence is 0 for any multiplicative or positively-contracting affine fade, and K-1 for a negatively-contracting one. Any intermediate count forces noise bounded below by the smallest step that breaks the pattern. This makes a purely combinatorial statistic of the ladder into a quantitative noise certificate.\n\nIf a ladder is a noisy affine fade with ratio lambda and noise eta over rungs 0..K, and the step sequence has s sign changes with 0 < s < K-1, then eta >= (1/2) * min over pattern-breaking indices of |step|.\n\nDefine signChanges of a finite step sequence in Lean, prove the two extreme cases from affineFade_alternates_of_neg and multiplicative_fade_no_rebound, then the intermediate bound by localising at a pattern-breaking index.\n\nA single integer statistic of the recorded ladder yields a lower bound on experimental noise without any model fit.\n\nSign patterns are compatible with arbitrarily small noise, and only magnitudes constrain the model.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4407",
+    "priority_score": 0.5648061131850186,
+    "research_mode": "team",
+    "source_exp_id": "9c1e5dc4",
+    "status": "available",
+    "timestamp": "2026-08-30T23:31:08.172030+00:00",
+    "title": "Sign-Change Count as a Fade-Law Discriminator"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Extend the window-score calculus from exactly orthogonal columns to columns whose Gram matrix is diagonally dominant. The conjecture is that dilution, matched-filter dominance and the peak-margin identity survive with a multiplicative 1 + O(eps) loss. This matters because real indicator columns are only approximately orthogonal.\n\nIf the Gram matrix G of the window columns satisfies ||G - D|| <= eps * lambda_min(D) with D the diagonal part, then for every weight w and window B one has R2(w,B) <= (1+C*eps) * R2(matched,B), and appending a column orthogonal to the response decreases R2 by at least (1-C*eps) times the orthogonal-model amount.\n\nFormalise a Gram-perturbation version of Model in Lean, with the orthogonality field replaced by a bound on off-diagonal inner products, and re-derive R2_le_matched and noise_dilutes with explicit constants.\n\nAll conclusions of the orthogonal theory transfer to realistic column families, so an observed interior argmax remains a certificate of weight mismatch.\n\nInterior maxima can be produced by column correlation alone, and no conclusion about the weight can be drawn from the shape of the window curve.",
     "domains": [
       "Algebra",
@@ -16010,6 +16036,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-28T14:27:24.269262+00:00",
     "title": "Powersmooth-Order Density Threshold for Hasse Windows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A B_{d+1}-free family cannot contain two pointwise-nested chains of length 2^d, a strictly stronger restriction than the absence of a single chain of length 2^{d+1}. Averaging this deficiency over random full chains should give the first constant-factor improvement over the chain bound. The formal criterion is already available.\n\nEvery B_3-free family F of subsets of [n] satisfies the Lubell bound sum_{A in F} 1/C(n,|A|) <= 6 + o(1), hence La(n,B_3) <= (6+o(1)) C(n, floor(n/2)).\n\nFormalise a random-full-chain averaging in the existing Lubell framework and show that chains meeting F in 7 sets force a forbidden parallel-chain configuration in a positive proportion of neighbouring chains.\n\nThe chain factor 2^d - 1 is not optimal already at d = 3, giving the first step towards La(n,B_d) <= (d+c)C(n,floor(n/2)).\n\nLong chains are the true obstruction and the extremal families for B_3 must contain 7-chains, reshaping the conjecture.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4410",
+    "priority_score": 0.5647058984721419,
+    "research_mode": "team",
+    "source_exp_id": "181f9c07",
+    "status": "available",
+    "timestamp": "2026-08-30T23:31:31.522086+00:00",
+    "title": "Parallel-Chain Deficiency Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -16370,6 +16411,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T08:00:46.322666+00:00",
     "title": "Mixture Spectrum for Prime Powers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "B_2-freeness is equivalent to the local statement that every open interval (A,D) spanned by two members of the family contains at most one further member. This converts a four-element search into a counting condition on intervals, which is the natural input for entropy or flag-algebra methods.\n\nLa(n, B_2) <= (2 + o(1)) C(n, floor(n/2)), proved via the interval-local characterisation.\n\nFormalise the equivalence from HasBdCopy 2 and then bound the Lubell mass of families satisfying the interval condition.\n\nThe long-standing diamond conjecture is resolved, and the doubling lemma lifts the result towards general d.\n\nThe interval condition is too weak to detect the extremal structure, isolating precisely which global information is needed.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4414",
+    "priority_score": 0.5645856408166897,
+    "research_mode": "team",
+    "source_exp_id": "181f9c07",
+    "status": "available",
+    "timestamp": "2026-08-30T23:31:33.550152+00:00",
+    "title": "Interval-Local Characterisation of Diamond-Freeness"
   },
   {
     "consumed_by_exp_id": "",
@@ -28229,6 +28285,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every floor statement proved in this cycle compares candidate floors at one common fade ratio. If the ratio is estimated from the same rungs, the set of pairs (floor, ratio) consistent with the data at noise eta should be a curve rather than a point. The conjecture is that this curve sweeps an interval of floors much wider than the pre-registered window, so a floor reported without an independent handle on the ratio is not a measurement.\n\nFor the recorded rungs and any eta at least the U116 rebound size, the set of pairs (L, lambda) with |lambda| < 1 for which the rungs form a noisy affine fade with floor L, ratio lambda and noise eta contains a continuous curve whose floor-projection is an interval of length at least 0.1.\n\nFor each lambda solve the one-step consistency inequalities for L, exhibit the resulting interval-valued map in Lean, and evaluate its projection at the recorded rungs.\n\nFloor reports must be accompanied by an independent ratio estimate; the U116 floor window is a statement about the fit, not about the dial.\n\nThe rungs pin the pair jointly, and the reported floor window is a genuine measurement of the dial.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4406",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9c1e5dc4",
+    "status": "available",
+    "timestamp": "2026-08-30T23:31:07.647817+00:00",
+    "title": "Consistency Curve of Floor and Ratio for a Fixed Ladder"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle five pinned the minimax floor error at eta/2 when the residuals are only assumed bounded with a known alternating pattern. The open successor couples the residuals to the dynamics: the readings must satisfy the noisy affine fade recursion with an unknown ratio lambda, which both restricts the adversary and hides the floor behind a second unknown. The conjecture is that the resulting minimax error is governed by the distance of lambda from 1 and, crucially, still does not improve with the number of rungs.\n\nFor the class of noisy affine fades with noise eta and unknown ratio lambda in [-1+delta, 1-delta], the minimax floor error from any number of rungs is between eta/2 and 2*eta/delta, and is bounded below by a constant multiple of eta/delta; in particular it does not tend to zero as the number of rungs grows.\n\nCombine floor_identifiability_threshold, which makes two floors confusable exactly when |1-lambda| |L1-L2| <= 2 eta, with a two-point construction at the worst admissible lambda, and compare against the midrange and the Aitken estimator on the recorded rungs.\n\nReporting a floor without an independent handle on the ratio is bounded away from the truth by eta/delta however long the sweep is run, so longer sweeps are the wrong experimental investment.\n\nSome estimator exploits the recursion to beat the static barrier, and longer sweeps do buy floor accuracy.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4408",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9c1e5dc4",
+    "status": "available",
+    "timestamp": "2026-08-30T23:31:08.715010+00:00",
+    "title": "Minimax Floor Estimation Under an Unknown Fade Ratio"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -39779,19 +39863,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture D (Exact asymptotics of the dequantisation error)"
   },
   {
-    "consumed_by_exp_id": "181f9c07",
-    "description": "**Conjecture.** The factor $2^d - 1$ in the chain bound is far from optimal:\n$\\mathrm{La}(n,B_d) \\le (d+c)\\binom{n}{\\lfloor n/2\\rfloor}$ for an absolute constant $c$\nindependent of $d$ and $n$. Concretely for $d = 3$:\n$\\mathrm{La}(n,B_3) \\le 4\\binom{n}{\\lfloor n/2\\rfloor}$ for all $n$.\n\n*Status.* Open. Proved: $\\le 7\\binom{n}{\\lfloor n/2\\rfloor}$ for $d = 3$, and the exact value\n$\\binom{n}{\\lfloor n/2\\rfloor}$ for $d = 1$. *Falsifiable* by a construction beating\n$4\\binom{n}{\\lfloor n/2\\rfloor}$ for some $n$; F3 only asks for $3+\\varepsilon$, so F3 and F4\nare compatible.",
-    "domains": [],
-    "id": "fd_2933",
-    "phase": "A",
-    "priority_score": 0.4386666666666666,
-    "research_mode": "team",
-    "source_exp_id": "39ee2889",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:27:00.324260+00:00",
-    "title": "F4. Sharpening the chain upper bound from $2^d - 1$ to $O(d)$"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The representable density over `Fin n` tends to `1 - e\u207b\u00b9`.  Conjecture: for the\ncategory of finite semantic domains with a fixed extra structure (monoid\nactions, partial orders, metric quantisations), the representable density\nconverges to a structure-dependent constant, and this constant is a complete\ninvariant separating the structures: e.g. monotone endomorphisms of a finite\nchain have density `1` (every monotone self-map of a finite chain has a fixed\npoint) while permutations have density `1 - e\u207b\u00b9 + o(1)` in the derangement\nsense.\n\n*The key insight is* that the obstruction is quantitative: `e\u207b\u00b9` of all\nsemantic dynamics is permanently outside self-applicative syntax, and this\nproportion is computed from the fixed-point predicate alone, so it should vary\npredictably when the ambient class of endomorphisms is restricted.\n\n*Why now?* `card_maximal_representable_family` and\n`representable_density_tendsto` give the unrestricted baseline in closed form,\nso restricted classes can be compared to a proved reference value.",
     "domains": [],
@@ -46298,14 +46369,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derive competitive exclusion from an explicit resource model rather than encoding unique occupancy in `NicheAllocation`."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "789057bd",
     "description": "Formalize the `L \u00d7 L` square torus and prove parameters `[[2L\u00b2, 2, L]]`, including a lower bound showing every nontrivial primal or dual cycle uses at least `L` edges.",
     "domains": [],
     "id": "fd_2302",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "fc320765",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:33.034786+00:00",
     "title": "Toric grids"
   },
