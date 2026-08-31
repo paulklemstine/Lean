@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3b9c1eb4",
-      "domain": "Computation",
-      "key_insight": "# FUTURE DIRECTIONS — U065 mechanism, after five research cycles\n\n## What these cycles established (formally, 0 sorries, standard axioms only)\n\n* **Mean preservation, any modulus.** `sum_rootCountM`:",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-26T08:01:01",
-      "title": "FACT round-86 #1 — U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL — hump REAL over exact Dic"
-    },
-    {
       "cycle_id": "92ebc5bc",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — identifiability inside the positional shape layer\n\nDerived from this cycle's two formal files:\n\n* `Catalog/MachineLearning/EdgeSpikeCensoring.lean` — the steepness of a\n  left-ed",
@@ -499,19 +489,19 @@
       "theorem_count": 106,
       "timestamp": "2026-08-31T23:52:45",
       "title": "FACT round-70 #1 — TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
+    },
+    {
+      "cycle_id": "c8871952",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after the rate-dial theorem (paper 242 formalized)\n\n## What this cycle established\n\nFormalized in `Catalog/Shared/MixtureRateDialCells.lean`,\n`MixtureRateDialBaseline.lean`, `Mix",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-31T23:53:01",
+      "title": "FACT round-87 #1 — MIXTURE-BASELINE (exp 588c FINAL): H0 — u*≈0.65 excess SURVIVES full divisibility"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3026c1dd",
-      "domain": "Physics",
-      "key_insight": "# Future directions — higher-dimensional Pythagorean trees\n\nThe results proved in this cycle (`Catalog/Physics/HigherPythagoreanTrees/`) settle the\nqualitative shape of the generalisation:\n\n* the desc",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-21T08:59:01",
-      "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
-    },
     {
       "cycle_id": "1e89ff02",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 106,
       "timestamp": "2026-08-31T23:52:45",
       "title": "FACT round-70 #1 — TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
+    },
+    {
+      "cycle_id": "c8871952",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after the rate-dial theorem (paper 242 formalized)\n\n## What this cycle established\n\nFormalized in `Catalog/Shared/MixtureRateDialCells.lean`,\n`MixtureRateDialBaseline.lean`, `Mix",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-31T23:53:01",
+      "title": "FACT round-87 #1 — MIXTURE-BASELINE (exp 588c FINAL): H0 — u*≈0.65 excess SURVIVES full divisibility"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "68de46a5",
-      "domain": "Tropical",
-      "name": "dpVal_eq",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "68de46a5",
-      "domain": "Tropical",
-      "name": "dpVal_eq_netCost_pin",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "68de46a5",
-      "domain": "Tropical",
-      "name": "saturation_exact",
-      "quality": 0.72
-    },
     {
       "cycle_id": "c9c85c67",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "langTax_eq",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "c8871952",
+      "domain": "Shared",
+      "name": "behind",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c8871952",
+      "domain": "Shared",
+      "name": "mixPred_eq_smul",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c8871952",
+      "domain": "Shared",
+      "name": "mixPred_no_positional_freedom",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-31T23:52:45",
+  "last_updated": "2026-08-31T23:53:01",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "b5bb3340",
-        "quality": 0.78,
-        "theorems": 169,
-        "title": "Topological Quantum Computation from the Berggren Groupoid — Anyonic Braiding on"
-      },
-      {
         "cycle_id": "ec6993b5",
         "quality": 0.82,
         "theorems": 72,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 97,
         "title": "NET-91 THE-CHEAP-DRAFT-WINS-AND-CODE-DRAFTS-DEEP: speculative decoding of a 7B L"
+      },
+      {
+        "cycle_id": "c8871952",
+        "quality": 0.82,
+        "theorems": 61,
+        "title": "FACT round-87 #1 — MIXTURE-BASELINE (exp 588c FINAL): H0 — u*≈0.65 excess SURVIV"
       }
     ],
     "Tropical": [
