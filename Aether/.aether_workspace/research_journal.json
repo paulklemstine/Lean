@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "217690eb",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nDerived from this cycle's results in `Catalog/MachineLearning/QRResidual/`\n(`BlockCeiling.lean`, `NeighborNull.lean`, `PermutationNull.lean`,\n`MeasurableCeiling.lean`).\n\nWhat this",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-26T03:19:58",
-      "title": "FACT round-83 #4 — NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR — local factorizati"
-    },
-    {
       "cycle_id": "733effba",
       "domain": "Algebra",
       "key_insight": "# Future Directions — after the H0 window-geometry cycle (exp 581 / paper 231)\n\n## What this cycle established\n\nThree Lean files (`Catalog/Algebra/HumpWindowGeometry.lean`,\n`Catalog/Algebra/HumpFitted",
@@ -499,19 +489,19 @@
       "theorem_count": 71,
       "timestamp": "2026-08-31T13:52:14",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "df74e96c",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE_DIRECTIONS — after the GAP-L7 falsification (round-76 #1)\n\n## What this run established (all `sorry`-free, `Catalog/Novelty/Reorder*.lean`)\n\nCycle 1\n\n* **Exchange theorem** (`probeCost_massso",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-08-31T13:52:33",
+      "title": "FACT round-76 #1 — GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "39ef81fe",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Chromatic Polynomials and Emotional Diversity\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What is already settled:\n`emoChrom G = max χ(G) 3` (structur",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 90,
-      "timestamp": "2026-08-21T03:17:09",
-      "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-    },
     {
       "cycle_id": "eccb3315",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 71,
       "timestamp": "2026-08-31T13:52:14",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "df74e96c",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE_DIRECTIONS — after the GAP-L7 falsification (round-76 #1)\n\n## What this run established (all `sorry`-free, `Catalog/Novelty/Reorder*.lean`)\n\nCycle 1\n\n* **Exchange theorem** (`probeCost_massso",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-08-31T13:52:33",
+      "title": "FACT round-76 #1 — GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "062fc32a",
-      "domain": "NumberTheory",
-      "name": "dial_def",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "062fc32a",
-      "domain": "NumberTheory",
-      "name": "three_le_of_ne_two",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "062fc32a",
-      "domain": "NumberTheory",
-      "name": "two_ne_zero_of_ne_two",
-      "quality": 0.78
-    },
     {
       "cycle_id": "f671dcbf",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "nth_prime_odd",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "df74e96c",
+      "domain": "Novelty",
+      "name": "This",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "df74e96c",
+      "domain": "Novelty",
+      "name": "plus",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "df74e96c",
+      "domain": "Novelty",
+      "name": "can",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-31T13:52:14",
+  "last_updated": "2026-08-31T13:52:33",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a3cbf41f",
-        "quality": 0.81,
-        "theorems": 51,
-        "title": "NET-87: CODE-AT-4096-IS-PROTECTED — code knee @4096 is 32 vs prose 40; domain fa"
-      },
-      {
         "cycle_id": "eef05184",
         "quality": 0.8,
         "theorems": 112,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 52,
         "title": "FACT round-70 #3 — ASCENT-COST: exact branch-oracle economics; effective branchi"
+      },
+      {
+        "cycle_id": "df74e96c",
+        "quality": 0.83,
+        "theorems": 73,
+        "title": "FACT round-76 #1 — GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as dra"
       }
     ],
     "NumberTheory": [

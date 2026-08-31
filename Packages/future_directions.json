@@ -17614,14 +17614,14 @@
       "parent_direction": "",
       "priority_score": 0.82,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Mis-scoped and internally inconsistent as stated. 'Positive integers with finite Collatz stopping time has density 1' is Terras's theorem, but the direction immediately bundles the Krasikov-Lagarias bound (density of integers with bounded trajectory >= x^{0.84}), a delicate analytic-combinatorial result far beyond a single formalization cycle, together with '3-adic analysis ... local convergence properties' which is not a precise statement (the Collatz map's 3-adic behaviour is not the standard 2-adic conjugacy, and no convergence theorem is specified). The actionable part is a single known density statement; the rest is undefined or infeasible, giving no coherent target.",
+      "pruned_at": "2026-08-31T13:52:34Z",
       "quarantined_until": "",
       "research_mode": "prove",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-07-24T14:34:16.697736+00:00",
       "title": "Collatz Stopping Times: Density Analysis"
@@ -86467,11 +86467,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ce3d1cf6",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -86481,7 +86481,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_2620",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-31T13:54:43.121806+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -86496,7 +86496,7 @@
       "source": "",
       "source_exp_id": "d1098480",
       "source_path": "resplit_migration",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-21T06:25:11.573329+00:00",
       "title": "Smoothness and rank of the Hopf map"
@@ -130722,11 +130722,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "17866175",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -130738,7 +130738,7 @@
       ],
       "github_issue": 333,
       "id": "fd_3776",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-31T13:53:59.917182+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -130753,7 +130753,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-22T23:36:49.794322+00:00",
       "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knees {12,20}: starts at code's level but rises at double the expected rate"
@@ -130762,11 +130762,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2f2e652e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -130778,7 +130778,7 @@
       ],
       "github_issue": 332,
       "id": "fd_3777",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-31T13:54:11.261772+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -130793,7 +130793,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-22T23:36:49.795485+00:00",
       "title": "NET-88: THE-TOKENIZER-TAX-EXPLODES — German prose at 4096 needs >56 keys (all points fail); +4 fine-step tax becomes >=+16 at long context (4x amplification)"
@@ -136193,11 +136193,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "51790419",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -136209,7 +136209,7 @@
       ],
       "github_issue": 335,
       "id": "fd_3911",
-      "last_attempt_time": "2026-08-31T05:38:00.878308+00:00",
+      "last_attempt_time": "2026-08-31T13:54:19.159150+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -136224,7 +136224,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-24T02:00:10.721551+00:00",
       "title": "FACT round-70 #1 — TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
@@ -142224,23 +142224,23 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 3,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c8871952",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "**FACT round-87 #1 — exp 588c MIXTURE-BASELINE [FINAL] · paper 242 · closes paper 241's routed branch with a negative that converts to a NEW MAP ENTRY**\n\nVERDICT: **H0 — EXCESS SURVIVES THE DIVISIBILITY MIXTURE** (registered rule: H0 iff amp_mix >= 2·SE_mix; fired as registered).\n\n- Residual mid-window peak **amp_mix = 0.1774 ± 0.0432 (z = 4.11 ≥ registered bar of 2), peak at t = 0.65 exactly**; removal vs single-α baseline = **0%** (pre-named corroboration).\n- Model: 16 cells = divisibility pattern (2|v, 3|v, 5|v, 7|v) of v = j²−N; PRED(b) = Σ_c κ_c·S_c(b); S_c = Dickman-weighted reference sums; κ_c flank-only fit (score window excluded), λ=5 shrinkage toward global flank rate.\n- **WHY the mixture couldn't absorb it:** class composition measured FLAT in t (max cell drift 0.269%) — the mixture had no positional freedom; per-cell rates ARE real (κ/g spread **0.645–1.406**, ~2.2× rate modulation, top cells 3|v&5|v combos) but t-INDEPENDENT by construction. Formulation: **DIVISIBILITY IS A RATE DIAL, NOT A POSITION DIAL.**\n- Bit 0 (2|v) ≡ j-parity since N odd — parity merged into the grid and equally failed → closes paper 241's residual parity reading too.\n\n**CONTROLS + CAVEAT (disclosed per registration):** CTRL-A machinery null PASS (amp 0.0271 ± 0.0102, max-dev all bins 0.0342). CTRL-B parametric Poisson estimator-null amp_sim 0.0860 ± 0.0411 measures max-over-bins positive bias inside the raw amplitude → **null-calibrated z_cal = 1.53 < 2**; registered raw-amplitude rule stays verdict-bearing, disagreement flagged not silently resolved. Follow-ups power against the calibrated scale.\n\n**PROVENANCE:** Regen EXACT_MATCH on the proven exp588b-A3 lineage (population/windows int64-equal, stream order-walk 128/128, smoothness spot-check hits-smooth/controls-nonsmooth all pass), statistics gated on it; wall 12.6 s; npz sha256 df4830ed…fbb74 re-recorded at load.\n\n**LEDGER CATCHES:** A1 amendment — original single control (count halves vs ρ-weighted prediction) had a NON-FLAT NULL BY CONSTRUCTION (counts carry no ρ(t) gradient); caught AT SMOKE (amp 0.47 from ~290 counts/bin), control split CTRL-A/CTRL-B PRE-FULL-RUN, registered rule unchanged, NO treatment number entered any verdict through the amendment.\n\n**THREE-PASS CHAIN CLOSED (232 → 241 → 242):** feature found/stable (232) → real over exact Dickman baseline, no single binary carrier, routed to mixture model (241) → mixture fails, removal 0% (242).\n\n**NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM** — third orthogonal layer beside positional (228–230) and left-edge composition (238–240): REAL (241), STABLE (shift-invariant since 232), NON-DIVISIBILITY (here).\n\n**NAMED FOLLOW-UP: identify the non-divisibility carrier.** Pre-named candidates: (i) j-arithmetic beyond small-prime divisibility — higher-order residues of v, bit structure near the truncation boundary, quadratic-character/Legendre patterns mod p > 7; (ii) polynomial-sequence correlations — values-of-(j²−N) smoothness biases beyond divisibility.\n\nBarrier framing: map-entry addition INSIDE the rate layer's baseline-shape question — residue cap 4/3, position 5.19×, external-hint laws, quantum frontier, four-class rate closure, spike-origin arc untouched; refuted family (divisibility-rate mixtures as a positional explanation) removed from the search space at every scale; entry defined at fixed data geometry so its test transfers across bit lengths unchanged. Open unchanged: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity; PLUS the named follow-up; .2346 provenance flag still traveling.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp588c_{mixbase.py, smoke.log, full.log, result.json}`; paper `ResearchOutput/NewMathematics/242_MixtureBaseline.md`; notebook Part 284; assessment v349.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty"
       ],
       "github_issue": 390,
       "id": "fd_4061",
-      "last_attempt_time": "2026-08-26T08:02:57.810001+00:00",
+      "last_attempt_time": "2026-08-31T13:54:27.508048+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -142255,7 +142255,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-24T22:46:21.540196+00:00",
       "title": "FACT round-87 #1 — MIXTURE-BASELINE (exp 588c FINAL): H0 — u*≈0.65 excess SURVIVES full divisibility mixture (amp .177±.043 z=4.11≥bar, peak t=0.65 exact, removal 0%) — composition FLAT in t, rates real but t-independent → DIVISIBILITY IS A RATE DIAL NOT A POSITION DIAL; NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM; chain 232→241→242 complete; CTRL-B caveat z_cal=1.53<2 disclosed; named follow-up: find the non-divisibility carrier"
@@ -142932,23 +142932,23 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f09adc42",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "Paper 249 (ResearchOutput/NewMathematics/249_ConsecutiveVDependency.md). Executes exp 598's pre-registered H0 route.\n\n**Design** (pre-registered before analysis): hit-indicator autocorrelation lags 1–20 in mid-window u ∈ [0.55,0.75], nb=1000 (robustness 500/2000); Amendment 0 pre-data — PRIMARY = per-batch quadratic-detrended ρ + MC-calibrated runs Z against pooled density curve p̂(u); SECONDARY literal global-mean; H1 iff |ρ| > 0.05 AND cluster-over-Ns CI excludes 0 at some lag, OR runs |Z| > 3.2905 (p < 0.001). Controls pre-committed: C1 ctl null both variants; C2 synthetic smooth-hump iid at rate curve; C3 injected lag-1 dependence must detect. Data: exp581_regen_positions.npz (sha256 0b1afa50…36a38; 128 batches, 9,594 hits, no N stored — purely positional). Boot/MC 2000 reps each, seed 599_20260828; wall 31.4 s.\n\n**Verdict H0_PURE_DENSITY**: detrended ρ(lag) ∈ [−0.0199, −0.0023] (max |ρ| = 0.020 << 0.05), flat/slightly negative — no refractory dip, no excitation bump; per-lag MC-vs-density-curve p ∈ [0.128, 0.969]; SECONDARY even more null (ρ_raw ∈ [−0.0103, +0.0046]); runs null BOTH readings (textbook Z = +0.850 p≈0.40; MC-calibrated Z = +0.894 p≈0.37; ctl Z = −0.454). Robustness nb500 max|ρ_det| = 0.036, nb2000 0.016.\n\n**Controls all met**: C1 null (.009 raw/.020 det); C2 synthetic-hump ALSO null on secondary (max .014 @lag17, pooled_Z +0.60) ⇒ curvature confound quantitatively immaterial — conditioned and literal readings AGREE, verdict not amendment-dependent; C3 injected lag-1 DETECTED MASSIVELY (ρ_det(lag1)=0.337, argmax exactly 1, pooled_Z −57.4) ⇒ null means \"no dependency\", not \"test blind\".\n\n**CONSEQUENCE (terminal characterization)**: given position, neighboring hits carry NO information about each other — the u* ≈ 0.65 excess is pure density/rate heterogeneity along the scan axis. Thread closure chain: excess real on home seed (papers 239/241) → divisibility a rate dial not position dial (242) → no j-arithmetic carrier (248) → no sequence structure (HERE). Hit-position thread papers 228–230 → 231 → 238/240 → 241–242 → 248 CLOSES COMPLETELY. Operational law: future gains come from modeling the positional DENSITY CURVE itself, never Markov/neighborhood structure. Scope honest: holds where the excess manifests (seed-20260828 lineage); exp592/#391 ≥3-pooled-seed amplitude test remains open — machinery transfers unchanged if an excess re-establishes elsewhere.\n\n**Ledger catches**: seed-20260828 ctl regeneration via two canonical recipes BOTH mismatch ctl_0 — recipe not recoverable from allowed reads; provenance rests on sha256 (disclosed). RECORD-TIME CORRECTION: findings' \"every CI straddles 0\" overstates — result.json shows 12/20 detrended CIs exclude zero on the NEGATIVE side, upper ends ≤ 0.0083 (raw 19/20 straddle; uniform ~−0.01 offset mirrored ~+0.01 on controls — opposite-sign shared-magnitude artifact, not structure); verdict unaffected (H1 required |ρ| > 0.05 AND CI exclusion JOINTLY).\n\nBarrier framing: none — terminal characterization inside the mapped positional stratum. Open unchanged: u ≥ 6–14 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, external-hint laws, quantum closed; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty"
       ],
       "github_issue": 397,
       "id": "fd_4078",
-      "last_attempt_time": "2026-08-26T15:56:26.478219+00:00",
+      "last_attempt_time": "2026-08-31T13:54:34.841352+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -142963,7 +142963,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-25T01:54:45.653750+00:00",
       "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-window hits INDEPENDENT given position — lag profile lags 1–20 flat/slightly negative ρ ∈ [−0.020, −0.002] vs 0.05 bar (MC p 0.128–0.969), runs null both readings (Z +0.85 textbook / +0.89 density-calibrated vs 3.29), POWER CONFIRMED (injected lag-1 ρ_det = 0.337 detected at argmax exactly lag 1) — u* ≈ 0.65 excess = PURE DENSITY / rate heterogeneity, NO sequence structure — POSITIONAL THREAD CLOSES COMPLETELY (228–230 → 231 → 238/240 → 241–242 → 248)"
@@ -143022,7 +143022,7 @@
       "depth_estimate": 3,
       "description": "Round-90 #1 · exp 597 DIAL-SCALE-TRANSFER · paper 247 · notebook Part 289 · assessment v353 → v354.\n\n**Verdict: HREFINE_SCALE_DEPENDENT fired** (pre-registered rule: H1 iff α̂ ∈ [0.35,0.65] at ALL bitlens — band contains only grid point 0.5). Resolves papers 223/227's shared scope caveat with a two-part answer.\n\n**α̂ ladder**: 0.75 @ b48 [CI95 0.5–0.75] / 0.50 @ b72 [0.25–0.75] / 0.75 @ b96 [0.5–1.0] — excursion non-monotonic (0.75→0.5→0.75).\n\n**(1) WHAT TRANSFERRED — the weighted-dial ADVANTAGE.** Unweighted anchor uniformly weak (R² ≈ 0.12–0.13 everywhere); best fractional weighting beats it +0.227 / +0.056 / +0.231 at 48/72/96; every fractional gains +0.10…+0.23 at b48/b96. χ⁺ dial family works at EVERY scale tested (2× beyond paper 223's b=15). **Paper 223's tilt-transfer caveat CLOSED.**\n\n**(2) WHAT DID NOT — the √-vs-harmonic point refinement.** ΔR²(S_0.5−S_1.0) = +0.032 (b48) / +0.083 (b72) / **−0.005 (b96)** — sign flips at the largest key size. R²(α) curves are SHALLOW plateaus (argmax-vs-best-alternative 0.008/0.010/0.024; only b96 clears the 0.02 bar and there harmonic edges √). Bootstrap CIs overlap heavily; α=0.5 inside all three CIs, as is 0.75; common support exactly [0.5, 0.75].\n\n**Refined law**: scale-stable exponent PLATEAU α* ∈ [0.5, 0.75], grid-unresolved (n=96 clusters × ~8 hits/N ⇒ heavy Poisson attenuation; design resolves one grid step; endpoints are grid points). Canonical covariate S_0.5 defensible WITHOUT scope restriction (never materially beaten), but justification downgraded from point-optimality to plateau membership. **Amendment: paper 227's adopted \"α* = 0.5\" → \"α* ∈ [0.5, 0.75] plateau\".**\n\n**Ledger catches**: tester reconstructed from spec (exp577 script outside read permissions; lineage coherence via ℓ|y ⟺ χ(N,ℓ)=+1); two pool-infrastructure bugs fixed mid-run with smoke byte-identical pre/post; SINGLE seed/bitlen disclosed; RECORD-TIME CORRECTION on exp597_findings.md's transfer sentence (\"every fractional +0.10…+0.23 at ALL bitlens\" overstates — b72 breaks both clauses: best gain +0.056, harmonic R² 0.0926 falls below unweighted 0.1196); corrected wording in paper 247 §3.\n\nDesign: populations 96/bitlen, seeds 20260904/05/06, exp586 recipe verbatim; 30k j ~ U[1,2^52) absolute per N; gcd-chain exact 1e6-smoothness of y=(isqrt(N)+j)²−N; dials odd primes ≤400, grid {0.25,0.5,0.75,1.0} + anchor 0 outside fitted grid; cluster bootstrap 500 reps seed 597. Mean hits/N 8.18/9.23/7.46; zero-hit Ns none. Wall 265 s parallel.\n\nBarrier framing: no barrier interaction — dial-layer robustness certificate inside the mapped stratum. Open unchanged: u≥6–14 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, position 5.19×, external-hint laws; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling. Named follow-up: multi-seed replication at discriminating cells only if plateau location ever matters operationally.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -143062,7 +143062,7 @@
       "depth_estimate": 3,
       "description": "**Paper 246 · round-89 #1 · exp 596 · wall 2.83 s** — pure reanalysis of STORED exp577 counts (zero resampling) paired with `archived_N_vector_seed20260827.json`.\n\n## Provenance VERIFIED (both legs)\n- archive Ns == exp577 rows[].N **order-for-order 128/128**\n- functional hash reproduces exp586's headline **EXACTLY**: R²(y~S√400) = 0.624219298 vs target 0.624219 (6 decimals); mean hits 77.578 vs ref 77.58\n- Verification standard recorded: identifier string-match AND exact functional reproduction, both mandatory.\n\n## ROOT CAUSE of all prior hash failures IDENTIFIED\n`exp581_regen_positions.npz` belongs to a DIFFERENT generation than exp577 (its jlo/jhi windows differ from rows[].lo/hi) — pairing that npz with any pool was invalid from the start; fully explains the ±1 count-jitter mystery. **Standing rule: never use that npz as an exp577-family y-vector.**\n\n## Three-pass adjudication history (honest)\nv1 INVALID → v2 FAILED_HASH → v3 CONFIRMED via stored-counts path. Both dead passes died at the pre-registered hash gate before verdict statistics were read — the gate worked.\n\n## Registered test (null)\n| model | R² |\n|---|---|\n| additive (S√400 dial + neighbor ω̄(N±δ), bound 1e5) | 0.62451 |\n| + pairwise interactions of centered covariates | 0.62530 |\n\nΔR² = **+0.00079** raw / **−0.0023** adjusted; permutation p = **0.62** (500 interaction-block shuffles; null mean .0032 / max .027; permuted-y control max .059). Rule fired mechanically (ΔR²<0.02): **H0_ADDITIVE_COMPLETE**.\n\nSecondary exploratory also null: raw S400 third class ΔR²=+0.0018, p=0.87 (corr(S,S400raw)=.77 same-signal; corr(S,ω̄)=.025 orthogonal-yet-useless) — the √-dial alone carries ~all predictable variance (~0.62 of 1.0).\n\n## Honest amendment\nParity class DROPPED (no stored hit positions for true counts) ⇒ completeness covers dial×neighbor(+S400) interaction classes only; a pure parity-interaction carrier NOT excluded — revival needs fresh positions on exp577 geometry. Neighbor LPF→ω̄ substitution disclosed (exact LPF infeasible at 96 bits).\n\n## Map consequence\nFour-way-negative coverage claim COMPLETE within stated limit (individually 226/227/235/237 + jointly-additive + pairwise-interactively all fail to beat R²≈0.62). \"Non-QR per-N structure at u=2.5\" narrows to carriers OUTSIDE the tested covariate-combination space. Effort moves to u≥6–14 scale-smoothness deviations or factor-local beyond scan-order per the standing directive.\n\nUntouched: residue cap 4/3, position 5.19×, external-hint laws, quantum frontier, positional shape/carrier arc (papers 238–245), MA-1 effectivity open, .2346 flag traveling, #391 single-seed-unconfirmed stands.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -143537,7 +143537,7 @@
       "depth_estimate": 3,
       "description": "**FACT round-93 #1 — POOLED-ADJUDICATION (exp 602) — paper 243's reopen condition executed to closure.**\n\nVERDICT: **H0 FIRES ON THE REGISTERED CALIBRATED SCALE — density-only reading confirmed; POSITIONAL THREAD CLOSES.**\n\nPre-registered single test (script header before analysis): excess amplitude at u* in [0.55, 0.75] vs divisibility-mixture baseline, pooled over >=3 independent seed lineages, null-calibrated; H1: pooled z_cal >= 2 => non-divisibility positional mechanism CONFIRMED multi-seed; H0: pooled z_cal < 2 => density-only confirmed, thread closes.\n\n**Path A ran** (inventory rule: all three lineages carry mid-window positional data; positions reconstruct exactly t=(j-jlo)/(jhi-jlo), INT64-exact vs stored bounds, pairwise-disjoint N sets asserted): verbatim exp588c/exp592 mixture machinery tensor-pooled (kappa flank-fitted only, lam=5, buffer predicted-not-scored), cluster bootstrap over pooled N-clusters, CTRL-B estimator null with max-over-bins bias included. Lineages: 20260828 (128 Ns, 9,594 hits), 20260902 (128 Ns, 9,840 hits), 20260903 SMOKE-SIZED (16 Ns, 66 hits, ~0.5% of pooled hits — disclosed).\n\n**THE TWO-SCALE RESULT**: pooled amp_mix = 0.0918 ± 0.0274 CI95 [0.0656, 0.1725] over 19,500 pooled hits / 1,043,200 reference points / 272 N-clusters; **pooled_z_mix_registered_raw = 3.36 > 2 BUT registered pooled_z_cal = 0.65 < 2** (calibrated excess 0.0256 ± 0.0393 after CTRL-B subtraction — the estimator null absorbs 0.0662 of the raw amplitude). Per-seed calibrated breakdown REPORT-ONLY: z_cal = 1.07 / 1.47 / 0.97 — NONE individually clears; raw→calibrated collapse systematic (4.26→1.07, 1.98→1.47, 1.96→0.97).\n\n**CTRL-A MACHINERY-GATE FAIL DISCLOSED PROMINENTLY**: gate amp = 0.0225 ± 0.0074, maxdev_all_bins = 0.0225, pass = False → the raw-amplitude scale is discredited as positional evidence; strictest internal booking = ARTIFACT_CONTAMINATED / no clean gate verdict, booked alongside the headline. Both readings agree: NO H1 claim possible on any scale.\n\nWHAT SURVIVES: κ composition ordering replicates across all seeds (rate-dial law untouched); the DENSITY phenomenon itself is real. WHAT DIES: any claim of POSITIONAL structure beyond it — no j-arithmetic carrier (#396), no consecutive-v dependency (#397), now no non-divisibility positional mechanism multi-seed. Paper 243's reopen condition CLOSED AGAINST; u*≈0.65 enters the catalog as pure within-stratum rate structure absorbed by the divisibility mixture once the estimator null is paid. Paper 242's single-seed-unconfirmed note superseded.\n\nLedger catches disclosed: coordinator mechanical fixes (.tolist() conversion + _n naming fix to enable execution; type/bookkeeping only); L3 smoke-sizing disclosed up front; single registered test, no sweep; population hashes + disjointness asserted. Wall 2.2 s.\n\nPaper 252 (`ResearchOutput/NewMathematics/252_PooledAdjudication.md`); notebook Part 294; assessment v359; count 589.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -143577,7 +143577,7 @@
       "depth_estimate": 3,
       "description": "## exp600 SCAN-SIM-JOINT — round-92 #2 (paper 251)\n\nPaper 250's named decidable closer RUN. Pre-registered two-sided in script header BEFORE analysis: joint measurement of S/Lambda/Theta/qhat from exp581_regen_positions.npz yields S_obs in [1.10, 1.51] with S_obs < certified bound 1.5059 => CONFIRMS the calibrated-gap structure (slack real, predicted gap X ~ 1.15); outside on EITHER side => FAILS with side and magnitude.\n\n### DEFINITIONAL DIFF RESOLVED (load-bearing)\nThe task's literal operationalization (\"cost from the indicator series under pi\") prices the REALIZED multi-hit window: C_asc = min(hit)-jlo+1, C_desc = jhi-max(hit), C0 = (W+1)/(m+1) — min/max order statistics over m ~ 75 hits/pool. Paper 250/f1tight's own algebra (sec(b) finite check pins it) books SINGLE-DRAW PRIOR expectations: C_asc = W*E_pi[x], C_desc = W*E_pi[1-x], C0 = W/2 => Lambda = Ex/(1-Ex), Theta = 2Ex, X = 1/(2Ex). Two valid frames, different quantities. Both measured on the SAME store; diff = identifiable multiplicity factor, NOT noise.\n\n### ALIGNED FRAME (from raw positions, NO parametric refit)\n- E[x] = 0.4398 W-weighted (hit-weighted 0.4373) vs f1tight 0.4336\n- Lambda = 0.7852 CI95 [0.7656, 0.8065] — CONTAINS recorded 0.7657\n- Theta = 0.8797 [0.8673, 0.8929] — lower edge = recorded 0.8673\n- qhat = 1 trivially by pool construction (zero information on this store)\n- **S_obs = 1.2736 [1.2399, 1.3061] — inside band [1.10, 1.51], below bound 1.5059 => PREDICTION CONFIRMS** (hit-weighted sensitivity 1.2869 also in band)\n- X = 1.1368 [1.1200, 1.1530] — upper CI edge TOUCHES recorded slack 1.1530; inside corner-grid [1.1018, 1.2205]\n\n### REALIZED FRAME DIVERGENCE\nLiteral operationalization: S_obs = 3.3722 [2.5577, 4.6933] FAILS-HIGH by an IDENTIFIABLE EXTREME-VALUE FACTOR 2.65x (= 3.3722/1.2736). Order statistics over finite hit-windows inflate vs prior expectation (per-pool median S 3.89, IQR [1.25, 14.91]; min-x reaches 2e-4 of W).\n\n### NEW BOOKKEEPING PRINCIPLE (travels to every future bound-calibration)\n**Bound/slack must be booked PER MULTIPLICITY REGIME — prior-frame slack does not transfer to realized-frame scanning cost.** The same tilt is simultaneously a slack X ~ 1.14 in the prior frame and a >bound overrun in the realized frame; which number is operative depends on what the scanner knows when it orders tests. Must be STATED per claim, never inherited across frames.\n\n### CONTROLS ALL NULL\nIdentical pipeline, CI covers 1 everywhere: full ctl sets S_obs = 0.985 [.766, 1.260]; count-matched 0.882 [.687, 1.124]; single-draw ctl 0.998 — asymmetry carried by the HIT SETS alone.\n\n### Honest notes\nDeterministic indicators => EXACT integer costs (degenerate sum_k k*P, no Monte Carlo). Identity PASS: total hits 9594 = recorded pool count, out-of-window 0. C0 choice affects Theta/X not headline S. Single pool class (128 balanced bitlen-96 semiprimes) — generalization untested. Smoke n=16 already stable both frames.\n\nWall 0.08 s full (nboot 1000 cluster bootstrap over pools, seed 20260824). Barrier framing: prices one side of barrier-4's converse program (F1 sharpness) affirmatively; sharpness still posed over the prior class. Ledger: count 587 -> 588, assessment v357 -> v358, papers 250 -> 251. Named next probe: multiplicity-regime transfer test (realized-frame S on a low-m pool class — does 2.65x shrink toward 1 as m -> few?). Open unchanged: u >= 6-14 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -143658,7 +143658,7 @@
       "depth_estimate": 3,
       "description": "**Paper 253** · round-94 #2 · completes paper 245's loose end; final completing experiment of the positional thread (arc 228–253).\n\n## Pre-registration (verbatim, script header, written BEFORE fitting)\n- **H1 (identifiable):** at CAP ≥ 120 the bootstrap CI upper edge of b_edge stays strictly BELOW its cap at every rung ⇒ b_edge ± CI reported AS IDENTIFIED.\n- **H0 (unidentified):** CI upper edge keeps hitting successive caps ⇒ steepness formally UNIDENTIFIABLE at this data size; lower-bound ladder {CAP → CI lower} recorded FINAL.\n- **Control bar:** ctl_* fits kernel-free iff w_edge(x=0.9) < 0.10 AND 1→2-comp relSSE improvement < 5% at every cap.\n\nModel T(x)=A(1+x)^−b_bulk + K(1+x)^−b_edge; per-seed x=(v−jlo)/(jhi−jlo) clip [0,1] (0 clips); pooled nb=50 histogram (exp581/582 anchor grid); unweighted NLS, (A,K) profiled linearly on dense log grid incl. near-cap points + multi-start TRF point refine; cluster bootstrap over 128 seeds, nboot 1000 main / 300 ctl; cap-hit := b_edge_hat ≥ 0.999·CAP; percentile CI. Caps {80,120,240}. Data: exp581_regen_positions.npz (128 seeds, 9594 hits, 512000 ctl). Seed 20260824. Wall 0.94 s.\n\n## Result: **H0-UNIDENTIFIED_LADDER_FINAL**\n\n| cap | b_edge point | b_bulk | 95% CI | cap-hit | pure-bulk | identified |\n|-----|-------------|--------|--------|---------|-----------|------------|\n| 80  | 30.1223 | 0.83996 | [0.618, **80.00**]  | 7.8% | 0.0% | NO |\n| 120 | 30.1223 | 0.83996 | [0.583, **120.00**] | 4.9% | 0.0% | NO |\n| 240 | 30.1226 | 0.83996 | [0.642, **160.24**] | 1.8% | 0.0% | yes |\n\n- Point estimates EXACTLY invariant under tripling the box — the point optimum never touched any cap; the UNCERTAINTY hits it.\n- Ladder nuance booked honestly: mass thins toward an EFFECTIVE CEILING ≈160 (cap-240 upper DETACHES to 160.24 < 240; boot mean inflates 28.85→37.37 while median falls 28.91→27.84), but H1 required BOTH rungs ≥120 interior and cap 120 pins exactly ⇒ verdict stands as pre-written. No post-hoc bar adjustment either direction.\n- Lower-bound ladder FINAL: LB 0.62 / 0.58 / 0.64 (~0.6 bulk-floor at every rung).\n- Historical anchor exp594 cap-80: point 40.46, CI [15.2, 80.0], cap-hit 26.7% (pipeline not replicated bit-for-bit; registered test is the within-run cap-to-cap comparison).\n\n## Control arm clean\nKernel-free bar PASSES at every cap: w_edge(0.9) ~1e−45..1e−55, relSSE gain ~1e−15, K~1e−21..1e−23, frac_purebulk = 100% of 300 ctl boots at every cap. Control cap-hits amplitude-free (K≈0), cannot mimic detection. Main-arm pure-bulk boots 0.0%, excluded from CI, never counted as cap-hits.\n\n## Sensitivity (cross-pipeline)\n√(count+1) weighting @ cap 240: b_edge = 44.12 vs exp594's 40.46 — two pipelines with different variance treatments agree on the ~30–45 steepness decade. Unweighted NLS stays registered primary.\n\n## Consequence\nPapers 238/245 canonical profile description AMENDED: **\"flat bulk b ≈ .57 + left-edge spike, amplitude 8.6% [verified], steepness >~15 [lower bound only; point ≈30, effective ceiling ≈160]\"** — any future claim needing the actual exponent requires more hit mass, not a different cap.\n\nLedger catches: none. Barrier framing: last open MEASUREMENT of the positional density layer closes after round-93 #1 (#400) closed its mechanism layer; shape fully specified (two components, verified amplitude, one-sided steepness); positional thread arc 228–253 COMPLETE.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/{exp603_edge_cap_raised.py, exp603_result.json, exp603_full_run.log, exp603_smoke.log}; paper ResearchOutput/NewMathematics/253_EdgeCapRaised.md.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -143698,7 +143698,7 @@
       "depth_estimate": 3,
       "description": "**Paper 254** (`ResearchOutput/NewMathematics/254_ProfileGenerality.md`) · artifacts `ResearchOutput/scripts/2026-08-24-round74/exp605_*` · notebook Part 296 · assessment v360 → v361 · count 590 → 591.\n\n## Question\nIs the j²−N positional smoothness profile (papers 228/229: power-law decline + left-edge spike) universal across polynomial families?\n\n## Pre-registration (script header, before analysis)\nH1 (universal): same normalized profile shape for ALL of {j²−N, j³−N, j⁴−N} at matched sample sizes — all pairwise profile r > 0.8 after normalization.\nH0 (family-specific): profiles diverge materially; report which family differs and how.\nBars fixed: (a) all pairwise r > 0.8; (b) every family left-decile > overall with boot P > 0.95; (c) every family Spearman ρ < 0 at p < 0.01. Overrides: <150 hits/arm ⇒ INCONCLUSIVE-LOWPOWER; control non-flatness (χ² p ≤ 0.01) ⇒ INVALID-CONTROL.\n\n## Method\n128-member npz-lineage population (exp581_regen_positions.npz); windows [r_k, 3r_k−4] anchored at the integer k-th root (k=2 reproduces [jlo, 3jlo−3] exactly); matched CRN grids L=3000/N/arm with tilt IDENTICAL across arms (paired); exact 1e6-cut gcd-chain B-smooth tester (unit-tested); controls C=1000/N/arm; 50-bin pooled profiles, WLS ln-rate fit on bins ≥3 hits, cluster bootstrap B=800 over the 128 Ns; sq2d dither probe (seeded dither ∈ [1, 2·jlo], isqrt preserved). Seeds 20260901 / 20260902. Wall 181 s.\n\n## Result — VERDICT: H0-SIDE (family-specific)\n| Bar | Observed | Pass |\n|---|---|---|\n| pair r > 0.8 | max 0.781 | **FAIL** |\n| edge concentration | 4/4 arms P(ld>ov)=1.0 | PASS |\n| monotone decline | cu3 Spearman +0.019, p=.92 | **FAIL** |\n\nPer family (384k draws each):\n- **sq2** (j²−N_rec): 8639 hits, rate .0225 — b̂ **+0.157 ± 0.008**, ld/ov 1.24×, Spearman −0.802 (p=2.5e−12)\n- **qu4** (j⁴−N_rec): 7603 hits, .0198 — b̂ **+0.188 ± 0.013**, ld/ov 1.29×, Spearman −0.856 (2.4e−15)\n- **cu3** (j³−N_rec): 287 hits, .00075 — b̂ +0.065 ± 0.037 [CI covers 0], Spearman +0.019 (p=.92) **FLAT**\n- **sq2d** (dither probe): 248 hits, .00065 — b̂ +0.168 ± 0.038, ld/ov 1.47×, shallow shape-consistent\n\nPairwise normalized-profile r: **sq2|qu4 = 0.781 [0.565, 0.767]** — close to but below the pre-registered 0.8 bar; sq2|cu3 0.385; cu3|qu4 0.477; sq2~sq2d 0.495. Controls flat 4/4 (χ² p .08–.65). No override fires.\n\n## THE DIFFERENCE-OF-SQUARES GATE (mechanism named)\nRate hierarchy **sq2 ≈ qu4 (~2×10⁻²) ≫ sq2d ≈ cu3 (~7×10⁻⁴) — ≈30× lower (29–34× across pairings)** is EXACTLY tracked by difference-of-squares factorability: N_rec = jlo² makes v_k = (j^(k/2)−jlo)(j^(k/2)+jlo) split for **EVEN k only**. Even powers share the small-factor route (b̂ .16/.19, ρ −.80/−.86, r .78); odd degree admits no integer split → baseline rate + flat profile. The sq2d arm confirms from inside the quadratic family: knock N off the exact-square locus and the rate collapses ~35× (~97% of mass gone) onto the cu3/sq2d level with only a shallow tilt left. The gate variable is ARITHMETIC (algebraic factorability of f(j)−N given N's form), not polynomial degree per se.\n\n## Consequence\n- Papers 228/229's profile law (with 238/245/253's bulk+spike decomposition) is a **QUADRATIC-FAMILY law, not a universal sequence law**; barrier-map entries citing it inherit the scope restriction.\n- **Extension prediction pre-stated**: even degrees j^{2m}−N share the structure via repeated difference-of-squares for square N (k=4 confirms). Falsifiable follow-up: j⁶−N / j⁸−N at matched grids should land in the ~0.16–0.19 b̂ band with pairwise r > 0.8 vs sq2/qu4.\n- Practical asymmetry booked: the strong structure lives on the perfect-square-N slice where trial division from jlo is already optimal — no scanning advantage transfers to general-N populations.\n\n## Ledger catches / honest limits\n- **Lineage APPROXIMATE, disclosed**: npz stores positions+bounds only (no N) — reconstruction N_rec=jlo² pins anchors exactly (residual ΔN < 2·jlo shifts effective left edge <1 integer step, profiling-invariant). Applicable check via N-independent v₂=(j−jlo)(j+jlo): stored npz hits classify smooth at .0226 ≈ ctl .0198 ⇒ **original N NON-SQUARE**; sq2/qu4 RATE LEVELS do not transfer to the general-N population of 228/229 — flagged for follow-up.\n- cu3/sq2d thin (287/248 hits, just above the registered 150 low-power floor): their null-ish shapes are UNDERPOWERED, disclosed (used only for bar (c)).\n- Smoke caught t-mat broadcast bug + key-name bug; both fixed pre-full-run. No commits mid-run; only exp605_* touched.\n\n## Barrier framing\nCloses the generality question the closed positional thread (250–253) left implicit; answer REDUCES exposure — the structure is scan-order geometry of the square-N slice, consistent with the standing method law (scan-order structure reflects proposal geometry, not N-information). Open frontier unchanged: u ≥ 6–14 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, external-hint laws; quantum closed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -144436,7 +144436,7 @@
       "depth_estimate": 3,
       "description": "**Round-95 #2 · exp 598b MIXTURE-RATE-CELLS · verdict: BORDERLINE_INCONCLUSIVE_CONTROL_FLAGGED**\n\nCompletes the rate-layer coverage matrix: papers 227/235/236 tested QR **dials** (weighted marginals S_α); exp596 tested **pairwise interactions**; this experiment asked whether the FULL **16-cell divisibility mixture** — joint class vector (2|v, 3|v, 5|v, 7|v), v = j²−N — explains per-N hit-rate variance BEYOND the sqrt dial S_sqrt,400.\n\n## Pre-registration (script header, BEFORE analysis)\n- **H1 (mixture adds):** hierarchical OLS log-rate ~ dial alone vs ~ dial + cell fixed effects raises adjR² ≥ 0.05 WITH perm p < 0.01 (500 row-shuffles of cell labels)\n- **H0 (dial sufficient):** ΔadjR² < 0.02\n- else BORDERLINE; **control:** permuted-RATE arm must be null (p_ctrl > 0.05 AND max control Δ < observed) — non-null FLAGS THE WHOLE INFERENCE\n\n## Result (full run: seed-20260827 semiprimes bits=96, n_pool=128, two fresh 50k/N streams, gcd-chain primorial(10⁶) tester, mean 779 hits/N, wall 551.6 s)\n\n| Bar | Threshold | Observed | Fires? |\n|---|---|---|---|\n| H1 effect | ΔadjR² ≥ 0.05 | **+0.0827** [0.0209 → 0.1036] | ✅ |\n| H1 permutation | p < 0.01 | **0.0399** (null q95 0.0727, max 0.163) | ❌ |\n| H0 sufficiency | ΔadjR² < 0.02 | 0.0827 | ❌ |\n| CTRL clause 1 | p_ctrl > 0.05 | 0.0519 (barely) | ✅ |\n| CTRL clause 2 | max(control Δ) < obs | **0.186 > 0.083** | ❌ |\n\n⇒ Neither claim available. A y-shuffle produced ΔadjR² LARGER than the observed effect: 15 free cell betas against 128 noisy log-rates fit shuffled rates to R² ≈ 0.1+, so the raw +0.083 cannot be read as composition carrying rate structure beyond the dial — and the dial-sufficiency upgrade is equally unavailable.\n\n## Sensitivity / consistency\n- α = 1 sensitivity: Δ = +0.066, same sign, same sub-threshold character.\n- Smoke (32 Ns, non-evidentiary): Δ = +0.346 with ctrl_ok false — textbook small-n overfit; collapse +0.346 → +0.083 under 4× population is itself the warning.\n- Does NOT contradict exp592's kappa-ordering replication (top-cell RANKING ≠ rate-variance increment).\n\n## Consequence\nAdditive-completeness stays at **DIAL level**. Rate-layer coverage matrix closes UNRESOLVED-AT-RESOLUTION on the joint-cell layer: answerable at ~4× n_pool, a reduced cell basis, or a paired design with null spread measured on the test statistic's own footing — pre-stated so the next iteration powers it correctly instead of re-firing the flagged design.\n\n## Honest limits\nRegen hash-check CONDITIONAL (exp586 stores no N strings; recipe identity + exp586's own 128/128 regeneration_verified are the mitigation). Hit classifier = gcd-chain primorial(10⁶) full-smoothness — same CLASS/cut as exp577's spec, not source-verbatim (source outside read allowance); absolute rates not comparable to exp577 rows. Cell rows permuted JOINTLY (conservative). Session crashed between completion (result JSON written 23:47) and recording; recovered post-hoc from completed artifacts.\n\nNo barrier breached; the flagged control REDUCES downstream exposure (discredits naive uncalibrated ΔadjR² readings from rich fixed-effect designs at small n_pool).\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp598b_*`, paper `ResearchOutput/NewMathematics/255_MixtureRateCells.md`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -144476,7 +144476,7 @@
       "depth_estimate": 3,
       "description": "**Round-95 #3 · exp 598c MIXTURE-RATE-CELLS-POWERED · verdict: H1_MIXTURE_ADDS**\n\nRe-fires exp598b's flagged question at its pre-stated power remedy (n_pool 128 → 512, fresh seed), under a pre-registration **v2** amended before any full-mode data existed after a two-agent adversarial audit of v1 caught two must-fixes:\n\n1. **598b's control_ok conjunction was logically unsatisfiable** — p_ctrl > 0.05 forces ≥25/500 y-shuffle deltas ≥ obs, forcing max(ctrl_null) ≥ d_obs. control_ok=False was guaranteed by construction. *Erratum on paper 255*: the informative content was c = 25/500 (obs at the y-shuffle 95th percentile), not an independent clause failure; BORDERLINE itself stands (598b never gated on it). Corrected rule: `clean_control := max(ctrl_null) < d_obs` gates H1; `machinery_ok := |mean| < 0.01` gates H0.\n2. **v1's seed 20260903 was exp601's recorded lineage** (`fa1746a5b065cbd9` prefix-collides) — withdrawn to registry-verified-unused **20260907**, self-exclusion + 11-seed disjointness + stream-band assertions added.\n\n## Result (512 fresh semiprimes bits=96, two independent 50k/N streams, gcd-chain primorial(10⁶) tester, perm seed 599, 500 reps, wall 286.5 s)\n\n| Bar | Threshold | Observed | Fires? |\n|---|---|---|---|\n| H1 effect | ΔadjR² ≥ 0.05 | **+0.105498** [0.051576 → 0.157074] | ✅ |\n| H1 permutation | p < 0.01 | **1/501 ≈ 0.001996** (0/500 exceedances; null q95 0.0189, max 0.0402) | ✅ |\n| clean_control | max(ctrl_null) < obs | **0.054872 < 0.105498** | ✅ |\n| machinery | \\|mean(ctrl)\\| < 0.01 | 6.9e−05 | ✅ |\n\n## The power remedy validated\ny-shuffle null max collapsed **{n=128: 0.186 → n=512: 0.0549}** (~p/(n−p) scaling) while the effect GREW across independent populations (**+0.083 on seed 20260827 → +0.105 on seed 20260907**). Paper 255's BORDERLINE resolves as UNDERPOWERED, not null.\n\n## Mechanism named by the secondary arm\nRepaired single covariate **κ = Σₖ P(lₖ|v)** (expected # distinct small primes dividing v, from cell marginals) captures **Δ = +0.114 alone** — matching/beating the full 15-cell basis. Composition ORDER, not cell identity, is the dominant axis; subsumes exp592's kappa-ordering replication as the tip of this graded law. α=1 sensitivity agrees (+0.108).\n\n## Verification\nIndependent verifier recomputed every headline stat from `exp598c_verify.npz` alone with a from-scratch code path: Δ exact to full float64 precision, perm_p bit-exact, permutation arrays regenerate bit-exactly from the documented call order. Hostile adjudication audit: all overturn attempts failed; occupancies match closed-form independence products. Chain-of-custody caveat disclosed (v1 smoke overwritten; filesystem forensics support pre-data integrity) → **adopted process law: commit pre-registrations before data-producing runs.**\n\n## Consequence\nPapers 227/235/236 additive completeness upgrades DIAL → CELL level: divisibility composition of v = j²−N carries per-N rate structure beyond the QR dial's marginals, dominated by composition depth. No barrier breached (proposal-geometry layer, not N-information); catalog scan found no prior work on joint mixtures/permutation-calibrated increments. Falsifiable follow-ups: κ-only nested test at higher resolution; bits {72,128} scale stability; Dickman-type closed-form slope check.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp598c_*`, paper `ResearchOutput/NewMathematics/256_MixtureRateCellsPowered.md` (errata for paper 255 ride inside).\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -146816,7 +146816,7 @@
       "depth_estimate": 3,
       "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 72 (LAST standing cell of the original limited-memory axis — size chain CLOSED).\n\n| k | retained | verdict |\n|---|---|---|\n| **8** | **0.98056** | **PASS — the knee** |\n| 12 | 0.98928 | PASS |\n| 16 | 0.98928 | PASS |\n| 20 | 0.99196 | PASS |\n| 24 | 0.99531 | PASS |\n\nGate: max|dlogit| = 0.000000, top-1 agreement = 1.000000 vs HF eager (BIT-EXACT). Full baseline CE 2.50867 / acc 0.48663.\n\n**Scorecard:** P1 REFUTED downward (predicted band {12,16,20}; measured 8); P2 CONFIRMED beyond tolerance (exact equality); P3 CONFIRMED (strictly monotone).\n\n**The law:** THE THREE-SCALE CHAIN IS {16, 16, <=8} — attention-knee size-invariance (NET-55/65/66) holds from 0.5B to 1.5B then INVERTS at 14x scale: the largest model is the CHEAPEST to serve sparsely (<=8 oracle keys @512 = 64x fewer KV reads, half the small-model key budget). Combined with NET-49's depth-multiplier collapse, pretrained attention concentrates MORE as models grow — opposite the toy-law extrapolation.\n\n**Honest limits:** sub-8 unmeasured (open bracket below); razor-thin pass margin (+0.0006); n=6 windows, single corpus/model/context; cross-scale comparison crosses substrate (7B bf16-CPU vs smaller fp32-GPU) — internal gate neutralizes dtype internally but not across scales; grid granularity leaves (8,12) unexplored.\n\nSetup: validated oracle-top-k Runner port (exp_net90 lineage), Qwen2.5-7B-Instruct bf16 CPU eager, ctx=512, 6 held-out wikitext windows, threads=8. Script ResearchOutput/exp_net97_knee7b.py; paper ResearchOutput/NetworkMathematics/97_TheKneeShrinksWithScale.md.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -147363,7 +147363,7 @@
       "depth_estimate": 3,
       "description": "**Round-95 #4 · exp 606 KAPPA-SUFFICIENCY-SCALE · verdicts: C1 H1_KAPPA_CARRIES · C3_SCALE_CONFIRMED (3/3) · KAPPA_SUFFICIENCY_MIXED**\n\nSharpens paper 256's mechanism claim into three registered questions — replication on fresh populations, sufficiency of composition ORDER against full cell IDENTITY, and scale stability. Pre-registration **pinned in-repo before any full-mode number existed** (process law from round-95 #3, exercised; chain of custody verified by git + filesystem forensics). Two pre-run audits caught four must-fixes while everything was still non-evidentiary — including TWO stream-collision classes: bands overlapping 598c's own `+17e6/+19e6` FULL streams (~412/512 slots per leg), and CROSS-leg interleaving from consecutive leg seeds sharing offsets (`default_rng(20261007+31e6+1)` ≡ `default_rng(20261008+31e6+0)`) — fixed with a per-leg ×10⁸ stride + pairwise band assertions.\n\n## Results (fresh seeds {96:20261007, 72:20261008, 128:20261009}, n=512/leg, sizing-pilot ladder → n_hit 50k/50k/150k, perm seed 606)\n\n| leg | Δκ | perm_p | ctrl null max | β_κ [CI95] | κ sufficient? |\n|---|---|---|---|---|---|\n| bits=72 | **+0.0830** | 1/501 | 0.0175 ✅ | −0.349 [−0.456,−0.256] | TRUE (+0.0071) |\n| bits=96 | **+0.0869** | 1/501 | 0.0204 ✅ | −0.380 [−0.483,−0.279] | TRUE (+0.0084) |\n| bits=128 | **+0.0585** | 1/501 | 0.0182 ✅ | −0.325 [−0.432,−0.217] | **FALSE (+0.0346)** |\n\n- **C1**: replicates on an independent population/stream complex.\n- **C3_SCALE_CONFIRMED 3/3** (rule was ≥2/3): the composition-order law is scale-stable.\n- **Slope law**: β_κ ≈ **−0.35** with mutually-overlapping CIs at every width — richer small-prime composition depth ⇔ LOWER window smoothness rate (sign ungated pre-data; stability is the striking fact).\n- **KAPPA_SUFFICIENCY_MIXED**: cell identity adds beyond κ ONLY at 128 bits (+0.0346 ≥ 0.02 bar), and that failure is permutation-supported (`cells_shuffle_share_ge` = **0.006** vs 0.226/0.218). Sufficiency has a regime boundary near u ≈ 4.5: below it HOW MANY small primes divide v summarizes everything rate-relevant; above it WHICH primes matter too.\n\nGraded law: log-rate ≈ dial − 0.35·κ + cell-identity terms switching on around u ≈ 4.5.\n\n## Verification\nIndependent from-scratch recompute of all three legs from verify.npz alone: permutation arrays replay BIT-EXACTLY from the documented idx/idy/idc call order; perm_p = 1/501 exact everywhere; verdict tree re-derives identically. Hostile adjudicator: chain of custody confirmed, stride fix proven necessary AND sufficient (512 colliding slots demonstrated without it), b128 np.bool_ serialization crash statistics-neutral (type-only bool() cast, disclosed; attempt 1 left only a truncated JSON), Bonferroni ×3 survives, no overturn constructed.\n\nFalsifiable follow-ups: locate the sufficiency boundary in (96,128); identify which cells carry the b128 increment (candidate: heavy-2-adic); Dickman-type closed-form check of β ≈ −0.35.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp606_*`, paper `ResearchOutput/NewMathematics/257_KappaSufficiencyScale.md`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -147697,7 +147697,7 @@
       "depth_estimate": 3,
       "description": "**Round-95 #5 · exp 607 STRATIFIED-DAYZERO · verdict: SCREEN_NEGATIVE_AS_AMENDED — pooled-null hole CLOSES AGAINST**\n\nFleet Bet #1 day-zero (pre-registered EXPLORATORY screen, no evidentiary claim): does exp602's POOLED null hide cell-wise deviations cancelling across N-computable strata? Four independent fresh-seed populations from stored verify-npz artifacts (598c-b96 s20260907, 606-b96 s20261007, 606-b72 s20261008, 606-b128 s20261009; n=512 each), method-law-compliant calibration (within lnN-decile × frac(√N)-quintile strata, 5000 reps).\n\n## Phase 1 (dial-only): fires everywhere — ON THE RECORDED LAW\nG1(M×K) p_Q = .0002/.0016/.0014/.0060, G3(S×K) .0002–.0004 across all four populations — sign-alternating alerts in the SAME pattern every time: low-κ tercile +2.0…+3.7, high-κ −2.0…−3.7. Near-identical graded monotone K-tercile profiles = **paper 257's β_κ ≈ −0.35 law replicated at CELL level in four independent datasets**.\n\n## Phase 2 (amendment: absorb κ): everything vanishes\nG1 → .105/.724/.649/.669; G3 → .495–.989; alerts → noise. **Verified non-mechanical three ways**: κ adds ΔR² 0.062–0.122 vs E[R²]≈0.002 under noise (31–62×); κ-only simulation through the identical pipeline reproduces fire/collapse exactly (190/200 & 162/200 then nominal-FP death); corr(κ,lnN)≈0 excludes masking.\n\n## Mandatory caveats (adjudicator)\n(a) **G2_MxF p column VOID** — degenerate by construction (axes ≡ null strata ⇒ Q bitwise invariant); recorded p=.0002 entries are fp-tie noise; decision robust without G2. (b) The LITERAL registration fired SCREEN_POSITIVE; the negative exists under the pre-decision against-interest amendment (disclosed prominently). (c) pooled_z ≡ 0 is intercept-orthogonality, not evidence. (d) prng stream collision B/C/D noted (harmless).\n\n## Consequence\nexp602's pooled null upgrades to a STRATIFIED-STRENGTH null: **dial + κ exhausts the N-computable rate structure detectable at n=512/population across bits {72,96,96′,128}** — no residual cancellation for a mixture to hide in at these resolutions. Bet #1 main run NOT funded from this screen; still licensable by u-regimes outside these windows (the door lives at u≥6–14) or resolution beyond 512/population.\n\nVerification: independent recompute of both audited populations, zero discrepancies; exhaustive S_dial reconstruction ALL Ns (≤3.6e−15); alternate-seed robustness Δp ≤ 0.005.\n\nArtifacts: `ResearchOutput/scripts/2026-08-25-round75/exp607_*`, paper `ResearchOutput/NewMathematics/258_StratifiedDayzero.md`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -148367,7 +148367,7 @@
       "depth_estimate": 3,
       "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 73 (compact probe closing NET-97's open lower bracket).\n\n| k | retained | verdict |\n|---|---|---|\n| 4 | 0.92560 | FAIL (-5.4 pts) |\n| 6 | 0.96247 | FAIL (-1.75 pts) |\n| 8 | 0.98056 | PASS (NET-97) |\n\nBoth pre-registered horns REFUTED: the knee is neither at six (P1) nor at/below four (P2). k*(Qwen2.5-7B@512) = 8 EXACTLY, bracketed from both sides with a strictly monotone seven-point curve {4:0.926, 8:0.981, 12:0.989, 16:0.989, 20:0.992, 24:0.995}. NET-97's '<=8' tightens to '=8': the size-shrink at 14x scale is an exact HALVING of the small-model knee ({16 -> 8}), not a collapse. Gate bit-exact again; baseline reproduced NET-97 exactly (third consecutive deterministic run).\n\nHonest limits: sub-4 unmeasured (curve shape makes it low-value); n=6 windows; single family.\n\nSetup identical to NET-97 (validated bf16-CPU Runner port). Script ResearchOutput/exp_net98_kneeprobe.py.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Novelty"
       ],
@@ -148407,7 +148407,7 @@
       "depth_estimate": 3,
       "description": "**Round-96 #1 · exp 608 CONIC-ORDER-RIGIDITY v2 · verdicts: CL1_WEAK_CONFIRMED · CL1_STRONG_REFUTED · CL2_CONFIRMED · CL3_CONTAINED (rate-parity fails in the sealing direction)**\n\nFleet Bet #2 empirical legs, positive-control gated. **Six defects caught pre-evidence by the control gates** — including the v1 generator family itself (3×3 triple-space matrices: det 5, no integral invariant Q, mod-p BFS blew 8.6 GB → withdrawn; correct object = GL₂(Z) moves on (m,n), tree-generation verified exact).\n\n## Results\n\n| leg | result |\n|---|---|\n| CL1 weak | ✅ ZERO violations of ord(w) \\| p(p²−1) across 550 primes × 40 words — ONE shared modulus caps ALL words ⇒ a tree-word method gets a SINGLE smoothness draw per prime |\n| CL1 strong | ❌ REFUTED: 4,973/22,000 word orders divide neither p(p−1) nor p(p+1) individually (tori mix) |\n| CL2 | ✅ ⟨M₁,M₂,M₃⟩ ≅ PGL₂(F_p) exactly at all 17 primes ≤ 60 |\n| Micro-audit | pm1 **225**/600, pp1 **292**/600, tree-word raw traces **0**/600 at matched per-N mpz-mul budgets; strata flat across (2/p); zero tree-only successes |\n\nZero is exactly what mechanics predicts for untargeted traces (~2/p ⇒ ~0.003 expected). Caveat disclosed: the registered design omitted the stage-1 targeting step tr(W^E); the seal predicts even that analogue behaves as ONE Williams draw at worse constants.\n\n## The six-defect ledger (positive-control gate validation)\n(1) v1 wrong generators; (2) stream bands under-crediting exp606's ×10⁸ strides (assertion fired pre-data); (3) control constants invalid on the exponent lattice twice → controls now searched with exact divisibility; (4) scalar exponentiation double-counting the MSB; (5) matrix ladder missing its R-squaring (k=5 passed BY ACCIDENT, k=13 exposed it); (6) Williams live-seed requirement booked (needs legendre(a²−4,p)=−1). **PROCESS LAW UPGRADED: positive controls are mandatory gates on factoring-machinery experiments.**\n\n## Consequence\nBet #2's triad closes the tree-matrix-ECM-analogue genre BY MECHANISM: genus-0 order structure carries no Hasse-interval variety. Falsifiable follow-up pre-stated: a targeted tr(W^E) variant at matched budgets must land within Poisson noise of one Williams draw's success count — beating it would be refutation-class news.\n\nArtifacts: `ResearchOutput/scripts/2026-08-25-round75/exp608_*`, paper `ResearchOutput/NewMathematics/259_ConicOrderRigidity.md`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Novelty"
       ],
@@ -148658,7 +148658,7 @@
       "depth_estimate": 3,
       "description": "**Round-96 #2 · exp 609 CF-CASCADE EVASION SHOT · verdict: INVALID_CONTROLS(PC2) with PRIMARY-NULL SUPPORT + FULLY-ABSORBED SECONDARY**\n\nThree-layer record from the geodesic face (√N continued-fraction cascade), positive-control gated, pre-registration pinned before data:\n\n1. **Primary**: zero replicated non-SQUFOF sensor events (both populations × 8 depths × 8 features; one non-replicated 0.011-bit blip → dead). The CF-prefix layer carries no detectable information about the Fermat oracle d ≤ B before the SQUFOF zone.\n2. **Secondary twist**: max_nu2Q ↔ v₂(p+q) carries ~0.99 bits plain (MI 0.998 vs null q99 0.017, replicated) — then drops to **EXACTLY 0.0 conditioned on N mod 8**. Fully absorbed by trivial modular arithmetic ⇒ **paper 198's mod-8 cap STANDS**; no new adic content. (mod-64 numbers degenerate from stratum starvation — disclosed.)\n3. **PC2 erratum**: registered control targeted the wrong association (first-square-index vs Fermat-oracle d≤B — unrelated quantities); estimator validity served by §2's detectability. PC2′ pre-stated requiring mechanistic targets.\n\nLedger catches: PC2 censoring by own depth cap; wrong-target control; signature/indexing defects — all pre-evidence via gates/crashes; pinned-seed determinism makes reruns bit-reproducible. Head-to-head arm deferred/open.\n\nFalsifiable follow-ups: PC2′-gated rerun at bits {56,64}; matched-budget head-to-head vs direct E(a) sampling; class-group linkage test (the fleet's one unreached mechanism).\n\nArtifacts: `ResearchOutput/scripts/2026-08-25-round75/exp609_*`, paper `ResearchOutput/NewMathematics/260_CFCascadeEvasion.md`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Novelty"
       ],
@@ -149335,7 +149335,7 @@
       "depth_estimate": 3,
       "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 74 (EIGHT-GB-FRONTIER, top-ranked cell of the 12-cell fan-out program).\n\n### Composition law (perplexity, standard slices)\n\n| arm | ctx512 | ctx4096 |\n|---|---|---|\n| control (q8_0 weights + f16 KV) | 7.7893 | 6.5315 |\n| weights-only (q2_k + f16 KV) | 9.2372 (+18.6%) | 7.7125 (+18.1%) |\n| composed (q2_k + K q8_0/V q4_0) | 9.2673 (**R=1.190**) | 7.7252 (**R=1.183**) |\n| iq4_nl variant | 9.2602 | — |\n\n**Scorecard:** P1 CONFIRMED (R512=1.190 in [1.10,1.22]); P1b CONFIRMED (iq4_nl within 0.0009 < 0.003); P2 CONFIRMED decisively (R4096/R512=0.994 <= 1.5 — composition tax is CONTEXT-STABLE; NET-88-style amplification refuted for this stack).\n\n### Constructed points (the GOAL made concrete)\n\n| point | result |\n|---|---|\n| **P3: Qwen2.5-14B-Instruct Q2_K + K8/V4 @ ctx=8192 inside MemoryMax=8G** | **255 tokens @ 4.33 tok/s, peak RSS 6.48GB, zero OOM** |\n| **P4: 7B stack @ ctx=4096 inside MemoryMax=4G** | 128 tokens in 15.8s, peak RSS 3.13GB, zero OOM |\n\nBoth verified by manual privileged runs with /usr/bin/time RSS capture.\n\n**The law:** the composition is SUB-ADDITIVE AND CONTEXT-STABLE — the total tax of the aggressive stack (~19% PPL) is almost exactly the weight tax alone; the role-split cache adds only +0.33%/+0.17% on top of extreme weight quantization. Single-digit-GB serving now has a demonstrated frontier built entirely from published lab laws.\n\n**Honest limits:** automated constructed-point launcher silently mis-reported (unprivileged systemd-run failure mode caught by red-team workflow; manual sudo re-runs are authoritative; '--user scope' fix queued as STARVED-LADDER amendment); token-rate regex missed under nested capture; single slice/family; tg is single-stream CPU economics.\n\nSetup: llama-perplexity/completion current build, threads=8, held-out wikitext slices. Script ResearchOutput/exp_net99_frontier.py; paper ResearchOutput/NetworkMathematics/99_EightGBFrontier.md.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty"
       ],
@@ -149590,7 +149590,7 @@
       "depth_estimate": 3,
       "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 77.\n\n**Results:**\n- **P1 CONFIRMED**: gpt-oss-20b (20.9B total / 3.6B active MoE, MXFP4-native) generates at **9.92 tok/s greedy, pure CPU**, ctx=512, threads=8.\n- **P2 CONFIRMED cross-architecture**: K8/V4 role-split cache vs f16-KV perplexity ratio = **0.9556** (<= 1.05 pre-registered) — Law 2 transfers beyond Qwen. Absolute PPL scale is broken for this model through llama-perplexity (849/811 regime — harmony-format/SWA/MXFP4 handling documented), ratio treated as the internally-consistent quantity.\n- **P4 REFUTED informatively**: peak RSS **21.2GB exceeds the 12.1GB file** — passive lazy-mmap expert hot-set FAILS under general workloads (prefill touches all 32 experts; MXFP4 repack materializes). Motivates explicit cgroup-pressure designs (MOE-HOT-SET cell).\n- **P3 BLOCKED-BY-CRASH**: --spec-type draft-eagle3 with the official eagle3 Q8_0 draft SEGFAULTS (exit 139) on this build pair. Upstream bug datum.\n\nSetup: direct /usr/bin/time -v capture after third unprivileged-systemd-run failure documented; gpt-oss-20b-MXFP4.gguf + official eagle3 draft cached in ~/f3cache/gguf20b. Script ResearchOutput/exp_net102_gptosshotset.py.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty"
       ],
@@ -149630,7 +149630,7 @@
       "depth_estimate": 3,
       "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 76.\n\n| domain @depth8 | f16 dcache | q8_0 dcache | q4_0 dcache |\n|---|---|---|---|\n| prose | 30.86 | 30.86 | 30.86 |\n| code | 55.97 | 55.97 | 55.97 |\n\nAcceptance IDENTICAL to two decimals across all three draft-cache precisions, and both values exactly reproduce NET-91's f16 measurements — deterministic harness confirmed a fourth time.\n\n**The law:** the recoverability asymmetry is now complete. Target-side key quantization annihilates (+38,000% PPL, -8.65 spec pts at shallow-code) while draft-side key quantization costs precisely NOTHING: a rejected draft token simply falls back to target decode, so draft-cache errors are recoverable by construction. Selection-criticalness applies only where errors are unrecoverable.\n\n**Practical:** draft-side KV always runs at lowest precision — removing draft RAM from little-RAM serving stacks.\n\n**Honest limits:** acceptance-only round (P3 throughput parity unmeasured); depth-8 only; n=4 prompts/domain.\n\nSetup: llama-speculative -ctkd/-ctvd flags, Qwen2.5-7B q4_k_m target + 0.5B q8_0 draft, greedy seed 42. Script ResearchOutput/exp_net101_draftcache.py.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty"
       ],
@@ -149670,7 +149670,7 @@
       "depth_estimate": 3,
       "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 75 (Law2x4 composition test).\n\n| config | f16 accept | K8/V4 accept | d | tok/s ratio |\n|---|---|---|---|---|\n| prose d=4 | 55.61 | 52.83 | -2.78 | 0.942 |\n| prose d=8 | 34.87 | 36.20 | +1.33 | ~1.0 |\n| **code d=4** | **49.58** | **40.93** | **-8.65** | **0.898** |\n| code d=8 | 35.27 | 34.72 | -0.55 | ~1.0 |\n\nBoth pre-registered horns REFUTED: acceptance is not interaction-free (P1) and speed parity fails selectively (P2). The interaction CONCENTRATES at code-depth-4 — exactly where NET-91 mapped the steepest acceptance slope. Mechanism hypothesis: perturbed keys shift selection boundaries that speculation re-tests step-by-step (NET-83 amplification on the draft-match channel), amplified by code's sharper distributions.\n\n**Recipe amendment:** when speculating on code at shallow depth, keep keys at f16 or accept ~9-10% throughput loss.\n\n**Honest limits:** n=3 prompts/cell, single seed — the -8.65 outlier needs replication at n>=8 before strong claims; single family/model.\n\nSetup: llama-speculative, Qwen2.5-7B-Instruct q4_k_m target + 0.5B q8_0 draft, greedy seed 42, ctx<=1024, threads=8. Script ResearchOutput/exp_net100_speccache.py.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty"
       ],
@@ -150664,7 +150664,7 @@
       "depth_estimate": 3,
       "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 78.\n\n### Throughput (llama-bench, threads=8, identical quant files)\n\n| model | engine | pp512 tok/s | tg128 tok/s |\n|---|---|---|---|\n| 7B dense Q4_K_M | mainline (c060ca9) | 53.53 | 5.87 |\n| 7B dense Q4_K_M | ik (08b500b9) | **79.94 (+49%)** | 5.91 |\n| **30B-A3B MoE IQ4_XS** | mainline | 56.13 | **13.28** |\n| **30B-A3B MoE IQ4_XS** | ik | **130.81 (+133%)** | **13.89** |\n\n### Quality (perplexity, identical quant + slice)\n\nmainline 6.9781 vs ik 6.9762 — **delta 0.039%**, deep inside the ±1% pre-registration.\n\n**Scorecard:** P1 REFUTED FAVORABLY (dense tg parity held but dense PP +49%); P2 CONFIRMED (2.33x >= 2x); P3 CONFIRMED (goal-grade >= 10 tok/s); P4 CONFIRMED (engine-invariance of quality).\n\n**The laws:** (1) ENGINE-INVARIANCE OF QUALITY — identical quant files produce near-identical perplexity across independent engines: our published quality laws are MODEL+QUANT properties, not kernel artifacts. (2) ENGINE-VARIANCE OF SPEED — +133% MoE prompt processing from the fork alone at zero quality cost; serving speed claims must name their engine. (3) GOAL-GRADE: a resident 30.5B sparse model sustains >13 tok/s single-stream pure CPU, and the fork's gains land exactly where full-context serving pays (prefill).\n\n**Honest limits:** synthetic pp512/tg128 bench; one MoE family; eagle3 x engine interaction unexplored (gpt-oss eagle3 segfault documented in NET-102); two instrumentation bugs caught mid-round via raw-capture discipline.\n\nSetup: llama-bench -p512 -n128 -t8; llama-perplexity standard 250KB slice @ctx2048; engines pinned by commit. Scripts ResearchOutput/exp_net103_engineik.py + exp_net103b_benchredo.py + exp_net103c_ikppl.py.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty"
       ],
@@ -150879,7 +150879,7 @@
       "depth_estimate": 3,
       "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 79 (STARVED-LADDER methodology cell).\n\n**Ladder results:**\n\n| cap | 7B-q2_k | |\n|---|---|---|\n| 2500M | completes, **0.61 tok/s** | STARVED-STREAMING regime |\n| 3000M | **8.82 tok/s** | full residency begins |\n| 3500M-8000M | 8.81-8.82 flat | placebo (<1% delta) |\n\n1.5B-q4_k_m: flat 25.2 tok/s across {1250M..2000M}. All eight arms COMPLETED with zero OOM kills; sha256 corruption canaries clean pre/post on both models.\n\n**Scorecard:** P2 streaming-regime CONFIRMED; P3 placebo-cheap CONFIRMED (<1% << 5%); P1 formula-validation deferred to offline computation against the measured (2500M, 3000M] bracket (the naive file+KV+overhead estimate over-predicted the threshold — mmap file-backed pages are reclaimable before OOM, so the survivable threshold sits BELOW the residency threshold).\n\n**The law:** below the RAM wall there is a REAL, usable-if-slow streaming regime carried entirely by mmap page reclamation — the params_max formula predicts the RESIDENT threshold, not the SURVIVABLE one; deployment planning needs both numbers.\n\n**Also verified:** the '--user --scope' launcher fix works in production across all arms (the unprivileged-systemd-run bug class stays closed).\n\nSetup: systemd-run --user --scope MemoryMax ladder, llama-completion ctx=2048 n=128 threads=8, sha256 canaries. Script ResearchOutput/exp_net104_starvedladder.py.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty"
       ],
@@ -158219,7 +158219,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 00e162eb (Q=0.820), which proved 52 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-70 #3, exp 547. The pricing half of the energy-ascent round.\n\n**ASCENT-COST-LAW**: two exact cost laws under end-verification-only semantics — DFS-backtrack E = h·(1−K/2) + K·(3^(h+1)−3)/4 with K=(1−α)(2−α); **restart-from-root E = h·α^(−h), dominating DFS in 99.0% of cells**; beam never wins.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty"
       ],
@@ -184816,14 +184816,14 @@
       "parent_direction": "",
       "priority_score": 0.83,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Incoherent bundle: the only precise items (uniqueness of negabinary representations, Zeckendorf/base-phi representations with no two consecutive 1s) are elementary, textbook facts already essentially covered by standard digit-expansion arguments, while the remaining content is ill-defined -- 'there exists a base b in which primes have a simple pattern' has no mathematical definition of 'simple pattern', and the speculation about alien civilizations' preferred base is not a mathematical statement at all. No provable non-trivial core theorem is identified.",
+      "pruned_at": "2026-08-31T13:52:34Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"

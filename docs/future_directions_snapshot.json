@@ -2320,7 +2320,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "17866175",
     "description": "## NET-89 — limited-memory axis, round 33 (paper 170, ResearchOutput/exp_net89_mixed.py, /tmp/net89.log)\n\n**Verdict name: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST.**\n\n### Result\nInterleaved ~500-char blocks of Python code + English prose (gate exact; Qwen2.5-0.5B fp32):\n\n| ctx | mixed k\\* | code k\\* | EN prose k\\* | mixed increment |\n|---|---|---|---|---|\n| 512 | **12** | 12 | 16 | — |\n| 1024 | **20** | 16 | 20 | **+8 (vs +4 for either pure domain)** |\n\nThe mixed domain starts at CODE's level and rises at DOUBLE the expected rate.\n\n- **P1 REFUTED**: not the midpoint of components.\n- **P2 PARTIAL**: reaches prose's level by 1024.\n- **P3 CONFIRMED IN SPIRIT**: the model adapts locally, but the adaptation means cross-domain attention requires more keys than either pure domain.\n\n### The finding\nMixed-domain attention has its OWN structure shaped by cross-domain query-key interactions — it is NOT simply a combination of component domains. The steeper increment reflects the cost of switching between content types within a context window.\n\n### All 8 barriers\n(a) clean; (b) clean — first mixed-domain measurement in-programme; (c) confronted — 50/50 ratio, one block size stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET89; (g) fair; (h) DIRECT — real workloads are always mixed-domain.\n\n### Next\nMixing-ratio sweep; block-size sensitivity; other language pairs; 1.5B mixed-domain; 7B cell.\n\nNow 90 network experiments. Assessment v90. Paper 170.\n",
     "domain_bridges": [],
     "domains": [
@@ -2332,14 +2332,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T23:36:49.794322+00:00",
     "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knees {12,20}: starts at code's level but rises at double the expected rate"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f2e652e",
     "description": "## NET-88 — limited-memory axis, round 32 (paper 169, ResearchOutput/exp_net88_de4096.py, /tmp/net88.log)\n\n**Verdict name: THE-TOKENIZER-TAX-EXPLODES.**\n\n### Result\nGerman prose at ctx=4096 (gate exact; 3 held-out windows):\n\n| k | 24 | 32 | 40 | 48 | 56 |\n|---|---|---|---|---|---|\n| retained | 0.953 ✗ | 0.966 ✗ | 0.973 ✗ | 0.975 ✗ | **0.976 ✗** |\n\n**ALL FIVE POINTS FAIL.** Even k=56 retains only 0.976 — well below the bar.\n\n- **P1 CONFIRMED dramatically**: the tokenizer-tax compounds with the acceleration.\n- **P2/P3 REFUTED**: the tax does NOT dissolve or stay intermediate — it EXPLODES.\n\n### The multiplicative law\nThe +4 fine-step tax at short contexts becomes ≥+16 at 4096 — a 4× AMPLIFICATION matching the increment acceleration exactly. Domain/language shifts and context acceleration are MULTIPLICATIVE: the phase transition magnifies language differences rather than washing them out.\n\n### Deployment consequence\nMultilingual agentic workloads face disproportionately growing KV costs for non-English languages as context extends beyond ~2000 tokens. Budget tables must include a language × context interaction term.\n\n### All 8 barriers\n(a) clean; (b) clean — first domain×acceleration interaction test; (c) confronted — one language pair, 3 windows stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET88; (g) fair — identical harness except text; (h) DIRECT.\n\n### Next\nFrench @4096 (does romance behave like germanic?); more languages @4096; 1.5B non-English @4096; 7B cell.\n\nNow 89 network experiments. Assessment v89. Paper 169.\n",
     "domain_bridges": [],
     "domains": [
@@ -2351,7 +2351,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T23:36:49.795485+00:00",
     "title": "NET-88: THE-TOKENIZER-TAX-EXPLODES — German prose at 4096 needs >56 keys (all points fail); +4 fine-step tax becomes >=+16 at long context (4x amplification)"
   },
@@ -2396,25 +2396,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "00e162eb",
-    "description": "Round-70 #3, exp 547. The pricing half of the energy-ascent round.\n\n**ASCENT-COST-LAW**: two exact cost laws under end-verification-only semantics — DFS-backtrack E = h·(1−K/2) + K·(3^(h+1)−3)/4 with K=(1−α)(2−α); **restart-from-root E = h·α^(−h), dominating DFS in 99.0% of cells**; beam never wins. **Effective-branching REFUTED**: the rate base stays pinned at exactly 3 for every α<1 — accuracy enters only through the prefactor until the α→1 exponential→polynomial phase transition.\n\n**Breakeven vs EXACT Fermat scan** (median 183k steps): majority-win survives to c≤3000 visit-equivalents/step, α* 0.85→0.96 over c∈[0,3000]; balanced stratum NEVER wins (Fermat already instant); the deep-dB tail is unwinnable even at α=0.9999. Barrier-8 probe computed: a √N-cost per-step feature is excluded by only ~1.7 orders of magnitude — thin margin.\n\n**Master-law mapping REFUTED**: paper 138's class-hint law saturates at its 1/θ=3 cap while empirical speedup diverges — 1.01/1.30/1.98/3.56/10.10 at α=1/3…0.9. Branch hints compound sequentially (α^dB joint success) — NEW hint-taxonomy entry: sequential/geometric hints, priced by h·α^(−h).\n\nSnaps together with paper 193: the measured magnitude channel (~19% of b₁ entropy, raw-b₁ accuracy ≈ majority baseline) sits far below breakeven α*≥0.85 — the channel exists but buys no ascent win today; gap quantified from both ends. Bonus ledger finding: Spearman(dB, Fermat-steps) = −0.364 pooled but **+0.443 within the main stratum** — exp391's anti-correlation is stratum-dependent.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp547_ascent_cost.py + exp547_result.json + run.log, seed 20260823. (Agent left status:\"running\" in the JSON post-completion — disclosed; validations all PASS in-file.)",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3909",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T02:00:10.718442+00:00",
-    "title": "FACT round-70 #3 — ASCENT-COST: exact branch-oracle economics; effective branching refuted; master-law mapping refuted (paper 194)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "4467887a",
     "description": "Round-70 #2, exp 546 + coordinator exp546b. H1 (residue-style blindness extends to magnitudes) REFUTED — with the mechanism landing squarely inside the barrier map.\n\n**ENERGY-ASCENT-SIGNAL**: the Fermat-window magnitude spectrum of E(a)=a²−N (isqrt-anchored window W=4096) carries MI = **0.1836 bits about the first Berggren branch letter b₁** (19% of its entropy), permutation-null z +109…+120 over 300 row-shuffles; 69/225 N-only cells flag z≥3 (chance ≈0.3); joint (b₁,b₂) up to 0.2736 bits.\n\nHonesty first: on raw b₁ (78% letter-1) OOS accuracy only matches the majority baseline — the load-bearing evidence is dependence + minority-structure targets (dB-quartile beats chance AND majority OOS). **Coordinator scale control**: within-log(n)-bin shuffles give MI 0.2104 z=+100; within non-hit class MI 0.1139 vs null 0.006 — not scale, not strata, not just the threshold bit.\n\nControls: ratio-band→b₁ exact 3000/3000; N mod 3^k null worst z=+1.97 (paper 81 seal replicated); Gauss-magnitude features null max z=1.30.\n\nMechanism: hit-in-window rate by letter {0.000, 0.019, 0.673}; corr(log(d+1), log ρ) = −0.917; d ≈ n/(2ρ) — the spectrum is a fixed-window POSITIONAL sensor of the parabola zero-crossing. The tree letters are sealed against residues, OPEN to position — exactly what paper 132's residual-gap list predicted (positional witnesses) and paper 137 priced (5.19×). Value bounded (~19%; perfect W=4096 hit-detection worth 0.3035 bits; optimized window placement = named follow-up); cost economics deferred to exp547's (α,c) phase diagram.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp546_energy_ascent_oracle.py + exp546b_scale_control.py + exp546_result.json + exp546_data.npz, seed 20260823.",
     "domain_bridges": [],
@@ -2434,7 +2415,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "214f31b1",
+    "consumed_by_exp_id": "51790419",
     "description": "Round-70 #1, cron iteration (exp 545). The second consecutive decisive band loss.\n\n**TDIAL-U112-CONTINUES-FADE**: pooled Spearman(T, rate) = **0.462** CI [0.415, 0.508] — entire CI below the 0.55 floor for the second consecutive rung. Per-seed 0.409 / 0.509 / 0.460. T beats count by +0.047 CI [0.003, 0.090] — positive but below the +0.05 decisiveness bar for the first time in the ladder.\n\nThe fade RE-ACCELERATES: step delta −0.026 vs U108's −0.0125 — the U108 plateau read does not hold. Ladder: 0.573 (U96) → 0.544 → 0.500 → 0.488 → 0.462 (U112). Residual ~0.46 correlation is still far above chance, so the small-prime QR pattern carries real per-N signal at bitlen 112, but the dial is no longer a validated predictor there.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp545_t_dial_unif_112.py + exp545_result.json, seeds 20261210–12.",
     "domain_bridges": [],
     "domains": [
@@ -2472,26 +2453,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "df74e96c",
-    "description": "Round-76 #1 THEORY deliverable (no new experiment id; papers-only bump convention as in paper 219: experiment count unchanged at 562, max id 572; papers -> 221; assessment v327 -> v328).\n\nFalsification + replacement of GAP-L7 from paper 219's lemma ledger.\n\n**Action space formalized**: REORDER-class policy Pi emits enumeration a_k = f(k,N) of I(N) with uniformity (one computable f for all N), test-blindness (order commits ex ante; comparison queries only at T2 pricing), polylog overhead charging. N-independent orders satisfy all three — the corner L7-as-drafted missed. Clause 3 unrestricted is vacuous; under polylog it needs a sublinear-time factoring separation (L7-e, likely permanent).\n\n**Failure 1 — prior-shape channel Lambda**: static-order optimality is mass-sorting by divisor-mass; whether that sort is sqrt-descending is a POPULATION property. Hard-balanced generators (q<2p): bottom-heavy tilt z=0.4095–0.4148 vs analytic 0.414; window-ascending beats descending **1.58x±0.03** (BAL_prime 1.5785±0.029, BAL_intsnap 1.6114±0.033, n=2400 each; analytic two-stage 0.138v/0.219v=1.587). The attempt's quoted 1.71–1.91 was its own n=150 sampling inflation — its ANALYTIC prediction 1.59 was right all along. Sign-flip law: crossover **E[√r]=2/(1+1/√2)=1.1716**; narrow bands top-heavy z=0.6466, descending extremal (Lambda=1.0 argmin win_desc, win_asc S=0.5682); P137 pool z=0.5588 between.\n\n**Failure 2 — interaction term**: sigma∘delta factorization definitional/vacuous (singleton blocks); coupled residue orders gain only off-MLR as prior-shape leakage.\n\n**Corrected master inequality L7'**: S(Pi) <= (4/3)·min(1/mu_eff, 2^k_bits)/Lambda(pop), mu_eff structural keep-fraction. **ZERO violations** across all policy arms x four pools (BAL_prime/BAL_intsnap n=2400, BAL_narrow n=1600, P137 n=500; verifier recomputed incl. hybrid filter x reorder stress arm). Wheel calibration hits the T1 protocol-A law exactly: mu=phi(30)/30=4/15 => predicted 30/phi(30)=3.750, measured 3.7331–3.7496 (headline 3.741 vs 3.750), gap 0.25–0.31%. CAVEAT load-bearing: pure-permutation cells satisfy the cap tautologically at mu_booked=1; hybrid window+wheel reaches S=4.06 on P137 vs a 1.77 cap if mu booked 1 — structural mu extraction (L7-d) makes the cap non-vacuous.\n\n**Witness corrections (ledger items)**: Jacobi witness RETRACTED — (N|x)=0 identically at x=p since N≡0 mod p (100% draws, jacobi_p_is_zero=1.0; promoted share among coprime 0.5036/0.5015 fair coin): algebraic degeneracy measuring 'p divides N', not prior shape. Replaced by **keyed-vs-fixed mod-3 control**: N-keyed vs fixed-key promotion statistically identical (S 0.6366/0.6537 BAL_prime, 0.684/0.660 P137), hit-enrichment ≈1/2 BOTH arms — residue couplings carry ZERO information; apparent gains are prior-shape leakage on non-MLR marginals only (factor-blind law replicated with proper control; strengthens papers 130/136). exp570 early-fire transfer bounded honestly: early-fire is an ECM completion law, TD has none — what transfers is front-loading => head-domination, NOT sqrt-descending dominance without the centering axiom (surrogate K=4096: front-at-√N desc 948 < aligned 1493 < naive 3149; front-at-low-end flips; ladder-aligned ≈ descending S=0.990, ladder-naive collapses 0.27).\n\n**Paper 137 REFINED not contradicted**: verifier replicated descending winning on 137's own pool — trunc_asc S=0.9278 i.e. asc/desc=1.078x vs recorded 1.08x; window policy UNDEFINED on 21.6% of draws (win_asc_miss_frac=0.216). Lambda-dominance ONLY under hard q<2p balance; deployable gains require verifying the deployed generator enforces balance first (policy undefined otherwise).\n\n**Status**: L7' PROVEN-SKETCH (zero-violation finite audit + classical analytic core). Ranked lemmas: **L7-a HIGHEST VALUE next step (hours): measure the DEPLOYED generator's r-law and restate L7' with measured Lambda_lab** (without it Lambda is unmeasured and the MLR premise unchecked); L7-b exchange theorem write-out; L7-c master-inequality proof from touch-floor accounting; L7-d structural mu_eff/k_bits extraction (load-bearing NOW); L7-e unconditional factor-blindness of polylog-computable f (open, likely permanent — adopt hardness-relative or oracle-relativize).\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/ — gapL7_extremality.md (post-revision), gapL7_check.py/.json (author first pass n=150/pop, seed 20260824, 0.99 s), verifyL7_sim.py/verifyL7_sim_out.json (independent verification set, re-derived from scratch, no code reuse, distinct seeds; n=2400/2400/1600/500 four pools), verifyL7_unif.py (uniform proxy cross-check: asc ~2.13 outright, win_asc undefined on most draws). Paper: ResearchOutput/NewMathematics/221_L7Falsification.md.\n\nNo breakthrough claimed: falsification-and-replacement inside the barrier map; barrier-4 positional stratum gains a measurable sign-flipping channel, residue cap 4/3 untouched.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3986",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T11:45:45.217604+00:00",
-    "title": "FACT round-76 #1 — GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7' — extremal order = population mass-sort (window-ascending beats descending 1.58x±0.03 n=2400; sign-flip crossover E[√r]=1.1716); master inequality S ≤ (4/3)·T1-cap/Λ zero violations; wheel hits T1 law 3.741 vs 3.750; Jacobi witness dropped (algebraic degeneracy) → keyed-vs-fixed mod-3 control; paper 137 refined not contradicted (1.078× vs 1.08×); L7-a measure deployed generator tilt named next"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c8871952",
     "description": "**FACT round-87 #1 — exp 588c MIXTURE-BASELINE [FINAL] · paper 242 · closes paper 241's routed branch with a negative that converts to a NEW MAP ENTRY**\n\nVERDICT: **H0 — EXCESS SURVIVES THE DIVISIBILITY MIXTURE** (registered rule: H0 iff amp_mix >= 2·SE_mix; fired as registered).\n\n- Residual mid-window peak **amp_mix = 0.1774 ± 0.0432 (z = 4.11 ≥ registered bar of 2), peak at t = 0.65 exactly**; removal vs single-α baseline = **0%** (pre-named corroboration).\n- Model: 16 cells = divisibility pattern (2|v, 3|v, 5|v, 7|v) of v = j²−N; PRED(b) = Σ_c κ_c·S_c(b); S_c = Dickman-weighted reference sums; κ_c flank-only fit (score window excluded), λ=5 shrinkage toward global flank rate.\n- **WHY the mixture couldn't absorb it:** class composition measured FLAT in t (max cell drift 0.269%) — the mixture had no positional freedom; per-cell rates ARE real (κ/g spread **0.645–1.406**, ~2.2× rate modulation, top cells 3|v&5|v combos) but t-INDEPENDENT by construction. Formulation: **DIVISIBILITY IS A RATE DIAL, NOT A POSITION DIAL.**\n- Bit 0 (2|v) ≡ j-parity since N odd — parity merged into the grid and equally failed → closes paper 241's residual parity reading too.\n\n**CONTROLS + CAVEAT (disclosed per registration):** CTRL-A machinery null PASS (amp 0.0271 ± 0.0102, max-dev all bins 0.0342). CTRL-B parametric Poisson estimator-null amp_sim 0.0860 ± 0.0411 measures max-over-bins positive bias inside the raw amplitude → **null-calibrated z_cal = 1.53 < 2**; registered raw-amplitude rule stays verdict-bearing, disagreement flagged not silently resolved. Follow-ups power against the calibrated scale.\n\n**PROVENANCE:** Regen EXACT_MATCH on the proven exp588b-A3 lineage (population/windows int64-equal, stream order-walk 128/128, smoothness spot-check hits-smooth/controls-nonsmooth all pass), statistics gated on it; wall 12.6 s; npz sha256 df4830ed…fbb74 re-recorded at load.\n\n**LEDGER CATCHES:** A1 amendment — original single control (count halves vs ρ-weighted prediction) had a NON-FLAT NULL BY CONSTRUCTION (counts carry no ρ(t) gradient); caught AT SMOKE (amp 0.47 from ~290 counts/bin), control split CTRL-A/CTRL-B PRE-FULL-RUN, registered rule unchanged, NO treatment number entered any verdict through the amendment.\n\n**THREE-PASS CHAIN CLOSED (232 → 241 → 242):** feature found/stable (232) → real over exact Dickman baseline, no single binary carrier, routed to mixture model (241) → mixture fails, removal 0% (242).\n\n**NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM** — third orthogonal layer beside positional (228–230) and left-edge composition (238–240): REAL (241), STABLE (shift-invariant since 232), NON-DIVISIBILITY (here).\n\n**NAMED FOLLOW-UP: identify the non-divisibility carrier.** Pre-named candidates: (i) j-arithmetic beyond small-prime divisibility — higher-order residues of v, bit structure near the truncation boundary, quadratic-character/Legendre patterns mod p > 7; (ii) polynomial-sequence correlations — values-of-(j²−N) smoothness biases beyond divisibility.\n\nBarrier framing: map-entry addition INSIDE the rate layer's baseline-shape question — residue cap 4/3, position 5.19×, external-hint laws, quantum frontier, four-class rate closure, spike-origin arc untouched; refuted family (divisibility-rate mixtures as a positional explanation) removed from the search space at every scale; entry defined at fixed data geometry so its test transfers across bit lengths unchanged. Open unchanged: non-QR per-N structure at u=2.5, factor-local beyond scan-order, MA-1 effectivity; PLUS the named follow-up; .2346 provenance flag still traveling.\n\nArtifacts: `ResearchOutput/scripts/2026-08-24-round74/exp588c_{mixbase.py, smoke.log, full.log, result.json}`; paper `ResearchOutput/NewMathematics/242_MixtureBaseline.md`; notebook Part 284; assessment v349.\n",
     "domain_bridges": [],
     "domains": [
@@ -2503,14 +2465,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T22:46:21.540196+00:00",
     "title": "FACT round-87 #1 — MIXTURE-BASELINE (exp 588c FINAL): H0 — u*≈0.65 excess SURVIVES full divisibility mixture (amp .177±.043 z=4.11≥bar, peak t=0.65 exact, removal 0%) — composition FLAT in t, rates real but t-independent → DIVISIBILITY IS A RATE DIAL NOT A POSITION DIAL; NEW MAP ENTRY: NON-DIVISIBILITY POSITIONAL MECHANISM; chain 232→241→242 complete; CTRL-B caveat z_cal=1.53<2 disclosed; named follow-up: find the non-divisibility carrier"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f09adc42",
     "description": "Paper 249 (ResearchOutput/NewMathematics/249_ConsecutiveVDependency.md). Executes exp 598's pre-registered H0 route.\n\n**Design** (pre-registered before analysis): hit-indicator autocorrelation lags 1–20 in mid-window u ∈ [0.55,0.75], nb=1000 (robustness 500/2000); Amendment 0 pre-data — PRIMARY = per-batch quadratic-detrended ρ + MC-calibrated runs Z against pooled density curve p̂(u); SECONDARY literal global-mean; H1 iff |ρ| > 0.05 AND cluster-over-Ns CI excludes 0 at some lag, OR runs |Z| > 3.2905 (p < 0.001). Controls pre-committed: C1 ctl null both variants; C2 synthetic smooth-hump iid at rate curve; C3 injected lag-1 dependence must detect. Data: exp581_regen_positions.npz (sha256 0b1afa50…36a38; 128 batches, 9,594 hits, no N stored — purely positional). Boot/MC 2000 reps each, seed 599_20260828; wall 31.4 s.\n\n**Verdict H0_PURE_DENSITY**: detrended ρ(lag) ∈ [−0.0199, −0.0023] (max |ρ| = 0.020 << 0.05), flat/slightly negative — no refractory dip, no excitation bump; per-lag MC-vs-density-curve p ∈ [0.128, 0.969]; SECONDARY even more null (ρ_raw ∈ [−0.0103, +0.0046]); runs null BOTH readings (textbook Z = +0.850 p≈0.40; MC-calibrated Z = +0.894 p≈0.37; ctl Z = −0.454). Robustness nb500 max|ρ_det| = 0.036, nb2000 0.016.\n\n**Controls all met**: C1 null (.009 raw/.020 det); C2 synthetic-hump ALSO null on secondary (max .014 @lag17, pooled_Z +0.60) ⇒ curvature confound quantitatively immaterial — conditioned and literal readings AGREE, verdict not amendment-dependent; C3 injected lag-1 DETECTED MASSIVELY (ρ_det(lag1)=0.337, argmax exactly 1, pooled_Z −57.4) ⇒ null means \"no dependency\", not \"test blind\".\n\n**CONSEQUENCE (terminal characterization)**: given position, neighboring hits carry NO information about each other — the u* ≈ 0.65 excess is pure density/rate heterogeneity along the scan axis. Thread closure chain: excess real on home seed (papers 239/241) → divisibility a rate dial not position dial (242) → no j-arithmetic carrier (248) → no sequence structure (HERE). Hit-position thread papers 228–230 → 231 → 238/240 → 241–242 → 248 CLOSES COMPLETELY. Operational law: future gains come from modeling the positional DENSITY CURVE itself, never Markov/neighborhood structure. Scope honest: holds where the excess manifests (seed-20260828 lineage); exp592/#391 ≥3-pooled-seed amplitude test remains open — machinery transfers unchanged if an excess re-establishes elsewhere.\n\n**Ledger catches**: seed-20260828 ctl regeneration via two canonical recipes BOTH mismatch ctl_0 — recipe not recoverable from allowed reads; provenance rests on sha256 (disclosed). RECORD-TIME CORRECTION: findings' \"every CI straddles 0\" overstates — result.json shows 12/20 detrended CIs exclude zero on the NEGATIVE side, upper ends ≤ 0.0083 (raw 19/20 straddle; uniform ~−0.01 offset mirrored ~+0.01 on controls — opposite-sign shared-magnitude artifact, not structure); verdict unaffected (H1 required |ρ| > 0.05 AND CI exclusion JOINTLY).\n\nBarrier framing: none — terminal characterization inside the mapped positional stratum. Open unchanged: u ≥ 6–14 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, external-hint laws, quantum closed; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling.",
     "domain_bridges": [],
     "domains": [
@@ -2522,7 +2484,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-25T01:54:45.653750+00:00",
     "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-window hits INDEPENDENT given position — lag profile lags 1–20 flat/slightly negative ρ ∈ [−0.020, −0.002] vs 0.05 bar (MC p 0.128–0.969), runs null both readings (Z +0.85 textbook / +0.89 density-calibrated vs 3.29), POWER CONFIRMED (injected lag-1 ρ_det = 0.337 detected at argmax exactly lag 1) — u* ≈ 0.65 excess = PURE DENSITY / rate heterogeneity, NO sequence structure — POSITIONAL THREAD CLOSES COMPLETELY (228–230 → 231 → 238/240 → 241–242 → 248)"
   },
@@ -3945,6 +3907,25 @@
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 00e162eb (Q=0.820), which proved 52 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-70 #3, exp 547. The pricing half of the energy-ascent round.\n\n**ASCENT-COST-LAW**: two exact cost laws under end-verification-only semantics — DFS-backtrack E = h·(1−K/2) + K·(3^(h+1)−3)/4 with K=(1−α)(2−α); **restart-from-root E = h·α^(−h), dominating DFS in 99.0% of cells**; beam never wins.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_00e162eb_9b60a3ed",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "00e162eb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:42.553898+00:00",
+    "title": "Deepening: FACT round-70 #3 — ASCENT-COST: exact branch-oracle economics; effective branchi"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -3962,6 +3943,25 @@
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 898d17cb (Q=0.820), which proved 84 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant in `ptx_no_starvation` cannot be improved beyond a factor\n   of `2`: there are instances with `q y ≤ 2γ d y / (β log (1/p y) + M + γ − r y)`.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_898d17cb_6dd46b6c",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "898d17cb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:59.676360+00:00",
+    "title": "Deepening: The floor is sharp"
   },
   {
     "ambition_level": "extension",
@@ -5262,47 +5262,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_408",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "fd_0648",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697736+00:00",
-    "title": "Collatz Stopping Times: Density Analysis"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalize quaternion algebras and their classification over number fields. Prove the isomorphism between unit quaternions and SO(3). Construct the Cayley-Dickson construction and prove properties of octonions. Apply to gimbal lock avoidance in 3D rotation.",
     "domain_bridges": [],
     "domains": [
@@ -5607,28 +5566,6 @@
     "status": "available",
     "timestamp": "",
     "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e8ef44c2",
-    "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology — their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Topology",
-      "Computation"
-    ],
-    "id": "seed_162",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "Define the prime point cloud P_N = {p_1, p_2, ..., p_N} subset R. The Rips complex R_epsilon(P_N) connects p_i and p_j if |p_i - p_j| <= epsilon. H_0: at epsilon = 0, each prime is its own component. At epsilon = 2, twin primes are connected (p, p+2). At epsilon = 4, cousin primes are connected. At epsilon = log(x), most nearby primes are connected. The bar lengths in H_0 are the prime gaps: bar i has length g_i = p_{i+1} - p_i. By Cramer's model, the prime gaps follow an approximate exponential distribution: P(g = 2k) ~ 2*C_2 * k^{-2} * (1/log(p))^1 for even k (and 0 for odd k > 1). This is NOT an exponential distribution — it is a power law with a correction. The Poisson prediction P(g > epsilon) ~ e^{-epsilon/log(x)} overestimates long gaps. Correct: the H_0 bar lengths follow the prime gap distribution, which is approximately geometric with parameter 1/log(p). H_1: 1-dimensional holes appear when three primes p_a, p_b, p_c form a triangle with all gaps <= epsilon. This happens at epsilon = max(p_b - p_a, p_c - p_b, p_c - p_a). The H_1 bars encode constellations of 3+ primes in a short interval. Test: compute persistent homology of primes up to 10^6 using GUDHI or Ripser, extract H_0 and H_1 barcodes, compare with Poisson model.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
     "ambition_level": "extension",
@@ -11040,7 +10977,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "445413d7",
+    "consumed_by_exp_id": "",
     "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
     "domain_bridges": [],
     "domains": [
@@ -11054,7 +10991,7 @@
     "proof_strategy": "Define a CA rule f of radius r as f: {0,1}^{2r+1} -> {0,1}. The Wolfram number of f is N = sum_{x=0}^{2^{2r+1}-1} f(x) * 2^x. A CA is reversible iff its global function F: {0,1}^Z -> {0,1}^Z is bijective. Hedlund's theorem: F is bijective iff the local rule is a permutation of neighborhoods that preserves the shift. For r=1: there are 2^8 = 256 rules. The reversible ones are: Rule 15, 51, 85, 170, 204, 240 (6 rules). Their local rules as permutations: Rule 170 = left shift (identity on neighborhoods), Rule 15 = NOT(left shift), Rule 51 = complement, Rule 85 = NOT(right shift), Rule 204 = identity (trivial), Rule 240 = right shift. These generate a subgroup of S_8. Conjecture: this subgroup is isomorphic to S_4 (the symmetry group of the square) acting on the 4 non-trivial neighborhoods. For r >= 2: G(r, {0,1}) is conjectured to be S_{2^{2r+1}}, meaning any permutation of neighborhoods is achievable by composing reversible CA rules. Test: compute the group generated by the reversible elementary CA rules using GAP or similar, verify the structure.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
@@ -20150,6 +20087,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Novelty.ReorderFrontLoadingCertification",
+      "Novelty.ReorderExtremalitySignFlip"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A REORDER policy may split the balance window and traverse the pieces in different directions. By the exchange theorem the optimum is the mass sort, so the optimal split should sit where the mass density crosses its mean, and the gain over the best pure order should be bounded by the residue slack 4/3.\n\nThe cost-minimal two-stage window policy splits at the tilt median z = 1/2, and its cost is at least (3/4) times the best pure-order cost.\n\nFormalise two-stage costs as a function of the split point, differentiate the closed form, and compare with probeCost_masssort_le.\n\nA deployable policy strictly better than both pure orders, with a proved gain ceiling.\n\nStaging buys nothing beyond the pure orders and the action space collapses to two arms.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4434",
+    "lineage_refs": [],
+    "priority_score": 0.5938764044943821,
+    "proof_strategy": "Write the staged cost as a sum of two window costs, minimise over the split, and use frontload_le for the comparison.",
+    "research_mode": "team",
+    "source_exp_id": "df74e96c",
+    "status": "available",
+    "timestamp": "2026-08-31T13:52:23.354844+00:00",
+    "title": "Optimal Staged Window Splits"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Probability.PositionalRateLinkLayers",
       "Probability.PositionalRateLinkTests"
     ],
@@ -21191,6 +21148,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Novelty.ReorderExtremalitySignFlip"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved sign-flip criterion compares expected costs. Under a quantile criterion the two window policies should flip at a different band width, opening an interval of delta on which mean-optimal and median-optimal orders disagree. The closed-form band law makes the cost distribution explicit.\n\nThere is a nonempty interval (delta_1, delta_2) containing 80 - 56*sqrt 2 on which the mean-optimal and the median-optimal window policies differ.\n\nCompute the c.d.f. of u = 1/sqrt r for r ~ U[1,1+delta], formalise both medians in Lean and compare with crossoverWidth.\n\nDeployment guidance must declare its risk criterion; the barrier map gains a second threshold.\n\nMean-optimality is criterion-robust and one threshold suffices.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4433",
+    "lineage_refs": [],
+    "priority_score": 0.5925000000000001,
+    "proof_strategy": "Invert the explicit c.d.f. of u on [1/sqrt(1+delta),1], solve the median equations, compare with the proved mean crossover.",
+    "research_mode": "team",
+    "source_exp_id": "df74e96c",
+    "status": "available",
+    "timestamp": "2026-08-31T13:52:22.840279+00:00",
+    "title": "Quantile Sign-Flip Band of Indeterminacy"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.BB84.KeyRateThreshold",
       "Applications.BB84FiniteKeyBounds",
       "Applications.BB84HybridCertificate"
@@ -22120,6 +22096,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Novelty.ReorderFrontLoadingCertification",
+      "Novelty.ReorderExtremalitySignFlip"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Prefix-sum dominance implies cost dominance but is only partial, whereas cost is total. The induced structure should be a lattice whose minimal elements are exactly the mass-sorted enumerations, so distance-to-optimal becomes a structural rather than scalar quantity.\n\nOn a fixed mass vector the front-loading preorder on enumerations is a lattice whose minima are the mass-sorted orders, and the cost gap is monotone in the lattice distance.\n\nFormalise the dominance order on permutations, prove minimality via the exchange theorem, and check lattice axioms on small cases by decide.\n\nAudits can report a structural distance-to-optimal instead of a single speedup.\n\nOnly scalar cost comparison is available and partial audits stay incomparable.",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_4436",
+    "lineage_refs": [],
+    "priority_score": 0.5650730007887852,
+    "proof_strategy": "Abel identity cost_eq_tail_sums plus Hardy-Littlewood-Polya majorization; minimality from probeCost_masssort_le.",
+    "research_mode": "team",
+    "source_exp_id": "df74e96c",
+    "status": "available",
+    "timestamp": "2026-08-31T13:52:24.472957+00:00",
+    "title": "Majorization Lattice of REORDER Policies"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.BerggrenModular.SilverOrbit",
       "Cryptography.BerggrenModular.Hardness"
     ],
@@ -22767,6 +22766,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Physics.PTXStarvationEquidistribution"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 3 shows the slack orbit of a geometric demand ladder is dense exactly when log_2 alpha is irrational. The effective question is how long one must wait for a slack within epsilon of the ceiling 2, and the answer should be governed by the continuants of log_2 alpha via the three-distance theorem.\n\nThe least n with slack(alpha^n) > 2 - epsilon satisfies q_k <= n <= q_{k+1} where q_k are the continued-fraction denominators of log_2 alpha and k is minimal with 1/q_k < c*epsilon.\n\nFormalise the three-distance theorem for the orbit fract(-n theta) and derive two-sided hitting-time bounds; test numerically against alpha = 3 and alpha = golden ratio squared.\n\nTurns the qualitative sharpness result into a schedule-length guarantee: one can certify how many rounds an exchange needs before it demonstrably nears the worst case.\n\nDensity would be non-effective for some alpha, pointing to Liouville-type growth ratios as pathological scheduler inputs.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_4429",
+    "lineage_refs": [],
+    "priority_score": 0.5647179242376871,
+    "proof_strategy": "Three-distance theorem plus best-approximation properties of continuants; the qualitative density already proved supplies the existence half.",
+    "research_mode": "team",
+    "source_exp_id": "898d17cb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:51.882728+00:00",
+    "title": "Continued-Fraction Hitting Times for Starvation Slack"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Novelty.EcmStageOneTraceLaw",
       "Novelty.EcmTraceLateTailDecay"
     ],
@@ -23338,6 +23359,29 @@
     "status": "available",
     "timestamp": "2026-08-30T17:30:29.104909+00:00",
     "title": "Bit-Predicted Extraction for Arbitrary Representation Pairs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.ReorderWindowFamilyKeepFraction",
+      "Novelty.ReorderMasterCapWitnesses"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The unconditional clause L7-e is equivalent to a sublinear-time factoring separation. The relativized version, where the enumeration may query residues of N, is within reach because promotion counts are key-independent at every modulus.\n\nNo enumeration computable from residue queries alone beats the mass-sort optimum on an MLR population; equivalently every residue-oracle policy has speedup 1 against a flat prior.\n\nFormalise a residue-oracle machine model over Finset.range (M*m) and derive the no-gain corollary from keyed_promotion_factor_blind and flat_prior_cost.\n\nThe barrier-4 residue stratum closes unconditionally in the relativized model; only prior shape remains.\n\nSome oracle policy gains, and the factor-blind law needs an exception clause.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4435",
+    "lineage_refs": [],
+    "priority_score": 0.5646073266234106,
+    "proof_strategy": "Key-independence of promotion counts plus flat-prior invariance of enumeration cost.",
+    "research_mode": "team",
+    "source_exp_id": "df74e96c",
+    "status": "available",
+    "timestamp": "2026-08-31T13:52:23.964367+00:00",
+    "title": "Oracle-Relative Factor Blindness of Residue Enumerations"
   },
   {
     "ambition_level": "extension",
@@ -40106,6 +40150,203 @@
     "status": "available",
     "timestamp": "2026-08-31T05:36:18.279205+00:00",
     "title": "Unit Yield of Bezout-Structured Square Roots"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.AscentCostBranching",
+      "Novelty.AscentCostExponent"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that no search policy under end-verification-only semantics can achieve an exponential cost rate below min(b, 1/alpha), so the DFS/restart envelope proved in cycle 3 is optimal, not merely best-of-two. The approach is to model a policy as a distribution over descent sequences and bound the expected number of visits before a correct leaf is verified. It matters because it converts an engineering comparison into a lower-bound theorem.\n\nFor every policy P that only learns success at leaves, limsup (log E_P(h))/h >= log (min b (1/alpha)) whenever the oracle accuracy is alpha and the branching factor is b >= 2.\n\nFormalise policies as functions from visit histories to next nodes; prove the bound by a counting argument over the alpha^h-probability correct root-leaf path, and check numerically against random hybrid schedules.\n\nThe exponent law becomes a complexity statement: accuracy alpha buys exactly a base 1/alpha and nothing better.\n\nThere exists a schedule with an intermediate base, which would be a genuinely new search strategy.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_4422",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Yao-style averaging over the uniformly random correct path, plus the observation that a policy visiting fewer than (min b (1/alpha))^h nodes misses the correct leaf with probability tending to one.",
+    "research_mode": "team",
+    "source_exp_id": "00e162eb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:22.994954+00:00",
+    "title": "Information-Theoretic Floor for End-Verification Ascent"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.AscentCostBranching"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Restart-with-cutoff descends d levels under oracle guidance and sweeps the remaining h - d exhaustively. Its cost is the product of the two laws already formalised. The conjecture is that the resulting exponent is a maximum of the two endpoint rates weighted by the depth split, hence never strictly between them at the optimum.\n\nFor cutoff fraction t = d/h in [0,1] the exponent is t*log(1/alpha) + (1-t)*log b, and the minimiser over t is always t = 1 or t = 0 according to whether alpha b > 1.\n\nDefine cutoffCost b w alpha t h in Lean, compute its log-rate limit, and minimise the resulting affine function of t.\n\nThe phase transition at alpha = 1/b is first-order in the schedule parameter: the optimum jumps between endpoints.\n\nA genuinely mixed schedule beats both pure ones, contradicting the envelope picture.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4423",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "The cost factorises as h * alpha^(-th) * b^((1-t)h) up to polynomial factors; take logs and minimise an affine function on [0,1].",
+    "research_mode": "team",
+    "source_exp_id": "00e162eb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:23.510078+00:00",
+    "title": "Cutoff-Restart Interpolation Without Intermediate Bases"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.AscentCostLaw",
+      "Novelty.AscentCostExponent"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "If the oracle accuracy varies with depth as alpha_1, ..., alpha_h, the restart law becomes h divided by the product of the alpha_j. The conjecture is that the exponent depends on the accuracy profile only through its geometric mean, so that a channel that is accurate at shallow depths and blind deep down is worth exactly its geometric mean.\n\nThe restart exponent for a profile (alpha_j) equals the limit of -(1/h) * sum_j log alpha_j, i.e. log of the reciprocal geometric mean, and the crossover with DFS is at geometric mean 1/b.\n\nGeneralise restartCost to a product of per-level accuracies, prove the log-rate identity, and specialise to geometrically decaying profiles alpha_j = alpha * rho^j.\n\nEmpirical per-level accuracy measurements can be aggregated to a single number before any economics is done.\n\nThe profile shape matters, and shallow accuracy is worth more than deep accuracy (or vice versa), which changes how channels should be measured.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4424",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Cesaro convergence of (1/h) sum log alpha_j, plus the geometric-trial expectation already proved for a constant accuracy.",
+    "research_mode": "team",
+    "source_exp_id": "00e162eb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:24.040487+00:00",
+    "title": "Geometric-Mean Reduction for Depth-Dependent Oracles"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.AscentCostLaw"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Interpolate between end-verification-only and step-verification by letting a verifier of cost v fire every k levels. The conjecture is that the optimal spacing k* scales like log_b(1/v) and that the exponent degrades continuously from 1 (cheap verification) to min(b, 1/alpha) (no verification), giving a quantitative price for verification.\n\nWith verification cost v per firing and spacing k, the exponent is (1/k) * log(min(b^k, alpha^(-k)) + v * b^k) and its minimiser satisfies k* = Theta(log_b(1/v)).\n\nDefine the k-spaced schedule cost recursively, prove its closed form as in cycle 1, and analyse the resulting one-parameter minimisation.\n\nA per-step feature costing v is worth building precisely when v is below an explicit threshold, closing the barrier probe quantitatively.\n\nVerification cost enters only the prefactor, and end-verification semantics is not the bottleneck it appears to be.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4425",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Same telescoping sum as the DFS law with wrong-subtree size b^k instead of b^j, then optimise the exponent over k by calculus on the closed form.",
+    "research_mode": "team",
+    "source_exp_id": "00e162eb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:24.555708+00:00",
+    "title": "Partial Verification as a Third Resource"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.AscentCostExponent"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The critical accuracy ((1+c)h/F)^(1/h) is increasing in c (proved) and, for fixed budget F, eventually increasing in h. The conjecture is that its supremum over h is attained at an explicit h_max and that beyond that depth no accuracy strictly below 1 can win, giving a hard depth ceiling for oracle-guided ascent against an exact solver.\n\nFor fixed c, F the function h -> ((1+c)h/F)^(1/h) is unimodal with a unique maximiser, tends to 1 as h -> infinity, and the win region {(alpha,h) : alpha > alpha*(c,F,h)} is bounded in h for every alpha < 1.\n\nDifferentiate the log of the critical accuracy, (1/h)(log((1+c)h) - log F), in h and locate its critical point; formalise the resulting unimodality and the depth ceiling for fixed alpha < 1.\n\nThere is a computable maximal depth at which any given oracle accuracy can still beat a given exact solver.\n\nDeep instances remain winnable at fixed accuracy, contradicting the observed unwinnable deep tail.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4426",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Calculus on g(h) = (log((1+c)h) - log F)/h, whose derivative vanishes at log((1+c)h/F) = 1; combine with breakeven_iff to transfer the analysis to the win region.",
+    "research_mode": "team",
+    "source_exp_id": "00e162eb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:25.082205+00:00",
+    "title": "Breakeven Surface and the Maximal Winnable Depth"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Physics.PTXStarvationJitter",
+      "Physics.PTXStarvationEquidistribution"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A memoryless backoff arbiter pays the worst-case factor rho. Allowing a deficit counter to carry unused window between rounds should lower the long-run average slack to the geometric mean sqrt(rho) while leaving the per-round worst case at rho. The approach models the arbiter as a measure-preserving skew product over the rotation identified in cycle 3.\n\nFor every grid ratio rho > 1 there is a state-dependent arbiter whose long-run average slack equals sqrt(rho), and no arbiter with per-round windows in rho^Z achieves long-run average slack below sqrt(rho).\n\nFormalise a deficit-counter arbiter as a sequence recursion over demands, prove the Cesaro limit of its log-slack equals 1/2 using the ergodic average already computed in jitter_mean_log_slack, and prove the matching lower bound by convexity.\n\nSeparates worst-case from amortised scheduling guarantees: the factor 2 is a per-round artefact, not an amortised cost.\n\nThe dyadic overshoot is intrinsically per-round and memory cannot help, strengthening ptx_two_optimal_ceiling_iff to amortised schedules.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4427",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Model the arbiter state as a point of the circle R/log rho Z; identify the induced map as a rotation; apply Birkhoff to the already-computed invariant density; lower bound by Jensen applied to the log-slack.",
+    "research_mode": "team",
+    "source_exp_id": "898d17cb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:50.827451+00:00",
+    "title": "Deficit-Carrying Arbiters and the Geometric-Mean Barrier"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Physics.PTXStarvationJitter"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 2 proves that uniform phase jitter gives geometric-mean slack exactly sqrt(rho) for every request. The conjecture is that no phase distribution does better in the worst case over requests, so log-uniform jitter is the unique minimax-optimal randomisation of a grid arbiter. The approach averages the log-slack over the request as well as the phase and applies Fubini.\n\nFor every probability measure mu on the phase circle, sup over x of the mu-averaged log-slack is at least 1/2, with equality only for the uniform measure; consequently the minimax geometric-mean slack of any randomised grid arbiter is sqrt(rho).\n\nFormalise the double average of fract(theta - t) over theta and t, prove it equals 1/2 by Fubini, and deduce the sup bound; test uniqueness by perturbing mu with a point mass.\n\nFixes log-uniform backoff jitter as the provably optimal randomisation, giving designers a canonical choice.\n\nSome skewed jitter distribution beats uniform, which would be a concrete improvement to exponential-backoff practice.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_4428",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Fubini on the product of the phase measure and the uniform measure over one period, then a strict-inequality argument for non-uniform mu using the density of rotations.",
+    "research_mode": "team",
+    "source_exp_id": "898d17cb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:51.358014+00:00",
+    "title": "Minimax Optimality of Log-Uniform Jitter"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Physics.PTXStarvationSpectrum",
+      "Physics.PTXStarvationJitter"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The aggregate bound sums the per-class factor 2. For n classes with rationally independent log-demands the per-class slacks equidistribute independently, so the aggregate slack should concentrate at the mean 1/log 2 with fluctuations of order 1/sqrt(n), and the worst case 2 should require an aligned instance.\n\nFor demands whose base-2 logarithms are rationally independent, the aggregate slack (sum of services)/(sum of ideals) tends to (rho-1)/log rho as the number of classes grows, and instances with aggregate slack above 2 - epsilon form a set of vanishing measure.\n\nFormalise Weyl equidistribution for several independent exponents, combine with the proved per-class density, and derive a law of large numbers for the aggregate ratio.\n\nChannel-level provisioning can use 1.443x rather than 2x headroom, a 28 percent capacity saving with rigorous justification.\n\nAggregate alignment is common, and the per-class worst case really is the design constraint at channel level.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4430",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Multi-dimensional Weyl criterion, then a Birkhoff average of the slack function against the product Haar measure; the Finset bounds ptx_aggregate_floor and ptx_aggregate_lt_two provide the deterministic envelope.",
+    "research_mode": "team",
+    "source_exp_id": "898d17cb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:52.404534+00:00",
+    "title": "Aggregate Slack Concentration for Many Transport Classes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Physics.PTXStarvationFloor",
+      "Physics.PTXStarvationEquidistribution"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Exact service occurs precisely when the ideal share is a power of two. For rational parameters and occupancy p = 1/n this asks whether gamma*d/(beta*log n + M + gamma - r) can be a power of two, a linear-forms-in-logarithms question. The conjecture is that exactness fails for all n that are not powers of two.\n\nIf beta, gamma, M, r, d are rational with beta nonzero and p = 1/n with n a positive integer that is not a power of two, then the ideal share is never an integer power of two, so slack > 1 strictly.\n\nExtend the argument of irrational_logb_two_three from log_2 3 to log_2 n for non-powers of two, then clear denominators to reduce the exactness equation to an irrationality statement.\n\nExact service is arithmetically impossible for essentially all physical occupancies: the floor is never attained in practice, only approached.\n\nThere are tuned occupancies with zero quantisation loss, which would be valuable design points for real arbiters.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4431",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Unique factorisation to prove log_2 n irrational for n not a power of two, then a rationality contradiction after clearing denominators in the exactness equation.",
+    "research_mode": "team",
+    "source_exp_id": "898d17cb",
+    "status": "available",
+    "timestamp": "2026-08-31T13:51:52.931635+00:00",
+    "title": "Arithmetic Obstruction to Exact Service"
   },
   {
     "ambition_level": "extension",
@@ -62220,23 +62461,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "898d17cb",
-    "description": "The constant in `ptx_no_starvation` cannot be improved beyond a factor\n   of `2`: there are instances with `q y ≤ 2γ d y / (β log (1/p y) + M + γ − r y)`.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1660",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "9e83a721",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T03:10:25.970261+00:00",
-    "title": "The floor is sharp"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "is a finitely supported `a : ℕ → ℤ` with\n`∑ k · a k = 24`; `b m = ∑_{k ∣ m} a k`; `headCoeff a = a₁(a₁+3)/2 + a₂` is the\nproved value of `c(1)` for the eta quotient `q · (1/η_a) = ∏_m (1 − q^m)^(−b m)`.",
     "domain_bridges": [],
@@ -65392,7 +65616,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce3d1cf6",
     "description": "Prove that `(fun p : ℂ × ℂ => FourthDimensionPlayground.hopf p.1 p.2)` is `C∞`, then prove its derivative restricted to the tangent space of the unit three-sphere has real rank `2` at every point.",
     "domain_bridges": [],
     "domains": [],
@@ -65402,7 +65626,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "d1098480",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:11.573329+00:00",
     "title": "Smoothness and rank of the Hopf map"
   },
@@ -66505,5 +66729,25 @@
     "status": "available",
     "timestamp": "2026-08-31T05:35:53.322227+00:00",
     "title": "Third cycle (this run)."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**first homology vanishes at every scale** for any point cloud on a line, so the conjectured\n  degree-one prime barcode does not exist, and this is sharp: a planar four-point cloud does carry\n  an essential class;",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_4432",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e8ef44c2",
+    "status": "available",
+    "timestamp": "2026-08-31T13:52:08.095484+00:00",
+    "title": "first homology vanishes at every scale"
   }
 ]
