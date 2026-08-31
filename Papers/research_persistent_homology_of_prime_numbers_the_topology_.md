@@ -1,333 +1,323 @@
-# Persistent Homology of the Prime Point Cloud: Quantisation, Correlation, and the Vanishing of $H_1$
+# The Topology of Arithmetic: Persistent Homology of the Prime Point Cloud
 
-**Author:** Aristotle
-**Date:** 2026-08-17
+**Aristotle**
+
+*2026-08-31*
 
 ---
 
 ## Abstract
 
-We study the Vietoris–Rips persistent homology of the prime point cloud $\{p_1, p_2, p_3, \dots\} = \{2,3,5,7,\dots\} \subseteq \mathbb{R}$ and test the *Poisson heuristic* for its barcode: the conjecture that the zero-dimensional bar lengths are exponentially distributed with mean $\log x$, and that the first homology carries bars at scale $(\log x)^2$, the longest of which encodes the Twin Prime Conjecture. We prove that both halves of the conjecture fail, and we replace them with exact statements.
+We study the Vietoris–Rips persistent homology of the prime numbers viewed as a point cloud on the real line, $P = \{p_1, p_2, p_3, \dots\} = \{2, 3, 5, 7, \dots\} \subset \mathbb{R}$, and determine its barcode completely.
 
-In dimension zero we show that the barcode is *arithmetically quantised*: the initial bar has length $1$ and every later bar has even length, so the bar-length measure is atomic on $\{1\} \cup 2\mathbb{N}$ and every open window $(2k, 2k+2)$ is empty, while any exponential law of any mean assigns strictly positive mass to it. The quantisation is quantitatively robust — every bar length is at distance at least $1$ from every odd integer $\ge 3$ — and the barcode has bars of arbitrarily large length, precluding an exponential tail at any fixed scale. The Betti staircase is constant on each interval $[2k, 2k+2)$, and its drops invert exactly to the prime-gap histogram; the area under the reduced Betti curve satisfies the exact identity $\int_0^\infty (b_0(\varepsilon,n) - 1)\,d\varepsilon = p_n - 2$.
+Four groups of results are established. First, a *vanishing theorem*: for an arbitrary point cloud on a line, the mod-$2$ first homology of the Rips complex vanishes at every scale, so the prime cloud has no degree-one barcode at all; this is sharp, since an explicit four-point planar configuration carries an essential one-cycle. Second, a *rigidity theorem*: for a cloud on a line the degree-zero barcode is the multiset of consecutive gaps, the Betti curve $b_0(\varepsilon, n) = 1 + \#\{i < n : g_i > \varepsilon\}$ is a complete invariant of that barcode, and the barcode is $2\delta$-stable under $\delta$-perturbations of the cloud. Third, an *atomicity theorem* and a consequent refutation: every bar of the prime barcode has length $1$ (once) or an even length $\ge 2$, so the bar-length spectrum is supported on the lattice $\{1\} \cup 2\mathbb{N}$; the number of bars shorter than $2$ among the first $n$ is exactly $1$, whereas an exponential law of any mean $\mu > 0$ predicts $n(1 - e^{-2/\mu}) \to \infty$ such bars. No exponential (Poisson) law, in particular none with mean $\log x$, describes the raw prime barcode. Fourth, a *dictionary* between arithmetic and topology: the twin-prime counting function is exactly the Betti defect at scale $2$, via the identity $b_0(2, n) + \#\{i < n : g_i = 2\} = n$, so the twin prime conjecture is equivalent to the unboundedness of $n - b_0(2, n)$; the same translation puts the bounded-gaps theorem of Zhang and Maynard–Tao in the form "the scale-$246$ Betti defect is unbounded"; and, contrary to naive expectation, at *every* fixed scale the prime cloud has arbitrarily many connected components.
 
-In dimension one we prove a vanishing theorem: for *any* strictly increasing point cloud on the real line and *any* scale, every mod-$2$ one-cycle of the Rips (flag) complex is a symmetric-difference sum of Rips triangles. Hence $H_1 = 0$ at all scales, and no $H_1$ bar of the prime cloud exists — in particular no "twin prime $H_1$ bar". The correct topological form of the Twin Prime Conjecture is zero-dimensional: it holds if and only if the single Betti step $b_0(1,n) - b_0(2,n)$ is unbounded in $n$.
+Numerical evidence to $10^6$ (78 497 bars, mean length $12.74$, longest bar $114$ starting at $492\,113$, $8\,169$ twin bars, $b_0(2, n) = 70\,328$) confirms every identity exactly.
 
-Finally we show that the barcode is a *correlated* point pattern, refuting independence as well as the exponential marginal. Past the initial triple $3,5,7$, two adjacent bars of equal length $d$ force $3 \mid d$; in particular adjacent twin bars never occur, though an independent model predicts $(n-1)q^2$ of them. This is the case $q = 3$ of a general block law: for every prime $q$, some block of fewer than $q$ consecutive bars has total length divisible by $q$. The barcode is a complete invariant, $p_n = 2 + \sum_{m<n} g_m$, so these congruence exclusions are genuine constraints on the topology.
-
-**Keywords:** persistent homology; Vietoris–Rips filtration; prime gaps; barcode; Betti curve; Poisson process; twin primes; chordal graphs.
+**Keywords:** persistent homology, Vietoris–Rips complex, prime gaps, twin primes, Betti curve, bounded gaps, Cramér model.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The prime point cloud
+Persistent homology extracts, from a finite metric space, a multiscale summary of its shape: one inflates each point to a ball of radius $\varepsilon/2$, records the homotopy type of the resulting union (combinatorially, of the Vietoris–Rips complex), and tracks the birth and death of homological features as $\varepsilon$ grows. The output is a *barcode*: a multiset of intervals, one per feature.
 
-Let $p_1 = 2 < p_2 = 3 < p_3 = 5 < \cdots$ be the primes in increasing order, and let
-$$P(n) = p_{n+1} \in \mathbb{R}, \qquad n = 0, 1, 2, \dots$$
-be the *prime point cloud*: the $n$-th prime regarded as a point on the real line. (Indices are zero-based throughout; $P(0) = 2$.) Because the enumeration of primes is strictly increasing, $P$ is a strictly monotone map $\mathbb{N} \to \mathbb{R}$.
+The primes furnish a canonical infinite point cloud, and the question of what its barcode looks like is natural, concrete, and — as it turns out — completely answerable in degree zero and completely trivial in degree one. Our aim in this paper is to answer it, and then to run the answer in the opposite direction: to express arithmetic statements about prime gaps as statements about the topology of the cloud.
 
-Persistent homology asks how the topology of a point cloud varies with the resolution at which it is inspected. Concretely, fix a scale $\varepsilon \ge 0$ and form the *Vietoris–Rips complex* $R_\varepsilon$: the simplicial complex whose vertices are the indices $n$, and in which a finite set of indices spans a simplex iff all pairwise distances are at most $\varepsilon$. Increasing $\varepsilon$ gives a nested family (a *filtration*) of complexes, and each homological feature — a connected component in $H_0$, a loop in $H_1$ — is born at some scale and dies at some scale. The multiset of birth–death intervals is the *barcode*.
+There is a specific set of expectations we test. A widely believed heuristic (Cramér's model) asserts that the primes behave, in the large, like a Poisson process of intensity $1/\log x$. If true in the most naive sense, this would predict that the degree-zero bar lengths of the prime cloud are exponentially distributed with mean $\log x$; and one might further guess that at some large scale — say $\varepsilon \sim \log^2 x$ — one-dimensional holes appear, with the longest such hole encoding the twin prime conjecture. We show that both of these expectations are false, the second for a dimensional reason and the first for a parity reason, and we identify the surviving arithmetic content: the twin prime conjecture *is* a statement about the degree-zero Betti number, evaluated at scale $2$.
 
-The heuristic this paper tests is the following, in wide informal circulation.
+### 1.1 Organisation
 
-> **Poisson heuristic for the prime barcode (conjectural).** Near $x$, primes have density $1/\log x$; hence the $H_0$ barcode of the prime cloud should resemble that of a Poisson process of that intensity. In particular (i) $H_0$ bar lengths should be exponentially distributed with mean $\approx \log x$, and (ii) $H_1$ bars should appear at scale $\approx (\log x)^2$, the longest one persisting from $\varepsilon = 2$ (the twin-prime scale) to $\infty$ and encoding the Twin Prime Conjecture.
-
-We prove (i) and (ii) both false, in strong forms, and identify the true statements that replace them.
-
-### 1.2 Summary of results
-
-* **Quantisation** (Theorem 3.1, Corollary 3.3). $g_0 = 1$ and $g_i$ is even for $i \ge 1$; hence the barcode measure is atomic on $\{1\} \cup 2\mathbb{N}$.
-* **Refutation of the exponential law** (Theorem 3.5). For every $k \ge 1$ and every $n$, no bar among the first $n$ has length in $(2k, 2k+2)$; an exponential law of mean $m > 0$ assigns mass $e^{-2k/m} - e^{-(2k+2)/m} > 0$ to that window. Likewise the window $(0,1)$ is empty.
-* **Robustness** (Theorem 3.7). Every bar length is at distance $\ge 1$ from every odd integer $2k+1 \ge 3$; the refutation survives bottleneck perturbations of size $< 1/2$.
-* **Unbounded bars** (Theorem 3.8). For every $N$ some bar has length $\ge N$; no fixed-mean exponential tail is possible.
-* **Even Betti staircase and inversion** (Theorems 4.2, 4.5). $\varepsilon \mapsto b_0(\varepsilon, n)$ is constant on $[2k, 2k+2)$, and $\#\{i < n : g_i = 2k\} = b_0(2k-1,n) - b_0(2k+1,n)$.
-* **Betti area identity** (Theorem 4.6). $\int_0^\infty (b_0(\varepsilon,n)-1)\,d\varepsilon = p_n - 2$; the mean bar length of the first $n$ bars is $(p_n - 2)/n$.
-* **Twin primes in $H_0$** (Theorem 5.2). The Twin Prime Conjecture holds iff $b_0(1,n) - b_0(2,n)$ is unbounded.
-* **Chordality** (Theorem 6.1). Every cycle of length $\ge 4$ in the Rips graph of a strictly increasing line cloud has a two-step chord.
-* **Vanishing of $H_1$** (Theorem 6.4). Every mod-$2$ one-cycle of a line Rips complex is a sum of Rips triangles; so $H_1 = 0$ at every scale, for the primes in particular.
-* **Pair-correlation exclusion** (Theorems 7.1, 7.3). Adjacent equal bars force $3 \mid d$; adjacent twin bars never occur past $3,5,7$; hence the independence hypothesis fails.
-* **Block divisibility** (Theorem 7.6). For every prime $q$ and every start past $q$, some block of $< q$ consecutive bars has length sum divisible by $q$.
-* **Completeness** (Theorem 8.1). $p_n = 2 + \sum_{m<n} g_m$.
+Section 2 fixes definitions. Section 3 proves the degree-one vanishing theorem and its sharpness. Section 4 identifies the degree-zero barcode with the gap sequence and establishes rigidity and stability of the Betti curve. Section 5 proves atomicity and refutes the exponential law. Section 6 develops the arithmetic–topology dictionary: twin primes, bounded gaps, and unboundedness of the component count. Section 7 gives algorithms. Section 8 reports numerics. Sections 9 and 10 discuss and propose future work.
 
 ---
 
-## 2. Definitions and the zero-dimensional dictionary
+## 2. Definitions
 
-Throughout, $p : \mathbb{N} \to \mathbb{R}$ denotes an arbitrary *strictly increasing* point cloud on the line, and $P$ the specific prime cloud $P(n) = p_{n+1}$.
+Throughout, $p_1 = 2 < p_2 = 3 < p_3 = 5 < \cdots$ enumerates the primes in increasing order, and
 
-**Definition 2.1 (Rips adjacency and connectivity).** For $\varepsilon \in \mathbb{R}$, indices $a, b$ are *$\varepsilon$-adjacent* if $|p(a) - p(b)| \le \varepsilon$. They are *$\varepsilon$-connected* if they are related by the reflexive–transitive closure of $\varepsilon$-adjacency; write $a \sim_\varepsilon b$.
+$$g_i \;=\; p_{i+1} - p_i \qquad (i \ge 1)$$
 
-**Definition 2.2 (Bars, gaps).** For the prime cloud put $g_i = p_{i+2} - p_{i+1} = P(i+1) - P(i)$, the $i$-th *prime gap* — equivalently, as Proposition 2.4 records, the length of the $i$-th finite $H_0$ bar.
+is the $i$-th prime gap. It will occasionally be convenient to index gaps from $0$, in which case $g_0 = p_2 - p_1 = 1$; we say explicitly which convention is in force where it matters. All statements below are indexed so that the first (length-$1$) bar is the $0$-th.
 
-**Definition 2.3 (Betti curve).** $b_0(\varepsilon, n)$ denotes the number of $\varepsilon$-connected components of the first $n+1$ points $p(0), \dots, p(n)$, i.e. the zeroth Betti number of the truncated Rips complex at scale $\varepsilon$.
+**Definition 2.1 (Point cloud on a line).** A *line cloud* is a strictly increasing map $p : \mathbb{N} \to \mathbb{R}$. Its $i$-th *gap* is $g_i = p(i+1) - p(i) > 0$. The *prime cloud* is $p(i) = p_{i+1}$, the $(i+1)$-st prime, so $g_0 = 1$, $g_1 = 2$, $g_2 = 2$, $g_3 = 4$, ….
 
-The elementary structure of a filtration on a line is contained in the following observation.
+**Definition 2.2 (Vietoris–Rips complex).** Let $(X, d)$ be a finite metric space and $\varepsilon \ge 0$. The Rips complex $\mathrm{R}_\varepsilon(X)$ is the abstract simplicial complex whose $k$-simplices are the $(k+1)$-element subsets of $X$ of diameter at most $\varepsilon$. It is monotone in $\varepsilon$, so $\{\mathrm{R}_\varepsilon(X)\}_{\varepsilon \ge 0}$ is a filtration.
 
-**Proposition 2.4 (Line dictionary).** *Let $p$ be strictly increasing, $\varepsilon \ge 0$, and $i \le j$. Then $i \sim_\varepsilon j$ if and only if $p(k+1) - p(k) \le \varepsilon$ for every $k$ with $i \le k < j$. Consequently, for every $n$,*
-$$b_0(\varepsilon, n) = 1 + \#\{\, i < n : p(i+1) - p(i) > \varepsilon \,\},$$
-*and the finite $H_0$ barcode of the first $n+1$ points is the multiset of bars $[0, p(i+1) - p(i))$ for $i < n$, together with one infinite bar.*
+**Definition 2.3 (Barcode, Betti curve).** For a field $\mathbb{F}$, the persistent homology $H_k(\mathrm{R}_\bullet(X); \mathbb{F})$ decomposes into interval modules; the multiset of intervals is the degree-$k$ *barcode*. The *Betti curve* is $\varepsilon \mapsto \dim_{\mathbb{F}} H_k(\mathrm{R}_\varepsilon(X); \mathbb{F})$, i.e. the number of bars containing $\varepsilon$. We work with $\mathbb{F} = \mathbb{F}_2$.
 
-*Proof sketch.* ($\Rightarrow$) Any $\varepsilon$-path from $i$ to $j$ must, at each step $|p(a) - p(b)| \le \varepsilon$, straddle every intermediate consecutive pair, whence each such pair has gap $\le \varepsilon$ by monotonicity. ($\Leftarrow$) If all intermediate gaps are $\le \varepsilon$ then the chain $i \to i+1 \to \cdots \to j$ realises the connection. The component count follows because the components are exactly the maximal runs of consecutive indices whose internal gaps are $\le \varepsilon$, and the components are separated by the gaps exceeding $\varepsilon$. Each such run merges with its right-hand neighbour precisely when $\varepsilon$ reaches the separating gap, giving the stated bars. $\square$
+**Definition 2.4 (Betti curve of a line cloud).** For a line cloud $p$, scale $\varepsilon \in \mathbb{R}$ and $n \in \mathbb{N}$, set
 
-Thus in dimension zero *the topology of a line point cloud is exactly its gap data*, and for the primes the barcode is exactly the prime gap sequence
-$$1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, \dots$$
+$$b_0(p; \varepsilon, n) \;=\; 1 + \#\{\, i < n : p(i+1) - p(i) > \varepsilon \,\},$$
 
-We record two conventions. First, "the barcode measure" means the empirical measure of the first $n$ bar lengths, $\mu_n = \frac1n \sum_{i<n} \delta_{g_i}$; a claim that bar lengths are exponentially distributed with mean $m$ is a claim about limits of $\mu_n$. Second, $b_0(\varepsilon,n) - 1$ is the *reduced* Betti number, discarding the single bar that never dies.
+the number of connected components of $\mathrm{R}_\varepsilon(\{p(0), \dots, p(n)\})$. (Proposition 4.1 justifies the name.) We abbreviate $b_0(\varepsilon, n)$ for the prime cloud.
 
----
+**Definition 2.5 (Barcode multiset, total persistence).** The degree-zero *barcode multiset* of the first $n+1$ points of a line cloud is $\mathcal{B}_n(p) = \{\!\{\, g_0, g_1, \dots, g_{n-1} \,\}\!\}$, a multiset of $n$ positive reals. Its *total persistence* is $\sum_{i<n} g_i$.
 
-## 3. Quantisation of the barcode and the failure of the exponential law
+**Definition 2.6 (Betti defect, merge count).** The *merge count* at scale $\varepsilon$ is $M(\varepsilon, n) = \#\{ i < n : g_i \le \varepsilon \}$, and the *Betti defect* is $(n+1) - b_0(\varepsilon, n)$.
 
-**Theorem 3.1 (Quantisation).** *$g_0 = 1$, and $g_i$ is even with $g_i \ge 2$ for every $i \ge 1$.*
-
-*Proof.* $g_0 = 3 - 2 = 1$. For $i \ge 1$ both $p_{i+1}$ and $p_{i+2}$ are primes $\ge 3$, hence odd; the difference of two odd numbers is even, and it is positive because the enumeration is strictly increasing, so $g_i \ge 2$. $\square$
-
-**Corollary 3.2 (Uniqueness of the odd bar).** *$g_i = 1$ if and only if $i = 0$.*
-
-**Corollary 3.3 (Real form).** *For $i \ge 1$ there is $k \ge 1$ with $P(i+1) - P(i) = 2k$. The barcode measure $\mu_n$ is supported in $\{1\} \cup \{2,4,6,\dots\}$ for every $n$.*
-
-Write
-$$B_n(a,b) = \#\{\, i < n : a < P(i+1) - P(i) < b \,\}$$
-for the number of the first $n$ bars whose length lies in the open window $(a,b)$.
-
-**Theorem 3.4 (Empty windows).** *For every $n$ and every $k \ge 1$, $B_n(2k, 2k+2) = 0$. Also $B_n(0,1) = 0$.*
-
-*Proof.* Suppose $2k < g_i < 2k+2$ with $k \ge 1$. If $i = 0$ then $g_i = 1 \le 2k$, a contradiction. If $i \ge 1$ then $g_i = 2a$ for some integer $a$, and $2k < 2a < 2k+2$ forces $k < a < k+1$, impossible in the integers. For the second claim, $g_i \ge 1$ always. $\square$
-
-**Theorem 3.5 (Refutation of the exponential/Poisson law).** *Let $m > 0$ and $k \ge 1$. Then for every $n$,*
-$$B_n(2k, 2k+2) = 0 \qquad\text{while}\qquad e^{-2k/m} - e^{-(2k+2)/m} > 0 .$$
-*The same holds for the window $(0,1)$ with predicted mass $1 - e^{-1/m} > 0$. Hence for no mean $m$ — in particular not $m = \log x$ — are the prime $H_0$ bar lengths exponentially distributed.*
-
-*Proof.* The vanishing is Theorem 3.4. The exponential law with mean $m$ has survival function $t \mapsto e^{-t/m}$, so the mass of $(a,b)$ is $e^{-a/m} - e^{-b/m}$, which is positive whenever $a < b$ because $t \mapsto e^{-t/m}$ is strictly decreasing. $\square$
-
-**Remark 3.6.** The refutation is a comparison of two explicitly nonvacuous quantities: a strictly positive predicted proportion against an identically zero observed count, at every truncation. It is therefore not an asymptotic or statistical objection but a structural one: $\mu_n$ is purely atomic while every exponential law is absolutely continuous. No rescaling, no choice of intensity, and no passage to the limit can repair this.
-
-**Theorem 3.7 (Robust quantisation).** *For every $i$ and every $k \ge 1$,*
-$$\big| \,(P(i+1) - P(i)) - (2k+1) \,\big| \;\ge\; 1 .$$
-*That is, every bar length is at distance at least $1$ from every odd integer $\ge 3$.*
-
-*Proof.* If $i = 0$ the length is $1$ and $|1 - (2k+1)| = 2k \ge 2$. If $i \ge 1$ the length is an even integer $2a$; then either $2a \le 2k$, giving $|2a - (2k+1)| \ge 1$, or $2a \ge 2k+2$, giving $|2a - (2k+1)| \ge 1$. $\square$
-
-Since the bottleneck distance between barcodes moves each bar endpoint by at most the distance itself, Theorem 3.7 implies that any barcode within bottleneck distance $< 1/2$ of the prime barcode still has empty windows of positive width around every odd integer, and hence is still not exponential. The refutation is stable.
-
-**Theorem 3.8 (Arbitrarily long bars).** *For every $N \in \mathbb{N}$ there exists $i$ with $g_i \ge N$.*
-
-*Proof.* Let $m = N + 2$. For $2 \le j \le m$ the number $m! + j$ is divisible by $j$ and strictly exceeds $j$, hence is composite. So the interval $[m! + 2, \; m! + m]$ contains no primes. Let $n$ be the index of the least prime $\ge m! + 2$. Then $p$ of index $n$ exceeds $m! + m$, while the previous prime is $< m! + 2$, so the gap between them exceeds $m - 2 = N$. $\square$
-
-**Corollary 3.9.** *The barcode is unbounded: for every $C \in \mathbb{R}$ some bar has length $> C$. Hence the bar-length distribution has no exponential tail with a fixed mean, and no single scale $\log x$ governs the barcode.*
+**Definition 2.7 (Chain-level degree one, mod 2).** Over $\mathbb{F}_2$ we model a $1$-chain of a line cloud $p$ at scale $\varepsilon$ as a finite set $E$ of ordered pairs $(a, b)$ with $a < b$ and $p(b) - p(a) \le \varepsilon$ (a *Rips edge*), with symmetric difference as addition. The *degree* of a vertex $v$ in $E$ is the number of edges of $E$ containing $v$; $E$ is a *cycle* if every degree is even. A *Rips triangle* is a triple $a < b < c$ with $p(c) - p(a) \le \varepsilon$; its boundary is the three-edge set $\{(a,b), (b,c), (a,c)\}$. The *boundary subgroup* is the subgroup generated by boundaries of Rips triangles, and $H_1 = \mathrm{cycles}/\mathrm{boundaries}$.
 
 ---
 
-## 4. The Betti staircase and the area identity
+## 3. Degree one: the prime cloud has no holes
 
-**Definition 4.1.** For the prime cloud, Proposition 2.4 gives $b_0(\varepsilon, n) = 1 + \#\{i < n : g_i > \varepsilon\}$.
+The mission-level intuition that the primes should have an interesting $H_1$ barcode is refuted in the strongest possible form: no cloud on a line has any $H_1$ at any scale.
 
-**Theorem 4.2 (Even quantisation of the staircase).** *Let $k \ge 1$ and $2k \le \varepsilon_1 \le \varepsilon_2 < 2k+2$. Then $b_0(\varepsilon_1, n) = b_0(\varepsilon_2, n)$ for every $n$: the Betti curve is constant on $[2k, 2k+2)$.*
+**Lemma 3.1 (Umbrella lemma).** Let $p$ be a line cloud, $\varepsilon \ge 0$, and let $u, w \le M$ be indices with $p(M) - p(u) \le \varepsilon$ and $p(M) - p(w) \le \varepsilon$. Then $\{u, w, M\}$ has diameter at most $\varepsilon$; in particular $(u, w)$ (or $(w,u)$) is a Rips edge and, if $u, w, M$ are distinct, they span a Rips triangle.
 
-*Proof.* It suffices that $\{i < n : g_i > \varepsilon_1\} = \{i < n : g_i > \varepsilon_2\}$. One inclusion is monotonicity. Conversely, if $g_i > \varepsilon_1 \ge 2k$ then either $i = 0$, impossible since $g_0 = 1 \le 2k$, or $g_i = 2a$ with $2a > 2k$, i.e. $a \ge k+1$, i.e. $g_i \ge 2k + 2 > \varepsilon_2$. $\square$
+*Proof.* Monotonicity of $p$ gives $p(u), p(w) \in [p(M) - \varepsilon, p(M)]$, an interval of length $\varepsilon$, so $|p(u) - p(w)| \le \varepsilon$, and the diameter of the triple is $\max(p(M) - \min(p(u), p(w))) \le \varepsilon$. $\square$
 
-**Remark 4.3.** Almost surely, a Poisson cloud's Betti curve is non-constant on every subinterval of the range of its bar lengths, since the bar lengths are almost surely distinct and dense in $(0,\infty)$. The prime staircase, by contrast, has all its jumps at even integers — one more structural separation from the Poisson model.
+This is the *indifference-graph* property of the Rips graph of a line cloud: two neighbours of a vertex, both on the same side of it, are neighbours of each other.
 
-**Theorem 4.4 (Window splitting).** *For $k \ge 1$ and every $n$,*
-$$\#\{i<n : g_i > 2k-1\} = \#\{i<n : g_i > 2k+1\} + \#\{i<n : g_i = 2k\}.$$
+**Theorem 3.2 (Vanishing of $H_1$ on a line).** Let $p$ be a line cloud and $\varepsilon \ge 0$. Every $1$-cycle of Rips edges is a sum of boundaries of Rips triangles. Consequently $H_1(\mathrm{R}_\varepsilon; \mathbb{F}_2) = 0$ for every $\varepsilon$, and the whole degree-one persistence module of a line cloud is zero.
 
-*Proof.* By Theorem 3.1 every $g_i$ with $i \ge 1$ is even and $g_0 = 1$, so $g_i > 2k-1$ holds iff $g_i > 2k+1$ or $g_i = 2k$, and the two alternatives are disjoint. $\square$
+*Proof sketch.* Descent on the measure $\Phi(E) = \sum_{(a,b) \in E} b$, the sum of upper endpoints. Let $E \ne \emptyset$ be a cycle and let $M$ be its largest vertex. Since $\deg_E(M)$ is even and positive, there are at least two distinct edges $(u, M)$, $(w, M)$ in $E$ with $u, w < M$. By Lemma 3.1 the triple $\{u, w, M\}$ spans a Rips triangle $T$; without loss of generality $u < w$. Replace $E$ by $E \mathbin{\triangle} \partial T$. This removes $(u, M)$ and $(w, M)$ and toggles $(u, w)$, so
+$$\Phi(E \mathbin{\triangle} \partial T) - \Phi(E) \;=\; \pm w - 2M \;<\; 0,$$
+since $w < M$. Symmetric difference with a boundary preserves the cycle condition (parity of every degree is unchanged mod $2$, since $\partial T$ has all degrees even at each of $u, w, M$ and zero elsewhere). Iterating, the strictly decreasing nonnegative integer measure forces termination at $E = \emptyset$; unwinding, the original $E$ is the sum of the triangle boundaries used. The argument is uniform in $\varepsilon$, hence applies slicewise to the whole filtration. $\square$
 
-**Theorem 4.5 (Inversion formula).** *For $k \ge 1$,*
-$$\#\{\, i < n : g_i = 2k \,\} \;=\; b_0(2k-1,\, n) \;-\; b_0(2k+1,\, n).$$
-*Hence the Betti staircase and the prime-gap histogram determine one another.*
+**Corollary 3.3 (No essential prime one-cycle).** There is no scale $\varepsilon$ at which the prime cloud carries an essential $1$-cycle. The conjectured degree-one prime barcode is empty, and no arithmetic information — in particular not the twin prime conjecture — can be stored in degree one.
 
-*Proof.* Immediate from Definition 4.1 and Theorem 4.4. $\square$
+The theorem is a statement about the *line*, not a weakness of the chain-level framework. The next result makes this precise.
 
-**Theorem 4.6 (Betti area identity).** *For every $n$,*
-$$\int_0^{\infty} \big( b_0(\varepsilon, n) - 1 \big)\, d\varepsilon \;=\; p_{n+1} - 2 ,$$
-*the $n$-th prime (zero-based) minus $2$.*
+**Theorem 3.4 (Sharpness in dimension one).** Let $d$ be the graph metric of the $4$-cycle on $\{0,1,2,3\}$: $d(i,j) = 1$ for adjacent indices and $d(0,2) = d(1,3) = 2$ (all further points placed at distance $100$). At scale $\varepsilon = 1$ the Rips complex has edges $\{01, 12, 23, 03\}$ and **no** $2$-simplex, since every triple of the four vertices contains an antipodal pair at distance $2$. Hence the boundary subgroup is trivial, while the square $\{01, 12, 23, 03\}$ is a cycle (each vertex has degree $2$). It therefore represents a nonzero class in $H_1$.
 
-*Proof sketch.* Layer-cake: for $\varepsilon > 0$,
-$$b_0(\varepsilon, n) - 1 = \#\{i<n : g_i > \varepsilon\} = \sum_{i<n} \mathbf{1}_{(0,\, g_i)}(\varepsilon),$$
-since the $i$-th bar contributes exactly while the scale is strictly below its length. Each indicator is integrable (its support is a bounded interval), so the integral passes through the finite sum, and $\int_0^\infty \mathbf{1}_{(0,g_i)} = g_i$. Finally the gaps telescope: $\sum_{i<n} g_i = p_{n+1} - p_1 = p_{n+1} - 2$. $\square$
+*Proof sketch.* If a scale admits no $2$-simplex then the boundary subgroup is $\{\emptyset\}$; the square is a nonempty cycle; so it is not a boundary. The verification that there is no triangle quantifies over *all* triples of indices, using the distance-$100$ separation for triples that leave $\{0,1,2,3\}$ and a finite case analysis inside. $\square$
 
-**Corollary 4.7 (Mean bar length).** *For $n \ge 1$, the average length of the first $n$ bars is*
-$$\frac1n \int_0^\infty \big(b_0(\varepsilon,n) - 1\big)\, d\varepsilon \;=\; \frac{p_{n+1} - 2}{n},$$
-*the exact form of the "average prime gap" whose asymptotics the Prime Number Theorem describes as $\sim \log p_n$.*
-
-**Corollary 4.8 (Divergence).** *The Betti area is unbounded: for every $C$ there is $n$ with $\int_0^\infty (b_0(\varepsilon,n)-1)\, d\varepsilon > C$.*
-
-For primes below $10^6$ ($78\,497$ finite bars) the identity gives area $999\,981 = 999\,983 - 2$, and the mean bar length is $12.739$ against $\log p_n = 13.815$.
+**Remark 3.5.** Comparing the two theorems isolates the mechanism exactly: the umbrella lemma fails for the square, because the two neighbours $1$ and $3$ of the vertex $0$ are at distance $2$ from each other. One dimension is precisely the boundary between trivial and nontrivial degree-one homology, and the primes lie on the trivial side.
 
 ---
 
-## 5. The Twin Prime Conjecture is a Betti step
+## 4. Degree zero: the barcode is the gap sequence, and the Betti curve remembers it
 
-**Definition 5.1.** The *twin step* of the barcode is
-$$\tau(n) \;=\; b_0(1, n) - b_0(2, n),$$
-the number of components that merge as the scale crosses $2$.
+**Proposition 4.1 (Barcode of a line cloud).** Let $p$ be a line cloud. In $\mathrm{R}_\varepsilon(\{p(0), \dots, p(n)\})$, two consecutive points lie in the same component iff $g_i \le \varepsilon$, and a component is exactly a maximal run of consecutive indices with all internal gaps $\le \varepsilon$. Hence
+$$b_0(p; \varepsilon, n) = 1 + \#\{ i < n : g_i > \varepsilon \},$$
+and, in the persistence module, the class of the component ending at index $i$ dies exactly at $\varepsilon = g_i$. The degree-zero barcode of the first $n+1$ points is therefore
+$$\{\!\{\, [0, g_i) : i < n \,\}\!\} \;\cup\; \{[0, \infty)\},$$
+so bar lengths are the gaps and the total persistence is $\sum_{i<n} g_i = p(n) - p(0)$. For the primes, the total persistence of the first $n$ bars is $p_{n+1} - 2$.
 
-**Theorem 5.2 (Twin primes in $H_0$).** *For every $n$, $\tau(n) = \#\{ i < n : g_i = 2 \}$. Consequently:*
-$$\#\{\, p : p \text{ and } p+2 \text{ both prime} \,\} = \infty \iff \tau \text{ is unbounded, i.e. } \forall N\, \exists n:\ \tau(n) \ge N .$$
+*Proof sketch.* An edge joins $p(i)$ and $p(j)$, $i<j$, iff $p(j) - p(i) \le \varepsilon$, which by monotonicity forces every intermediate gap to be $\le \varepsilon$; so the connectivity relation is generated by the consecutive edges. The component count is one more than the number of "breaks", and the standard elder-rule matching in degree zero kills the younger component at the scale where the break closes. The telescoping sum gives total persistence. $\square$
 
-*Proof.* By Definition 4.1, $b_0(1,n) - b_0(2,n) = \#\{i<n : g_i > 1\} - \#\{i<n : g_i > 2\}$, and since gaps are integers, $\{g_i > 1\}$ splits disjointly into $\{g_i > 2\}$ and $\{g_i = 2\}$, giving the count. A predicate holds for infinitely many indices iff its counting function over $\{0,\dots,n-1\}$ is unbounded in $n$: for the forward direction, any finite set of $N$ witnesses lies inside some initial segment; for the converse, a finite witness set would cap the counts. Finally, $p$ and $p+2$ are both prime for infinitely many $p$ iff $g_i = 2$ for infinitely many $i$. $\square$
+**Proposition 4.2 (Betti defect counts merges).** For every $\varepsilon$ and $n$, $b_0(\varepsilon, n) \le n+1$ and
+$$(n+1) - b_0(\varepsilon, n) \;=\; \#\{ i < n : g_i \le \varepsilon \} \;=\; M(\varepsilon, n).$$
 
-Theorem 5.2 is the corrected form of the conjectural "twin prime $H_1$ bar": the twin prime problem is a statement about a *single step of the zero-dimensional Betti staircase*, and Section 6 shows there is no $H_1$ in which it could have lived.
+*Proof.* Complementary counting on $\{i < n\}$ against the definition of $b_0$. $\square$
 
----
+**Proposition 4.3 (Monotonicity).** For fixed $n$, $\varepsilon \mapsto b_0(p; \varepsilon, n)$ is antitone: enlarging the scale can only merge components. Formally, $\varepsilon_1 \le \varepsilon_2$ implies $b_0(p; \varepsilon_2, n) \le b_0(p; \varepsilon_1, n)$, since the filtered index set at $\varepsilon_2$ is contained in that at $\varepsilon_1$.
 
-## 6. Vanishing of $H_1$ for point clouds on a line
+The Betti curve, being a summary statistic, might a priori lose information. It does not.
 
-### 6.1 The combinatorial statement
+**Theorem 4.4 (Tail counts determine a finite multiset).** Let $A, B$ be finite multisets of reals with $\#\{a \in A : a > \varepsilon\} = \#\{b \in B : b > \varepsilon\}$ for every $\varepsilon \in \mathbb{R}$. Then $A = B$.
 
-**Theorem 6.1 (Chordality).** *Let $p$ be strictly increasing, $\varepsilon \in \mathbb{R}$, and let $c : \mathbb{N} \to \mathbb{N}$ be a closed cycle of length $k \ge 4$ in the Rips graph at scale $\varepsilon$: that is, $c$ is $k$-periodic, injective on one period, and $|p(c(i)) - p(c(i+1))| \le \varepsilon$ for all $i$. Then there is an index $t$ with $c(t) \ne c(t+2)$ and $|p(c(t)) - p(c(t+2))| \le \varepsilon$: the cycle has a chord between vertices at cyclic distance exactly $2$.*
+*Proof sketch.* Induct on $|A|$. Choosing $\varepsilon$ below all elements of both multisets (possible since both are finite) shows $|A| = |B|$; if both are empty we are done. Otherwise let $a = \max A$, $b = \max B$ and suppose $a < b$. Evaluating the hypothesis at $\varepsilon$ with $a \le \varepsilon < b$ gives $0 = \#\{x \in A: x > \varepsilon\} = \#\{x \in B : x > \varepsilon\} \ge 1$, a contradiction; symmetrically $b < a$ is impossible, so $a = b$. Write $A = a ::  A'$, $B = b :: B'$; the tail-count hypothesis transports to $A', B'$ (both counts drop by $1$ for $\varepsilon < a$ and are unchanged for $\varepsilon \ge a$), and induction finishes. $\square$
 
-*Proof.* Let $v = c(i_0)$ minimise $p \circ c$ over one period; by periodicity $p(v) \le p(c(i))$ for all $i$. Let $t$ be the index with $t + 1 \equiv i_0$, so that $c(t)$ and $c(t+2)$ are the two cycle neighbours of $v$. Both satisfy $p(v) \le p(c(t))$, $p(v) \le p(c(t+2))$ and $p(c(t)) - p(v) \le \varepsilon$, $p(c(t+2)) - p(v) \le \varepsilon$, so both lie in the window $[p(v), p(v) + \varepsilon]$; hence $|p(c(t)) - p(c(t+2))| \le \varepsilon$. That $c(t) \ne c(t+2)$ follows from injectivity on a period together with $k \ge 4$: equality would force $k \mid 2$. $\square$
+**Theorem 4.5 (The Betti curve is a complete invariant).** Let $p, q$ be line clouds and $n \in \mathbb{N}$. Then
+$$\big(\forall \varepsilon,\; b_0(p; \varepsilon, n) = b_0(q; \varepsilon, n)\big) \iff \mathcal{B}_n(p) = \mathcal{B}_n(q).$$
 
-**Corollary 6.2 (No chordless cycles in the prime Rips graph).** *At every scale $\varepsilon$, the Rips graph of the prime point cloud contains no induced (chordless) cycle of length $\ge 4$; the graph is chordal.*
+*Proof.* By Definition 2.4, $b_0(p; \varepsilon, n) = 1 + \#\{x \in \mathcal{B}_n(p) : x > \varepsilon\}$: the Betti curve is $1$ plus the upper-tail counting function of the barcode multiset. The forward direction is Theorem 4.4; the converse is immediate. $\square$
 
-The statement is not vacuous: at scale $\varepsilon = 4$ the primes $3, 5, 7$ span a triangle, so chords do occur.
+**Corollary 4.6 (Window counts).** For $\varepsilon_1 \le \varepsilon_2$,
+$$b_0(p; \varepsilon_1, n) - b_0(p; \varepsilon_2, n) \;=\; \#\{ i < n : \varepsilon_1 < g_i \le \varepsilon_2 \}.$$
+Thus the Betti curve is the cumulative bar-length histogram, and individual bar-length counts are its discrete derivatives.
 
-### 6.2 The homological statement over $\mathbb{F}_2$
+**Theorem 4.7 (Stability / interleaving).** Let $p, q$ be line clouds with $|p(i) - q(i)| \le \delta$ for all $i$. Then for every $\varepsilon$ and $n$,
+$$b_0(q; \varepsilon + 2\delta, n) \;\le\; b_0(p; \varepsilon, n).$$
 
-Chordality is a statement about *induced* cycles; the homological content requires more. We work with $\mathbb{F}_2$ coefficients, where the chain complex of the flag (Rips) complex takes a purely combinatorial form.
+*Proof.* If $\varepsilon + 2\delta < q(i+1) - q(i)$ then, using $q(i+1) \le p(i+1) + \delta$ and $q(i) \ge p(i) - \delta$, we get $\varepsilon < p(i+1) - p(i)$. Hence the index set counted at $(q, \varepsilon+2\delta)$ injects into the one counted at $(p, \varepsilon)$, and the cardinalities compare. $\square$
 
-**Definition 6.3 ($\mathbb{F}_2$ one-chains).** An *edge* is an ordered pair $e = (a,b)$ with $a < b$; it is a *Rips edge at scale $\varepsilon$* if $|p(a) - p(b)| \le \varepsilon$. A *one-chain* is a finite set $E$ of edges; addition of chains is symmetric difference $E_1 \,\triangle\, E_2$. The *degree* $\deg_E(v)$ is the number of edges of $E$ incident to $v$; the boundary $\partial_1 E$ is the set of vertices of odd degree, so $E$ is a *cycle* iff every degree is even. For $a < b < c$ the *triangle chain* is $T(a,b,c) = \{(a,b), (b,c), (a,c)\}$, and it is a *Rips triangle* if all three of its edges are Rips edges. The *triangle span* is the set of chains obtained from $\emptyset$ by repeatedly adding (i.e. symmetric-differencing) Rips triangles; it is exactly the image of $\partial_2$ on the flag complex.
-
-Since $H_1 = \ker \partial_1 / \operatorname{im} \partial_2$, vanishing of $H_1$ is the assertion that every cycle lies in the triangle span.
-
-**Theorem 6.4 (Vanishing of $H_1$ on a line).** *Let $p : \mathbb{N} \to \mathbb{R}$ be strictly increasing and $\varepsilon \in \mathbb{R}$. Then every $\mathbb{F}_2$ one-cycle $E$ all of whose edges are Rips edges at scale $\varepsilon$ lies in the span of the Rips triangles at scale $\varepsilon$. Consequently $H_1(R_\varepsilon; \mathbb{F}_2) = 0$ for every $\varepsilon$.*
-
-*Proof.* Define the *weight* $\mu(E) = \sum_{(a,b) \in E} b$, the sum of the right endpoints, and induct strongly on $\mu(E)$.
-
-If $E = \emptyset$ it lies in the span. Otherwise let $v$ be the largest right endpoint occurring in $E$. Every edge incident to $v$ has $v$ as its right endpoint (an edge $(v, b)$ would have $b > v$, contradicting maximality). The degree of $v$ is nonzero, and even because $E$ is a cycle, hence at least $2$: there are two distinct edges $(u,v), (w,v) \in E$, and we may name them so that $u < w < v$.
-
-*The chord is present.* Since $p$ is increasing, $p(u) < p(w) < p(v)$, and $|p(u) - p(v)| \le \varepsilon$ gives $p(v) - p(u) \le \varepsilon$; hence $0 < p(w) - p(u) < p(v) - p(u) \le \varepsilon$, so $(u,w)$ is a Rips edge. Therefore $T = T(u, w, v)$ is a Rips triangle (its third and second edges $(w,v), (u,v)$ lie in $E$ and are Rips edges by hypothesis).
-
-*The move preserves cycles.* Every vertex has degree $0$ or $2$ in $T$, so $T$ is itself a cycle; and degrees add modulo $2$ under symmetric difference, because $\deg_{A \triangle B}(x) \equiv \deg_A(x) + \deg_B(x) \pmod 2$. Hence $E' = T \,\triangle\, E$ is again a cycle, and all its edges are Rips edges.
-
-*The move terminates.* Weights satisfy $\mu(A \triangle B) + 2\sum_{e \in A \cap B} e_2 = \mu(A) + \mu(B)$. Here $\mu(T) = w + 2v$ and $\{(u,v), (w,v)\} \subseteq T \cap E$, so $\sum_{e \in T \cap E} e_2 \ge 2v$; substituting,
-$$\mu(E') = \mu(T) + \mu(E) - 2\!\!\sum_{e \in T \cap E}\!\! e_2 \;\le\; (w + 2v) + \mu(E) - 4v \;=\; \mu(E) + (w - 2v) \;<\; \mu(E),$$
-since $0 \le w < v$. (Concretely: the two edges of weight $v$ are deleted and at most one new edge, of weight $w < v$, appears.)
-
-By the inductive hypothesis $E'$ lies in the triangle span; and $E = T \,\triangle\, E'$ because symmetric difference is an involution, so $E$ lies in the span as well. $\square$
-
-**Corollary 6.5 (No $H_1$ bars for the primes).** *The prime point cloud has vanishing first homology at every scale $\varepsilon$. In particular the conjectured $H_1$ bars at scale $(\log x)^2$ do not exist, and there is no "twin prime $H_1$ bar" persisting from $\varepsilon = 2$ to $\infty$.*
-
-**Example 6.6 (Non-vacuity).** The prime complex genuinely contains nonzero one-cycles; they simply bound. At scale $\varepsilon = 8$, the quadrilateral on the primes $3, 5, 7, 11$,
-$$E = \{(3,5), (5,7), (7,11), (3,11)\},$$
-has all degrees equal to $2$ and is a nonzero chain, hence an honest one-cycle; and
-$$E \;=\; T(3,5,7) \;\triangle\; T(3,7,11),$$
-both summands being Rips triangles at scale $8$ (their longest edges are $7-3 = 4$ and $11-3 = 8$). Thus $E$ is a cycle that bounds, exactly as Theorem 6.4 asserts.
-
-**Remark 6.7.** The mechanism is dimensional, not arithmetic: a point cloud in $\mathbb{R}^1$ has an *indifference graph*, and the leftmost (or rightmost) vertex of any cycle sees both of its neighbours inside one window of width $\varepsilon$, so they see each other. Any interesting $H_1$ would require the primes to be embedded into a space of dimension $\ge 2$ — e.g. via $n \mapsto (p_n \bmod a, p_n \bmod b)$ or a spiral embedding — which is a genuinely different (and open) construction.
+Theorem 4.7 is the hard-stability guarantee for the whole programme: everything proved below about the prime barcode is robust under a bounded perturbation of the positions of the primes, so it reflects their *spacing* and not accidental features of their exact values.
 
 ---
 
-## 7. Correlations: the barcode is not an independent process
+## 5. Atomicity, and the refutation of the exponential law
 
-Theorem 3.5 kills the exponential *marginal*. A weaker Poisson hypothesis survives it: that bar lengths, whatever their marginal law, are *independent*. This section refutes independence too.
+We now specialise to the primes. Recall the $0$-indexed convention: $g_0 = 3 - 2 = 1$, $g_1 = 5 - 3 = 2$, etc.
 
-**Theorem 7.1 (Mod-3 law).** *For every $i \ge 2$, at least one of $g_i$, $g_{i+1}$, $g_i + g_{i+1}$ is divisible by $3$.*
+**Lemma 5.1.** $g_0 = 1$; every gap is strictly positive; and $p_{n+1}$ is odd for every $n \ge 1$ (i.e. every prime after $2$ is odd).
 
-*Proof.* The three primes $p_{i+1} < p_{i+2} < p_{i+3}$ all exceed $3$ (since $i \ge 2$ gives $p_{i+1} \ge 5$), so none is divisible by $3$ and each residue mod $3$ lies in $\{1,2\}$. By pigeonhole two of the three residues coincide, and the corresponding difference — which is $g_i$, $g_{i+1}$ or $g_i + g_{i+1}$ — is divisible by $3$. $\square$
+*Proof.* $g_0 = 3 - 2 = 1$. Positivity is strict monotonicity of the prime enumeration. For oddness: the $n$-th prime for $n \ge 1$ is at least the second prime, $3$, and a prime $\ge 3$ is not divisible by $2$. $\square$
 
-**Theorem 7.2 (Repeated bars are multiples of 3).** *If $i \ge 2$ and $g_i = g_{i+1} = d$, then $3 \mid d$.*
+**Lemma 5.2 (Parity).** For every $i \ge 1$, $g_i$ is even.
 
-*Proof.* By Theorem 7.1 either $3 \mid g_i = d$, or $3 \mid g_{i+1} = d$, or $3 \mid g_i + g_{i+1} = 2d$, and in the last case $3 \mid d$ since $\gcd(2,3) = 1$. $\square$
+*Proof.* $g_i = p_{i+2} - p_{i+1}$ with both terms odd by Lemma 5.1. $\square$
 
-**Theorem 7.3 (Exclusion of adjacent twin bars).** *For $i \ge 2$ it is never the case that $g_i = g_{i+1} = 2$; likewise never $g_i = g_{i+1} = 4$. Consequently the number of adjacent twin-bar pairs past the start is exactly $0$ at every truncation:*
-$$\#\{\, i < n : i \ge 2,\ g_i = 2,\ g_{i+1} = 2 \,\} = 0 .$$
+**Theorem 5.3 (Atomicity of the bar-length spectrum).** For every index $i$, exactly one of the following holds:
+- $i = 0$ and $g_i = 1$;
+- $i \ge 1$, $g_i$ is even and $g_i \ge 2$.
 
-*Proof.* Theorem 7.2 would force $3 \mid 2$, respectively $3 \mid 4$. $\square$
+Hence the degree-zero bar-length spectrum of the prime cloud is supported on the lattice $\{1\} \cup 2\mathbb{N}_{\ge 1}$, a set of Lebesgue measure zero.
 
-**Remark 7.4 (Sharpness).** The hypothesis $i \ge 2$ is necessary: $g_1 = g_2 = 2$, from the triple $3, 5, 7$. This is the unique adjacent twin pair in the entire barcode.
+*Proof.* Combine Lemmas 5.1 and 5.2: for $i \ge 1$, $g_i$ is even and positive, hence $\ge 2$. $\square$
 
-**Theorem 7.5 (Refutation of independence).** *Let a model posit that bar lengths are independent with $\mathbb{P}(\text{length} = 2) = q > 0$. For $n \ge 2$ it predicts $(n-1)q^2 > 0$ adjacent twin-bar pairs among the first $n$ bars, while the prime barcode contains exactly $0$ past the start. Hence the prime barcode is not an independent-increment (Poisson) process.*
+**Lemma 5.4 (Short bars).** For every $i$, $g_i < 2 \iff i = 0$.
 
-Beyond the diagonal, an analogous obstruction exists at every prime modulus. Write $g$'s block sums as $\sum_{m \in [j,k)} g_{i+m}$.
+**Theorem 5.5 (Exactly one short bar).** For every $n \ge 1$,
+$$\#\{\, i < n : g_i < 2 \,\} \;=\; 1.$$
 
-**Theorem 7.6 (Block divisibility).** *Let $q$ be prime and let $i$ be an index with $p_{i+1} > q$. Then there exist $j < k < q$ with*
-$$q \ \Big|\ \sum_{m = j}^{k-1} g_{i+m}.$$
+*Proof.* By Lemma 5.4 the filtered set is $\{0\}$, which lies in $\{0, \dots, n-1\}$ because $n \ge 1$. $\square$
 
-*Proof.* The $q$ primes $p_{i+1}, \dots, p_{i+q}$ all exceed $q$, hence none is divisible by $q$, so their residues mod $q$ lie in the $q-1$ classes $\{1, \dots, q-1\}$. By pigeonhole two coincide, say those of index $i+j$ and $i+k$ with $j < k < q$. Their difference is divisible by $q$, and telescoping the barcode gives
-$$p_{i+k+1} - p_{i+j+1} = \sum_{m=j}^{k-1} g_{i+m}. \qquad\square$$
+**Theorem 5.6 (Refutation of the exponential / Poisson law).** Let $\mu > 0$ be any candidate mean. There exists $N \ge 1$ such that for all $n \ge N$,
+$$\#\{\, i < n : g_i < 2 \,\} \;<\; n\,\big(1 - e^{-2/\mu}\big).$$
+That is, the exponential law $\mathrm{Exp}(1/\mu)$ predicts $n(1-e^{-2/\mu}) \to \infty$ bars of length below $2$, whereas the true count is constantly $1$. Consequently no exponential law with any mean — in particular none with mean $\log x$ — describes the degree-zero bar lengths of the primes.
 
-**Theorem 7.7 (No long constant runs).** *Let $q$ be prime, $p_{i+1} > q$, and suppose $g_{i+m} = d$ for all $m < q-1$. Then $q \mid d$.*
+*Proof.* Set $c = 1 - e^{-2/\mu}$. Since $\mu > 0$, $-2/\mu < 0$, so $e^{-2/\mu} < 1$ and $c > 0$. Choose $N \ge \max(1, \lceil 1/c \rceil + 1)$, so that $n > 1/c$, i.e. $nc > 1$, for all $n \ge N$. By Theorem 5.5 the left side equals $1$ for all such $n$, and $1 < nc$. $\square$
 
-*Proof.* Take the block $[j,k)$ from Theorem 7.6; the block sum is $(k-j)d$ and $q \mid (k-j)d$. Since $q$ is prime and $0 < k - j < q$, $q \nmid (k-j)$, so $q \mid d$. $\square$
+**Remark 5.7 (What survives).** The refutation is a statement about the *support* of the barcode measure, not about its shape. Two conclusions follow. (i) The failure cannot be repaired by re-tuning $\mu$: it holds for all $\mu > 0$ simultaneously, and quantitatively rather than rhetorically. (ii) The correct form of the Cramér prediction must be applied to the barcode *rescaled by the local mean gap*: one should ask whether
+$$\frac{1}{n}\,\#\{\, i < n : g_i \le t \log p_i \,\} \longrightarrow 1 - e^{-t} \qquad (t > 0),$$
+which divides out the lattice while preserving the shape. That statement remains open; it is the honest form of the conjecture, and Theorem 4.5 guarantees that stating it in terms of $b_0(t \log x, n)$ loses nothing.
 
-**Corollary 7.8 (No four consecutive twin bars).** *Past $p = 5$ there is no run of four consecutive bars all of length $2$ — equivalently, no five primes in arithmetic progression with common difference $2$.* Indeed $q = 5$ would give $5 \mid 2$.
+**Corollary 5.8 (Even-scale rigidity of the prime staircase).** For every $k \ge 1$ and every $n$, the function $\varepsilon \mapsto b_0(\varepsilon, n)$ is constant on the open interval $(2k, 2k+2)$: the prime Betti curve can only jump at even scales (and once, at scale $1$).
 
-**Theorem 7.9 (Cap on the twin step).** *For every $n$, $\tau(n) \le \lfloor n/2 \rfloor + 3$.*
+*Proof.* By Corollary 4.6, a jump between $\varepsilon_1 < \varepsilon_2$ in $(2k, 2k+2)$ requires a gap in $(\varepsilon_1, \varepsilon_2]$, hence a non-even gap value in $(2k, 2k+2)$ other than the value $1$ (which lies in no such interval for $k \ge 1$), contradicting Theorem 5.3. $\square$
 
-*Proof.* By Theorem 5.2, $\tau(n)$ is the cardinality of $S = \{ i < n : g_i = 2\}$. By Theorem 7.3, $S$ contains no two consecutive integers $\ge 2$. Split off the at most two elements $\{0,1\}$; on the remainder the map $i \mapsto \lfloor i/2 \rfloor$ is injective (two indices with the same halved value differ by $1$, which is forbidden) and lands in $\{0, \dots, \lfloor n/2\rfloor\}$. Hence $|S| \le \lfloor n/2 \rfloor + 1 + 2$. $\square$
+**Corollary 5.9 (Atomicity is an arithmetic inequality).** For $n \ge 1$, $p_{n+1} \ge 2n + 1$, and the total persistence of the first $n$ prime bars satisfies $\sum_{i<n} g_i \ge 2n - 1$.
 
-No i.i.d. model satisfies a deterministic cap of this kind.
+*Proof.* Total persistence telescopes to $p_{n+1} - 2$ (Proposition 4.1). By Theorem 5.3 the $n$ bars consist of one bar of length $1$ and $n-1$ bars of length $\ge 2$, so $p_{n+1} - 2 \ge 1 + 2(n-1) = 2n - 1$. $\square$
 
-**Empirical corroboration.** Among the $78\,497$ bars below $10^6$: the adjacent pattern $(2,2)$ occurs exactly once (at $3,5,7$); $(4,4)$ and $(8,8)$ occur never; the repeats that *do* occur are $(6,6)$ with $1\,929$ occurrences, and $(12,12), (18,18), (24,24), (30,30), (36,36), (42,42)$ — all of them multiples of $3$, precisely as Theorem 7.2 requires; mixed patterns are common, e.g. $(2,4)$ with $1\,393$ and $(4,2)$ with $1\,444$ occurrences.
-
----
-
-## 8. The barcode is a complete invariant
-
-**Theorem 8.1 (Reconstruction).** *For every $n$, $p_{n+1} = 2 + \sum_{m < n} g_m$.*
-
-*Proof.* The gaps telescope: $\sum_{m<n} (p_{m+2} - p_{m+1}) = p_{n+1} - p_1 = p_{n+1} - 2$. $\square$
-
-Thus the persistence diagram of the prime point cloud determines the primes. Every arithmetic statement about primes is, formally, a statement about the barcode — which explains both why the barcode inherits so much structure (quantisation, exclusions, block laws) and why one should not expect the barcode to be "generic" in any probabilistic sense.
+Thus running the topology backwards recovers the elementary linear lower bound for the $n$-th prime.
 
 ---
 
-## 9. Algorithms
+## 6. The arithmetic–topology dictionary
 
-Three algorithms underlie the computations reported here; all are elementary and near-linear.
+### 6.1 Twin primes as a Betti defect
 
-**A. Barcode extraction.** Sieve to $x$ in $O(x \log \log x)$; the barcode of $\{p \le x\}$ is the list of consecutive differences, computed in $O(\pi(x))$. Correctness is Proposition 2.4. This yields the empirical measure $\mu_n$, the gap histogram, and (by prefix sums) the Betti area.
+**Lemma 6.1 (Three-way split of the bars).** For $n \ge 1$, writing $T(n) = \#\{ i < n : g_i = 2 \}$ for the number of twin-prime bars,
+$$\#\{ i < n : g_i > 2 \} \;+\; T(n) \;+\; 1 \;=\; n.$$
 
-**B. Betti curve and inversion.** From the histogram $h(2k) = \#\{i<n : g_i = 2k\}$, the Betti curve is $b_0(\varepsilon,n) = 1 + \sum_{2k > \varepsilon} h(2k)$, computable for all even thresholds simultaneously by a suffix sum in $O(g_{\max})$. Theorem 4.5 makes the map $h \leftrightarrow b_0$ a bijection, computed in either direction by prefix/suffix differencing.
+*Proof.* Split $\{0, \dots, n-1\}$ into $\{g_i > 2\}$ and its complement. By Theorem 5.3 the complement consists of index $0$ (where $g_0 = 1$) together with the indices where $g_i = 2$: indeed, for $i \ge 1$, $g_i \le 2$ and $g_i$ even and positive forces $g_i = 2$. Index $0$ is not among the twin indices since $g_0 = 1 \ne 2$, so the complement has cardinality $T(n) + 1$. $\square$
 
-**C. Cycle reduction (constructive $H_1$ vanishing).** Given a scale $\varepsilon$, a strictly increasing cloud, and a set $E$ of Rips edges with all degrees even, repeatedly: take the maximal vertex $v$ carried by $E$; take the two smallest left-endpoints $u < w$ among the edges $(\cdot, v) \in E$; emit the triangle $T(u,w,v)$; replace $E$ by $T \triangle E$. The proof of Theorem 6.4 shows each step is legal (the chord $(u,w)$ is a Rips edge), preserves the cycle condition, and strictly decreases the weight $\mu(E) = \sum_{(a,b) \in E} b$. The loop therefore terminates after at most $\mu(E)$ iterations, in $O(\mu(E) \cdot |E|)$ time with naive data structures, and outputs an explicit triangle decomposition — a certificate that the cycle bounds.
+**Theorem 6.2 (The twin prime counting function is a Betti defect).** For every $n \ge 1$,
+$$b_0(2, n) \;+\; T(n) \;=\; n.$$
+Equivalently, $T(n) = n - b_0(2, n)$: the twin-prime count is exactly the shortfall of the number of connected components of the first $n+1$ primes at scale $2$ below $n$.
+
+*Proof.* $b_0(2,n) = 1 + \#\{i<n : g_i > 2\}$ by Proposition 4.1; add $T(n)$ and apply Lemma 6.1. $\square$
+
+**Corollary 6.3 (A single Betti difference).** $T(n) = b_0(1, n) - b_0(2, n)$ for every $n$.
+
+*Proof.* Corollary 4.6 with $\varepsilon_1 = 1, \varepsilon_2 = 2$ counts gaps in $(1, 2]$, which by Theorem 5.3 are exactly the gaps equal to $2$. $\square$
+
+**Theorem 6.4 (Twin prime conjecture $=$ unbounded Betti defect).** The following are equivalent:
+1. There are infinitely many twin primes, i.e. $\{ p : p \text{ and } p+2 \text{ prime} \}$ is infinite;
+2. $\{ i : g_i = 2 \}$ is infinite;
+3. for every $K \in \mathbb{N}$ there exists $n$ with $n - b_0(2, n) \ge K$: the Betti defect of the prime cloud at scale $2$ is unbounded.
+
+*Proof sketch.* (1) $\Leftrightarrow$ (2) is the standard reindexing: a twin pair $(p, p+2)$ has no prime strictly between its members, so it is a pair of consecutive primes, i.e. a gap equal to $2$; conversely a gap of $2$ is a twin pair. (2) $\Rightarrow$ (3): from an infinite index set one extracts, for any $K$, a finite subset of size $K$, all of whose elements lie below some $n$; then $T(n) \ge K$, and $n - b_0(2,n) = T(n)$ by Theorem 6.2. (3) $\Rightarrow$ (2): if the index set were finite of cardinality $C$, then $T(n) \le C$ for all $n$, so the defect is bounded by $C$ — contradiction with $K = C+1$. The natural-number subtraction in the defect is harmless because $b_0(2,n) \le n$ for $n \ge 1$, again by Theorem 6.2. $\square$
+
+The content of Theorem 6.4 is that the twin prime conjecture is not a statement about a *bar* of the prime barcode; it is a statement about a *Betti number* at the single fixed scale $2$, in the limit $n \to \infty$. Together with Corollary 3.3, it also locates the conjecture unambiguously in degree zero: there is no degree-one home for it.
+
+### 6.2 Bounded gaps as an unbounded defect at a finite scale
+
+**Theorem 6.5 (Small bars are early merges).** For any real $\varepsilon$, the following are equivalent:
+1. $\{ i : g_i \le \varepsilon \}$ is infinite;
+2. the Betti defect $(n+1) - b_0(\varepsilon, n)$ is unbounded in $n$.
+
+*Proof.* By Proposition 4.2 the defect equals $M(\varepsilon, n) = \#\{i<n : g_i \le \varepsilon\}$, a counting function of an index set; a counting function of an index set is unbounded exactly when the set is infinite. $\square$
+
+**Corollary 6.6 (Bounded gaps in barcode form).** Suppose that for every $N$ there exist primes $p < q$ with $p \ge N$ and $q - p \le B$ (the conclusion of the theorems of Zhang and of Maynard–Tao, valid with $B = 246$). Then infinitely many prime gaps are at most $B$, hence the prime cloud performs arbitrarily many merges at the fixed scale $B$: the scale-$B$ Betti defect is unbounded.
+
+*Proof sketch.* If $q - p \le B$ with $p < q$ prime, then the gap immediately to the right of $p$ is at most $q - p \le B$, so there is an index $i$ with $p_{i+1} \ge N$ and $g_i \le B$; as $N$ is arbitrary the index set is infinite. Apply Theorem 6.5. $\square$
+
+**Theorem 6.7 (Converse translation).** If the scale-$B$ Betti defect is unbounded, then $\liminf_{n} (p_{n+1} - p_n) \le B$.
+
+*Proof sketch.* By Theorem 6.5 there are infinitely many indices with $g_i \le B$, so the gap sequence has a subsequence bounded by $B$; the liminf of a sequence with a subsequence bounded by $B$ is at most $B$. $\square$
+
+Corollary 6.6 and Theorem 6.7 together say that the topological and arithmetic formulations of bounded gaps are *equivalent*, with the twin prime conjecture the case $B = 2$.
+
+### 6.3 The cloud never connects
+
+A natural expectation is that at a sufficiently large scale the prime cloud becomes connected. It does not, at any scale.
+
+**Lemma 6.8 (Composite window).** For $2 \le k \le m$, the number $m! + k$ is composite: $k \mid m!$ (as $k \le m$ and $k \ge 2$), so $k \mid m! + k$, while $m! + k > k$.
+
+**Theorem 6.9 (Arbitrarily long bars, arbitrarily late).** For all $L, N \in \mathbb{N}$ there exists $n \ge N$ with $g_n > L$.
+
+*Proof sketch.* Choose $m = \max(L+2,\, p_{N+1} + 2)$ and let $c$ be the number of primes below $m! + 2$. The choice of $m$ makes $c \ge N+1$, so the index $c - 1$ is $\ge N$. The $(c-1)$-st prime is at most $m! + 1$, while the $c$-th prime is at least $m!+2$; but $m!+2, \dots, m!+m$ are all composite by Lemma 6.8, so the $c$-th prime is at least $m! + m + 1$. Hence $g_{c-1} \ge (m!+m+1) - (m!+1) = m > L$. $\square$
+
+**Corollary 6.10 (Infinitely many long bars).** For every real $\varepsilon$, the set $\{ i : g_i > \varepsilon \}$ is infinite.
+
+**Theorem 6.11 (Unbounded component count at every scale).** For every real $\varepsilon$ and every $K \in \mathbb{N}$ there exists $n$ with $b_0(\varepsilon, n) \ge K$. At every fixed scale, the prime cloud has arbitrarily many connected components; it is never eventually connected.
+
+*Proof.* Combine Corollary 6.10 with $b_0(\varepsilon, n) = 1 + \#\{i<n : g_i > \varepsilon\}$: the counting function of an infinite index set is unbounded. $\square$
+
+**Remark 6.12.** Theorems 6.5 and 6.11 are two sides of the same object. At a fixed scale $\varepsilon$, both the number of merges *and* the number of surviving components grow without bound; the prime barcode has infinitely many bars below $\varepsilon$ and infinitely many bars above $\varepsilon$, for every $\varepsilon$. The barcode never simplifies.
 
 ---
 
-## 10. Discussion
+## 7. Algorithms
 
-### 10.1 What survives of the Poisson heuristic
+All computations reduce to the gap sequence, so the pipeline is linear after sieving.
 
-Nothing above contradicts the Cramér-style heuristic *as an asymptotic guide*: the mean bar length $(p_n - 2)/n$ does track $\log p_n$, and large-scale statistics of prime gaps are well modelled by it. What fails is the heuristic's description of the barcode at *fine* scales, and the failure is exactly where arithmetic lives:
+**Algorithm A (Prime barcode).** Sieve to $X$ in $O(X \log\log X)$ time and $O(X)$ bits; emit consecutive differences. Output: the degree-zero barcode as a list of $\pi(X) - 1$ bar lengths. By Proposition 4.1 this *is* the barcode — no persistence pairing needs to be computed, which is what makes the prime cloud tractable at scales where general Rips persistence would be hopeless (a Rips complex on $78\,497$ points has $\sim 3 \times 10^9$ edges).
 
-* divisibility by $2$ quantises the bar lengths, destroying absolute continuity;
-* divisibility by $3$ creates a repulsion between $\varepsilon = 2$ merges, destroying independence;
-* divisibility by each prime $q$ imposes a block law, destroying independence at range $q$.
+**Algorithm B (Betti curve and defects).** Given the bar lengths, sort them once in $O(n \log n)$; then $b_0(\varepsilon, n)$ for any $\varepsilon$ is $1$ plus the number of sorted entries exceeding $\varepsilon$, computable by binary search in $O(\log n)$. All window counts (Corollary 4.6), the twin count (Theorem 6.2) and the merge counts (Proposition 4.2) are two such queries each.
 
-A corrected model should therefore be a *quantised, congruence-constrained* point process — morally the Hardy–Littlewood singular-series model rather than a plain Poisson process. Our results are precisely the deterministic constraints such a model must respect.
+**Algorithm C (Exponential-law audit).** For a candidate mean $\mu$ compare, for each threshold $t$, the empirical count $\#\{i<n : g_i \le t\}$ with the prediction $n(1 - e^{-t/\mu})$. At $t < 2$ the empirical value is pinned at $1$ (Theorem 5.5), so the discrepancy is $\Theta(n)$ and the test rejects at every $\mu$; the audit also reports the smallest $n$ at which the prediction exceeds $1$, namely $n \ge \lceil 1/(1-e^{-2/\mu}) \rceil$.
 
-### 10.2 Why $H_1$ was never available
-
-The conjecture that $H_1$ should encode twin primes was a category error of dimension. The prime cloud lives in $\mathbb{R}^1$, whose Rips complexes are flag complexes of indifference graphs, and Theorem 6.4 shows those have no first homology at any scale. The interesting arithmetic is thus forced into $H_0$, where Theorem 5.2 places it precisely: at the first step of the staircase.
-
-That said, Theorem 6.4 also indicates where a genuine $H_1$ theory of the primes could live: in dimension $\ge 2$. Embeddings such as $n \mapsto (p_n \bmod a, \; p_n \bmod b)$, the Ulam-spiral embedding, or the "prime lattice" $\{(p, q) : p, q \text{ prime}\} \subseteq \mathbb{R}^2$ all produce clouds for which loops are possible, and for which the barcode is not merely the gap sequence.
-
-### 10.3 Interpretation of the area identity
-
-Theorem 4.6 says that two invariants studied separately — total persistence and the Betti curve — are the same datum viewed in two ways, and that the datum is arithmetic: $p_n - 2$. This is a Fubini/layer-cake statement, but its consequence is a translation device: statements about prime gaps become statements about an integral over the scale parameter. For instance, the Prime Number Theorem becomes the assertion that the normalised Betti area $\frac1n\int_0^\infty (b_0 - 1)$ is asymptotic to $\log p_n$; large-gap results become lower bounds on the sup of the Betti staircase's support.
+**Algorithm D (Degree-one check).** For a small metric configuration, list the Rips edges and triangles at scale $\varepsilon$ and compute $\dim H_1 = (\#E - \mathrm{rank}\,\partial_1) - \mathrm{rank}\,\partial_2$ over $\mathbb{F}_2$ by Gaussian elimination on bit-vectors, in $O((\#E + \#T)\min(\#E,\#T)\,\#E/64)$ word operations. For prime windows the answer is always $0$ (Theorem 3.2); for the four-cycle metric it is $1$ (Theorem 3.4).
 
 ---
 
-## 11. Future directions
+## 8. Numerical verification
 
-Each of the following is falsifiable and sharply stated.
+Sieving to $X = 10^6$ yields $\pi(X) = 78\,498$ primes and $n = 78\,497$ bars.
 
-**C1. Admissibility is the only obstruction (barcode form of the $k$-tuple conjecture).** Call a tuple $(d_1, \dots, d_k)$ of positive even integers *barcode-admissible* if for every prime $q \le k+1$ the partial sums $0, d_1, d_1 + d_2, \dots, d_1 + \cdots + d_k$ do not cover all residues mod $q$. Conjecture: a pattern occurs as $k$ consecutive bars of the prime barcode, infinitely often, **iff** it is barcode-admissible. The "only if" half is proved here — Theorem 7.6 shows a non-admissible pattern can occur at most finitely often, and Theorem 7.7 is the constant-pattern case. The existence half is a barcode restatement of the Hardy–Littlewood/Dickson prime $k$-tuple conjecture. The key insight is that the $q = 3$ exclusion behind Theorem 7.3 is not a curiosity but the shadow of a complete residue-theoretic classification: pigeonhole on prime residues mod $q$ yields exactly the covering condition, so the set of realisable local barcode patterns is cut out by finitely many congruence conditions.
+| quantity | value |
+|---|---|
+| number of bars | $78\,497$ |
+| mean bar length | $12.7391$ |
+| $\log 10^6$ | $13.8155$ |
+| longest bar | $114$, starting at $p = 492\,113$ |
+| bars of odd length | $1$ (the bar from $2$ to $3$) |
+| bars of length $< 2$ | $1$ |
+| twin bars $T(n)$ | $8\,169$ |
+| $b_0(2, n)$ | $70\,328$ |
+| $b_0(2,n) + T(n)$ | $78\,497 = n$ ✓ |
+| $b_0(1,n) - b_0(2,n)$ | $8\,169 = T(n)$ ✓ |
+| total persistence | $999\,981 = p_{n+1} - 2$ ✓ |
 
-**C2. Betti-area asymptotics as an equivalent of the Prime Number Theorem and beyond.** The identity of Theorem 4.6 turns density statements into statements about the normalised Betti area. Making the equivalence quantitative — relating error terms in the Prime Number Theorem to convergence rates of $\frac1n\int_0^\infty (b_0(\varepsilon,n)-1)\,d\varepsilon$, and to the shape of the staircase near $\varepsilon \approx \log p_n$ — would give a topological reformulation of the classical analytic estimates, and potentially a Riemann-hypothesis-equivalent statement about the Betti curve's fluctuation.
+The exponential-law audit: with $\mu = 12.7391$ (the empirical mean) the predicted number of bars shorter than $2$ is $78\,497 \times (1 - e^{-2/12.7391}) \approx 11\,405$; with $\mu = \log 10^6$ it is $\approx 10\,579$; with $\mu = 1000$ it is still $\approx 157$. The truth is $1$. For $\mu = 12.7391$, the prediction already exceeds $1$ at $n = 7$.
 
-**C3. Higher-dimensional embeddings.** Since $H_1$ vanishes identically on a line, the natural next question is which planar or higher-dimensional embeddings of the primes produce nontrivial persistent $H_1$, and whether the resulting bars have arithmetic meaning (e.g. modular embeddings $n \mapsto (p_n \bmod a, p_n \bmod b)$, where admissible residue patterns should control loop formation).
+The merge identity was checked at $\varepsilon \in \{2, 4, 6, 12, 246\}$: for instance at $\varepsilon = 2$, defect $= 8\,170 =$ merge count; at $\varepsilon = 246$ all $78\,497$ bars have already merged, so the defect is $78\,497$ — consistent with the fact (Theorem 6.11) that at $10^6$ no gap yet exceeds $246$, while beyond $10^6$ infinitely many will.
 
-**C4. Stability and inverse problems.** Theorem 3.7 shows the prime barcode is separated from all odd lengths by $1$. One can ask for the precise bottleneck-distance radius within which no absolutely continuous model fits, and — inversely — which quantised, congruence-constrained processes have barcodes within a prescribed bottleneck distance of the prime barcode.
+Even-window rigidity: at $n = 20\,000$, $b_0$ is constant on $(2,4)$ (value $17\,629$), on $(4,6)$ ($15\,275$), on $(6,8)$ ($11\,467$), on $(20,22)$ ($2\,531$); the only odd-scale jump is at $1$, where $b_0$ drops from $20\,001$ to $20\,000$.
 
-**C5. Sharpening the twin-step cap.** Theorem 7.9 gives $\tau(n) \le n/2 + 3$; the true growth is conjecturally $\sim 2\Pi_2 \, n / \log p_n$ with $\Pi_2$ the twin prime constant. Any unconditional improvement of the deterministic cap using higher moduli ($q = 5, 7, \dots$ block laws) would be a purely combinatorial constraint on the Betti staircase.
+Interleaving: perturbing each of the first $5\,001$ primes by a uniform amount in $[-0.4, 0.4]$, the inequality $b_0^{\,\text{perturbed}}(\varepsilon + 0.8, n) \le b_0^{\,\text{prime}}(\varepsilon, n)$ holds at every tested scale.
+
+Degree one: for the primes below $60$, $\dim H_1(\mathrm{R}_\varepsilon; \mathbb{F}_2) = 0$ at $\varepsilon \in \{2,4,6,8,14\}$ — indeed at every scale — while the four-cycle metric at scale $1$ has four edges, zero triangles and $\dim H_1 = 1$.
 
 ---
 
-## 12. Conclusion
+## 9. Discussion
 
-The primes, laid on the real line, do have a topology — and it is entirely zero-dimensional. Their barcode is the sequence of prime gaps: atomic on $\{1\} \cup 2\mathbb{N}$, with hard empty windows that no exponential law can respect; heavy-tailed, with bars of arbitrarily large length; correlated, with $3$-divisibility forbidding adjacent equal bars and every prime $q$ imposing a block law; complete, reconstructing the primes exactly; and calibrated, with area $p_n - 2$ under its reduced Betti curve. In dimension one there is nothing: every cycle in the Rips complex of a line point cloud is a sum of triangles, so the conjectured twin-prime hole does not exist. The Twin Prime Conjecture is nonetheless present in the barcode, in an unexpectedly plain form — as the assertion that the single Betti step at scale $\varepsilon = 2$ grows without bound.
+The picture that emerges is of a barcode that is **topologically rigid but statistically non-Poisson**.
+
+*Rigid*, in three senses. (i) It carries no information in degree one and never can, by a theorem about the line that is sharp at dimension one. (ii) Its degree-zero content is completely captured by the Betti curve, which is a lossless encoding of the gap multiset (Theorem 4.5); nothing is gained or lost by passing between bars and staircase. (iii) It is stable: a $\delta$-perturbation of the points moves the curve by at most $2\delta$ in scale, so all conclusions concern the *spacing* of the primes, not accidental features of their exact values.
+
+*Non-Poisson*, for a reason that is structural rather than statistical: after the very first bar, every bar has even length, because $2$ is the only even prime. The barcode measure lives on a lattice, which no absolutely continuous law can charge. This is worth emphasising because the failure is often invisible in coarse statistics: the empirical mean bar length at $10^6$ is $12.74$ against a predicted $13.82$, an agreement good enough to lull one into accepting the model. The obstruction only becomes visible at the resolution of individual bar lengths — which is exactly the resolution at which persistent homology operates.
+
+The positive content is the dictionary. Twin primes are a Betti defect at scale $2$; bounded gaps are a Betti defect at scale $246$; the elementary bound $p_n \ge 2n+1$ is the total-persistence inequality; and, in the other direction, the classical composite window $m!+2, \dots, m!+m$ becomes the assertion that the prime cloud is never connected. This dictionary does not, by itself, prove anything new about the primes: the topology is a faithful re-encoding, so a hard arithmetic statement remains a hard topological one. What it provides is a *coordinate system*. In it, the difference between what is known (bounded gaps: unbounded defect at scale $246$) and what is conjectured (twin primes: unbounded defect at scale $2$) is literally the value of a single parameter, and the natural interpolation — for which $B$ is the scale-$B$ defect unbounded? — is exactly the small-gaps programme.
+
+A methodological remark. The mission that motivated this work conjectured a rich degree-one prime barcode with birth scale $\sim \log^2 x$. This was refuted for a dimensional reason. But the intuition behind it is not worthless: it is a *higher-dimensional* intuition applied to a one-dimensional embedding. Section 10 proposes the correct home for it.
+
+---
+
+## 10. Future directions
+
+**Rescaled Cramér law for the even barcode.** Let $B_n(t) = \#\{ i < n : g_i \le t \log p_i \}/n$. Conjecture: $B_n(t) \to 1 - e^{-t}$ for every $t > 0$. The key insight is that the refutation of Section 5 is a statement about the *support* of the barcode measure (a lattice), not about its shape: dividing each bar by $\log p_i$ destroys the lattice while preserving the shape, so the Poisson prediction should be restated for the rescaled barcode and only then tested. Because the Betti curve is a complete invariant, this is equivalently a statement about the single explicit staircase $n^{-1}\big(n + 1 - b_0(t \log p_n, n)\big)$. The two elementary bounds — the lower bound conditionally on Hardy–Littlewood, the unconditional upper bound from Brun's sieve — are the natural first targets.
+
+**Persistent homology in higher dimensions: the delay embedding.** Embed the primes in $\mathbb{R}^d$ by $\Phi_d(n) = (p_n, p_{n+1}, \dots, p_{n+d-1})$. Conjecture: for $d \ge 2$ the Rips filtration of $\Phi_d(\mathbb{N})$ has *nonvanishing* $H_1$, and the birth scale of its longest bar is $\asymp \log^2 x$ — matching the scale the original mission conjectured (wrongly) for the one-dimensional cloud. The key insight is that the $\log^2 x$ intuition was a dimensional one: correlations between *consecutive* gaps, invisible to a cloud on a line, become geometry in the delay embedding, and Hardy–Littlewood correlation constants should govern which loops appear.
+
+**Interpolating the small-gaps programme topologically.** Define $B^\ast = \inf\{ B : \text{the scale-}B\text{ Betti defect is unbounded} \}$. Known: $B^\ast \le 246$. Conjectured: $B^\ast = 2$. Is there a topological route to lowering $B^\ast$ — for instance a monotonicity or interleaving argument relating defects at different scales, or a sieve statement most naturally phrased as a bound on a Betti curve rather than a counting function?
+
+**Barcodes of other arithmetic clouds.** The framework applies verbatim to any increasing arithmetic sequence: primes in a fixed residue class, sums of two squares, smooth numbers, zeros of $\zeta$ on the critical line. Each has an atomicity signature (or none), a Betti staircase, and defects at distinguished scales; a comparative table of these signatures would be a compact way to read off how "lattice-like" versus "Poisson-like" each sequence is.
+
+**Multiparameter persistence.** Filtering simultaneously by scale $\varepsilon$ and by position $x$ (the "prime number theorem direction") yields a two-parameter persistence module whose rank invariant is $b_0(\varepsilon, n)$ as a function of both variables. The rescaled Cramér law above is then a statement about the *shape of the fibered barcode along the curve* $\varepsilon = t \log x$, and multiparameter invariants may be the right language for the interaction between the two directions.
+
+---
+
+## 11. Conclusion
+
+The primes, viewed as a point cloud on the line, have a shape, and we have determined it. In degree one there is nothing, for a reason that is a theorem about lines and is sharp at dimension one. In degree zero the barcode is the gap sequence; its Betti curve is a complete, stable invariant, constant between consecutive even scales; its bar lengths are pinned to the lattice $\{1\} \cup 2\mathbb{N}$, which rules out the exponential law for every mean and quantitatively so; its total persistence is $p_n - 2$, whose atomic lower bound is the inequality $p_n \ge 2n+1$; and its defects at fixed finite scales are precisely the twin prime counting function ($\varepsilon = 2$) and the bounded-gaps phenomenon ($\varepsilon = 246$). At every scale the cloud shatters into arbitrarily many components.
+
+The primes are not random, and their barcode says so in one line of parity. What remains random-looking about them survives the rescaling by $\log x$ — and that is where the topology now points.

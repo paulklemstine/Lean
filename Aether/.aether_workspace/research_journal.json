@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "56a9e19d",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — NET-95 thread (weight floor collapsed)\n\nWhat this cycle established formally (all in `Catalog/Novelty/`, 0 sorries):\n\n1. **The ladder is a one-parameter geometric law.**  Over *a",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-26T03:19:25",
-      "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q"
-    },
-    {
       "cycle_id": "56c4877a",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — from the local-unitary normal form\n\nThe cycle just completed proved, in `Catalog/Combinatorics/LocalUnitaryNormalForm.lean`:\n\n* the sharp Hadamard-type bound `2‖det M‖ ≤ ‖M‖_F²`",
@@ -499,19 +489,19 @@
       "theorem_count": 52,
       "timestamp": "2026-08-31T13:51:42",
       "title": "FACT round-70 #3 — ASCENT-COST: exact branch-oracle economics; effective branching refuted; master-l"
+    },
+    {
+      "cycle_id": "898d17cb",
+      "domain": "Physics",
+      "key_insight": "# Future directions — PTX starvation floor programme\n\nThree research cycles are recorded in `Catalog/Physics/PTXStarvationFloor.lean`,\n`PTXStarvationSpectrum.lean`, `PTXStarvationJitter.lean` and\n`PTX",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-08-31T13:51:59",
+      "title": "The floor is sharp"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "42f28947",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML expressiveness after the depth/width cycle\n\nEverything below is *derived from* the theorems proved in\n`Catalog/Applications/EMLDepthWidthTradeoff.lean` and\n`Catalog/Applicati",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-20T23:41:43",
-      "title": "EML Neural Network Expressiveness: Depth vs Width"
-    },
     {
       "cycle_id": "6a8ae4e1",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 52,
       "timestamp": "2026-08-31T13:51:42",
       "title": "FACT round-70 #3 — ASCENT-COST: exact branch-oracle economics; effective branching refuted; master-l"
+    },
+    {
+      "cycle_id": "898d17cb",
+      "domain": "Physics",
+      "key_insight": "# Future directions — PTX starvation floor programme\n\nThree research cycles are recorded in `Catalog/Physics/PTXStarvationFloor.lean`,\n`PTXStarvationSpectrum.lean`, `PTXStarvationJitter.lean` and\n`PTX",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-08-31T13:51:59",
+      "title": "The floor is sharp"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "25df59ed",
-      "domain": "Algebra",
-      "name": "hasDerivAt_binEntropy_sub_lin",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "25df59ed",
-      "domain": "Algebra",
-      "name": "hasDerivAt_lin_sub_binEntropy",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "90e1e335",
-      "domain": "Novelty",
-      "name": "numLeaves_le_two_pow_depth",
-      "quality": 0.8
-    },
     {
       "cycle_id": "90e1e335",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "dfsCostB_div_pow_tendsto",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "898d17cb",
+      "domain": "Physics",
+      "name": "slack_eq_rpow_logSlack",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "898d17cb",
+      "domain": "Physics",
+      "name": "logSlack_eq_fract",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "898d17cb",
+      "domain": "Physics",
+      "name": "logSlack_zpow",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-31T13:51:42",
+  "last_updated": "2026-08-31T13:51:59",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "3026c1dd",
-        "quality": 0.82,
-        "theorems": 101,
-        "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythago"
-      },
-      {
         "cycle_id": "a7626bf4",
         "quality": 0.88,
         "theorems": 77,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 88,
         "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist"
+      },
+      {
+        "cycle_id": "898d17cb",
+        "quality": 0.82,
+        "theorems": 84,
+        "title": "The floor is sharp"
       }
     ],
     "Probability": [
