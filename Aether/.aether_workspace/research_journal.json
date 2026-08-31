@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5e9b52ad",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Kneser input for many lines\n\nThis cycle settled the assigned conjecture (negatively) and replaced it with a\n*sharp* positive criterion together with a matching family of extremal",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-26T07:10:28",
-      "title": "Kneser input for many lines"
-    },
-    {
       "cycle_id": "3b9c1eb4",
       "domain": "Computation",
       "key_insight": "# FUTURE DIRECTIONS — U065 mechanism, after five research cycles\n\n## What these cycles established (formally, 0 sorries, standard axioms only)\n\n* **Mean preservation, any modulus.** `sum_rootCountM`:",
@@ -499,19 +489,19 @@
       "theorem_count": 50,
       "timestamp": "2026-08-31T23:52:29",
       "title": "NET-88: THE-TOKENIZER-TAX-EXPLODES — German prose at 4096 needs >56 keys (all points fail); +4 fine-"
+    },
+    {
+      "cycle_id": "51790419",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after FACT round-70 #1 (TDIAL-U112, exp 545)\n\nThree cycles of the loop produced: (i) a sharp Gram/spherical decorrelation bound that\nstrictly improves the catalog's previous adva",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-08-31T23:52:45",
+      "title": "FACT round-70 #1 — TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3d7df1d3",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Higher-Dimensional Pythagorean Trees\n\nThe development settles the basic form of the hypothesis:\n\n* the Berggren mechanism *does* generalise to Pythagorean quadruples — the all-on",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 156,
-      "timestamp": "2026-08-21T05:48:53",
-      "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
-    },
     {
       "cycle_id": "3026c1dd",
       "domain": "Physics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 50,
       "timestamp": "2026-08-31T23:52:29",
       "title": "NET-88: THE-TOKENIZER-TAX-EXPLODES — German prose at 4096 needs >56 keys (all points fail); +4 fine-"
+    },
+    {
+      "cycle_id": "51790419",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after FACT round-70 #1 (TDIAL-U112, exp 545)\n\nThree cycles of the loop produced: (i) a sharp Gram/spherical decorrelation bound that\nstrictly improves the catalog's previous adva",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-08-31T23:52:45",
+      "title": "FACT round-70 #1 — TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-31T23:52:29",
+  "last_updated": "2026-08-31T23:52:45",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "eef05184",
-        "quality": 0.8,
-        "theorems": 112,
-        "title": "Weighted / signed sums"
-      },
-      {
         "cycle_id": "9061d61f",
         "quality": 0.78,
         "theorems": 56,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 73,
         "title": "FACT round-76 #1 — GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as dra"
+      },
+      {
+        "cycle_id": "51790419",
+        "quality": 0.79,
+        "theorems": 106,
+        "title": "FACT round-70 #1 — TDIAL-U112: the fade continues below the band at bitlen 112 ("
       }
     ],
     "NumberTheory": [
