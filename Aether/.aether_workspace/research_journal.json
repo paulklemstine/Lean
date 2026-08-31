@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "56c4877a",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — from the local-unitary normal form\n\nThe cycle just completed proved, in `Catalog/Combinatorics/LocalUnitaryNormalForm.lean`:\n\n* the sharp Hadamard-type bound `2‖det M‖ ≤ ‖M‖_F²`",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 107,
-      "timestamp": "2026-08-26T03:19:41",
-      "title": "Local-unitary normal form"
-    },
-    {
       "cycle_id": "217690eb",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nDerived from this cycle's results in `Catalog/MachineLearning/QRResidual/`\n(`BlockCeiling.lean`, `NeighborNull.lean`, `PermutationNull.lean`,\n`MeasurableCeiling.lean`).\n\nWhat this",
@@ -499,19 +489,19 @@
       "theorem_count": 84,
       "timestamp": "2026-08-31T13:51:59",
       "title": "The floor is sharp"
+    },
+    {
+      "cycle_id": "e8ef44c2",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Topology of the prime point cloud\n\nDerived from four research cycles on this thread, whose verified outcomes are:\n\n* the degree-zero barcode of the primes is the gap sequence, it",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-31T13:52:14",
+      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6a8ae4e1",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by the research loop on\n`Catalog/Shared/GradedTransitivity/`.  Each is stated so that it can be\nattacked directly in Lean on top of the defin",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-08-21T03:16:57",
-      "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction"
-    },
     {
       "cycle_id": "39ef81fe",
       "domain": "Computation",
@@ -2501,21 +2491,19 @@
       "theorem_count": 84,
       "timestamp": "2026-08-31T13:51:59",
       "title": "The floor is sharp"
+    },
+    {
+      "cycle_id": "e8ef44c2",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Topology of the prime point cloud\n\nDerived from four research cycles on this thread, whose verified outcomes are:\n\n* the degree-zero barcode of the primes is the gap sequence, it",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-31T13:52:14",
+      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "90e1e335",
-      "domain": "Novelty",
-      "name": "eval_eq_of_menu_agree",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "90e1e335",
-      "domain": "Novelty",
-      "name": "errs_of_menu_",
-      "quality": 0.8
-    },
     {
       "cycle_id": "062fc32a",
       "domain": "NumberTheory",
@@ -2803,9 +2791,21 @@
       "domain": "Physics",
       "name": "logSlack_zpow",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "e8ef44c2",
+      "domain": "NumberTheory",
+      "name": "primeGap_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "e8ef44c2",
+      "domain": "NumberTheory",
+      "name": "nth_prime_odd",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-31T13:51:59",
+  "last_updated": "2026-08-31T13:52:14",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "77469890",
-        "quality": 0.82,
-        "theorems": 55,
-        "title": "FACT round-31 #2 — INDEPENDENT-VERIFICATION: the character captures exactly one "
-      },
-      {
         "cycle_id": "08e16c4e",
         "quality": 0.85,
         "theorems": 125,
@@ -3699,6 +3693,12 @@
         "quality": 0.78,
         "theorems": 82,
         "title": "FACT round-73 #4 — SCALE-SMOOTHNESS-DEVIATION: x²−N smoothness is random-level a"
+      },
+      {
+        "cycle_id": "e8ef44c2",
+        "quality": 0.82,
+        "theorems": 71,
+        "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
       }
     ],
     "Physics": [
