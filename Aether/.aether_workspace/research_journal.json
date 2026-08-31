@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e645a8ec",
-      "domain": "Probability",
-      "key_insight": "# Future directions after exp 580 / paper 230 (round-80 #2)\n\nThe formal cycle established four things: (i) the occupancy table of a scan is\na rate layer times a positional layer, and \"no interaction\"",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-25T23:40:18",
-      "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-rich vs hit-poor posi"
-    },
-    {
       "cycle_id": "0dec095c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — the shape/leakage frontier\n\nThe work delivered in this cycle settles, as theorems, the three inferential steps that the\nabsolute-shape closure rested on:\n\n1. **Nonlinearity ⇏ mod",
@@ -499,19 +489,19 @@
       "theorem_count": 90,
       "timestamp": "2026-08-30T23:31:39",
       "title": "F4. Sharpening the chain upper bound from $2^d - 1$ to $O(d)$"
+    },
+    {
+      "cycle_id": "be2e1d6c",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — after the Two-Tree Closure\n\nThe work of this cycle closes the \"energy-ascent\" question at four strengths and, in\ndoing so, isolates exactly what a reopening probe would have to l",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 172,
+      "timestamp": "2026-08-31T05:36:07",
+      "title": "FACT rounds 70–71 SYNTHESIS — THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exac"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1a7b47b1",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Tropical Cryptocurrency (cycle 1 output)\n\nThis cycle settled, in Lean 4, the first three conjectures of the previous cycle\n(with one of them *refuted and corrected*), and added a",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-08-20T21:43:57",
-      "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
-    },
     {
       "cycle_id": "f2707534",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 90,
       "timestamp": "2026-08-30T23:31:39",
       "title": "F4. Sharpening the chain upper bound from $2^d - 1$ to $O(d)$"
+    },
+    {
+      "cycle_id": "be2e1d6c",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — after the Two-Tree Closure\n\nThe work of this cycle closes the \"energy-ascent\" question at four strengths and, in\ndoing so, isolates exactly what a reopening probe would have to l",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 172,
+      "timestamp": "2026-08-31T05:36:07",
+      "title": "FACT rounds 70–71 SYNTHESIS — THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exac"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "601f1720",
-      "domain": "Pythagorean",
-      "name": "mem_step",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "601f1720",
-      "domain": "Pythagorean",
-      "name": "halfIter_mono",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "6060f6d0",
-      "domain": "Tropical",
-      "name": "dialCost_one",
-      "quality": 0.78
-    },
     {
       "cycle_id": "6060f6d0",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "bdFree_empty",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "be2e1d6c",
+      "domain": "Bridges",
+      "name": "restartEnergy_eq_mul_inv",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "be2e1d6c",
+      "domain": "Bridges",
+      "name": "restartEnergy_ge_height",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "be2e1d6c",
+      "domain": "Bridges",
+      "name": "restartEnergy_strictMono_height",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-30T23:31:39",
+  "last_updated": "2026-08-31T05:36:07",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "c442a26f",
-        "quality": 0.88,
-        "theorems": 91,
-        "title": "Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-seri"
-      },
-      {
         "cycle_id": "61305688",
         "quality": 0.82,
         "theorems": 185,
@@ -3203,6 +3197,12 @@
         "quality": 0.8,
         "theorems": 66,
         "title": "FACT round-74 #4 — MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude "
+      },
+      {
+        "cycle_id": "be2e1d6c",
+        "quality": 0.87,
+        "theorems": 172,
+        "title": "FACT rounds 70–71 SYNTHESIS — THE TWO-TREE CLOSURE: Pythagorean trees sealed at "
       }
     ],
     "Combinatorics": [
