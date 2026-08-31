@@ -2358,7 +2358,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed4056bf",
     "description": "Round-69 #2, cron iteration (exp 544). The first CI-separated band loss of the ladder.\n\n**TDIAL-U108-CONTINUES-FADE**: pooled Spearman(T, rate) = **0.488** CI [0.445, 0.534] — the ENTIRE CI below the 0.55 floor for the FIRST time. Fade decelerates toward a ~0.48 plateau (step delta −0.0125 vs prior −0.030/−0.043). T beats count by +0.092 CI [0.043, 0.139]. First seed heterogeneity of the ladder.\n\nThe dial drops decisively below the validated band at bitlen 108 — the fade is real and the CI now excludes the floor.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp544_t_dial_unif_108.py + exp544_result.json + run.log, seeds 20261210–12.",
     "domain_bridges": [],
     "domains": [
@@ -2370,7 +2370,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T23:36:49.796512+00:00",
     "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
   },
@@ -2392,25 +2392,6 @@
     "status": "in_progress",
     "timestamp": "2026-08-23T02:01:14.895568+00:00",
     "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pure domains — the mixing-ratio response is a bump, not a line/dip/ramp"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "4467887a",
-    "description": "Round-70 #2, exp 546 + coordinator exp546b. H1 (residue-style blindness extends to magnitudes) REFUTED — with the mechanism landing squarely inside the barrier map.\n\n**ENERGY-ASCENT-SIGNAL**: the Fermat-window magnitude spectrum of E(a)=a²−N (isqrt-anchored window W=4096) carries MI = **0.1836 bits about the first Berggren branch letter b₁** (19% of its entropy), permutation-null z +109…+120 over 300 row-shuffles; 69/225 N-only cells flag z≥3 (chance ≈0.3); joint (b₁,b₂) up to 0.2736 bits.\n\nHonesty first: on raw b₁ (78% letter-1) OOS accuracy only matches the majority baseline — the load-bearing evidence is dependence + minority-structure targets (dB-quartile beats chance AND majority OOS). **Coordinator scale control**: within-log(n)-bin shuffles give MI 0.2104 z=+100; within non-hit class MI 0.1139 vs null 0.006 — not scale, not strata, not just the threshold bit.\n\nControls: ratio-band→b₁ exact 3000/3000; N mod 3^k null worst z=+1.97 (paper 81 seal replicated); Gauss-magnitude features null max z=1.30.\n\nMechanism: hit-in-window rate by letter {0.000, 0.019, 0.673}; corr(log(d+1), log ρ) = −0.917; d ≈ n/(2ρ) — the spectrum is a fixed-window POSITIONAL sensor of the parabola zero-crossing. The tree letters are sealed against residues, OPEN to position — exactly what paper 132's residual-gap list predicted (positional witnesses) and paper 137 priced (5.19×). Value bounded (~19%; perfect W=4096 hit-detection worth 0.3035 bits; optimized window placement = named follow-up); cost economics deferred to exp547's (α,c) phase diagram.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp546_energy_ascent_oracle.py + exp546b_scale_control.py + exp546_result.json + exp546_data.npz, seed 20260823.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3910",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T02:00:10.720028+00:00",
-    "title": "FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch letters; mechanism positional (paper 193)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2472,7 +2453,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "f09adc42",
+    "consumed_by_exp_id": "b96d5582",
     "description": "Paper 249 (ResearchOutput/NewMathematics/249_ConsecutiveVDependency.md). Executes exp 598's pre-registered H0 route.\n\n**Design** (pre-registered before analysis): hit-indicator autocorrelation lags 1–20 in mid-window u ∈ [0.55,0.75], nb=1000 (robustness 500/2000); Amendment 0 pre-data — PRIMARY = per-batch quadratic-detrended ρ + MC-calibrated runs Z against pooled density curve p̂(u); SECONDARY literal global-mean; H1 iff |ρ| > 0.05 AND cluster-over-Ns CI excludes 0 at some lag, OR runs |Z| > 3.2905 (p < 0.001). Controls pre-committed: C1 ctl null both variants; C2 synthetic smooth-hump iid at rate curve; C3 injected lag-1 dependence must detect. Data: exp581_regen_positions.npz (sha256 0b1afa50…36a38; 128 batches, 9,594 hits, no N stored — purely positional). Boot/MC 2000 reps each, seed 599_20260828; wall 31.4 s.\n\n**Verdict H0_PURE_DENSITY**: detrended ρ(lag) ∈ [−0.0199, −0.0023] (max |ρ| = 0.020 << 0.05), flat/slightly negative — no refractory dip, no excitation bump; per-lag MC-vs-density-curve p ∈ [0.128, 0.969]; SECONDARY even more null (ρ_raw ∈ [−0.0103, +0.0046]); runs null BOTH readings (textbook Z = +0.850 p≈0.40; MC-calibrated Z = +0.894 p≈0.37; ctl Z = −0.454). Robustness nb500 max|ρ_det| = 0.036, nb2000 0.016.\n\n**Controls all met**: C1 null (.009 raw/.020 det); C2 synthetic-hump ALSO null on secondary (max .014 @lag17, pooled_Z +0.60) ⇒ curvature confound quantitatively immaterial — conditioned and literal readings AGREE, verdict not amendment-dependent; C3 injected lag-1 DETECTED MASSIVELY (ρ_det(lag1)=0.337, argmax exactly 1, pooled_Z −57.4) ⇒ null means \"no dependency\", not \"test blind\".\n\n**CONSEQUENCE (terminal characterization)**: given position, neighboring hits carry NO information about each other — the u* ≈ 0.65 excess is pure density/rate heterogeneity along the scan axis. Thread closure chain: excess real on home seed (papers 239/241) → divisibility a rate dial not position dial (242) → no j-arithmetic carrier (248) → no sequence structure (HERE). Hit-position thread papers 228–230 → 231 → 238/240 → 241–242 → 248 CLOSES COMPLETELY. Operational law: future gains come from modeling the positional DENSITY CURVE itself, never Markov/neighborhood structure. Scope honest: holds where the excess manifests (seed-20260828 lineage); exp592/#391 ≥3-pooled-seed amplitude test remains open — machinery transfers unchanged if an excess re-establishes elsewhere.\n\n**Ledger catches**: seed-20260828 ctl regeneration via two canonical recipes BOTH mismatch ctl_0 — recipe not recoverable from allowed reads; provenance rests on sha256 (disclosed). RECORD-TIME CORRECTION: findings' \"every CI straddles 0\" overstates — result.json shows 12/20 detrended CIs exclude zero on the NEGATIVE side, upper ends ≤ 0.0083 (raw 19/20 straddle; uniform ~−0.01 offset mirrored ~+0.01 on controls — opposite-sign shared-magnitude artifact, not structure); verdict unaffected (H1 required |ρ| > 0.05 AND CI exclusion JOINTLY).\n\nBarrier framing: none — terminal characterization inside the mapped positional stratum. Open unchanged: u ≥ 6–14 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, external-hint laws, quantum closed; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling.",
     "domain_bridges": [],
     "domains": [
@@ -2955,6 +2936,25 @@
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 4467887a (Q=0.850), which proved 87 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-70 #2, exp 546 + coordinator exp546b. H1 (residue-style blindness extends to magnitudes) REFUTED — with the mechanism landing squarely inside the barrier map.\n\n**ENERGY-ASCENT-SIGNAL**: the Fermat-window magnitude spectrum of E(a)=a²−N (isqrt-anchored window W=4096) carries MI = **0.1836 bits ",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_4467887a_66e6f151",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4467887a",
+    "status": "available",
+    "timestamp": "2026-08-31T20:06:22.038438+00:00",
+    "title": "Deepening: FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch l"
   },
   {
     "ambition_level": "grand_challenge",
@@ -3907,25 +3907,6 @@
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 00e162eb (Q=0.820), which proved 52 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-70 #3, exp 547. The pricing half of the energy-ascent round.\n\n**ASCENT-COST-LAW**: two exact cost laws under end-verification-only semantics — DFS-backtrack E = h·(1−K/2) + K·(3^(h+1)−3)/4 with K=(1−α)(2−α); **restart-from-root E = h·α^(−h), dominating DFS in 99.0% of cells**; beam never wins.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_00e162eb_9b60a3ed",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "00e162eb",
-    "status": "available",
-    "timestamp": "2026-08-31T13:51:42.553898+00:00",
-    "title": "Deepening: FACT round-70 #3 — ASCENT-COST: exact branch-oracle economics; effective branchi"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -3943,25 +3924,6 @@
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 898d17cb (Q=0.820), which proved 84 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant in `ptx_no_starvation` cannot be improved beyond a factor\n   of `2`: there are instances with `q y ≤ 2γ d y / (β log (1/p y) + M + γ − r y)`.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_898d17cb_6dd46b6c",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "898d17cb",
-    "status": "available",
-    "timestamp": "2026-08-31T13:51:59.676360+00:00",
-    "title": "Deepening: The floor is sharp"
   },
   {
     "ambition_level": "extension",
@@ -41712,6 +41674,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Two-sided bounds\n   on the Fermat offset (`fermatOffset_lower/upper`), degree-one homogeneity\n   (`fermatOffset_scale`), and the mechanism theorem: above scale `112·W`, a\n   window hit *forces* the middle band (`hit_implies_middle_band`), hence pins\n   the Berggren letter (`window_hit_determines_berggren_letter`).  The constant\n   is sharp to two units (`threshold_sharp`, witness at scale `110·W`).",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4437",
+    "lineage_refs": [],
+    "priority_score": 0.5280566037735849,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4467887a",
+    "status": "available",
+    "timestamp": "2026-08-31T20:06:07.789840+00:00",
+    "title": "The window is a ratio sensor with a sharp threshold"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Import or define a concrete Turing-machine model, encode configurations in one fixed wetware state family, and prove a commuting simulation diagram for each transition. A useful final theorem would preserve halting and output, with an explicit neuron and time overhead.",
     "domain_bridges": [],
     "domains": [
@@ -55330,7 +55311,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d451fd97",
     "description": "**Conjecture.** For a specified IEEE-754 implementation of a polynomial dynamical system, every finite execution avoiding overflow and exceptional values can be translated into an exact real pseudo-orbit whose local defect is bounded by a compositional expression in unit roundoff and the intermediate magnitudes.\n\nThe key insight is that floating-point execution should first be interpreted as a certified pseudo-orbit; only then should a dynamical shadowing theorem be applied.\n\n**Why now?** The abstract pseudo-orbit theorem already consumes precisely such a local defect certificate, leaving a sharply delimited semantics problem rather than an informal appeal to “precision.”",
     "domain_bridges": [],
     "domains": [],
@@ -55340,7 +55321,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ee626e30",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:27.772179+00:00",
     "title": "Backward-error semantics for floating-point chaotic programs"
   },
@@ -65616,7 +65597,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ce3d1cf6",
+    "consumed_by_exp_id": "",
     "description": "Prove that `(fun p : ℂ × ℂ => FourthDimensionPlayground.hopf p.1 p.2)` is `C∞`, then prove its derivative restricted to the tangent space of the unit three-sphere has real rank `2` at every point.",
     "domain_bridges": [],
     "domains": [],
@@ -65626,7 +65607,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "d1098480",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:25:11.573329+00:00",
     "title": "Smoothness and rank of the Hopf map"
   },

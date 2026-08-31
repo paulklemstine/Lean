@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "733effba",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after the H0 window-geometry cycle (exp 581 / paper 231)\n\n## What this cycle established\n\nThree Lean files (`Catalog/Algebra/HumpWindowGeometry.lean`,\n`Catalog/Algebra/HumpFitted",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-08-26T04:57:04",
-      "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE — n"
-    },
-    {
       "cycle_id": "c2e74b6a",
       "domain": "Logic",
       "key_insight": "# Future Directions — Temporal Gödel–Löb logic after the finite model property\n\n## What this cycle established\n\nThe assignment conjectured that every non-derivable formula `A` of the temporal\nGödel–Lö",
@@ -499,19 +489,19 @@
       "theorem_count": 73,
       "timestamp": "2026-08-31T13:52:33",
       "title": "FACT round-76 #1 — GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7"
+    },
+    {
+      "cycle_id": "4467887a",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — after the ENERGY-ASCENT cycle\n\n## What this cycle settled\n\nThe round-70 report claimed a magnitude channel that sees the first Berggren\nbranch letter `b₁`, with a *positional* me",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-31T20:06:21",
+      "title": "FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch letters; mechanism po"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "eccb3315",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — after the Berggren Tree Zeta Function\n\n## What this cycle established\n\n* **Structure.** The Berggren tree in Euclid-seed coordinates is a bijection from the set of words\n  in thr",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 147,
-      "timestamp": "2026-08-21T04:45:05",
-      "title": "The Berggren Tree Zeta Function — Analytic Counting of Pythagorean Triples Governed by the Silver Ra"
-    },
     {
       "cycle_id": "21cbaba8",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 73,
       "timestamp": "2026-08-31T13:52:33",
       "title": "FACT round-76 #1 — GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7"
+    },
+    {
+      "cycle_id": "4467887a",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — after the ENERGY-ASCENT cycle\n\n## What this cycle settled\n\nThe round-70 report claimed a magnitude channel that sees the first Berggren\nbranch letter `b₁`, with a *positional* me",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-31T20:06:21",
+      "title": "FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch letters; mechanism po"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f671dcbf",
-      "domain": "Logic",
-      "name": "block_scaling_is_bit_shift",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "f671dcbf",
-      "domain": "Logic",
-      "name": "rescue_requires_16x_concentration",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "f671dcbf",
-      "domain": "Logic",
-      "name": "block_rescue_at_net92_scale",
-      "quality": 0.78
-    },
     {
       "cycle_id": "3f9d41d2",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "can",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "4467887a",
+      "domain": "Combinatorics",
+      "name": "leg_lt_hyp",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "4467887a",
+      "domain": "Combinatorics",
+      "name": "hyp_lt_sum",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "4467887a",
+      "domain": "Combinatorics",
+      "name": "cond_left_iff",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-31T13:52:33",
+  "last_updated": "2026-08-31T20:06:21",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "a303e67d",
-        "quality": 0.78,
-        "theorems": 48,
-        "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP — hybrid z(acc)+lambda*z(probe) "
-      },
-      {
         "cycle_id": "86b92df3",
         "quality": 0.78,
         "theorems": 101,
@@ -3265,6 +3259,12 @@
         "quality": 0.85,
         "theorems": 21,
         "title": "Test curvature only after identifiability"
+      },
+      {
+        "cycle_id": "4467887a",
+        "quality": 0.85,
+        "theorems": 87,
+        "title": "FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch l"
       }
     ],
     "Computation": [
