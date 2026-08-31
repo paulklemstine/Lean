@@ -1,197 +1,166 @@
-# Computational evidence — Two-Tree Closure (Berggren / Price)
+# The Two-Tree Closure — a guided tour
 
-All numbers below were produced by direct enumeration before the Lean development;
-each block names the theorem that now proves the corresponding statement.
-The Lean files are the authoritative artifacts: everything asserted as a *law* here
-is a `sorry`-free theorem in `Catalog/Bridges/TwoTreeClosure/`.
+*Every right triangle with whole-number sides has an exact address in one infinite family tree. This page is about a simple question with a surprisingly sharp answer: can you read a triangle's address off its hypotenuse?*
 
-## 1. The Price two-adic law (`PriceTwoAdicLaw.lean`)
+---
 
-Exhaustive check over all odd `p, q < 200` (10 000 pairs), with `v₂` the two-adic
-valuation of the factor sum:
+## 1. A tree that contains every Pythagorean triple exactly once
 
-| statement | verified |
-|---|---|
-| `v₂(p+q) = 1 ⟺ pq ≡ 1 (mod 4)` | true on all 10 000 pairs |
-| `v₂(p+q) = 2 ⟺ pq ≡ 3 (mod 8)` | true on all 10 000 pairs |
-| `v₂(p+q) ≥ 3 ⟺ pq ≡ 7 (mod 8)` | true on all 10 000 pairs |
+Write a primitive Pythagorean triple in Euclid's form
+$$(m^2 - n^2,\; 2mn,\; m^2 + n^2),$$
+with $m > n \ge 1$ coprime and of opposite parity. Call the pair $(m,n)$ a **node** and $N = m^2+n^2$ its **hypotenuse**. The root is $(2,1)$, the familiar $(3,4,5)$. Each node has exactly three children:
 
-Proved as `v2_one_iff_mod_four`, `v2_two_iff_mod_eight_three`,
-`mod_eight_seven_iff_eight_dvd`.
+$$A:(m,n)\mapsto(2m-n,\,m),\qquad B:(m,n)\mapsto(2m+n,\,m),\qquad C:(m,n)\mapsto(m+2n,\,n).$$
 
-**Cap / death at position 2.**  The valuation is pinned only up to `3`; past that it
-is not a function of `N` at all.  Sample of the family `N = 9m`, `m ≡ 7 (mod 16)`:
+Applying these forever from the root sweeps out **every** primitive triple, each exactly once. So every triple carries a unique **address word** over the alphabet $\{A,B,C\}$ — the sequence of turns leading to it.
 
-| `N` | factorisation `9·m` | `v₂(9+m)` | factorisation `3·(3m)` | `v₂(3+3m)` |
-|---|---|---|---|---|
-| 63 | 9·7 | 4 | 3·21 | 3 |
-| 207 | 9·23 | 5 | 3·69 | 3 |
-| 351 | 9·39 | 4 | 3·117 | 3 |
-| 495 | 9·55 | 6 | 3·165 | 3 |
+Start by walking the tree yourself. Descend with A, B, C; climb back with the parent button; watch how the address word grows and how the hypotenuse explodes.
 
-Proved as `priceLetter_two_not_function_of_N` (letters 0 and 1 agree, letter 2 differs).
+{{interactive_demo:0}}
 
-## 2. Residue dials are blind (`TreeCore.lean`)
+<details>
+<summary><strong>Click to reveal: why the address is unique</strong></summary>
 
-For the smooth Gauss-sum modulus `M = 720720` and `n = 2M = 1441440`, the three nodes
+The **ascent letter** of a node is decided by the ratio $m/n$ alone:
+$$\ell(m,n) = A \text{ if } m<2n, \qquad B \text{ if } 2n<m<3n, \qquad C \text{ if } 3n<m.$$
+The boundary cases are impossible: $m=2n$ with $\gcd(m,n)=1$ forces the root $(2,1)$, and $m=3n$ forces $(3,1)$, whose coordinate sum is even — not a node.
 
-`(n+1, n)`, `(2n+1, n)`, `(3n+1, n)`
+Inverting the branch named by the letter gives a candidate parent, and one checks it is again a node with a strictly smaller leading coordinate. So descent terminates at the root: every node is reachable, the parent is unique, and the address word is unique. In fact distinct words always reach distinct nodes — the tree is *free* on its three generators. Consequently level $h$ has exactly $3^h$ nodes, and since the last letter of a word is the ascent letter of the node it reaches, each of the three letters is worn by exactly $3^{h}$ of the $3^{h+1}$ nodes at level $h+1$: **perfect equidistribution**.
+</details>
 
-carry the letters `A`, `B`, `C` respectively, and all three hypotenuses reduce to
-`1 mod 720720`.  A residue dial therefore sees one value where the tree has all
-three branches.  Proved as `letterOf_blind_of_residue`, `residue_dial_letterBlind`,
-`gaussDial_letterBlind`, and (for genuine Gauss sums) `gaussProbe_letterBlind`,
-`gaussBattery_letterBlind` in `GaussDial.lean`.
+---
 
-## 3. Magnitude mirrors are blind (`TreeCore.lean`, `FactorOracle.lean`)
+## 2. Why anyone cares: the address hides a factorisation
 
-Collision family `k = 10t`: the nodes `(2k−1, k+2)` and `(2k+1, k−2)`.
+Let $N = pq$ be a semiprime with $p \equiv q \equiv 1 \pmod 4$. Such an $N$ is a sum of two coprime squares, so it sits at a node. Find that node $(m,n)$ and you have written $N = m^2+n^2$ — a Gaussian factorisation, from which $p$ and $q$ fall out.
 
-| t | node 1 | letter | node 2 | letter | common hypotenuse |
-|---|---|---|---|---|---|
-| 1 | (19, 12) | A | (21, 8) | B | 505 = 5·101 |
-| 2 | (39, 22) | A | (41, 18) | B | 2005 = 5·401 |
-| 3 | (59, 32) | A | (61, 28) | B | 4505 = 5·17·53 |
-| 4 | (79, 42) | A | (81, 38) | B | 8005 = 5·1601 |
-| 5 | (99, 52) | A | (101, 48) | B | 12505 = 5·41·61 |
+So a cheap letter oracle would be a factoring shortcut: predict the letter, invert one branch, repeat. The rest of this page is the story of why every cheap oracle fails.
 
-All pairs are coprime and of opposite parity (checked), i.e. genuine tree nodes.
-Proved as `letterOf_blind_of_magnitude`, `magnitude_probe_letterBlind`; the
-semiprimality of the `t = 1` witness is `magnitude_witness_semiprime`.
-The collision is exactly the Brahmagupta–Fibonacci ambiguity of the factorisation
-`5 · (k² + 1)` (`factor_oracle_family`).
+The picture below shows the geometry of the obstruction in one image. On the left, the letter is a function of the **direction** of $(m,n)$; on the right, the hypotenuse is a function of its **length** — and lengths collide.
 
-## 4. Ascent economics (`AscentEconomics.lean`)
+{{visualization:0}}
 
-Restart energy `E(h, a) = h · a^(−h)` at height `h = 30`:
+---
 
-| a | `E(30, a)` | within a 3000-visit budget? |
-|---|---|---|
-| 0.80 | ≈ 2.42 · 10⁴ | no |
-| 0.85 | ≈ 3.93 · 10³ | no |
-| 0.86 | ≈ 2.77 · 10³ | yes |
-| 0.90 | ≈ 7.08 · 10² | yes |
+## 3. Seal one and two: dials with a modulus
 
-Exact rational check: `100 · 17³⁰ < 20³⁰` (budget fails at 0.85) and
-`100 · 43³⁰ ≥ 50³⁰` (budget met at 0.86).  Proved as `accuracy_085_over_budget`,
-`accuracy_086_within_budget`, `critical_accuracy_bracket`.  The exhaustive
-alternative at the same depth costs `(3³¹ − 1)/2 > 10¹⁴` visits
-(`exhaustive_cost_astronomical`, together with `card_desc`/`sum_card_desc`).
+The first probes to try read $N$ modulo something — a residue dial, or the magnitude of a quadratic Gauss sum
+$$G_M(N) = \sum_{x \bmod M} e^{2\pi i N x^2/M}$$
+at a smooth modulus like $M = 720720 = 2^4\cdot3^2\cdot5\cdot7\cdot11\cdot13$.
 
-## 5. Ascent words and depth (`AscentWord.lean`)
+Both fail for the same reason, and you can manufacture the counterexample yourself for any modulus in the second tab of the lab above: pick $M$, hit "build a blindness certificate", and read off three nodes with the three distinct letters and one common residue.
 
-Breadth-first descent from the root `(2,1)`, first three levels:
+<details>
+<summary><strong>Click to reveal: the one-line certificate</strong></summary>
 
-| word | node | hypotenuse |
-|---|---|---|
-| (empty) | (2,1) | 5 |
-| A | (3,2) | 13 |
-| B | (5,2) | 29 |
-| C | (4,1) | 17 |
-| AA | (4,3) | 25 |
-| AB | (8,3) | 73 |
-| AC | (7,2) | 53 |
+Take any even $n \ge 2$ with $M \mid n$ — for instance $n = 2Mt$. The three nodes
+$$(n+1,\,n), \qquad (2n+1,\,n), \qquad (3n+1,\,n)$$
+have ratios just below $2$, just above $2$, and just above $3$, hence letters $A$, $B$, $C$. Their hypotenuses are
+$$2n^2+2n+1, \qquad 5n^2+4n+1, \qquad 10n^2+6n+1,$$
+each of which is $1 + M\cdot(\text{integer})$ because $M \mid n$. Three letters, one residue: no function of $N \bmod M$ can output the letter, at any modulus and at any scale.
 
-All `3^h` words of length `h` give distinct nodes (`card_desc`, `follow_injective`).
-The `A`-spine `A^k` lands on `(k+2, k+1)` with hypotenuse `2k² + 6k + 5`
-(`spine_depth_sqrt`): depth grows like the square root of the hypotenuse, while the
-bracket `2 + L ≤ m ≤ 2·3^L` (`depth_bracket`) shows the other branches can be
-exponentially faster.
+And $G_M(N+kM) = G_M(N)$, because each summand's exponent shifts by an integer multiple of $2\pi i$. So a Gauss-sum probe — magnitude, phase, or any learned readout — *is* a residue dial. A whole battery of moduli all dividing a common $M$ is still a function of $N \bmod M$, and still blind.
+</details>
 
-## 6. No OEIS hit sought
+---
 
-The objects here are two-parameter node families rather than a single integer
-sequence, so no OEIS lookup was applicable.
+## 4. Seal three: sensors that never move
 
-## 7. Second cycle: two refutation families
+A third family reads structure: parities of the sides, sign counts, the quadratic form. These fail humiliatingly. At **every** node the parity profile of $(m^2-n^2,\ 2mn,\ m^2+n^2)$ is exactly $(\text{odd},\ \text{even},\ \text{odd})$, and the Lorentz form
+$$(m^2-n^2)^2 + (2mn)^2 - (m^2+n^2)^2$$
+vanishes identically — it *is* the Pythagorean identity. A constant sensor has zero mutual information with anything. Not "small": exactly zero.
 
-### 7.1 Sophie Germain same-letter collisions (`RepresentationOrbit.lean`)
+---
 
-Primitive representations `N = m² + n²` (`m > n ≥ 1`, coprime, opposite parity) of
-`N = u⁴ + 4` for `u = 2s + 7`, with the ascent letter of each:
+## 5. Seal four: even the number itself is not enough
 
-| `s` | `N` | primitive representations `(m,n)` | letters |
-|---|---|---|---|
-| 0 | 2405 | (38,31), (46,17), (47,14), (49,2) | A, B, **C**, **C** |
-| 1 | 6565 | (66,47), (74,33), (79,18), (81,2) | A, B, **C**, **C** |
-| 2 | 14645 | (89,82), (98,71), (119,22), (121,2) | A, A, **C**, **C** |
-| 3 | 28565 | (121,118), (134,103), (167,26), (169,2) | A, A, **C**, **C** |
-| 4 | 50629 | (223,30), (225,2) | **C**, **C** |
-| 5 | 83525 | (266,113), (278,79), (287,34), (289,2) | B, **C**, **C**, **C** |
+Here is the strongest statement, and the one to remember.
 
-The bold entries are the two family members `(u² - 2, 2u)` and `(u², 2)`, which always
-share the letter `C`; `s = 4` is a **semiprime** (`50629 = 197 · 257`) with *exactly*
-two primitive representations, both `C`.  This refutes the orbit conjecture of the
-previous cycle (`orbit_letter_separation_false`, `semiprime_same_letter_collision`).
+$$505 = 19^2 + 12^2 = 21^2 + 8^2 = 5 \cdot 101.$$
 
-### 7.2 Valuation-constant semiprimes (`TwoAdicCapRefutation.lean`)
+Two legitimate addresses for one number — and the first has $m<2n$ (letter $A$) while the second has $2n<m<3n$ (letter $B$). So the ascent letter **is not a function of the hypotenuse**, and no probe reading $N$, however clever, can compute it. The family is infinite: for every $t\ge1$,
+$$(20t-1)^2 + (10t+2)^2 = (20t+1)^2 + (10t-2)^2 = 500t^2+5.$$
 
-Exhaustive scan of odd `N ≡ 7 (mod 8)` below `2 · 10⁵` with at least two factorisations:
-`2197` of them realise a **single** value of `v₂(p + q)` across all factorisations.
-The smallest are
+Type $505$, $8005$, or $2405$ into the "Blindness lab" tab above and watch the verdict change. Then try a number of your own.
 
-| `N` | factorisations | `v₂(p+q)` values |
-|---|---|---|
-| 119 = 7·17 | (1,119), (7,17) | {3} |
-| 343 = 7³ | (1,343), (7,49) | {3} |
-| 391 = 17·23 | (1,391), (17,23) | {3} |
-| 527 = 17·31 | (1,527), (17,31) | {4} |
-| 679 = 7·97 | (1,679), (7,97) | {3} |
+<details>
+<summary><strong>Click to reveal: why collisions exist at all</strong></summary>
 
-The proved family `N = 7q` with `q ≡ 1 (mod 16)` (119, 679, 791, 1351, …) is the
-`v₂ = 3` case, and Dirichlet's theorem makes it infinite
-(`two_adic_constant_of_prime`, `two_adic_cap_conjecture_false`).
+The Brahmagupta–Fibonacci identity says a product of two sums of squares is a sum of squares in *two* ways:
+$$(a^2+b^2)(c^2+d^2) = (ac-bd)^2 + (ad+bc)^2 = (ac+bd)^2 + (ad-bc)^2 .$$
+With $(a,b) = (2,1)$ and $(c,d) = (10t,1)$ the two compositions are exactly $(20t-1,\,10t+2)$ and $(20t+1,\,10t-2)$ — the colliding pair. The ambiguity in the address is precisely the ambiguity in the composition, and pinning down the composition means knowing how $N$ factors. Positional information is real; it just lives on the far side of the factorisation.
 
-## 8. Third cycle: search bounds, magnitude windows, collision counts
+For much more on the underlying arithmetic, see [sums of two squares](https://en.wikipedia.org/wiki/Sum_of_two_squares_theorem) and the [Brahmagupta–Fibonacci identity](https://en.wikipedia.org/wiki/Brahmagupta%E2%80%93Fibonacci_identity).
+</details>
 
-### 8.1 Level sizes and letter counts (`SearchLowerBound.lean`)
+<details>
+<summary><strong>Click to reveal: the conjecture that a collision must split the letters — and why it is false</strong></summary>
 
-Depth-`h` levels of the tree, counted by ascent word:
+It is tempting to hope that whenever $N$ has two addresses, the letters differ, so that the mere existence of a collision is a signal. The Sophie Germain identity kills this:
+$$u^4 + 4 = (u^2-2u+2)(u^2+2u+2), \qquad u^4+4 = (u^2-2)^2 + (2u)^2 = (u^2)^2 + 2^2 .$$
+For odd $u \ge 7$ both nodes have ratio above $3$, so both carry letter $C$. The smallest case is $2405 = 47^2+14^2 = 49^2+2^2$, and the semiprime $50629 = 197\cdot257 = 223^2+30^2 = 225^2+2^2$ shows it is not a small-number accident. Both behaviours — splitting and non-splitting — occur above every bound, with at least $\sqrt{(X-5)/500}$ splitting collisions and $\gg X^{1/4}$ non-splitting ones below $X$. So "does $N$ collide?" is itself letter-free.
+</details>
 
-| depth `h` | nodes `3^h` | nodes with last letter `A` / `B` / `C` |
-|---|---|---|
-| 1 | 3 | 1 / 1 / 1 |
-| 2 | 9 | 3 / 3 / 3 |
-| 3 | 27 | 9 / 9 / 9 |
-| 4 | 81 | 27 / 27 / 27 |
+Finally, magnitude-*scale* probes die too: for every $X \ge 661$ and every letter there is a node with that letter whose hypotenuse lies in $[X,2X)$. Knowing the order of magnitude of $N$ does not even restrict which letters are possible.
 
-The pattern is a theorem, not a measurement: `card_depthNodes` gives `3 ^ h` and
-`card_depthNodes_letter` gives exactly `3 ^ (h-1)` per letter, with
-`sum_card_depthNodes_letter` checking that the three classes exhaust the level.
+{{algorithm:1}}
 
-Restart energy versus exhaustive search, at accuracy `1/2` (`h · 2^h` against `3^h`):
+---
 
-| `h` | `h · 2^h` | `3^h` |
-|---|---|---|
-| 1 | 2 | 3 |
-| 5 | 160 | 243 |
-| 10 | 10240 | 59049 |
-| 20 | 20971520 | 3486784401 |
+## 6. Suppose you had a noisy oracle anyway
 
-The inequality holds at *every* `h` (`restart_beats_exhaustive_half`), and the
-threshold accuracy separating "guided wins" from "brute force wins" is exactly `1/3`
-(`guided_cost_threshold_one_third`).
+Grant, hypothetically, a probe that guesses each letter correctly with probability $a$. Climb $h$ levels, restart on failure. The expected number of visited nodes is the **restart energy**
+$$E(h,a) = \frac{h}{a^{h}} .$$
 
-### 8.2 Dyadic windows (`MagnitudeWindows.lean`)
+Slide the accuracy in the third tab of the lab and watch the gold curve cross the white one ($3^h$, exhaustive search) and the green one (your budget).
 
-Representatives found by the discrete intermediate-value lemma inside the window
-`[1024, 2048)`:
+{{visualization:1}}
 
-| letter | family | index | node | hypotenuse |
-|---|---|---|---|---|
-| `A` | `(m+1, m)`, `hyp = 2m²+2m+1` | `m = 23` | `(24, 23)` | 1105 |
-| `B` | `(4u+1, 2u)`, `hyp = 20u²+8u+1` | `u = 7` | `(29, 14)` | 1037 |
-| `C` | `(8u+1, 2u)`, `hyp = 68u²+16u+1` | `u = 4` | `(33, 8)` | 1153 |
+Two thresholds emerge, and they are far apart:
 
-The predecessors `m = 22` (1013), `u = 6` (769) and `u = 3` (661) fall below the
-window, confirming the minimality step of `window_hit`.  All three letters therefore
-occur in the same log-magnitude decile — the support form of the measured null
-(`all_letters_in_every_window`, `decile_sensor_letterBlind`).
+* **Worth switching on:** exactly $a > 1/3$, the reciprocal of the branching number. Below $1/3$ the guided ascent eventually costs *more* than sweeping the whole level. At $a = 1/2$ it wins at every depth, since $h\,2^h < 3^h$ for all $h$.
+* **Competitive:** at height $30$ within a budget of $3000$ visits you need $\alpha^\ast$ with $0.85 < \alpha^\ast \le 0.86$, because $E(30,0.85) \approx 3931 > 3000 \ge 2768 \approx E(30,0.86)$ — exactly $\alpha^\ast = 100^{-1/30} \approx 0.8577$.
 
-### 8.3 Collision counting (`CollisionCounts.lean`)
+Against that floor, the best positional content ever measured for an oracle that *already knows the factorisation* is about $0.48$ bits per step. Everything cheaper is at exactly zero.
 
-Splitting family `500t² + 5`: 505, 2005, 4505, 8005, … (letters `A` and `B` at every
-`t ≥ 1`); non-splitting Sophie Germain family `u⁴ + 4`, `u = 2s+7`: 2405, 6565, 14645,
-28565, 50629, … (letter `C` twice).  Counting up to `X` gives at least `≍ X^{1/2}`
-splitting magnitudes and at least `≍ X^{1/4}` non-splitting ones
-(`many_split_collisions`, `many_same_letter_collisions`).
+{{algorithm:2}}
+
+<details>
+<summary><strong>Click to reveal: why brute force is not an escape either</strong></summary>
+
+Because the letters are unreadable from $N$, an adversary may place the target anywhere on level $h$. Any searcher visiting fewer than $3^h$ nodes provably misses one; below half the level it misses a strict majority; and adaptivity gains nothing, since the only feedback before a hit is "miss". Exhaustive search to depth $30$ visits $(3^{31}-1)/2 > 10^{14}$ nodes.
+
+Worse, depth is expensive to reach: along the pure-$A$ spine the word of length $k$ lands on $(k+2,k+1)$, whose hypotenuse is $2k^2+6k+5$ — depth grows like $\sqrt{N}$, not $\log N$.
+</details>
+
+---
+
+## 7. Decoding an address, when you already have the node
+
+For completeness, here is the easy direction: given the node, the address is read off in a handful of comparisons. It is exact, it is fast, and it is useless without the node.
+
+{{algorithm:0}}
+
+---
+
+## 8. Run everything
+
+The complete numerical companion reproduces all of it — the four seals, the two refuted conjectures, the two-adic law, and the economics — with assertions that fail loudly if any claim is off.
+
+{{demo:0}}
+
+---
+
+## 9. A methodological aside worth more than the negative result
+
+Early rounds of this investigation "detected" signal by comparing sensors against a **row-shuffle null**: permute the labels, re-measure, and call the gap significance. For a deterministic function of $N$ this null is simply wrong. Tree position correlates with $|N|$ (deeper nodes are bigger), so shuffling destroys a shared dependence on magnitude and any sensor that merely tracks $|N|$ scores as informative.
+
+The correct null **conditions on magnitude** — compare only within a decile of $\log N$. Under that null the promising spectral summaries collapsed to what the theorems say they are: mirrors of $|N|$, carrying nothing about position. Two habits follow: derive before you validate (ask whether the sensor factors through a quantity already known to be blind), and treat an implausibly successful pilot as a *mechanism detector*, not a discovery.
+
+---
+
+## 10. What would reopen the question
+
+A probe that is **none** of the four sealed kinds — not a function of $N \bmod M$ for any $M$, not a Gauss-sum readout, not a structural constant, and not a function of $N$ at all — that is non-monotone in $|N|$, and that delivers per-step accuracy above $\approx 0.86$ at a cost of at most $3000$ visit-equivalents. Since the letter provably is not a function of $N$, such a probe must consume side information: partial factorisation data, class-group information for the Gaussian integers, or a quantum resource.
+
+The tree keeps its perfect addresses. It just will not tell you yours.
