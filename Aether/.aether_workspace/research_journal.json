@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0dec095c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — the shape/leakage frontier\n\nThe work delivered in this cycle settles, as theorems, the three inferential steps that the\nabsolute-shape closure rested on:\n\n1. **Nonlinearity ⇏ mod",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-25T23:40:36",
-      "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=100.6 df=3 p=1.17e-21"
-    },
-    {
       "cycle_id": "7b0f4515",
       "domain": "Probability",
       "key_insight": "# Future directions — harmonic bulk × steeper-edge kernels\n\nThe thread turned the carried-forward \"bulk exponent −1.10 versus steeper-than-harmonic left\nedge\" tension into a proved structural mechanis",
@@ -499,19 +489,19 @@
       "theorem_count": 172,
       "timestamp": "2026-08-31T05:36:07",
       "title": "FACT rounds 70–71 SYNTHESIS — THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exac"
+    },
+    {
+      "cycle_id": "ecb169bf",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — after the tree-sieve / multi-target verdicts\n\nThe formalized cycle established six things, all with sorry-free Lean proofs in\n`Catalog/Bridges/`:\n\n1. **Invalid as stated.** An id",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-08-31T05:36:26",
+      "title": "FACT round-72 #2/#3 — TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-TARGET relaxation lan"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f2707534",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n## What is now proved\n\nAll statements below are formalised in `Catalog/Probability/` and compile\nagainst mathlib4 (Lean 4.28.0) with **no `sorry` and no extra axioms** (only\n`prop",
-      "quality_score": 0.92,
-      "sorry_count": 0,
-      "theorem_count": 115,
-      "timestamp": "2026-08-20T23:41:20",
-      "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
-    },
     {
       "cycle_id": "63d0d6e2",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 172,
       "timestamp": "2026-08-31T05:36:07",
       "title": "FACT rounds 70–71 SYNTHESIS — THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exac"
+    },
+    {
+      "cycle_id": "ecb169bf",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — after the tree-sieve / multi-target verdicts\n\nThe formalized cycle established six things, all with sorry-free Lean proofs in\n`Catalog/Bridges/`:\n\n1. **Invalid as stated.** An id",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-08-31T05:36:26",
+      "title": "FACT round-72 #2/#3 — TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-TARGET relaxation lan"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6060f6d0",
-      "domain": "Tropical",
-      "name": "dialCost_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "6060f6d0",
-      "domain": "Tropical",
-      "name": "dialCost_exch",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "3596d147",
-      "domain": "Bridges",
-      "name": "betweenSS_nonneg",
-      "quality": 0.8
-    },
     {
       "cycle_id": "3596d147",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "restartEnergy_strictMono_height",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "ecb169bf",
+      "domain": "Bridges",
+      "name": "min_le_of_hit",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "ecb169bf",
+      "domain": "Bridges",
+      "name": "hit_min",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "ecb169bf",
+      "domain": "Bridges",
+      "name": "isLeast_hit_min",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-31T05:36:07",
+  "last_updated": "2026-08-31T05:36:26",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "61305688",
-        "quality": 0.82,
-        "theorems": 185,
-        "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
-      },
-      {
         "cycle_id": "21cbaba8",
         "quality": 0.87,
         "theorems": 99,
@@ -3203,6 +3197,12 @@
         "quality": 0.87,
         "theorems": 172,
         "title": "FACT rounds 70–71 SYNTHESIS — THE TWO-TREE CLOSURE: Pythagorean trees sealed at "
+      },
+      {
+        "cycle_id": "ecb169bf",
+        "quality": 0.86,
+        "theorems": 88,
+        "title": "FACT round-72 #2/#3 — TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-T"
       }
     ],
     "Combinatorics": [

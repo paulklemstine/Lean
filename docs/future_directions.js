@@ -1753,16 +1753,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-69 #2 \u2014 TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1aa0b577",
     "description": "**Program:** factor3 NETWORK/LLM loop, limited-memory axis iteration 65 (mixing-ratio sweep resolving NET-89's open cell).\n\n**Claim:** All three pre-registered shapes REFUTED. The knee is not linear in mixing ratio (P1\u2717), not a dip below the pure domains (P2\u2717), not monotone in prose fraction (P3\u2717). The balanced 50/50 mixture needs {16, 20} keys at ctx {512, 1024} while BOTH pure endpoints AND both asymmetric mixtures sit at {12, 16} \u2014 symmetric mixing pays a +4-key (+25\u201333%) premium at both contexts. Double tax: 50/50 also has the lowest full accuracy of any arm (0.441/0.467 vs code 0.611/0.651).\n\n| ratio | knee@512 | knee@1024 |\n|---|---|---|\n| pure code | 12 | 16 |\n| 25/75 | 12 | 16 |\n| **50/50** | **16** | **20** |\n| 75/25 | 16 | 16 |\n| pure prose | 12 | 16 |\n\n**Mechanism reading:** at the balanced point every code-block query attends into prose-keys and vice versa \u2014 cross-domain query-key interactions are maximized and inflate the required key count; minority blocks (25%) are rare enough that majority structure dominates the budget.\n\n**Honest limits:** fresh endpoint reads \u2014 code replicates NET-68 exactly ({12,16}), prose one grid step low ({12,16} vs {16,20}, \u00b11-step knee fuzz on razor-thin curves); NET-89 vs NET-90 mixed-knee jitter at 512 (12\u219216) across independent corpus draws reveals construction-draw variance in mixed budgets larger than pure-domain replication. One model (0.5B), one pair, one block size, two contexts.\n\n**Practical:** balanced agentic code+prose workloads are underestimated by pure-corpus budget tables by a grid step per context level plus draw variance.\n\nGate exact (retained \u2265 0.98\u00b7full), 12 held-out windows, oracle top-k, Qwen2.5-0.5B fp32. Script ResearchOutput/exp_net90_mixratio.py; paper ResearchOutput/NetworkMathematics/90_TheSymmetricMixtureBump.md.\n\nOpen: other domain pairs; block-size sensitivity; 1.5B mixed; bump \u00d7 4096-acceleration interaction; the 7B cell.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3779",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T02:01:14.895568+00:00",
     "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pure domains \u2014 the mixing-ratio response is a bump, not a line/dip/ramp"
   },
@@ -1782,7 +1783,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-70 #3 \u2014 ASCENT-COST: exact branch-oracle economics; effective branching refuted; master-law mapping refuted (paper 194)"
   },
   {
-    "consumed_by_exp_id": "295b6c11",
+    "consumed_by_exp_id": "4467887a",
     "description": "Round-70 #2, exp 546 + coordinator exp546b. H1 (residue-style blindness extends to magnitudes) REFUTED \u2014 with the mechanism landing squarely inside the barrier map.\n\n**ENERGY-ASCENT-SIGNAL**: the Fermat-window magnitude spectrum of E(a)=a\u00b2\u2212N (isqrt-anchored window W=4096) carries MI = **0.1836 bits about the first Berggren branch letter b\u2081** (19% of its entropy), permutation-null z +109\u2026+120 over 300 row-shuffles; 69/225 N-only cells flag z\u22653 (chance \u22480.3); joint (b\u2081,b\u2082) up to 0.2736 bits.\n\nHonesty first: on raw b\u2081 (78% letter-1) OOS accuracy only matches the majority baseline \u2014 the load-bearing evidence is dependence + minority-structure targets (dB-quartile beats chance AND majority OOS). **Coordinator scale control**: within-log(n)-bin shuffles give MI 0.2104 z=+100; within non-hit class MI 0.1139 vs null 0.006 \u2014 not scale, not strata, not just the threshold bit.\n\nControls: ratio-band\u2192b\u2081 exact 3000/3000; N mod 3^k null worst z=+1.97 (paper 81 seal replicated); Gauss-magnitude features null max z=1.30.\n\nMechanism: hit-in-window rate by letter {0.000, 0.019, 0.673}; corr(log(d+1), log \u03c1) = \u22120.917; d \u2248 n/(2\u03c1) \u2014 the spectrum is a fixed-window POSITIONAL sensor of the parabola zero-crossing. The tree letters are sealed against residues, OPEN to position \u2014 exactly what paper 132's residual-gap list predicted (positional witnesses) and paper 137 priced (5.19\u00d7). Value bounded (~19%; perfect W=4096 hit-detection worth 0.3035 bits; optimized window placement = named follow-up); cost economics deferred to exp547's (\u03b1,c) phase diagram.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp546_energy_ascent_oracle.py + exp546b_scale_control.py + exp546_result.json + exp546_data.npz, seed 20260823.",
     "domains": [
       "Novelty"
@@ -1797,48 +1798,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-70 #2 \u2014 ENERGY-ASCENT: a magnitude channel sees the Berggren branch letters; mechanism positional (paper 193)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "214f31b1",
     "description": "Round-70 #1, cron iteration (exp 545). The second consecutive decisive band loss.\n\n**TDIAL-U112-CONTINUES-FADE**: pooled Spearman(T, rate) = **0.462** CI [0.415, 0.508] \u2014 entire CI below the 0.55 floor for the second consecutive rung. Per-seed 0.409 / 0.509 / 0.460. T beats count by +0.047 CI [0.003, 0.090] \u2014 positive but below the +0.05 decisiveness bar for the first time in the ladder.\n\nThe fade RE-ACCELERATES: step delta \u22120.026 vs U108's \u22120.0125 \u2014 the U108 plateau read does not hold. Ladder: 0.573 (U96) \u2192 0.544 \u2192 0.500 \u2192 0.488 \u2192 0.462 (U112). Residual ~0.46 correlation is still far above chance, so the small-prime QR pattern carries real per-N signal at bitlen 112, but the dial is no longer a validated predictor there.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp545_t_dial_unif_112.py + exp545_result.json, seeds 20261210\u201312.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3911",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T02:00:10.721551+00:00",
     "title": "FACT round-70 #1 \u2014 TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
-  },
-  {
-    "consumed_by_exp_id": "be2e1d6c",
-    "description": "Consolidation of papers 192\u2013198 (issues #335\u2013#341, exps 545\u2013553).\n\n**THE TWO-TREE CLOSURE.** The energy-ascent question \u2014 can a magnitude spectrum computed from N climb the Berggren/Price trees toward the semiprime's node? \u2014 is answered NO, sealed at FOUR strengths: (1) residue dials blind (paper 81 replicated); (2) Gauss-sum magnitudes PROVEN residue dials (N mod 720720); (3) bracket/sign-count sensors structurally constant (MI=0.000000 exactly, identities proven); (4) spectral summaries RETRACTED to magnitude mirrors of |N| (exact null given log-N deciles). Only a factor-derived oracle bound remains (I peaks 0.4798 bits @ B\u224822758), unrealized by every tested probe.\n\nExact laws banked: Price two-adic law (letter\u2080=A \u27fa N\u22611 mod 4; letter\u2081=A \u27fa N mod 8 \u2208{1,3}; bijection with N mod 8; v\u2082(p+q)-capped mechanism; provable death at position 2); ascent economics (restart E=h\u00b7\u03b1^(\u2212h); branching base pinned at 3 \u2200\u03b1<1; win-vs-Fermat needs \u03b1*\u22650.85 & c\u22643000); sequential hints COMPOUND where the class-hint master law saturates \u2014 new taxonomy entry. Corrections: dP slope 1.211 not 1.4; dB/Fermat anticorrelation stratum-dependent.\n\nMethod laws banked lab-wide: row-shuffle nulls are WRONG for deterministic functions of N (condition on magnitude instead); derivation-first validation; smoke-run checks as mechanism detectors.\n\nWhat would reopen it: a probe class none of the four sealed kinds, non-monotone in |N|, delivering per-step accuracy above \u03b1*\u22480.85 at cost \u22643000 visit-equivalents. The geometry contains up to 0.48 bits of positional content; nothing cheap reads it.\n\nFull document: ResearchOutput/NewMathematics/199_TwoTreeClosure_Synthesis.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3920",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T03:18:15.576963+00:00",
-    "title": "FACT rounds 70\u201371 SYNTHESIS \u2014 THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exact laws + method laws consolidated (paper 199)"
-  },
-  {
-    "consumed_by_exp_id": "ecb169bf",
-    "description": "**#2 exp556 TREE-SIEVE (paper 202):** the combining proposal is **INVALID AS STATED** \u2014 \u03a0(m\u1d62\u2212n\u1d62)(m\u1d62+n\u1d62)=Y\u00b2 lives in \u2124, never reduces mod N; candidate pairs are N-independent \u27f9 per-ticket success = generic gcd luck O(N^{\u22121/2}). End-to-end: 8/12000 splits vs baseline 4/12000 vs heuristic 6.55e-4 \u2014 CONSISTENT-LOTTERY. Smoothness boost real but modest: tree values 7.31\u00d7 smoother than random (vs naive ~44\u00d7 prediction); BFS starvation confirmed (50k nodes never reach the analysis window). Corrected variants forcing u\u2261v mod N collapse to Dixon/QS \u2014 barrier 8.\n\n**#3 exp558 MULTI-TARGET (paper 203):** relaxing exact a=N to gcd(a,N)>1 \u2014 blind FIFO stays broken (55% censored, \u03b1=1.17-finished); value-guided best-first wins 1500/1500 paired (median visit ratio 0.111, zero censoring) **but the mechanism is ascending-value sweep: 100% of first-hits land exactly at a=min(p,q), \u03b1=1.087 r\u00b2=1.0 = dead center of the TD band**. Honest headline: the relaxation turns an uncomputable search (~2^56 units) into a trial-division-class one (~2^16) \u2014 ~10^12\u00d7 better than blind, yet still dominated by \u03c1 (\u03b1=0.458). Every route through the tree's integer face ends in a known method.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp556_tree_sieve.py + exp558_multi_target.py + JSONs/logs, seed 20260826.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3928",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T04:10:59.499265+00:00",
-    "title": "FACT round-72 #2/#3 \u2014 TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-TARGET relaxation lands at trial division (papers 202\u2013203)"
   },
   {
     "consumed_by_exp_id": "c4f754ac",
@@ -3911,37 +3883,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "seed_391",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. Explore: what is the minimal volume complete hyperbolic 3-manifold? Conjecture: the Weeks manifold (volume ~0.94) is minimal. Connect to Rucker's vision of donut-shaped spacetime.",
-    "domains": [
-      "Novelty",
-      "Physics",
-      "Geometry"
-    ],
-    "id": "seed_397",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
   {
     "consumed_by_exp_id": "",
@@ -8044,6 +7985,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Betti bounds for spaces of curves on varieties and Manin's conjecture for quartic del Pezzo surfaces' and formalize its key results. Abstract: We prove uniform exponential bounds for the compactly supported Betti numbers of spaces of morphisms from curves of fixed genus to projective varieties. For targets in a fixed projective space cut out by a prescribed number of equations of fixed degrees, the bound is exponential in the degree of the morphism and is independent of the ground field, the source curve, and the target. The proof constructs bounded-degree affine presentations involving only linearly many variables and equations, and then applies Katz's estimate. As an application, we establish a higher genus function field version of Manin's conjecture for split quartic del Pezzo surfaces, generalizing a recent theorem of Das--Lehmann--Tanimoto--Tosteson. Over sufficiently large finite fields, and after restricting curve classes to a slightly shrunken nef cone, we obtain the predicted asymptotic with the expected leading constant. As in Das--Lehmann--Tanimoto--Tosteson's argument, we combine the uniform Betti bound with a hi",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4421",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.28465v1",
+    "status": "available",
+    "timestamp": "2026-08-31T05:36:49.285273+00:00",
+    "title": "ArXiv paper: Betti bounds for spaces of curves on varieties and Manin's conjecture for quartic del Pezzo surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -8188,7 +8144,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "445413d7",
     "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
     "domains": [
       "Novelty",
@@ -8196,10 +8152,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_176",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
@@ -15529,6 +15486,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The value-guided search wins because it sweeps values upward, and its first hit is provably min(p,q). The worst case is settled: SearchOrder.enumeration_defeated shows every N-independent enumeration is defeated by large semiprimes. The open part is the average case, where a single composite probe can batch many primes at once.\n\nFor every search order determined by candidate values alone, the expected number of expansions before the first a with gcd(a,N) > 1 is at least min(p,q)^(1-o(1)) for a uniformly random semiprime N = pq, even allowing composite probes that batch many prime tests into one gcd.\n\nFormalize the averaged adversary argument over value-only orderings using the linear ticket bound TreeSieve.lottery_union_bound to cap how many primes a bounded prefix can cover, and check it against randomized simulations of batching heuristics.\n\nValue-guided tree search cannot beat exponent 1/2, closing the multi-target route in the strong sense.\n\nThere is a value-only ordering below trial division, which would be a genuinely new factoring heuristic.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4419",
+    "priority_score": 0.5651666988341547,
+    "research_mode": "team",
+    "source_exp_id": "ecb169bf",
+    "status": "available",
+    "timestamp": "2026-08-31T05:36:17.740718+00:00",
+    "title": "Optimality of Ascending Order for Relaxed Multi-Target Search"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For a specified finite neural-state transition graph, assign each readout channel a topology generated by its distinguishable state subsets. Test whether adding a readout node strictly coarsens consensus exactly when that node excludes an open set shared by all previous readouts. A measured transition graph and readout table make this directly falsifiable by finite computation.",
     "domains": [
       "Combinatorics",
@@ -15676,6 +15648,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T12:55:22.662982+00:00",
     "title": "Four-Quadrant Independence of Hellinger Decay and Curvature Sign"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The pointwise blindness theorem is now proved for every form x^2 + D y^2 (NormFormBlindness.normForm_gcd_eq_one), the D = 1 and D = 2 blind sets are proved incomparable, and each blind set of composite moduli is proved infinite (SearchOrder.infinite_blindOne_semiprimes, SearchOrder.infinite_blindTwo_semiprimes). The open part is quantitative: the blind semiprimes for a fixed D should have density 1/4, and a search allowed to switch between k forms should still miss a positive-density set of moduli.\n\nFor each fixed D the set of primes inert for x^2 + D y^2 has natural density 1/2, so the semiprimes N = pq that a D-form search provably cannot split have density 1/4; for any finite set of forms D_1,...,D_k the jointly blind semiprimes still have density bounded below by a positive constant depending only on k.\n\nCount inert primes and blind semiprimes up to 10^7 for D = 1, 2, 3, 5 and for pairs of forms; formalize the fixed-D case from Dirichlet's theorem on primes in arithmetic progressions, using the already-proved congruence characterisations inert_one_iff and inert_two_iff.\n\nNo finite menu of norm forms escapes the obstruction: every algebraic-tree factoring proposal of this shape misses a positive-density family of moduli.\n\nSome finite family of forms is jointly surjective onto prime classes, and a form-switching tree search would have no blind moduli.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4418",
+    "priority_score": 0.5648212140321645,
+    "research_mode": "team",
+    "source_exp_id": "ecb169bf",
+    "status": "available",
+    "timestamp": "2026-08-31T05:36:17.194836+00:00",
+    "title": "Norm-Form Blindness Classes for Algebraic Search Trees"
   },
   {
     "consumed_by_exp_id": "",
@@ -16441,6 +16428,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T05:46:13.353320+00:00",
     "title": "Involution-Optimal Visiting Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Each coordinate face of the Berggren tree is supported on prime classes fixed by a quadratic character. The hypotenuse face is exactly the 1 mod 4 primes; the leg faces should have their own, different, congruence supports. Classifying them tells any tree-based sieve in advance which moduli it can never split.\n\nFor a primitive Pythagorean triple (a,b,c) with b even, every odd prime divisor of c is 1 mod 4, every prime divisor of b is unrestricted, and every odd prime divisor of a is 1 mod 4 or 3 mod 4 according to the parity of the parametrizing pair (m,n) modulo 4.\n\nFormalize the leg analogue of TreeSieveHyp.prime_dvd_hyp_one_mod_four via the (m,n) parametrization and verify exhaustively for tree depth <= 8.\n\nEvery face-restricted tree sieve carries a provable blindness class, extending TreeSieveHyp.hypotenuse_face_blind_semiprime.\n\nThe blindness obstruction is confined to the hypotenuse and leg-based sieves remain generic lotteries.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_4416",
+    "priority_score": 0.564540025843932,
+    "research_mode": "team",
+    "source_exp_id": "ecb169bf",
+    "status": "available",
+    "timestamp": "2026-08-31T05:36:16.030966+00:00",
+    "title": "Quadratic-Residue Face Selection for Tree Sieves"
   },
   {
     "consumed_by_exp_id": "",
@@ -28310,6 +28312,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T23:31:08.715010+00:00",
     "title": "Minimax Floor Estimation Under an Unknown Fade Ratio"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The measured smoothness advantage of tree values should be fully explained by the halving of the effective factor base to primes 1 mod 4. A Mertens estimate restricted to that progression predicts a bounded, computable boost factor rather than the naive 44x.\n\nFor B-smoothness with B in the experimental range, the ratio of smooth-density among Berggren hypotenuses to smooth-density among random integers of the same size is bounded by a constant independent of B, and equals the Mertens ratio for the progression 1 mod 4 up to lower-order terms.\n\nCompute smooth-density ratios for tree values versus random values at several B and sizes; compare with the Mertens prediction for primes 1 mod 4.\n\nThe boost is a constant factor and, by DixonCollapse.exponent_dominance, cannot change any cost exponent.\n\nTree values carry smoothness structure beyond the character constraint, and the naive 44x prediction needs a new explanation.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_4417",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ecb169bf",
+    "status": "available",
+    "timestamp": "2026-08-31T05:36:16.567366+00:00",
+    "title": "Character-Density Accounting of the 7.31x Smoothness Boost"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Random nontrivial square roots of 1 mod pq split N with probability 1/2, but the explicit Bezout root z = 1 - 2up always splits, returning exactly p. Quantifying this shows all the cost of Dixon-type methods sits in producing relations, none in exploiting them.\n\nFor distinct odd primes p, q and any Bezout pair (u,v) with up + vq = 1, gcd(1 - 2up - 1, pq) = p; consequently the yield of structured roots is 1 while the yield of uniformly random square roots of 1 is exactly 1/2.\n\nThe first half is proved (DixonCollapse.gcd_pair_recovers_factorization, which also gives gcd(z+1,pq) = q); formalize the second half by counting the four square roots of 1 modulo pq via the CRT isomorphism ZMod (pq) = ZMod p x ZMod q.\n\nDixon-class cost accounting reduces entirely to relation generation, sharpening barrier 8.\n\nStructured roots sometimes fail, indicating a hidden dependence on the Bezout representative.",
+    "domains": [
+      "Computation",
+      "NumberTheory"
+    ],
+    "id": "fd_4420",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ecb169bf",
+    "status": "available",
+    "timestamp": "2026-08-31T05:36:18.279205+00:00",
+    "title": "Unit Yield of Bezout-Structured Square Roots"
   },
   {
     "consumed_by_exp_id": "",
@@ -46369,15 +46401,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derive competitive exclusion from an explicit resource model rather than encoding unique occupancy in `NicheAllocation`."
   },
   {
-    "consumed_by_exp_id": "789057bd",
+    "consumed_by_exp_id": "",
     "description": "Formalize the `L \u00d7 L` square torus and prove parameters `[[2L\u00b2, 2, L]]`, including a lower bound showing every nontrivial primal or dual cycle uses at least `L` edges.",
     "domains": [],
     "id": "fd_2302",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "fc320765",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:23:33.034786+00:00",
     "title": "Toric grids"
   },
@@ -47604,5 +47635,17 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T14:30:02.707034+00:00",
     "title": "the global structure correction has ensemble mean exactly `1`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Third cycle (this run).** Three of the five directions of the previous cycle were\nadvanced from conjecture to theorem in their support/lower-bound form; only their\n*frequency* halves remain open.",
+    "domains": [],
+    "id": "fd_4415",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "be2e1d6c",
+    "status": "available",
+    "timestamp": "2026-08-31T05:35:53.322227+00:00",
+    "title": "Third cycle (this run)."
   }
 ];
