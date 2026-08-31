@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c2e74b6a",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Temporal Gödel–Löb logic after the finite model property\n\n## What this cycle established\n\nThe assignment conjectured that every non-derivable formula `A` of the temporal\nGödel–Lö",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 114,
-      "timestamp": "2026-08-26T05:52:11",
-      "title": "Finite model property with an explicit bound"
-    },
-    {
       "cycle_id": "55b01213",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — positional layer of Fermat-window residues\n\n## What the three cycles established\n\nWorking inside the positional layer of the exp589 spike-origin question, the informal\nstatement",
@@ -499,19 +489,19 @@
       "theorem_count": 87,
       "timestamp": "2026-08-31T20:06:21",
       "title": "FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch letters; mechanism po"
+    },
+    {
+      "cycle_id": "c4f754ac",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after exp 559 (ADAPT-NULL-EQUALIZER / SKIP-FLIP-WINS)\n\nThe Lean files in `Catalog/Probability/AdaptiveQS*` settle the *sign structure* and, in\nthis cycle, a large part of the *qu",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-31T23:52:14",
+      "title": "FACT round-73 #2 — ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; sk"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "21cbaba8",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nDerived from the results now formalised in `Catalog/Bridges/DenseSumsetLower/`\n(`Core.lean`, `Density.lean`, `Group.lean`, `Window.lean`, `Sharp.lean`, `Optimal.lean`,\n`Mission.le",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 99,
-      "timestamp": "2026-08-21T04:45:19",
-      "title": "Existence of δ-Dense Sets Avoiding Sumsets of Size ≥ (3+o(1)) log n / log(1/δ)"
-    },
     {
       "cycle_id": "5e41571a",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 87,
       "timestamp": "2026-08-31T20:06:21",
       "title": "FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch letters; mechanism po"
+    },
+    {
+      "cycle_id": "c4f754ac",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after exp 559 (ADAPT-NULL-EQUALIZER / SKIP-FLIP-WINS)\n\nThe Lean files in `Catalog/Probability/AdaptiveQS*` settle the *sign structure* and, in\nthis cycle, a large part of the *qu",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-31T23:52:14",
+      "title": "FACT round-73 #2 — ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive reallocation loses; sk"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3f9d41d2",
-      "domain": "Applications",
-      "name": "primorial_pos",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "3f9d41d2",
-      "domain": "Applications",
-      "name": "primorial_ne_zero",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "3f9d41d2",
-      "domain": "Applications",
-      "name": "factorization_primorial",
-      "quality": 0.74
-    },
     {
       "cycle_id": "f5dbb89f",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "cond_left_iff",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "c4f754ac",
+      "domain": "Probability",
+      "name": "two_le_ratio_add_ratio",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "c4f754ac",
+      "domain": "Probability",
+      "name": "two_lt_ratio_add_ratio",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "c4f754ac",
+      "domain": "Probability",
+      "name": "prod_sum_eq",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-31T20:06:21",
+  "last_updated": "2026-08-31T23:52:14",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "c38d70d3",
-        "quality": 0.85,
-        "theorems": 141,
-        "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT — corpus-B fine knee at 20"
-      },
-      {
         "cycle_id": "c293906f",
         "quality": 0.88,
         "theorems": 95,
@@ -3823,6 +3817,12 @@
         "quality": 0.84,
         "theorems": 101,
         "title": "FACT round-71 #2 — TDIAL-U116: the fade REBOUNDS, floor forming near 0.46–0.49 ("
+      },
+      {
+        "cycle_id": "c4f754ac",
+        "quality": 0.83,
+        "theorems": 114,
+        "title": "FACT round-73 #2 — ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive re"
       }
     ],
     "Pythagorean": [
