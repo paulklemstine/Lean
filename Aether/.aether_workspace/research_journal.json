@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "44bf5a41",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from the three cycles in `Catalog/Combinatorics/WindowSaturation*.lean`:\n(1) the OLS window calculus and the matched-filter dominance theorem, (2) the\nexact step law, the",
-      "quality_score": 0.72,
-      "sorry_count": 1,
-      "theorem_count": 111,
-      "timestamp": "2026-08-26T11:46:34",
-      "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfers to the sqrt-weigh"
-    },
-    {
       "cycle_id": "20511e4a",
       "domain": "Pythagorean",
       "key_insight": "# Future directions — after the U9-DRIFT-GATE rejection (paper 222)\n\nThe round closed a gate by *sign flip*: two seed families disagree on the direction of a\nfew-percent deviation, so nothing is banke",
@@ -499,19 +489,19 @@
       "theorem_count": 70,
       "timestamp": "2026-09-01T10:08:16",
       "title": "Backward-error semantics for floating-point chaotic programs"
+    },
+    {
+      "cycle_id": "26c8c1ed",
+      "domain": "MachineLearning",
+      "key_insight": "# FUTURE DIRECTIONS — after TDIAL-U104 (round-68 #2, exp 541)\n\n## What this cycle established\n\nThe bitlen-104 rung (`pooled ρ = 0.500`, CI `[0.456, 0.545]`, seeds `0.493 / 0.499 / 0.509`)\nwas analysed",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 155,
+      "timestamp": "2026-09-01T10:08:38",
+      "title": "FACT round-68 #2 — TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "75105c60",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Berggren Causal Set\n\n## Where this cycle ended up\n\nThe moonshot hypothesis (\"the Berggren tree of primitive Pythagorean triples is a discrete\nmodel of `2+1`-dimensional Minko",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 111,
-      "timestamp": "2026-08-21T13:59:28",
-      "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
-    },
     {
       "cycle_id": "ec6993b5",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 70,
       "timestamp": "2026-09-01T10:08:16",
       "title": "Backward-error semantics for floating-point chaotic programs"
+    },
+    {
+      "cycle_id": "26c8c1ed",
+      "domain": "MachineLearning",
+      "key_insight": "# FUTURE DIRECTIONS — after TDIAL-U104 (round-68 #2, exp 541)\n\n## What this cycle established\n\nThe bitlen-104 rung (`pooled ρ = 0.500`, CI `[0.456, 0.545]`, seeds `0.493 / 0.499 / 0.509`)\nwas analysed",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 155,
+      "timestamp": "2026-09-01T10:08:38",
+      "title": "FACT round-68 #2 — TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "17477782",
-      "domain": "MachineLearning",
-      "name": "decode_encode",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "17477782",
-      "domain": "MachineLearning",
-      "name": "encode_decode",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "17477782",
-      "domain": "MachineLearning",
-      "name": "fiber_card_sum",
-      "quality": 0.9
-    },
     {
       "cycle_id": "b50cc5ce",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "gamma_mono",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "26c8c1ed",
+      "domain": "MachineLearning",
+      "name": "dstep_geometric",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "26c8c1ed",
+      "domain": "MachineLearning",
+      "name": "geom_partial_le",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "26c8c1ed",
+      "domain": "MachineLearning",
+      "name": "contractive_tail_bound",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-09-01T10:08:16",
+  "last_updated": "2026-09-01T10:08:38",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "347a400e",
-        "quality": 0.82,
-        "theorems": 75,
-        "title": "prove that this function is a *class function up to inversion*, i.e."
-      },
-      {
         "cycle_id": "7797dc46",
         "quality": 0.85,
         "theorems": 95,
@@ -3575,6 +3569,12 @@
         "quality": 0.9,
         "theorems": 22,
         "title": "Completeness / compactness"
+      },
+      {
+        "cycle_id": "26c8c1ed",
+        "quality": 0.88,
+        "theorems": 155,
+        "title": "FACT round-68 #2 — TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
       }
     ],
     "Novelty": [

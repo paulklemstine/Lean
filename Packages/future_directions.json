@@ -130009,46 +130009,6 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "00fe96df",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "## NET-84 — limited-memory axis, round 32 (paper 166, ResearchOutput/exp_net84_tailprecision.py, /tmp/net84.log)\n\n**Verdict name: TAIL-AWARE-MIXED-PRECISION-WORKS.**\n\n### Result\nThree arms on Qwen2.5-0.5B (gate exact; ctx=1024):\n\n| arm | retained |\n|---|---|\n| GPTQ4 full | 0.9081 |\n| **GPTQ4 + L22/L23 fp32** | **0.9261 (+1.8 pts)** |\n| GPTQ4 L22/L23 only | 0.9766 |\n\n- **P1 CONFIRMED**: mixed precision reaches 0.926.\n- **P2 REFUTED**: the tail DOES benefit from precision protection.\n\n### The convergence\nThree independent lines of evidence now converge on the same prescription:\n1. NET-60: the tail pair is epistatic (7× super-additive joint pruning cost)\n2. NET-54: the tail is unportable (swap breaks agreement with both parents)\n3. NET-83: quantization × sparsity interaction is super-additive\n\nAll point to: **treat L22/L23 as ONE unit with SPECIAL handling in every optimization dimension.** Tail-aware mixed precision is the practical implementation.\n\nMemory cost of protection: 2 layers × ~1.8M params × 4 bytes = 7.2 MB fp32 (vs ~0.9 MB at 4-bit) = 1.4% overhead for +1.8 pts quality.\n\n### All 8 barriers\n(a) clean — two horns pre-stated incl. the refuted P2; (b) clean; (c) confronted; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET84; (g) fair; (h) DIRECT.\n\n### Next\n8-bit tail (even better?); 1.5B replication; 4096 context increments; 7B cell.\n\nNow 85 network experiments. Assessment v85. Paper 166.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Novelty"
-      ],
-      "github_issue": 327,
-      "id": "fd_3761",
-      "last_attempt_time": "2026-08-31T23:54:15.363107+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 1000.0,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "github_injection",
-      "source_exp_id": "github",
-      "source_path": "github",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-08-22T22:39:30.332797+00:00",
-      "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS — keeping L22/L23 at fp32 gains +1.8pts over full 4-bit GPTQ; three evidence lines converge on tail-as-one-unit prescription"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
       "consumed_by_exp_id": "b20378a3",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -132245,7 +132205,7 @@
       "depth_estimate": 3,
       "description": "The knee curve is a complete invariant of the attention capture curve (proved in NET73MajorizationDuality). Conjecture that the same information is carried by the Rényi entropy spectrum of the attention mass vector, so that knee dominance between domains is equivalent to domination of all Rényi entropies. This would upgrade the one-sided collision bound to an exact characterisation.\n\nFor sorted attention mass vectors p, q with total mass 1, the knee curves satisfy k*_p(tau) <= k*_q(tau) for all tau in (0,1) if and only if H_alpha(p) <= H_alpha(q) for all alpha >= 1.\n\nFormalise Renyi entropies over the MassVector structure and prove both implications; the forward direction follows from Schur concavity, the converse from a majorization-recovery argument on capture curves.\n\nThe knee is exactly an entropy functional, giving a closed-form predictor of KV budget from attention statistics.\n\nThere exist domains with identical Renyi spectra but different knees, showing the knee sees strictly more than entropy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -132418,7 +132378,7 @@
       "depth_estimate": 3,
       "description": "On the geometric family the knee is exactly characterised by r^k <= 1 - tau, so one fitted decay rate per domain predicts the whole knee curve. Conjecture that fitting r to attention logs recovers the predictive power that tokens-per-word failed to provide.\n\nFitting a geometric capture curve per domain yields knee predictions with rank correlation at least 0.9 against the measured knees, in contrast to the -0.40 obtained from tokens-per-word.\n\nEstimate r per domain from attention mass logs, compute predicted knees via kneeAt_geometric_le_iff, and re-run the Spearman and R-squared statistics formalised in NET73TokenizationDensity.\n\nThe domain shift has a one-parameter explanation on the decay axis, replacing the refuted tokenization hypothesis.\n\nAttention capture is not geometric, and the knee requires the full capture curve rather than any one-parameter summary.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -133175,7 +133135,7 @@
       "depth_estimate": 3,
       "description": "**The key insight is** that a knee reading converts directly into a lower bound on the\nheaviest key's mass, so $\\mathrm{base}(\\text{domain})$ should be exactly the reciprocal of\nthe domain's asymptotic top-key mass — a *shape* invariant that can be measured without any\ndownstream task.\n\n**Why now?** The attention-profile calculus already supports the inequality in one\ndirection, and the uniform profile shows it is tight; what is missing is a matching upper\nbound for realistic, heavy-tailed profiles.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -133215,7 +133175,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that the bound `knee ≥ tau²/C` needs no tokenizer, no domain\nlabel and no notion of \"word\": it is computed from the attention weights alone,\nand it is sharp on the flat profile, so it cannot be improved as a function of\nthe collision mass. Why now? Attention maps are already logged in the existing\nsweeps, so the collision mass costs one extra reduction per head; the immediate\ntest is whether French exhibits a smaller collision mass than English at the\nsame context length, and whether the ratio of collision masses tracks the ratio\nof knees across all five domains. If it does, budget provisioning becomes a\nmeasurement on the model rather than a per-language calibration campaign.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -133475,7 +133435,7 @@
       "depth_estimate": 3,
       "description": "The measured four-domain table collapses to one affine function of (domain rank + context doublings). The conjecture is that the depth axis supplies a third rung of the same kind, so the budget is affine in a three-term sum. The approach is to adjoin a second exchange law to the rigidity theorem already proved and test it at one new cell.\n\nThere is a constant step s and a rung function on layer counts such that budget(domain, doublings, layers) = 12 + s*(rank(domain) + doublings + layerRung(layers)) for every measured cell.\n\nProve the three-variable form of Catalog.NET71.diagonal_rigidity from two exchange laws plus one constant increment, then measure the German cell at half depth and ctx 512 and compare with the predicted value.\n\nCache sizing for any (domain, context, depth) configuration reduces to reading one integer, and deployment tables become one-dimensional in all three knobs.\n\nThe exchange law is axis-specific, so the domain/scale collapse is a coincidence of two axes and the table must be stored, not computed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -134956,7 +134916,7 @@
       "depth_estimate": 3,
       "description": "For the trailing-zero statistic, a draw law is summarised by the mass alpha of the odd class and the geometric tail it induces. Conjecture a closed one-parameter ceiling formula in alpha that is strictly decreasing, so that uniform draws (alpha = 1/2) are the worst case and every less odd-heavy law sits above the 6/7 ceiling: the deployment envelope is one-sided.\n\nFor the alpha-geometric 2-adic profile, rho^2(alpha) = 1 - alpha^3/(1 - (1-alpha)^3) exactly, this is strictly decreasing on (0,1), and rho^2(1/2) = 6/7.\n\nGeneralise dyadicBlocks to alpha-geometric profiles with rational alpha, evaluate the tie correction as a geometric series, and differentiate the closed form.\n\nThe bitlen-52 envelope claim extends from a 1 percent total-variation ball to the entire half-space alpha <= 1/2 of draw laws.\n\nSome non-uniform draw law is more tie-attenuated than the uniform one, which would identify a concrete adversarial sampling regime for the dial.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -135000,7 +134960,7 @@
       "depth_estimate": 3,
       "description": "Every L-estimator (weighted average of order statistics) should have breakdown number equal to the tent profile min(j+1, n-j) evaluated at the extreme support points of its weight vector. The approach lifts the two count-based sandwich lemmas from single order statistics to finite convex combinations. It matters because it would compute the breakdown numbers of the trimmed mean, Winsorised mean and trimean as instances of one theorem.\n\nFor weights w on {0,...,n-1} with nonnegative entries summing to 1, the breakdown number of xs \\mapsto \\sum_j w_j \\cdot orderStat j xs equals min(jmin+1, n-jmax) where jmin and jmax are the smallest and largest indices with w_j > 0.\n\nFormalise trimmedMean alpha as an L-estimator in Lean and prove IsLeast {k | not EstBounded ...} = min(jmin+1, n-jmax); first check the alpha-trimmed mean on ratios16 for alpha = 1/8, 1/4, 3/8 by #eval on the profile formula.\n\nA single theorem yields the breakdown numbers of the whole classical L-estimator family, and shows no L-estimator beats the median.\n\nThere is an L-estimator whose interior weights create extra robustness, which would contradict the support-functional picture and force a genuinely new mechanism.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -135298,7 +135258,7 @@
       "depth_estimate": 3,
       "description": "Characterise the attention-profile families whose retention knee grows as a*log2(ctx)+b. The trichotomy theorem shows Zipf tails give an almost linear knee and fixed geometric tails a constant knee, so the measured law forces a geometric tail whose rate drifts with the context. The conjecture pins the class exactly, up to uniform constants.\n\nA profile family on n keys has knee a*log2 n + b at gate tau for all n iff its tail mass beyond k is within a uniform constant factor of (1-tau)*2^{-(k-b)/a}.\n\nDefine driftGeomCurve in Lean, prove its knee equals a*Nat.log 2 n + b, then prove the converse bound on tail mass for any family with that knee law.\n\nThe deployment table becomes a two-parameter mechanistic model (slope = tail rate, intercept = tokenisation) rather than a lookup table.\n\nKnee laws are not determined by tail mass alone and a finer invariant (e.g. block structure of the profile) is required.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -136213,7 +136173,7 @@
       "depth_estimate": 3,
       "description": "Real deployments optimize a learned reward r-hat, not the true reward r. Conjecture: the hacking threshold is Lipschitz in the reward in L^2(p), with constant sigma_p(f)/eps, so reward-model accuracy translates linearly into threshold accuracy.\n\nIf ||r - r_hat||_{L^2(p)} <= eta and both are bounded by R, then |eps * beta_c^{r}(eps) - eps * beta_c^{r_hat}(eps)| <= eta * sigma_p(f) + o(1) as eps -> 0.\n\nCombine RLHF.abs_cov_le (Cauchy-Schwarz gives |Cov(r,f) - Cov(r_hat,f)| <= eta sigma_p(f)) with the two-sided window RLHF.betaCrit_window applied to both rewards.\n\nA quantitative safety budget: reward-model error eta buys threshold error eta sigma_p(f), so audit thresholds inherit reward-learning guarantees.\n\nThreshold prediction is unstable under reward error, so measured thresholds cannot be transferred from a proxy reward to the true one.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -136677,7 +136637,7 @@
       "depth_estimate": 3,
       "description": "Static probes have a fixed error vector, whereas accumulated heavy-hitter statistics observe realised attention and so have an error that decays with the observation window. Modelling the error as eps(t) and re-running the transfer argument should show that accumulation dominates any static score after a finite window.\n\nIf a score's sup-error satisfies eps(t) <= C/t while a static probe's error is bounded below by a positive constant, then beyond an explicit t0 the accumulated arm's guaranteed retention strictly exceeds the static arm's worst case at the same budget.\n\nState a time-indexed version of retained_ge_of_isTopSet_sup and combine with the sharpness instance, which certifies that the static worst case is attained.\n\nThe deployable pair recency+accumulation is justified by a theorem, not only by measurement.\n\nStatic content information retains a role at short windows, and the crossover point becomes the object of study.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -138264,7 +138224,7 @@
       "depth_estimate": 3,
       "description": "Reading a knee on a coarse grid returns a bracket, not a value. The NET-78 grid leaves the true knee anywhere in [33,40], and both endpoints are realised by explicit profiles matching the whole table. Probe design is therefore threshold search on a monotone predicate, with a matching information-theoretic lower bound.\n\nThree further probes suffice to determine the knee inside a bracket of width 8, and no adaptive strategy using two probes can, because a monotone predicate on 8 candidate thresholds has 8 distinguishable outcomes.\n\nFormalise adaptive probe strategies as decision trees over monotone predicates and prove a depth lower bound of ceil(log2 (b-a+1)) together with a binary-search strategy attaining it; empirically, probe k = 34, 36, 38.\n\nEvery reported knee acquires a certified resolution, and grid design becomes a theorem-backed part of the protocol rather than a convention.\n\nSome structural property of retention curves (e.g. concavity of the tail) lets fewer probes suffice, which would itself be a strong statement about attention profiles.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -138396,7 +138356,7 @@
       "depth_estimate": 3,
       "description": "Knee and decay rate are exact reciprocals, so the measured acceleration is a statement about how quickly attention de-peaks with context. The conjecture is that the asymptotic per-doubling rate ratio increases with parameter count and tends to 1, i.e. sufficiently large models have context-free budgets even after the transition.\n\nThere is rho(N) in (0,1] with lam_{j+1}/lam_j -> rho(N) for a model of N parameters, rho increasing in N and rho(N) -> 1 as N -> infinity; the 4.5B context-free threshold of the earlier cycle must be recomputed under the crossover family.\n\nFit lam_j = log(1/delta)/k*_j from the measured chains at 0.5B and 1.5B, extend by the 1.5B ctx = 4096 cell and a 7B quantized-offload cell, and check monotonicity of the fitted rho.\n\nLarge-model serving budgets are asymptotically context-free and the phase transition is a small-model phenomenon, which changes cache sizing for 7B and above.\n\nThe collapse is scale-invariant, so every model has the same post-corner slope in log-context and budget tables need the nonlinear term at every scale.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -139122,7 +139082,7 @@
       "depth_estimate": 3,
       "description": "Everything sharp here is proved for exactly geometric profiles.  **The key insight is**\nthat the rearrangement inequality behind `retained_geomProfile_antitone_ratio` only uses\nlog-convexity of `i ↦ w i`, so the whole monotone-in-ratio theory should extend to\nlog-convex profiles with a \"ratio\" replaced by a majorization order.  **Why now?** The\nproof is already a pure cross-term comparison and never differentiates.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Exact Crossover Equation for Gap-Plus-Floor Profiles\",\n    \"domain\": \"MachineLearning\",\n    \"description\": \"The proved crossover bound (K+1)M/(tau c) overshoots the observed crossover by about 10%. Replacing the band estimate with the exact retained-mass formula for a mixture profile r^i + eps should yield an exact crossover context, expressible in closed form in r, eps and tau. This would turn a phase-transition location into a computable deployment parameter.\",\n    \"conjecture\": \"For w i = r^i + eps with 0 < r < 1 and eps > 0, and any profile v with context-free budget K at gate tau, the least context n at which k*(v,n,tau) < k*(w,n,tau) equals the least n with (1 - r^{K+1})/(1-r) + (K+1) eps < tau ((1-r^n)/(1-r) + n eps).\",\n    \"test\": \"Formalise the exact retained mass of the mixture profile (a geometric sum plus a linear term) and prove both directions of the least-context characterisation; check numerically against the witnesses profGap / profFloor.\",\n    \"if_true\": \"Crossover contexts become computable from three profile parameters, replacing the current one-sided bound.\",\n    \"if_false\": \"The crossover is not determined by the head/floor split alone, which would point to a genuine dependence on the intermediate decay shape.\",\n    \"proof_strategy\": \"Add a closed form for headMass of the mixture, then reuse knee_bracket to pin the least n by a pass/fail pair at n and n-1.\",\n    \"catalog_references\": [\"Pythagorean.NET79CrossoverLocalization\", \"Pythagorean.NET79ScaleContextSurface\", \"Shared.AttentionBudgetKnee\"]\n  },\n  {\n    \"title\": \"Angular Defect Law for Pythagorean Budget Gaps\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"Along the near-isosceles branch the short/long budget gap closes to zero. The conjecture is that the gap of a triple is controlled by how far its angle sits from pi/4, monotonically in that defect, so that branches of the Berggren tree moving away from the isosceles direction have unbounded gaps.\",\n    \"conjecture\": \"There is a monotone function G with gap(a,b,c) = k*(b/c) - k*(a/c) bounded above and below by G(|a/c - 1/sqrt 2|) at any fixed gate and sufficiently large context.\",\n    \"test\": \"Prove monotonicity of the gap under the Berggren generators using kstar_geomProfile_mono_ratio, then compute gaps along all three children of (3,4,5) for the first six levels.\",\n    \"if_true\": \"The Pythagorean budget gap becomes a geometric invariant of the triple rather than an arithmetic accident.\",\n    \"if_false\": \"Quantisation of the knee dominates the geometry",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -139455,7 +139415,7 @@
       "depth_estimate": 3,
       "description": "The KL bridge proved here inherits Pinsker's sqrt(KL/2), which exceeds 1 and becomes vacuous for KL >= 2. The Bretagnolle-Huber bound sqrt(1 - exp(-KL)) is always non-vacuous. Both follow from the same Bernoulli reduction already performed in the catalog's Pinsker proof.\n\nFor all finite Q absolutely continuous with respect to P, d_TV(Q,P) <= sqrt(1 - exp(-KL(Q||P))), and this is strictly better than sqrt(KL/2) exactly for KL above a universal threshold in (1,2).\n\nReuse klFinDist_block_ge to reduce to the Bernoulli case and prove the scalar inequality for klBernoulli by calculus (derivative comparison), then re-derive bayesError_ge_of_kl with the new bound.\n\nEvery KL-based Le Cam bound in the catalog becomes non-vacuous, and PAC-Bayes generalization bounds inherit a strictly better distinguishability floor.\n\nThe Bernoulli reduction must lose information, which would itself be a notable failure of the standard two-point method.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "MachineLearning",
         "Bridges"
@@ -142180,7 +142140,7 @@
       "depth_estimate": 3,
       "description": "The mechanism predicts that the attention deficit at the selected budget, measured in units of margin over read-out constant, is confined to [1/8, 1/4] with no depth, context or amplitude dependence. The conjecture promotes this to a universal across the model family and asserts its value inside the window is a function of the tail amplitude alone.\n\nFor every model in the family and every context at least 32, (1 - rho(k*)) * L * B / m lies in [1/8, 1/4], and equals a fixed function of the tail amplitude A independent of depth and context.\n\nMeasure retained mass at the knee and the held-out margin in the same forward pass, at two contexts with a common fitted amplitude, and compare.\n\nA single forward pass falsifies or supports the whole margin channel, with no sweep.\n\nThe deficit carries depth or context information that the scale-free tail does not capture, refuting the Zipf profile.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "MachineLearning"
       ],
@@ -142223,7 +142183,7 @@
       "depth_estimate": 3,
       "description": "A drifting margin could in principle be hidden behind a steeper attention tail. The conjecture is that the two exponents cannot compensate: the same measured knee ratio bounds their deviations additively, so a joint fit over three depths is over-determined. This closes the last free direction in the mechanism.\n\nIf the knee ratio between depths 4 and 16 is measured within relative tolerance eta of 4, then for any joint fit tail(k) = A*ctx/k^beta and m(d) = m_1 * d^(-alpha) one has |alpha| + |1 - 1/beta| <= log(1/(1-eta))/log 2.\n\nDerive the knee ratio 4^((1+alpha)/beta) for the joint model and take logarithms, then bound the two deviations from the single measured interval.\n\nThe mechanism has no remaining fitting freedom and one refined sweep settles it.\n\nThe knee measurement is degenerate in a one-parameter family of (alpha, beta) pairs and a second observable is needed to separate them.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "MachineLearning"
       ],
@@ -146881,7 +146841,7 @@
       "depth_estimate": 3,
       "description": "Certificates have constant transcripts, so the longest prefix on which a certificate can imitate a destructive test is exactly the prefix on which that test's transcript is still constant. The conjecture turns this observation into an exact approximation modulus and identifies the tests that are approximable for the full rigidity horizon.\n\nFor a test t on n dishes, the largest m such that some nondestructive c satisfies transcript t d j = transcript c d j for all dishes d and all j < m equals the minimum over d of the destruction depth of t at d; and m >= n forces t to be repeatable with verdict c = verdict t.\n\nFormalise the approximation modulus as a sInf over dishes, prove both inequalities using transcript_rigid and the constancy of certificate transcripts, and confirm on the fuse tests, which should give modulus exactly k + 1 on k + 2 dishes.\n\nDestruction acquires a quantitative measure: the number of runs for which a destructive test is indistinguishable from a certificate, with an exact formula.\n\nSome test is certificate-approximable beyond its destruction depth, meaning the verdict of a certificate can track a non-constant stream, contradicting Nondestructive.transcript_const.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "MachineLearning"
       ],
@@ -147810,7 +147770,7 @@
       "depth_estimate": 3,
       "description": "The permutation p-value is exactly super-uniform in finite samples, whereas the chi-square approximation to the interaction likelihood-ratio statistic relies on asymptotics that fail on sparse occupancy tables. The conjecture is that on tables of the exp-578 sparsity the chi-square p-value is anti-conservative by a quantifiable amount.\n\nFor occupancy tables with expected cell counts below a fixed threshold, the chi-square p-value of the interaction statistic has null rejection probability strictly exceeding the nominal level, while the permutation p-value does not.\n\nSimulate null tables at the observed sparsity, compare empirical rejection rates of both rules against the proved bound permPValue_valid, and formalise the union of both decisions with the Bonferroni theorem.\n\nAll round-80 family-B decisions should be re-expressed in permutation terms, strengthening the null result.\n\nThe chi-square calibration is adequate at this sparsity and the two analyses can be reported interchangeably.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -148303,7 +148263,7 @@
       "depth_estimate": 3,
       "description": "The bit depth at which quantised cache keys destroy attention decisions should be predictable from the top-1 margin distribution alone. The formal bound flips_le_small_margin_count says the number of broken decisions is at most the number of positions whose margin is below twice the quantiser step; the conjecture is that this bound is tight up to a constant on real models. If so, the cliff location is a measurable statistic of a single forward pass, not an empirical property of each quantiser.\n\nFor a fixed model, the fraction of flipped top-1 attention decisions under b-bit key quantisation equals F(2^{1-b}) + o(1), where F is the empirical CDF of the top-1 score margin.\n\nHistogram top-1 margins per layer on the held-out slice; compare F(2^{1-b}) with the measured flip rate at b = 8, 6, 5, 4; formalise the matching lower bound as a companion to flips_le_small_margin_count.\n\nKey bit-depth selection becomes a calculation, not a sweep, and the weight/key asymmetry is explained by margin statistics.\n\nFlip rate is driven by correlated, not marginal, perturbations, and a joint (multi-position) theory of decision stability is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "MachineLearning"
       ],
@@ -151206,7 +151166,7 @@
       "depth_estimate": 3,
       "description": "The scan-order contest factors through the single functional E[z(r)] of the generator's ratio law. For the one-parameter family of densities proportional to r^{-theta} on the balance band, the mean tilt should be strictly decreasing in theta with a unique crossing of 1/2. This would classify all power-law generators by one number.\n\nFor mu_theta with density proportional to r^{-theta} on [1,2], the map theta -> E_{mu_theta}[zOfRatio] is strictly decreasing and crosses 1/2 at a unique theta*, computable in closed form in terms of sqrt(2).\n\nEvaluate the closed-form rpow integrals for E[z] under mu_theta using the same antiderivative technique as tiltAntideriv, then prove strict monotonicity in theta by differentiating under the integral sign.\n\nAny power-law generator can be certified adversarial or favourable to window-ascending by a single scalar comparison.\n\nThe mean tilt is non-monotone in the concentration parameter, so the scope boundary is not a threshold phenomenon and per-generator analysis is unavoidable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -153249,7 +153209,7 @@
       "depth_estimate": 3,
       "description": "Replace the smooth Lipschitz response by a threshold response driven by the top-two logit gap: attention is intact while key noise stays below half the gap and its ranking is destroyed above it. Because noise halves per bit, the resulting transition window is at most one bit, matching the observed sharpness that the smooth law cannot produce.\n\nThe key bit floor equals ceil(log2(d*Q*R / g_typ)) where g_typ is the typical top-two logit gap, so it is predictable from a single forward pass without any perplexity sweep.\n\nMeasure the top-two logit gap distribution per head, compute the predicted floor, and compare with the bracketed floor in (5,8]; the Lean side (rank inversion, order-1 damage, one-bit critical band) is already proved in Algebra.KVCacheArgmaxThreshold.\n\nThe key floor is a gap statistic of the model, predictable without a perplexity sweep.\n\nDegradation is diffuse rather than argmax driven, and the exponent picture of cycle 2 is the correct one.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -153570,7 +153530,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Allocating key bits per *attention head* according to that head's\n`log₂(‖q‖₁/m)` beats any uniform allocation at the same average bit-width, and\na small fraction of heads (`< 20%`) accounts for the entire cliff.\n\n*The key insight is* that `shift_bit_to_keys` is a local exchange argument: it\napplies to each head independently, so the optimum of a total budget equalises\nthe amplified marginal damage `A_h·2^{-b_h}` across heads, which uniform\nallocation cannot do when the `A_h` vary by orders of magnitude.\n\n*Why now?* The exchange argument is already formal; per-head `‖q‖₁` is cheap to\ninstrument, and the resulting allocation is implementable in the existing\ncache-type plumbing.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Logarithmic Query-Norm Law for the Key Bit Cliff\",\n    \"domain\": \"MachineLearning\",\n    \"description\": \"The critical key bit-width should be logarithmic in the amplification ratio (query L1 norm times key range over decision margin). The proved margin criterion 2*L1*R/2^b < m says exactly this, so doubling the query norm must cost one extra key bit. Testing it converts a qualitative cliff into a calibrated design rule.\",\n    \"conjecture\": \"The critical key bit-width satisfies b* = log2(L1q * R / m) + Theta(1), with the constant independent of model and slice.\",\n    \"test\": \"Instrument the attention kernel for per-head query L1 norm and top-1 logit margin; sweep key bit-width and locate the departure from control perplexity; compare the measured b* with the predicted logarithm.\",\n    \"if_true\": \"Key bit-width becomes computable in advance from two cheap statistics, removing the need for a sweep per model.\",\n    \"if_false\": \"Some mechanism other than per-token decision flips dominates the cliff, and the margin certificate is not the operative bound.\",\n    \"proof_strategy\": \"Formal side is done (decision_preserved_of_key_bits, bits_suffice_for_margin, four_bits_destroy_the_decision); the remaining step is a matching lower bound showing a decision flip is forced once 2*L1*res exceeds the margin of a positive-mass set of tokens.\",\n    \"catalog_references\": [\"Novelty.KeyBitwidthSafety\", \"Novelty.KeysOwnTheCliff\", \"Novelty.KVDecisionDissociation\"]\n  },\n  {\n    \"title\": \"Margin-Mass Law for Quantisation Damage\",\n    \"domain\": \"Probability\",\n    \"description\": \"Aggregate perplexity damage should be proportional to the probability mass of tokens whose top-1 margin falls below the induced logit error. The per-token certificate and the per-token exponential damage bound are already theorems; only the aggregation over the margin distribution remains.\",\n    \"conjecture\": \"Relative perplexity damage equals C * P(margin < 2 * L1q * deltaK) + O(deltaV), with C independent of the model.\",\n    \"test\": \"Histogram the top-1 margins of a held-out slice, compute the predicted failure mass at each key bit-width, and regress measured dPPL against it.\",\n    \"if_true\": \"Damage becomes predictable from a single histogram, and cache for",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -154817,7 +154777,7 @@
       "depth_estimate": 3,
       "description": "The safe KV bit width is a function of bits minus log2 of the context length, because n logits inside a bounded window force a minimum consecutive gap of R/n. The formal criterion SafeBits A R n b is invariant under (n, b) -> (2n, b+1), so the cliff must translate along the context axis at exactly one bit per doubling. This turns an untested limit of NET-92 into a sharp prediction.\n\nFor a fixed model, the minimal quality-preserving KV bit width satisfies b*(2n) = b*(n) + 1 up to one bit, for all context lengths n in the trained range.\n\nRerun the NET-92 arm grid at ctx 4096, 8192 and 32768 and locate the free/annihilated bracket; compare with the theorem SafeBits_ctx_pow and minSafeBits_double.\n\nKV precision budgets must be specified per context length, and long-context deployments need 2-3 more KV bits than the ctx-2048 measurement suggests.\n\nThe logit window is not bounded independently of context (logit norms grow with n), which would itself be a strong structural finding about attention.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "MachineLearning"
       ],
@@ -158125,7 +158085,7 @@
       "depth_estimate": 3,
       "description": "Exact scale invariance holds only for the untruncated attention profile. On [1, C] the additive unit of mass breaks homogeneity and produces a crossover context length, a candidate mechanism for the reported onset near two thousand tokens. The conjecture makes the onset a theorem about a squeeze between two explicit budgets.\n\nFor the profile x^(-s) on [1,C] with s<1 the exact budget is (τ C^(1-s) + (1-τ))^(1/(1-s)), it exceeds the scale-invariant budget τ^(1/(1-s)) C, and the relative gap is decreasing in C.\n\nCompute the truncated mass integral with integral_rpow, derive the gate, and prove both inequalities in Lean.\n\nThe phase-transition onset is a boundary-layer artefact of finite context, with a computable crossover.\n\nThe onset needs a genuinely different mechanism, e.g. head specialisation rather than mass truncation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -158510,7 +158470,7 @@
       "depth_estimate": 3,
       "description": "Invert the robustness bound: a mixture with relative composition drift δ can shrink a relative excess by at most the factor (1-δ)/(1+δ), so absorbing amplitude A requires δ ≥ A/(2+A). This turns a single-geometry verdict into a scale-free necessary condition on any future mixture model. It is a two-line consequence of mixPred_drift_bounds but has not been stated as a design rule.\n\nAny cell mixture absorbing a relative excess A must exhibit maximal per-cell composition drift δ ≥ A/(2+A); for A = 0.1774 this is δ ≥ 0.0815, thirty times the measured 0.00269.\n\nFormalize as a theorem in Shared.MixtureRateDialBaseline: from the two-sided drift bounds derive the contrapositive of H0_excess_survives_measured with δ as a variable.\n\nEvery future mixture baseline can be rejected or accepted from its measured drift alone, before fitting.\n\nThe two-sided drift bound is not tight and some non-uniform drift pattern absorbs more than (1-δ)/(1+δ) allows.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -159729,6 +159689,46 @@
       "thread_id": "",
       "timestamp": "2026-09-01T10:08:29.631273+00:00",
       "title": "Noise-Price Separation of Dispersion Scales"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "**Refined, not failed.** The first attempt at the tail-as-one-unit theorem carried the\n  hypotheses `a ∈ U`, `b ∈ U`; the proof showed they are unnecessary (only `a ≠ b` is\n  used), so the theorem was strengthened.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_4482",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "00fe96df",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/00fe96df",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-01T10:08:48.208000+00:00",
+      "title": "Refined, not failed."
     },
     {
       "ambition_level": "extension",
@@ -161529,6 +161529,46 @@
       "thread_id": "",
       "timestamp": "2026-08-16T15:36:21.695272+00:00",
       "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 26c8c1ed (Q=0.880), which proved 155 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-68 #2, cron iteration (exp 541). Quantifying the fade's progression.\n\n**FADE-CONTINUES**: pooled Spearman(T, rate) = **0.500** CI [0.456, 0.545] at bitlen 104; per-seed 0.493/0.499/0.509 — all below 0.55 for the first time; fade is MONOTONE and NEAR-LINEAR (−0.030 then −0.043 per 4-bit step). ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "MachineLearning"
+      ],
+      "github_issue": 0,
+      "id": "push_26c8c1ed_9195326c",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.95,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "26c8c1ed",
+      "source_path": "FACT round-68 #2 — TDIAL-U104: the fade continues at bitlen 104 (paper 189)",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-01T10:08:38.947735+00:00",
+      "title": "Deepening: FACT round-68 #2 — TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
     },
     {
       "ambition_level": "extension",
@@ -188372,7 +188412,7 @@
     "Computation": 5,
     "Geometry": 2,
     "Logic": 2,
-    "Novelty": 122.0,
+    "Novelty": 123.0,
     "NumberTheory": 3,
     "SetTheory": 1,
     "Speculative": 3,
@@ -188385,15 +188425,15 @@
     "**hypothesis": 2,
     "**hypothesis**": 5.0,
     "**test**": 9.0,
-    "**verdict": 32,
+    "**verdict": 33,
     "0.0001": 2,
     "3-adic": 3,
     "acting": 4,
     "algebraic": 4.0,
     "already": 21,
-    "assessment": 49,
+    "assessment": 50,
     "a²+b²−c²": 3,
-    "barriers": 15,
+    "barriers": 16,
     "becomes": 9,
     "berggren": 18.0,
     "boundary": 16,
@@ -188405,7 +188445,6 @@
     "concrete": 7,
     "conjecture": 31.0,
     "connecting": 5.0,
-    "continues": 1,
     "correct**": 2,
     "e.g": 6.0,
     "either": 7,
@@ -188415,7 +188454,7 @@
     "events": 6,
     "exactly": 65.0,
     "existing": 6.0,
-    "experiments": 28,
+    "experiments": 29,
     "explicit": 13,
     "exponent": 7.0,
     "false**": 9.0,
@@ -188434,7 +188473,7 @@
     "i(joint": 2,
     "iteration": 20,
     "itself": 19.0,
-    "limited-memory": 12,
+    "limited-memory": 13,
     "log(1+√2": 4.0,
     "lorentz": 5.0,
     "lorentz-preserving": 5.0,
@@ -188448,7 +188487,8 @@
     "now**": 9.0,
     "number": 19.0,
     "opening": 2,
-    "paper": 80,
+    "overhead": 1,
+    "paper": 81,
     "positive": 12,
     "precise": 5,
     "preserving": 4,
@@ -188461,7 +188501,7 @@
     "reduces": 5,
     "represent": 2,
     "residue": 30,
-    "result": 30,
+    "result": 31,
     "round-32": 2,
     "semiprime": 3,
     "silver": 4.0,
