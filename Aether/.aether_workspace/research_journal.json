@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1bcec21a",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — canonical α-connections, after the analytic core\n\nThis cycle turned the catalog's *algebraic* α-connection identities\n(`Probability/InformationGeometryContrarian.lean`: `((1-α)/2",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-26T15:55:04",
-      "title": "Canonical alpha-connections"
-    },
-    {
       "cycle_id": "b3980a1a",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of this cycle.  The cycle\nestablished three things, and each conjecture below pushes on one of them:\n\n1. **Reflection is free** —",
@@ -499,19 +489,19 @@
       "theorem_count": 102,
       "timestamp": "2026-09-01T18:32:25",
       "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-window hits INDEPENDENT"
+    },
+    {
+      "cycle_id": "b20378a3",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — U56B-DIAL-HOLDS-COUNT-PARITY (FACT round-61 #2, exp 542)\n\n## What this cycle settled\n\nThe bitlen-56 fresh-seed replication reports pooled `ρ(T, rate) = 0.669` (CI\n`[0.650, 0.690]",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-09-01T18:32:57",
+      "title": "FACT round-61 #2 — TDIAL-U56B: fresh-seed replication confirms validity but edge not established (pa"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d588a53d",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — after the Pythagorean Hydra\n\n## What this cycle established\n\nThe moonshot hypothesis was that the Berggren tree of primitive Pythagorean triples\ncarries a Kirby–Paris-style indep",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 135,
-      "timestamp": "2026-08-21T18:56:44",
-      "title": "The Pythagorean Hydra — Natural Independence for the Berggren Tree"
-    },
     {
       "cycle_id": "532d78bc",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-09-01T18:32:41",
       "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
+    },
+    {
+      "cycle_id": "b20378a3",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — U56B-DIAL-HOLDS-COUNT-PARITY (FACT round-61 #2, exp 542)\n\n## What this cycle settled\n\nThe bitlen-56 fresh-seed replication reports pooled `ρ(T, rate) = 0.669` (CI\n`[0.650, 0.690]",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-09-01T18:32:57",
+      "title": "FACT round-61 #2 — TDIAL-U56B: fresh-seed replication confirms validity but edge not established (pa"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "be2e1d6c",
-      "domain": "Bridges",
-      "name": "restartEnergy_eq_mul_inv",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "be2e1d6c",
-      "domain": "Bridges",
-      "name": "restartEnergy_ge_height",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "be2e1d6c",
-      "domain": "Bridges",
-      "name": "restartEnergy_strictMono_height",
-      "quality": 0.87
-    },
     {
       "cycle_id": "ecb169bf",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "maCorrProfile_lag_one_nonneg",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "b20378a3",
+      "domain": "MachineLearning",
+      "name": "sum_cube_le_length_sq_mul_cubeSum",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "b20378a3",
+      "domain": "MachineLearning",
+      "name": "cubeSum_div_ge_inv_length_sq",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "b20378a3",
+      "domain": "MachineLearning",
+      "name": "spearmanSq_block_count_",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-01T18:32:41",
+  "last_updated": "2026-09-01T18:32:57",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "7797dc46",
-        "quality": 0.85,
-        "theorems": 95,
-        "title": "Known versus unresolved cards."
-      },
-      {
         "cycle_id": "147eac16",
         "quality": 0.84,
         "theorems": 79,
@@ -3575,6 +3569,12 @@
         "quality": 0.88,
         "theorems": 155,
         "title": "FACT round-68 #2 — TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
+      },
+      {
+        "cycle_id": "b20378a3",
+        "quality": 0.84,
+        "theorems": 100,
+        "title": "FACT round-61 #2 — TDIAL-U56B: fresh-seed replication confirms validity but edge"
       }
     ],
     "Novelty": [
