@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6ca543a1",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Kernel Patterns and the Braid Arrangement\n\nTwo full research cycles were run on the topic *\"kernel patterns are complete\n`G`-invariants of a tuple, counted by the Bell numbers\"*.",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 127,
-      "timestamp": "2026-08-26T14:08:32",
-      "title": "Kernel patterns"
-    },
-    {
       "cycle_id": "1bcec21a",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — canonical α-connections, after the analytic core\n\nThis cycle turned the catalog's *algebraic* α-connection identities\n(`Probability/InformationGeometryContrarian.lean`: `((1-α)/2",
@@ -499,19 +489,19 @@
       "theorem_count": 124,
       "timestamp": "2026-09-01T14:55:09",
       "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\ncounterexample."
+    },
+    {
+      "cycle_id": "b96d5582",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — hit-position thread after paper 249\n\nThe cycle formalised the two competing explanations of a hit-indicator lag\nprofile: *pure density* (independent hits with a position-dependen",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 102,
+      "timestamp": "2026-09-01T18:32:25",
+      "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-window hits INDEPENDENT"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f87f1170",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — certified thresholds in quantum cryptography\n\nDerived from the four research cycles in `Catalog/Cryptography/BB84/`\n(`ThresholdEnclosure`, `ThresholdNewtonRefinement`, `Threshold",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-08-21T17:45:59",
-      "title": "Sharper threshold certification"
-    },
     {
       "cycle_id": "df44f621",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 124,
       "timestamp": "2026-09-01T14:55:09",
       "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\ncounterexample."
+    },
+    {
+      "cycle_id": "b96d5582",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — hit-position thread after paper 249\n\nThe cycle formalised the two competing explanations of a hit-indicator lag\nprofile: *pure density* (independent hits with a position-dependen",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 102,
+      "timestamp": "2026-09-01T18:32:25",
+      "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-window hits INDEPENDENT"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "181f9c07",
-      "domain": "Algebra",
-      "name": "central_pos",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "181f9c07",
-      "domain": "Algebra",
-      "name": "choose_le_central",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "181f9c07",
-      "domain": "Algebra",
-      "name": "bdFree_empty",
-      "quality": 0.72
-    },
     {
       "cycle_id": "be2e1d6c",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "pellRank_pos",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "b96d5582",
+      "domain": "Bridges",
+      "name": "maCorrProfile_lag_one_eq",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "b96d5582",
+      "domain": "Bridges",
+      "name": "maCorrProfile_lag_one_lt_one",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "b96d5582",
+      "domain": "Bridges",
+      "name": "maCorrProfile_lag_one_nonneg",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-01T14:55:09",
+  "last_updated": "2026-09-01T18:32:25",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "21cbaba8",
-        "quality": 0.87,
-        "theorems": 99,
-        "title": "Existence of δ-Dense Sets Avoiding Sumsets of Size ≥ (3+o(1)) log n / log(1/δ)"
-      },
-      {
         "cycle_id": "fe1191f5",
         "quality": 0.88,
         "theorems": 251,
@@ -3203,6 +3197,12 @@
         "quality": 0.86,
         "theorems": 88,
         "title": "FACT round-72 #2/#3 — TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-T"
+      },
+      {
+        "cycle_id": "b96d5582",
+        "quality": 0.86,
+        "theorems": 102,
+        "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-win"
       }
     ],
     "Combinatorics": [
