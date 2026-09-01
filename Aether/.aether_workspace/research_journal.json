@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8eac1b6d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — ECA fixed-point varieties after five research cycles\n\n## What the cycles established\n\nThe starting conjecture — *\"the dimension of the fixed-point variety\n`V(f) = {s : f(s) = s}`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 137,
-      "timestamp": "2026-08-26T10:53:16",
-      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-    },
-    {
       "cycle_id": "837a61ec",
       "domain": "Tropical",
       "key_insight": "# Future directions — the weight-exponent layer of the QR product dial\n\nThis cycle formalized the mathematics underlying exp-586's refinement `1/ℓ → 1/√ℓ`:\nthe weight family and its log-convexity, the",
@@ -499,19 +489,19 @@
       "theorem_count": 110,
       "timestamp": "2026-09-01T10:07:38",
       "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pure domains — the mixi"
+    },
+    {
+      "cycle_id": "17866175",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after NET-89 (mixed-domain key budgets)\n\nFifteen cycles of the loop produced, all machine-checked and sorry-free:\n\n* **Cycle 1** (`Catalog/Probability/NET89MixedDomainKnee.lean`)",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 198,
+      "timestamp": "2026-09-01T10:07:58",
+      "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knees {12,20}: starts at"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fe1191f5",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Random Walks on the Berggren Tree\n\n## What this cycle settled\n\n* The boundary **is** a Cantor set, and the harmonic measure of the `(p₁,p₂,p₃)`-walk **is**\n  the Bernoulli produc",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 251,
-      "timestamp": "2026-08-21T10:47:42",
-      "title": "Harmonic Measure on the Berggren Tree Boundary — Random Walks and the 3-adic Cantor Set"
-    },
     {
       "cycle_id": "b5bb3340",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 110,
       "timestamp": "2026-09-01T10:07:38",
       "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pure domains — the mixi"
+    },
+    {
+      "cycle_id": "17866175",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after NET-89 (mixed-domain key budgets)\n\nFifteen cycles of the loop produced, all machine-checked and sorry-free:\n\n* **Cycle 1** (`Catalog/Probability/NET89MixedDomainKnee.lean`)",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 198,
+      "timestamp": "2026-09-01T10:07:58",
+      "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knees {12,20}: starts at"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9b32ba78",
-      "domain": "Cryptography",
-      "name": "exists_nhds_zero_not_subset_family",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "9b32ba78",
-      "domain": "Cryptography",
-      "name": "exists_nhds_zero_not_subset",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "9b32ba78",
-      "domain": "Cryptography",
-      "name": "exists_nhds_not_subset_family",
-      "quality": 0.83
-    },
     {
       "cycle_id": "342e465c",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "mixHead_balanced_le_split",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "17866175",
+      "domain": "Probability",
+      "name": "mixBlock_first",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "17866175",
+      "domain": "Probability",
+      "name": "mixBlock_second",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "17866175",
+      "domain": "Probability",
+      "name": "headMass_mixBlock_first_half",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-09-01T10:07:38",
+  "last_updated": "2026-09-01T10:07:58",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "51837664",
-        "quality": 0.87,
-        "theorems": 153,
-        "title": "FACT round-71 #1 — TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exa"
-      },
-      {
         "cycle_id": "40fe72ea",
         "quality": 0.88,
         "theorems": 171,
@@ -3823,6 +3817,12 @@
         "quality": 0.88,
         "theorems": 110,
         "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pur"
+      },
+      {
+        "cycle_id": "17866175",
+        "quality": 0.9,
+        "theorems": 198,
+        "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knee"
       }
     ],
     "Pythagorean": [
