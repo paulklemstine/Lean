@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "837a61ec",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — the weight-exponent layer of the QR product dial\n\nThis cycle formalized the mathematics underlying exp-586's refinement `1/ℓ → 1/√ℓ`:\nthe weight family and its log-convexity, the",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-08-26T10:53:39",
-      "title": "FACT round-83 #2 — WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED — dial weight exponent alpha_h"
-    },
-    {
       "cycle_id": "44bf5a41",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nDerived from the three cycles in `Catalog/Combinatorics/WindowSaturation*.lean`:\n(1) the OLS window calculus and the matched-filter dominance theorem, (2) the\nexact step law, the",
@@ -499,19 +489,19 @@
       "theorem_count": 198,
       "timestamp": "2026-09-01T10:07:58",
       "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knees {12,20}: starts at"
+    },
+    {
+      "cycle_id": "d451fd97",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — backward-error semantics for floating-point chaotic programs\n\nDerived from the five research cycles formalised in\n`Catalog/Novelty/FloatBackwardErrorHorner.lean`,\n`Catalog/Novelt",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-09-01T10:08:16",
+      "title": "Backward-error semantics for floating-point chaotic programs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b5bb3340",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Berggren Groupoid, Braiding, and Quantum Computation\n\n## What this cycle settled\n\nThe moonshot (\"the Berggren groupoid realizes universal topological quantum computation\")\nis **f",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 169,
-      "timestamp": "2026-08-21T13:59:12",
-      "title": "Topological Quantum Computation from the Berggren Groupoid — Anyonic Braiding on the Tree Boundary"
-    },
     {
       "cycle_id": "75105c60",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 198,
       "timestamp": "2026-09-01T10:07:58",
       "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knees {12,20}: starts at"
+    },
+    {
+      "cycle_id": "d451fd97",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — backward-error semantics for floating-point chaotic programs\n\nDerived from the five research cycles formalised in\n`Catalog/Novelty/FloatBackwardErrorHorner.lean`,\n`Catalog/Novelt",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-09-01T10:08:16",
+      "title": "Backward-error semantics for floating-point chaotic programs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "342e465c",
-      "domain": "Shared",
-      "name": "about",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "342e465c",
-      "domain": "Shared",
-      "name": "posYield_geom",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "342e465c",
-      "domain": "Shared",
-      "name": "posYield_succ",
-      "quality": 0.82
-    },
     {
       "cycle_id": "17477782",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "headMass_mixBlock_first_half",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "d451fd97",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d451fd97",
+      "domain": "Novelty",
+      "name": "gamma_nonneg",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d451fd97",
+      "domain": "Novelty",
+      "name": "gamma_mono",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-01T10:07:58",
+  "last_updated": "2026-09-01T10:08:16",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9061d61f",
-        "quality": 0.78,
-        "theorems": 56,
-        "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverte"
-      },
-      {
         "cycle_id": "0dec095c",
         "quality": 0.72,
         "theorems": 64,
@@ -3637,6 +3631,12 @@
         "quality": 0.79,
         "theorems": 106,
         "title": "FACT round-70 #1 — TDIAL-U112: the fade continues below the band at bitlen 112 ("
+      },
+      {
+        "cycle_id": "d451fd97",
+        "quality": 0.82,
+        "theorems": 70,
+        "title": "Backward-error semantics for floating-point chaotic programs"
       }
     ],
     "NumberTheory": [
