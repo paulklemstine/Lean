@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "20511e4a",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — after the U9-DRIFT-GATE rejection (paper 222)\n\nThe round closed a gate by *sign flip*: two seed families disagree on the direction of a\nfew-percent deviation, so nothing is banke",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-08-26T13:18:02",
-      "title": "FACT round-76 #2 — U9-DRIFT-GATE (exp 569c): GATE REJECTED by sign flip — fresh seed 20260825 reads "
-    },
-    {
       "cycle_id": "5260665b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — scan-order tilt, after three cycles\n\n## What this cycle settled\n\nThe scan-order question (\"does scanning the balance window upward beat scanning down from\n`√N`?\") has been reduce",
@@ -499,19 +489,19 @@
       "theorem_count": 155,
       "timestamp": "2026-09-01T10:08:38",
       "title": "FACT round-68 #2 — TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
+    },
+    {
+      "cycle_id": "00fe96df",
+      "domain": "Computation",
+      "key_insight": "# Future directions — the tail-precision thread\n\nThree cycles of the hypothesize → experiment → analyse → critique loop produced three\ncomplete strands of theory:\n\n* **Propagation and sensitivity** —",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-09-01T10:08:56",
+      "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS — keeping L22/L23 at fp32 gains +1.8pts over full 4-bit GPT"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ec6993b5",
-      "domain": "Shared",
-      "key_insight": "# Future directions: from the two bracketing degrees to a general peak calculus\n\nThis cycle closed the missing ingredient identified in the assignment: strict\nunimodality and the *existence* of a brac",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-21T16:51:34",
-      "title": "Strict unimodality and the bracketing of the argmax are already theorems, so the"
-    },
     {
       "cycle_id": "58852b38",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 155,
       "timestamp": "2026-09-01T10:08:38",
       "title": "FACT round-68 #2 — TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
+    },
+    {
+      "cycle_id": "00fe96df",
+      "domain": "Computation",
+      "key_insight": "# Future directions — the tail-precision thread\n\nThree cycles of the hypothesize → experiment → analyse → critique loop produced three\ncomplete strands of theory:\n\n* **Propagation and sensitivity** —",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-09-01T10:08:56",
+      "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS — keeping L22/L23 at fp32 gains +1.8pts over full 4-bit GPT"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b50cc5ce",
-      "domain": "Combinatorics",
-      "name": "sum_prob",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "b50cc5ce",
-      "domain": "Combinatorics",
-      "name": "hasDerivAt_log_prob_fst",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "b50cc5ce",
-      "domain": "Combinatorics",
-      "name": "hasDerivAt_log_prob_snd",
-      "quality": 0.85
-    },
     {
       "cycle_id": "b63aa142",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "contractive_tail_bound",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "00fe96df",
+      "domain": "Computation",
+      "name": "of",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "00fe96df",
+      "domain": "Computation",
+      "name": "cost_lower_bound",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "00fe96df",
+      "domain": "Computation",
+      "name": "bStar_sub_bStar",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-01T10:08:38",
+  "last_updated": "2026-09-01T10:08:56",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "3fdce232",
-        "quality": 0.82,
-        "theorems": 141,
-        "title": "Information reconciliation"
-      },
-      {
         "cycle_id": "3a849502",
         "quality": 0.82,
         "theorems": 107,
@@ -3327,6 +3321,12 @@
         "quality": 0.84,
         "theorems": 84,
         "title": "FACT round-86 #1 — U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL — hump"
+      },
+      {
+        "cycle_id": "00fe96df",
+        "quality": 0.82,
+        "theorems": 92,
+        "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS — keeping L22/L23 at fp32 gains +1.8pts"
       }
     ],
     "Cryptography": [

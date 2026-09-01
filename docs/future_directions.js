@@ -1571,44 +1571,47 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now strictly monotone {16,20,24}; size-invariance sharpens; 2048 corpus-B reading was a coarse-grid artifact"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d23453a",
     "description": "Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.\n\nThe dial's signal degrades toward the floor on a gradual path.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp535_t_dial_unif_84.py + exp535_result.json, seeds 20261190\u201392.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3744",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.051034+00:00",
     "title": "FACT round-67 #1 \u2014 TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b4f872e1",
     "description": "## NET-75 \u2014 limited-memory axis, round 27 (paper 160, ResearchOutput/exp_net75_frenchext.py, /tmp/net75.log)\n\n**Verdict name: THE-FRENCH-KNEE-IS-FORTY.**\n\n### Result\nExtended grid on French prose (corpus-B; gate exact):\n\n| k | 36 | 40 | 48 | 56 | 64 |\n|---|---|---|---|---|---|\n| retained | 0.9795 \u2717 | **0.9830 \u2713** | 0.9855 \u2713 | 0.9896 \u2713 | 0.9916 \u2713 |\n\n**k\\*(fr@1024) = 40 \u2014 exactly DOUBLE English prose's 20 at the same context.**\n\n- **P1 CONFIRMED**: the knee exists within the extended grid.\n- **P2 REFUTED**: it is 40, not the predicted ~28\u201332.\n\n### The five-domain table @1024\ncode=12, EN-prose=20, math=20, DE-prose=24, FR-prose=40. The tokenizer-tax is a domain-dependent MULTIPLIER (German +4, French \u00d72), not a fixed +4 step. The +4/doubling increment appears domain-universal. Combined with NET-73's TPW refutation: the mechanism is in HOW attention patterns are structured within each language, not how many tokens are used.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean \u2014 first beyond-coarse-grid French measurement; (c) confronted \u2014 one source/context stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET75; (g) fair \u2014 byte-identical harness; (h) DIRECT.\n\n### Next\nFrench @512 extended grid; increments at 4096; more languages; 7B quantized-offload cell.\n\nNow 75 network experiments. Assessment v75. Paper 160.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3746",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.054044+00:00",
     "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY \u2014 extended grid pins k*(fr@1024)=40, exactly double English prose's 20; tokenizer-tax is a domain-dependent multiplier"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3ffa89b",
     "description": "Round-66 #1, cron iteration (exp 534). The highest-bitlen uniform measurement.\n\n**U80-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.562** / **0.551** / **0.582** across three seeds on uniform draws at bitlen 80; pooled **0.565** CI [0.542, 0.587]. All inside [0.55, 0.85] but seed 20261181 clears the floor by only +0.001; every CI dips below 0.55 at its lower end.\n\nH2 count parity persists (pooled advantage +0.053 CI [0.030, 0.083]).\n\nThe next cell (bitlen 84) is the crossing test \u2014 whether rho_T drops below 0.55 decisively or stabilizes.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp534_t_dial_unif_80.py + exp534_result.json, seeds 20261180\u201382.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3747",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.055569+00:00",
     "title": "FACT round-66 #1 \u2014 TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 187)"
   },
@@ -1625,36 +1628,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T20:41:46.057011+00:00",
     "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
-  },
-  {
-    "consumed_by_exp_id": "26c8c1ed",
-    "description": "Round-68 #2, cron iteration (exp 541). Quantifying the fade's progression.\n\n**FADE-CONTINUES**: pooled Spearman(T, rate) = **0.500** CI [0.456, 0.545] at bitlen 104; per-seed 0.493/0.499/0.509 \u2014 all below 0.55 for the first time; fade is MONOTONE and NEAR-LINEAR (\u22120.030 then \u22120.043 per 4-bit step). T advantage WIDENS (+0.126 vs count) because count degrades faster.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp541_t_dial_unif_104.py + exp541_result.json, seeds 20261210\u201312.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3760",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T22:39:30.331366+00:00",
-    "title": "FACT round-68 #2 \u2014 TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
-  },
-  {
-    "consumed_by_exp_id": "00fe96df",
-    "description": "## NET-84 \u2014 limited-memory axis, round 32 (paper 166, ResearchOutput/exp_net84_tailprecision.py, /tmp/net84.log)\n\n**Verdict name: TAIL-AWARE-MIXED-PRECISION-WORKS.**\n\n### Result\nThree arms on Qwen2.5-0.5B (gate exact; ctx=1024):\n\n| arm | retained |\n|---|---|\n| GPTQ4 full | 0.9081 |\n| **GPTQ4 + L22/L23 fp32** | **0.9261 (+1.8 pts)** |\n| GPTQ4 L22/L23 only | 0.9766 |\n\n- **P1 CONFIRMED**: mixed precision reaches 0.926.\n- **P2 REFUTED**: the tail DOES benefit from precision protection.\n\n### The convergence\nThree independent lines of evidence now converge on the same prescription:\n1. NET-60: the tail pair is epistatic (7\u00d7 super-additive joint pruning cost)\n2. NET-54: the tail is unportable (swap breaks agreement with both parents)\n3. NET-83: quantization \u00d7 sparsity interaction is super-additive\n\nAll point to: **treat L22/L23 as ONE unit with SPECIAL handling in every optimization dimension.** Tail-aware mixed precision is the practical implementation.\n\nMemory cost of protection: 2 layers \u00d7 ~1.8M params \u00d7 4 bytes = 7.2 MB fp32 (vs ~0.9 MB at 4-bit) = 1.4% overhead for +1.8 pts quality.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean; (c) confronted; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET84; (g) fair; (h) DIRECT.\n\n### Next\n8-bit tail (even better?); 1.5B replication; 4096 context increments; 7B cell.\n\nNow 85 network experiments. Assessment v85. Paper 166.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3761",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T22:39:30.332797+00:00",
-    "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS \u2014 keeping L22/L23 at fp32 gains +1.8pts over full 4-bit GPTQ; three evidence lines converge on tail-as-one-unit prescription"
   },
   {
     "consumed_by_exp_id": "b20378a3",
@@ -1713,36 +1686,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T22:39:30.338596+00:00",
     "title": "FACT round-60 #2 \u2014 PERNDIAL-48-52: the per-N dial transfers to bitlen 52 with partial degradation (paper 186)"
-  },
-  {
-    "consumed_by_exp_id": "17866175",
-    "description": "## NET-89 \u2014 limited-memory axis, round 33 (paper 170, ResearchOutput/exp_net89_mixed.py, /tmp/net89.log)\n\n**Verdict name: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST.**\n\n### Result\nInterleaved ~500-char blocks of Python code + English prose (gate exact; Qwen2.5-0.5B fp32):\n\n| ctx | mixed k\\* | code k\\* | EN prose k\\* | mixed increment |\n|---|---|---|---|---|\n| 512 | **12** | 12 | 16 | \u2014 |\n| 1024 | **20** | 16 | 20 | **+8 (vs +4 for either pure domain)** |\n\nThe mixed domain starts at CODE's level and rises at DOUBLE the expected rate.\n\n- **P1 REFUTED**: not the midpoint of components.\n- **P2 PARTIAL**: reaches prose's level by 1024.\n- **P3 CONFIRMED IN SPIRIT**: the model adapts locally, but the adaptation means cross-domain attention requires more keys than either pure domain.\n\n### The finding\nMixed-domain attention has its OWN structure shaped by cross-domain query-key interactions \u2014 it is NOT simply a combination of component domains. The steeper increment reflects the cost of switching between content types within a context window.\n\n### All 8 barriers\n(a) clean; (b) clean \u2014 first mixed-domain measurement in-programme; (c) confronted \u2014 50/50 ratio, one block size stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET89; (g) fair; (h) DIRECT \u2014 real workloads are always mixed-domain.\n\n### Next\nMixing-ratio sweep; block-size sensitivity; other language pairs; 1.5B mixed-domain; 7B cell.\n\nNow 90 network experiments. Assessment v90. Paper 170.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3776",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T23:36:49.794322+00:00",
-    "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST \u2014 interleaved code+prose knees {12,20}: starts at code's level but rises at double the expected rate"
-  },
-  {
-    "consumed_by_exp_id": "1aa0b577",
-    "description": "**Program:** factor3 NETWORK/LLM loop, limited-memory axis iteration 65 (mixing-ratio sweep resolving NET-89's open cell).\n\n**Claim:** All three pre-registered shapes REFUTED. The knee is not linear in mixing ratio (P1\u2717), not a dip below the pure domains (P2\u2717), not monotone in prose fraction (P3\u2717). The balanced 50/50 mixture needs {16, 20} keys at ctx {512, 1024} while BOTH pure endpoints AND both asymmetric mixtures sit at {12, 16} \u2014 symmetric mixing pays a +4-key (+25\u201333%) premium at both contexts. Double tax: 50/50 also has the lowest full accuracy of any arm (0.441/0.467 vs code 0.611/0.651).\n\n| ratio | knee@512 | knee@1024 |\n|---|---|---|\n| pure code | 12 | 16 |\n| 25/75 | 12 | 16 |\n| **50/50** | **16** | **20** |\n| 75/25 | 16 | 16 |\n| pure prose | 12 | 16 |\n\n**Mechanism reading:** at the balanced point every code-block query attends into prose-keys and vice versa \u2014 cross-domain query-key interactions are maximized and inflate the required key count; minority blocks (25%) are rare enough that majority structure dominates the budget.\n\n**Honest limits:** fresh endpoint reads \u2014 code replicates NET-68 exactly ({12,16}), prose one grid step low ({12,16} vs {16,20}, \u00b11-step knee fuzz on razor-thin curves); NET-89 vs NET-90 mixed-knee jitter at 512 (12\u219216) across independent corpus draws reveals construction-draw variance in mixed budgets larger than pure-domain replication. One model (0.5B), one pair, one block size, two contexts.\n\n**Practical:** balanced agentic code+prose workloads are underestimated by pure-corpus budget tables by a grid step per context level plus draw variance.\n\nGate exact (retained \u2265 0.98\u00b7full), 12 held-out windows, oracle top-k, Qwen2.5-0.5B fp32. Script ResearchOutput/exp_net90_mixratio.py; paper ResearchOutput/NetworkMathematics/90_TheSymmetricMixtureBump.md.\n\nOpen: other domain pairs; block-size sensitivity; 1.5B mixed; bump \u00d7 4096-acceleration interaction; the 7B cell.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3779",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-23T02:01:14.895568+00:00",
-    "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pure domains \u2014 the mixing-ratio response is a bump, not a line/dip/ramp"
   },
   {
     "consumed_by_exp_id": "b96d5582",
@@ -2098,6 +2041,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 17866175 (Q=0.900), which proved 198 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-89 \u2014 limited-memory axis, round 33 (paper 170, ResearchOutput/exp_net89_mixed.py, /tmp/net89.log)\n\n**Verdict name: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST.**\n\n### Result\nInterleaved ~500-char blocks of Python code + English prose (gate exact; Qwen2.5-0.5B fp32):\n\n| ctx | mixed k\\* | code k",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_17866175_1c84e76d",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "17866175",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:59.242484+00:00",
+    "title": "Deepening: NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST \u2014 interleaved code+prose knee"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 1aa0b577 (Q=0.880), which proved 110 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** factor3 NETWORK/LLM loop, limited-memory axis iteration 65 (mixing-ratio sweep resolving NET-89's open cell).\n\n**Claim:** All three pre-registered shapes REFUTED. The knee is not linear in mixing ratio (P1\u2717), not a dip below the pure domains (P2\u2717), not monotone in prose fraction (P3\u2717). ",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_1aa0b577_2b68f6c6",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "1aa0b577",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:39.064602+00:00",
+    "title": "Deepening: NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pur"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 26c8c1ed (Q=0.880), which proved 155 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-68 #2, cron iteration (exp 541). Quantifying the fade's progression.\n\n**FADE-CONTINUES**: pooled Spearman(T, rate) = **0.500** CI [0.456, 0.545] at bitlen 104; per-seed 0.493/0.499/0.509 \u2014 all below 0.55 for the first time; fade is MONOTONE and NEAR-LINEAR (\u22120.030 then \u22120.043 per 4-bit step). ",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_26c8c1ed_9195326c",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "26c8c1ed",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:38.947735+00:00",
+    "title": "Deepening: FACT round-68 #2 \u2014 TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2801,6 +2786,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 00fe96df (Q=0.820), which proved 92 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-84 \u2014 limited-memory axis, round 32 (paper 166, ResearchOutput/exp_net84_tailprecision.py, /tmp/net84.log)\n\n**Verdict name: TAIL-AWARE-MIXED-PRECISION-WORKS.**\n\n### Result\nThree arms on Qwen2.5-0.5B (gate exact; ctx=1024):\n\n| arm | retained |\n|---|---|\n| GPTQ4 full | 0.9081 |\n| **GPTQ4 + L22/L",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_00fe96df_d54a5b53",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "00fe96df",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:57.136897+00:00",
+    "title": "Deepening: NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS \u2014 keeping L22/L23 at fp32 gains +1.8pts"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -2815,17 +2814,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle ed4056bf (Q=0.820), which proved 51 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-69 #2, cron iteration (exp 544). The first CI-separated band loss of the ladder.\n\n**TDIAL-U108-CONTINUES-FADE**: pooled Spearman(T, rate) = **0.488** CI [0.445, 0.534] \u2014 the ENTIRE CI below the 0.55 floor for the FIRST time. Fade decelerates toward a ~0.48 plateau (step delta \u22120.0125 vs prior ",
+    "description": "Building on cycle d451fd97 (Q=0.820), which proved 70 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** For a specified IEEE-754 implementation of a polynomial dynamical system, every finite execution avoiding overflow and exceptional values can be translated into an exact real pseudo-orbit whose local defect is bounded by a compositional expression in unit roundoff and the intermediat",
     "domains": [
-      "Physics"
+      "Novelty"
     ],
-    "id": "push_ed4056bf_b6e4c124",
+    "id": "push_d451fd97_332b5fcd",
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
-    "source_exp_id": "ed4056bf",
+    "source_exp_id": "d451fd97",
     "status": "available",
-    "timestamp": "2026-09-01T05:09:23.188668+00:00",
-    "title": "Deepening: FACT round-69 #2 \u2014 TDIAL-U108: the dial drops below the band at bitlen 108 (pape"
+    "timestamp": "2026-09-01T10:08:17.247523+00:00",
+    "title": "Deepening: Backward-error semantics for floating-point chaotic programs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3403,6 +3402,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
+    "domains": [
+      "Combinatorics",
+      "Probability"
+    ],
+    "id": "fd_0673",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697801+00:00",
+    "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -3786,21 +3800,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
-    "domains": [
-      "Combinatorics",
-      "Probability"
-    ],
-    "id": "fd_0673",
-    "priority_score": 0.82,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697801+00:00",
-    "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
   {
     "consumed_by_exp_id": "",
@@ -12449,6 +12448,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The two halves of the now two-sided estimator depend on the gate in opposite directions, so the width of the certified window for the per-key ratio is a function of the gate alone once the knee is fixed. We conjecture that this width is unimodal in the gate and attains its minimum at an interior point, giving an optimal gate at which a budget measurement is most informative about the spectrum.\n\nFor a fixed knee value K and context at least 2K, the width of the window between the largest candidate ratio refuted by the criterion at K-1 and the smallest floor rate excluded by the certificate q^(2K) <= (1 - tau)/tau is a unimodal function of tau on (0,1) with a unique minimiser strictly between 0 and 1, and that minimiser is bounded away from the value 0.99 used in the reported protocol.\n\nExpress both endpoints as explicit functions of tau in Lean, differentiate or use monotonicity of the two implicit criteria to prove unimodality, and evaluate the minimiser numerically for K equal to 10, 12 and 20.\n\nBudget measurements should be reported at the optimal gate, and existing tables can be re-analysed to give tighter spectral windows at no experimental cost.\n\nThe window width is monotone in the gate, so the informativeness of a measurement is maximised at an endpoint and gate choice reduces to a feasibility constraint.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_4468",
+    "priority_score": 0.671529411764706,
+    "research_mode": "team",
+    "source_exp_id": "17866175",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:49.145773+00:00",
+    "title": "Optimal Measurement Gate for the Spectral Window"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Upgrade the yes/no triple criterion into a quantitative bound on the set of unreachable points. The union bound behind the criterion already counts unreachable targets, so optimising over admissible triples should bound the miss set by a small union of lines, degenerating to a single point in the extremal case.\n\nFor pairwise independent v_i and sets S_i containing 0, the complement of sum_i S_i v_i in F_p^2 is contained in a union of at most min over admissible triples of (d_i + d_j) lines in the direction v_l; in particular if sum_i d_i = (k-2)(p-1) and the reach is not full then the miss set is a single point.\n\nCompute the exact miss sets for all failing configurations at p=5 (k=4,5) and for the harmonic family at p=7,11,13,17; compare with the predicted line bound. Then formalise the counting version of reach_eq_univ_of_triple in Lean.\n\nYields a Kneser-type stability theorem for iterated sumsets along lines, strictly stronger than the spanning criterion and usable for spread exclusions where a small exceptional set is tolerable.\n\nThe miss set can be large even near the threshold, indicating that the failure mode is global rather than a bounded local defect.",
     "domains": [
       "Combinatorics"
@@ -14206,6 +14219,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Interleaving conserves information density when the domains are balanced and destroys it without bound when they are not. We conjecture that the density of a two-domain protocol is a unimodal function of the mixing weight with its maximum exactly at mass balance, so a 50/50 protocol is the uniquely optimal measurement design and every other ratio carries a computable discount. This turns the proposed mixing-ratio sweep into a sequence of unequally informative measurements with known weights.\n\nFor two positive profiles and weights (a, 1-a), the information density (context-doubling increment times narrowest sub-step) is non-decreasing in a below the weight at which the two total head masses are equal and non-increasing above it, and at the balance point it equals the pooled density up to half a pooled step.\n\nExpress the narrowest sub-step as the explicit ratio min(a*u k, (1-a)*v k) over the total interleaved mass, prove unimodality of that ratio in a, and combine with the increment bracket; check numerically against directly computed knees for weights 0.1 through 0.9 on explicit rational profiles.\n\nThe reported 50/50 protocol is provably the most informative two-domain design, and every point of a ratio sweep can be reweighted by an explicit discount before comparison.\n\nSome skewed mixture is more informative than the balanced one, which would make mixing ratio a genuine tuning parameter of the measurement rather than a nuisance.",
+    "domains": [],
+    "id": "fd_4469",
+    "priority_score": 0.5942424242424243,
+    "research_mode": "team",
+    "source_exp_id": "17866175",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:49.742162+00:00",
+    "title": "Density-Optimal Mixing Ratio for Two-Domain Budget Measurements"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Tropical Perron\u2013Frobenius in all dimensions**\n  (`exists_maxPlusMul_eigenvector` in\n  `Catalog/Speculative/AutoResearch/PerronTheorem.lean`, on the new core\n  `Catalog/Speculative/AutoResearch/TropicalPerronCore.lean`): the Cuninghame-Green\n  construction is formalised \u2014 maximal cycle mean, cycle removal by pigeonhole, and the\n  longest-path potential to a critical node \u2014 replacing the previous `1\u00d71`/`2\u00d72`-only\n  situation.",
     "domains": [
       "Tropical",
@@ -14242,6 +14267,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-31T13:52:23.354844+00:00",
     "title": "Optimal Staged Window Splits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Uniform-in-time shadowing should require inverse branches only on a forward-invariant trapping region rather than globally, extending the cubic instantiation to Julia-set dynamics of quadratic and Chebyshev maps. The approach localises the backward construction to the nested intervals it actually visits.\n\nIf f is expanding with local inverse branches on a forward-invariant S and a delta-pseudo-orbit stays delta/(lambda-1)-inside S, then a true orbit in S shadows it with error at most delta/(lambda-1), uniformly in the horizon.\n\nWeaken the hypotheses of expanding_backward_shadowing to branches defined on closed balls and re-run the backward induction, tracking membership of the constructed points.\n\nBinary64 executions of expanding polynomial maps on their Julia sets carry O(u) shadowing certificates for unbounded time.\n\nGlobal branch existence is essential and uniform shadowing is limited to globally invertible expanding maps.",
+    "domains": [],
+    "id": "fd_4473",
+    "priority_score": 0.5938764044943821,
+    "research_mode": "team",
+    "source_exp_id": "d451fd97",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:09.394536+00:00",
+    "title": "Localised Inverse Branches for Trapping-Region Shadowing"
   },
   {
     "consumed_by_exp_id": "",
@@ -14326,6 +14363,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T23:36:47.751042+00:00",
     "title": "Breakdown Optimality of the Median Margin Statistic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The closed formula for the critical weight assumes a positive dominant excess Hu(K) - tau*Hu(n). We conjecture that the sign of this quantity is the discriminant of the whole sweep: when it is negative the collapse region reverses from a half-line upward to a bounded interval, producing a re-entrant phase in which very large mixing weights stop collapsing. This is a qualitatively new, directly falsifiable prediction about ratio sweeps.\n\nIf Hu(K) - tau*Hu(n) < 0 with K the dominant knee, then the set of positive weights a at which the pooled knee equals K is bounded above, and its supremum is the same expression (tau*Hv(n) - Hv(K)) / (Hu(K) - tau*Hu(n)); in particular there exist profile pairs whose sweep collapses on an interval and un-collapses beyond it.\n\nRerun the division-free pass criterion with the reversed sign, then search explicit rational profile pairs for a realisation of the negative-excess regime and compute the sweep directly on both sides of the predicted supremum.\n\nRatio sweeps can be non-monotone in a controlled way, and the sign of one pure-domain quantity tells an experimenter which regime to expect.\n\nThe dominant excess is always positive under domination, so the closed formula holds unconditionally and the hypothesis can be dropped.",
+    "domains": [],
+    "id": "fd_4470",
+    "priority_score": 0.5934848484848486,
+    "research_mode": "team",
+    "source_exp_id": "17866175",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:50.560642+00:00",
+    "title": "Sign of the Dominant Excess as Sweep Discriminant"
   },
   {
     "consumed_by_exp_id": "",
@@ -14425,6 +14474,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "With the blocked knee now exact for every block size, the block-size sweep becomes a deterministic arithmetic object. We conjecture it is a sawtooth: the knee is the doubled pooled knee corrected by the block-local offset of that knee, so the entire sweep is predicted by one pooled measurement plus the residues of the knee modulo each block size.\n\nFor a fixed profile pair, gate and context, the blocked knee at block size b lies in the window from 2Q - (Q mod b) to 2Q + b - (Q mod b), where Q is the pooled knee, and its exact position inside the window is determined by the two component head masses at the block boundary; in particular the sweep jumps exactly at the divisors of Q.\n\nCombine the exact intra-block knee theorems with the sharpened aligned bound, then evaluate the predicted sweep against a direct computation on explicit rational profiles for all block sizes up to the context length.\n\nBlock-size sweeps require no new measurement and any observed deviation isolates tokenisation or positional effects outside the model.\n\nBlocking carries information beyond the pooled knee and its residues, so block size is a genuine physical parameter rather than a gauge.",
+    "domains": [],
+    "id": "fd_4467",
+    "priority_score": 0.593360655737705,
+    "research_mode": "team",
+    "source_exp_id": "17866175",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:48.551844+00:00",
+    "title": "Block-Size Sawtooth for Interleaved Key Budgets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Refine the binary mirror/non-mirror distinction into a rank filtration counting how finely a probe splits each magnitude cell. Conjecture that every window-local realized probe has rank 1 (a mirror) while the factor-derived positional bit has rank at least 2, so no realized probe of intermediate rank exists. This would explain why every measured channel collapsed to an exact null while the oracle bound survived.\n\nFor probes computed from a poly(log N) read of the isqrt-anchored window, the mirror rank is 1; for 1{d<=B} it is at least 2 on any family containing two same-magnitude instances with different smallest factor.\n\nDefine mirrorRank as the maximum over magnitude cells of the number of distinct probe values on the cell; prove rank 1 for signVector and its post-processings using signVector_const, and rank >= 2 via oracle_informative_within_magnitude_cell.\n\nThe realized probe class is provably sealed as a class, not instance by instance.\n\nThere exists a window-local probe separating same-magnitude instances, i.e. a genuinely new channel.",
     "domains": [],
     "id": "fd_4056",
@@ -14482,6 +14543,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T11:46:18.899057+00:00",
     "title": "Quantitative Mismatch Angle from Peak Height"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Rounded execution of a straight-line polynomial program is claimed to be exactly an execution of the same parameterised family at a detuned parameter precisely when each parameter occurs once in the expression DAG. The approach lifts the three-rounding computation of the logistic product form to arbitrary DAGs. It matters because it turns backward-error analysis into a syntactic property of programs.\n\nA straight-line program computing p_\u03b8 admits family-structural backward error with constant \u03b3_k(u), k the depth, iff each parameter node has out-degree one in the evaluation DAG.\n\nFormalise DAG evaluation with a RoundingModel; prove the positive direction by induction on the DAG, and refute the multi-occurrence case by exhibiting rounding errors that force distinct effective parameters in the two monomials of r*x - r*x^2.\n\nBackward-error certificates can be generated by a compiler pass from program syntax alone.\n\nStructural backward error is genuinely semantic and must be re-proved per program.",
+    "domains": [],
+    "id": "fd_4471",
+    "priority_score": 0.5933146067415731,
+    "research_mode": "team",
+    "source_exp_id": "d451fd97",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:08.251381+00:00",
+    "title": "Syntactic Criterion for Structural Backward Error"
   },
   {
     "consumed_by_exp_id": "",
@@ -14640,14 +14713,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Angular Curvature Obstruction to Band Re-entry"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f7361634",
     "description": "Two candidate predictors of transplant damage exist in the catalog: a norm-based upper bound and a margin-based certificate. Conjecture: the margin-uncertified fraction predicts damage, and Lipschitz/norm distance between the two copies of a block does not.\n\nAcross layer blocks, the measured post-transplant disagreement correlates with the margin-uncertified fraction and is not monotone in the block's weight-space distance.\n\nCompute both predictors per block and compare against measured disagreement, using net54_margin_failure_fraction as the certified lower bound.\n\nPortability becomes predictable from a cheap forward-pass statistic, with no transplant needed.\n\nNorm-based bounds remain the operative predictor and the margin route is only a sufficient condition.",
     "domains": [],
     "id": "fd_3792",
+    "phase": "A",
     "priority_score": 0.5931651376146789,
     "research_mode": "team",
     "source_exp_id": "78e6d19a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T04:04:40.807255+00:00",
     "title": "Margin Scarcity as the Portability Predictor"
   },
@@ -14725,6 +14799,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For rational rates with unit-numerator minority the context-doubling increment is multiplied by the interleaving period, i.e. the reciprocal of the rarest rate. We conjecture the general law for arbitrary rate vectors, where the pattern is quasi-periodic rather than periodic: the multiplier becomes the return time of the rarest domain. This would make the increment a function of the mixing rates alone, independent of the number of domains.\n\nFor a Beatty-type interleaving in which domain j occupies a fraction p_j of the keys, the context-doubling increment of the mixture equals the ceiling of 1 / min_j p_j times the pooled increment, up to an additive error of one return time.\n\nReplace the periodic index decomposition of the s:1 reduction by a Beatty pattern, prove the head-mass identity at return times of the rarest domain, and check numerically on 70/30, 80/20 and 80/10/10 mixtures against directly computed knees.\n\nMixture increments are predicted from the rates alone, and a measured increment identifies the rarest rate of the corpus mixture.\n\nQuasi-periodicity interacts with the profile shapes and only exactly periodic mixtures admit a clean multiplier.",
+    "domains": [],
+    "id": "fd_4466",
+    "priority_score": 0.5930769230769232,
+    "research_mode": "team",
+    "source_exp_id": "17866175",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:47.975933+00:00",
+    "title": "Beatty Interleaving and the Return-Time Multiplier"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved estimate franel(2m+1)*(3m+1) <= 8^(2m+1) is off by a factor of about 2.7 from the true asymptotics franel(n) ~ 2*sqrt(3)*8^n/(3*pi*n). Sharpening it would make the inversion threshold provable uniformly in parity with no finite case check.\n\nFor all n >= 1, 2*franel(n)*n <= 8^n, with the constant 2 asymptotically optimal up to sqrt(3)/pi.\n\nInduction on n using the Franel recurrence (n+1)^2 F(n+1) = (7n^2+7n+2) F(n) + 8 n^2 F(n-1), verified numerically for n <= 40 by exact evaluation.\n\nOne clean estimate replaces both parity cases and the small-bitlen checks in the threshold theorem.\n\nThe crude max-times-total bound is essentially the only elementary route, and thresholds must stay case-split.",
     "domains": [],
     "id": "fd_3932",
@@ -14770,6 +14856,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T18:56:35.553837+00:00",
     "title": "Depth-Hypotenuse Bracket for the Berggren Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 2 proved that a finite ladder cannot distinguish a positive floor from finite extinction: two explicit continuations match all seven recorded rungs, one floored at 0.218 and one reaching zero at bitlen 160. Identifiability must therefore come from a rate hypothesis. The conjecture is that the recorded ladder admits no uniform contraction factor, so the Aitken floor estimate in the catalog is not licensed by the data.\n\nThe unconditional half is proved: any q bounding the six recorded step ratios satisfies q >= 2, while every q-contractive ladder with q < 1 has the explicit floor rho_n - |d_n|/(1-q). The open half is that the least noise level making the ladder 1/2-contractive exceeds the model-free noise floor 0.0101 derived from step-ratio mismatch.\n\nFormalise a noise-subtracted contraction hypothesis over the rationals, minimise the admissible eta on the six recorded steps, and compare with the recorded noise floor.\n\nThe plateau and extinction readings of the thread are formally unresolved by all data recorded so far, and the next experiment must be designed to bound the contraction factor rather than to add another rung.\n\nA uniform contraction factor exists, the floor is identifiable, and the extinction forecasts are excluded.",
+    "domains": [],
+    "id": "fd_4477",
+    "priority_score": 0.592972972972973,
+    "research_mode": "team",
+    "source_exp_id": "26c8c1ed",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:27.248376+00:00",
+    "title": "Rate-Bounded Identifiability of a Dial Floor"
   },
   {
     "consumed_by_exp_id": "",
@@ -15886,6 +15984,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The sign word of a measured ladder's grid second differences is a model-free invariant that excludes whole shape classes before any parameter fit. Convex laws (hyperbolic, geometric, exponential-to-floor) realise only all-nonnegative words; concave laws only all-nonpositive ones. The recorded T-dial ladder realises neither, which is a structural, not statistical, refutation.\n\nProved: for every law A + C*g(b) with g convex and C >= 0 the 4-bit grid second differences are nonnegative, so a ladder with both a strictly positive and a strictly negative grid second difference is unfittable by any signed-curvature law. The open refinement is quantitative: the number of sign changes in a ladder's curvature word certifies a lower bound on the differential order of any law that can fit it.\n\nThe sign law and the categorical exclusion are formalised as signedLaw_second_difference and no_signed_curvature_law; the refinement needs a Lean notion of k-fold monotone laws and a bound on the sign changes each order admits.\n\nModel selection for dial ladders reduces to a finite combinatorial check, and every published fade law in the thread is refuted in one line.\n\nSome convex family produces sign-alternating grid second differences, which would identify the extra degree of freedom the current fits are missing.",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_4476",
+    "priority_score": 0.5647412683708043,
+    "research_mode": "team",
+    "source_exp_id": "26c8c1ed",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:26.671223+00:00",
+    "title": "Curvature-Sign Spectroscopy of Fading Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every McKay-Thompson head coefficient should be derivable, like the 1A entry proved here, from an eta-quotient q-expansion checked by the Lean kernel. The pipeline uses only unit-ness of eta products in Z[[X]], never modularity. Completing it would convert the 194-entry head table from quoted data into verified data.\n\nFor each of the 194 conjugacy classes g of the Monster there is an integral exponent vector r with (prod_d eta(d tau)^{r_d}) + const having q-coefficient c_g(1), and the truncation identity mod q^8 is kernel-decidable.\n\nDefine etaQuotient for an arbitrary exponent vector, reprove unit-ness and truncation stability by the existing AgreeBelow calculus, and discharge class 2A end to end before looping over all classes.\n\nThe head conjecture becomes a single decide over 194 verified integers via head_check_iff.\n\nThe classes without eta-quotient hauptmoduln isolate where genuinely modular input is unavoidable.",
     "domains": [
       "Algebra",
@@ -16471,6 +16584,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every reading converts into a forced rank-displacement fraction (1-rho)/6, turning model selection into a statement about how much of the sample a mechanism must touch. The hyperbolic law saturates at 3/28 and can never demand more; any extinction law demands unboundedly more, with the crossing at bitlen 120. The budget is therefore a combinatorial falsification test that needs no curve fitting at all.\n\nAny rank-level mechanism reproducing the recorded ladder must displace a fraction of the sample that exceeds 3/28 at some bitlen at most 128; equivalently, no bounded-displacement mechanism explains the thread.\n\nInstantiate reading_corruption_budget at each recorded rung and compare with 3/28; formalise the resulting monotone budget ladder in Lean.\n\nThe hyperbolic shape class is refuted a second time, by a purely combinatorial argument independent of any fit.\n\nThe budget stalls below 3/28, which would be strong evidence for a genuine floor and against extinction.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4479",
+    "priority_score": 0.5645555764028267,
+    "research_mode": "team",
+    "source_exp_id": "26c8c1ed",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:28.380501+00:00",
+    "title": "Corruption-Budget Saturation Test"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Each coordinate face of the Berggren tree is supported on prime classes fixed by a quadratic character. The hypotenuse face is exactly the 1 mod 4 primes; the leg faces should have their own, different, congruence supports. Classifying them tells any tree-based sieve in advance which moduli it can never split.\n\nFor a primitive Pythagorean triple (a,b,c) with b even, every odd prime divisor of c is 1 mod 4, every prime divisor of b is unrestricted, and every odd prime divisor of a is 1 mod 4 or 3 mod 4 according to the parity of the parametrizing pair (m,n) modulo 4.\n\nFormalize the leg analogue of TreeSieveHyp.prime_dvd_hyp_one_mod_four via the (m,n) parametrization and verify exhaustively for tree depth <= 8.\n\nEvery face-restricted tree sieve carries a provable blindness class, extending TreeSieveHyp.hypotenuse_face_blind_semiprime.\n\nThe blindness obstruction is confined to the hypotenuse and leg-based sieves remain generic lotteries.",
     "domains": [
       "NumberTheory",
@@ -16618,6 +16746,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T22:45:39.343918+00:00",
     "title": "Frontier-Cost Exponent Law for Balanced Semiprimes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The mixing-ratio response of the top-k attention budget is Schur-concave in the key-count vector, not merely maximised at the balanced point; cycle 4 proves the non-strict ordering and the open part is strictness. The approach is to quantify the mass moved by one Robin Hood transposition and compare it with the spacing of the knee grid. It matters because it would reduce the whole ratio sweep to a single scalar imbalance parameter.\n\nFor a strictly antitone profile and m + l = m' + l' with (m, l) majorising (m', l'), the mixed knee satisfies k*(m, l) <= k*(m', l') (proved in cycle 4 as mixKnee_majorise), and the inequality is strict whenever the profile's tail ratio exceeds a threshold depending on the gate.\n\nQuantify the mass moved by one Robin Hood step using headMass_majorise and mixHead_majorise, compare it with the spacing of the retained-fraction grid, and test numerically on power-law profiles where the grid is fine.\n\nMixed-corpus budget tables can be indexed by imbalance alone.\n\nKnee curves can have interior local minima, so the reported premium is not a robust design parameter.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4463",
+    "priority_score": 0.5643419608306419,
+    "research_mode": "team",
+    "source_exp_id": "1aa0b577",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:23.344204+00:00",
+    "title": "Strict Schur-Concavity of the Mixed Attention Budget"
   },
   {
     "consumed_by_exp_id": "",
@@ -18298,6 +18441,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T13:12:57.870840+00:00",
     "title": "Volume-Ratio Threshold for General Convex Bodies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For profiles with a spectral gap the mixing premium should be independent of the context length, while gapless profiles should show a premium growing linearly in the context. The approach transports the existing decay dichotomy through the sup-convolution. It decides whether mixed budget tables need re-measurement per context level.\n\nGeometric decay implies k*_balanced(2N) - k*_pure(2N) is constant in N; a positive uniform weight floor implies it grows linearly in N.\n\nInstantiate the sup-convolution with the uniform profile and compute both knees in closed form; contrast with the geometric instance already proved uniformly in N.\n\nOne mixed measurement extrapolates across contexts for gap-possessing models.\n\nMixed budget tables must be re-measured at every context level.",
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "fd_4465",
+    "priority_score": 0.5630396779447929,
+    "research_mode": "team",
+    "source_exp_id": "1aa0b577",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:24.519808+00:00",
+    "title": "Context-Scaling of the Mixing Premium"
   },
   {
     "consumed_by_exp_id": "",
@@ -28726,6 +28884,104 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T05:09:08.362444+00:00",
     "title": "Quartic Defect Law for Decorrelation Certificates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalise the two-domain sup-convolution to d domains and determine the exact multi-domain budget. Cycle 6 settles the equal-size case on the geometric profile: the d-fold knee at gate 0.98 is exactly ceil(143 d / 25), so the per-domain cost is 5.72 keys and the d-times-pure ceiling is attained only for d <= 3. What remains is the barycentric (unequal domain sizes) case, which decides whether balanced mixing still maximises the budget over the whole simplex.\n\nFor d domains of comparable mass the d-fold knee is maximised at the barycentre of the mixing simplex, and at the barycentre it equals ceil(rho * d) for a profile- and gate-dependent rate rho strictly below the pure budget; for the profile (1/2)^i at gate 0.98 the rate is 143/25 (proved in cycle 6 as mixNKnee_geomHalf), so d times the pure budget is only an upper bound and fails to be exact from d = 4 on.\n\nReplace the single per-domain size m in mixNHead by a vector of sizes, re-derive the tangent upper bound and the block-allocation lower bound, and check numerically whether an unbalanced size vector can beat the barycentre at fixed total context.\n\nMulti-domain agentic workloads are cheaper than pairwise extrapolation predicts, by the factor 143/150 per domain already at d = 4.\n\nThe maximum of the simplex sits at an unbalanced corner and mixed budget tables must be indexed by the full domain-size vector.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4464",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "1aa0b577",
+    "status": "available",
+    "timestamp": "2026-09-01T10:07:23.973507+00:00",
+    "title": "Multi-Domain Bump Simplex"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The a-posteriori recursion E(n+1) = \u03b4 + |4-8x_n| E(n) should grow with rate exp(n ln 2) for almost every initial condition, halving the exponent of the global-Lipschitz bound and doubling the certified simulation horizon. The approach couples the nonautonomous shadowing recursion with the Birkhoff ergodic theorem for the arcsine invariant measure.\n\nFor Lebesgue-a.e. x_0 in [0,1], (1/n) log E(n) tends to ln 2 where E is the errBound recursion driven by L n = |4 - 8 x_n|.\n\nFormalise the arcsine invariant density for the r=4 logistic map, apply Birkhoff's theorem to log|f'|, and combine with errBound monotonicity.\n\nCertified shadowing horizons for binary64 chaotic simulation roughly double, matching observed numerics.\n\nThe observed 2^n growth is not ergodic-generic and shadowing horizons must be certified per orbit.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4472",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d451fd97",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:08.836907+00:00",
+    "title": "Lyapunov-Exact Shadowing Horizon for the Logistic Map"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Genuine IEEE executions of the logistic map are conjectured to realise the sharp exponential shadowing bound, because rounding near the critical point x = 1/2 has a systematic sign. The approach analyses the sign of the rounding error of 4*x*(1-x) as a function of the binary expansion of x.\n\nThere is x_0 in [0,1] and c > 0 such that for all n the binary64 execution satisfies |x_n - y_n| >= c u 2^n for every exact orbit y with y_0 = x_0.\n\nSearch over binary64 initial values for orbits whose per-step defects share a sign, then formalise the resulting lower bound by an induction mirroring finite_shadowing_sharp.\n\nFloating-point chaotic simulations provably fail to be pointwise-accurate orbits, making the pseudo-orbit reading mandatory rather than convenient.\n\nRounding defects decorrelate and typical executions are far better shadowed than the worst case, suggesting a probabilistic refinement of the defect certificate.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4474",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d451fd97",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:09.957684+00:00",
+    "title": "Coherent Rounding Bias at the Critical Point"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The analytic certificate gamma_{2n}(u) times the magnitude functional should agree, within a factor two, with the width returned by one interval-arithmetic step on the same Horner program, yielding an executable certified pipeline from program to shadowing theorem. The approach compares both recursions term by term.\n\nFor every coefficient list and every x, the width of the interval-Horner evaluation lies between gamma_{2n}(u) hornerAbs as x and 2 gamma_{2n}(u) hornerAbs as x.\n\nDefine outward-rounded interval Horner in Lean, prove both inequalities by the same induction that proves hornerFl_forward_defect.\n\nShadowing certificates can be produced at runtime by interval arithmetic with no analytic bookkeeping.\n\nInterval widths overestimate the true defect superlinearly, motivating affine-arithmetic certificates instead.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4475",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d451fd97",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:10.508748+00:00",
+    "title": "Interval Arithmetic Equals the Analytic Defect Certificate"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The effective p-adic base of a reading is Theta(rho^{-2}), proved here by the bracket 1/rho^2 - 1 < p <= 3/rho^2. Combining that with a linear late-epoch fade predicts that the effective base grows quadratically in the bitlen, so the dial degenerates through the primes at an accelerating rate rather than settling at base 23 as the hyperbolic law predicted.\n\nUnder any fade with rho(b) asymptotically c*(B - b) on a finite window, the effective base satisfies p(b) = Theta((B-b)^{-2}); in particular the recorded bases 6, 8, 10, 14 at bitlens 76, 92, 104, 120 lie on a quadratic in b, not a linear one.\n\nProve the bracket and monotonicity in Lean, compute the effective base of every recorded rung, and fit linear against quadratic on the four data points.\n\nBase drift becomes the natural coordinate for the thread: fade laws should be fitted in base space, where they may be linear even when they are not in rho space.\n\nThe bases grow linearly, which would force rho(b)^{-2} to be linear, i.e. an inverse-square-root fade -- a shape class not yet tested.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4478",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "26c8c1ed",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:27.823659+00:00",
+    "title": "Quadratic Effective-Base Drift"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The T-over-count advantage was flat (0.070, 0.073) through bitlen 76, spiked to 0.126 at bitlen 104, then collapsed to 0.047 by bitlen 112. The catalog knows both tie ceilings in closed form: 6/7 for the dyadic profile and 1 - 4/(3b+2) for the binomial one. The conjecture is that the spike marks the bitlen at which the count baseline's realised correlation crosses a fixed fraction of its own ceiling, i.e. the count statistic stops resolving before the dial does.\n\nThe bitlen maximising the T-over-count advantage is the bitlen at which the count baseline's ceiling utilisation rho_count^2 / (1 - 4/(3b+2)) first falls below the dial's utilisation rho_T^2 / (6/7).\n\nCompute both utilisations at every recorded rung from the closed-form ceilings in the catalog, and check whether the crossing bitlen coincides with the advantage maximum at 104.\n\nThe advantage becomes a derived quantity, predictable from tie geometry alone, and the count baseline's death bitlen is computable in advance.\n\nThe advantage spike is a response-side effect, which localises the mechanism of the fade in the response rather than in either statistic.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4480",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "26c8c1ed",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:29.037092+00:00",
+    "title": "Advantage Spike as a Tie-Ceiling Crossing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Reading a measured ladder as monotone, or as a contracting plateau, costs a definite per-rung measurement-error budget. For the recorded T-dial ladder those prices are exactly 0.0113 and at least 0.012823, and they lie strictly between the per-seed half-spread 0.008 and the pooled CI half-width 0.0445. The gap converts a modelling dispute into a variance-reduction experiment.\n\nThe monotone price of a finite ladder is half its largest pairwise excursion max over k <= l of (r l - r k), realised by the suffix-maximum flattening; this is now proved, and the local variant using only consecutive increases is refuted. The open half is experimental: any rerun of the T-dial ladder whose per-rung dispersion is at most 0.008 either removes the bitlen-116 rebound or refutes the 1/2-contractive plateau reading.\n\nThe price identity is formalised as ladder_mono_price with the counterexample consecutive_price_insufficient; the remaining test is to rerun exp 541 at increased seed count and compare the realised dispersion with the two prices.\n\nModel selection between plateau and extinction becomes an experiment-design question with a computable target variance, rather than a curve-fitting dispute.\n\nThe rebound survives variance reduction, which would make the non-contractive step a property of the mechanism rather than of the instrument and would settle the plateau dispute against the plateau.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4481",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "26c8c1ed",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:29.631273+00:00",
+    "title": "Noise-Price Separation of Dispersion Scales"
   },
   {
     "consumed_by_exp_id": "",
@@ -39826,19 +40082,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "D5 \u2014 A difficulty-blind lower bound for eviction policies"
   },
   {
-    "consumed_by_exp_id": "d451fd97",
-    "description": "**Conjecture.** For a specified IEEE-754 implementation of a polynomial dynamical system, every finite execution avoiding overflow and exceptional values can be translated into an exact real pseudo-orbit whose local defect is bounded by a compositional expression in unit roundoff and the intermediate magnitudes.\n\nThe key insight is that floating-point execution should first be interpreted as a certified pseudo-orbit; only then should a dynamical shadowing theorem be applied.\n\n**Why now?** The abstract pseudo-orbit theorem already consumes precisely such a local defect certificate, leaving a sharply delimited semantics problem rather than an informal appeal to \u201cprecision.\u201d",
-    "domains": [],
-    "id": "fd_1848",
-    "phase": "A",
-    "priority_score": 0.4390588235294117,
-    "research_mode": "team",
-    "source_exp_id": "ee626e30",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:27.772179+00:00",
-    "title": "Backward-error semantics for floating-point chaotic programs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "**Conjecture.** For every certificate tree, augmenting redundant-restatement elimination and named-lemma inlining with a finite family of commuting conversions yields a confluent terminating rewrite system. Consequently, every certificate has a unique normal form up to renaming of hypothesis leaves.\n\nThe key insight is that termination has already been separated from uniqueness: natural-valued descent supplies the former, while local diamond properties could supply the latter through a confluence theorem.\n\n**Why now?** Concrete refinement is known to preserve conclusions and strictly decrease audited cost, so the remaining question has a sharply testable form: classify all critical pairs and determine whether they join.",
     "domains": [],
@@ -48050,5 +48293,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-31T13:52:08.095484+00:00",
     "title": "first homology vanishes at every scale"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Refined, not failed.** The first attempt at the tail-as-one-unit theorem carried the\n  hypotheses `a \u2208 U`, `b \u2208 U`; the proof showed they are unnecessary (only `a \u2260 b` is\n  used), so the theorem was strengthened.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4482",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "00fe96df",
+    "status": "available",
+    "timestamp": "2026-09-01T10:08:48.208000+00:00",
+    "title": "Refined, not failed."
   }
 ];
