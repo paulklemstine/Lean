@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-01T18:33:40Z",
-  "count": 68,
+  "archived_at": "2026-09-01T21:48:17Z",
+  "count": 69,
   "directions": [
     {
       "id": "fd_3695",
@@ -2690,6 +2690,47 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 316
+    },
+    {
+      "id": "fd_3792",
+      "title": "Margin Scarcity as the Portability Predictor",
+      "description": "Two candidate predictors of transplant damage exist in the catalog: a norm-based upper bound and a margin-based certificate. Conjecture: the margin-uncertified fraction predicts damage, and Lipschitz/norm distance between the two copies of a block does not.\n\nAcross layer blocks, the measured post-transplant disagreement correlates with the margin-uncertified fraction and is not monotone in the block's weight-space distance.\n\nCompute both predictors per block and compare against measured disagreement, using net54_margin_failure_fraction as the certified lower bound.\n\nPortability becomes predictable from a cheap forward-pass statistic, with no transplant needed.\n\nNorm-based bounds remain the operative predictor and the margin route is only a sufficient condition.",
+      "source_exp_id": "78e6d19a",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/78e6d19a",
+      "domains": [],
+      "proof_strategy": "Contrapositive of the margin transfer theorem gives the lower bound; the negative half needs an explicit pair of blocks with small norm distance and large decision divergence.",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.5931651376146789,
+      "status": "completed",
+      "consumed_by_exp_id": "f7361634",
+      "timestamp": "2026-08-23T04:04:40.807255+00:00",
+      "catalog_references": [
+        "Catalog.Probability.TailTransplantCost",
+        "Catalog.Novelty.KVDecisionDissociation"
+      ],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-01T10:10:45.282490+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "40d19005",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Square-core stack polyominoes\n\nThe formalized development (`Catalog/Physics/StackSquareCore*.lean`) establishes:\nthe combinatorial decomposition `a(n) = Σ_{k²≤n} Σ_{i+j=n-k²} p_{",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 122,
-      "timestamp": "2026-08-26T23:34:23",
-      "title": "OEIS sequence: Stack polyominoes with square core."
-    },
-    {
       "cycle_id": "7ae2917a",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nDerived from this cycle's analysis of *committed local-oracle protocols* — the\ncompilation of a constant-query (PCP-style) verifier with a hiding commitment —\nformalized in\n\n* `Ca",
@@ -499,19 +489,19 @@
       "theorem_count": 72,
       "timestamp": "2026-09-01T18:33:49",
       "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY — extended grid pins k*(fr@1024)=40, exactly double English prose's"
+    },
+    {
+      "cycle_id": "f7361634",
+      "domain": "Applications",
+      "key_insight": "# Future directions — margin scarcity as the portability predictor\n\nDerived from the three research cycles in `Catalog/Applications/`:\n\n* Cycle 1 — `MarginScarcityPortability.lean`, `MarginScarcityCor",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 42,
+      "timestamp": "2026-09-01T21:48:29",
+      "title": "Margin Scarcity as the Portability Predictor"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ef4f9365",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — after the Berggren / Q(√2) / Langlands cycle\n\n## What this cycle established\n\n**Positive.**  There *is* a rigorous bridge from Pythagorean triples to the arithmetic of\n`ℚ(√2)`, a",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 181,
-      "timestamp": "2026-08-21T21:39:21",
-      "title": "The Berggren Tree and the Langlands Program — Automorphic Forms on the 3-adic Boundary over Q(√2)"
-    },
     {
       "cycle_id": "28aa3954",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 72,
       "timestamp": "2026-09-01T18:33:49",
       "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY — extended grid pins k*(fr@1024)=40, exactly double English prose's"
+    },
+    {
+      "cycle_id": "f7361634",
+      "domain": "Applications",
+      "key_insight": "# Future directions — margin scarcity as the portability predictor\n\nDerived from the three research cycles in `Catalog/Applications/`:\n\n* Cycle 1 — `MarginScarcityPortability.lean`, `MarginScarcityCor",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 42,
+      "timestamp": "2026-09-01T21:48:29",
+      "title": "Margin Scarcity as the Portability Predictor"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "898d17cb",
-      "domain": "Physics",
-      "name": "slack_eq_rpow_logSlack",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "898d17cb",
-      "domain": "Physics",
-      "name": "logSlack_eq_fract",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "898d17cb",
-      "domain": "Physics",
-      "name": "logSlack_zpow",
-      "quality": 0.82
-    },
     {
       "cycle_id": "e8ef44c2",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "five_domain_table_118",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "f7361634",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f7361634",
+      "domain": "Applications",
+      "name": "famVar_eq",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f7361634",
+      "domain": "Applications",
+      "name": "famVar_nonneg",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-01T18:33:49",
+  "last_updated": "2026-09-01T21:48:29",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5f0e4f5e",
-        "quality": 0.86,
-        "theorems": 114,
-        "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
-      },
-      {
         "cycle_id": "0e0f4ea6",
         "quality": 0.82,
         "theorems": 57,
@@ -3141,6 +3135,12 @@
         "quality": 0.74,
         "theorems": 55,
         "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase ("
+      },
+      {
+        "cycle_id": "f7361634",
+        "quality": 0.78,
+        "theorems": 42,
+        "title": "Margin Scarcity as the Portability Predictor"
       }
     ],
     "Bridges": [

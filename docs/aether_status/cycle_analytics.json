@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-01T18:33:56.744158+00:00",
+  "last_updated": "2026-09-01T21:48:45.809056+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -71496,6 +71496,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-01T18:33:56.499571+00:00",
       "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY \u2014 extended grid pins k*(fr@1024)=40, exactly double English prose's"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Applications",
+      "duration_seconds": 11597.915953874588,
+      "end_time": 1788299231.888507,
+      "files_integrated": 4,
+      "job_id": "f7361634",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1788287633.972553,
+      "strategy_count": 0,
+      "theorem_count": 42,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 39,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-01T21:48:45.480831+00:00",
+      "title": "Margin Scarcity as the Portability Predictor"
     }
   ]
 }

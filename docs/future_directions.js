@@ -1590,16 +1590,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-66 #1 \u2014 TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 187)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53c2b4c2",
     "description": "## NET-74 \u2014 limited-memory axis, round 25 (paper 159, ResearchOutput/exp_net74_attnstructure.py, /tmp/net74.log)\n\n**Verdict name: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR.**\n\n### Result\nThree structural quantities per domain (5 domains, 3 sampled layers, 12 windows @ctx=512):\n\n| domain | entropy | top-8 mass | head agreement | k\\*@512 |\n|---|---|---|---|---|\n| code | 3.798 | 0.488 | 0.083 | **12** |\n| prose-en | 3.801 | 0.488 | 0.082 | **16** |\n| math | 3.615 | **0.526** | 0.086 | **16** |\n| prose-de | 3.752 | 0.502 | 0.080 | **20** |\n| prose-fr | 3.864 | **0.473** | 0.079 | **>24** |\n\nSpearman: entropy\u2194k\\* = \u22120.60; top8\u2194k\\* = **+0.80**; headvar\u2194k\\* = \u22120.40.\n\n- **P1 PARTIAL**: entropy anticorrelates (right sign) but below the \u22120.7 threshold.\n- **P2 CONFIRMED**: top-8 mass is the strongest correlate (+0.80 > 0.7).\n- **P3 REFUTED**: cross-head agreement ~8% everywhere \u2014 constant, not differentiator.\n\n### The mechanism finding\nThe POSITIVE sign means domains with MORE mass in their top-8 have HIGHER knees: the knee is set by the RESIDUAL spread after the top keys are captured, not by how concentrated the peak is. The mechanism lives in the TAIL of the attention distribution \u2014 how the non-top mass decays determines whether a small budget suffices. Head diversity is constant across all domains and cannot explain any part of the variation.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) clean \u2014 first structural mechanism test; (c) confronted \u2014 5 domains, 3 sampled layers, n=4 stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET74 (cosmetic error after data); (g) fair \u2014 identical methodology across domains; (h) DIRECT.\n\n### Next\nTail-shape analysis (Pareto vs exponential decay per domain); sub-20 addendum @2048; 0.5B @4096; 7B cell.\n\nNow 74 network experiments. Assessment v74. Paper 159.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3748",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.057011+00:00",
     "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
   },
@@ -2660,34 +2661,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle b20378a3 (Q=0.840), which proved 100 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-61 #2, cron iteration (exp 542). Fresh-seed replication of paper 184's bitlen-56 uniform cell.\n\n**U56B-DIAL-HOLDS-COUNT-PARITY**: pooled \u03c1(T, rate) = **0.669** [0.650, 0.690] \u2014 in band; all 3 seeds pass H1.\n\nH2 FAIL on pre-stated rule: pooled advantage +0.045 \u2264 +0.05; only 1/3 seeds > +0.05. T",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_b20378a3_2f3a3c16",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "b20378a3",
-    "status": "available",
-    "timestamp": "2026-09-01T18:32:57.638663+00:00",
-    "title": "Deepening: FACT round-61 #2 \u2014 TDIAL-U56B: fresh-seed replication confirms validity but edge"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle eb1faf15 (Q=0.840), which proved 114 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-67 #2, cron iteration (exp 540). The first band-miss on uniform draws.\n\n**DIAL-FADES**: pooled Spearman(T, rate) = **0.544** CI [0.498, 0.588] at bitlen 100 \u2014 the CI straddles the 0.55 floor for the first time. Per-seed: 0.546/0.528/0.549.\n\nT beats count by +0.098 everywhere. But the dial's si",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_eb1faf15_04221070",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "eb1faf15",
-    "status": "available",
-    "timestamp": "2026-09-01T18:33:15.428797+00:00",
-    "title": "Deepening: FACT round-67 #2 \u2014 TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -3684,6 +3657,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T18:33:49.902603+00:00",
     "title": "Deepening: NET-75: THE-FRENCH-KNEE-IS-FORTY \u2014 extended grid pins k*(fr@1024)=40, exactly do"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f7361634 (Q=0.780), which proved 42 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two candidate predictors of transplant damage exist in the catalog: a norm-based upper bound and a margin-based certificate. Conjecture: the margin-uncertified fraction predicts damage, and Lipschitz/norm distance between the two copies of a block does not.\n\nAcross layer blocks, the measured post-tr",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_f7361634_d00a1ff2",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "f7361634",
+    "status": "available",
+    "timestamp": "2026-09-01T21:48:30.247237+00:00",
+    "title": "Deepening: Margin Scarcity as the Portability Predictor"
   },
   {
     "consumed_by_exp_id": "",
@@ -14201,14 +14188,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Radix Crossover for the Weighted Zero-Fit Edge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe7714ae",
     "description": "Predictors realising the crossed and uncrossed readings can be aligned to 0.9999, so the entire hypothesis test lives in a spherical cap of angular radius about 0.9 degrees. The conjecture is that any test statistic Lipschitz in the predictor direction has power bounded by its Lipschitz constant times the cap radius, independently of the sample size.\n\nFor unit vectors u, v with corr(u,v) >= 1 - eps and any L-Lipschitz functional F on the sphere, |F(u) - F(v)| <= L*sqrt(2*eps); consequently no such statistic separates the U84 hypotheses beyond that bound.\n\nFormalise the chordal-distance bound sqrt(2-2c) and combine with the attained configuration of crossing_states_indistinguishable.\n\nA sample-size-free ceiling on the power of any smooth crossing test, explaining why replication has not settled the question.\n\nSome non-Lipschitz (rank-based, discontinuous) statistic can separate the hypotheses, which would be a concrete better test to run.",
     "domains": [],
     "id": "fd_4508",
+    "phase": "A",
     "priority_score": 0.593901098901099,
     "research_mode": "team",
     "source_exp_id": "6d23453a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-01T18:33:24.169561+00:00",
     "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
   },
@@ -14247,6 +14235,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T10:08:09.394536+00:00",
     "title": "Localised Inverse Branches for Trapping-Region Shadowing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All damage from a block transplant is conjectured to be a function of the drift's component along the per-position top-2 logit-difference direction, not of any norm. Norm and margin statistics are then relaxations of a single exact identity. This would replace one-sided screens by an exact predictor.\n\nFor a linear block with drift \u0394W, damageFrac = frac{x : \u27e8\u0394W\u00b7feat x, e_{d(x)} \u2212 e_{second(x)}\u27e9 > gap(x)}, and every norm-based or margin-based bound is obtained by relaxing this identity.\n\nFormalise the top-2 projection statistic in the blockLogit model of Catalog/Applications/MarginScarcityPortability.lean and prove the identity for m = 2, then general m by reduction to the top-2 pair.\n\nPortability becomes exactly computable from one forward pass plus one matrix-vector product per position.\n\nDamage depends on third-order structure of the logit vector, and only one-sided screens can exist.",
+    "domains": [],
+    "id": "fd_4510",
+    "priority_score": 0.5938235294117648,
+    "research_mode": "team",
+    "source_exp_id": "f7361634",
+    "status": "available",
+    "timestamp": "2026-09-01T21:48:15.834073+00:00",
+    "title": "Top-Two Projection Completeness for Transplant Damage"
   },
   {
     "consumed_by_exp_id": "",
@@ -14705,19 +14705,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Angular Curvature Obstruction to Band Re-entry"
   },
   {
-    "consumed_by_exp_id": "f7361634",
-    "description": "Two candidate predictors of transplant damage exist in the catalog: a norm-based upper bound and a margin-based certificate. Conjecture: the margin-uncertified fraction predicts damage, and Lipschitz/norm distance between the two copies of a block does not.\n\nAcross layer blocks, the measured post-transplant disagreement correlates with the margin-uncertified fraction and is not monotone in the block's weight-space distance.\n\nCompute both predictors per block and compare against measured disagreement, using net54_margin_failure_fraction as the certified lower bound.\n\nPortability becomes predictable from a cheap forward-pass statistic, with no transplant needed.\n\nNorm-based bounds remain the operative predictor and the margin route is only a sufficient condition.",
-    "domains": [],
-    "id": "fd_3792",
-    "phase": "A",
-    "priority_score": 0.5931651376146789,
-    "research_mode": "team",
-    "source_exp_id": "78e6d19a",
-    "status": "in_progress",
-    "timestamp": "2026-08-23T04:04:40.807255+00:00",
-    "title": "Margin Scarcity as the Portability Predictor"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "A property determined by finitely many digits should be unable to separate any asymptotic behaviour. We conjecture that every prefix-measurable property containing a point contains rationals, non-normal irrationals, and continuum many of each, so that asymptotic digit laws are never prefix-measurable.\n\nIf P is a set of reals such that every x in P has an n with the whole n-digit cylinder of x contained in P, then P contains a rational, an irrational with nonzero-digit density 0, an irrational with nonzero-digit density 1, and uncountably many elements.\n\nInstantiate Pyth.prefix_determines_no_digit_law and Pyth.not_countable_prefix_class at the cylinder witnessing membership.\n\nA clean impossibility theorem: no experiment reading finitely many digits can decide any asymptotic digit law.\n\nThe cylinder topology would carry more arithmetic information than expected, contradicting the graft construction.",
     "domains": [],
@@ -14776,6 +14763,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T18:30:48.485663+00:00",
     "title": "Square-Root Law for Optimal Batch Size under Sub-Quadratic Multiplication"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The collision-mass criterion 4\u00b7eps\u00b2 separates certifiable from uncertifiable positions. The conjecture is that this is a genuine threshold: above the critical entropy nothing is certifiable, below it almost everything is. The upper half is already proved.\n\nWith H*(eps) = 2\u00b7log(1/(2\u00b7eps)), positions with Renyi-2 entropy above H* are never margin-certified, and for score vectors with collision mass bounded away from 4\u00b7eps\u00b2 a positive fraction is certified.\n\nProve the converse of diffuse_not_certified under an anti-concentration hypothesis on the score vector, in Catalog/Applications/MarginScarcityEntropy.lean.\n\nPortability screening reduces to a single entropy histogram per block.\n\nCollision mass is too coarse and a higher Renyi order is needed.",
+    "domains": [],
+    "id": "fd_4511",
+    "priority_score": 0.5931481481481482,
+    "research_mode": "team",
+    "source_exp_id": "f7361634",
+    "status": "available",
+    "timestamp": "2026-09-01T21:48:16.478670+00:00",
+    "title": "Renyi-2 Threshold Law for Certifiable Portability"
   },
   {
     "consumed_by_exp_id": "",
@@ -16390,6 +16389,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T12:55:22.133974+00:00",
     "title": "Universal Quadratic Law for Alpha-Connection Curvature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Margin scarcity is conjectured to increase monotonically with layer depth in the last blocks of a transformer, making the tail structurally the least portable region. Combined with the two-scalar bound this yields a monotone, transplant-free damage profile.\n\nFor the last k blocks, the mean top-1 gap mu_l is non-increasing in l, hence the certified damage bound (G \u2212 mu_l)/(G \u2212 2\u00b7eps) is non-decreasing in l.\n\nMeasure mu_l and G per layer with a logit lens and compare the predicted bound against measured transplant damage per layer.\n\nLayer selection for model surgery can be made analytically, top-down.\n\nSome late layers are more portable than earlier ones and depth is not the right ordering variable.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_4512",
+    "priority_score": 0.5646486329219266,
+    "research_mode": "team",
+    "source_exp_id": "f7361634",
+    "status": "available",
+    "timestamp": "2026-09-01T21:48:17.024637+00:00",
+    "title": "Depth Monotonicity of Margin Scarcity"
   },
   {
     "consumed_by_exp_id": "",
@@ -29187,6 +29201,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T18:33:23.203272+00:00",
     "title": "Floor Identifiability Under Rebound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The dead-direction counterexample is conjectured to be typical rather than exceptional: for rotation-invariant random drifts the correlation between weight distance and damage vanishes as the feature dimension grows, while margin scarcity stays informative. This would explain why norm-based portability heuristics fail in practice.\n\nFor a uniformly random drift direction in dimension k, corr(weight distance, damage) = O(1/sqrt k) while corr(margin scarcity, damage) is bounded below by a positive constant.\n\nFormalise the spherical concentration estimate for the projection onto a fixed top-2 direction and combine with margin_predicts_norm_does_not.\n\nNorm-based portability heuristics are provably useless at scale.\n\nNorm distance retains predictive power for structured (non-isotropic) drifts, and the relevant question becomes drift anisotropy.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4513",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f7361634",
+    "status": "available",
+    "timestamp": "2026-09-01T21:48:17.545481+00:00",
+    "title": "Genericity of Norm Anti-Prediction in High Dimension"
   },
   {
     "consumed_by_exp_id": "",
