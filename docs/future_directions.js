@@ -1672,16 +1672,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-61 #2 \u2014 TDIAL-U56B: fresh-seed replication confirms validity but edge not established (paper 187)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb1faf15",
     "description": "Round-67 #2, cron iteration (exp 540). The first band-miss on uniform draws.\n\n**DIAL-FADES**: pooled Spearman(T, rate) = **0.544** CI [0.498, 0.588] at bitlen 100 \u2014 the CI straddles the 0.55 floor for the first time. Per-seed: 0.546/0.528/0.549.\n\nT beats count by +0.098 everywhere. But the dial's signal has faded below the validated band \u2014 the erosion that began at bitlen 56 continues its gradual path.\n\nThe zero-fit dial's validated deployment envelope ends at bitlen ~96; beyond that signal degrades gradually toward the floor.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp540_t_dial_unif_100.py + exp540_result.json, seeds 20261200\u201302.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3763",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T22:39:30.335650+00:00",
     "title": "FACT round-67 #2 \u2014 TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
   },
@@ -1727,21 +1728,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-22T23:36:49.794322+00:00",
     "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST \u2014 interleaved code+prose knees {12,20}: starts at code's level but rises at double the expected rate"
-  },
-  {
-    "consumed_by_exp_id": "ed4056bf",
-    "description": "Round-69 #2, cron iteration (exp 544). The first CI-separated band loss of the ladder.\n\n**TDIAL-U108-CONTINUES-FADE**: pooled Spearman(T, rate) = **0.488** CI [0.445, 0.534] \u2014 the ENTIRE CI below the 0.55 floor for the FIRST time. Fade decelerates toward a ~0.48 plateau (step delta \u22120.0125 vs prior \u22120.030/\u22120.043). T beats count by +0.092 CI [0.043, 0.139]. First seed heterogeneity of the ladder.\n\nThe dial drops decisively below the validated band at bitlen 108 \u2014 the fade is real and the CI now excludes the floor.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp544_t_dial_unif_108.py + exp544_result.json + run.log, seeds 20261210\u201312.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3778",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T23:36:49.796512+00:00",
-    "title": "FACT round-69 #2 \u2014 TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
   },
   {
     "consumed_by_exp_id": "1aa0b577",
@@ -2829,6 +2815,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ed4056bf (Q=0.820), which proved 51 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-69 #2, cron iteration (exp 544). The first CI-separated band loss of the ladder.\n\n**TDIAL-U108-CONTINUES-FADE**: pooled Spearman(T, rate) = **0.488** CI [0.445, 0.534] \u2014 the ENTIRE CI below the 0.55 floor for the FIRST time. Fade decelerates toward a ~0.48 plateau (step delta \u22120.0125 vs prior ",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_ed4056bf_b6e4c124",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "ed4056bf",
+    "status": "available",
+    "timestamp": "2026-09-01T05:09:23.188668+00:00",
+    "title": "Deepening: FACT round-69 #2 \u2014 TDIAL-U108: the dial drops below the band at bitlen 108 (pape"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domains": [
       "NumberTheory"
@@ -3769,34 +3769,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 51790419 (Q=0.790), which proved 106 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-70 #1, cron iteration (exp 545). The second consecutive decisive band loss.\n\n**TDIAL-U112-CONTINUES-FADE**: pooled Spearman(T, rate) = **0.462** CI [0.415, 0.508] \u2014 entire CI below the 0.55 floor for the second consecutive rung. Per-seed 0.409 / 0.509 / 0.460. T beats count by +0.047 CI [0.003",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_51790419_547485d5",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "51790419",
-    "status": "available",
-    "timestamp": "2026-08-31T23:52:45.933902+00:00",
-    "title": "Deepening: FACT round-70 #1 \u2014 TDIAL-U112: the fade continues below the band at bitlen 112 ("
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 2f2e652e (Q=0.780), which proved 50 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-88 \u2014 limited-memory axis, round 32 (paper 169, ResearchOutput/exp_net88_de4096.py, /tmp/net88.log)\n\n**Verdict name: THE-TOKENIZER-TAX-EXPLODES.**\n\n### Result\nGerman prose at ctx=4096 (gate exact; 3 held-out windows):\n\n| k | 24 | 32 | 40 | 48 | 56 |\n|---|---|---|---|---|---|\n| retained | 0.953",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_2f2e652e_d9b96776",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "2f2e652e",
-    "status": "available",
-    "timestamp": "2026-08-31T23:52:30.161245+00:00",
-    "title": "Deepening: NET-88: THE-TOKENIZER-TAX-EXPLODES \u2014 German prose at 4096 needs >56 keys (all po"
   },
   {
     "consumed_by_exp_id": "",
@@ -7863,6 +7835,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-31T05:36:49.285273+00:00",
     "title": "ArXiv paper: Betti bounds for spaces of curves on varieties and Manin's conjecture for quartic del Pezzo surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Asymptotic Bounds on Generalized Covering Radii of Binary Primitive BCH Codes' and formalize its key results. Abstract: Fix integers $e\\ge2$ and $r\\ge1$. In this paper we study the $r$-th generalized covering radius $\u03c1_r\\left(BCH(e,m)\\right)$ of the binary primitive $e$-error-correcting BCH code $BCH(e,m)$. By using an algebraic-geometric reformulation of the covering problem together with an explicit Lang-Weil estimate, we prove that \\[\u03c1_r\\bigl(\\BCH(e,m)\\bigr)\\le(r+1)e-1\\] for all sufficiently large $m$. For $e\\ge7$, this improves a recent result of Belinsky--Zabokritskiy. Our proof gives a substantially simpler geometric approach to this upper bound. In particular it implies that \\[\u03c1_2\\bigl(BCH(e,m)\\bigr)=3e-1\\] for all sufficiently large $m$. Previously it was only known that \\[\u03c1_2\\bigl(\\BCH(e,m)\\bigr) \\in \\left\\{3e-1,3e\\right\\}\\] for all sufficiently large $m$.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4461",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.30961v1",
+    "status": "available",
+    "timestamp": "2026-09-01T05:10:02.443124+00:00",
+    "title": "ArXiv paper: Asymptotic Bounds on Generalized Covering Radii of Binary Primitive BCH Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Extensions of Hindman's theorem via finite colorings of topological groups' and formalize its key results. Abstract: We study the partition regular properties of topological groups, proving several extensions of Hindman theorem where monochromatic sets of finite sums are required to satisfy additional topological constraints. In particular, our results imply that for every nowhere dense set $C \\subseteq \\mathbb{R}^n$, there exists an open set $P \\supseteq C$ such that for any finite coloring of $\\mathbb{Q}^n \\setminus P$, there is a family $\\mathcal{A}$ of sequences in $\\mathbb{Q}^n \\setminus P$ which satisfies the following properties: (i) for each $A\\in\\mathcal A$, the set $\\operatorname{FS}(A)$ of finite sums of $A$ is a closed discrete subset of $\\mathbb R^n$; (ii) the set $\\bigcup_{A\\in\\mathcal A}\\operatorname{FS}(A)$ is monochromatic; and (iii) the set $\\bigcup_{A\\in\\mathcal A}\\operatorname{FS}(A)$ is dense in an open unbounded subset of $\\mathbb R^n$.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4462",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.31088v1",
+    "status": "available",
+    "timestamp": "2026-09-01T05:10:05.695275+00:00",
+    "title": "ArXiv paper: Extensions of Hindman's theorem via finite colorings of topological groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -14627,6 +14629,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Recast the fade in the correlation-angle coordinate arccos, where the measured ladder's 116 rebound is compatible with a concavity hypothesis that raw-correlation antitonicity fails. Conjecture that angular deceleration forces convergence of the angle and forbids re-entry into the 0.55 spherical cap. This replaces a falsified monotone model by a testable curvature model.\n\nIf theta_n = arccos(rho_n) satisfies theta_{n+2} - 2 theta_{n+1} + theta_n <= 0 for n >= 3 then theta_n converges and lim theta_n >= arccos(0.488), so rho_n < 0.55 for all n >= 3.\n\nFormalise angular deceleration and apply the plateau localisation theorem to theta; numerically check the derived rebound bound against the measured 112/116/120 rungs.\n\nBand loss at U108 is permanent for the angular model class and the rebound is quantitatively bounded.\n\nThe fade has no monotone description in either natural coordinate, so the plateau reading is unsupported.",
+    "domains": [],
+    "id": "fd_4456",
+    "priority_score": 0.5931927710843374,
+    "research_mode": "team",
+    "source_exp_id": "ed4056bf",
+    "status": "available",
+    "timestamp": "2026-09-01T05:09:07.845499+00:00",
+    "title": "Angular Curvature Obstruction to Band Re-entry"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two candidate predictors of transplant damage exist in the catalog: a norm-based upper bound and a margin-based certificate. Conjecture: the margin-uncertified fraction predicts damage, and Lipschitz/norm distance between the two copies of a block does not.\n\nAcross layer blocks, the measured post-transplant disagreement correlates with the margin-uncertified fraction and is not monotone in the block's weight-space distance.\n\nCompute both predictors per block and compare against measured disagreement, using net54_margin_failure_fraction as the certified lower bound.\n\nPortability becomes predictable from a cheap forward-pass statistic, with no transplant needed.\n\nNorm-based bounds remain the operative predictor and the margin route is only a sufficient condition.",
     "domains": [],
     "id": "fd_3792",
@@ -14876,6 +14890,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-27T20:32:07.156011+00:00",
     "title": "Power Threshold for the Lag-Averaged Pair Statistic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Exact identifiability shows one rung plus a ratio bound leaves an interval of length d0 r/(1-r) of admissible plateaus. Conjecture that each additional measured rung contracts this interval by exactly the factor r, giving a closed formula for the number of extra rungs needed to identify the plateau to within the U108 CI half-width. This converts 'measure more rungs' into a costed experimental plan.\n\nAfter m further rungs the admissible plateau interval has length d0 r^{m+1}/(1-r), so identification to within 0.0445 needs ceil(log(0.0445 (1-r)/(d0 r))/log r) rungs, i.e. three at r = 1/2 and d0 = 0.0259.\n\nGeneralise plateau_set_exact to a prefix of m measured rungs and compute the resulting interval length in Lean.\n\nThe programme has an explicit stopping rule for the bitlen ladder.\n\nPlateau identification is either cheaper or impossible, and the ladder design must change.",
+    "domains": [],
+    "id": "fd_4460",
+    "priority_score": 0.5925609756097562,
+    "research_mode": "team",
+    "source_exp_id": "ed4056bf",
+    "status": "available",
+    "timestamp": "2026-09-01T05:09:09.904683+00:00",
+    "title": "Rung Budget for Plateau Identification"
   },
   {
     "consumed_by_exp_id": "",
@@ -16415,6 +16441,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Because Fisher-z pooling is Einstein velocity composition, rapidity is the unique coordinate in which correlation pooling is a group operation. Conjecture that the bitlen fade is exponential in rapidity with a finite plateau rapidity and that the seed ensemble is a translation family in that coordinate. This makes the plateau a constant of the generator rather than of the sampling grid.\n\nThere exist kappa > 0 and z_inf with artanh(rho_L) = z_inf + (artanh(rho_96) - z_inf) exp(-kappa (L - 96)) for the seven measured rungs within CI width, and the per-seed rapidities differ by bitlen-independent offsets.\n\nFit the three-parameter rapidity model to the seven rungs and to the per-seed triples; compare residuals with the affine-in-rho fit.\n\nThe band floor becomes a rapidity threshold and the plateau is a generator constant.\n\nThe fade is not a noise-accumulation process and the plateau is an artefact of the bitlen grid.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4458",
+    "priority_score": 0.5645707775109596,
+    "research_mode": "team",
+    "source_exp_id": "ed4056bf",
+    "status": "available",
+    "timestamp": "2026-09-01T05:09:08.874064+00:00",
+    "title": "Rapidity-Additive Fade Law"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Because the x-coordinate detector is invariant under the elliptic involution, the detected orders are the divisors of the sumset J+J together with the difference set J-J of the visited multiple set J. Conjecture: the sequential run is far from optimal and a Sidon-complement construction detects many more orders at equal cost.\n\nThe advantage already proved at k = 4 (the set {1,2,4,8} detects orders 9, 10 and 12 that {1,2,3,4} misses) persists and grows: the ratio of detected-order counts between the best J of size k and the sequential set tends to infinity with k.\n\nExhaustive or randomized search over J for small k, then a Lean certificate for the winning set using the divisibility characterization xEq_iff_dvd.\n\nA cheap redesign of stage one improves the constant of every lite-style method.\n\nThe sequential run is combinatorially optimal for involution detectors, a satisfying rigidity statement.",
     "domains": [
       "NumberTheory",
@@ -16937,6 +16978,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T12:55:21.563268+00:00",
     "title": "Degree Propagation Bound for Curvature of Algebraic Statistical Surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved capacity bound k <= (1-c)/(rho^2-c) comes from comparing the squared length of the sum of the dials with its projection on the rate. Conjecture that equality characterises a regular-simplex configuration around the rate direction, and determine exactly for which (k, rho, c) such a configuration exists. This says whether a four-dial ensemble at the band floor is constructible or merely not excluded.\n\nEquality in k <= (1-c)/(rho^2-c) holds iff all pairwise inner products equal c, all inner products with the rate equal rho, and the sum of the dials is parallel to the rate; such a family exists in R^k iff c = (k rho^2 - 1)/(k - 1) and c >= -1/(k-1).\n\nFormalise the equality case of the Cauchy-Schwarz step and construct the candidate simplex family as an explicit Gram matrix, checking positive semidefiniteness.\n\nEnsembling strategies have an exactly known optimum and the four-dial bound at the floor is achieved.\n\nThe capacity bound is not tight and a strictly better packing bound exists for weak dial families.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4459",
+    "priority_score": 0.5640187118695582,
+    "research_mode": "team",
+    "source_exp_id": "ed4056bf",
+    "status": "available",
+    "timestamp": "2026-09-01T05:09:09.393249+00:00",
+    "title": "Extremal Configurations for the Dial Capacity Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -28656,6 +28712,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-31T23:52:54.685171+00:00",
     "title": "Parity Merging and the Quadratic Residue Rate Table"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact identity gram_gap_eq expresses the loss of the advantage certificate relative to the Gram certificate as half the squared difference of residual lengths. Conjecture that this defect is asymptotically delta^4 / (8 (1 - rho^2)), so the two certificates agree to fourth order in the advantage. This decides whether measuring the dial/baseline correlation directly is experimentally worthwhile.\n\nFor a = rho + delta/2 and b = rho - delta/2 with |rho| < 1, (1 - delta^2/2) - (a b + sqrt((1-a^2)(1-b^2))) = delta^4/(8(1-rho^2)) + O(delta^6).\n\nExpand the closed form of gram_gap_eq in Lean with an explicit remainder bound and evaluate at each measured rung.\n\nAdvantage-only readings are provably within O(delta^4) of optimal; no new experiment is needed.\n\nDirect measurement of corr(T, count) carries first-order information and should be scheduled.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4457",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ed4056bf",
+    "status": "available",
+    "timestamp": "2026-09-01T05:09:08.362444+00:00",
+    "title": "Quartic Defect Law for Decorrelation Certificates"
   },
   {
     "consumed_by_exp_id": "",
@@ -45393,14 +45463,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both invariants are formalised and computed in closed form; what"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f5ddf1b2",
     "description": "The dichotomy, the local homeomorphism property and the semicontinuity\nof `sheetNumber` are all proved; the remaining step is to run the same\ntrivialisation argument relative to an open subset of the base.",
     "domains": [],
     "id": "fd_1707",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "4b03d5cc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T10:47:35.625224+00:00",
     "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
   },

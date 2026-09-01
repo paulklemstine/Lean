@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "92ebc5bc",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — identifiability inside the positional shape layer\n\nDerived from this cycle's two formal files:\n\n* `Catalog/MachineLearning/EdgeSpikeCensoring.lean` — the steepness of a\n  left-ed",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 50,
-      "timestamp": "2026-08-26T08:01:16",
-      "title": "FACT round-88 #2 — EDGE-CAP (exp 594 FINAL): H0 — SPIKE STEEPNESS UNIDENTIFIABLE AT THIS DATA SIZE ("
-    },
-    {
       "cycle_id": "220a83a3",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Berggren moves on `(ℤ/m)³`\n\nThis cycle established, with complete Lean proofs in\n`Catalog/Cryptography/BerggrenModular/`:\n\n* the exact linear classifier `whichMove (a,b,c) = [5a<",
@@ -499,19 +489,19 @@
       "theorem_count": 61,
       "timestamp": "2026-08-31T23:53:01",
       "title": "FACT round-87 #1 — MIXTURE-BASELINE (exp 588c FINAL): H0 — u*≈0.65 excess SURVIVES full divisibility"
+    },
+    {
+      "cycle_id": "ed4056bf",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after TDIAL-U108 (round-69 #2, exp 544)\n\nThree research cycles were run in this session. Everything listed below as *proved* compiles\nin Lean 4 / Mathlib with 0 `sorry` and only",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 51,
+      "timestamp": "2026-09-01T05:09:22",
+      "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1e89ff02",
-      "domain": "Geometry",
-      "key_insight": "# Future directions: p-adic Berggren dynamics\n\nThese conjectures grow out of the four Lean files produced in this cycle\n(`Catalog/Geometry/PadicBerggrenDynamics.lean`, `…NullCone.lean`, `…Orbits.lean`",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 143,
-      "timestamp": "2026-08-21T09:53:06",
-      "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical System"
-    },
     {
       "cycle_id": "315472d4",
       "domain": "Cryptography",
@@ -2501,6 +2491,16 @@
       "theorem_count": 61,
       "timestamp": "2026-08-31T23:53:01",
       "title": "FACT round-87 #1 — MIXTURE-BASELINE (exp 588c FINAL): H0 — u*≈0.65 excess SURVIVES full divisibility"
+    },
+    {
+      "cycle_id": "ed4056bf",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after TDIAL-U108 (round-69 #2, exp 544)\n\nThree research cycles were run in this session. Everything listed below as *proved* compiles\nin Lean 4 / Mathlib with 0 `sorry` and only",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 51,
+      "timestamp": "2026-09-01T05:09:22",
+      "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-31T23:53:01",
+  "last_updated": "2026-09-01T05:09:22",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "a7626bf4",
-        "quality": 0.88,
-        "theorems": 77,
-        "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
-      },
-      {
         "cycle_id": "9d22f1f1",
         "quality": 0.83,
         "theorems": 108,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 84,
         "title": "The floor is sharp"
+      },
+      {
+        "cycle_id": "ed4056bf",
+        "quality": 0.82,
+        "theorems": 51,
+        "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (pape"
       }
     ],
     "Probability": [
