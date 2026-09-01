@@ -193,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.showWelcome = function(updateUrl = true) {
         welcomeScreen.classList.remove('hidden');
         packageView.classList.add('hidden');
+        if (window.resumeGraphAnimation) window.resumeGraphAnimation();
         const titleEl = document.getElementById('pkg-title');
         if (titleEl) titleEl.textContent = '';
         window.Aether.currentPackage = null;
@@ -207,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.loadPackage = async function(filename, updateUrl = true) {
+        if (window.pauseGraphAnimation) window.pauseGraphAnimation();
         const slug = filename.replace(/\.json$/i, '');
         if (updateUrl !== false) {
             const targetPath = '/' + encodeURIComponent(slug);

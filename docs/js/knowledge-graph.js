@@ -156,6 +156,7 @@
     // ─── Canvas state ───
     let W, H;
     let animating = false;
+    let rafId = null;
     let camera = { x: 0, y: 0, zoom: 0.024 };
     let cameraTarget = null; // { x, y, zoom } — smooth zoom-to target
     let hoverTrackId = null;  // node ID being tracked by hover zoom
@@ -173,6 +174,36 @@
     let hoveredCluster = null;
     let time = 0;
     let timeScale = 1;
+
+    function isReadingPackage() {
+        if (welcomeScreen.classList.contains('hidden')) return true;
+        const packageView = document.getElementById('package-view');
+        if (packageView && !packageView.classList.contains('hidden')) return true;
+        return false;
+    }
+
+    function startAnimation() {
+        if (isReadingPackage()) {
+            stopAnimation();
+            return;
+        }
+        if (animating) return;
+        animating = true;
+        resize();
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+        rafId = requestAnimationFrame(render);
+    }
+
+    function stopAnimation() {
+        animating = false;
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+    }
 
 
 
@@ -1114,7 +1145,10 @@
     }
 
     function render() {
-        if (!animating) return;
+        if (!animating || isReadingPackage()) {
+            stopAnimation();
+            return;
+        }
         time += 0.016 * timeScale;
 
         // Smooth camera animation toward target
@@ -1642,7 +1676,11 @@
             }
         });
 
-        requestAnimationFrame(render);
+        if (animating && !isReadingPackage()) {
+            rafId = requestAnimationFrame(render);
+        } else {
+            stopAnimation();
+        }
     }
 
     // ─── Welcome text fade-out ───
@@ -2036,52 +2074,55 @@
         nodeMap[node.id] = node;
     };
 
-    // Resize handler
-    window.addEventListener('resize', resize);
+    // Expose pause/resume controls globally
+    window.pauseGraphAnimation = stopAnimation;
+    window.resumeGraphAnimation = startAnimation;
+    window._pauseGraph = stopAnimation;
+    window._resumeGraph = startAnimation;
 
-    // MutationObserver to pause/resume animation
-    const observer = new MutationObserver(() => {
-        if (welcomeScreen.classList.contains('hidden')) {
-            animating = false;
-        } else {
+    // Resize handler: only resize when welcome screen / graph is active
+    window.addEventListener('resize', () => {
+        if (!isReadingPackage()) {
             resize();
-            animating = true;
-            requestAnimationFrame(render);
         }
     });
-    observer.observe(welcomeScreen, { attributes: true, attributeFilter: ['class'] });
 
-    if (!welcomeScreen.classList.contains('hidden')) {
-        resize();
-        animating = true;
-        requestAnimationFrame(render);
+    // MutationObserver to pause/resume animation when welcome screen is hidden/shown
+    const welcomeObserver = new MutationObserver(() => {
+        if (welcomeScreen.classList.contains('hidden')) {
+            stopAnimation();
+        } else {
+            startAnimation();
+        }
+    });
+    welcomeObserver.observe(welcomeScreen, { attributes: true, attributeFilter: ['class'] });
+
+    // MutationObserver on packageView to pause animation when reading a research package
+    const packageView = document.getElementById('package-view');
+    if (packageView) {
+        const pkgObserver = new MutationObserver(() => {
+            if (!packageView.classList.contains('hidden')) {
+                stopAnimation();
+            } else if (!welcomeScreen.classList.contains('hidden')) {
+                startAnimation();
+            }
+        });
+        pkgObserver.observe(packageView, { attributes: true, attributeFilter: ['class'] });
     }
 
-    // Stop animation after a short warmup so it doesn't consume GPU/CPU
-    // while the user is reading a research package and scrolling the page.
-    // The static rendered frame remains visible and interactive.
-    const WARMUP_FRAMES = 60; // ~1 second at 60fps
-    let warmupFrameCount = 0;
-    const originalRender = render;
-    render = function () {
-        if (!animating) return;
-        warmupFrameCount++;
-        if (warmupFrameCount >= WARMUP_FRAMES && welcomeScreen.classList.contains('hidden')) {
-            animating = false;
-            return;
-        }
-        originalRender();
-    };
-
-    // Re-enable animation briefly when returning to the welcome screen
-    // so the graph is alive again.
-    const restartObserver = new MutationObserver(() => {
-        if (!welcomeScreen.classList.contains('hidden')) {
-            animating = true;
-            warmupFrameCount = 0;
-            resize();
-            requestAnimationFrame(render);
+    // Visibility change handler (pause when tab hidden, resume when tab active on welcome screen)
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAnimation();
+        } else if (!isReadingPackage()) {
+            startAnimation();
         }
     });
-    restartObserver.observe(welcomeScreen, { attributes: true, attributeFilter: ['class'] });
+
+    // Initial state check
+    if (!isReadingPackage()) {
+        startAnimation();
+    } else {
+        stopAnimation();
+    }
 })();

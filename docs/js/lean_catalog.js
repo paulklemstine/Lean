@@ -21,9 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.hideLeanCatalogView = function() {
         catalogView.classList.add('hidden');
         if (catalogLink) catalogLink.classList.remove('active');
+        if (window.resumeGraphAnimation && (!welcomeScreen || !welcomeScreen.classList.contains('hidden'))) {
+            window.resumeGraphAnimation();
+        }
     };
 
     async function showLeanCatalog(targetPath = null) {
+        if (window.pauseGraphAnimation) window.pauseGraphAnimation();
         if (welcomeScreen) welcomeScreen.classList.add('hidden');
         if (packageView) packageView.classList.add('hidden');
         if (directionsView) directionsView.classList.add('hidden');

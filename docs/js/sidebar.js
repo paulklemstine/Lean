@@ -128,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             li.classList.add('active');
+            if (window.pauseGraphAnimation) window.pauseGraphAnimation();
             if (window.loadPackage) window.loadPackage(pkg.filename);
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (window.innerWidth <= 768 && window.closeSidebar) {

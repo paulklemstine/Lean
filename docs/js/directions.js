@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const packageView = document.getElementById('package-view');
 
     window.showDirectionsView = function() {
+        if (window.pauseGraphAnimation) window.pauseGraphAnimation();
         window.Aether.directionsVisible = true;
         welcomeScreen.classList.add('hidden');
         packageView.classList.add('hidden');
@@ -126,6 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.Aether.directionsVisible = false;
         directionsView.classList.add('hidden');
         directionsLink.classList.remove('active');
+        if (window.resumeGraphAnimation && (!welcomeScreen || !welcomeScreen.classList.contains('hidden'))) {
+            window.resumeGraphAnimation();
+        }
     };
 
     window.populateDomainFilter = function() {
