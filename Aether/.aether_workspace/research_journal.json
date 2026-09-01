@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "220a83a3",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Berggren moves on `(ℤ/m)³`\n\nThis cycle established, with complete Lean proofs in\n`Catalog/Cryptography/BerggrenModular/`:\n\n* the exact linear classifier `whichMove (a,b,c) = [5a<",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 145,
-      "timestamp": "2026-08-26T09:03:40",
-      "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
-    },
-    {
       "cycle_id": "8eac1b6d",
       "domain": "Novelty",
       "key_insight": "# Future Directions — ECA fixed-point varieties after five research cycles\n\n## What the cycles established\n\nThe starting conjecture — *\"the dimension of the fixed-point variety\n`V(f) = {s : f(s) = s}`",
@@ -499,19 +489,19 @@
       "theorem_count": 51,
       "timestamp": "2026-09-01T05:09:22",
       "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
+    },
+    {
+      "cycle_id": "1aa0b577",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after the NET-90 symmetric-mixture bump\n\nSix research cycles produced a complete structural account of the mixing-ratio\nresponse of the attention key budget: a sup-convolution mo",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-09-01T10:07:38",
+      "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pure domains — the mixi"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "315472d4",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Berggren ⟷ Markoff\n\n## Where this cycle ended up\n\nThe mission hypothesis (\"the Berggren ternary tree and the Markoff tree are isomorphic as\nLorentz-preserving ternary trees\") is",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 115,
-      "timestamp": "2026-08-21T09:53:19",
-      "title": "Markoff Tree Transfer — Carrying the Berggren Tree's Machinery to the Markoff Tree"
-    },
     {
       "cycle_id": "fe1191f5",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 51,
       "timestamp": "2026-09-01T05:09:22",
       "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
+    },
+    {
+      "cycle_id": "1aa0b577",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after the NET-90 symmetric-mixture bump\n\nSix research cycles produced a complete structural account of the mixing-ratio\nresponse of the attention key budget: a sup-convolution mo",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-09-01T10:07:38",
+      "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pure domains — the mixi"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c9c85c67",
-      "domain": "Cryptography",
-      "name": "hyp_not_even",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c9c85c67",
-      "domain": "Cryptography",
-      "name": "prime_not_dvd_leg",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c9c85c67",
-      "domain": "Cryptography",
-      "name": "prime_not_dvd_leg",
-      "quality": 0.82
-    },
     {
       "cycle_id": "9b32ba78",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "mixPred_no_positional_freedom",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "1aa0b577",
+      "domain": "Probability",
+      "name": "rather",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "1aa0b577",
+      "domain": "Probability",
+      "name": "headMass_split_le_balanced",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "1aa0b577",
+      "domain": "Probability",
+      "name": "mixHead_balanced_le_split",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-09-01T05:09:22",
+  "last_updated": "2026-09-01T10:07:38",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "c293906f",
-        "quality": 0.88,
-        "theorems": 95,
-        "title": "NET-76: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE — complete 5-domain × 2-context tabl"
-      },
-      {
         "cycle_id": "51837664",
         "quality": 0.87,
         "theorems": 153,
@@ -3823,6 +3817,12 @@
         "quality": 0.83,
         "theorems": 114,
         "title": "FACT round-73 #2 — ADAPTIVE-QS: dial predicts yield (rho 0.74-0.84) but naive re"
+      },
+      {
+        "cycle_id": "1aa0b577",
+        "quality": 0.88,
+        "theorems": 110,
+        "title": "NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pur"
       }
     ],
     "Pythagorean": [
