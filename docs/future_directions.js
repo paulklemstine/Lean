@@ -1473,30 +1473,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a75b3939",
     "description": "## NET-59 \u2014 limited-memory axis, round 12 (paper 144, ResearchOutput/exp_net59_perlayer.py, /tmp/net59.log)\n\n**Verdict name: NO-SINGLE-LAYER-IS-THE-BOTTLENECK.**\n\n### Result\nSolo-layer causal pruning profiles: for each of Qwen2.5-0.5B's 24 layers independently, oracle top-k applied ONLY to that layer (k=16 and k=32), all others full (ctx=512, 24 held-out windows):\n\n- **k=16 profile: spread 0.6 points.** Best 1.0013 (L13), worst 0.9953 (L12); every layer \u2265 0.995.\n- The identity tail: L21 0.9987, L22 0.9987, **L23 1.0008 \u2014 the BEST layer in the stack.**\n- k=32: even flatter (spread 0.5 pts).\n\n- **P1 TAIL-IS-CRITICAL REFUTED**: the tail is not individually fragile under top-k.\n- **P2 CONFIRMED trivially**: all layers \u2265 0.995.\n- **P3 NON-UNIFORM-MAP REFUTED**: the profile is remarkably uniform.\n\n### The epistasis resolution\nFour prior rounds established L22/L23 as categorically different: only far-from-tropical region (NET-50), highest crystallization loss, only cross-fine-tune decision divergence (NET-51), only unportable weights (NET-54), personal KV. Yet solo deletion costs \u2248 0. **The tail's role lives in interaction with upstream representations**, exactly as NET-54's swap-collapse showed directly. Additional structure: joint all-layer k=16 costs 1.7% (NET-50) vs ~4.8% if solo costs were additive \u2014 pruning interactions are SUB-ADDITIVE/redundant.\n\n### Design implication\nThere is no per-layer budget hierarchy to exploit for mixed-precision serving at this scale; differentiation must come from interaction-aware or policy-level criteria.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 causal solo profiles new in-programme; (c) confronted \u2014 limits: ONE context (512), solo-only granularity (pairs/joints open), 24 windows; (d) clean; (e) deterministic monotone profiles; (f) clean \u2014 gate exact, ALL_DONE_NET59; (g) fair \u2014 identical budgets per layer; (h) DIRECT.\n\n### Next\nPairwise/joint tail ablations; 1.5B replication; probe+recency hybrid; domain-jump corpora; 7B cell.\n\nNow 59 network experiments. Assessment v59. Paper 144.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3698",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T17:37:32.037042+00:00",
     "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK \u2014 solo-layer top-k profiles are flat (all 24 layers within 0.6pts at k=16, tail L23 literally best); the tail's specialness is epistatic, not individual fragility"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "108711a9",
     "description": "Round-55 #2, cron iteration (exp 524, assessment v291). Completing the degree-12 semiprime arm.\n\n**D12-SEMIPRIME-CONFIRMED**: pair channel matches exact enumeration law (z = \u22120.88 inside null); split-count z = \u22120.91; which-factor wall HOLDS (sensitivity 0.0002 bits); T-dial replicates at Spearman 0.692.\n\nThe degree-12 structure is fully validated at both prime and semiprime levels.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp524_d12_semiprime.py + exp524_result.json, seeds 20261110\u201312.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3699",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T17:37:32.038600+00:00",
     "title": "FACT round-55 #2 \u2014 D12-SEMIPRIME: the degree-12 semiprime pair channel matches law (paper 183)"
   },
@@ -1543,62 +1545,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "384c4d0f",
     "description": "## NET-66 \u2014 limited-memory axis, round 19 (paper 151, ResearchOutput/exp_net66_1p5b2048.py, /tmp/net66.log)\n\n**Verdict name: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING.**\n\n### Result\nThe 1.5B's first ctx=2048 cell (fine grid, gate identical to NET-55/65):\n\n| k | 8 | 12 | 16 | 20 | 24 | 32 |\n|---|---|---|---|---|---|---|\n| retained | 0.9597 \u2717 | 0.9715 \u2717 | **0.9785 \u2717 (razor)** | **0.9817 \u2713** | 0.9846 \u2713 | 0.9867 \u2713 |\n\n- **P1 CONFIRMED**: the flat chain breaks upward \u2014 k\\*(2048) = 20 > 16.\n- **P2 REFUTED**: flatness does not hold through 2048.\n- **P3 REFUTED**: 20 < the 0.5B's 24 at the same context \u2014 scale does not increase sensitivity either.\n\n### The one-octave law\nThe two chains: 0.5B {16, 20, 24} vs 1.5B {16, 16, 20}. The 1.5B curve equals the 0.5B curve shifted right by ONE CONTEXT DOUBLING (20 arrives at 1024 for the small model, at 2048 for the large). Scale POSTPONES context-sensitivity rather than eliminating or amplifying it. Budget tables gain a scale-shift form: a 16-key budget covers the 0.5B to 512 and the 1.5B to 1024.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 2048 cell at 1.5B; (c) confronted \u2014 razor k=16 fail (~1 SE) leaves bracket (16, 20] partially open; 12 windows stated; (d) clean; (e) deterministic baseline monotone (0.5132); (f) clean \u2014 ALL_DONE_NET66; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-20 addendum @2048; 0.5B @4096 (does its chain continue rising?); domain-jump corpora; 7B cell (does the shift extend?).\n\nNow 66 network experiments. Assessment v66. Paper 151.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3712",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.077817+00:00",
     "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING \u2014 1.5B chain breaks at 2048 ({16,16,20}); broken curve equals the 0.5B shifted one octave (1.5B@2048 = 0.5B@1024 = 20)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bdc483a",
     "description": "## NET-62 \u2014 limited-memory axis, round 15 (paper 147, ResearchOutput/exp_net62_sub16.py, /tmp/net62.log)\n\n**Verdict name: THE-KNEE-LANDS-ON-THE-FINE-GRID.**\n\n### Result\nFine sweep at ctx=1024 (oracle top-k, Qwen2.5-0.5B, 24 held-out windows; baseline 0.4627 bit-identical to three prior rounds):\n\n| k | 4 | 8 | 12 | 20 | 24 |\n|---|---|---|---|---|---|\n| retained | 0.8940 \u2717 | 0.9520 \u2717 | 0.9662 \u2717 | **0.9803 \u2713** | **0.9851 \u2713** |\n\n- **P1 CONFIRMED**: the knee is 20 \u2014 well below the coarse-grid 32.\n- **P2 CONFIRMED**: it lands exactly ON the fine-grid point 20.\n\n### Consequences\n1. The 0.5B chain is now **strictly monotone: {16, 20, 24}** across {512, 1024, 2048}, replacing the coarse {16, 32, 24}.\n2. NET-55's size-invariance SHARPENS: 1.5B's {16, 16} is flat-to-declining against a rising baseline.\n3. The 2048 corpus-B reading (32) looks like a coarse-grid artifact, not corpus sensitivity.\n4. The knee-quantizes-to-grid pattern (toy 112 mid-grid; 20 here) gains a third instance.\n\nDeployment: the 1024 entry moves from 32 to 20 keys.\n\n### All 8 barriers\n(a) clean \u2014 both horns confirmed; (b) clean; (c) confronted \u2014 finer grid, same model/corpus; 24 windows stated; (d) clean; (e) deterministic pre-stated grid; (f) clean \u2014 ALL_DONE_NET62; (g) fair \u2014 same bar/harness; (h) DIRECT.\n\n### Next\nFine grids at 512/2048; domain-jump corpora; 1.5B fine-grid; 7B cell.\n\nNow 62 network experiments. Assessment v62. Paper 147.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3717",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.085865+00:00",
     "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now strictly monotone {16,20,24}; size-invariance sharpens; 2048 corpus-B reading was a coarse-grid artifact"
-  },
-  {
-    "consumed_by_exp_id": "6d23453a",
-    "description": "Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.\n\nThe dial's signal degrades toward the floor on a gradual path.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp535_t_dial_unif_84.py + exp535_result.json, seeds 20261190\u201392.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3744",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T20:41:46.051034+00:00",
-    "title": "FACT round-67 #1 \u2014 TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
-  },
-  {
-    "consumed_by_exp_id": "b4f872e1",
-    "description": "## NET-75 \u2014 limited-memory axis, round 27 (paper 160, ResearchOutput/exp_net75_frenchext.py, /tmp/net75.log)\n\n**Verdict name: THE-FRENCH-KNEE-IS-FORTY.**\n\n### Result\nExtended grid on French prose (corpus-B; gate exact):\n\n| k | 36 | 40 | 48 | 56 | 64 |\n|---|---|---|---|---|---|\n| retained | 0.9795 \u2717 | **0.9830 \u2713** | 0.9855 \u2713 | 0.9896 \u2713 | 0.9916 \u2713 |\n\n**k\\*(fr@1024) = 40 \u2014 exactly DOUBLE English prose's 20 at the same context.**\n\n- **P1 CONFIRMED**: the knee exists within the extended grid.\n- **P2 REFUTED**: it is 40, not the predicted ~28\u201332.\n\n### The five-domain table @1024\ncode=12, EN-prose=20, math=20, DE-prose=24, FR-prose=40. The tokenizer-tax is a domain-dependent MULTIPLIER (German +4, French \u00d72), not a fixed +4 step. The +4/doubling increment appears domain-universal. Combined with NET-73's TPW refutation: the mechanism is in HOW attention patterns are structured within each language, not how many tokens are used.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean \u2014 first beyond-coarse-grid French measurement; (c) confronted \u2014 one source/context stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET75; (g) fair \u2014 byte-identical harness; (h) DIRECT.\n\n### Next\nFrench @512 extended grid; increments at 4096; more languages; 7B quantized-offload cell.\n\nNow 75 network experiments. Assessment v75. Paper 160.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3746",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T20:41:46.054044+00:00",
-    "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY \u2014 extended grid pins k*(fr@1024)=40, exactly double English prose's 20; tokenizer-tax is a domain-dependent multiplier"
   },
   {
     "consumed_by_exp_id": "f3ffa89b",
@@ -1630,36 +1604,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
   },
   {
-    "consumed_by_exp_id": "b20378a3",
-    "description": "Round-61 #2, cron iteration (exp 542). Fresh-seed replication of paper 184's bitlen-56 uniform cell.\n\n**U56B-DIAL-HOLDS-COUNT-PARITY**: pooled \u03c1(T, rate) = **0.669** [0.650, 0.690] \u2014 in band; all 3 seeds pass H1.\n\nH2 FAIL on pre-stated rule: pooled advantage +0.045 \u2264 +0.05; only 1/3 seeds > +0.05. The dial's weighted edge is NOT ESTABLISHED at bitlen 56 \u2014 count catches up in this batch.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp542_t_dial_unif_56.py + exp542_result.json, seeds 20261140\u201342.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3762",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T22:39:30.334253+00:00",
-    "title": "FACT round-61 #2 \u2014 TDIAL-U56B: fresh-seed replication confirms validity but edge not established (paper 187)"
-  },
-  {
-    "consumed_by_exp_id": "eb1faf15",
-    "description": "Round-67 #2, cron iteration (exp 540). The first band-miss on uniform draws.\n\n**DIAL-FADES**: pooled Spearman(T, rate) = **0.544** CI [0.498, 0.588] at bitlen 100 \u2014 the CI straddles the 0.55 floor for the first time. Per-seed: 0.546/0.528/0.549.\n\nT beats count by +0.098 everywhere. But the dial's signal has faded below the validated band \u2014 the erosion that began at bitlen 56 continues its gradual path.\n\nThe zero-fit dial's validated deployment envelope ends at bitlen ~96; beyond that signal degrades gradually toward the floor.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp540_t_dial_unif_100.py + exp540_result.json, seeds 20261200\u201302.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3763",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T22:39:30.335650+00:00",
-    "title": "FACT round-67 #2 \u2014 TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
-  },
-  {
     "consumed_by_exp_id": "d4f58bc3",
     "description": "## NET-83 \u2014 limited-memory axis, round 33 (paper 165, ResearchOutput/exp_net83_integration.py, /tmp/net83.log)\n\n**Verdict name: THE-INTEGRATION-IS-SUPER-ADDITIVE.**\n\n### Result\nThe integration test combining GPTQ 4-bit group-128 weights with top-k attention:\n\n| arm | retained | CE |\n|---|---|---|\n| full fp32 | 1.0000 | 2.697 |\n| attn k=16 only | 0.9768 | 2.774 |\n| attn k=20 only | 0.9803 | 2.755 |\n| attn k=24 only | 0.9851 | 2.742 |\n| GPTQ4 alone | 0.9081 | 3.015 |\n| **GPTQ4 + k=16** | **0.8598** | **3.220** |\n| **GPTQ4 + k=20** | **0.8707** | **3.180** |\n| **GPTQ4 + k=24** | **0.8772** | **3.155** |\n\nAt k=16: expected additive degradation = 2.3% (attention) + 9.2% (quantization) = 11.5%. Actual combined = 14.0%. The extra 2.5% is the INTERACTION COST.\n\n- **P1 REFUTED**: NOT sub-additive\n- **P2 CONFIRMED**: super-additive \u2014 sparse attention AMPLIFIES quantization noise\n- **P3 REFUTED**: the axes are NOT independent\n\n### Mechanism\n(1) Quantized key vectors project differently, changing which keys pass the top-k threshold.\n(2) Selected keys' values carry quantization error that the sparse weighted sum cannot average away.\n\n### Engineering consequence\nBudget tables must include an INTERACTION PENALTY when both optimizations are active. A 4-bit model with k=24 attention is NOT equivalent to a 4-bit model plus a 24-key cache.\n\n### Debug transparency\nSEVEN debug iterations before recording; SIX bugs caught by sanity gates including a critical runner-layers reference bug that silently evaluated the wrong model.\n\nNow 84 network experiments. Assessment v84. Paper 165.\n",
     "domains": [
@@ -1687,21 +1631,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T22:39:30.338596+00:00",
     "title": "FACT round-60 #2 \u2014 PERNDIAL-48-52: the per-N dial transfers to bitlen 52 with partial degradation (paper 186)"
-  },
-  {
-    "consumed_by_exp_id": "b96d5582",
-    "description": "Paper 249 (ResearchOutput/NewMathematics/249_ConsecutiveVDependency.md). Executes exp 598's pre-registered H0 route.\n\n**Design** (pre-registered before analysis): hit-indicator autocorrelation lags 1\u201320 in mid-window u \u2208 [0.55,0.75], nb=1000 (robustness 500/2000); Amendment 0 pre-data \u2014 PRIMARY = per-batch quadratic-detrended \u03c1 + MC-calibrated runs Z against pooled density curve p\u0302(u); SECONDARY literal global-mean; H1 iff |\u03c1| > 0.05 AND cluster-over-Ns CI excludes 0 at some lag, OR runs |Z| > 3.2905 (p < 0.001). Controls pre-committed: C1 ctl null both variants; C2 synthetic smooth-hump iid at rate curve; C3 injected lag-1 dependence must detect. Data: exp581_regen_positions.npz (sha256 0b1afa50\u202636a38; 128 batches, 9,594 hits, no N stored \u2014 purely positional). Boot/MC 2000 reps each, seed 599_20260828; wall 31.4 s.\n\n**Verdict H0_PURE_DENSITY**: detrended \u03c1(lag) \u2208 [\u22120.0199, \u22120.0023] (max |\u03c1| = 0.020 << 0.05), flat/slightly negative \u2014 no refractory dip, no excitation bump; per-lag MC-vs-density-curve p \u2208 [0.128, 0.969]; SECONDARY even more null (\u03c1_raw \u2208 [\u22120.0103, +0.0046]); runs null BOTH readings (textbook Z = +0.850 p\u22480.40; MC-calibrated Z = +0.894 p\u22480.37; ctl Z = \u22120.454). Robustness nb500 max|\u03c1_det| = 0.036, nb2000 0.016.\n\n**Controls all met**: C1 null (.009 raw/.020 det); C2 synthetic-hump ALSO null on secondary (max .014 @lag17, pooled_Z +0.60) \u21d2 curvature confound quantitatively immaterial \u2014 conditioned and literal readings AGREE, verdict not amendment-dependent; C3 injected lag-1 DETECTED MASSIVELY (\u03c1_det(lag1)=0.337, argmax exactly 1, pooled_Z \u221257.4) \u21d2 null means \"no dependency\", not \"test blind\".\n\n**CONSEQUENCE (terminal characterization)**: given position, neighboring hits carry NO information about each other \u2014 the u* \u2248 0.65 excess is pure density/rate heterogeneity along the scan axis. Thread closure chain: excess real on home seed (papers 239/241) \u2192 divisibility a rate dial not position dial (242) \u2192 no j-arithmetic carrier (248) \u2192 no sequence structure (HERE). Hit-position thread papers 228\u2013230 \u2192 231 \u2192 238/240 \u2192 241\u2013242 \u2192 248 CLOSES COMPLETELY. Operational law: future gains come from modeling the positional DENSITY CURVE itself, never Markov/neighborhood structure. Scope honest: holds where the excess manifests (seed-20260828 lineage); exp592/#391 \u22653-pooled-seed amplitude test remains open \u2014 machinery transfers unchanged if an excess re-establishes elsewhere.\n\n**Ledger catches**: seed-20260828 ctl regeneration via two canonical recipes BOTH mismatch ctl_0 \u2014 recipe not recoverable from allowed reads; provenance rests on sha256 (disclosed). RECORD-TIME CORRECTION: findings' \"every CI straddles 0\" overstates \u2014 result.json shows 12/20 detrended CIs exclude zero on the NEGATIVE side, upper ends \u2264 0.0083 (raw 19/20 straddle; uniform ~\u22120.01 offset mirrored ~+0.01 on controls \u2014 opposite-sign shared-magnitude artifact, not structure); verdict unaffected (H1 required |\u03c1| > 0.05 AND CI exclusion JOINTLY).\n\nBarrier framing: none \u2014 terminal characterization inside the mapped positional stratum. Open unchanged: u \u2265 6\u201314 scale-smoothness deviations, factor-local beyond scan-order, MA-1 effectivity, residue cap 4/3, external-hint laws, quantum closed; paper 242 single-seed-unconfirmed (#391); .2346 flag traveling.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4078",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-25T01:54:45.653750+00:00",
-    "title": "FACT round-91 #2 \u2014 CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY \u2014 mid-window hits INDEPENDENT given position \u2014 lag profile lags 1\u201320 flat/slightly negative \u03c1 \u2208 [\u22120.020, \u22120.002] vs 0.05 bar (MC p 0.128\u20130.969), runs null both readings (Z +0.85 textbook / +0.89 density-calibrated vs 3.29), POWER CONFIRMED (injected lag-1 \u03c1_det = 0.337 detected at argmax exactly lag 1) \u2014 u* \u2248 0.65 excess = PURE DENSITY / rate heterogeneity, NO sequence structure \u2014 POSITIONAL THREAD CLOSES COMPLETELY (228\u2013230 \u2192 231 \u2192 238/240 \u2192 241\u2013242 \u2192 248)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2731,6 +2660,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b20378a3 (Q=0.840), which proved 100 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-61 #2, cron iteration (exp 542). Fresh-seed replication of paper 184's bitlen-56 uniform cell.\n\n**U56B-DIAL-HOLDS-COUNT-PARITY**: pooled \u03c1(T, rate) = **0.669** [0.650, 0.690] \u2014 in band; all 3 seeds pass H1.\n\nH2 FAIL on pre-stated rule: pooled advantage +0.045 \u2264 +0.05; only 1/3 seeds > +0.05. T",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_b20378a3_2f3a3c16",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "b20378a3",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:57.638663+00:00",
+    "title": "Deepening: FACT round-61 #2 \u2014 TDIAL-U56B: fresh-seed replication confirms validity but edge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle eb1faf15 (Q=0.840), which proved 114 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-67 #2, cron iteration (exp 540). The first band-miss on uniform draws.\n\n**DIAL-FADES**: pooled Spearman(T, rate) = **0.544** CI [0.498, 0.588] at bitlen 100 \u2014 the CI straddles the 0.55 floor for the first time. Per-seed: 0.546/0.528/0.549.\n\nT beats count by +0.098 everywhere. But the dial's si",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_eb1faf15_04221070",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "eb1faf15",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:15.428797+00:00",
+    "title": "Deepening: FACT round-67 #2 \u2014 TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -3674,21 +3631,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_361",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 18b02a30 (Q=0.880) proved 294 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` m",
     "domains": [
       "NumberTheory"
@@ -3717,6 +3659,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6d23453a (Q=0.790), which proved 94 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_6d23453a_b4b9938f",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "6d23453a",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:33.635005+00:00",
+    "title": "Deepening: FACT round-67 #1 \u2014 TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b4f872e1 (Q=0.780), which proved 72 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-75 \u2014 limited-memory axis, round 27 (paper 160, ResearchOutput/exp_net75_frenchext.py, /tmp/net75.log)\n\n**Verdict name: THE-FRENCH-KNEE-IS-FORTY.**\n\n### Result\nExtended grid on French prose (corpus-B; gate exact):\n\n| k | 36 | 40 | 48 | 56 | 64 |\n|---|---|---|---|---|---|\n| retained | 0.9795 \u2717 ",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_b4f872e1_ad7fe000",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "b4f872e1",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:49.902603+00:00",
+    "title": "Deepening: NET-75: THE-FRENCH-KNEE-IS-FORTY \u2014 extended grid pins k*(fr@1024)=40, exactly do"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
     "domains": [
       "Algebra",
@@ -3731,21 +3701,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
-    "domains": [
-      "Logic",
-      "Analysis"
-    ],
-    "id": "fd_0677",
-    "priority_score": 0.82,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697814+00:00",
-    "title": "Constructive Mathematics: Bishop's Analysis"
   },
   {
     "consumed_by_exp_id": "",
@@ -10018,6 +9973,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The optimal stratified weighting is q/p = sqrt(kappa_g), irrational for g = 2. Conjecture that the shortfall of the best integer weighting with p,q <= N decays exactly like N^-2, with the continued-fraction convergents of sqrt(7) as extremisers. This turns a qualitative suboptimality theorem into a design rule.\n\nThere are constants 0 < a < A with a/N^2 <= min_{1<=p,q<=N} (kappa* - stratCeiling p q) <= A/N^2, and the minimiser is a convergent of the continued fraction of sqrt(7).\n\nProve kappa* - stratCeiling p q is comparable to (q - p sqrt 7)^2 / (p+q)^3 using the cubic weight identity, then invoke the classical theory of best rational approximation to a quadratic irrational.\n\nInteger weight budgets for the dial can be chosen optimally by continued fractions; 37/14 is provably near-extremal.\n\nApproximation of the optimum is governed by something other than Diophantine quality, e.g. the discrete 1/n^2 correction dominates.",
+    "domains": [
+      "Pythagorean",
+      "Combinatorics"
+    ],
+    "id": "fd_4496",
+    "priority_score": 0.7113870967741937,
+    "research_mode": "team",
+    "source_exp_id": "b20378a3",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:48.124570+00:00",
+    "title": "Irrational Optimum Barrier for Integer Weightings"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The interval matrix of a melody window is idempotent in the min-plus matrix semiring, hence equal to its own Kleene star. We conjecture a full tropical Perron-Frobenius description: eigenvalue zero, eigenspace spanned by the columns, and a transposition-invariance classification of melodies with equal eigenspaces.\n\nFor every window, the tropical eigenvalue of the interval matrix is the tropical unit, its eigenspace is the tropical span of its columns, and two windows share an eigenspace iff their digit multisets agree up to a common additive shift.\n\nFormalize tropical eigenvectors for Matrix (Fin n) (Fin n) (Tropical (WithTop N)) and prove A * v = v for columns v of A using intervalMatrix_idempotent.\n\nMelody windows acquire a canonical tropical invariant, independent of any temporal lag statistic.\n\nIdempotency is not enough to pin down the eigenspace and additional metric hypotheses on the digit alphabet are needed.",
     "domains": [
       "Tropical",
@@ -12198,6 +12168,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Two independent lower bounds on the number of adjacent transpositions needed to move Spearman's rho by a given amount are now proved: a linear-in-margin bound of order margin*n^2 and an l1-accumulation bound of order sqrt(margin)*n^{3/2}. The conjecture is that their maximum is tight up to constants, with the crossover at K ~ n^{3/2} marking a change of extremal configuration. Settling it would give the exact metric cost of dial erosion.\n\nFor every n >= 2 and every delta in (0,2) there is a chain of adjacent transpositions of length O(max(delta*n^2, sqrt(delta)*n^{3/2})) taking the identity ranking to a ranking with Spearman rho <= 1 - delta.\n\nConstruct explicit chains (bubble cascades of a fixed block, and block reversals) and compute their exact rho via the proved transposition identity; formalise the resulting upper bound alongside spearman_ge_of_chain_from_id.\n\nThe Kendall cost of a prescribed Spearman drop is determined up to constants, making 'gradual versus cliff' a quantitative, grid-free statement.\n\nThere is an unexploited conserved quantity beyond step size and l1 accumulation, and the true cost has a third regime.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4504",
+    "priority_score": 0.6717012987012989,
+    "research_mode": "team",
+    "source_exp_id": "6d23453a",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:22.340019+00:00",
+    "title": "Kendall\u2013Spearman Budget Duality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Unary Moore machines have eventually periodic behaviours, so the shortest distinguishing word is the first mismatch of two eventually periodic words. We conjecture the exact bound max(p1,p2) + q1 + q2 - gcd(q1,q2) - 1 in terms of preperiods and periods, refining the coarse |S|+|T|-2 estimate. This ties automata testing to word combinatorics.\n\nFor unary machines with rho-shapes (p1,q1) and (p2,q2), inequivalent initial states are separated by a word of length at most max(p1,p2) + q1 + q2 - gcd(q1,q2) - 1, and some pair attains it.\n\nFormalise a rho-decomposition of unary machines, then prove the bound by Fine-Wilf; validate by exhaustive enumeration for n,m <= 5 as in ComputationalEvidence.md.\n\nA tight, gcd-sensitive refinement of the Moore bound for unary alphabets, strictly stronger than |S|+|T|-2 whenever gcd(q1,q2) > 1.\n\nThe extremal pairs must use preperiods in an essential way, isolating a new combinatorial obstruction beyond Fine-Wilf.",
     "domains": [
       "Combinatorics"
@@ -13035,6 +13019,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T03:14:11.540119+00:00",
     "title": "Real-Base Depth Function and Its Jump Set"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The three recorded seeds attain 86% of their Bhatia\u2013Davis variance ceiling, so the dispersion is nearly two-point extremal. The conjecture is that under such near-extremal dispersion, adding seeds strictly dominates deepening seeds for any fixed compute budget, with the crossover independent of the unknown correlation structure.\n\nIf the seed-level variance is at least half of its Bhatia\u2013Davis ceiling for the observed range, then for any fixed total number of draws the pooled estimator has smaller worst-case error with more seeds than with longer seeds.\n\nFormalise the two-level variance decomposition in the rationals and compare the two designs under the Bhatia\u2013Davis constraint.\n\nThe experiment protocol should be re-specified: more seeds, shorter runs, for the same compute.\n\nWithin-seed depth still buys accuracy, and the straddling CI can be closed by deeper runs.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4507",
+    "priority_score": 0.6705806451612905,
+    "research_mode": "team",
+    "source_exp_id": "6d23453a",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:23.734605+00:00",
+    "title": "Replication Design at a Bhatia\u2013Davis Ceiling"
   },
   {
     "consumed_by_exp_id": "",
@@ -14192,6 +14190,30 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The weighting gain 1/kappa_g - 1/(1+sqrt kappa_g)^2 strictly increases with the radix while the unweighted ceiling 1 - 1/kappa_g strictly decreases. Conjecture a unique small crossover radix at which a weighted base-g dial overtakes the unweighted binary dial, suggesting radix, not seed, as the next experimental knob.\n\nThere is a unique integer g0 >= 3 such that 1 - 1/(1+sqrt kappa_g)^2 > 6/7 for all g >= g0 and <= 6/7 for 2 < g < g0, and g0 <= 4.\n\nEvaluate kappaRadix and radixCeiling at g = 3,4,5 with exact rationals and bound the square roots by rational sandwiches, then prove monotonicity in g from kappaRadix_strictAnti.\n\nA radix change buys more correlation than the entire +0.05 H2 bar, redirecting the experiment programme.\n\nThe binary dial is already at the practical optimum and radix variation is a dead end.",
+    "domains": [],
+    "id": "fd_4497",
+    "priority_score": 0.5941525423728814,
+    "research_mode": "team",
+    "source_exp_id": "b20378a3",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:48.553171+00:00",
+    "title": "Radix Crossover for the Weighted Zero-Fit Edge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Predictors realising the crossed and uncrossed readings can be aligned to 0.9999, so the entire hypothesis test lives in a spherical cap of angular radius about 0.9 degrees. The conjecture is that any test statistic Lipschitz in the predictor direction has power bounded by its Lipschitz constant times the cap radius, independently of the sample size.\n\nFor unit vectors u, v with corr(u,v) >= 1 - eps and any L-Lipschitz functional F on the sphere, |F(u) - F(v)| <= L*sqrt(2*eps); consequently no such statistic separates the U84 hypotheses beyond that bound.\n\nFormalise the chordal-distance bound sqrt(2-2c) and combine with the attained configuration of crossing_states_indistinguishable.\n\nA sample-size-free ceiling on the power of any smooth crossing test, explaining why replication has not settled the question.\n\nSome non-Lipschitz (rank-based, discontinuous) statistic can separate the hypotheses, which would be a concrete better test to run.",
+    "domains": [],
+    "id": "fd_4508",
+    "priority_score": 0.593901098901099,
+    "research_mode": "team",
+    "source_exp_id": "6d23453a",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:24.169561+00:00",
+    "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The crowding and codebook pigeonholes are worst-case over arrangements; the operational damage depends on the empirical distribution of top-two logit gaps. A distributional refinement should predict the expected fraction of inverted positions as a function of the quantisation error, closing the gap between 'some pair inverts' and 'perplexity moves by x'.\n\nThe excess log-perplexity of a KV-quantised model is, to first order, proportional to the mass of the top-two logit gap distribution below 2*eps, with a model-independent proportionality constant of order one.\n\nCollect the top-two gap histogram per head at ctx 2048, compute the mass below 2*eps for each arm, and regress the measured excess log-perplexity against it.\n\nA single cheap histogram predicts the safe KV width for any model, removing the need for a perplexity sweep.\n\nInversions are not exchangeable across heads and positions, and a correlated model of gap statistics is required.",
     "domains": [],
     "id": "fd_4369",
@@ -14225,6 +14247,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T10:08:09.394536+00:00",
     "title": "Localised Inverse Branches for Trapping-Region Shadowing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The counting bound used only that level sets of the trailing-zero statistic are arithmetic progressions with nested moduli. Conjecture a ceiling formula depending only on the modulus chain, valid for arbitrary windows with an O(1/n) error, and apply it to the count baseline that T beats by +0.098.\n\nIf the level sets of a statistic on a window of length n are progressions with moduli q\u2080 \u2223 q\u2081 \u2223 \u22ef \u2223 q_K, then \u03c1\u00b2 = 1 \u2212 \u03a3_i (1/q_i \u2212 1/q_{i+1})\u00b3 + O(K/n) with an absolute implied constant.\n\nInstantiate the dyadic-domination lemma with general moduli and compare against exact enumeration for small chains.\n\nThe T-versus-count advantage becomes predictable from the two modulus chains rather than measured, giving a falsifiable prediction for every future rung.\n\nThe count baseline's ties are not progression-structured, which would itself explain why its degradation outpaces T's.",
+    "domains": [],
+    "id": "fd_4503",
+    "priority_score": 0.5938095238095239,
+    "research_mode": "team",
+    "source_exp_id": "eb1faf15",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:06.311517+00:00",
+    "title": "Modulus-Chain Ceilings for Progression Statistics"
   },
   {
     "consumed_by_exp_id": "",
@@ -14333,6 +14367,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T03:19:50.090297+00:00",
     "title": "Sharp Frame Constant of the Neighbour-Smoothness Design"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The dial's ceiling can be driven to 1 by flattening its block profile, so the observed 0.669 must be charged to the response side. Conjecture that the attainable correlation factorises as a product of the two tie-attenuation factors, making the dial and response headrooms additive on the log scale and pinning the observed +0.045 advantage.\n\nFor tie profiles L (predictor) and M (response) on the same n observations, the maximal attainable Spearman rho satisfies rho^2 <= spearmanSq L * spearmanSq M + O(1/n^2), with equality for aligned profiles.\n\nFormalise the two-sided tie correction of Spearman's rho and prove the product bound by Cauchy-Schwarz on the rank vectors; check numerically against the recorded pooled reading.\n\nThe H2 accounting closes: the 0.045 advantage is predicted from the response tie profile alone.\n\nPredictor and response attenuation interact non-multiplicatively and the headroom argument must be replaced by a joint-profile bound.",
+    "domains": [],
+    "id": "fd_4498",
+    "priority_score": 0.5934375000000001,
+    "research_mode": "team",
+    "source_exp_id": "b20378a3",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:48.984393+00:00",
+    "title": "Headroom Conservation Under Response Rebalancing"
   },
   {
     "consumed_by_exp_id": "",
@@ -14982,6 +15028,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-31T13:52:22.840279+00:00",
     "title": "Quantile Sign-Flip Band of Indeterminacy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The straddle window of a dial eroding by at least d per rung has width below 2w/d. Conjecture that acceleration shortens it quadratically: if the rung steps increase by at least a per rung, the window has width at most 2 once a \u2265 w/d\u00b2. The recorded 96/100 straddle pair and the resolved bitlen-104 interval are the first confirmation.\n\nFor f with f(k+1) \u2264 f(k) \u2212 d \u2212 a\u00b7k and half-width w, the set {k : |f(k) \u2212 B| < w} has at most 2 elements whenever a\u00b7d \u2265 w.\n\nFormalise as a statement about quadratic sequences and check against the recorded rungs 96\u2013112.\n\nEnvelope certification reduces to a two-reading computation, cutting the experimental cost of each round.\n\nAmbiguity windows can persist under acceleration, so band decisions need more rungs than currently budgeted.",
+    "domains": [],
+    "id": "fd_4502",
+    "priority_score": 0.5925000000000001,
+    "research_mode": "team",
+    "source_exp_id": "eb1faf15",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:05.857605+00:00",
+    "title": "Two-Rung Ambiguity Window under Accelerating Fade"
   },
   {
     "consumed_by_exp_id": "",
@@ -28990,6 +29048,148 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "After the dichotomy theorem, all information in a 0/1 scan lies in the rate curve p. Conjecture that p, assumed H\u00f6lder-smooth of order \u03b2 on the scan axis, is recoverable from a single scan of length n at the one-dimensional nonparametric rate n^{-\u03b2/(2\u03b2+1)}, and that no estimator does better. The approach is to combine the exact moment calculus of the product model with a two-point (Le Cam) argument between two curves whose scans are hard to tell apart.\n\nFor the product Bernoulli scan model with rate curve p in a H\u00f6lder-\u03b2 ball, the minimax L2 risk of estimating p from one scan of length n is of order n^{-2\u03b2/(2\u03b2+1)}.\n\nFormalise the upper bound for a binned estimator using the exact variance identity bernExp_centeredPairSum_sq specialised to k = 0, and the lower bound by a two-point argument with an explicit bump perturbation of the rate curve.\n\nPositional-excess modelling becomes a solved estimation problem with an explicit optimal bin width; all future gains are quantified.\n\nSome scan-specific structure (dependence, or non-H\u00f6lder curvature) is present after all, reopening the closed thread.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4488",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b96d5582",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:09.145793+00:00",
+    "title": "Minimax Recovery of the Positional Density Curve"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Chebyshev floor 1/(16 m t^2) proved here is polynomial; the true floor should be exponential. Conjecture that the detrended lag-k statistic satisfies a Bernstein bound exp(-c m t^2) under pure density. The route is the same multilinear expansion that gave the variance, pushed to the fourth moment and then to a bounded-difference argument.\n\nP(|centeredPairSum| >= t m) <= 2 exp(-c m t^2) for an absolute constant c > 0, under any rate curve with values in [0,1].\n\nProve the fourth-moment identity by classifying overlaps of two index pairs, then apply a fourth-moment or bounded-difference inequality inside the finite product model.\n\nThe pre-registered 0.05 bar corresponds to an astronomically small null probability, upgrading the exclusion from 'rare' to 'impossible at this scale'.\n\nHeavy-tailed behaviour of the statistic would mean the bar must scale with the window, changing the pre-registration rule.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4489",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b96d5582",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:09.565977+00:00",
+    "title": "Fourth-Moment Law and Exponential Noise Floor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The alternation count and the lag-1 cross-product see the same dependence parameter but different heterogeneity confounds: second order in delta for runs at c = 1/2, second order for the lag statistic as well but with a different constant and opposite sign behaviour. Conjecture that a fixed linear combination of the two statistics has zero first-order and zero second-order heterogeneity bias while retaining first-order sensitivity to lambda.\n\nThere are constants (alpha, beta), independent of the rate curve, such that alpha * (alternation deficit) + beta * (lag-1 statistic) has heterogeneity bias O(delta^3) and Markov signal Theta(lambda).\n\nCompute both expectations exactly (already available: bernExp_altCount and bernExp_centeredPairSum) as polynomials in the residuals e_i and match coefficients.\n\nA confound-free single-number test for sequence structure, strictly more powerful than either channel alone.\n\nThe two confounds are collinear, and no combination improves on the better single channel.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4490",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b96d5582",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:09.989295+00:00",
+    "title": "Joint Runs-and-Lag Channel with Orthogonal Confounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A record whose mean-centred cyclic autocorrelation is the same at every nonzero lag must sit at the level -1/(n-1). Conjecture that among 0/1 records the constant-profile ones are exactly the indicator vectors of cyclic difference sets and their complements, so the extremal flat profile is a design-theoretic object.\n\nRefined after this cycle: the equivalence 'constant nonzero-lag autocorrelation iff constant difference multiplicity' is now proved (constant_profile_iff_constant_diffMult); the open part is the fluctuation law, namely that for a uniformly random support of size k the maximal deviation max_{k != 0} |d_S(k) - |S|^2/n| is of order sqrt(|S| log n).\n\nUse the proved identity cAutocov_indic to turn the fluctuation statement into a concentration bound for the difference-multiplicity function, and verify the constant-profile classification exhaustively for n <= 31 by decidable computation.\n\nThe 'maximally flat, slightly negative' profile observed in the data is the signature of a design, giving a sharp null shape to compare against.\n\nThere are non-design constant-profile records, and the extremal set is larger than expected.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4491",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b96d5582",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:10.417810+00:00",
+    "title": "Constant-Profile Records and Cyclic Difference Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The order-1 coincidence scan is now fully solved: its lag-1 correlation is c(1-b)/(1-ab) in the three latent rates, maximised over a rate window [l,u] by u(1-l)/(1-ul) and attained by the alternating curve, with supremum 1 over all curves, while every lag at least 2 is exactly zero. Conjecture that the order-r scan Y_i = X_i * ... * X_{i+r} has an analogous closed form: profile supported exactly on lags 1..r, each value a rational function of the 2r+1 latent rates in which the common product factor cancels, and each attaining supremum 1 as the rate window opens.\n\nFor the order-r coincidence scan of a product Bernoulli scan with rates in (0,1), Cov(Y_i, Y_{i+k}) = 0 for all k > r, and for 1 <= k <= r the lag-k correlation equals (prod_{j=r+1}^{r+k} p_{i+j}) * (1 - prod_{j=k}^{r} p_{i+j}) / (1 - prod_{j=0}^{r} p_{i+j}) times a factor free of the shared rates; its supremum over rate curves with values in (0,1) is 1 for every k <= r.\n\nExtend bernExp_hit_prod3 / bernExp_hit_prod4 to products over arbitrary finite index sets, then compute the order-r covariance by the same cancellation used in maCorrProfile_lag_one_eq; verify the closed forms by exact rational evaluation for r = 2, 3 before formalising.\n\nMechanism selection becomes a support-length readout: the largest lag with a nonzero profile value is exactly the coincidence order, independent of all amplitudes.\n\nHigher-order coincidence scans leak into far lags, and finite dependence range is not detectable from the profile support alone.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4492",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b96d5582",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:10.865493+00:00",
+    "title": "Finite-Range Coincidence Scans of Order r"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the halving recursion of this cycle to arbitrary base p, proving that uniform draws from {0,\u2026,n\u22121} have p-adic tie ceiling 3p/(p\u00b2+p+1) + O(1/n) for every n, not only for n = p^b. The defect \u03a3 m\u2c7c\u00b3 \u2212 ((p\u22121)\u00b3/(p\u00b3\u22121))n\u00b3 is invariant under n \u21a6 pn, exactly as in the dyadic case. This makes the effective-base inversion of round 65 independent of the sampler.\n\nFor every prime p \u2265 2 and every n \u2265 2, the Spearman tie ceiling of the p-adic valuation statistic on {0,\u2026,n\u22121} satisfies |\u03c1\u00b2(n) \u2212 3p/(p\u00b2+p+1)| \u2264 C_p/n with C_p \u2264 3.\n\nDefine padicRangeBlocks p n = (n \u2212 \u2308n/p\u2309) :: padicRangeBlocks p \u2308n/p\u2309 and mirror devE_even / devE_le / devE_ge for base p; then reuse spearmanSq_eq.\n\nThe p-adic ceiling law becomes sampler-independent and the effective-base-seven inversion is structural rather than an artefact of power-of-p sample sizes.\n\nSome base p has range-dependent ceilings, and every effective-base inference in the catalogue must be re-derived with the actual sample size.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4499",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "eb1faf15",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:04.513222+00:00",
+    "title": "General-Base Range Law for p-adic Tie Ceilings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The defect devE is constant along doublings and contracts by 1/4 at each odd step, the signature of a Takagi-type self-similar function. Conjecture that devE(n)/n\u00b2 converges, along n with prescribed binary tails, to an explicit nowhere-differentiable profile with infimum \u22123/7 and supremum 0.\n\nThere is a continuous nowhere-differentiable T : [0,1) \u2192 [\u22123/7, 0] with devE(n)/n\u00b2 \u2212 T(frac(log\u2082 n)) \u2192 0 along every sequence whose odd part tends to infinity.\n\nCompute devE(n)/n\u00b2 for all n < 2^20, bucket by frac(log\u2082 n), and check convergence of the empirical profile; then formalise the contraction estimate.\n\nDeployment envelopes acquire a proved ceiling band rather than a single ceiling number.\n\nThe defect has genuinely non-self-similar behaviour, contradicting the doubling invariance already proved, so the failure would have to come from the odd step.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4500",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "eb1faf15",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:04.960359+00:00",
+    "title": "Takagi Profile of the Dyadic Ceiling Defect"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "With sampler geometry excluded, the erosion must live in the response. Model the measured dial as \u03c1_max(b)/\u221a(1+\u03b7(b)) and conjecture \u03b7 linear in the bitlen across 56 \u2264 b \u2264 116. This predicts the recorded concave acceleration while any sampler mechanism is bounded by O(2^\u2212b).\n\nThere are \u03b1, \u03b2 > 0 with |measured(b) \u2212 \u221a(6/7)/\u221a(1 + \u03b1 + \u03b2b)| \u2264 0.01 for every recorded rung b \u2208 {56, 64, 76, 92, 96, 100, 104, 108, 112}.\n\nFit \u03b1, \u03b2 to two rungs and check the remaining seven; formalise the resulting inequalities as exact rational bounds in Lean.\n\nThe dial's fade is a single-parameter noise-accumulation law, and extrapolation to any bitlen becomes a proved bound.\n\nNoise power is super-linear, pointing at a multiplicative rather than additive degradation of the response.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4501",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "eb1faf15",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:05.407997+00:00",
+    "title": "Linear Noise-Power Model for the Response Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Whether an erosion is a cliff currently depends on the spacing of the bitlen grid. We propose an intrinsic criterion: a rung is cliff-like when its step exceeds the rho-motion attainable by o(n^2) adjacent transpositions. The conjecture is that under this criterion no rung of the recorded T-dial ladder is cliff-like.\n\nFor every consecutive pair of recorded rungs of the T-dial ladder at sample size n = 4096, the observed step is smaller than the maximal rho-motion of any chain of at most n^{3/2} adjacent transpositions.\n\nInstantiate spearman_ge_of_chain_from_id at n = 4096 and compare with each recorded step (0.05 at U76->U84 being the largest).\n\nThe whole ladder is certified gradual in a grid-free sense, and the 'crossing test' language can be replaced by a budget statement.\n\nAt least one rung is a genuine rank-geometric cliff, which localises the mechanism to that bitlen.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4505",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6d23453a",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:22.768240+00:00",
+    "title": "Intrinsic Cliff Criterion for Rank Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The crossing dichotomy shows that eventual crossing is equivalent to the model floor L lying below the band floor, and two exhibited fades straddle it while fitting the record within the margin. The conjecture is that the ladder identifies only the product a(1-lambda) and never L itself at the recorded resolution, so no finite prefix of the ladder decides crossing.\n\nFor every finite set of recorded rungs with sup-residual tolerance eta >= 0.008 there exist contractive fades with floors on opposite sides of 0.55 fitting all of them.\n\nGeneralise crossing_undecidable_at_margin_resolution from three rungs to an arbitrary finite family by solving the two-sided interpolation constraints explicitly in the rationals.\n\nThe crossing test is unfalsifiable at the current resolution and must be replaced by an estimate of the local slope.\n\nA specific rung count suffices to decide the crossing, giving a concrete stopping rule for the experiment.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4506",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6d23453a",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:23.203272+00:00",
+    "title": "Floor Identifiability Under Rebound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -34437,6 +34637,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:21:41.635449+00:00",
     "title": "Develop a finite enumeration only after specifying what \u201ctopologically distinct cake\u201d means."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a polyhedral map the sheet number is constant on each\nchamber of a suitable subdivision of the target. Combining this with orientation data should give a\npurely combinatorial degree, computed as a signed sheet count, together with a wall-crossing formula\nrelating the counts of adjacent chambers across the discriminant.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4493",
+    "priority_score": 0.5086091954022989,
+    "research_mode": "team",
+    "source_exp_id": "f5ddf1b2",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:34.810133+00:00",
+    "title": "Degree theory for polyhedral maps"
   },
   {
     "consumed_by_exp_id": "",
@@ -43294,14 +43508,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Honest Laurent normalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79285565",
     "description": "A product of `m` normalized series has order exactly `\u2212m`\n   (`orderTop_prod_normalized`), so a Monster-sized product has a pole of order `194`\n   (`orderTop_prod_traceLaurent_194`); multiplying by `q^m` restores order `0`.",
     "domains": [],
     "id": "fd_1428",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:04.565939+00:00",
     "title": "Pole-order obstruction"
   },
@@ -45710,19 +45925,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T10:47:35.428257+00:00",
     "title": "Both invariants are formalised and computed in closed form; what"
-  },
-  {
-    "consumed_by_exp_id": "f5ddf1b2",
-    "description": "The dichotomy, the local homeomorphism property and the semicontinuity\nof `sheetNumber` are all proved; the remaining step is to run the same\ntrivialisation argument relative to an open subset of the base.",
-    "domains": [],
-    "id": "fd_1707",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "4b03d5cc",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T10:47:35.625224+00:00",
-    "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
   },
   {
     "consumed_by_exp_id": "",
@@ -48300,5 +48502,41 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T10:08:48.208000+00:00",
     "title": "Refined, not failed."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the trivialisation theory to locally closed base sets by\nallowing charts whose targets are open in the base set, and determine which of the trivialisation\nand characterisation theorems survive.",
+    "domains": [],
+    "id": "fd_4494",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f5ddf1b2",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:35.205858+00:00",
+    "title": "Non-open base regions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replace the natural-number sheet count by a cardinal-valued\ninvariant to remove the conflation of empty with infinite fibres, and re-derive the semicontinuity\npackage in the order topology on cardinals.",
+    "domains": [],
+    "id": "fd_4495",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f5ddf1b2",
+    "status": "available",
+    "timestamp": "2026-09-01T18:32:35.596910+00:00",
+    "title": "Cardinal-valued sheet numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "French at a second context (e.g. 512) on the extended grid, to test\n  gate/context invariance of the ratio.",
+    "domains": [],
+    "id": "fd_4509",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "b4f872e1",
+    "status": "available",
+    "timestamp": "2026-09-01T18:33:40.401150+00:00",
+    "title": "French at a second context (e.g."
   }
 ];

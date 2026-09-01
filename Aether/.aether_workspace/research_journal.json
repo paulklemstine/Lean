@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "95a534e1",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — the κ rate-dial layer\n\nThe cycle closed the two-run-surviving part of the composition layer as exact theorems: the\ndivisibility pattern controls the *rate* of a cell exactly and",
-      "quality_score": 0.81,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-26T19:21:10",
-      "title": "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES — feature DOES NOT REPLICATE "
-    },
-    {
       "cycle_id": "40d19005",
       "domain": "Physics",
       "key_insight": "# Future Directions — Square-core stack polyominoes\n\nThe formalized development (`Catalog/Physics/StackSquareCore*.lean`) establishes:\nthe combinatorial decomposition `a(n) = Σ_{k²≤n} Σ_{i+j=n-k²} p_{",
@@ -499,19 +489,19 @@
       "theorem_count": 94,
       "timestamp": "2026-09-01T18:33:33",
       "title": "FACT round-67 #1 — TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
+    },
+    {
+      "cycle_id": "b4f872e1",
+      "domain": "Physics",
+      "key_insight": "# Future directions — knee theory for attention profiles\n\n## What the formal cycles settled\n\n1. **Two distinct tax mechanisms.** A delay shifts the knee by exactly `+d`; an\n   `m`-th root of the decay",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-09-01T18:33:49",
+      "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY — extended grid pins k*(fr@1024)=40, exactly double English prose's"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "018e116a",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — bounding distinguishing experiments\n\nDerived from the verified results in `Catalog/Pythagorean/DistinguishingWordBound.lean`,\n`DistinguishingWordMoore.lean`, `DistinguishingWordS",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-21T20:42:06",
-      "title": "Bound the length of distinguishing experiments"
-    },
     {
       "cycle_id": "ef4f9365",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 94,
       "timestamp": "2026-09-01T18:33:33",
       "title": "FACT round-67 #1 — TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
+    },
+    {
+      "cycle_id": "b4f872e1",
+      "domain": "Physics",
+      "key_insight": "# Future directions — knee theory for attention profiles\n\n## What the formal cycles settled\n\n1. **Two distinct tax mechanisms.** A delay shifts the knee by exactly `+d`; an\n   `m`-th root of the decay",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-09-01T18:33:49",
+      "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY — extended grid pins k*(fr@1024)=40, exactly double English prose's"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "00e162eb",
-      "domain": "Novelty",
-      "name": "dfsCostB_eq_rec",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "00e162eb",
-      "domain": "Novelty",
-      "name": "dfsCostB_specializes",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "00e162eb",
-      "domain": "Novelty",
-      "name": "dfsCostB_div_pow_tendsto",
-      "quality": 0.82
-    },
     {
       "cycle_id": "898d17cb",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "dominated_tail",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "b4f872e1",
+      "domain": "Physics",
+      "name": "exponent_le_of_ceilDiv_eq",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "b4f872e1",
+      "domain": "Physics",
+      "name": "realizes_iff",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "b4f872e1",
+      "domain": "Physics",
+      "name": "five_domain_table_118",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-01T18:33:33",
+  "last_updated": "2026-09-01T18:33:49",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "9d22f1f1",
-        "quality": 0.83,
-        "theorems": 108,
-        "title": "FACT round-32 #3 — UNIVERSAL-S3-EXTENDED: three fields, one answer (paper 114)"
-      },
-      {
         "cycle_id": "b8859dfd",
         "quality": 0.86,
         "theorems": 93,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 51,
         "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (pape"
+      },
+      {
+        "cycle_id": "b4f872e1",
+        "quality": 0.78,
+        "theorems": 72,
+        "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY — extended grid pins k*(fr@1024)=40, exactly do"
       }
     ],
     "Probability": [
