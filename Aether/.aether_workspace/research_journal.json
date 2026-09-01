@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1a774383",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\nDerived from the formal results in `Catalog/Probability/Spike*.lean`. Each\ndirection is stated so that it can be refuted by a single computation or a\nsingle counterexample.\n\n## St",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 103,
-      "timestamp": "2026-08-26T19:20:52",
-      "title": "FACT round-85 #1 — SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT + ERRATUM to paper "
-    },
-    {
       "cycle_id": "95a534e1",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — the κ rate-dial layer\n\nThe cycle closed the two-run-surviving part of the composition layer as exact theorems: the\ndivisibility pattern controls the *rate* of a cell exactly and",
@@ -499,19 +489,19 @@
       "theorem_count": 114,
       "timestamp": "2026-09-01T18:33:15",
       "title": "FACT round-67 #2 — TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
+    },
+    {
+      "cycle_id": "6d23453a",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after TDIAL-U84 (paper 188)\n\nThree research cycles were run on the U84 record (pooled Spearman `0.558`, CI\n`[0.536, 0.581]`, band floor `0.55`, margin `+0.008`, seeds 20261190–92",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-09-01T18:33:33",
+      "title": "FACT round-67 #1 — TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "63cef724",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Möbius arithmetic, twist rings, and graded number theory\n\nThis cycle tested the \"Möbius integers\" conjecture literally, refuted five of its\nclaims, and relocated its surviving in",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-21T19:38:14",
-      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
-    },
     {
       "cycle_id": "018e116a",
       "domain": "Pythagorean",
@@ -2501,6 +2491,16 @@
       "theorem_count": 114,
       "timestamp": "2026-09-01T18:33:15",
       "title": "FACT round-67 #2 — TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
+    },
+    {
+      "cycle_id": "6d23453a",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after TDIAL-U84 (paper 188)\n\nThree research cycles were run on the U84 record (pooled Spearman `0.558`, CI\n`[0.536, 0.581]`, band floor `0.55`, margin `+0.008`, seeds 20261190–92",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-09-01T18:33:33",
+      "title": "FACT round-67 #1 — TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-01T18:33:15",
+  "last_updated": "2026-09-01T18:33:33",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8eac1b6d",
-        "quality": 0.82,
-        "theorems": 137,
-        "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-      },
-      {
         "cycle_id": "5260665b",
         "quality": 0.83,
         "theorems": 96,
@@ -3637,6 +3631,12 @@
         "quality": 0.84,
         "theorems": 114,
         "title": "FACT round-67 #2 — TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
+      },
+      {
+        "cycle_id": "6d23453a",
+        "quality": 0.79,
+        "theorems": 94,
+        "title": "FACT round-67 #1 — TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
       }
     ],
     "NumberTheory": [
