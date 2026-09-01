@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b3980a1a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of this cycle.  The cycle\nestablished three things, and each conjecture below pushes on one of them:\n\n1. **Reflection is free** —",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 110,
-      "timestamp": "2026-08-26T17:00:47",
-      "title": "Strengthen certified computation"
-    },
-    {
       "cycle_id": "1a774383",
       "domain": "Probability",
       "key_insight": "# Future directions\n\nDerived from the formal results in `Catalog/Probability/Spike*.lean`. Each\ndirection is stated so that it can be refuted by a single computation or a\nsingle counterexample.\n\n## St",
@@ -499,19 +489,19 @@
       "theorem_count": 100,
       "timestamp": "2026-09-01T18:32:57",
       "title": "FACT round-61 #2 — TDIAL-U56B: fresh-seed replication confirms validity but edge not established (pa"
+    },
+    {
+      "cycle_id": "eb1faf15",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — from the bitlen-100 band miss (round-67 #2, exp 540)\n\nThis cycle proved that the *sampler* is exonerated at bitlen 100: the 2-adic tie ceiling of the\ntrailing-zero statistic is `",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-09-01T18:33:15",
+      "title": "FACT round-67 #2 — TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "532d78bc",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — RH for the Berggren tree (Phase A, cycle v19c)\n\n## What this cycle established\n\nFormalised, `sorry`-free, in `Catalog/Novelty/`:\n\n1. **Core** (`BerggrenTreeZetaCore.lean`) — the",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-21T19:38:01",
-      "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable Critical Line"
-    },
     {
       "cycle_id": "63cef724",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 100,
       "timestamp": "2026-09-01T18:32:57",
       "title": "FACT round-61 #2 — TDIAL-U56B: fresh-seed replication confirms validity but edge not established (pa"
+    },
+    {
+      "cycle_id": "eb1faf15",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — from the bitlen-100 band miss (round-67 #2, exp 540)\n\nThis cycle proved that the *sampler* is exonerated at bitlen 100: the 2-adic tie ceiling of the\ntrailing-zero statistic is `",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-09-01T18:33:15",
+      "title": "FACT round-67 #2 — TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ecb169bf",
-      "domain": "Bridges",
-      "name": "min_le_of_hit",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "ecb169bf",
-      "domain": "Bridges",
-      "name": "hit_min",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "ecb169bf",
-      "domain": "Bridges",
-      "name": "isLeast_hit_min",
-      "quality": 0.86
-    },
     {
       "cycle_id": "00e162eb",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "spearmanSq_block_count_",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "eb1faf15",
+      "domain": "Novelty",
+      "name": "this",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "eb1faf15",
+      "domain": "Novelty",
+      "name": "dominated_head",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "eb1faf15",
+      "domain": "Novelty",
+      "name": "dominated_tail",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-01T18:32:57",
+  "last_updated": "2026-09-01T18:33:15",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "56a9e19d",
-        "quality": 0.79,
-        "theorems": 14,
-        "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays d"
-      },
-      {
         "cycle_id": "8eac1b6d",
         "quality": 0.82,
         "theorems": 137,
@@ -3637,6 +3631,12 @@
         "quality": 0.84,
         "theorems": 124,
         "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\nc"
+      },
+      {
+        "cycle_id": "eb1faf15",
+        "quality": 0.84,
+        "theorems": 114,
+        "title": "FACT round-67 #2 — TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
       }
     ],
     "NumberTheory": [
