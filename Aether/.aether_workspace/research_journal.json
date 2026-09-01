@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "df44f621",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThis cycle turned the exact ensemble dichotomy of `Probability.WignerAllOrderParity`\ninto a self-contained combinatorial theory of *even closed walks*, and used it to push\nthe exa",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-08-21T18:56:28",
-      "title": "The exact ensemble dichotomy"
-    },
-    {
       "cycle_id": "d588a53d",
       "domain": "Geometry",
       "key_insight": "# Future directions — after the Pythagorean Hydra\n\n## What this cycle established\n\nThe moonshot hypothesis was that the Berggren tree of primitive Pythagorean triples\ncarries a Kirby–Paris-style indep",
@@ -2501,6 +2491,16 @@
       "theorem_count": 102,
       "timestamp": "2026-09-01T18:32:25",
       "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-window hits INDEPENDENT"
+    },
+    {
+      "cycle_id": "f5ddf1b2",
+      "domain": "Tropical",
+      "key_insight": "",
+      "quality_score": 0.6729149999999999,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-09-01T18:32:41",
+      "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-01T18:32:25",
+  "last_updated": "2026-09-01T18:32:41",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "6ba84571",
-        "quality": 0.85,
-        "theorems": 120,
-        "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
-      },
-      {
         "cycle_id": "aa4eb9d3",
         "quality": 0.86,
         "theorems": 106,
@@ -4009,6 +4003,12 @@
         "quality": 0.72,
         "theorems": 76,
         "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/mag"
+      },
+      {
+        "cycle_id": "f5ddf1b2",
+        "quality": 0.6729149999999999,
+        "theorems": 27,
+        "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
       }
     ]
   }
