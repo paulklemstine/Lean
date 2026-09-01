@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-01T10:09:06.014037+00:00",
+  "last_updated": "2026-09-01T14:55:32.136591+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -71194,6 +71194,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-01T10:09:05.583358+00:00",
       "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS \u2014 keeping L22/L23 at fp32 gains +1.8pts over full 4-bit GPT"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Novelty",
+      "duration_seconds": 17092.2876598835,
+      "end_time": 1788274435.266487,
+      "files_integrated": 4,
+      "job_id": "3c91f334",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.84,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.553,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.84,
+        "novelty": 0.84,
+        "proof_depth": 0.84,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1788257342.978827,
+      "strategy_count": 0,
+      "theorem_count": 124,
+      "theorem_novelty_disproof": 7,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 114,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-01T14:55:31.838483+00:00",
+      "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\ncounterexample."
     }
   ]
 }

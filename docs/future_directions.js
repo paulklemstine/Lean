@@ -1660,16 +1660,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-67 #2 \u2014 TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4f58bc3",
     "description": "## NET-83 \u2014 limited-memory axis, round 33 (paper 165, ResearchOutput/exp_net83_integration.py, /tmp/net83.log)\n\n**Verdict name: THE-INTEGRATION-IS-SUPER-ADDITIVE.**\n\n### Result\nThe integration test combining GPTQ 4-bit group-128 weights with top-k attention:\n\n| arm | retained | CE |\n|---|---|---|\n| full fp32 | 1.0000 | 2.697 |\n| attn k=16 only | 0.9768 | 2.774 |\n| attn k=20 only | 0.9803 | 2.755 |\n| attn k=24 only | 0.9851 | 2.742 |\n| GPTQ4 alone | 0.9081 | 3.015 |\n| **GPTQ4 + k=16** | **0.8598** | **3.220** |\n| **GPTQ4 + k=20** | **0.8707** | **3.180** |\n| **GPTQ4 + k=24** | **0.8772** | **3.155** |\n\nAt k=16: expected additive degradation = 2.3% (attention) + 9.2% (quantization) = 11.5%. Actual combined = 14.0%. The extra 2.5% is the INTERACTION COST.\n\n- **P1 REFUTED**: NOT sub-additive\n- **P2 CONFIRMED**: super-additive \u2014 sparse attention AMPLIFIES quantization noise\n- **P3 REFUTED**: the axes are NOT independent\n\n### Mechanism\n(1) Quantized key vectors project differently, changing which keys pass the top-k threshold.\n(2) Selected keys' values carry quantization error that the sparse weighted sum cannot average away.\n\n### Engineering consequence\nBudget tables must include an INTERACTION PENALTY when both optimizations are active. A 4-bit model with k=24 attention is NOT equivalent to a 4-bit model plus a 24-key cache.\n\n### Debug transparency\nSEVEN debug iterations before recording; SIX bugs caught by sanity gates including a critical runner-layers reference bug that silently evaluated the wrong model.\n\nNow 84 network experiments. Assessment v84. Paper 165.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3764",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T22:39:30.337116+00:00",
     "title": "NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE \u2014 GPTQ4+top-k degrades WORSE than sum of parts (14.0% vs expected 11.5%); sparse attention amplifies quantization noise"
   },
@@ -2041,48 +2042,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 17866175 (Q=0.900), which proved 198 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-89 \u2014 limited-memory axis, round 33 (paper 170, ResearchOutput/exp_net89_mixed.py, /tmp/net89.log)\n\n**Verdict name: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST.**\n\n### Result\nInterleaved ~500-char blocks of Python code + English prose (gate exact; Qwen2.5-0.5B fp32):\n\n| ctx | mixed k\\* | code k",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_17866175_1c84e76d",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "17866175",
-    "status": "available",
-    "timestamp": "2026-09-01T10:07:59.242484+00:00",
-    "title": "Deepening: NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST \u2014 interleaved code+prose knee"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 1aa0b577 (Q=0.880), which proved 110 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** factor3 NETWORK/LLM loop, limited-memory axis iteration 65 (mixing-ratio sweep resolving NET-89's open cell).\n\n**Claim:** All three pre-registered shapes REFUTED. The knee is not linear in mixing ratio (P1\u2717), not a dip below the pure domains (P2\u2717), not monotone in prose fraction (P3\u2717). ",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_1aa0b577_2b68f6c6",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "1aa0b577",
-    "status": "available",
-    "timestamp": "2026-09-01T10:07:39.064602+00:00",
-    "title": "Deepening: NET-90 THE-SYMMETRIC-MIXTURE-BUMP: 50/50 code+prose costs +4 keys above BOTH pur"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 26c8c1ed (Q=0.880), which proved 155 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-68 #2, cron iteration (exp 541). Quantifying the fade's progression.\n\n**FADE-CONTINUES**: pooled Spearman(T, rate) = **0.500** CI [0.456, 0.545] at bitlen 104; per-seed 0.493/0.499/0.509 \u2014 all below 0.55 for the first time; fade is MONOTONE and NEAR-LINEAR (\u22120.030 then \u22120.043 per 4-bit step). ",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_26c8c1ed_9195326c",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "26c8c1ed",
-    "status": "available",
-    "timestamp": "2026-09-01T10:08:38.947735+00:00",
-    "title": "Deepening: FACT round-68 #2 \u2014 TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2786,20 +2745,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 00fe96df (Q=0.820), which proved 92 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-84 \u2014 limited-memory axis, round 32 (paper 166, ResearchOutput/exp_net84_tailprecision.py, /tmp/net84.log)\n\n**Verdict name: TAIL-AWARE-MIXED-PRECISION-WORKS.**\n\n### Result\nThree arms on Qwen2.5-0.5B (gate exact; ctx=1024):\n\n| arm | retained |\n|---|---|\n| GPTQ4 full | 0.9081 |\n| **GPTQ4 + L22/L",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_00fe96df_d54a5b53",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "00fe96df",
-    "status": "available",
-    "timestamp": "2026-09-01T10:08:57.136897+00:00",
-    "title": "Deepening: NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS \u2014 keeping L22/L23 at fp32 gains +1.8pts"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -2811,20 +2756,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle d451fd97 (Q=0.820), which proved 70 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** For a specified IEEE-754 implementation of a polynomial dynamical system, every finite execution avoiding overflow and exceptional values can be translated into an exact real pseudo-orbit whose local defect is bounded by a compositional expression in unit roundoff and the intermediat",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_d451fd97_332b5fcd",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "d451fd97",
-    "status": "available",
-    "timestamp": "2026-09-01T10:08:17.247523+00:00",
-    "title": "Deepening: Backward-error semantics for floating-point chaotic programs"
   },
   {
     "consumed_by_exp_id": "",
@@ -10684,6 +10615,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T07:48:07.070263+00:00",
     "title": "Prescribed Digit Frequency Vectors Over Any Prefix"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact error identity |Q n \u2212 P n \u221a2| = (\u221a2\u22121)^n is now a theorem. We conjecture that the spine lists all best rational approximations to \u221a2, with the side of approximation dictated by the parity of n, and that the constant 1/(2\u221a2) is optimal.\n\nFor every rational a/b with 1 \u2264 b < P (n+1) and (a,b) \u2260 (Q n, P n), |\u221a2 \u2212 a/b| > |\u221a2 \u2212 Q n / P n|; moreover P n\u00b2 \u00b7 |\u221a2 \u2212 Q n / P n| \u2192 1/(2\u221a2).\n\nFormalise a pigeonhole argument on the lattice \u2124 + \u2124\u221a2 using pell_error_exact and the exact classification pell_unit_classification; test numerically for b \u2264 10^5.\n\nA fully formal, continued-fraction-free proof that the Pell spine is the sequence of best approximations, transferable to every real quadratic unit.\n\nA better approximation off the spine would contradict pell_unit_classification, so failure would expose a gap in the norm-one description of good approximations.",
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_4487",
+    "priority_score": 0.7103684210526316,
+    "research_mode": "team",
+    "source_exp_id": "3c91f334",
+    "status": "available",
+    "timestamp": "2026-09-01T14:54:57.315944+00:00",
+    "title": "Spine-Optimality of Diophantine Approximation"
   },
   {
     "consumed_by_exp_id": "",
@@ -28985,6 +28931,65 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Pell analogue of Wall\u2013Sun\u2013Sun primes is non-empty: 13 and 31 both satisfy p\u00b2 \u2223 P(rank p), verified in Lean. We conjecture the set is infinite with log-log density, twice the Fibonacci heuristic because the discriminant 8 is ramified at 2. Certifying more members turns a folklore heuristic into measurable data.\n\nThe set {p prime : p\u00b2 \u2223 pellP (pellRank p)} is infinite and its counting function is asymptotically c\u00b7log log x with c \u2265 1.\n\nExtend the certified search past 10^6 using the formalised rank law dvd_pellP_iff_pellRank_dvd, verifying each candidate with a decide-checked divisibility; compare the observed count with log log x.\n\nThe Pell spine gives the first family of explicitly known Wall\u2013Sun\u2013Sun-type primes, and Fibonacci's emptiness becomes a small-sample artefact.\n\nA finite exceptional set would signal an unknown obstruction attached to the ramified prime 2 in \u2124[\u221a2].",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4483",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "3c91f334",
+    "status": "available",
+    "timestamp": "2026-09-01T14:54:55.237969+00:00",
+    "title": "Silver-Ratio Wall\u2013Sun\u2013Sun Density"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Pell case is now a theorem (pellQ_dvd_iff, pellQ_gcd_law): the half-companion sequence is divisibility-graded by parity of the index quotient, and its gcd is either Q(gcd) or 1. We conjecture that the same parity grading holds for the companion sequence of every Lucas pair (a, -1), with an extra factor 2 exactly when a is odd. This would isolate strong divisibility as a norm-form phenomenon and the parity grading as a property of the unit index lattice.\n\nLet V 0 = 2, V 1 = a, V (n+2) = a V (n+1) + V n and g = gcd m n. Then gcd (V m) (V n) = V g when m/g and n/g are both odd, and gcd (V m) (V n) divides 2 otherwise, with value 2 attained exactly when a is odd.\n\nParameterise the Pell development by a: reprove V m \u2223 U (2m), strong divisibility of U, gcd (U m) (V m) \u2223 2 and the congruence V (b + 2m) \u2261 c \u00b7 V b mod V m, then rerun the proof of pellQ_gcd_law verbatim; test numerically on a = 1 (Lucas, where gcd (L 3) (L 6) = 2) and a = 3.\n\nEvery real quadratic order gets a complete companion gcd calculus, and the Pell theorem becomes the a even, 2-torsion-free instance.\n\nSome Lucas pair produces a gcd value exceeding 2, meaning the index lattice grading is not by \u2124/2 alone and an extra ramification invariant is needed.",
+    "domains": [
+      "NumberTheory",
+      "Cryptography"
+    ],
+    "id": "fd_4484",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "3c91f334",
+    "status": "available",
+    "timestamp": "2026-09-01T14:54:55.790293+00:00",
+    "title": "Parity-Graded Divisibility for Companion Spines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Legendre refinement of the Fermat law was closed in this cycle (pellRank p divides p-1 exactly for p congruent to plus or minus 1 mod 8). The successor question is how the rank grows on prime powers: geometrically with ratio p, except at Pell-Wall-Sun-Sun primes where the growth is delayed by exactly one step.\n\nWith e(p) the largest exponent such that p^e divides pellP (pellRank p), for every k >= 1 one has pellRank (p^k) = p^(max (k - e p) 0) * pellRank p.\n\nCompute pellRank (p^k) for all primes p < 10^4 and k <= 4 using the certified law dvd_pellP_iff_pellRank_dvd, and check the formula, paying attention to p = 13 and p = 31.\n\nCombined with pellRank_mul_of_coprime this determines pellRank on every modulus from its values at primes, completing the divisibility theory of the spine.\n\nA prime power where the rank jumps by a non-p factor would break the p-adic filtration of the unit group of Z[sqrt 2] and indicate a wild ramification effect.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_4485",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "3c91f334",
+    "status": "available",
+    "timestamp": "2026-09-01T14:54:56.286252+00:00",
+    "title": "Prime-Power Rank Growth off the Wall\u2013Sun\u2013Sun Locus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Pythagorean triples with consecutive legs are exactly the odd Pell spine points, and their hypotenuses are 1 mod 4. We conjecture the sharper local law: every prime factor of such a hypotenuse is \u00b11 mod 8. This is a geometric statement whose proof is purely local-arithmetic.\n\nIf a\u00b2 + (a+1)\u00b2 = c\u00b2 then every prime factor q of c satisfies q \u2261 \u00b11 (mod 8); in particular 3, 5, 11, 13 never divide c except through the square 169 = 13\u00b2.\n\nFrom 2c\u00b2 = (2a+1)\u00b2 + 1 deduce that -1 and 2 are both squares mod q using ZMod.exists_sq_eq_neg_one_iff and the classification nearIsosceles_iff; verify on the first twenty spine terms.\n\nA congruence atlas for a classical geometric family, and an explanation of why 169 is the unique composite hypotenuse in the visible range.\n\nA hypotenuse with a prime factor \u2261 3 (mod 8) would break the norm-form description of the spine, forcing a wider class of quadratic orders.",
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_4486",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "3c91f334",
+    "status": "available",
+    "timestamp": "2026-09-01T14:54:56.800060+00:00",
+    "title": "Congruence Atlas of Near-Isosceles Hypotenuses"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -41837,14 +41842,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Specialize the generic ordered-cloud theorem to a formally defined increasing enumeration of primes."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d41e431",
     "description": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,\n`degree_two_exact`, `degree_three_exact` \u2014 the last one extracts its three linear\nconstraints from nothing but linear independence of the chart coordinates); the general case\nonly needs the recursion to be organised by total degree, which the reflective `NExpr`\ncalculus makes mechanical.",
     "domains": [],
     "id": "fd_1650",
+    "phase": "A",
     "priority_score": 0.4224285714285715,
     "research_mode": "team",
     "source_exp_id": "2e28602b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T22:41:46.891152+00:00",
     "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
   },
@@ -48061,19 +48067,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:27:51.715611+00:00",
     "title": "Formally: with `Q = \u230ay/\u03b5\u230b`, the number of resolved star centres in `(0,1]` is\n`\u2211_{q \u2264 Q} \u03c6(q) = 3Q\u00b2/\u03c0\u00b2 + O(Q log Q)`."
-  },
-  {
-    "consumed_by_exp_id": "3c91f334",
-    "description": "Each conjecture below is stated so that it can be *falsified* by a single Lean\ncounterexample.",
-    "domains": [],
-    "id": "fd_3099",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "2d369115",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:28:01.913353+00:00",
-    "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\ncounterexample."
   },
   {
     "consumed_by_exp_id": "",

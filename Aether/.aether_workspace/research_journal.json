@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5260665b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — scan-order tilt, after three cycles\n\n## What this cycle settled\n\nThe scan-order question (\"does scanning the balance window upward beat scanning down from\n`√N`?\") has been reduce",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 96,
-      "timestamp": "2026-08-26T13:18:20",
-      "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style pools read z=0.6356 ["
-    },
-    {
       "cycle_id": "6ca543a1",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Kernel Patterns and the Braid Arrangement\n\nTwo full research cycles were run on the topic *\"kernel patterns are complete\n`G`-invariants of a tuple, counted by the Bell numbers\"*.",
@@ -499,19 +489,19 @@
       "theorem_count": 92,
       "timestamp": "2026-09-01T10:08:56",
       "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS — keeping L22/L23 at fp32 gains +1.8pts over full 4-bit GPT"
+    },
+    {
+      "cycle_id": "3c91f334",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the Pell-spine falsification cycle\n\nThis cycle took the mission literally: every conjecture was stated so that one Lean\ncounterexample could kill it.  Seven did die (all in",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-09-01T14:55:09",
+      "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\ncounterexample."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "58852b38",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — the probabilistic method as finite counting\n\n## What the thread has established\n\nEleven Lean 4 files in `Catalog/Bridges/`, all compiling with zero `sorry` and using only the\naxi",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 157,
-      "timestamp": "2026-08-21T16:51:52",
-      "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
-    },
     {
       "cycle_id": "f87f1170",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 92,
       "timestamp": "2026-09-01T10:08:56",
       "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS — keeping L22/L23 at fp32 gains +1.8pts over full 4-bit GPT"
+    },
+    {
+      "cycle_id": "3c91f334",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the Pell-spine falsification cycle\n\nThis cycle took the mission literally: every conjecture was stated so that one Lean\ncounterexample could kill it.  Seven did die (all in",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-09-01T14:55:09",
+      "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\ncounterexample."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b63aa142",
-      "domain": "Algebra",
-      "name": "quartic_barrier_gap",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "b63aa142",
-      "domain": "Algebra",
-      "name": "quartic_barrier",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "b63aa142",
-      "domain": "Algebra",
-      "name": "quartic_barrier_three",
-      "quality": 0.87
-    },
     {
       "cycle_id": "181f9c07",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "bStar_sub_bStar",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "3c91f334",
+      "domain": "Novelty",
+      "name": "pell_apparition",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "3c91f334",
+      "domain": "Novelty",
+      "name": "pellRank_spec",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "3c91f334",
+      "domain": "Novelty",
+      "name": "pellRank_pos",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-01T10:08:56",
+  "last_updated": "2026-09-01T14:55:09",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0dec095c",
-        "quality": 0.72,
-        "theorems": 64,
-        "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=1"
-      },
-      {
         "cycle_id": "56a9e19d",
         "quality": 0.79,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 70,
         "title": "Backward-error semantics for floating-point chaotic programs"
+      },
+      {
+        "cycle_id": "3c91f334",
+        "quality": 0.84,
+        "theorems": 124,
+        "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\nc"
       }
     ],
     "NumberTheory": [
