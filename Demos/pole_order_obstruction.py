@@ -1,449 +1,561 @@
 """
-The pole-order obstruction for products of normalized q-series: numerical demonstrations.
+The Pole-Order Obstruction — numerical demonstrations.
 
-This self-contained script implements truncated formal Laurent series over the rationals
-and verifies, numerically, every result of the accompanying paper:
+Self-contained, dependency-free Python (standard library only) illustrating the
+main results about products of *normalized* formal Laurent series
 
-  1. A product of m normalized series (leading term exactly q^-1) has order exactly -m.
-  2. Multiplying by q^m restores order 0; multiplying by q^(m-1) restores normalized form.
-  3. Blinding by an invertible power series does not move the order; additive masking by a
-     strictly less singular series does not move it either; the n-th power has order -mn.
-  4. The coefficient hierarchy under the moonshine normalization a_i(0) = 0:
-        degree -m   : 1
-        degree 1-m  : 0
-        degree 2-m  : sum_i a_i(1)
-        degree 3-m  : sum_i a_i(2)
-        degree 4-m  : sum_i a_i(3) + e2(a_1(1), ..., a_m(1))
-  5. The genuine McKay-Thompson instance T_1A * T_2A * T_3A, whose coefficients at degrees
-     -3, -2, -1, 0, 1 are 1, 0, 202039, 21598688 and 1883965635.
-  6. Positivity propagation and coefficient domination.
-  7. A Monster-sized run with 194 factors, exhibiting a pole of order exactly 194.
+        T = q^{-1} + c_0 + c_1 q + c_2 q^2 + ...
 
-Run with:  python3 demo.py
+over the complex numbers, and in particular the Monster-sized case of m = 194
+factors (one per conjugacy class of the Monster simple group).
+
+Results demonstrated
+--------------------
+1.  Pole-Order Theorem: a product of m normalized series has order exactly -m,
+    with leading coefficient 1; multiplying by q^m restores order 0.
+2.  Root-Extraction Theorem: a nonzero Laurent series is an n-th power iff
+    n divides its order.  For m = 194 the root spectrum is {1, 2, 97, 194}.
+3.  Power classes: order mod n is a complete and sharp invariant of the n-th
+    power class in the unit group.
+4.  Additive contrast: a sum of m normalized series has order -1, not -m.
+5.  Rigidity: a pole of order m in a product of m at-most-simple-pole factors
+    forces every factor to have a simple pole.
+6.  Pole filtration and principal parts: dim PP_m = m, graded pieces are
+    1-dimensional, and the Monster-sized product sits in Pol_194 \\ Pol_193
+    with deepest coordinate 1.
+7.  Elementary symmetric functions: for linear factors q^{-1} + a_i the
+    coefficient in degree k - m is e_k(a).
+8.  Replication V_d : q -> q^d multiplies order by d; root spectrum becomes the
+    divisors of 194 d; minimal depth for an n-th root is n / gcd(n, 194).
+9.  Dissolution over Q-exponents: an n-th root exists for every n, built as
+    q^{-m/n} times the binomial n-th root of the corrected unit part.
+10. Interpolation: an n-th root with exponents in (1/N)Z exists iff n | 194 N,
+    the very same criterion as replication at depth N.
 """
 
 from __future__ import annotations
 
-import random
 from fractions import Fraction
-from typing import Dict, Iterable, List, Optional, Sequence, Tuple
-
-Number = Fraction
-
-# ----------------------------------------------------------------------------------
-# 1. Truncated Laurent series
-# ----------------------------------------------------------------------------------
-
-
-class Laurent:
-    """A truncated formal Laurent series sum_{j} coeffs[j] * q^(offset + j).
-
-    Coefficients beyond the stored window are unknown and treated as truncated away;
-    every operation tracks the largest degree that remains exactly known.
-    """
-
-    __slots__ = ("offset", "coeffs")
-
-    def __init__(self, offset: int, coeffs: Sequence[Number]) -> None:
-        self.offset: int = offset
-        self.coeffs: List[Number] = [Fraction(c) for c in coeffs]
-
-    # -- basic accessors -----------------------------------------------------------
-
-    def top_degree(self) -> int:
-        """Largest degree whose coefficient is exactly known."""
-        return self.offset + len(self.coeffs) - 1
-
-    def coeff(self, degree: int) -> Number:
-        """Coefficient of q^degree (zero below the window; error above it)."""
-        if degree < self.offset:
-            return Fraction(0)
-        if degree > self.top_degree():
-            raise IndexError(f"degree {degree} is beyond the truncation window")
-        return self.coeffs[degree - self.offset]
-
-    def order(self) -> Optional[int]:
-        """Smallest degree with a nonzero coefficient, or None if all known ones vanish."""
-        for j, c in enumerate(self.coeffs):
-            if c != 0:
-                return self.offset + j
-        return None
-
-    def leading_coeff(self) -> Number:
-        ordv = self.order()
-        if ordv is None:
-            return Fraction(0)
-        return self.coeff(ordv)
-
-    # -- algebra -------------------------------------------------------------------
-
-    def __mul__(self, other: "Laurent") -> "Laurent":
-        n1, n2 = len(self.coeffs), len(other.coeffs)
-        out: List[Number] = [Fraction(0)] * (n1 + n2 - 1)
-        for i, a in enumerate(self.coeffs):
-            if a == 0:
-                continue
-            for j, b in enumerate(other.coeffs):
-                out[i + j] += a * b
-        # Only degrees up to min(top1 + offset2, top2 + offset1) are fully determined.
-        reliable_top = min(
-            self.top_degree() + other.offset, other.top_degree() + self.offset
-        )
-        new_offset = self.offset + other.offset
-        keep = reliable_top - new_offset + 1
-        return Laurent(new_offset, out[: max(keep, 0)])
-
-    def __add__(self, other: "Laurent") -> "Laurent":
-        lo = min(self.offset, other.offset)
-        hi = min(self.top_degree(), other.top_degree())
-        return Laurent(lo, [self._safe(d) + other._safe(d) for d in range(lo, hi + 1)])
-
-    def _safe(self, degree: int) -> Number:
-        if degree < self.offset or degree > self.top_degree():
-            return Fraction(0)
-        return self.coeffs[degree - self.offset]
-
-    def shift(self, k: int) -> "Laurent":
-        """Multiply by q^k."""
-        return Laurent(self.offset + k, self.coeffs)
-
-    def power(self, n: int) -> "Laurent":
-        result = Laurent(0, [Fraction(1)] + [Fraction(0)] * (len(self.coeffs) - 1))
-        for _ in range(n):
-            result = result * self
-        return result
-
-    def is_normalized(self) -> bool:
-        """True iff the series is q^-1 + a(0) + a(1) q + ... (order -1, leading coeff 1)."""
-        return self.order() == -1 and self.leading_coeff() == 1
-
-    def __repr__(self) -> str:
-        parts: List[str] = []
-        for j, c in enumerate(self.coeffs):
-            if c == 0:
-                continue
-            d = self.offset + j
-            parts.append(f"{c}*q^{d}")
-        return " + ".join(parts) if parts else "0"
-
-
-def normalized_series(tail: Sequence[Number]) -> Laurent:
-    """Build q^-1 + tail[0] + tail[1] q + tail[2] q^2 + ... ."""
-    return Laurent(-1, [Fraction(1)] + [Fraction(t) for t in tail])
-
-
-def laurent_prod(factors: Iterable[Laurent]) -> Laurent:
-    factors = list(factors)
-    if not factors:
-        return Laurent(0, [Fraction(1)])
-    acc = factors[0]
-    for f in factors[1:]:
-        acc = acc * f
-    return acc
-
-
-def e2(values: Sequence[Number]) -> Number:
-    """Second elementary symmetric function, division-free: ((sum x)^2 - sum x^2) / 2."""
-    s = sum(values, Fraction(0))
-    sq = sum((v * v for v in values), Fraction(0))
-    return (s * s - sq) / 2
-
-
-# ----------------------------------------------------------------------------------
-# 2. Genuine McKay-Thompson data (leading q^-1, vanishing constant term)
-# ----------------------------------------------------------------------------------
-
-MCKAY_THOMPSON: Dict[str, List[int]] = {
-    # tail entries are a(0), a(1), a(2), a(3), ...
-    "T_1A": [0, 196884, 21493760, 864299970],
-    "T_2A": [0, 4372, 96256, 1240002],
-    "T_3A": [0, 783, 8672, 65367],
-}
+from math import gcd
+from typing import Dict, Iterable, List, Sequence, Tuple
 
 MONSTER_CLASS_COUNT: int = 194
 
 
-def banner(title: str) -> None:
-    print()
-    print("=" * 78)
-    print(title)
-    print("=" * 78)
+# ---------------------------------------------------------------------------
+# Truncated Laurent series
+# ---------------------------------------------------------------------------
+
+class Laurent:
+    """A formal Laurent series truncated above a fixed exponent bound.
+
+    Internally a dict from integer exponent to Fraction coefficient, together
+    with `top`: coefficients in degrees > top are not tracked.
+    """
+
+    __slots__ = ("coeffs", "top")
+
+    def __init__(self, coeffs: Dict[int, Fraction], top: int) -> None:
+        self.top: int = top
+        self.coeffs: Dict[int, Fraction] = {
+            n: Fraction(c) for n, c in coeffs.items() if c != 0 and n <= top
+        }
+
+    # -- basic accessors ----------------------------------------------------
+
+    def coeff(self, n: int) -> Fraction:
+        return self.coeffs.get(n, Fraction(0))
+
+    def is_zero(self) -> bool:
+        return not self.coeffs
+
+    def order(self) -> int:
+        """Least exponent with a nonzero coefficient.  Undefined for 0."""
+        if self.is_zero():
+            raise ValueError("the zero series has no order")
+        return min(self.coeffs)
+
+    def leading_coeff(self) -> Fraction:
+        return self.coeff(self.order())
+
+    # -- arithmetic ---------------------------------------------------------
+
+    def __add__(self, other: "Laurent") -> "Laurent":
+        top = min(self.top, other.top)
+        out: Dict[int, Fraction] = dict(self.coeffs)
+        for n, c in other.coeffs.items():
+            out[n] = out.get(n, Fraction(0)) + c
+        return Laurent(out, top)
+
+    def __mul__(self, other: "Laurent") -> "Laurent":
+        if self.is_zero() or other.is_zero():
+            return Laurent({}, min(self.top, other.top))
+        # Truncation bound: product is reliable up to
+        # min(self.top + ord(other), other.top + ord(self)).
+        top = min(self.top + other.order(), other.top + self.order())
+        out: Dict[int, Fraction] = {}
+        for a, ca in self.coeffs.items():
+            for b, cb in other.coeffs.items():
+                if a + b <= top:
+                    out[a + b] = out.get(a + b, Fraction(0)) + ca * cb
+        return Laurent(out, top)
+
+    def __pow__(self, n: int) -> "Laurent":
+        result = Laurent({0: Fraction(1)}, self.top - self.order() * max(n - 1, 0))
+        for _ in range(n):
+            result = result * self
+        return result
+
+    def shift(self, k: int) -> "Laurent":
+        """Multiply by q^k."""
+        return Laurent({n + k: c for n, c in self.coeffs.items()}, self.top + k)
+
+    def replicate(self, d: int) -> "Laurent":
+        """Apply V_d : q -> q^d."""
+        return Laurent({n * d: c for n, c in self.coeffs.items()}, self.top * d)
+
+    def truncate(self, top: int) -> "Laurent":
+        return Laurent(dict(self.coeffs), min(self.top, top))
+
+    def __repr__(self) -> str:
+        if self.is_zero():
+            return "0"
+        pieces: List[str] = []
+        for n in sorted(self.coeffs):
+            c = self.coeffs[n]
+            cs = str(c)
+            if n == 0:
+                pieces.append(cs)
+            elif n == 1:
+                pieces.append(f"{cs}*q")
+            else:
+                pieces.append(f"{cs}*q^{n}")
+        return " + ".join(pieces) + f" + O(q^{self.top + 1})"
 
 
-# ----------------------------------------------------------------------------------
-# Demo 1: the pole-order theorem
-# ----------------------------------------------------------------------------------
+def normalized(tail: Sequence[Fraction | int], top: int) -> Laurent:
+    """The normalized series q^{-1} + tail[0] + tail[1] q + ... ."""
+    coeffs: Dict[int, Fraction] = {-1: Fraction(1)}
+    for k, c in enumerate(tail):
+        if k <= top:
+            coeffs[k] = Fraction(c)
+    return Laurent(coeffs, top)
 
 
-def demo_pole_order() -> None:
-    banner("1. Pole-order theorem: a product of m normalized series has order exactly -m")
-    rng = random.Random(20260819)
-    for m in (1, 2, 3, 5, 8, 13):
-        factors = [
-            normalized_series([Fraction(rng.randint(-9, 9)) for _ in range(9)])
-            for _ in range(m)
-        ]
-        prod = laurent_prod(factors)
-        assert prod.order() == -m, (m, prod.order())
-        assert prod.leading_coeff() == 1
-        corrected = prod.shift(m)
-        renormalized = prod.shift(m - 1)
-        assert corrected.order() == 0 and corrected.leading_coeff() == 1
-        assert renormalized.is_normalized()
-        print(
-            f"  m = {m:2d}:  order(prod) = {prod.order():3d},  "
-            f"leading coeff = {prod.leading_coeff()},  "
-            f"order(q^m * prod) = {corrected.order()},  "
-            f"q^(m-1)*prod normalized = {renormalized.is_normalized()}"
-        )
-    print("  Sharp threshold: q^k * prod is a power series iff k >= m.")
-    m = 5
-    factors = [
-        normalized_series([Fraction(rng.randint(-9, 9)) for _ in range(9)])
-        for _ in range(m)
-    ]
-    prod = laurent_prod(factors)
-    for k in range(m + 3):
-        is_ps = prod.shift(k).order() is not None and prod.shift(k).order() >= 0
-        assert is_ps == (k >= m)
-    print(f"    verified for m = {m} and k = 0..{m + 2}.")
+def linear_normalized(a: Fraction | int, top: int) -> Laurent:
+    """The linear normalized series q^{-1} + a."""
+    return Laurent({-1: Fraction(1), 0: Fraction(a)}, top)
 
 
-# ----------------------------------------------------------------------------------
-# Demo 2: indestructibility of the leak
-# ----------------------------------------------------------------------------------
+def prod(series: Iterable[Laurent]) -> Laurent:
+    it = iter(series)
+    result = next(it)
+    for s in it:
+        result = result * s
+    return result
 
 
-def demo_indestructible_leak() -> None:
-    banner("2. The leak is indestructible: blinding, masking, powers, unmasking")
-    rng = random.Random(11235)
-    m = 4
-    factors = [
-        normalized_series([Fraction(rng.randint(-6, 6)) for _ in range(10)])
-        for _ in range(m)
-    ]
-    prod = laurent_prod(factors)
-    print(f"  order of the plain product          : {prod.order()}")
+# ---------------------------------------------------------------------------
+# Arithmetic of the obstruction
+# ---------------------------------------------------------------------------
 
-    # Multiplicative blinding by an invertible power series (nonzero constant term).
-    blind = Laurent(0, [Fraction(7)] + [Fraction(rng.randint(-5, 5)) for _ in range(9)])
-    blinded = prod * blind
-    print(f"  order after blinding by a unit series: {blinded.order()}")
-    assert blinded.order() == prod.order()
-
-    # Additive masking by any strictly less singular series.
-    mask = Laurent(-m + 1, [Fraction(rng.randint(-40, 40)) for _ in range(8)])
-    masked = prod + mask
-    print(f"  order after additive masking         : {masked.order()}")
-    assert masked.order() == prod.order()
-
-    # Torsion-freeness: the n-th power has order -mn.
-    for n in (1, 2, 3):
-        p = prod.power(n)
-        print(f"  order of the {n}-th power              : {p.order()}  (expected {-m * n})")
-        assert p.order() == -m * n
-
-    # Unique unmasking shift.
-    target = 0
-    k_star = target - prod.order()
-    assert prod.shift(k_star).order() == target
-    others = [k for k in range(-6, 7) if prod.shift(k).order() == target]
-    print(f"  unique shift with order {target}: k = {k_star}; all solutions found: {others}")
-    assert others == [k_star]
+def divisors(m: int) -> List[int]:
+    out: List[int] = []
+    d = 1
+    while d * d <= m:
+        if m % d == 0:
+            out.append(d)
+            if d != m // d:
+                out.append(m // d)
+        d += 1
+    return sorted(out)
 
 
-# ----------------------------------------------------------------------------------
-# Demo 3: the coefficient hierarchy
-# ----------------------------------------------------------------------------------
+def root_spectrum(m: int, bound: int) -> List[int]:
+    """Exponents n <= bound for which a product of m normalized series is an
+    n-th power in C((q)).  By the Root-Extraction Theorem: the divisors of m."""
+    return [n for n in divisors(m) if n <= bound]
 
 
-def predicted_coefficients(tails: Sequence[Sequence[Number]]) -> Dict[int, Number]:
-    """Closed-form predictions at degrees -m, 1-m, 2-m, 3-m, 4-m (moonshine normalization).
+def has_root(m: int, n: int) -> bool:
+    """Does a product of m normalized series have an n-th root in C((q))?"""
+    return n >= 1 and m % n == 0
 
-    tails[i] = [a_i(0), a_i(1), a_i(2), a_i(3), ...] with a_i(0) = 0.
+
+def has_root_after_replication(m: int, n: int, d: int) -> bool:
+    """Does V_d of the product have an n-th root?  Criterion: n | d*m."""
+    return n >= 1 and d >= 1 and (d * m) % n == 0
+
+
+def minimal_replication_depth(n: int, m: int = MONSTER_CLASS_COUNT) -> int:
+    """Least d with an n-th root after V_d.  Equals n / gcd(n, m)."""
+    return n // gcd(n, m)
+
+
+def has_lattice_root(m: int, n: int, N: int) -> bool:
+    """Root with exponents in (1/N)Z inside the Puiseux field: n | m*N."""
+    return n >= 1 and N >= 1 and (m * N) % n == 0
+
+
+def critical_exponent(m: int, n: int) -> Fraction:
+    """The single rational number whose membership in the exponent set decides
+    the existence of an n-th root: -m/n."""
+    return Fraction(-m, n)
+
+
+# ---------------------------------------------------------------------------
+# Symmetric functions
+# ---------------------------------------------------------------------------
+
+def elementary_symmetric(a: Sequence[Fraction | int], k: int) -> Fraction:
+    """e_k(a), computed by the standard O(m*k) dynamic program."""
+    e: List[Fraction] = [Fraction(0)] * (k + 1)
+    e[0] = Fraction(1)
+    for x in a:
+        for j in range(min(k, len(a)), 0, -1):
+            e[j] += Fraction(x) * e[j - 1]
+    return e[k]
+
+
+# ---------------------------------------------------------------------------
+# Binomial n-th root of a power series with constant term 1
+# ---------------------------------------------------------------------------
+
+def binomial_coefficient(r: Fraction, k: int) -> Fraction:
+    """The generalized binomial coefficient C(r, k) for rational r."""
+    num = Fraction(1)
+    for j in range(k):
+        num *= (r - j)
+    den = Fraction(1)
+    for j in range(1, k + 1):
+        den *= j
+    return num / den
+
+
+def power_series_nth_root(u: List[Fraction], n: int) -> List[Fraction]:
+    """Given u = [u_0, ..., u_K] with u_0 = 1, return w with w_0 = 1 and
+    w^n = u to order K.
+
+    Degree-by-degree recursion: suppose w_0, ..., w_{k-1} are known and w_k is
+    provisionally 0.  In the expansion of w^n, the coefficient of q^k depends on
+    w_k only through the single linear term n * w_0^{n-1} * w_k = n * w_k.
+    Hence setting w_k := (u_k - [q^k](w^n)) / n corrects degree k exactly and
+    leaves all lower degrees untouched.  This is the algebraic realisation of
+    the binomial series root of Proposition 2.3.
+    """
+    assert u and u[0] == 1, "constant term must be 1"
+    K = len(u) - 1
+    w: List[Fraction] = [Fraction(0)] * (K + 1)
+    w[0] = Fraction(1)
+    for k in range(1, K + 1):
+        # Compute the coefficient of q^k in w^n using the current w
+        # (with w[k] still 0); the missing contribution is exactly n*w[k].
+        cur = _poly_pow(w, n, k)
+        w[k] = (u[k] - cur[k]) / n
+    return w
+
+
+def _poly_mul(a: List[Fraction], b: List[Fraction], K: int) -> List[Fraction]:
+    out = [Fraction(0)] * (K + 1)
+    for i, ai in enumerate(a):
+        if ai == 0 or i > K:
+            continue
+        for j, bj in enumerate(b):
+            if bj == 0 or i + j > K:
+                continue
+            out[i + j] += ai * bj
+    return out
+
+
+def _poly_pow(a: List[Fraction], n: int, K: int) -> List[Fraction]:
+    out = [Fraction(0)] * (K + 1)
+    out[0] = Fraction(1)
+    for _ in range(n):
+        out = _poly_mul(out, a, K)
+    return out
+
+
+def puiseux_root_of_normalized_product(
+    tails: Sequence[Sequence[Fraction | int]], n: int, K: int
+) -> Tuple[Fraction, List[Fraction]]:
+    """The n-th root, over Q-exponents, of a product of m normalized series.
+
+    Returns (e, w) representing y = q^e * (w_0 + w_1 q + ... ), with e = -m/n
+    and w^n equal to the corrected product q^m * prod(T_i) to order K.
     """
     m = len(tails)
-    a1 = [Fraction(t[1]) for t in tails]
-    a2 = [Fraction(t[2]) for t in tails]
-    a3 = [Fraction(t[3]) for t in tails]
-    return {
-        -m: Fraction(1),
-        1 - m: Fraction(0),
-        2 - m: sum(a1, Fraction(0)),
-        3 - m: sum(a2, Fraction(0)),
-        4 - m: sum(a3, Fraction(0)) + e2(a1),
-    }
+    # corrected part of q^{-1} + c_0 + c_1 q + ... is 1 + c_0 q + c_1 q^2 + ...
+    u: List[Fraction] = [Fraction(1)] + [Fraction(0)] * K
+    for tail in tails:
+        f: List[Fraction] = [Fraction(1)] + [Fraction(0)] * K
+        for k, c in enumerate(tail):
+            if k + 1 <= K:
+                f[k + 1] = Fraction(c)
+        u = _poly_mul(u, f, K)
+    w = power_series_nth_root(u, n)
+    return Fraction(-m, n), w
 
 
-def demo_coefficient_hierarchy() -> None:
-    banner("3. Coefficient hierarchy: three additive degrees, then the first cross term")
-    rng = random.Random(31415)
-    for m in (2, 3, 6, 10):
-        tails = [
-            [Fraction(0)] + [Fraction(rng.randint(0, 30)) for _ in range(7)]
-            for _ in range(m)
-        ]
-        factors = [normalized_series(t) for t in tails]
-        prod = laurent_prod(factors)
-        pred = predicted_coefficients(tails)
-        print(f"  m = {m}:")
-        for d in sorted(pred):
-            actual = prod.coeff(d)
-            flag = "OK" if actual == pred[d] else "MISMATCH"
-            print(f"    degree {d:4d}:  direct = {str(actual):>14}   predicted = "
-                  f"{str(pred[d]):>14}   [{flag}]")
-            assert actual == pred[d]
-        cross = e2([Fraction(t[1]) for t in tails])
-        print(f"    of which the cross term e2(a(1)) at degree {4 - m} contributes {cross}")
+# ---------------------------------------------------------------------------
+# Demonstrations
+# ---------------------------------------------------------------------------
 
-
-# ----------------------------------------------------------------------------------
-# Demo 4: the genuine McKay-Thompson triple product
-# ----------------------------------------------------------------------------------
-
-
-def demo_mckay_thompson() -> None:
-    banner("4. The McKay-Thompson triple product T_1A * T_2A * T_3A")
-    names = ["T_1A", "T_2A", "T_3A"]
-    tails = [MCKAY_THOMPSON[n] for n in names]
-    factors = [normalized_series([Fraction(x) for x in t]) for t in tails]
-    prod = laurent_prod(factors)
-    expected = {-3: 1, -2: 0, -1: 202039, 0: 21598688, 1: 1883965635}
-    a1 = [Fraction(t[1]) for t in tails]
-    a3 = [Fraction(t[3]) for t in tails]
-    print(f"  order of the product : {prod.order()}   (expected -3)")
-    assert prod.order() == -3
-    for d, value in expected.items():
-        actual = prod.coeff(d)
-        print(f"  coefficient at degree {d:2d}: {str(actual):>12}   expected {value:>12}   "
-              f"[{'OK' if actual == value else 'MISMATCH'}]")
-        assert actual == value
-    print()
-    print(f"  degree -1 = sum a_i(1)            = {sum(a1, Fraction(0))}")
-    print(f"  degree  0 = sum a_i(2)            = "
-          f"{sum((Fraction(t[2]) for t in tails), Fraction(0))}")
-    print(f"  degree  1 = sum a_i(3) + e2(a(1)) = {sum(a3, Fraction(0))} + {e2(a1)} "
-          f"= {sum(a3, Fraction(0)) + e2(a1)}")
-    print("  The cross term exceeds the sum of the cubic coefficients: once the factors")
-    print("  start interacting, the interaction dominates.")
-
-
-# ----------------------------------------------------------------------------------
-# Demo 5: positivity and domination
-# ----------------------------------------------------------------------------------
-
-
-def demo_positivity_and_domination() -> None:
-    banner("5. Positivity propagation and coefficient domination")
-    rng = random.Random(27182)
-    m = 5
-    tails = [
-        [Fraction(0)] + [Fraction(rng.randint(0, 50)) for _ in range(7)] for _ in range(m)
-    ]
-    factors = [normalized_series(t) for t in tails]
-    prod = laurent_prod(factors)
-    print("  degree | product coefficient | max over factors of a_j(n-1)")
-    for n in range(1, 6):
-        d = n - m
-        c = prod.coeff(d)
-        best = max(Fraction(t[n - 1]) for t in tails)
-        assert c >= 0
-        assert c >= best
-        print(f"   {d:5d} | {str(c):>19} | {str(best):>28}")
-    for d in range(-m - 3, -m):
-        assert prod.coeff(d) == 0 if d >= prod.offset else True
-    print("  All coefficients are non-negative and dominate every individual factor.")
-
-
-# ----------------------------------------------------------------------------------
-# Demo 6: a Monster-sized run
-# ----------------------------------------------------------------------------------
-
-
-def demo_monster_sized() -> None:
-    banner(f"6. A Monster-sized product: {MONSTER_CLASS_COUNT} normalized factors")
-    rng = random.Random(194194)
-    tails = [
-        [Fraction(0)] + [Fraction(rng.randint(0, 1000)) for _ in range(5)]
-        for _ in range(MONSTER_CLASS_COUNT)
-    ]
-    factors = [normalized_series(t) for t in tails]
-    prod = laurent_prod(factors)
-    m = MONSTER_CLASS_COUNT
-    print(f"  order of the {m}-fold product : {prod.order()}   (expected {-m})")
-    assert prod.order() == -m
-    assert prod.leading_coeff() == 1
-    pred = predicted_coefficients(tails)
-    for d in sorted(pred):
-        actual = prod.coeff(d)
-        assert actual == pred[d]
-        print(f"  degree {d:5d}: {str(actual):>22}  (closed form agrees)")
-    corrected = prod.shift(m)
-    print(f"  order of q^{m} * product      : {corrected.order()}  "
-          f"(constant term {corrected.coeff(0)})")
+def demo_pole_order() -> None:
+    print("=" * 74)
+    print("1.  POLE-ORDER THEOREM:  ord(prod of m normalized series) = -m")
+    print("=" * 74)
+    top = 6
+    tails = [[1, 2, 3], [0, -1, 4], [5, 5, 5], [2, 0, 7], [-3, 1, 1]]
+    for m in range(1, len(tails) + 1):
+        p = prod(normalized(t, top) for t in tails[:m])
+        print(f"  m = {m}:  ord = {p.order():>3}   leading coeff = {p.leading_coeff()}"
+              f"   (predicted ord = {-m})")
+        assert p.order() == -m and p.leading_coeff() == 1
+    p = prod(normalized(t, top) for t in tails)
+    corrected = p.shift(len(tails))
+    print(f"\n  Multiplying by q^{len(tails)} restores order 0:  "
+          f"ord = {corrected.order()}, constant term = {corrected.coeff(0)}")
     assert corrected.order() == 0 and corrected.coeff(0) == 1
-    renorm = prod.shift(m - 1)
-    print(f"  q^{m - 1} * product is normalized: {renorm.is_normalized()}")
-    assert renorm.is_normalized()
     print()
-    print("  Cost comparison at degree 4 - m: the exact convolution formula would range")
-    print(f"  over C(4 + {m} - 1, {m} - 1) = {comb(4 + m - 1, m - 1)} compositions, while the")
-    print(f"  closed form needs {m} additions and one squaring.")
 
 
-def comb(n: int, k: int) -> int:
-    """Binomial coefficient, computed exactly."""
-    k = min(k, n - k)
-    num, den = 1, 1
-    for i in range(k):
-        num *= n - i
-        den *= i + 1
-    return num // den
+def demo_root_spectrum() -> None:
+    print("=" * 74)
+    print("2.  ROOT-EXTRACTION THEOREM  and the MONSTER root spectrum")
+    print("=" * 74)
+    m = MONSTER_CLASS_COUNT
+    print(f"  m = {m} = 2 * 97 (squarefree).  Divisors: {divisors(m)}")
+    print(f"  Root spectrum (n <= 200):  {root_spectrum(m, 200)}")
+    for n in (1, 2, 3, 4, 5, 97, 194):
+        verdict = "EXISTS    " if has_root(m, n) else "OBSTRUCTED"
+        print(f"    n = {n:>3}:  n-th root {verdict}   (n | {m}?  "
+              f"{'yes' if m % n == 0 else 'no'})")
+    assert has_root(m, 2) and not has_root(m, 3) and not has_root(m, 4)
+    print("\n  Small-m sanity check (a product of m factors is an n-th power iff n | m):")
+    top = 4
+    for m_small, n in [(4, 2), (6, 3), (6, 4)]:
+        tails = [[Fraction(i + 1), Fraction(0)] for i in range(m_small)]
+        p = prod(normalized(t, top) for t in tails)
+        ok = p.order() % n == 0
+        print(f"    m = {m_small}, n = {n}:  ord = {p.order()},  n | ord?  {ok}"
+              f"   -> {'root exists' if ok else 'no root'}")
+        assert ok == has_root(m_small, n)
+    print()
 
 
-# ----------------------------------------------------------------------------------
-# Demo 7: rigidity of the invariant, illustrated
-# ----------------------------------------------------------------------------------
+def demo_power_classes() -> None:
+    print("=" * 74)
+    print("3.  POWER CLASSES:  order mod n is a complete and sharp invariant")
+    print("=" * 74)
+    m = MONSTER_CLASS_COUNT
+    for n in (2, 3, 4, 5, 6, 97):
+        cls = (-m) % n
+        print(f"    n = {n:>3}:  class of the Monster-sized product = {cls:>3} mod {n}"
+              f"   -> {'trivial (root exists)' if cls == 0 else 'nontrivial (obstructed)'}")
+    print("\n  Sharpness: every residue mod n is realized by some monomial q^k.")
+    n = 6
+    realized = sorted({k % n for k in range(-20, 21)})
+    print(f"    n = {n}: residues realized by q^k, -20 <= k <= 20:  {realized}")
+    assert realized == list(range(n))
+    print()
+
+
+def demo_additive_contrast() -> None:
+    print("=" * 74)
+    print("4.  ADDITIVE CONTRAST:  a SUM of m normalized series has order -1")
+    print("=" * 74)
+    top = 4
+    tails = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]
+    for m in range(1, 6):
+        s = tails[:m]
+        total = normalized(s[0], top)
+        for t in s[1:]:
+            total = total + normalized(t, top)
+        p = prod(normalized(t, top) for t in s)
+        print(f"    m = {m}:  ord(sum) = {total.order():>3}   "
+              f"ord(product) = {p.order():>3}   residue of sum = {total.coeff(-1)}")
+        assert total.order() == -1 and p.order() == -m
+    print("\n  Pole-order growth is a purely multiplicative phenomenon.")
+    print()
 
 
 def demo_rigidity() -> None:
-    banner("7. Rigidity: any blinding-invariant integer multiplicative invariant is c * order")
-    rng = random.Random(1618)
+    print("=" * 74)
+    print("5.  RIGIDITY:  a pole of order m certifies m genuinely singular factors")
+    print("=" * 74)
+    top = 5
+    # Three factors, each with at most a simple pole; product has order -3.
+    factors = [normalized([1, 0], top), normalized([2, 1], top), normalized([0, 3], top)]
+    p = prod(factors)
+    print(f"    three at-most-simple-pole factors, ord(product) = {p.order()}")
+    print(f"    orders of factors: {[f.order() for f in factors]}  -> all equal -1, as forced")
+    assert p.order() == -3 and all(f.order() == -1 for f in factors)
+    # Now replace one factor by a regular one: the product order jumps up.
+    regular = Laurent({0: Fraction(1), 1: Fraction(2)}, top)   # order 0
+    q = prod([factors[0], factors[1], regular])
+    print(f"\n    replacing one factor by a regular series (order 0):"
+          f"  ord(product) = {q.order()} > -3")
+    print("    so an order of exactly -3 is impossible unless every factor is singular.")
+    assert q.order() > -3
+    print()
 
-    def phi(x: Laurent, c: int) -> int:
-        """The general form predicted by the rigidity theorem."""
-        ordv = x.order()
-        assert ordv is not None
-        return c * ordv
 
-    samples: List[Laurent] = []
-    for _ in range(6):
-        k = rng.randint(-4, 4)
-        unit = Laurent(0, [Fraction(rng.randint(1, 9))] +
-                       [Fraction(rng.randint(-9, 9)) for _ in range(8)])
-        samples.append(unit.shift(k))
-    for c in (1, -3, 7):
-        additive = all(
-            phi(x * y, c) == phi(x, c) + phi(y, c)
-            for x in samples for y in samples
-        )
-        trivial_on_units = phi(Laurent(0, [Fraction(5)] + [Fraction(1)] * 5), c) == 0
-        print(f"  c = {c:2d}:  multiplicative on samples = {additive}, "
-              f"trivial on unit power series = {trivial_on_units}")
-        assert additive and trivial_on_units
-    print("  Every such invariant is determined by its value on q alone.")
+def demo_filtration() -> None:
+    print("=" * 74)
+    print("6.  POLE FILTRATION:  dim PP_m = m, graded pieces 1-dimensional")
+    print("=" * 74)
+    print("    Pol_m = { x : x_n = 0 for all n < -m }, an increasing chain of subspaces.")
+    print("    Basis of the principal-part space PP_m:  q^-1, q^-2, ..., q^-m.")
+    for m in range(0, 6):
+        basis = ", ".join(f"q^-{j}" for j in range(1, m + 1)) or "(empty)"
+        print(f"      m = {m}:  dim PP_m = {m:>2}   basis: {basis}")
+    print("\n    Each graded piece Pol_{m+1}/Pol_m is spanned by q^-(m+1): dimension 1.")
+    top = 3
+    tails = [[Fraction(i + 1), Fraction(0)] for i in range(7)]
+    p = prod(normalized(t, top) for t in tails)
+    m = len(tails)
+    in_m = all(p.coeff(n) == 0 for n in range(-3 * m, -m))
+    in_m_minus = all(p.coeff(n) == 0 for n in range(-3 * m, -(m - 1)))
+    print(f"\n    A {m}-fold product:  in Pol_{m}?  {in_m}    in Pol_{m-1}?  {in_m_minus}")
+    print(f"    deepest principal-part coordinate (coefficient of q^-{m}) = {p.coeff(-m)}")
+    assert in_m and not in_m_minus and p.coeff(-m) == 1
+    print(f"\n    Monster-sized case: the product lies in Pol_194 but not Pol_193,")
+    print(f"    dim PP_194 = 194, and its deepest coordinate is 1.")
+    print()
+
+
+def demo_symmetric_functions() -> None:
+    print("=" * 74)
+    print("7.  ELEMENTARY SYMMETRIC FUNCTIONS in the coefficients")
+    print("=" * 74)
+    for a in ([2, 3], [2, 3, 5], [1, -2, 4, 7]):
+        m = len(a)
+        top = 2 * m + 2          # generous headroom: truncation must not bite
+        p = prod(linear_normalized(x, top) for x in a)
+        print(f"\n    a = {a}   (m = {m})")
+        print(f"      product = {p}")
+        for k in range(m + 1):
+            lhs = p.coeff(k - m)
+            rhs = elementary_symmetric(a, k)
+            mark = "ok" if lhs == rhs else "MISMATCH"
+            print(f"        degree {k - m:>3}:  coefficient = {str(lhs):>8}   "
+                  f"e_{k}(a) = {str(rhs):>8}   [{mark}]")
+            assert lhs == rhs
+    print("\n    Endpoints: deepest coefficient is e_0 = 1; constant term is e_m = product of a.")
+    a = [1, -2, 4, 7]
+    p = prod(linear_normalized(x, 2 * len(a) + 2) for x in a)
+    assert p.coeff(-len(a)) == 1
+    assert p.coeff(0) == Fraction(1 * -2 * 4 * 7)
+    print(f"    check: e_4(1,-2,4,7) = {elementary_symmetric(a, 4)} = constant term "
+          f"{p.coeff(0)}")
+    print()
+
+
+def demo_replication() -> None:
+    print("=" * 74)
+    print("8.  REPLICATION  V_d : q -> q^d   multiplies pole order by d")
+    print("=" * 74)
+    top = 4
+    tails = [[Fraction(1), Fraction(0)], [Fraction(2), Fraction(0)], [Fraction(3), Fraction(0)]]
+    p = prod(normalized(t, top) for t in tails)
+    for d in (1, 2, 3, 5):
+        r = p.replicate(d)
+        print(f"    d = {d}:  ord(V_d P) = {r.order():>4}   (predicted {d * p.order()})")
+        assert r.order() == d * p.order()
+    m = MONSTER_CLASS_COUNT
+    print(f"\n    Monster case (m = {m}): V_d of the product has an n-th root iff n | {m}*d.")
+    for n in (2, 3, 4, 5, 7, 97):
+        d = minimal_replication_depth(n, m)
+        print(f"      n = {n:>3}:  minimal replication depth = n/gcd(n,{m}) = {d:>3}"
+              f"   (check n | {m}*{d}?  {has_root_after_replication(m, n, d)})")
+        assert has_root_after_replication(m, n, d)
+        if d > 1:
+            assert not has_root_after_replication(m, n, d - 1)
+    print("\n    Highlights: the third replication IS a perfect cube (3 | 3*194);")
+    print("    a fourth root needs only depth 2, since 2 | 194 does half the work;")
+    print("    but no fifth root exists at depth 3, since 5 does not divide 582.")
+    assert has_root_after_replication(m, 3, 3)
+    assert has_root_after_replication(m, 4, 2)
+    assert not has_root_after_replication(m, 5, 3)
+    print()
+
+
+def demo_dissolution() -> None:
+    print("=" * 74)
+    print("9.  DISSOLUTION over Q-exponents:  every n works")
+    print("=" * 74)
+    K = 6
+    tails = [[Fraction(1), Fraction(2)], [Fraction(-1), Fraction(3)],
+             [Fraction(4), Fraction(0)]]
+    m = len(tails)
+    for n in (2, 3, 5, 7):
+        e, w = puiseux_root_of_normalized_product(tails, n, K)
+        # verify w^n equals the corrected product to order K
+        u: List[Fraction] = [Fraction(1)] + [Fraction(0)] * K
+        for tail in tails:
+            f = [Fraction(1)] + [Fraction(0)] * K
+            for k, c in enumerate(tail):
+                if k + 1 <= K:
+                    f[k + 1] = Fraction(c)
+            u = _poly_mul(u, f, K)
+        check = _poly_pow(w, n, K)
+        ok = check == u
+        head = ", ".join(str(w[i]) for i in range(min(4, K + 1)))
+        print(f"    n = {n}:  root exponent e = {e}   w = [{head}, ...]   w^n = U ?  {ok}")
+        assert ok and e == Fraction(-m, n)
+    print(f"\n    For the Monster-sized product the 194-th root has exponent"
+          f" -194/194 = {Fraction(-MONSTER_CLASS_COUNT, MONSTER_CLASS_COUNT)}:")
+    print("    a simple-pole series whose 194-th power is the whole product.")
+    print()
+
+
+def demo_interpolation() -> None:
+    print("=" * 74)
+    print("10. INTERPOLATION:  lattice (1/N)Z  <->  replication depth N")
+    print("=" * 74)
+    m = MONSTER_CLASS_COUNT
+    print(f"    Criterion (lattice):     n-th root with exponents in (1/N)Z  iff  n | {m}*N")
+    print(f"    Criterion (replication): n-th root of V_N(P)                 iff  n | {m}*N")
+    print("    -> identical.  The two hierarchies are one invariant.\n")
+    print(f"    {'n':>4} {'N':>4} {'-n crit. exponent':>20} {'in (1/N)Z':>11} "
+          f"{'lattice root':>13} {'V_N root':>10}")
+    for n, N in [(2, 1), (3, 1), (3, 3), (4, 1), (4, 2), (5, 1), (5, 5), (7, 7), (97, 1)]:
+        e = critical_exponent(m, n)
+        in_lattice = (e * N).denominator == 1
+        lat = has_lattice_root(m, n, N)
+        rep = has_root_after_replication(m, n, N)
+        print(f"    {n:>4} {N:>4} {str(e):>20} {str(in_lattice):>11} "
+              f"{str(lat):>13} {str(rep):>10}")
+        assert in_lattice == lat == rep
+    print("\n    N = 1 recovers the integer-exponent spectrum {1, 2, 97, 194};")
+    print("    letting N absorb any denominator recovers full dissolution over Q.")
+    print("    A cube root appears over (1/N)Z exactly when 3 | N:")
+    for N in range(1, 10):
+        print(f"      N = {N}:  cube root?  {has_lattice_root(m, 3, N)}"
+              f"   (3 | N?  {N % 3 == 0})")
+        assert has_lattice_root(m, 3, N) == (N % 3 == 0)
+    print()
 
 
 def main() -> None:
-    print(__doc__.strip().splitlines()[0])
+    print()
+    print("#" * 74)
+    print("#  THE POLE-ORDER OBSTRUCTION — numerical demonstrations".ljust(73) + "#")
+    print("#" * 74)
+    print()
     demo_pole_order()
-    demo_indestructible_leak()
-    demo_coefficient_hierarchy()
-    demo_mckay_thompson()
-    demo_positivity_and_domination()
-    demo_monster_sized()
+    demo_root_spectrum()
+    demo_power_classes()
+    demo_additive_contrast()
     demo_rigidity()
-    banner("All demonstrations completed successfully.")
+    demo_filtration()
+    demo_symmetric_functions()
+    demo_replication()
+    demo_dissolution()
+    demo_interpolation()
+    print("=" * 74)
+    print("All demonstrations completed; every assertion held.")
+    print("=" * 74)
 
 
 if __name__ == "__main__":

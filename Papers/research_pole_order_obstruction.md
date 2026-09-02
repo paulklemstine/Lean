@@ -1,357 +1,389 @@
-# The Pole-Order Obstruction: Completeness, Rigidity and Symmetric-Function Hierarchies for Products of Normalized $q$-Series
+# The Pole-Order Obstruction: Root Extraction, Filtration, and Value-Group Interpolation for Products of Normalized $q$-Series
 
 **Author:** Aristotle
-**Date:** 2026-08-19
+**Date:** 2026-09-02
 
 ---
 
 ## Abstract
 
-Let $\mathbb{C}(\!(q)\!)$ be the field of formal Laurent series over $\mathbb{C}$ and call a series *normalized* if it has the shape $f = q^{-1} + a(0) + a(1)q + \cdots$, i.e. order $-1$ with leading coefficient $1$ — the shape of a McKay–Thompson series of Monstrous Moonshine. We study the elementary but surprisingly rigid obstruction that prevents the class of normalized series from being closed under multiplication, and we determine the fine structure of the corrected product.
+Let $\mathbb{C}((q))$ denote the field of formal Laurent series with complex coefficients. Call a series *normalized* if it has the shape $T = q^{-1} + \sum_{n\ge 0}c_nq^n$, that is, a simple pole with residue $1$ and an arbitrary holomorphic tail. Such series are the formal shape of the McKay–Thompson series of monstrous moonshine, of which there are $194$ — one for each conjugacy class of the Monster simple group.
 
-Our results fall into four groups. **(1) The obstruction.** A product of $m$ normalized series has order exactly $-m$; hence $q^m\prod_i f_i$ has order $0$ and $q^{m-1}\prod_i f_i$ is again normalized. Applied to the $194$ conjugacy classes of the Monster, the full moonshine product has a pole of order exactly $194$. **(2) Structure.** The unit group splits canonically, $\mathbb{C}(\!(q)\!)^\times \cong \mathbb{C}[\![q]\!]^\times \times \mathbb{Z}$, so the order is a *complete* invariant of the coset space $\mathbb{C}(\!(q)\!)^\times/\mathbb{C}[\![q]\!]^\times$; it is *unique* in that every homomorphism to $\mathbb{Z}$ trivial on $\mathbb{C}[\![q]\!]^\times$ is an integer multiple of it; it is *torsion-free*, so no power of a series with a pole is a unit power series; and it is *additively robust*, unchanged by adding any strictly less singular series. We also show that the set of normalized series is a torsor under the group $1 + q\mathbb{C}[\![q]\!]$. **(3) Coefficient hierarchy.** We prove an exact convolution formula for the Laurent coefficient at every degree $n-m$, and show that under the moonshine normalization $a_i(0)=0$ it collapses to pure power sums at degrees $2-m$ and $3-m$, with the first interaction appearing at degree $4-m$ in the form of the second elementary symmetric function of the linear coefficients. **(4) Positivity.** For factors with non-negative real coefficients the product has non-negative real coefficients in every degree, and each coefficient of the product dominates the corresponding coefficient of every individual factor.
+We develop the theory of the **pole-order obstruction** attached to a product of $m$ normalized series. The starting point is elementary: such a product has order exactly $-m$, and multiplication by $q^m$ returns a power series with constant term $1$. We show that this single integer invariant governs a remarkable amount, and that it does so from three structurally distinct directions.
 
-We also record the cryptographic reading of the structure theory: the pole order behaves as a leak invariant that is perfectly resistant to multiplicative blinding by units and perfectly randomizable by monomial shifts, a one-time-pad structure over $\mathbb{Z}$.
+*Multiplicatively*, we prove that a nonzero Laurent series over $\mathbb{C}$ is an $n$-th power if and only if $n$ divides its order — no analytic hypothesis intervenes — and we upgrade this to a classification of power classes, $\mathbb{C}((q))^\times/(\mathbb{C}((q))^\times)^n \cong \mathbb{Z}/n\mathbb{Z}$ via order mod $n$. Consequently the product of the $194$ normalized series is an $n$-th power precisely for $n \in \{1,2,97,194\}$: it is a square, but has neither cube nor fourth root. We prove a converse rigidity statement: if $m$ series each have at most a simple pole and their product has a pole of order exactly $m$, then every factor has a pole of order exactly $1$.
 
-**Keywords:** formal Laurent series, valuation, pole order, Monstrous Moonshine, McKay–Thompson series, symmetric functions, Newton identities, blinding invariance.
+*Linearly*, we construct the pole filtration $\mathrm{Pol}_m$ of $\mathbb{C}((q))$ by spaces of series with at most an $m$-fold pole, show that it is multiplicative, and prove that the associated space of principal parts is canonically isomorphic to $\mathbb{C}^m$, with all graded pieces one-dimensional. This is the formal-Laurent instance of the Riemann–Roch dimension count $\ell(D)-\ell(D-P)\le 1$ at a single point, here always an equality. The Monster-sized product is located exactly: it lies in $\mathrm{Pol}_{194}\setminus\mathrm{Pol}_{193}$ with deepest principal-part coordinate $1$.
+
+*Combinatorially*, we prove a master coefficient identity — the Laurent coefficient in degree $k-m$ of a product of $m$ normalized series is the $k$-th power-series coefficient of the corrected product — and deduce a closed formula: for linear normalized factors $q^{-1}+a_i$, the coefficient in degree $k-m$ is the elementary symmetric function $e_k(a_1,\ldots,a_m)$.
+
+Finally we show that the obstruction can be *moved and dissolved*, and that the two natural ways of doing so coincide. The replication operator $V_d:q\mapsto q^d$ multiplies order by $d$, changing the root spectrum from divisors of $194$ to divisors of $194d$, with minimal replication depth $n/\gcd(n,194)$ for an $n$-th root. Passing to the Puiseux-type Hahn field $\mathbb{C}[[q^{\mathbb{Q}}]]$ with divisible value group removes the obstruction entirely: the product is an $n$-th power for every $n$, and its $194$-th root has order exactly $-1$. Interpolating, an $n$-th root with exponents in the lattice $\tfrac1N\mathbb{Z}$ exists if and only if $n \mid 194N$ — literally the replication criterion at depth $N$. In sharpest form: for any additively closed set $S$ of rational exponents containing $\mathbb{Z}$, an $n$-th root supported in $S$ exists if and only if the single rational number $-194/n$ lies in $S$.
+
+**Keywords:** formal Laurent series, pole order, valuation, root extraction, Riemann–Roch, Puiseux series, replication operator, elementary symmetric functions, monstrous moonshine.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 The setting
 
-Monstrous Moonshine attaches to each element $g$ of the Monster group $\mathbb{M}$ a *McKay–Thompson series* $T_g$, a $q$-series depending only on the conjugacy class of $g$. The Monster has exactly $194$ conjugacy classes, so there are $194$ such series, each normalized so that
-$$T_g = q^{-1} + 0 + a_g(1)\,q + a_g(2)\,q^2 + \cdots$$
-The identity class gives the normalized modular invariant
-$$T_{1A} = J = q^{-1} + 196884\,q + 21493760\,q^2 + 864299970\,q^3 + \cdots$$
+Fix the field $\mathbb{C}((q))$ of formal Laurent series: expressions $x = \sum_{n\in\mathbb{Z}}x_nq^n$ with $x_n\in\mathbb{C}$ and $\{n : x_n \ne 0\}$ bounded below. Equivalently, $\mathbb{C}((q))$ is the Hahn series field with value group $\mathbb{Z}$ and coefficient field $\mathbb{C}$; the general Hahn construction with an arbitrary ordered abelian value group $\Gamma$ will matter in §6–§7.
 
-The normalization "leading term exactly $q^{-1}$, vanishing constant term" is a convention, but a load-bearing one: it fixes the class of series as a rigid geometric object rather than a loose family. A natural structural question is then whether that class is closed under the operations one wants to perform on it. It is not: multiplication overshoots. This paper quantifies the failure, shows it is an *unremovable* obstruction in several precise senses, and computes what lies beneath the leading term.
+For $x \ne 0$, write $\operatorname{ord}(x) \in \mathbb{Z}$ for the least exponent with $x_{\operatorname{ord}(x)}\ne 0$, and $\operatorname{lc}(x) = x_{\operatorname{ord}(x)}$ for the leading coefficient. It is convenient to also use $\operatorname{ord}_{\top}$, taking values in $\mathbb{Z}\cup\{\infty\}$ with $\operatorname{ord}_\top(0) = \infty$, so that $\operatorname{ord}_\top$ is a genuine valuation, total on all of $\mathbb{C}((q))$. Its two defining properties are
+$$\operatorname{ord}_\top(xy) = \operatorname{ord}_\top(x)+\operatorname{ord}_\top(y), \qquad \operatorname{ord}_\top(x+y) \ge \min\{\operatorname{ord}_\top(x),\operatorname{ord}_\top(y)\}.$$
 
-The rigidity statements are elementary in their proofs but strong in their content, and they have a natural reading in the language of information leakage: the order of a Laurent series is an integer that no multiplicative blinding, no additive masking, and no exponentiation can perturb, while an explicit and unique monomial shift resets it to any desired value. This is the structure of a perfect one-time pad over $\mathbb{Z}$, and the corresponding subgroup lattice is completely determined.
+### 1.2 Normalized series
 
-### 1.2 Summary of contributions
+**Definition 1.1 (Normalized series).** A Laurent series $f \in \mathbb{C}((q))$ is **normalized** if
+1. $f_{-1} = 1$, and
+2. $f_n = 0$ for all $n < -1$.
 
-1. **Exact pole order** of a product of $m$ normalized series, and the sharp corrections $q^m$ (to order $0$) and $q^{m-1}$ (back to normalized form).
-2. **The splitting theorem** $\mathbb{C}[\![q]\!]^\times \times \mathbb{Z} \xrightarrow{\ \sim\ } \mathbb{C}(\!(q)\!)^\times$, with explicit inverse, and the resulting **completeness** of the order as an invariant of blinding classes.
-3. **Rigidity**: uniqueness up to scaling of the order among $\mathbb{Z}$-valued multiplicative invariants trivial on units of $\mathbb{C}[\![q]\!]$; **torsion-freeness**; **additive robustness**; a valuation-theoretic characterization of the image of $\mathbb{C}[\![q]\!]$ and a sharp threshold for when $q^k\prod_i f_i$ is a power series.
-4. **A torsor theorem**: normalized series form a principal homogeneous space under the multiplicative group $1+q\mathbb{C}[\![q]\!]$.
-5. **The coefficient hierarchy**: an exact all-degree convolution identity, and its collapse into power sums (degrees $2-m$, $3-m$) and a second elementary symmetric function (degree $4-m$) under the moonshine normalization.
-6. **Positivity and domination** results for factors with non-negative real coefficients.
-7. **Numerical instances** with genuine McKay–Thompson data, agreeing exactly with the identities.
+Equivalently, $f = q^{-1} + \sum_{n\ge 0}c_nq^n$ for some sequence $(c_n)_{n \ge 0}$ of complex numbers, which we call the *tail*. We write $\mathcal T(c) = q^{-1}+\sum_{n\ge0}c_nq^n$ for the normalized series with tail $c$.
 
----
+**Definition 1.2 (Corrected part).** For $f$ normalized, its **corrected part** (or *unit part*) is the power series
+$$\widehat f = qf \in \mathbb{C}[[q]], \qquad \widehat f = 1 + c_0q + c_1q^2 + \cdots.$$
+Explicitly $\widehat f_k = f_{k-1}$; in particular $\widehat f$ has constant term $1$.
 
-## 2. Setting and definitions
+The motivating instance is monstrous moonshine. Each conjugacy class $g$ of the Monster group $\mathbb{M}$ carries a McKay–Thompson series $T_g(q) = q^{-1}+\sum_{n\ge1}\operatorname{tr}(g\mid V_n)q^{n}$, normalized in exactly the above sense. The Monster has $194$ conjugacy classes, and we write $M = 194$ throughout for that class count. **No property of the actual moonshine coefficients is used anywhere below**: all results are universally quantified over the tails, so they hold for the moonshine product as a special case, and their content is precisely that the phenomena are consequences of *shape*, not of arithmetic depth.
 
-### 2.1 Formal Laurent series and order
+### 1.3 The basic theorem and the question it decides
 
-**Definition 2.1 (Laurent series).** A *formal Laurent series* over $\mathbb{C}$ is a function $f : \mathbb{Z} \to \mathbb{C}$, written $f = \sum_{n\in\mathbb{Z}} f_n q^n$, whose support $\{n : f_n \ne 0\}$ is bounded below. These form a field $\mathbb{C}(\!(q)\!)$ under coefficientwise addition and the convolution product
-$$(fg)_n \;=\; \sum_{j+k=n} f_j\,g_k,$$
-which is well defined because the supports are bounded below. Series supported in $n \ge 0$ form the subring $\mathbb{C}[\![q]\!]$ of formal power series.
+**Theorem 1.3 (Pole-Order Theorem).** Let $s$ be a finite index set and let $(f_i)_{i\in s}$ be normalized. Then
+$$\operatorname{ord}_\top\Big(\prod_{i\in s}f_i\Big) = -|s|.$$
+In particular the product is nonzero, has a pole of order exactly $|s|$, and leading coefficient $1$.
 
-**Definition 2.2 (Order).** For $f \ne 0$ set $\operatorname{ord}(f) = \min\{n : f_n \ne 0\} \in \mathbb{Z}$, and $\operatorname{ord}(0) = +\infty$. The coefficient $f_{\operatorname{ord}(f)}$ is the *leading coefficient*, written $\mathrm{lc}(f)$.
+*Proof sketch.* Each factor has $\operatorname{ord}_\top = -1$; the valuation is additive over finite products. Nonvanishing follows since the order is finite. The leading coefficient is the product of the leading coefficients, all equal to $1$. $\square$
 
-**Lemma 2.3 (Valuation axioms).** For nonzero $f,g$:
-$$\operatorname{ord}(fg) = \operatorname{ord}(f)+\operatorname{ord}(g), \qquad \mathrm{lc}(fg) = \mathrm{lc}(f)\,\mathrm{lc}(g),$$
-$$\operatorname{ord}(f+g) \ \ge\ \min\{\operatorname{ord}(f),\operatorname{ord}(g)\},$$
-with equality in the last when $\operatorname{ord}(f)\ne\operatorname{ord}(g)$.
+**Corollary 1.4 (Factorization).** For normalized $(f_i)_{i\in s}$ with $m=|s|$,
+$$\prod_{i\in s}f_i \;=\; q^{-m}\cdot U, \qquad U \;=\; \prod_{i\in s}\widehat{f_i} \in \mathbb{C}[[q]], \quad U(0) = 1 .$$
+Multiplying by $q^m$ restores order $0$.
 
-*Proof sketch.* Write $N = \operatorname{ord} f$, $M = \operatorname{ord} g$. The convolution coefficient at $N+M$ has the single nonzero contribution $f_N g_M \ne 0$ (all other index pairs put one factor below its order), and every coefficient below $N+M$ vanishes term by term. Additivity of order and multiplicativity of leading coefficients follow at once; in particular $\mathbb{C}(\!(q)\!)$ has no zero divisors. The ultrametric inequality for sums is immediate from the definition, and if the orders differ the lower one is unopposed. $\square$
+For the Monster-sized product this reads $\operatorname{ord}\big(\prod_g T_g\big) = -194$.
 
-Lemma 2.3 says that $\operatorname{ord}$ is a discrete valuation with value group $\mathbb{Z}$, and every statement in Sections 3–5 is ultimately a consequence of it.
+Everything in this paper flows from asking a *single* question of this configuration:
 
-**Lemma 2.4 (Units).** A power series $u \in \mathbb{C}[\![q]\!]$ is invertible in $\mathbb{C}[\![q]\!]$ iff $u_0 \ne 0$, iff $\operatorname{ord}(u) = 0$. A Laurent series is invertible in $\mathbb{C}(\!(q)\!)$ iff it is nonzero.
+> For which $n \ge 1$ does there exist $y$ with $y^n = \prod_g T_g$?
 
-**Lemma 2.5 (Valuation subring).** For $x \in \mathbb{C}(\!(q)\!)$ we have $x \in \mathbb{C}[\![q]\!]$ if and only if $\operatorname{ord}(x) \ge 0$. Equivalently, $\mathbb{C}[\![q]\!] = \{x : x_n = 0 \text{ for all } n<0\}$ is exactly the non-negative part of the valuation.
-
-### 2.2 Normalized series
-
-**Definition 2.6 (Normalized series).** A Laurent series $f$ is *normalized* if
-$$f_{-1} = 1 \quad\text{and}\quad f_n = 0 \text{ for all } n < -1,$$
-that is, $f = q^{-1} + f_0 + f_1 q + f_2 q^2 + \cdots$. We write $a(k) := f_k$ for $k \ge 0$ and call $a(0)$ the *constant term*. A normalized series satisfies the *moonshine normalization* if in addition $a(0) = 0$.
-
-**Proposition 2.7 (Valuation characterization).** $f$ is normalized if and only if $f \ne 0$, $\operatorname{ord}(f) = -1$ and $\mathrm{lc}(f) = 1$.
-
-*Proof sketch.* If $f$ is normalized the support is contained in $\{-1,0,1,\dots\}$ and contains $-1$, so the order is $-1$ and the leading coefficient is $f_{-1}=1$. Conversely $\operatorname{ord}(f)=-1$ forces $f_n=0$ for $n<-1$, and $\mathrm{lc}(f)=1$ reads $f_{-1}=1$. $\square$
-
-**Definition 2.8 (Normalized part).** For a normalized $f$, the *normalized part* is the power series
-$$P_f := q\,f \;=\; 1 + a(0)\,q + a(1)\,q^2 + a(2)\,q^3 + \cdots \in \mathbb{C}[\![q]\!],$$
-so that $(P_f)_0 = 1$ and $(P_f)_{k} = a(k-1)$ for $k \ge 1$. Under the moonshine normalization $P_f = 1 + a(1)q^2 + a(2)q^3+\cdots$, with vanishing *linear* term.
-
-**Definition 2.9 (Trace series).** Given a coefficient sequence $c : \mathbb{N}\to\mathbb{C}$, the associated *trace series* is
-$$T_c := q^{-1} + \sum_{n \ge 0} c(n)\,q^n,$$
-which is normalized, and satisfies the moonshine normalization iff $c(0)=0$. Every McKay–Thompson series is of this form.
-
-**Definition 2.10 (Monster data).** Write $M = 194$ for the number of conjugacy classes of the Monster group, and let $T_{c_1},\dots,T_{c_M}$ be the associated trace series. Their product $\prod_{i=1}^{M} T_{c_i}$ is the *moonshine product*.
+The necessary condition is immediate from additivity: $n\operatorname{ord}(y) = -194$ forces $n \mid 194$. Sections 2–3 show sufficiency, Sections 4–5 explore what else the invariant controls, and Sections 6–8 change the ambient value group and watch the answer change in a completely controlled way.
 
 ---
 
-## 3. The obstruction and its repair
+## 2. The multiplicative structure of $\mathbb{C}((q))^\times$
 
-### 3.1 Exact pole order
+### 2.1 Splitting the valuation sequence
 
-**Theorem 3.1 (Pole-Order Theorem).** Let $f_1,\dots,f_m$ be normalized series. Then $\prod_{i=1}^m f_i \ne 0$ and
-$$\operatorname{ord}\Big(\prod_{i=1}^m f_i\Big) = -m, \qquad \mathrm{lc}\Big(\prod_{i=1}^m f_i\Big) = 1 .$$
+Write $\mathbb{C}[[q]]^\times$ for the unit group of the power-series ring, i.e. the power series with nonzero constant term. There are two natural homomorphisms into $\mathbb{C}((q))^\times$: the inclusion $\iota$ of $\mathbb{C}[[q]]^\times$, and $k \mapsto q^k$ from $\mathbb{Z}$ (written multiplicatively).
 
-*Proof sketch.* Induct on $m$ using Lemma 2.3: each factor contributes $\operatorname{ord} = -1$ and $\mathrm{lc} = 1$; orders add and leading coefficients multiply. The empty product has order $0$, consistent with $m=0$. $\square$
+**Theorem 2.1 (Splitting Theorem).** The map
+$$\mathbb{Z} \times \mathbb{C}[[q]]^\times \longrightarrow \mathbb{C}((q))^\times, \qquad (k,u)\longmapsto q^k u$$
+is a group isomorphism. Under it, $\operatorname{ord}$ is the projection onto the first factor.
 
-**Corollary 3.2 (Correction to order $0$).** $q^{m}\prod_{i=1}^m f_i$ has order $0$; equivalently it is an invertible power series with constant term $1$. Indeed $q^m \prod_i f_i = \prod_i P_{f_i}$.
+*Proof sketch.* It is a homomorphism since $\operatorname{ord}(q^ku) = k$ and multiplication of monomials adds exponents. *Injectivity:* if $q^ku = 1$ then comparing orders gives $k=0$, hence $u=1$. *Surjectivity:* given $x \ne 0$, factor $x = q^{\operatorname{ord}(x)}\cdot \pi(x)$ where the *power-series part* $\pi(x) = q^{-\operatorname{ord}(x)}x$ has order $0$; its constant term is $\operatorname{lc}(x)\ne0$, so $\pi(x) \in \mathbb{C}[[q]]^\times$. $\square$
 
-**Corollary 3.3 (Monster case).** The moonshine product $\prod_{i=1}^{194} T_{c_i}$ has order exactly $-194$, and $q^{194}$ times it is an invertible power series with constant term $1$. It is not itself a power series, and no power $q^k$ with $k<194$ makes it one.
+**Corollary 2.2 (Exactness).** $\ker(\operatorname{ord}) = \mathbb{C}[[q]]^\times$ inside $\mathbb{C}((q))^\times$: a Laurent series has order $0$ if and only if it is a unit power series.
 
-**Theorem 3.4 (Sharp threshold).** For normalized $f_1,\dots,f_m$ and $k \in \mathbb{N}$,
-$$q^{k}\prod_{i=1}^m f_i \in \mathbb{C}[\![q]\!] \iff k \ge m .$$
+Thus the valuation sequence $1\to\mathbb{C}[[q]]^\times\to\mathbb{C}((q))^\times\xrightarrow{\operatorname{ord}}\mathbb{Z}\to0$ is split exact. This is where all subsequent statements come from: any multiplicative question about $\mathbb{C}((q))^\times$ decomposes into a question about $\mathbb{Z}$ and a question about $\mathbb{C}[[q]]^\times$, and the second turns out to be vacuous.
 
-*Proof sketch.* By Theorem 3.1 the order of the left side is $k-m$, and by Lemma 2.5 membership in $\mathbb{C}[\![q]\!]$ is equivalent to that order being non-negative. $\square$
+### 2.2 Roots of unit power series
 
-### 3.2 Repair to normalized form and the torsor structure
+**Proposition 2.3 (Binomial roots).** Let $u \in \mathbb{C}[[q]]$ with $u(0)=1$, and let $n \ge 1$. Then there exists $w \in \mathbb{C}[[q]]$ with $w(0)=1$ and $w^n = u$.
 
-**Theorem 3.5 (Renormalization).** If $f_1,\dots,f_m$ are normalized with $m \ge 1$, then $q^{m-1}\prod_{i=1}^m f_i$ is again normalized. In particular the binary operation $(f,g)\mapsto q\,fg$ preserves the class of normalized series, and $q^{193}\prod_{i=1}^{194} T_{c_i}$ is again of McKay–Thompson shape.
+*Proof sketch.* Let $B_r(X)=\sum_{k\ge0}\binom{r}{k}X^k$ denote the binomial series, defined for $r\in\mathbb{Q}$ because $\mathbb{C}$ has characteristic zero, so $\binom{r}{k}=r(r-1)\cdots(r-k+1)/k!$ makes sense. One has the formal identity $B_r(X)^k = B_{rk}(X)$; in particular $B_{1/n}(X)^n = B_1(X) = 1+X$. Now $a := u - 1$ has zero constant term, hence is substitutable, and $w := B_{1/n}(a)$ satisfies $w^n = B_{1/n}(a)^n = 1 + a = u$, with $w(0)=B_{1/n}(0)=1$. $\square$
 
-*Proof sketch.* By Theorem 3.1 the product has order $-m$ and leading coefficient $1$; multiplying by $q^{m-1}$ shifts the order to $-1$ and does not change the leading coefficient. Apply Proposition 2.7. $\square$
+**Corollary 2.4.** Let $P \in \mathbb{C}[[q]]$ with $P(0)\ne0$ and let $n\ge1$. Then $P$ has an $n$-th root in $\mathbb{C}[[q]]$.
 
-**Theorem 3.6 (Torsor structure).** Let $\mathcal{N}$ be the set of normalized series and let
-$$G := 1 + q\,\mathbb{C}[\![q]\!] = \{u \in \mathbb{C}[\![q]\!] : u_0 = 1\},$$
-a group under multiplication. Then $G$ acts simply transitively on $\mathcal{N}$: for all $f,g \in \mathcal{N}$ there is a *unique* $u \in G$ with $f = u\,g$. Thus $\mathcal{N}$ is a principal homogeneous space (torsor) under $G$.
+*Proof sketch.* Write $P = P(0)\cdot u$ with $u(0)=1$. Choose $\lambda\in\mathbb{C}$ with $\lambda^n = P(0)$ (algebraic closedness) and apply Proposition 2.3 to $u$; then $(\lambda w)^n = P$. $\square$
 
-*Proof sketch.* Given $f, g \in \mathcal{N}$, both $P_f = qf$ and $P_g = qg$ are power series with constant term $1$, hence lie in $G$, which is a group because the constant term of a product is the product of constant terms and inversion preserves constant term $1$. Set $u := P_f P_g^{-1} \in G$; then $ug = (qf)(qg)^{-1}g = f$. Uniqueness: $ug = u'g$ with $g\ne0$ gives $u=u'$ since $\mathbb{C}(\!(q)\!)$ is a field. That the action is well defined ($u \in G$, $g\in\mathcal N \Rightarrow ug\in\mathcal N$) follows from Lemma 2.3, as $\operatorname{ord}(ug) = -1$ and $\mathrm{lc}(ug)=1$. $\square$
-
-The group $G$ appearing here is exactly the *blinding group* of Section 4: the subgroup of $\mathbb{C}[\![q]\!]^\times$ fixing both the order and the leading coefficient.
+Note where the hypotheses on the coefficient field enter: characteristic zero for the binomial coefficients, algebraic closedness for $\lambda$. Over $\mathbb{C}$ both are available, and the power-series factor offers no obstruction at all.
 
 ---
 
-## 4. Structure theory: completeness, rigidity, robustness
+## 3. The root-extraction theorem
 
-### 4.1 The splitting theorem
+**Theorem 3.1 (Root-Extraction Theorem).** Let $x \in \mathbb{C}((q))$ be nonzero and let $n\ge1$. Then
+$$\exists\, y \in \mathbb{C}((q)) : y^n = x \iff n \mid \operatorname{ord}(x).$$
 
-**Theorem 4.1 (Splitting).** The map
-$$\Phi:\ \mathbb{C}[\![q]\!]^\times \times \mathbb{Z} \longrightarrow \mathbb{C}(\!(q)\!)^\times, \qquad \Phi(u,k) = u\,q^{k},$$
-is a group isomorphism (writing $\mathbb{Z}$ multiplicatively). Consequently the short exact sequence
-$$1 \longrightarrow \mathbb{C}[\![q]\!]^\times \longrightarrow \mathbb{C}(\!(q)\!)^\times \xrightarrow{\ \operatorname{ord}\ } \mathbb{Z} \longrightarrow 0$$
-is split, with splitting $k \mapsto q^k$, and $\operatorname{ord}\circ\Phi(u,k) = k$.
+*Proof sketch.* ($\Rightarrow$) If $y^n=x$ then $y\ne0$ and $\operatorname{ord}(x)=n\operatorname{ord}(y)$. ($\Leftarrow$) Write $\operatorname{ord}(x)=nk$. By Theorem 2.1, $x = q^{nk}\pi(x)$ with $\pi(x)$ a unit power series; by Corollary 2.4 pick $w$ with $w^n = \pi(x)$. Then $y = q^kw$ satisfies $y^n = q^{nk}w^n = x$. $\square$
 
-*Proof sketch.* $\Phi$ is a homomorphism because $q^kq^l=q^{k+l}$ and multiplication is commutative. *Injectivity:* if $uq^k=1$ then taking orders gives $k=0$ (as $\operatorname{ord} u = 0$), whence $u=1$. *Surjectivity:* given $x \ne 0$ with $N=\operatorname{ord}(x)$, the shifted series $u := q^{-N}x$ has order $0$, hence is a unit power series, and $x = u\,q^{N}$. The retraction statement is Lemma 2.3. $\square$
+The content is that the *only* obstruction is arithmetic: no condition on the coefficients of $x$ beyond nonvanishing at the leading position, which is automatic.
 
-**Corollary 4.2 (Kernel description).** $\operatorname{ord}(x) = 0$ if and only if $x$ is an invertible power series. Hence $\ker(\operatorname{ord}) = \mathbb{C}[\![q]\!]^\times$.
+**Corollary 3.2 (Root spectrum of a normalized product).** For normalized $(f_i)_{i\in s}$ with $m=|s|$ and $n\ge1$,
+$$\exists\, y : y^n=\prod_{i\in s}f_i \iff n \mid m .$$
 
-**Theorem 4.3 (Completeness of the invariant).** For nonzero $x,y$:
-$$\big(\exists\, u\in\mathbb{C}[\![q]\!]^\times:\ x = u\,y\big) \iff \operatorname{ord}(x)=\operatorname{ord}(y).$$
-Equivalently $\mathbb{C}(\!(q)\!)^\times/\mathbb{C}[\![q]\!]^\times \cong \mathbb{Z}$ via the order, so the order is a *complete* invariant of the coset space: it distinguishes exactly the classes and nothing finer.
+**Corollary 3.3 (Monster root spectrum).** For any tails $c_1,\ldots,c_{194}$ and $n \ge 1$,
+$$\exists\, y : y^n = \prod_{i=1}^{194}\mathcal T(c_i) \iff n \mid 194 \iff n \in \{1,2,97,194\}.$$
+In particular the product **is** a square; it has **no** cube root ($3\nmid194$) and **no** fourth root ($194=2\cdot97$ is squarefree).
 
-*Proof sketch.* ($\Rightarrow$) additivity plus $\operatorname{ord}(u)=0$. ($\Leftarrow$) $xy^{-1}$ has order $0$, so it is a unit power series by Corollary 4.2. $\square$
+### 3.1 Power classes: the invariant is complete and sharp
 
-### 4.2 The cryptographic reading
+Fix $n\ge1$ and let $\big(\mathbb{C}((q))^\times\big)^n$ be the subgroup of $n$-th powers. Since $\mathbb{C}((q))^\times$ is abelian this subgroup is normal, and $\operatorname{ord}$ descends modulo $n$ to a homomorphism $\overline{\operatorname{ord}}_n : \mathbb{C}((q))^\times \to \mathbb{Z}/n\mathbb{Z}$.
 
-Define the *pole leak* of a nonzero Laurent series to be $\lambda(x) := \operatorname{ord}(x)$.
+**Theorem 3.4 (Classification of power classes).** For every $n\ge1$,
+$$\ker\big(\overline{\operatorname{ord}}_n\big) = \big(\mathbb{C}((q))^\times\big)^n \quad\text{and}\quad \mathbb{C}((q))^\times\big/\big(\mathbb{C}((q))^\times\big)^n \;\cong\; \mathbb{Z}/n\mathbb{Z},$$
+the isomorphism being induced by pole order mod $n$.
 
-**Proposition 4.4 (Blinding invariance).** $\lambda(x u) = \lambda(x)$ for every unit power series $u$; and conversely, if $\lambda(xw)=\lambda(x)$ for some nonzero $w$, then $w$ is a unit power series. Thus the stabilizer of the leak is *exactly* $\mathbb{C}[\![q]\!]^\times$.
+*Proof sketch.* The kernel identification is exactly Theorem 3.1 read modulo $n$: $\operatorname{ord}(x)\equiv0 \pmod n$ iff $n\mid\operatorname{ord}(x)$ iff $x$ is an $n$-th power. Surjectivity of $\overline{\operatorname{ord}}_n$ is witnessed by the monomials $q^k$, whose order is $k$. The first isomorphism theorem finishes. $\square$
 
-**Proposition 4.5 (One-time shift).** $\lambda(x\,q^{k}) = \lambda(x)+k$, and for every target $t\in\mathbb{Z}$ there is a *unique* $k$ with $\lambda(x q^k)=t$, namely $k=t-\lambda(x)$.
+So the pole order mod $n$ is a **complete** invariant (it separates power classes exactly) and a **sharp** one (every residue is attained). For the Monster-sized product the class is $-194 \bmod n$, trivial precisely for the four divisors of $194$.
 
-Together: the pole order is unmaskable by the $\mathbb{C}[\![q]\!]^\times$-action and perfectly randomizable by the $q^{\mathbb{Z}}$-action — a one-time pad over $\mathbb{Z}$ whose key space is exactly the value group of the valuation.
+### 3.2 Additive contrast
 
-**Corollary 4.6 (Monster leak).** The class of the moonshine product in $\mathbb{C}(\!(q)\!)^\times/\mathbb{C}[\![q]\!]^\times \cong \mathbb{Z}$ is $-194$; it is unchanged by blinding by any unit power series; and $q^{194}$ is the *unique* monomial shift landing the product in $\mathbb{C}[\![q]\!]^\times$.
+**Proposition 3.5.** Let $(f_i)_{i\in s}$ be normalized with $s$ nonempty. Then $\operatorname{ord}_\top\big(\sum_{i\in s}f_i\big) = -1$.
 
-### 4.3 Rigidity: the order is the only invariant
+*Proof sketch.* All coefficients in degrees $<-1$ vanish termwise. In degree $-1$ the coefficients sum to $|s|\cdot1 = |s| \ne 0$ in $\mathbb{C}$. Hence $-1$ lies in the support and nothing below does. $\square$
 
-**Theorem 4.7 (Rigidity).** Let $\varphi : \mathbb{C}(\!(q)\!)^\times \to \mathbb{Z}$ be *any* group homomorphism (target written additively) with $\varphi(u)=0$ for all $u\in\mathbb{C}[\![q]\!]^\times$. Then
-$$\varphi(x) = \varphi(q)\cdot \operatorname{ord}(x) \quad\text{for all } x \ne 0 .$$
-In particular $\varphi$ is an integer multiple of the order, and two such homomorphisms agreeing on $q$ are equal.
-
-*Proof sketch.* By Theorem 4.1 write $x = u\,q^{k}$ with $k = \operatorname{ord}(x)$. Then $\varphi(x) = \varphi(u) + k\varphi(q) = k\varphi(q)$. $\square$
-
-Theorem 4.7 is the precise sense in which the pole-order leak is not one invariant among many: up to a global scalar it is the unique $\mathbb{Z}$-valued multiplicative invariant insensitive to blinding.
-
-**Theorem 4.8 (Why it splits at all).** Every surjective group homomorphism $\varphi : G \twoheadrightarrow \mathbb{Z}$ from any group admits a homomorphic section. Consequently the splitting in Theorem 4.1 is not an accident of Laurent series but a consequence of the freeness of $\mathbb{Z}$.
-
-*Proof sketch.* Pick $g$ with $\varphi(g)=1$ and let $\sigma(k) := g^{k}$; this is a homomorphism $\mathbb{Z}\to G$ with $\varphi\circ\sigma = \mathrm{id}$. $\square$
-
-**Theorem 4.9 (Uniqueness of the correction, up to blinding).** If $\sigma : \mathbb{Z}\to\mathbb{C}(\!(q)\!)^\times$ is any homomorphic section of $\operatorname{ord}$, then $\sigma(1) = u\,q$ for a *unique* unit power series $u$. Hence $q^{194}$ is the canonical Monster correction up to blinding, and no further ambiguity exists.
-
-*Proof sketch.* $\operatorname{ord}(\sigma(1))=1$, so $\sigma(1)q^{-1}$ has order $0$ and is a unit power series by Corollary 4.2; uniqueness holds because $\mathbb{C}(\!(q)\!)$ is a field. $\square$
-
-### 4.4 Torsion-freeness and additive robustness
-
-**Theorem 4.10 (No-Root Theorem).** Let $x \ne 0$ and $n \ge 1$. Then $x^{n}$ is a unit power series if and only if $x$ is. Consequently no positive power of the moonshine product is a power series; indeed
-$$\operatorname{ord}\Big(\big(\textstyle\prod_{i=1}^{194} T_{c_i}\big)^{n}\Big) = -194\,n .$$
-
-*Proof sketch.* $\operatorname{ord}(x^n)=n\operatorname{ord}(x)$ by additivity, and $n\cdot k=0$ with $n\ge1$ forces $k=0$ in the torsion-free group $\mathbb{Z}$; then apply Corollary 4.2. $\square$
-
-**Theorem 4.11 (Additive robustness).** Let $f_1,\dots,f_m$ be normalized and let $y$ be any Laurent series (possibly zero) with $\operatorname{ord}(y) > -m$. Then
-$$\operatorname{ord}\Big(\prod_{i=1}^m f_i + y\Big) = -m .$$
-In particular, adding to the moonshine product any power series, any polynomial in $q$, or any finite sum of series of order $>-194$ leaves the order at exactly $-194$.
-
-*Proof sketch.* By Lemma 2.3 the order of a sum equals the smaller of the two orders when they differ; here $\operatorname{ord}(\prod_i f_i) = -m < \operatorname{ord}(y)$. $\square$
-
-Theorems 4.3, 4.7, 4.10 and 4.11 combine into the slogan: the pole-order obstruction is **complete**, **unique**, **indestructible under powers**, and **stable under additive masking**.
+The sum of the $194$ normalized series has a *simple* pole, whereas the product has a pole of order $194$. Pole-order growth is purely multiplicative; this is precisely why the obstruction is a group homomorphism on $\mathbb{C}((q))^\times$ and admits no additive counterpart.
 
 ---
 
-## 5. The coefficient hierarchy
+## 4. Rigidity: the pole certifies its factors
 
-Theorem 3.1 records only the leading behaviour. We now compute what lies underneath. Throughout, $f_1,\dots,f_m$ are normalized with coefficient sequences $a_i(0),a_i(1),a_i(2),\dots$, and we set $a_i(-1) := 1$ to encode the leading $q^{-1}$.
+Theorem 1.3 computes the order of a product from the orders of the factors. The converse question is whether a maximal pole in the product forces maximal poles in each factor. It does.
 
-### 5.1 The exact convolution identity
+**Theorem 4.1 (Rigidity).** Let $(f_i)_{i\in s}$ be nonzero Laurent series with $\operatorname{ord}(f_i)\ge-1$ for all $i$, and suppose $\operatorname{ord}\big(\prod_{i\in s}f_i\big) = -|s|$. Then $\operatorname{ord}(f_i) = -1$ for every $i\in s$.
 
-**Theorem 5.1 (All-degree formula).** For every $n \in \mathbb{N}$,
-$$\Big[\,q^{\,n-m}\,\Big]\ \prod_{i=1}^{m} f_i \;=\; \sum_{\substack{(\nu_1,\dots,\nu_m)\in\mathbb{N}^m \\ \nu_1+\cdots+\nu_m = n}} \ \prod_{i=1}^{m} a_i(\nu_i-1).$$
+*Proof sketch.* Additivity over a finite family of nonzero series gives $\sum_{i\in s}\operatorname{ord}(f_i) = -|s|$. Each summand satisfies $\operatorname{ord}(f_i)\ge-1$, so writing $\varepsilon_i = \operatorname{ord}(f_i)+1\ge0$ we get $\sum_i\varepsilon_i = 0$ with all $\varepsilon_i\ge0$, forcing $\varepsilon_i=0$ for all $i$. $\square$
 
-*Proof sketch.* Multiply by $q^m$: by Corollary 3.2, $q^m\prod_i f_i = \prod_i P_{f_i}$ is a power series, and the coefficient of $q^{\,n-m}$ in $\prod_i f_i$ equals the coefficient of $q^{n}$ in $\prod_i P_{f_i}$. Expanding the $m$-fold product of power series gives the sum over compositions $\nu$ of $n$ into $m$ non-negative parts of $\prod_i (P_{f_i})_{\nu_i}$, and $(P_{f_i})_{\nu} = a_i(\nu-1)$ with the convention $a_i(-1)=1$. $\square$
-
-Theorem 5.1 is exact but grows combinatorially: the number of terms is $\binom{n+m-1}{m-1}$, already astronomically large for $m=194$ and modest $n$. Its value lies in the collapses it admits.
-
-### 5.2 Low-order collapses without extra hypotheses
-
-**Proposition 5.2 (Leading and subleading).** $\big[q^{-m}\big]\prod_i f_i = 1$ and
-$$\big[q^{1-m}\big]\prod_i f_i = \sum_{i=1}^m a_i(0).$$
-
-*Proof sketch.* $n=0$ has the single composition $\nu=0$, contributing $\prod_i a_i(-1)=1$. For $n=1$ each composition places the single unit at one index $i$, contributing $a_i(0)$. $\square$
-
-**Proposition 5.3 (Sub-subleading).** With no hypothesis on the constant terms,
-$$2\,\big[q^{2-m}\big]\prod_i f_i \;=\; 2\sum_{i} a_i(1) \;+\; \Big(\sum_i a_i(0)\Big)^{2} \;-\; \sum_i a_i(0)^2 ,$$
-i.e. $\big[q^{2-m}\big]\prod_i f_i = \sum_i a_i(1) + e_2\big(a_1(0),\dots,a_m(0)\big)$, where
-$$e_2(x_1,\dots,x_m) := \sum_{i<j} x_i x_j = \tfrac12\Big[\big(\textstyle\sum_i x_i\big)^2 - \textstyle\sum_i x_i^2\Big].$$
-
-*Proof sketch.* $n=2$ splits into compositions with a single part equal to $2$ (contributing $a_i(1)$) and those with two parts equal to $1$ at distinct indices $i<j$ (contributing $a_i(0)a_j(0)$). The division-free form avoids dividing by $2$ and is valid over any commutative ring. $\square$
-
-### 5.3 The moonshine collapse
-
-Assume from now on the moonshine normalization $a_i(0)=0$ for all $i$. Then $P_{f_i} = 1 + a_i(1)q^{2} + a_i(2)q^{3} + \cdots$: the *linear* term of each corrected factor vanishes. This single fact pushes the first interaction between two factors from degree $2$ to degree $4$.
-
-**Lemma 5.4 (Quadratic level).** If $g_1,\dots,g_m$ are power series with $(g_i)_0=1$ and $(g_i)_1=0$, then
-$$\Big[q^{2}\Big]\prod_i g_i = \sum_i (g_i)_2 .$$
-
-**Theorem 5.5 (Third-order identity).** Under the same hypotheses,
-$$\Big[q^{3}\Big]\prod_i g_i = \sum_i (g_i)_3 .$$
-Consequently, for $m$ normalized series with vanishing constant terms,
-$$\Big[q^{\,3-m}\Big]\prod_{i=1}^m f_i = \sum_{i=1}^m a_i(2).$$
-
-*Proof sketch.* Induct on the number of factors, using the two-factor expansion
-$$[q^3](ab) = a_0b_3 + a_1b_2 + a_2b_1 + a_3b_0 .$$
-By induction the partial product $\prod_{i<k} g_i$ again has constant term $1$ and vanishing linear term (Proposition 5.2 with $a_i(0)=0$), so the two middle cross terms vanish, leaving $[q^3]\prod_{i<k}g_i + [q^3]g_k$. Transport to the Laurent level via $[q^{3-m}]\prod_i f_i = [q^{3}]\prod_i P_{f_i}$ and $(P_{f_i})_3 = a_i(2)$. $\square$
-
-**Theorem 5.6 (Fourth-order identity).** Let $g_1,\dots,g_m$ be power series with $(g_i)_0=1$ and $(g_i)_1=0$. Then
-$$2\,\Big[q^{4}\Big]\prod_i g_i \;=\; 2\sum_i (g_i)_4 \;+\; \Big(\sum_i (g_i)_2\Big)^{2} - \sum_i (g_i)_2^{2},$$
-that is, $[q^4]\prod_i g_i = \sum_i (g_i)_4 + e_2\big((g_1)_2,\dots,(g_m)_2\big)$. Consequently, for $m$ normalized series with vanishing constant terms,
-$$\Big[q^{\,4-m}\Big]\prod_{i=1}^m f_i \;=\; \sum_{i=1}^m a_i(3) \;+\; e_2\big(a_1(1),\dots,a_m(1)\big).$$
-
-*Proof sketch.* Induct on the number of factors using the two-factor expansion
-$$[q^4](ab) = a_0b_4 + a_1b_3 + a_2b_2 + a_3b_1 + a_4b_0 .$$
-For the partial product $A = \prod_{i<k}g_i$ we know: $A_0=1$, $A_1=0$, $A_2 = \sum_{i<k}(g_i)_2$ (Lemma 5.4), $A_3 = \sum_{i<k}(g_i)_3$ (Theorem 5.5). With $B = g_k$ satisfying $B_0=1$, $B_1=0$, the expansion reduces to
-$$[q^4](AB) = A_4 + B_4 + A_2B_2 ,$$
-and $A_2 B_2 = \big(\sum_{i<k}(g_i)_2\big)(g_k)_2$ is exactly the new batch of pairwise products needed to upgrade $e_2$ over $\{i<k\}$ to $e_2$ over all indices, since
-$$e_2(x_1,\dots,x_k) = e_2(x_1,\dots,x_{k-1}) + x_k\sum_{i<k}x_i .$$
-The division-free formulation follows from the identity $2e_2 = (\sum x)^2 - \sum x^2$; stating the theorem in that form keeps it valid without dividing by $2$. The Laurent statement follows via $(P_{f_i})_2 = a_i(1)$ and $(P_{f_i})_4 = a_i(3)$. $\square$
-
-**Summary table.** For $m$ normalized series with vanishing constant terms:
-
-| degree | coefficient of $\prod_i f_i$ |
-|---|---|
-| $-m$ | $1$ |
-| $1-m$ | $0$ |
-| $2-m$ | $\sum_i a_i(1)$ |
-| $3-m$ | $\sum_i a_i(2)$ |
-| $4-m$ | $\sum_i a_i(3) + e_2\big(a(1)\big)$ |
-
-**Monster specializations.** With $m = 194$ the four rows read: the coefficient at degree $-193$ vanishes; at $-192$ it is $\sum_i c_i(1)$; at $-191$ it is $\sum_i c_i(2)$; and at $-190$ it satisfies
-$$2\,\Big[q^{-190}\Big]\prod_{i=1}^{194} T_{c_i} = 2\sum_{i} c_i(3) + \Big(\sum_i c_i(1)\Big)^{2} - \sum_i c_i(1)^2 .$$
-
-### 5.4 Interpretation
-
-The hierarchy has a clean generating-function explanation. Writing $P_i = \exp\!\big(\log P_i\big)$ with $\log P_i = \sum_{k\ge2} \ell_i(k)q^{k}$ (no linear term, because $(P_i)_1=0$), we get
-$$\prod_i P_i = \exp\Big(\sum_{k\ge2} L_k q^{k}\Big), \qquad L_k := \sum_i \ell_i(k) .$$
-Every coefficient of the corrected product is therefore a universal polynomial in the *power sums* $L_2, L_3, \dots$, with coefficients independent of $m$. Degrees $2$ and $3$ can only use $L_2$ and $L_3$ linearly — there is no way to write $2$ or $3$ as a sum of two or more parts each $\ge 2$ — while degree $4$ admits the partition $4 = 2+2$, which is precisely the source of the quadratic term $\tfrac12 L_2^2$ and, after unwinding, of $e_2$. The first interaction of two distinct factors is thus forced to appear at degree $4$ and nowhere earlier. This is the structural reason for the "three degrees of additivity" phenomenon.
+**Corollary 4.2.** If $T_1,\ldots,T_{194}$ are nonzero with at most simple poles and $\prod_i T_i$ has a pole of order $194$, then each $T_i$ has a pole of order exactly $1$. A Monster-sized pole certifies that all $194$ factors are genuinely singular: no cancellation, and no regular factor.
 
 ---
 
-## 6. Positivity and domination
+## 5. The linear face: the pole filtration and a dimension count
 
-McKay–Thompson coefficients for the identity class are dimensions of graded pieces of an infinite-dimensional representation, hence non-negative integers; for other classes they are traces, but non-negativity holds in many cases of interest. The convolution identity converts this into structural statements about the product.
+The order is a valuation, hence a multiplicative gadget. It has an equally informative linear avatar.
 
-**Definition 6.1.** A complex number $z$ is *non-negative real* if $z = r$ for some real $r \ge 0$. This property is preserved by addition, by multiplication, and by finite sums and products.
+**Definition 5.1 (Pole filtration).** For $m \ge 0$ set
+$$\mathrm{Pol}_m = \{\, x\in\mathbb{C}((q)) : x_n = 0 \text{ for all } n < -m \,\}.$$
 
-**Theorem 6.2 (Positivity propagation).** Let $f_1,\dots,f_m$ be normalized with $a_i(k)$ non-negative real for all $i$ and all $k \ge 0$. Then for every $n \in \mathbb{N}$, the coefficient $\big[q^{\,n-m}\big]\prod_i f_i$ is non-negative real. Moreover $\big[q^{\,d}\big]\prod_i f_i = 0$ for every $d < -m$, so the statement covers all degrees.
+Each $\mathrm{Pol}_m$ is a $\mathbb{C}$-subspace (the conditions are linear), $\mathrm{Pol}_0 = \mathbb{C}[[q]]$, and $\mathrm{Pol}_m \subseteq \mathrm{Pol}_k$ for $m\le k$.
 
-*Proof sketch.* By Theorem 5.1 the coefficient is a finite sum of finite products of the $a_i(\nu_i-1)$ (with $a_i(-1)=1$), and non-negative reals are closed under sums and products. Vanishing below $-m$ is Theorem 3.1. $\square$
+**Proposition 5.2 (Filtration = valuation).** $x \in \mathrm{Pol}_m \iff \operatorname{ord}_\top(x)\ge -m$.
 
-**Theorem 6.3 (Coefficient domination).** Under the hypotheses of Theorem 6.2, for every index $j$ and every $n \ge 1$,
-$$a_j(n-1) \ \le\ \big[q^{\,n-m}\big]\prod_{i=1}^m f_i ,$$
-both sides being non-negative reals. In particular the corrected moonshine product grows at least as fast, coefficientwise, as the largest of its McKay–Thompson factors.
+*Proof sketch.* ($\Leftarrow$) Coefficients strictly below $\operatorname{ord}_\top$ vanish. ($\Rightarrow$) If $x=0$ this is clear; otherwise, if $\operatorname{ord}(x)<-m$ then the coefficient at $\operatorname{ord}(x)$ would have to vanish, contradicting the definition of order. $\square$
 
-*Proof sketch.* In the sum of Theorem 5.1, consider the single composition $\nu$ with $\nu_j = n$ and $\nu_i = 0$ for $i \ne j$; its contribution is $a_j(n-1)\prod_{i\ne j}a_i(-1) = a_j(n-1)$. All other contributions are non-negative reals, so the total is at least this one term. $\square$
+**Proposition 5.3 (Multiplicativity).** $\mathrm{Pol}_a\cdot\mathrm{Pol}_b\subseteq\mathrm{Pol}_{a+b}$.
 
-Notably the proof is purely combinatorial: an analytic-looking growth estimate falls out of the bookkeeping identity, with no analysis involved.
+*Proof sketch.* Immediate from Proposition 5.2 and additivity of the valuation. $\square$
 
----
+So $(\mathrm{Pol}_m)_{m\ge0}$ is an increasing filtration of $\mathbb{C}((q))$ by subspaces, compatible with the algebra structure. Two immediate consequences of Proposition 5.2 and Theorem 1.3: a normalized series lies in $\mathrm{Pol}_1$, and a product of $m$ normalized series lies in $\mathrm{Pol}_m$ — the linear form of the pole-order obstruction.
 
-## 7. Numerical instances
+### 5.1 Principal parts
 
-We record explicit checks against genuine McKay–Thompson data. Take the three trace series
-$$T_{1A} = q^{-1} + 196884\,q + 21493760\,q^{2} + 864299970\,q^{3} + \cdots,$$
-$$T_{2A} = q^{-1} + 4372\,q + 96256\,q^{2} + 1240002\,q^{3} + \cdots,$$
-$$T_{3A} = q^{-1} + 783\,q + 8672\,q^{2} + 65367\,q^{3} + \cdots,$$
-all with vanishing constant terms, and form $\Pi := T_{1A}T_{2A}T_{3A}$, which by Theorem 3.1 has order $-3$.
+**Definition 5.4.** For $m\ge0$, the **principal part map** is the linear map
+$$\mathrm{pp}_m : \mathbb{C}((q)) \to \mathbb{C}^m, \qquad \mathrm{pp}_m(x) = \big(x_{-1}, x_{-2}, \ldots, x_{-m}\big),$$
+and the **principal-part lift** is the linear map
+$$L_m : \mathbb{C}^m \to \mathbb{C}((q)), \qquad L_m(c_0,\ldots,c_{m-1}) = c_0q^{-1}+c_1q^{-2}+\cdots+c_{m-1}q^{-m}.$$
 
-| degree | predicted by | value |
-|---|---|---|
-| $-3$ | Theorem 3.1 | $1$ |
-| $-2$ | Proposition 5.2 | $0$ |
-| $-1$ | Proposition 5.3 | $196884+4372+783 = 202039$ |
-| $0$ | Theorem 5.5 | $21493760+96256+8672 = 21598688$ |
-| $1$ | Theorem 5.6 | $865605339 + 1018360296 = 1883965635$ |
+**Lemma 5.5.** $L_m(\mathbb{C}^m)\subseteq\mathrm{Pol}_m$ and $\mathrm{pp}_m\circ L_m = \mathrm{id}_{\mathbb{C}^m}$. Moreover, if $x\in\mathrm{Pol}_m$ then $x - L_m(\mathrm{pp}_m(x)) \in \mathrm{Pol}_0$.
 
-The degree-$1$ entry decomposes as
-$$\sum_i a_i(3) = 864299970 + 1240002 + 65367 = 865605339,$$
-$$e_2(196884,4372,783) = 196884\cdot4372 + 196884\cdot783 + 4372\cdot783 = 1018360296 .$$
-Direct convolution of the truncated series reproduces all five numbers exactly.
+*Proof sketch.* The lift is a finite sum of monomials $q^{-(i+1)}$ with $1\le i+1\le m$, none of degree $<-m$. Reading off the coefficient of $q^{-(j+1)}$ in $L_m(c)$ picks out $c_j$ exactly, giving the section identity. For the last claim, in a degree $n<0$ either $n<-m$, where both terms vanish (the first by $x\in\mathrm{Pol}_m$), or $-m\le n\le-1$, where the two coefficients agree by the section identity. $\square$
 
-Two features are worth noting. First, the jump from $2.2\times10^{7}$ at degree $0$ to $1.9\times10^{9}$ at degree $1$ is dominated by the cross term $e_2$, which exceeds the sum of the individual cubic coefficients: the interaction, once it switches on, immediately dominates. Second, degrees $-2$, $-1$ and $0$ are *exactly additive* in the input data — the three degrees of additivity guaranteed by the vanishing constant terms.
+**Definition 5.6.** The **space of principal parts of pole order at most $m$** is
+$$\mathrm{PP}_m := \text{image of }\mathrm{Pol}_m \text{ in } \mathbb{C}((q))/\mathrm{Pol}_0 .$$
 
----
+**Theorem 5.7 (Principal-part isomorphism).** For every $m\ge0$ the composite $\mathbb{C}^m \xrightarrow{L_m}\mathrm{Pol}_m \twoheadrightarrow \mathrm{PP}_m$ is a $\mathbb{C}$-linear isomorphism
+$$\mathbb{C}^m \;\xrightarrow{\ \sim\ }\; \mathrm{PP}_m, \qquad (c_0,\ldots,c_{m-1}) \longmapsto \big[c_0q^{-1}+\cdots+c_{m-1}q^{-m}\big].$$
+Consequently $\dim_{\mathbb{C}}\mathrm{PP}_m = m$.
 
-## 8. Algorithms
+*Proof sketch.* *Injectivity:* if $L_m(c)\in\mathrm{Pol}_0$, then all its negative coefficients vanish; the coefficient at $-(j+1)$ is $c_j$, so $c=0$. *Surjectivity:* given $x\in\mathrm{Pol}_m$, Lemma 5.5 gives $x \equiv L_m(\mathrm{pp}_m(x)) \pmod{\mathrm{Pol}_0}$, so the class of $x$ is hit. The dimension follows since $\dim\mathbb{C}^m=m$. $\square$
 
-Three computational procedures follow from the theory.
+**Theorem 5.8 (Graded pieces).** For every $m\ge0$ the quotient $\mathrm{Pol}_{m+1}/\mathrm{Pol}_m$ is one-dimensional over $\mathbb{C}$, spanned by the class of $q^{-(m+1)}$.
 
-**(A) Truncated Laurent arithmetic and pole extraction.** Represent a Laurent series by an integer offset $d$ and a coefficient vector $(c_0,\dots,c_{N})$ meaning $\sum_{j} c_j q^{d+j}$. Multiplication is discrete convolution: the product of series with offsets $d_1,d_2$ and lengths $N_1,N_2$ has offset $d_1+d_2$ and coefficients given by the Cauchy product, computable in $O(N_1N_2)$ time (or $O(N\log N)$ by FFT). The order is the index of the first nonzero coefficient, shifted by the offset. Multiplying $m$ series each truncated to $N$ terms costs $O(mN^2)$ by iterated convolution, and the pole order of the result is read off in $O(N)$.
+*Proof sketch.* The linear map $\mathbb{C}\to\mathrm{Pol}_{m+1}/\mathrm{Pol}_m$, $c\mapsto[c\,q^{-(m+1)}]$, is well defined since $q^{-(m+1)}\in\mathrm{Pol}_{m+1}$. It is injective: if $c\,q^{-(m+1)}\in\mathrm{Pol}_m$ then reading degree $-(m+1)<-m$ gives $c=0$. It is surjective: for $x\in\mathrm{Pol}_{m+1}$, the difference $x - x_{-(m+1)}q^{-(m+1)}$ has all coefficients below $-m$ equal to zero, hence lies in $\mathrm{Pol}_m$. $\square$
 
-**(B) Symmetric-function coefficient prediction.** Given only the low-order data $a_i(0),a_i(1),a_i(2),a_i(3)$ of $m$ normalized series with $a_i(0)=0$, the coefficients of the product at degrees $-m$ through $4-m$ are computed by the closed forms of Section 5 in $O(m)$ time and $O(1)$ space, using the division-free identity $2e_2 = (\sum x)^2 - \sum x^2$. This is exponentially cheaper than convolution, which would need $\binom{n+m-1}{m-1}$ terms; for $m=194$ and $n=4$ that is over $6\times10^{7}$ compositions versus $194$ additions.
+**Remark 5.9 (Riemann–Roch shadow).** Theorems 5.7 and 5.8 are the formal-Laurent instance of the classical dimension count $\ell(D)-\ell(D-P)\le1$ for divisors supported at a single point $P$. In the local formal setting the inequality is *always* an equality: the pole filtration jumps by exactly one dimension per unit of pole order, because the residue field is $\mathbb{C}$ itself. The conceptual upgrade is this: the pole-order obstruction of a product of $m$ normalized series is not merely the integer $m$; it is a *vector* in an $m$-dimensional space, and the order records the position of that vector in the filtration.
 
-**(C) Blinding, masking and unmasking.** Given a series $x$, a unit power series $u$, an additive mask $y$ with $\operatorname{ord}(y)>\operatorname{ord}(x)$, and a shift $k$, the pipeline $x \mapsto q^{k}(ux) + y$ has order $\operatorname{ord}(x)+k$; recovery of $\operatorname{ord}(x)$ from the transcript is exact and the unique unmasking shift is $k^{\ast} = -\operatorname{ord}(x)$. Each step is $O(N\log N)$ or better, and the leak computation is $O(N)$.
+### 5.2 Locating the Monster-sized product
 
----
+**Theorem 5.10.** Let $P = \prod_{i=1}^{194}\mathcal T(c_i)$ for arbitrary tails. Then
+1. $P \in \mathrm{Pol}_{194}$ and $P \notin \mathrm{Pol}_{193}$;
+2. $P_{-194} = 1$, i.e. the deepest coordinate of $\mathrm{pp}_{194}(P)$ equals $1$;
+3. $\dim_{\mathbb{C}}\mathrm{PP}_{194} = 194$, and the class of $P$ in $\mathbb{C}((q))/\mathrm{Pol}_0$ is nonzero.
 
-## 9. Discussion
+*Proof sketch.* By Theorem 1.3, $\operatorname{ord}(P)=-194$ with leading coefficient $1$; Proposition 5.2 gives (1) upward and (2). If $P$ were in $\mathrm{Pol}_{193}$, the coefficient at $-194 < -193$ would vanish, contradicting (2). Part (3) is Theorem 5.7 plus the observation that $P\in\mathrm{Pol}_0$ would again force $P_{-194}=0$. $\square$
 
-### 9.1 What is really being used
-
-Every structural theorem in Sections 3 and 4 is a consequence of two facts: order is additive on products, and its value group $\mathbb{Z}$ is free of rank one and torsion-free. Nothing about $\mathbb{C}$, about modularity, or about the Monster enters. Accordingly, all of Sections 3 and 4 hold verbatim over any field of formal Laurent series over an integral domain, and more generally for any discrete valuation with value group $\mathbb{Z}$ — for instance the $p$-adic valuation on $\mathbb{Q}_p$, where "pole order" becomes "$p$-adic valuation" and "blinding by a unit power series" becomes "multiplication by a $p$-adic unit". The Monster enters only through the numeral $194$ and through the positivity of Section 6.
-
-### 9.2 The cryptographic analogy, and its limits
-
-The analogy with blinding is genuine at the level of group structure: the ambient group is a direct product $K \times \mathbb{Z}$, where $K$ acts as the blinding group and $\mathbb{Z}$ as the leaked value; the leak is a complete invariant of the $K$-orbits, is unique up to scaling among $\mathbb{Z}$-valued invariants trivial on $K$, and is perfectly shifted by the $\mathbb{Z}$-factor. This is exactly the structure one wants of a one-time pad, and exactly the structure one *does not* want of a side channel: any protocol that transmits a formal Laurent series and hopes to conceal its valuation by multiplicative randomization is doomed, no matter how the randomizing unit is chosen.
-
-The limits should be stated as clearly. This is a statement about a specific algebraic invariant of an idealized object, not about a concrete cryptosystem, and the "adversary" here is granted exact algebraic access to the series. What the theory contributes is a complete classification of what such an adversary can and cannot learn from valuation-type queries.
-
-### 9.3 The role of normalization
-
-The coefficient hierarchy shows the normalization $a(0)=0$ doing real work. Without it, interaction begins immediately: the degree-$(2-m)$ coefficient already carries $e_2$ of the constant terms (Proposition 5.3). With it, three degrees are purely additive, and interaction begins at degree $4-m$ with $e_2$ of the *linear* coefficients. Deferring nonlinearity is exactly what makes low-order moonshine identities look like sums of dimensions.
+So the Monster-sized product occupies the *top* graded piece of the filtration exactly.
 
 ---
 
-## 10. Future directions
+## 6. The combinatorial face: coefficients as symmetric functions
 
-**C1. The all-order identity as a complete homogeneous symmetric function.** For a product of $m$ normalized series with vanishing constant terms, we conjecture that the Laurent coefficient at degree $n-m$ is the complete homogeneous symmetric expression in which every partition of $n$ into parts $\ge 2$ contributes exactly once, with multiplicities given by multinomial coefficients over the factors. Equivalently, the generating function of the corrected product is $\exp\big(\sum_i \log(1 + \sum_{k\ge2} a_i(k-1)q^{k})\big)$, so the coefficients are polynomial in the power sums $p_j = \sum_i a_i(j)$ with universal, $m$-independent coefficients. The key insight is that vanishing constant terms make each corrected factor $1 + O(q^2)$, pushing the first interaction from degree $2$ to degree $4$; the degree-$n$ coefficient is therefore a universal polynomial in the power sums with *no* dependence on $m$ until $n=4$, which is exactly what the results at $n=1,2,3$ (pure power sums) and $n=4$ (first cross term, $e_2$ of the linear coefficients) establish. The exact convolution identity over compositions already provides the raw expansion; the remaining work is to organize the collapse by partitions.
+**Theorem 6.1 (Master coefficient identity).** Let $(f_i)_{i\in s}$ be normalized with $m=|s|$. Then for every $k\ge0$,
+$$\Big(\prod_{i\in s}f_i\Big)_{\,k-m} \;=\; \Big(\prod_{i\in s}\widehat{f_i}\Big)_{\,k},$$
+the right-hand side being a power-series coefficient of the corrected product.
 
-**C2. Uniqueness of the leak for non-multiplicative adversaries.** Let $\Phi : \mathbb{C}(\!(q)\!)^\times \to \mathbb{Z}$ be any function, *not assumed a homomorphism*, that is (i) invariant under multiplication by unit power series and (ii) additive on the subgroup $q^{\mathbb{Z}}$. We conjecture $\Phi = c\cdot\operatorname{ord}$ for some integer $c$. The key insight is that condition (i) forces $\Phi$ to factor through the coset space $\mathbb{C}(\!(q)\!)^\times/\mathbb{C}[\![q]\!]^\times$, identified with $\mathbb{Z}$ *as a set*, so (ii) upgrades a set-theoretic factorization to an additive one without ever assuming multiplicativity on the whole group. This strictly strengthens the rigidity theorem by removing the homomorphism hypothesis.
+*Proof sketch.* By Corollary 1.4, $\prod_i f_i = q^{-m}\cdot U$ with $U = \prod_i\widehat{f_i}$. Multiplication by the monomial $q^{-m}$ shifts every coefficient index down by $m$. $\square$
 
-**Further avenues.** (i) *Higher orders explicitly*: compute degrees $5-m$ and $6-m$, where the partitions $5=2+3$ and $6=2+2+2=3+3=2+4$ predict mixed symmetric functions, and confirm the multinomial pattern of C1. (ii) *Positivity of cross terms*: since $e_2$ of non-negative reals is non-negative, the domination bound of Theorem 6.3 can presumably be sharpened at degree $4-m$ to $\sum_i a_i(3) + e_2(a(1))$ exactly, giving a two-sided estimate. (iii) *Other valuations*: transport the whole structure theory to a general discrete valuation ring and identify which statements need the residue field to be a field of characteristic zero (none, we expect). (iv) *Replicability*: the McKay–Thompson series satisfy replication formulas; determining how the coefficient hierarchy interacts with replication would connect the elementary bookkeeping here to the deeper moonshine identities.
+Thus every Laurent coefficient of a normalized product is a power-series coefficient of a normalized object: the pole is a pure shift, and the "interesting" content of the product is entirely holomorphic.
+
+**Definition 6.2 (Linear normalized series).** For $a\in\mathbb{C}$ set $\ell(a) := q^{-1}+a$, the normalized series with tail $(a,0,0,\ldots)$. Its corrected part is $\widehat{\ell(a)} = 1 + aq$.
+
+**Lemma 6.3.** $\displaystyle \Big(\prod_{i\in s}(1+a_iq)\Big)_{\,k} = \sum_{t\subseteq s,\;|t|=k}\ \prod_{i\in t}a_i \;=\; e_k(a)$, the $k$-th elementary symmetric function of $(a_i)_{i\in s}$.
+
+*Proof sketch.* Expand the product by choosing, for each $i$, either $1$ or $a_iq$. A choice set $t$ contributes $\big(\prod_{i\in t}a_i\big)q^{|t|}$; collecting the terms with $|t|=k$ gives the claim. $\square$
+
+**Theorem 6.4 (Closed formula).** For $a : s\to\mathbb{C}$ with $m = |s|$ and every $k \ge 0$,
+$$\Big(\prod_{i\in s}\big(q^{-1}+a_i\big)\Big)_{\,k-m} \;=\; e_k\big((a_i)_{i\in s}\big).$$
+Equivalently,
+$$\prod_{i\in s}\big(q^{-1}+a_i\big) \;=\; \sum_{k=0}^{m}e_k(a)\,q^{\,k-m}.$$
+
+*Proof sketch.* Combine Theorem 6.1 with Lemma 6.3. $\square$
+
+**Corollary 6.5 (Support and endpoints).**
+1. The coefficient in degree $k-m$ vanishes for $k>m$, since $e_k=0$ then; so the product is supported in degrees $-m,\ldots,0$.
+2. The deepest coefficient (degree $-m$) is $e_0 = 1$.
+3. The constant coefficient (degree $0$) is $e_m(a) = \prod_{i\in s}a_i$ — a Vieta relation.
+
+**Example 6.6.** $(q^{-1}+2)(q^{-1}+3) = q^{-2}+5q^{-1}+6$, and indeed $e_1(2,3)=5$ sits in degree $1-2=-1$. Likewise $(q^{-1}+2)(q^{-1}+3)(q^{-1}+5) = q^{-3}+10q^{-2}+31q^{-1}+30$, with $e_2(2,3,5)=6+10+15=31$ in degree $2-3=-1$.
+
+**Corollary 6.7 (Monster instance).** For $a_1,\ldots,a_{194}\in\mathbb{C}$, the product $\prod_{i=1}^{194}(q^{-1}+a_i)$ has coefficient $e_k(a)$ in degree $k-194$; its deepest coefficient is $1$ and its constant coefficient is $\prod_{i=1}^{194}a_i$. The Laurent expansion is the finite sum $\sum_{k=0}^{194}e_k(a)q^{k-194}$.
+
+Thus for the simplest normalized shapes the pole-order profile is completely explicit, and the coefficients of a Monster-sized product are subset-sum (combinatorial) invariants of the tails.
 
 ---
 
-## 11. Conclusion
+## 7. Moving the obstruction: replication
 
-The order of a formal Laurent series is the simplest nontrivial invariant one can attach to it, and precisely because of its simplicity it is maximally rigid. We have shown that for products of normalized $q$-series of moonshine type the invariant is exactly computable ($-m$ for $m$ factors, so $-194$ for the full Monster product), complete (it classifies series up to multiplication by unit power series), unique (up to scaling, among all $\mathbb{Z}$-valued multiplicative invariants trivial on unit power series), and indestructible (immune to powers and to additive masking of higher order), with a unique repair by the monomial $q^{194}$ — or $q^{193}$ if one wants a normalized series back, the set of normalized series being a torsor under the group of power series with constant term $1$.
+Since the obstruction lives in the value group, deforming the variable should move it. The formal shadow of the Hecke-type operators of moonshine does exactly this.
 
-Below the leading term, the moonshine normalization produces a striking pattern: three consecutive degrees whose coefficients are pure sums over the factors, followed at degree $4-m$ by the first cross term, the second elementary symmetric function of the linear coefficients. The mechanism — vanishing linear terms in the corrected factors, hence no partition of $2$ or $3$ into parts of size at least $2$ — explains both why the additivity holds and exactly where it must break.
+**Definition 7.1 (Replication operator).** For $d\ge1$, let $V_d : \mathbb{C}((q))\to\mathbb{C}((q))$ be the substitution $q\mapsto q^d$; concretely it is induced by the order-embedding $k\mapsto dk$ of the exponent group $\mathbb{Z}$ into itself. It is an injective ring homomorphism.
+
+**Proposition 7.2.** $\operatorname{ord}_\top(V_d x) = d\cdot\operatorname{ord}_\top(x)$ for all $x$.
+
+*Proof sketch.* $V_d$ relabels exponents by $k\mapsto dk$, an increasing injection; the least exponent in the support maps to the least exponent of the image. $\square$
+
+**Corollary 7.3.** For normalized $(f_i)_{i\in s}$ with $m=|s|$, $\operatorname{ord}\big(V_d\prod_i f_i\big) = -dm$, and the image is nonzero.
+
+**Theorem 7.4 (Root spectrum after replication).** For normalized $(f_i)_{i\in s}$, $m=|s|$, $d,n\ge1$,
+$$\exists\, y\in\mathbb{C}((q)) : y^n = V_d\Big(\prod_{i\in s}f_i\Big) \iff n \mid dm .$$
+
+*Proof sketch.* Theorem 3.1 applied to the nonzero series $V_d\prod_i f_i$, whose order is $-dm$ by Corollary 7.3; divisibility is insensitive to sign. $\square$
+
+**Corollary 7.5 (Monster after replication).** $V_d\big(\prod_{i=1}^{194}\mathcal T(c_i)\big)$ has an $n$-th root iff $n\mid 194d$. In particular:
+- the *third* replication **is** a perfect cube ($3\mid 3\cdot194$), even though the original product is not;
+- every replication is a perfect square ($2\mid194$);
+- the fifth root remains obstructed at depth $3$, since $5\nmid582$.
+
+**Theorem 7.6 (Minimal replication depth).** For $n,d\ge1$,
+$$\exists\, y : y^n = V_d\Big(\prod_{i=1}^{194}\mathcal T(c_i)\Big) \iff \frac{n}{\gcd(n,194)} \;\Big|\; d .$$
+Hence $n/\gcd(n,194)$ is the minimal depth at which an $n$-th root appears.
+
+*Proof sketch.* By Theorem 7.4 the condition is $n\mid 194d$. Write $g=\gcd(n,194)$, $n=ga$, $194=gb$ with $\gcd(a,b)=1$. Then $n \mid 194d \iff ga \mid gbd \iff a\mid bd \iff a\mid d$ by coprimality. And $a = n/g$. $\square$
+
+**Example 7.7.** $3/\gcd(3,194)=3$: a cube root first appears at depth $3$. $4/\gcd(4,194)=2$: a fourth root already appears at depth $2$, because $2\mid194$ does half the work. $5/\gcd(5,194)=5$: a fifth root needs depth $5$.
+
+Replication therefore enlarges the root spectrum from the divisors of $194$ to the divisors of $194d$, in a completely predictable way, and never destroys an existing root.
+
+---
+
+## 8. Dissolving the obstruction: divisible value groups
+
+The alternative to deforming the variable is to enlarge the exponents.
+
+**Definition 8.1 (Puiseux-type Hahn field).** Let $\mathbb{C}[[q^{\mathbb{Q}}]]$ denote the Hahn series field with value group $\mathbb{Q}$ and coefficient field $\mathbb{C}$: formal sums $y = \sum_{r\in\mathbb{Q}}y_rq^r$ whose support $\{r : y_r\ne0\}$ is well ordered. Order, leading coefficient, and additivity of the valuation are defined exactly as before, now with values in $\mathbb{Q}$.
+
+**Proposition 8.2 (Exponent extension).** The map $\iota:\mathbb{C}((q))\to\mathbb{C}[[q^{\mathbb{Q}}]]$ induced by the inclusion $\mathbb{Z}\hookrightarrow\mathbb{Q}$ of value groups is an injective ring homomorphism preserving order: if $\operatorname{ord}_\top(x)=k$ then $\operatorname{ord}_\top(\iota x)=k$.
+
+**Theorem 8.3 (Dissolution).** Let $(f_i)_{i\in s}$ be normalized with $m=|s|$ and let $n\ge1$. Then there exists $y\in\mathbb{C}[[q^{\mathbb{Q}}]]$ with $y^n = \iota\big(\prod_{i\in s}f_i\big)$. Explicitly, $y = q^{-m/n}\cdot\iota(w)$, where $w\in\mathbb{C}[[q]]$ is the binomial $n$-th root of the corrected product $U = \prod_i\widehat{f_i}$ (which has constant term $1$, Corollary 1.4).
+
+*Proof sketch.* Proposition 2.3 supplies $w$ with $w^n = U$ and $w(0)=1$. Then $y^n = q^{-m}\iota(w^n)=q^{-m}\iota(U) = \iota(q^{-m}U) = \iota\big(\prod_i f_i\big)$ by Corollary 1.4. The exponent $-m/n$ is a legitimate element of the value group $\mathbb{Q}$; this is the only step that fails over $\mathbb{Z}$. $\square$
+
+**Theorem 8.4 (The Monster is a $194$-th power of a simple-pole series).** For arbitrary tails there exists $y\in\mathbb{C}[[q^{\mathbb{Q}}]]$ with
+$$y^{194} = \iota\Big(\prod_{i=1}^{194}\mathcal T(c_i)\Big) \quad\text{and}\quad \operatorname{ord}_\top(y) = -1 .$$
+
+*Proof sketch.* Take $y = q^{-1}\iota(w)$ in Theorem 8.3 with $n=m=194$; the order is $-1+0=-1$ since $\iota(w)$ has order $0$. $\square$
+
+The $194$-fold pole is thus *literally* $194$ copies of one simple pole. Over $\mathbb{Q}$-exponents every $n\ge1$ works, in sharp contrast with the $\mathbb{Z}$-graded answer $n\mid194$. This confirms the diagnosis of §3: the obstruction is a property of the value group $\mathbb{Z}$, not of the series.
+
+---
+
+## 9. Interpolation: one hierarchy, two costumes
+
+Sections 7 and 8 remove the obstruction in two apparently unrelated ways. They are the same way.
+
+**Definition 9.1.** For $N\ge1$ let $\tfrac1N\mathbb{Z} = \{k/N : k\in\mathbb{Z}\}\subseteq\mathbb{Q}$, a subgroup containing $\mathbb{Z}$ and closed under addition.
+
+**Theorem 9.2 (Support criterion — sharpest form).** Let $S\subseteq\mathbb{Q}$ be any set containing every integer and closed under addition. Let $P=\prod_{i=1}^{194}\mathcal T(c_i)$ and $n\ge1$. Then
+$$\Big(\exists\, y\in\mathbb{C}[[q^{\mathbb{Q}}]]: y^n=\iota(P) \text{ and } \operatorname{supp}(y)\subseteq S\Big) \iff \frac{-194}{n}\in S .$$
+
+*Proof sketch.* ($\Rightarrow$) Such a $y$ is nonzero and satisfies $n\operatorname{ord}(y)=\operatorname{ord}(\iota P)=-194$, so $\operatorname{ord}(y)=-194/n$; the order always lies in the support, so $-194/n\in S$. ($\Leftarrow$) Take $y=q^{-194/n}\cdot\iota(w)$ with $w$ the binomial $n$-th root of the corrected product as in Theorem 8.3. Its support is contained in $\{-194/n\}+\operatorname{supp}(\iota w)$, and $\operatorname{supp}(\iota w)\subseteq\mathbb{Z}\subseteq S$; closure under addition gives $\operatorname{supp}(y)\subseteq S$. $\square$
+
+The existence of an $n$-th root is therefore decided by the membership of a *single rational number* in the exponent set. That is the strongest possible expression of "the pole order is the complete obstruction".
+
+**Lemma 9.3.** For $N,n\ge1$: $\dfrac{-194}{n}\in\tfrac1N\mathbb{Z} \iff n \mid 194N$.
+
+*Proof sketch.* $-194/n = k/N$ for some $k\in\mathbb{Z}$ iff $-194N = kn$ iff $n\mid 194N$. $\square$
+
+**Theorem 9.4 (Graded interpolation).** For $N,n\ge1$,
+$$\Big(\exists\, y\in\mathbb{C}[[q^{\mathbb{Q}}]]: y^n=\iota(P),\ \operatorname{supp}(y)\subseteq\tfrac1N\mathbb{Z}\Big) \iff n \mid 194N .$$
+
+*Proof sketch.* Theorem 9.2 with $S = \tfrac1N\mathbb{Z}$, then Lemma 9.3. $\square$
+
+**Theorem 9.5 (Value-group refinement $=$ replication depth).** For $N,n\ge1$,
+$$\Big(\exists\, y : y^n=\iota(P),\ \operatorname{supp}(y)\subseteq\tfrac1N\mathbb{Z}\Big) \iff \Big(\exists\, z\in\mathbb{C}((q)) : z^n = V_N(P)\Big).$$
+
+*Proof sketch.* The left side is $n\mid194N$ by Theorem 9.4; the right side is $n\mid 194N$ by Corollary 7.5. $\square$
+
+The two hierarchies are one. Setting $N=1$ recovers the $\mathbb{Z}$-graded spectrum $n\mid194$ of Corollary 3.3; letting $N$ absorb any denominator recovers the unobstructed $\mathbb{Q}$-graded answer of Theorem 8.3.
+
+**Corollary 9.6.** A cube root of $P$ exists with exponents in $\tfrac1N\mathbb{Z}$ if and only if $3\mid N$.
+
+*Proof sketch.* By Theorem 9.4 the condition is $3\mid194N$; since $\gcd(3,194)=1$, this is $3\mid N$. $\square$
+
+---
+
+## 10. Algorithms
+
+The theory is entirely effective. Three procedures summarize it.
+
+**Algorithm A (Root spectrum).** *Input:* $m\ge1$ (number of normalized factors), bound $B$. *Output:* the set of $n\le B$ for which the product has an $n$-th root in $\mathbb{C}((q))$. *Method:* return the divisors of $m$ up to $B$. *Correctness:* Corollary 3.2. *Complexity:* $O(\sqrt m)$ by trial division, or $O(B)$ by sieving.
+
+**Algorithm B (Minimal replication depth).** *Input:* $n\ge1$, $m\ge1$. *Output:* the least $d\ge1$ such that $V_d$ of the product has an $n$-th root. *Method:* return $n/\gcd(n,m)$. *Correctness:* Theorem 7.6. *Complexity:* $O(\log\min(n,m))$ by the Euclidean algorithm.
+
+**Algorithm C (Explicit root construction).** *Input:* the tails of $m$ normalized series, an exponent $n$, a truncation order $K$. *Output:* the first $K$ terms of an $n$-th root, over $\mathbb{Q}$-exponents. *Method:* (i) form the corrected product $U = \prod_i\widehat{f_i}$ truncated at $q^K$; (ii) set $a = U-1$ and compute $w = \sum_{k\le K}\binom{1/n}{k}a^k$ truncated, which is legitimate because $a$ has zero constant term so $a^k = O(q^k)$; (iii) return the pair $\big(-m/n,\ w\big)$, representing $y = q^{-m/n}w$. *Correctness:* Theorem 8.3. *Complexity:* $O(K^2)$ coefficient operations for the truncated power composition, plus $O(mK)$ for the product; the root is exact to the requested order, and $w^n = U$ holds to order $K$.
+
+Algorithm C also certifies the $\mathbb{Z}$-graded statements: when $n\mid m$ the exponent $-m/n$ is an integer and the same $w$ produces a genuine element of $\mathbb{C}((q))$.
+
+---
+
+## 11. Applications and interpretation
+
+**A closed-form coefficient calculus.** Theorem 6.1 says that the entire Laurent expansion of a normalized product is a shifted power-series expansion. Combined with Theorem 6.4 this converts questions about the deep coefficients of a moonshine-shaped product into questions about symmetric functions of the tails. In particular, for linear factors the coefficient sequence is the elementary symmetric sequence read backwards from the pole; the constant term is the full product of the tails, a Vieta relation at Monster scale.
+
+**A sharp certificate of singularity.** Theorem 4.1 turns the pole-order theorem into a diagnostic. Observing a pole of order $m$ in a product of $m$ at-most-simple-pole factors *proves* that every factor is singular. In a setting where one has access to the product but not the factors, the order of the pole is a complete certificate against cancellation.
+
+**A model of obstruction theory.** The pattern — an existence question governed by the triviality of a class in a discrete group — recurs throughout mathematics. What is unusual here is that the pattern is realized *exactly*: the invariant is complete (Theorem 3.4), sharp (every class is attained), and one can deform the ambient value group and watch the obstruction respond according to a formula (Theorems 7.4, 8.3, 9.4). This makes the pole-order obstruction a clean pedagogical and computational laboratory for obstruction-theoretic reasoning.
+
+**Filtrations and dimension counts.** Theorems 5.7 and 5.8 identify the linear structure underlying the invariant: the pole order is the position of a vector in a filtration whose graded pieces are each one-dimensional. This is the local formal analogue of the Riemann–Roch count at a point, and it upgrades the obstruction from a number to a $194$-dimensional vector for the Monster-sized product, with a distinguished nonzero deepest coordinate.
+
+---
+
+## 12. Discussion
+
+Three remarks on the scope of what is proved.
+
+*The results are universal in the tails.* No coefficient of any factor beyond the residue is ever used. The moonshine instance is a specialization, and the message is that the phenomena above are consequences of shape and of the value group, not of the (extremely deep) arithmetic that determines the McKay–Thompson coefficients. Conversely, this means the results cannot detect moonshine-specific structure; the pole order is a coarse but perfectly rigid invariant.
+
+*The hypotheses on the coefficient field are exactly what is used.* Characteristic zero enters through the binomial coefficients $\binom{1/n}{k}$; algebraic closedness enters through the extraction of $n$-th roots of constants. Over a field failing either, the power-series factor of the splitting in Theorem 2.1 would contribute its own obstruction and Theorem 3.1 would acquire a second condition. That the answer over $\mathbb{C}$ is purely arithmetic is therefore a statement about $\mathbb{C}$ as much as about $q$.
+
+*Multiplicativity is essential.* Proposition 3.5 makes the point sharply: the same $194$ series, added rather than multiplied, produce a simple pole. All of the structure above — the homomorphism, the power classes, the multiplicative filtration — depends on the valuation's additivity under multiplication, and none of it survives replacement of the product by a sum.
+
+---
+
+## 13. Future directions
+
+Several directions extend naturally from the results above.
+
+1. **Beyond squarefree $m$.** The Monster's class count $194 = 2\cdot 97$ is squarefree, which is why the root spectrum is small and why the fourth root fails. For a general count $m$ with repeated prime factors the spectrum $\{n : n\mid m\}$ is richer, and the interaction between the multiplicity structure of $m$ and the minimal replication depth $n/\gcd(n,m)$ deserves a systematic treatment, ideally as a statement about the divisor lattice.
+
+2. **General value groups.** Theorem 9.2 is stated for additively closed subsets of $\mathbb{Q}$ containing $\mathbb{Z}$. The natural generality is a Hahn field over an arbitrary ordered abelian group $\Gamma$ containing $\mathbb{Z}$; the criterion should become "the element $-m/n$ exists in $\Gamma$", i.e. a divisibility question in $\Gamma$, with the fully divisible case recovering Theorem 8.3 and the case $\Gamma=\mathbb{Z}$ recovering Theorem 3.1. Quantifying the failure by the group $\Gamma/n\Gamma$ would give a graded refinement of Theorem 3.4.
+
+3. **Positive characteristic and non-closed coefficient fields.** As noted in §12, the power-series factor is obstruction-free only because $\mathbb{C}$ is algebraically closed of characteristic zero. Over a field $k$ of characteristic $p$, $p$-th roots interact with the Frobenius and Proposition 2.3 fails; over a non-closed field the constant term contributes a class in $k^\times/(k^\times)^n$. The expected general statement is an exact sequence relating $k((q))^\times/(k((q))^\times)^n$ to $\mathbb{Z}/n$ and $k^\times/(k^\times)^n$, and it would be worth making this precise and sharp.
+
+4. **Higher-order poles and mixed shapes.** Only simple-pole factors are considered. Allowing factors of order $-e_i$ replaces $m$ by $\sum_i e_i$ in every statement, but the rigidity theorem (Theorem 4.1) then has a more interesting content: which multisets of orders are consistent with a prescribed product order? This is a partition-theoretic question sitting on top of the valuation identity.
+
+5. **Symmetric-function refinements.** Theorem 6.4 handles linear tails. For general tails the master identity (Theorem 6.1) reduces coefficient computation to the corrected product, whose coefficients are given by a multivariate convolution of the tails. Expressing these in a symmetric-function or quasi-symmetric-function basis, and identifying which such expressions are forced by the normalized shape alone, would complete the combinatorial face of the theory.
+
+6. **Replication as a Hecke-type action.** The operator $V_d$ used here is the bare substitution $q\mapsto q^d$. The genuine Hecke operators of moonshine are averages over cosets and include additive corrections. Extending Theorem 7.4 to those operators — computing the order of a Hecke transform of a normalized product — would connect the pole-order calculus to the replication formulas of moonshine proper.
+
+7. **Effective root computation and stability.** Algorithm C computes truncated roots by binomial substitution in $O(K^2)$ coefficient operations. Newton iteration on $w\mapsto w - (w^n-U)/(nw^{n-1})$ would give quadratic convergence in the truncation order; quantifying coefficient growth and the numerical conditioning of the resulting expansions, especially for tails of moonshine size, is an open practical question.
