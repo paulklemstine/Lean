@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6060f6d0",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — after the ORBIT-DIAL-CAP-TEST (Tropical cycle)\n\n## What this cycle settled\n\nFour formal files in `Catalog/Tropical/` (all 0 sorries) turn the experimental report\ninto theorems:",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 80,
-      "timestamp": "2026-08-29T02:13:31",
-      "title": "FACT round-74 #2 — ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor informati"
-    },
-    {
       "cycle_id": "3596d147",
       "domain": "Bridges",
       "key_insight": "# Future directions — MA-1 effectivity, after the magnitude null\n\nEverything referenced below is in `Catalog/Bridges/`, fully proved, zero sorries, standard\naxioms only (`propext`, `Classical.choice`,",
@@ -499,19 +489,19 @@
       "theorem_count": 66,
       "timestamp": "2026-09-02T09:39:53",
       "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID — 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now stri"
+    },
+    {
+      "cycle_id": "53c2b4c2",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after the NET-74 audit and tail-mechanism cycle\n\nThree cycles were run on the NET-74 round-25 verdict\n(\"TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR\").\n\n**Cycle 1 (audit).**",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 138,
+      "timestamp": "2026-09-02T09:40:12",
+      "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR — Spearman(top8-mass, k*) = +0.80 strongest "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "16cb59c0",
-      "domain": "Algebra",
-      "key_insight": "# Future directions: the non-backtracking trace after the counting theorem\n\nThe formal development proves `trace(Bⁿ) = #{rooted closed non-backtracking walks of\nlength n}` in three equivalent shapes (",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 123,
-      "timestamp": "2026-08-22T03:57:43",
-      "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`."
-    },
     {
       "cycle_id": "a7626bf4",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 66,
       "timestamp": "2026-09-02T09:39:53",
       "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID — 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now stri"
+    },
+    {
+      "cycle_id": "53c2b4c2",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after the NET-74 audit and tail-mechanism cycle\n\nThree cycles were run on the NET-74 round-25 verdict\n(\"TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR\").\n\n**Cycle 1 (audit).**",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 138,
+      "timestamp": "2026-09-02T09:40:12",
+      "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR — Spearman(top8-mass, k*) = +0.80 strongest "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "17866175",
-      "domain": "Probability",
-      "name": "headMass_mixBlock_first_half",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "d451fd97",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d451fd97",
-      "domain": "Novelty",
-      "name": "gamma_nonneg",
-      "quality": 0.82
-    },
     {
       "cycle_id": "d451fd97",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "below",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "53c2b4c2",
+      "domain": "Physics",
+      "name": "keyMass_nonneg",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "53c2b4c2",
+      "domain": "Physics",
+      "name": "sum_keyMass",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "53c2b4c2",
+      "domain": "Physics",
+      "name": "sq_cum_le_card_mul_collision",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-02T09:39:53",
+  "last_updated": "2026-09-02T09:40:12",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "43ad4483",
-        "quality": 0.82,
-        "theorems": 56,
-        "title": "A radix-growth threshold"
-      },
-      {
         "cycle_id": "80241759",
         "quality": 0.79,
         "theorems": 110,
@@ -3761,6 +3755,12 @@
         "quality": 0.84,
         "theorems": 61,
         "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
+      },
+      {
+        "cycle_id": "53c2b4c2",
+        "quality": 0.82,
+        "theorems": 138,
+        "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR — Spearman(top8-mass, k*"
       }
     ],
     "Probability": [
