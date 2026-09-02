@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7ae2917a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nDerived from this cycle's analysis of *committed local-oracle protocols* — the\ncompilation of a constant-query (PCP-style) verifier with a hiding commitment —\nformalized in\n\n* `Ca",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-27T09:50:06",
-      "title": "Composition of PCP locality with commitment hiding"
-    },
-    {
       "cycle_id": "9524045a",
       "domain": "Shared",
       "key_insight": "# Future directions — after the stage-1 order-completion / collision separation\n\n## What this cycle settled\n\nThe mechanism question behind the experimental chain (\"is low-`B1` success a collision\nacci",
@@ -499,19 +489,19 @@
       "theorem_count": 42,
       "timestamp": "2026-09-01T21:48:29",
       "title": "Margin Scarcity as the Portability Predictor"
+    },
+    {
+      "cycle_id": "f3ffa89b",
+      "domain": "Applications",
+      "key_insight": "# Future directions — after TDIAL-U80 (round-66 #1, exp 534)\n\nTwo cycles were run on the U80 record.  Cycle 1\n(`Catalog/Applications/TDialU80FloorResolution.lean`) built the geometry of a\nrapidity-sym",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-09-02T00:16:08",
+      "title": "FACT round-66 #1 — TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 187)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "28aa3954",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: the single-voter exchange law and its geometry\n\nThree research cycles were run on the tropical/social-choice chamber complex of\na min-plus aggregator `F x = min_{i ∈ S} (x i + δ i",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 49,
-      "timestamp": "2026-08-21T21:39:35",
-      "title": "single-voter exchange law."
-    },
     {
       "cycle_id": "3cb644d1",
       "domain": "Logic",
@@ -2501,6 +2491,16 @@
       "theorem_count": 42,
       "timestamp": "2026-09-01T21:48:29",
       "title": "Margin Scarcity as the Portability Predictor"
+    },
+    {
+      "cycle_id": "f3ffa89b",
+      "domain": "Applications",
+      "key_insight": "# Future directions — after TDIAL-U80 (round-66 #1, exp 534)\n\nTwo cycles were run on the U80 record.  Cycle 1\n(`Catalog/Applications/TDialU80FloorResolution.lean`) built the geometry of a\nrapidity-sym",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-09-02T00:16:08",
+      "title": "FACT round-66 #1 — TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 187)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-01T21:48:29",
+  "last_updated": "2026-09-02T00:16:08",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0e0f4ea6",
-        "quality": 0.82,
-        "theorems": 57,
-        "title": "FACT round-29 #2 — JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collap"
-      },
-      {
         "cycle_id": "6f0c0f57",
         "quality": 0.85,
         "theorems": 148,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 42,
         "title": "Margin Scarcity as the Portability Predictor"
+      },
+      {
+        "cycle_id": "f3ffa89b",
+        "quality": 0.82,
+        "theorems": 58,
+        "title": "FACT round-66 #1 — TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 18"
       }
     ],
     "Bridges": [
