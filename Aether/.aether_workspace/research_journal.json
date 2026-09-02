@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "497c96d6",
-      "domain": "Physics",
-      "key_insight": "# Future directions — after the ECM wall audit\n\n## What this cycle settled\n\nWorking from the stage-1 order-completion theory already in the catalog\n(`Catalog/Shared/ECMStage1OrderCompletion.lean`, `…F",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-08-28T14:27:33",
-      "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separ"
-    },
-    {
       "cycle_id": "523b9317",
       "domain": "Probability",
       "key_insight": "# Future directions — band-9 `x² − N` smoothness, after the round-74 replication\n\nThe formal results of this cycle live in `Catalog/Probability/U9DriftIntervals.lean`,\n`U9DriftPooling.lean`, `U9DriftP",
@@ -499,19 +489,19 @@
       "theorem_count": 161,
       "timestamp": "2026-09-02T09:38:58",
       "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
+    },
+    {
+      "cycle_id": "a75b3939",
+      "domain": "Probability",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-59, rounds 12–18\n\n## What the completed cycles established\n\nWorking in an exact finite-probability model (layers = Markov channels on finite\nstate spaces, damage = tota",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 147,
+      "timestamp": "2026-09-02T09:39:18",
+      "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK — solo-layer top-k profiles are flat (all 24 layers within"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7f454a93",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Berggren Tree Box Counting\n\nDerived from the verified results in\n\n* `Catalog/NumberTheory/CoprimePairDensity.lean`\n* `Catalog/NumberTheory/BerggrenTreeCompleteness.lean`\n* `Catal",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 98,
-      "timestamp": "2026-08-22T01:51:18",
-      "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive see"
-    },
     {
       "cycle_id": "11e84a32",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 161,
       "timestamp": "2026-09-02T09:38:58",
       "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
+    },
+    {
+      "cycle_id": "a75b3939",
+      "domain": "Probability",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-59, rounds 12–18\n\n## What the completed cycles established\n\nWorking in an exact finite-probability model (layers = Markov channels on finite\nstate spaces, damage = tota",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 147,
+      "timestamp": "2026-09-02T09:39:18",
+      "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK — solo-layer top-k profiles are flat (all 24 layers within"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c8871952",
-      "domain": "Shared",
-      "name": "mixPred_eq_smul",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c8871952",
-      "domain": "Shared",
-      "name": "mixPred_no_positional_freedom",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "1aa0b577",
-      "domain": "Probability",
-      "name": "rather",
-      "quality": 0.88
-    },
     {
       "cycle_id": "1aa0b577",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "universal_of_gridCert",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "a75b3939",
+      "domain": "Probability",
+      "name": "length_twoMaskStack",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "a75b3939",
+      "domain": "Probability",
+      "name": "chain_append_pair",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "a75b3939",
+      "domain": "Probability",
+      "name": "chain_twoMaskStack",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-09-02T09:38:58",
+  "last_updated": "2026-09-02T09:39:18",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "40fe72ea",
-        "quality": 0.88,
-        "theorems": 171,
-        "title": "FACT round-73 #1 — PORTFOLIO: no universal winner, no dial edge; regret tail is "
-      },
-      {
         "cycle_id": "e645a8ec",
         "quality": 0.85,
         "theorems": 124,
@@ -3823,6 +3817,12 @@
         "quality": 0.9,
         "theorems": 198,
         "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knee"
+      },
+      {
+        "cycle_id": "a75b3939",
+        "quality": 0.88,
+        "theorems": 147,
+        "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK — solo-layer top-k profiles are flat ("
       }
     ],
     "Pythagorean": [
