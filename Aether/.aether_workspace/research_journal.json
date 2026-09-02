@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f671dcbf",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — after the NET-92 KV-cliff cycle\n\nThis cycle added five self-contained Lean files to `Catalog/Logic/`:\n\n* `KVCliffCrowdingLaw.lean` — the crowding pigeonhole, the `SafeBits` crite",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 50,
-      "timestamp": "2026-08-29T18:30:40",
-      "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates t"
-    },
-    {
       "cycle_id": "3f9d41d2",
       "domain": "Applications",
       "key_insight": "# Future Directions — batch smoothness testing (round-73 #3, exp 561)\n\nDerived from the two research cycles formalised in\n`Catalog/Applications/BatchSmoothnessCorrectness.lean`,\n`Catalog/Applications/",
@@ -499,19 +489,19 @@
       "theorem_count": 65,
       "timestamp": "2026-09-02T18:44:30",
       "title": "NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE — linear probes recover only R2~0.33 of key future"
+    },
+    {
+      "cycle_id": "efbccac8",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — NET-57 corpus algebra of the attention knee\n\nFour formalisation cycles produced a self-contained algebraic theory of the retention\nknee in `Catalog/Algebra/`:\n\n| file | content |",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-09-02T18:44:48",
+      "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST — independent wikitext shard replicates the knees exactly ({16,3"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0e0f4ea6",
-      "domain": "Applications",
-      "key_insight": "# Future directions — from the round-29 joint-label reconciliation\n\n## What this cycle established\n\nFour Lean files in `Catalog/Applications/`:\n\n* `ChainedLabelWidth.lean` — the arithmetic of `pj = a·",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-08-22T07:00:16",
-      "title": "FACT round-29 #2 — JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collapsed (paper 100)"
-    },
     {
       "cycle_id": "a3ad9f21",
       "domain": "Combinatorics",
@@ -2501,15 +2491,19 @@
       "theorem_count": 65,
       "timestamp": "2026-09-02T18:44:30",
       "title": "NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE — linear probes recover only R2~0.33 of key future"
+    },
+    {
+      "cycle_id": "efbccac8",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — NET-57 corpus algebra of the attention knee\n\nFour formalisation cycles produced a self-contained algebraic theory of the retention\nknee in `Catalog/Algebra/`:\n\n| file | content |",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-09-02T18:44:48",
+      "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST — independent wikitext shard replicates the knees exactly ({16,3"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b96d5582",
-      "domain": "Bridges",
-      "name": "maCorrProfile_lag_one_eq",
-      "quality": 0.86
-    },
     {
       "cycle_id": "b96d5582",
       "domain": "Bridges",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "sum_sqrt_le_sqrt_card_mul_sum",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "efbccac8",
+      "domain": "Algebra",
+      "name": "here",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-02T18:44:30",
+  "last_updated": "2026-09-02T18:44:48",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "4aeadf94",
-        "quality": 0.84,
-        "theorems": 77,
-        "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypot"
-      },
-      {
         "cycle_id": "9fb758b1",
         "quality": 0.82,
         "theorems": 54,
@@ -3079,6 +3073,12 @@
         "quality": 0.78,
         "theorems": 50,
         "title": "NET-88: THE-TOKENIZER-TAX-EXPLODES — German prose at 4096 needs >56 keys (all po"
+      },
+      {
+        "cycle_id": "efbccac8",
+        "quality": 0.82,
+        "theorems": 103,
+        "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST — independent wikitext shard replicates the "
       }
     ],
     "Applications": [
