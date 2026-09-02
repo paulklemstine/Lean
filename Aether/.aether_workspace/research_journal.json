@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b58ee289",
-      "domain": "Logic",
-      "key_insight": "# Future directions — after the j-feature sweep (paper 248)\n\n## What the formal cycles established\n\nThe eight-family marginal sweep returned `H0_CARRIER_OPEN`. The Lean development\nin `Catalog/Logic/J",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-27T20:32:18",
-      "title": "FACT round-91 #1 — J-FEATURE-SWEEP (exp 598): H0_CARRIER_OPEN — no j-arithmetic feature carries the "
-    },
-    {
       "cycle_id": "94eeec9f",
       "domain": "Algebra",
       "key_insight": "# Future directions — after the NET-94 role-split algebra\n\nCycle 1 formalised *why* keys and values behave differently (`Algebra.KVCacheRoleSplit`)\nand *how fast* each side degrades with bit width (`A",
@@ -499,19 +489,19 @@
       "theorem_count": 70,
       "timestamp": "2026-09-02T00:16:48",
       "title": "FACT round-55 #2 — D12-SEMIPRIME: the degree-12 semiprime pair channel matches law (paper 183)"
+    },
+    {
+      "cycle_id": "384c4d0f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — after the NET-66 one-octave law\n\nThe formal cycle in `Catalog/Combinatorics/OctaveShiftLaw.lean`,\n`Catalog/Combinatorics/GridRazorBracket.lean`,\n`Catalog/Combinatorics/OctaveShif",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-09-02T00:17:08",
+      "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING — 1.5B chain breaks at 2048 ({16,16,20}); b"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1632a2eb",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from the two verified files of this cycle:\n\n* `Catalog/Combinatorics/CodiscreteMagmaBicategory.lean` — every pointed magma `M` (no axioms)\n  yields a one-object bicategory",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 102,
-      "timestamp": "2026-08-21T23:38:40",
-      "title": "General codiscrete construction"
-    },
     {
       "cycle_id": "663f5de8",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 70,
       "timestamp": "2026-09-02T00:16:48",
       "title": "FACT round-55 #2 — D12-SEMIPRIME: the degree-12 semiprime pair channel matches law (paper 183)"
+    },
+    {
+      "cycle_id": "384c4d0f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — after the NET-66 one-octave law\n\nThe formal cycle in `Catalog/Combinatorics/OctaveShiftLaw.lean`,\n`Catalog/Combinatorics/GridRazorBracket.lean`,\n`Catalog/Combinatorics/OctaveShif",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-09-02T00:17:08",
+      "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING — 1.5B chain breaks at 2048 ({16,16,20}); b"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4467887a",
-      "domain": "Combinatorics",
-      "name": "hyp_lt_sum",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "4467887a",
-      "domain": "Combinatorics",
-      "name": "cond_left_iff",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "c4f754ac",
-      "domain": "Probability",
-      "name": "two_le_ratio_add_ratio",
-      "quality": 0.83
-    },
     {
       "cycle_id": "c4f754ac",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "filter_typePair_offdiag",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "384c4d0f",
+      "domain": "Combinatorics",
+      "name": "curveOf_mono",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "384c4d0f",
+      "domain": "Combinatorics",
+      "name": "curveOf_le_iff",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "384c4d0f",
+      "domain": "Combinatorics",
+      "name": "gate_eq",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-02T00:16:48",
+  "last_updated": "2026-09-02T00:17:08",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "886e75dc",
-        "quality": 0.82,
-        "theorems": 64,
-        "title": "FACT round-70 #6 — MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree s"
-      },
-      {
         "cycle_id": "22848dce",
         "quality": 0.82,
         "theorems": 112,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 70,
         "title": "FACT round-55 #2 — D12-SEMIPRIME: the degree-12 semiprime pair channel matches l"
+      },
+      {
+        "cycle_id": "384c4d0f",
+        "quality": 0.84,
+        "theorems": 103,
+        "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING — 1.5B chain breaks at "
       }
     ],
     "Computation": [

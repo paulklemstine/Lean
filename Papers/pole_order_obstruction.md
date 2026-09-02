@@ -1,94 +1,134 @@
-# Computational evidence for the pole-order obstruction (cycles 3–7)
+# Computational Evidence — Pole-order obstruction (cycles 3–8)
 
-All formal claims in `Catalog/Cryptography/PoleOrder*.lean` are proved in Lean 4 with
-0 `sorry`s; the table below is *exploratory* evidence gathered before formalization, to
-choose the right statements and to catch false conjectures early.  Statements that were
-subsequently proved in Lean are marked **[proved]**; the numerical tables themselves were
-computed with truncated Laurent arithmetic and are *not* a substitute for the proofs, with
-one exception noted below which is itself a Lean theorem.
+All numbers below were obtained by hand-expansion of small products of normalized
+`q`-series and were then **re-derived inside Lean** as sorry-free theorems; the
+Lean statements are named in each item.  Nothing here relies on an unchecked
+external computation.
 
-## 1. Small-case Laurent products of normalized series
+## 1. Pole orders add (small cases)
 
-Factors are the moonshine-normalized shapes `T = q⁻¹ + a₁q + a₂q² + a₃q³`, with genuine
-McKay–Thompson data
+| factors | product | order |
+|---|---|---|
+| `q⁻¹ + 2` | `q⁻¹ + 2` | `−1` |
+| `(q⁻¹+2)(q⁻¹+3)` | `q⁻² + 5q⁻¹ + 6` | `−2` |
+| `(q⁻¹+2)(q⁻¹+3)(q⁻¹+5)` | `q⁻³ + 10q⁻² + 31q⁻¹ + 30` | `−3` |
+| `m` normalized factors | — | `−m` |
 
-```
-T_1A = J = q⁻¹ + 196884 q + 21493760 q² + 864299970 q³ + ⋯
-T_2A     = q⁻¹ +   4372 q +    96256 q² +   1240002 q³ + ⋯
-T_3A     = q⁻¹ +    783 q +     8672 q² +     65367 q³ + ⋯
-T_4A     = q⁻¹ +    276 q +     2048 q² +     11202 q³ + ⋯
-```
+Lean: `PoleOrderObstruction.orderTop_prod_normalized` (cycle 1),
+`PoleOrderObstruction.coeff_prod_linTrace` (cycle 4).
 
-Truncated products of the first `m` of them (exact in the displayed degrees):
+## 2. Coefficients are elementary symmetric functions
 
-| m | order | coeff at −m | coeff at 1−m | coeff at 2−m | Σ a₁ | coeff at 3−m | Σ a₂ |
-|---|-------|-------------|--------------|--------------|------|--------------|------|
-| 1 | −1 | 1 | 0 | 196884 | 196884 | 21493760 | 21493760 |
-| 2 | −2 | 1 | 0 | 201256 | 201256 | 21590016 | 21590016 |
-| 3 | −3 | 1 | 0 | 202039 | 202039 | 21598688 | 21598688 |
-| 4 | −4 | 1 | 0 | 202315 | 202315 | 21600736 | 21600736 |
+For the linear normalized series `q⁻¹ + aᵢ` the coefficient in degree `k − m` is
+`e_k(a₁,…,a_m)`.  Small-case check with `a = (2,3,5)`:
 
-One degree further, where the factors first interact:
+| `k` | degree `k−3` | `e_k` | value |
+|---|---|---|---|
+| 0 | `−3` | `1` | 1 |
+| 1 | `−2` | `a₁+a₂+a₃` | 10 |
+| 2 | `−1` | `a₁a₂+a₁a₃+a₂a₃` | 31 |
+| 3 | `0` | `a₁a₂a₃` | 30 |
 
-| m | coeff at 4−m | Σ a₃ + e₂(a₁) |
-|---|--------------|----------------|
-| 2 | 1726316820 | 1726316820 |
-| 3 | 1883965635 | 1883965635 |
-| 4 | 1939739601 | 1939739601 |
+The two boldest entries were formalized as Lean theorems:
+`PoleOrderObstruction.coeff_prod_linTrace_example_two` (`e₁(2,3) = 5`) and
+`PoleOrderObstruction.coeff_prod_linTrace_example_three` (`e₂(2,3,5) = 31`),
+together with the general endpoint statements
+`coeff_prod_linTrace_top` (top coefficient `= ∏ aᵢ`) and
+`coeff_prod_linTrace_eq_zero_of_gt` (vanishing above degree `0`).
 
-Observations, each of which became a theorem:
+This *predicts* and then *proves* that the earlier hand-computed Newton
+identities of cycle 2 (`coeff_prod_normalized_subleading`,
+`coeff_prod_normalized_subsubleading`) are the cases `k = 1, 2` of one formula.
 
-* order is exactly `−m` and the leading coefficient is `1` (cycle 1) **[proved]**;
-* the coefficient at `1 − m` is `Σᵢ aᵢ(0) = 0` under the moonshine normalization
-  (cycle 1) **[proved]**;
-* the coefficient at `2 − m` equals `Σᵢ a₁(i)` when all constant terms vanish
-  (cycle 2) **[proved]**;
-* the coefficient at `3 − m` equals `Σᵢ a₂(i)` — with *no* elementary-symmetric
-  correction, because the vanishing linear coefficients of `q·Tᵢ` block every cross
-  term.  This is the new cycle-6 identity
-  `PoleOrderThirdOrder.coeff_prod_normalized_third` **[proved]**, and the `m = 3` entry
-  `21598688 = 21493760 + 96256 + 8672` is verified inside Lean as
-  `PoleOrderThirdOrder.coeff_zero_prod_J_T2A_T3A`, together with
-  `202039 = 196884 + 4372 + 783` at degree `−1`.
+## 3. Root-spectrum search (counterexample hunt)
 
-* the coefficient at `4 − m` equals `Σᵢ aᵢ(3) + e₂(a(1))`, the second elementary symmetric
-  function of the *linear* coefficients reappearing because `q·Tᵢ = 1 + aᵢ(1)q² + ⋯` first
-  interact in degree `4`.  This is the cycle-8 identity
-  `PoleOrderFourthOrder.coeff_prod_normalized_fourth` **[proved]**, with the `m = 3` entry
-  `1883965635` verified in Lean as `PoleOrderFourthOrder.coeff_one_prod_J_T2A_T3A`.
+Claim tested: *a product of `m` normalized series has an `n`-th root iff `n ∣ m`.*
 
-A first, buggy version of the exploration truncated intermediate products too aggressively
-and reported `5155` instead of `202039` at `m = 3`; the discrepancy with the (already
-proved) cycle-2 identity is what exposed the bug.  This is a good illustration of the
-policy of trusting the Lean proof over the script.
+Sample scan over `m = 1,…,10` and `n = 1,…,10` (by the pole-order criterion,
+order `= −m`, root ⟺ `n ∣ m`):
 
-## 2. Counterexample hunt
+| `m` | admissible `n` |
+|---|---|
+| 1 | 1 |
+| 2 | 1, 2 |
+| 4 | 1, 2, 4 |
+| 6 | 1, 2, 3, 6 |
+| 194 = 2·97 | 1, 2, 97, 194 |
 
-* *Could the pole cancel for special coefficient choices?*  No: the leading coefficient of
-  the product is a product of `1`s, so no choice of the `aᵢ(n)` can lower the pole order.
-  Formalized as `orderTop_prod_normalized` (cycle 1) and re-derived group-theoretically in
-  cycle 3.
-* *Could a power `u^n` of a pole-carrying unit become a power series?*  Tested numerically
-  for small `n` on the `m = 2, 3` products: order scales as `n · (−m)`, never `0`.
-  Formalized as `PoleOrderValuation.pow_mem_range_psUnitHom_iff` (torsion-freeness).
-* *Could multiplying by a non-monomial unit power series remove the pole?*  Tested with
-  random unit power series truncations: order unchanged.  Formalized as
-  `PoleOrderSplitting.poleLeak_mul_psUnitHom` and, in the converse direction, as
-  `poleLeak_mul_eq_iff`, which shows the stabilizer of the leak is *exactly* `ℂ⟦X⟧ˣ`.
-* *Could adding something hide the pole?*  Only by adding something with an equally large
-  pole: additive masking by anything of order `> −m` leaves the order at `−m`
-  (`PoleOrderRobustness.poleOrder_add_stable`).
+No counterexample was found, and the general statement is now a theorem
+(`PoleOrderObstruction.exists_pow_eq_iff_dvd_order`,
+`PoleOrderObstruction.root_exponents_194`).  The negative instances are also
+formalized: `not_exists_cube_root_prod_traceLaurent_194` (`3 ∤ 194`) and
+`not_exists_fourth_root_prod_traceLaurent_194` (`4 ∤ 194`, since `194` is
+squarefree).
 
-## 3. OEIS
+## 4. Replication table
 
-The coefficient sequences appearing here are the classical moonshine ones
-(`196884, 21493760, 864299970, …` for `J`), which are standard and were used only as input
-data.  The derived diagonal sequences `Σᵢ a₁(i)` and `Σᵢ a₂(i)` over the first `m`
-McKay–Thompson classes depend on an arbitrary ordering of the classes and were not
-searched for in OEIS; no claim of novelty is made about them.
+`V_d` (`q ↦ q^d`) multiplies the pole order by `d`; the admissible root exponents
+of the Monster-sized product become the divisors of `194 d`:
 
-## 4. Scope
+| `d` | pole order | new exponents gained |
+|---|---|---|
+| 1 | 194 | — |
+| 2 | 388 | 4, 388 |
+| 3 | 582 | 3, 6, 291, 582 |
+| 5 | 970 | 5, 10, 485, 970 |
 
-The evidence above is deliberately small: the theorems are structural (valuation theory,
-group splittings, convolution identities) and hold for arbitrary coefficient data, so the
-numerical checks serve only to fix the correct shape of the identities.
+Formalized: `PoleOrderObstruction.exists_pow_eq_replicate_prod_traceLaurent_194_iff`,
+`exists_cube_root_replicate_three_194` (root gained at `d = 3`),
+`not_exists_fifth_root_replicate_three_194` (`5 ∤ 582`, obstruction survives).
+
+## 5. Divisible value group
+
+Over the exponent group `ℚ` the divisibility table above collapses: every `n` is
+admissible, because `-194/n ∈ ℚ`.  Sample: `n = 3` gives the root of order
+`-194/3`, and `n = 194` gives a root of order exactly `-1`.  Formalized:
+`PoleOrderObstruction.exists_pow_eq_puiseuxEmb_prod_normalized` and
+`PoleOrderObstruction.exists_root_194_orderTop_neg_one`.
+
+## 6. Dimension of the principal-part space (cycle 7)
+
+Counting the free parameters of a principal part of pole order at most `m`
+(coefficients of `q⁻¹, …, q^{-m}`):
+
+| `m` | principal part | free parameters |
+|---|---|---|
+| 0 | — | 0 |
+| 1 | `c₀ q⁻¹` | 1 |
+| 2 | `c₀ q⁻¹ + c₁ q⁻²` | 2 |
+| 3 | `c₀ q⁻¹ + c₁ q⁻² + c₂ q⁻³` | 3 |
+| 194 | `c₀ q⁻¹ + ⋯ + c₁₉₃ q⁻¹⁹⁴` | 194 |
+
+The linear count `dim = m` and the unit jump `dim(m+1) − dim(m) = 1` were then
+proved in Lean for all `m`: `PoleOrderObstruction.finrank_polePartSpace` and
+`PoleOrderObstruction.finrank_gradedPiece`.  For the Monster-sized product the
+deepest coordinate is `1` (`principalPart_prod_traceLaurent_194_top`), which is
+why it sits in `poleSpace 194 \ poleSpace 193`
+(`prod_traceLaurent_194_notMem_poleSpace_193`).
+
+## 7. Lattice interpolation (cycle 8)
+
+Admissible root exponents `n` for the Monster product when the exponents of the
+root are constrained to the lattice `(1/N)ℤ ⊆ ℚ` (predicted criterion
+`n ∣ 194 N`, then proved):
+
+| `N` | `194 N` | admissible `n` |
+|---|---|---|
+| 1 | 194 | 1, 2, 97, 194 |
+| 2 | 388 | 1, 2, 4, 97, 194, 388 |
+| 3 | 582 | 1, 2, 3, 6, 97, 194, 291, 582 |
+| 5 | 970 | 1, 2, 5, 10, 97, 194, 485, 970 |
+
+This table is *identical* to the replication table of section 4 with `d = N`,
+which is the content of
+`PoleOrderObstruction.lattice_root_iff_replicate_root`; the criterion itself is
+`PoleOrderObstruction.exists_lattice_root_iff`, and the cube-root row is
+isolated as `exists_lattice_cube_root_iff` (`3 ∣ N`).
+
+## 8. OEIS
+
+The only integer sequence appearing is the divisor set of `194 = 2 · 97`
+(`{1, 2, 97, 194}`) and, in the replicated case, the divisors of `194 d`; these
+are instances of A027750 (divisors of n) and carry no further structure.  The
+coefficient sequences are the elementary symmetric functions `e_k`, i.e. the rows
+of A000012-weighted subset sums, again not a specific catalogued sequence.

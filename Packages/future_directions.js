@@ -1417,16 +1417,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-53 #1 \u2014 T-DIAL-UNIF-52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54a9fda9",
     "description": "Round-54 #1, cron iteration (exp 523). The zero-fit dial's robustness envelope tested.\n\n**DIAL-ROBUST**: Spearman(T, rate) \u2265 0.53 at every tested bitlen \u00d7 u combination; T consistently beats the bare count by 0.10\u20130.15. No cliff, no breakdown, no convention artifact.\n\nThe zero-fit dial is ROBUST across the entire tested bitlen \u00d7 u envelope. Barriers: (5)/(8) unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp523_balanced_bkey.py + exp523_result.json, seeds 20261100+bitlen.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3681",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T16:41:43.033337+00:00",
     "title": "FACT round-54 #1 \u2014 BALANCED-BKEY: the T-dial is robust across bitlen and u (paper 181)"
   },
@@ -1488,31 +1489,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK \u2014 solo-layer top-k profiles are flat (all 24 layers within 0.6pts at k=16, tail L23 literally best); the tail's specialness is epistatic, not individual fragility"
   },
   {
-    "consumed_by_exp_id": "108711a9",
-    "description": "Round-55 #2, cron iteration (exp 524, assessment v291). Completing the degree-12 semiprime arm.\n\n**D12-SEMIPRIME-CONFIRMED**: pair channel matches exact enumeration law (z = \u22120.88 inside null); split-count z = \u22120.91; which-factor wall HOLDS (sensitivity 0.0002 bits); T-dial replicates at Spearman 0.692.\n\nThe degree-12 structure is fully validated at both prime and semiprime levels.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp524_d12_semiprime.py + exp524_result.json, seeds 20261110\u201312.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3699",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T17:37:32.038600+00:00",
-    "title": "FACT round-55 #2 \u2014 D12-SEMIPRIME: the degree-12 semiprime pair channel matches law (paper 183)"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe441855",
     "description": "## NET-58 \u2014 limited-memory axis, round 11 (paper 143, ResearchOutput/exp_net58_probe.py, /tmp/net58.log)\n\n**Verdict name: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE.**\n\n### Result\nPer-(layer, kv-head) ridge probes (64-d post-rope key \u2192 log1p(total future attention), fit on TRAIN-side windows only) + streaming eviction by static probe score:\n\n| B | accumulated-HH (NET-56) | PROBE (this round) | oracle |\n|---|---|---|---|\n| 32 | 0.8633 | 0.8395 | 0.9913 |\n| 64 | 0.8822 | **0.8938** | 0.9953 |\n| 128 | 0.9189 | **0.9284** | \u2014 |\n\n- Probe R\u00b2: mean **0.329** (min 0.113, max 0.639; front-high/mid-low depth structure).\n- **P1 REFUTED**: at B=64 the probe closes only ~11% of the oracle gap (needed \u226533%); worse than accumulation at B=32.\n- **P2 CONFIRMED**: 10+ points to oracle remain at B=64.\n- **P3 CONFIRMED**: R\u00b2 is depth-structured.\n\n### The law\nA key's vector knows little about how much attention it will receive. With NET-56, this bounds ALL content-based KV-eviction policies: **importance is relational and positional, not intrinsic to key identity** \u2014 the oracle-to-policy gap is structural, not an engineering shortfall. Deployable caches must track usage online, keep recency (the dominant cheap signal), or accept ~10 points at aggressive budgets.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P1; (b) confronted \u2014 probe-based key importance exists in interpretability folklore; NEW = its measured CEILING as an eviction policy on the knee-measuring harness with the R\u00b2\u2192retained conversion; (c) confronted \u2014 linear probe class only, one model/context (nonlinear heads bounded by P2 logic unless near-perfect); (d) clean \u2014 train-side fits only; (e) deterministic closed-form; (f) clean \u2014 ALL_DONE_NET58; (g) fair \u2014 identical harness/budgets/windows as NET-56; (h) DIRECT.\n\n### Next\nPer-layer load-bearingness ablation (which layers' attention is actually load-bearing \u2014 running next); probe+recency hybrid; 1.5B tail map; 7B cell.\n\nNow 58 network experiments. Assessment v58. Paper 143.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3700",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T17:37:32.040067+00:00",
     "title": "NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE \u2014 linear probes recover only R2~0.33 of key future-attention; content-based eviction ~1pt over accumulation, 10pts below oracle; importance is relational, not intrinsic"
   },
@@ -1545,21 +1532,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
   },
   {
-    "consumed_by_exp_id": "384c4d0f",
-    "description": "## NET-66 \u2014 limited-memory axis, round 19 (paper 151, ResearchOutput/exp_net66_1p5b2048.py, /tmp/net66.log)\n\n**Verdict name: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING.**\n\n### Result\nThe 1.5B's first ctx=2048 cell (fine grid, gate identical to NET-55/65):\n\n| k | 8 | 12 | 16 | 20 | 24 | 32 |\n|---|---|---|---|---|---|---|\n| retained | 0.9597 \u2717 | 0.9715 \u2717 | **0.9785 \u2717 (razor)** | **0.9817 \u2713** | 0.9846 \u2713 | 0.9867 \u2713 |\n\n- **P1 CONFIRMED**: the flat chain breaks upward \u2014 k\\*(2048) = 20 > 16.\n- **P2 REFUTED**: flatness does not hold through 2048.\n- **P3 REFUTED**: 20 < the 0.5B's 24 at the same context \u2014 scale does not increase sensitivity either.\n\n### The one-octave law\nThe two chains: 0.5B {16, 20, 24} vs 1.5B {16, 16, 20}. The 1.5B curve equals the 0.5B curve shifted right by ONE CONTEXT DOUBLING (20 arrives at 1024 for the small model, at 2048 for the large). Scale POSTPONES context-sensitivity rather than eliminating or amplifying it. Budget tables gain a scale-shift form: a 16-key budget covers the 0.5B to 512 and the 1.5B to 1024.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 2048 cell at 1.5B; (c) confronted \u2014 razor k=16 fail (~1 SE) leaves bracket (16, 20] partially open; 12 windows stated; (d) clean; (e) deterministic baseline monotone (0.5132); (f) clean \u2014 ALL_DONE_NET66; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-20 addendum @2048; 0.5B @4096 (does its chain continue rising?); domain-jump corpora; 7B cell (does the shift extend?).\n\nNow 66 network experiments. Assessment v66. Paper 151.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3712",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T18:51:45.077817+00:00",
-    "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING \u2014 1.5B chain breaks at 2048 ({16,16,20}); broken curve equals the 0.5B shifted one octave (1.5B@2048 = 0.5B@1024 = 20)"
-  },
-  {
     "consumed_by_exp_id": "0bdc483a",
     "description": "## NET-62 \u2014 limited-memory axis, round 15 (paper 147, ResearchOutput/exp_net62_sub16.py, /tmp/net62.log)\n\n**Verdict name: THE-KNEE-LANDS-ON-THE-FINE-GRID.**\n\n### Result\nFine sweep at ctx=1024 (oracle top-k, Qwen2.5-0.5B, 24 held-out windows; baseline 0.4627 bit-identical to three prior rounds):\n\n| k | 4 | 8 | 12 | 20 | 24 |\n|---|---|---|---|---|---|\n| retained | 0.8940 \u2717 | 0.9520 \u2717 | 0.9662 \u2717 | **0.9803 \u2713** | **0.9851 \u2713** |\n\n- **P1 CONFIRMED**: the knee is 20 \u2014 well below the coarse-grid 32.\n- **P2 CONFIRMED**: it lands exactly ON the fine-grid point 20.\n\n### Consequences\n1. The 0.5B chain is now **strictly monotone: {16, 20, 24}** across {512, 1024, 2048}, replacing the coarse {16, 32, 24}.\n2. NET-55's size-invariance SHARPENS: 1.5B's {16, 16} is flat-to-declining against a rising baseline.\n3. The 2048 corpus-B reading (32) looks like a coarse-grid artifact, not corpus sensitivity.\n4. The knee-quantizes-to-grid pattern (toy 112 mid-grid; 20 here) gains a third instance.\n\nDeployment: the 1024 entry moves from 32 to 20 keys.\n\n### All 8 barriers\n(a) clean \u2014 both horns confirmed; (b) clean; (c) confronted \u2014 finer grid, same model/corpus; 24 windows stated; (d) clean; (e) deterministic pre-stated grid; (f) clean \u2014 ALL_DONE_NET62; (g) fair \u2014 same bar/harness; (h) DIRECT.\n\n### Next\nFine grids at 512/2048; domain-jump corpora; 1.5B fine-grid; 7B cell.\n\nNow 62 network experiments. Assessment v62. Paper 147.\n",
     "domains": [
@@ -1575,21 +1547,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now strictly monotone {16,20,24}; size-invariance sharpens; 2048 corpus-B reading was a coarse-grid artifact"
   },
   {
-    "consumed_by_exp_id": "f3ffa89b",
-    "description": "Round-66 #1, cron iteration (exp 534). The highest-bitlen uniform measurement.\n\n**U80-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.562** / **0.551** / **0.582** across three seeds on uniform draws at bitlen 80; pooled **0.565** CI [0.542, 0.587]. All inside [0.55, 0.85] but seed 20261181 clears the floor by only +0.001; every CI dips below 0.55 at its lower end.\n\nH2 count parity persists (pooled advantage +0.053 CI [0.030, 0.083]).\n\nThe next cell (bitlen 84) is the crossing test \u2014 whether rho_T drops below 0.55 decisively or stabilizes.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp534_t_dial_unif_80.py + exp534_result.json, seeds 20261180\u201382.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3747",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T20:41:46.055569+00:00",
-    "title": "FACT round-66 #1 \u2014 TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 187)"
-  },
-  {
     "consumed_by_exp_id": "53c2b4c2",
     "description": "## NET-74 \u2014 limited-memory axis, round 25 (paper 159, ResearchOutput/exp_net74_attnstructure.py, /tmp/net74.log)\n\n**Verdict name: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR.**\n\n### Result\nThree structural quantities per domain (5 domains, 3 sampled layers, 12 windows @ctx=512):\n\n| domain | entropy | top-8 mass | head agreement | k\\*@512 |\n|---|---|---|---|---|\n| code | 3.798 | 0.488 | 0.083 | **12** |\n| prose-en | 3.801 | 0.488 | 0.082 | **16** |\n| math | 3.615 | **0.526** | 0.086 | **16** |\n| prose-de | 3.752 | 0.502 | 0.080 | **20** |\n| prose-fr | 3.864 | **0.473** | 0.079 | **>24** |\n\nSpearman: entropy\u2194k\\* = \u22120.60; top8\u2194k\\* = **+0.80**; headvar\u2194k\\* = \u22120.40.\n\n- **P1 PARTIAL**: entropy anticorrelates (right sign) but below the \u22120.7 threshold.\n- **P2 CONFIRMED**: top-8 mass is the strongest correlate (+0.80 > 0.7).\n- **P3 REFUTED**: cross-head agreement ~8% everywhere \u2014 constant, not differentiator.\n\n### The mechanism finding\nThe POSITIVE sign means domains with MORE mass in their top-8 have HIGHER knees: the knee is set by the RESIDUAL spread after the top keys are captured, not by how concentrated the peak is. The mechanism lives in the TAIL of the attention distribution \u2014 how the non-top mass decays determines whether a small budget suffices. Head diversity is constant across all domains and cannot explain any part of the variation.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) clean \u2014 first structural mechanism test; (c) confronted \u2014 5 domains, 3 sampled layers, n=4 stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET74 (cosmetic error after data); (g) fair \u2014 identical methodology across domains; (h) DIRECT.\n\n### Next\nTail-shape analysis (Pareto vs exponential decay per domain); sub-20 addendum @2048; 0.5B @4096; 7B cell.\n\nNow 74 network experiments. Assessment v74. Paper 159.\n",
     "domains": [
@@ -1603,21 +1560,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.057011+00:00",
     "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
-  },
-  {
-    "consumed_by_exp_id": "d4f58bc3",
-    "description": "## NET-83 \u2014 limited-memory axis, round 33 (paper 165, ResearchOutput/exp_net83_integration.py, /tmp/net83.log)\n\n**Verdict name: THE-INTEGRATION-IS-SUPER-ADDITIVE.**\n\n### Result\nThe integration test combining GPTQ 4-bit group-128 weights with top-k attention:\n\n| arm | retained | CE |\n|---|---|---|\n| full fp32 | 1.0000 | 2.697 |\n| attn k=16 only | 0.9768 | 2.774 |\n| attn k=20 only | 0.9803 | 2.755 |\n| attn k=24 only | 0.9851 | 2.742 |\n| GPTQ4 alone | 0.9081 | 3.015 |\n| **GPTQ4 + k=16** | **0.8598** | **3.220** |\n| **GPTQ4 + k=20** | **0.8707** | **3.180** |\n| **GPTQ4 + k=24** | **0.8772** | **3.155** |\n\nAt k=16: expected additive degradation = 2.3% (attention) + 9.2% (quantization) = 11.5%. Actual combined = 14.0%. The extra 2.5% is the INTERACTION COST.\n\n- **P1 REFUTED**: NOT sub-additive\n- **P2 CONFIRMED**: super-additive \u2014 sparse attention AMPLIFIES quantization noise\n- **P3 REFUTED**: the axes are NOT independent\n\n### Mechanism\n(1) Quantized key vectors project differently, changing which keys pass the top-k threshold.\n(2) Selected keys' values carry quantization error that the sparse weighted sum cannot average away.\n\n### Engineering consequence\nBudget tables must include an INTERACTION PENALTY when both optimizations are active. A 4-bit model with k=24 attention is NOT equivalent to a 4-bit model plus a 24-key cache.\n\n### Debug transparency\nSEVEN debug iterations before recording; SIX bugs caught by sanity gates including a critical runner-layers reference bug that silently evaluated the wrong model.\n\nNow 84 network experiments. Assessment v84. Paper 165.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3764",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T22:39:30.337116+00:00",
-    "title": "NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE \u2014 GPTQ4+top-k degrades WORSE than sum of parts (14.0% vs expected 11.5%); sparse attention amplifies quantization noise"
   },
   {
     "consumed_by_exp_id": "",
@@ -1986,6 +1928,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d4f58bc3 (Q=0.860), which proved 83 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-83 \u2014 limited-memory axis, round 33 (paper 165, ResearchOutput/exp_net83_integration.py, /tmp/net83.log)\n\n**Verdict name: THE-INTEGRATION-IS-SUPER-ADDITIVE.**\n\n### Result\nThe integration test combining GPTQ 4-bit group-128 weights with top-k attention:\n\n| arm | retained | CE |\n|---|---|---|\n| ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_d4f58bc3_3c4da5c9",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "d4f58bc3",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:29.161461+00:00",
+    "title": "Deepening: NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE \u2014 GPTQ4+top-k degrades WORSE than sum "
   },
   {
     "consumed_by_exp_id": "",
@@ -2661,6 +2617,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 384c4d0f (Q=0.840), which proved 103 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-66 \u2014 limited-memory axis, round 19 (paper 151, ResearchOutput/exp_net66_1p5b2048.py, /tmp/net66.log)\n\n**Verdict name: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING.**\n\n### Result\nThe 1.5B's first ctx=2048 cell (fine grid, gate identical to NET-55/65):\n\n| k | 8 | 12 | 16 | 20 | 24 | 32 |\n|-",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_384c4d0f_d63735aa",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "384c4d0f",
+    "status": "available",
+    "timestamp": "2026-09-02T00:17:09.299014+00:00",
+    "title": "Deepening: NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING \u2014 1.5B chain breaks at "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -2675,6 +2645,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 108711a9 (Q=0.820), which proved 70 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-55 #2, cron iteration (exp 524, assessment v291). Completing the degree-12 semiprime arm.\n\n**D12-SEMIPRIME-CONFIRMED**: pair channel matches exact enumeration law (z = \u22120.88 inside null); split-count z = \u22120.91; which-factor wall HOLDS (sensitivity 0.0002 bits); T-dial replicates at Spearman 0.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_108711a9_f5018a79",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "108711a9",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:49.246100+00:00",
+    "title": "Deepening: FACT round-55 #2 \u2014 D12-SEMIPRIME: the degree-12 semiprime pair channel matches l"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -2686,6 +2670,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f3ffa89b (Q=0.820), which proved 58 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-66 #1, cron iteration (exp 534). The highest-bitlen uniform measurement.\n\n**U80-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.562** / **0.551** / **0.582** across three seeds on uniform draws at bitlen 80; pooled **0.565** CI [0.542, 0.587]. All inside [0.55, 0.85] but seed 20261181 clear",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_f3ffa89b_c249b1f3",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "f3ffa89b",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:08.657358+00:00",
+    "title": "Deepening: FACT round-66 #1 \u2014 TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 18"
   },
   {
     "consumed_by_exp_id": "",
@@ -3629,34 +3627,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 6d23453a (Q=0.790), which proved 94 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_6d23453a_b4b9938f",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "6d23453a",
-    "status": "available",
-    "timestamp": "2026-09-01T18:33:33.635005+00:00",
-    "title": "Deepening: FACT round-67 #1 \u2014 TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle b4f872e1 (Q=0.780), which proved 72 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-75 \u2014 limited-memory axis, round 27 (paper 160, ResearchOutput/exp_net75_frenchext.py, /tmp/net75.log)\n\n**Verdict name: THE-FRENCH-KNEE-IS-FORTY.**\n\n### Result\nExtended grid on French prose (corpus-B; gate exact):\n\n| k | 36 | 40 | 48 | 56 | 64 |\n|---|---|---|---|---|---|\n| retained | 0.9795 \u2717 ",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_b4f872e1_ad7fe000",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "b4f872e1",
-    "status": "available",
-    "timestamp": "2026-09-01T18:33:49.902603+00:00",
-    "title": "Deepening: NET-75: THE-FRENCH-KNEE-IS-FORTY \u2014 extended grid pins k*(fr@1024)=40, exactly do"
   },
   {
     "consumed_by_exp_id": "",
@@ -12239,6 +12209,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Integer exchange rates are now classified: rate p is rigid, every rate is consistent, and the measured 1.5B cell at ctx 2048 forces p = 1. The open half is q > 1, the rational rates p/q given by invariance of the table under the sublattice generated by (q, p). Settling it turns a fitted constant into a discrete invariant of the measurement.\n\nA rational exchange rate p/q admits a monotone non-constant clamped knee table if and only if p \u2265 1, and every such table is a function of the single variable q\u00b7j \u2212 p\u00b7s truncated at 0.\n\nExtend RateFamily with a second index q (exchange : F (s+q) (j+p) = F s j) and prove the classification; experimentally, the s = 2 cell separates rate 1 ({16,16,16,20}) from rate 1/2 ({16,16,20,24}).\n\nBudget tables for every scale are generated by one chain plus one integer invariant, and the 7B cell becomes a prediction rather than a measurement.\n\nThe scale axis is not a monoid action and per-scale chains must be measured independently.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_4528",
+    "priority_score": 0.6716301369863015,
+    "research_mode": "team",
+    "source_exp_id": "384c4d0f",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:57.995124+00:00",
+    "title": "Fractional Exchange Rates for Scale-Context Knee Tables"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The equivariance shear only uses two corruption patterns, a prefix and a suffix, which together cover all coordinates precisely when 2k >= n. This suggests the real hypothesis behind the breakdown ceiling is a covering condition on the admissible corruption patterns rather than a cardinality bound. The conjecture replaces k-subsets by an arbitrary downward-closed set system and predicts the ceiling from its covering number.\n\nLet S be a downward-closed family of subsets of {0,...,n-1} of admissible corruption supports. Every translation-equivariant estimator is unbounded under S-contamination if and only if some two members of S cover {0,...,n-1}.\n\nFormalise S-contamination as diffSupport xs ys in S, re-prove breakdown_ceiling_unbounded from the covering hypothesis, and instantiate S as (i) all k-subsets, recovering 2k >= n, and (ii) contiguous blocks of length k, where the covering threshold differs.\n\nThe ceiling extends verbatim to structured adversaries such as sensor dropouts and block corruption, with no new analysis.\n\nBoundedness under structured contamination is not covering-determined, which would mean equivariance interacts with the combinatorics of the support family in a way the shear cannot see.",
     "domains": [
       "Algebra"
@@ -14162,6 +14146,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Floor and ceiling certification are mirror statements costing the corresponding rapidity margins. Because the band [0.55,0.85] is far from symmetric in rapidity, the two gates of the band have wildly different costs at the readings actually observed, making the band effectively one-sided.\n\nAt every recorded rung, the sample size needed to certify the ceiling 0.85 is at least an order of magnitude smaller than that needed to certify the floor 0.55, so the band decision is determined by the floor gate alone.\n\nInstantiate floor_certified_iff and ceiling_certified_iff at each recorded rung and compare the two reqSamples values as explicit rational bounds.\n\nBand membership as reported is a one-sided test and should be reported as such, with the ceiling clause dropped.\n\nSome rung is ceiling-limited, which would be the first evidence of an upper obstruction of the kind the tie and Gram ceilings predict.",
+    "domains": [],
+    "id": "fd_4517",
+    "priority_score": 0.5942063492063493,
+    "research_mode": "team",
+    "source_exp_id": "f3ffa89b",
+    "status": "available",
+    "timestamp": "2026-09-02T00:15:52.843350+00:00",
+    "title": "One-Sidedness of the Pre-Registered Validation Band"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Tropical Perron\u2013Frobenius in all dimensions**\n  (`exists_maxPlusMul_eigenvector` in\n  `Catalog/Speculative/AutoResearch/PerronTheorem.lean`, on the new core\n  `Catalog/Speculative/AutoResearch/TropicalPerronCore.lean`): the Cuninghame-Green\n  construction is formalised \u2014 maximal cycle mean, cycle removal by pigeonhole, and the\n  longest-path potential to a critical node \u2014 replacing the previous `1\u00d71`/`2\u00d72`-only\n  situation.",
     "domains": [
       "Tropical",
@@ -14298,6 +14294,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The octave shift is an action of the additive monoid of naturals. If it extends to a real scale parameter, intermediate model sizes must interpolate the table monotonically, giving a one-parameter flow whose generator is the keys-per-octave rate.\n\nThere is a monotone K0 : \u211d\u22650 \u2192 \u211d with k*(sigma, j) = K0(max(j - sigma, 0)) restricting to the measured integer cells; equivalently the shift action extends from (\u2115,+) to (\u211d\u22650,+).\n\nFormalise the extension as a monotone-interpolation problem and prove existence for arithmetic base chains; experimentally sweep 3B between the 1.5B and 7B cells.\n\nKnee budgets can be interpolated for unmeasured model sizes, and deployment tables become continuous in scale.\n\nScale acts only discretely and each model family needs its own chain.",
+    "domains": [],
+    "id": "fd_4530",
+    "priority_score": 0.5935507246376812,
+    "research_mode": "team",
+    "source_exp_id": "384c4d0f",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:59.246549+00:00",
+    "title": "Real-Parameter Scale Flow on Knee Chains"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every entry and every increment of the reported table is a multiple of four. If the sweep grid has spacing g, the reported knee is the grid ceiling of the true knee, and increments are forced into g\u00b7\u2115. This would show that much of the table's apparent structure is an artefact of the measurement design.\n\nIf a sweep grid is g\u00b7\u2115 then every reported doubling increment lies in g\u00b7\u2115, and the reported factor of a domain differs from its true factor by at most g/k*.\n\nCombine gridKnee from Combinatorics.KneeInvariance with the dilation bracket and prove both statements.\n\nThe '+0 / +4 / +8' pattern carries less information than claimed, and finer grids are required for factor claims.\n\nThe quantisation is a property of the model, not of the sweep, and is itself the interesting phenomenon.",
     "domains": [],
     "id": "fd_3968",
@@ -14379,6 +14387,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T18:32:48.984393+00:00",
     "title": "Headroom Conservation Under Response Rebalancing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Domain changes act on the demand multiset while scale acts on the octave index. If these are independent coordinates, the three-way table factorises and a domain jump can never interact with a scale shift.\n\nk*(domain, scale s, octave j) = K_domain(j - s) for every domain, i.e. the domain-jump operator and the octave-shift operator commute on knee tables.\n\nFormalise a domain action on Workload.demand, prove it commutes with shift using knee_eq_of_demandMultiset_eq, and measure one off-diagonal cell (mathematics corpus at 1.5B, ctx 2048).\n\nBudget tables factor into a domain factor and a scale-shifted context factor, collapsing the measurement grid from cubic to linear in size.\n\nDomain difficulty and effective context interact, and per-domain scale ladders must be measured separately.",
+    "domains": [],
+    "id": "fd_4531",
+    "priority_score": 0.5934375000000001,
+    "research_mode": "team",
+    "source_exp_id": "384c4d0f",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:59.850501+00:00",
+    "title": "Commuting Square of Domain Jumps and Scale Shifts"
   },
   {
     "consumed_by_exp_id": "",
@@ -15852,6 +15872,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A finite sweep determines only the interval between the last failing and first passing grid budgets. Bounding the demand density bounds the agreement curve's slope, which should convert grid mesh into a quantitative bracket width and expose the point past which refining the grid is useless.\n\nFor a workload whose demand multiset has at most rho*n windows at any single demand value, a sweep of mesh m determines the knee to width at most min(m, ceil(slack/rho)), and this is sharp.\n\nExtend GridRazorBracket with a density hypothesis on Workload.demand, prove the width bound, and exhibit a matching extremal profile.\n\nThe sub-20 addendum at ctx 2048 is provably decisive or provably futile before it is run.\n\nBracket width is not controlled by density alone and additional structure of the demand tail is needed.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4529",
+    "priority_score": 0.5647746171324002,
+    "research_mode": "team",
+    "source_exp_id": "384c4d0f",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:58.623227+00:00",
+    "title": "Density-Limited Grid Resolution of the Knee Bracket"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Lift the sharp stage-1 threshold theory to the difference stage. Stage 2 kills orders that are B1-powersmooth after removing a single prime factor in (B1, B2], so the criterion should become a two-parameter threshold and the firing count an exact product formula. The stage-2 arms of the audited experiment never executed, so a theorem is the only available validation.\n\nA point of order n is killed by the (B1,B2) difference stage iff n = s*r with maxPrimePow s <= B1 and r = 1 or r prime in (B1,B2]; the firing count in Z/m is gcd(m,lcm(1..B1)) times (1 + #{r prime in (B1,B2] : r divides m / gcd(m,lcm(1..B1)))}).\n\nFormalize the criterion by the same factorization argument as dvd_stage1Scalar_iff, then count the firing set as a disjoint union over the admissible prime r.\n\nExact stage-2 success rates replace the usual heuristic, and the B2/B1 scaling law of the pre-registered H1 hypothesis becomes computable in closed form.\n\nThe difference stage kills strictly more orders than the criterion allows, indicating that intermediate differences contribute extra collisions.",
     "domains": [
       "NumberTheory",
@@ -16449,6 +16484,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T21:45:30.881015+00:00",
     "title": "Diagonal Extremality of the Residue Cap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact grouped mean-square formula reduces the GPTQ group-correlation penalty to the number of same-group ordered pairs in the selected key set. The conjecture identifies this count as a Schur-convex function of the group occupancy profile, so balanced selections are optimal and single-group selections worst. This converts a kernel-design question into an extremal set-system statement.\n\nAmong group occupancy profiles with sum_t m_t = k and m_t <= g, the same-group pair count sum_t m_t(m_t-1) is minimised exactly at the balanced profiles, with minimum r*q*(q+1) + (N-r)*q*(q-1) for k = qN + r; the counting identity and the maximum k(k-1) are already proved.\n\nIterate the proved one-step smoothing inequality pairs_smoothing by induction on the imbalance of the profile, using samePartners_sum_eq_profile to transfer back to selections.\n\nA provable scheduling rule: interleave top-k selection across quantization groups.\n\nSome skewed allocation would beat the balanced one, indicating a non-convex interaction landscape.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4518",
+    "priority_score": 0.5646283128879792,
+    "research_mode": "team",
+    "source_exp_id": "d4f58bc3",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:17.410004+00:00",
+    "title": "Schur-Convexity of the Group-Aligned Interaction Penalty"
   },
   {
     "consumed_by_exp_id": "",
@@ -29218,6 +29268,178 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "As a monotone rank dial approaches a pre-registered floor, its rapidity margin decays linearly in the bitlen while the required sample size grows as the inverse square of the margin. This predicts a last decidable rung b_max(N) for any experiment of size N, growing only logarithmically in N. The barrier, not the dial, then governs what the ladder can report.\n\nIf artanh rho(b) = z0 - s*b with s > 0 and the floor has rapidity zf, then the smallest sample size that certifies rung b is 3 + (z/(z0 - s*b - zf))^2, so b_max(N) = (z0 - zf)/s - (z/s)/sqrt(N-3) and no experiment of size N can classify any rung beyond it.\n\nFormalise b_max as a definition over the recorded ladder and prove the two-sided bound using reqSamples_scaling and the artanh bounds of the U80 files; then evaluate at the recorded rungs 44..120.\n\nEvery reported band decision beyond b_max is uninformative, and the thread's crossing tests must be re-budgeted rather than re-run.\n\nEither the fade is not linear in rapidity (curvature, see direction 2) or the intervals are not Fisher intervals, both of which are checkable against the recorded CIs.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4514",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f3ffa89b",
+    "status": "available",
+    "timestamp": "2026-09-02T00:15:51.226775+00:00",
+    "title": "Quadratic Identifiability Barrier for Fading Rank Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Rapidity is the canonical coordinate on correlations, so the bitlen ladder is a curve in a one-dimensional hyperbolic metric. Linear fade is the geodesic case; the recorded rebounds and decelerations are curvature. Curvature is coordinate-free and can be compared with the seed-spread noise floor.\n\nThe second difference of artanh rho over equally spaced bitlens is bounded in absolute value by the rapidity image of the seed spread; i.e. every recorded non-linearity in the ladder is noise-compatible.\n\nCompute second differences of artanh rho on the recorded rungs and compare with artanh of the seed spread, formalised as a finite inequality over explicit rationals in the style of u80_crossing_before_84.\n\nThe single-parameter linear-rapidity model is sufficient for the whole thread, and all rung-to-rung commentary about acceleration is unsupported.\n\nThere is a genuine mechanism switching on at a specific bitlen, and its location is pinned by the curvature maximum.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4515",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f3ffa89b",
+    "status": "available",
+    "timestamp": "2026-09-02T00:15:51.769198+00:00",
+    "title": "Hyperbolic Curvature of the Bitlen Ladder"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A measured advantage delta of a statistic over a baseline yields a Gram decorrelation certificate of strength growing in delta, and a resolution cost growing as delta^-2. The informativeness of a parity measurement is therefore a product of an increasing and a decreasing factor and should have an interior optimum.\n\nThe quantity (delta^2/2) * (number of draws affordable at a fixed budget with margin delta) is maximised at a unique delta*, and the recorded advantages of the T-dial thread pass through delta* between bitlen 44 and bitlen 80.\n\nDefine the informativeness functional over the rapidity advantage, prove unimodality by a derivative argument, and evaluate at the recorded advantages 0.07 and 0.053.\n\nThere is an optimal bitlen for measuring count parity, and the thread has passed it; further parity measurements are cheaper to obtain at lower bitlen.\n\nEither the Gram certificate or the resolution cost is not the binding constraint, isolating which of the two governs parity claims.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4516",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f3ffa89b",
+    "status": "available",
+    "timestamp": "2026-09-02T00:15:52.306562+00:00",
+    "title": "Stationary Advantage for Parity Certificates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Hard top-k and dense attention are endpoints of a softmax temperature family, and the transmitted quantization variance was proved to be exactly the weight energy sum of squares. The conjecture upgrades the two endpoint values to a continuous strictly monotone curve, turning the interaction penalty into a tunable dial.\n\nFor softmax weights w(tau) on fixed non-constant scores, tau -> sum_i w_i(tau)^2 is strictly antitone on (0, infinity) with limits 1 and 1/n, and the mean-square interaction equals sigma^2 (sum_i w_i(tau)^2 - 1/n).\n\nFormalise softmax weights, differentiate the collision probability in tau, and compose with meansquare_wRead, which already allows arbitrary weights.\n\nContinuous, predictable budget tables parameterised by attention temperature.\n\nIntermediate temperatures could be worse than both endpoints, a stronger deployment warning.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4519",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d4f58bc3",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:17.940382+00:00",
+    "title": "Softmax-Temperature Interpolation of Quantization Interaction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Selection stability is gated by the proved 2*eps score margin and the threshold is sharp. Adding a distribution on the top-k boundary gap converts the gate into an expected cost, and separates the two NET-83 mechanisms by their order in the quantization scale.\n\nIf the top-k boundary gap has density bounded by C near 0, the expected flip contribution to the interaction is at most 2*C*eps*diam(values); flips dominate for small eps (linear) and noise dominates for large eps (quadratic).\n\nFormalise a finite gap ensemble, bound the flip probability by the contrapositive of selection_stable_of_margin, and bound the loss on the flip event by the value diameter.\n\nA quantitative safety rule for 4-bit quantization at a given attention budget.\n\nFlip costs are superlinear, implying heavy-tailed sensitivity of sparse attention to quantization.",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_4520",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d4f58bc3",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:18.474625+00:00",
+    "title": "Gap-Density Law for Top-k Selection Flips"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "With the interaction term now in closed form, choosing bits and keys under a memory constraint is a convex program rather than a heuristic. The conjecture is that the 1/k interaction term strictly excludes the extreme corner of the budget simplex, so optimal deployments are interior.\n\nFor A convex decreasing in k and sigma(b)^2 = c*4^(-b), the minimiser of A(k) + Q(b) + sigma(b)^2 (1/k - 1/n) under a linear memory constraint is interior, with optimal k scaling like sigma(b)^(2/3).\n\nFormalise the objective over the reals, use convexity of k -> 1/k, and derive first-order conditions in Lean.\n\nA closed-form deployment rule replacing the additive budget tables that NET-83 refutes.\n\nCorner solutions are sometimes optimal, licensing aggressive combined compression.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4521",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d4f58bc3",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:18.998384+00:00",
+    "title": "Interior Optimum for Joint Bit-Width and Key-Budget Allocation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Recentering the quantization error on the selected key set was proved to remove the first-order interaction, but the corrector must know the realised selection. If quantization itself flips the selection, the corrector centres on the wrong set and a residual penalty proportional to the symmetric difference returns.\n\nWith recentering on the pre-quantization top-k set S and realised set S', the residual interaction is at most 2*eps*|S symmetric-difference S'|/k, and vanishes exactly on the stable regime characterised by the 2*eps margin condition.\n\nCombine recentering_kills_interaction with selection_stable_of_margin, bounding the sparse error mean on the symmetric difference.\n\nA cheap corrector with a certified residual, restoring additive budget tables in the stable regime.\n\nCorrectors must be selection-adaptive at runtime, raising their cost.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4522",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d4f58bc3",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:19.527437+00:00",
+    "title": "Residual Interaction of Selection-Aware Recentering under Flips"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The split-count projection of the semiprime splitting-type pair carries a strictly positive but rapidly vanishing amount of information about the residue of the semiprime. We conjecture strict positivity for all cyclic orders and a log n / n decay rate. This would separate the split-count read-out from a true information wall.\n\nFor every n >= 2, Isplit n > 0, and Isplit n = O(log n / n) as n grows through orders with a bounded number of divisors.\n\nFormalise the general fibre profile of sProj over the residue classes of prodRes (the n = 12 case is splitProfile_rigid_12), then bound the resulting entropy difference; check numerically for n up to 200.\n\nThe split count is a leaky but asymptotically negligible channel, and the only genuine wall in the model is the which-factor wall.\n\nSome cyclic order has an exactly closed split-count channel, giving a second, arithmetic wall to classify.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4523",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "108711a9",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:38.065944+00:00",
+    "title": "Positivity and Decay of the Split-Count Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The which-factor wall proved here rests only on a fixed-point-free involution of each read-out fibre. We conjecture the full converse: a functional of the ordered exponent pair leaks order information exactly when it takes a swap-fixed value on a positive-measure set.\n\nFor a finite set s with an involution sigma and a read-out k with k o sigma = k on s, and any w with w o sigma = tau o w for a fixed-point-free involution tau of the alphabet, mutInfo s w k = 0; conversely if w has a sigma-invariant value on a nonempty subset then some symmetric k has positive mutual information with w.\n\nGeneralise mutInfo_eq_zero_of_flip from Bool to an arbitrary alphabet with a fixed-point-free involution, and construct the converse witness by conditioning on the sigma-fixed part.\n\nThe wall is a purely group-theoretic phenomenon, transferable to every symmetric fork in the catalog.\n\nThe Boolean case is special and the arithmetic of ordType does enter, which would be a surprise.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4524",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "108711a9",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:38.623436+00:00",
+    "title": "Orbit-Theoretic Which-Factor Wall"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved law H(Pi) = 2H(T) - #asym(n)/n^2 turns the semiprime pair entropy into an arithmetic quantity: the collision probability of two independent phi-distributed splitting types. Since sum over d | n of phi(d)^2 is multiplicative, the defect should factor over prime powers, giving a closed form for every n from a prime-power table.\n\nS(n) = sum_{d | n} phi(d)^2 is multiplicative, hence 2 H(T) - H(Pi) = 1 - prod_{p^k || n} S(p^k)/p^{2k}.\n\nProve multiplicativity of S via Nat.ArithmeticFunction.IsMultiplicative and combine with card_asym_eq and pairEntropy_symmetrization_law.\n\nThe semiprime pair channel of every cyclic order is computable from the prime-power case, eliminating all remaining per-order enumeration.\n\nThe defect carries genuinely non-multiplicative arithmetic, which would contradict the independence heuristic behind the model.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_4525",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "108711a9",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:39.154261+00:00",
+    "title": "Multiplicative Factorisation of the Symmetrization Defect"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Degree 12 beats every other computed cyclic order in pair-channel capacity despite not being the largest. The symmetrization law splits the capacity into a divisor-richness term and a defect bounded by one bit, suggesting that the ranking is governed by the divisor function alone.\n\nAmong cyclic orders n with n + 1 prime and n <= 100, I_pair(n) / log2 n is maximised at n = 12, and in general I_pair(n) = 2H(T)(n) - conditional term with the leading behaviour controlled by d(n).\n\nCombine typeEntropy_formula with pairEntropy_symmetrization_law to reduce the comparison to explicit divisor sums, then verify the finite range by a decidable computation.\n\nDivisor richness, not group size, is the design parameter for maximal type-pair capacity.\n\nA large smooth order overtakes 12, and the richness heuristic needs a correction term.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4526",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "108711a9",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:39.693095+00:00",
+    "title": "Divisor-Richness Optimality of Degree Twelve"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Refining the residue of a single prime beyond the modulus f gives no extra information about its splitting type. We conjecture the semiprime analogue: refining N mod f to N mod f^k changes neither the which-factor wall nor the pair channel, because every such refinement is still symmetric in the two primes.\n\nFor every k >= 1 the which-factor mutual information against the read-out (typePair, N mod f^k) is 0, and the pair channel I({T(p),T(q)} ; N mod f^k) equals I_pair.\n\nInstantiate whichFactor_wall with the thickened symmetric read-out; for the second half, exhibit the thickened residue as a symmetric refinement and compare conditional entropies.\n\nNo p-adic thickening of the modulus can break the semiprime wall, isolating asymmetry as the only useful side information.\n\nThickening leaks, and the exponent model of the semiprime channel is not faithful beyond the first level.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4527",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "108711a9",
+    "status": "available",
+    "timestamp": "2026-09-02T00:16:40.231990+00:00",
+    "title": "Thickening Invariance of the Semiprime Pair Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -41354,14 +41576,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "D3 \u2014 The increment law is a translation cocycle"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa167cd7",
     "description": "The current theorem is an exact Hahn-series statement. To connect it to analysis,\nformalize an interpretation into germs of real functions and prove:\n\n1. the leading nonzero monomial controls eventual sign;\n2. smaller ranks are asymptotically negligible relative to larger ranks;\n3. the interpretation is injective on a normalized, summable fragment;\n4. formal agreement to all ranks implies equality of eventual germs.\n\nThis will distinguish the valid formal principle from the generally false claim\nthat arbitrary smooth functions with identical classical asymptotic power series\nmust coincide (flat functions provide counterexamples).",
     "domains": [],
     "id": "fd_2733",
+    "phase": "A",
     "priority_score": 0.4331764705882352,
     "research_mode": "team",
     "source_exp_id": "bb566a68",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:48.986410+00:00",
     "title": "Asymptotic comparison beyond coefficient extensionality"
   },
