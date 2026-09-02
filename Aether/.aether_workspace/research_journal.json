@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "601f1720",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — sequential hint pricing (SEQHINT-COMPOUND-LAW)\n\nWhat the cycles so far established (all in `Catalog/Pythagorean/SeqHint/`, zero\n`sorry`, standard axioms only):\n\n* fixed compariso",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 125,
-      "timestamp": "2026-08-29T02:13:13",
-      "title": "FACT round-74 #3 — SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3"
-    },
-    {
       "cycle_id": "6060f6d0",
       "domain": "Tropical",
       "key_insight": "# Future Directions — after the ORBIT-DIAL-CAP-TEST (Tropical cycle)\n\n## What this cycle settled\n\nFour formal files in `Catalog/Tropical/` (all 0 sorries) turn the experimental report\ninto theorems:",
@@ -499,19 +489,19 @@
       "theorem_count": 61,
       "timestamp": "2026-09-02T09:39:34",
       "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
+    },
+    {
+      "cycle_id": "0bdc483a",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — after the NET-62 grid-quantization round\n\nThree files were added under `Catalog/NumberTheory/`, all compiling with zero `sorry`s:\n\n* `GridKneeQuantization.lean` — grids, the read",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-09-02T09:39:53",
+      "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID — 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now stri"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5f0e4f5e",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nDerived from this cycle's results on the mass (`ℓ¹`) theory of weight vectors that are\ninvisible to a truncated power-sum window.  What was settled this cycle:\n\n* the exact mass l",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 114,
-      "timestamp": "2026-08-22T03:08:06",
-      "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
-    },
     {
       "cycle_id": "16cb59c0",
       "domain": "Algebra",
@@ -2501,15 +2491,19 @@
       "theorem_count": 61,
       "timestamp": "2026-09-02T09:39:34",
       "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
+    },
+    {
+      "cycle_id": "0bdc483a",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — after the NET-62 grid-quantization round\n\nThree files were added under `Catalog/NumberTheory/`, all compiling with zero `sorry`s:\n\n* `GridKneeQuantization.lean` — grids, the read",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-09-02T09:39:53",
+      "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID — 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now stri"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "17866175",
-      "domain": "Probability",
-      "name": "mixBlock_second",
-      "quality": 0.9
-    },
     {
       "cycle_id": "17866175",
       "domain": "Probability",
@@ -2803,9 +2797,15 @@
       "domain": "Physics",
       "name": "contrast_test_attains_chord",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "0bdc483a",
+      "domain": "NumberTheory",
+      "name": "below",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-02T09:39:34",
+  "last_updated": "2026-09-02T09:39:53",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "08e16c4e",
-        "quality": 0.85,
-        "theorems": 125,
-        "title": "Aleph-1 Surface: Geometry Between Dimensions"
-      },
-      {
         "cycle_id": "ae01533d",
         "quality": 0.78,
         "theorems": 131,
@@ -3699,6 +3693,12 @@
         "quality": 0.82,
         "theorems": 71,
         "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+      },
+      {
+        "cycle_id": "0bdc483a",
+        "quality": 0.78,
+        "theorems": 66,
+        "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID — 0.5B knee at ctx=1024 is k*=20 (fine g"
       }
     ],
     "Physics": [
