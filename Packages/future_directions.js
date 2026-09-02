@@ -1347,61 +1347,49 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-49 #2 \u2014 T-DIAL-60: the degradation plateaus (paper 179)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "88e58a70",
     "description": "Round-52 #1, cron iteration (exp 517). The zero-fit dial's regime-invariance extends to bitlen 48.\n\n**DIAL-HOLDS-UNIFORM-48**: Spearman(T, rate) = **0.777** / **0.755** / **0.801** across three seeds on uniform draws at bitlen 48 \u2014 all inside [0.55, 0.85]; T beats the bare QR-count by +0.09 to +0.13 on every seed.\n\nThe zero-fit dial's deployment envelope now covers balanced and uniform draws at bitlens 44\u201352 with confirmed seed-stability, regime-invariance, and bitlen-stability.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp517_t_dial_unif_48.py + exp517_result.json, seeds 20261080\u201382.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3674",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T14:39:10.954810+00:00",
-    "title": "FACT round-52 #1 \u2014 T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-51 #1, cron iteration (exp 515, assessment v283). The full augmented dial tested across 5 fresh populations.\n\n**EXTENDED-DIAL-ABSENT**: the prime-power feature's contribution does NOT replicate \u2014 \u0394R\u00b2(pp) \u2248 0 on all 5 populations. Per-seed R\u00b2(augmented) at u=3.5: [0.490, 0.555, 0.428, 0.532, 0.508] \u2014 mean **0.502**, only 1/5 above the 0.55 target. The +0.089 from paper 172 was population-specific.\n\nTransfer slope 0.898 in band; combined model reaches R\u00b2 = 0.634 at u=2.5. The per-N dial's best validated form remains the paper-145 footprint dial (w + qrc).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp515_extended_dial.py + exp515_result.json, seeds 20261060\u201364.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3675",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T14:39:10.956328+00:00",
-    "title": "FACT round-51 #1 \u2014 EXTENDED-DIAL: the prime-power feature does not replicate (paper 181)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-50 (exp 513). The abelian ladder's eleventh rung.\n\n**FULL-PINNING-AT-DEGREE-11**: Q(\u03b6\u2082\u2083)\u207a confirms every pre-stated prediction:\n- T(p)=1 iff dlog\u22610 mod 11; densities {1/11, 10/11}; H(T)=0.4395 bits\n- I(p mod 29; T) = H(T) EXACTLY (perm z>1000, per-class degenerate)\n- Semiprime pair Bin(2,1/11) \u03c7\u00b2=0.08; Is(11)=0.116\n\nThe abelian full-pinning law is UNIVERSAL: every degree 2\u201311 tested and confirmed with no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp513_degree_11.py + exp513_result.json, seed 20261050.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3676",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T14:39:10.957753+00:00",
-    "title": "FACT round-50 \u2014 DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper 180 addendum)"
-  },
-  {
-    "consumed_by_exp_id": "f3a0d241",
-    "description": "## NET-55 \u2014 limited-memory axis, round 8 (paper 140, ResearchOutput/exp_net55_1p5b_knee.py committed pre-run, /tmp/net55.log)\n\n**Verdict name: THE-KNEE-IS-SIZE-INVARIANT.**\n\n### Result\nQwen2.5-1.5B (3\u00d7 the parameters of the 0.5B, d=28 vs 24) on identical protocol (held-out wikitext, 24 windows/cell, bf16-storage/fp32-compute harness):\n\n| ctx | full acc | k\\* | 0.5B comparison |\n|---|---|---|---|\n| 512 | 0.4680 | **16** | identical (0.5B: 16) |\n| 1024 | 0.5004 | **16** | HALF (0.5B: 32; grid floor \u2014 could be lower) |\n\n- **P1 REFUTED decisively**: knees did not grow with 3\u00d7 parameters \u2014 they came in below the pre-registered floor ([24,48]@512, [32,96]@1024) at both contexts.\n- **P2 honestly UNMEASURED**: the crash-recovery harness rewrite dropped the per-layer stats block; the 1.5B tail map stays open.\n- **P3 CONFIRMED with a stronger reading**: ratio = 1.0 \u2014 not just sub-linear, FLAT.\n\nSweeps: 512 \u2014 8: 0.9727 \u2717, **16: 0.9896 \u2713**, 24: 0.9915, 32: 0.9969, 48: 0.9993, 64: 0.9988. 1024 \u2014 **16: 0.9806 \u2713**, 24: 0.9867, 32: 0.9881, 48: 0.9928, 64: 0.9927, 96: 0.9954, 128: 0.9974.\n\n### The emerging law\nReal-model lossless attention budget across everything measured: {16, 32, 24} @0.5B and {16, 16} @1.5B \u2014 a ~30-key budget covers every real model at every context, while the toy law predicted 384\u20131344 for these cells. The knee is set by the concentration structure of trained attention, not model capacity. **Deployment reading: the KV working-set budget does NOT scale with model size** \u2014 at larger models the binding constraint is weights (NET-52's quantization table), not cache.\n\n### Engineering record\nQwen2.5-1.5B's own fp16 forward NaNs on real text (verified pre-wrapper \u2014 bf16 storage mandatory on pre-bf16 GPUs); CPU-fp32 reference SIGILLs on this host; gate = HF-bf16-GPU reference captured pre-floatify with \u0394CE 0.0054 as the binding check and argmax-agreement 0.89 documented as near-tie flips across the 152k vocab.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted one; (b) clean \u2014 size-transfer of sparsity knees not a measured law in Catalog or literature; (c) confronted \u2014 3\u00d7 scale jump measured; limits: two size points, grid floor at 16, one corpus, SE \u2248 0.3%, P2 unmeasured; (d) clean \u2014 held-out last 10%; (e) deterministic evals, gate calibration documented; (f) clean \u2014 finite-reference assert, ALL_DONE_NET55; (g) fair \u2014 same 0.98 bar as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-16 addendum at 1024; 1.5B tail map (P2); 7B quantized-offload cell; oracle-to-policy eviction gap; corpus robustness.\n\nNow 55 network experiments. Assessment v55. Paper 140.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3679",
     "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-08-22T15:36:32.739868+00:00",
-    "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT \u2014 Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-half the 0.5B knees; tripling parameters did not raise the lossless attention budget by one key"
+    "timestamp": "2026-08-22T14:39:10.954810+00:00",
+    "title": "FACT round-52 #1 \u2014 T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
+  },
+  {
+    "consumed_by_exp_id": "8c9b3d94",
+    "description": "Round-51 #1, cron iteration (exp 515, assessment v283). The full augmented dial tested across 5 fresh populations.\n\n**EXTENDED-DIAL-ABSENT**: the prime-power feature's contribution does NOT replicate \u2014 \u0394R\u00b2(pp) \u2248 0 on all 5 populations. Per-seed R\u00b2(augmented) at u=3.5: [0.490, 0.555, 0.428, 0.532, 0.508] \u2014 mean **0.502**, only 1/5 above the 0.55 target. The +0.089 from paper 172 was population-specific.\n\nTransfer slope 0.898 in band; combined model reaches R\u00b2 = 0.634 at u=2.5. The per-N dial's best validated form remains the paper-145 footprint dial (w + qrc).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp515_extended_dial.py + exp515_result.json, seeds 20261060\u201364.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3675",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-22T14:39:10.956328+00:00",
+    "title": "FACT round-51 #1 \u2014 EXTENDED-DIAL: the prime-power feature does not replicate (paper 181)"
+  },
+  {
+    "consumed_by_exp_id": "42a2aa0b",
+    "description": "Round-50 (exp 513). The abelian ladder's eleventh rung.\n\n**FULL-PINNING-AT-DEGREE-11**: Q(\u03b6\u2082\u2083)\u207a confirms every pre-stated prediction:\n- T(p)=1 iff dlog\u22610 mod 11; densities {1/11, 10/11}; H(T)=0.4395 bits\n- I(p mod 29; T) = H(T) EXACTLY (perm z>1000, per-class degenerate)\n- Semiprime pair Bin(2,1/11) \u03c7\u00b2=0.08; Is(11)=0.116\n\nThe abelian full-pinning law is UNIVERSAL: every degree 2\u201311 tested and confirmed with no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp513_degree_11.py + exp513_result.json, seed 20261050.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3676",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-22T14:39:10.957753+00:00",
+    "title": "FACT round-50 \u2014 DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper 180 addendum)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1416,21 +1404,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T15:36:32.741347+00:00",
     "title": "FACT round-53 #1 \u2014 T-DIAL-UNIF-52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
-  },
-  {
-    "consumed_by_exp_id": "ee56ba3a",
-    "description": "## NET-56 \u2014 limited-memory axis, round 9 (paper 141, ResearchOutput/exp_net56_policy.py, /tmp/net56.log)\n\n**Verdict name: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN.**\n\n### Result\nCausally-honest streaming KV eviction (accumulated-score heavy-hitters, block-128, current block always cached, strict per-row causality) vs the omniscient oracle \u2014 same harness, same data, matched budgets (Qwen2.5-0.5B, ctx=1024):\n\n| arm | B=32 | B=64 | B=128 |\n|---|---|---|---|\n| ORACLE (per-row top-k) | **0.9913 \u2713** | **0.9953 \u2713** | \u2014 |\n| HH (accumulated, pure) | 0.8633 | 0.8822 | 0.9189 |\n| HYB (HH + recency) | 0.9205 | 0.9384 | 0.9605 |\n\n- **P1 CONFIRMED emphatically**: policy gap = 11.3 points at matched B=64 (not the \u22652% floor).\n- **P2 CONFIRMED**: recency beats pure accumulation everywhere (+5.7/+5.6/+4.2 pts).\n- **P3 REFUTED**: best-at-64 = 0.938 < 0.95; even a 12.5%-of-context cache tops out at 0.961.\n\nAnchor: oracle arms cross-replicate NET-49's knee to four decimals (0.9913 vs 0.9912 at k=32).\n\n### The law\nThe knee collapse (NET-49: knees {16,32,24}; NET-55: size-invariant) is real for an OMNISCIENT selector but does NOT transfer to online eviction: **trained attention is prunable in retrospect, not predictable in advance** \u2014 accumulated attention probability is a biased estimator of future importance. This is the measurable form of the catalogue's min-plus decoder-reliability barrier (no exponential reliability without assumptions). Deployment tables must be policy-adjusted; oracle quotes are upper bounds.\n\n### Engineering record\nSeven implementation variants were rejected by sanity gates before recording: two shape bugs; a stale kept-set that starved local context (retained 0.35\u20130.46); a per-block causal leak that let rows see their block's future (retained 2.06 > 1 \u2014 physically impossible); a strict-mask NaN; duplicate recency; and an unbound variable. The two invalid variants are retained in git history as bracketing negative controls. The recorded run passes retained\u2208(0,1), monotone budget response, and exact oracle replication.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) confronted \u2014 H2O/heavy-hitter literature exists; NEW = the quantified oracle-to-policy gap measured on the very harness that established the knees; (c) confronted \u2014 limits: ONE model, ONE context, block-128 granularity, no learned importance heads; (d) clean \u2014 held-out data, no training; (e) deterministic evals, sanity-band acceptance documented; (f) clean \u2014 ALL_DONE_NET56; (g) fair \u2014 identical harness/data for both arms, budgets matched exactly; (h) DIRECT.\n\n### Next\nLearned importance heads (can a tiny predictor close the gap?); per-layer budgets; 1.5B replication; corpus robustness (next cell).\n\nNow 56 network experiments. Assessment v56. Paper 141.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3682",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T16:41:43.034980+00:00",
-    "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN \u2014 streaming heavy-hitter eviction retains 0.86-0.92 where the oracle posts 0.99+ at matched budgets; trained attention is prunable in retrospect, not predictable online"
   },
   {
     "consumed_by_exp_id": "5c95862a",
@@ -1461,36 +1434,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-22T16:41:43.038020+00:00",
     "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
-  },
-  {
-    "consumed_by_exp_id": "fe441855",
-    "description": "## NET-58 \u2014 limited-memory axis, round 11 (paper 143, ResearchOutput/exp_net58_probe.py, /tmp/net58.log)\n\n**Verdict name: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE.**\n\n### Result\nPer-(layer, kv-head) ridge probes (64-d post-rope key \u2192 log1p(total future attention), fit on TRAIN-side windows only) + streaming eviction by static probe score:\n\n| B | accumulated-HH (NET-56) | PROBE (this round) | oracle |\n|---|---|---|---|\n| 32 | 0.8633 | 0.8395 | 0.9913 |\n| 64 | 0.8822 | **0.8938** | 0.9953 |\n| 128 | 0.9189 | **0.9284** | \u2014 |\n\n- Probe R\u00b2: mean **0.329** (min 0.113, max 0.639; front-high/mid-low depth structure).\n- **P1 REFUTED**: at B=64 the probe closes only ~11% of the oracle gap (needed \u226533%); worse than accumulation at B=32.\n- **P2 CONFIRMED**: 10+ points to oracle remain at B=64.\n- **P3 CONFIRMED**: R\u00b2 is depth-structured.\n\n### The law\nA key's vector knows little about how much attention it will receive. With NET-56, this bounds ALL content-based KV-eviction policies: **importance is relational and positional, not intrinsic to key identity** \u2014 the oracle-to-policy gap is structural, not an engineering shortfall. Deployable caches must track usage online, keep recency (the dominant cheap signal), or accept ~10 points at aggressive budgets.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P1; (b) confronted \u2014 probe-based key importance exists in interpretability folklore; NEW = its measured CEILING as an eviction policy on the knee-measuring harness with the R\u00b2\u2192retained conversion; (c) confronted \u2014 linear probe class only, one model/context (nonlinear heads bounded by P2 logic unless near-perfect); (d) clean \u2014 train-side fits only; (e) deterministic closed-form; (f) clean \u2014 ALL_DONE_NET58; (g) fair \u2014 identical harness/budgets/windows as NET-56; (h) DIRECT.\n\n### Next\nPer-layer load-bearingness ablation (which layers' attention is actually load-bearing \u2014 running next); probe+recency hybrid; 1.5B tail map; 7B cell.\n\nNow 58 network experiments. Assessment v58. Paper 143.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3700",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T17:37:32.040067+00:00",
-    "title": "NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE \u2014 linear probes recover only R2~0.33 of key future-attention; content-based eviction ~1pt over accumulation, 10pts below oracle; importance is relational, not intrinsic"
-  },
-  {
-    "consumed_by_exp_id": "efbccac8",
-    "description": "## NET-57 \u2014 limited-memory axis, round 10 (paper 142, ResearchOutput/exp_net57_corpusB.py, /tmp/net57.log)\n\n**Verdict name: THE-KNEES-ARE-CORPUS-ROBUST.**\n\n### Result\nIndependent corpus (wikitext-103-raw train shard **1**, disjoint from shard 0), byte-identical NET-49 harness, Qwen2.5-0.5B:\n\n| ctx | corpus-B k\\* | corpus-A k\\* | verdict |\n|---|---|---|---|\n| 512 | **16** | 16 | EXACT |\n| 1024 | **32** | 32 | EXACT |\n| 2048 (bonus) | **32** | 24 (razor +0.5 SE) | inside documented bracket |\n\nControls replicate to FOUR DECIMALS: random-k {0.1775, 0.3004} = corpus-A exactly; local-window within noise.\n\n### The law\nThe ~30-key lossless attention budget now holds across **3 contexts \u00d7 2 corpora \u00d7 2 model sizes**. The single-corpus limit carried since NET-49 is closed: the knee laws are properties of trained attention, not of the evaluation text. Joint reading at 2048: knee \u2248 24\u201332, corpus-insensitive within the grid.\n\n### All 8 barriers\n(a) clean \u2014 horns inherited from the pre-registered harness block; (b) clean; (c) confronted \u2014 this WAS the corpus test; remaining limits: both corpora wikitext-family (domain jump open), 24 windows/cell; (d) clean per-corpus held-out splits; (e) deterministic + 4-decimal cross-corpus control agreement as a measurement-validity result; (f) clean \u2014 gate exact, ALL_DONE, one stray-process OOM diagnosed and cleared before any recorded measurement; (g) fair \u2014 only the text changed; (h) DIRECT \u2014 licenses quoting the deployment table without per-domain re-measurement.\n\n### Next\nDomain-jump corpora (code/math/non-English); learned importance heads to close the NET-56 policy gap; per-layer budgets; 1.5B tail map; 7B quantized-offload cell.\n\nNow 57 network experiments. Assessment v57. Paper 142.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3701",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T17:37:32.041644+00:00",
-    "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST \u2014 independent wikitext shard replicates the knees exactly ({16,32} at {512,1024}) with controls matching to four decimals; the ~30-key budget holds across 3 contexts x 2 corpora x 2 model sizes"
   },
   {
     "consumed_by_exp_id": "a9de2f0b",
@@ -1860,20 +1803,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 4d41e431 (Q=0.890), which proved 161 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,\n`degree_two_exact`, `degree_three_exact` \u2014 the last one extracts its three linear\nconstraints from nothing but linear independence of the chart coordinates); the general case\nonly needs the recursion to be organised by total degr",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_4d41e431_9a8106e3",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "4d41e431",
-    "status": "available",
-    "timestamp": "2026-09-02T09:38:58.956586+00:00",
-    "title": "Deepening: The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
   },
   {
     "consumed_by_exp_id": "",
@@ -2591,6 +2520,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 240c61ef (Q=0.820), which proved 94 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: If `F` has an abundant element `x` and `x \u2208 F.sup id`, then `x` remains abundant after adjoining `F.sup id` to `F`. The parity of `F.card` makes this claim directly falsifiable and should reveal the exact additional hypothesis needed if it fails.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_240c61ef_fa16b561",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "240c61ef",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:09.957645+00:00",
+    "title": "Deepening: Adjoining the top member preserves a witness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -2602,6 +2545,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle efbccac8 (Q=0.820), which proved 103 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-57 \u2014 limited-memory axis, round 10 (paper 142, ResearchOutput/exp_net57_corpusB.py, /tmp/net57.log)\n\n**Verdict name: THE-KNEES-ARE-CORPUS-ROBUST.**\n\n### Result\nIndependent corpus (wikitext-103-raw train shard **1**, disjoint from shard 0), byte-identical NET-49 harness, Qwen2.5-0.5B:\n\n| ctx |",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_efbccac8_cbb302e1",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "efbccac8",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:48.450932+00:00",
+    "title": "Deepening: NET-57: THE-KNEES-ARE-CORPUS-ROBUST \u2014 independent wikitext shard replicates the "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f3a0d241 (Q=0.820), which proved 49 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-55 \u2014 limited-memory axis, round 8 (paper 140, ResearchOutput/exp_net55_1p5b_knee.py committed pre-run, /tmp/net55.log)\n\n**Verdict name: THE-KNEE-IS-SIZE-INVARIANT.**\n\n### Result\nQwen2.5-1.5B (3\u00d7 the parameters of the 0.5B, d=28 vs 24) on identical protocol (held-out wikitext, 24 windows/cell,",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_f3a0d241_7fbc8758",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "f3a0d241",
+    "status": "available",
+    "timestamp": "2026-09-02T18:45:07.734136+00:00",
+    "title": "Deepening: NET-55: THE-KNEE-IS-SIZE-INVARIANT \u2014 Qwen2.5-1.5B posts k*={16,16} at ctx={512,1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle fe441855 (Q=0.820), which proved 65 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-58 \u2014 limited-memory axis, round 11 (paper 143, ResearchOutput/exp_net58_probe.py, /tmp/net58.log)\n\n**Verdict name: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE.**\n\n### Result\nPer-(layer, kv-head) ridge probes (64-d post-rope key \u2192 log1p(total future attention), fit on TRAIN-side windows only) + ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_fe441855_e2513ef7",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "fe441855",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:30.432494+00:00",
+    "title": "Deepening: NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE \u2014 linear probes recover only R"
   },
   {
     "consumed_by_exp_id": "",
@@ -3517,6 +3502,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T06:30:57.793286+00:00",
     "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle ee56ba3a (Q=0.800), which proved 91 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-56 \u2014 limited-memory axis, round 9 (paper 141, ResearchOutput/exp_net56_policy.py, /tmp/net56.log)\n\n**Verdict name: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN.**\n\n### Result\nCausally-honest streaming KV eviction (accumulated-score heavy-hitters, block-128, current block always cached, strict per",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_ee56ba3a_87f5b36d",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "ee56ba3a",
+    "status": "available",
+    "timestamp": "2026-09-02T18:45:27.412613+00:00",
+    "title": "Deepening: NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN \u2014 streaming heavy-hitter evicti"
   },
   {
     "consumed_by_exp_id": "",
@@ -19922,6 +19921,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T17:35:25.659873+00:00",
     "title": "Inverse-Ackermann analogue: two-parameter schedules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The map (primitive Pythagorean triple) `\u21a6` (short-leg knee at gate `\u03c4`)\nis, for each `\u03c4`, a surjection onto an interval of integers `[1, K(\u03c4)]` with\n`K(\u03c4) = \u2308log(1-\u03c4) / log 0.708\u2309`, and every fibre is a union of similarity classes closed\nunder scaling.\n\nThe key insight is that the knee factors through `legRatio`, which is a similarity\ninvariant, so the fibres of the knee are exactly unions of Euclid-parametrised families\n`(m\u00b2 - n\u00b2, 2mn, m\u00b2 + n\u00b2)` with `arctan` in a fixed window. **Why now?** The universal\nbudget `12` at gate `0.98` is proved and sharp; the remaining question is how the\nbudget partitions the triple family, which is a purely arithmetic question about density\nof `(m\u00b2-n\u00b2)/(m\u00b2+n\u00b2)` in `(0, 1/\u221a2]` and connects the attention-budget theory to the\nBerggren-tree machinery already in the catalog.",
+    "domains": [
+      "Combinatorics",
+      "MachineLearning"
+    ],
+    "id": "fd_4580",
+    "priority_score": 0.5573684210526315,
+    "research_mode": "team",
+    "source_exp_id": "f3a0d241",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:58.272290+00:00",
+    "title": "Similarity-Class Spectrometry for Pythagorean Profiles"
   },
   {
     "consumed_by_exp_id": "",
@@ -36450,6 +36464,49 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 3 shows that a *single* member of size `k` can force nothing better than\n`|F| \u2264 (2^{k\u22121}+1)\u00b7deg`, and that this is attained.  **Conjecture: for a union-closed family\nin which every nonempty member has size at least `k`, the best possible abundance ratio\ndegrades exactly like `2^{k\u22121}+1`, i.e. the extremal family `insert A (A.erase a).powerset`\nis the unique extremiser up to isomorphism.**  The key insight is that the extremal family is\na power set with a single \"cap\", so extremality is a statement about how much of a Boolean\nlattice can sit below one cap.  Why now?  Both sides are already formalised, so uniqueness is\nthe only missing ingredient, and it can be probed by enumerating extremisers on `Fin 4`.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_4569",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "240c61ef",
+    "status": "available",
+    "timestamp": "2026-09-02T18:43:55.808884+00:00",
+    "title": "Direction 2 \u2014 The `2^{k\u22121} + 1` law as a Frankl obstruction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`frankl_of_card_le_four` is proved by \"two distinct nonempty members give degree \u2265 2\".\n**Conjecture: `m` distinct nonempty members of a union-closed family always produce an element\nof degree at least `\u2308log\u2082(m+1)\u2309 + 1`, and consequently Frankl's conjecture holds for all\nfamilies with at most `2^t` members by induction on `t`.** The key insight is that minimal\nnonempty members behave like the singleton in Frankl's classical argument, and unions with a\nminimal member are injective on the family.  Why now?  The chain case\n(`frankl_of_chain`) is the extreme case of this statement and is already proved; the general\ncase needs only a quantitative version of the same minimality argument.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4570",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "240c61ef",
+    "status": "available",
+    "timestamp": "2026-09-02T18:43:56.344473+00:00",
+    "title": "Direction 3 \u2014 Frankl for families of bounded size, beyond four"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The averaging criterion (`exists_abundant_of_large_totalSize`) needs average member size\n`\u2265 n/2` and needs no union-closedness; union-closed families can sit far below that (see\n`averaging_criterion_not_necessary`).  **Conjecture: there is a constant `c < 1/2` such that\nevery *union-closed* family whose members average at least `c\u00b7n` has an abundant element, and\n`c` can be taken to be `1/4`.**  The key insight is that union-closedness itself pushes total\nsize upward \u2014 the closure of any family contains all its joins \u2014 so the averaging threshold\nshould be strictly weaker for union-closed families than in general.  Why now?  Total size is\nalready related to degrees by the formalised double-counting identity\n`sum_deg_eq_totalSize`, so the conjecture is exactly a question about the minimum of\n`totalSize` over union-closed families with no abundant element.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4571",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "240c61ef",
+    "status": "available",
+    "timestamp": "2026-09-02T18:43:56.894913+00:00",
+    "title": "Direction 4 \u2014 Average size versus abundance: a threshold phenomenon"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Replace algebraic spheres in `Type` by bundled topological spaces, equip the dependent product with the product topology, and establish the corresponding categorical product in `TopCat`.",
     "domains": [
       "Algebra",
@@ -38382,6 +38439,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Replication at 1.5B parameters, at longer contexts, and across a broader corpus, to establish\nwhether the retention bands and the size of the gap are stable properties of trained attention or\nartefacts of one model and one context length.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_4585",
+    "priority_score": 0.4709425287356322,
+    "research_mode": "team",
+    "source_exp_id": "ee56ba3a",
+    "status": "available",
+    "timestamp": "2026-09-02T18:45:18.240498+00:00",
+    "title": "Scale and corpus robustness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The convolution of two log-concave finitely\n   supported sequences of nonnegative integers with no internal zeros is log-concave.  (The\n   combinatorial core of Conjecture 2, and reusable well beyond this thread.)",
     "domains": [
       "Combinatorics"
@@ -40032,6 +40103,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "`exists_abundant_iff_card_le_two_mul_sup_deg` reduces abundance testing to one maximum.\n**Conjecture: for every union-closed `F` there is a sequence of \"safe\" single-set adjunctions\nfrom `F` to a family whose max-degree certificate is satisfied, of length at most `|F|`, and\nthis sequence can be computed greedily by always adjoining the top of the current family.**\nThe key insight is that the greedy step is exactly the operation analysed in cycle 1, whose\neffect on the certificate is monotone (`sup_deg_le_sup_deg_adjoinTop`).  Why now?  The\ncertificate and its monotonicity are formalised, so the missing part is purely the\ntermination/length analysis, which is finite-state and machine-checkable on small ground\nsets.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Safe Scheduling of Union-Closure Batches\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"Adjoining the top of a family raises the surplus of an element by exactly one, while a batch of new sets can lower it. We conjecture that the sets added by the full union closure can always be adjoined in an order along which the running surplus of some element never falls below its initial value. This would explain why the one-step operation is safe while the closure is not, and turn Frankl-type stability into a scheduling problem.\",\n    \"conjecture\": \"For every finite family F with an abundant element x in F.sup id there is an enumeration A_1, ..., A_m of uclosure F \\\\ F such that for every prefix, surplus (F \u222a {A_1,...,A_i}) x \u2265 surplus F x.\",\n    \"test\": \"Exhaustive search over all families on Fin 3 and Fin 4 for a family admitting no safe schedule; then formalise the positive case with surplus_union_of_disjoint as the accounting device.\",\n    \"if_true\": \"Frankl-type witnesses could be tracked along the union closure by a greedy schedule, giving an incremental proof strategy for the conjecture.\",\n    \"if_false\": \"There is a family whose closure is intrinsically hostile to every element, which would localise the difficulty of Frankl's conjecture to an explicit finite obstruction.\",\n    \"proof_strategy\": \"Use additivity of the surplus over disjoint batches; order the new sets by decreasing degree contribution and analyse the resulting lattice path with an exchange argument.\",\n    \"catalog_references\": [\"Catalog.Computation.UnionClosedAdjoinTop\"]\n  },\n  {\n    \"title\": \"Uniqueness of the Capped Power-Set Extremiser\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"The sharp local degree bound |F| \u2264 (2^(|A|-1)+1)\u00b7deg F a is attained by insert A (A.erase a).powerset. We conjecture this family is the unique extremiser up to relabelling. This would pin down exactly how much of a Boolean lattice can hide below a single member of a union-closed family.\",\n    \"conjecture\": \"If F is union-closed, A \u2208 F, a \u2208 A and |F| = (2^(|A|-1)+1) * deg F a, then F is isomorphic to insert A (A.erase a).powerset.\",\n    \"test\": \"Enumerate all union-closed families on Fin 4 attaining the bound and compare them with ",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_4572",
+    "priority_score": 0.4429459473857418,
+    "research_mode": "team",
+    "source_exp_id": "240c61ef",
+    "status": "available",
+    "timestamp": "2026-09-02T18:43:57.644038+00:00",
+    "title": "Direction 5 \u2014 Certificate monotonicity as an algorithmic invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  The poset of ordered patterns of `Fin n`, ordered by\n\"coarsening the block order\", is isomorphic to the face poset of the Coxeter\ncomplex of type `A_{n-1}` (a triangulation of the `(n-2)`-sphere); in particular\nits proper part has reduced Euler characteristic `(-1)^{n-2}(n-1)!` and its\n`f`-vector is `f_{k-1} = S(n,k)\u00b7k!` for `1 \u2264 k \u2264 n`.\n\nThe key insight is that the `f`-vector claim is *already proved* \u2014 it is exactly\n`card_ordPatternsWith` \u2014 so the conjecture reduces to identifying the order\nrelation, i.e. to showing that `rank`-refinement is the face relation, after\nwhich the sphere statement follows from `chamber_convex` and `iUnion_chamber`.\n\n**Why now?**  `Faces.lean` proves faces are convex and that the ordered pattern\nis a complete invariant, and `Chambers.lean` proves the chambers partition the\ninjective locus; the missing ingredient is only the order-theoretic comparison\nlemma between `rank` and `pat`, for which `pat_rank` is the base case.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Signed Kernel Patterns for Hyperoctahedral Arrangements\",\n    \"domain\": \"Geometry\",\n    \"description\": \"Extend the kernel-pattern classification from the braid arrangement (type A) to the hyperoctahedral arrangement (type B), where hyperplanes x_i = \u00b1x_j and x_i = 0 appear. The invariant should be the kernel of i \u21a6 |x_i| decorated with a sign vector, and the resulting counts should be the type-B Dowling partition numbers rather than the Bell numbers. This tests whether the completeness proof is genuinely group-theoretic rather than an accident of the symmetric group.\",\n    \"conjecture\": \"The signed kernel pattern is a complete invariant of the orbits of the hyperoctahedral group acting diagonally on n-tuples, and the number of flats of the type-B arrangement in R^n equals the Dowling number sum_k C(n,k) * D(k), giving 1, 2, 6, 24, 116, 648.\",\n    \"test\": \"Define signedPat on Fin n -> X with an involution, prove a signedPat_congr analogue, and verify the counts 1, 2, 6, 24, 116 by decide for n <= 4 before proving the general Dowling recursion by the delete-last-index method of Stirling.lean.\",\n    \"if_true\": \"Kernel patterns become a uniform combinatorial model for the intersection lattices of all classical reflection arrangements, and the Bell/Dowling dichotomy is explained by the invariance argument alone.\",\n    \"if_false\": \"Completeness genuinely depends on the full symmetric group, isolating the failure to the sign action and pinpointing the extra invariant needed.\",\n    \"proof_strategy\": \"Reuse pat_congr and pat_comp_injective verbatim for the induced equivalence relation; then re-run the card_patternsWith_succ_succ recursion with the Dowling recursion in place of the Stirling recursion.\",\n    \"catalog_references\": [\"Geometry.KernelPatterns.Core\", \"Geometry.KernelPatterns.Stirling\", \"Geometry.KernelPatterns.BraidFlats\"]\n  },\n  {\n    \"title\": \"Mobius Rigidity of the Kernel Lattice\",\n    \"domain\": \"Combinatorics\",\n    \"descrip",
     "domains": [
       "Geometry",
@@ -40077,6 +40163,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The counterexample of cycle 1 shows the closure can be surplus-negative, but it reaches its\nclosure through many single adjunctions, each of which is either `+1` or `\u22121`.  **Conjecture:\nfor every union-closed target there is an ordering of the added sets along which the running\nsurplus of some fixed element never drops below its starting value.**  The key insight is\nthat adjoining the top is safe *because it is the batch of size one with positive surplus*,\nso the question is not whether a batch is dangerous but whether it can be *scheduled* into\nsafe increments.  Why now?  Surplus additivity (`surplus_union_of_disjoint`) makes the\nschedule a purely combinatorial object \u2014 a lattice path \u2014 so the conjecture is testable by\nexhaustive search on `Fin 3`/`Fin 4` before any proof attempt.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_4568",
+    "priority_score": 0.44291601900995053,
+    "research_mode": "team",
+    "source_exp_id": "240c61ef",
+    "status": "available",
+    "timestamp": "2026-09-02T18:43:55.262838+00:00",
+    "title": "Direction 1 \u2014 Batch-surplus schedules for the union closure"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** Allocating key bits per *attention head* according to that head's\n`log\u2082(\u2016q\u2016\u2081/m)` beats any uniform allocation at the same average bit-width, and\na small fraction of heads (`< 20%`) accounts for the entire cliff.\n\n*The key insight is* that `shift_bit_to_keys` is a local exchange argument: it\napplies to each head independently, so the optimum of a total budget equalises\nthe amplified marginal damage `A_h\u00b72^{-b_h}` across heads, which uniform\nallocation cannot do when the `A_h` vary by orders of magnitude.\n\n*Why now?* The exchange argument is already formal; per-head `\u2016q\u2016\u2081` is cheap to\ninstrument, and the resulting allocation is implementable in the existing\ncache-type plumbing.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Logarithmic Query-Norm Law for the Key Bit Cliff\",\n    \"domain\": \"MachineLearning\",\n    \"description\": \"The critical key bit-width should be logarithmic in the amplification ratio (query L1 norm times key range over decision margin). The proved margin criterion 2*L1*R/2^b < m says exactly this, so doubling the query norm must cost one extra key bit. Testing it converts a qualitative cliff into a calibrated design rule.\",\n    \"conjecture\": \"The critical key bit-width satisfies b* = log2(L1q * R / m) + Theta(1), with the constant independent of model and slice.\",\n    \"test\": \"Instrument the attention kernel for per-head query L1 norm and top-1 logit margin; sweep key bit-width and locate the departure from control perplexity; compare the measured b* with the predicted logarithm.\",\n    \"if_true\": \"Key bit-width becomes computable in advance from two cheap statistics, removing the need for a sweep per model.\",\n    \"if_false\": \"Some mechanism other than per-token decision flips dominates the cliff, and the margin certificate is not the operative bound.\",\n    \"proof_strategy\": \"Formal side is done (decision_preserved_of_key_bits, bits_suffice_for_margin, four_bits_destroy_the_decision); the remaining step is a matching lower bound showing a decision flip is forced once 2*L1*res exceeds the margin of a positive-mass set of tokens.\",\n    \"catalog_references\": [\"Novelty.KeyBitwidthSafety\", \"Novelty.KeysOwnTheCliff\", \"Novelty.KVDecisionDissociation\"]\n  },\n  {\n    \"title\": \"Margin-Mass Law for Quantisation Damage\",\n    \"domain\": \"Probability\",\n    \"description\": \"Aggregate perplexity damage should be proportional to the probability mass of tokens whose top-1 margin falls below the induced logit error. The per-token certificate and the per-token exponential damage bound are already theorems; only the aggregation over the margin distribution remains.\",\n    \"conjecture\": \"Relative perplexity damage equals C * P(margin < 2 * L1q * deltaK) + O(deltaV), with C independent of the model.\",\n    \"test\": \"Histogram the top-1 margins of a held-out slice, compute the predicted failure mass at each key bit-width, and regress measured dPPL against it.\",\n    \"if_true\": \"Damage becomes predictable from a single histogram, and cache for",
     "domains": [
       "Geometry",
@@ -40089,6 +40190,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-28T14:27:02.032723+00:00",
     "title": "Mixed-precision keys: protect the head, not the layer"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Three of the follow-ups below were partially closed while the development was being written, and\nthe directions have been narrowed accordingly:\n\n* *granularity* \u2014 the block-granularity theorem proves that a block-level oracle still retains\n  everything on an instance where every causal policy retains nothing, so the separation is about\n  causality and not eviction granularity. What remains open is the **empirical** split of the\n  measured 11.3 points into a coarsening term and a causality term (direction 5);\n* *layers* \u2014 the min-plus allocation loss and its penalty theorem prove that a per-layer policy\n  penalty `\u03b4` accumulates to `L\u00b7\u03b4` under optimal global budget allocation, for arbitrary (not\n  necessarily convex) loss curves. What remains open is whether trained per-layer curves are\n  convex, which is what would make greedy allocation optimal (direction 4);\n* *stationarity* \u2014 the exact and approximate stationarity theorems isolate the precise hypothesis\n  under which the heavy-hitter cache is oracle-optimal, and its `B\u00b7\u03b5` robust version. What remains\n  open is the measurement of the defect (direction 1) and the online certificate (direction 2).",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_4582",
+    "priority_score": 0.44281875178862895,
+    "research_mode": "team",
+    "source_exp_id": "ee56ba3a",
+    "status": "available",
+    "timestamp": "2026-09-02T18:45:16.394710+00:00",
+    "title": "Closed inside this round"
   },
   {
     "consumed_by_exp_id": "",
@@ -40257,6 +40373,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Weighting each `(layer, head)` cell by its measured *load-bearingness* (the\nend-task degradation caused by corrupting that cell's attention) turns the unweighted aggregate\nbound `2\u221a(H\u00b7B\u00b7\u2211\u2095 SSE\u2095)` into a strictly smaller weighted bound, and the front-high/mid-low `R\u00b2`\nprofile is *anti-correlated* with load-bearingness \u2014 cells that are easy to predict are the ones\nthat matter least.\n\n**The key insight is** that the aggregation step is a Cauchy\u2013Schwarz inequality with uniform\nweights, and any nonuniform weighting that is negatively correlated with the residual variance\nstrictly improves it \u2014 so measuring load-bearingness converts P3 from a description into a\nbudget-allocation rule.\n\n**Why now?** `head_aggregate_gap_le` and `heterogeneity_strictly_improves_bound` supply exactly\nthe unweighted inequality and its strictness criterion; the ablation that measures the weights is\nthe experiment already scheduled as \"next\" in the round.\n\n**If true:** cache budget should be allocated per layer by residual variance, not uniformly.\n**If false:** uniform budget allocation is optimal and the depth structure of `R\u00b2` is a red\nherring for deployment.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Spectral Control of the Relational Eviction Deficit\",\n    \"domain\": \"MachineLearning\",\n    \"description\": \"The oracle-to-static gap for KV eviction is a Jensen gap of the max-functional over the budget-B hypersimplex. We conjecture two-sided control of this gap by the top-B singular mass of the centred context matrix, making it a computable spectral statistic of the attention tensor rather than an experimental residue.\",\n    \"conjecture\": \"There are universal constants c1, c2 > 0 with c1 * s_B(A - 1 (x) abar) <= avg_w max_{|T|=B} <a_w, 1_T> - max_{|T|=B} <abar, 1_T> <= c2 * s_B(A - 1 (x) abar), where s_B denotes the sum of the B largest singular values of the centred context matrix; this sharpens the proved Frobenius bound deficit <= sqrt(B * dispersion / |W|).\",\n    \"test\": \"Formalise the deficit as in Catalog.Novelty.NET58RelationalImportance.relationalDeficit, and prove the upper bound by bounding <a_w - abar, 1_T> via Cauchy-Schwarz on the hypersimplex vertices; test numerically on the recorded attention tensors before attempting the lower bound.\",\n    \"if_true\": \"The structural gap becomes measurable without running any eviction policy, and cache budgets can be set from a spectral scan.\",\n    \"if_false\": \"The deficit is genuinely combinatorial and only hypersimplex geometry, not second-order statistics, can describe it.\",\n    \"proof_strategy\": \"Write the deficit as an average of support-function differences; bound each by the operator norm of the centred matrix restricted to the span of the competing indicator vectors; obtain the lower bound from a single well-separated context using relationalDeficit_ge_single_context.\",\n    \"catalog_references\": [\"Novelty.NET58RelationalImportance\", \"Novelty.NET58DeficitDispersion\", \"Novelty.ProbeRetentionL",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_4576",
+    "priority_score": 0.4421827738030648,
+    "research_mode": "team",
+    "source_exp_id": "fe441855",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:20.503843+00:00",
+    "title": "D5. Layer load-bearingness as a weighted ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** There is no non-trivial translation-invariant, countably additive Borel\nmeasure (real- or surreal-valued) on `Surreal` giving finite non-zero mass to some clopen\nmonad; equivalently, `Surreal` supports no Haar-type integration theory.\n\n*The key insight is* that `Surreal.not_isCompact_of_mem_nhds` kills the usual construction\nof Haar measure from compact neighbourhoods, while zero-dimensionality\n(`Surreal.exists_isClopen_subset_of_mem_nhds`) means any candidate measure is determined by\nits values on monads \u2014 and monads at one scale split into a proper class of monads at\nsmaller scales, forcing mass `0` or `\u221e`.\n\n*Why now?* The clopen basis and the non-compactness obstruction are both formalised, so the\nstatement can be attacked directly as a theorem about finitely additive set functions on the\nBoolean algebra generated by monads.\n\n**Test.** Formalise the monad Boolean algebra and prove: a translation-invariant finitely\nadditive `\u03bc` with `0 < \u03bc(monad 0 1) < \u221e` yields a contradiction from a proper-class\npartition of `monad 0 1`.",
     "domains": [
       "Algebra",
@@ -40287,6 +40418,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For any causal eviction policy, the retained mass at budget `k` is at\nmost the oracle retained mass at budget `k`, and the induced knee gap is bounded by the\nnumber of *rank inversions* the policy makes on the sorted profile; in the geometric\nregime the gap is `O(log(1/r)^{-1})` and hence bounded uniformly in context and model\nsize.\n\nThe key insight is that a policy is a selection rule, and retained mass is monotone under\nset inclusion, so the whole gap is a rearrangement defect measurable on the profile\nalone. **Why now?** Every deployment claim in this axis is currently oracle-based; the\ntheorem would turn the measured oracle knees into policy guarantees without any further\nmodel evaluation.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Exponent Rigidity of the Sub-Knee Window\",\n    \"domain\": \"MachineLearning\",\n    \"description\": \"The value of the attention-budget knee is a coarse observable, but its sensitivity to the gate is conjectured to pin down the tail exponent of the sorted attention profile. Measuring retained mass against gate at fixed budget would therefore estimate the exponent, and the summability criterion predicts a divergence exactly at Zipf exponent 1. This converts a single-context measurement into a prediction for unmeasured contexts.\",\n    \"conjecture\": \"For a positive sorted profile w with Zipf-type tail exponent s, the width of the knee window {k*(n, tau') : tau' in [tau - eps, tau]} is bounded by a function of s and eps alone, uniformly in n, and diverges as s decreases to 1.\",\n    \"test\": \"Formalise the window width as kstar w n tau - kstar w n (tau - eps) for the zipf family of Shared.AttentionBudgetSummability and prove uniform bounds for s > 1 plus divergence for s <= 1.\",\n    \"if_true\": \"A gate sweep at fixed budget measures the tail exponent, so knees at unmeasured contexts become predictable.\",\n    \"if_false\": \"Knee values carry no exponent information and cross-context extrapolation of budgets is unjustified.\",\n    \"proof_strategy\": \"Combine ctxStable_iff_summable with explicit p-series tail estimates to sandwich the window width; for s <= 1 reuse zipf_budget_defeated to force divergence.\",\n    \"catalog_references\": [\"Shared.AttentionBudgetSummability\", \"Shared.AttentionBudgetKnee\", \"Pythagorean.NET55SizeInvariantKnee\"]\n  },\n  {\n    \"title\": \"Per-Head Knee Spectrum and the Worst-Head Defect\",\n    \"domain\": \"MachineLearning\",\n    \"description\": \"Aggregation over heads is proved to be bounded by the worst per-head budget. The open half is the reverse: how far below that maximum the aggregate can sit. The conjecture is that the defect is controlled by the dispersion of per-head total masses, making the per-head sweep the decisive missing measurement.\",\n    \"conjecture\": \"For finitely many positive profiles with head masses within a factor rho of each other, max_j k*(w_j, n, tau) - k*(sum_j w_j, n, tau) is bounded by a function of rho and tau only, independent of the number of heads.\",\n    \"test\"",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_4581",
+    "priority_score": 0.4421378812393779,
+    "research_mode": "team",
+    "source_exp_id": "f3a0d241",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:58.922330+00:00",
+    "title": "Oracle-to-Policy Gap as a Retained-Mass Deficit"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** The per-layer key amplification factor `\u03b3` of\n`key_error_geometric` is a property of the *architecture*, not of the quantiser:\nthe same `\u03b3` (within measurement error) fits `q4_0`, `q4_1` and `iq4_nl` key\ncaches at every bit-width.\n\n*The key insight is* that `no_codebook_rescues_keys` shows the codebook enters\nonly through its cardinality, so any format dependence in the depth exponent\nwould have to come from a mechanism outside the collision picture.\n\n*Why now?* NET-93's honest limit is that its three collapsed formats share one\nimplementation family; measuring `\u03b3` per layer separates \"implementation family\"\nfrom \"architecture\" with the existing harness.",
     "domains": [
       "Algebra",
@@ -40314,6 +40460,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T15:54:51.022629+00:00",
     "title": "Dual affine coordinates and a finite Pythagorean theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The `lam^2` gate shift of `kstar_le_of_comparable` is sharp: for every\n`lam > 1` and every gate `\u03c4` with `lam^2 \u03c4 < 1` there are profiles comparable within\n`lam` whose knees differ by `\u0398(log lam / log(1/r))` keys, and no bound better than\n`lam^2` holds.\n\nThe key insight is that comparability controls head mass multiplicatively at both ends of\nthe ratio defining retained mass, so the loss is exactly the square, and the witness\nshould be a geometric profile perturbed on a single block. **Why now?** Budget transfer\nbetween model sizes is precisely what \"the knee is size-invariant\" is used for in\ndeployment; the distortion radius says how much gate margin such a transfer costs, and it\nis measurable by comparing two models' sorted profiles directly, without any accuracy\nevaluation.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4579",
+    "priority_score": 0.4420425990633894,
+    "research_mode": "team",
+    "source_exp_id": "f3a0d241",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:57.716355+00:00",
+    "title": "Distortion Radius of a Transferred Budget"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*Status after this cycle: the upper half is proved.*\n`Novelty.NET58DeficitDispersion.deficit_le_sqrt_dispersion` gives\n`deficit \u2264 \u221a(B \u00b7 dispersion / |W|)`, and `swap_deficit_ratio` shows the constant is off by\nexactly `\u221a2` on the swap witness.  What remains is the *spectral refinement* and a lower bound.\n\n**Conjecture.** For a family of contexts `a : W \u2192 \u03b9 \u2192 \u211d` with common budget `B`, the relational\ndeficit `avg_w max_{|T|=B} \u27e8a_w, 1_T\u27e9 - max_{|T|=B} \u27e8\u0101, 1_T\u27e9` is bounded above and below by\nexplicit multiples of the top-`B` singular mass of the centred context matrix\n`A - 1 \u2297 \u0101`, strictly sharpening the Frobenius-norm bound already proved; in particular it\nvanishes iff that matrix has rank 0 restricted to the top-`B` selection cone.\n\n**The key insight is** that the Jensen gap of the `max`-functional over a polytope is controlled\nby the dispersion of the argmax *vertices*, and the vertex set of the budget-`B` selection\npolytope is exactly the hypersimplex, whose diameter is a rank quantity.\n\n**Why now?** The deficit is already defined, proved nonnegative and bounded in Frobenius norm\n(`relationalDeficit_nonneg`, `relationalDeficit_ge_single_context`,\n`deficit_le_sqrt_dispersion`); only the spectral sharpening is missing, and Mathlib\nnow has enough linear algebra (`Module.finrank`, `LinearMap.finrank_range_add_finrank_ker`) to\ncarry a rank-based bound, as this cycle's dimension theorem demonstrates.\n\n**If true:** the 10-point gap becomes a measurable spectral statistic of the attention tensor,\ncomputable without running any eviction policy.  **If false:** the deficit is not a second-order\nstatistic and only a combinatorial (hypersimplex) description can capture it.\n\n---",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4573",
+    "priority_score": 0.4417353961856334,
+    "research_mode": "team",
+    "source_exp_id": "fe441855",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:18.636561+00:00",
+    "title": "D1. Relational deficit as a spectral quantity"
   },
   {
     "consumed_by_exp_id": "",
@@ -40528,6 +40704,30 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T18:49:23.787028+00:00",
     "title": "D4 \u2014 Sparsity classes are a coarse quotient of domains"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The model-level knee equals the maximum of the per-head knees up to a\nbounded additive defect, and the defect is controlled by the spread of the per-head\nhead-mass totals: `k*(\u03a3 heads) \u2264 max_j k*(head j)` always (proved), with equality unless\none head carries a vanishing share of the total mass.\n\nThe key insight is that the pass inequalities add, so aggregation can only be limited by\nthe worst head, while the *mediant* structure of retained mass prevents a large gap\nunless the mass shares are extremely unequal. **Why now?** This is exactly the P2\nmeasurement the round dropped in the crash-recovery rewrite; the theorem says the\nper-layer/per-head stats block is not a nice-to-have but the only way to explain a\nmodel-level knee mechanistically.",
+    "domains": [],
+    "id": "fd_4578",
+    "priority_score": 0.44007692307692303,
+    "research_mode": "team",
+    "source_exp_id": "f3a0d241",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:57.165010+00:00",
+    "title": "Per-Head Knee Spectrum and the Worst-Head Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Can a tiny predictor, trained to forecast the next row's top-`B` set from the prefix, close the\ngap? It cannot in the worst case \u2014 a learned head is still a causal policy and so is covered by the\nimpossibility theorem \u2014 but the sharp empirical question is whether it reduces the *measured*\ndefect. This is the cleanest test of whether the deployed gap is estimator-limited or\ninformation-limited on real text.",
+    "domains": [],
+    "id": "fd_4584",
+    "priority_score": 0.44007692307692303,
+    "research_mode": "team",
+    "source_exp_id": "ee56ba3a",
+    "status": "available",
+    "timestamp": "2026-09-02T18:45:17.438856+00:00",
+    "title": "Learned importance heads"
   },
   {
     "consumed_by_exp_id": "",
@@ -40973,14 +41173,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kraft-weighted incompressibility on derivation trees"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ec45b40",
     "description": "**Conjecture.** On image-finite transition systems, every interpretation invariant under all modal observations factors through bisimulation classes, but need not factor through isomorphism classes; the gap is characterized by multiplicity-sensitive observations.\n\nThe key insight is that different observational languages induce different notions of sameness, with ordinary modal truth naturally aligned to behavior rather than literal structural identity.\n\n**Why now?** Structural truth transport and existing depth-bounded behavioral equivalences can be compared within one framework, exposing a testable hierarchy from renaming invariance to bisimulation invariance.",
     "domains": [],
     "id": "fd_2156",
+    "phase": "A",
     "priority_score": 0.4390588235294117,
     "research_mode": "team",
     "source_exp_id": "198023c0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:52.848250+00:00",
     "title": "Bisimulation versus isomorphism as semantic resolution"
   },
@@ -41568,6 +41769,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The key insight is that order-consistency is a *checkable* property of a prefix together with a\ncandidate ranking: it does not require the future row, only a certificate that no inversion of the\ncandidate ranking can be large. Any such test must be conservative \u2014 the impossibility theorem\nforbids a complete one \u2014 but a conservative test is already valuable, because it licenses adaptive\nbudgets: evict aggressively on certified prefixes and fall back to a conservative cache on the\nrest. The research question is how much of a real corpus certifies, and at what budget.",
+    "domains": [],
+    "id": "fd_4583",
+    "priority_score": 0.4381538461538461,
+    "research_mode": "team",
+    "source_exp_id": "ee56ba3a",
+    "status": "available",
+    "timestamp": "2026-09-02T18:45:16.925816+00:00",
+    "title": "Certifiable prefixes: an online test for when pruning transfers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Generalize the finite-support argument from `\u211d` to\n   suitable linearly ordered additive groups admitting finite suprema.",
     "domains": [
       "Algebra"
@@ -41579,6 +41792,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:27.698986+00:00",
     "title": "Scalar generality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For the pooled train/test window population of a fixed model, the ANOVA ceiling\n`1 - SS_within/SS_tot` lies below `0.5`; consequently no content head, however deep, exceeds\n`R\u00b2 = 0.5`, and the measured linear `0.329` already captures more than two thirds of what any\ncontent function can achieve.\n\n**The key insight is** that `SS_within` is measurable directly \u2014 it needs only repeated key\ncontents across windows and no model of the predictor \u2014 so the ceiling of the entire nonlinear\nclass can be *measured* rather than searched for.\n\n**Why now?** `Rsq_le_intrinsic_ceiling` plus `intrinsic_ceiling_attained` make the ceiling an\nexact supremum, and `ssWithin_eq_zero_of_injective` identifies precisely the pooling regime in\nwhich the measurement is meaningful.\n\n**If true:** the nonlinear arm of the roadmap can be cancelled on quantitative grounds.\n**If false:** a deep content head is worth building, and the relational ceiling (D1) becomes the\nbinding constraint instead.\n\n---",
+    "domains": [],
+    "id": "fd_4574",
+    "priority_score": 0.43799999999999994,
+    "research_mode": "team",
+    "source_exp_id": "fe441855",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:19.204025+00:00",
+    "title": "D3. Nonlinear probe ceiling on the pooled window population"
   },
   {
     "consumed_by_exp_id": "",
@@ -42540,6 +42765,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T17:46:36.014125+00:00",
     "title": "\u2014 they hold for every finite family and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Failed as originally conjectured.** Additivity of the knee\n  (`k*(A+B) = k*(A)`) is false: `sharp_knee_add_eq_max` and the rational-arithmetic\n  witness `A + U` in `ComputationalEvidence.md` both push the pooled knee to the larger\n  value.  The correct invariant is the sandwich together with its diagonal equality \u2014\n  a \"needs a different definition\" outcome.",
+    "domains": [],
+    "id": "fd_4577",
+    "priority_score": 0.425076923076923,
+    "research_mode": "team",
+    "source_exp_id": "efbccac8",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:39.118162+00:00",
+    "title": "Failed as originally conjectured."
   },
   {
     "consumed_by_exp_id": "",
@@ -43824,19 +44061,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:52.143511+00:00",
     "title": "Cram\u00e9r\u2013Rao as Mathlib Cauchy\u2013Schwarz* (previously Conjecture 3)."
-  },
-  {
-    "consumed_by_exp_id": "240c61ef",
-    "description": "If `F` has an abundant element `x` and `x \u2208 F.sup id`, then `x` remains abundant after adjoining `F.sup id` to `F`. The parity of `F.card` makes this claim directly falsifiable and should reveal the exact additional hypothesis needed if it fails.",
-    "domains": [],
-    "id": "fd_2690",
-    "phase": "A",
-    "priority_score": 0.4024871794871795,
-    "research_mode": "team",
-    "source_exp_id": "7edbd52d",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:33.397781+00:00",
-    "title": "Adjoining the top member preserves a witness"
   },
   {
     "consumed_by_exp_id": "",
@@ -49141,5 +49365,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T18:33:40.401150+00:00",
     "title": "French at a second context (e.g."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For two scores drawn from any absolutely continuous distribution over rankings\nof `n` keys, the probability that their retained-mass ordering is constant across all budgets\n`1 \u2264 B \u2264 n` tends to `0` as `n \u2192 \u221e`; the expected number of crossings grows like `\u0398(log n)`.\n\n**The key insight is** that retained mass differences are partial sums of a mean-zero exchange\nsequence, so sign changes are recurrences of a random walk, and recurrence counts are\nlogarithmic.\n\n**Why now?** `net58_no_uniform_budget_ordering` shows one crossing exists; upgrading existence\nto genericity is the natural next step, and it directly governs how many budgets a benchmark\nmust report before a policy comparison can be trusted.\n\n**If true:** single-budget policy comparisons in the KV-eviction literature are statistically\nmeaningless.  **If false:** a single well-chosen budget suffices and benchmarks can be cheaper.\n\n---",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_4575",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "fe441855",
+    "status": "available",
+    "timestamp": "2026-09-02T18:44:19.765273+00:00",
+    "title": "D4. Budget-crossing is generic, not exceptional"
   }
 ];

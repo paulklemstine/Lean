@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f5dbb89f",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Fermi occupancy, pigeonhole thresholds, and rare-event geometry\n\nDerived from the verified results in `Catalog/Pythagorean/FermiPigeonhole/`\n(`Model`, `DrakeFirstMoment`, `Contac",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-29T21:45:25",
-      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-    },
-    {
       "cycle_id": "68de46a5",
       "domain": "Tropical",
       "key_insight": "# Future directions — barrier-4 positional/magnitude converse\n\nThis cycle turned the recorded DRAFT-WITH-CAVEATS strata into four compiling, sorry-free Lean\nfiles:\n\n* `Catalog/Tropical/Barrier4FixedWi",
@@ -499,19 +489,19 @@
       "theorem_count": 49,
       "timestamp": "2026-09-02T18:45:07",
       "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT — Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-h"
+    },
+    {
+      "cycle_id": "ee56ba3a",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after the oracle/policy separation\n\nThe formal round closed three things: the oracle-to-policy gap is maximal (a full unit) for\n*every* causally honest evictor at any budget belo",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 91,
+      "timestamp": "2026-09-02T18:45:27",
+      "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN — streaming heavy-hitter eviction retains 0.86-0.92"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d7470f1b",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Clock-and-Switch Worlds\n\nDerived from the cycle recorded in `Catalog/Combinatorics/CWorldFiltration.lean`,\n`…Sharpness.lean`, `…SwitchlessChains.lean`, `…ClosureProperties.lean`,",
-      "quality_score": 0.86,
-      "sorry_count": 1,
-      "theorem_count": 101,
-      "timestamp": "2026-08-22T07:46:29",
-      "title": "Filtration lemma"
-    },
     {
       "cycle_id": "9d22f1f1",
       "domain": "Physics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 49,
       "timestamp": "2026-09-02T18:45:07",
       "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT — Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-h"
+    },
+    {
+      "cycle_id": "ee56ba3a",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after the oracle/policy separation\n\nThe formal round closed three things: the oracle-to-policy gap is maximal (a full unit) for\n*every* causally honest evictor at any budget belo",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 91,
+      "timestamp": "2026-09-02T18:45:27",
+      "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN — streaming heavy-hitter eviction retains 0.86-0.92"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b20378a3",
-      "domain": "MachineLearning",
-      "name": "sum_cube_le_length_sq_mul_cubeSum",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "b20378a3",
-      "domain": "MachineLearning",
-      "name": "cubeSum_div_ge_inv_length_sq",
-      "quality": 0.84
-    },
     {
       "cycle_id": "b20378a3",
       "domain": "MachineLearning",
@@ -2803,9 +2791,21 @@
       "domain": "Pythagorean",
       "name": "headMass_finset_sum",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "ee56ba3a",
+      "domain": "Novelty",
+      "name": "read",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "ee56ba3a",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-09-02T18:45:07",
+  "last_updated": "2026-09-02T18:45:27",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5be8ecbc",
-        "quality": 0.82,
-        "theorems": 43,
-        "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%"
-      },
-      {
         "cycle_id": "90e1e335",
         "quality": 0.8,
         "theorems": 69,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 65,
         "title": "NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE — linear probes recover only R"
+      },
+      {
+        "cycle_id": "ee56ba3a",
+        "quality": 0.8,
+        "theorems": 91,
+        "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN — streaming heavy-hitter evicti"
       }
     ],
     "NumberTheory": [

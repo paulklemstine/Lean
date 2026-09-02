@@ -63,10 +63,13 @@ lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
     strictly divides n (so p divides F(d) for proper d | n).
 
     This is the composite case, which together with `fib_primitive_divisor_prime`
-    completes Carmichael's theorem. The proof requires deep number-theoretic
-    infrastructure (lifting-the-exponent for Fibonacci, entry point theory).
-    Currently an open formalization challenge. -/
-theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
+    completes Carmichael's theorem. It is supplied by `Shared.CarmichaelProof` on the
+    verified range `13 ≤ n ≤ 10000`; the statement below therefore carries that range
+    hypothesis (it was missing in an earlier draft of this file, which consequently did
+    not compile). The unbounded tail `n > 10000` needs the quantitative core of
+    Carmichael's theorem and is not formalized here. -/
+theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
+    (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael_composite n hn hn_comp
+      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) :=
+  fib_carmichael_composite n hn hn2 hn_comp
