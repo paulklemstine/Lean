@@ -1504,16 +1504,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE \u2014 linear probes recover only R2~0.33 of key future-attention; content-based eviction ~1pt over accumulation, 10pts below oracle; importance is relational, not intrinsic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "efbccac8",
     "description": "## NET-57 \u2014 limited-memory axis, round 10 (paper 142, ResearchOutput/exp_net57_corpusB.py, /tmp/net57.log)\n\n**Verdict name: THE-KNEES-ARE-CORPUS-ROBUST.**\n\n### Result\nIndependent corpus (wikitext-103-raw train shard **1**, disjoint from shard 0), byte-identical NET-49 harness, Qwen2.5-0.5B:\n\n| ctx | corpus-B k\\* | corpus-A k\\* | verdict |\n|---|---|---|---|\n| 512 | **16** | 16 | EXACT |\n| 1024 | **32** | 32 | EXACT |\n| 2048 (bonus) | **32** | 24 (razor +0.5 SE) | inside documented bracket |\n\nControls replicate to FOUR DECIMALS: random-k {0.1775, 0.3004} = corpus-A exactly; local-window within noise.\n\n### The law\nThe ~30-key lossless attention budget now holds across **3 contexts \u00d7 2 corpora \u00d7 2 model sizes**. The single-corpus limit carried since NET-49 is closed: the knee laws are properties of trained attention, not of the evaluation text. Joint reading at 2048: knee \u2248 24\u201332, corpus-insensitive within the grid.\n\n### All 8 barriers\n(a) clean \u2014 horns inherited from the pre-registered harness block; (b) clean; (c) confronted \u2014 this WAS the corpus test; remaining limits: both corpora wikitext-family (domain jump open), 24 windows/cell; (d) clean per-corpus held-out splits; (e) deterministic + 4-decimal cross-corpus control agreement as a measurement-validity result; (f) clean \u2014 gate exact, ALL_DONE, one stray-process OOM diagnosed and cleared before any recorded measurement; (g) fair \u2014 only the text changed; (h) DIRECT \u2014 licenses quoting the deployment table without per-domain re-measurement.\n\n### Next\nDomain-jump corpora (code/math/non-English); learned importance heads to close the NET-56 policy gap; per-layer budgets; 1.5B tail map; 7B quantized-offload cell.\n\nNow 57 network experiments. Assessment v57. Paper 142.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3701",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T17:37:32.041644+00:00",
     "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST \u2014 independent wikitext shard replicates the knees exactly ({16,32} at {512,1024}) with controls matching to four decimals; the ~30-key budget holds across 3 contexts x 2 corpora x 2 model sizes"
   },
@@ -1928,20 +1929,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle d4f58bc3 (Q=0.860), which proved 83 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-83 \u2014 limited-memory axis, round 33 (paper 165, ResearchOutput/exp_net83_integration.py, /tmp/net83.log)\n\n**Verdict name: THE-INTEGRATION-IS-SUPER-ADDITIVE.**\n\n### Result\nThe integration test combining GPTQ 4-bit group-128 weights with top-k attention:\n\n| arm | retained | CE |\n|---|---|---|\n| ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_d4f58bc3_3c4da5c9",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "d4f58bc3",
-    "status": "available",
-    "timestamp": "2026-09-02T00:16:29.161461+00:00",
-    "title": "Deepening: NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE \u2014 GPTQ4+top-k degrades WORSE than sum "
   },
   {
     "consumed_by_exp_id": "",
@@ -2617,20 +2604,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 384c4d0f (Q=0.840), which proved 103 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-66 \u2014 limited-memory axis, round 19 (paper 151, ResearchOutput/exp_net66_1p5b2048.py, /tmp/net66.log)\n\n**Verdict name: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING.**\n\n### Result\nThe 1.5B's first ctx=2048 cell (fine grid, gate identical to NET-55/65):\n\n| k | 8 | 12 | 16 | 20 | 24 | 32 |\n|-",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_384c4d0f_d63735aa",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "384c4d0f",
-    "status": "available",
-    "timestamp": "2026-09-02T00:17:09.299014+00:00",
-    "title": "Deepening: NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING \u2014 1.5B chain breaks at "
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -2645,20 +2618,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 108711a9 (Q=0.820), which proved 70 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-55 #2, cron iteration (exp 524, assessment v291). Completing the degree-12 semiprime arm.\n\n**D12-SEMIPRIME-CONFIRMED**: pair channel matches exact enumeration law (z = \u22120.88 inside null); split-count z = \u22120.91; which-factor wall HOLDS (sensitivity 0.0002 bits); T-dial replicates at Spearman 0.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_108711a9_f5018a79",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "108711a9",
-    "status": "available",
-    "timestamp": "2026-09-02T00:16:49.246100+00:00",
-    "title": "Deepening: FACT round-55 #2 \u2014 D12-SEMIPRIME: the degree-12 semiprime pair channel matches l"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -2670,20 +2629,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f3ffa89b (Q=0.820), which proved 58 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-66 #1, cron iteration (exp 534). The highest-bitlen uniform measurement.\n\n**U80-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.562** / **0.551** / **0.582** across three seeds on uniform draws at bitlen 80; pooled **0.565** CI [0.542, 0.587]. All inside [0.55, 0.85] but seed 20261181 clear",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_f3ffa89b_c249b1f3",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "f3ffa89b",
-    "status": "available",
-    "timestamp": "2026-09-02T00:16:08.657358+00:00",
-    "title": "Deepening: FACT round-66 #1 \u2014 TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 18"
   },
   {
     "consumed_by_exp_id": "",
@@ -7710,6 +7655,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A General Construction of Codes from Drinfeld Modules' and formalize its key results. Abstract: We construct additive rank-metric and sum-rank-metric codes from Drinfeld modules by restricting bounded-degree morphisms to prime-to-characteristic torsion. For supersingular Drinfeld modules of rank $r$ in characteristic $\\mathfrak{p}$ of degree $d$, the stabilization formula for morphism spaces yields rank-metric codes of $\\mathbb{F}_q$-dimension $mrt-c$ and minimum distance $r-t+1$, where $c=r(r-1)(d-1)/2$. Simultaneous restriction to $\\ell$ distinct degree-$m$ torsion modules gives additive sum-rank codes of the same dimension and minimum distance at least $\\ell r-t+1$. Their normalized Singleton defects tend to zero, while in characteristic $(T)$ the module $\u03c6_T=\u03c4^r$ makes the defect vanish and produces an explicit MSRD family. We identify this family with a skew Chinese remainder theorem code supported on central skew polynomials and prove that its poly-skew weight is exactly $m$ times its sum-rank weight. This gives a specialized Singleton-type bound and a polynomial-time uniqu",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4537",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.01484v1",
+    "status": "available",
+    "timestamp": "2026-09-02T04:40:09.238689+00:00",
+    "title": "ArXiv paper: A General Construction of Codes from Drinfeld Modules"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -12489,6 +12449,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Study the map from replication depth d to the set of admissible root exponents of the d-th replication of the Monster product. The approach is to combine the proven equivalence n-th root \u27fa n \u2223 194d with elementary divisor arithmetic. It matters because it turns a moonshine-flavoured question into an exactly solvable lattice problem.\n\nThe map d \u21a6 divisors(194 d) from replication depth to root spectrum is an order isomorphism onto its image, refining the proved minimal-depth formula n / gcd(n, 194).\n\nBuild the map into the divisor lattice on top of exists_pow_eq_replicate_iff_depth and prove monotonicity and reflection of the order.\n\nReplication depth becomes a computable invariant of a moonshine product.\n\nThe root spectrum depends on more than the pole order after replication, contradicting the proven criterion.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_4534",
+    "priority_score": 0.6714375000000001,
+    "research_mode": "team",
+    "source_exp_id": "79285565",
+    "status": "available",
+    "timestamp": "2026-09-02T04:39:16.034611+00:00",
+    "title": "Replication Lattice of Root Spectra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The safe KV bit width is a function of bits minus log2 of the context length, because n logits inside a bounded window force a minimum consecutive gap of R/n. The formal criterion SafeBits A R n b is invariant under (n, b) -> (2n, b+1), so the cliff must translate along the context axis at exactly one bit per doubling. This turns an untested limit of NET-92 into a sharp prediction.\n\nFor a fixed model, the minimal quality-preserving KV bit width satisfies b*(2n) = b*(n) + 1 up to one bit, for all context lengths n in the trained range.\n\nRerun the NET-92 arm grid at ctx 4096, 8192 and 32768 and locate the free/annihilated bracket; compare with the theorem SafeBits_ctx_pow and minSafeBits_double.\n\nKV precision budgets must be specified per context length, and long-context deployments need 2-3 more KV bits than the ctx-2048 measurement suggests.\n\nThe logit window is not bounded independently of context (logit norms grow with n), which would itself be a strong structural finding about attention.",
     "domains": [
       "MachineLearning"
@@ -16739,6 +16713,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T09:03:26.078988+00:00",
     "title": "Half-Cone Orbit Count for Berggren Moves mod m"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Transfer the multiplicative pole-order theorem to q-expansions of modular functions at the cusp. The approach is to identify orderTop with the cusp valuation and deduce that a product of m \u2265 2 Hauptmodul-shaped functions cannot itself be a Hauptmodul. It matters because it converts an algebraic valuation statement into a statement about modular curves.\n\nNo product of m \u2265 2 normalized q-expansions of weight-zero modular functions is again a Hauptmodul for the same group.\n\nMatch orderTop with the cusp order in Mathlib's modular forms API and apply prod_isNormalized_iff.\n\nThe pole-order obstruction gives a purely formal proof of a genus-zero rigidity statement.\n\nThe cusp valuation differs from the formal Laurent order in the relevant normalization, indicating a definitional mismatch to repair.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_4535",
+    "priority_score": 0.5644911526588344,
+    "research_mode": "team",
+    "source_exp_id": "79285565",
+    "status": "available",
+    "timestamp": "2026-09-02T04:39:16.677620+00:00",
+    "title": "Cusp-Order Obstruction to Modular Invariance"
   },
   {
     "consumed_by_exp_id": "",
@@ -29437,6 +29426,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T00:16:40.231990+00:00",
     "title": "Thickening Invariance of the Semiprime Pair Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalize the pole-order classification of power classes from the value group Z to an arbitrary linearly ordered abelian group. The approach is to split the valuation sequence of the Hahn field and use unique divisibility of series with leading coefficient one. It matters because it would identify the root-extraction obstruction of any Hahn field with a single quotient of its value group.\n\nFor a Hahn field C[[q^G]] over a linearly ordered abelian group G, the units modulo n-th powers are isomorphic to G/nG via the order map.\n\nRestate unitsModPowEquiv with Z replaced by a general G, reusing the order homomorphism and the binomial root construction for the unit part.\n\nEvery root-extraction question over a Hahn field reduces to arithmetic in G/nG, subsuming the Z, (1/N)Z and Q results of this thread.\n\nSome value group carries an obstruction beyond its order quotient, which would be a genuinely new phenomenon.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4532",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "79285565",
+    "status": "available",
+    "timestamp": "2026-09-02T04:39:14.928560+00:00",
+    "title": "Kummer Theory of Hahn Fields over General Value Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The pole filtration of \u2102\u2e28q\u2e29 is multiplicative and its graded pieces are one-dimensional. The approach is to build the associated graded algebra and identify it with the polynomial ring \u2102[t] graded by pole order. It matters because it would make pole order literally a degree, unifying the multiplicative and linear faces of the obstruction.\n\nThe associated graded algebra of the filtration (poleSpace m) is isomorphic as a graded \u2102-algebra to \u2102[t] with t of degree 1, the class of x of pole order m mapping to leadingCoeff(x)\u00b7t^m.\n\nStarting from the proved multiplicativity poleSpace_mul_mem, define the graded multiplication on the pieces of finrank_gradedPiece and construct the algebra map to \u2102[t].\n\nPole order becomes a degree function and the m-fold product theorem becomes the statement deg(\u220f) = \u03a3 deg.\n\nThe filtration fails to be multiplicative in the required strict sense, isolating a genuine obstruction to grading.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4533",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "79285565",
+    "status": "available",
+    "timestamp": "2026-09-02T04:39:15.487885+00:00",
+    "title": "Associated Graded Algebra of the Pole Filtration"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend pole-order additivity from finite to infinite families. The approach is to use additivity in WithTop \u2124 and show that partial products leave every bounded region of the value group. It matters because it shows the obstruction is absolute rather than quantitative for infinite moonshine-type products.\n\nNo nonzero Laurent series is a limit of partial products of an infinite family of normalized series; equivalently, the orders of the partial products diverge to -\u221e.\n\nFormalize the sequence of partial products, apply orderTop_prod, and prove divergence of the order sequence.\n\nInfinite Monster-type products only exist after a pole-cancelling renormalization such as multiplication by q^m.\n\nSome summability condition permits convergence, which would give a genuinely new normalization for infinite products.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4536",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "79285565",
+    "status": "available",
+    "timestamp": "2026-09-02T04:39:17.275830+00:00",
+    "title": "Divergence of Infinite Normalized Products"
   },
   {
     "consumed_by_exp_id": "",
@@ -43464,14 +43496,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cram\u00e9r\u2013Rao as Mathlib Cauchy\u2013Schwarz* (previously Conjecture 3)."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "240c61ef",
     "description": "If `F` has an abundant element `x` and `x \u2208 F.sup id`, then `x` remains abundant after adjoining `F.sup id` to `F`. The parity of `F.card` makes this claim directly falsifiable and should reveal the exact additional hypothesis needed if it fails.",
     "domains": [],
     "id": "fd_2690",
+    "phase": "A",
     "priority_score": 0.4024871794871795,
     "research_mode": "team",
     "source_exp_id": "7edbd52d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:33.397781+00:00",
     "title": "Adjoining the top member preserves a witness"
   },
@@ -43757,19 +43790,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T13:54:04.340399+00:00",
     "title": "Honest Laurent normalization"
-  },
-  {
-    "consumed_by_exp_id": "79285565",
-    "description": "A product of `m` normalized series has order exactly `\u2212m`\n   (`orderTop_prod_normalized`), so a Monster-sized product has a pole of order `194`\n   (`orderTop_prod_traceLaurent_194`); multiplying by `q^m` restores order `0`.",
-    "domains": [],
-    "id": "fd_1428",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "286b3a0e",
-    "status": "in_progress",
-    "timestamp": "2026-08-17T13:54:04.565939+00:00",
-    "title": "Pole-order obstruction"
   },
   {
     "consumed_by_exp_id": "",

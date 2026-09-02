@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-02T00:17:00Z",
-  "count": 73,
+  "archived_at": "2026-09-02T04:39:17Z",
+  "count": 74,
   "directions": [
     {
       "id": "fd_3695",
@@ -2891,6 +2891,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 303
+    },
+    {
+      "id": "fd_1428",
+      "title": "Pole-order obstruction",
+      "description": "A product of `m` normalized series has order exactly `−m`\n   (`orderTop_prod_normalized`), so a Monster-sized product has a pole of order `194`\n   (`orderTop_prod_traceLaurent_194`); multiplying by `q^m` restores order `0`.",
+      "source_exp_id": "286b3a0e",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/286b3a0e",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4,
+      "status": "completed",
+      "consumed_by_exp_id": "79285565",
+      "timestamp": "2026-08-17T13:54:04.565939+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.87,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 3,
+      "last_attempt_time": "2026-09-01T18:35:50.838785+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

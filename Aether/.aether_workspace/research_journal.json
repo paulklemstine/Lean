@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "94eeec9f",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — after the NET-94 role-split algebra\n\nCycle 1 formalised *why* keys and values behave differently (`Algebra.KVCacheRoleSplit`)\nand *how fast* each side degrades with bit width (`A",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-08-28T05:25:55",
-      "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits — the serving d"
-    },
-    {
       "cycle_id": "5be8ecbc",
       "domain": "Novelty",
       "key_insight": "# Future directions — NET-93 \"keys own the cliff\" thread\n\nThe four files added in this cycle\n(`Catalog/Novelty/KeysOwnTheCliff.lean`, `KVCliffExponent.lean`,\n`KVBitBudgetSplit.lean`, `KeyBitwidthSafet",
@@ -499,19 +489,19 @@
       "theorem_count": 103,
       "timestamp": "2026-09-02T00:17:08",
       "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING — 1.5B chain breaks at 2048 ({16,16,20}); b"
+    },
+    {
+      "cycle_id": "79285565",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Pole-order obstruction (after cycles 3–8)\n\n## What the current cycles established\n\nSix new Lean files extend the catalog files `Shared/PoleOrderObstruction.lean`\n(cycle 1) and `S",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-09-02T04:39:28",
+      "title": "Pole-order obstruction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "663f5de8",
-      "domain": "Computation",
-      "key_insight": "# Future directions: the corrected-product torsor\n\nThis cycle turned `f ⋆ g = q · f · g` from a \"well-posed operation\" into a fully described\nalgebraic object: a torsion-free, uniquely divisible abeli",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 112,
-      "timestamp": "2026-08-21T23:38:53",
-      "title": "The corrected-product operation is now a proved closure property"
-    },
     {
       "cycle_id": "1210c28a",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 103,
       "timestamp": "2026-09-02T00:17:08",
       "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING — 1.5B chain breaks at 2048 ({16,16,20}); b"
+    },
+    {
+      "cycle_id": "79285565",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Pole-order obstruction (after cycles 3–8)\n\n## What the current cycles established\n\nSix new Lean files extend the catalog files `Shared/PoleOrderObstruction.lean`\n(cycle 1) and `S",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-09-02T04:39:28",
+      "title": "Pole-order obstruction"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c4f754ac",
-      "domain": "Probability",
-      "name": "two_lt_ratio_add_ratio",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "c4f754ac",
-      "domain": "Probability",
-      "name": "prod_sum_eq",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "2f2e652e",
-      "domain": "Algebra",
-      "name": "chi_one",
-      "quality": 0.78
-    },
     {
       "cycle_id": "2f2e652e",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "gate_eq",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "79285565",
+      "domain": "Shared",
+      "name": "coeffLin_apply",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "79285565",
+      "domain": "Shared",
+      "name": "mem_poleSpace_iff",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "79285565",
+      "domain": "Shared",
+      "name": "poleSpace_mono",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-09-02T00:17:08",
+  "last_updated": "2026-09-02T04:39:28",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "ec6993b5",
-        "quality": 0.82,
-        "theorems": 72,
-        "title": "Strict unimodality and the bracketing of the argmax are already theorems, so the"
-      },
-      {
         "cycle_id": "a1194bd0",
         "quality": 0.78,
         "theorems": 56,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 61,
         "title": "FACT round-87 #1 — MIXTURE-BASELINE (exp 588c FINAL): H0 — u*≈0.65 excess SURVIV"
+      },
+      {
+        "cycle_id": "79285565",
+        "quality": 0.87,
+        "theorems": 106,
+        "title": "Pole-order obstruction"
       }
     ],
     "Tropical": [
