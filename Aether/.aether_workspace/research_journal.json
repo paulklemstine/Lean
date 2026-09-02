@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9524045a",
-      "domain": "Shared",
-      "key_insight": "# Future directions — after the stage-1 order-completion / collision separation\n\n## What this cycle settled\n\nThe mechanism question behind the experimental chain (\"is low-`B1` success a collision\nacci",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-27T09:50:25",
-      "title": "FACT round-88 #1 — LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED — exp570's picture REPLICATES"
-    },
-    {
       "cycle_id": "10b0e429",
       "domain": "Probability",
       "key_insight": "# Future directions — F1 tightness after the bound-slack-by-X result\n\nThe first formal cycle closed four things: the identity chain\n(`X = (1+Λ)/(2Λ) = 1/Θ`, `bound = X·S_asc`), the strict unattainabil",
@@ -499,19 +489,19 @@
       "theorem_count": 58,
       "timestamp": "2026-09-02T00:16:08",
       "title": "FACT round-66 #1 — TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 187)"
+    },
+    {
+      "cycle_id": "d4f58bc3",
+      "domain": "Applications",
+      "key_insight": "# Future directions — NET-83 super-additive integration\n\nDerived from three research cycles, recorded in\n`Catalog/Applications/NET83SuperAdditiveIntegration.lean` (cycles 1–2) and\n`Catalog/Application",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-09-02T00:16:28",
+      "title": "NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE — GPTQ4+top-k degrades WORSE than sum of parts (14.0% vs e"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3cb644d1",
-      "domain": "Logic",
-      "key_insight": "# Future directions: the Berggren tree as a solvable model of `abc`\n\n## What this cycle established\n\nThe Berggren ternary tree of primitive Pythagorean triples is a fully explicit family of `abc`\ntrip",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 86,
-      "timestamp": "2026-08-21T22:42:14",
-      "title": "The Tree as a Solvable Model of the abc Conjecture — The Exact Quality Spectrum of a²+b²=c²"
-    },
     {
       "cycle_id": "85ca8e3d",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 58,
       "timestamp": "2026-09-02T00:16:08",
       "title": "FACT round-66 #1 — TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 187)"
+    },
+    {
+      "cycle_id": "d4f58bc3",
+      "domain": "Applications",
+      "key_insight": "# Future directions — NET-83 super-additive integration\n\nDerived from three research cycles, recorded in\n`Catalog/Applications/NET83SuperAdditiveIntegration.lean` (cycles 1–2) and\n`Catalog/Application",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-09-02T00:16:28",
+      "title": "NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE — GPTQ4+top-k degrades WORSE than sum of parts (14.0% vs e"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e8ef44c2",
-      "domain": "NumberTheory",
-      "name": "primeGap_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "e8ef44c2",
-      "domain": "NumberTheory",
-      "name": "nth_prime_odd",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "df74e96c",
-      "domain": "Novelty",
-      "name": "This",
-      "quality": 0.83
-    },
     {
       "cycle_id": "df74e96c",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "famVar_nonneg",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "d4f58bc3",
+      "domain": "Applications",
+      "name": "samePartners_add_one",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "d4f58bc3",
+      "domain": "Applications",
+      "name": "samePartners_le",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "d4f58bc3",
+      "domain": "Applications",
+      "name": "samePartners_sum_eq_profile",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-02T00:16:08",
+  "last_updated": "2026-09-02T00:16:28",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6f0c0f57",
-        "quality": 0.85,
-        "theorems": 148,
-        "title": "FACT round-32 #3 — CYCLIC-CUBIC-TYPE-CHANNEL: two types, full pinning (paper 122"
-      },
-      {
         "cycle_id": "bc20ce21",
         "quality": 0.82,
         "theorems": 56,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 58,
         "title": "FACT round-66 #1 — TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 18"
+      },
+      {
+        "cycle_id": "d4f58bc3",
+        "quality": 0.86,
+        "theorems": 83,
+        "title": "NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE — GPTQ4+top-k degrades WORSE than sum "
       }
     ],
     "Bridges": [
