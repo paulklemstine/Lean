@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "523b9317",
-      "domain": "Probability",
-      "key_insight": "# Future directions — band-9 `x² − N` smoothness, after the round-74 replication\n\nThe formal results of this cycle live in `Catalog/Probability/U9DriftIntervals.lean`,\n`U9DriftPooling.lean`, `U9DriftP",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 153,
-      "timestamp": "2026-08-28T18:44:04",
-      "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut"
-    },
-    {
       "cycle_id": "601f1720",
       "domain": "Pythagorean",
       "key_insight": "# Future directions — sequential hint pricing (SEQHINT-COMPOUND-LAW)\n\nWhat the cycles so far established (all in `Catalog/Pythagorean/SeqHint/`, zero\n`sorry`, standard axioms only):\n\n* fixed compariso",
@@ -499,19 +489,19 @@
       "theorem_count": 147,
       "timestamp": "2026-09-02T09:39:18",
       "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK — solo-layer top-k profiles are flat (all 24 layers within"
+    },
+    {
+      "cycle_id": "fe7714ae",
+      "domain": "Physics",
+      "key_insight": "# Future directions — spherical-cap power ceilings for near-threshold correlation tests\n\nDerived from three research cycles on `Catalog/Physics/SphericalCapPowerCeiling.lean`,\n`…Sharp.lean` and `…Hold",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-09-02T09:39:34",
+      "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "11e84a32",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Definability Boundary for External Interpretations\n\n## What this cycle settled\n\nThe conjecture under test was:\n\n> An external interpretation is recoverable from structural truth",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 118,
-      "timestamp": "2026-08-22T01:51:30",
-      "title": "Definability boundary for external interpretations"
-    },
     {
       "cycle_id": "5f0e4f5e",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 147,
       "timestamp": "2026-09-02T09:39:18",
       "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK — solo-layer top-k profiles are flat (all 24 layers within"
+    },
+    {
+      "cycle_id": "fe7714ae",
+      "domain": "Physics",
+      "key_insight": "# Future directions — spherical-cap power ceilings for near-threshold correlation tests\n\nDerived from three research cycles on `Catalog/Physics/SphericalCapPowerCeiling.lean`,\n`…Sharp.lean` and `…Hold",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-09-02T09:39:34",
+      "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1aa0b577",
-      "domain": "Probability",
-      "name": "headMass_split_le_balanced",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "1aa0b577",
-      "domain": "Probability",
-      "name": "mixHead_balanced_le_split",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "17866175",
-      "domain": "Probability",
-      "name": "mixBlock_first",
-      "quality": 0.9
-    },
     {
       "cycle_id": "17866175",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "chain_twoMaskStack",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "fe7714ae",
+      "domain": "Physics",
+      "name": "chord_eq_nrm_contrastRaw",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "fe7714ae",
+      "domain": "Physics",
+      "name": "contrast_unit",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "fe7714ae",
+      "domain": "Physics",
+      "name": "contrast_test_attains_chord",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-02T09:39:18",
+  "last_updated": "2026-09-02T09:39:34",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "b8859dfd",
-        "quality": 0.86,
-        "theorems": 93,
-        "title": "Parity-corrected asymptotics for the information-free game"
-      },
-      {
         "cycle_id": "43ad4483",
         "quality": 0.82,
         "theorems": 56,
@@ -3761,6 +3755,12 @@
         "quality": 0.78,
         "theorems": 72,
         "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY — extended grid pins k*(fr@1024)=40, exactly do"
+      },
+      {
+        "cycle_id": "fe7714ae",
+        "quality": 0.84,
+        "theorems": 61,
+        "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
       }
     ],
     "Probability": [
