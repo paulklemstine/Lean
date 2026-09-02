@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3f9d41d2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — batch smoothness testing (round-73 #3, exp 561)\n\nDerived from the two research cycles formalised in\n`Catalog/Applications/BatchSmoothnessCorrectness.lean`,\n`Catalog/Applications/",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-29T18:30:57",
-      "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) b"
-    },
-    {
       "cycle_id": "f5dbb89f",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Fermi occupancy, pigeonhole thresholds, and rare-event geometry\n\nDerived from the verified results in `Catalog/Pythagorean/FermiPigeonhole/`\n(`Model`, `DrakeFirstMoment`, `Contac",
@@ -499,19 +489,19 @@
       "theorem_count": 103,
       "timestamp": "2026-09-02T18:44:48",
       "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST — independent wikitext shard replicates the knees exactly ({16,3"
+    },
+    {
+      "cycle_id": "f3a0d241",
+      "domain": "Pythagorean",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-55 (THE-KNEE-IS-SIZE-INVARIANT)\n\nThis cycle proved that a size-invariant attention budget follows from three separate\nstructural mechanisms — exact homogeneity of the r",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-09-02T18:45:07",
+      "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT — Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-h"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a3ad9f21",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — TRACE-BATTERY joint capacity (paper 108, round-30 #4)\n\nThe formal cycle established, for arbitrary finite populations and arbitrary\ndial batteries: monotone scaling of joint capa",
-      "quality_score": 0.82,
-      "sorry_count": 2,
-      "theorem_count": 63,
-      "timestamp": "2026-08-22T07:00:32",
-      "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
-    },
     {
       "cycle_id": "d7470f1b",
       "domain": "Combinatorics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 103,
       "timestamp": "2026-09-02T18:44:48",
       "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST — independent wikitext shard replicates the knees exactly ({16,3"
+    },
+    {
+      "cycle_id": "f3a0d241",
+      "domain": "Pythagorean",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-55 (THE-KNEE-IS-SIZE-INVARIANT)\n\nThis cycle proved that a size-invariant attention budget follows from three separate\nstructural mechanisms — exact homogeneity of the r",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-09-02T18:45:07",
+      "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT — Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-h"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b96d5582",
-      "domain": "Bridges",
-      "name": "maCorrProfile_lag_one_lt_one",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "b96d5582",
-      "domain": "Bridges",
-      "name": "maCorrProfile_lag_one_nonneg",
-      "quality": 0.86
-    },
     {
       "cycle_id": "b20378a3",
       "domain": "MachineLearning",
@@ -2803,9 +2791,21 @@
       "domain": "Algebra",
       "name": "here",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "f3a0d241",
+      "domain": "Pythagorean",
+      "name": "also",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f3a0d241",
+      "domain": "Pythagorean",
+      "name": "headMass_finset_sum",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-02T18:44:48",
+  "last_updated": "2026-09-02T18:45:07",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "1210c28a",
-        "quality": 0.82,
-        "theorems": 81,
-        "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); p"
-      },
-      {
         "cycle_id": "50edc087",
         "quality": 0.8,
         "theorems": 129,
@@ -3885,6 +3879,12 @@
         "quality": 0.78,
         "theorems": 64,
         "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+      },
+      {
+        "cycle_id": "f3a0d241",
+        "quality": 0.82,
+        "theorems": 49,
+        "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT — Qwen2.5-1.5B posts k*={16,16} at ctx={512,1"
       }
     ],
     "Shared": [
