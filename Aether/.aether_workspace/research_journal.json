@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5be8ecbc",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — NET-93 \"keys own the cliff\" thread\n\nThe four files added in this cycle\n(`Catalog/Novelty/KeysOwnTheCliff.lean`, `KVCliffExponent.lean`,\n`KVBitBudgetSplit.lean`, `KeyBitwidthSafet",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 43,
-      "timestamp": "2026-08-28T14:27:15",
-      "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES"
-    },
-    {
       "cycle_id": "497c96d6",
       "domain": "Physics",
       "key_insight": "# Future directions — after the ECM wall audit\n\n## What this cycle settled\n\nWorking from the stage-1 order-completion theory already in the catalog\n(`Catalog/Shared/ECMStage1OrderCompletion.lean`, `…F",
@@ -499,19 +489,19 @@
       "theorem_count": 106,
       "timestamp": "2026-09-02T04:39:28",
       "title": "Pole-order obstruction"
+    },
+    {
+      "cycle_id": "4d41e431",
+      "domain": "Bridges",
+      "key_insight": "# Future directions: degree-graded exactness for the reflective chart calculus\n\nThe project builds a reflective calculus `NExpr n` of polynomial expressions in `n` chart\ncoordinates and organises its",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 161,
+      "timestamp": "2026-09-02T09:38:58",
+      "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1210c28a",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: clique sums as a gluing calculus for graph invariants\n\nThe cycle reported here formalised clique sums (`IsCliqueSum`, `IsWeakCliqueSum`) and\nestablished:\n\n* an independent set mee",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 81,
-      "timestamp": "2026-08-22T01:07:40",
-      "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`α(G) ≥ α₁ + α₂"
-    },
     {
       "cycle_id": "7f454a93",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 106,
       "timestamp": "2026-09-02T04:39:28",
       "title": "Pole-order obstruction"
+    },
+    {
+      "cycle_id": "4d41e431",
+      "domain": "Bridges",
+      "key_insight": "# Future directions: degree-graded exactness for the reflective chart calculus\n\nThe project builds a reflective calculus `NExpr n` of polynomial expressions in `n` chart\ncoordinates and organises its",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 161,
+      "timestamp": "2026-09-02T09:38:58",
+      "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2f2e652e",
-      "domain": "Algebra",
-      "name": "chi_mul",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "2f2e652e",
-      "domain": "Algebra",
-      "name": "langTax_eq",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "c8871952",
-      "domain": "Shared",
-      "name": "behind",
-      "quality": 0.82
-    },
     {
       "cycle_id": "c8871952",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "poleSpace_mono",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "4d41e431",
+      "domain": "Bridges",
+      "name": "into",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "4d41e431",
+      "domain": "Bridges",
+      "name": "gridCert_iff_toZ_eq",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "4d41e431",
+      "domain": "Bridges",
+      "name": "universal_of_gridCert",
+      "quality": 0.89
     }
   ],
-  "last_updated": "2026-09-02T04:39:28",
+  "last_updated": "2026-09-02T09:38:58",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "fe1191f5",
-        "quality": 0.88,
-        "theorems": 251,
-        "title": "Harmonic Measure on the Berggren Tree Boundary — Random Walks and the 3-adic Can"
-      },
-      {
         "cycle_id": "58852b38",
         "quality": 0.89,
         "theorems": 157,
@@ -3203,6 +3197,12 @@
         "quality": 0.86,
         "theorems": 102,
         "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-win"
+      },
+      {
+        "cycle_id": "4d41e431",
+        "quality": 0.89,
+        "theorems": 161,
+        "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
       }
     ],
     "Combinatorics": [
