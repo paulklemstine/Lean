@@ -1,0 +1,25 @@
+import Pythagorean.NET55SizeInvariantKnee
+import Pythagorean.NET55SweepAudit
+import Pythagorean.NET55PythagoreanSizeLaw
+import Pythagorean.NET55MixtureStability
+open PythKnee
+#print axioms PythKnee.kstar_const_smul
+#print axioms PythKnee.sizeUniform_of_summable_envelope
+#print axioms PythKnee.sizeUniform_uniform_concentration
+#print axioms PythKnee.net55_P1_refuted
+#print axioms PythKnee.net55_flat_knee_chain
+#print axioms PythKnee.two_point_sweep_realizable_iff
+#print axioms PythKnee.net55_grid_floor_indeterminate
+#print axioms PythKnee.net55_sweep_512_not_retained_mass
+#print axioms PythKnee.net55_sweep_1024_not_retained_mass
+#print axioms PythKnee.net55_sweep_512_prefix_realizable
+#print axioms PythKnee.pyth_knee_similarity_invariant
+#print axioms PythKnee.pyth_short_leg_budget_le_twelve_98
+#print axioms PythKnee.pell_family_knee_size_invariant
+#print axioms PythKnee.net55_shape_not_size
+#print axioms PythKnee.pyth_budget_dichotomy_98
+#print axioms PythKnee.retained_of_cumulative
+#print axioms PythKnee.kstar_multihead_le
+#print axioms PythKnee.head_count_does_not_move_the_budget
+#print axioms PythKnee.kstar_le_of_comparable
+#print axioms PythKnee.comparable_knees_can_differ

@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-02T09:40:23Z",
-  "count": 80,
+  "archived_at": "2026-09-02T14:31:00Z",
+  "count": 81,
   "directions": [
     {
       "id": "fd_3695",
@@ -3167,6 +3167,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 288
+    },
+    {
+      "id": "fd_2733",
+      "title": "Asymptotic comparison beyond coefficient extensionality",
+      "description": "The current theorem is an exact Hahn-series statement. To connect it to analysis,\nformalize an interpretation into germs of real functions and prove:\n\n1. the leading nonzero monomial controls eventual sign;\n2. smaller ranks are asymptotically negligible relative to larger ranks;\n3. the interpretation is injective on a normalized, summable fragment;\n4. formal agreement to all ranks implies equality of eventual germs.\n\nThis will distinguish the valid formal principle from the generally false claim\nthat arbitrary smooth functions with identical classical asymptotic power series\nmust coincide (flat functions provide counterexamples).",
+      "source_exp_id": "bb566a68",
+      "source_path": "resplit_migration",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4331764705882352,
+      "status": "completed",
+      "consumed_by_exp_id": "aa167cd7",
+      "timestamp": "2026-08-21T06:25:48.986410+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.86,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-02T00:19:04.898842+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

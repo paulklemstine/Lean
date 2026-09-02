@@ -1493,16 +1493,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST \u2014 independent wikitext shard replicates the knees exactly ({16,32} at {512,1024}) with controls matching to four decimals; the ~30-key budget holds across 3 contexts x 2 corpora x 2 model sizes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9de2f0b",
     "description": "Round-55 #1, cron iteration (exp 523). The most comprehensive single-dial robustness sweep.\n\n**BKEY-MIXED-ZONE**: the T-dial's Spearman declines GRADUALLY with both bitlen and u \u2014 no cliff, no convention artifact, no threshold effect. Full 4-bitlen \u00d7 3-u grid: sp(T) ranges 0.53\u20130.79; decline is smooth and monotone in both variables.\n\nPaper 178's 'practical floor' at bitlen ~54 is a gradual transition, not a sharp edge.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp523_balanced_bkey.py + exp523_result.json, seeds 20261100\u201303.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3702",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T17:37:32.043186+00:00",
     "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
   },
@@ -1890,17 +1891,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle a75b3939 (Q=0.880), which proved 147 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-59 \u2014 limited-memory axis, round 12 (paper 144, ResearchOutput/exp_net59_perlayer.py, /tmp/net59.log)\n\n**Verdict name: NO-SINGLE-LAYER-IS-THE-BOTTLENECK.**\n\n### Result\nSolo-layer causal pruning profiles: for each of Qwen2.5-0.5B's 24 layers independently, oracle top-k applied ONLY to that laye",
+    "description": "Building on cycle aa167cd7 (Q=0.860), which proved 80 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The current theorem is an exact Hahn-series statement. To connect it to analysis,\nformalize an interpretation into germs of real functions and prove:\n\n1. the leading nonzero monomial controls eventual sign;\n2. smaller ranks are asymptotically negligible relative to larger ranks;\n3. the interpretatio",
     "domains": [
-      "Probability"
+      "NumberTheory"
     ],
-    "id": "push_a75b3939_7a4d0f4e",
+    "id": "push_aa167cd7_dea2a190",
     "priority_score": 0.95,
     "research_mode": "team",
-    "source_exp_id": "a75b3939",
+    "source_exp_id": "aa167cd7",
     "status": "available",
-    "timestamp": "2026-09-02T09:39:18.674318+00:00",
-    "title": "Deepening: NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK \u2014 solo-layer top-k profiles are flat ("
+    "timestamp": "2026-09-02T14:31:13.676979+00:00",
+    "title": "Deepening: Asymptotic comparison beyond coefficient extensionality"
   },
   {
     "consumed_by_exp_id": "",
@@ -2587,34 +2588,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 53c2b4c2 (Q=0.820), which proved 138 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-74 \u2014 limited-memory axis, round 25 (paper 159, ResearchOutput/exp_net74_attnstructure.py, /tmp/net74.log)\n\n**Verdict name: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR.**\n\n### Result\nThree structural quantities per domain (5 domains, 3 sampled layers, 12 windows @ctx=512):\n\n| domain | entr",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_53c2b4c2_af6b9021",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "53c2b4c2",
-    "status": "available",
-    "timestamp": "2026-09-02T09:40:12.682291+00:00",
-    "title": "Deepening: NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 54a9fda9 (Q=0.820), which proved 71 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-54 #1, cron iteration (exp 523). The zero-fit dial's robustness envelope tested.\n\n**DIAL-ROBUST**: Spearman(T, rate) \u2265 0.53 at every tested bitlen \u00d7 u combination; T consistently beats the bare count by 0.10\u20130.15. No cliff, no breakdown, no convention artifact.\n\nThe zero-fit dial is ROBUST acr",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_54a9fda9_415ecc5b",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "54a9fda9",
-    "status": "available",
-    "timestamp": "2026-09-02T09:40:32.007752+00:00",
-    "title": "Deepening: FACT round-54 #1 \u2014 BALANCED-BKEY: the T-dial is robust across bitlen and u (pape"
   },
   {
     "consumed_by_exp_id": "",
@@ -16877,6 +16850,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The geometric fragment is now known to be closed under Cauchy products and its germs are totally ordered by the lexicographic order on coefficients. Adding multiplicative inverses for series with nonzero leading coefficient should make the germs an ordered field, that is a Hardy field. This would complete a formal-to-analytic dictionary for asymptotic expansions.\n\nFor a GeoSeries c with nonzero leading coefficient there is a GeoSeries c' and a rate r such that eval c * eval c' equals 1 eventually; consequently the germs of the geometric fragment modulo eventual equality form an ordered field.\n\nConstruct the inverse by normalizing the leading coefficient, writing c as leading times (1 - u) with u of positive rank, and inverting by the geometric series in u; verify convergence with GeoSeries.tail_bound and multiplicativity with GeoSeries.evalT_mulG.\n\nA fully formalized Hardy field arising from a Hahn-type coefficient algebra, with order given by eval_lt_iff_lexLt.\n\nInversion leaks out of every geometric rate, and the correct object is a localization rather than a field of germs.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4563",
+    "priority_score": 0.5644911526588344,
+    "research_mode": "team",
+    "source_exp_id": "aa167cd7",
+    "status": "available",
+    "timestamp": "2026-09-02T14:30:58.196060+00:00",
+    "title": "Hardy Field Structure on Geometric Fragment Germs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The G\u00f6del-universe conjecture is not asserted here: a closed\n   timelike curve is geometric, whereas self-consistency requires an additional dynamical law.\n   A faithful future treatment should first formalize a Lorentzian spacetime, timelike curves,\n   G\u00f6del's metric, and a matter evolution relation. It should then state consistency relative to\n   that evolution law rather than infer it from geometric closure alone.",
     "domains": [
       "Geometry",
@@ -17384,6 +17372,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T17:00:34.116280+00:00",
     "title": "Orbit-Count Threshold for Version-Space Collapse"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Differentiating the monomial x^{-n} lowers the rank by one and multiplies by -n, so termwise differentiation of a geometrically bounded series should again be geometrically bounded after an arbitrarily small inflation of the rate. The conjecture is that the germ interpretation is a differential ring map. This would make the fragment a differential subring of germs, the standard setting for Hardy fields.\n\nFor every GeoSeries c and every r greater than c.ratio there is a GeoSeries c' of rate r with coefficients c'.coeff n = -(n-1) * c.coeff (n-1), and eval c is differentiable on a neighbourhood of infinity with derivative eventually equal to eval c'.\n\nFormalize termwise differentiation of the tsum using Mathlib's theorems on differentiation of uniformly convergent series, and control the extra factor n by GeoSeries.succ_le_const_mul_pow.\n\nThe geometric fragment is a differential ring and the germ interpretation is a differential embedding, enabling formalized asymptotic ODE arguments.\n\nDifferentiation genuinely escapes the fragment, isolating a new obstruction invisible at the level of coefficients.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4564",
+    "priority_score": 0.5639882318186371,
+    "research_mode": "team",
+    "source_exp_id": "aa167cd7",
+    "status": "available",
+    "timestamp": "2026-09-02T14:30:58.736399+00:00",
+    "title": "Differential Closure of the Geometric Fragment"
   },
   {
     "consumed_by_exp_id": "",
@@ -18254,6 +18257,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-31T23:52:21.954529+00:00",
     "title": "Recall-Decay Exponent Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All proofs in these cycles use the rank group Z only through its order and the comparison x^r = o(x^s) for r < s. Replacing Z by an arbitrary ordered abelian group embedded in the reals, with Hahn-type supports, should reproduce the entire theory with the lexicographic order replaced by the Hahn order.\n\nFor an ordered abelian group Gamma with an order embedding into the reals, and Hahn series over Gamma with reverse well-ordered support and geometrically bounded coefficients, the germ interpretation is injective, order preserving for the Hahn order, multiplicative for the Hahn product, and its expansion fibres are cosets of the flat germs.\n\nGeneralize monoZ to monoGamma, restate tail_bound as a sum over an initial segment of the support, and re-run the cycle 1 to 6 proofs against Mathlib's HahnSeries API.\n\nA general bridge between Hahn series algebra and asymptotic analysis, subsuming Puiseux, transseries and Laurent scales in one formalized theorem set.\n\nThe embedding of the rank group into the reals is essential, isolating archimedean-ness as the true hypothesis behind the germ interpretation.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4567",
+    "priority_score": 0.5633887908171898,
+    "research_mode": "team",
+    "source_exp_id": "aa167cd7",
+    "status": "available",
+    "timestamp": "2026-09-02T14:31:00.353896+00:00",
+    "title": "Rank Scales over Ordered Abelian Groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -29687,6 +29705,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T09:39:08.336318+00:00",
     "title": "Inversion of the Ablation Arity Curve"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "hasExpansion_iff_flat_sub identifies each fibre of the expansion map with a coset of the flat germs. The conjecture is that this coset is as large as possible, so coefficient extensionality fails maximally rather than marginally. Flat.bigO_mul already shows the flat germs absorb multiplication by bounded germs.\n\nThe set of germs at +infinity with identically zero asymptotic expansion has cardinality 2^(2^aleph_0), and the same holds for every nonempty fibre of the expansion map.\n\nFormalize an injection from bounded functions modulo eventual equality into flat germs via g mapsto g(x) * exp(-x), and prove distinct arguments give germs that are not eventually equal.\n\nThe failure of the analytic claim is not a boundary phenomenon: almost all functions sharing an expansion are pairwise distinct germs.\n\nFlat germs would be small, suggesting a canonical summation operator selecting a representative in each fibre.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4565",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "aa167cd7",
+    "status": "available",
+    "timestamp": "2026-09-02T14:30:59.277209+00:00",
+    "title": "Maximal Cardinality of the Flat Defect"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The convergent fragments realize exactly the geometrically bounded coefficient sequences. Divergent sequences of factorial growth admit no convergent realization, yet a Borel-type construction should give a smooth one. The fibre description hasExpansion_iff_flat_sub is already proved for arbitrary coefficient sequences, so only existence is missing.\n\nFor every a : nat -> real there is f : real -> real with HasExpansion f a, while for a of factorial growth no GeoSeries c satisfies c.coeff = a.\n\nFormalize a cutoff construction f(x) = sum_n a_n x^{-n} chi(lambda_n / x) with rapidly chosen scales lambda_n, and verify HasExpansion by the truncation estimate used in eval_hasExpansion.\n\nThe expansion map is surjective, so the whole formal coefficient space is analytically realized and the flat kernel is its exact defect.\n\nSome coefficient sequences are analytically unrealizable, giving a growth obstruction invisible to the formal Hahn-series picture.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4566",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "aa167cd7",
+    "status": "available",
+    "timestamp": "2026-09-02T14:30:59.811246+00:00",
+    "title": "Borel Realization Beyond the Convergent Fragment"
   },
   {
     "consumed_by_exp_id": "",
@@ -41904,19 +41950,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "D3 \u2014 The increment law is a translation cocycle"
   },
   {
-    "consumed_by_exp_id": "aa167cd7",
-    "description": "The current theorem is an exact Hahn-series statement. To connect it to analysis,\nformalize an interpretation into germs of real functions and prove:\n\n1. the leading nonzero monomial controls eventual sign;\n2. smaller ranks are asymptotically negligible relative to larger ranks;\n3. the interpretation is injective on a normalized, summable fragment;\n4. formal agreement to all ranks implies equality of eventual germs.\n\nThis will distinguish the valid formal principle from the generally false claim\nthat arbitrary smooth functions with identical classical asymptotic power series\nmust coincide (flat functions provide counterexamples).",
-    "domains": [],
-    "id": "fd_2733",
-    "phase": "A",
-    "priority_score": 0.4331764705882352,
-    "research_mode": "team",
-    "source_exp_id": "bb566a68",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:48.986410+00:00",
-    "title": "Asymptotic comparison beyond coefficient extensionality"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "**\u201cEvery conscious type is undecidable.\u201d \u2014 Disproved.** In fact, every type\n   satisfying the displayed definition has decidable equality.",
     "domains": [
@@ -48300,14 +48333,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "One-parameter fourth-dimensional rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9885d74",
     "description": "Package degree-`< k` polynomials as a finite-dimensional vector space, prove that the encoder is linear with dimension `k`, and combine the lower bound with the Singleton bound to obtain minimum distance exactly `n-k+1`.",
     "domains": [],
     "id": "fd_2623",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "2bb5622c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:12.497522+00:00",
     "title": "Reed\u2013Solomon dimension and MDS equality"
   },

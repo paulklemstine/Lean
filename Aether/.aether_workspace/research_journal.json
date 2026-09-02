@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "25df59ed",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — the which-factor wall\n\n## What this cycle settled\n\n1. **The proposed inverse-Lipschitz bound is false.** The constant\n   $c(\\delta) = \\log((1-\\delta)/\\delta)$ is the supremum of",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-29T09:04:19",
-      "title": "Which-Factor Wall as a Cross-Population Invariant"
-    },
-    {
       "cycle_id": "90e1e335",
       "domain": "Novelty",
       "key_insight": "# Future Directions — after the oracle-realization gap\n\nFive Lean files were produced and are machine-checked without `sorry`:\n\n* `Catalog/Novelty/OracleRealizationGap.lean` — the sensor's statistic r",
@@ -499,19 +489,19 @@
       "theorem_count": 71,
       "timestamp": "2026-09-02T09:40:31",
       "title": "FACT round-54 #1 — BALANCED-BKEY: the T-dial is robust across bitlen and u (paper 181)"
+    },
+    {
+      "cycle_id": "aa167cd7",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nDerived from five research cycles, all fully verified (0 sorries):\n\n| file | cycle |\n|------|-------|\n| `Catalog/NumberTheory/AsymptoticGermInterpretation.lean` | 1 — rank scale,",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 80,
+      "timestamp": "2026-09-02T14:31:13",
+      "title": "Asymptotic comparison beyond coefficient extensionality"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "71e110b3",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — fair schedules under arbitrary positive rate profiles\n\nThis cycle established, in machine-checked Lean 4 (files\n`Catalog/Novelty/FairSchedulePrefixBatches.lean`, `FairScheduleOpt",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 77,
-      "timestamp": "2026-08-22T04:50:27",
-      "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batche"
-    },
     {
       "cycle_id": "eb2ba545",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 71,
       "timestamp": "2026-09-02T09:40:31",
       "title": "FACT round-54 #1 — BALANCED-BKEY: the T-dial is robust across bitlen and u (paper 181)"
+    },
+    {
+      "cycle_id": "aa167cd7",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nDerived from five research cycles, all fully verified (0 sorries):\n\n| file | cycle |\n|------|-------|\n| `Catalog/NumberTheory/AsymptoticGermInterpretation.lean` | 1 — rank scale,",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 80,
+      "timestamp": "2026-09-02T14:31:13",
+      "title": "Asymptotic comparison beyond coefficient extensionality"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "26c8c1ed",
-      "domain": "MachineLearning",
-      "name": "contractive_tail_bound",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "00fe96df",
-      "domain": "Computation",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "00fe96df",
-      "domain": "Computation",
-      "name": "cost_lower_bound",
-      "quality": 0.82
-    },
     {
       "cycle_id": "00fe96df",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "capBlocks_self",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "aa167cd7",
+      "domain": "NumberTheory",
+      "name": "summable_norm_term",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "aa167cd7",
+      "domain": "NumberTheory",
+      "name": "evalT_mul",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "aa167cd7",
+      "domain": "NumberTheory",
+      "name": "eval_mul_eventually",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-02T09:40:31",
+  "last_updated": "2026-09-02T14:31:13",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "ae01533d",
-        "quality": 0.78,
-        "theorems": 131,
-        "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +"
-      },
-      {
         "cycle_id": "fdd9261c",
         "quality": 0.82,
         "theorems": 63,
@@ -3699,6 +3693,12 @@
         "quality": 0.78,
         "theorems": 66,
         "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID — 0.5B knee at ctx=1024 is k*=20 (fine g"
+      },
+      {
+        "cycle_id": "aa167cd7",
+        "quality": 0.86,
+        "theorems": 80,
+        "title": "Asymptotic comparison beyond coefficient extensionality"
       }
     ],
     "Physics": [
