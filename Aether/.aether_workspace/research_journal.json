@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "68de46a5",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — barrier-4 positional/magnitude converse\n\nThis cycle turned the recorded DRAFT-WITH-CAVEATS strata into four compiling, sorry-free Lean\nfiles:\n\n* `Catalog/Tropical/Barrier4FixedWi",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-08-29T21:45:38",
-      "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of th"
-    },
-    {
       "cycle_id": "c9c85c67",
       "domain": "Cryptography",
       "key_insight": "# Future directions — after the exp 555 formalisation\n\nThis cycle turned the three experimental findings of exp 555 into theorems:\n\n1. **Trial-division class (`α = 1`).**  In the finite sampling model",
@@ -499,19 +489,19 @@
       "theorem_count": 91,
       "timestamp": "2026-09-02T18:45:27",
       "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN — streaming heavy-hitter eviction retains 0.86-0.92"
+    },
+    {
+      "cycle_id": "5c95862a",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n*Build status.* Every Lean file of this thread compiles against mathlib4 (Lean 4.28.0) with\nno `sorry` and no non-standard axioms; the whole catalog (all declared libraries) build",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-09-02T21:50:57",
+      "title": "FACT round-51 #3 — T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 (paper 184)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9d22f1f1",
-      "domain": "Physics",
-      "key_insight": "# FUTURE DIRECTIONS — after THREE-FIELDS-ONE-ANSWER (paper 114)\n\nWhat this cycle established (all `sorry`-free, in `Catalog/Physics/S3TypeChannel*.lean`):\n\n* the **character channel law** `S3Channel.I",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 108,
-      "timestamp": "2026-08-22T08:48:37",
-      "title": "FACT round-32 #3 — UNIVERSAL-S3-EXTENDED: three fields, one answer (paper 114)"
-    },
     {
       "cycle_id": "e82f11a2",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 91,
       "timestamp": "2026-09-02T18:45:27",
       "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN — streaming heavy-hitter eviction retains 0.86-0.92"
+    },
+    {
+      "cycle_id": "5c95862a",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n*Build status.* Every Lean file of this thread compiles against mathlib4 (Lean 4.28.0) with\nno `sorry` and no non-standard axioms; the whole catalog (all declared libraries) build",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-09-02T21:50:57",
+      "title": "FACT round-51 #3 — T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 (paper 184)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b20378a3",
-      "domain": "MachineLearning",
-      "name": "spearmanSq_block_count_",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "eb1faf15",
-      "domain": "Novelty",
-      "name": "this",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "eb1faf15",
-      "domain": "Novelty",
-      "name": "dominated_head",
-      "quality": 0.84
-    },
     {
       "cycle_id": "eb1faf15",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "is",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "5c95862a",
+      "domain": "Pythagorean",
+      "name": "We",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "5c95862a",
+      "domain": "Pythagorean",
+      "name": "for",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "5c95862a",
+      "domain": "Pythagorean",
+      "name": "fib_dvd_gcd",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-09-02T18:45:27",
+  "last_updated": "2026-09-02T21:50:57",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "50edc087",
-        "quality": 0.8,
-        "theorems": 129,
-        "title": "Do not infer infinite-digit laws from finite prefixes"
-      },
-      {
         "cycle_id": "3be10ac1",
         "quality": 0.83,
         "theorems": 93,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 49,
         "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT — Qwen2.5-1.5B posts k*={16,16} at ctx={512,1"
+      },
+      {
+        "cycle_id": "5c95862a",
+        "quality": 0.85,
+        "theorems": 13,
+        "title": "FACT round-51 #3 — T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 "
       }
     ],
     "Shared": [
