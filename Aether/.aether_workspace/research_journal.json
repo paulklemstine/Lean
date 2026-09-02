@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "90e1e335",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after the oracle-realization gap\n\nFive Lean files were produced and are machine-checked without `sorry`:\n\n* `Catalog/Novelty/OracleRealizationGap.lean` — the sensor's statistic r",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-08-29T14:29:54",
-      "title": "FACT round-74 #1 — ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-compu"
-    },
-    {
       "cycle_id": "062fc32a",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — after the RANDOM-AT-SCALE cycle\n\nThis cycle turned the experimental verdict — \"`x² − N` smoothness is random-level\nat `u = 6–8.5`, `|r − 1| ≤ 0.217`; per-`N` clustering and the Q",
@@ -499,19 +489,19 @@
       "theorem_count": 80,
       "timestamp": "2026-09-02T14:31:13",
       "title": "Asymptotic comparison beyond coefficient extensionality"
+    },
+    {
+      "cycle_id": "240c61ef",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — union-closed families, abundance, and the closure operation\n\nDerived from the four research cycles in `Catalog/Computation/UnionClosedAdjoinTop.lean`,\n`UnionClosedAbundanceAverag",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-09-02T18:44:09",
+      "title": "Adjoining the top member preserves a witness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "eb2ba545",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Completeness of Dynamic Programming\n\nThis cycle established, in full generality over a linearly ordered cancellative additive\nmonoid of weights and an arbitrary finite state spac",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-08-22T05:43:11",
-      "title": "prove *completeness* — every labelling is dominated by some DP run;"
-    },
     {
       "cycle_id": "77469890",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 80,
       "timestamp": "2026-09-02T14:31:13",
       "title": "Asymptotic comparison beyond coefficient extensionality"
+    },
+    {
+      "cycle_id": "240c61ef",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — union-closed families, abundance, and the closure operation\n\nDerived from the four research cycles in `Catalog/Computation/UnionClosedAdjoinTop.lean`,\n`UnionClosedAbundanceAverag",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 94,
+      "timestamp": "2026-09-02T18:44:09",
+      "title": "Adjoining the top member preserves a witness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "00fe96df",
-      "domain": "Computation",
-      "name": "bStar_sub_bStar",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3c91f334",
-      "domain": "Novelty",
-      "name": "pell_apparition",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "3c91f334",
-      "domain": "Novelty",
-      "name": "pellRank_spec",
-      "quality": 0.84
-    },
     {
       "cycle_id": "3c91f334",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "eval_mul_eventually",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "240c61ef",
+      "domain": "Computation",
+      "name": "sum_deg_eq_totalSize",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "240c61ef",
+      "domain": "Computation",
+      "name": "subset_sup_id",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "240c61ef",
+      "domain": "Computation",
+      "name": "sum_deg_sup_eq_totalSize",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-02T14:31:13",
+  "last_updated": "2026-09-02T18:44:09",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "3a849502",
-        "quality": 0.82,
-        "theorems": 107,
-        "title": "The breakdown theorem is formalised and the two measured normalised distribution"
-      },
-      {
         "cycle_id": "2292d7e8",
         "quality": 0.82,
         "theorems": 70,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 92,
         "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS — keeping L22/L23 at fp32 gains +1.8pts"
+      },
+      {
+        "cycle_id": "240c61ef",
+        "quality": 0.82,
+        "theorems": 94,
+        "title": "Adjoining the top member preserves a witness"
       }
     ],
     "Cryptography": [
