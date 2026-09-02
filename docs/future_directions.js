@@ -1333,16 +1333,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-48 #1 \u2014 MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14592ce7",
     "description": "Round-49 #2, cron iteration (exp 512, assessment v285). Does the bitlen degradation continue?\n\n**T-DIAL-60-PLATEAU**: Spearman(T, rate) = **0.437** [0.393, 0.480] at bitlen 60 \u2014 the degradation PLATEAUS rather than continuing monotonically. Mean smooth rate stays at 0.89% (starved regime persists). T still beats count by +0.070.\n\nH1 (monotone continuation) REFUTED; H3 (recovery) REFUTED.\n\nThe dial's bitlen degradation reaches a floor at ~0.44 rather than vanishing \u2014 the QR-lottery signal stabilizes at its minimum rather than disappearing entirely.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp512_t_dial_60.py + exp512_result.json, seed 20261040.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3669",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T13:46:15.641520+00:00",
     "title": "FACT round-49 #2 \u2014 T-DIAL-60: the degradation plateaus (paper 179)"
   },
@@ -1404,21 +1405,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T15:36:32.741347+00:00",
     "title": "FACT round-53 #1 \u2014 T-DIAL-UNIF-52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
-  },
-  {
-    "consumed_by_exp_id": "5c95862a",
-    "description": "Round-51 #3, cron iteration (exp 521). The last untested intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-60**: Spearman(T, rate) = **0.669** [0.634, 0.705] on uniform draws at bitlen 60 \u2014 inside [0.55, 0.85]; T beats count by **+0.151** [0.107, 0.193].\n\nThe dial's deployment envelope now covers balanced and uniform draws through bitlen 60.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp521_t_dial_60_unif.py + exp521_result.json, seed 20261050.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3683",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T16:41:43.036530+00:00",
-    "title": "FACT round-51 #3 \u2014 T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 (paper 184)"
   },
   {
     "consumed_by_exp_id": "5f5fd816",
@@ -1817,20 +1803,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle aa167cd7 (Q=0.860), which proved 80 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The current theorem is an exact Hahn-series statement. To connect it to analysis,\nformalize an interpretation into germs of real functions and prove:\n\n1. the leading nonzero monomial controls eventual sign;\n2. smaller ranks are asymptotically negligible relative to larger ranks;\n3. the interpretatio",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_aa167cd7_dea2a190",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "aa167cd7",
-    "status": "available",
-    "timestamp": "2026-09-02T14:31:13.676979+00:00",
-    "title": "Deepening: Asymptotic comparison beyond coefficient extensionality"
   },
   {
     "consumed_by_exp_id": "",
@@ -2520,20 +2492,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 240c61ef (Q=0.820), which proved 94 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: If `F` has an abundant element `x` and `x \u2208 F.sup id`, then `x` remains abundant after adjoining `F.sup id` to `F`. The parity of `F.card` makes this claim directly falsifiable and should reveal the exact additional hypothesis needed if it fails.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_240c61ef_fa16b561",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "240c61ef",
-    "status": "available",
-    "timestamp": "2026-09-02T18:44:09.957645+00:00",
-    "title": "Deepening: Adjoining the top member preserves a witness"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -2548,45 +2506,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle efbccac8 (Q=0.820), which proved 103 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-57 \u2014 limited-memory axis, round 10 (paper 142, ResearchOutput/exp_net57_corpusB.py, /tmp/net57.log)\n\n**Verdict name: THE-KNEES-ARE-CORPUS-ROBUST.**\n\n### Result\nIndependent corpus (wikitext-103-raw train shard **1**, disjoint from shard 0), byte-identical NET-49 harness, Qwen2.5-0.5B:\n\n| ctx |",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_efbccac8_cbb302e1",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "efbccac8",
-    "status": "available",
-    "timestamp": "2026-09-02T18:44:48.450932+00:00",
-    "title": "Deepening: NET-57: THE-KNEES-ARE-CORPUS-ROBUST \u2014 independent wikitext shard replicates the "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f3a0d241 (Q=0.820), which proved 49 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-55 \u2014 limited-memory axis, round 8 (paper 140, ResearchOutput/exp_net55_1p5b_knee.py committed pre-run, /tmp/net55.log)\n\n**Verdict name: THE-KNEE-IS-SIZE-INVARIANT.**\n\n### Result\nQwen2.5-1.5B (3\u00d7 the parameters of the 0.5B, d=28 vs 24) on identical protocol (held-out wikitext, 24 windows/cell,",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_f3a0d241_7fbc8758",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "f3a0d241",
-    "status": "available",
-    "timestamp": "2026-09-02T18:45:07.734136+00:00",
-    "title": "Deepening: NET-55: THE-KNEE-IS-SIZE-INVARIANT \u2014 Qwen2.5-1.5B posts k*={16,16} at ctx={512,1"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle fe441855 (Q=0.820), which proved 65 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-58 \u2014 limited-memory axis, round 11 (paper 143, ResearchOutput/exp_net58_probe.py, /tmp/net58.log)\n\n**Verdict name: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE.**\n\n### Result\nPer-(layer, kv-head) ridge probes (64-d post-rope key \u2192 log1p(total future attention), fit on TRAIN-side windows only) + ",
+    "description": "Building on cycle c90a227e (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Generalize from permutations of distinct elements to multisets with repeated keys. The expected number of distinguishable inputs is the multinomial coefficient `n! / \u220f m\u1d62!`, and the corresponding erased information should be its logarithm.",
     "domains": [
       "Novelty"
     ],
-    "id": "push_fe441855_e2513ef7",
+    "id": "push_c90a227e_8c5846c0",
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
-    "source_exp_id": "fe441855",
+    "source_exp_id": "c90a227e",
     "status": "available",
-    "timestamp": "2026-09-02T18:44:30.432494+00:00",
-    "title": "Deepening: NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE \u2014 linear probes recover only R"
+    "timestamp": "2026-09-02T21:51:12.075938+00:00",
+    "title": "Deepening: Generalize from permutations of distinct elements to multisets with repeated key"
   },
   {
     "consumed_by_exp_id": "",
@@ -14253,14 +14183,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Two-Sided Pooling Envelope"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98caf022",
     "description": "The octave shift is an action of the additive monoid of naturals. If it extends to a real scale parameter, intermediate model sizes must interpolate the table monotonically, giving a one-parameter flow whose generator is the keys-per-octave rate.\n\nThere is a monotone K0 : \u211d\u22650 \u2192 \u211d with k*(sigma, j) = K0(max(j - sigma, 0)) restricting to the measured integer cells; equivalently the shift action extends from (\u2115,+) to (\u211d\u22650,+).\n\nFormalise the extension as a monotone-interpolation problem and prove existence for arithmetic base chains; experimentally sweep 3B between the 1.5B and 7B cells.\n\nKnee budgets can be interpolated for unmeasured model sizes, and deployment tables become continuous in scale.\n\nScale acts only discretely and each model family needs its own chain.",
     "domains": [],
     "id": "fd_4530",
+    "phase": "A",
     "priority_score": 0.5935507246376812,
     "research_mode": "team",
     "source_exp_id": "384c4d0f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-02T00:16:59.246549+00:00",
     "title": "Real-Parameter Scale Flow on Knee Chains"
   },
@@ -15007,6 +14938,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:22.101781+00:00",
     "title": "Auxiliary-Class Spread Exclusion at p = 5"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Repeated keys and a nonuniform prior are two independent discounts on the factorial sorting baseline. We conjecture that they compose exactly: state counts multiply, entropies add, and the optimal expected comparison count of a prior-sensitive multiset sorter sits within one comparison of H(q).\n\nFor a prior q on the n!/prod m_i! distinguishable rearrangements, the optimal expected comparison count lies in [H(q), H(q)+1), and H(q) <= log2(n!/prod m_i!) with equality iff q is uniform.\n\nInstantiate the general finite-ensemble entropy sandwich of Novelty.PriorSensitiveSorting at the ensemble Input w of this cycle.\n\nA single two-parameter ledger (repetition, prior) governs all comparison-sorting erasure, unifying two previously separate refinements of log2(n!).\n\nRepetition and prior interact, so the multinomial floor is not the uniform-prior specialisation of the entropy floor and a joint analysis is required.",
+    "domains": [],
+    "id": "fd_4591",
+    "priority_score": 0.5927272727272728,
+    "research_mode": "team",
+    "source_exp_id": "c90a227e",
+    "status": "available",
+    "timestamp": "2026-09-02T21:51:05.392795+00:00",
+    "title": "Orthogonality of Repetition and Prior Refinements"
   },
   {
     "consumed_by_exp_id": "",
@@ -16624,6 +16567,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The balanced (fixed-weight) draw law approaches the universal Spearman tie ceiling 6/7 from below at rate Theta(1/v). We conjecture the exact rate constant is 9/343 = 9/7^3, arising as (1/8)(3/2)(1/7 - 1/343) where the gain 1/7 is the Catalan first-step anomaly and the loss 1/343 is the summed Weierstrass defect of all deeper steps. This identifies a closed-form asymptotic for the deployment-envelope margin of the zero-fit dial.\n\nlim_{v -> infinity} v * (6/7 - spearmanSq (centralProfile v)) = 9/343.\n\nSqueeze the deficit between two explicit rational bounds of the form 9/343 +- C/v^2 by refining loss_invariant into a two-sided invariant, then conclude with a Filter.Tendsto argument; numerically the exact-rational sweep to v = 1200 already agrees to five digits.\n\nThe bitlen-60 margin (0.856238... versus 6/7) becomes a closed-form quantity, and every future envelope check at a new bitlen reduces to evaluating 6/7 - 9/(343 v).\n\nEither the Weierstrass loss series is not summable termwise at second order or the profile has a hidden third-order correction, which would invalidate the geometric heuristics used throughout the catalog's ceiling bounds.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4586",
+    "priority_score": 0.5646001774563597,
+    "research_mode": "team",
+    "source_exp_id": "5c95862a",
+    "status": "available",
+    "timestamp": "2026-09-02T21:50:38.290824+00:00",
+    "title": "Catalan Deficit Constant Nine Over Three Hundred Forty-Three"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For balanced semiprimes N, define the capture spectrum C(X) = \u03a3_{\u2113 \u2264 X} r_\u2113\u00b2, where r_\u2113 is the sample correlation between the per-N log hit rate and the product-form Legendre indicator at prime \u2113. The conjecture is that C(X) stays below the pre-registered 0.30 bar for every X up to 10\u2076 at bitlen 96, so the overdispersion carrier is not a small-prime residue effect at any window. The family capture bound turns this into a finite scalar computation with a proved stopping rule.\n\nFor bitlen-96 balanced semiprimes, sup_{X \u2264 10\u2076} \u03a3_{\u2113 \u2264 X} r_\u2113\u00b2 < 0.30, hence no affine recalibration of the \u2113 \u2264 X product-form dial family attains a 30% dispersion reduction.\n\nCompute the 78k per-prime correlations and partial sums; compare against Logic.QRDial.family_bar_missed, whose hypothesis is exactly \u03a3_j corrSq y (s j) < 3/10.\n\nThe papers-136/139 dial line does not extend to bitlen 96 at any prime window; the carrier of u \u2248 10 clustering is a genuinely new N-structure.\n\nPapers 136/139, 220 and 226 unify under a scale-dependent dial bound, with the crossing point of C(X) giving the calibration scale.",
     "domains": [
       "NumberTheory",
@@ -17974,6 +17932,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "All ceiling bounds in the catalog compare cube sums of tie profiles with equal totals. We conjecture the ceiling is Schur-concave in the profile, so that majorization between profiles orders their ceilings, and the balanced profile is extremal in its weight class. This would replace a family of block-by-block estimates with one order-theoretic principle.\n\nIf profiles L and L' have the same total n and L majorizes L', then spearmanSq L <= spearmanSq L'; in particular the ceiling is minimized by the majorization-maximal profile at fixed n.\n\nSince spearmanSq L = 1 - (sum of m^3 - n)/(n^3 - n), the claim reduces to Schur convexity of the power sum of cubes, provable by the Hardy-Littlewood-Polya transfer argument; the single transfer step is already formalized for lists of naturals (spearmanSq_transfer), so what remains is the chain decomposition of a majorization relation.\n\ncubeSum_balanced_le, weight_ceiling_ge and loss_invariant all become corollaries, and any new draw law can be placed in the envelope by a majorization comparison alone.\n\nThe ceiling depends on more than the multiset order of the profile, meaning the envelope must be certified law by law and no universal comparison principle exists.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4589",
+    "priority_score": 0.5636078937919268,
+    "research_mode": "team",
+    "source_exp_id": "5c95862a",
+    "status": "available",
+    "timestamp": "2026-09-02T21:50:39.657878+00:00",
+    "title": "Schur Convexity of the Spearman Tie Ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Curvature saturates at 1 as soon as the pool has more models than the alphabet has messages, so nontrivial curvature lives only below the capacity threshold |Omega| <= |X|. The conjecture is a matching construction: for every kappa in [0,1] and every pool size below the threshold there is a pool of probability mass functions realising exactly that curvature.\n\nFor all n <= |X| and all kappa in [0,1] there exists a pool Omega of n probability mass functions on X with curvature exactly kappa, and no such pool exists when n > |X|.\n\nThe impossibility half is the proved theorem curvature_eq_one_of_card_lt and the case n = 2 of the realisation half is the proved theorem exists_pool_curvature_eq; formalise the remaining sizes by an explicit family interpolating between disjointly supported models (kappa = 0) and duplicated models (kappa = 1).\n\nCurvature becomes a complete invariant of pool geometry below the capacity threshold, and low-curvature library design is exactly a coding problem.\n\nSome curvature values are unreachable, revealing a hidden quantisation of the achievable marginal ratios.",
     "domains": [
       "Geometry",
@@ -18271,6 +18244,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T14:31:00.353896+00:00",
     "title": "Rank Scales over Ordered Abelian Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Shannon ceiling is strict for every mixed multiset. We conjecture the deficit is exactly the Gaussian normalisation of the multinomial distribution, growing like ((r-1)/2) log2 n, which is the finite-size thermodynamic signature of key repetition.\n\nn*H(p) - log2(n!/prod m_i!) = ((r-1)/2)*log2 n + O(1) for multiplicity profiles with all m_i = Theta(n), where r is the number of occurring keys.\n\nCombine Stirling bounds for each factorial with the proved strict inequality; verify numerically for r = 2,3 and n up to a few hundred by kernel-checked rational bounds.\n\nPhysical sorters of repeated-key streams dissipate kT log 2 * H(p) per item with an explicit logarithmic finite-size correction.\n\nThe deficit has a different order, indicating that the empirical distribution is not the correct thermodynamic ensemble for finite multiset streams.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_4592",
+    "priority_score": 0.5633887908171898,
+    "research_mode": "team",
+    "source_exp_id": "c90a227e",
+    "status": "available",
+    "timestamp": "2026-09-02T21:51:05.832928+00:00",
+    "title": "Logarithmic Finite-Size Deficit of the Shannon Ceiling"
   },
   {
     "consumed_by_exp_id": "",
@@ -29747,6 +29735,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T14:30:59.811246+00:00",
     "title": "Borel Realization Beyond the Convergent Fragment"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Over a q-letter alphabet the universal tie-attenuation constant of the zero-fit dial is 3q/(q^2+q+1), now proved exactly. We conjecture that a composition-constrained draw law (uniform on words of length b with exactly z zeros) exceeds that constant precisely when z/b > 1/q, so the critical surface is the uniform composition itself. The binary half-weight line is the case q = 2 of this statement.\n\nFor q >= 2, b >= 2 and 1 <= z <= b-1, the trailing-zero ceiling of the fixed-zero-count law satisfies rho^2 > 3q/(q^2+q+1) if and only if z/b > 1/q; on the line z/b = 1/q the ceiling is at most the constant, with equality only at (q,b,z) = (2,4,2).\n\nGeneralize geom_cube_bound to the q-ary composition profile (a hockey-stick slice weighted by powers of q-1), then repeat the two-sided argument of ZeroFitDialSparseWindow60; an exact-rational sweep over 2 <= q <= 6, 2 <= b <= 22 and all z already shows 0 mismatches.\n\nDeploying the dial on any alphabet reduces to one inequality on the zero-letter frequency, and the whole binary theory (phase boundary, rates, validation band) transports with q as a parameter.\n\nThe critical composition drifts with the alphabet size, meaning the geometric profile picture is binary-specific and each alphabet needs its own phase analysis.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4587",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5c95862a",
+    "status": "available",
+    "timestamp": "2026-09-02T21:50:38.748950+00:00",
+    "title": "Uniform-Composition Criticality for Radix-q Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Under a pure fixed-weight law the popcount baseline is constant and its ceiling is exactly 0, while under uniform draws it has more tie headroom than the trailing-zero statistic. We conjecture the count ceiling increases monotonically in the mixing width of the weight distribution, so the measured advantage of T over count can never be explained by tie granularity anywhere between the two extremes.\n\nFor a mixture of fixed-weight laws with weight fractions supported in [1/2, 3/5], the popcount Spearman ceiling is bounded away from 1 by an absolute constant while the trailing-zero ceiling stays above 0.73; both bounds are monotone in the support width.\n\nModel the mixture profile as a convex combination of binomial blocks, bound its cube sum below by the pure-weight case, and compare with binomBlocks; verify numerically on mixtures at bitlen 60.\n\nThe +0.151 advantage recorded at bitlen 60 is provably not a headroom artefact for any realistic draw law, closing the last confound in the dial's validation.\n\nThere exists a mixture width at which the count baseline gains enough headroom to explain the advantage, which would require re-running the round-51 comparison under that draw law.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4588",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5c95862a",
+    "status": "available",
+    "timestamp": "2026-09-02T21:50:39.204600+00:00",
+    "title": "Monotone Advantage Under Weight Mixing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The erased information of a multiset sorting task is a function on the refinement lattice of key partitions. We proved it is monotone; we conjecture it is a polymatroid rank function, hence submodular, with a characterised strictness locus.\n\nFor partitions P, Q of the n slots, E(P) = log2(n!/prod_B |B|!) satisfies E(P join Q) + E(P meet Q) <= E(P) + E(Q), and E is strictly monotone except across splits of singleton blocks.\n\nReduce to an inequality among products of factorials via the division-free identity, then verify by exhaustive decide for n <= 7 before attempting the general proof.\n\nMultiset erasure is a polymatroid rank, importing the whole submodular optimisation toolkit into reversible-sorting thermodynamics.\n\nErasure is monotone but not submodular, so no matroidal structure organises key coarsening and greedy key-merging schedules can be suboptimal.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4590",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c90a227e",
+    "status": "available",
+    "timestamp": "2026-09-02T21:51:04.869897+00:00",
+    "title": "Coarsening Lattice of Erasure Values"
   },
   {
     "consumed_by_exp_id": "",
@@ -47918,19 +47949,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:23:00.935124+00:00",
     "title": "Quantitative collision bounds"
-  },
-  {
-    "consumed_by_exp_id": "c90a227e",
-    "description": "Generalize from permutations of distinct elements to multisets with repeated keys. The expected number of distinguishable inputs is the multinomial coefficient `n! / \u220f m\u1d62!`, and the corresponding erased information should be its logarithm.",
-    "domains": [],
-    "id": "fd_2191",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "8d3b0867",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:23:01.751007+00:00",
-    "title": "Generalize from permutations of distinct elements to multisets with repeated keys."
   },
   {
     "consumed_by_exp_id": "",

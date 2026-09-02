@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c9c85c67",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — after the exp 555 formalisation\n\nThis cycle turned the three experimental findings of exp 555 into theorems:\n\n1. **Trial-division class (`α = 1`).**  In the finite sampling model",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-30T00:21:52",
-      "title": "FACT round-72 #5 — MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-sl"
-    },
-    {
       "cycle_id": "9b32ba78",
       "domain": "Cryptography",
       "key_insight": "# Future directions — the surreal order topology\n\nThe cycle just completed established, for the order topology on `Surreal` (all statements\nformalised, zero `sorry`):\n\n1. `Surreal` is densely ordered,",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-09-02T21:50:57",
       "title": "FACT round-51 #3 — T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 (paper 184)"
+    },
+    {
+      "cycle_id": "c90a227e",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — from the multiset erasure ledger\n\nThis cycle generalised the catalog's factorial erasure baseline `log₂(n!)`\n(`Computation.ReversibleSortingBennett`) to multisets with repeated k",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-09-02T21:51:11",
+      "title": "Generalize from permutations of distinct elements to multisets with repeated keys."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e82f11a2",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — rigidity and stability of the universality price\n\nThis cycle closed the equality analysis of the two sharp bounds `1 ≤ Cₛ ≤ #Θ`\nfor the Shtarkov sum of a finite source class, of",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-22T08:48:50",
-      "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
-    },
     {
       "cycle_id": "175408d6",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-09-02T21:50:57",
       "title": "FACT round-51 #3 — T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 (paper 184)"
+    },
+    {
+      "cycle_id": "c90a227e",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — from the multiset erasure ledger\n\nThis cycle generalised the catalog's factorial erasure baseline `log₂(n!)`\n(`Computation.ReversibleSortingBennett`) to multisets with repeated k",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-09-02T21:51:11",
+      "title": "Generalize from permutations of distinct elements to multisets with repeated keys."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "eb1faf15",
-      "domain": "Novelty",
-      "name": "dominated_tail",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "b4f872e1",
-      "domain": "Physics",
-      "name": "exponent_le_of_ceilDiv_eq",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "b4f872e1",
-      "domain": "Physics",
-      "name": "realizes_iff",
-      "quality": 0.78
-    },
     {
       "cycle_id": "b4f872e1",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "fib_dvd_gcd",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "c90a227e",
+      "domain": "Novelty",
+      "name": "at",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c90a227e",
+      "domain": "Novelty",
+      "name": "at",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c90a227e",
+      "domain": "Novelty",
+      "name": "multinomial_mul_prob_pow_le_one",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-02T21:50:57",
+  "last_updated": "2026-09-02T21:51:11",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "90e1e335",
-        "quality": 0.8,
-        "theorems": 69,
-        "title": "FACT round-74 #1 — ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unreali"
-      },
-      {
         "cycle_id": "00e162eb",
         "quality": 0.82,
         "theorems": 52,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 91,
         "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN — streaming heavy-hitter evicti"
+      },
+      {
+        "cycle_id": "c90a227e",
+        "quality": 0.82,
+        "theorems": 13,
+        "title": "Generalize from permutations of distinct elements to multisets with repeated key"
       }
     ],
     "NumberTheory": [
