@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3596d147",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — MA-1 effectivity, after the magnitude null\n\nEverything referenced below is in `Catalog/Bridges/`, fully proved, zero sorries, standard\naxioms only (`propext`, `Classical.choice`,",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-29T09:04:06",
-      "title": "FACT round-74 #4 — MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude does NOT carry AP-de"
-    },
-    {
       "cycle_id": "25df59ed",
       "domain": "Algebra",
       "key_insight": "# Future directions — the which-factor wall\n\n## What this cycle settled\n\n1. **The proposed inverse-Lipschitz bound is false.** The constant\n   $c(\\delta) = \\log((1-\\delta)/\\delta)$ is the supremum of",
@@ -499,19 +489,19 @@
       "theorem_count": 138,
       "timestamp": "2026-09-02T09:40:12",
       "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR — Spearman(top8-mass, k*) = +0.80 strongest "
+    },
+    {
+      "cycle_id": "54a9fda9",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — BALANCED-BKEY, after round-54 #1 (exp 523)\n\nTwo full scientific cycles were run on the `DIAL-ROBUST` verdict.\n\n**Cycle 1 (uniform keys, `bitlen × cap`).**  The exact ceiling fact",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-09-02T09:40:31",
+      "title": "FACT round-54 #1 — BALANCED-BKEY: the T-dial is robust across bitlen and u (paper 181)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a7626bf4",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this thread, whose verified (`sorry`-free,\ncompiling) output is:\n\n* `Catalog/Physics/GradedTransitivityComplex.lean` — passage",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 77,
-      "timestamp": "2026-08-22T04:50:15",
-      "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
-    },
     {
       "cycle_id": "71e110b3",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 138,
       "timestamp": "2026-09-02T09:40:12",
       "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR — Spearman(top8-mass, k*) = +0.80 strongest "
+    },
+    {
+      "cycle_id": "54a9fda9",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — BALANCED-BKEY, after round-54 #1 (exp 523)\n\nTwo full scientific cycles were run on the `DIAL-ROBUST` verdict.\n\n**Cycle 1 (uniform keys, `bitlen × cap`).**  The exact ceiling fact",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-09-02T09:40:31",
+      "title": "FACT round-54 #1 — BALANCED-BKEY: the T-dial is robust across bitlen and u (paper 181)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d451fd97",
-      "domain": "Novelty",
-      "name": "gamma_mono",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "26c8c1ed",
-      "domain": "MachineLearning",
-      "name": "dstep_geometric",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "26c8c1ed",
-      "domain": "MachineLearning",
-      "name": "geom_partial_le",
-      "quality": 0.88
-    },
     {
       "cycle_id": "26c8c1ed",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "sq_cum_le_card_mul_collision",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "54a9fda9",
+      "domain": "Cryptography",
+      "name": "capBlocks_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "54a9fda9",
+      "domain": "Cryptography",
+      "name": "capBlocks_succ_succ",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "54a9fda9",
+      "domain": "Cryptography",
+      "name": "capBlocks_self",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-02T09:40:12",
+  "last_updated": "2026-09-02T09:40:31",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "f49038d4",
-        "quality": 0.8,
-        "theorems": 62,
-        "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` "
-      },
-      {
         "cycle_id": "04d3a29d",
         "quality": 0.82,
         "theorems": 104,
@@ -3389,6 +3383,12 @@
         "quality": 0.83,
         "theorems": 80,
         "title": "Local character at every point"
+      },
+      {
+        "cycle_id": "54a9fda9",
+        "quality": 0.82,
+        "theorems": 71,
+        "title": "FACT round-54 #1 — BALANCED-BKEY: the T-dial is robust across bitlen and u (pape"
       }
     ],
     "Geometry": [

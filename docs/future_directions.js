@@ -1389,16 +1389,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-50 \u2014 DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper 180 addendum)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3a0d241",
     "description": "## NET-55 \u2014 limited-memory axis, round 8 (paper 140, ResearchOutput/exp_net55_1p5b_knee.py committed pre-run, /tmp/net55.log)\n\n**Verdict name: THE-KNEE-IS-SIZE-INVARIANT.**\n\n### Result\nQwen2.5-1.5B (3\u00d7 the parameters of the 0.5B, d=28 vs 24) on identical protocol (held-out wikitext, 24 windows/cell, bf16-storage/fp32-compute harness):\n\n| ctx | full acc | k\\* | 0.5B comparison |\n|---|---|---|---|\n| 512 | 0.4680 | **16** | identical (0.5B: 16) |\n| 1024 | 0.5004 | **16** | HALF (0.5B: 32; grid floor \u2014 could be lower) |\n\n- **P1 REFUTED decisively**: knees did not grow with 3\u00d7 parameters \u2014 they came in below the pre-registered floor ([24,48]@512, [32,96]@1024) at both contexts.\n- **P2 honestly UNMEASURED**: the crash-recovery harness rewrite dropped the per-layer stats block; the 1.5B tail map stays open.\n- **P3 CONFIRMED with a stronger reading**: ratio = 1.0 \u2014 not just sub-linear, FLAT.\n\nSweeps: 512 \u2014 8: 0.9727 \u2717, **16: 0.9896 \u2713**, 24: 0.9915, 32: 0.9969, 48: 0.9993, 64: 0.9988. 1024 \u2014 **16: 0.9806 \u2713**, 24: 0.9867, 32: 0.9881, 48: 0.9928, 64: 0.9927, 96: 0.9954, 128: 0.9974.\n\n### The emerging law\nReal-model lossless attention budget across everything measured: {16, 32, 24} @0.5B and {16, 16} @1.5B \u2014 a ~30-key budget covers every real model at every context, while the toy law predicted 384\u20131344 for these cells. The knee is set by the concentration structure of trained attention, not model capacity. **Deployment reading: the KV working-set budget does NOT scale with model size** \u2014 at larger models the binding constraint is weights (NET-52's quantization table), not cache.\n\n### Engineering record\nQwen2.5-1.5B's own fp16 forward NaNs on real text (verified pre-wrapper \u2014 bf16 storage mandatory on pre-bf16 GPUs); CPU-fp32 reference SIGILLs on this host; gate = HF-bf16-GPU reference captured pre-floatify with \u0394CE 0.0054 as the binding check and argmax-agreement 0.89 documented as near-tie flips across the 152k vocab.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted one; (b) clean \u2014 size-transfer of sparsity knees not a measured law in Catalog or literature; (c) confronted \u2014 3\u00d7 scale jump measured; limits: two size points, grid floor at 16, one corpus, SE \u2248 0.3%, P2 unmeasured; (d) clean \u2014 held-out last 10%; (e) deterministic evals, gate calibration documented; (f) clean \u2014 finite-reference assert, ALL_DONE_NET55; (g) fair \u2014 same 0.98 bar as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-16 addendum at 1024; 1.5B tail map (P2); 7B quantized-offload cell; oracle-to-policy eviction gap; corpus robustness.\n\nNow 55 network experiments. Assessment v55. Paper 140.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3679",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T15:36:32.739868+00:00",
     "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT \u2014 Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-half the 0.5B knees; tripling parameters did not raise the lossless attention budget by one key"
   },
@@ -1417,76 +1418,49 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-53 #1 \u2014 T-DIAL-UNIF-52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
   },
   {
-    "consumed_by_exp_id": "54a9fda9",
-    "description": "Round-54 #1, cron iteration (exp 523). The zero-fit dial's robustness envelope tested.\n\n**DIAL-ROBUST**: Spearman(T, rate) \u2265 0.53 at every tested bitlen \u00d7 u combination; T consistently beats the bare count by 0.10\u20130.15. No cliff, no breakdown, no convention artifact.\n\nThe zero-fit dial is ROBUST across the entire tested bitlen \u00d7 u envelope. Barriers: (5)/(8) unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp523_balanced_bkey.py + exp523_result.json, seeds 20261100+bitlen.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3681",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T16:41:43.033337+00:00",
-    "title": "FACT round-54 #1 \u2014 BALANCED-BKEY: the T-dial is robust across bitlen and u (paper 181)"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee56ba3a",
     "description": "## NET-56 \u2014 limited-memory axis, round 9 (paper 141, ResearchOutput/exp_net56_policy.py, /tmp/net56.log)\n\n**Verdict name: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN.**\n\n### Result\nCausally-honest streaming KV eviction (accumulated-score heavy-hitters, block-128, current block always cached, strict per-row causality) vs the omniscient oracle \u2014 same harness, same data, matched budgets (Qwen2.5-0.5B, ctx=1024):\n\n| arm | B=32 | B=64 | B=128 |\n|---|---|---|---|\n| ORACLE (per-row top-k) | **0.9913 \u2713** | **0.9953 \u2713** | \u2014 |\n| HH (accumulated, pure) | 0.8633 | 0.8822 | 0.9189 |\n| HYB (HH + recency) | 0.9205 | 0.9384 | 0.9605 |\n\n- **P1 CONFIRMED emphatically**: policy gap = 11.3 points at matched B=64 (not the \u22652% floor).\n- **P2 CONFIRMED**: recency beats pure accumulation everywhere (+5.7/+5.6/+4.2 pts).\n- **P3 REFUTED**: best-at-64 = 0.938 < 0.95; even a 12.5%-of-context cache tops out at 0.961.\n\nAnchor: oracle arms cross-replicate NET-49's knee to four decimals (0.9913 vs 0.9912 at k=32).\n\n### The law\nThe knee collapse (NET-49: knees {16,32,24}; NET-55: size-invariant) is real for an OMNISCIENT selector but does NOT transfer to online eviction: **trained attention is prunable in retrospect, not predictable in advance** \u2014 accumulated attention probability is a biased estimator of future importance. This is the measurable form of the catalogue's min-plus decoder-reliability barrier (no exponential reliability without assumptions). Deployment tables must be policy-adjusted; oracle quotes are upper bounds.\n\n### Engineering record\nSeven implementation variants were rejected by sanity gates before recording: two shape bugs; a stale kept-set that starved local context (retained 0.35\u20130.46); a per-block causal leak that let rows see their block's future (retained 2.06 > 1 \u2014 physically impossible); a strict-mask NaN; duplicate recency; and an unbound variable. The two invalid variants are retained in git history as bracketing negative controls. The recorded run passes retained\u2208(0,1), monotone budget response, and exact oracle replication.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) confronted \u2014 H2O/heavy-hitter literature exists; NEW = the quantified oracle-to-policy gap measured on the very harness that established the knees; (c) confronted \u2014 limits: ONE model, ONE context, block-128 granularity, no learned importance heads; (d) clean \u2014 held-out data, no training; (e) deterministic evals, sanity-band acceptance documented; (f) clean \u2014 ALL_DONE_NET56; (g) fair \u2014 identical harness/data for both arms, budgets matched exactly; (h) DIRECT.\n\n### Next\nLearned importance heads (can a tiny predictor close the gap?); per-layer budgets; 1.5B replication; corpus robustness (next cell).\n\nNow 56 network experiments. Assessment v56. Paper 141.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3682",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T16:41:43.034980+00:00",
-    "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN \u2014 streaming heavy-hitter eviction retains 0.86-0.92 where the oracle posts 0.99+ at matched budgets; trained attention is prunable in retrospect, not predictable online"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-51 #3, cron iteration (exp 521). The last untested intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-60**: Spearman(T, rate) = **0.669** [0.634, 0.705] on uniform draws at bitlen 60 \u2014 inside [0.55, 0.85]; T beats count by **+0.151** [0.107, 0.193].\n\nThe dial's deployment envelope now covers balanced and uniform draws through bitlen 60.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp521_t_dial_60_unif.py + exp521_result.json, seed 20261050.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3683",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T16:41:43.036530+00:00",
-    "title": "FACT round-51 #3 \u2014 T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 (paper 184)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-50 (exp 520). The first composite-order Galois group rung.\n\n**FULL-PINNING-AT-DEGREE-12**: Q(\u03b6\u2085\u2086)\u207a degree 12, G\u207a = C\u2086\u00d7C\u2082 (non-cyclic), conductor 56 \u2014 selected from ten \u03c6(f)=24 candidates by pre-stated rule.\n\nI(p mod 56; T) = H(T) = 1.7296 bits EXACTLY (gap 0.0, machine-exact); type densities {1/12, 1/4, 1/6, 1/2} match Chebotarev; orbit purity 12/12; perm z=+48,419; poly cross-check 160/160; semiprime pair channel matches exact enumeration law.\n\nThe abelian ladder now covers its FIRST non-cyclic composite-order group, extending beyond cyclic fields to C\u2086\u00d7C\u2082.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp520_degree_12.py + exp520_result.json, seed 20261060.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3684",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T16:41:43.038020+00:00",
-    "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
-  },
-  {
-    "consumed_by_exp_id": "a75b3939",
-    "description": "## NET-59 \u2014 limited-memory axis, round 12 (paper 144, ResearchOutput/exp_net59_perlayer.py, /tmp/net59.log)\n\n**Verdict name: NO-SINGLE-LAYER-IS-THE-BOTTLENECK.**\n\n### Result\nSolo-layer causal pruning profiles: for each of Qwen2.5-0.5B's 24 layers independently, oracle top-k applied ONLY to that layer (k=16 and k=32), all others full (ctx=512, 24 held-out windows):\n\n- **k=16 profile: spread 0.6 points.** Best 1.0013 (L13), worst 0.9953 (L12); every layer \u2265 0.995.\n- The identity tail: L21 0.9987, L22 0.9987, **L23 1.0008 \u2014 the BEST layer in the stack.**\n- k=32: even flatter (spread 0.5 pts).\n\n- **P1 TAIL-IS-CRITICAL REFUTED**: the tail is not individually fragile under top-k.\n- **P2 CONFIRMED trivially**: all layers \u2265 0.995.\n- **P3 NON-UNIFORM-MAP REFUTED**: the profile is remarkably uniform.\n\n### The epistasis resolution\nFour prior rounds established L22/L23 as categorically different: only far-from-tropical region (NET-50), highest crystallization loss, only cross-fine-tune decision divergence (NET-51), only unportable weights (NET-54), personal KV. Yet solo deletion costs \u2248 0. **The tail's role lives in interaction with upstream representations**, exactly as NET-54's swap-collapse showed directly. Additional structure: joint all-layer k=16 costs 1.7% (NET-50) vs ~4.8% if solo costs were additive \u2014 pruning interactions are SUB-ADDITIVE/redundant.\n\n### Design implication\nThere is no per-layer budget hierarchy to exploit for mixed-precision serving at this scale; differentiation must come from interaction-aware or policy-level criteria.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 causal solo profiles new in-programme; (c) confronted \u2014 limits: ONE context (512), solo-only granularity (pairs/joints open), 24 windows; (d) clean; (e) deterministic monotone profiles; (f) clean \u2014 gate exact, ALL_DONE_NET59; (g) fair \u2014 identical budgets per layer; (h) DIRECT.\n\n### Next\nPairwise/joint tail ablations; 1.5B replication; probe+recency hybrid; domain-jump corpora; 7B cell.\n\nNow 59 network experiments. Assessment v59. Paper 144.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3698",
     "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-08-22T17:37:32.037042+00:00",
-    "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK \u2014 solo-layer top-k profiles are flat (all 24 layers within 0.6pts at k=16, tail L23 literally best); the tail's specialness is epistatic, not individual fragility"
+    "timestamp": "2026-08-22T16:41:43.034980+00:00",
+    "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN \u2014 streaming heavy-hitter eviction retains 0.86-0.92 where the oracle posts 0.99+ at matched budgets; trained attention is prunable in retrospect, not predictable online"
+  },
+  {
+    "consumed_by_exp_id": "5c95862a",
+    "description": "Round-51 #3, cron iteration (exp 521). The last untested intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-60**: Spearman(T, rate) = **0.669** [0.634, 0.705] on uniform draws at bitlen 60 \u2014 inside [0.55, 0.85]; T beats count by **+0.151** [0.107, 0.193].\n\nThe dial's deployment envelope now covers balanced and uniform draws through bitlen 60.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp521_t_dial_60_unif.py + exp521_result.json, seed 20261050.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3683",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-22T16:41:43.036530+00:00",
+    "title": "FACT round-51 #3 \u2014 T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 (paper 184)"
+  },
+  {
+    "consumed_by_exp_id": "5f5fd816",
+    "description": "Round-50 (exp 520). The first composite-order Galois group rung.\n\n**FULL-PINNING-AT-DEGREE-12**: Q(\u03b6\u2085\u2086)\u207a degree 12, G\u207a = C\u2086\u00d7C\u2082 (non-cyclic), conductor 56 \u2014 selected from ten \u03c6(f)=24 candidates by pre-stated rule.\n\nI(p mod 56; T) = H(T) = 1.7296 bits EXACTLY (gap 0.0, machine-exact); type densities {1/12, 1/4, 1/6, 1/2} match Chebotarev; orbit purity 12/12; perm z=+48,419; poly cross-check 160/160; semiprime pair channel matches exact enumeration law.\n\nThe abelian ladder now covers its FIRST non-cyclic composite-order group, extending beyond cyclic fields to C\u2086\u00d7C\u2082.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp520_degree_12.py + exp520_result.json, seed 20261060.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3684",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-22T16:41:43.038020+00:00",
+    "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
   },
   {
     "consumed_by_exp_id": "fe441855",
@@ -1531,36 +1505,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T17:37:32.043186+00:00",
     "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
-  },
-  {
-    "consumed_by_exp_id": "0bdc483a",
-    "description": "## NET-62 \u2014 limited-memory axis, round 15 (paper 147, ResearchOutput/exp_net62_sub16.py, /tmp/net62.log)\n\n**Verdict name: THE-KNEE-LANDS-ON-THE-FINE-GRID.**\n\n### Result\nFine sweep at ctx=1024 (oracle top-k, Qwen2.5-0.5B, 24 held-out windows; baseline 0.4627 bit-identical to three prior rounds):\n\n| k | 4 | 8 | 12 | 20 | 24 |\n|---|---|---|---|---|---|\n| retained | 0.8940 \u2717 | 0.9520 \u2717 | 0.9662 \u2717 | **0.9803 \u2713** | **0.9851 \u2713** |\n\n- **P1 CONFIRMED**: the knee is 20 \u2014 well below the coarse-grid 32.\n- **P2 CONFIRMED**: it lands exactly ON the fine-grid point 20.\n\n### Consequences\n1. The 0.5B chain is now **strictly monotone: {16, 20, 24}** across {512, 1024, 2048}, replacing the coarse {16, 32, 24}.\n2. NET-55's size-invariance SHARPENS: 1.5B's {16, 16} is flat-to-declining against a rising baseline.\n3. The 2048 corpus-B reading (32) looks like a coarse-grid artifact, not corpus sensitivity.\n4. The knee-quantizes-to-grid pattern (toy 112 mid-grid; 20 here) gains a third instance.\n\nDeployment: the 1024 entry moves from 32 to 20 keys.\n\n### All 8 barriers\n(a) clean \u2014 both horns confirmed; (b) clean; (c) confronted \u2014 finer grid, same model/corpus; 24 windows stated; (d) clean; (e) deterministic pre-stated grid; (f) clean \u2014 ALL_DONE_NET62; (g) fair \u2014 same bar/harness; (h) DIRECT.\n\n### Next\nFine grids at 512/2048; domain-jump corpora; 1.5B fine-grid; 7B cell.\n\nNow 62 network experiments. Assessment v62. Paper 147.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3717",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T18:51:45.085865+00:00",
-    "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now strictly monotone {16,20,24}; size-invariance sharpens; 2048 corpus-B reading was a coarse-grid artifact"
-  },
-  {
-    "consumed_by_exp_id": "53c2b4c2",
-    "description": "## NET-74 \u2014 limited-memory axis, round 25 (paper 159, ResearchOutput/exp_net74_attnstructure.py, /tmp/net74.log)\n\n**Verdict name: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR.**\n\n### Result\nThree structural quantities per domain (5 domains, 3 sampled layers, 12 windows @ctx=512):\n\n| domain | entropy | top-8 mass | head agreement | k\\*@512 |\n|---|---|---|---|---|\n| code | 3.798 | 0.488 | 0.083 | **12** |\n| prose-en | 3.801 | 0.488 | 0.082 | **16** |\n| math | 3.615 | **0.526** | 0.086 | **16** |\n| prose-de | 3.752 | 0.502 | 0.080 | **20** |\n| prose-fr | 3.864 | **0.473** | 0.079 | **>24** |\n\nSpearman: entropy\u2194k\\* = \u22120.60; top8\u2194k\\* = **+0.80**; headvar\u2194k\\* = \u22120.40.\n\n- **P1 PARTIAL**: entropy anticorrelates (right sign) but below the \u22120.7 threshold.\n- **P2 CONFIRMED**: top-8 mass is the strongest correlate (+0.80 > 0.7).\n- **P3 REFUTED**: cross-head agreement ~8% everywhere \u2014 constant, not differentiator.\n\n### The mechanism finding\nThe POSITIVE sign means domains with MORE mass in their top-8 have HIGHER knees: the knee is set by the RESIDUAL spread after the top keys are captured, not by how concentrated the peak is. The mechanism lives in the TAIL of the attention distribution \u2014 how the non-top mass decays determines whether a small budget suffices. Head diversity is constant across all domains and cannot explain any part of the variation.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) clean \u2014 first structural mechanism test; (c) confronted \u2014 5 domains, 3 sampled layers, n=4 stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET74 (cosmetic error after data); (g) fair \u2014 identical methodology across domains; (h) DIRECT.\n\n### Next\nTail-shape analysis (Pareto vs exponential decay per domain); sub-20 addendum @2048; 0.5B @4096; 7B cell.\n\nNow 74 network experiments. Assessment v74. Paper 159.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3748",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T20:41:46.057011+00:00",
-    "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
   },
   {
     "consumed_by_exp_id": "",
@@ -1918,6 +1862,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4d41e431 (Q=0.890), which proved 161 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,\n`degree_two_exact`, `degree_three_exact` \u2014 the last one extracts its three linear\nconstraints from nothing but linear independence of the chart coordinates); the general case\nonly needs the recursion to be organised by total degr",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_4d41e431_9a8106e3",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "4d41e431",
+    "status": "available",
+    "timestamp": "2026-09-02T09:38:58.956586+00:00",
+    "title": "Deepening: The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 569bc76d (Q=0.880), which proved 156 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
     "domains": [
       "Bridges"
@@ -1929,6 +1887,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a75b3939 (Q=0.880), which proved 147 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-59 \u2014 limited-memory axis, round 12 (paper 144, ResearchOutput/exp_net59_perlayer.py, /tmp/net59.log)\n\n**Verdict name: NO-SINGLE-LAYER-IS-THE-BOTTLENECK.**\n\n### Result\nSolo-layer causal pruning profiles: for each of Qwen2.5-0.5B's 24 layers independently, oracle top-k applied ONLY to that laye",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_a75b3939_7a4d0f4e",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "a75b3939",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:18.674318+00:00",
+    "title": "Deepening: NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK \u2014 solo-layer top-k profiles are flat ("
   },
   {
     "consumed_by_exp_id": "",
@@ -2615,6 +2587,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 53c2b4c2 (Q=0.820), which proved 138 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-74 \u2014 limited-memory axis, round 25 (paper 159, ResearchOutput/exp_net74_attnstructure.py, /tmp/net74.log)\n\n**Verdict name: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR.**\n\n### Result\nThree structural quantities per domain (5 domains, 3 sampled layers, 12 windows @ctx=512):\n\n| domain | entr",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_53c2b4c2_af6b9021",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "53c2b4c2",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:12.682291+00:00",
+    "title": "Deepening: NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 54a9fda9 (Q=0.820), which proved 71 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-54 #1, cron iteration (exp 523). The zero-fit dial's robustness envelope tested.\n\n**DIAL-ROBUST**: Spearman(T, rate) \u2265 0.53 at every tested bitlen \u00d7 u combination; T consistently beats the bare count by 0.10\u20130.15. No cliff, no breakdown, no convention artifact.\n\nThe zero-fit dial is ROBUST acr",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_54a9fda9_415ecc5b",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "54a9fda9",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:32.007752+00:00",
+    "title": "Deepening: FACT round-54 #1 \u2014 BALANCED-BKEY: the T-dial is robust across bitlen and u (pape"
   },
   {
     "consumed_by_exp_id": "",
@@ -3575,17 +3575,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle f7361634 (Q=0.780), which proved 42 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two candidate predictors of transplant damage exist in the catalog: a norm-based upper bound and a margin-based certificate. Conjecture: the margin-uncertified fraction predicts damage, and Lipschitz/norm distance between the two copies of a block does not.\n\nAcross layer blocks, the measured post-tr",
+    "description": "Building on cycle 0bdc483a (Q=0.780), which proved 66 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-62 \u2014 limited-memory axis, round 15 (paper 147, ResearchOutput/exp_net62_sub16.py, /tmp/net62.log)\n\n**Verdict name: THE-KNEE-LANDS-ON-THE-FINE-GRID.**\n\n### Result\nFine sweep at ctx=1024 (oracle top-k, Qwen2.5-0.5B, 24 held-out windows; baseline 0.4627 bit-identical to three prior rounds):\n\n| k",
     "domains": [
-      "Applications"
+      "NumberTheory"
     ],
-    "id": "push_f7361634_d00a1ff2",
+    "id": "push_0bdc483a_0de54b5a",
     "priority_score": 0.88,
     "research_mode": "team",
-    "source_exp_id": "f7361634",
+    "source_exp_id": "0bdc483a",
     "status": "available",
-    "timestamp": "2026-09-01T21:48:30.247237+00:00",
-    "title": "Deepening: Margin Scarcity as the Portability Predictor"
+    "timestamp": "2026-09-02T09:39:53.845380+00:00",
+    "title": "Deepening: NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine g"
   },
   {
     "consumed_by_exp_id": "",
@@ -3603,22 +3603,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
-    "domains": [
-      "Tropical",
-      "Computation",
-      "Geometry"
-    ],
-    "id": "fd_0692",
-    "priority_score": 0.82,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697843+00:00",
-    "title": "Tropical Convexity and Linear Programming"
   },
   {
     "consumed_by_exp_id": "",
@@ -9800,6 +9784,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The semantic optimum is now known: the nodes of a downset containing the support are a minimum-cardinality uniqueness set. What is missing is a syntactic invariant computing that downset from the expression tree. The conjecture is that a compositional Newton-downset recursion is both sound and, for cancellation-free expressions, tight, giving certificates that are never worse and usually far better than the simplex one.\n\nThere is a computable compositional map newton : NExpr n \u2192 Finset (Fin n \u2192\u2080 \u2115) whose value is a downset containing the support of toZ e, equal to the downward closure of that support whenever no coefficient cancellation occurs in the products; the induced certificate uses #(newton e) evaluations, which is minimal for that support.\n\nDefine newton by recursion with a downward-closure operator, prove support containment and closure under \u2264, derive NewtonCert from downset_unisolvent, and check that #(newton e) < C(n + deg e, n) for cubeLHS, symLHS and quasiLHS.\n\nIdentity checking in the chart calculus becomes support-adapted end to end: the number of evaluations is dictated by the Newton polytope of the identity rather than by its degree.\n\nEither downward closure of Minkowski sums overshoots the true support systematically, or cancellation is generic, in which case optimal certificates cannot be read off the syntax and must be computed from coefficients.",
+    "domains": [
+      "Combinatorics",
+      "Applications"
+    ],
+    "id": "fd_4540",
+    "priority_score": 0.7115915492957747,
+    "research_mode": "team",
+    "source_exp_id": "4d41e431",
+    "status": "available",
+    "timestamp": "2026-09-02T09:38:45.188284+00:00",
+    "title": "Syntactic Newton Downsets for Optimal Certificates"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The exact box-kernel deflation k w^2 / 12 is the curvature times the variance of the box kernel. We conjecture the same formula with Var(K) for every symmetric unimodal kernel, with the vertex exactly preserved. This identifies the single number any binning-free shape test must report.\n\nFor symmetric non-negative unimodal K with unit mass and f symmetric and concave about u*, argmax (f * K_h) = u* and (f * K_h)(u*) = f(u*) + (1/2) f''(u*) Var(K_h) + o(Var(K_h)).\n\nGeneralise slidingAvg_quadratic from the box kernel to an arbitrary kernel by second-order Taylor expansion under the integral, and re-derive w^2/12 as the box variance.\n\nBin width, kernel bandwidth and wavelet scale become interchangeable through a single scalar, making cross-method comparison exact.\n\nKernel shape enters at leading order and histogram results cannot be compared with density-regression results without recalibration.",
     "domains": [
       "Algebra",
@@ -12911,6 +12910,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The floor law gives rho^2 > 1 - a^2 for modal mass fraction a, and a 15:1 profile violates the 0.53 floor. The two bounds bracket the cliff in the window 0.848 to 0.938 of modal mass. We conjecture the critical value is exactly sqrt(1 - 0.53^2), attained by two-block profiles.\n\nsup over profiles with modal fraction a of spearmanSq equals 1 - a^2 + O(1/n), and inf equals 1 - a^2 - O(1/n); hence the 0.53 floor holds iff a <= sqrt(1 - 0.2809) = 0.848002...\n\nProve the two-block family [an, (1-a)n] has spearmanSq tending to 1 - a^2, and combine with mass_fraction_floor.\n\nThe robustness envelope acquires a sharp boundary expressible purely in modal mass, independent of bitlen and cap.\n\nThe floor depends on more than the modal block and the envelope needs a finer invariant.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_4559",
+    "priority_score": 0.6706923076923078,
+    "research_mode": "team",
+    "source_exp_id": "54a9fda9",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:21.770288+00:00",
+    "title": "Exact Critical Modal Mass for the 0.53 Floor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The ternary case admits exactly three trees because the density budget 1 = sum of 1/(a(a+b)) has three admissible solutions, one of which mixes Berggren and Price branches. For general arity k the same budget equation plus the power-of-two determinant constraint bounds the search space. Determining t(k), the number of k-ary trees, would show whether hybridisation is an accident of arity three or a general phenomenon.\n\nFor every k >= 2 the number t(k) of k-ary trees on the node set {1 <= n < m, gcd(m,n)=1, m+n odd} with root (2,1) is finite, with t(2) = 0, t(3) = 3 and t(k) >= 3 for k >= 3, and every branch of every such tree satisfies |det| <= 2.\n\nExtend the finite search of evidence.py from triples to k-tuples of admissible matrices with |entries| <= 8, checking that the images partition the non-root nodes with first coordinate at most 200; then formalise the arity-k analogue of TernaryTree.no_branch_det_ge_three using the same root-child forcing argument.\n\nThe bound |det| <= 2 is a structural property of the node cone rather than of arity three, and the classification method generalises to a uniform theorem.\n\nA k-ary branch with |det| = 4 exists, showing that the power-of-two spectrum is genuinely realised beyond 2 and that the ternary bound is a low-arity coincidence.",
     "domains": [
       "Combinatorics"
@@ -12936,6 +12949,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:51:05.976839+00:00",
     "title": "Square-Root Depth Profile of the Berggren Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalise the n = 5 enumeration to arbitrary sample size: compute the exact permutation-null size of a |\u03c1| \u2265 t bar for every n, and prove monotonicity so that a threshold with a stated false-positive rate can be chosen in advance.\n\nFor each n the set of attainable Spearman values is the lattice {1 - 6D/(n(n\u00b2-1))} and the exact size of the |\u03c1| \u2265 t test is a computable rational, decreasing in n for fixed t.\n\nProve the d\u00b2 identity for general n from \u2211 r = n(n+1)/2 and \u2211 r\u00b2 = n(n+1)(2n+1)/6, then formalise the size function and verify n = 4,5,6 by enumeration.\n\nEvery future round can pre-register a bar with a known false-positive rate instead of the conventional 0.7.\n\nNon-monotone size in n would mean small-sample bars cannot be compared across rounds at all.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_4555",
+    "priority_score": 0.6706562500000002,
+    "research_mode": "team",
+    "source_exp_id": "53c2b4c2",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:02.963737+00:00",
+    "title": "Exact Size Calculus for Rank-Correlation Bars"
   },
   {
     "consumed_by_exp_id": "",
@@ -14158,19 +14185,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Radix Crossover for the Weighted Zero-Fit Edge"
   },
   {
-    "consumed_by_exp_id": "fe7714ae",
-    "description": "Predictors realising the crossed and uncrossed readings can be aligned to 0.9999, so the entire hypothesis test lives in a spherical cap of angular radius about 0.9 degrees. The conjecture is that any test statistic Lipschitz in the predictor direction has power bounded by its Lipschitz constant times the cap radius, independently of the sample size.\n\nFor unit vectors u, v with corr(u,v) >= 1 - eps and any L-Lipschitz functional F on the sphere, |F(u) - F(v)| <= L*sqrt(2*eps); consequently no such statistic separates the U84 hypotheses beyond that bound.\n\nFormalise the chordal-distance bound sqrt(2-2c) and combine with the attained configuration of crossing_states_indistinguishable.\n\nA sample-size-free ceiling on the power of any smooth crossing test, explaining why replication has not settled the question.\n\nSome non-Lipschitz (rank-based, discontinuous) statistic can separate the hypotheses, which would be a concrete better test to run.",
-    "domains": [],
-    "id": "fd_4508",
-    "phase": "A",
-    "priority_score": 0.593901098901099,
-    "research_mode": "team",
-    "source_exp_id": "6d23453a",
-    "status": "in_progress",
-    "timestamp": "2026-09-01T18:33:24.169561+00:00",
-    "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The crowding and codebook pigeonholes are worst-case over arrangements; the operational damage depends on the empirical distribution of top-two logit gaps. A distributional refinement should predict the expected fraction of inverted positions as a function of the quantisation error, closing the gap between 'some pair inverts' and 'perplexity moves by x'.\n\nThe excess log-perplexity of a KV-quantised model is, to first order, proportional to the mass of the top-two logit gap distribution below 2*eps, with a model-independent proportionality constant of order one.\n\nCollect the top-two gap histogram per head at ctx 2048, compute the mass below 2*eps for each arm, and regress the measured excess log-perplexity against it.\n\nA single cheap histogram predicts the safe KV width for any model, removing the need for a perplexity sweep.\n\nInversions are not exchangeable across heads and positions, and a correlated model of gap statistics is required.",
     "domains": [],
@@ -14316,6 +14330,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Depth-additive damage bounds hold under a per-layer perturbation bound that is uniform over upstream states, and fail under any bound certified at a single state. The conjecture upgrades this from a counterexample to a dichotomy for arbitrary budget functionals.\n\nFor every per-layer budget functional B that depends only on the behaviour of a layer at finitely many prescribed upstream states, there is a stack on which the joint damage exceeds the sum of the budgets.\n\nGeneralise the witness family to interpolate any finite set of probe states, and prove that a masking suffix can always be inserted after the probes.\n\nServing policies must certify worst-case per-layer behaviour; held-out-window measurements can never be turned into a sound budget.\n\nSome finite probe set suffices, and the design question becomes which probes, opening a concrete experimental programme.",
+    "domains": [],
+    "id": "fd_4546",
+    "priority_score": 0.5935074626865673,
+    "research_mode": "team",
+    "source_exp_id": "a75b3939",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:09.391037+00:00",
+    "title": "Necessity of Uniform Per-Layer Budgets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Any monotone, translation-equivariant aggregator of per-seed margins is sandwiched between order statistics, so its breakdown point cannot exceed that of the median. The conjecture states the median is optimal and quantifies the seed budget needed to tolerate k hardware failures. It matters because seed count dominates the cost of the E3 run.\n\nFor every monotone translation-equivariant aggregator T of n reals, the breakdown point of T is at most ceil(n/2), with equality for the median; consequently a protocol tolerating k corrupted runs needs n >= 2k+1 runs.\n\nFormalize monotone equivariant aggregators, prove the sandwich between order statistics, and reuse the sharpness half of MedianBreakdown for the upper bound.\n\nAdding seeds is provably the only way to harden the E3 measurement.\n\nA more robust statistic exists and the protocol should adopt it instead of adding runs.",
     "domains": [],
     "id": "fd_4068",
@@ -14337,6 +14363,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T10:07:50.560642+00:00",
     "title": "Sign of the Dominant Excess as Sweep Discriminant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The audit promotes cross-head agreement to the strongest correlate of the knee. The natural mechanism is that disagreeing heads union their supports, flattening the aggregate tail and delaying the knee; agreeing heads reinforce a common support and sharpen it.\n\nFor an aggregate profile formed by averaging h head profiles, the tail decay exponent of the average is a decreasing function of the pairwise support overlap of the heads, and the knee of the average therefore decreases with agreement.\n\nFormalise the averaged profile and prove monotonicity of the knee in a support-overlap parameter; then measure agreement and fitted exponent on the same layers.\n\nHead agreement becomes a mechanism, not a summary statistic, and the refuted horn P3 is reinstated with a reason.\n\nThe measured head-agreement/knee association is an artefact of five points and should not be pursued.",
+    "domains": [],
+    "id": "fd_4557",
+    "priority_score": 0.5934693877551022,
+    "research_mode": "team",
+    "source_exp_id": "53c2b4c2",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:04.043224+00:00",
+    "title": "Head Agreement Drives Tail Flatness"
   },
   {
     "consumed_by_exp_id": "",
@@ -14472,6 +14510,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Swapping uniform for balanced draws moves the tie ceiling by less than 0.07 in rho. We conjecture a general budget: two draw laws whose modal fractions differ by delta have ceilings within delta of each other, which turns every law-swap experiment into a falsifiable prediction with an explicit tie budget.\n\nFor tie profiles L, L' with modal fractions a, a' one has |sqrt(spearmanSq L) - sqrt(spearmanSq L')| <= |a - a'| + O(1/n), and the bound is attained by two-block profiles.\n\nProve the Lipschitz bound from the mass-fraction floor and the dominant-block upper law, then check sharpness on two-block families.\n\nAny recorded law-to-law dial movement above the modal-fraction gap is provably a response effect.\n\nCeilings can move more than modal fractions and law-swap comparisons need the full profile.",
+    "domains": [],
+    "id": "fd_4562",
+    "priority_score": 0.593360655737705,
+    "research_mode": "team",
+    "source_exp_id": "54a9fda9",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:23.378521+00:00",
+    "title": "Universal Law-Change Capacity in Modal Fraction"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Refine the binary mirror/non-mirror distinction into a rank filtration counting how finely a probe splits each magnitude cell. Conjecture that every window-local realized probe has rank 1 (a mirror) while the factor-derived positional bit has rank at least 2, so no realized probe of intermediate rank exists. This would explain why every measured channel collapsed to an exact null while the oracle bound survived.\n\nFor probes computed from a poly(log N) read of the isqrt-anchored window, the mirror rank is 1; for 1{d<=B} it is at least 2 on any family containing two same-magnitude instances with different smallest factor.\n\nDefine mirrorRank as the maximum over magnitude cells of the number of distinct probe values on the cell; prove rank 1 for signVector and its post-processings using signVector_const, and rank >= 2 via oracle_informative_within_magnitude_cell.\n\nThe realized probe class is provably sealed as a class, not instance by instance.\n\nThere exists a window-local probe separating same-magnitude instances, i.e. a genuinely new channel.",
     "domains": [],
     "id": "fd_4056",
@@ -14577,6 +14627,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T00:21:35.798675+00:00",
     "title": "Schedule-Independence Law for Oblivious Search"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For weight-w b-bit keys the modal trailing-zero class carries exactly a w/b fraction of the keys. The floor law then gives rho^2 > 1 - (w/b)^2 for every weight. We conjecture a matching upper bound, so that the balanced dial degrades smoothly in w and crosses the 0.53 floor at w/b about 0.848.\n\nspearmanSq (weightBlocks b w) = 1 - (w/b)^2 + O(1/C(b,w)) uniformly in w, hence the balanced dial clears 0.53 exactly when w/b <= 0.848 asymptotically.\n\nFormalise the sum of cubes of the binomial profile via Vandermonde-type identities and compare with (w/b)^2 C(b,w)^3.\n\nThe balanced-key envelope gets an exact boundary in the single parameter w/b, testable by a weight sweep.\n\nHigher blocks of the binomial profile contribute at leading order and the modal fraction is not the right invariant for balanced draws.",
+    "domains": [],
+    "id": "fd_4561",
+    "priority_score": 0.5932758620689657,
+    "research_mode": "team",
+    "source_exp_id": "54a9fda9",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:22.848169+00:00",
+    "title": "Weight Cliff for Balanced Keys"
   },
   {
     "consumed_by_exp_id": "",
@@ -14940,6 +15002,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The bitlen \u00d7 cap ceiling table of the zero-fit dial factorises exactly into a row function and a column function. We conjecture this is not an accident of the dyadic profile but the signature of two knobs acting on disjoint parts of the tie profile: truncation of the tail versus rescaling of the whole space. A converse would make rank deficiency a diagnostic for knob independence.\n\nIf a two-parameter family of tie profiles is obtained by applying a tail-truncation operation indexed by u and a self-similar scaling indexed by b, then spearmanSq is a product f(u)\u00b7g(b); conversely, a nonvanishing 2x2 determinant in the ceiling table implies the two operations do not commute on the profile.\n\nFormalise truncation and scaling as operations on List N, prove the product form in general, and exhibit a non-commuting pair whose ceiling table has rank two.\n\nEvery dial in the programme can be certified interaction-free by checking two one-parameter families instead of a full grid.\n\nRank-one is specific to the 2-adic profile and grid sweeps remain necessary.",
+    "domains": [],
+    "id": "fd_4558",
+    "priority_score": 0.5927528089887641,
+    "research_mode": "team",
+    "source_exp_id": "54a9fda9",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:21.235130+00:00",
+    "title": "Rank-One Ceiling Tables for Composed Tie Statistics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The k-th orbit count on tuples should be the Stirling transform of the orbit counts on injective tuples, generalising the proved rank splitting o_2 = o_1 + #(offDiag/G). This exhibits the moment hierarchy as the moment sequence whose factorial moments are the injective-tuple counts.\n\nFor every finite G-set X and every k, #((X^k)/G) = \u2211_{j\u2264k} S(k,j) \u00b7 #(Inj(Fin j, X)/G), where S(k,j) are Stirling numbers of the second kind.\n\nDecompose Fin k \u2192 X over the kernel setoid, prove that each kernel class is G-equivariantly isomorphic to the injective tuples on the quotient, and count.\n\nGives exact formulas for o_k from finitely many invariants d_1,\u2026,d_k, and recovers rank splitting as the case k = 2.\n\nSome kernel classes fail to be G-stable, which would reveal an error in the equivariant decomposition of tuple space.",
     "domains": [],
     "id": "fd_3855",
@@ -15033,6 +15107,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T18:33:05.857605+00:00",
     "title": "Two-Rung Ambiguity Window under Accelerating Fade"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Tie resolution can buy at most 0.0598 of Spearman advantage for the capped dial over bare parity, yet the experiment records 0.10 to 0.15. The excess must be response coupling, not granularity. We conjecture the excess is exactly the part of the response explained by the event v2 >= 2 conditionally on parity.\n\nFor the recorded response, Spearman(T, rate) - Spearman(parity, rate) = tie term (< 0.06) + coupling term, and the coupling term equals the Spearman correlation of rate with the indicator of v2 >= 2 restricted to even keys, up to O(1/sqrt(N)).\n\nRe-run exp 523 with the response decomposed by parity and compare the measured coupling term with the residual 0.10 - 0.06.\n\nThe dial's advantage gets a mechanistic explanation and a predictive formula for other statistics.\n\nThe advantage is a sampling artefact and the recorded gap band should shrink under larger N.",
+    "domains": [],
+    "id": "fd_4560",
+    "priority_score": 0.5925000000000001,
+    "research_mode": "team",
+    "source_exp_id": "54a9fda9",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:22.314355+00:00",
+    "title": "Slack Budget for the T-versus-Count Advantage"
   },
   {
     "consumed_by_exp_id": "",
@@ -15678,6 +15764,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T05:51:58.739552+00:00",
     "title": "Interaction-Axiom Trichotomy for Bimodal L\u00f6b Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved invariance of the knee under modifications of the capture curve below tolerance is a monoid action on profiles. Classify the invariants of that action to determine exactly which head statistics can appear in any knee law.\n\nEvery function of an attention profile that is invariant under all tolerance-preserving head modifications factors through the residual curve beyond the head budget; in particular no function of the top-r mass alone is invariant unless it is constant.\n\nDefine the monoid of admissible head modifications in Lean, prove the knee is invariant, and prove the factorisation for the induced quotient.\n\nHead statistics are ruled out a priori as knee predictors, replacing correlational refutation with a structural one.\n\nSome head statistic survives the action and becomes the natural candidate predictor.",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_4556",
+    "priority_score": 0.5649405475559509,
+    "research_mode": "team",
+    "source_exp_id": "53c2b4c2",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:03.502876+00:00",
+    "title": "Gauge Freedom of the Head and Knee Invariants"
   },
   {
     "consumed_by_exp_id": "",
@@ -16416,6 +16517,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The tropical model of the same ablation programme assigns a net an epistasis order via transversals of near-optimal paths; the probabilistic model assigns a stack a contraction profile. The conjecture is that these two invariants coincide, bridging combinatorial and probabilistic accounts of the same measurements.\n\nFor a stack whose suffix contraction coefficients are c_1 >= ... >= c_n, the epistasis order of the associated prunable net equals the number of indices with c_i < 1.\n\nBuild the map sending a Dist/Kern stack to a prunable net, compute both invariants on the affine family and on the tail-pair model, and prove the equality in the deterministic case first.\n\nA single invariant governs both the tropical cost table and the probabilistic ablation profile, unifying two independent formalisations of the programme.\n\nThe two models measure genuinely different aspects of epistasis, and tropical cost tables cannot be read as contraction data.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4545",
+    "priority_score": 0.5646419316341353,
+    "research_mode": "team",
+    "source_exp_id": "a75b3939",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:08.866103+00:00",
+    "title": "Epistasis Order Equals Contracting Suffix Length"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Replace v = j^2 - N by v = f(j) - N for a sieve polynomial f of degree d. Mean preservation of the root count is pure fibre counting and still holds, so a mixture excess persists; what changes is the distribution of the root count, which is governed by the factorisation type of f mod q and hence by the Galois group of f.\n\nFor a separable f of degree d and odd prime q, the variance of the root count over targets N mod q equals the number of non-identity elements of the Galois group of f fixing a root, up to O(1/q); consequently the mixture excess for the multiplicative proxy is p*c + V_f*(c-1)^2/2 + O((c-1)^3) with V_f a Galois invariant.\n\nFormalise rootCountM for the fibres of a general polynomial map on ZMod q, enumerate cubics and quartics with decide for q up to a few hundred, and compare the measured variance with the orbit count predicted by Frobenius cycle types.\n\nThe divisibility-mixture baseline extends to number field sieve style polynomials, where the predicted hump amplitude becomes a Galois-theoretic quantity.\n\nThe excess depends on more than the Galois data, indicating that the quadratic case is special and the mechanism is tied to the two-point structure of quadratic residues.",
     "domains": [
       "Algebra",
@@ -16473,6 +16589,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T00:16:17.410004+00:00",
     "title": "Schur-Convexity of the Group-Aligned Interaction Penalty"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All node sets used here are arithmetic. The interpolation isomorphisms isolate the only property actually used, namely invertibility of the evaluation system at the node set, suggesting the theory transfers to geometric grids and Laurent charts.\n\nFor q of infinite multiplicative order in a domain R, the geometric node set {q^k : |k| \u2264 d} certifies identities between Laurent expressions with exponent window [-d,d], in every commutative ring where the relevant elements are invertible.\n\nParametrise stdGrid by an abstract node set with a nonvanishing Vandermonde determinant hypothesis and check that degree_exact, exists_unique_interpolant, exists_unique_downset_interpolant and finrank_boundedDegree re-elaborate.\n\nThe chart calculus extends from polynomial to Laurent charts, covering identities on tori and q-analogues with the same finite-check methodology.\n\nVandermonde invertibility is not the only ingredient, and the arithmetic of the grid {0,\u2026,d} plays a hidden role that must be isolated.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4542",
+    "priority_score": 0.5646283128879792,
+    "research_mode": "team",
+    "source_exp_id": "4d41e431",
+    "status": "available",
+    "timestamp": "2026-09-02T09:38:46.334179+00:00",
+    "title": "Geometric Node Systems for Laurent Charts"
   },
   {
     "consumed_by_exp_id": "",
@@ -16608,6 +16739,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T05:09:08.874064+00:00",
     "title": "Rapidity-Additive Fade Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Interpolate the proved geometric and Pareto knee bounds by a single power-law family: if the residual after r+j keys decays like R\u00b7j^(-\u03b1), the knee should satisfy k* - r \u224d (R/(1-\u03c4))^(1/\u03b1). This turns per-domain tail-shape analysis into a law with one measurable exponent.\n\nFor every attention profile whose residual satisfies R/(j+1)^\u03b1 \u2264 1 - cum(r+j) \u2264 R'/(j+1)^\u03b1 with \u03b1 \u2265 1, the knee obeys c\u2081(R/(1-\u03c4))^(1/\u03b1) \u2264 k* - r \u2264 c\u2082(R'/(1-\u03c4))^(1/\u03b1) with absolute constants c\u2081, c\u2082.\n\nFormalise the \u03b1-indexed staged profile in Lean and prove both inequalities; check the \u03b1 \u2192 \u221e limit reduces to the existing geometric bound.\n\nThe knee becomes predictable from a single fitted exponent per domain, replacing the current correlational reporting.\n\nThe knee depends on more than the leading tail exponent, and any per-domain summary must retain at least two tail parameters.",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_4554",
+    "priority_score": 0.5645707775109596,
+    "research_mode": "team",
+    "source_exp_id": "53c2b4c2",
+    "status": "available",
+    "timestamp": "2026-09-02T09:40:02.400385+00:00",
+    "title": "Tail-Exponent Law for the Attention Knee"
   },
   {
     "consumed_by_exp_id": "",
@@ -29472,6 +29618,78 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Degree-graded exactness is the corner case d < #S of a quantitative statement about how often two distinct bounded-degree expressions can agree on a grid. Proving the density version turns the deterministic certificate into a randomised one and supplies a missing classical lemma. The reflection layer reduces the problem to a single statement over the integers.\n\nFor a domain R, finite S \u2286 R and distinct polynomials p \u2260 q of total degree \u2264 d, #{x \u2208 S\u207f : p(x) = q(x)} \u2264 d \u00b7 (#S)^(n-1).\n\nProve the bound by induction on n through MvPolynomial.finSuccEquiv and the univariate root count, then re-derive ChartCalculus.NExpr.toZ_eq_of_grid as the special case d < #S.\n\nThe chart calculus gains a probabilistic identity test with explicit failure probability d/#S, and the deterministic theorems become the zero-error endpoint of a family.\n\nAgreement loci of bounded-degree polynomials would exhibit unexpected concentration, contradicting the univariate root bound in some coordinate \u2014 pointing to an error in the degree bookkeeping rather than to new mathematics.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4538",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4d41e431",
+    "status": "available",
+    "timestamp": "2026-09-02T09:38:43.978237+00:00",
+    "title": "Schwartz-Zippel Density for Chart Certificates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Unisolvence at lattice nodes is now known to hold exactly while the exponents stay below the characteristic, both for total degree and for arbitrary downsets. The open question is quantitative: once the threshold is crossed, how many nodes are needed, and is the excess governed by collisions of the reduction map on the downset?\n\nOver a field of prime characteristic p and a finite downset D whose coordinates reach p, the minimum cardinality of a uniqueness set for the D-supported polynomials is still #D, but no natural-number lattice node set attains it; the minimal integral node set exceeds #D by exactly the number of collisions of \u2115 \u2192 \ud835\udd3d_p on D, a function of base-p digits.\n\nFor p = 2, 3 and boxes b = p, p+1 in two variables, enumerate node sets of (ZMod p)\u00b2 of size #D, decide unisolvence by the rank of the evaluation matrix, and compare the minimum attained size with #D and with the digit prediction.\n\nThe cost of identity certificates in characteristic p is quantified exactly, extending the optimal node theory beyond the proved threshold.\n\nEither the dimension bound is not tight in positive characteristic, or some non-lattice node set attains it, showing that minimal certificates are not governed by the arithmetic of the node coordinates.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4539",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4d41e431",
+    "status": "available",
+    "timestamp": "2026-09-02T09:38:44.580410+00:00",
+    "title": "Minimal Node Sets Past the Characteristic Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The free ring \u2124[x] detects every chart-calculus identity, and \u2124 itself is a test ring. With parameters adjoined this can fail, and the conjecture is that the failure is measured by explicit torsion data computable from the syntax tree via the optimal certificate.\n\nFor the parametrised calculus, validity over \u2124 implies validity over every commutative ring iff the integer N obtained as the gcd of the coefficients of toZ e\u2081 - toZ e\u2082 is 0 or 1; otherwise ZMod N is a counterexample ring.\n\nExtend NExpr with parameter constructors, re-prove universal_iff_toZ_eq over \u2124[params], and verify the ZMod N counterexample construction on identities such as 2xy = 0.\n\nA complete arithmetic classification of which rings detect which polynomial identities, with a decision procedure computing N from a support-adapted number of evaluations.\n\nSome identity fails over a ring of characteristic not dividing N, which would mean the free-ring factorisation eval_X_eq_toZ does not extend to parameters as stated.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4541",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4d41e431",
+    "status": "available",
+    "timestamp": "2026-09-02T09:38:45.766814+00:00",
+    "title": "Torsion Obstruction to Integer Test Rings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Solo ablation costs should be exactly the point costs damped by the contraction coefficient of the downstream suffix. The upper bound is proved and is now known to be attained; the conjecture asks for a matching lower bound under a Doeblin minorisation, which would make the solo profile a computable function of the contraction spectrum and the point profile.\n\nFor a finite-state stack in which every layer satisfies a Doeblin minorisation, solo_j is bounded below by c_j' * point_j with c_j' an ergodic coefficient of the suffix after j; in particular a flat solo profile forces c_j * point_j to be constant in j.\n\nFormalise the ergodic coefficient of a composed suffix in the Dist/Kern framework and prove a lower bound for tv (chain S mu) (chain S nu) in terms of it; instantiate on the affine family of NET59GeometricSharpness.\n\nThe solo profile becomes an invertible measurement once the contraction spectrum is known, so per-layer budgets can be recovered from ablation data plus a contraction probe.\n\nSolo ablation data is not invertible even with contraction information, and per-layer budgeting must be abandoned in favour of set-level criteria.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4543",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a75b3939",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:07.671386+00:00",
+    "title": "Doeblin Lower Bound for Solo Ablation Profiles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Because the measured cost of an arity-(k+1) experiment is exactly a geometric sequence in k, the ratio of consecutive measurements is the contraction coefficient itself. This turns a sweep over arities into a direct measurement of a structural quantity, with no model fitting and no assumption of layer importance.\n\nFor any finite-state stack, the ratio between the arity-(k+2) and arity-(k+1) ablation costs of a fixed layer converges to the contraction coefficient of the ablated downstream layer, with deviation from a geometric sequence bounded by the spread of the downstream coefficients.\n\nProve the exact geometric law for uniform spectra (already available as probe_cost), then bound the deviation for a two-valued spectrum and compare with exact rational evaluations.\n\nA short arity sweep measures the contraction spectrum of a served model directly, giving a cheap structural diagnostic.\n\nAblation curves conflate contraction with point damage, and the spectrum must be probed by other means.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4544",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a75b3939",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:08.336318+00:00",
+    "title": "Inversion of the Ablation Arity Curve"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -39753,6 +39971,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the recorded ladder (`bitlen 44 \u2026 96`) is a chain of caps whose\nradii are set by the successive reading gaps, so the composed chordal bound\n`chord(f 0, f k) \u2264 \u03a3 \u221a(2\u03b5_i)` predicts a *ladder-level* indistinguishability threshold: the\nwhole erosion curve is smooth-test-invisible unless some single rung gap exceeds `\u221a2/100`.\n**Why now?** `chord_chain_le` provides the composition law and the catalog files already carry\nall eight recorded rungs, so the prediction is a finite arithmetic check against recorded data.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Total-Variation Floor for Discontinuous Crossing Tests\",\n    \"domain\": \"Probability\",\n    \"description\": \"Escaping the spherical-cap Lipschitz ceiling requires concentrating variation inside a cap of radius sqrt(2*eps). We conjecture a sharp lower bound on the total variation of any statistic that separates two directions in the cap. This converts the qualitative statement 'only discontinuous tests work' into a quantitative instability budget.\",\n    \"conjecture\": \"If F separates unit vectors u,v with corr(u,v) >= 1-eps by delta, then the total variation of F along any rectifiable path from u to v inside the cap is at least delta, and along the geodesic the variation per unit length is at least delta/sqrt(2*eps).\",\n    \"test\": \"Formalise eVariationOn for F restricted to the great-circle arc joining the normalised directions and prove the bound from the definition of variation; instantiate at the U84 numbers delta = 0.008, eps = 1e-4.\",\n    \"if_true\": \"Gives a principled instability cost for rank-based crossing tests and a criterion for preferring them only when variation is affordable.\",\n    \"if_false\": \"Some statistic separates the cap with vanishing variation, which would contradict the attained ceiling and force a re-examination of the metric used on predictor space.\",\n    \"proof_strategy\": \"Parametrise the geodesic, apply the definition of eVariationOn to the two endpoints, then combine with chord_le_sqrt_two_mul to normalise by arclength.\",\n    \"catalog_references\": [\"Catalog.Physics.SphericalCapPowerCeiling\", \"Catalog.Novelty.TDialU84ApproachNotCrossed\"]\n  },\n  {\n    \"title\": \"Dimension-Free Packing Capacity of Correlation Caps\",\n    \"domain\": \"Geometry\",\n    \"description\": \"The chain bound cap_ladder_count_bound limits how many successive hypotheses an L-Lipschitz statistic can resolve inside a cap. We conjecture the same bound for arbitrary finite families, not just chains, giving a dimension-free capacity 1 + L*sqrt(2*eps)/delta even though the cap contains exponentially many separated directions.\",\n    \"conjecture\": \"For any finite family of nonzero vectors pairwise correlated at level >= 1-eps and any L-Lipschitz F whose values are pairwise delta-separated, the family has at most 1 + L*sqrt(2*eps)/delta members.\",\n    \"test\": \"Sort the finite value set of F, apply the chain bound to the sorted chain, and check tightness numerically for small families on ",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4548",
+    "priority_score": 0.4429459473857418,
+    "research_mode": "team",
+    "source_exp_id": "fe7714ae",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:27.911748+00:00",
+    "title": "Direction 5 \u2014 Cap ceilings for the whole `T`-dial ladder"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  The poset of ordered patterns of `Fin n`, ordered by\n\"coarsening the block order\", is isomorphic to the face poset of the Coxeter\ncomplex of type `A_{n-1}` (a triangulation of the `(n-2)`-sphere); in particular\nits proper part has reduced Euler characteristic `(-1)^{n-2}(n-1)!` and its\n`f`-vector is `f_{k-1} = S(n,k)\u00b7k!` for `1 \u2264 k \u2264 n`.\n\nThe key insight is that the `f`-vector claim is *already proved* \u2014 it is exactly\n`card_ordPatternsWith` \u2014 so the conjecture reduces to identifying the order\nrelation, i.e. to showing that `rank`-refinement is the face relation, after\nwhich the sphere statement follows from `chamber_convex` and `iUnion_chamber`.\n\n**Why now?**  `Faces.lean` proves faces are convex and that the ordered pattern\nis a complete invariant, and `Chambers.lean` proves the chambers partition the\ninjective locus; the missing ingredient is only the order-theoretic comparison\nlemma between `rank` and `pat`, for which `pat_rank` is the base case.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Signed Kernel Patterns for Hyperoctahedral Arrangements\",\n    \"domain\": \"Geometry\",\n    \"description\": \"Extend the kernel-pattern classification from the braid arrangement (type A) to the hyperoctahedral arrangement (type B), where hyperplanes x_i = \u00b1x_j and x_i = 0 appear. The invariant should be the kernel of i \u21a6 |x_i| decorated with a sign vector, and the resulting counts should be the type-B Dowling partition numbers rather than the Bell numbers. This tests whether the completeness proof is genuinely group-theoretic rather than an accident of the symmetric group.\",\n    \"conjecture\": \"The signed kernel pattern is a complete invariant of the orbits of the hyperoctahedral group acting diagonally on n-tuples, and the number of flats of the type-B arrangement in R^n equals the Dowling number sum_k C(n,k) * D(k), giving 1, 2, 6, 24, 116, 648.\",\n    \"test\": \"Define signedPat on Fin n -> X with an involution, prove a signedPat_congr analogue, and verify the counts 1, 2, 6, 24, 116 by decide for n <= 4 before proving the general Dowling recursion by the delete-last-index method of Stirling.lean.\",\n    \"if_true\": \"Kernel patterns become a uniform combinatorial model for the intersection lattices of all classical reflection arrangements, and the Bell/Dowling dichotomy is explained by the invariance argument alone.\",\n    \"if_false\": \"Completeness genuinely depends on the full symmetric group, isolating the failure to the sign action and pinpointing the extra invariant needed.\",\n    \"proof_strategy\": \"Reuse pat_congr and pat_comp_injective verbatim for the induced equivalence relation; then re-run the card_patternsWith_succ_succ recursion with the Dowling recursion in place of the Stirling recursion.\",\n    \"catalog_references\": [\"Geometry.KernelPatterns.Core\", \"Geometry.KernelPatterns.Stirling\", \"Geometry.KernelPatterns.BraidFlats\"]\n  },\n  {\n    \"title\": \"Mobius Rigidity of the Kernel Lattice\",\n    \"domain\": \"Combinatorics\",\n    \"descrip",
     "domains": [
       "Geometry",
@@ -39780,6 +40013,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-27T09:49:52.889604+00:00",
     "title": "From perfect to computational hiding: a quantitative compiler"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** After a non-adaptive sweep leaves the knee bracketed in `(p, g]`, any\nadaptive procedure that certifies the exact knee needs at least `\u2308log\u2082(g \u2212 p)\u2309` further\ngate evaluations in the worst case, and bisection attains this bound.  For NET-62\n(`p = 12`, `g = 20`) that is exactly `3` further cells, the cheapest of which is `k = 16`.\n\nThe key insight is that `bracket_tight` shows the adversary retains full freedom inside\nthe hole, which converts the experiment-design question into a standard decision-tree\nlower bound over `g \u2212 p` indistinguishable profiles.  Why now? The family\n`Net62.profileAt t` is precisely the adversary's strategy set, already constructed and\nproved to match the table.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Budgeted Grid Optimality for Additive versus Multiplicative Loss\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"With a fixed number of sweep points in a window, arithmetic grids minimise worst-case additive rounding error while geometric grids minimise worst-case multiplicative error. The conjecture makes this precise and identifies the doubling grid as optimal for the multiplicative loss only. It explains the NET-62 discrepancy as a mismatch of loss function rather than an experimental fault.\",\n    \"conjecture\": \"Among sweep sets of size r inside [1, N], the arithmetic grid of step ceil(N/r) minimises max_k (read k - k) and the geometric grid of ratio N^(1/r) minimises max_k (read k)/k.\",\n    \"test\": \"Formalise both worst-case losses over Finset sweep sets and prove optimality by an exchange argument on consecutive gaps; check the doubling grid instance against GridKnee.dyad_overstates.\",\n    \"if_true\": \"Grid choice becomes a decision about which error a deployment cares about, with a proved optimum for each.\",\n    \"if_false\": \"Some non-uniform grid beats both families, which would itself be a useful harness design.\",\n    \"proof_strategy\": \"The worst-case loss of a sweep set is determined by its gap profile; equalising gaps (additively or multiplicatively) is optimal by a standard exchange/convexity argument.\",\n    \"catalog_references\": [\"Catalog.NumberTheory.GridKneeResolution\", \"Catalog.NumberTheory.GridKneeQuantization\"]\n  },\n  {\n    \"title\": \"Octave-Collapse Bound on Certifiable Chain Length\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"A doubling sweep over budgets in [1, N] has at most clog2 N + 1 possible verdicts, so any longer chain of knees must repeat a value. The conjecture upgrades this counting bound to the number of strict increases such a sweep can certify, namely the number of octaves the chain meets minus one.\",\n    \"conjecture\": \"For knees k(1) < ... < k(r) in [1, N] the doubling sweep produces at most clog2 N + 1 distinct readings, and it certifies exactly (number of distinct octaves met) - 1 strict increases.\",\n    \"test\": \"Extend GridKnee.card_verdicts_dyad_le to chains and pair it with GridKnee.read_strictMono_reflect; the chain {16,20,24} is the test case, where 1",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_4553",
+    "priority_score": 0.44291601900995053,
+    "research_mode": "team",
+    "source_exp_id": "0bdc483a",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:45.056629+00:00",
+    "title": "Adaptive probing lower bound inside a hole"
   },
   {
     "consumed_by_exp_id": "",
@@ -40064,6 +40312,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 4 settled the minimax question posed after cycle 2: the optimum over smooth tests is the\nchordal distance and it is attained by a *correlation* statistic, namely correlation against the\ncontrast direction.  What remains open is implementability.  **The key insight is** that the\ncontrast direction is not an observable: it is built from the two hypothetical predictors\nthemselves, so a physically realisable test must correlate against a direction in the span of\n*measurable* covariates, and the loss is exactly the cosine of the angle between that span and\nthe contrast direction.  **Why now?** With the optimum pinned exactly, the residual question is\na single projection estimate, and the recorded response `w` already provides one measurable\ndirection achieving `0.008` out of the optimal `0.0141\u2026`, i.e. cosine `0.5657` \u2014 a concrete\nnumber to beat.",
+    "domains": [],
+    "id": "fd_4547",
+    "priority_score": 0.4410384615384615,
+    "research_mode": "team",
+    "source_exp_id": "fe7714ae",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:27.163805+00:00",
+    "title": "Direction 3 \u2014 Implementability gap of the contrast test"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "*(The previous cycle's Direction 4 \u2014 an infinite family of parity witnesses \u2014 is now proved:\n`halving_obstruction_family`, together with the completeness statement\n`isSidon_insert_iff_avoid`. What follows replaces it.)*\n\n**Conjecture.** For every `n \u2265 4` the greedy set `greedySet n` is *not* a perfect difference\nset: reduced modulo `q = n\u00b2 \u2212 n + 1` its differences never cover all nonzero residues. The\nSinger family and the greedy family intersect only in the degenerate range `n \u2264 3`.\n\nThe key insight is that a perfect difference set is an algebraically rigid object \u2014 Singer\nsets come from the action of a Frobenius-type cyclic group on a projective plane \u2014 while the\ngreedy rule is purely order-theoretic and locally minimal, so the two selection principles\nshould be incompatible beyond the trivial cases; the leftover residues should be forced by\nthe rigidity result `greedy_valid_gt`, which pins each greedy value as the least admissible\none rather than an algebraically distinguished one.\n\n**Why now?** The base cases are already formalised (`greedySet_three_perfect` shows\nperfection modulo `7` at `n = 3`, `greedySet_four_not_perfect` shows the residue `5` is\nmissed modulo `13` at `n = 4`), and the exact step criterion `isSidon_insert_iff_avoid` gives\na handle on which residues a greedy extension can create, which is precisely what an\ninduction on `n` needs. Numerically the conjecture holds for every `n` up to `9`, with an\nincreasing number of missed residues.\n\n---",
     "domains": [
       "Algebra",
@@ -40306,6 +40566,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For a sweep set `S` whose smallest passing point is `g` and whose largest\nfailing point below `g` is `p`, the true knee lies in `(p, g]`, and for *every* `t` in\nthat interval there is a monotone profile matching all measurements on `S` with knee `t`.\nHence a sweep determines the knee iff `g = p + 1`.\n\nThe key insight is that a monotone profile is free inside a grid hole, so the resolving\npower of a sweep is the fineness of its consecutive gaps *around the crossing*, not its\noverall density.  Why now? The `p = 12`, `g = 20` case is fully proved in both directions\n(`Net62.true_knee_bracket`, `Net62.bracket_tight`); the general statement is the same\nconstruction with `S` abstract.",
+    "domains": [],
+    "id": "fd_4551",
+    "priority_score": 0.43999999999999995,
+    "research_mode": "team",
+    "source_exp_id": "0bdc483a",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:43.750980+00:00",
+    "title": "Tight hole brackets for arbitrary sweeps with gaps"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** The Dedekind completion of the surreal line (adding all gaps such as `On`\nand the infinitesimal gap) is a compact, connected, non-metrizable linear continuum in which\n`Surreal` embeds as a dense, totally disconnected, nowhere-locally-compact subspace; and\n`Surreal` itself is a Baire space.\n\n*The key insight is* that our clopen cuts are exactly the gaps of the surreal line, so total\ndisconnectedness measures the abundance of gaps, and completing the order must restore\nconnectedness while destroying first countability at every point.\n\n*Why now?* `Surreal.smallerPart` gives an explicit, formalised supply of gaps, which is the\nhard half of building the completion.\n\n**Test.** Formalise the cut completion of `Surreal` for small families, prove density of the\nimage, and prove that a countable intersection of dense open sets in `Surreal` is dense using\n`exists_pos_lt_seq`.",
     "domains": [],
     "id": "fd_4388",
@@ -40315,6 +40587,30 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T06:41:06.560079+00:00",
     "title": "Direction 4 \u2014 Gaps, Dedekind completion and the Baire property"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** If a knee chain `k(1) < \u22ef < k(r)` lies in `[1, N]`, a doubling sweep\nreports at most `clog\u2082N + 1` distinct values, so for `r > clog\u2082N + 1` at least\n`r \u2212 clog\u2082N \u2212 1` reported \"plateaus\" are artifacts; moreover the number of *genuine*\nstrict increases such a sweep can certify equals the number of octaves the chain meets,\nminus one.\n\nThe key insight is that the information content of a coarse sweep is bounded by the size\nof its grid inside the window, independently of the model, so flatness claims (such as\nthe `{16, 16}` size-invariance reading) are counting artifacts until the octave count is\nchecked.  Why now? `card_verdicts_dyad_le` gives the bound and `read_strictMono_reflect`\nthe reflection principle; only the chain-level bookkeeping remains.",
+    "domains": [],
+    "id": "fd_4550",
+    "priority_score": 0.4399591836734693,
+    "research_mode": "team",
+    "source_exp_id": "0bdc483a",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:43.223298+00:00",
+    "title": "Octave-collapse bound on certifiable chain length"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Let `stair b j = 2^b(2^j \u2212 1)` be the NET-47 knee family.  A doubling\nsweep reads `stair b j` as `2^(b+j)` for all `j \u2265 2`, with relative overstatement\n`2^j/(2^j \u2212 1) \u2192 1`; and an arithmetic sweep of step `d` resolves *every* rung of the\nweight-`n` ladder iff `d \u2223 2`, since the `2`-adic valuation of `stair b j` is exactly `b`\nand the ladder contains the rung with `b = 1`.\n\nThe key insight is that binary staircases are simultaneously as far as possible from the\ndyadic grid and highly divisible, so they separate the two grid families sharply.  Why\nnow? `Net62.stair_dyad_read` proves the first clause; the ladder-wide statement combines\nit with `KneeStaircase.factorization_two_stair`, already in the catalog.",
+    "domains": [],
+    "id": "fd_4552",
+    "priority_score": 0.4399591836734693,
+    "research_mode": "team",
+    "source_exp_id": "0bdc483a",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:44.305168+00:00",
+    "title": "Staircase knees are dyadically invisible"
   },
   {
     "consumed_by_exp_id": "",
@@ -42339,19 +42635,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Specialize the generic ordered-cloud theorem to a formally defined increasing enumeration of primes."
   },
   {
-    "consumed_by_exp_id": "4d41e431",
-    "description": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,\n`degree_two_exact`, `degree_three_exact` \u2014 the last one extracts its three linear\nconstraints from nothing but linear independence of the chart coordinates); the general case\nonly needs the recursion to be organised by total degree, which the reflective `NExpr`\ncalculus makes mechanical.",
-    "domains": [],
-    "id": "fd_1650",
-    "phase": "A",
-    "priority_score": 0.4224285714285715,
-    "research_mode": "team",
-    "source_exp_id": "2e28602b",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T22:41:46.891152+00:00",
-    "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "formulate probabilistic shell deficits and derive high-probability crossing-window bounds.",
     "domains": [
@@ -42931,6 +43214,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T14:08:10.986174+00:00",
     "title": "Kernel Completeness Beyond the Symmetric Group"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Fix a window `[1, N]` and a budget of `r` sweep points.  The sweep set\nminimising the worst-case *additive* overstatement `max_k (read k \u2212 k)` is the arithmetic\ngrid of step `\u2308N/r\u2309`, while the sweep set minimising the worst-case *multiplicative*\noverstatement `max_k (read k)/k` is the geometric grid of ratio `N^{1/r}` (rounded to\nintegers).  In particular the doubling grid is optimal for the wrong loss function, which\nis exactly why it misreports knees by up to a factor `2` while costing only `log\u2082N`\npoints.\n\nThe key insight is that the two grid families in this round are not \"coarse versus fine\"\nbut *optima of two different loss functions*, so the NET-62 discrepancy is a statement\nabout which error the harness should minimise.  Why now? `card_resolved_arith`,\n`card_resolved_dyad_le` and `dyad_overstates` already quantify both grid families; the\noptimisation needs only an exchange argument on gap lengths.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4549",
+    "priority_score": 0.41024395936803154,
+    "research_mode": "team",
+    "source_exp_id": "0bdc483a",
+    "status": "available",
+    "timestamp": "2026-09-02T09:39:42.665921+00:00",
+    "title": "Budgeted grid optimality: additive versus multiplicative error"
   },
   {
     "consumed_by_exp_id": "",
@@ -47366,14 +47663,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantitative collision bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c90a227e",
     "description": "Generalize from permutations of distinct elements to multisets with repeated keys. The expected number of distinguishable inputs is the multinomial coefficient `n! / \u220f m\u1d62!`, and the corresponding erased information should be its logarithm.",
     "domains": [],
     "id": "fd_2191",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "8d3b0867",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:01.751007+00:00",
     "title": "Generalize from permutations of distinct elements to multisets with repeated keys."
   },
