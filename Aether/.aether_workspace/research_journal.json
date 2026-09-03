@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e8ef44c2",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Topology of the prime point cloud\n\nDerived from four research cycles on this thread, whose verified outcomes are:\n\n* the degree-zero barcode of the primes is the gap sequence, it",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 71,
-      "timestamp": "2026-08-31T13:52:14",
-      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-    },
-    {
       "cycle_id": "df74e96c",
       "domain": "Novelty",
       "key_insight": "# FUTURE_DIRECTIONS — after the GAP-L7 falsification (round-76 #1)\n\n## What this run established (all `sorry`-free, `Catalog/Novelty/Reorder*.lean`)\n\nCycle 1\n\n* **Exchange theorem** (`probeCost_massso",
@@ -499,19 +489,19 @@
       "theorem_count": 95,
       "timestamp": "2026-09-03T14:36:20",
       "title": "Uniqueness of the Two-Point Transreal Compactification"
+    },
+    {
+      "cycle_id": "ed88da41",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — OR-dial invariance, washout, and what comes next\n\nThis thread has established, with complete Lean 4 proofs and no `sorry`, the following\nstructural laws for the semiprime / multi",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 749,
+      "timestamp": "2026-09-03T18:40:18",
+      "title": "FACT round-48 #2 — T-DIAL-UNIF-HB: the dial holds at the regime × bitlen intersection (paper 177)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a4769f7a",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — cyclic cubic conductor 13 and the subfield channel\n\n## What is now proved (all `sorry`-free, in `Catalog/Bridges/`)\n\nCycles 1–2:\n\n* the **periodic transfer / uniform-cover** inva",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 194,
-      "timestamp": "2026-08-22T19:36:20",
-      "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)"
-    },
     {
       "cycle_id": "ae01533d",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 95,
       "timestamp": "2026-09-03T14:36:20",
       "title": "Uniqueness of the Two-Point Transreal Compactification"
+    },
+    {
+      "cycle_id": "ed88da41",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — OR-dial invariance, washout, and what comes next\n\nThis thread has established, with complete Lean 4 proofs and no `sorry`, the following\nstructural laws for the semiprime / multi",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 749,
+      "timestamp": "2026-09-03T18:40:18",
+      "title": "FACT round-48 #2 — T-DIAL-UNIF-HB: the dial holds at the regime × bitlen intersection (paper 177)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "54a9fda9",
-      "domain": "Cryptography",
-      "name": "capBlocks_self",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "aa167cd7",
-      "domain": "NumberTheory",
-      "name": "summable_norm_term",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "aa167cd7",
-      "domain": "NumberTheory",
-      "name": "evalT_mul",
-      "quality": 0.86
-    },
     {
       "cycle_id": "aa167cd7",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "ninf_notMem_range_fin",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "ed88da41",
+      "domain": "Bridges",
+      "name": "catalog",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "ed88da41",
+      "domain": "Bridges",
+      "name": "catalog",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "ed88da41",
+      "domain": "Bridges",
+      "name": "eml_generates_neg_one",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-09-03T14:36:20",
+  "last_updated": "2026-09-03T18:40:18",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "58852b38",
-        "quality": 0.89,
-        "theorems": 157,
-        "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
-      },
-      {
         "cycle_id": "a4769f7a",
         "quality": 0.9,
         "theorems": 194,
@@ -3203,6 +3197,12 @@
         "quality": 0.89,
         "theorems": 161,
         "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
+      },
+      {
+        "cycle_id": "ed88da41",
+        "quality": 0.88,
+        "theorems": 749,
+        "title": "FACT round-48 #2 — T-DIAL-UNIF-HB: the dial holds at the regime × bitlen interse"
       }
     ],
     "Combinatorics": [
