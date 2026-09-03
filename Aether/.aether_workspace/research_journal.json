@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "be2e1d6c",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — after the Two-Tree Closure\n\nThe work of this cycle closes the \"energy-ascent\" question at four strengths and, in\ndoing so, isolates exactly what a reopening probe would have to l",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 172,
-      "timestamp": "2026-08-31T05:36:07",
-      "title": "FACT rounds 70–71 SYNTHESIS — THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exac"
-    },
-    {
       "cycle_id": "ecb169bf",
       "domain": "Bridges",
       "key_insight": "# Future Directions — after the tree-sieve / multi-target verdicts\n\nThe formalized cycle established six things, all with sorry-free Lean proofs in\n`Catalog/Bridges/`:\n\n1. **Invalid as stated.** An id",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-09-03T09:51:52",
       "title": "FACT round-52 #1 — T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
+    },
+    {
+      "cycle_id": "98caf022",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — real-parameter scale flow on knee chains\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.\n\n## What survived this cycle\n\n* **The extension exists and is cano",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-09-03T09:52:09",
+      "title": "Real-Parameter Scale Flow on Knee Chains"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c08b5555",
-      "domain": "Shared",
-      "key_insight": "# Future directions — after the additive uncertainty principle on Z/pZ\n\n## What has been established\n\nThe previously open item was the *additive* uncertainty bound `|supp f| + |supp f̂| ≥ p + 1` for\np",
-      "quality_score": 0.93,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-22T15:36:10",
-      "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
-    },
     {
       "cycle_id": "ba827ea4",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-09-03T09:51:52",
       "title": "FACT round-52 #1 — T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
+    },
+    {
+      "cycle_id": "98caf022",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — real-parameter scale flow on knee chains\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.\n\n## What survived this cycle\n\n* **The extension exists and is cano",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-09-03T09:52:09",
+      "title": "Real-Parameter Scale Flow on Knee Chains"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a75b3939",
-      "domain": "Probability",
-      "name": "length_twoMaskStack",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "a75b3939",
-      "domain": "Probability",
-      "name": "chain_append_pair",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "a75b3939",
-      "domain": "Probability",
-      "name": "chain_twoMaskStack",
-      "quality": 0.88
-    },
     {
       "cycle_id": "fe7714ae",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "cubeSu",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "98caf022",
+      "domain": "Tropical",
+      "name": "reach_nonneg",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "98caf022",
+      "domain": "Tropical",
+      "name": "served_iff",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "98caf022",
+      "domain": "Tropical",
+      "name": "isGreatest_served",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-03T09:51:52",
+  "last_updated": "2026-09-03T09:52:09",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "aa4eb9d3",
-        "quality": 0.86,
-        "theorems": 106,
-        "title": "Both endpoints of the trade-off are now formal theorems in this"
-      },
-      {
         "cycle_id": "560d610e",
         "quality": 0.82,
         "theorems": 93,
@@ -4009,6 +4003,12 @@
         "quality": 0.6729149999999999,
         "theorems": 27,
         "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
+      },
+      {
+        "cycle_id": "98caf022",
+        "quality": 0.82,
+        "theorems": 88,
+        "title": "Real-Parameter Scale Flow on Knee Chains"
       }
     ]
   }
