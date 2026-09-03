@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2f2e652e",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — NET-88 / THE-TOKENIZER-TAX-EXPLODES\n\n## What this cycle established\n\nThree new files in `Catalog/Algebra/` formalise the NET-88 verdict as algebra rather than\nas a table of measu",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 50,
-      "timestamp": "2026-08-31T23:52:29",
-      "title": "NET-88: THE-TOKENIZER-TAX-EXPLODES — German prose at 4096 needs >56 keys (all points fail); +4 fine-"
-    },
-    {
       "cycle_id": "51790419",
       "domain": "Novelty",
       "key_insight": "# Future directions — after FACT round-70 #1 (TDIAL-U112, exp 545)\n\nThree cycles of the loop produced: (i) a sharp Gram/spherical decorrelation bound that\nstrictly improves the catalog's previous adva",
@@ -499,19 +489,19 @@
       "theorem_count": 131,
       "timestamp": "2026-09-03T18:41:17",
       "title": "FACT round-45 #3 — TIGHT-U-RECAL: reweighting cannot recover the tight-u drop (paper 170)"
+    },
+    {
+      "cycle_id": "0688a872",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — MA-1 effectivity (round 48, exp 509)\n\n## What this cycle settled\n\nThe recorded claim \"the 4/3 cap's constants hold to three significant figures\" is now a\ntheorem *conditional on",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 566,
+      "timestamp": "2026-09-03T21:44:03",
+      "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3fdce232",
-      "domain": "Computation",
-      "key_insight": "# Future directions — information reconciliation, transcripts, and leakage\n\nThe formalised core (in `Catalog/Computation/InformationReconciliation*.lean`)\nestablishes, for binary keys `Key n = Fin n →",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 141,
-      "timestamp": "2026-08-22T21:36:44",
-      "title": "Information reconciliation"
-    },
     {
       "cycle_id": "22ca7429",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 131,
       "timestamp": "2026-09-03T18:41:17",
       "title": "FACT round-45 #3 — TIGHT-U-RECAL: reweighting cannot recover the tight-u drop (paper 170)"
+    },
+    {
+      "cycle_id": "0688a872",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — MA-1 effectivity (round 48, exp 509)\n\n## What this cycle settled\n\nThe recorded claim \"the 4/3 cap's constants hold to three significant figures\" is now a\ntheorem *conditional on",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 566,
+      "timestamp": "2026-09-03T21:44:03",
+      "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f3a0d241",
-      "domain": "Pythagorean",
-      "name": "also",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f3a0d241",
-      "domain": "Pythagorean",
-      "name": "headMass_finset_sum",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ee56ba3a",
-      "domain": "Novelty",
-      "name": "read",
-      "quality": 0.8
-    },
     {
       "cycle_id": "ee56ba3a",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "sub_div_le_log_div",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "0688a872",
+      "domain": "Bridges",
+      "name": "catalog",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "0688a872",
+      "domain": "Bridges",
+      "name": "catalog",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "0688a872",
+      "domain": "Bridges",
+      "name": "eml_generates_neg_one",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-03T18:41:17",
+  "last_updated": "2026-09-03T21:44:03",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "a4769f7a",
-        "quality": 0.9,
-        "theorems": 194,
-        "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conduc"
-      },
-      {
         "cycle_id": "198a9f40",
         "quality": 0.84,
         "theorems": 94,
@@ -3203,6 +3197,12 @@
         "quality": 0.88,
         "theorems": 749,
         "title": "FACT round-48 #2 — T-DIAL-UNIF-HB: the dial holds at the regime × bitlen interse"
+      },
+      {
+        "cycle_id": "0688a872",
+        "quality": 0.84,
+        "theorems": 566,
+        "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant fi"
       }
     ],
     "Combinatorics": [
