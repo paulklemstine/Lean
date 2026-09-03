@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "181f9c07",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — F4: from `2^d − 1` towards `d + c`\n\nThis cycle produced a complete, sorry-free formal framework for forbidden Boolean-lattice\nsubposets (`Catalog/Algebra/BooleanLatticeChainBound",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 90,
-      "timestamp": "2026-08-30T23:31:39",
-      "title": "F4. Sharpening the chain upper bound from $2^d - 1$ to $O(d)$"
-    },
-    {
       "cycle_id": "be2e1d6c",
       "domain": "Bridges",
       "key_insight": "# Future directions — after the Two-Tree Closure\n\nThe work of this cycle closes the \"energy-ascent\" question at four strengths and, in\ndoing so, isolates exactly what a reopening probe would have to l",
@@ -499,19 +489,19 @@
       "theorem_count": 100,
       "timestamp": "2026-09-03T04:39:23",
       "title": "FACT round-50 — DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper"
+    },
+    {
+      "cycle_id": "88e58a70",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — the zero-fit dial and its arithmetic baselines\n\n## What this cycle established\n\n1. **Prime independence.** The bare quadratic-residue baseline has tie ceiling exactly\n   $\\rho^2",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-09-03T09:51:52",
+      "title": "FACT round-52 #1 — T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a1194bd0",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's results in `Catalog/Shared/QSRelationPoolRandom.lean`,\n`QSPoolKernelSymmetry.lean`, `SievePolynomialUniversality.lean`,\n`SmoothCountSparsity.lean`, `Dick",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-22T14:38:51",
-      "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130"
-    },
     {
       "cycle_id": "c08b5555",
       "domain": "Shared",
@@ -2501,15 +2491,19 @@
       "theorem_count": 100,
       "timestamp": "2026-09-03T04:39:23",
       "title": "FACT round-50 — DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper"
+    },
+    {
+      "cycle_id": "88e58a70",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — the zero-fit dial and its arithmetic baselines\n\n## What this cycle established\n\n1. **Prime independence.** The bare quadratic-residue baseline has tie ceiling exactly\n   $\\rho^2",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-09-03T09:51:52",
+      "title": "FACT round-52 #1 — T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4d41e431",
-      "domain": "Bridges",
-      "name": "universal_of_gridCert",
-      "quality": 0.89
-    },
     {
       "cycle_id": "a75b3939",
       "domain": "Probability",
@@ -2803,9 +2797,15 @@
       "domain": "Shared",
       "name": "hasDerivAt_hFun",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "88e58a70",
+      "domain": "Cryptography",
+      "name": "cubeSu",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-03T04:39:23",
+  "last_updated": "2026-09-03T09:51:52",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "04d3a29d",
-        "quality": 0.82,
-        "theorems": 104,
-        "title": "Guarded transfer principle for real analysis"
-      },
-      {
         "cycle_id": "d4951edd",
         "quality": 0.82,
         "theorems": 85,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 71,
         "title": "FACT round-54 #1 — BALANCED-BKEY: the T-dial is robust across bitlen and u (pape"
+      },
+      {
+        "cycle_id": "88e58a70",
+        "quality": 0.78,
+        "theorems": 55,
+        "title": "FACT round-52 #1 — T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at b"
       }
     ],
     "Geometry": [
