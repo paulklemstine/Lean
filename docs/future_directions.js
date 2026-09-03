@@ -1249,16 +1249,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-45 #3 \u2014 FIXED-BOUND: the u-sensitivity is genuine reweighting (paper 169)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8aeaf6ab",
     "description": "Round-47 #1, cron iteration (exp 508, assessment v282). The dial's third validation axis.\n\n**DIAL-BITLEN-STABLE**: all 6 cells (bitlen {48, 52} \u00d7 3 seeds) inside [0.60, 0.85]; T beats the bare QR-count everywhere (mean advantage +0.12/+0.14). Neither graceful decline nor cliff \u2014 the dial's accuracy is BITLEN-STABLE.\n\nThe zero-fit dial is now validated on three axes: seed-stability (paper 165), regime-invariance (paper 162), and bitlen-stability (this paper). Its deployment envelope is fully characterized.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp508_t_dial_bitlen.py + exp508_result.json, seeds 20261010\u201312.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3649",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T11:37:04.903570+00:00",
     "title": "FACT round-47 #1 \u2014 T-DIAL-BITLEN: the zero-fit dial is bitlen-stable (paper 175)"
   },
@@ -1364,21 +1365,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-22T14:39:10.954810+00:00",
     "title": "FACT round-52 #1 \u2014 T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
-  },
-  {
-    "consumed_by_exp_id": "42a2aa0b",
-    "description": "Round-50 (exp 513). The abelian ladder's eleventh rung.\n\n**FULL-PINNING-AT-DEGREE-11**: Q(\u03b6\u2082\u2083)\u207a confirms every pre-stated prediction:\n- T(p)=1 iff dlog\u22610 mod 11; densities {1/11, 10/11}; H(T)=0.4395 bits\n- I(p mod 29; T) = H(T) EXACTLY (perm z>1000, per-class degenerate)\n- Semiprime pair Bin(2,1/11) \u03c7\u00b2=0.08; Is(11)=0.116\n\nThe abelian full-pinning law is UNIVERSAL: every degree 2\u201311 tested and confirmed with no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp513_degree_11.py + exp513_result.json, seed 20261050.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3676",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T14:39:10.957753+00:00",
-    "title": "FACT round-50 \u2014 DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper 180 addendum)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1761,6 +1747,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 8ec45b40 (Q=0.850), which proved 124 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** On image-finite transition systems, every interpretation invariant under all modal observations factors through bisimulation classes, but need not factor through isomorphism classes; the gap is characterized by multiplicity-sensitive observations.\n\nThe key insight is that different o",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_8ec45b40_ca177275",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "8ec45b40",
+    "status": "available",
+    "timestamp": "2026-09-03T04:39:06.363185+00:00",
+    "title": "Deepening: Bisimulation versus isomorphism as semantic resolution"
   },
   {
     "consumed_by_exp_id": "",
@@ -2436,6 +2436,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 42a2aa0b (Q=0.840), which proved 100 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-50 (exp 513). The abelian ladder's eleventh rung.\n\n**FULL-PINNING-AT-DEGREE-11**: Q(\u03b6\u2082\u2083)\u207a confirms every pre-stated prediction:\n- T(p)=1 iff dlog\u22610 mod 11; densities {1/11, 10/11}; H(T)=0.4395 bits\n- I(p mod 29; T) = H(T) EXACTLY (perm z>1000, per-class degenerate)\n- Semiprime pair Bin(2,1/11)",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_42a2aa0b_790938fd",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "42a2aa0b",
+    "status": "available",
+    "timestamp": "2026-09-03T04:39:23.704517+00:00",
+    "title": "Deepening: FACT round-50 \u2014 DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder thro"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -2475,34 +2489,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5f5fd816 (Q=0.820), which proved 118 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-50 (exp 520). The first composite-order Galois group rung.\n\n**FULL-PINNING-AT-DEGREE-12**: Q(\u03b6\u2085\u2086)\u207a degree 12, G\u207a = C\u2086\u00d7C\u2082 (non-cyclic), conductor 56 \u2014 selected from ten \u03c6(f)=24 candidates by pre-stated rule.\n\nI(p mod 56; T) = H(T) = 1.7296 bits EXACTLY (gap 0.0, machine-exact); type densities {",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_5f5fd816_5333608a",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "5f5fd816",
-    "status": "available",
-    "timestamp": "2026-09-03T00:17:41.388246+00:00",
-    "title": "Deepening: FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order a"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8c9b3d94 (Q=0.820), which proved 96 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-51 #1, cron iteration (exp 515, assessment v283). The full augmented dial tested across 5 fresh populations.\n\n**EXTENDED-DIAL-ABSENT**: the prime-power feature's contribution does NOT replicate \u2014 \u0394R\u00b2(pp) \u2248 0 on all 5 populations. Per-seed R\u00b2(augmented) at u=3.5: [0.490, 0.555, 0.428, 0.532, 0.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_8c9b3d94_94e20e6e",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "8c9b3d94",
-    "status": "available",
-    "timestamp": "2026-09-03T00:18:20.440593+00:00",
-    "title": "Deepening: FACT round-51 #1 \u2014 EXTENDED-DIAL: the prime-power feature does not replicate (pa"
   },
   {
     "consumed_by_exp_id": "",
@@ -7539,6 +7525,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T04:40:09.238689+00:00",
     "title": "ArXiv paper: A General Construction of Codes from Drinfeld Modules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Localized Persistent Commutative Algebra' and formalize its key results. Abstract: We develop a localized persistent theory of commutative algebra for Stanley-Reisner rings, based on local cohomology supported at a coordinate prime rather than at the maximal ideal. The construction is modeled on the persistent Stanley-Reisner theory of Suwayyid and Wei (arXiv:2503.23482) and its functorial development for graphs and hypergraphs (arXiv:2512.17619), in which invariants of the face ring such as graded Betti numbers and f- and h-vectors are persisted across a filtration. That framework is built from the minimal free resolution and is thus Tor-theoretic; we work instead on the injective side, and the resulting modules record information localized at a single vertex, complementing the global picture given by maximal-support local cohomology. For a vertex prime $p_i = (x_j : j \\neq i)$ we prove an exact $\\mathbb{Z}^n$-graded decomposition of $H^q_{p_i}(k[\u0394])$ into the maximal-support local cohomology of the deletion and of the link of the vertex $i$, the first in $x_i$-degr",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4615",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.02858v1",
+    "status": "available",
+    "timestamp": "2026-09-03T04:39:53.375606+00:00",
+    "title": "ArXiv paper: Localized Persistent Commutative Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Finite extensions of abelian schemes and duality for commutative group stacks' and formalize its key results. Abstract: Let $R$ be a discrete valuation ring. We prove that every proper flat finitely presented commutative $R$-group scheme $P$ fits into an exact sequence \\[ 0\\longrightarrow E\\longrightarrow P\\longrightarrow B\\longrightarrow0, \\] where $E$ is finite flat and $B$ is an abelian scheme. For a quasiabelian model---that is, a proper flat finitely presented $R$-group scheme with abelian generic fibre---we prove a finer structure theorem: its normalization is an abelian scheme, and the model is obtained from it by a pushout involving finite flat group schemes. An analogous abelian quotient exists for proper flat commutative group stacks with finite flat inertia. These structure theorems give explicit quotient presentations for duals. Over an arbitrary base, we show that the dual of a proper flat finitely presented commutative group algebraic space is algebraic, proper, flat, and finitely presented, and biduality holds. When $2$ is invertible, the corresponding result for group stacks proves Broch",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4616",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.02826v1",
+    "status": "available",
+    "timestamp": "2026-09-03T04:39:56.481736+00:00",
+    "title": "ArXiv paper: Finite extensions of abelian schemes and duality for commutative group stacks"
   },
   {
     "consumed_by_exp_id": "",
@@ -15479,14 +15494,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of the Two-Point Transreal Compactification"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d00ca27a",
     "description": "The upper bracketing degree of the binomial weights is \u230a(n+1)\u03b1\u230b with \u03b1 = p/(p+q), a Beatty sequence. The conjecture is that the increment word of the argmax staircase is the Sturmian word of slope \u03b1, so the combinatorics of binomial peaks is the combinatorics of a circle rotation.\n\nThe word w n = lastArgmax (n+1) - lastArgmax n \u2208 {0,1} is the Sturmian/Beatty word of slope p/(p+q); in particular it is balanced and has exactly n+1 factors of length n when \u03b1 is irrational.\n\nIdentify lastArgmax with \u230a(n+1)\u03b1\u230b (already proved) and connect to mathlib's Beatty sequence API; verify balance numerically for several \u03b1.\n\nTransfers the full Sturmian toolkit (continued fractions, three-distance theorem) to statements about binomial peaks.\n\nThe staircase carries extra arithmetic from the +1 shift and is not literally Sturmian, which itself is a precise structural statement.",
     "domains": [],
     "id": "fd_3420",
+    "phase": "A",
     "priority_score": 0.5910000000000001,
     "research_mode": "team",
     "source_exp_id": "ec6993b5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T16:51:23.724905+00:00",
     "title": "Sturmian Structure of the Argmax Staircase"
   },
@@ -17259,6 +17275,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T02:12:58.874133+00:00",
     "title": "Transcript Conservation and the Worthlessness of Adaptivity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Depth measures how far an observer looks, multiplicity how wide. The conjecture asserts these coordinates never interact: parametric witness families exist for every prescribed depth and degree defect, and the invariant lattice they generate has exactly two limit points.\n\nFor all k and d there are pointed models that are depth-k equivalent and bisimilar yet whose root out-degrees differ by exactly d; and the lattice of invariants generated by the depth-k and degree-j observations has exactly the two limit points BisimInv and IsoInv.\n\nGeneralize multR to a family with d duplicated successors, prove bisimilarity by the same class-kernel argument, and compute out-degrees by decide; then prove the lattice statement from the separation witnesses.\n\nThe observational lattice is a product of two independent chains, so any observational language is classified by a pair of numbers.\n\nDepth-bounded counting is strictly more expressive than the two coordinates separately, revealing a genuinely two-dimensional observational logic.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_4612",
+    "priority_score": 0.5640768584282383,
+    "research_mode": "team",
+    "source_exp_id": "8ec45b40",
+    "status": "available",
+    "timestamp": "2026-09-03T04:38:54.325328+00:00",
+    "title": "Orthogonality of Depth and Multiplicity Observations"
   },
   {
     "consumed_by_exp_id": "",
@@ -29992,6 +30023,64 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 2 showed that bisimulation plus out-degree matching still fails to determine isomorphism, the obstruction being sharing. The conjecture is that a single integer, the sharing index (reachable worlds minus unravelling nodes), is a complete invariant for graded-bisimilar finite pointed models. This would turn the residual gap into a computable number and identify the unravelling as the canonical representative.\n\nFor finite pointed models M, N that are bisimilar with equal out-degrees at every related pair, M and N are isomorphic if and only if their sharing indices coincide; the unravelling is the unique representative of sharing index 0.\n\nDefine the unravelling of a tag-indexed frame inside the satF semantics, prove it bisimilar and multiplicity-matched to the original, and verify the criterion on the shareR/treeR witnesses of BisimulationBeyondMultiplicity.lean before attempting the general finite case.\n\nThe bisimulation/isomorphism gap becomes fully quantified: modal observation plus counting plus one integer determines the model up to isomorphism.\n\nA second, non-numeric obstruction to isomorphism exists beyond folding, and the resolution hierarchy has at least four strictly distinct levels.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4609",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "8ec45b40",
+    "status": "available",
+    "timestamp": "2026-09-03T04:38:52.601248+00:00",
+    "title": "Sharing Index as the Exact Residue of Graded Bisimulation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 5 proved that depth-k observation determines the modal theory of worlds of height at most k. The algorithmic counterpart is that partition refinement decides bisimilarity on a truncation in exactly that many rounds, with the chain frame as the worst case. This would turn a semantic criterion into a verified decision procedure with a matching lower bound.\n\nPartition refinement decides bisimilarity of the worlds 0..N of any tag-indexed frame in at most N rounds, the bound being attained on the chain frame, and the number of bisimulation classes below N is at most N+1 with equality exactly for the chain.\n\nImplement the refinement as a Lean function on Finset partitions, prove its fixed point equals Bisim.Bisimilar restricted to the truncation using Collapse.depthEq_iff_modEq_of_le, and measure rounds on chainR, multR, shareR by evaluation.\n\nEvery bisimulation-invariant statement about truncated catalog frames becomes machine-checkable by computation with a proved optimal round bound.\n\nRefinement rounds and modal depth are not the same resource, revealing a gap between logical and algorithmic measures of behaviour.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4610",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "8ec45b40",
+    "status": "available",
+    "timestamp": "2026-09-03T04:38:53.178384+00:00",
+    "title": "Partition Refinement with Tight Round Complexity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Adding the graded modality 'at least j successors satisfy a' to the language should characterize exactly the invariance class strictly between bisimulation and isomorphism that cycles 1 and 2 bracketed. The conjecture is a Hennessy-Milner theorem for that language, with graded bisimulation on the semantic side.\n\nOn tag-indexed frames, two pointed models satisfy the same graded modal formulas if and only if they are related by a graded bisimulation, and the induced invariance class strictly contains BisimInv and is strictly contained in IsoInv.\n\nDefine the graded language and its semantics by counting successors with succList, prove transport along graded bisimulations, and prove the converse by conjoining the finitely many separating formulas exactly as in modEq_forth; strictness reuses multR and the shareR/treeR pair.\n\nThe observational ladder gains a proved middle rung, and multiplicity-sensitive invariants get an intrinsic logical characterization.\n\nCounting observations are not compositional in this setting, which would make out-degree an invariant with no modal definition at all.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4611",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "8ec45b40",
+    "status": "available",
+    "timestamp": "2026-09-03T04:38:53.755083+00:00",
+    "title": "Graded Hennessy-Milner Theorem for the Multiplicity Layer"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Since truncated GL theories and their reflection-depth spectra are bisimulation invariants, unravelling a realizing frame cannot change the spectrum. The conjecture is that every realizable spectrum is realizable on a sharing-free frame with linearly many worlds.\n\nEvery reflection-depth spectrum realized by some tag-indexed frame truncated at N is realized by a tree frame, and the minimal world count of such a tree frame grows linearly in the length of the spectrum.\n\nApply TheoryTransfer.depthReflection_congr_of_bisim to the unravelling of the frames used in TagReflectionDepthRigidity and count worlds.\n\nAll catalog realizability results acquire a canonical sharing-free normal form, simplifying every downstream rigidity argument.\n\nSharing is proof-theoretically economical: some spectra need exponentially fewer worlds when folding is allowed, which is itself a strong complexity statement.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4613",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "8ec45b40",
+    "status": "available",
+    "timestamp": "2026-09-03T04:38:54.881705+00:00",
+    "title": "Tree Normal Form for Reflection-Depth Spectra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -41415,19 +41504,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kraft-weighted incompressibility on derivation trees"
   },
   {
-    "consumed_by_exp_id": "8ec45b40",
-    "description": "**Conjecture.** On image-finite transition systems, every interpretation invariant under all modal observations factors through bisimulation classes, but need not factor through isomorphism classes; the gap is characterized by multiplicity-sensitive observations.\n\nThe key insight is that different observational languages induce different notions of sameness, with ordinary modal truth naturally aligned to behavior rather than literal structural identity.\n\n**Why now?** Structural truth transport and existing depth-bounded behavioral equivalences can be compared within one framework, exposing a testable hierarchy from renaming invariance to bisimulation invariance.",
-    "domains": [],
-    "id": "fd_2156",
-    "phase": "A",
-    "priority_score": 0.4390588235294117,
-    "research_mode": "team",
-    "source_exp_id": "198023c0",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:22:52.848250+00:00",
-    "title": "Bisimulation versus isomorphism as semantic resolution"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "**Conjecture.** Every state in the stabilized winning region has a least iteration rank, and this rank equals the minimum worst-case capture time among all cops' strategies from that state.\n\nThe key insight is that the first table containing a state records the outer existential choice of a cops' move followed by the worst robber response, which is precisely a minimax recurrence. **Why now?** Bounded-horizon correctness already gives one direction; extracting least ranks would turn a yes/no recognizer into a strategy and optimal-capture-time certificate generator.",
     "domains": [],
@@ -49596,5 +49672,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T18:44:19.765273+00:00",
     "title": "D4. Budget-crossing is generic, not exceptional"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "the universal pinning theorem for **all** finite abelian Galois groups\n  (`abelian_full_pinning`), which turns \"no exceptions at degrees 2\u201311\" from an\n  empirical observation into a theorem;",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4614",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "42a2aa0b",
+    "status": "available",
+    "timestamp": "2026-09-03T04:39:15.261091+00:00",
+    "title": "the universal pinning theorem for all"
   }
 ];

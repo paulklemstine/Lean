@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9c1e5dc4",
-      "domain": "Probability",
-      "key_insight": "# Future directions — after the U116 rebound / floor cycle\n\nFive cycles of the loop were run.  The fifth settled — negatively — the estimator question that\nthe fourth had opened: `Probability.TDialBlo",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-30T23:31:23",
-      "title": "FACT round-71 #2 — TDIAL-U116: the fade REBOUNDS, floor forming near 0.46–0.49 (paper 200)"
-    },
-    {
       "cycle_id": "181f9c07",
       "domain": "Algebra",
       "key_insight": "# Future Directions — F4: from `2^d − 1` towards `d + c`\n\nThis cycle produced a complete, sorry-free formal framework for forbidden Boolean-lattice\nsubposets (`Catalog/Algebra/BooleanLatticeChainBound",
@@ -499,19 +489,19 @@
       "theorem_count": 124,
       "timestamp": "2026-09-03T04:39:05",
       "title": "Bisimulation versus isomorphism as semantic resolution"
+    },
+    {
+      "cycle_id": "42a2aa0b",
+      "domain": "Shared",
+      "key_insight": "# Future directions after the degree-11 rung\n\nThe verified content of this cycle is:\n\n* the arithmetic pinning law at degree 11 (`realDeg_23_prime_iff`);\n* the universal pinning theorem for **all** fi",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-09-03T04:39:23",
+      "title": "FACT round-50 — DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c99dba13",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Fisher–Rao length bounds\n\nThis cycle turned the former *Conjecture 5* (\"the `L¹` bound integrates to a\nFisher–Rao length bound\") into the theorem\n`FisherRao.l1_le_fisherRao_lengt",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-08-22T13:45:51",
-      "title": "The `L¹` bound integrates to a Fisher–Rao length bound* (previously\n  Conjecture 5)."
-    },
     {
       "cycle_id": "a1194bd0",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 124,
       "timestamp": "2026-09-03T04:39:05",
       "title": "Bisimulation versus isomorphism as semantic resolution"
+    },
+    {
+      "cycle_id": "42a2aa0b",
+      "domain": "Shared",
+      "key_insight": "# Future directions after the degree-11 rung\n\nThe verified content of this cycle is:\n\n* the arithmetic pinning law at degree 11 (`realDeg_23_prime_iff`);\n* the universal pinning theorem for **all** fi",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-09-03T04:39:23",
+      "title": "FACT round-50 — DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "79285565",
-      "domain": "Shared",
-      "name": "poleSpace_mono",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "4d41e431",
-      "domain": "Bridges",
-      "name": "into",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "4d41e431",
-      "domain": "Bridges",
-      "name": "gridCert_iff_toZ_eq",
-      "quality": 0.89
-    },
     {
       "cycle_id": "4d41e431",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "bisimilar_trans",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "42a2aa0b",
+      "domain": "Shared",
+      "name": "hFun_eq_typeEntropy",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "42a2aa0b",
+      "domain": "Shared",
+      "name": "hFun_two",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "42a2aa0b",
+      "domain": "Shared",
+      "name": "hasDerivAt_hFun",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-03T04:39:05",
+  "last_updated": "2026-09-03T04:39:23",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "a1194bd0",
-        "quality": 0.78,
-        "theorems": 56,
-        "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at ev"
-      },
-      {
         "cycle_id": "c08b5555",
         "quality": 0.93,
         "theorems": 68,
@@ -3947,6 +3941,12 @@
         "quality": 0.87,
         "theorems": 106,
         "title": "Pole-order obstruction"
+      },
+      {
+        "cycle_id": "42a2aa0b",
+        "quality": 0.84,
+        "theorems": 100,
+        "title": "FACT round-50 — DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder thro"
       }
     ],
     "Tropical": [
