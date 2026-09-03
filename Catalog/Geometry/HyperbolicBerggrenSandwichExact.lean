@@ -1,4 +1,4 @@
-import Geometry.HyperbolicBerggrenBranchExact
+import Catalog.Geometry.HyperbolicBerggrenBranchExact
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle VII: the residual gap, exactly

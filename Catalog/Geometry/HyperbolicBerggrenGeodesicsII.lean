@@ -1,4 +1,4 @@
-import Geometry.HyperbolicBerggrenGeodesics
+import Catalog.Geometry.HyperbolicBerggrenGeodesics
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle II
