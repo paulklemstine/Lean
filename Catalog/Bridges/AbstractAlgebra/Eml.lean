@@ -9,10 +9,6 @@ Declarations: 17
 
 noncomputable section
 
-/-- The `eml` operation `eml a b = exp a - log b`.  (Supplied here: the file referenced
-it but the definition was missing from the project.) -/
-def eml (a b : ℝ) : ℝ := Real.exp a - Real.log b
-
 /-- [Section: # CatalogBuild.Shared.Eml
 Auto-generated from theorem catalog database.
 Domain: EML

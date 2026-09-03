@@ -1,34 +1,23 @@
-import Mathlib
-
 /-! # CatalogBuild.Shared.SpbMatrix_det_mul
 
 Auto-generated from theorem catalog database.
 Domain: EML
 Declarations: 8
-
-The declarations of this auto-generated file were emitted in an order in which several of
-them were used before being introduced (the definition `spbMatrix` came last, and
-`spbMatrix_det` after its first use), so the file did not elaborate.  Only the order has
-been repaired here; the statements and proofs are unchanged.
 -/
 
+import Mathlib
+
 noncomputable section
-
-open Matrix
-
-/-- The SPB matrix: M(a) = [[1, a], [-a, 1]]. -/
-def spbMatrix (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  !![1, a; -a, 1]
-
-/-- The determinant of the SPB matrix is 1 + a². -/
-theorem spbMatrix_det (a : ℝ) : (spbMatrix a).det = 1 + a ^ 2 := by
-  simp [spbMatrix, det_fin_two]; ring
-
 
 /-- det of the product = product of dets. -/
 theorem spbMatrix_det_mul (a b : ℝ) :
     (spbMatrix a * spbMatrix b).det = (1 + a ^ 2) * (1 + b ^ 2) := by
   rw [det_mul, spbMatrix_det, spbMatrix_det]
+
+
+/-- The determinant of the SPB matrix is 1 + a². -/
+theorem spbMatrix_det (a : ℝ) : (spbMatrix a).det = 1 + a ^ 2 := by
+  simp [spbMatrix, det_fin_two]; ring
 
 
 /-- The SPB matrix determinant is always positive. -/
@@ -61,6 +50,11 @@ theorem spbMatrix_det_ne_zero (a : ℝ) : (spbMatrix a).det ≠ 0 := by
 /-- M(0) is the identity matrix. -/
 theorem spbMatrix_zero : spbMatrix 0 = 1 := by
   simp [spbMatrix]; ext i j; fin_cases i <;> fin_cases j <;> simp
+
+
+/-- The SPB matrix: M(a) = [[1, a], [-a, 1]]. -/
+def spbMatrix (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  !![1, a; -a, 1]
 
 
 end

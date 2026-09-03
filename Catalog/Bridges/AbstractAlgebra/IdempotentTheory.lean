@@ -19,14 +19,6 @@ theorem idempotent_orthogonal_left {R : Type*} [Ring R] (e : R) (he : e * e = e)
     (1 - e) * e = 0 := by
   rw [sub_mul, one_mul, he, sub_self]
 
-/-- The complement of an idempotent is idempotent.  (Supplied here: referenced but
-missing.) -/
-theorem idempotent_complement {R : Type*} [Ring R] (e : R) (he : e * e = e) :
-    (1 - e) * (1 - e) = 1 - e := by
-  have h : (1 - e) * (1 - e) = 1 - e - e + e * e := by noncomm_ring
-  rw [h, he]
-  abel
-
 /-- Complement is idempotent (using Mathlib's IsIdempotentElem). -/
 theorem isIdempotentElem_complement {R : Type*} [Ring R] (e : R)
     (he : IsIdempotentElem e) : IsIdempotentElem (1 - e) := by

@@ -10,11 +10,6 @@ Declarations: 13
 
 noncomputable section
 
-open Matrix
-
-/-- The hyperbolic speed-addition law.  (Supplied here.) -/
-def spbH (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
-
 /-- The SPB matrix for parameter a. -/
 def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
   !![1, a; a, 1]
