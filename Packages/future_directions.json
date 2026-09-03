@@ -126610,46 +126610,6 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "025e0adb",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Round-49 #1, cron iteration (exp 511, assessment v284). Paper 175's bitlen-stability pushed to its limit.\n\n**T-DIAL-56-PARTIAL**: Spearman(T, rate) = **0.405** at bitlen 56 — BELOW the [0.55, 0.85] band. The dial DEGRADES because the smooth rate drops to **0.89%** (starved; 194/1200 Ns with ZERO hits). T still beats count by +0.093 (CI [0.042, 0.146]).\n\nThe bitlen-stability has a PRACTICAL FLOOR near bitlen ~54, beyond which the starved regime destroys rank resolution.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp511_t_dial_56.py + exp511_result.json, seed 20261030.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Novelty"
-      ],
-      "github_issue": 278,
-      "id": "fd_3662",
-      "last_attempt_time": "2026-09-03T00:22:05.517148+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 1000.0,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "github_injection",
-      "source_exp_id": "github",
-      "source_path": "github",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-08-22T13:02:58.897389+00:00",
-      "title": "FACT round-49 #1 — T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -148331,7 +148291,7 @@
       "depth_estimate": 3,
       "description": "Upgrade the yes/no triple criterion into a quantitative bound on the set of unreachable points. The union bound behind the criterion already counts unreachable targets, so optimising over admissible triples should bound the miss set by a small union of lines, degenerating to a single point in the extremal case.\n\nFor pairwise independent v_i and sets S_i containing 0, the complement of sum_i S_i v_i in F_p^2 is contained in a union of at most min over admissible triples of (d_i + d_j) lines in the direction v_l; in particular if sum_i d_i = (k-2)(p-1) and the reach is not full then the miss set is a single point.\n\nCompute the exact miss sets for all failing configurations at p=5 (k=4,5) and for the harmonic family at p=7,11,13,17; compare with the predicted line bound. Then formalise the counting version of reach_eq_univ_of_triple in Lean.\n\nYields a Kneser-type stability theorem for iterated sumsets along lines, strictly stronger than the spanning criterion and usable for spread exclusions where a small exceptional set is tolerable.\n\nThe miss set can be large even near the threshold, indicating that the failure mode is global rather than a bounded local defect.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -148591,7 +148551,7 @@
       "depth_estimate": 3,
       "description": "The log-convexity defect separates a flat-plus-spike mixture from every single truncated-exponential law by a margin independent of the spike steepness. The per-index k-bin version is already proved in this cycle (defect_mixK_ge, single_law_separationK); what remains is the summed invariant, uniformity for r near 1, and sharpness of the constant.\n\nFor k equal bins the summed second log-differences of the flat-bulk plus edge-spike mixture satisfy sum_j (p_j p_{j+2} - p_{j+1}^2) >= c * rho (1 - rho) / k with c absolute and no restriction on r in (0,1), and the proved per-index constant 1/(8k) is sharp up to a factor 2, attained at r = 1/2.\n\nSum the closed form of EdgeSpikeDefect.defect_mixK_eq over j, bound the resulting geometric sum below uniformly in r, and exhibit the extremal configuration at r = 1/2 to test sharpness.\n\nModel selection for edge kernels becomes a distance computation with explicit constants, valid at every optimiser cap and independent of the unidentified steepness.\n\nThe margin must degrade with the number of bins, which would mean fine binning genuinely destroys the evidence for a second component and would explain cross-pipeline disagreement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -149992,7 +149952,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  The poset of ordered patterns of `Fin n`, ordered by\n\"coarsening the block order\", is isomorphic to the face poset of the Coxeter\ncomplex of type `A_{n-1}` (a triangulation of the `(n-2)`-sphere); in particular\nits proper part has reduced Euler characteristic `(-1)^{n-2}(n-1)!` and its\n`f`-vector is `f_{k-1} = S(n,k)·k!` for `1 ≤ k ≤ n`.\n\nThe key insight is that the `f`-vector claim is *already proved* — it is exactly\n`card_ordPatternsWith` — so the conjecture reduces to identifying the order\nrelation, i.e. to showing that `rank`-refinement is the face relation, after\nwhich the sphere statement follows from `chamber_convex` and `iUnion_chamber`.\n\n**Why now?**  `Faces.lean` proves faces are convex and that the ordered pattern\nis a complete invariant, and `Chambers.lean` proves the chambers partition the\ninjective locus; the missing ingredient is only the order-theoretic comparison\nlemma between `rank` and `pat`, for which `pat_rank` is the base case.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Signed Kernel Patterns for Hyperoctahedral Arrangements\",\n    \"domain\": \"Geometry\",\n    \"description\": \"Extend the kernel-pattern classification from the braid arrangement (type A) to the hyperoctahedral arrangement (type B), where hyperplanes x_i = ±x_j and x_i = 0 appear. The invariant should be the kernel of i ↦ |x_i| decorated with a sign vector, and the resulting counts should be the type-B Dowling partition numbers rather than the Bell numbers. This tests whether the completeness proof is genuinely group-theoretic rather than an accident of the symmetric group.\",\n    \"conjecture\": \"The signed kernel pattern is a complete invariant of the orbits of the hyperoctahedral group acting diagonally on n-tuples, and the number of flats of the type-B arrangement in R^n equals the Dowling number sum_k C(n,k) * D(k), giving 1, 2, 6, 24, 116, 648.\",\n    \"test\": \"Define signedPat on Fin n -> X with an involution, prove a signedPat_congr analogue, and verify the counts 1, 2, 6, 24, 116 by decide for n <= 4 before proving the general Dowling recursion by the delete-last-index method of Stirling.lean.\",\n    \"if_true\": \"Kernel patterns become a uniform combinatorial model for the intersection lattices of all classical reflection arrangements, and the Bell/Dowling dichotomy is explained by the invariance argument alone.\",\n    \"if_false\": \"Completeness genuinely depends on the full symmetric group, isolating the failure to the sign action and pinpointing the extra invariant needed.\",\n    \"proof_strategy\": \"Reuse pat_congr and pat_comp_injective verbatim for the induced equivalence relation; then re-run the card_patternsWith_succ_succ recursion with the Dowling recursion in place of the Stirling recursion.\",\n    \"catalog_references\": [\"Geometry.KernelPatterns.Core\", \"Geometry.KernelPatterns.Stirling\", \"Geometry.KernelPatterns.BraidFlats\"]\n  },\n  {\n    \"title\": \"Mobius Rigidity of the Kernel Lattice\",\n    \"domain\": \"Combinatorics\",\n    \"descrip",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -150074,7 +150034,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a binary graphical model on a graph `G` with pairwise\nfeatures, the Amari–Chentsov tensor component `C_{eee}` for an edge feature `e`\nfactors as `p_e (1 − p_e)(1 − 2 p_e)` and the *mixed* component `C_{ef g}`\nvanishes whenever the features `e, f, g` lie in three distinct connected\ncomponents — with the converse failing precisely at triangles.\n\nThe key insight is that `cum3_binary_feature` and `cum3_mixed_product_eq_zero`\nare the two extreme cases (one feature; independent blocks) of a single\ninclusion–exclusion statement about third cumulants of indicator features, whose\ncombinatorics is governed by the cycle structure of `G`.\n\n**Why now?** Both extremes are now formal theorems with a shared proof\n(`cum3_expand` plus factorisation), so the interpolating statement is a\ncombinatorial bookkeeping problem over subgraphs rather than new analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -150714,7 +150674,7 @@
       "depth_estimate": 3,
       "description": "Numerically a(n) ≤ p(n) for all n ≤ 200. The Durfee square identity expresses p(n) as the same layered sum as a(n) but with Euler products truncated one step later, giving coefficientwise domination. Formalizing this would also produce a Lean proof of the Durfee square identity itself.\n\nFor every n, a(n) ≤ p(n); more precisely p(n) = Σ_{k²≤n} Σ_{i+j=n-k²} p_{≤k}(i) p_{≤k}(j), and a(n) is the same sum with p_{≤k-1} in place of p_{≤k}.\n\nFormalize the Durfee square bijection between partitions of n and triples (k, λ, μ) with λ, μ partitions with parts ≤ k and |λ|+|μ| = n-k², then compare layer by layer using the already proved pb b m ≤ pb (b+1) m.\n\nSquare-core stacks embed quantitatively inside partitions, and every upper bound for p(n) transfers to a(n).\n\nSome layer of the stack decomposition overshoots its Durfee counterpart, which would reveal an unexpected overcounting in the stack model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -150846,7 +150806,7 @@
       "depth_estimate": 3,
       "description": "It is proved that log a(n)/n → 0, in contrast with the exponential growth of unrestricted polyomino counts. This places square-core stacks in the Hardy–Ramanujan class of one-dimensional interface models and suggests the constrained ensemble has the classical partition limit shape after √n scaling.\n\nThe rescaled column-height profile of a uniformly random square-core stack of area n converges, after dividing both coordinates by √n, to the Vershik curve e^{-cx} + e^{-cy} = 1 with c = π/√6, symmetrized about the core.\n\nCombine the proved layer decomposition with known limit-shape results for partitions with bounded parts, conditioned on the two slopes having parts ≤ k-1 with k ≈ 0.5404√n.\n\nThe square-core constraint is asymptotically invisible at the level of the limit shape, confirming universality of the Vershik curve for constrained interfaces.\n\nThe core imposes a macroscopic plateau, producing a genuinely new limit shape with a flat segment of length proportional to √n.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -151357,7 +151317,7 @@
       "depth_estimate": 3,
       "description": "The refined inequality 1 + ||p - flat||_1/(2 c_asc) <= X is now proved, and it is an identity on two-cell profiles, which shows the constant 1 is optimal. The conjecture is that two-cell support is not only sufficient but necessary for equality, so the equality locus is exactly the union of the two-atom faces of the simplex.\n\nAn antitone profile on M cells satisfies C_0 - c_asc = ||p - flat||_1/2 if and only if its mass is carried by at most two cells.\n\nTrack the discarded factor |i - j| in the pairwise Chebyshev expansion of scanCost_le_baseCost_sub_flatDist and characterise when every discarded term vanishes; check the resulting criterion on explicit three-cell profiles.\n\nThe dispersion correction is exactly computable on its extremal set and the residual slack of a measured profile decomposes into a two-cell part and a strictly positive remainder.\n\nA larger equality face exists and the L1 dispersion functional is degenerate on it, so a finer (index-weighted) functional is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics"
       ],
@@ -151400,7 +151360,7 @@
       "depth_estimate": 3,
       "description": "For a single tail constraint the reachable slack interval is now exactly [(M+1)/(2M), (M+1)/(2Km+2)], with the upper endpoint attained by a two-atom profile. The conjecture extends this to the family of nested constraints in which the measured bulk exponent, spike weight and edge mass are actually booked, and predicts that two-atom profiles remain extremal.\n\nFor nested cuts K_1 < ... < K_r with required masses m_1, ..., m_r, the reachable mean positions form an interval whose endpoints are attained by profiles supported on at most two cells, and the maximal slack is (M+1)/(2*max_j K_j m_j + 2) whenever the constraints are consistent.\n\nFormalise a finite family of edgeMass constraints, prove the analogue of meanPos_ge_of_edgeMass by summing the active constraints, and search for a three-constraint counterexample by exact rational enumeration on small M.\n\nThe measured tail statistics determine the admissible slack interval outright, making the booked CI a derived quantity.\n\nInteractions between constraints matter and the polytope has vertices with three or more atoms, so the LP must be solved in full.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics"
       ],
@@ -152498,7 +152458,7 @@
       "depth_estimate": 3,
       "description": "Banking a direction-stable observation is a sign test whose null probability is 2^(1-k) for k split-halves. Conjecture: adopting k >= 6 as a pre-registration gate removes essentially all historical banked-tension entries that later failed to replicate, at no additional compute cost.\n\nFor every banked direction-stable tension recorded with k <= 5 split-halves, the associated null probability exceeds 0.05; and a k >= 6 gate is achievable by re-partitioning existing samples.\n\nRecompute split-half depth for each banked entry and apply split_halves_needed_for_significance; formalize the multiple-comparison correction across the ledger.\n\nA cheap, purely statistical gate that prevents future over-banking.\n\nSome banked entries had genuine depth and their tensions deserve full-power follow-up.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -152541,7 +152501,7 @@
       "depth_estimate": 3,
       "description": "The measured halving slope failed the -ln 2 test in the balanced stratum while the width-halving law is exact. The exact closed form halfIter k w = ceil(w / 2^k) makes the discrepancy a ceiling-phase artefact whose size is computable, predicting a shortfall that vanishes for large windows.\n\nFor w uniform on [W/2, W), the expectation of log(ceil(w / 2^k)) equals log w - k log 2 + Theta(2^k / W), so the fitted slope is -ln 2 (1 + Theta(2^k/W)); at the experiment's grid this yields a 10-20% shortfall for the balanced stratum and a negligible one for the unbalanced stratum.\n\nFormalise the error term of halfIter_eq_ceilDiv, sum it over a dense grid of w with Finset.sum, and compare to the measured -0.5836 / -0.6589 slopes.\n\nThe A10 FAIL clause is an artefact of the discretisation, and the halving law can be reported as universally exact.\n\nA genuine phase correlation between factor position and band entry exists, which would be a new structure in the distribution of min(p,q).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics"
       ],
@@ -153231,7 +153191,7 @@
       "depth_estimate": 3,
       "description": "A policy that reads k binary answers from a query menu is measurable with respect to a statistic with at most 2^k classes. Combining this with the exact crediting law bounds the realization achievable by any such policy in terms of k alone, independently of how the policy is fitted.\n\nFor any population P, target s and menu of binary queries, every policy using at most k queries has error at least the sum of class minorities of the coarsest partition refined by all 2^k answer patterns; in particular if every class of the answer statistic is balanced the error is exactly |P|/2.\n\nInstantiate StatisticRealization.isLeast_err with kappa = Bool^k and the answer-vector statistic, combine with the decision-tree indistinguishability theorem of AdaptiveMenuCapacity, and verify on the 295-item menu population by direct enumeration.\n\nThe empirical statement 'no policy reaches 50 percent of the peak' becomes a theorem about menu capacity rather than a fitted observation.\n\nAdaptivity (queries chosen depending on earlier answers) escapes the static statistic bound, and adaptive policies must be modelled by decision trees instead.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics"
       ],
@@ -153273,7 +153233,7 @@
       "depth_estimate": 3,
       "description": "The proved minimum-error law gives the exact error of any statistic-measurable policy. We conjecture that it also controls the mutual information between the statistic and the target, turning the campaign's bit-valued reports and its percentage-credited reports into two readings of one functional.\n\nFor a finite population P, statistic T and Boolean target s, the mutual information I(T; s) is at most H(s) - H(irredError P T s / |P|), with equality iff every class of T is pure or balanced.\n\nFormalize empirical entropy on a Finset, prove the inequality from the class decomposition already used in err_eq_sum, and check it numerically on the populations of ComputationalEvidence.md Table 4.\n\nBits realized and percentage credited become formally interchangeable, and the 0 percent strict verdict becomes a zero-information theorem.\n\nError-based and information-based crediting are genuinely different functionals and the campaign must report both.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics"
       ],
@@ -153522,7 +153482,7 @@
       "depth_estimate": 3,
       "description": "The quadratic sieve needs π(B)+1 smooth relations, which is proved sufficient here. The number of candidates needed is that quota divided by the smooth density ρ(u). We conjecture the required candidate count always exceeds the profitable batch size, so the testing phase can never be the bottleneck at cryptographic sizes.\n\nFor N ≥ 2^40 and every B ≥ 2, (π(B)+1)/ρ(log N / log B) > √(A/q) for the empirically calibrated A, q of the product-tree cost model.\n\nCombine the proved quota BatchYield.exists_square_subproduct with a proved lower bound ρ(u) ≥ u^(−u) and the proved optimum BatchYield.blockCost_eq_opt_iff.\n\nBatch smoothness testing is permanently a constant-factor optimisation for QS at these sizes; effort should move to the finding phase.\n\nThere is a parameter window where batching changes the asymptotic balance of the sieve — a much stronger claim than the measured +0.104.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean",
         "Combinatorics"
@@ -153867,7 +153827,7 @@
       "depth_estimate": 3,
       "description": "The named gap L4 asks for a stratum measure Delta(pi, R) for scan orders. With the positional law now a single scalar function of the block measure, Delta can be defined as the integrated excess of costCert under the order pi over the identity order, making L4 and the L7 extremality claim precise.\n\nDelta(pi, R) >= 0 for every order pi with equality iff pi is measure preserving on the corner window, and Delta is maximised among N-computable orders by the sqrt-descending order, with extremal value 1/2 - o(1).\n\nDefine Delta as a finite sum over window cells in Lean, prove nonnegativity by convexity of costCert in mu, and evaluate the sqrt-descending order on small N.\n\nL4 is closed and L7 becomes a concrete extremal problem over computable orders.\n\nOrder effects are not captured by the block measure alone and the positional law needs a genuinely order-dependent refinement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -153994,7 +153954,7 @@
       "depth_estimate": 3,
       "description": "Upgrades the injection used for the rho bound to a bijection, giving the exact count of collision-free streams modulo N = pq, and then the sharp threshold constant sqrt(2 ln 2 p). This makes the birthday heuristic a formal theorem over composite moduli.\n\nThe number of streams in (range (p*q))^t with pairwise distinct residues mod p equals descFactorial p t * q^t, and the least t with success probability at least 1/2 is ceil(sqrt(2 log 2 * p)) + O(1).\n\nReplace card_injMod_le by a Finset.card_bij' equality, then estimate the product of (1 - i/p) with Mathlib's Real.log machinery.\n\nA reusable formal birthday theorem for composite moduli, applicable to all collision-based cryptanalysis in the catalog.\n\nThe fibration x -> (x mod p, x div p) fails to be measure preserving and the rho heuristic needs another justification.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -154163,7 +154123,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** There is no non-trivial translation-invariant, countably additive Borel\nmeasure (real- or surreal-valued) on `Surreal` giving finite non-zero mass to some clopen\nmonad; equivalently, `Surreal` supports no Haar-type integration theory.\n\n*The key insight is* that `Surreal.not_isCompact_of_mem_nhds` kills the usual construction\nof Haar measure from compact neighbourhoods, while zero-dimensionality\n(`Surreal.exists_isClopen_subset_of_mem_nhds`) means any candidate measure is determined by\nits values on monads — and monads at one scale split into a proper class of monads at\nsmaller scales, forcing mass `0` or `∞`.\n\n*Why now?* The clopen basis and the non-compactness obstruction are both formalised, so the\nstatement can be attacked directly as a theorem about finitely additive set functions on the\nBoolean algebra generated by monads.\n\n**Test.** Formalise the monad Boolean algebra and prove: a translation-invariant finitely\nadditive `μ` with `0 < μ(monad 0 1) < ∞` yields a contradiction from a proper-class\npartition of `monad 0 1`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -154455,7 +154415,7 @@
       "depth_estimate": 3,
       "description": "Construct the Markov measure on the golden-mean subshift with transition weights 1/φ and 1/φ² and prove it is shift invariant with entropy log φ, matching the covering-number growth already established. The construction uses the clopen cylinder algebra and Carathéodory extension on the compact space proved compact in cycle 1. Cycle 6's Fekete inequalities supply the subadditivity that makes the entropy limit exist independently of the Fibonacci formula.\n\nThere is a shift-invariant Borel probability measure μ on GoldenMean with μ(cylinder w) = φ^{-|w|} up to boundary weights, and its measure-theoretic entropy equals log φ, which is the topological entropy computed by card_goldenWords.\n\nFormalise the Markov measure via Carathéodory extension on the clopen cylinder algebra isClopen_cylinder, then compute the entropy of the 2x2 Perron-Frobenius eigenvector and compare with tendsto_log_coveringNumber.\n\nThe variational principle for this subshift is fully formalised, and the box dimension result upgrades to a measure-theoretic dimension statement.\n\nThe failure would have to come from non-additivity on the cylinder algebra, indicating that the recursive definition of goldenWords does not match the Markov structure, which would be a surprising defect in the combinatorial model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -154632,7 +154592,7 @@
       "depth_estimate": 3,
       "description": "Cycles 5, 6 and 7 all consume the same lemma: any two admissible words glue through one buffer letter. The conjecture is that the least buffer length g of a subshift of finite type simultaneously characterises Devaney chaos, the shift in the supermultiplicativity inequality, and the minimax mistake rate, so that a single combinatorial constant has a topological, a combinatorial and a learning-theoretic reading.\n\nFor a subshift of finite type X on {0,1} with specification constant g, (i) the shift on X is Devaney chaotic iff g is finite, (ii) #L(n) · #L(m) ≤ #L(n+m+g) with g least such, and (iii) the minimax mistake rate is 1 - 1/(g+1); the three characterisations of g agree.\n\nAbstract admissible_glue to a hypothesis `glue : ∀ v w ∈ L, ∃ u, |u| = g ∧ v ++ u ++ w ∈ L`, then re-run goldenMean_transitive, card_goldenWords_mul_le and exists_adversary_stream against that hypothesis and check each proof survives verbatim.\n\nA reusable Lean framework in which one combinatorial constant delivers chaos, entropy subadditivity and a learning bound for any subshift of finite type.\n\nAny of the three implications failing pinpoints an extra property of the golden-mean case that the current proofs use silently, which is exactly the kind of hidden hypothesis this abstraction is designed to expose.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic",
         "Combinatorics"
@@ -155079,7 +155039,7 @@
       "depth_estimate": 3,
       "description": "Over a window of K rungs, the number of sign changes of the step sequence is 0 for any multiplicative or positively-contracting affine fade, and K-1 for a negatively-contracting one. Any intermediate count forces noise bounded below by the smallest step that breaks the pattern. This makes a purely combinatorial statistic of the ladder into a quantitative noise certificate.\n\nIf a ladder is a noisy affine fade with ratio lambda and noise eta over rungs 0..K, and the step sequence has s sign changes with 0 < s < K-1, then eta >= (1/2) * min over pattern-breaking indices of |step|.\n\nDefine signChanges of a finite step sequence in Lean, prove the two extreme cases from affineFade_alternates_of_neg and multiplicative_fade_no_rebound, then the intermediate bound by localising at a pattern-breaking index.\n\nA single integer statistic of the recorded ladder yields a lower bound on experimental noise without any model fit.\n\nSign patterns are compatible with arbitrarily small noise, and only magnitudes constrain the model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -155208,7 +155168,7 @@
       "depth_estimate": 3,
       "description": "A B_{d+1}-free family cannot contain two pointwise-nested chains of length 2^d, a strictly stronger restriction than the absence of a single chain of length 2^{d+1}. Averaging this deficiency over random full chains should give the first constant-factor improvement over the chain bound. The formal criterion is already available.\n\nEvery B_3-free family F of subsets of [n] satisfies the Lubell bound sum_{A in F} 1/C(n,|A|) <= 6 + o(1), hence La(n,B_3) <= (6+o(1)) C(n, floor(n/2)).\n\nFormalise a random-full-chain averaging in the existing Lubell framework and show that chains meeting F in 7 sets force a forbidden parallel-chain configuration in a positive proportion of neighbouring chains.\n\nThe chain factor 2^d - 1 is not optimal already at d = 3, giving the first step towards La(n,B_d) <= (d+c)C(n,floor(n/2)).\n\nLong chains are the true obstruction and the extremal families for B_3 must contain 7-chains, reshaping the conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -155251,7 +155211,7 @@
       "depth_estimate": 3,
       "description": "The doubling lemma builds a B_{d+1} copy from two parallel B_d copies, suggesting that the asymptotic constant grows additively rather than doubling. A one-step comparison between B_{d+1}-free and B_d-free families would iterate to the linear bound demanded by F4.\n\nThere is an absolute constant c0 with La(n, B_{d+1}) <= La(n, B_d) + c0 * C(n, floor(n/2)) for all n and d.\n\nGiven a B_{d+1}-free family, peel off a bounded number of antichains so that the remainder is B_d-free, using hasBdCopy_succ_of_stacked to detect the forbidden doubled configuration.\n\nIterating gives La(n,B_d) <= (c0 d + O(1)) C(n, floor(n/2)), which is exactly the O(d) target of F4.\n\nThe Boolean poset constant grows superlinearly in d and the conjectured (d+c) form is wrong.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -155293,7 +155253,7 @@
       "depth_estimate": 3,
       "description": "The Lubell-mass theorem proved here is exactly the constraint of a fractional knapsack whose variables are the layer intersections of the family. Solving that knapsack greedily upgrades the counting bound to Erdos's exact theorem on chain-free families.\n\nIf F has no chain of k+1 sets then |F| is at most the sum of the k largest binomial coefficients C(n, i).\n\nFormalise the exchange argument: given layer sizes n_j <= C(n,j) with sum n_j / C(n,j) <= k, the total sum n_j is maximised by saturating the k largest layers.\n\nThe chain bound becomes exact for chain-free families, and every subsequent improvement for B_d must come from non-chain configurations.\n\nThe Lubell relaxation is strictly weaker than Erdos's theorem, indicating an obstruction invisible to LYM-type arguments.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -155335,7 +155295,7 @@
       "depth_estimate": 3,
       "description": "Since d+1 complete levels always contain a copy of B_d, any family beating d levels must be non-levelled. Quantifying the defect from being a level union should bound the possible excess and pin the absolute constant c in the conjecture.\n\nThere is an absolute constant c with La(n,B_d) <= (d+c) C(n,floor(n/2)) for all n and d, and near-extremal families differ from a union of d consecutive levels in o(C(n,floor(n/2))) sets.\n\nIntroduce a defect parameter counting incomplete layers of F and prove a bound of the form |F| <= d C + f(defect), then optimise over defect.\n\nThe main conjecture F4 is settled with an explicit structural description of the extremal families.\n\nThere exist genuinely non-levelled families beating d + c levels, which would be a striking new construction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -155377,7 +155337,7 @@
       "depth_estimate": 3,
       "description": "B_2-freeness is equivalent to the local statement that every open interval (A,D) spanned by two members of the family contains at most one further member. This converts a four-element search into a counting condition on intervals, which is the natural input for entropy or flag-algebra methods.\n\nLa(n, B_2) <= (2 + o(1)) C(n, floor(n/2)), proved via the interval-local characterisation.\n\nFormalise the equivalence from HasBdCopy 2 and then bound the Lubell mass of families satisfying the interval condition.\n\nThe long-standing diamond conjecture is resolved, and the doubling lemma lifts the result towards general d.\n\nThe interval condition is too weak to detect the extremal structure, isolating precisely which global information is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -156273,7 +156233,7 @@
       "depth_estimate": 3,
       "description": "The unconditional clause L7-e is equivalent to a sublinear-time factoring separation. The relativized version, where the enumeration may query residues of N, is within reach because promotion counts are key-independent at every modulus.\n\nNo enumeration computable from residue queries alone beats the mass-sort optimum on an MLR population; equivalently every residue-oracle policy has speedup 1 against a flat prior.\n\nFormalise a residue-oracle machine model over Finset.range (M*m) and derive the no-gain corollary from keyed_promotion_factor_blind and flat_prior_cost.\n\nThe barrier-4 residue stratum closes unconditionally in the relativized model; only prior shape remains.\n\nSome oracle policy gains, and the factor-blind law needs an exception clause.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -157302,7 +157262,7 @@
       "depth_estimate": 3,
       "description": "The proved capacity bound k <= (1-c)/(rho^2-c) comes from comparing the squared length of the sum of the dials with its projection on the rate. Conjecture that equality characterises a regular-simplex configuration around the rate direction, and determine exactly for which (k, rho, c) such a configuration exists. This says whether a four-dial ensemble at the band floor is constructible or merely not excluded.\n\nEquality in k <= (1-c)/(rho^2-c) holds iff all pairwise inner products equal c, all inner products with the rate equal rho, and the sum of the dials is parallel to the rate; such a family exists in R^k iff c = (k rho^2 - 1)/(k - 1) and c >= -1/(k-1).\n\nFormalise the equality case of the Cauchy-Schwarz step and construct the candidate simplex family as an explicit Gram matrix, checking positive semidefiniteness.\n\nEnsembling strategies have an exactly known optimum and the four-dial bound at the floor is achieved.\n\nThe capacity bound is not tight and a strictly better packing bound exists for weak dial families.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -157425,7 +157385,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Extensions of Hindman's theorem via finite colorings of topological groups' and formalize its key results. Abstract: We study the partition regular properties of topological groups, proving several extensions of Hindman theorem where monochromatic sets of finite sums are required to satisfy additional topological constraints. In particular, our results imply that for every nowhere dense set $C \\subseteq \\mathbb{R}^n$, there exists an open set $P \\supseteq C$ such that for any finite coloring of $\\mathbb{Q}^n \\setminus P$, there is a family $\\mathcal{A}$ of sequences in $\\mathbb{Q}^n \\setminus P$ which satisfies the following properties: (i) for each $A\\in\\mathcal A$, the set $\\operatorname{FS}(A)$ of finite sums of $A$ is a closed discrete subset of $\\mathbb R^n$; (ii) the set $\\bigcup_{A\\in\\mathcal A}\\operatorname{FS}(A)$ is monochromatic; and (iii) the set $\\bigcup_{A\\in\\mathcal A}\\operatorname{FS}(A)$ is dense in an open unbounded subset of $\\mathbb R^n$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -158021,7 +157981,7 @@
       "depth_estimate": 3,
       "description": "The sign word of a measured ladder's grid second differences is a model-free invariant that excludes whole shape classes before any parameter fit. Convex laws (hyperbolic, geometric, exponential-to-floor) realise only all-nonnegative words; concave laws only all-nonpositive ones. The recorded T-dial ladder realises neither, which is a structural, not statistical, refutation.\n\nProved: for every law A + C*g(b) with g convex and C >= 0 the 4-bit grid second differences are nonnegative, so a ladder with both a strictly positive and a strictly negative grid second difference is unfittable by any signed-curvature law. The open refinement is quantitative: the number of sign changes in a ladder's curvature word certifies a lower bound on the differential order of any law that can fit it.\n\nThe sign law and the categorical exclusion are formalised as signedLaw_second_difference and no_signed_curvature_law; the refinement needs a Lean notion of k-fold monotone laws and a bound on the sign changes each order admits.\n\nModel selection for dial ladders reduces to a finite combinatorial check, and every published fade law in the thread is refuted in one line.\n\nSome convex family produces sign-alternating grid second differences, which would identify the extra degree of freedom the current fits are missing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -158152,7 +158112,7 @@
       "depth_estimate": 3,
       "description": "Every reading converts into a forced rank-displacement fraction (1-rho)/6, turning model selection into a statement about how much of the sample a mechanism must touch. The hyperbolic law saturates at 3/28 and can never demand more; any extinction law demands unboundedly more, with the crossing at bitlen 120. The budget is therefore a combinatorial falsification test that needs no curve fitting at all.\n\nAny rank-level mechanism reproducing the recorded ladder must displace a fraction of the sample that exceeds 3/28 at some bitlen at most 128; equivalently, no bounded-displacement mechanism explains the thread.\n\nInstantiate reading_corruption_budget at each recorded rung and compare with 3/28; formalise the resulting monotone budget ladder in Lean.\n\nThe hyperbolic shape class is refuted a second time, by a purely combinatorial argument independent of any fit.\n\nThe budget stalls below 3/28, which would be strong evidence for a genuine floor and against extinction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -158671,7 +158631,7 @@
       "depth_estimate": 3,
       "description": "A record whose mean-centred cyclic autocorrelation is the same at every nonzero lag must sit at the level -1/(n-1). Conjecture that among 0/1 records the constant-profile ones are exactly the indicator vectors of cyclic difference sets and their complements, so the extremal flat profile is a design-theoretic object.\n\nRefined after this cycle: the equivalence 'constant nonzero-lag autocorrelation iff constant difference multiplicity' is now proved (constant_profile_iff_constant_diffMult); the open part is the fluctuation law, namely that for a uniformly random support of size k the maximal deviation max_{k != 0} |d_S(k) - |S|^2/n| is of order sqrt(|S| log n).\n\nUse the proved identity cAutocov_indic to turn the fluctuation statement into a concentration bound for the difference-multiplicity function, and verify the constant-profile classification exhaustively for n <= 31 by decidable computation.\n\nThe 'maximally flat, slightly negative' profile observed in the data is the signature of a design, giving a sharp null shape to compare against.\n\nThere are non-design constant-profile records, and the extremal set is larger than expected.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -158755,7 +158715,7 @@
       "depth_estimate": 3,
       "description": "For a polyhedral map the sheet number is constant on each\nchamber of a suitable subdivision of the target. Combining this with orientation data should give a\npurely combinatorial degree, computed as a signed sheet count, together with a wall-crossing formula\nrelating the counts of adjacent chambers across the discriminant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics"
       ],
@@ -158874,7 +158834,7 @@
       "depth_estimate": 3,
       "description": "The optimal stratified weighting is q/p = sqrt(kappa_g), irrational for g = 2. Conjecture that the shortfall of the best integer weighting with p,q <= N decays exactly like N^-2, with the continued-fraction convergents of sqrt(7) as extremisers. This turns a qualitative suboptimality theorem into a design rule.\n\nThere are constants 0 < a < A with a/N^2 <= min_{1<=p,q<=N} (kappa* - stratCeiling p q) <= A/N^2, and the minimiser is a convergent of the continued fraction of sqrt(7).\n\nProve kappa* - stratCeiling p q is comparable to (q - p sqrt 7)^2 / (p+q)^3 using the cubic weight identity, then invoke the classical theory of best rational approximation to a quadratic irrational.\n\nInteger weight budgets for the dial can be chosen optimally by continued fractions; 37/14 is provably near-extremal.\n\nApproximation of the optimum is governed by something other than Diophantine quality, e.g. the discrete 1/n^2 correction dominates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Pythagorean",
         "Combinatorics"
@@ -159213,7 +159173,7 @@
       "depth_estimate": 3,
       "description": "Two independent lower bounds on the number of adjacent transpositions needed to move Spearman's rho by a given amount are now proved: a linear-in-margin bound of order margin*n^2 and an l1-accumulation bound of order sqrt(margin)*n^{3/2}. The conjecture is that their maximum is tight up to constants, with the crossover at K ~ n^{3/2} marking a change of extremal configuration. Settling it would give the exact metric cost of dial erosion.\n\nFor every n >= 2 and every delta in (0,2) there is a chain of adjacent transpositions of length O(max(delta*n^2, sqrt(delta)*n^{3/2})) taking the identity ranking to a ranking with Spearman rho <= 1 - delta.\n\nConstruct explicit chains (bubble cascades of a fixed block, and block reversals) and compute their exact rho via the proved transposition identity; formalise the resulting upper bound alongside spearman_ge_of_chain_from_id.\n\nThe Kendall cost of a prescribed Spearman drop is determined up to constants, making 'gradual versus cliff' a quantitative, grid-free statement.\n\nThere is an unexploited conserved quantity beyond step size and l1 accumulation, and the true cost has a third regime.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics"
       ],
@@ -159340,7 +159300,7 @@
       "depth_estimate": 3,
       "description": "The three recorded seeds attain 86% of their Bhatia–Davis variance ceiling, so the dispersion is nearly two-point extremal. The conjecture is that under such near-extremal dispersion, adding seeds strictly dominates deepening seeds for any fixed compute budget, with the crossover independent of the unknown correlation structure.\n\nIf the seed-level variance is at least half of its Bhatia–Davis ceiling for the observed range, then for any fixed total number of draws the pooled estimator has smaller worst-case error with more seeds than with longer seeds.\n\nFormalise the two-level variance decomposition in the rationals and compare the two designs under the Bhatia–Davis constraint.\n\nThe experiment protocol should be re-specified: more seeds, shorter runs, for the same compute.\n\nWithin-seed depth still buys accuracy, and the straddling CI can be closed by deeper runs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics"
       ],
@@ -159798,7 +159758,7 @@
       "depth_estimate": 3,
       "description": "The exact grouped mean-square formula reduces the GPTQ group-correlation penalty to the number of same-group ordered pairs in the selected key set. The conjecture identifies this count as a Schur-convex function of the group occupancy profile, so balanced selections are optimal and single-group selections worst. This converts a kernel-design question into an extremal set-system statement.\n\nAmong group occupancy profiles with sum_t m_t = k and m_t <= g, the same-group pair count sum_t m_t(m_t-1) is minimised exactly at the balanced profiles, with minimum r*q*(q+1) + (N-r)*q*(q-1) for k = qN + r; the counting identity and the maximum k(k-1) are already proved.\n\nIterate the proved one-step smoothing inequality pairs_smoothing by induction on the imbalance of the profile, using samePartners_sum_eq_profile to transfer back to selections.\n\nA provable scheduling rule: interleave top-k selection across quantization groups.\n\nSome skewed allocation would beat the balanced one, indicating a non-convex interaction landscape.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -160273,7 +160233,7 @@
       "depth_estimate": 3,
       "description": "A finite sweep determines only the interval between the last failing and first passing grid budgets. Bounding the demand density bounds the agreement curve's slope, which should convert grid mesh into a quantitative bracket width and expose the point past which refining the grid is useless.\n\nFor a workload whose demand multiset has at most rho*n windows at any single demand value, a sweep of mesh m determines the knee to width at most min(m, ceil(slack/rho)), and this is sharp.\n\nExtend GridRazorBracket with a density hypothesis on Workload.demand, prove the width bound, and exhibit a matching extremal profile.\n\nThe sub-20 addendum at ctx 2048 is provably decisive or provably futile before it is run.\n\nBracket width is not controlled by density alone and additional structure of the demand tail is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -160744,7 +160704,7 @@
       "depth_estimate": 3,
       "description": "The semantic optimum is now known: the nodes of a downset containing the support are a minimum-cardinality uniqueness set. What is missing is a syntactic invariant computing that downset from the expression tree. The conjecture is that a compositional Newton-downset recursion is both sound and, for cancellation-free expressions, tight, giving certificates that are never worse and usually far better than the simplex one.\n\nThere is a computable compositional map newton : NExpr n → Finset (Fin n →₀ ℕ) whose value is a downset containing the support of toZ e, equal to the downward closure of that support whenever no coefficient cancellation occurs in the products; the induced certificate uses #(newton e) evaluations, which is minimal for that support.\n\nDefine newton by recursion with a downward-closure operator, prove support containment and closure under ≤, derive NewtonCert from downset_unisolvent, and check that #(newton e) < C(n + deg e, n) for cubeLHS, symLHS and quasiLHS.\n\nIdentity checking in the chart calculus becomes support-adapted end to end: the number of evaluations is dictated by the Newton polytope of the identity rather than by its degree.\n\nEither downward closure of Minkowski sums overshoots the true support systematically, or cancellation is generic, in which case optimal certificates cannot be read off the syntax and must be computed from coefficients.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Applications"
@@ -160964,7 +160924,7 @@
       "depth_estimate": 3,
       "description": "The tropical model of the same ablation programme assigns a net an epistasis order via transversals of near-optimal paths; the probabilistic model assigns a stack a contraction profile. The conjecture is that these two invariants coincide, bridging combinatorial and probabilistic accounts of the same measurements.\n\nFor a stack whose suffix contraction coefficients are c_1 >= ... >= c_n, the epistasis order of the associated prunable net equals the number of indices with c_i < 1.\n\nBuild the map sending a Dist/Kern stack to a prunable net, compute both invariants on the affine family and on the tail-pair model, and prove the equality in the deterministic case first.\n\nA single invariant governs both the tropical cost table and the probabilistic ablation profile, unifying two independent formalisations of the programme.\n\nThe two models measure genuinely different aspects of epistasis, and tropical cost tables cannot be read as contraction data.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -161702,7 +161662,7 @@
       "depth_estimate": 3,
       "description": "The geometric fragment is now known to be closed under Cauchy products and its germs are totally ordered by the lexicographic order on coefficients. Adding multiplicative inverses for series with nonzero leading coefficient should make the germs an ordered field, that is a Hardy field. This would complete a formal-to-analytic dictionary for asymptotic expansions.\n\nFor a GeoSeries c with nonzero leading coefficient there is a GeoSeries c' and a rate r such that eval c * eval c' equals 1 eventually; consequently the germs of the geometric fragment modulo eventual equality form an ordered field.\n\nConstruct the inverse by normalizing the leading coefficient, writing c as leading times (1 - u) with u of positive rank, and inverting by the geometric series in u; verify convergence with GeoSeries.tail_bound and multiplicativity with GeoSeries.evalT_mulG.\n\nA fully formalized Hardy field arising from a Hahn-type coefficient algebra, with order given by eval_lt_iff_lexLt.\n\nInversion leaks out of every geometric rate, and the correct object is a localization rather than a field of germs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -161875,7 +161835,7 @@
       "depth_estimate": 3,
       "description": "All proofs in these cycles use the rank group Z only through its order and the comparison x^r = o(x^s) for r < s. Replacing Z by an arbitrary ordered abelian group embedded in the reals, with Hahn-type supports, should reproduce the entire theory with the lexicographic order replaced by the Hahn order.\n\nFor an ordered abelian group Gamma with an order embedding into the reals, and Hahn series over Gamma with reverse well-ordered support and geometrically bounded coefficients, the germ interpretation is injective, order preserving for the Hahn order, multiplicative for the Hahn product, and its expansion fibres are cosets of the flat germs.\n\nGeneralize monoZ to monoGamma, restate tail_bound as a sum over an initial segment of the support, and re-run the cycle 1 to 6 proofs against Mathlib's HahnSeries API.\n\nA general bridge between Hahn series algebra and asymptotic analysis, subsuming Puiseux, transseries and Laurent scales in one formalized theorem set.\n\nThe embedding of the rank group into the reals is essential, isolating archimedean-ness as the true hypothesis behind the germ interpretation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -161916,7 +161876,7 @@
       "depth_estimate": 3,
       "description": "The counterexample of cycle 1 shows the closure can be surplus-negative, but it reaches its\nclosure through many single adjunctions, each of which is either `+1` or `−1`.  **Conjecture:\nfor every union-closed target there is an ordering of the added sets along which the running\nsurplus of some fixed element never drops below its starting value.**  The key insight is\nthat adjoining the top is safe *because it is the batch of size one with positive surplus*,\nso the question is not whether a batch is dangerous but whether it can be *scheduled* into\nsafe increments.  Why now?  Surplus additivity (`surplus_union_of_disjoint`) makes the\nschedule a purely combinatorial object — a lattice path — so the conjecture is testable by\nexhaustive search on `Fin 3`/`Fin 4` before any proof attempt.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -161957,7 +161917,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3 shows that a *single* member of size `k` can force nothing better than\n`|F| ≤ (2^{k−1}+1)·deg`, and that this is attained.  **Conjecture: for a union-closed family\nin which every nonempty member has size at least `k`, the best possible abundance ratio\ndegrades exactly like `2^{k−1}+1`, i.e. the extremal family `insert A (A.erase a).powerset`\nis the unique extremiser up to isomorphism.**  The key insight is that the extremal family is\na power set with a single \"cap\", so extremality is a statement about how much of a Boolean\nlattice can sit below one cap.  Why now?  Both sides are already formalised, so uniqueness is\nthe only missing ingredient, and it can be probed by enumerating extremisers on `Fin 4`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -161998,7 +161958,7 @@
       "depth_estimate": 3,
       "description": "`frankl_of_card_le_four` is proved by \"two distinct nonempty members give degree ≥ 2\".\n**Conjecture: `m` distinct nonempty members of a union-closed family always produce an element\nof degree at least `⌈log₂(m+1)⌉ + 1`, and consequently Frankl's conjecture holds for all\nfamilies with at most `2^t` members by induction on `t`.** The key insight is that minimal\nnonempty members behave like the singleton in Frankl's classical argument, and unions with a\nminimal member are injective on the family.  Why now?  The chain case\n(`frankl_of_chain`) is the extreme case of this statement and is already proved; the general\ncase needs only a quantitative version of the same minimality argument.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -162038,7 +161998,7 @@
       "depth_estimate": 3,
       "description": "The averaging criterion (`exists_abundant_of_large_totalSize`) needs average member size\n`≥ n/2` and needs no union-closedness; union-closed families can sit far below that (see\n`averaging_criterion_not_necessary`).  **Conjecture: there is a constant `c < 1/2` such that\nevery *union-closed* family whose members average at least `c·n` has an abundant element, and\n`c` can be taken to be `1/4`.**  The key insight is that union-closedness itself pushes total\nsize upward — the closure of any family contains all its joins — so the averaging threshold\nshould be strictly weaker for union-closed families than in general.  Why now?  Total size is\nalready related to degrees by the formalised double-counting identity\n`sum_deg_eq_totalSize`, so the conjecture is exactly a question about the minimum of\n`totalSize` over union-closed families with no abundant element.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -162078,7 +162038,7 @@
       "depth_estimate": 3,
       "description": "`exists_abundant_iff_card_le_two_mul_sup_deg` reduces abundance testing to one maximum.\n**Conjecture: for every union-closed `F` there is a sequence of \"safe\" single-set adjunctions\nfrom `F` to a family whose max-degree certificate is satisfied, of length at most `|F|`, and\nthis sequence can be computed greedily by always adjoining the top of the current family.**\nThe key insight is that the greedy step is exactly the operation analysed in cycle 1, whose\neffect on the certificate is monotone (`sup_deg_le_sup_deg_adjoinTop`).  Why now?  The\ncertificate and its monotonicity are formalised, so the missing part is purely the\ntermination/length analysis, which is finite-state and machine-checkable on small ground\nsets.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Safe Scheduling of Union-Closure Batches\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"Adjoining the top of a family raises the surplus of an element by exactly one, while a batch of new sets can lower it. We conjecture that the sets added by the full union closure can always be adjoined in an order along which the running surplus of some element never falls below its initial value. This would explain why the one-step operation is safe while the closure is not, and turn Frankl-type stability into a scheduling problem.\",\n    \"conjecture\": \"For every finite family F with an abundant element x in F.sup id there is an enumeration A_1, ..., A_m of uclosure F \\\\ F such that for every prefix, surplus (F ∪ {A_1,...,A_i}) x ≥ surplus F x.\",\n    \"test\": \"Exhaustive search over all families on Fin 3 and Fin 4 for a family admitting no safe schedule; then formalise the positive case with surplus_union_of_disjoint as the accounting device.\",\n    \"if_true\": \"Frankl-type witnesses could be tracked along the union closure by a greedy schedule, giving an incremental proof strategy for the conjecture.\",\n    \"if_false\": \"There is a family whose closure is intrinsically hostile to every element, which would localise the difficulty of Frankl's conjecture to an explicit finite obstruction.\",\n    \"proof_strategy\": \"Use additivity of the surplus over disjoint batches; order the new sets by decreasing degree contribution and analyse the resulting lattice path with an exchange argument.\",\n    \"catalog_references\": [\"Catalog.Computation.UnionClosedAdjoinTop\"]\n  },\n  {\n    \"title\": \"Uniqueness of the Capped Power-Set Extremiser\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"The sharp local degree bound |F| ≤ (2^(|A|-1)+1)·deg F a is attained by insert A (A.erase a).powerset. We conjecture this family is the unique extremiser up to relabelling. This would pin down exactly how much of a Boolean lattice can hide below a single member of a union-closed family.\",\n    \"conjecture\": \"If F is union-closed, A ∈ F, a ∈ A and |F| = (2^(|A|-1)+1) * deg F a, then F is isomorphic to insert A (A.erase a).powerset.\",\n    \"test\": \"Enumerate all union-closed families on Fin 4 attaining the bound and compare them with ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -162119,7 +162079,7 @@
       "depth_estimate": 3,
       "description": "*Status after this cycle: the upper half is proved.*\n`Novelty.NET58DeficitDispersion.deficit_le_sqrt_dispersion` gives\n`deficit ≤ √(B · dispersion / |W|)`, and `swap_deficit_ratio` shows the constant is off by\nexactly `√2` on the swap witness.  What remains is the *spectral refinement* and a lower bound.\n\n**Conjecture.** For a family of contexts `a : W → ι → ℝ` with common budget `B`, the relational\ndeficit `avg_w max_{|T|=B} ⟨a_w, 1_T⟩ - max_{|T|=B} ⟨ā, 1_T⟩` is bounded above and below by\nexplicit multiples of the top-`B` singular mass of the centred context matrix\n`A - 1 ⊗ ā`, strictly sharpening the Frobenius-norm bound already proved; in particular it\nvanishes iff that matrix has rank 0 restricted to the top-`B` selection cone.\n\n**The key insight is** that the Jensen gap of the `max`-functional over a polytope is controlled\nby the dispersion of the argmax *vertices*, and the vertex set of the budget-`B` selection\npolytope is exactly the hypersimplex, whose diameter is a rank quantity.\n\n**Why now?** The deficit is already defined, proved nonnegative and bounded in Frobenius norm\n(`relationalDeficit_nonneg`, `relationalDeficit_ge_single_context`,\n`deficit_le_sqrt_dispersion`); only the spectral sharpening is missing, and Mathlib\nnow has enough linear algebra (`Module.finrank`, `LinearMap.finrank_range_add_finrank_ker`) to\ncarry a rank-based bound, as this cycle's dimension theorem demonstrates.\n\n**If true:** the 10-point gap becomes a measurable spectral statistic of the attention tensor,\ncomputable without running any eviction policy.  **If false:** the deficit is not a second-order\nstatistic and only a combinatorial (hypersimplex) description can capture it.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -162397,7 +162357,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** The map (primitive Pythagorean triple) `↦` (short-leg knee at gate `τ`)\nis, for each `τ`, a surjection onto an interval of integers `[1, K(τ)]` with\n`K(τ) = ⌈log(1-τ) / log 0.708⌉`, and every fibre is a union of similarity classes closed\nunder scaling.\n\nThe key insight is that the knee factors through `legRatio`, which is a similarity\ninvariant, so the fibres of the knee are exactly unions of Euclid-parametrised families\n`(m² - n², 2mn, m² + n²)` with `arctan` in a fixed window. **Why now?** The universal\nbudget `12` at gate `0.98` is proved and sharp; the remaining question is how the\nbudget partitions the triple family, which is a purely arithmetic question about density\nof `(m²-n²)/(m²+n²)` in `(0, 1/√2]` and connects the attention-budget theory to the\nBerggren-tree machinery already in the catalog.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "MachineLearning"
@@ -162640,7 +162600,7 @@
       "depth_estimate": 3,
       "description": "The balanced (fixed-weight) draw law approaches the universal Spearman tie ceiling 6/7 from below at rate Theta(1/v). We conjecture the exact rate constant is 9/343 = 9/7^3, arising as (1/8)(3/2)(1/7 - 1/343) where the gain 1/7 is the Catalan first-step anomaly and the loss 1/343 is the summed Weierstrass defect of all deeper steps. This identifies a closed-form asymptotic for the deployment-envelope margin of the zero-fit dial.\n\nlim_{v -> infinity} v * (6/7 - spearmanSq (centralProfile v)) = 9/343.\n\nSqueeze the deficit between two explicit rational bounds of the form 9/343 +- C/v^2 by refining loss_invariant into a two-sided invariant, then conclude with a Filter.Tendsto argument; numerically the exact-rational sweep to v = 1200 already agrees to five digits.\n\nThe bitlen-60 margin (0.856238... versus 6/7) becomes a closed-form quantity, and every future envelope check at a new bitlen reduces to evaluating 6/7 - 9/(343 v).\n\nEither the Weierstrass loss series is not summable termwise at second order or the profile has a hidden third-order correction, which would invalidate the geometric heuristics used throughout the catalog's ceiling bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -162774,7 +162734,7 @@
       "depth_estimate": 3,
       "description": "All ceiling bounds in the catalog compare cube sums of tie profiles with equal totals. We conjecture the ceiling is Schur-concave in the profile, so that majorization between profiles orders their ceilings, and the balanced profile is extremal in its weight class. This would replace a family of block-by-block estimates with one order-theoretic principle.\n\nIf profiles L and L' have the same total n and L majorizes L', then spearmanSq L <= spearmanSq L'; in particular the ceiling is minimized by the majorization-maximal profile at fixed n.\n\nSince spearmanSq L = 1 - (sum of m^3 - n)/(n^3 - n), the claim reduces to Schur convexity of the power sum of cubes, provable by the Hardy-Littlewood-Polya transfer argument; the single transfer step is already formalized for lists of naturals (spearmanSq_transfer), so what remains is the chain decomposition of a majorization relation.\n\ncubeSum_balanced_le, weight_ceiling_ge and loss_invariant all become corollaries, and any new draw law can be placed in the envelope by a majorization comparison alone.\n\nThe ceiling depends on more than the multiset order of the profile, meaning the envelope must be certified law by law and no universal comparison principle exists.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -162818,7 +162778,7 @@
       "depth_estimate": 3,
       "description": "The erased information of a multiset sorting task is a function on the refinement lattice of key partitions. We proved it is monotone; we conjecture it is a polymatroid rank function, hence submodular, with a characterised strictness locus.\n\nFor partitions P, Q of the n slots, E(P) = log2(n!/prod_B |B|!) satisfies E(P join Q) + E(P meet Q) <= E(P) + E(Q), and E is strictly monotone except across splits of singleton blocks.\n\nReduce to an inequality among products of factorials via the division-free identity, then verify by exhaustive decide for n <= 7 before attempting the general proof.\n\nMultiset erasure is a polymatroid rank, importing the whole submodular optimisation toolkit into reversible-sorting thermodynamics.\n\nErasure is monotone but not submodular, so no matroidal structure organises key coarsening and greedy key-merging schedules can be suboptimal.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -163203,7 +163163,7 @@
       "depth_estimate": 3,
       "description": "Every deterministic channel on residues is fully pinned (gap 0), as proved in general here. The open half is the extremal one: how large can the output entropy be, and which groups achieve it.\n\nFor any modulus m and any sign-stable type map T on (ZMod m)^x, I(X;T) = H(T) and H(T) <= log2 (number of divisors of the exponent of (ZMod m)^x/{±1}), with equality iff the quotient is elementary abelian.\n\nThe equality I = H is already formalised (mutualInfo_eq_entropyOut). For the bound, enumerate moduli m <= 200 in Lean, compute H(T) via entropyOut, and compare with log2 of the divisor count.\n\nThe ladder has a universal ceiling depending only on the exponent, so entropy growth along the ladder is governed by divisor counts.\n\nSome rung exceeds the divisor-count ceiling, indicating that the type map is not the order map for that conductor.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -163672,7 +163632,7 @@
       "depth_estimate": 3,
       "description": "Cycle 5 proved that depth-k observation determines the modal theory of worlds of height at most k. The algorithmic counterpart is that partition refinement decides bisimilarity on a truncation in exactly that many rounds, with the chain frame as the worst case. This would turn a semantic criterion into a verified decision procedure with a matching lower bound.\n\nPartition refinement decides bisimilarity of the worlds 0..N of any tag-indexed frame in at most N rounds, the bound being attained on the chain frame, and the number of bisimulation classes below N is at most N+1 with equality exactly for the chain.\n\nImplement the refinement as a Lean function on Finset partitions, prove its fixed point equals Bisim.Bisimilar restricted to the truncation using Collapse.depthEq_iff_modEq_of_le, and measure rounds on chainR, multR, shareR by evaluation.\n\nEvery bisimulation-invariant statement about truncated catalog frames becomes machine-checkable by computation with a proved optimal round bound.\n\nRefinement rounds and modal depth are not the same resource, revealing a gap between logical and algorithmic measures of behaviour.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -164304,7 +164264,7 @@
       "depth_estimate": 3,
       "description": "The proved bound ρ ≥ 1 - 2/k² for k-segment scrambling is conjectured to be exactly the infimum over all such dials, attained only as the segment length tends to infinity. This pins the plateau to a discrete invariant, the number of surviving coarse blocks.\n\ninf over SegPerm k m dials of ρ(k*m) equals 1 - 2k(m³-m)/((km)³-km), which decreases strictly in m to 1 - 2/k².\n\nProve the exact value for the all-segments-reversed dial and a tendsto statement mirroring rho_blockRev_tendsto; check by enumeration for k ≤ 3, m ≤ 5.\n\nThe observed plateau value 0.437 determines a non-integer effective k ≈ 1.88, i.e. the coarse structure is between one and two blocks — a falsifiable structural reading.\n\nSome segment-wise scrambling beats the reversal, meaning the extremal problem does not decouple as the identity suggests.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -164415,6 +164375,176 @@
       "thread_id": "",
       "timestamp": "2026-09-03T09:52:20.149236+00:00",
       "title": "Concentration of Spearman Displacement for Random Windows"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Shared.StarvedDialCeiling",
+        "Shared.QuantizationCeiling",
+        "Shared.RankSpreadLowerBound"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The Spearman ceiling imposed by a tie block of relative size q is exactly sqrt(1 - q^3) in the large-sample limit. This cycle proved the upper bound and proved that the bound is attained by a real-valued response; the remaining step is to attain it with an honest rank vector. It matters because it converts a vague 'starved regime' narrative into a sharp cubic threshold.\n\nFor every q in [0,1) there is a sequence of rank pairs (X_n, Y_n) on n points with a single tie block of size floor(q n) whose Spearman correlation tends to sqrt(1 - q^3), and none exceeds it.\n\nFormalise the attaining construction in Lean using TieCeiling.cov_sq_eq_explained_of_condExp with a rank-valued response, then evaluate at q = 194/1200.\n\nThe practical floor of any bit-length dial is a computable function of the zero-hit fraction alone.\n\nThe tie ceiling is not tight for rank data and the true ceiling must involve the joint rank distribution.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_4628",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5928260869565218,
+      "proof_strategy": "Combine spearman_sq_le_one_sub_ratio (upper bound) with an explicit permutation placing the tie block on consecutive ranks and matching the remaining ranks to the response; equality in Cauchy-Schwarz forces proportionality, which the construction supplies.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "025e0adb",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/025e0adb",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-03T09:52:38.469731+00:00",
+      "title": "Cubic Starvation Threshold for Rank Dials"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Shared.NoiseBudget",
+        "Shared.StarvedDialCeiling"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The observed Spearman collapse at bit length 56 cannot be caused by ties, so it must be caused by displacement of the measured ranking. This direction predicts the displacement energy from the trial budget and the mean smooth rate, and matches it against the proved lower bound. It converts the reported floor into a budget statement that a rerun can falsify.\n\nWith B independent trials per modulus and mean success probability p, the expected rank-displacement energy of the measured rate ranking is asymptotic to c n^3 / (B p) for an absolute constant c.\n\nRerun exp 511 at bit length 56 with B doubled; the Spearman score should rise by the amount predicted by rank_displacement_energy_ge run backwards.\n\nThe bit-length floor is an artefact of the measurement budget and disappears with more trials.\n\nThe dial genuinely loses information at high bit length and the mechanism is still unidentified.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "fd_4629",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.55,
+      "proof_strategy": "Model each measured count as Binomial(B, p_i), bound the probability that two moduli swap ranks by a Berry-Esseen estimate, and sum the resulting displacement energies; compare with TieCeiling.rank_displacement_energy_ge.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "025e0adb",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/025e0adb",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-03T09:52:39.077727+00:00",
+      "title": "Monte-Carlo Rank Displacement Law for Starved Sieves"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Shared.SmoothCountSparsity",
+        "Shared.QuantizationCeiling"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The catalog already bounds the size of the B-smooth pool by (log2 x + 1)^pi(B) via the exponent-vector injection. The same injection should bound the number of distinct smooth-hit counts observed across a sample of moduli, hence the number of tie blocks, hence the quantization ceiling. If the count grows, the quantization ceiling tends to one and the tie explanation is dead at every bit length.\n\nThe number of distinct hit counts recorded across n moduli at bit length L is at least 3 for all L in the tested range, so the quantization ceiling never falls below 0.94.\n\nBound the number of distinct values of the hit-count statistic using SmoothSparsity.smoothPool_card_le, then apply TieCeiling.quantization_ceiling.\n\nNo bit length can produce a tie-limited dial; every reported degradation is estimator noise.\n\nThere is a bit-length regime where the response degenerates to two values and the 0.866 cap becomes real.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_4630",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.591875,
+      "proof_strategy": "Combine the exponent-vector injection of SmoothCountSparsity with a pigeonhole count of achievable hit totals, and instantiate Fintype.card of the block label type in quantization_ceiling.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "025e0adb",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/025e0adb",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-03T09:52:39.849105+00:00",
+      "title": "Polylogarithmic Tie Count for Smooth-Pool Dials"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Shared.TieBlockRankCeiling",
+        "Shared.NoiseBudget"
+      ],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The tie ceiling is a projection statement and the noise bound is a Cauchy-Schwarz statement in the same Euclidean space of centred functions. This suggests the two loss budgets are exactly additive with no cross term, giving a two-number diagnosis for every reported dial degradation. It would replace narrative explanations of degraded dials with an accounting identity.\n\nFor any predictor X and responses Z (true) and Y (measured), the squared correlation loss splits as loss = tie_loss + displacement_loss with tie_loss determined by the tie partition of Y and displacement_loss by Var(Y - Z), and the two terms are orthogonal.\n\nState and prove the identity in the varOf/cov API of Shared.TieBlockRankCeiling, then check it numerically on the exp 511 data.\n\nEvery future dial report can be audited by two computable numbers rather than by narrative.\n\nTies and displacement interact, and the ceiling framework must be replaced by a joint bound.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_4631",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.6710000000000002,
+      "proof_strategy": "Write both bounds as norms of orthogonal components of X - E[X] under the projection onto functions measurable with respect to the tie partition, then verify that the residual and explained parts are orthogonal by sum_residual_mul_comp.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "025e0adb",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/025e0adb",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-03T09:52:40.426766+00:00",
+      "title": "Orthogonal Decomposition of Rank-Correlation Loss"
     },
     {
       "ambition_level": "extension",
@@ -165375,6 +165505,46 @@
       "thread_id": "",
       "timestamp": "2026-07-27T13:44:25.584304+00:00",
       "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 14592ce7 (Q=0.820), which proved 55 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-49 #2, cron iteration (exp 512, assessment v285). Does the bitlen degradation continue?\n\n**T-DIAL-60-PLATEAU**: Spearman(T, rate) = **0.437** [0.393, 0.480] at bitlen 60 — the degradation PLATEAUS rather than continuing monotonically. Mean smooth rate stays at 0.89% (starved regime persists). ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "push_14592ce7_7d3b3d76",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "14592ce7",
+      "source_path": "FACT round-49 #2 — T-DIAL-60: the degradation plateaus (paper 179)",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-03T09:52:29.348816+00:00",
+      "title": "Deepening: FACT round-49 #2 — T-DIAL-60: the degradation plateaus (paper 179)"
     },
     {
       "ambition_level": "extension",
@@ -172910,7 +173080,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a9de2f0b (Q=0.780), which proved 71 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-55 #1, cron iteration (exp 523). The most comprehensive single-dial robustness sweep.\n\n**BKEY-MIXED-ZONE**: the T-dial's Spearman declines GRADUALLY with both bitlen and u — no cliff, no convention artifact, no threshold effect. Full 4-bitlen × 3-u grid: sp(T) ranges 0.53–0.79; decline is smoo",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -194258,7 +194428,7 @@
     "Computation": 5,
     "Geometry": 2,
     "Logic": 2,
-    "Novelty": 147.0,
+    "Novelty": 148.0,
     "NumberTheory": 3,
     "SetTheory": 1,
     "Speculative": 3,
@@ -194277,7 +194447,7 @@
     "acting": 4,
     "algebraic": 4.0,
     "already": 22,
-    "assessment": 63,
+    "assessment": 64,
     "a²+b²−c²": 3,
     "barriers": 26,
     "becomes": 10,
@@ -194317,7 +194487,7 @@
     "holds": 8,
     "hyperbolic": 6.0,
     "i(joint": 2,
-    "iteration": 31,
+    "iteration": 32,
     "itself": 20.0,
     "limited-memory": 23,
     "log(1+√2": 4.0,
@@ -194334,7 +194504,7 @@
     "now**": 9.0,
     "number": 20.0,
     "opening": 2,
-    "paper": 104,
+    "paper": 105,
     "positive": 13,
     "precise": 5,
     "preserving": 4,

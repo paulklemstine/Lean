@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ecb169bf",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — after the tree-sieve / multi-target verdicts\n\nThe formalized cycle established six things, all with sorry-free Lean proofs in\n`Catalog/Bridges/`:\n\n1. **Invalid as stated.** An id",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-08-31T05:36:26",
-      "title": "FACT round-72 #2/#3 — TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-TARGET relaxation lan"
-    },
-    {
       "cycle_id": "00e162eb",
       "domain": "Novelty",
       "key_insight": "# Future directions — ascent-cost economics after cycles 1–3\n\nThree cycles are complete and fully formalised (0 sorries) in\n`Catalog/Novelty/AscentCostLaw.lean`, `Catalog/Novelty/AscentCostExponent.le",
@@ -499,19 +489,19 @@
       "theorem_count": 88,
       "timestamp": "2026-09-03T09:52:09",
       "title": "Real-Parameter Scale Flow on Knee Chains"
+    },
+    {
+      "cycle_id": "14592ce7",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — after T-DIAL-60-PLATEAU\n\nThe formal cycle in `Catalog/Combinatorics/TDialPlateau60.lean` replaced the empirical\nstatement \"the bitlen degradation plateaus at ≈ 0.44\" by two exact",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-09-03T09:52:28",
+      "title": "FACT round-49 #2 — T-DIAL-60: the degradation plateaus (paper 179)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ba827ea4",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — reversible radius-one cellular automata over small alphabets\n\nThe cycle just completed answered the mission's falsifiable question negatively: for the\nternary alphabet there are",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 154,
-      "timestamp": "2026-08-22T17:36:48",
-      "title": "Ternary radius-one finite-window classification"
-    },
     {
       "cycle_id": "43b197e4",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 88,
       "timestamp": "2026-09-03T09:52:09",
       "title": "Real-Parameter Scale Flow on Knee Chains"
+    },
+    {
+      "cycle_id": "14592ce7",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — after T-DIAL-60-PLATEAU\n\nThe formal cycle in `Catalog/Combinatorics/TDialPlateau60.lean` replaced the empirical\nstatement \"the bitlen degradation plateaus at ≈ 0.44\" by two exact",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-09-03T09:52:28",
+      "title": "FACT round-49 #2 — T-DIAL-60: the degradation plateaus (paper 179)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fe7714ae",
-      "domain": "Physics",
-      "name": "chord_eq_nrm_contrastRaw",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "fe7714ae",
-      "domain": "Physics",
-      "name": "contrast_unit",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "fe7714ae",
-      "domain": "Physics",
-      "name": "contrast_test_attains_chord",
-      "quality": 0.84
-    },
     {
       "cycle_id": "0bdc483a",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "isGreatest_served",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "14592ce7",
+      "domain": "Combinatorics",
+      "name": "PermRange",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "14592ce7",
+      "domain": "Combinatorics",
+      "name": "PermRange",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "14592ce7",
+      "domain": "Combinatorics",
+      "name": "two_mul_sum_range",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-03T09:52:09",
+  "last_updated": "2026-09-03T09:52:28",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "56c4877a",
-        "quality": 0.85,
-        "theorems": 107,
-        "title": "Local-unitary normal form"
-      },
-      {
         "cycle_id": "44bf5a41",
         "quality": 0.72,
         "theorems": 111,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 96,
         "title": "FACT round-51 #1 — EXTENDED-DIAL: the prime-power feature does not replicate (pa"
+      },
+      {
+        "cycle_id": "14592ce7",
+        "quality": 0.82,
+        "theorems": 55,
+        "title": "FACT round-49 #2 — T-DIAL-60: the degradation plateaus (paper 179)"
       }
     ],
     "Computation": [
