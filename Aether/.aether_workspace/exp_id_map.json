@@ -2213,5 +2213,6 @@
   "f3a0d241": "net_55_the_knee_is_size_invariant__qwen25_15b_post.json",
   "ee56ba3a": "net_56_the_oracle_overstates_the_deployable_win__s.json",
   "5c95862a": "fact_round_51_3__t_dial_60_unif_the_dial_survives_.json",
-  "c90a227e": "generalize_from_permutations_of_distinct_elements_.json"
+  "c90a227e": "generalize_from_permutations_of_distinct_elements_.json",
+  "c9885d74": "reedsolomon_dimension_and_mds_equality.json"
 }
