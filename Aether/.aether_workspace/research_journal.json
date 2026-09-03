@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9b32ba78",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — the surreal order topology\n\nThe cycle just completed established, for the order topology on `Surreal` (all statements\nformalised, zero `sorry`):\n\n1. `Surreal` is densely ordered,",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 80,
-      "timestamp": "2026-08-30T06:41:19",
-      "title": "Local character at every point"
-    },
-    {
       "cycle_id": "342e465c",
       "domain": "Shared",
       "key_insight": "# Future directions — NET-91 thread (CPU speculative decoding)\n\nFour cycles of the loop are formalised in\n\n* `Catalog/Shared/SpeculativeDecodingCostDominance.lean` — block model, cost dominance,\n  dep",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-09-02T21:51:11",
       "title": "Generalize from permutations of distinct elements to multisets with repeated keys."
+    },
+    {
+      "cycle_id": "c9885d74",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Reed–Solomon, MDS codes, and their algebraic environment\n\nDerived from the verified results in `Catalog/Physics/ReedSolomonMDS.lean`:\nthe encoder `degreeLT F k →ₗ[F] (Fin n → F)`",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-09-03T00:17:21",
+      "title": "Reed–Solomon dimension and MDS equality"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "175408d6",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — \"which marginals feed the Bonferroni machinery\" (cycle v19c)\n\n## What this cycle established\n\nThe assignment observed that the Bonferroni machinery of\n`Catalog/Geometry/AlmostLos",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-08-22T09:43:14",
-      "title": "The Bonferroni machinery"
-    },
     {
       "cycle_id": "6f0c0f57",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-09-02T21:51:11",
       "title": "Generalize from permutations of distinct elements to multisets with repeated keys."
+    },
+    {
+      "cycle_id": "c9885d74",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Reed–Solomon, MDS codes, and their algebraic environment\n\nDerived from the verified results in `Catalog/Physics/ReedSolomonMDS.lean`:\nthe encoder `degreeLT F k →ₗ[F] (Fin n → F)`",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-09-03T00:17:21",
+      "title": "Reed–Solomon dimension and MDS equality"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b4f872e1",
-      "domain": "Physics",
-      "name": "five_domain_table_118",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "f7361634",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "f7361634",
-      "domain": "Applications",
-      "name": "famVar_eq",
-      "quality": 0.78
-    },
     {
       "cycle_id": "f7361634",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "multinomial_mul_prob_pow_le_one",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "c9885d74",
+      "domain": "Physics",
+      "name": "encoder_apply",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "c9885d74",
+      "domain": "Physics",
+      "name": "finrank_degreeLT",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "c9885d74",
+      "domain": "Physics",
+      "name": "natDegree_lt_of_mem_degreeLT",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-09-02T21:51:11",
+  "last_updated": "2026-09-03T00:17:21",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "80241759",
-        "quality": 0.79,
-        "theorems": 110,
-        "title": "Parameter-derived depth"
-      },
-      {
         "cycle_id": "7957a9f1",
         "quality": 0.82,
         "theorems": 66,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 138,
         "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR — Spearman(top8-mass, k*"
+      },
+      {
+        "cycle_id": "c9885d74",
+        "quality": 0.83,
+        "theorems": 38,
+        "title": "Reed–Solomon dimension and MDS equality"
       }
     ],
     "Probability": [
