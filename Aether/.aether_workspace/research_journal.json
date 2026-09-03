@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "df74e96c",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE_DIRECTIONS — after the GAP-L7 falsification (round-76 #1)\n\n## What this run established (all `sorry`-free, `Catalog/Novelty/Reorder*.lean`)\n\nCycle 1\n\n* **Exchange theorem** (`probeCost_massso",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-31T13:52:33",
-      "title": "FACT round-76 #1 — GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as drafted, replaced by L7"
-    },
-    {
       "cycle_id": "4467887a",
       "domain": "Combinatorics",
       "key_insight": "# FUTURE DIRECTIONS — after the ENERGY-ASCENT cycle\n\n## What this cycle settled\n\nThe round-70 report claimed a magnitude channel that sees the first Berggren\nbranch letter `b₁`, with a *positional* me",
@@ -499,19 +489,19 @@
       "theorem_count": 749,
       "timestamp": "2026-09-03T18:40:18",
       "title": "FACT round-48 #2 — T-DIAL-UNIF-HB: the dial holds at the regime × bitlen intersection (paper 177)"
+    },
+    {
+      "cycle_id": "d00ca27a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions: the Sturmian structure of binomial peaks\n\nThis cycle established, with sorry-free Lean 4 proofs (files\n`Catalog/MachineLearning/SturmianArgmaxStaircase.lean`,\n`Catalog/MachineLear",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-09-03T18:40:36",
+      "title": "Sturmian Structure of the Argmax Staircase"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ae01533d",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE_DIRECTIONS — NET-52 formal layer (round-to-nearest arithmetic)\n\n## What this cycle established\n\nFive self-contained Lean files in `Catalog/NumberTheory/` turn the NET-52 measurements into\nthe",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 131,
-      "timestamp": "2026-08-22T19:36:34",
-      "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0"
-    },
     {
       "cycle_id": "8828af22",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 749,
       "timestamp": "2026-09-03T18:40:18",
       "title": "FACT round-48 #2 — T-DIAL-UNIF-HB: the dial holds at the regime × bitlen intersection (paper 177)"
+    },
+    {
+      "cycle_id": "d00ca27a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions: the Sturmian structure of binomial peaks\n\nThis cycle established, with sorry-free Lean 4 proofs (files\n`Catalog/MachineLearning/SturmianArgmaxStaircase.lean`,\n`Catalog/MachineLear",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-09-03T18:40:36",
+      "title": "Sturmian Structure of the Argmax Staircase"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "aa167cd7",
-      "domain": "NumberTheory",
-      "name": "eval_mul_eventually",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "240c61ef",
-      "domain": "Computation",
-      "name": "sum_deg_eq_totalSize",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "240c61ef",
-      "domain": "Computation",
-      "name": "subset_sup_id",
-      "quality": 0.82
-    },
     {
       "cycle_id": "240c61ef",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "eml_generates_neg_one",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "d00ca27a",
+      "domain": "MachineLearning",
+      "name": "klFinDist_nonneg",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "d00ca27a",
+      "domain": "MachineLearning",
+      "name": "klFinDist_self",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "d00ca27a",
+      "domain": "MachineLearning",
+      "name": "change_of_measure",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-03T18:40:18",
+  "last_updated": "2026-09-03T18:40:36",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "147eac16",
-        "quality": 0.84,
-        "theorems": 79,
-        "title": "FACT round-58 #1 — TDIAL-U52: the dial survives uniform draws at bitlen 52 (pape"
-      },
-      {
         "cycle_id": "59651b5d",
         "quality": 0.79,
         "theorems": 62,
@@ -3575,6 +3569,12 @@
         "quality": 0.84,
         "theorems": 100,
         "title": "FACT round-61 #2 — TDIAL-U56B: fresh-seed replication confirms validity but edge"
+      },
+      {
+        "cycle_id": "d00ca27a",
+        "quality": 0.86,
+        "theorems": 18,
+        "title": "Sturmian Structure of the Argmax Staircase"
       }
     ],
     "Novelty": [
