@@ -1221,16 +1221,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-44 #1 \u2014 T-DIAL-STABLE: the zero-fit dial is seed-stable (paper 165)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "776b8f2a",
     "description": "Round-45 #3, cron iteration (exp 503, assessment v279). Paper 169's named follow-up: can refitting the footprint weights at tight u recover the drop?\n\n**NO-RECAL-RECOVERY**: recalibrated OOS sp(3.5) = **0.6050** (CI [0.581, 0.626]) < 0.70 \u2014 and the refit lands BELOW the unrefit zero-fit dial (0.6288; paired gain **\u22120.0238**, 5/5 negative; recovery \u221224%). H2 CONFIRMED as annotation: \u03b2 rank-stability 0.869 split-half / 0.9433 LOPO \u2014 a consistent structural object that is informationally empty. The fitted \u03b2 is anti-correlated \u22120.93 with the theory 2/p profile.\n\nBitlen-48 transfer 0.5693 < 0.60 (H3 refuted).\n\nCombined with papers 167\u2013169, the drop is now doubly localized: genuine threshold reweighting whose content is NOT capturable by small-prime footprint features of any weighting. Paper 164's zero-form adoption stands WITHOUT QUALIFICATION; the lost content sits in mid primes (31\u2013356) and/or non-footprint structure.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp503_tight_u_recal.py + exp503_result.json + ledger_exp503.jsonl, seeds 20260990\u201399 + 20261000.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3637",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T10:41:00.260365+00:00",
     "title": "FACT round-45 #3 \u2014 TIGHT-U-RECAL: reweighting cannot recover the tight-u drop (paper 170)"
   },
@@ -1264,47 +1265,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-47 #1 \u2014 T-DIAL-BITLEN: the zero-fit dial is bitlen-stable (paper 175)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "671d5841",
     "description": "Round-46 #2 (exp 506). Multi-seed replication of paper 172's prime-power lift.\n\n**PPOW-LIFT-REPLICATES-AND-GROWS**:\n- Per-seed \u0394R\u00b2(pp_sum over base) at (u=3.5, w=240): **+0.055/+0.049/+0.051/+0.050/+0.048** \u2014 all five above 0.03, cross-seed sd **0.0025**, SE(mean) **0.0011**\n- CI excludes zero on 5/5 cells at BOTH u\n- Lift GROWS with window length: mean \u0394R\u00b2 rises 240\u2192960 (u=3.5: 0.051\u21920.058; u=2.5: 0.058\u21920.082)\n\nThe prime-power term is REAL, seed-stable, and window-robust. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp506_ppow_multiseed.py + exp506_result.json, seeds 20260940\u201344.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3650",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T11:37:04.905091+00:00",
-    "title": "FACT round-46 #2 \u2014 PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with window length (paper 173)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-46 #1, cron iteration (exp 505, assessment v280). The direct hunt for paper 170's residual.\n\n**PRIME-POWER-CARRIES**: mid-prime fractions and QR-density add nothing (+0.019/+0.004, CIs span 0), but **prime-power hits (p\u00b2 | v_j for p \u2264 13) add +0.0892 out-of-sample R\u00b2 (CI [0.041, 0.125])** over the full baseline \u2014 decisively capturing the tight-u residual.\n\nMechanism: at smaller B, a value with p\u00b2 | v has its smoothness budget disproportionately consumed by small-prime powers \u2014 structure marginal squarefree-hit features cannot see. The per-N dial gains a prime-power term; the residual-hunt arc (papers 167\u2013172) closes constructively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp505_mid_prime_hunt.py + exp505_result.json, seed 20260927.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3651",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T11:37:04.906497+00:00",
-    "title": "FACT round-46 #1 \u2014 MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
-  },
-  {
-    "consumed_by_exp_id": "025e0adb",
-    "description": "Round-49 #1, cron iteration (exp 511, assessment v284). Paper 175's bitlen-stability pushed to its limit.\n\n**T-DIAL-56-PARTIAL**: Spearman(T, rate) = **0.405** at bitlen 56 \u2014 BELOW the [0.55, 0.85] band. The dial DEGRADES because the smooth rate drops to **0.89%** (starved; 194/1200 Ns with ZERO hits). T still beats count by +0.093 (CI [0.042, 0.146]).\n\nThe bitlen-stability has a PRACTICAL FLOOR near bitlen ~54, beyond which the starved regime destroys rank resolution.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp511_t_dial_56.py + exp511_result.json, seed 20261030.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3662",
     "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-08-22T13:02:58.897389+00:00",
-    "title": "FACT round-49 #1 \u2014 T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
+    "timestamp": "2026-08-22T11:37:04.905091+00:00",
+    "title": "FACT round-46 #2 \u2014 PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with window length (paper 173)"
+  },
+  {
+    "consumed_by_exp_id": "e635525e",
+    "description": "Round-46 #1, cron iteration (exp 505, assessment v280). The direct hunt for paper 170's residual.\n\n**PRIME-POWER-CARRIES**: mid-prime fractions and QR-density add nothing (+0.019/+0.004, CIs span 0), but **prime-power hits (p\u00b2 | v_j for p \u2264 13) add +0.0892 out-of-sample R\u00b2 (CI [0.041, 0.125])** over the full baseline \u2014 decisively capturing the tight-u residual.\n\nMechanism: at smaller B, a value with p\u00b2 | v has its smoothness budget disproportionately consumed by small-prime powers \u2014 structure marginal squarefree-hit features cannot see. The per-N dial gains a prime-power term; the residual-hunt arc (papers 167\u2013172) closes constructively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp505_mid_prime_hunt.py + exp505_result.json, seed 20260927.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3651",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-22T11:37:04.906497+00:00",
+    "title": "FACT round-46 #1 \u2014 MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
   },
   {
     "consumed_by_exp_id": "ed88da41",
@@ -1335,36 +1323,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-22T13:02:58.900934+00:00",
     "title": "FACT round-48 #1 \u2014 MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
-  },
-  {
-    "consumed_by_exp_id": "14592ce7",
-    "description": "Round-49 #2, cron iteration (exp 512, assessment v285). Does the bitlen degradation continue?\n\n**T-DIAL-60-PLATEAU**: Spearman(T, rate) = **0.437** [0.393, 0.480] at bitlen 60 \u2014 the degradation PLATEAUS rather than continuing monotonically. Mean smooth rate stays at 0.89% (starved regime persists). T still beats count by +0.070.\n\nH1 (monotone continuation) REFUTED; H3 (recovery) REFUTED.\n\nThe dial's bitlen degradation reaches a floor at ~0.44 rather than vanishing \u2014 the QR-lottery signal stabilizes at its minimum rather than disappearing entirely.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp512_t_dial_60.py + exp512_result.json, seed 20261040.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3669",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T13:46:15.641520+00:00",
-    "title": "FACT round-49 #2 \u2014 T-DIAL-60: the degradation plateaus (paper 179)"
-  },
-  {
-    "consumed_by_exp_id": "88e58a70",
-    "description": "Round-52 #1, cron iteration (exp 517). The zero-fit dial's regime-invariance extends to bitlen 48.\n\n**DIAL-HOLDS-UNIFORM-48**: Spearman(T, rate) = **0.777** / **0.755** / **0.801** across three seeds on uniform draws at bitlen 48 \u2014 all inside [0.55, 0.85]; T beats the bare QR-count by +0.09 to +0.13 on every seed.\n\nThe zero-fit dial's deployment envelope now covers balanced and uniform draws at bitlens 44\u201352 with confirmed seed-stability, regime-invariance, and bitlen-stability.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp517_t_dial_unif_48.py + exp517_result.json, seeds 20261080\u201382.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3674",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T14:39:10.954810+00:00",
-    "title": "FACT round-52 #1 \u2014 T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1747,20 +1705,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8ec45b40 (Q=0.850), which proved 124 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** On image-finite transition systems, every interpretation invariant under all modal observations factors through bisimulation classes, but need not factor through isomorphism classes; the gap is characterized by multiplicity-sensitive observations.\n\nThe key insight is that different o",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_8ec45b40_ca177275",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "8ec45b40",
-    "status": "available",
-    "timestamp": "2026-09-03T04:39:06.363185+00:00",
-    "title": "Deepening: Bisimulation versus isomorphism as semantic resolution"
   },
   {
     "consumed_by_exp_id": "",
@@ -2436,20 +2380,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 42a2aa0b (Q=0.840), which proved 100 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-50 (exp 513). The abelian ladder's eleventh rung.\n\n**FULL-PINNING-AT-DEGREE-11**: Q(\u03b6\u2082\u2083)\u207a confirms every pre-stated prediction:\n- T(p)=1 iff dlog\u22610 mod 11; densities {1/11, 10/11}; H(T)=0.4395 bits\n- I(p mod 29; T) = H(T) EXACTLY (perm z>1000, per-class degenerate)\n- Semiprime pair Bin(2,1/11)",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_42a2aa0b_790938fd",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "42a2aa0b",
-    "status": "available",
-    "timestamp": "2026-09-03T04:39:23.704517+00:00",
-    "title": "Deepening: FACT round-50 \u2014 DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder thro"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -2475,6 +2405,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T00:17:22.113391+00:00",
     "title": "Deepening: Reed\u2013Solomon dimension and MDS equality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 025e0adb (Q=0.820), which proved 46 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-49 #1, cron iteration (exp 511, assessment v284). Paper 175's bitlen-stability pushed to its limit.\n\n**T-DIAL-56-PARTIAL**: Spearman(T, rate) = **0.405** at bitlen 56 \u2014 BELOW the [0.55, 0.85] band. The dial DEGRADES because the smooth rate drops to **0.89%** (starved; 194/1200 Ns with ZERO hit",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_025e0adb_9e125c8e",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "025e0adb",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:49.283683+00:00",
+    "title": "Deepening: FACT round-49 #1 \u2014 T-DIAL-56: the bitlen-stability has a practical floor (paper "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 14592ce7 (Q=0.820), which proved 55 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-49 #2, cron iteration (exp 512, assessment v285). Does the bitlen degradation continue?\n\n**T-DIAL-60-PLATEAU**: Spearman(T, rate) = **0.437** [0.393, 0.480] at bitlen 60 \u2014 the degradation PLATEAUS rather than continuing monotonically. Mean smooth rate stays at 0.89% (starved regime persists). ",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_14592ce7_7d3b3d76",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "14592ce7",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:29.348816+00:00",
+    "title": "Deepening: FACT round-49 #2 \u2014 T-DIAL-60: the degradation plateaus (paper 179)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3446,6 +3404,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T09:39:53.845380+00:00",
     "title": "Deepening: NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine g"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 88e58a70 (Q=0.780), which proved 55 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-52 #1, cron iteration (exp 517). The zero-fit dial's regime-invariance extends to bitlen 48.\n\n**DIAL-HOLDS-UNIFORM-48**: Spearman(T, rate) = **0.777** / **0.755** / **0.801** across three seeds on uniform draws at bitlen 48 \u2014 all inside [0.55, 0.85]; T beats the bare QR-count by +0.09 to +0.13",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_88e58a70_9e16cd0e",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "88e58a70",
+    "status": "available",
+    "timestamp": "2026-09-03T09:51:52.444615+00:00",
+    "title": "Deepening: FACT round-52 #1 \u2014 T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at b"
   },
   {
     "consumed_by_exp_id": "",
@@ -12785,6 +12757,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The tie ceiling is a projection statement and the noise bound is a Cauchy-Schwarz statement in the same Euclidean space of centred functions. This suggests the two loss budgets are exactly additive with no cross term, giving a two-number diagnosis for every reported dial degradation. It would replace narrative explanations of degraded dials with an accounting identity.\n\nFor any predictor X and responses Z (true) and Y (measured), the squared correlation loss splits as loss = tie_loss + displacement_loss with tie_loss determined by the tie partition of Y and displacement_loss by Var(Y - Z), and the two terms are orthogonal.\n\nState and prove the identity in the varOf/cov API of Shared.TieBlockRankCeiling, then check it numerically on the exp 511 data.\n\nEvery future dial report can be audited by two computable numbers rather than by narrative.\n\nTies and displacement interact, and the ceiling framework must be replaced by a joint bound.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4631",
+    "priority_score": 0.6710000000000002,
+    "research_mode": "team",
+    "source_exp_id": "025e0adb",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:40.426766+00:00",
+    "title": "Orthogonal Decomposition of Rank-Correlation Loss"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved sandwich |X|^k \u2264 |G|\u00b7o_k \u2264 |G|\u00b7|X|^k pins the exponential growth rate of the hierarchy at |X|. The conjecture sharpens this to an exact second-order expansion controlled by the second largest fixed-point count, making the hierarchy a spectral probe of the action.\n\n|G|\u00b7o_k = |X|^k + m\u00b7r^k + O(s^k) where r is the largest fixed-point count among nonidentity elements, m the number of elements attaining it, and s < r.\n\nSplit the moment sum by the value of |X^g| and bound the tail; formalise as an inequality with explicit constants rather than an asymptotic statement.\n\nOrbit counts on tuples determine the fixed-point spectrum of the action, an inverse-problem statement.\n\nCancellation among elements with equal fixed-point counts would have to be exhibited, contradicting positivity.",
     "domains": [
       "Physics"
@@ -14184,19 +14170,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Two-Sided Pooling Envelope"
   },
   {
-    "consumed_by_exp_id": "98caf022",
-    "description": "The octave shift is an action of the additive monoid of naturals. If it extends to a real scale parameter, intermediate model sizes must interpolate the table monotonically, giving a one-parameter flow whose generator is the keys-per-octave rate.\n\nThere is a monotone K0 : \u211d\u22650 \u2192 \u211d with k*(sigma, j) = K0(max(j - sigma, 0)) restricting to the measured integer cells; equivalently the shift action extends from (\u2115,+) to (\u211d\u22650,+).\n\nFormalise the extension as a monotone-interpolation problem and prove existence for arithmetic base chains; experimentally sweep 3B between the 1.5B and 7B cells.\n\nKnee budgets can be interpolated for unmeasured model sizes, and deployment tables become continuous in scale.\n\nScale acts only discretely and each model family needs its own chain.",
-    "domains": [],
-    "id": "fd_4530",
-    "phase": "A",
-    "priority_score": 0.5935507246376812,
-    "research_mode": "team",
-    "source_exp_id": "384c4d0f",
-    "status": "in_progress",
-    "timestamp": "2026-09-02T00:16:59.246549+00:00",
-    "title": "Real-Parameter Scale Flow on Knee Chains"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every entry and every increment of the reported table is a multiple of four. If the sweep grid has spacing g, the reported knee is the grid ceiling of the true knee, and increments are forced into g\u00b7\u2115. This would show that much of the table's apparent structure is an artefact of the measurement design.\n\nIf a sweep grid is g\u00b7\u2115 then every reported doubling increment lies in g\u00b7\u2115, and the reported factor of a domain differs from its true factor by at most g/k*.\n\nCombine gridKnee from Combinatorics.KneeInvariance with the dilation bracket and prove both statements.\n\nThe '+0 / +4 / +8' pattern carries less information than claimed, and finer grids are required for factor claims.\n\nThe quantisation is a property of the model, not of the sweep, and is itself the interesting phenomenon.",
     "domains": [],
@@ -14942,6 +14915,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Spearman ceiling imposed by a tie block of relative size q is exactly sqrt(1 - q^3) in the large-sample limit. This cycle proved the upper bound and proved that the bound is attained by a real-valued response; the remaining step is to attain it with an honest rank vector. It matters because it converts a vague 'starved regime' narrative into a sharp cubic threshold.\n\nFor every q in [0,1) there is a sequence of rank pairs (X_n, Y_n) on n points with a single tie block of size floor(q n) whose Spearman correlation tends to sqrt(1 - q^3), and none exceeds it.\n\nFormalise the attaining construction in Lean using TieCeiling.cov_sq_eq_explained_of_condExp with a rank-valued response, then evaluate at q = 194/1200.\n\nThe practical floor of any bit-length dial is a computable function of the zero-hit fraction alone.\n\nThe tie ceiling is not tight for rank data and the true ceiling must involve the joint rank distribution.",
+    "domains": [],
+    "id": "fd_4628",
+    "priority_score": 0.5928260869565218,
+    "research_mode": "team",
+    "source_exp_id": "025e0adb",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:38.469731+00:00",
+    "title": "Cubic Starvation Threshold for Rank Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The bitlen \u00d7 cap ceiling table of the zero-fit dial factorises exactly into a row function and a column function. We conjecture this is not an accident of the dyadic profile but the signature of two knobs acting on disjoint parts of the tie profile: truncation of the tail versus rescaling of the whole space. A converse would make rank deficiency a diagnostic for knob independence.\n\nIf a two-parameter family of tie profiles is obtained by applying a tail-truncation operation indexed by u and a self-similar scaling indexed by b, then spearmanSq is a product f(u)\u00b7g(b); conversely, a nonvanishing 2x2 determinant in the ceiling table implies the two operations do not commute on the profile.\n\nFormalise truncation and scaling as operations on List N, prove the product form in general, and exhibit a non-commuting pair whose ceiling table has rank two.\n\nEvery dial in the programme can be certified interaction-free by checking two one-parameter families instead of a full grid.\n\nRank-one is specific to the 2-adic profile and grid sweeps remain necessary.",
     "domains": [],
     "id": "fd_4558",
@@ -15230,6 +15215,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The measured rate variable has ~99% ties, so the empirical Spearman coefficient uses mid-ranks. We conjecture that the plateau survives ties with the floor replaced by the between-class fragmentation constant. This turns the 0.89% smooth rate from a nuisance parameter into a predictor of the plateau height.\n\nFor a rank map scrambled inside k tie-classes of sizes m_1,\u2026,m_k summing to n, the mid-rank Spearman coefficient equals 1 - 2\u2211 m_i\u00b3/(n\u00b3-n) + O(1/n\u00b2), independently of the within-class arrangement.\n\nExtend sqDisp_seg_eq to unequal segment lengths, define the mid-rank statistic, and prove the identity; validate against exhaustive enumeration for n \u2264 10.\n\nThe plateau height becomes computable from the smooth-rate histogram alone, giving a parameter-free prediction for the next bitlen.\n\nThe tie structure contributes a genuinely new term, and the reported coefficient is not comparable across bit lengths.",
+    "domains": [],
+    "id": "fd_4624",
+    "priority_score": 0.5920149253731344,
+    "research_mode": "team",
+    "source_exp_id": "14592ce7",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:18.393685+00:00",
+    "title": "Tie-Corrected Spearman Plateau in the Starved Regime"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Beyond qualitative concavity, the midpoint defect of sigma should be pinned between two constant multiples of (s-t)^2 (1+s+t)^{-5/3}. The exponent 5/3 is dictated by the second derivative sigma'' = -6 (27t-1)^{-5/3} up to constants, so the conjecture asserts that the naive scaling is the true one uniformly on the physical range.\n\nThere exist 0 < c1 <= c2 such that for all s,t >= 1/27, c1 (s-t)^2 (1+s+t)^{-5/3} <= sigma((s+t)/2) - (sigma s + sigma t)/2 <= c2 (s-t)^2 (1+s+t)^{-5/3}.\n\nDifferentiate lagrangeExponent twice using HasDerivAt.rpow_const on top of lagrangeExponent_hasDerivAt, then apply the Taylor remainder bound on the segment [s,t] and check the endpoint scaling numerically on a grid first.\n\nConcavity upgrades to a quantitative modulus, which is what any application (rate-of-convergence for averaging schemes) actually needs.\n\nThe defect degenerates near the threshold t = 1/27 where sigma'' blows up, so no uniform two-sided modulus exists and the estimate must be stated on [1/27 + delta, infinity).",
     "domains": [],
     "id": "fd_3812",
@@ -15299,6 +15296,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T11:45:06.663933+00:00",
     "title": "Effective-Base Linearity Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The catalog already bounds the size of the B-smooth pool by (log2 x + 1)^pi(B) via the exponent-vector injection. The same injection should bound the number of distinct smooth-hit counts observed across a sample of moduli, hence the number of tie blocks, hence the quantization ceiling. If the count grows, the quantization ceiling tends to one and the tie explanation is dead at every bit length.\n\nThe number of distinct hit counts recorded across n moduli at bit length L is at least 3 for all L in the tested range, so the quantization ceiling never falls below 0.94.\n\nBound the number of distinct values of the hit-count statistic using SmoothSparsity.smoothPool_card_le, then apply TieCeiling.quantization_ceiling.\n\nNo bit length can produce a tie-limited dial; every reported degradation is estimator noise.\n\nThere is a bit-length regime where the response degenerates to two values and the 0.866 cap becomes real.",
+    "domains": [],
+    "id": "fd_4630",
+    "priority_score": 0.591875,
+    "research_mode": "team",
+    "source_exp_id": "025e0adb",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:39.849105+00:00",
+    "title": "Polylogarithmic Tie Count for Smooth-Pool Dials"
   },
   {
     "consumed_by_exp_id": "",
@@ -16783,6 +16792,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Diminishing returns (convexity of the knee profile) is preserved by the scale flow, and the profile is determined up to a rigid offset by the measured rate. We conjecture convexity therefore transfers across every family sharing a rate, making it a property of the ladder rather than of a model.\n\nIf two families have the same keys-per-octave rate and one has a convex profile, then so does the other; moreover every scale reparametrisation preserving the corner locus preserves convexity.\n\nCombine flow_preserves_convexOn with kstar_rate_identifiable and formalise the reparametrisation group as the translations of the scale axis.\n\nExtrapolating budgets by convexity is licensed across families, not only within one.\n\nConvexity is family-specific, so cross-family extrapolation of deployment tables needs new measurements.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4623",
+    "priority_score": 0.5645632198978766,
+    "research_mode": "team",
+    "source_exp_id": "98caf022",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:03.195159+00:00",
+    "title": "Convexity Transfer Across Model Families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every reading converts into a forced rank-displacement fraction (1-rho)/6, turning model selection into a statement about how much of the sample a mechanism must touch. The hyperbolic law saturates at 3/28 and can never demand more; any extinction law demands unboundedly more, with the crossing at bitlen 120. The budget is therefore a combinatorial falsification test that needs no curve fitting at all.\n\nAny rank-level mechanism reproducing the recorded ladder must displace a fraction of the sample that exceeds 3/28 at some bitlen at most 128; equivalently, no bounded-displacement mechanism explains the thread.\n\nInstantiate reading_corruption_budget at each recorded rung and compare with 3/28; formalise the resulting monotone budget ladder in Lean.\n\nThe hyperbolic shape class is refuted a second time, by a purely combinatorial argument independent of any fit.\n\nThe budget stalls below 3/28, which would be strong evidence for a genuine floor and against extinction.",
     "domains": [
       "Combinatorics",
@@ -17398,6 +17422,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Adding a second continuous knob (sparsity or quantisation width) yields two clamp-shift flows on the same profile. We conjecture the two flows commute exactly when the profile is affine, with the commutator measuring the second difference of the profile, so non-affine profiles have genuinely non-commuting deployment knobs.\n\nLet S_a and Q_b be the clamp-shift flows in scale and in sparsity. Then S_a Q_b = Q_b S_a for all a, b >= 0 iff the profile has stationary increments, i.e. is affine.\n\nDefine the two-parameter action on RChain, compute the commutator, and use affine_of_monotone_of_stationary_increments for the forward direction.\n\nDeployment knobs can be tuned independently exactly in the affine regime; elsewhere the tuning order matters.\n\nThere are non-affine profiles with commuting knobs, and stationarity is not the right rigidity axiom for multi-knob tables.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4622",
+    "priority_score": 0.5640187118695582,
+    "research_mode": "team",
+    "source_exp_id": "98caf022",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:02.642778+00:00",
+    "title": "Commuting Scale and Sparsity Flows"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Everything is proved for groupoids.  Transporting across\n   the fundamental-groupoid functor to genuine aspherical spaces requires the equivalence\n   between homotopy classes of maps of aspherical spaces and of their fundamental\n   groupoids, which is not in Mathlib and remains the main missing ingredient for a\n   statement such as \"degree classifies self-maps of the topological circle\".",
     "domains": [
       "Geometry",
@@ -17965,6 +18004,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T08:00:25.273322+00:00",
     "title": "Second-Order Cost Law from Run-Length Variance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved bound \u03c1 \u2265 1 - 2/k\u00b2 for k-segment scrambling is conjectured to be exactly the infimum over all such dials, attained only as the segment length tends to infinity. This pins the plateau to a discrete invariant, the number of surviving coarse blocks.\n\ninf over SegPerm k m dials of \u03c1(k*m) equals 1 - 2k(m\u00b3-m)/((km)\u00b3-km), which decreases strictly in m to 1 - 2/k\u00b2.\n\nProve the exact value for the all-segments-reversed dial and a tendsto statement mirroring rho_blockRev_tendsto; check by enumeration for k \u2264 3, m \u2264 5.\n\nThe observed plateau value 0.437 determines a non-integer effective k \u2248 1.88, i.e. the coarse structure is between one and two blocks \u2014 a falsifiable structural reading.\n\nSome segment-wise scrambling beats the reversal, meaning the extremal problem does not decouple as the identity suggests.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4625",
+    "priority_score": 0.563703751343374,
+    "research_mode": "team",
+    "source_exp_id": "14592ce7",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:18.982657+00:00",
+    "title": "Exact Infimum of the Fragmentation Floor"
   },
   {
     "consumed_by_exp_id": "",
@@ -30078,6 +30132,77 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T04:38:54.881705+00:00",
     "title": "Tree Normal Form for Reflection-Depth Spectra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The real-parameter flow predicts a strictly intermediate knee budget for unmeasured model sizes, which a discrete (N,+) action cannot produce. For 3B at ctx 2048 the proved window is (18, 18.4), so the deployable budget is 19 keys. Measuring that single cell decides between the discrete and continuous readings of scale.\n\nThe measured 3B knee at ctx 2048, at the NET-66 gate, equals 19 keys; more generally k*(N, ctx) = ceil(16 + 4 * (log2(ctx/512) - scaleIndex N)^+).\n\nRun the NET-66 budget sweep on a 3B model at contexts 512-4096 and compare with the proved windows in ScaleFlowSweep.\n\nDeployment tables can be interpolated for unmeasured sizes, and the scale axis is genuinely continuous.\n\nScale acts only discretely; the correct object is a per-family chain and the interpolation problem is ill-posed.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4620",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "98caf022",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:01.512929+00:00",
+    "title": "Fractional-Offset Falsification Protocol"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The number of served cells of the discrete scale-context table exceeds the area under the continuous served boundary by exactly S/2 for the arithmetic chain. We conjecture this half-cell defect is universal: for any monotone profile the defect is S/2 plus a term controlled by the fractional parts of the reach function.\n\nFor every monotone chain K with continuous reach r(b), card(served b S J) - integral_0^S (r(b) + sigma) dsigma = S/2 + E with |E| <= sum over the window of the fractional parts of r(b) + sigma.\n\nGeneralise net66_staircase_defect from the arithmetic chain to an arbitrary monotone chain via the reach adjunction served_iff, and bound the error term by a sum of fractional parts.\n\nInterpolated deployment budgets carry a known, rate-independent discretisation bias that can simply be subtracted.\n\nThe defect depends on the profile, and continuous budgeting needs a per-family correction table.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4621",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "98caf022",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:02.080114+00:00",
+    "title": "Euler-Maclaurin Defect Law for Served Regions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "T beats count by +0.070 at bitlen 60. We conjecture this gap is a difference of window volumes and hence independent of instance size, up to an explicit O(1/n\u00b2) error, so it should neither grow nor shrink with bit length.\n\nFor block dials with shape parameters \u03b1_T < \u03b1_C, \u03c1_T - \u03c1_C = 2(\u03b1_C\u00b3 - \u03b1_T\u00b3) + E with |E| \u2264 4/(n\u00b2-1).\n\nProve the two-sided version of rho_blockRev_alpha_law and subtract; compare with the measured gaps at bitlen 40, 50, 60.\n\nThe dial ordering is a scale invariant of the construction, and cross-bitlen comparisons of the gap are meaningful.\n\nThe gap carries an n-dependent term, so the reported +0.070 cannot be extrapolated.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4626",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "14592ce7",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:19.559396+00:00",
+    "title": "Scale-Free Dial Gap Between T and Count"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replacing the deterministic scrambled window by a uniformly random permutation of a random window makes \u03c1 a random variable. We conjecture Gaussian-scale concentration at the plateau value, which would convert the reported bootstrap interval into an effective sample size.\n\nFor a uniformly random permutation of a window of width m = \u230a\u03b1n\u230b, E[\u03c1] = 1 - (m\u00b3-m)/(n\u00b3-n) exactly (half the deterministic worst case), and P(|\u03c1 - E[\u03c1]| > t) \u2264 2exp(-c n t\u00b2) for an absolute constant c.\n\nFormalise \u2211d\u00b2 as a quadratic statistic, compute its mean and variance under the uniform measure on the window, and apply a bounded-difference inequality.\n\nThe half-width 0.044 of the reported interval becomes a direct estimate of the number of effectively independent ranks.\n\nThe statistic has heavy dependence across ranks and bootstrap intervals under-report the true uncertainty.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4627",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "14592ce7",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:20.149236+00:00",
+    "title": "Concentration of Spearman Displacement for Random Windows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The observed Spearman collapse at bit length 56 cannot be caused by ties, so it must be caused by displacement of the measured ranking. This direction predicts the displacement energy from the trial budget and the mean smooth rate, and matches it against the proved lower bound. It converts the reported floor into a budget statement that a rerun can falsify.\n\nWith B independent trials per modulus and mean success probability p, the expected rank-displacement energy of the measured rate ranking is asymptotic to c n^3 / (B p) for an absolute constant c.\n\nRerun exp 511 at bit length 56 with B doubled; the Spearman score should rise by the amount predicted by rank_displacement_energy_ge run backwards.\n\nThe bit-length floor is an artefact of the measurement budget and disappears with more trials.\n\nThe dial genuinely loses information at high bit length and the mechanism is still unidentified.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_4629",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "025e0adb",
+    "status": "available",
+    "timestamp": "2026-09-03T09:52:39.077727+00:00",
+    "title": "Monte-Carlo Rank Displacement Law for Starved Sieves"
   },
   {
     "consumed_by_exp_id": "",
@@ -48886,14 +49011,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berlekamp\u2013Massey"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e2f91544",
     "description": "Parameterize the coefficients by `N` and prove the standard first terms of the critical exponents uniformly in the admissible range of `N`.",
     "domains": [],
     "id": "fd_2634",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "89e28e84",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:15.766829+00:00",
     "title": "General `O(N)` model"
   },
@@ -49686,5 +49812,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T04:39:15.261091+00:00",
     "title": "the universal pinning theorem for all"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Every *balanced arithmetic indicator* \u2014 an indicator whose two classes differ in\nsize by at most one on a full residue system mod $n$ \u2014 has tie ceiling\n$\\rho^2 \\in \\bigl[3/4,\\ 3/4 + 3/(4n^2)\\bigr]$, with equality $3/4$ exactly on the odd-prime\nLegendre indicator, and no arithmetic indicator with $k$ classes can exceed $1 - 1/k^2$ on a\nmodulus supporting equidistribution.\n\n**The key insight is** that the ceiling of a two-valued statistic is a pure function of the\nclass-mass split, so *all* arithmetic content of the indicator \u2014 reciprocity, character sums,\nequidistribution \u2014 enters only through a single scalar, its bias.\n\n**Why now?** The prime-independence law shows the Legendre split is exactly balanced, and the\ncube-sum monotonicity machinery already reduces such comparisons to a cube-sum inequality.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4617",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "88e58a70",
+    "status": "available",
+    "timestamp": "2026-09-03T09:51:36.492573+00:00",
+    "title": "D1. Sharp two-block cliff for arithmetic indicators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For any squarefree modulus $M = p_1 \\cdots p_r$ the joint-Legendre ceiling is\n$$1 - \\frac{\\prod_i \\frac{p_i^2+3}{4 p_i^2} \\cdot M^3 - M}{M^3 - M},$$\nhence the set of achievable ceilings is the multiplicative semigroup generated by\n$\\{(p^2+3)/(4p^2)\\}$, which is dense in $(0,1)$; consequently for every target\n$t \\in (3/4, 1)$ there is a squarefree modulus whose Legendre vector has ceiling within\n$10^{-6}$ of $t$.\n\n**The key insight is** that the tie functional $\\sum_j m_j^3$ is multiplicative across CRT\nfactors while the sample size is multiplicative too, so the ceiling factorises with no\ninteraction term.\n\n**Why now?** The multiplicative tower law has already been established in closed form, and the\nper-prime factor $(p^2+3)/(4p^2)$ falls straight out of the factorisation\n$m^3 + (m+1)^3 = (2m+1)(m^2+m+1)$.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4618",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "88e58a70",
+    "status": "available",
+    "timestamp": "2026-09-03T09:51:37.046702+00:00",
+    "title": "D2. Multiplicative ceiling spectrum for CRT towers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Kendall's $\\tau_b$ and the Goodman\u2013Kruskal $\\gamma$ carry their own tie corrections. Whether an\nanalogous exact prime-independence law holds for them \u2014 a ceiling that is a pure constant,\nindependent of the modulus \u2014 is open.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4619",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "88e58a70",
+    "status": "available",
+    "timestamp": "2026-09-03T09:51:37.568305+00:00",
+    "title": "D5. Beyond Spearman"
   }
 ];

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "00e162eb",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — ascent-cost economics after cycles 1–3\n\nThree cycles are complete and fully formalised (0 sorries) in\n`Catalog/Novelty/AscentCostLaw.lean`, `Catalog/Novelty/AscentCostExponent.le",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-08-31T13:51:42",
-      "title": "FACT round-70 #3 — ASCENT-COST: exact branch-oracle economics; effective branching refuted; master-l"
-    },
-    {
       "cycle_id": "898d17cb",
       "domain": "Physics",
       "key_insight": "# Future directions — PTX starvation floor programme\n\nThree research cycles are recorded in `Catalog/Physics/PTXStarvationFloor.lean`,\n`PTXStarvationSpectrum.lean`, `PTXStarvationJitter.lean` and\n`PTX",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-09-03T09:52:28",
       "title": "FACT round-49 #2 — T-DIAL-60: the degradation plateaus (paper 179)"
+    },
+    {
+      "cycle_id": "025e0adb",
+      "domain": "Shared",
+      "key_insight": "# FUTURE_DIRECTIONS — after T-DIAL-56 (paper 178, exp 511)\n\n## What this cycle established\n\nFive new `Catalog/Shared` files, all sorry-free:\n\n| file | content |\n|------|---------|\n| `TieBlockRankCeili",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-09-03T09:52:48",
+      "title": "FACT round-49 #1 — T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "43b197e4",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — after the QR footprint dial (paper 145 cycle)\n\nThis cycle established, with machine-checked proofs:\n\n1. the \"each QR prime divides `2/p` of the values\" slogan is an **exact ident",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 171,
-      "timestamp": "2026-08-22T17:37:04",
-      "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
-    },
     {
       "cycle_id": "113c03c3",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-09-03T09:52:28",
       "title": "FACT round-49 #2 — T-DIAL-60: the degradation plateaus (paper 179)"
+    },
+    {
+      "cycle_id": "025e0adb",
+      "domain": "Shared",
+      "key_insight": "# FUTURE_DIRECTIONS — after T-DIAL-56 (paper 178, exp 511)\n\n## What this cycle established\n\nFive new `Catalog/Shared` files, all sorry-free:\n\n| file | content |\n|------|---------|\n| `TieBlockRankCeili",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-09-03T09:52:48",
+      "title": "FACT round-49 #1 — T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0bdc483a",
-      "domain": "NumberTheory",
-      "name": "below",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "53c2b4c2",
-      "domain": "Physics",
-      "name": "keyMass_nonneg",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "53c2b4c2",
-      "domain": "Physics",
-      "name": "sum_keyMass",
-      "quality": 0.82
-    },
     {
       "cycle_id": "53c2b4c2",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "two_mul_sum_range",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "025e0adb",
+      "domain": "Shared",
+      "name": "mean_sub",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "025e0adb",
+      "domain": "Shared",
+      "name": "cov_sub_right",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "025e0adb",
+      "domain": "Shared",
+      "name": "cov_diff_sq_le",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-03T09:52:28",
+  "last_updated": "2026-09-03T09:52:48",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "c08b5555",
-        "quality": 0.93,
-        "theorems": 68,
-        "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
-      },
-      {
         "cycle_id": "4be48a30",
         "quality": 0.78,
         "theorems": 51,
@@ -3947,6 +3941,12 @@
         "quality": 0.84,
         "theorems": 100,
         "title": "FACT round-50 — DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder thro"
+      },
+      {
+        "cycle_id": "025e0adb",
+        "quality": 0.82,
+        "theorems": 46,
+        "title": "FACT round-49 #1 — T-DIAL-56: the bitlen-stability has a practical floor (paper "
       }
     ],
     "Tropical": [
