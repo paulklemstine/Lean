@@ -22,33 +22,42 @@ noncomputable section
 
 namespace PACBayes
 
-/-! ## Finite distributions and the divergences used below
+/-! ## Section 0: the objects of the theory
 
-The three notions below (`FinDist`, `klFinDist`, `klBernoulli`) were used
-throughout this file but were never defined in the project, so the file did not
-elaborate.  They are the standard finitary definitions. -/
+The three objects used throughout this file (`FinDist`, `klFinDist`, `klBernoulli`) were
+referenced but were missing from the project, so the file did not elaborate.  They are
+supplied here with the conventions the rest of the file uses:
 
-/-- A probability distribution on a finite type: a nonnegative weight function
-summing to one. -/
+* a `FinDist α` is a probability vector on a fintype `α`;
+* `klFinDist Q P = ∑ a, Q a * log (Q a / P a)`, with the summand replaced by `0` where
+  `Q a = 0` (this is only a cosmetic guard: `0 * log (0 / P a) = 0` anyway);
+* `klBernoulli p q = p * log (p/q) + (1-p) * log ((1-p)/(1-q))`, which by the Lean
+  convention `log 0 = 0` already encodes `0 log 0 = 0` at the endpoints `p ∈ {0,1}`.
+-/
+
+/-- A probability distribution on a finite type. -/
 structure FinDist (α : Type*) [Fintype α] where
   /-- The probability mass function. -/
   prob : α → ℝ
-  /-- Probabilities are nonnegative. -/
+  /-- Masses are nonnegative. -/
   prob_nonneg : ∀ a, 0 ≤ prob a
-  /-- Probabilities sum to one. -/
+  /-- The masses sum to one. -/
   prob_sum_one : ∑ a, prob a = 1
 
-/-- Kullback–Leibler divergence `KL(Q ‖ P)` of two finite distributions, with the
-usual convention `0 · log (0 / x) = 0`. -/
+/-- The Kullback–Leibler divergence `KL(Q ‖ P)` of two distributions on a finite type. -/
 def klFinDist {α : Type*} [Fintype α] (Q P : FinDist α) : ℝ :=
-  ∑ a : α, if Q.prob a = 0 then 0 else Q.prob a * Real.log (Q.prob a / P.prob a)
+  ∑ a, if Q.prob a = 0 then 0 else Q.prob a * Real.log (Q.prob a / P.prob a)
 
-/-- Kullback–Leibler divergence of two Bernoulli laws, `KL(Ber p ‖ Ber q)`,
-with the convention `0 · log 0 = 0` at the two endpoints. -/
+/-- The Kullback–Leibler divergence of two Bernoulli distributions,
+`KL(Ber p ‖ Ber q) = p log (p/q) + (1-p) log ((1-p)/(1-q))`. -/
 def klBernoulli (p q : ℝ) : ℝ :=
-  if p = 0 then -Real.log (1 - q)
-  else if p = 1 then -Real.log q
-  else p * Real.log (p / q) + (1 - p) * Real.log ((1 - p) / (1 - q))
+  p * Real.log (p / q) + (1 - p) * Real.log ((1 - p) / (1 - q))
+
+/-- The `if`-guard in `klFinDist` is cosmetic: the guarded summand vanishes anyway. -/
+theorem klFinDist_eq_sum {α : Type*} [Fintype α] (Q P : FinDist α) :
+    klFinDist Q P = ∑ a, Q.prob a * Real.log (Q.prob a / P.prob a) := by
+  refine Finset.sum_congr rfl fun a _ => ?_
+  by_cases h : Q.prob a = 0 <;> simp [h]
 
 /-! ## KL Divergence: Basic Properties -/
 
@@ -127,331 +136,313 @@ theorem change_of_measure {α : Type*} [Fintype α]
     rw [ show P.prob a * ( Q.prob a ) ⁻¹ = ( Q.prob a * ( P.prob a ) ⁻¹ ) ⁻¹ by group, Real.log_inv ] ; ring;
   · exact add_comm _ _
 
-/-! ## Ingredients for Pinsker's inequality
-
-The two analytic facts below are the whole content of Pinsker's inequality: a
-one-dimensional calculus estimate for the Bernoulli divergence (proved by the
-mean value theorem, since the derivative of `q ↦ KL(p ‖ q) - 2 (p - q)²` is
-`(q - p)(1/(q(1-q)) - 4)`, which has the sign of `q - p`), and the log-sum
-inequality, which lets one collapse an arbitrary block of the alphabet to a
-single Bernoulli coordinate. -/
-
-/-- Endpoint estimate: `2 x² ≤ -log (1 - x)` on `[0, 1)`.  This is Pinsker's
-inequality for the degenerate Bernoulli laws `Ber 0` and `Ber 1`. -/
-theorem two_sq_le_neg_log_one_sub {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x < 1) :
-    2 * x ^ 2 ≤ -Real.log (1 - x) := by
-  rcases eq_or_lt_of_le hx0 with h | h
-  · simp [← h]
-  · set f : ℝ → ℝ := fun t => -Real.log (1 - t) - 2 * t ^ 2 with hf
-    have hderiv : ∀ y ∈ Set.Ioo (0:ℝ) x, HasDerivAt f (1 / (1 - y) - 4 * y) y := by
-      intro y hy
-      have h1 : (1 : ℝ) - y ≠ 0 := by nlinarith [hy.1, hy.2]
-      have hlog : HasDerivAt (fun t : ℝ => Real.log (1 - t)) (-1 / (1 - y)) y := by
-        simpa using (((hasDerivAt_const y (1:ℝ)).sub (hasDerivAt_id y)).log h1)
-      have hsq : HasDerivAt (fun t : ℝ => 2 * t ^ 2) (4 * y) y := by
-        have h0 := (hasDerivAt_pow 2 y).const_mul (2:ℝ)
-        convert h0 using 1
-        norm_num
-        ring
-      have h2 := (hlog.neg).sub hsq
-      convert h2 using 1
-      field_simp
-    have hcont : ContinuousOn f (Set.Icc 0 x) := by
-      apply ContinuousOn.sub
-      · apply ContinuousOn.neg
-        apply ContinuousOn.log (by fun_prop)
-        intro t ht
-        have h1 := ht.1
-        have h2 := ht.2
-        nlinarith
-      · fun_prop
-    obtain ⟨c, hc, hslope⟩ := exists_hasDerivAt_eq_slope f _ h hcont hderiv
-    have hc1 : c < 1 := lt_trans hc.2 hx1
-    have h1c : 0 < 1 - c := by linarith
-    have hpos : 0 ≤ 1 / (1 - c) - 4 * c := by
-      rw [sub_nonneg, le_div_iff₀ h1c]
-      nlinarith [sq_nonneg (1 - 2*c)]
-    have hf0 : f 0 = 0 := by simp [hf]
-    rw [hslope, hf0, sub_zero, sub_zero] at hpos
-    have h3 : 0 ≤ f x / x * x := mul_nonneg hpos h.le
-    rw [div_mul_cancel₀ _ (ne_of_gt h)] at h3
-    simp only [hf] at h3
-    linarith
-
-/-- Interior estimate: the Bernoulli divergence dominates `2 (p - q)²` for
-parameters strictly inside `(0, 1)`.  Proved by the mean value theorem applied to
-`x ↦ KL(p ‖ x) - 2 (p - x)²`, whose derivative is
-`(x - p)(1 - 2x)² / (x (1 - x))`. -/
-theorem pinsker_core_interior {p q : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (hq0 : 0 < q) (hq1 : q < 1) :
-    2 * (p - q) ^ 2 ≤
-      p * (Real.log p - Real.log q) + (1 - p) * (Real.log (1 - p) - Real.log (1 - q)) := by
-  set G : ℝ → ℝ := fun x =>
-    p * (Real.log p - Real.log x) + (1 - p) * (Real.log (1 - p) - Real.log (1 - x))
-      - 2 * (p - x) ^ 2 with hG
-  have hGp : G p = 0 := by simp [hG]
-  have hderiv : ∀ y : ℝ, 0 < y → y < 1 →
-      HasDerivAt G (-(p / y) + (1 - p) / (1 - y) + 4 * (p - y)) y := by
-    intro y hy0 hy1
-    have hy : y ≠ 0 := ne_of_gt hy0
-    have h1y : (1 : ℝ) - y ≠ 0 := by linarith
-    have hlog1 : HasDerivAt (fun t : ℝ => Real.log t) (1 / y) y := by
-      simpa [one_div] using (Real.hasDerivAt_log hy)
-    have hlog2 : HasDerivAt (fun t : ℝ => Real.log (1 - t)) (-1 / (1 - y)) y := by
-      simpa using (((hasDerivAt_const y (1:ℝ)).sub (hasDerivAt_id y)).log h1y)
-    have d1 : HasDerivAt (fun x : ℝ => p * (Real.log p - Real.log x)) (p * (0 - 1 / y)) y :=
-      (((hasDerivAt_const y (Real.log p)).sub hlog1).const_mul p)
-    have d2 : HasDerivAt (fun x : ℝ => (1 - p) * (Real.log (1 - p) - Real.log (1 - x)))
-        ((1 - p) * (0 - (-1 / (1 - y)))) y :=
-      (((hasDerivAt_const y (Real.log (1 - p))).sub hlog2).const_mul (1 - p))
-    have d3 : HasDerivAt (fun t : ℝ => 2 * (p - t) ^ 2) (-4 * (p - y)) y := by
-      have h0 : HasDerivAt (fun t : ℝ => (p - t)) (-1) y := by
-        simpa using (hasDerivAt_const y p).sub (hasDerivAt_id y)
-      have h1 := (h0.pow 2).const_mul (2:ℝ)
-      convert h1 using 1
-      ring
-    have h2 := (d1.add d2).sub d3
-    convert h2 using 1
-    field_simp
-    ring
-  have hcont : ∀ a b : ℝ, 0 < a → b < 1 → ContinuousOn G (Set.Icc a b) := by
-    intro a b ha hb
-    apply ContinuousOn.sub
-    · apply ContinuousOn.add
-      · apply ContinuousOn.mul continuousOn_const
-        apply ContinuousOn.sub continuousOn_const
-        apply ContinuousOn.log (by fun_prop)
-        intro t ht
-        have := ht.1
-        linarith
-      · apply ContinuousOn.mul continuousOn_const
-        apply ContinuousOn.sub continuousOn_const
-        apply ContinuousOn.log (by fun_prop)
-        intro t ht
-        have := ht.2
-        intro hcon
-        linarith [sub_eq_zero.mp hcon]
-    · fun_prop
-  have hsign : ∀ c : ℝ, 0 < c → c < 1 →
-      -(p / c) + (1 - p) / (1 - c) + 4 * (p - c) = (c - p) * (1 - 2 * c) ^ 2 / (c * (1 - c)) := by
-    intro c hc0 hc1
-    have h1 : c ≠ 0 := ne_of_gt hc0
-    have h2 : (1 : ℝ) - c ≠ 0 := by linarith
-    field_simp
-    ring
-  have hGq : 0 ≤ G q := by
-    rcases lt_trichotomy p q with h | h | h
-    · obtain ⟨c, hc, hslope⟩ := exists_hasDerivAt_eq_slope G
-        (fun y => -(p / y) + (1 - p) / (1 - y) + 4 * (p - y)) h
-        (hcont p q hp0 hq1) (fun y hy => hderiv y (lt_trans hp0 hy.1) (lt_trans hy.2 hq1))
-      have hc0 : 0 < c := lt_trans hp0 hc.1
-      have hc1 : c < 1 := lt_trans hc.2 hq1
-      have hnn : 0 ≤ -(p / c) + (1 - p) / (1 - c) + 4 * (p - c) := by
-        rw [hsign c hc0 hc1]
-        apply div_nonneg
-        · have : 0 ≤ c - p := by linarith [hc.1]
-          positivity
-        · nlinarith
-      rw [hslope, hGp, sub_zero] at hnn
-      have hqp : 0 < q - p := by linarith
-      have := mul_nonneg hnn hqp.le
-      rwa [div_mul_cancel₀ _ (ne_of_gt hqp)] at this
-    · rw [← h, hGp]
-    · obtain ⟨c, hc, hslope⟩ := exists_hasDerivAt_eq_slope G
-        (fun y => -(p / y) + (1 - p) / (1 - y) + 4 * (p - y)) h
-        (hcont q p hq0 hp1) (fun y hy => hderiv y (lt_trans hq0 hy.1) (lt_trans hy.2 hp1))
-      have hc0 : 0 < c := lt_trans hq0 hc.1
-      have hc1 : c < 1 := lt_trans hc.2 hp1
-      have hnp : -(p / c) + (1 - p) / (1 - c) + 4 * (p - c) ≤ 0 := by
-        rw [hsign c hc0 hc1]
-        apply div_nonpos_of_nonpos_of_nonneg
-        · have : c - p ≤ 0 := by linarith [hc.2]
-          nlinarith [sq_nonneg (1 - 2*c)]
-        · nlinarith
-      rw [hslope, hGp] at hnp
-      have hpq : 0 < p - q := by linarith
-      have := mul_nonpos_of_nonpos_of_nonneg hnp hpq.le
-      rw [div_mul_cancel₀ _ (ne_of_gt hpq)] at this
-      linarith
-  simp only [hG] at hGq
-  linarith
-
-/-- `a log (a / b) = a (log a - log b)` for `a ≥ 0 < b`, including the convention
-`0 · log 0 = 0`. -/
-theorem mul_log_div_eq {a b : ℝ} (ha : 0 ≤ a) (hb : 0 < b) :
-    a * Real.log (a / b) = a * (Real.log a - Real.log b) := by
-  rcases eq_or_lt_of_le ha with h | h
-  · simp [← h]
-  · rw [Real.log_div (ne_of_gt h) (ne_of_gt hb)]
-
-/-- Pinsker's inequality for Bernoulli laws, in expanded form: for `p ∈ [0,1]`
-and `q ∈ (0,1)`, `2 (p - q)² ≤ KL(Ber p ‖ Ber q)`. -/
-theorem pinsker_core {p q : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (hq0 : 0 < q) (hq1 : q < 1) :
-    2 * (p - q) ^ 2 ≤ p * Real.log (p / q) + (1 - p) * Real.log ((1 - p) / (1 - q)) := by
-  rw [mul_log_div_eq hp0 hq0,
-    mul_log_div_eq (by linarith : (0:ℝ) ≤ 1 - p) (by linarith : (0:ℝ) < 1 - q)]
-  rcases eq_or_lt_of_le hp0 with hp00 | hppos
-  · rw [← hp00]
-    have := two_sq_le_neg_log_one_sub (le_of_lt hq0) hq1
-    simp
-    linarith
-  rcases eq_or_lt_of_le hp1 with hp11 | hplt
-  · rw [hp11]
-    have := two_sq_le_neg_log_one_sub (x := 1 - q) (by linarith) (by linarith)
-    simp only [sub_sub_cancel] at this
-    simp
-    linarith
-  · exact pinsker_core_interior hppos hplt hq0 hq1
-
-/-- The log-sum inequality, in the form needed for the data-processing step of
-Pinsker's inequality: lumping a block `s` of the alphabet into a single symbol
-can only decrease the divergence. -/
-theorem klFinDist_block_ge {α : Type*} [Fintype α] (Q P : FinDist α)
-    (hac : ∀ a, P.prob a = 0 → Q.prob a = 0) (s : Finset α) :
-    (∑ a ∈ s, Q.prob a) * Real.log ((∑ a ∈ s, Q.prob a) / (∑ a ∈ s, P.prob a)) ≤
-      ∑ a ∈ s, (if Q.prob a = 0 then 0 else Q.prob a * Real.log (Q.prob a / P.prob a)) := by
-  classical
-  set F := ∑ a ∈ s, Q.prob a with hF
-  set G := ∑ a ∈ s, P.prob a with hGdef
-  have hFnn : 0 ≤ F := Finset.sum_nonneg fun a _ => Q.prob_nonneg a
-  have hGnn : 0 ≤ G := Finset.sum_nonneg fun a _ => P.prob_nonneg a
-  rcases eq_or_lt_of_le hFnn with hF0 | hFpos
-  · have hz : ∀ a ∈ s, Q.prob a = 0 :=
-      (Finset.sum_eq_zero_iff_of_nonneg (fun a _ => Q.prob_nonneg a)).mp hF0.symm
-    have hzero :
-        ∑ a ∈ s, (if Q.prob a = 0 then 0 else Q.prob a * Real.log (Q.prob a / P.prob a)) = 0 :=
-      Finset.sum_eq_zero fun a ha => by simp [hz a ha]
-    rw [hzero, ← hF0]
-    simp
-  · have hGpos : 0 < G := by
-      rcases eq_or_lt_of_le hGnn with hG0 | h
-      · exfalso
-        have hz : ∀ a ∈ s, P.prob a = 0 :=
-          (Finset.sum_eq_zero_iff_of_nonneg (fun a _ => P.prob_nonneg a)).mp hG0.symm
-        have : F = 0 := Finset.sum_eq_zero fun a ha => hac a (hz a ha)
-        linarith
-      · exact h
-    have key : ∀ a ∈ s, Q.prob a - P.prob a * (F / G) ≤
-        (if Q.prob a = 0 then 0 else Q.prob a * Real.log (Q.prob a / P.prob a))
-          - Q.prob a * Real.log (F / G) := by
-      intro a ha
-      by_cases h : Q.prob a = 0
-      · simp only [h, if_pos, zero_sub, zero_mul, sub_zero]
-        have : 0 ≤ P.prob a * (F / G) :=
-          mul_nonneg (P.prob_nonneg a) (div_nonneg hFnn hGnn)
-        linarith
-      · have hQa : 0 < Q.prob a := lt_of_le_of_ne (Q.prob_nonneg a) (Ne.symm h)
-        have hPa : 0 < P.prob a := lt_of_le_of_ne (P.prob_nonneg a)
-          (fun hc => h (hac a hc.symm))
-        set u : ℝ := (Q.prob a / P.prob a) / (F / G) with hu
-        have hupos : 0 < u := div_pos (div_pos hQa hPa) (div_pos hFpos hGpos)
-        have hlogu : Real.log u = Real.log (Q.prob a / P.prob a) - Real.log (F / G) :=
-          Real.log_div (ne_of_gt (div_pos hQa hPa)) (ne_of_gt (div_pos hFpos hGpos))
-        have hlow : 1 - 1 / u ≤ Real.log u := by
-          have h1 := Real.log_le_sub_one_of_pos (show (0:ℝ) < 1 / u by positivity)
-          rw [Real.log_div one_ne_zero (ne_of_gt hupos), Real.log_one] at h1
-          linarith
-        have hmul := mul_le_mul_of_nonneg_left hlow hQa.le
-        have hcancel : Q.prob a * (1 / u) = P.prob a * (F / G) := by
-          rw [hu]
-          field_simp
-        simp only [if_neg h]
-        rw [hlogu] at hmul
-        nlinarith [hmul, hcancel]
-    have hsum := Finset.sum_le_sum key
-    rw [Finset.sum_sub_distrib, Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.sum_mul] at hsum
-    rw [← hF, ← hGdef] at hsum
-    have hGF : G * (F / G) = F := by field_simp
-    rw [hGF] at hsum
-    linarith
-
 /-! ## Pinsker's Inequality -/
 
 /-- Total variation distance between two finite distributions. -/
 def tvDist {α : Type*} [Fintype α] (Q P : FinDist α) : ℝ :=
   (∑ a : α, |Q.prob a - P.prob a|) / 2
 
+/-! ### The one-dimensional ingredients of Pinsker's inequality
+
+The route taken here is the classical Csiszár reduction:
+
+1. a calculus lemma (`klAux`, `klAux_mono`, `klAux_anti`) showing that
+   `x ↦ KL(Ber p ‖ Ber x) − 2 (p − x)²` is minimised at `x = p`, which is the binary
+   Pinsker inequality `bernoulli_pinsker`;
+2. the log-sum inequality on a block (`log_sum_block`), proved pointwise from
+   `log t ≥ 1 − 1/t`;
+3. contraction onto the two-point partition `{P ≤ Q}` / `{Q < P}`, on which the total
+   variation distance is exactly the difference of the two block masses.
+-/
+
+/-- The auxiliary function `x ↦ −p log x − (1−p) log (1−x) − 2 (p−x)²`, which differs from
+`x ↦ KL(Ber p ‖ Ber x) − 2 (p − x)²` by the constant `−(p log p + (1−p) log (1−p))`. -/
+def klAux (p x : ℝ) : ℝ :=
+  -(p * Real.log x) - (1 - p) * Real.log (1 - x) - 2 * (p - x) ^ 2
+
+/-- The derivative of `klAux p` at an interior point of `(0,1)`. -/
+theorem klAux_hasDerivAt (p x : ℝ) (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt (klAux p) (-(p / x) + (1 - p) / (1 - x) + 4 * (p - x)) x := by
+  have h1 : HasDerivAt (fun y : ℝ => Real.log y) (1 / x) x := by
+    simpa [one_div] using Real.hasDerivAt_log (ne_of_gt hx0)
+  have h2 : HasDerivAt (fun y : ℝ => Real.log (1 - y)) (-(1 / (1 - x))) x := by
+    have hb : HasDerivAt (fun y : ℝ => 1 - y) (-1) x := by
+      simpa using (hasDerivAt_id x).const_sub 1
+    have := (Real.hasDerivAt_log (by linarith : (1:ℝ) - x ≠ 0)).comp x hb
+    simpa [mul_comm, one_div] using this
+  have h3 : HasDerivAt (fun y : ℝ => 2 * (p - y) ^ 2) (2 * (2 * (p - x) * (-1))) x := by
+    have hb : HasDerivAt (fun y : ℝ => (p - y) ^ 2) (2 * (p - x) * (-1)) x := by
+      have hc : HasDerivAt (fun y : ℝ => p - y) (-1) x := by
+        simpa using (hasDerivAt_id x).const_sub p
+      simpa using hc.pow 2
+    simpa using hb.const_mul (2:ℝ)
+  have := ((h1.const_mul p).neg.sub (h2.const_mul (1 - p))).sub h3
+  convert this using 1
+  field_simp
+  ring
+
+/-- `klAux p` is nondecreasing to the right of `p`. -/
+theorem klAux_mono (p a b : ℝ) (ha : 0 < a) (hb : b < 1) (hpa : p ≤ a) (hab : a ≤ b) :
+    klAux p a ≤ klAux p b := by
+  have hsub : Set.Icc a b ⊆ Set.Ioo (0:ℝ) 1 := fun x hx =>
+    ⟨lt_of_lt_of_le ha hx.1, lt_of_le_of_lt hx.2 hb⟩
+  have hmono : MonotoneOn (klAux p) (Set.Icc a b) := by
+    apply monotoneOn_of_deriv_nonneg (convex_Icc a b)
+    · intro x hx
+      have hx' := hsub hx
+      exact ((klAux_hasDerivAt p x hx'.1 hx'.2).continuousAt).continuousWithinAt
+    · intro x hx
+      rw [interior_Icc] at hx
+      have hx' : x ∈ Set.Ioo (0:ℝ) 1 := hsub (Set.Ioo_subset_Icc_self hx)
+      exact (klAux_hasDerivAt p x hx'.1 hx'.2).differentiableAt.differentiableWithinAt
+    · intro x hx
+      rw [interior_Icc] at hx
+      have hx' : x ∈ Set.Ioo (0:ℝ) 1 := hsub (Set.Ioo_subset_Icc_self hx)
+      rw [(klAux_hasDerivAt p x hx'.1 hx'.2).deriv]
+      have hxp : p ≤ x := le_trans hpa (le_of_lt hx.1)
+      have h0 : 0 < x := hx'.1
+      have h1 : 0 < 1 - x := by linarith [hx'.2]
+      have e : -(p / x) + (1 - p) / (1 - x) + 4 * (p - x)
+          = ((x - p) * (1 - 2 * x) ^ 2) / (x * (1 - x)) := by
+        field_simp; ring
+      rw [e]
+      exact div_nonneg (mul_nonneg (by linarith) (sq_nonneg _)) (le_of_lt (mul_pos h0 h1))
+  exact hmono (Set.left_mem_Icc.2 hab) (Set.right_mem_Icc.2 hab) hab
+
+/-- `klAux p` is nonincreasing to the left of `p`. -/
+theorem klAux_anti (p a b : ℝ) (ha : 0 < a) (hb : b < 1) (hbp : b ≤ p) (hab : a ≤ b) :
+    klAux p b ≤ klAux p a := by
+  have hsub : Set.Icc a b ⊆ Set.Ioo (0:ℝ) 1 := fun x hx =>
+    ⟨lt_of_lt_of_le ha hx.1, lt_of_le_of_lt hx.2 hb⟩
+  have hanti : AntitoneOn (klAux p) (Set.Icc a b) := by
+    apply antitoneOn_of_deriv_nonpos (convex_Icc a b)
+    · intro x hx
+      have hx' := hsub hx
+      exact ((klAux_hasDerivAt p x hx'.1 hx'.2).continuousAt).continuousWithinAt
+    · intro x hx
+      rw [interior_Icc] at hx
+      have hx' : x ∈ Set.Ioo (0:ℝ) 1 := hsub (Set.Ioo_subset_Icc_self hx)
+      exact (klAux_hasDerivAt p x hx'.1 hx'.2).differentiableAt.differentiableWithinAt
+    · intro x hx
+      rw [interior_Icc] at hx
+      have hx' : x ∈ Set.Ioo (0:ℝ) 1 := hsub (Set.Ioo_subset_Icc_self hx)
+      rw [(klAux_hasDerivAt p x hx'.1 hx'.2).deriv]
+      have hxp : x ≤ p := le_trans (le_of_lt hx.2) hbp
+      have h0 : 0 < x := hx'.1
+      have h1 : 0 < 1 - x := by linarith [hx'.2]
+      have e : -(p / x) + (1 - p) / (1 - x) + 4 * (p - x)
+          = ((x - p) * (1 - 2 * x) ^ 2) / (x * (1 - x)) := by
+        field_simp; ring
+      rw [e]
+      exact div_nonpos_of_nonpos_of_nonneg
+        (mul_nonpos_of_nonpos_of_nonneg (by linarith) (sq_nonneg _)) (le_of_lt (mul_pos h0 h1))
+  exact hanti (Set.left_mem_Icc.2 hab) (Set.right_mem_Icc.2 hab) hab
+
+/-- The endpoint case of the binary Pinsker inequality: `2x² ≤ −log (1−x)` on `[0,1)`. -/
+theorem two_sq_le_neg_log_one_sub (x : ℝ) (hx0 : 0 ≤ x) (hx1 : x < 1) :
+    2 * x ^ 2 ≤ -Real.log (1 - x) := by
+  set G : ℝ → ℝ := fun y => -Real.log (1 - y) - 2 * y ^ 2 with hG
+  have hderiv : ∀ y : ℝ, y < 1 → HasDerivAt G (1 / (1 - y) - 4 * y) y := by
+    intro y hy
+    have h2 : HasDerivAt (fun z : ℝ => Real.log (1 - z)) (-(1 / (1 - y))) y := by
+      have hb : HasDerivAt (fun z : ℝ => 1 - z) (-1) y := by
+        simpa using (hasDerivAt_id y).const_sub 1
+      have := (Real.hasDerivAt_log (by linarith : (1:ℝ) - y ≠ 0)).comp y hb
+      simpa [mul_comm, one_div] using this
+    have h3 : HasDerivAt (fun z : ℝ => 2 * z ^ 2) (2 * (2 * y)) y := by
+      simpa using ((hasDerivAt_pow 2 y).const_mul (2:ℝ))
+    have := h2.neg.sub h3
+    convert this using 1
+    ring
+  have hmono : MonotoneOn G (Set.Icc 0 x) := by
+    apply monotoneOn_of_deriv_nonneg (convex_Icc 0 x)
+    · intro y hy
+      exact ((hderiv y (lt_of_le_of_lt hy.2 hx1)).continuousAt).continuousWithinAt
+    · intro y hy
+      rw [interior_Icc] at hy
+      exact (hderiv y (lt_trans hy.2 hx1)).differentiableAt.differentiableWithinAt
+    · intro y hy
+      rw [interior_Icc] at hy
+      have hy1 : y < 1 := lt_trans hy.2 hx1
+      rw [(hderiv y hy1).deriv]
+      have h1 : 0 < 1 - y := by linarith
+      have e : 1 / (1 - y) - 4 * y = (1 - 2 * y) ^ 2 / (1 - y) := by field_simp; ring
+      rw [e]
+      exact div_nonneg (sq_nonneg _) (le_of_lt h1)
+  have := hmono (Set.left_mem_Icc.2 hx0) (Set.right_mem_Icc.2 hx0) hx0
+  simp only [hG] at this
+  norm_num at this
+  linarith
+
+/-- **Binary Pinsker inequality**: `2 (p − q)² ≤ KL(Ber p ‖ Ber q)`. -/
+theorem klBernoulli_ge_two_sq {p q : ℝ}
+    (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (hq0 : 0 < q) (hq1 : q < 1) :
+    (p - q) ^ 2 ≤ klBernoulli p q / 2 := by
+  rcases eq_or_lt_of_le hp0 with hp | hp
+  · have h := two_sq_le_neg_log_one_sub q (le_of_lt hq0) hq1
+    simp only [klBernoulli, ← hp]
+    norm_num
+    linarith
+  rcases eq_or_lt_of_le hp1 with hp' | hp'
+  · have h := two_sq_le_neg_log_one_sub (1 - q) (by linarith) (by linarith)
+    have hq : (1:ℝ) - (1 - q) = q := by ring
+    rw [hq] at h
+    simp only [klBernoulli, hp']
+    norm_num
+    linarith
+  · have hkey : klAux p p ≤ klAux p q := by
+      rcases le_total p q with h | h
+      · exact klAux_mono p p q hp hq1 le_rfl h
+      · exact klAux_anti p q p hq0 hp' le_rfl h
+    simp only [klAux] at hkey
+    have hlog1 : Real.log (p / q) = Real.log p - Real.log q :=
+      Real.log_div (ne_of_gt hp) (ne_of_gt hq0)
+    have hlog2 : Real.log ((1 - p) / (1 - q)) = Real.log (1 - p) - Real.log (1 - q) :=
+      Real.log_div (by linarith) (by linarith)
+    simp only [klBernoulli, hlog1, hlog2]
+    nlinarith [hkey]
+
+/-- **Log-sum inequality on a block**: for a subset `T` of positive `P`-mass,
+`(∑_T Q) log ((∑_T Q)/(∑_T P)) ≤ ∑_T Q log (Q/P)`. -/
+theorem log_sum_block {α : Type*} [Fintype α] (Q P : FinDist α)
+    (hac : ∀ a, P.prob a = 0 → Q.prob a = 0) (T : Finset α)
+    (hy : 0 < ∑ a ∈ T, P.prob a) :
+    (∑ a ∈ T, Q.prob a) * Real.log ((∑ a ∈ T, Q.prob a) / (∑ a ∈ T, P.prob a))
+      ≤ ∑ a ∈ T, Q.prob a * Real.log (Q.prob a / P.prob a) := by
+  set x := ∑ a ∈ T, Q.prob a with hx
+  set y := ∑ a ∈ T, P.prob a with hydef
+  have hx0 : 0 ≤ x := Finset.sum_nonneg fun a _ => Q.prob_nonneg a
+  have key : ∀ a ∈ T, Q.prob a * Real.log (x / y) + (Q.prob a - P.prob a * (x / y))
+      ≤ Q.prob a * Real.log (Q.prob a / P.prob a) := by
+    intro a ha
+    rcases eq_or_lt_of_le (Q.prob_nonneg a) with hQ | hQ
+    · have hnn : 0 ≤ P.prob a * (x / y) :=
+        mul_nonneg (P.prob_nonneg a) (div_nonneg hx0 hy.le)
+      rw [← hQ]
+      simp only [zero_mul, zero_sub, zero_add]
+      linarith
+    · have hP : 0 < P.prob a := by
+        rcases eq_or_lt_of_le (P.prob_nonneg a) with hP | hP
+        · exact absurd (hac a hP.symm) (ne_of_gt hQ)
+        · exact hP
+      have hxpos : 0 < x :=
+        lt_of_lt_of_le hQ (Finset.single_le_sum (fun b _ => Q.prob_nonneg b) ha)
+      set t := (Q.prob a * y) / (P.prob a * x) with ht
+      have htpos : 0 < t := by positivity
+      have hlog : 1 - 1 / t ≤ Real.log t := by
+        have := Real.log_le_sub_one_of_pos (x := 1 / t) (by positivity)
+        rw [Real.log_div one_ne_zero (ne_of_gt htpos), Real.log_one] at this
+        linarith
+      have hteq : Real.log t = Real.log (Q.prob a / P.prob a) - Real.log (x / y) := by
+        rw [ht, Real.log_div (by positivity) (by positivity),
+          Real.log_div (ne_of_gt hQ) (ne_of_gt hP), Real.log_div (ne_of_gt hxpos) (ne_of_gt hy),
+          Real.log_mul (ne_of_gt hQ) (ne_of_gt hy), Real.log_mul (ne_of_gt hP) (ne_of_gt hxpos)]
+        ring
+      have hinv : 1 / t = (P.prob a * x) / (Q.prob a * y) := by rw [ht]; field_simp
+      rw [hteq, hinv] at hlog
+      have hmul := mul_le_mul_of_nonneg_left hlog (le_of_lt hQ)
+      have hsimp : Q.prob a * (1 - P.prob a * x / (Q.prob a * y))
+          = Q.prob a - P.prob a * (x / y) := by field_simp
+      rw [hsimp] at hmul
+      linarith
+  have hsum := Finset.sum_le_sum key
+  have hL : ∑ a ∈ T, (Q.prob a * Real.log (x / y) + (Q.prob a - P.prob a * (x / y)))
+      = x * Real.log (x / y) := by
+    rw [Finset.sum_add_distrib, ← Finset.sum_mul, Finset.sum_sub_distrib, ← Finset.sum_mul]
+    rw [← hx, ← hydef]
+    field_simp
+    ring
+  linarith [hL ▸ hsum]
+
+/-- On the block `{P ≤ Q}` the total variation distance is the difference of the masses. -/
+theorem tvDist_eq_block {α : Type*} [Fintype α] [DecidableEq α] (Q P : FinDist α) :
+    tvDist Q P = (∑ a ∈ Finset.univ.filter (fun a => P.prob a ≤ Q.prob a), Q.prob a)
+      - (∑ a ∈ Finset.univ.filter (fun a => P.prob a ≤ Q.prob a), P.prob a) := by
+  classical
+  set S := Finset.univ.filter (fun a => P.prob a ≤ Q.prob a) with hS
+  have hsplit : ∑ a ∈ S, |Q.prob a - P.prob a|
+      + ∑ a ∈ Finset.univ.filter (fun a => ¬ P.prob a ≤ Q.prob a), |Q.prob a - P.prob a|
+      = ∑ a : α, |Q.prob a - P.prob a| :=
+    Finset.sum_filter_add_sum_filter_not _ _ _
+  have h1 : ∑ a ∈ S, |Q.prob a - P.prob a| = ∑ a ∈ S, (Q.prob a - P.prob a) := by
+    refine Finset.sum_congr rfl fun a ha => ?_
+    have : P.prob a ≤ Q.prob a := (Finset.mem_filter.mp ha).2
+    exact abs_of_nonneg (by linarith)
+  have h2 : ∑ a ∈ Finset.univ.filter (fun a => ¬ P.prob a ≤ Q.prob a), |Q.prob a - P.prob a|
+      = ∑ a ∈ Finset.univ.filter (fun a => ¬ P.prob a ≤ Q.prob a), (P.prob a - Q.prob a) := by
+    refine Finset.sum_congr rfl fun a ha => ?_
+    have h : ¬ P.prob a ≤ Q.prob a := (Finset.mem_filter.mp ha).2
+    rw [abs_of_nonpos (by linarith [not_le.mp h])]; ring
+  have hQ : ∑ a ∈ S, Q.prob a
+      + ∑ a ∈ Finset.univ.filter (fun a => ¬ P.prob a ≤ Q.prob a), Q.prob a = 1 := by
+    rw [Finset.sum_filter_add_sum_filter_not]; exact Q.prob_sum_one
+  have hP : ∑ a ∈ S, P.prob a
+      + ∑ a ∈ Finset.univ.filter (fun a => ¬ P.prob a ≤ Q.prob a), P.prob a = 1 := by
+    rw [Finset.sum_filter_add_sum_filter_not]; exact P.prob_sum_one
+  rw [tvDist, ← hsplit, h1, h2, Finset.sum_sub_distrib, Finset.sum_sub_distrib]
+  linarith
+
 /-- Pinsker's inequality: TV(Q, P)² ≤ KL(Q ‖ P) / 2.
     This converts KL control into uniform probability control.
-    The proof is the classical two-step argument: the log-sum inequality
-    (`klFinDist_block_ge`) collapses the alphabet along the set where `Q ≥ P`,
-    reducing the claim to the Bernoulli case (`pinsker_core`). -/
+    The proof contracts the divergence onto the two-point partition `{P ≤ Q}`/`{Q < P}`
+    with the log-sum inequality and then applies the binary Pinsker inequality. -/
 theorem pinsker_inequality {α : Type*} [Fintype α] (Q P : FinDist α)
     (hac : ∀ a, P.prob a = 0 → Q.prob a = 0) :
     tvDist Q P ^ 2 ≤ klFinDist Q P / 2 := by
   classical
-  set A : Finset α := Finset.univ.filter (fun a => P.prob a ≤ Q.prob a) with hAdef
-  set B : Finset α := Finset.univ.filter (fun a => ¬ P.prob a ≤ Q.prob a) with hBdef
-  set p : ℝ := ∑ a ∈ A, Q.prob a with hp
-  set q : ℝ := ∑ a ∈ A, P.prob a with hq
-  have hQsplit : p + ∑ a ∈ B, Q.prob a = 1 := by
-    rw [hp, hAdef, hBdef, Finset.sum_filter_add_sum_filter_not]
-    exact Q.prob_sum_one
-  have hPsplit : q + ∑ a ∈ B, P.prob a = 1 := by
-    rw [hq, hAdef, hBdef, Finset.sum_filter_add_sum_filter_not]
-    exact P.prob_sum_one
-  have hQB : ∑ a ∈ B, Q.prob a = 1 - p := by linarith
-  have hPB : ∑ a ∈ B, P.prob a = 1 - q := by linarith
-  have htv : tvDist Q P = p - q := by
-    have hsplit : (∑ a ∈ A, |Q.prob a - P.prob a|) + (∑ a ∈ B, |Q.prob a - P.prob a|)
-        = ∑ a : α, |Q.prob a - P.prob a| := by
-      rw [hAdef, hBdef, Finset.sum_filter_add_sum_filter_not]
-    have hA1 : (∑ a ∈ A, |Q.prob a - P.prob a|) = p - q := by
-      rw [← Finset.sum_sub_distrib]
-      refine Finset.sum_congr rfl fun a ha => ?_
-      have : P.prob a ≤ Q.prob a := by
-        rw [hAdef] at ha; exact (Finset.mem_filter.mp ha).2
-      exact abs_of_nonneg (by linarith)
-    have hB1 : (∑ a ∈ B, |Q.prob a - P.prob a|) = (1 - q) - (1 - p) := by
-      rw [← hPB, ← hQB, ← Finset.sum_sub_distrib]
-      refine Finset.sum_congr rfl fun a ha => ?_
-      have : ¬ P.prob a ≤ Q.prob a := by
-        rw [hBdef] at ha; exact (Finset.mem_filter.mp ha).2
-      push_neg at this
-      rw [abs_of_nonpos (by linarith)]
-      ring
-    unfold tvDist
-    rw [← hsplit, hA1, hB1]
-    ring
-  have hkl : klFinDist Q P
-      = (∑ a ∈ A, (if Q.prob a = 0 then 0 else Q.prob a * Real.log (Q.prob a / P.prob a)))
-        + ∑ a ∈ B, (if Q.prob a = 0 then 0 else Q.prob a * Real.log (Q.prob a / P.prob a)) := by
-    rw [hAdef, hBdef, Finset.sum_filter_add_sum_filter_not]
-    rfl
-  have hq0 : 0 ≤ q := Finset.sum_nonneg fun a _ => P.prob_nonneg a
-  have hq1 : q ≤ 1 := by
-    have : 0 ≤ ∑ a ∈ B, P.prob a := Finset.sum_nonneg fun a _ => P.prob_nonneg a
+  set S := Finset.univ.filter (fun a => P.prob a ≤ Q.prob a) with hS
+  set Sc := Finset.univ.filter (fun a => ¬ P.prob a ≤ Q.prob a) with hSc
+  set x := ∑ a ∈ S, Q.prob a with hx
+  set y := ∑ a ∈ S, P.prob a with hy
+  have hxc : ∑ a ∈ Sc, Q.prob a = 1 - x := by
+    have : ∑ a ∈ S, Q.prob a + ∑ a ∈ Sc, Q.prob a = 1 := by
+      rw [hS, hSc, Finset.sum_filter_add_sum_filter_not]; exact Q.prob_sum_one
     linarith
-  have hp0 : 0 ≤ p := Finset.sum_nonneg fun a _ => Q.prob_nonneg a
-  have hp1 : p ≤ 1 := by
-    have : 0 ≤ ∑ a ∈ B, Q.prob a := Finset.sum_nonneg fun a _ => Q.prob_nonneg a
+  have hyc : ∑ a ∈ Sc, P.prob a = 1 - y := by
+    have : ∑ a ∈ S, P.prob a + ∑ a ∈ Sc, P.prob a = 1 := by
+      rw [hS, hSc, Finset.sum_filter_add_sum_filter_not]; exact P.prob_sum_one
     linarith
-  rcases eq_or_lt_of_le hq0 with hq00 | hq0pos
-  · have hz : ∀ a ∈ A, P.prob a = 0 :=
-      (Finset.sum_eq_zero_iff_of_nonneg (fun a _ => P.prob_nonneg a)).mp hq00.symm
-    have hp00 : p = 0 := Finset.sum_eq_zero fun a ha => hac a (hz a ha)
-    have htv0 : tvDist Q P = 0 := by rw [htv, hp00, ← hq00]; ring
+  have htv : tvDist Q P = x - y := tvDist_eq_block Q P
+  have hy0 : 0 ≤ y := Finset.sum_nonneg fun a _ => P.prob_nonneg a
+  have hx0 : 0 ≤ x := Finset.sum_nonneg fun a _ => Q.prob_nonneg a
+  have hx1 : x ≤ 1 := by
+    have : 0 ≤ ∑ a ∈ Sc, Q.prob a := Finset.sum_nonneg fun a _ => Q.prob_nonneg a
+    linarith [hxc]
+  have hy1 : y ≤ 1 := by
+    have : 0 ≤ ∑ a ∈ Sc, P.prob a := Finset.sum_nonneg fun a _ => P.prob_nonneg a
+    linarith [hyc]
+  rcases eq_or_lt_of_le hy0 with hy0' | hy0'
+  · have hallP : ∀ a ∈ S, P.prob a = 0 :=
+      (Finset.sum_eq_zero_iff_of_nonneg (fun b _ => P.prob_nonneg b)).mp hy0'.symm
+    have hxz : x = 0 := Finset.sum_eq_zero fun a ha => hac a (hallP a ha)
+    have htv0 : tvDist Q P = 0 := by rw [htv, hxz, ← hy0']; ring
     rw [htv0]
     have := klFinDist_nonneg Q P hac
-    simp
-    linarith
-  rcases eq_or_lt_of_le hq1 with hq11 | hq1lt
-  · have hPB0 : ∑ a ∈ B, P.prob a = 0 := by rw [hPB, hq11]; ring
-    have hz : ∀ a ∈ B, P.prob a = 0 :=
-      (Finset.sum_eq_zero_iff_of_nonneg (fun a _ => P.prob_nonneg a)).mp hPB0
-    have hQB0 : ∑ a ∈ B, Q.prob a = 0 := Finset.sum_eq_zero fun a ha => hac a (hz a ha)
-    have hp11 : p = 1 := by rw [hQB] at hQB0; linarith
-    have htv0 : tvDist Q P = 0 := by rw [htv, hp11, hq11]; ring
+    nlinarith
+  rcases eq_or_lt_of_le hy1 with hy1' | hy1'
+  · have hzero : ∑ a ∈ Sc, P.prob a = 0 := by rw [hyc, ← hy1']; ring
+    have hallP : ∀ a ∈ Sc, P.prob a = 0 :=
+      (Finset.sum_eq_zero_iff_of_nonneg (fun b _ => P.prob_nonneg b)).mp hzero
+    have hxz : ∑ a ∈ Sc, Q.prob a = 0 := Finset.sum_eq_zero fun a ha => hac a (hallP a ha)
+    have hx1' : x = 1 := by rw [hxc] at hxz; linarith
+    have htv0 : tvDist Q P = 0 := by rw [htv, hx1', ← hy1']; ring
     rw [htv0]
     have := klFinDist_nonneg Q P hac
-    simp
+    nlinarith
+  · have h1 := log_sum_block Q P hac S (by rw [← hy]; exact hy0')
+    rw [← hx, ← hy] at h1
+    have h2 := log_sum_block Q P hac Sc (by rw [hyc]; linarith)
+    rw [hxc, hyc] at h2
+    have hsplit : ∑ a ∈ S, Q.prob a * Real.log (Q.prob a / P.prob a)
+        + ∑ a ∈ Sc, Q.prob a * Real.log (Q.prob a / P.prob a)
+        = klFinDist Q P := by
+      rw [klFinDist_eq_sum, hS, hSc, Finset.sum_filter_add_sum_filter_not]
+    have hkl : klBernoulli x y ≤ klFinDist Q P := by
+      rw [klBernoulli, ← hsplit]
+      linarith
+    have hbp := klBernoulli_ge_two_sq hx0 hx1 hy0' hy1'
+    rw [htv]
     linarith
-  · have hA' := klFinDist_block_ge Q P hac A
-    have hB' := klFinDist_block_ge Q P hac B
-    rw [hQB, hPB] at hB'
-    rw [← hp, ← hq] at hA'
-    have hcore := pinsker_core hp0 hp1 hq0pos hq1lt
-    rw [htv, hkl]
-    nlinarith [hA', hB', hcore]
 
 /-! ## Bernoulli KL Properties -/
 
@@ -461,14 +452,8 @@ Bernoulli KL is nonneg for p, q ∈ [0, 1].
 theorem klBernoulli_nonneg {p q : ℝ}
     (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (hq0 : 0 < q) (hq1 : q < 1) :
     0 ≤ klBernoulli p q := by
-  unfold klBernoulli;
-  split_ifs <;> try linarith [ Real.log_le_sub_one_of_pos ( sub_pos.mpr hq1 ), Real.log_le_sub_one_of_pos hq0 ];
-  -- Applying the inequality $\log(x) \leq x - 1$ to both terms, we get:
-  have h_log_ineq : log (p / q) ≥ 1 - q / p ∧ log ((1 - p) / (1 - q)) ≥ 1 - (1 - q) / (1 - p) := by
-    have h_log_ineq : ∀ x : ℝ, 0 < x → log x ≥ 1 - 1 / x := by
-      exact fun x x_pos => by have := Real.log_le_sub_one_of_pos ( inv_pos.mpr x_pos ) ; norm_num at * ; linarith;
-    exact ⟨ by simpa using h_log_ineq ( p / q ) ( div_pos ( lt_of_le_of_ne hp0 ( Ne.symm ‹_› ) ) hq0 ), by simpa using h_log_ineq ( ( 1 - p ) / ( 1 - q ) ) ( div_pos ( sub_pos.mpr ( lt_of_le_of_ne hp1 ‹_› ) ) ( sub_pos.mpr hq1 ) ) ⟩;
-  nlinarith [ mul_div_cancel₀ q ( show p ≠ 0 by assumption ), mul_div_cancel₀ ( 1 - q ) ( show ( 1 - p ) ≠ 0 by cases lt_or_gt_of_ne ‹¬p = 1› <;> linarith ) ]
+  have h := klBernoulli_ge_two_sq hp0 hp1 hq0 hq1
+  nlinarith [sq_nonneg (p - q)]
 
 /-
 Bernoulli KL is zero iff p = q.
@@ -476,23 +461,19 @@ Bernoulli KL is zero iff p = q.
 theorem klBernoulli_eq_zero_iff {p q : ℝ}
     (hp0 : 0 < p) (hp1 : p < 1) (hq0 : 0 < q) (hq1 : q < 1) :
     klBernoulli p q = 0 ↔ p = q := by
-  -- By definition of $klBernoulli$, we have:
-  unfold klBernoulli;
-  split_ifs <;> simp_all +decide [ ne_of_gt, ne_of_lt ];
-  constructor <;> intro h;
-  · -- By the properties of the logarithm and the fact that $p \neq q$, we can derive a contradiction.
-    by_contra h_neq
-    have h_log : p * Real.log (p / q) + (1 - p) * Real.log ((1 - p) / (1 - q)) > 0 := by
-      have h_log : ∀ x y : ℝ, 0 < x → 0 < y → x ≠ y → x * Real.log (x / y) > x - y := by
-        intros x y hx hy hxy
-        have h_log : Real.log (x / y) > 1 - y / x := by
-          have h_log : ∀ z : ℝ, 0 < z → z ≠ 1 → Real.log z > 1 - 1 / z := by
-            exact fun z hz hz' => by have := Real.log_lt_sub_one_of_pos ( inv_pos.mpr hz ) ( by aesop ) ; norm_num at * ; linarith;
-          simpa using h_log ( x / y ) ( div_pos hx hy ) ( div_ne_one_of_ne hxy );
-        nlinarith [ mul_div_cancel₀ y hx.ne' ];
-      linarith [ h_log p q hp0 hq0 h_neq, h_log ( 1 - p ) ( 1 - q ) ( by linarith ) ( by linarith ) ( by contrapose! h_neq; linarith ) ];
-    linarith;
-  · aesop
+  constructor
+  · intro h
+    have hb := klBernoulli_ge_two_sq hp0.le hp1.le hq0 hq1
+    rw [h] at hb
+    have hsq : (p - q) ^ 2 = 0 := le_antisymm (by linarith) (sq_nonneg _)
+    have : p - q = 0 := by
+      exact pow_eq_zero_iff (n := 2) (by norm_num) |>.mp hsq
+    linarith
+  · intro h
+    subst h
+    rw [klBernoulli, div_self (ne_of_gt hp0), div_self (by linarith : (1:ℝ) - p ≠ 0),
+      Real.log_one]
+    ring
 
 /-
 Pinsker for Bernoulli: |p - q|² ≤ klBernoulli(p, q) / 2.
@@ -502,19 +483,8 @@ Pinsker for Bernoulli: |p - q|² ≤ klBernoulli(p, q) / 2.
     Direct proof without the general Pinsker inequality. -/
 theorem bernoulli_pinsker {p q : ℝ}
     (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (hq0 : 0 < q) (hq1 : q < 1) :
-    (p - q) ^ 2 ≤ klBernoulli p q / 2 := by
-  have hexp : klBernoulli p q
-      = p * Real.log (p / q) + (1 - p) * Real.log ((1 - p) / (1 - q)) := by
-    unfold klBernoulli
-    split_ifs with h0 h1
-    · subst h0
-      simp [Real.log_div one_ne_zero (by linarith : (1:ℝ) - q ≠ 0)]
-    · subst h1
-      simp [Real.log_div one_ne_zero (ne_of_gt hq0)]
-    · rfl
-  rw [hexp]
-  have := pinsker_core hp0 hp1 hq0 hq1
-  linarith
+    (p - q) ^ 2 ≤ klBernoulli p q / 2 :=
+  klBernoulli_ge_two_sq hp0 hp1 hq0 hq1
 
 /-
 From Bernoulli KL bound to risk bound:
