@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-03T09:52:57.627577+00:00",
+  "last_updated": "2026-09-03T14:36:33.315108+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -72786,6 +72786,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-03T09:52:57.310004+00:00",
       "title": "FACT round-49 #1 \u2014 T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Novelty",
+      "duration_seconds": 16929.584401845932,
+      "end_time": 1788446104.4755263,
+      "files_integrated": 4,
+      "job_id": "24e44638",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.86,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.562,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.86,
+        "novelty": 0.86,
+        "proof_depth": 0.86,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1788429174.8911245,
+      "strategy_count": 0,
+      "theorem_count": 95,
+      "theorem_novelty_disproof": 3,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 86,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-03T14:36:32.973888+00:00",
+      "title": "Uniqueness of the Two-Point Transreal Compactification"
     }
   ]
 }

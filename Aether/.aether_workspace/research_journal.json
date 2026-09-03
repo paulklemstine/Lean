@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "898d17cb",
-      "domain": "Physics",
-      "key_insight": "# Future directions — PTX starvation floor programme\n\nThree research cycles are recorded in `Catalog/Physics/PTXStarvationFloor.lean`,\n`PTXStarvationSpectrum.lean`, `PTXStarvationJitter.lean` and\n`PTX",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-31T13:51:59",
-      "title": "The floor is sharp"
-    },
-    {
       "cycle_id": "e8ef44c2",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Topology of the prime point cloud\n\nDerived from four research cycles on this thread, whose verified outcomes are:\n\n* the degree-zero barcode of the primes is the gap sequence, it",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-09-03T09:52:48",
       "title": "FACT round-49 #1 — T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
+    },
+    {
+      "cycle_id": "24e44638",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe cycle reported here started from the conjecture that the natural topology\n`EReal ⊔ {Φ}` on the four-constructor transreal carrier is forced by\n\"compact Hausdorff + open line +",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 95,
+      "timestamp": "2026-09-03T14:36:20",
+      "title": "Uniqueness of the Two-Point Transreal Compactification"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "113c03c3",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — after the residue-dial converse\n\nProved in this cycle (all sorry-free, in `Catalog/Cryptography/ResidueDial/`):\n\n* the exact single-pass law `Speedup = 1/(1 − θ + θ²)`, derived f",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-22T18:50:04",
-      "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum,"
-    },
     {
       "cycle_id": "a4769f7a",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 46,
       "timestamp": "2026-09-03T09:52:48",
       "title": "FACT round-49 #1 — T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
+    },
+    {
+      "cycle_id": "24e44638",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe cycle reported here started from the conjecture that the natural topology\n`EReal ⊔ {Φ}` on the four-constructor transreal carrier is forced by\n\"compact Hausdorff + open line +",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 95,
+      "timestamp": "2026-09-03T14:36:20",
+      "title": "Uniqueness of the Two-Point Transreal Compactification"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "53c2b4c2",
-      "domain": "Physics",
-      "name": "sq_cum_le_card_mul_collision",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "54a9fda9",
-      "domain": "Cryptography",
-      "name": "capBlocks_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "54a9fda9",
-      "domain": "Cryptography",
-      "name": "capBlocks_succ_succ",
-      "quality": 0.82
-    },
     {
       "cycle_id": "54a9fda9",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "cov_diff_sq_le",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "24e44638",
+      "domain": "Novelty",
+      "name": "pinf_ne_ninf",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "24e44638",
+      "domain": "Novelty",
+      "name": "pinf_notMem_range_fin",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "24e44638",
+      "domain": "Novelty",
+      "name": "ninf_notMem_range_fin",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-03T09:52:48",
+  "last_updated": "2026-09-03T14:36:20",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "00e162eb",
-        "quality": 0.82,
-        "theorems": 52,
-        "title": "FACT round-70 #3 — ASCENT-COST: exact branch-oracle economics; effective branchi"
-      },
-      {
         "cycle_id": "df74e96c",
         "quality": 0.83,
         "theorems": 73,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 13,
         "title": "Generalize from permutations of distinct elements to multisets with repeated key"
+      },
+      {
+        "cycle_id": "24e44638",
+        "quality": 0.86,
+        "theorems": 95,
+        "title": "Uniqueness of the Two-Point Transreal Compactification"
       }
     ],
     "NumberTheory": [

@@ -1325,16 +1325,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-48 #1 \u2014 MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52a5284b",
     "description": "Round-53 #1, cron iteration (exp 518). The zero-fit dial tested on uniform draws at bitlen 52 \u2014 highest bitlen \u00d7 regime combination yet measured.\n\n**CELL-CLOSED-DIAL-HOLDS**: Spearman(T, rate) = **0.793** / **0.808** / **0.808** across three seeds; all inside [0.55, 0.85]; pooled advantage over count +0.121 CI [0.103, 0.140].\n\nThe dial survives the intersection of regime-invariance and bitlen-stability at its highest tested point.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp518_t_dial_unif_52.py + exp518_result.json, seeds 20261090\u201392.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3680",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T15:36:32.741347+00:00",
     "title": "FACT round-53 #1 \u2014 T-DIAL-UNIF-52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
   },
@@ -1691,6 +1692,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 24e44638 (Q=0.860), which proved 95 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The four-constructor carrier was topologised by fiat as EReal \u2294 {\u03a6}. We conjecture that this is forced: any compact Hausdorff topology making the finite fragment an open copy of the line and nullity isolated is that one. The approach is an ends argument for the real line inside a two-point remainder",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_24e44638_ecba20db",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "24e44638",
+    "status": "available",
+    "timestamp": "2026-09-03T14:36:20.874195+00:00",
+    "title": "Deepening: Uniqueness of the Two-Point Transreal Compactification"
   },
   {
     "consumed_by_exp_id": "",
@@ -2405,34 +2420,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T00:17:22.113391+00:00",
     "title": "Deepening: Reed\u2013Solomon dimension and MDS equality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 025e0adb (Q=0.820), which proved 46 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-49 #1, cron iteration (exp 511, assessment v284). Paper 175's bitlen-stability pushed to its limit.\n\n**T-DIAL-56-PARTIAL**: Spearman(T, rate) = **0.405** at bitlen 56 \u2014 BELOW the [0.55, 0.85] band. The dial DEGRADES because the smooth rate drops to **0.89%** (starved; 194/1200 Ns with ZERO hit",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_025e0adb_9e125c8e",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "025e0adb",
-    "status": "available",
-    "timestamp": "2026-09-03T09:52:49.283683+00:00",
-    "title": "Deepening: FACT round-49 #1 \u2014 T-DIAL-56: the bitlen-stability has a practical floor (paper "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 14592ce7 (Q=0.820), which proved 55 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-49 #2, cron iteration (exp 512, assessment v285). Does the bitlen degradation continue?\n\n**T-DIAL-60-PLATEAU**: Spearman(T, rate) = **0.437** [0.393, 0.480] at bitlen 60 \u2014 the degradation PLATEAUS rather than continuing monotonically. Mean smooth rate stays at 0.89% (starved regime persists). ",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_14592ce7_7d3b3d76",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "14592ce7",
-    "status": "available",
-    "timestamp": "2026-09-03T09:52:29.348816+00:00",
-    "title": "Deepening: FACT round-49 #2 \u2014 T-DIAL-60: the degradation plateaus (paper 179)"
   },
   {
     "consumed_by_exp_id": "",
@@ -15488,19 +15475,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T19:38:08.791559+00:00",
     "title": "Rank Threshold for Nowhere-Vanishing Twisted Sections"
-  },
-  {
-    "consumed_by_exp_id": "24e44638",
-    "description": "The four-constructor carrier was topologised by fiat as EReal \u2294 {\u03a6}. We conjecture that this is forced: any compact Hausdorff topology making the finite fragment an open copy of the line and nullity isolated is that one. The approach is an ends argument for the real line inside a two-point remainder compactification.\n\nIf t is a compact Hausdorff topology on Transreal such that fin is an open embedding and {null} is open, then t equals the topology induced by the bijection Transreal \u2243 EReal \u2295 Unit.\n\nFormalise the end compactification of \u211d, show any compactification with two-point remainder of a two-ended locally compact space is the end compactification, then apply it to the complement of {null}.\n\nAll sharpness theorems about the division boundary become topology-canonical rather than model-dependent.\n\nThere is an exotic compact Hausdorff transreal topology; the guard's necessity would have to be re-examined in it.",
-    "domains": [],
-    "id": "fd_3833",
-    "phase": "A",
-    "priority_score": 0.5910526315789475,
-    "research_mode": "team",
-    "source_exp_id": "04d3a29d",
-    "status": "in_progress",
-    "timestamp": "2026-08-23T11:35:56.215025+00:00",
-    "title": "Uniqueness of the Two-Point Transreal Compactification"
   },
   {
     "consumed_by_exp_id": "d00ca27a",
@@ -40544,6 +40518,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that isolating nullity was used only to keep the\nuncovered core inside the line; dropping it allows `null` to attach to an end,\nproducing genuinely new models (e.g. the three-point remainder collapsing to a\nsegment).  Classifying compact Hausdorff topologies with `fin` an open embedding\nand *no* condition on `null` would describe the full lattice.  **Why now?** All\nthe machinery is parameterised over the topology, so the axiom can be dropped\none clause at a time.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_4633",
+    "priority_score": 0.44310384536836467,
+    "research_mode": "team",
+    "source_exp_id": "24e44638",
+    "status": "available",
+    "timestamp": "2026-09-03T14:36:05.170646+00:00",
+    "title": "The lattice of transreal compactifications without the nullity axiom"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**The key insight is** that the recorded ladder (`bitlen 44 \u2026 96`) is a chain of caps whose\nradii are set by the successive reading gaps, so the composed chordal bound\n`chord(f 0, f k) \u2264 \u03a3 \u221a(2\u03b5_i)` predicts a *ladder-level* indistinguishability threshold: the\nwhole erosion curve is smooth-test-invisible unless some single rung gap exceeds `\u221a2/100`.\n**Why now?** `chord_chain_le` provides the composition law and the catalog files already carry\nall eight recorded rungs, so the prediction is a finite arithmetic check against recorded data.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Total-Variation Floor for Discontinuous Crossing Tests\",\n    \"domain\": \"Probability\",\n    \"description\": \"Escaping the spherical-cap Lipschitz ceiling requires concentrating variation inside a cap of radius sqrt(2*eps). We conjecture a sharp lower bound on the total variation of any statistic that separates two directions in the cap. This converts the qualitative statement 'only discontinuous tests work' into a quantitative instability budget.\",\n    \"conjecture\": \"If F separates unit vectors u,v with corr(u,v) >= 1-eps by delta, then the total variation of F along any rectifiable path from u to v inside the cap is at least delta, and along the geodesic the variation per unit length is at least delta/sqrt(2*eps).\",\n    \"test\": \"Formalise eVariationOn for F restricted to the great-circle arc joining the normalised directions and prove the bound from the definition of variation; instantiate at the U84 numbers delta = 0.008, eps = 1e-4.\",\n    \"if_true\": \"Gives a principled instability cost for rank-based crossing tests and a criterion for preferring them only when variation is affordable.\",\n    \"if_false\": \"Some statistic separates the cap with vanishing variation, which would contradict the attained ceiling and force a re-examination of the metric used on predictor space.\",\n    \"proof_strategy\": \"Parametrise the geodesic, apply the definition of eVariationOn to the two endpoints, then combine with chord_le_sqrt_two_mul to normalise by arclength.\",\n    \"catalog_references\": [\"Catalog.Physics.SphericalCapPowerCeiling\", \"Catalog.Novelty.TDialU84ApproachNotCrossed\"]\n  },\n  {\n    \"title\": \"Dimension-Free Packing Capacity of Correlation Caps\",\n    \"domain\": \"Geometry\",\n    \"description\": \"The chain bound cap_ladder_count_bound limits how many successive hypotheses an L-Lipschitz statistic can resolve inside a cap. We conjecture the same bound for arbitrary finite families, not just chains, giving a dimension-free capacity 1 + L*sqrt(2*eps)/delta even though the cap contains exponentially many separated directions.\",\n    \"conjecture\": \"For any finite family of nonzero vectors pairwise correlated at level >= 1-eps and any L-Lipschitz F whose values are pairwise delta-separated, the family has at most 1 + L*sqrt(2*eps)/delta members.\",\n    \"test\": \"Sort the finite value set of F, apply the chain bound to the sorted chain, and check tightness numerically for small families on ",
     "domains": [
       "Algebra",
@@ -40904,6 +40893,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the natural topology is metrisable while the\nclassification's residual flip symmetry acts nontrivially on any compatible\nmetric, so no *canonical* metric on the carrier exists even though the topology\nis canonical once oriented.  **Why now?** With the two-element classification in\nhand, the automorphism group of the carrier-as-space can be computed exactly,\nwhich is the missing ingredient.\n\n```json future_directions.json\n[{\"title\": \"Finite-Remainder Ends Functor for Locally Compact Carriers\",\n  \"domain\": \"Bridges\",\n  \"description\": \"Generalise the two-point-remainder argument from the real line to an arbitrary locally compact Hausdorff space with finitely many ends. The conjecture is that finite-remainder compactifications are exactly the quotients of the end compactification, with the remainder recording a partition of the ends. This turns the transreal uniqueness theorem into an instance of a general structure theorem.\",\n  \"conjecture\": \"For a locally compact Hausdorff space X with exactly n ends, the compactifications of X with finite remainder are in bijection with partitions of the end set, the compactification being the corresponding quotient of the end compactification.\",\n  \"test\": \"Formalise the end space as the inverse limit of the components of complements of compacts, and reproduce the proof pattern exists_rays_aux -> ray neighbourhood bases -> compact-to-Hausdorff comparison in that generality; test first on X = disjoint union of k copies of the line.\",\n  \"if_true\": \"The transreal topology theorem becomes a corollary, and every carrier built by adjoining finitely many points to a locally compact space acquires a canonical topology up to relabelling of ends.\",\n  \"if_false\": \"There is a finite-remainder compactification not induced by an end partition, which would be a new source of exotic arithmetic carriers.\",\n  \"proof_strategy\": \"Separate the remainder points by disjoint open sets, use compactness to bound an uncovered core inside X, apply connectedness of the components of the complement of the core to assign each component to a remainder point, and upgrade the resulting comparison of topologies by the compact-to-Hausdorff argument.\",\n  \"catalog_references\": [\"Cryptography.Transreal.Topology\", \"Novelty.TransrealEndCompactification\"]},\n {\"title\": \"Arithmetic Rigidity of the Transreal Orientation\",\n  \"domain\": \"Algebra\",\n  \"description\": \"The classification leaves exactly one ambiguity, the flip exchanging the two infinities, and topology alone cannot remove it. Transreal multiplication is not flip-invariant, so demanding continuity of arithmetic should select the natural topology outright. This would make the orientation hypothesis an algebraic consequence rather than an extra axiom.\",\n  \"conjecture\": \"If t is a transreal compactification with no isolated infinity and the maps a mapsto fin c * a are t-continuous for all positive reals c, then t = Transreal.instTopologicalSpace.\",\n  \"test\": \"In Lean, show t",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4634",
+    "priority_score": 0.44209119297314353,
+    "research_mode": "team",
+    "source_exp_id": "24e44638",
+    "status": "available",
+    "timestamp": "2026-09-03T14:36:05.858970+00:00",
+    "title": "Metrisability and the failure of a canonical uniformity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** The mean map `\u03b8 \u21a6 (\u2202_i \u03c8(\u03b8))_i` of a finite exponential family is\ninjective with image an open convex set, and the induced dual coordinates make the\n`\u03b1 = \u22121` connection flat, yielding a fully formal generalised Pythagorean theorem\nfor the Kullback\u2013Leibler divergence on finite models.\n\nThe key insight is that injectivity is exactly strict convexity of `\u03c8`, which our\nsecond-derivative theorem identifies with positive definiteness of the Fisher\nmetric \u2014 already available in the catalog as `featureFisher_null_iff`.\n\n**Why now?** The first two derivatives of `\u03c8` are formalised and the null-space\ncriterion for the Fisher form is in the catalog, so the convexity argument closes\nwithout new analytic input.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Quadratic Curvature Pencil of Alpha-Connections\",\n    \"domain\": \"Geometry\",\n    \"description\": \"The lower-index alpha-coefficients are affine in alpha, but curvature is quadratic in the connection. We conjecture that the alpha-curvature of a finite exponential family is a parabola in alpha with roots exactly at the dually flat endpoints alpha = 1 and alpha = -1, whose leading coefficient is a Gauss-type quadratic expression in the Amari-Chentsov tensor. This would explain dual flatness as a root phenomenon rather than a coincidence.\",\n    \"conjecture\": \"For a finite exponential family with Fisher metric g and Amari-Chentsov tensor C, the alpha-curvature tensor satisfies R^{(alpha)} = ((1 - alpha^2)/4) * Q(C, g) for a fixed quadratic expression Q, so R^{(alpha)} = 0 exactly at alpha = 1 and alpha = -1 when Q(C,g) is nonzero.\",\n    \"test\": \"Differentiate the Fisher metric twice using the existing hasDerivAt_covar machinery to obtain the fourth-cumulant identity, then assemble the curvature from the natural-coordinate coefficients and verify the quadratic dependence in alpha symbolically for the Bernoulli and Rademacher families first.\",\n    \"if_true\": \"Dual flatness at alpha = +/-1 becomes a corollary of a single algebraic identity, and the whole pencil is determined by two cumulant tensors.\",\n    \"if_false\": \"The alpha-family carries curvature information beyond the third and fourth cumulants, forcing a genuinely higher-order invariant.\",\n    \"proof_strategy\": \"Extend cum3_expand to a fourth-order polarisation lemma, differentiate hasDerivAt_fisher once more to get the fourth cumulant, then compute the curvature of the coefficient family and factor the resulting polynomial in alpha.\",\n    \"catalog_references\": [\"Combinatorics.AlphaConnectionCanonical\", \"Probability.InformationGeometryContrarian\"]\n  },\n  {\n    \"title\": \"Involution Zero Sets and Chentsov Uniqueness\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"A weight-preserving sign-reversing involution forces the cubic tensor to vanish at the origin of natural coordinates. We conjecture that this combinatorial zero set, together with naturality under Markov embeddings, characterises the Amari-Chentsov tensor up to scale on finit",
     "domains": [
       "Algebra",
@@ -41184,6 +41188,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T18:45:17.438856+00:00",
     "title": "Learned importance heads"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the circle model repairs `1/y` precisely because it\nidentifies the two ends, i.e. because the remainder is a quotient of the end\nspace.  This suggests a general theorem: an unbounded continuous real function\n`f` extends continuously to a compactification iff the compactification's\nremainder separates the limit behaviour of `f` along the ends.  **Why now?** The\npresent file already proves both instances of this dichotomy in Lean, so the\ngeneral statement has two verified test cases to be checked against.",
+    "domains": [],
+    "id": "fd_4632",
+    "priority_score": 0.44007692307692303,
+    "research_mode": "team",
+    "source_exp_id": "24e44638",
+    "status": "available",
+    "timestamp": "2026-09-03T14:36:04.620802+00:00",
+    "title": "Guard necessity as an invariant of the remainder"
   },
   {
     "consumed_by_exp_id": "",
@@ -42784,14 +42800,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C1 (settled, in a stronger form)."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60926357",
     "description": "**Conjecture C (sharper silent-error constant) \u2014 PROVED.**\n  `AlmostLosslessTunableMarkov.lean` generalises the Markov step to an arbitrary\n  threshold (`card_badMassC_lt`, sub-conjecture C1) and splits the key space\n  with any pair `1/c\u2081 + 1/c\u2082 \u2264 1` (`exists_tunable_good_key`).  With\n  `c\u2081 = 1+\u03b7`, `c\u2082 = 1+1/\u03b7` this yields\n  `exists_tunable_almost_lossless_scheme`: silent corruption\n  `\u2264 (1+\u03b7)\u00b7\u03b4\u00b7|l|/M` and failure `\u2264 \u03b4 + (1+1/\u03b7)\u00b7|l|/M`, cost exactly `|l|`.  The\n  silent constant can therefore be pushed to the first-moment optimum `1`; the\n  cycle-2 theorem is the case `\u03b7 = 1`.",
     "domains": [],
     "id": "fd_1540",
+    "phase": "A",
     "priority_score": 0.4302222222222222,
     "research_mode": "team",
     "source_exp_id": "ef01dce6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T18:57:21.765957+00:00",
     "title": "Conjecture C (sharper silent-error constant) \u2014 PROVED.*"
   },

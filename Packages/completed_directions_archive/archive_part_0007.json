@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-03T09:52:40Z",
-  "count": 98,
+  "archived_at": "2026-09-03T14:36:06Z",
+  "count": 99,
   "directions": [
     {
       "id": "fd_3695",
@@ -3877,6 +3877,47 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 278
+    },
+    {
+      "id": "fd_3833",
+      "title": "Uniqueness of the Two-Point Transreal Compactification",
+      "description": "The four-constructor carrier was topologised by fiat as EReal ⊔ {Φ}. We conjecture that this is forced: any compact Hausdorff topology making the finite fragment an open copy of the line and nullity isolated is that one. The approach is an ends argument for the real line inside a two-point remainder compactification.\n\nIf t is a compact Hausdorff topology on Transreal such that fin is an open embedding and {null} is open, then t equals the topology induced by the bijection Transreal ≃ EReal ⊕ Unit.\n\nFormalise the end compactification of ℝ, show any compactification with two-point remainder of a two-ended locally compact space is the end compactification, then apply it to the complement of {null}.\n\nAll sharpness theorems about the division boundary become topology-canonical rather than model-dependent.\n\nThere is an exotic compact Hausdorff transreal topology; the guard's necessity would have to be re-examined in it.",
+      "source_exp_id": "04d3a29d",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/04d3a29d",
+      "domains": [],
+      "proof_strategy": "Complement of {null} is compact Hausdorff, contains range fin open with two-point complement; show each remainder point has a neighbourhood basis meeting exactly one end using local compactness and connectedness of the line.",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.5910526315789475,
+      "status": "completed",
+      "consumed_by_exp_id": "24e44638",
+      "timestamp": "2026-08-23T11:35:56.215025+00:00",
+      "catalog_references": [
+        "Cryptography.Transreal.Topology",
+        "Cryptography.Transreal.Core"
+      ],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.86,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-03T00:22:28.937809+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

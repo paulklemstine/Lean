@@ -62,25 +62,24 @@ theorem softplus_not_polynomial' :
   · rw [ Polynomial.eq_C_of_degree_le_zero h ] at hp;
     exact absurd ( hp 0 ) ( by have := hp ( -1 ) ; have := hp 1 ; norm_num [ softplus ] at * ; linarith [ Real.log_pos one_lt_two, Real.log_lt_log ( by positivity ) ( by linarith [ Real.add_one_le_exp 1, Real.add_one_le_exp ( -1 ) ] : ( 1 + Real.exp 1 ) > 2 ) ] )
 
-/-! ## Softplus Lipschitz Properties -/
+/-! ## Softplus Lipschitz Properties
 
-/-
-Softplus is 1-Lipschitz: |σ(x) - σ(y)| ≤ |x - y| for all x, y.
--/
-theorem softplus_lipschitz : LipschitzWith 1 softplus := by
-  have h_deriv : ∀ x, deriv softplus x = logisticSigmoid x := by
-    exact?;
-  apply_rules [ lipschitzWith_of_nnnorm_deriv_le ];
-  · exact?;
-  · norm_num [ ← NNReal.coe_le_coe, h_deriv ];
-    exact fun x => abs_le.mpr ⟨ by rw [ logisticSigmoid ] ; rw [ le_div_iff₀ ] <;> linarith [ Real.exp_pos x ], by rw [ logisticSigmoid ] ; rw [ div_le_iff₀ ] <;> linarith [ Real.exp_pos x ] ⟩
+`softplus_lipschitz` and `sigmoid_complement` are already provided by the imported
+`MachineLearning.ShefferFunction.Lean.SoftplusBasic`, so the duplicate copies that used to
+sit here (and which made this file fail to elaborate) have been removed.  The two auxiliary
+identities that the rest of the file uses but that were missing are supplied instead. -/
+
+/-- The sigmoid reflection identity `S(-x) = 1 - S(x)`.  (Supplied here: referenced but
+missing.) -/
+theorem logisticSigmoid_symmetry (x : ℝ) : logisticSigmoid (-x) = 1 - logisticSigmoid x := by
+  have := sigmoid_complement x
+  linarith
+
+/-- `exp (softplus x) = 1 + exp x`.  (Supplied here: referenced but missing.) -/
+theorem softplus_exp_identity (x : ℝ) : Real.exp (softplus x) = 1 + Real.exp x := by
+  rw [softplus, Real.exp_log (one_add_exp_pos x)]
 
 /-! ## Sigmoid Additional Properties -/
-
-/-- Sigmoid satisfies S(x) + S(-x) = 1 -/
-theorem sigmoid_complement (x : ℝ) : logisticSigmoid x + logisticSigmoid (-x) = 1 := by
-  have := logisticSigmoid_symmetry x
-  linarith
 
 /-
 Sigmoid is strictly monotone increasing

@@ -9,6 +9,8 @@ Declarations: 8
 
 noncomputable section
 
+open Matrix
+
 /-- The SPB matrix: M(a) = [[1, a], [-a, 1]]. -/
 def spbMatrix (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
   !![1, a; -a, 1]
