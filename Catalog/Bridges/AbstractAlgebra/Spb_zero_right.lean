@@ -1,26 +1,13 @@
-import Mathlib
-
 /-! # CatalogBuild.Shared.Spb_zero_right
 
 Auto-generated from theorem catalog database.
 Domain: Bridges
 Declarations: 14
-
-The declarations of this auto-generated file were emitted in an order in which some of
-them were used before being introduced, and the definitions `spb` and `cayley` were
-missing altogether, so the file did not elaborate.  Only the definitions and the order
-have been repaired here; the statements and proofs are unchanged.
 -/
 
+import Mathlib
+
 noncomputable section
-
-open Real
-
-/-- The speed-addition law `spb x y = (x + y) / (1 - x y)`.  (Supplied here.) -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
-/-- The Cayley transform.  (Supplied here.) -/
-def cayley (x : ℝ) : ℂ := (1 + x * Complex.I) / (1 - x * Complex.I)
 
 /-- Zero is a right identity for SPB. -/
 theorem spb_zero_right (x : ℝ) : spb x 0 = x := by
@@ -30,6 +17,11 @@ theorem spb_zero_right (x : ℝ) : spb x 0 = x := by
 /-- Zero is a left identity for SPB. -/
 theorem spb_zero_left (x : ℝ) : spb 0 x = x := by
   simp [spb]
+
+
+/-- The SPB (Stereographic Projection Bridge) operation.
+`spb x y = (x + y) / (1 - x * y)` -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
 theorem spb_assoc (x y z : ℝ) (hxy : x * y ≠ 1) (hyz : y * z ≠ 1)
@@ -48,6 +40,14 @@ theorem spb_assoc (x y z : ℝ) (hxy : x * y ≠ 1) (hyz : y * z ≠ 1)
   · contrapose! hxy; linarith
 
 
+theorem spb_double (a : ℝ) (ha : cos a ≠ 0) (h2a : cos (2 * a) ≠ 0) :
+    tan (2 * a) = spb (tan a) (tan a) := by
+  convert SPB.spb_tan_add a a _ _ _ using 1 <;> simp_all +decide [ Real.tan_eq_sin_div_cos, Real.sin_two_mul, Real.cos_two_mul ];
+  · rw [ Real.sin_add, Real.cos_add ] ; ring;
+    rw [ Real.sin_sq ] ; ring;
+  · rw [ ← two_mul, Real.cos_two_mul ] ; aesop
+
+
 /-- The SPB inverse of `x` is `-x`: `spb(x, -x) = 0`. -/
 theorem spb_neg_self (x : ℝ) : spb x (-x) = 0 := by
   simp [spb]
@@ -59,14 +59,6 @@ theorem spb_tan_add (a b : ℝ) (ha : cos a ≠ 0) (hb : cos b ≠ 0)
   unfold spb;
   simp_all +decide [ Real.tan_eq_sin_div_cos, Real.sin_add, Real.cos_add ];
   grind
-
-
-theorem spb_double (a : ℝ) (ha : cos a ≠ 0) (h2a : cos (2 * a) ≠ 0) :
-    tan (2 * a) = spb (tan a) (tan a) := by
-  convert spb_tan_add a a _ _ _ using 1 <;> simp_all +decide [ Real.tan_eq_sin_div_cos, Real.sin_two_mul, Real.cos_two_mul ];
-  · rw [ Real.sin_add, Real.cos_add ] ; ring;
-    rw [ Real.sin_sq ] ; ring;
-  · rw [ ← two_mul, Real.cos_two_mul ] ; aesop
 
 
 /-- SPB of `x` with itself gives the double formula: `2x/(1-x²)`. -/
@@ -86,7 +78,7 @@ theorem spb_neg_neg (x y : ℝ) : spb (-x) (-y) = -spb x y := by
 theorem spb_cancel_right (x y : ℝ) (hxy : x * y ≠ 1)
     (hy : y ^ 2 ≠ 1) (h : spb x y * (-y) ≠ 1) :
     spb (spb x y) (-y) = x := by
-  unfold spb at *;
+  unfold SPB.spb at *;
   rw [ div_eq_iff ];
   · linarith [ div_mul_cancel₀ ( x + y ) ( sub_ne_zero_of_ne <| Ne.symm hxy ) ];
   · grind +locals

@@ -9,11 +9,6 @@ Declarations: 3
 
 noncomputable section
 
-open Set
-
-/-- The diagonal of `eml`: `emlDiag z = exp z - log z`.  (Supplied here.) -/
-def emlDiag (z : ℝ) : ℝ := Real.exp z - Real.log z
-
 /-- [Section: # CatalogBuild.Shared.EmlDiag
 Auto-generated from theorem catalog database.
 Domain: EML
