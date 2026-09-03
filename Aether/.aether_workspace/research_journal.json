@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b63aa142",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — after the Euler two-squares cycles\n\n## What is now established (all `sorry`-free, in `Catalog/Algebra/EulerTwoSquares*.lean`)\n\n1. **Extraction is unconditional, and needs no norm",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-08-30T17:30:44",
-      "title": "FACT round-72 #1 — EULER-LOSES: two-squares route measured — algebra exact, class 25%, cost 5.7x Fer"
-    },
-    {
       "cycle_id": "9c1e5dc4",
       "domain": "Probability",
       "key_insight": "# Future directions — after the U116 rebound / floor cycle\n\nFive cycles of the loop were run.  The fifth settled — negatively — the estimator question that\nthe fourth had opened: `Probability.TDialBlo",
@@ -499,19 +489,19 @@
       "theorem_count": 96,
       "timestamp": "2026-09-03T00:18:20",
       "title": "FACT round-51 #1 — EXTENDED-DIAL: the prime-power feature does not replicate (paper 181)"
+    },
+    {
+      "cycle_id": "8ec45b40",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — semantic resolution of observational languages\n\n## What this cycle established\n\nWorking inside the catalog's tag-indexed Kripke semantics `satF R V`\n(`NumberTheory.TagFrameSemant",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-09-03T04:39:05",
+      "title": "Bisimulation versus isomorphism as semantic resolution"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bb070ee4",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\nThe cycle started from the one-parameter theorem `PMFrame.headCoeff_pmFrame_ge_neg_one` and the\ntwo-parameter (Migotti) theorem of `Catalog/Shared/PMFrameTwoParameter.lean`, and p",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 140,
-      "timestamp": "2026-08-22T13:02:30",
-      "title": "The one-parameter case is already a theorem here"
-    },
     {
       "cycle_id": "c99dba13",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 96,
       "timestamp": "2026-09-03T00:18:20",
       "title": "FACT round-51 #1 — EXTENDED-DIAL: the prime-power feature does not replicate (paper 181)"
+    },
+    {
+      "cycle_id": "8ec45b40",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — semantic resolution of observational languages\n\n## What this cycle established\n\nWorking inside the catalog's tag-indexed Kripke semantics `satF R V`\n(`NumberTheory.TagFrameSemant",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-09-03T04:39:05",
+      "title": "Bisimulation versus isomorphism as semantic resolution"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "384c4d0f",
-      "domain": "Combinatorics",
-      "name": "gate_eq",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "79285565",
-      "domain": "Shared",
-      "name": "coeffLin_apply",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "79285565",
-      "domain": "Shared",
-      "name": "mem_poleSpace_iff",
-      "quality": 0.87
-    },
     {
       "cycle_id": "79285565",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "partial_var_formula",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "8ec45b40",
+      "domain": "NumberTheory",
+      "name": "bisimilar_refl",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "8ec45b40",
+      "domain": "NumberTheory",
+      "name": "bisimilar_symm",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "8ec45b40",
+      "domain": "NumberTheory",
+      "name": "bisimilar_trans",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-09-03T00:18:20",
+  "last_updated": "2026-09-03T04:39:05",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "fdd9261c",
-        "quality": 0.82,
-        "theorems": 63,
-        "title": "Define Laurent q-series with the standard `q⁻¹ + O(q)` normalization and formali"
-      },
-      {
         "cycle_id": "194ffa72",
         "quality": 0.87,
         "theorems": 79,
@@ -3699,6 +3693,12 @@
         "quality": 0.86,
         "theorems": 80,
         "title": "Asymptotic comparison beyond coefficient extensionality"
+      },
+      {
+        "cycle_id": "8ec45b40",
+        "quality": 0.85,
+        "theorems": 124,
+        "title": "Bisimulation versus isomorphism as semantic resolution"
       }
     ],
     "Physics": [
