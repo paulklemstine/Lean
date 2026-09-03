@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "17477782",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Cantor truth space, golden-mean subshift\n\nDerived from twelve completed research cycles in `Catalog/MachineLearning/`, all building on\nthe first-disagreement ultrametric of `Shar",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-08-30T12:55:11",
-      "title": "Completeness / compactness"
-    },
-    {
       "cycle_id": "b50cc5ce",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\nDerived from the Stage-3 analysis and Stage-4 adversarial review of this cycle.\n\n## What this cycle established (formally, 0 sorries)\n\nFive Lean files in `Catalog/Combinatorics/`",
@@ -499,19 +489,19 @@
       "theorem_count": 118,
       "timestamp": "2026-09-03T00:17:40",
       "title": "FACT round-50 — DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper "
+    },
+    {
+      "cycle_id": "a9de2f0b",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — BKEY-MIXED-ZONE (round-55 #1, exp 523)\n\n## What this cycle established\n\nThree compiling, sorry-free Lean files in `Catalog/Combinatorics/`:\n\n1. `BKeyMixedZoneGradualDecline.lean`",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-09-03T00:18:00",
+      "title": "FACT round-55 #1 — BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "08e16c4e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Aleph-One Surface: Geometry Between Dimensions\n\nDerived from the verified results in\n`Catalog/NumberTheory/AlephOneSurfaceHausdorff.lean` (the `ℓ²` aleph-one surface:\n`dimH = ⊤`,",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 125,
-      "timestamp": "2026-08-22T11:36:38",
-      "title": "Aleph-1 Surface: Geometry Between Dimensions"
-    },
     {
       "cycle_id": "0f0bd7f8",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 118,
       "timestamp": "2026-09-03T00:17:40",
       "title": "FACT round-50 — DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper "
+    },
+    {
+      "cycle_id": "a9de2f0b",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — BKEY-MIXED-ZONE (round-55 #1, exp 523)\n\n## What this cycle established\n\nThree compiling, sorry-free Lean files in `Catalog/Combinatorics/`:\n\n1. `BKeyMixedZoneGradualDecline.lean`",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-09-03T00:18:00",
+      "title": "FACT round-55 #1 — BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d4f58bc3",
-      "domain": "Applications",
-      "name": "samePartners_sum_eq_profile",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "108711a9",
-      "domain": "Combinatorics",
-      "name": "mem_divPairs",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "108711a9",
-      "domain": "Combinatorics",
-      "name": "filter_typePair_diag",
-      "quality": 0.82
-    },
     {
       "cycle_id": "108711a9",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "totient_56",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a9de2f0b",
+      "domain": "Combinatorics",
+      "name": "spearmanSq_sub",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a9de2f0b",
+      "domain": "Combinatorics",
+      "name": "ceiling_perturbation_bound",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a9de2f0b",
+      "domain": "Combinatorics",
+      "name": "move_sum_eq",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-03T00:17:40",
+  "last_updated": "2026-09-03T00:18:00",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "22848dce",
-        "quality": 0.82,
-        "theorems": 112,
-        "title": "Exponential lower bound via quartet codes"
-      },
-      {
         "cycle_id": "a32bc1e4",
         "quality": 0.82,
         "theorems": 111,
@@ -3265,6 +3259,12 @@
         "quality": 0.84,
         "theorems": 103,
         "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING — 1.5B chain breaks at "
+      },
+      {
+        "cycle_id": "a9de2f0b",
+        "quality": 0.78,
+        "theorems": 71,
+        "title": "FACT round-55 #1 — BALANCED-BKEY: the T-dial's decline is gradual, not a cliff ("
       }
     ],
     "Computation": [
