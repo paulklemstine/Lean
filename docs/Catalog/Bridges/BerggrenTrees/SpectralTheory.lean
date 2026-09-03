@@ -352,7 +352,7 @@ theorem M_det_sq : M.det ^ 2 = 1 := by native_decide
 #print axioms det_M6
 #print axioms M_lorentz
 #print axioms syndrome_identity
--- (`#print axioms pq_diff` removed: no theorem `pq_diff` is declared in this file.)
+#print axioms pq_diff
 #print axioms error_detection_a
 #print axioms M00_are_squares
 #print axioms nsw_values

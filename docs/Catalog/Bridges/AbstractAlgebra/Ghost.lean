@@ -847,13 +847,6 @@ theorem hyp13_minus_hyp23 (a b c d : ℤ) :
 theorem hyp23_decrease (b c d : ℤ) (hbc : b + c > d) :
     -2*b - 2*c + 3*d < d := by linarith
 
-/-- For a positive PQ quadruple the spatial components satisfy the strict triangle
-inequality `a + b + c > d`.  (Supplied here: it was referenced but missing.) -/
-theorem pq_triangle (a b c d : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (hq : isPQ a b c d) (hd : 0 < d) : a + b + c > d := by
-  unfold isPQ at hq
-  nlinarith [mul_pos ha hb, mul_pos ha hc, mul_pos hb hc]
-
 theorem descent_exists (a b c d : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hq : isPQ a b c d) (hd : 0 < d) :
     -2*a - 2*b + 3*d < d ∨ -2*a - 2*c + 3*d < d ∨ -2*b - 2*c + 3*d < d := by

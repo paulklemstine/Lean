@@ -67,7 +67,6 @@ theorem spb_right_cancel (x y : ℝ) (hxy : x * y ≠ 1) (hysq : y^2 ≠ 1) :
     field_simp;
     cases lt_or_gt_of_ne hxy <;> cases lt_or_gt_of_ne hysq <;> nlinarith [ mul_div_cancel₀ ( y * ( x + y ) ) ( by linarith : ( 1 - x * y ) ≠ 0 ) ]
 
-/-- [Section: # CatalogBuild.Bridges.SPBFiniteFields
 Auto-generated from theorem catalog database.
 Domain: Bridges
 Declarations: 13] -/

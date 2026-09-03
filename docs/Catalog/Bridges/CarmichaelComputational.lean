@@ -1,6 +1,6 @@
 import Mathlib
 import Shared.CarmichaelHelper
-import Shared.NumberTheory.CarmichaelProof
+import Shared.NumberTheory.CarmichaelComposite
 
 /-! # Computational verification of Carmichael's theorem
 
@@ -69,4 +69,4 @@ lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael_composite n hn hn_comp
+  exact fib_carmichael n hn

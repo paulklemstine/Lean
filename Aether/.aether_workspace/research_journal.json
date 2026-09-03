@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "51790419",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — after FACT round-70 #1 (TDIAL-U112, exp 545)\n\nThree cycles of the loop produced: (i) a sharp Gram/spherical decorrelation bound that\nstrictly improves the catalog's previous adva",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 106,
-      "timestamp": "2026-08-31T23:52:45",
-      "title": "FACT round-70 #1 — TDIAL-U112: the fade continues below the band at bitlen 112 (paper 192)"
-    },
-    {
       "cycle_id": "c8871952",
       "domain": "Shared",
       "key_insight": "# Future directions — after the rate-dial theorem (paper 242 formalized)\n\n## What this cycle established\n\nFormalized in `Catalog/Shared/MixtureRateDialCells.lean`,\n`MixtureRateDialBaseline.lean`, `Mix",
@@ -499,19 +489,19 @@
       "theorem_count": 566,
       "timestamp": "2026-09-03T21:44:03",
       "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
+    },
+    {
+      "cycle_id": "e2f91544",
+      "domain": "Physics",
+      "key_insight": "# Future directions from the `O(N)` `ε`-expansion cycle\n\nThis cycle parameterised the Wilson–Fisher analysis of the one-component\n`φ⁴` theory by the symmetry index `N` and proved the standard first te",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-09-03T21:44:19",
+      "title": "General `O(N)` model"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "22ca7429",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Rigidity gap for shallow product coins\n\nThis cycle formalised, in `Catalog/Geometry/ShallowProductCoin*.lean`:\n\n* the exact Cauchy–Schwarz defect identity and the rigidity charac",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-22T21:36:55",
-      "title": "Rigidity gap for shallow product coins"
-    },
     {
       "cycle_id": "ccf34fd5",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 566,
       "timestamp": "2026-09-03T21:44:03",
       "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
+    },
+    {
+      "cycle_id": "e2f91544",
+      "domain": "Physics",
+      "key_insight": "# Future directions from the `O(N)` `ε`-expansion cycle\n\nThis cycle parameterised the Wilson–Fisher analysis of the one-component\n`φ⁴` theory by the symmetry index `N` and proved the standard first te",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-09-03T21:44:19",
+      "title": "General `O(N)` model"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ee56ba3a",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "5c95862a",
-      "domain": "Pythagorean",
-      "name": "We",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "5c95862a",
-      "domain": "Pythagorean",
-      "name": "for",
-      "quality": 0.85
-    },
     {
       "cycle_id": "5c95862a",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "eml_generates_neg_one",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "e2f91544",
+      "domain": "Physics",
+      "name": "admissible_ne_neg_eight",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e2f91544",
+      "domain": "Physics",
+      "name": "admissible_pos_denom",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e2f91544",
+      "domain": "Physics",
+      "name": "betaON_one",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-03T21:44:03",
+  "last_updated": "2026-09-03T21:44:19",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "7957a9f1",
-        "quality": 0.82,
-        "theorems": 66,
-        "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pai"
-      },
-      {
         "cycle_id": "7af52a9c",
         "quality": 0.86,
         "theorems": 5,
@@ -3761,6 +3755,12 @@
         "quality": 0.83,
         "theorems": 38,
         "title": "Reed–Solomon dimension and MDS equality"
+      },
+      {
+        "cycle_id": "e2f91544",
+        "quality": 0.78,
+        "theorems": 69,
+        "title": "General `O(N)` model"
       }
     ],
     "Probability": [

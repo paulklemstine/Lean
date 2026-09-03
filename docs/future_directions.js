@@ -1180,16 +1180,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-45 #2 \u2014 U-HARDEN: the u-sensitivity is mostly intrinsic, partly resolution (paper 168)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3831c02e",
     "description": "Round-45 #1, cron iteration (exp 500, assessment v276). The queued 14-seed localization of paper 166's u=3.5 breach.\n\n**NEITHER \u2014 DECISIVE**: over 14 fresh populations, sp(3.5) mean = **0.6282 \u00b1 0.0041**, bootstrap CI [0.6204, 0.6363] EXCLUDES the 0.60 floor; **0/14 sub-floor seeds**; sd = 0.0155 (far under the tail threshold). H1 (center-below) and H2 (wide-tail) both refuted.\n\nWhat survives: the systematic paired u-drop \u2014 \u0394 = sp(2.5) \u2212 sp(3.5) = **+0.1057**, CI [0.0999, 0.1112], **14/14 positive**. Paper 166's sub-floor column was 240-Ns/population sampling noise; its deep-breach seed has no analogue at 5\u00d7 N.\n\nDial-hardening should target the uniform ~0.11 u-sensitivity loss (starved ~1.9% smooth-rate regime or bound-coverage mismatch), not seed outliers.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp500_u35_localize.py + exp500_result.json + ledger_exp500.jsonl, seeds 20260950\u201363.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3634",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T09:43:33.958262+00:00",
     "title": "FACT round-45 #1 \u2014 U35-LOCALIZED: above the floor everywhere, degrades everywhere (paper 167)"
   },
@@ -1251,33 +1252,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-46 #2 \u2014 PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with window length (paper 173)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f5f0f634",
     "description": "Round-46 #1, cron iteration (exp 505, assessment v280). The direct hunt for paper 170's residual.\n\n**PRIME-POWER-CARRIES**: mid-prime fractions and QR-density add nothing (+0.019/+0.004, CIs span 0), but **prime-power hits (p\u00b2 | v_j for p \u2264 13) add +0.0892 out-of-sample R\u00b2 (CI [0.041, 0.125])** over the full baseline \u2014 decisively capturing the tight-u residual.\n\nMechanism: at smaller B, a value with p\u00b2 | v has its smoothness budget disproportionately consumed by small-prime powers \u2014 structure marginal squarefree-hit features cannot see. The per-N dial gains a prime-power term; the residual-hunt arc (papers 167\u2013172) closes constructively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp505_mid_prime_hunt.py + exp505_result.json, seed 20260927.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3651",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T11:37:04.906497+00:00",
-    "title": "FACT round-46 #1 \u2014 MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
-  },
-  {
-    "consumed_by_exp_id": "0688a872",
-    "description": "Round-48 #1, cron iteration (exp 509, assessment v283). Paper 132's residual gap item (3): effectivizing MA-1.\n\n**EQUIDISTRIBUTION-CONFIRMED**: max per-class deviation from Li(x)/\u03c6(m) at x=2\u00b3\u2070 = **0.000446** relative \u2014 well below 0.001; the 4/3 cap's constants hold to three significant figures.\n\nH2 SPLIT: worst class stable for m \u2208 {3,4,7,8,11} but unstable for m \u2208 {5,31}. H3 CONFIRMED: deviations shrink 6/7 moduli.\n\nPaper 132's converse constants are numerically robust at practical sizes: MA-1's equidistribution assumption introduces < 0.05% error into the 4/3 cap.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp509_lean.py + exp509_result_v2.json.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3664",
     "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-08-22T13:02:58.900934+00:00",
-    "title": "FACT round-48 #1 \u2014 MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
+    "timestamp": "2026-08-22T11:37:04.906497+00:00",
+    "title": "FACT round-46 #1 \u2014 MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1675,20 +1662,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T18:40:36.516082+00:00",
     "title": "Deepening: Sturmian Structure of the Argmax Staircase"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ed88da41 (Q=0.880), which proved 749 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-48 #2, cron iteration (exp 510, assessment v284). The intersection cell from papers 175 \u00d7 166.\n\n**DIAL-HOLDS-UNIFORM-HB**: Spearman(T, rate) = 0.686/0.656/0.553/0.561 across four cells (balanced/uniform \u00d7 bitlen {44, 48}); T beats count by +0.06\u20130.10 everywhere, CI excludes zero.\n\nK-WASHOUT pi",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_ed88da41_f65e81ee",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "ed88da41",
-    "status": "available",
-    "timestamp": "2026-09-03T18:40:18.445468+00:00",
-    "title": "Deepening: FACT round-48 #2 \u2014 T-DIAL-UNIF-HB: the dial holds at the regime \u00d7 bitlen interse"
   },
   {
     "consumed_by_exp_id": "",
@@ -2364,6 +2337,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0688a872 (Q=0.840), which proved 566 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-48 #1, cron iteration (exp 509, assessment v283). Paper 132's residual gap item (3): effectivizing MA-1.\n\n**EQUIDISTRIBUTION-CONFIRMED**: max per-class deviation from Li(x)/\u03c6(m) at x=2\u00b3\u2070 = **0.000446** relative \u2014 well below 0.001; the 4/3 cap's constants hold to three significant figures.\n\nH2 ",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_0688a872_09078f8e",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "0688a872",
+    "status": "available",
+    "timestamp": "2026-09-03T21:44:03.719231+00:00",
+    "title": "Deepening: FACT round-48 #1 \u2014 MA1-EFFECTIVE: equidistribution holds to three significant fi"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -2389,20 +2376,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 776b8f2a (Q=0.820), which proved 131 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-45 #3, cron iteration (exp 503, assessment v279). Paper 169's named follow-up: can refitting the footprint weights at tight u recover the drop?\n\n**NO-RECAL-RECOVERY**: recalibrated OOS sp(3.5) = **0.6050** (CI [0.581, 0.626]) < 0.70 \u2014 and the refit lands BELOW the unrefit zero-fit dial (0.6288",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_776b8f2a_3e5e19de",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "776b8f2a",
-    "status": "available",
-    "timestamp": "2026-09-03T18:41:17.437257+00:00",
-    "title": "Deepening: FACT round-45 #3 \u2014 TIGHT-U-RECAL: reweighting cannot recover the tight-u drop (p"
   },
   {
     "consumed_by_exp_id": "",
@@ -3388,6 +3361,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T00:18:01.217939+00:00",
     "title": "Deepening: FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff ("
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e2f91544 (Q=0.780), which proved 69 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Parameterize the coefficients by `N` and prove the standard first terms of the critical exponents uniformly in the admissible range of `N`.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_e2f91544_bcfa25ad",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "e2f91544",
+    "status": "available",
+    "timestamp": "2026-09-03T21:44:20.156512+00:00",
+    "title": "Deepening: General `O(N)` model"
   },
   {
     "consumed_by_exp_id": "",
@@ -30399,6 +30386,50 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Fourier inversion for the class counts is now proved, and it makes the round trip from an equidistribution certificate to the character sums and back lossy by a factor phi(m) - 1. That factor comes from bounding every nontrivial character sum by the same number. For genuine prime counts the character sums should exhibit square-root cancellation, making the true loss O(sqrt(phi(m))).\n\nFor prime counts modulo m, the sum over nontrivial characters of |S_chi| is O(sqrt(phi(m))) times the maximum of |S_chi|, so the round-trip loss in equiCert_charSum_round_trip improves from phi(m) - 1 to O(sqrt(phi(m))).\n\nCompute the full character-sum vector for m = 31 at x = 2^24 and compare its l1 and l-infinity norms; then formalize the improved bound as a hypothesis-carrying theorem.\n\nThe dual formulation of MA-1 is nearly lossless and effectivizing the cap reduces to bounding a single extremal character sum.\n\nThe certificate is strictly stronger than character-sum control for fixed m, and the primal formulation must be kept.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_4653",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0688a872",
+    "status": "available",
+    "timestamp": "2026-09-03T21:43:46.571752+00:00",
+    "title": "Square-Root Round-Trip Loss on the Dual Side"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conservation of the total count forbids a one-sided deviation field: an excess in one class is paid for elsewhere. Combined with classical Omega-results for the prime race mod 4, this should force the measured epsilon to stall rather than decay indefinitely.\n\nFor m = 4 there is c > 0 with epsilon(x) >= c * sqrt(x) * log log x / (x / log x) for infinitely many x, so H3's shrinkage cannot continue past the Littlewood scale.\n\nFormalize excess_forces_deficit against a lower bound for |pi(x;4,3) - pi(x;4,1)| and check numerically at x = 2^30 .. 2^40.\n\nThe three-significant-figure claim has a hard floor: no amount of extra computation improves it beyond a computable scale.\n\nCertificates may decay to zero and MA-1 becomes asymptotically exact for every modulus.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4654",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0688a872",
+    "status": "available",
+    "timestamp": "2026-09-03T21:43:47.124280+00:00",
+    "title": "Chebyshev-Bias Obstruction to Uniform Certificates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjectured equivalence between paying O(eps^2) and annihilating constant vectors has been refuted: the coordinate difference annihilates constants yet attains the linear cost 2*eps*mu. What survives is a statement about degree in the deviation field, where the two proved endpoints are degree one and degree two.\n\nWriting N = mu*1 + Delta with sup-norm of Delta at most eps*mu, a readout that vanishes on constants and is homogeneous of degree d in Delta pays exactly Theta(eps^d): an upper bound C * n^(d/2) * (eps*mu)^d and a saturated example attaining it.\n\nFormalize degree-d homogeneity in the deviation field, prove the upper bound by Holder against the certificate, and construct saturated examples for d = 1, 2, 3.\n\nEffectivizing any cap reduces to reading off one integer, the degree of its readout in the deviation field.\n\nTransfer costs are not graded by degree and the classification needs a finer invariant than homogeneity.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4655",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0688a872",
+    "status": "available",
+    "timestamp": "2026-09-03T21:43:47.687008+00:00",
+    "title": "Homogeneity-Degree Law for Transfer Costs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -44206,6 +44237,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The exponents as rational functions of `N`.**  `\u03b7 = (N+2)\u03b5\u00b2/(2(N+8)\u00b2)`,\n  `1/\u03bd = 2 - (N+2)\u03b5/(N+8)`, `\u03b3 = 1 + (N+2)\u03b5/(2(N+8))`,\n  `\u03b1 = (4-N)\u03b5/(2(N+8))`, `\u03b2 = 1/2 - 3\u03b5/(2(N+8))`, `\u03b4 = 3 + \u03b5`, `\u03c9 = \u03b5`, each\n  derived from the fixed point `g* = 3\u03b5/(N+8)` and reducing at `N = 1` to the\n  classical one-component values.",
+    "domains": [],
+    "id": "fd_4656",
+    "priority_score": 0.4097272727272728,
+    "research_mode": "team",
+    "source_exp_id": "e2f91544",
+    "status": "available",
+    "timestamp": "2026-09-03T21:44:12.583692+00:00",
+    "title": "The exponents as rational functions of `N`."
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Model scores in `\u2115 \u2192 Fin 2` (Cantor space)\n   and study shift maps, iterated-function systems, and invariant compact sets. A Cantor\n   attractor must be assumed or generated by explicit contracting branches; it does not\n   follow from continuity and total order alone.",
     "domains": [],
     "id": "fd_2158",
@@ -49247,19 +49290,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berlekamp\u2013Massey"
   },
   {
-    "consumed_by_exp_id": "e2f91544",
-    "description": "Parameterize the coefficients by `N` and prove the standard first terms of the critical exponents uniformly in the admissible range of `N`.",
-    "domains": [],
-    "id": "fd_2634",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "89e28e84",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:15.766829+00:00",
-    "title": "General `O(N)` model"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Separate formal power-series identities from analytic estimates and investigate hypotheses under which truncation errors have certified neighborhoods and constants.",
     "domains": [],
@@ -50091,5 +50121,29 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T09:51:37.568305+00:00",
     "title": "D5. Beyond Spearman"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**A two-loop existence theorem** with `N`-uniform `O(\u03b5\u00b3)` control, obtained\n  from a scheme-independent quadratic-root lemma rather than from formal power\n  series, plus the exact identity `\u2202_g \u03b2 = \u03b5 - c g\u00b2` along the zero locus.",
+    "domains": [],
+    "id": "fd_4657",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "e2f91544",
+    "status": "available",
+    "timestamp": "2026-09-03T21:44:13.103780+00:00",
+    "title": "A two-loop existence theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*\"The one-loop `\u03b5`-expansion coefficients are monotone in `N`\"* is **false**\n  for `\u03b7`: monotonicity holds only up to `N = 4`.  This is what turned into the\n  extremum theorem.",
+    "domains": [],
+    "id": "fd_4658",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "e2f91544",
+    "status": "available",
+    "timestamp": "2026-09-03T21:44:13.619717+00:00",
+    "title": "\"The one-loop `\u03b5`-expansion coefficients are monotone in `N`\"* is false"
   }
 ];

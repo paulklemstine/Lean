@@ -9,11 +9,6 @@ Declarations: 5
 
 noncomputable section
 
-open Real
-
-/-- The speed-addition law `spb x y = (x + y) / (1 - x y)`.  (Supplied here.) -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
 /-- [Section: # CatalogBuild.Shared.Spb_zero
 Auto-generated from theorem catalog database.
 Domain: EML

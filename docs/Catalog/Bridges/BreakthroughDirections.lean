@@ -1,7 +1,5 @@
 import Mathlib
 
-open Real
-
 /-! # CatalogBuild.Bridges.BreakthroughDirections
 
 Auto-generated from theorem catalog database.
@@ -55,14 +53,14 @@ theorem lse2_comm (x y : ℝ) : lse2 x y = lse2 y x := by
 theorem lse_sandwich_lower (x y : ℝ) : max x y ≤ lse2 x y := by
   rw [lse2, max_le_iff]
   constructor <;> rw [Real.le_log_iff_exp_le (by positivity)]
-  · linarith [Real.exp_pos y]
-  · linarith [Real.exp_pos x]
+  · linarith [exp_pos y]
+  · linarith [exp_pos x]
 
 /-- The LogSumExp upper bound: LSE(x,y) ≤ max(x,y) + log(2). -/
 theorem lse_sandwich_upper (x y : ℝ) : lse2 x y ≤ max x y + Real.log 2 := by
   rw [lse2, Real.log_le_iff_le_exp (by positivity)]
-  have h1 := Real.exp_le_exp.mpr (le_max_left x y)
-  have h2 := Real.exp_le_exp.mpr (le_max_right x y)
+  have h1 := exp_le_exp.mpr (le_max_left x y)
+  have h2 := exp_le_exp.mpr (le_max_right x y)
   calc exp x + exp y
       ≤ exp (max x y) + exp (max x y) := by linarith
     _ = 2 * exp (max x y) := by ring

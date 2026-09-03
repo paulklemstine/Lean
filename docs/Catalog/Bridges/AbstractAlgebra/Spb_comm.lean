@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Shared.Spb_comm
 
 Auto-generated from theorem catalog database.
@@ -7,39 +5,9 @@ Domain: EML
 Declarations: 25
 -/
 
+import Mathlib
+
 noncomputable section
-
-open Real
-
-/-- The speed-addition law `spb x y = (x + y) / (1 - x y)`.  (Supplied here.) -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
-/-- The SPB matrix.  (Supplied here.) -/
-def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
-
-/-- The cross ratio of four reals.  (Supplied here: referenced but missing.) -/
-def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
-
-/-- The trace of the SPB matrix is `2`.  (Supplied here.) -/
-theorem spbMat_trace (a : ℝ) : (spbMat a).trace = 2 := by
-  simp [spbMat, Matrix.trace_fin_two]
-  norm_num
-
-/-- The determinant of the SPB matrix is `1 + a²`.  (Supplied here.) -/
-theorem spbMat_det (a : ℝ) : (spbMat a).det = 1 + a ^ 2 := by
-  simp [spbMat, Matrix.det_fin_two]
-  ring
-
-/-- SPB is odd.  (Supplied here.) -/
-theorem spb_odd (x y : ℝ) : spb (-x) (-y) = -spb x y := by unfold spb; ring
-
-/-- The Cauchy pull-back identity behind the SPB Jacobian.  (Supplied here.) -/
-theorem cauchy_pullback (x a : ℝ) (h : 1 - x * a ≠ 0) :
-    (1 + spb x a ^ 2) * (1 - x * a) ^ 2 = (1 + x ^ 2) * (1 + a ^ 2) := by
-  unfold spb
-  field_simp
-  ring
-
 
 /-- [Section: ## Section 1: SPB Algebraic Structure] -/
 theorem spb_comm (x y : ℝ) : spb x y = spb y x := by unfold spb; ring
@@ -108,6 +76,8 @@ theorem spb_parabolic_at_zero :
   rw [spbMat_trace, spbMat_det]; norm_num
 
 
+/-- [Section: ## Core Definitions] -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 theorem spb_zero_left (x : ℝ) : spb 0 x = x := by unfold spb; simp
 
@@ -170,6 +140,8 @@ theorem spb_elliptic (a : ℝ) (ha : a ≠ 0) :
   have h := spb_discriminant a; nlinarith [mul_self_pos.mpr ha]
 
 
+/-- [Section: ## Section 12: SPB Symmetries] -/
+theorem spb_odd (x y : ℝ) : spb (-x) (-y) = -spb x y := by unfold spb; ring
 
 /-- [Section: ## Section 17: Fixed Point Theory] -/
 theorem spb_no_fixed_points (a : ℝ) (ha : a ≠ 0) (x : ℝ) (hd : 1 - x * a ≠ 0) :

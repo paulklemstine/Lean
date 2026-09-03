@@ -1,7 +1,5 @@
 import Mathlib
 
-open CategoryTheory
-
 /-! # CatalogBuild.Bridges.CategoricalBridges
 
 Auto-generated from theorem catalog database.
