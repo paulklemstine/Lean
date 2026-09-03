@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4467887a",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — after the ENERGY-ASCENT cycle\n\n## What this cycle settled\n\nThe round-70 report claimed a magnitude channel that sees the first Berggren\nbranch letter `b₁`, with a *positional* me",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-31T20:06:21",
-      "title": "FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch letters; mechanism po"
-    },
-    {
       "cycle_id": "c4f754ac",
       "domain": "Probability",
       "key_insight": "# Future directions — after exp 559 (ADAPT-NULL-EQUALIZER / SKIP-FLIP-WINS)\n\nThe Lean files in `Catalog/Probability/AdaptiveQS*` settle the *sign structure* and, in\nthis cycle, a large part of the *qu",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-09-03T18:40:36",
       "title": "Sturmian Structure of the Argmax Staircase"
+    },
+    {
+      "cycle_id": "8aeaf6ab",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — after T-DIAL-BITLEN (paper 175)\n\nThe bitlen axis closed the deployment envelope of the zero-fit dial: seed-stability\n(paper 165), regime-invariance (paper 162), and now bitlen-st",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-09-03T18:40:56",
+      "title": "FACT round-47 #1 — T-DIAL-BITLEN: the zero-fit dial is bitlen-stable (paper 175)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8828af22",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — after the linear phase route closed at both prime ranges\n\n## What this cycle established (formally, 0 sorries)\n\nThe empirical thread reported that singleton root-position phases",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-22T20:41:20",
-      "title": "FACT round-41 #2 — HIGH-PHASE: the linear phase route is closed at both prime ranges (paper 151)"
-    },
     {
       "cycle_id": "6cdc8533",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-09-03T18:40:36",
       "title": "Sturmian Structure of the Argmax Staircase"
+    },
+    {
+      "cycle_id": "8aeaf6ab",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — after T-DIAL-BITLEN (paper 175)\n\nThe bitlen axis closed the deployment envelope of the zero-fit dial: seed-stability\n(paper 165), regime-invariance (paper 162), and now bitlen-st",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-09-03T18:40:56",
+      "title": "FACT round-47 #1 — T-DIAL-BITLEN: the zero-fit dial is bitlen-stable (paper 175)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "240c61ef",
-      "domain": "Computation",
-      "name": "sum_deg_sup_eq_totalSize",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fe441855",
-      "domain": "Novelty",
-      "name": "sum_sqrt_le_sqrt_card_mul_sum",
-      "quality": 0.82
-    },
     {
       "cycle_id": "efbccac8",
       "domain": "Algebra",
@@ -2803,9 +2791,21 @@
       "domain": "MachineLearning",
       "name": "change_of_measure",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "8aeaf6ab",
+      "domain": "Pythagorean",
+      "name": "ceiling_shape_diff",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "8aeaf6ab",
+      "domain": "Pythagorean",
+      "name": "ceiling_shape_bound",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-03T18:40:36",
+  "last_updated": "2026-09-03T18:40:56",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "c96b94a8",
-        "quality": 0.78,
-        "theorems": 188,
-        "title": "FACT round-68 #1 — TDIAL-U88: the dial drops below the floor at bitlen 88 (paper"
-      },
-      {
         "cycle_id": "f45042dc",
         "quality": 0.82,
         "theorems": 86,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 118,
         "title": "FACT round-50 — DEGREE-12-COMPOSITE: full pinning at the first composite-order a"
+      },
+      {
+        "cycle_id": "8aeaf6ab",
+        "quality": 0.78,
+        "theorems": 82,
+        "title": "FACT round-47 #1 — T-DIAL-BITLEN: the zero-fit dial is bitlen-stable (paper 175)"
       }
     ],
     "Shared": [

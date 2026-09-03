@@ -1,4 +1,4 @@
-import Geometry.HyperbolicBerggrenDensity
+import Catalog.Geometry.HyperbolicBerggrenDensity
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle V: the residual and its branch monotonicity
