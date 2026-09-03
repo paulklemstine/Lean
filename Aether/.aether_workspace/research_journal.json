@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "342e465c",
-      "domain": "Shared",
-      "key_insight": "# Future directions — NET-91 thread (CPU speculative decoding)\n\nFour cycles of the loop are formalised in\n\n* `Catalog/Shared/SpeculativeDecodingCostDominance.lean` — block model, cost dominance,\n  dep",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 97,
-      "timestamp": "2026-08-30T06:41:36",
-      "title": "NET-91 THE-CHEAP-DRAFT-WINS-AND-CODE-DRAFTS-DEEP: speculative decoding of a 7B LLM entirely on CPU p"
-    },
-    {
       "cycle_id": "17477782",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Cantor truth space, golden-mean subshift\n\nDerived from twelve completed research cycles in `Catalog/MachineLearning/`, all building on\nthe first-disagreement ultrametric of `Shar",
@@ -499,19 +489,19 @@
       "theorem_count": 38,
       "timestamp": "2026-09-03T00:17:21",
       "title": "Reed–Solomon dimension and MDS equality"
+    },
+    {
+      "cycle_id": "5f5fd816",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — after the degree-12 composite rung\n\n## What this cycle established\n\nFormally, with zero `sorry`:\n\n1. `[Q(ζ₅₆) : Q] = 24`, the involution `conj56` attached to `-1` has order 2, an",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 118,
+      "timestamp": "2026-09-03T00:17:40",
+      "title": "FACT round-50 — DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6f0c0f57",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — THE-CYCLIC-CUBIC-IS-FULLY-PINNED (paper 122)\n\nWhat this cycle established, in one line: the conductor-7 cyclic cubic splitting\nlaw is a *deterministic* channel from `p mod 7` to",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 148,
-      "timestamp": "2026-08-22T11:36:24",
-      "title": "FACT round-32 #3 — CYCLIC-CUBIC-TYPE-CHANNEL: two types, full pinning (paper 122)"
-    },
     {
       "cycle_id": "08e16c4e",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 38,
       "timestamp": "2026-09-03T00:17:21",
       "title": "Reed–Solomon dimension and MDS equality"
+    },
+    {
+      "cycle_id": "5f5fd816",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — after the degree-12 composite rung\n\n## What this cycle established\n\nFormally, with zero `sorry`:\n\n1. `[Q(ζ₅₆) : Q] = 24`, the involution `conj56` attached to `-1` has order 2, an",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 118,
+      "timestamp": "2026-09-03T00:17:40",
+      "title": "FACT round-50 — DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f7361634",
-      "domain": "Applications",
-      "name": "famVar_nonneg",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "d4f58bc3",
-      "domain": "Applications",
-      "name": "samePartners_add_one",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "d4f58bc3",
-      "domain": "Applications",
-      "name": "samePartners_le",
-      "quality": 0.86
-    },
     {
       "cycle_id": "d4f58bc3",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "natDegree_lt_of_mem_degreeLT",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "5f5fd816",
+      "domain": "Pythagorean",
+      "name": "mem_Units56",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5f5fd816",
+      "domain": "Pythagorean",
+      "name": "card_Units56",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5f5fd816",
+      "domain": "Pythagorean",
+      "name": "totient_56",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-03T00:17:21",
+  "last_updated": "2026-09-03T00:17:40",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "3be10ac1",
-        "quality": 0.83,
-        "theorems": 93,
-        "title": "FACT round-56 #1 — TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 unif"
-      },
-      {
         "cycle_id": "c96b94a8",
         "quality": 0.78,
         "theorems": 188,
@@ -3885,6 +3879,12 @@
         "quality": 0.85,
         "theorems": 13,
         "title": "FACT round-51 #3 — T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 "
+      },
+      {
+        "cycle_id": "5f5fd816",
+        "quality": 0.82,
+        "theorems": 118,
+        "title": "FACT round-50 — DEGREE-12-COMPOSITE: full pinning at the first composite-order a"
       }
     ],
     "Shared": [
