@@ -1291,44 +1291,47 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-46 #1 \u2014 MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "025e0adb",
     "description": "Round-49 #1, cron iteration (exp 511, assessment v284). Paper 175's bitlen-stability pushed to its limit.\n\n**T-DIAL-56-PARTIAL**: Spearman(T, rate) = **0.405** at bitlen 56 \u2014 BELOW the [0.55, 0.85] band. The dial DEGRADES because the smooth rate drops to **0.89%** (starved; 194/1200 Ns with ZERO hits). T still beats count by +0.093 (CI [0.042, 0.146]).\n\nThe bitlen-stability has a PRACTICAL FLOOR near bitlen ~54, beyond which the starved regime destroys rank resolution.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp511_t_dial_56.py + exp511_result.json, seed 20261030.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3662",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T13:02:58.897389+00:00",
     "title": "FACT round-49 #1 \u2014 T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed88da41",
     "description": "Round-48 #2, cron iteration (exp 510, assessment v284). The intersection cell from papers 175 \u00d7 166.\n\n**DIAL-HOLDS-UNIFORM-HB**: Spearman(T, rate) = 0.686/0.656/0.553/0.561 across four cells (balanced/uniform \u00d7 bitlen {44, 48}); T beats count by +0.06\u20130.10 everywhere, CI excludes zero.\n\nK-WASHOUT pilot: multiplier-randomized samplers destroy the QR dial channel entirely (averaging over k equidistributes the characters). Fixed k=1 CFRAC ladder required.\n\nTwo independent implementations agree; mid-run file collision documented and resolved.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp510_t_dial_unif_hb.py + exp510_result.json, seeds 20261020\u201323.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3663",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T13:02:58.899264+00:00",
     "title": "FACT round-48 #2 \u2014 T-DIAL-UNIF-HB: the dial holds at the regime \u00d7 bitlen intersection (paper 177)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0688a872",
     "description": "Round-48 #1, cron iteration (exp 509, assessment v283). Paper 132's residual gap item (3): effectivizing MA-1.\n\n**EQUIDISTRIBUTION-CONFIRMED**: max per-class deviation from Li(x)/\u03c6(m) at x=2\u00b3\u2070 = **0.000446** relative \u2014 well below 0.001; the 4/3 cap's constants hold to three significant figures.\n\nH2 SPLIT: worst class stable for m \u2208 {3,4,7,8,11} but unstable for m \u2208 {5,31}. H3 CONFIRMED: deviations shrink 6/7 moduli.\n\nPaper 132's converse constants are numerically robust at practical sizes: MA-1's equidistribution assumption introduces < 0.05% error into the 4/3 cap.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp509_lean.py + exp509_result_v2.json.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3664",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T13:02:58.900934+00:00",
     "title": "FACT round-48 #1 \u2014 MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
   },
@@ -1363,21 +1366,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-52 #1 \u2014 T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
   },
   {
-    "consumed_by_exp_id": "8c9b3d94",
-    "description": "Round-51 #1, cron iteration (exp 515, assessment v283). The full augmented dial tested across 5 fresh populations.\n\n**EXTENDED-DIAL-ABSENT**: the prime-power feature's contribution does NOT replicate \u2014 \u0394R\u00b2(pp) \u2248 0 on all 5 populations. Per-seed R\u00b2(augmented) at u=3.5: [0.490, 0.555, 0.428, 0.532, 0.508] \u2014 mean **0.502**, only 1/5 above the 0.55 target. The +0.089 from paper 172 was population-specific.\n\nTransfer slope 0.898 in band; combined model reaches R\u00b2 = 0.634 at u=2.5. The per-N dial's best validated form remains the paper-145 footprint dial (w + qrc).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp515_extended_dial.py + exp515_result.json, seeds 20261060\u201364.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3675",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T14:39:10.956328+00:00",
-    "title": "FACT round-51 #1 \u2014 EXTENDED-DIAL: the prime-power feature does not replicate (paper 181)"
-  },
-  {
     "consumed_by_exp_id": "42a2aa0b",
     "description": "Round-50 (exp 513). The abelian ladder's eleventh rung.\n\n**FULL-PINNING-AT-DEGREE-11**: Q(\u03b6\u2082\u2083)\u207a confirms every pre-stated prediction:\n- T(p)=1 iff dlog\u22610 mod 11; densities {1/11, 10/11}; H(T)=0.4395 bits\n- I(p mod 29; T) = H(T) EXACTLY (perm z>1000, per-class degenerate)\n- Semiprime pair Bin(2,1/11) \u03c7\u00b2=0.08; Is(11)=0.116\n\nThe abelian full-pinning law is UNIVERSAL: every degree 2\u201311 tested and confirmed with no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp513_degree_11.py + exp513_result.json, seed 20261050.",
     "domains": [
@@ -1405,36 +1393,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T15:36:32.741347+00:00",
     "title": "FACT round-53 #1 \u2014 T-DIAL-UNIF-52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
-  },
-  {
-    "consumed_by_exp_id": "5f5fd816",
-    "description": "Round-50 (exp 520). The first composite-order Galois group rung.\n\n**FULL-PINNING-AT-DEGREE-12**: Q(\u03b6\u2085\u2086)\u207a degree 12, G\u207a = C\u2086\u00d7C\u2082 (non-cyclic), conductor 56 \u2014 selected from ten \u03c6(f)=24 candidates by pre-stated rule.\n\nI(p mod 56; T) = H(T) = 1.7296 bits EXACTLY (gap 0.0, machine-exact); type densities {1/12, 1/4, 1/6, 1/2} match Chebotarev; orbit purity 12/12; perm z=+48,419; poly cross-check 160/160; semiprime pair channel matches exact enumeration law.\n\nThe abelian ladder now covers its FIRST non-cyclic composite-order group, extending beyond cyclic fields to C\u2086\u00d7C\u2082.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp520_degree_12.py + exp520_result.json, seed 20261060.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3684",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T16:41:43.038020+00:00",
-    "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
-  },
-  {
-    "consumed_by_exp_id": "a9de2f0b",
-    "description": "Round-55 #1, cron iteration (exp 523). The most comprehensive single-dial robustness sweep.\n\n**BKEY-MIXED-ZONE**: the T-dial's Spearman declines GRADUALLY with both bitlen and u \u2014 no cliff, no convention artifact, no threshold effect. Full 4-bitlen \u00d7 3-u grid: sp(T) ranges 0.53\u20130.79; decline is smooth and monotone in both variables.\n\nPaper 178's 'practical floor' at bitlen ~54 is a gradual transition, not a sharp edge.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp523_balanced_bkey.py + exp523_result.json, seeds 20261100\u201303.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3702",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T17:37:32.043186+00:00",
-    "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2492,6 +2450,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c9885d74 (Q=0.830), which proved 38 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Package degree-`< k` polynomials as a finite-dimensional vector space, prove that the encoder is linear with dimension `k`, and combine the lower bound with the Singleton bound to obtain minimum distance exactly `n-k+1`.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_c9885d74_5f997481",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "c9885d74",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:22.113391+00:00",
+    "title": "Deepening: Reed\u2013Solomon dimension and MDS equality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -2506,17 +2478,31 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle c90a227e (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Generalize from permutations of distinct elements to multisets with repeated keys. The expected number of distinguishable inputs is the multinomial coefficient `n! / \u220f m\u1d62!`, and the corresponding erased information should be its logarithm.",
+    "description": "Building on cycle 5f5fd816 (Q=0.820), which proved 118 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-50 (exp 520). The first composite-order Galois group rung.\n\n**FULL-PINNING-AT-DEGREE-12**: Q(\u03b6\u2085\u2086)\u207a degree 12, G\u207a = C\u2086\u00d7C\u2082 (non-cyclic), conductor 56 \u2014 selected from ten \u03c6(f)=24 candidates by pre-stated rule.\n\nI(p mod 56; T) = H(T) = 1.7296 bits EXACTLY (gap 0.0, machine-exact); type densities {",
     "domains": [
-      "Novelty"
+      "Pythagorean"
     ],
-    "id": "push_c90a227e_8c5846c0",
+    "id": "push_5f5fd816_5333608a",
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
-    "source_exp_id": "c90a227e",
+    "source_exp_id": "5f5fd816",
     "status": "available",
-    "timestamp": "2026-09-02T21:51:12.075938+00:00",
-    "title": "Deepening: Generalize from permutations of distinct elements to multisets with repeated key"
+    "timestamp": "2026-09-03T00:17:41.388246+00:00",
+    "title": "Deepening: FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 8c9b3d94 (Q=0.820), which proved 96 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-51 #1, cron iteration (exp 515, assessment v283). The full augmented dial tested across 5 fresh populations.\n\n**EXTENDED-DIAL-ABSENT**: the prime-power feature's contribution does NOT replicate \u2014 \u0394R\u00b2(pp) \u2248 0 on all 5 populations. Per-seed R\u00b2(augmented) at u=3.5: [0.490, 0.555, 0.428, 0.532, 0.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_8c9b3d94_94e20e6e",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "8c9b3d94",
+    "status": "available",
+    "timestamp": "2026-09-03T00:18:20.440593+00:00",
+    "title": "Deepening: FACT round-51 #1 \u2014 EXTENDED-DIAL: the prime-power feature does not replicate (pa"
   },
   {
     "consumed_by_exp_id": "",
@@ -3435,20 +3421,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle ee56ba3a (Q=0.800), which proved 91 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-56 \u2014 limited-memory axis, round 9 (paper 141, ResearchOutput/exp_net56_policy.py, /tmp/net56.log)\n\n**Verdict name: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN.**\n\n### Result\nCausally-honest streaming KV eviction (accumulated-score heavy-hitters, block-128, current block always cached, strict per",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_ee56ba3a_87f5b36d",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "ee56ba3a",
-    "status": "available",
-    "timestamp": "2026-09-02T18:45:27.412613+00:00",
-    "title": "Deepening: NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN \u2014 streaming heavy-hitter evicti"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 18b02a30 (Q=0.880) proved 294 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` m",
     "domains": [
       "NumberTheory"
@@ -3488,6 +3460,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T09:39:53.845380+00:00",
     "title": "Deepening: NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine g"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a9de2f0b (Q=0.780), which proved 71 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-55 #1, cron iteration (exp 523). The most comprehensive single-dial robustness sweep.\n\n**BKEY-MIXED-ZONE**: the T-dial's Spearman declines GRADUALLY with both bitlen and u \u2014 no cliff, no convention artifact, no threshold effect. Full 4-bitlen \u00d7 3-u grid: sp(T) ranges 0.53\u20130.79; decline is smoo",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_a9de2f0b_2e766fe4",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "a9de2f0b",
+    "status": "available",
+    "timestamp": "2026-09-03T00:18:01.217939+00:00",
+    "title": "Deepening: FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff ("
   },
   {
     "consumed_by_exp_id": "",
@@ -14317,6 +14303,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The zero-increment locus of one feature is a hyperplane in rate-profile space. For a family of m candidate features the simultaneous absence locus should be an intersection of m independent hyperplanes, so codimension adds. This turns 'which augmentations can be absent together' into a rank computation on the Gram matrix of the partialled features.\n\nIf the partialled features zt_1,...,zt_m are linearly independent in the weighted inner product, the set of rate profiles on which all m increments vanish has codimension exactly m in the space of rate profiles.\n\nGeneralise zeroGainFunctional to a linear map into R^m, prove surjectivity from Gram nondegeneracy, and apply the rank-nullity theorem.\n\nSimultaneous absence of several augmentations is exponentially non-generic, so a repeated null result is strong evidence of a structural constraint on the population generator.\n\nSome partialled features are weightedly dependent, i.e. the candidate dial family is redundant, which itself explains the null results.",
+    "domains": [],
+    "id": "fd_4606",
+    "priority_score": 0.5934375000000001,
+    "research_mode": "team",
+    "source_exp_id": "8c9b3d94",
+    "status": "available",
+    "timestamp": "2026-09-03T00:18:09.920888+00:00",
+    "title": "Codimension Additivity for Simultaneously Absent Feature Families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This cycle proved upper bounds on the reflection depths available inside the refinement of capC and valSys (a height gap bound and a collapse to depth one for non-maximal tags) and proved that they are attained when the height vector takes only two values. The conjecture extends the resulting closed formula to arbitrary height vectors: the reflection depth of a tag is the distance from its own cut point to the next cut point below it, giving a complete decision procedure for ClassRealizes.\n\nIn cvSys c V N the reflection depth of tag i equals min N (d i) minus the largest strictly smaller value of min N (d j), and equals min N (d i) when no tag is strictly lower; ClassRealizes N d r holds iff r is given by this formula. The two-valued case is the proved theorem classRealizes_twoValue.\n\nGeneralize the proved bisimulation satCV_flat_congr from one low cut point to the whole sequence of cut points, then assemble the biconditional characterization of ClassRealizes; check the formula first by exhaustive enumeration on three-valued height vectors.\n\nThe refinement class is completely classified: its reflection-depth vector is a computable function of the height vector, closing the question the mission conjecture opened.\n\nSome intermediate reflection depth is unreachable, which would mean the gap probe is not optimal and a sharper separating formula exists.",
     "domains": [],
     "id": "fd_4045",
@@ -14665,6 +14663,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Paper 178's practical floor should be characterised as an approximate fixed point of the per-notch descent map rather than as a threshold. Writing the retention r(b) = s(b+1)/s(b), the floor is the bitlen where r(b) approaches 1 from below while s(b) is still positive, producing a long flat tail rather than an edge.\n\nIf r is monotone increasing to 1 and s(b+1) = r(b)*s(b), then for any eta > 0 the set of bitlens with |s(b) - lim s| < eta is an infinite terminal segment, and the crossing of any level tau > lim s has overshoot at most (1 - r(b*))*tau.\n\nExtend crossing_no_jump and crossing_relative_overshoot to a variable retention sequence and prove convergence of the induced product.\n\nThe floor is a limit, not a threshold, and 'bitlen 54' is only the first bitlen inside a chosen band.\n\nThere is a genuine terminal bitlen after which the dial is exactly flat, which would be a new structural phenomenon.",
+    "domains": [],
+    "id": "fd_4603",
+    "priority_score": 0.5931707317073172,
+    "research_mode": "team",
+    "source_exp_id": "a9de2f0b",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:50.228969+00:00",
+    "title": "Fixed-Point Characterisation of the Practical Floor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A property determined by finitely many digits should be unable to separate any asymptotic behaviour. We conjecture that every prefix-measurable property containing a point contains rationals, non-normal irrationals, and continuum many of each, so that asymptotic digit laws are never prefix-measurable.\n\nIf P is a set of reals such that every x in P has an n with the whole n-digit cylinder of x contained in P, then P contains a rational, an irrational with nonzero-digit density 0, an irrational with nonzero-digit density 1, and uncountably many elements.\n\nInstantiate Pyth.prefix_determines_no_digit_law and Pyth.not_countable_prefix_class at the cylinder witnessing membership.\n\nA clean impossibility theorem: no experiment reading finitely many digits can decide any asymptotic digit law.\n\nThe cylinder topology would carry more arithmetic information than expected, contradicting the graft construction.",
     "domains": [],
     "id": "fd_3815",
@@ -14794,6 +14804,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T23:31:09.238617+00:00",
     "title": "Upward Inheritance of Floors Through Seed Pooling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A transfer slope strictly below one is forced by noise in the measured footprint, and the slope identifies the noise-to-signal ratio. Correcting for it should reconcile the base dial readings across populations and isolate the disagreement in a single moment coordinate.\n\nWith slope s = Var x/(Var x + Var u), the corrected base variance shares of the five populations agree to within the proved ell-1 stability bound, and the residual disagreement is confined to the sigma_zy coordinate.\n\nInstantiate slope_attenuation and slope_band with the recorded slope 0.898 to pin rho = 1/s - 1, then compare corrected base R-squared values against the wcov_stability_tv bound.\n\nThe base dial is fully transferable once attenuation is corrected, sharpening the contrast with the non-transferable increment.\n\nThe base dial is population-specific too, which would demote the footprint dial itself and force a redesign of the per-N dial.",
+    "domains": [],
+    "id": "fd_4608",
+    "priority_score": 0.5930000000000001,
+    "research_mode": "team",
+    "source_exp_id": "8c9b3d94",
+    "status": "available",
+    "timestamp": "2026-09-03T00:18:10.960347+00:00",
+    "title": "Attenuation-Corrected Footprint Transfer"
   },
   {
     "consumed_by_exp_id": "",
@@ -15034,6 +15056,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T09:40:22.314355+00:00",
     "title": "Slack Budget for the T-versus-Count Advantage"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The increment depends on signed second moments, while R-squared readings are sign-blind. A single explicit pair of populations already defeats any predictor built from the three marginal variance shares; the conjecture upgrades this from one pair to a robust family.\n\nThere is no function F with Delta-R-squared = F(R2(x,y), R2(z,y), R2(x,z)) valid on all finite populations, and the set of population pairs witnessing the failure contains an open set in moment space.\n\nPerturb the constructed pair (rateSB, rateSC) within the moment parametrisation and show the increment gap stays bounded away from zero on a neighbourhood, using pgain_moment_formula.\n\nReporting protocols must record signed covariances; sign-blind dashboards cannot certify or refute an augmentation.\n\nSome extra invariant pins the sign down, which would be a genuinely new constraint on admissible populations.",
+    "domains": [],
+    "id": "fd_4607",
+    "priority_score": 0.5925000000000001,
+    "research_mode": "team",
+    "source_exp_id": "8c9b3d94",
+    "status": "available",
+    "timestamp": "2026-09-03T00:18:10.435870+00:00",
+    "title": "Inadmissibility of Sign-Blind Dial Reporting"
   },
   {
     "consumed_by_exp_id": "",
@@ -15432,14 +15466,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rank Threshold for Nowhere-Vanishing Twisted Sections"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24e44638",
     "description": "The four-constructor carrier was topologised by fiat as EReal \u2294 {\u03a6}. We conjecture that this is forced: any compact Hausdorff topology making the finite fragment an open copy of the line and nullity isolated is that one. The approach is an ends argument for the real line inside a two-point remainder compactification.\n\nIf t is a compact Hausdorff topology on Transreal such that fin is an open embedding and {null} is open, then t equals the topology induced by the bijection Transreal \u2243 EReal \u2295 Unit.\n\nFormalise the end compactification of \u211d, show any compactification with two-point remainder of a two-ended locally compact space is the end compactification, then apply it to the complement of {null}.\n\nAll sharpness theorems about the division boundary become topology-canonical rather than model-dependent.\n\nThere is an exotic compact Hausdorff transreal topology; the guard's necessity would have to be re-examined in it.",
     "domains": [],
     "id": "fd_3833",
+    "phase": "A",
     "priority_score": 0.5910526315789475,
     "research_mode": "team",
     "source_exp_id": "04d3a29d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T11:35:56.215025+00:00",
     "title": "Uniqueness of the Two-Point Transreal Compactification"
   },
@@ -15814,6 +15849,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T23:31:08.172030+00:00",
     "title": "Sign-Change Count as a Fade-Law Discriminator"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every deterministic channel on residues is fully pinned (gap 0), as proved in general here. The open half is the extremal one: how large can the output entropy be, and which groups achieve it.\n\nFor any modulus m and any sign-stable type map T on (ZMod m)^x, I(X;T) = H(T) and H(T) <= log2 (number of divisors of the exponent of (ZMod m)^x/{\u00b11}), with equality iff the quotient is elementary abelian.\n\nThe equality I = H is already formalised (mutualInfo_eq_entropyOut). For the bound, enumerate moduli m <= 200 in Lean, compute H(T) via entropyOut, and compare with log2 of the divisor count.\n\nThe ladder has a universal ceiling depending only on the exponent, so entropy growth along the ladder is governed by divisor counts.\n\nSome rung exceeds the divisor-count ceiling, indicating that the type map is not the order map for that conductor.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4599",
+    "priority_score": 0.5648061131850186,
+    "research_mode": "team",
+    "source_exp_id": "5f5fd816",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:30.962184+00:00",
+    "title": "Universal Pinning Bound for Deterministic Residue Channels"
   },
   {
     "consumed_by_exp_id": "",
@@ -16369,6 +16419,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T12:54:57.177644+00:00",
     "title": "Parry Measure of Maximal Entropy for the Golden-Mean Subshift"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Nested Reed\u2013Solomon codes RS(k\u2081) \u2286 RS(k\u2082) with the computed dual dimensions give a CSS construction whose quantum parameters follow from the classical minimum distances proved here. Conjecture the resulting [[n, k\u2082-k\u2081, min(n-k\u2082+1, k\u2081+1)]] parameters and formalize the CSS bookkeeping over a finite field.\n\nFor 1 \u2264 k\u2081 \u2264 k\u2082 \u2264 n, the CSS pair (RS(k\u2082), RS(k\u2081)\u22a5) yields a quantum code with n - (k\u2082 - k\u2081) stabilizer generators and distance at least min(n - k\u2082 + 1, k\u2081 + 1).\n\nProve the nesting RS(k\u2081) \u2286 RS(k\u2082) as a Submodule inclusion, combine with finrank_dualCode_code, and state the CSS distance bound as a weight statement about the quotient of the two codes.\n\nA fully verified family of quantum error-correcting codes derived from the classical results in this file.\n\nThe distance bound degrades on the quotient, pinpointing where classical minimum distance fails to control quantum distance.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_4597",
+    "priority_score": 0.5646683179548131,
+    "research_mode": "team",
+    "source_exp_id": "c9885d74",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:08.613215+00:00",
+    "title": "CSS Quantum Codes from Nested Reed\u2013Solomon Pairs"
   },
   {
     "consumed_by_exp_id": "",
@@ -17029,6 +17094,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T12:55:20.460566+00:00",
     "title": "Nonexistence of Constant-Negative Fisher Curvature on Finite Supports"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Type entropy is a shape invariant, not a size invariant, so along conductors f the value should oscillate rather than increase with degree. We conjecture unbounded oscillation with liminf zero.\n\nThe sequence f -> orderEntropy(Gal(Q(zeta_f)+/Q)) has liminf 0 and limsup +infinity, and is non-monotone in the degree phi(f)/2.\n\nCompute orderEntropy for the Galois groups of Q(zeta_f)+ for f up to a few hundred using the closed form for products of cyclic groups; exhibit explicit conductor pairs with larger degree but smaller entropy.\n\nEntropy cannot be used as a proxy for degree; it must be interpreted as a structural fingerprint.\n\nEntropy is a monotone function of the degree, which would make the ladder's measurements redundant.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_4600",
+    "priority_score": 0.5641830391006109,
+    "research_mode": "team",
+    "source_exp_id": "5f5fd816",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:31.478156+00:00",
+    "title": "Non-Monotone Type Entropy Along the Real Cyclotomic Ladder"
   },
   {
     "consumed_by_exp_id": "",
@@ -18217,6 +18297,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The MDS property alone pins down the number of codewords of each weight. Conjecture the closed formula A_w = C(n,w) \u03a3_j (-1)^j C(w,j)(q^{w-d+1-j} - 1) for an [n,k,n-k+1] code over a field with q elements. The proof route is inclusion\u2013exclusion over coordinate subsets, using that every k-subset is an information set.\n\nFor every [n,k,n-k+1] linear code over F_q and every w \u2265 d = n-k+1, the number of codewords of Hamming weight w equals C(n,w) \u03a3_{j=0}^{w-d} (-1)^j C(w,j) (q^{w-d+1-j} - 1).\n\nFormalize the count of codewords vanishing outside a subset S as q^{max(0, k - (n - #S))} using restrict_bijective_of_mds, then apply M\u00f6bius inversion on the subset lattice.\n\nThe complete weight distribution of Reed\u2013Solomon codes becomes a corollary, with no field-specific input.\n\nSome MDS code has a weight distribution not determined by its parameters, contradicting the information-set count and revealing an error in the subset-counting step.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_4594",
+    "priority_score": 0.5634281608829629,
+    "research_mode": "team",
+    "source_exp_id": "c9885d74",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:06.872388+00:00",
+    "title": "Forced Weight Enumerator of MDS Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The power-law recall model and the Zipf attention model are conjectured to be the same object in different coordinates, with the recall exponent determined by the attention decay exponent. Matching the two retention curves on a window would let a KV-cache budget measurement read off the attention decay directly.\n\nIf the Zipf retention curve (k/C)^(1-s) and the power-law retention 1 - A k^(-a) agree on an interval of budgets, then the amplification exponents coincide: b/a = 1 and a = 1 - s is forced on that window.\n\nEquate the two retention functions at three budgets and derive the parameter relations with Real.rpow algebra in Lean.\n\nThe measured a ~ 0.81 is a spectral measurement of attention decay, not a fitting constant.\n\nThe two model classes are genuinely inequivalent and the exponent must be measured per corpus.",
     "domains": [
       "Algebra",
@@ -18484,6 +18579,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:50:39.509926+00:00",
     "title": "Divisor-Model Separation Exponent"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The elementary half of the MDS conjecture bounds the length of a nontrivial MDS code by the field size. Conjecture that any [n,k,n-k+1] code with 2 \u2264 k \u2264 n-2 over a field with q elements satisfies n \u2264 q + k - 1. The route is that the dual information-set property makes parity-check columns pairwise non-proportional points of a projective space.\n\nIf C \u2264 F_q^n is MDS with 2 \u2264 k \u2264 n - 2, then n \u2264 q + k - 1.\n\nExtract from dual_weight_lower_bound that every n-k columns of a parity-check matrix are independent, normalize to a systematic form, and count admissible columns over F_q.\n\nReed\u2013Solomon codes are length-optimal over their field, and no MDS code can beat them asymptotically for fixed q.\n\nA longer MDS code exists, which would be a counterexample to a long-standing expectation and would have to be exhibited explicitly.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4595",
+    "priority_score": 0.5632628066067162,
+    "research_mode": "team",
+    "source_exp_id": "c9885d74",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:07.426714+00:00",
+    "title": "Length Barrier for MDS Codes over Small Fields"
   },
   {
     "consumed_by_exp_id": "",
@@ -18769,6 +18879,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T10:54:52.593638+00:00",
     "title": "Budget-Threshold Universality of the Attention Corner"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Orbit purity holds for translation actions in any finite group, abelian or not. The conjecture is that the full orbit-length spectrum, indexed by conjugacy classes, identifies the group among groups of the same order for small orders.\n\nFor finite groups G, H with |G| = |H| <= 32, equality of the multisets {(order of g, number of translation orbits) : g in G} together with the conjugacy class sizes implies G \u2245 H.\n\nFormalise the orbit machinery for non-abelian G (the current proof of card_orbits_mul_addOrderOf only uses that orbits are cosets), then verify by decide on S3, D4, Q8, A4 and their order-mates.\n\nThe ladder extends past abelian Galois groups with an invariant that is still computable from splitting data alone.\n\nTwo non-isomorphic groups share the spectrum, so non-abelian rungs need genuinely representation-theoretic invariants (character tables).",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4601",
+    "priority_score": 0.5627754466346208,
+    "research_mode": "team",
+    "source_exp_id": "5f5fd816",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:32.141504+00:00",
+    "title": "Frobenius Orbit Spectra as Non-Abelian Rung Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -19204,6 +19329,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T23:36:24.235210+00:00",
     "title": "Two-Sided Adic Budget for Pythagorean Triple Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Welch\u2013Berlekamp linear system produces the transmitted polynomial whenever at most (n-k)/2 errors occurred. Conjecture that solvability plus the polynomial identity N = E\u00b7p can be proved purely inside the degreeLT packaging already used for the encoder, giving a verified decoder matching the proved unique-decoding radius.\n\nFor t \u2264 (n-k)/2 and any received word y at distance \u2264 t from a codeword enc(p), every nonzero solution (E, N) with deg E \u2264 t, deg N < t + k of the system E(\u03b1_i) y_i = N(\u03b1_i) satisfies N = E * p.\n\nSet up the system as a linear map between degreeLT spaces, show the kernel is nontrivial by dimension count, and prove N - E*p has more roots than its degree.\n\nA machine-checked decoder correctness proof at the exact radius already established as optimal for unique decoding.\n\nThe dimension count fails for some parameter range, marking the precise boundary where the linear-algebraic decoder must be replaced.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4596",
+    "priority_score": 0.5615791994303863,
+    "research_mode": "team",
+    "source_exp_id": "c9885d74",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:08.054795+00:00",
+    "title": "Berlekamp\u2013Welch Correctness at the Unique-Decoding Radius"
   },
   {
     "consumed_by_exp_id": "",
@@ -29778,6 +29918,77 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T21:51:04.869897+00:00",
     "title": "Coarsening Lattice of Erasure Values"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Column scaling by a vector of nonzero multipliers is a weight-preserving linear isomorphism of F^n. Conjecture that the entire package proved for RS codes (dimension k, distance n-k+1, information sets, dual distance k+1) transports to generalized Reed\u2013Solomon codes, and that the class of GRS codes is closed under duality. This upgrades a single family to the standard workhorse family of coding theory.\n\nFor distinct \u03b1 : Fin n \u2192 F and v : Fin n \u2192 F\u02e3, the code GRS(\u03b1,v) = {(v_i p(\u03b1_i))_i : deg p < k} has finrank k, minimum distance n-k+1, and its dual is GRS(\u03b1,w) for an explicit w.\n\nDefine the scaling automorphism as a LinearEquiv of Fin n \u2192 F, prove hammingNorm invariance, and push ReedSolomonMDS.minDist_code and minDist_dualCode_code through it; identify the dual multiplier via Lagrange interpolation of \u220f_{j\u2260i}(\u03b1_i-\u03b1_j).\n\nAll MDS results in the catalog apply to the full GRS family, including the dual, giving a duality-closed class.\n\nThe failure must occur in the dual multiplier identification, isolating a genuine obstruction in the pairing rather than in the weight theory.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4593",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c9885d74",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:06.321128+00:00",
+    "title": "Generalized Reed\u2013Solomon Transport of MDS Equality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The order-profile (type) entropy of a finite abelian group is conjectured to be a complete isomorphism invariant for orders up to 100. This cycle proved the first non-trivial instance, separating C12 from C6xC2 at degree 12. If true, a single measured real number identifies the Galois group of an abelian rung.\n\nFor finite abelian A, B with |A| = |B| = n <= 100, orderEntropy A = orderEntropy B implies A \u2245 B.\n\nEnumerate all abelian groups of each order n <= 100 in Lean as products of ZMod p^k, compute orderEntropy in closed form as a rational combination of log2 p, and prove distinctness by rational linear independence of the log2 p.\n\nThe measured entropy of a rung determines its Galois group, making the ladder's single scalar a complete classifier.\n\nThere is a collision pair of abelian groups sharing an order profile; the entropy must then be refined by a second statistic (e.g. the pair-channel spectrum).",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4598",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5f5fd816",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:30.397029+00:00",
+    "title": "Entropy Injectivity for Abelian Galois Rungs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The spreading law gives at least R/epsilon active notches. For a dial whose notch sizes themselves decay geometrically with ratio q, the number of notches needed to accumulate a decline R should grow like log(1/(1-q)) faster than the linear count. The conjecture quantifies how much more gradual a geometric dial is than the worst case.\n\nIf the notch sizes satisfy d_{k+1} <= q*d_k with 0 < q < 1 and the total decline is R with max notch epsilon, then the number of positive notches is at least log(1 - R*(1-q)/epsilon)/log q.\n\nProve the geometric-sum inequality in Lean over the rationals and instantiate with the exact cap notch (3/4)*8^{-u} of ceiling_colStep_exact.\n\nAny geometrically decaying dial is provably cliff-free with a bound depending only on q, no data needed.\n\nGradualness is genuinely a data property and cannot be inferred from the notch decay alone.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4602",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a9de2f0b",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:49.687082+00:00",
+    "title": "Logarithmic Spreading Exponent for Geometric Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A one-key convention move changes the Spearman ceiling of a balanced profile by less than 4/N. Iterating along a path of single-key edits should show that any convention affecting t keys changes the ceiling by less than 4t/N, making all sublinear conventions invisible at recorded bit lengths.\n\nFor a balanced profile of N keys, any two tie profiles differing by a transport of t keys satisfy |rho^2 - rho'^2| < 4t/N, provided every intermediate profile stays balanced.\n\nIterate convention_move_bound along an explicit edit path and control the balance condition at each step.\n\nConvention-freedom of the dial is established once and for all, for every convention of sublinear support.\n\nThere exist balanced-to-balanced edit paths whose cumulative effect is superlinear, which would locate a real convention sensitivity.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4604",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a9de2f0b",
+    "status": "available",
+    "timestamp": "2026-09-03T00:17:50.753789+00:00",
+    "title": "Tensorised Convention Invisibility"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The prime-power indicator is a sparse 0/1 feature on the key range {1,...,N}. The proved ceiling gain <= B^2 * density converts sparsity into a hard bound on the augmented dial. Combining it with an elementary sieve bound on the density of prime powers yields an asymptotic no-signal theorem for the prime-power dial.\n\nFor every N, every draw regime p on {1,...,N} and every residual with sup-norm at most B, the prime-power augmentation gain is at most B^2 * delta_N where delta_N is the regime mass of the prime powers; and for the uniform regime delta_N -> 0, so the gain tends to 0 uniformly over bounded residuals.\n\nFormalise #{n <= N : IsPrimePow n} <= N/3 + O(log N) via the mod-6 sieve (all prime powers above 3 are congruent to +-1 mod 6, plus at most log_2 N + log_3 N powers of 2 and 3), then instantiate gain_le_sup_sq_density and gain_lt_of_density_small.\n\nThe prime-power feature is asymptotically worthless as a per-N dial for bounded residuals, closing the EXTENDED-DIAL question in the negative for large key ranges.\n\nThe residual must be unbounded in sup norm, which would relocate the effect to heavy-tailed yield profiles and change the experimental design.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4605",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "8c9b3d94",
+    "status": "available",
+    "timestamp": "2026-09-03T00:18:09.396904+00:00",
+    "title": "Prime-Power Density Ceiling for Integer Key Populations"
   },
   {
     "consumed_by_exp_id": "",
@@ -48573,19 +48784,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:12.082171+00:00",
     "title": "One-parameter fourth-dimensional rotations"
-  },
-  {
-    "consumed_by_exp_id": "c9885d74",
-    "description": "Package degree-`< k` polynomials as a finite-dimensional vector space, prove that the encoder is linear with dimension `k`, and combine the lower bound with the Singleton bound to obtain minimum distance exactly `n-k+1`.",
-    "domains": [],
-    "id": "fd_2623",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "2bb5622c",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:12.497522+00:00",
-    "title": "Reed\u2013Solomon dimension and MDS equality"
   },
   {
     "consumed_by_exp_id": "",

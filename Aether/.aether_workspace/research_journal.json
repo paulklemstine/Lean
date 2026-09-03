@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b50cc5ce",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nDerived from the Stage-3 analysis and Stage-4 adversarial review of this cycle.\n\n## What this cycle established (formally, 0 sorries)\n\nFive Lean files in `Catalog/Combinatorics/`",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-30T12:55:28",
-      "title": "Test curvature only after identifiability"
-    },
-    {
       "cycle_id": "b63aa142",
       "domain": "Algebra",
       "key_insight": "# Future directions — after the Euler two-squares cycles\n\n## What is now established (all `sorry`-free, in `Catalog/Algebra/EulerTwoSquares*.lean`)\n\n1. **Extraction is unconditional, and needs no norm",
@@ -499,19 +489,19 @@
       "theorem_count": 71,
       "timestamp": "2026-09-03T00:18:00",
       "title": "FACT round-55 #1 — BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
+    },
+    {
+      "cycle_id": "8c9b3d94",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — after EXTENDED-DIAL-ABSENT (round-51 #1)\n\nThree research cycles were run on the negative result \"the prime-power feature's\ncontribution does not replicate\". What survived formali",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-09-03T00:18:20",
+      "title": "FACT round-51 #1 — EXTENDED-DIAL: the prime-power feature does not replicate (paper 181)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0f0bd7f8",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — after Cycles 6–9 (Markov-chain frame definability for `ModalSystem`)\n\nThe mission asked for a Lean development of frame definability for Cycle 4's\n`ModalSystem`, carried by the `",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 152,
-      "timestamp": "2026-08-22T13:02:14",
-      "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
-    },
     {
       "cycle_id": "bb070ee4",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 71,
       "timestamp": "2026-09-03T00:18:00",
       "title": "FACT round-55 #1 — BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
+    },
+    {
+      "cycle_id": "8c9b3d94",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — after EXTENDED-DIAL-ABSENT (round-51 #1)\n\nThree research cycles were run on the negative result \"the prime-power feature's\ncontribution does not replicate\". What survived formali",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-09-03T00:18:20",
+      "title": "FACT round-51 #1 — EXTENDED-DIAL: the prime-power feature does not replicate (paper 181)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "108711a9",
-      "domain": "Combinatorics",
-      "name": "filter_typePair_offdiag",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "384c4d0f",
-      "domain": "Combinatorics",
-      "name": "curveOf_mono",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "384c4d0f",
-      "domain": "Combinatorics",
-      "name": "curveOf_le_iff",
-      "quality": 0.84
-    },
     {
       "cycle_id": "384c4d0f",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "move_sum_eq",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "8c9b3d94",
+      "domain": "Combinatorics",
+      "name": "wip_eq_wcov_of_centred",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "8c9b3d94",
+      "domain": "Combinatorics",
+      "name": "partial_cov_formula",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "8c9b3d94",
+      "domain": "Combinatorics",
+      "name": "partial_var_formula",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-03T00:18:00",
+  "last_updated": "2026-09-03T00:18:20",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "a32bc1e4",
-        "quality": 0.82,
-        "theorems": 111,
-        "title": "Destructive verification"
-      },
-      {
         "cycle_id": "56c4877a",
         "quality": 0.85,
         "theorems": 107,
@@ -3265,6 +3259,12 @@
         "quality": 0.78,
         "theorems": 71,
         "title": "FACT round-55 #1 — BALANCED-BKEY: the T-dial's decline is gradual, not a cliff ("
+      },
+      {
+        "cycle_id": "8c9b3d94",
+        "quality": 0.82,
+        "theorems": 96,
+        "title": "FACT round-51 #1 — EXTENDED-DIAL: the prime-power feature does not replicate (pa"
       }
     ],
     "Computation": [
