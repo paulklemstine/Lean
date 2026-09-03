@@ -9,6 +9,9 @@ Declarations: 3
 
 noncomputable section
 
+/-- The hyperbolic speed-addition law.  (Supplied here: referenced but missing.) -/
+def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
+
 /-- [Section: # CatalogBuild.Shared.SpbH_bounded
 Auto-generated from theorem catalog database.
 Domain: Bridges

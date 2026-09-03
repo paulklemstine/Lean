@@ -49,6 +49,37 @@ abstract correspondence semiring S(C,W). -/
     correspondences between states. -/
 abbrev CorrespondenceSemiring (X : Type*) := Matrix X X NNReal
 
+/-! ### State and Equilibrium Functionals
+
+A *state functional* on a finite state space `X` is a normalized nonnegative weight,
+i.e. a probability vector.  An *equilibrium functional* for a nonnegative matrix `A`
+is a state functional which is an eigenvector of `A` with some nonnegative eigenvalue. -/
+
+/-- A normalized nonnegative weight on the finite state space `X`. -/
+structure StateFunctional (X : Type*) [Fintype X] where
+  /-- The underlying nonnegative weight. -/
+  val : X → NNReal
+  /-- The weights sum to one. -/
+  normalized : ∑ x : X, val x = 1
+
+/-- The kernel of a state functional: the setoid identifying states of equal weight. -/
+def StateFunctional.kernel (μ : StateFunctional X) : Setoid X := Setoid.ker μ.val
+
+/-- A state functional factors through a setoid `Q` when `Q` refines its kernel. -/
+def StateFunctional.factorsThrough (μ : StateFunctional X) (Q : Setoid X) : Prop :=
+  ∀ x y, Q.r x y → μ.kernel.r x y
+
+/-- An equilibrium functional for the nonnegative matrix `A`: a state functional that is
+    an eigenvector of `A`. -/
+structure EquilibriumFunctional (X : Type*) [Fintype X] (A : Matrix X X NNReal) where
+  /-- The underlying probability vector. -/
+  toStateFunctional : StateFunctional X
+  /-- The associated eigenvalue. -/
+  eigenvalue : NNReal
+  /-- The eigenvector equation. -/
+  eigenvector_eq : ∀ x : X,
+    ∑ y : X, A x y * toStateFunctional.val y = eigenvalue * toStateFunctional.val x
+
 /-! ### From Equilibrium Functionals to Semiring Characters -/
 
 /-- Given a positive normalized eigenvector μ (equilibrium functional) of
