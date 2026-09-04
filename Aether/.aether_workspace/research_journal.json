@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b20378a3",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — U56B-DIAL-HOLDS-COUNT-PARITY (FACT round-61 #2, exp 542)\n\n## What this cycle settled\n\nThe bitlen-56 fresh-seed replication reports pooled `ρ(T, rate) = 0.669` (CI\n`[0.650, 0.690]",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-09-01T18:32:57",
-      "title": "FACT round-61 #2 — TDIAL-U56B: fresh-seed replication confirms validity but edge not established (pa"
-    },
-    {
       "cycle_id": "eb1faf15",
       "domain": "Novelty",
       "key_insight": "# Future directions — from the bitlen-100 band miss (round-67 #2, exp 540)\n\nThis cycle proved that the *sampler* is exonerated at bitlen 100: the 2-adic tie ceiling of the\ntrailing-zero statistic is `",
@@ -499,19 +489,19 @@
       "theorem_count": 37,
       "timestamp": "2026-09-04T18:25:54",
       "title": "FACT round-43 #1 — TABLE-CLOSURE FULL: the exact asymptotic constants of the fork channels (paper 16"
+    },
+    {
+      "cycle_id": "5b4963ae",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — after the calibration of the Fisher–Rao length\n\n## What this cycle settled\n\nThe open question of the mission was calibration: do the discrete Bhattacharyya angle\nsums converge to",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-09-04T18:26:12",
+      "title": "Riemann Convergence of Bhattacharyya Angle Sums"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cd05a1fd",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — the Lagrange exponent programme\n\nThis cycle settled the old sub-conjecture 1 (`lagrangeExponent_concaveOn`) and, more than\nthat, pinned the threshold `1/27` down exactly: `σ` is",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-08-23T07:02:41",
-      "title": "Concavity (old sub-conjecture 1)."
-    },
     {
       "cycle_id": "50edc087",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 37,
       "timestamp": "2026-09-04T18:25:54",
       "title": "FACT round-43 #1 — TABLE-CLOSURE FULL: the exact asymptotic constants of the fork channels (paper 16"
+    },
+    {
+      "cycle_id": "5b4963ae",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — after the calibration of the Fisher–Rao length\n\n## What this cycle settled\n\nThe open question of the mission was calibration: do the discrete Bhattacharyya angle\nsums converge to",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-09-04T18:26:12",
+      "title": "Riemann Convergence of Bhattacharyya Angle Sums"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "14592ce7",
-      "domain": "Combinatorics",
-      "name": "PermRange",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "14592ce7",
-      "domain": "Combinatorics",
-      "name": "PermRange",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "14592ce7",
-      "domain": "Combinatorics",
-      "name": "two_mul_sum_range",
-      "quality": 0.82
-    },
     {
       "cycle_id": "025e0adb",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "neg_log_one_sub_ge",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "5b4963ae",
+      "domain": "Pythagorean",
+      "name": "sqrtVelVec_ofLp",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "5b4963ae",
+      "domain": "Pythagorean",
+      "name": "norm_sqrtVelVec",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "5b4963ae",
+      "domain": "Pythagorean",
+      "name": "norm_sqrtVelVec_eq_sqrt",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-04T18:25:54",
+  "last_updated": "2026-09-04T18:26:12",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "f45042dc",
-        "quality": 0.82,
-        "theorems": 86,
-        "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-"
-      },
-      {
         "cycle_id": "539def03",
         "quality": 0.83,
         "theorems": 94,
@@ -3885,6 +3879,12 @@
         "quality": 0.78,
         "theorems": 82,
         "title": "FACT round-47 #1 — T-DIAL-BITLEN: the zero-fit dial is bitlen-stable (paper 175)"
+      },
+      {
+        "cycle_id": "5b4963ae",
+        "quality": 0.86,
+        "theorems": 62,
+        "title": "Riemann Convergence of Bhattacharyya Angle Sums"
       }
     ],
     "Shared": [

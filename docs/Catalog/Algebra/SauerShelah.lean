@@ -98,17 +98,10 @@ lemma eq_embed_proj_of_last_not_mem {n : ℕ} {S : Finset (Fin (n + 1))}
 
 lemma eq_embed_proj_union_last {n : ℕ} {S : Finset (Fin (n + 1))}
     (h : Fin.last n ∈ S) : S = embed (proj S) ∪ {Fin.last n} := by
-  ext x
-  simp only [Finset.mem_union, Finset.mem_singleton, embed, proj, Finset.mem_image,
-    Finset.mem_filter, Finset.mem_univ, true_and]
-  constructor
-  · intro hx
-    rcases Fin.eq_castSucc_or_eq_last x with ⟨i, rfl⟩ | rfl
-    · exact Or.inl ⟨i, hx, rfl⟩
-    · exact Or.inr rfl
-  · rintro (⟨i, hi, rfl⟩ | rfl)
-    · exact hi
-    · exact h
+      ext x; by_cases hx : x = Fin.last n <;> simp_all +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one ] ;
+      · rwa [ show x = Fin.last n from Fin.ext hx ];
+      · simp +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one, hx, embed, proj ];
+        exact ⟨ fun hx' => ⟨ ⟨ x, lt_of_le_of_ne ( Fin.le_last _ ) hx ⟩, by simpa [ Fin.ext_iff ] using hx', rfl ⟩, by rintro ⟨ a, ha, ha' ⟩ ; convert ha; aesop ⟩
 
 
 
@@ -118,22 +111,19 @@ lemma shatters_embed_of_union {n : ℕ} (F : Finset (Finset (Fin (n + 1))))
     (h : Shatters ((F.filter (Fin.last n ∉ ·)).image proj ∪
                     (F.filter (Fin.last n ∈ ·)).image proj) A) :
     Shatters F (embed A) := by
-  intro B hB
-  have hprojB : proj B ⊆ A := by
-    intro i hi
-    have h1 : i.castSucc ∈ B := mem_proj.mp hi
-    have h2 : i.castSucc ∈ embed A := hB h1
-    simpa [embed] using h2
-  obtain ⟨T, hT, hAT⟩ := h (proj B) hprojB
-  obtain ⟨S, hSF, rfl⟩ : ∃ S ∈ F, T = proj S := by
-    rcases Finset.mem_union.mp hT with hT' | hT' <;>
-    · obtain ⟨S, hS, rfl⟩ := Finset.mem_image.mp hT'
-      exact ⟨S, (Finset.mem_filter.mp hS).1, rfl⟩
-  refine ⟨S, hSF, ?_⟩
-  have hlast : Fin.last n ∉ B := fun hc => last_not_mem_embed A (hB hc)
-  have hBe : B = embed (proj B) := eq_embed_proj_of_last_not_mem hlast
-  rw [embed_inter_eq, hAT]
-  exact hBe.symm
+      intro B hB
+      obtain ⟨T, hT⟩ : ∃ T ∈ Finset.image proj ({x ∈ F | Fin.last n ∉ x}) ∪ Finset.image proj ({x ∈ F | Fin.last n ∈ x}), A ∩ T = proj B := by
+        exact h _ ( Finset.subset_iff.mpr fun i hi => by
+          simp_all +decide [ Finset.subset_iff, proj, embed ];
+          cases hB hi ; aesop );
+      obtain ⟨S, hS⟩ : ∃ S ∈ F, T = proj S := by
+        aesop;
+      use S, hS.left;
+      have h_eq : B = embed (proj B) := by
+        apply eq_embed_proj_of_last_not_mem;
+        intro h_last_in_B; have := hB h_last_in_B; simp_all +decide [ embed ] ;
+      convert embed_inter_eq A S using 1;
+      simpa only [ ← hS.2, hT.2 ] using h_eq
 
 
 

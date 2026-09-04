@@ -1053,21 +1053,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-41 #3 \u2014 JOINT-ALIGN: cross-prime coincidences transfer where singleton phases fail (paper 152)"
   },
   {
-    "consumed_by_exp_id": "fbb2311e",
-    "description": "Round-43 #1, cron iteration (exp 491-full, assessment v270). Paper 160's refuted guess becomes exact law, verified to n=655360 at deviations \u22643e-6 (mpmath dps=50).\n\n**EXACT-CONSTANT-LAWS**:\n- **g\u00b7n\u00b2 \u2192 log\u2082e \u2212 1 = 0.442695** \u2014 no log factor at all\n- **X\u00b7n\u00b2 \u2192 2log\u2082e = 2.885390**\n- **A\u00b7n\u00b2/log\u2082n \u2192 1 exactly**\n- **(Is\u2212A)\u00b7n\u00b2 \u2192 2log\u2082e**\n- hence **X/g \u2192 2log\u2082e/(log\u2082e\u22121) = 6.51778**\n\nThe author's own pre-data scratch prediction (X/g\u21922, same as paper 160's H3) was refuted by its own exact table; corrected constants derived post-hoc, confirmed out-of-sample, labeled post-hoc.\n\nAlso: all four channels collapse at n=2 (g=A=0.311278 = the OR cap; Is=X=1); A/X sign flip exactly in (7,8); MC tie n=17 z=\u22120.10.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp491_full_table.py + exp491_full_result.json + table.csv + ledger.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3614",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:46:53.278990+00:00",
-    "title": "FACT round-43 #1 \u2014 TABLE-CLOSURE FULL: the exact asymptotic constants of the fork channels (paper 161)"
-  },
-  {
     "consumed_by_exp_id": "2d4305e2",
     "description": "Round-42 #6, cron iteration (exp 491, assessment v269).\n\n**TABLES-SHUT**: all four fork channels (g/OR, Is/split-count, A/AND, X/XOR) computed exactly for n = 2..25.\n- **H1 CONFIRMED**: Is \u2265 max(g,A,X) at every n (no violations); A \u2265 g everywhere; **A overtakes X exactly at n=8** \u2014 paper 74's crossover re-derived to the integer.\n- **H2 CONFIRMED**: every channel \u2192 0 (n=25 values recorded).\n- **H3 REFUTED**: the guessed asymptotic X/g \u2192 2 is wrong \u2014 X/g rises through 5.93 \u2192 6.43 over n=5..25 and has not settled; the measured ratio table replaces the guess.\n\nLedger: two-stage silent-garbage hunt disclosed (unnormalized entropy + non-summing distributions) \u2014 both produced plausible-looking wrong numbers until exact complement forms were imposed.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp491_table_closure.py + exp491_result.json.",
     "domains": [
@@ -1098,30 +1083,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-42 #5 \u2014 FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79cda873",
     "description": "Round-42 #4, cron iteration (exp 490, assessment v267). Paper 154's deferred ECM column completed properly by its author-agent (marks exp487 SUPERSEDED).\n\n**ECM-PLANE-COMPLETION** (H1/H2/H3 confirmed):\n- ECM across-k \u03b1 = **0.761 (B1=50) / 0.718 (B1=250)** \u2014 strictly between \u03c1 and trial division.\n- Factor-locality SHARP: \u0394\u03b1 \u2264 0.03 for \u03c1/ECM under uniform-vs-balanced draws; only intercepts move. TD shifts 1.00 \u2192 1.14 replicating paper 89's 1.09.\n- H3 AT THE EDGE: c_ECM \u2212 c_\u03c1 = **+3.04 bits common-currency / 10.29\u00d7 wall time** \u2014 toy-scale overhead exactly at the order line.\n\nFull (\u03b1, c) table for five methods \u00d7 two regimes recorded. Ledger: \u03c1 cycle-lock pathology fixed; batched-gcd quantization had erased the \u221ap law (per-iteration gcd restored \u03b1=0.512 vs paper 154's 0.52).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp490_ecm_completion.py + exp490_result.json, seed 20260921.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3617",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T07:46:53.283073+00:00",
     "title": "FACT round-42 #4 \u2014 ECM-PLANE-COMPLETION: five methods, one population, one functional (paper 158)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a7aa0976",
     "description": "Round-42 #3, cron iteration (exp 489, assessment v266).\n\n**FULL-PINNING-AT-DEGREE-SEVEN**: the cyclic degree-7 subfield of Q(\u03b6\u2082\u2089) (conductor 29, C\u2082\u2088/\u27e8g\u2077\u27e9 \u2245 C\u2087) confirms every pre-stated prediction \u2014 T(p)=1 iff dlog\u22610 mod 7; densities {1/7, 6/7}; I(p mod 29; T) = H(T) = 0.5917 EXACTLY (empirical 0.5914); semiprime pair 0.0112 vs law 0.0111; Is(7)-projection 0.1161 = Bin(2,1/7) closed form.\n\nLEDGER disclosure: the coordinator-supplied anchor 'Is(7)=0.0103' was actually G(7) (the OR channel) \u2014 caught by the measurement landing at 0.116.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp489_degree_seven.py + exp489_result.json, seed 20260923.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3618",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T07:46:53.284429+00:00",
     "title": "FACT round-42 #3 \u2014 DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
   },
@@ -1138,35 +1125,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T07:46:53.285748+00:00",
     "title": "FACT round-42 #2 \u2014 TRUE-ECM: lcm arm strictly dominates (paper 156)"
-  },
-  {
-    "consumed_by_exp_id": "135e0dcb",
-    "description": "Round-43 #4, cron iteration (exp 495, assessment v273). The consolidation: is a NO-FIT closed-form dial available?\n\n**THEORY-DIAL-HOLDS**: T(N) = \u03a3 2/p over QR primes p \u2264 400 \u2014 pure first-principles footprint, ZERO fitted coefficients \u2014 achieves Spearman vs rate = **0.755 / 0.7264** (two independent implementations) and OOS R\u00b2 = **0.541 / 0.5335** with one global scale. T-only BEATS the 8-fitted-bit model (0.534 > 0.463).\n\n- H3 PASS STRONG in both runs: measured fractions add nothing over the bits \u2014 the indicator vector is SUFFICIENT (paper 163's lottery confirmed at the marginal level). Lottery table: mean n_p | QR = 2/p to four decimals; QNR exactly 0.\n- Cascade survival variant retired (underperforms T).\n- Combined model reaches R\u00b2 = 0.626 (+0.029 over paper-145 baseline).\n- Adopted: T as the closed-form dial; keep w's full p \u2264 400 support over bit truncation.\n\nThe per-N yield dial's final form is fully theory-derived. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp495_qrlotto_dial.py + exp495_result.json, seed 20260926.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3628",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T08:49:15.376150+00:00",
-    "title": "FACT round-43 #4 \u2014 QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-43 #3, cron iteration (exp 494, assessment v272). The mechanism question behind paper 152's pair features.\n\n**ANTI-COINCIDENCE**: measured pair coincidences run at only **23.5\u201328.4% of the independence prediction** across all ten pairs (e.g., 3\u00d711: 1.79 vs 6.71 predicted). The same N's root structures across different small primes are coupled through N itself \u2014 v_j's residue pattern is one object, not independent per-prime draws \u2014 so joint hits are strongly SUPPRESSED relative to independence.\n\nThe pair features are joint-absence / anti-coincidence statistics, not coincidence statistics. H2 also refuted: clumping variance adds nothing over pairs (+0.015 pair lift on this population, direction consistent with paper 152).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp494_coincidence_depth.py + exp494_result.json, seed 20260925.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3629",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T08:49:15.377654+00:00",
-    "title": "FACT round-43 #3 \u2014 COINCIDENCE-DEPTH: the pair features measure anti-coincidence (paper 163)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1230,6 +1188,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 135e0dcb (Q=0.860), which proved 118 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-43 #4, cron iteration (exp 495, assessment v273). The consolidation: is a NO-FIT closed-form dial available?\n\n**THEORY-DIAL-HOLDS**: T(N) = \u03a3 2/p over QR primes p \u2264 400 \u2014 pure first-principles footprint, ZERO fitted coefficients \u2014 achieves Spearman vs rate = **0.755 / 0.7264** (two independent",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_135e0dcb_732fbb91",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "135e0dcb",
+    "status": "available",
+    "timestamp": "2026-09-04T18:25:35.491475+00:00",
+    "title": "Deepening: FACT round-43 #4 \u2014 QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 569bc76d (Q=0.880), which proved 156 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
     "domains": [
       "Bridges"
@@ -1241,6 +1213,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 5b4963ae (Q=0.860), which proved 62 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The discrete bound by sums of Bhattacharyya angles is now proved. The remaining question is calibration: do those sums converge to the Fisher-Rao length as the partition mesh tends to zero? A positive answer identifies the Fisher-Rao length functional with the length structure of the spherical metri",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_5b4963ae_d1f34d42",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "5b4963ae",
+    "status": "available",
+    "timestamp": "2026-09-04T18:26:13.298441+00:00",
+    "title": "Deepening: Riemann Convergence of Bhattacharyya Angle Sums"
   },
   {
     "consumed_by_exp_id": "",
@@ -10529,22 +10515,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Category\u2013Dimension Dichotomy Beyond the Borel Hierarchy"
   },
   {
-    "consumed_by_exp_id": "5b4963ae",
-    "description": "The discrete bound by sums of Bhattacharyya angles is now proved. The remaining question is calibration: do those sums converge to the Fisher-Rao length as the partition mesh tends to zero? A positive answer identifies the Fisher-Rao length functional with the length structure of the spherical metric of the square-root embedding, and implies the geodesic lower bound.\n\nFor a C\u00b9 curve of strictly positive probability vectors on [a,b], the sums \u2211\u2096 2\u00b7arccos BC(p_{t_k}, p_{t_{k+1}}) over partitions converge to fisherRaoLength p v a b as the mesh tends to 0.\n\nEstablish the local expansion 2 arccos BC(p_s, p_t) = \u222b_s^t speed + O((t\u2212s)\u00b3) using the chord bound and the exact two-point evaluation, then sum over a partition and pass to the limit.\n\nThe Fisher-Rao length becomes the intrinsic length of the spherical metric, and the geodesic lower bound 2 arccos BC \u2264 length follows immediately.\n\nThe integral functional would not be the induced length of the Bhattacharyya angle metric, indicating that the definition of fisherRaoLength needs a different normalisation.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_3667",
-    "phase": "A",
-    "priority_score": 0.7097741935483872,
-    "research_mode": "team",
-    "source_exp_id": "c99dba13",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T13:45:39.138316+00:00",
-    "title": "Riemann Convergence of Bhattacharyya Angle Sums"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Real library design is constrained by budgets and architectures, not by cardinality alone. The conjecture is the matroid analogue of this cycle's results: greedy over any matroid of admissible libraries recovers at least 1/(1 + kappa) of the optimum for the Shtarkov price functional, degrading to 1/2 at maximal curvature and to exactness at kappa = 0.\n\nFor any matroid M on the pool Omega, the greedy library A produced by scanning models in order of marginal price satisfies shtarkov P A >= (1/(1 + curvature P Omega)) * shtarkov P B for every independent set B of M.\n\nFormalise matroid exchange for Finset bases in Lean and combine it with curvature_marginal_ge exactly as the uniform case combines it with the covering inequality.\n\nCurvature-aware library design extends to structured deployment constraints with a single scalar knob.\n\nThe uniform-matroid analysis of this cycle is special to cardinality constraints, isolating where the exchange property is essential.",
     "domains": [
@@ -14313,6 +14283,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A/X was proved to cross 1 between n = 7 and n = 8 and to tend to infinity. The conjecture is that this crossing is the only one, i.e. A \u2212 X is negative on (2,7] and positive on [8,\u221e). Establishing monotonicity of A/X on [8,\u221e) closes the gap.\n\nA n > X n for all real n \u2265 8 and A n < X n for all real 2 < n \u2264 7.\n\nCombine a sharpened finite-n bound on X\u00b7n\u00b2 with log\u2082 n \u2265 3 for large n, and check the remaining finitely many cases by integer certificates.\n\nThe comparison table of the two channels is completely determined by one integer inequality per side.\n\nA second crossing exists at small n, and the model has a hidden resonance between log\u2082 n and the entropy deficit.",
+    "domains": [],
+    "id": "fd_4687",
+    "priority_score": 0.5931250000000001,
+    "research_mode": "team",
+    "source_exp_id": "fbb2311e",
+    "status": "available",
+    "timestamp": "2026-09-04T18:25:45.086248+00:00",
+    "title": "Uniqueness of the A/X Crossing"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The finite-size correction to the p-adic ceiling decays like p^{-2b}, uniformly in the base. Hence every valuation-type dial saturates well before the bitlens used in the FACT rounds, and any residual bitlen dependence is diagnostic of a non-tie mechanism.\n\nFor all p >= 2 and b >= 40, rho^2(p,b) - 3p/(p^2+p+1) < 10^{-24}.\n\nStrengthen padic_ceiling_close to a uniform numeric statement and instantiate at b = 40.\n\nProvides a one-line falsification test for every future bitlen sweep in the programme.\n\nSome base has anomalously slow saturation, contradicting the closed form.",
     "domains": [],
     "id": "fd_3826",
@@ -15102,6 +15084,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:07:55.119392+00:00",
     "title": "Log-Concavity of the Minimal Mass Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The square-root embedding of a product distribution is the tensor product of the embeddings, so the Bhattacharyya coefficient is multiplicative and the angles obey a spherical Pythagorean law. The conjecture upgrades the catalog's infinitesimal tensorisation to a statement about geodesic distances and lengths.\n\ncos \u03b8(p\u2297q, p'\u2297q') = cos \u03b8(p,p') cos \u03b8(q,q'), hence cos(d_FR(p\u2297q,p'\u2297q')/2) = cos(d_FR(p,p')/2) cos(d_FR(q,q')/2).\n\nProve multiplicativity of bhattacharyya on product index types by Fubini for finite sums, then feed it into the distance formula proved in FisherRaoGeodesic.\n\nThe Fisher-Rao distance satisfies an exact spherical Pythagorean identity under independent products, a genuinely non-Euclidean strengthening of fisherRao_sq_tensor.\n\nMultiplicativity fails for dependent couplings only, which would delimit exactly how far the Pythagorean tensorisation extends.",
+    "domains": [],
+    "id": "fd_4694",
+    "priority_score": 0.5905882352941177,
+    "research_mode": "team",
+    "source_exp_id": "5b4963ae",
+    "status": "available",
+    "timestamp": "2026-09-04T18:26:06.434427+00:00",
+    "title": "Multiplicative Tensorisation of Bhattacharyya Angles"
   },
   {
     "consumed_by_exp_id": "",
@@ -16818,6 +16812,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The exact chord/angle identity chord = 2 sin(\u03b8/2) turns every L\u00b9 bound of the catalog into a scalar inequality in \u03b8. The conjecture pins the optimal constants in the chain \u2016p\u2212q\u2016\u2081 \u2264 2 sin \u03b8 \u2264 2\u03b8 and characterises the equality cases as two-point distributions and vanishing length respectively.\n\n\u2016p\u2212q\u2016\u2081 \u2264 2 sin \u03b8 with equality iff p and q are supported on two points with equal total mass, and the constant 1 in \u2016p_b\u2212p_a\u2016\u2081 \u2264 fisherRaoLength is optimal but never attained for a nonconstant curve.\n\nFormalise the equality case of the Cauchy-Schwarz step in l1Dist_le_two_mul_sqrt_one_sub_bhattacharyya_sq and combine with the two-point family already in the catalog.\n\nThe catalog's L\u00b9, Hellinger and angle bounds collapse into one sharp scalar comparison with identified extremals.\n\nThe equality analysis reveals an additional family of extremal pairs, i.e. a richer boundary structure of the simplex metric.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4692",
+    "priority_score": 0.5641446960800318,
+    "research_mode": "team",
+    "source_exp_id": "5b4963ae",
+    "status": "available",
+    "timestamp": "2026-09-04T18:26:05.237753+00:00",
+    "title": "Sharp L1-Hellinger-Angle Comparison Chain"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The firing position equals pi(largest prime factor of the powersmooth part). We conjecture that the expected normalized position decays like 1/u where u = log p / log B, so early fire survives arbitrarily large smoothness deficits. This is the named open question of the experimental chain.\n\nFor orders m in the Hasse interval of p with nontrivial B-powersmooth part, the mean of pi(lpf(gcd(m,k(B))))/pi(B) is O(1/u) with u = log p / log B.\n\nCensus the exact position functional over Hasse intervals for growing p at fixed u (the definitions of ECMStage1FiringRate are computable), then formalize the upper bound conditional on a Dickman-type input for the largest part of a smooth number.\n\nLow-B1 ECM success is early-firing at every scale, justifying schedule truncation as a practical stage-1 optimization.\n\nEarly fire is a small-u artefact and truncation loses success probability at cryptographic scales.",
     "domains": [
       "NumberTheory",
@@ -17313,6 +17322,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The great-circle arc realises the Fisher-Rao distance; the conjecture is that it is the unique minimiser up to reparametrisation and that the open simplex has no interior cut locus. This would complete the identification of the Fisher-Rao manifold with the positive orthant of a sphere of radius 2.\n\nIf a C\u00b9 curve of positive probability vectors from p to q has Fisher-Rao length exactly 2 arccos BC(p,q), then its square-root image is a monotone reparametrisation of the great-circle arc.\n\nAnalyse the equality case in the chord bound sqrt_chord_le_half_fisherRao_length: equality forces the velocity to be parallel to a fixed vector field, which pins the curve to the great circle.\n\nThe Fisher-Rao metric on the open simplex is a geodesic metric space with unique geodesics, so all comparison geometry of the round sphere transfers.\n\nNon-uniqueness would signal that the square-root chart degenerates somewhere in the interior, contradicting the smooth structure \u2014 hence a likely error in the length functional.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4693",
+    "priority_score": 0.563924223711703,
+    "research_mode": "team",
+    "source_exp_id": "5b4963ae",
+    "status": "available",
+    "timestamp": "2026-09-04T18:26:05.846370+00:00",
+    "title": "Uniqueness of the Fisher-Rao Geodesic on the Open Simplex"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Theta(H) count proved here traces back to the fact that Euclid's parametrisation of Pythagorean triples uses two integer parameters of size sqrt(H). The same template should give Theta(H^{k/2}) for any Diophantine family with a k-parameter homogeneous quadratic parametrisation, in particular Theta(H^2) for primitive Pythagorean quadruples. This turns a counting theorem into a general exponent principle.\n\nFor a primitive family parametrised bijectively by k coprime integer parameters via forms of degree 2, the number of members inside the box [1,H]^d is Theta(H^{k/2}); for Pythagorean quadruples k = 4 and the count is Theta(H^2).\n\nFormalize the quadruple parametrisation (a,b,c,d) from four parameters, redo the injection into a parameter box, and instantiate the CoprimePairDensity argument in four variables.\n\nA single reusable counting template covers triples, quadruples and higher Lorentz trees, and the vanishing-density statement generalises to all dimensions.\n\nCoprimality or parity conditions in dimension four are not of product type, so the parameter box is not filled with positive density and the exponent drops.",
     "domains": [
       "NumberTheory",
@@ -17430,6 +17454,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T09:01:44.235621+00:00",
     "title": "Intra-Modulus Correlation Law at the Smoothness Frontier"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The gap between the Fisher-Rao length and its Bhattacharyya angle Riemann sums is conjectured to have leading term (h^2/24)\u222b \u2016\u03ba\u2016\u00b2 s\u00b3, with \u03ba the geodesic curvature of the square-root curve on the sphere. This upgrades a qualitative convergence theorem to a quantitative asymptotic expansion. It would give the first curvature invariant extracted from the discrete Fisher-Rao length.\n\nFor a C\u00b3 curve of strictly positive probability vectors and uniform partitions of mesh h, fisherRaoLength - \u2211\u2096 2 arccos BC = (h\u00b2/24)\u222b \u2016\u03ba\u2016\u00b2 s\u00b3 dt + O(h\u00b3).\n\nFormalise the third-order Taylor expansion of the spherical distance between x(t) and x(t+h) for a C\u00b3 spherical curve, sum over a uniform partition, and identify the limit of (L - S)/h\u00b2 as a Riemann integral; validate numerically against the table in ComputationalEvidence.md.\n\nThe discrete Bhattacharyya length becomes a curvature detector, giving a discrete Gauss-Bonnet-flavoured statistic for statistical models.\n\nThe deficit is governed by a different functional (e.g. involving the speed alone), which still refines the current O(h\u00b2)-free statement.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_4690",
+    "priority_score": 0.5638197894319682,
+    "research_mode": "team",
+    "source_exp_id": "5b4963ae",
+    "status": "available",
+    "timestamp": "2026-09-04T18:26:04.036688+00:00",
+    "title": "Curvature-Corrected Bhattacharyya Deficit"
   },
   {
     "consumed_by_exp_id": "",
@@ -30145,6 +30184,111 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-04T09:40:33.513500+00:00",
     "title": "Midrank Faces and the Degradation of the Quantisation Gap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The zero-fit dial counts single hits with weight 2/p. Joint hits of two factor-base primes occur with density 4/(pq) by CRT independence, so the yield should be corrected by the second elementary symmetric function of the weights. Formalising the inclusion-exclusion expansion gives the first genuinely nonlinear term of the sieve footprint.\n\nFor distinct odd primes q_1..q_k and N coprime to all of them, the expected number of sieve positions hit by at least two of the primes equals e_2(w) - 2 e_3(w) + ... with w_i = 2/q_i b_i, and the corrected dial T - e_2 has strictly smaller risk against the measured yield than T.\n\nExtend QRLotto.sum_piFinset_pair to triples, compute the second moment of the joint-hit counter over sampleSpace, and compare risks using the risk_eq machinery.\n\nThe dial acquires a first-principles nonlinear correction, still with zero fitted coefficients.\n\nJoint hits are not captured by the independence model, indicating correlation between factor-base primes at the sieve-position level.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_4683",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "135e0dcb",
+    "status": "available",
+    "timestamp": "2026-09-04T18:25:17.183284+00:00",
+    "title": "Second-Order Pair-Correlation Dial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sub-Gaussian tail 2 exp(-t^2) is now proved in Bridges.QRLottoDialHoeffding, but it is lossy far out: the coin amplitudes 2/p are tiny relative to the variance scale, and the dial is bounded above by sum 2/p deterministically. A Bennett/Bernstein analysis of the exactly computed moment generating function should replace the Gaussian tail by a Poissonian one and expose the hard support cap.\n\nWith V = sum 1/p^2 and a = max 2/p, the upper tail satisfies P(T - sum 1/p >= t) <= exp(-(V/a^2) h(a t / V)) where h(u) = (1+u) log(1+u) - u, and the tail is exactly zero for t > sum 1/p.\n\nFeed the Bennett bound for the exact single-coin MGF sum_exp_coin into the existing Chernoff step chernoff_card_le_param, and compare the resulting bound with dial_tail numerically for factor bases up to 400.\n\nThe dial's far tail is governed by the largest weight 2/3 rather than by the variance, so extreme yield outliers are exponentially rarer than the Gaussian model predicts.\n\nThe Gaussian rate is already optimal, meaning the small primes dominate the tail behaviour and the dial's outliers are driven by a bounded number of coordinates.",
+    "domains": [
+      "NumberTheory",
+      "Bridges"
+    ],
+    "id": "fd_4684",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "135e0dcb",
+    "status": "available",
+    "timestamp": "2026-09-04T18:25:17.772647+00:00",
+    "title": "Poissonian Upper Tail for Sparse Dial Weights"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Randomising over sieve positions x rather than over targets N, the number of factor-base primes dividing x^2 - N has mean exactly T(N) by the lottery law, and the coordinates decouple by CRT. The conjecture is that this counter concentrates, so that the dial enters the smoothness exponent linearly.\n\nFor fixed N coprime to the factor base, the counter #{p : p divides x^2 - N} over x uniform in the CRT product has mean T(N) and variance sum over winning p of (2/p)(1 - 2/p), with sub-Gaussian tails; consequently the smoothness probability at N is exp(-(1+o(1)) u log u) with u shifted by T(N).\n\nThe mean and variance are already proved in Bridges.QRLottoDialPositions; what remains is a finite Hoeffding bound for the independent indicators and the transfer to the Dickman exponent.\n\nThe per-N yield dial acquires a proved place in the Dickman exponent, upgrading a correlation statement to a mechanism.\n\nThe position-side counter is not concentrated, so per-N yield differences would be dominated by fluctuations rather than by T(N).",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_4685",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "135e0dcb",
+    "status": "available",
+    "timestamp": "2026-09-04T18:25:18.450745+00:00",
+    "title": "Position-Side Footprint Concentration"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "CRT steerability shows every bit pattern is realised, but the realising integer produced is of size the product of the factor base. The quantitative question is how small N can be for a prescribed reading, which controls how adversarially the per-N yield of a sieve can be manipulated.\n\nThe least N with all QR bits on for primes up to B is exp(Theta(B)), while the least N whose dial exceeds (1+delta) times the Mertens weight is exp(O(delta B / log B)).\n\nCombine exists_prescribed_bits with counting bounds on CRT classes and a sieve upper bound; test numerically for B up to 100.\n\nYield manipulation of a quadratic sieve is cheap in the bulk regime and expensive in the extremal regime, a concrete adversarial boundary.\n\nEither the extremal integers are much smaller than the CRT bound, indicating hidden structure among QR patterns, or the bulk regime is also expensive.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4686",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "135e0dcb",
+    "status": "available",
+    "timestamp": "2026-09-04T18:25:19.077082+00:00",
+    "title": "Least Integer Steering a Prescribed Dial Reading"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The constant log\u2082 e \u2212 1 arises as the limit of the deficit between the survival-entropy term and the event probability for any rare event, not just for p = 1/n\u00b2. Proving this makes the g law a corollary of a one-parameter universality statement. It also explains the absence of a logarithmic factor.\n\nIf p n \u2192 0 with 0 < p n < 1 then (\u2212(1\u2212p n)log\u2082(1\u2212p n) \u2212 p n)/p n \u2192 log\u2082 e \u2212 1.\n\nState the limit for an arbitrary null sequence and prove it with the existing two-sided window u \u2264 \u2212log(1\u2212u) \u2264 u + 2u\u00b2; then derive gch_mul_sq_tendsto as the case p n = 1/n\u00b2.\n\nThe g channel carries no information specific to forks: it measures a universal entropy deficit.\n\nThe 1/n\u00b2 scaling is essential, and the fork geometry enters the constant.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4688",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "fbb2311e",
+    "status": "available",
+    "timestamp": "2026-09-04T18:25:45.681756+00:00",
+    "title": "Entropy-Deficit Universality of log\u2082 e \u2212 1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every comparison of these channels at a rational argument reduces, after clearing denominators and using log(a/b) = log a \u2212 log b, to an inequality between integers of the form \u220f p\u1d62^a\u1d62. This makes the entire comparison table decidable exactly, with no floating-point input. The (7,8) flip was proved this way.\n\nFor rational n = p/q > 2, the sign of A n \u2212 X n equals the sign of an explicit integer inequality \u220f p\u1d62^a\u1d62 < \u220f q\u2c7c^b\u2c7c whose exponents are polynomial in max(p,q).\n\nImplement the reduction as a Lean lemma producing the certificate exponents from n, and verify it for all integers 3 \u2264 n \u2264 64 with norm_num.\n\nA decision procedure for the whole fork table, immune to the double-precision cancellation visible at n = 655360.\n\nSome comparisons need genuinely transcendental input (e.g. irrationality measures of log ratios), which is itself a strong statement.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4689",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "fbb2311e",
+    "status": "available",
+    "timestamp": "2026-09-04T18:25:46.288898+00:00",
+    "title": "Prime-Power Certificates for Channel Comparisons"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The least-upper-bound characterisation of the Fisher-Rao length matches Mathlib's eVariationOn. The conjecture is that the identification persists for merely absolutely continuous paths, with finiteness equivalent to square-integrability of the Fisher-Rao speed. This removes all smoothness hypotheses from the calibration theorem.\n\nFor an absolutely continuous path of positive probability vectors, eVariationOn (arccos-BC metric) equals \u222b fisherRaoSpeed, and is finite iff the speed is integrable.\n\nInstantiate the Bhattacharyya angle as a MetricSpace structure on the positive simplex and prove the equality with eVariationOn using the proved LUB statement plus an approximation of AC paths by C\u00b9 paths.\n\nThe Fisher-Rao length becomes an instance of Mathlib's variation API, immediately inheriting lower semicontinuity and reparametrisation invariance.\n\nThere is a rectifiable but non-absolutely-continuous path whose angle variation exceeds the integral, exhibiting a singular part of the Fisher-Rao length.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4691",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5b4963ae",
+    "status": "available",
+    "timestamp": "2026-09-04T18:26:04.639002+00:00",
+    "title": "Variation-Theoretic Fisher-Rao Length"
   },
   {
     "consumed_by_exp_id": "",
@@ -44135,14 +44279,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Parametrised families and bifurcation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3a54ad0",
     "description": "Both regimes are proved unconditionally here\n(`sum_card_V4_of_isSquare_three`, `sum_card_V4_of_not_isSquare_three`), together with the\nreciprocity input for the classes `1, 5, 7 mod 12`; the general statement needs only the\nfactorisation of `\u03c8_n` over `\u211a(N)` plus the same fibre-counting bijection factor by factor.",
     "domains": [],
     "id": "fd_1734",
+    "phase": "A",
     "priority_score": 0.40820833333333334,
     "research_mode": "team",
     "source_exp_id": "a0dce043",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T17:46:03.842645+00:00",
     "title": "Both regimes are proved unconditionally here"
   },
