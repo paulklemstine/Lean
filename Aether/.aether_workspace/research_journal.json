@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c8871952",
-      "domain": "Shared",
-      "key_insight": "# Future directions — after the rate-dial theorem (paper 242 formalized)\n\n## What this cycle established\n\nFormalized in `Catalog/Shared/MixtureRateDialCells.lean`,\n`MixtureRateDialBaseline.lean`, `Mix",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-08-31T23:53:01",
-      "title": "FACT round-87 #1 — MIXTURE-BASELINE (exp 588c FINAL): H0 — u*≈0.65 excess SURVIVES full divisibility"
-    },
-    {
       "cycle_id": "ed4056bf",
       "domain": "Physics",
       "key_insight": "# Future directions — after TDIAL-U108 (round-69 #2, exp 544)\n\nThree research cycles were run in this session. Everything listed below as *proved* compiles\nin Lean 4 / Mathlib with 0 `sorry` and only",
@@ -499,19 +489,19 @@
       "theorem_count": 69,
       "timestamp": "2026-09-03T21:44:19",
       "title": "General `O(N)` model"
+    },
+    {
+      "cycle_id": "671d5841",
+      "domain": "Probability",
+      "key_insight": "# Future directions — PPOW-MULTISEED (round-46 #2, exp 506)\n\nEight cycles of the hypothesise → experiment → analyse → critique loop turned the\nempirical claim *\"the prime-power feature `pp_sum` lifts",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 129,
+      "timestamp": "2026-09-04T00:07:55",
+      "title": "FACT round-46 #2 — PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with windo"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ccf34fd5",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Smooth Windows (Phase A v19c)\n\nThis cycle replaced the rectangular window of\n`Algebra.ReciprocalZeroHarmonics.WindowDichotomy` by a Gaussian/Schwartz window and proved the\nmodula",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-08-22T23:36:16",
-      "title": "Smooth windows"
-    },
     {
       "cycle_id": "f49038d4",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 69,
       "timestamp": "2026-09-03T21:44:19",
       "title": "General `O(N)` model"
+    },
+    {
+      "cycle_id": "671d5841",
+      "domain": "Probability",
+      "key_insight": "# Future directions — PPOW-MULTISEED (round-46 #2, exp 506)\n\nEight cycles of the hypothesise → experiment → analyse → critique loop turned the\nempirical claim *\"the prime-power feature `pp_sum` lifts",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 129,
+      "timestamp": "2026-09-04T00:07:55",
+      "title": "FACT round-46 #2 — PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with windo"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5c95862a",
-      "domain": "Pythagorean",
-      "name": "fib_dvd_gcd",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "c90a227e",
-      "domain": "Novelty",
-      "name": "at",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c90a227e",
-      "domain": "Novelty",
-      "name": "at",
-      "quality": 0.82
-    },
     {
       "cycle_id": "c90a227e",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "betaON_one",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "671d5841",
+      "domain": "Probability",
+      "name": "mem_fibre",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "671d5841",
+      "domain": "Probability",
+      "name": "sum_over_fibres",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "671d5841",
+      "domain": "Probability",
+      "name": "TSS_nonneg",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-03T21:44:19",
+  "last_updated": "2026-09-04T00:07:55",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "e645a8ec",
-        "quality": 0.85,
-        "theorems": 124,
-        "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-r"
-      },
-      {
         "cycle_id": "7b0f4515",
         "quality": 0.84,
         "theorems": 13,
@@ -3823,6 +3817,12 @@
         "quality": 0.88,
         "theorems": 147,
         "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK — solo-layer top-k profiles are flat ("
+      },
+      {
+        "cycle_id": "671d5841",
+        "quality": 0.86,
+        "theorems": 129,
+        "title": "FACT round-46 #2 — PPOW-MULTISEED: the prime-power lift replicates across seeds "
       }
     ],
     "Pythagorean": [
