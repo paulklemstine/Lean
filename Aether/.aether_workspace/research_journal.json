@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "00fe96df",
-      "domain": "Computation",
-      "key_insight": "# Future directions — the tail-precision thread\n\nThree cycles of the hypothesize → experiment → analyse → critique loop produced three\ncomplete strands of theory:\n\n* **Propagation and sensitivity** —",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 92,
-      "timestamp": "2026-09-01T10:08:56",
-      "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS — keeping L22/L23 at fp32 gains +1.8pts over full 4-bit GPT"
-    },
-    {
       "cycle_id": "3c91f334",
       "domain": "Novelty",
       "key_insight": "# Future Directions — after the Pell-spine falsification cycle\n\nThis cycle took the mission literally: every conjecture was stated so that one Lean\ncounterexample could kill it.  Seven did die (all in",
@@ -499,19 +489,19 @@
       "theorem_count": 42,
       "timestamp": "2026-09-04T04:35:13",
       "title": "FACT round-46 #1 — MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
+    },
+    {
+      "cycle_id": "5109f84c",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — geometry of the Spearman `T`-dial (round-44 #2, exp 499)\n\nThis cycle re-founded the `T`-dial's Spearman reading on permutohedron geometry.  Four\ncompiling, sorry-free files were",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-09-04T09:40:48",
+      "title": "FACT round-44 #2 — T-DIAL-AXES: regime holds, u breaks (paper 166)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9b10b60b",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — after the ECM-lite window and scaling cycle\n\nTwo Lean files were produced and fully proved:\n\n* `Catalog/Geometry/ECMLiteBirthdayScaling.lean` — the exact detection window of\n  th",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-08-23T05:46:28",
-      "title": "FACT round-42 #1 — ECM-COMPLETION: the lite variant scales like rho (paper 155)"
-    },
     {
       "cycle_id": "a303e67d",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 42,
       "timestamp": "2026-09-04T04:35:13",
       "title": "FACT round-46 #1 — MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
+    },
+    {
+      "cycle_id": "5109f84c",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — geometry of the Spearman `T`-dial (round-44 #2, exp 499)\n\nThis cycle re-founded the `T`-dial's Spearman reading on permutohedron geometry.  Four\ncompiling, sorry-free files were",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-09-04T09:40:48",
+      "title": "FACT round-44 #2 — T-DIAL-AXES: regime holds, u breaks (paper 166)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8ec45b40",
-      "domain": "NumberTheory",
-      "name": "bisimilar_symm",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "8ec45b40",
-      "domain": "NumberTheory",
-      "name": "bisimilar_trans",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "42a2aa0b",
-      "domain": "Shared",
-      "name": "hFun_eq_typeEntropy",
-      "quality": 0.84
-    },
     {
       "cycle_id": "42a2aa0b",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "factorization_le_log_two",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "5109f84c",
+      "domain": "Geometry",
+      "name": "F_nonneg",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5109f84c",
+      "domain": "Geometry",
+      "name": "F_comm",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5109f84c",
+      "domain": "Geometry",
+      "name": "F_dist_triangle",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-04T04:35:13",
+  "last_updated": "2026-09-04T09:40:48",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "308f24be",
-        "quality": 0.82,
-        "theorems": 113,
-        "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
-      },
-      {
         "cycle_id": "d11810a4",
         "quality": 0.82,
         "theorems": 57,
@@ -3451,6 +3445,12 @@
         "quality": 0.82,
         "theorems": 127,
         "title": "Kernel patterns"
+      },
+      {
+        "cycle_id": "5109f84c",
+        "quality": 0.82,
+        "theorems": 92,
+        "title": "FACT round-44 #2 — T-DIAL-AXES: regime holds, u breaks (paper 166)"
       }
     ],
     "Logic": [

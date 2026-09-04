@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-04T04:35:04Z",
-  "count": 111,
+  "archived_at": "2026-09-04T09:40:33Z",
+  "count": 112,
   "directions": [
     {
       "id": "fd_3695",
@@ -4394,6 +4394,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 273
+    },
+    {
+      "id": "fd_3635",
+      "title": "FACT round-44 #2 — T-DIAL-AXES: regime holds, u breaks (paper 166)",
+      "description": "Round-44 #2, cron iteration (exp 499, assessment v275). The adopted zero-fit dial's two validation axes, 20-cell grid, determinism verified.\n\n**REGIME-HOLDS-U-BREAKS**: \n- **H1 CONFIRMED**: uniform draws fully in-band on 5/5 populations (mean Spearman(T) = 0.713 ≈ balanced's 0.717) despite N spanning 2^27–2^38.\n- **H2 REFUTED**: u=3.5 degrades SYSTEMATICALLY — every seed drops (sign test 5/5, p≈0.03), one seed breaching deeply at 0.487; column mean below the band floor.\n- H3 REFUTED (4/5 joint).\n\n**Adopted**: deploy for uniform/heterogeneous draws at the paper-165 operating point u=2.5; do NOT deploy at tighter thresholds without recalibration. Queued: multi-seed bal@u=3.5 sweep.\n\nAnchor replicates paper 165 on five fresh seeds (0.7167 in [0.71, 0.76]).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp499_t_dial_axes.py + exp499_result.json, seeds 20260940–44.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "5109f84c",
+      "timestamp": "2026-08-22T09:43:33.959641+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-09-04T00:11:54.530476+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 268
     }
   ]
 }

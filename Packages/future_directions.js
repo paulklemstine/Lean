@@ -1083,16 +1083,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-42 #6 \u2014 TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d588bfb",
     "description": "Round-42 #5, cron iteration (exp 486-full, assessment v268). The full version of paper 154's plane with bootstrap-CI pooled fits (n=6000/arm).\n\n**PLANE-MEASURED-ECM-WALL**: TD \u03b1 = **1.0009 [1.000, 1.002]** exact; \u03c1-balanced \u03b1 = **0.4994 [0.485, 0.510]** \u2014 birthday bound to three decimals; Fermat-uniform \u03b1 = **0.9932** = the exact p/2 law; arm-invariance first-order for td/\u03c1, Fermat strongly non-invariant as predicted.\n\n**HEADLINE: the ECM self-destruction wall** \u2014 when B1 \u2273 min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] = \u221e. ECM refuses a single \u03b1 on toy range (\u22120.86 to +0.04); the honest object is {(\u03b1,c)(B1)} behind validity edge **B1 \u2272 min(p,q)/2**. H2b refuted: lpf/\u03c9 proxies capture none of ECM's drivers (powersmoothness across the 4\u221ap window does).\n\nCloses paper 132's residual item (2) with that qualification. Ledger: two superseded buggy runs disclosed; ECM denominator validated pre-data.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp486_full_plane.py + exp486_full_result.json, seed 20260920.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3616",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T07:46:53.281697+00:00",
     "title": "FACT round-42 #5 \u2014 FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
   },
@@ -1166,21 +1167,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T08:49:15.377654+00:00",
     "title": "FACT round-43 #3 \u2014 COINCIDENCE-DEPTH: the pair features measure anti-coincidence (paper 163)"
-  },
-  {
-    "consumed_by_exp_id": "5109f84c",
-    "description": "Round-44 #2, cron iteration (exp 499, assessment v275). The adopted zero-fit dial's two validation axes, 20-cell grid, determinism verified.\n\n**REGIME-HOLDS-U-BREAKS**: \n- **H1 CONFIRMED**: uniform draws fully in-band on 5/5 populations (mean Spearman(T) = 0.713 \u2248 balanced's 0.717) despite N spanning 2^27\u20132^38.\n- **H2 REFUTED**: u=3.5 degrades SYSTEMATICALLY \u2014 every seed drops (sign test 5/5, p\u22480.03), one seed breaching deeply at 0.487; column mean below the band floor.\n- H3 REFUTED (4/5 joint).\n\n**Adopted**: deploy for uniform/heterogeneous draws at the paper-165 operating point u=2.5; do NOT deploy at tighter thresholds without recalibration. Queued: multi-seed bal@u=3.5 sweep.\n\nAnchor replicates paper 165 on five fresh seeds (0.7167 in [0.71, 0.76]).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp499_t_dial_axes.py + exp499_result.json, seeds 20260940\u201344.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3635",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T09:43:33.959641+00:00",
-    "title": "FACT round-44 #2 \u2014 T-DIAL-AXES: regime holds, u breaks (paper 166)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1972,6 +1958,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5109f84c (Q=0.820), which proved 92 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-44 #2, cron iteration (exp 499, assessment v275). The adopted zero-fit dial's two validation axes, 20-cell grid, determinism verified.\n\n**REGIME-HOLDS-U-BREAKS**: \n- **H1 CONFIRMED**: uniform draws fully in-band on 5/5 populations (mean Spearman(T) = 0.713 \u2248 balanced's 0.717) despite N spannin",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_5109f84c_e5e728d7",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "5109f84c",
+    "status": "available",
+    "timestamp": "2026-09-04T09:40:48.492647+00:00",
+    "title": "Deepening: FACT round-44 #2 \u2014 T-DIAL-AXES: regime holds, u breaks (paper 166)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -1983,20 +1983,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f5f0f634 (Q=0.820), which proved 42 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-46 #1, cron iteration (exp 505, assessment v280). The direct hunt for paper 170's residual.\n\n**PRIME-POWER-CARRIES**: mid-prime fractions and QR-density add nothing (+0.019/+0.004, CIs span 0), but **prime-power hits (p\u00b2 | v_j for p \u2264 13) add +0.0892 out-of-sample R\u00b2 (CI [0.041, 0.125])** over",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_f5f0f634_9e9d9747",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "f5f0f634",
-    "status": "available",
-    "timestamp": "2026-09-04T04:35:13.422913+00:00",
-    "title": "Deepening: FACT round-46 #1 \u2014 MID-PRIME-HUNT: prime-power hits carry the tight-u residual ("
   },
   {
     "consumed_by_exp_id": "",
@@ -2925,20 +2911,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 0bdc483a (Q=0.780), which proved 66 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-62 \u2014 limited-memory axis, round 15 (paper 147, ResearchOutput/exp_net62_sub16.py, /tmp/net62.log)\n\n**Verdict name: THE-KNEE-LANDS-ON-THE-FINE-GRID.**\n\n### Result\nFine sweep at ctx=1024 (oracle top-k, Qwen2.5-0.5B, 24 held-out windows; baseline 0.4627 bit-identical to three prior rounds):\n\n| k",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_0bdc483a_0de54b5a",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "0bdc483a",
-    "status": "available",
-    "timestamp": "2026-09-02T09:39:53.845380+00:00",
-    "title": "Deepening: NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine g"
   },
   {
     "consumed_by_exp_id": "",
@@ -10599,17 +10571,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Category\u2013Dimension Dichotomy Beyond the Borel Hierarchy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b4963ae",
     "description": "The discrete bound by sums of Bhattacharyya angles is now proved. The remaining question is calibration: do those sums converge to the Fisher-Rao length as the partition mesh tends to zero? A positive answer identifies the Fisher-Rao length functional with the length structure of the spherical metric of the square-root embedding, and implies the geodesic lower bound.\n\nFor a C\u00b9 curve of strictly positive probability vectors on [a,b], the sums \u2211\u2096 2\u00b7arccos BC(p_{t_k}, p_{t_{k+1}}) over partitions converge to fisherRaoLength p v a b as the mesh tends to 0.\n\nEstablish the local expansion 2 arccos BC(p_s, p_t) = \u222b_s^t speed + O((t\u2212s)\u00b3) using the chord bound and the exact two-point evaluation, then sum over a partition and pass to the limit.\n\nThe Fisher-Rao length becomes the intrinsic length of the spherical metric, and the geodesic lower bound 2 arccos BC \u2264 length follows immediately.\n\nThe integral functional would not be the induced length of the Bhattacharyya angle metric, indicating that the definition of fisherRaoLength needs a different normalisation.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_3667",
+    "phase": "A",
     "priority_score": 0.7097741935483872,
     "research_mode": "team",
     "source_exp_id": "c99dba13",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T13:45:39.138316+00:00",
     "title": "Riemann Convergence of Bhattacharyya Angle Sums"
   },
@@ -12404,6 +12377,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The unproved half of the Diaconis\u2013Graham inequalities states that the footrule dominates the sum of the Coxeter length (inversions) and the Cayley length (minimal transpositions) of a permutation. The upper half is now proved here, together with the metric infrastructure the lower half needs. Establishing it would complete the two-sided equivalence of all three disorder scales on the permutohedron.\n\nFor every n and every \u03c3 \u2208 S\u2099, inv \u03c3 + (|support \u03c3| \u2212 |cycleType \u03c3|) \u2264 \u2211\u1d62 |\u03c3(i) \u2212 i|.\n\nFormalize by induction on Cayley length using the exact transposition price F_swap a b = 2|a \u2212 b| proved in SpearmanFootruleInversions.lean; exhaustively verified for n \u2264 6 (labnote_dg_lower_fin4 is kernel-checked at n = 4).\n\nThe \u2113\u00b9, \u2113\u00b2, Coxeter and Cayley disorder scales are two-sidedly equivalent with explicit constants, so any band violation of the dial in one scale is a violation in all of them.\n\nSome permutation family would separate footrule from combinatorial disorder, and the dial's \u2113\u00b9 reading would carry information not visible to inversion counting.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4679",
+    "priority_score": 0.6709166666666668,
+    "research_mode": "team",
+    "source_exp_id": "5109f84c",
+    "status": "available",
+    "timestamp": "2026-09-04T09:40:31.686605+00:00",
+    "title": "Diaconis\u2013Graham Lower Bound as a Length-Function Domination"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The floor law gives rho^2 > 1 - a^2 for modal mass fraction a, and a 15:1 profile violates the 0.53 floor. The two bounds bracket the cliff in the window 0.848 to 0.938 of modal mass. We conjecture the critical value is exactly sqrt(1 - 0.53^2), attained by two-block profiles.\n\nsup over profiles with modal fraction a of spearmanSq equals 1 - a^2 + O(1/n), and inf equals 1 - a^2 - O(1/n); hence the 0.53 floor holds iff a <= sqrt(1 - 0.2809) = 0.848002...\n\nProve the two-block family [an, (1-a)n] has spearmanSq tending to 1 - a^2, and combine with mass_fraction_floor.\n\nThe robustness envelope acquires a sharp boundary expressible purely in modal mass, independent of bitlen and cap.\n\nThe floor depends on more than the modal block and the envelope needs a finer invariant.",
     "domains": [
       "MachineLearning"
@@ -12709,6 +12696,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T16:01:42.831911+00:00",
     "title": "Curvature-Sign Certificates for Box-Averaged Windows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved two-block ceiling corr\u00b2 \u2264 3m(n\u2212m)/(n\u00b2\u22121) should be the k = 2 instance of a general partition ceiling given by the classical tie-correction factor. This would give a complete feasibility map for thresholded dials: given the block profile, the exact maximum reading is known in closed form.\n\nFor a partition of Fin n into blocks of sizes m\u2081,\u2026,m_k, the maximal squared correlation between the block-indicator midrank vector and any full ranking equals 1 \u2212 (\u2211\u1d62 (m\u1d62\u00b3 \u2212 m\u1d62))/(n\u00b3 \u2212 n).\n\nIterate the extremal block-sum lemmas two_mul_blockSum_le / sum_le_two_mul_blockSum over the blocks of the partition, and check the resulting closed form against exhaustive computation for n \u2264 7 and all partitions.\n\nEvery operating point of the dial gets a certified feasibility verdict before any data is collected; recalibration becomes a computation rather than an experiment.\n\nThe ceiling is not determined by the block profile alone, so threshold feasibility depends on the underlying statistic and must remain empirical.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4680",
+    "priority_score": 0.6700588235294119,
+    "research_mode": "team",
+    "source_exp_id": "5109f84c",
+    "status": "available",
+    "timestamp": "2026-09-04T09:40:32.272117+00:00",
+    "title": "k-Block Ceiling and the Tie-Correction Factor"
   },
   {
     "consumed_by_exp_id": "",
@@ -14387,6 +14388,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:02:36.888610+00:00",
     "title": "Sharp Constant for Odd Franel Cube Sums"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The null mean of the dial was proved to be exactly zero by a right-translation symmetry argument. The same symmetry, applied to ordered pairs of positions, should give the exact null variance 1/(n \u2212 1), turning every band statement in this research thread into a Chebyshev certificate rather than an empirical confidence interval.\n\nFor n \u2265 2, \u2211_{\u03c3 \u2208 S\u2099} (sprho \u03c3 1)\u00b2 = |S\u2099|/(n \u2212 1).\n\nExtend sum_rk_indep_of_index to a two-point version: \u2211_\u03c3 \u03c3(i)\u03c3(j) depends only on whether i = j, then expand the square of the covariance form.\n\nBand membership becomes certifiable at a stated confidence from the sample size alone, with no distributional assumption on the population.\n\nThe dial's null fluctuations depend on more than the position-pair orbit structure, and finite-n calibration cannot be closed-form.",
+    "domains": [],
+    "id": "fd_4681",
+    "priority_score": 0.5930392156862746,
+    "research_mode": "team",
+    "source_exp_id": "5109f84c",
+    "status": "available",
+    "timestamp": "2026-09-04T09:40:32.929601+00:00",
+    "title": "Exact Null Variance of the Rank Dial"
   },
   {
     "consumed_by_exp_id": "",
@@ -30160,6 +30173,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-04T00:08:05.924878+00:00",
     "title": "Exact Derandomization Penalty in Min-Entropy Units"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Real dial measurements have ties, and the midrank convention places the rank vector at the barycentre of a permutohedron face rather than at a vertex. The parity invariant that produces the rigidity gap should degrade in a controlled way: the statistic becomes rational with denominator dividing the lcm of the tie-block sizes, shrinking the gap by exactly that factor.\n\nFor midranked data with tie blocks of sizes m\u2081,\u2026,m_k, the raw statistic \u2211d\u00b2 lies in (1/L)\u00b7\u2124 with L = lcm(2, m\u2081, \u2026, m_k), and the rigidity gap becomes 12/(L(n\u00b3 \u2212 n)).\n\nDefine the midrank vector as a face barycentre, re-derive perm_vertex_sum and perm_vertex_normSq with an explicit radius defect, and check the resulting denominators exhaustively for small tie profiles.\n\nThe gap theorem survives ties with an explicit, computable degradation, so it applies to the measured dial and not only to the tie-free idealisation.\n\nTies destroy quantisation entirely, and the rigidity certificate must be restricted to tie-free populations.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4682",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5109f84c",
+    "status": "available",
+    "timestamp": "2026-09-04T09:40:33.513500+00:00",
+    "title": "Midrank Faces and the Degradation of the Quantisation Gap"
   },
   {
     "consumed_by_exp_id": "",
