@@ -1170,20 +1170,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Round-44 #1, cron iteration (exp 497, assessment v274). Paper 152's lesson applied prospectively.\n\n**DIAL-SEED-STABLE**: across 5 fully independent populations, per-seed Spearman(T, rate) = 0.7528/0.7363/0.7253/0.7235/0.7133 \u2014 all inside the pre-stated [0.60, 0.85] band; mean **0.7302 \u00b1 0.0067 (SE)**. T beats the bare QR-count by >0.05 on **5/5 seeds**.\n\nThe zero-fit dial's adoption (paper 164) stands without qualification. Lean run omitted the H2 rank-flip arm \u2014 disclosed.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp497_t_dial_stable.py + exp497_result.json, seeds 20260930\u201334.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3636",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T09:43:33.960986+00:00",
-    "title": "FACT round-44 #1 \u2014 T-DIAL-STABLE: the zero-fit dial is seed-stable (paper 165)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -1955,20 +1941,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5109f84c (Q=0.820), which proved 92 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-44 #2, cron iteration (exp 499, assessment v275). The adopted zero-fit dial's two validation axes, 20-cell grid, determinism verified.\n\n**REGIME-HOLDS-U-BREAKS**: \n- **H1 CONFIRMED**: uniform draws fully in-band on 5/5 populations (mean Spearman(T) = 0.713 \u2248 balanced's 0.717) despite N spannin",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_5109f84c_e5e728d7",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "5109f84c",
-    "status": "available",
-    "timestamp": "2026-09-04T09:40:48.492647+00:00",
-    "title": "Deepening: FACT round-44 #2 \u2014 T-DIAL-AXES: regime holds, u breaks (paper 166)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2911,20 +2883,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 3831c02e (Q=0.780), which proved 63 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-45 #1, cron iteration (exp 500, assessment v276). The queued 14-seed localization of paper 166's u=3.5 breach.\n\n**NEITHER \u2014 DECISIVE**: over 14 fresh populations, sp(3.5) mean = **0.6282 \u00b1 0.0041**, bootstrap CI [0.6204, 0.6363] EXCLUDES the 0.60 floor; **0/14 sub-floor seeds**; sd = 0.0155 (f",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_3831c02e_cc1b8018",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "3831c02e",
-    "status": "available",
-    "timestamp": "2026-09-04T04:34:54.688646+00:00",
-    "title": "Deepening: FACT round-45 #1 \u2014 U35-LOCALIZED: above the floor everywhere, degrades everywher"
   },
   {
     "consumed_by_exp_id": "",
