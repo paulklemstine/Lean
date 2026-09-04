@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3c91f334",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after the Pell-spine falsification cycle\n\nThis cycle took the mission literally: every conjecture was stated so that one Lean\ncounterexample could kill it.  Seven did die (all in",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-09-01T14:55:09",
-      "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\ncounterexample."
-    },
-    {
       "cycle_id": "b96d5582",
       "domain": "Bridges",
       "key_insight": "# Future directions — hit-position thread after paper 249\n\nThe cycle formalised the two competing explanations of a hit-indicator lag\nprofile: *pure density* (independent hits with a position-dependen",
@@ -499,19 +489,19 @@
       "theorem_count": 92,
       "timestamp": "2026-09-04T09:40:48",
       "title": "FACT round-44 #2 — T-DIAL-AXES: regime holds, u breaks (paper 166)"
+    },
+    {
+      "cycle_id": "135e0dcb",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — QR lottery dial (Bridges, round-43 #4, paper 164)\n\n## What this cycle settled\n\nFive new files in `Catalog/Bridges/` prove, with zero sorries:\n\n1. **The dial is an expectation, no",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 118,
+      "timestamp": "2026-09-04T18:25:35",
+      "title": "FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a303e67d",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — from the NET-61 additive-hybrid eviction cycle\n\n## What this cycle established\n\nTwo Lean files, no `sorry`, no non-standard axioms.\n\n*Static selection* (`Catalog/Combinatorics/Hy",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-23T05:46:46",
-      "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP — hybrid z(acc)+lambda*z(probe) monotonically worse "
-    },
     {
       "cycle_id": "347a400e",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 92,
       "timestamp": "2026-09-04T09:40:48",
       "title": "FACT round-44 #2 — T-DIAL-AXES: regime holds, u breaks (paper 166)"
+    },
+    {
+      "cycle_id": "135e0dcb",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — QR lottery dial (Bridges, round-43 #4, paper 164)\n\n## What this cycle settled\n\nFive new files in `Catalog/Bridges/` prove, with zero sorries:\n\n1. **The dial is an expectation, no",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 118,
+      "timestamp": "2026-09-04T18:25:35",
+      "title": "FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "42a2aa0b",
-      "domain": "Shared",
-      "name": "hFun_two",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "42a2aa0b",
-      "domain": "Shared",
-      "name": "hasDerivAt_hFun",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "88e58a70",
-      "domain": "Cryptography",
-      "name": "cubeSu",
-      "quality": 0.78
-    },
     {
       "cycle_id": "98caf022",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "F_dist_triangle",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "135e0dcb",
+      "domain": "Bridges",
+      "name": "mem_rootSet_iff",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "135e0dcb",
+      "domain": "Bridges",
+      "name": "rootCount_eq_card_zmod",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "135e0dcb",
+      "domain": "Bridges",
+      "name": "rootCount_eq_legendreSym_add_one",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-04T09:40:48",
+  "last_updated": "2026-09-04T18:25:35",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "198a9f40",
-        "quality": 0.84,
-        "theorems": 94,
-        "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healt"
-      },
-      {
         "cycle_id": "05978b53",
         "quality": 0.89,
         "theorems": 95,
@@ -3203,6 +3197,12 @@
         "quality": 0.84,
         "theorems": 566,
         "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant fi"
+      },
+      {
+        "cycle_id": "135e0dcb",
+        "quality": 0.86,
+        "theorems": 118,
+        "title": "FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
       }
     ],
     "Combinatorics": [
