@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-04T18:26:06Z",
-  "count": 115,
+  "archived_at": "2026-09-04T21:29:58Z",
+  "count": 116,
   "directions": [
     {
       "id": "fd_3695",
@@ -4557,6 +4557,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_3615",
+      "title": "FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)",
+      "description": "Round-42 #6, cron iteration (exp 491, assessment v269).\n\n**TABLES-SHUT**: all four fork channels (g/OR, Is/split-count, A/AND, X/XOR) computed exactly for n = 2..25.\n- **H1 CONFIRMED**: Is ≥ max(g,A,X) at every n (no violations); A ≥ g everywhere; **A overtakes X exactly at n=8** — paper 74's crossover re-derived to the integer.\n- **H2 CONFIRMED**: every channel → 0 (n=25 values recorded).\n- **H3 REFUTED**: the guessed asymptotic X/g → 2 is wrong — X/g rises through 5.93 → 6.43 over n=5..25 and has not settled; the measured ratio table replaces the guess.\n\nLedger: two-stage silent-garbage hunt disclosed (unnormalized entropy + non-summing distributions) — both produced plausible-looking wrong numbers until exact complement forms were imposed.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp491_table_closure.py + exp491_result.json.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "2d4305e2",
+      "timestamp": "2026-08-22T07:46:53.280353+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.88,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-04T04:36:46.420784+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 262
     }
   ]
 }

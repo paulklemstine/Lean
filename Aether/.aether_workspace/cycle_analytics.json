@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-04T18:26:16.286061+00:00",
+  "last_updated": "2026-09-04T21:30:27.520831+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -73517,6 +73517,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-04T18:26:15.954494+00:00",
       "title": "Riemann Convergence of Bhattacharyya Angle Sums"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "MachineLearning",
+      "duration_seconds": 11051.1884496212,
+      "end_time": 1788557359.4593523,
+      "files_integrated": 4,
+      "job_id": "2d4305e2",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.88,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.571,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.88,
+        "novelty": 0.88,
+        "proof_depth": 0.88,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1788546308.2709026,
+      "strategy_count": 0,
+      "theorem_count": 605,
+      "theorem_novelty_disproof": 17,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 500,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-04T21:30:27.180066+00:00",
+      "title": "FACT round-42 #6 \u2014 TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
     }
   ]
 }

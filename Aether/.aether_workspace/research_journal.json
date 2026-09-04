@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "eb1faf15",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — from the bitlen-100 band miss (round-67 #2, exp 540)\n\nThis cycle proved that the *sampler* is exonerated at bitlen 100: the 2-adic tie ceiling of the\ntrailing-zero statistic is `",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 114,
-      "timestamp": "2026-09-01T18:33:15",
-      "title": "FACT round-67 #2 — TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
-    },
-    {
       "cycle_id": "6d23453a",
       "domain": "Novelty",
       "key_insight": "# Future directions — after TDIAL-U84 (paper 188)\n\nThree research cycles were run on the U84 record (pooled Spearman `0.558`, CI\n`[0.536, 0.581]`, band floor `0.55`, margin `+0.008`, seeds 20261190–92",
@@ -499,19 +489,19 @@
       "theorem_count": 62,
       "timestamp": "2026-09-04T18:26:12",
       "title": "Riemann Convergence of Bhattacharyya Angle Sums"
+    },
+    {
+      "cycle_id": "2d4305e2",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — fork channels after the table closure\n\nThis cycle replaced the *measured* g/Is/A/X tables by exact algebra. The pivotal\nfinding is that the four channels are one rational profile",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 605,
+      "timestamp": "2026-09-04T21:30:12",
+      "title": "FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "50edc087",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What survived: the\nwhole grafting programme — digit recovery (`Pyth.digits_ofDigits`), lacunary irrationalit",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 129,
-      "timestamp": "2026-08-23T07:48:19",
-      "title": "Do not infer infinite-digit laws from finite prefixes"
-    },
     {
       "cycle_id": "0c164125",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 62,
       "timestamp": "2026-09-04T18:26:12",
       "title": "Riemann Convergence of Bhattacharyya Angle Sums"
+    },
+    {
+      "cycle_id": "2d4305e2",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — fork channels after the table closure\n\nThis cycle replaced the *measured* g/Is/A/X tables by exact algebra. The pivotal\nfinding is that the four channels are one rational profile",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 605,
+      "timestamp": "2026-09-04T21:30:12",
+      "title": "FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "025e0adb",
-      "domain": "Shared",
-      "name": "mean_sub",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "025e0adb",
-      "domain": "Shared",
-      "name": "cov_sub_right",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "025e0adb",
-      "domain": "Shared",
-      "name": "cov_diff_sq_le",
-      "quality": 0.82
-    },
     {
       "cycle_id": "24e44638",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "norm_sqrtVelVec_eq_sqrt",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "2d4305e2",
+      "domain": "MachineLearning",
+      "name": "E_prod",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "2d4305e2",
+      "domain": "MachineLearning",
+      "name": "E_congr",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "2d4305e2",
+      "domain": "MachineLearning",
+      "name": "E_add",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-09-04T18:26:12",
+  "last_updated": "2026-09-04T21:30:12",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "7934932a",
-        "quality": 0.84,
-        "theorems": 87,
-        "title": "Sharper normalization"
-      },
-      {
         "cycle_id": "217690eb",
         "quality": 0.82,
         "theorems": 67,
@@ -3575,6 +3569,12 @@
         "quality": 0.85,
         "theorems": 28,
         "title": "Conjecture C (sharper silent-error constant) — PROVED.*"
+      },
+      {
+        "cycle_id": "2d4305e2",
+        "quality": 0.88,
+        "theorems": 605,
+        "title": "FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
       }
     ],
     "Novelty": [

@@ -1427,25 +1427,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "2d4305e2",
-    "description": "Round-42 #6, cron iteration (exp 491, assessment v269).\n\n**TABLES-SHUT**: all four fork channels (g/OR, Is/split-count, A/AND, X/XOR) computed exactly for n = 2..25.\n- **H1 CONFIRMED**: Is ≥ max(g,A,X) at every n (no violations); A ≥ g everywhere; **A overtakes X exactly at n=8** — paper 74's crossover re-derived to the integer.\n- **H2 CONFIRMED**: every channel → 0 (n=25 values recorded).\n- **H3 REFUTED**: the guessed asymptotic X/g → 2 is wrong — X/g rises through 5.93 → 6.43 over n=5..25 and has not settled; the measured ratio table replaces the guess.\n\nLedger: two-stage silent-garbage hunt disclosed (unnormalized entropy + non-summing distributions) — both produced plausible-looking wrong numbers until exact complement forms were imposed.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp491_table_closure.py + exp491_result.json.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3615",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:46:53.280353+00:00",
-    "title": "FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "8d588bfb",
     "description": "Round-42 #5, cron iteration (exp 486-full, assessment v268). The full version of paper 154's plane with bootstrap-CI pooled fits (n=6000/arm).\n\n**PLANE-MEASURED-ECM-WALL**: TD α = **1.0009 [1.000, 1.002]** exact; ρ-balanced α = **0.4994 [0.485, 0.510]** — birthday bound to three decimals; Fermat-uniform α = **0.9932** = the exact p/2 law; arm-invariance first-order for td/ρ, Fermat strongly non-invariant as predicted.\n\n**HEADLINE: the ECM self-destruction wall** — when B1 ≳ min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] = ∞. ECM refuses a single α on toy range (−0.86 to +0.04); the honest object is {(α,c)(B1)} behind validity edge **B1 ≲ min(p,q)/2**. H2b refuted: lpf/ω proxies capture none of ECM's drivers (powersmoothness across the 4√p window does).\n\nCloses paper 132's residual item (2) with that qualification. Ledger: two superseded buggy runs disclosed; ECM denominator validated pre-data.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp486_full_plane.py + exp486_full_result.json, seed 20260920.",
     "domain_bridges": [],
@@ -1611,20 +1592,20 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 135e0dcb (Q=0.860), which proved 118 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-43 #4, cron iteration (exp 495, assessment v273). The consolidation: is a NO-FIT closed-form dial available?\n\n**THEORY-DIAL-HOLDS**: T(N) = Σ 2/p over QR primes p ≤ 400 — pure first-principles footprint, ZERO fitted coefficients — achieves Spearman vs rate = **0.755 / 0.7264** (two independent",
+    "description": "Building on cycle 2d4305e2 (Q=0.880), which proved 605 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-42 #6, cron iteration (exp 491, assessment v269).\n\n**TABLES-SHUT**: all four fork channels (g/OR, Is/split-count, A/AND, X/XOR) computed exactly for n = 2..25.\n- **H1 CONFIRMED**: Is ≥ max(g,A,X) at every n (no violations); A ≥ g everywhere; **A overtakes X exactly at n=8** — paper 74's crosso",
     "domain_bridges": [],
     "domains": [
-      "Bridges"
+      "MachineLearning"
     ],
-    "id": "push_135e0dcb_732fbb91",
+    "id": "push_2d4305e2_cfc988b7",
     "lineage_refs": [],
     "priority_score": 0.95,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "135e0dcb",
+    "source_exp_id": "2d4305e2",
     "status": "available",
-    "timestamp": "2026-09-04T18:25:35.491475+00:00",
-    "title": "Deepening: FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
+    "timestamp": "2026-09-04T21:30:13.049782+00:00",
+    "title": "Deepening: FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -1646,7 +1627,7 @@
     "title": "Deepening: Ellipsoids"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 5b4963ae (Q=0.860), which proved 62 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The discrete bound by sums of Bhattacharyya angles is now proved. The remaining question is calibration: do those sums converge to the Fisher-Rao length as the partition mesh tends to zero? A positive answer identifies the Fisher-Rao length functional with the length structure of the spherical metri",
@@ -19762,7 +19743,7 @@
       "Cryptography.BalancedBKeyFixedWeight",
       "MachineLearning.ZeroFitDialEnvelope"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0b20dfc4",
     "description": "Swapping uniform for balanced draws moves the tie ceiling by less than 0.07 in rho. We conjecture a general budget: two draw laws whose modal fractions differ by delta have ceilings within delta of each other, which turns every law-swap experiment into a falsifiable prediction with an explicit tie budget.\n\nFor tie profiles L, L' with modal fractions a, a' one has |sqrt(spearmanSq L) - sqrt(spearmanSq L')| <= |a - a'| + O(1/n), and the bound is attained by two-block profiles.\n\nProve the Lipschitz bound from the mass-fraction floor and the dominant-block upper law, then check sharpness on two-block families.\n\nAny recorded law-to-law dial movement above the modal-fraction gap is provably a response effect.\n\nCeilings can move more than modal fractions and law-swap comparisons need the full profile.",
     "domain_bridges": [],
     "domains": [],
@@ -19772,7 +19753,7 @@
     "proof_strategy": "Sandwich each ceiling between 1 - a^2 and the half-mass style cap, then use the mean value bound for the square root on the resulting interval.",
     "research_mode": "team",
     "source_exp_id": "54a9fda9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-02T09:40:23.378521+00:00",
     "title": "Universal Law-Change Capacity in Modal Fraction"
   },
@@ -24177,6 +24158,29 @@
     "status": "available",
     "timestamp": "2026-09-03T18:40:47.281992+00:00",
     "title": "Bare-Count Ceiling as a Universal Detector Bound"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.ForkChannelLeakageSumRule",
+      "MachineLearning.ForkChannelCorrelation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The degree-one total-leakage sum rule was proved this cycle, together with the identity that its slack is the normalised variance of the readout's nonlinear part. The conjecture completes the picture: the p-biased product characters form an orthonormal basis, so the slack is exactly the spectral mass of degree at least two, and each fork channel is classified by the degree carrying its mass.\n\nFor the p-biased characters chi_S(x) = prod_{i in S} (1[x_i] - p)/sqrt(p(1-p)) and any readout F with Var F > 0, the squared coefficients E[F chi_S] over nonempty S sum to Var F; the degree-one part is sum_i corrSq(x_i, F), the split count is a pure degree-one readout, and every coordinatewise product readout has a geometric degree profile governed by its channel parameter.\n\nIndex the residual in E_residual_sq by subsets instead of coordinates, compute the Gram matrix of the characters from E_prod, and verify the spectral decomposition of the four channels by exact rational enumeration for N <= 6.\n\nFork channels acquire a spectral invariant, the degree profile, which explains the o(1/N) decay of the Boolean channels as geometric spread across degrees and gives a basis-free classification of readouts.\n\nThe p-biased product characters are not complete for the fork functional, which would mean the leakage budget is not exhausted by the interaction hierarchy.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "fd_4699",
+    "lineage_refs": [],
+    "priority_score": 0.5642076881852688,
+    "proof_strategy": "Prove orthonormality of chi_S via E_prod, obtain Parseval by expanding the residual against the full basis exactly as in E_residual_sq, and read off the degree profiles of andCh, orCh, pmCh and wCh from the closed forms already proved.",
+    "research_mode": "team",
+    "source_exp_id": "2d4305e2",
+    "status": "available",
+    "timestamp": "2026-09-04T21:29:58.035476+00:00",
+    "title": "Walsh-Spectral Parseval Rule for Fork Channels"
   },
   {
     "ambition_level": "extension",
@@ -43362,6 +43366,92 @@
     "status": "available",
     "timestamp": "2026-09-04T18:26:04.639002+00:00",
     "title": "Variation-Theoretic Fisher-Rao Length"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.ForkChannelSymmetricOptimality",
+      "MachineLearning.ForkChannelCorrelation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The optimality of the split-count readout among symmetric readouts was proved this cycle for independent forks, together with its equality case. The conjecture lifts it to arbitrary exchangeable forks, where the bound should acquire the factor (1 + n*rho) coming from the variance of the Hamming weight. It would separate what in H1 is exchangeability from what is independence.\n\nFor an exchangeable law on (n+1) bits with pairwise correlation rho, every permutation-invariant readout F satisfies leak F <= (1 + n*rho)/(n+1), with equality exactly when F is a non-degenerate affine function of the Hamming weight.\n\nRefactor the expectation functional E to an arbitrary permutation-invariant weight, reprove E_perm, Cov_wCh_eq_of_symm and Cov_sq_le in that generality, and evaluate Var(w) for a Polya-urn or Beta-mixture fork; cross-check by exact enumeration for n <= 6.\n\nH2 for the split channel is an independence phenomenon: with rho > 0 fixed the bound stays bounded away from zero, so correlated forks leak persistently through counts.\n\nThe 1/(n+1) decay survives latent common causes, which would make H2 far more robust than the independent computation suggests.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4695",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Keep the Cauchy-Schwarz argument verbatim; replace the two independence-specific variances Var(x0) and Var(w) by their exchangeable values Var(x0) and (n+1)Var(x0)(1 + n*rho).",
+    "research_mode": "team",
+    "source_exp_id": "2d4305e2",
+    "status": "available",
+    "timestamp": "2026-09-04T21:29:55.674198+00:00",
+    "title": "Exchangeable Leakage Bound with Intra-Fork Correlation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.ForkChannelTableClosure"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Squared-correlation leakage provably forbids a size crossover between the AND and XOR channels. The conjecture characterises the functionals that do allow one: exactly those that do not compress a readout to a single monotone parameter, mutual information being the canonical example.\n\nA leakage functional admits a bias and a fork size at which the A/X ordering flips iff it is not of the form ψ(t_chan, n) with ψ monotone in its first argument; in particular Shannon mutual information admits such a flip while squared correlation does not.\n\nFormalise I(x₀; F) for the four readouts, evaluate exactly at rational biases for n ≤ 25, and search for a sign change; prove the impossibility half from monotonicity as in aChan_xChan_crossover_free.\n\nThe reported n = 8 crossover is a statement about the chosen functional, not about forks, and the literature's crossover claims must be tagged with their functional.\n\nNo functional distinguishes the orderings, and channel comparison is a bias-only phenomenon in full generality.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4696",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "One direction is the rigidity theorem already proved; the other is an explicit two-parameter entropy computation exhibiting a crossing bias.",
+    "research_mode": "team",
+    "source_exp_id": "2d4305e2",
+    "status": "available",
+    "timestamp": "2026-09-04T21:29:56.259060+00:00",
+    "title": "Crossover Admissibility of Leakage Functionals"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.ForkChannelTableClosure"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "At rational bias a/b every table entry is aⁿ(b−a)/(bⁿ⁺¹−aⁿ⁺¹). This makes exact integer certification of a whole channel table cheaper than the floating-point computation it replaces, and turns silent-garbage detection into a decidable check.\n\nEvery fork-channel table entry at rational bias is the stated integer ratio, and a table is correct iff each entry satisfies the corresponding integer identity.\n\nGenerate tables for n ≤ 200 with big-integer arithmetic, compare against the Lean-proved closed form Phi_rat, and formalise a decision procedure for a whole table.\n\nFork tables become machine-certifiable artifacts rather than measurements.\n\nSome channel has no rational closed form, indicating a genuinely transcendental fork functional.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4697",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Phi_rat plus a norm_num-style evaluation on each entry; extend to a decidable predicate over a finite index range.",
+    "research_mode": "team",
+    "source_exp_id": "2d4305e2",
+    "status": "available",
+    "timestamp": "2026-09-04T21:29:56.907480+00:00",
+    "title": "Integer Certification of Fork Tables"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.ForkChannelCorrelation",
+      "MachineLearning.ForkChannelPhaseDiagram"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Independence is what makes the split-count channel decay like 1/(n+1). Under a de Finetti mixture the empirical mean retains information about any single bit, so the split channel should stay bounded away from zero while the Boolean channels still vanish geometrically.\n\nFor an exchangeable fork with non-degenerate de Finetti mixing measure μ, the split-count channel converges to a strictly positive limit determined by Var μ, while the AND, OR and XOR channels converge to 0.\n\nReplace the product weights by a mixture over p ~ μ, recompute Cov and Var with the same E-functional machinery, and evaluate the limit for Beta mixtures.\n\nH2 is an independence statement, not a fork statement, and correlated forks leak persistently through counts.\n\nThe 1/(n+1) decay is robust to latent common causes, strengthening H2 considerably.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4698",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Condition on the latent bias, apply the proved independent-case formulas inside the integral, and compute the mixture covariance via the law of total covariance.",
+    "research_mode": "team",
+    "source_exp_id": "2d4305e2",
+    "status": "available",
+    "timestamp": "2026-09-04T21:29:57.470917+00:00",
+    "title": "Correlated Forks and the Survival of the Split Channel"
   },
   {
     "ambition_level": "extension",
