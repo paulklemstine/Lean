@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d451fd97",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — backward-error semantics for floating-point chaotic programs\n\nDerived from the five research cycles formalised in\n`Catalog/Novelty/FloatBackwardErrorHorner.lean`,\n`Catalog/Novelt",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-09-01T10:08:16",
-      "title": "Backward-error semantics for floating-point chaotic programs"
-    },
-    {
       "cycle_id": "26c8c1ed",
       "domain": "MachineLearning",
       "key_insight": "# FUTURE DIRECTIONS — after TDIAL-U104 (round-68 #2, exp 541)\n\n## What this cycle established\n\nThe bitlen-104 rung (`pooled ρ = 0.500`, CI `[0.456, 0.545]`, seeds `0.493 / 0.499 / 0.509`)\nwas analysed",
@@ -499,19 +489,19 @@
       "theorem_count": 88,
       "timestamp": "2026-09-04T04:34:37",
       "title": "FACT round-95 #4 — KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES — composition order κ r"
+    },
+    {
+      "cycle_id": "3831c02e",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after U35-LOCALIZED (round-45 #1, exp 500)\n\n## What this cycle established\n\nFive Lean files (`Catalog/Novelty/U35SubfloorCap.lean`, `U35PairedDrop.lean`,\n`U35USensitivityForecast",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-09-04T04:34:54",
+      "title": "FACT round-45 #1 — U35-LOCALIZED: above the floor everywhere, degrades everywhere (paper 167)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "78e6d19a",
-      "domain": "Probability",
-      "key_insight": "# Future directions from the NET-54 formalisation\n\nThe thread has produced ten compiling, `sorry`-free files in `Catalog/Probability/`:\n\n* `TailTransplantGeometry.lean` — agreement geometry and the bo",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 145,
-      "timestamp": "2026-08-23T04:04:53",
-      "title": "NET-54: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE — bulk layers transplant between fine-tunes at zero "
-    },
     {
       "cycle_id": "d221a4de",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 88,
       "timestamp": "2026-09-04T04:34:37",
       "title": "FACT round-95 #4 — KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES — composition order κ r"
+    },
+    {
+      "cycle_id": "3831c02e",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after U35-LOCALIZED (round-45 #1, exp 500)\n\n## What this cycle established\n\nFive Lean files (`Catalog/Novelty/U35SubfloorCap.lean`, `U35PairedDrop.lean`,\n`U35USensitivityForecast",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-09-04T04:34:54",
+      "title": "FACT round-45 #1 — U35-LOCALIZED: above the floor everywhere, degrades everywhere (paper 167)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a9de2f0b",
-      "domain": "Combinatorics",
-      "name": "ceiling_perturbation_bound",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "a9de2f0b",
-      "domain": "Combinatorics",
-      "name": "move_sum_eq",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "8c9b3d94",
-      "domain": "Combinatorics",
-      "name": "wip_eq_wcov_of_centred",
-      "quality": 0.82
-    },
     {
       "cycle_id": "8c9b3d94",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "cell_eq_iff",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "3831c02e",
+      "domain": "Novelty",
+      "name": "about",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "3831c02e",
+      "domain": "Novelty",
+      "name": "sqDev_single_le",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "3831c02e",
+      "domain": "Novelty",
+      "name": "u35_no_deep_breach",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-04T04:34:37",
+  "last_updated": "2026-09-04T04:34:54",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "51790419",
-        "quality": 0.79,
-        "theorems": 106,
-        "title": "FACT round-70 #1 — TDIAL-U112: the fade continues below the band at bitlen 112 ("
-      },
-      {
         "cycle_id": "d451fd97",
         "quality": 0.82,
         "theorems": 70,
@@ -3637,6 +3631,12 @@
         "quality": 0.84,
         "theorems": 88,
         "title": "FACT round-95 #4 — KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES — c"
+      },
+      {
+        "cycle_id": "3831c02e",
+        "quality": 0.78,
+        "theorems": 63,
+        "title": "FACT round-45 #1 — U35-LOCALIZED: above the floor everywhere, degrades everywher"
       }
     ],
     "NumberTheory": [
