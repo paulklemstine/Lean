@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b96d5582",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — hit-position thread after paper 249\n\nThe cycle formalised the two competing explanations of a hit-indicator lag\nprofile: *pure density* (independent hits with a position-dependen",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 102,
-      "timestamp": "2026-09-01T18:32:25",
-      "title": "FACT round-91 #2 — CONSECUTIVE-V-DEPENDENCY (exp 599): H0_PURE_DENSITY — mid-window hits INDEPENDENT"
-    },
-    {
       "cycle_id": "b20378a3",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — U56B-DIAL-HOLDS-COUNT-PARITY (FACT round-61 #2, exp 542)\n\n## What this cycle settled\n\nThe bitlen-56 fresh-seed replication reports pooled `ρ(T, rate) = 0.669` (CI\n`[0.650, 0.690]",
@@ -499,19 +489,19 @@
       "theorem_count": 118,
       "timestamp": "2026-09-04T18:25:35",
       "title": "FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
+    },
+    {
+      "cycle_id": "fbb2311e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — fork channels and their exact asymptotic constants\n\nAll statements below are follow-ups to the fully proved results in\n`Catalog/Combinatorics/ForkChannelExactConstants.lean`, whe",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-09-04T18:25:54",
+      "title": "FACT round-43 #1 — TABLE-CLOSURE FULL: the exact asymptotic constants of the fork channels (paper 16"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "347a400e",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Cayley Census Invariance\n\nThis cycle established that the Cayley walk census\n`walkCount S n g = #{(s₁,…,s_n) ∈ Sⁿ : s₁⋯s_n = g}` is a *class function up to\ninversion*: invariant",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-08-23T05:47:00",
-      "title": "prove that this function is a *class function up to inversion*, i.e."
-    },
     {
       "cycle_id": "cd05a1fd",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 118,
       "timestamp": "2026-09-04T18:25:35",
       "title": "FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
+    },
+    {
+      "cycle_id": "fbb2311e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — fork channels and their exact asymptotic constants\n\nAll statements below are follow-ups to the fully proved results in\n`Catalog/Combinatorics/ForkChannelExactConstants.lean`, whe",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-09-04T18:25:54",
+      "title": "FACT round-43 #1 — TABLE-CLOSURE FULL: the exact asymptotic constants of the fork channels (paper 16"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "98caf022",
-      "domain": "Tropical",
-      "name": "reach_nonneg",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "98caf022",
-      "domain": "Tropical",
-      "name": "served_iff",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "98caf022",
-      "domain": "Tropical",
-      "name": "isGreatest_served",
-      "quality": 0.82
-    },
     {
       "cycle_id": "14592ce7",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "rootCount_eq_legendreSym_add_one",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "fbb2311e",
+      "domain": "Combinatorics",
+      "name": "log_two_pos",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "fbb2311e",
+      "domain": "Combinatorics",
+      "name": "log_two_lt_one",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "fbb2311e",
+      "domain": "Combinatorics",
+      "name": "neg_log_one_sub_ge",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-04T18:25:35",
+  "last_updated": "2026-09-04T18:25:54",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "44bf5a41",
-        "quality": 0.72,
-        "theorems": 111,
-        "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfe"
-      },
-      {
         "cycle_id": "1bcec21a",
         "quality": 0.78,
         "theorems": 68,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 55,
         "title": "FACT round-49 #2 — T-DIAL-60: the degradation plateaus (paper 179)"
+      },
+      {
+        "cycle_id": "fbb2311e",
+        "quality": 0.72,
+        "theorems": 37,
+        "title": "FACT round-43 #1 — TABLE-CLOSURE FULL: the exact asymptotic constants of the for"
       }
     ],
     "Computation": [
