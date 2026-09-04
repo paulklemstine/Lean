@@ -1137,16 +1137,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-42 #2 \u2014 TRUE-ECM: lcm arm strictly dominates (paper 156)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "135e0dcb",
     "description": "Round-43 #4, cron iteration (exp 495, assessment v273). The consolidation: is a NO-FIT closed-form dial available?\n\n**THEORY-DIAL-HOLDS**: T(N) = \u03a3 2/p over QR primes p \u2264 400 \u2014 pure first-principles footprint, ZERO fitted coefficients \u2014 achieves Spearman vs rate = **0.755 / 0.7264** (two independent implementations) and OOS R\u00b2 = **0.541 / 0.5335** with one global scale. T-only BEATS the 8-fitted-bit model (0.534 > 0.463).\n\n- H3 PASS STRONG in both runs: measured fractions add nothing over the bits \u2014 the indicator vector is SUFFICIENT (paper 163's lottery confirmed at the marginal level). Lottery table: mean n_p | QR = 2/p to four decimals; QNR exactly 0.\n- Cascade survival variant retired (underperforms T).\n- Combined model reaches R\u00b2 = 0.626 (+0.029 over paper-145 baseline).\n- Adopted: T as the closed-form dial; keep w's full p \u2264 400 support over bit truncation.\n\nThe per-N yield dial's final form is fully theory-derived. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp495_qrlotto_dial.py + exp495_result.json, seed 20260926.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3628",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T08:49:15.376150+00:00",
     "title": "FACT round-43 #4 \u2014 QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
   },
@@ -1165,21 +1166,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-43 #3 \u2014 COINCIDENCE-DEPTH: the pair features measure anti-coincidence (paper 163)"
   },
   {
-    "consumed_by_exp_id": "575f19d4",
-    "description": "Round-45 #2, cron iteration (exp 501, assessment v277). Paper 167's driver question answered.\n\n**NEITHER** \u2014 both pre-stated hypotheses fail; the truth is intermediate. Four-cell design (window {240, 960} \u00d7 u {2.5, 3.5}, 8 populations):\n- \u0394(240) = **+0.1073** [0.0973, 0.1148] \u2014 reproduces paper 167 on fresh seeds\n- \u0394(960) = **+0.0636** [0.0597, 0.0680]\n- D = **+0.0437** [0.0346, 0.0533] \u2014 excludes zero and the \u00b10.03 band\n\n**H1 FAIL**: 4\u00d7 values recover only 41% of the drop, not 'most'. **H2 FAIL**: not 'none' either. Reading: mostly intrinsic threshold reweighting, with a real ~41% minority from per-N rank resolution (the u=3.5 gain came from finer rate granularity \u2014 smooth mass per offset unchanged).\n\nNamed follow-up: decouple B from vmed (hold the strip bound fixed across u). Caveat: nested windows conflate sample size with bound growth.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp501_u_harden.py + exp501_result.json, seeds 20260970\u201377.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3633",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T09:43:33.956778+00:00",
-    "title": "FACT round-45 #2 \u2014 U-HARDEN: the u-sensitivity is mostly intrinsic, partly resolution (paper 168)"
-  },
-  {
     "consumed_by_exp_id": "3831c02e",
     "description": "Round-45 #1, cron iteration (exp 500, assessment v276). The queued 14-seed localization of paper 166's u=3.5 breach.\n\n**NEITHER \u2014 DECISIVE**: over 14 fresh populations, sp(3.5) mean = **0.6282 \u00b1 0.0041**, bootstrap CI [0.6204, 0.6363] EXCLUDES the 0.60 floor; **0/14 sub-floor seeds**; sd = 0.0155 (far under the tail threshold). H1 (center-below) and H2 (wide-tail) both refuted.\n\nWhat survives: the systematic paired u-drop \u2014 \u0394 = sp(2.5) \u2212 sp(3.5) = **+0.1057**, CI [0.0999, 0.1112], **14/14 positive**. Paper 166's sub-floor column was 240-Ns/population sampling noise; its deep-breach seed has no analogue at 5\u00d7 N.\n\nDial-hardening should target the uniform ~0.11 u-sensitivity loss (starved ~1.9% smooth-rate regime or bound-coverage mismatch), not seed outliers.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp500_u35_localize.py + exp500_result.json + ledger_exp500.jsonl, seeds 20260950\u201363.",
     "domains": [
@@ -1195,16 +1181,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-45 #1 \u2014 U35-LOCALIZED: above the floor everywhere, degrades everywhere (paper 167)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5109f84c",
     "description": "Round-44 #2, cron iteration (exp 499, assessment v275). The adopted zero-fit dial's two validation axes, 20-cell grid, determinism verified.\n\n**REGIME-HOLDS-U-BREAKS**: \n- **H1 CONFIRMED**: uniform draws fully in-band on 5/5 populations (mean Spearman(T) = 0.713 \u2248 balanced's 0.717) despite N spanning 2^27\u20132^38.\n- **H2 REFUTED**: u=3.5 degrades SYSTEMATICALLY \u2014 every seed drops (sign test 5/5, p\u22480.03), one seed breaching deeply at 0.487; column mean below the band floor.\n- H3 REFUTED (4/5 joint).\n\n**Adopted**: deploy for uniform/heterogeneous draws at the paper-165 operating point u=2.5; do NOT deploy at tighter thresholds without recalibration. Queued: multi-seed bal@u=3.5 sweep.\n\nAnchor replicates paper 165 on five fresh seeds (0.7167 in [0.71, 0.76]).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp499_t_dial_axes.py + exp499_result.json, seeds 20260940\u201344.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3635",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T09:43:33.959641+00:00",
     "title": "FACT round-44 #2 \u2014 T-DIAL-AXES: regime holds, u breaks (paper 166)"
   },
@@ -1235,21 +1222,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T10:41:00.261918+00:00",
     "title": "FACT round-45 #3 \u2014 FIXED-BOUND: the u-sensitivity is genuine reweighting (paper 169)"
-  },
-  {
-    "consumed_by_exp_id": "671d5841",
-    "description": "Round-46 #2 (exp 506). Multi-seed replication of paper 172's prime-power lift.\n\n**PPOW-LIFT-REPLICATES-AND-GROWS**:\n- Per-seed \u0394R\u00b2(pp_sum over base) at (u=3.5, w=240): **+0.055/+0.049/+0.051/+0.050/+0.048** \u2014 all five above 0.03, cross-seed sd **0.0025**, SE(mean) **0.0011**\n- CI excludes zero on 5/5 cells at BOTH u\n- Lift GROWS with window length: mean \u0394R\u00b2 rises 240\u2192960 (u=3.5: 0.051\u21920.058; u=2.5: 0.058\u21920.082)\n\nThe prime-power term is REAL, seed-stable, and window-robust. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp506_ppow_multiseed.py + exp506_result.json, seeds 20260940\u201344.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3650",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T11:37:04.905091+00:00",
-    "title": "FACT round-46 #2 \u2014 PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with window length (paper 173)"
   },
   {
     "consumed_by_exp_id": "f5f0f634",
@@ -1648,6 +1620,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T05:49:54.837772+00:00",
     "title": "Deepening: Ellipsoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 671d5841 (Q=0.860), which proved 129 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-46 #2 (exp 506). Multi-seed replication of paper 172's prime-power lift.\n\n**PPOW-LIFT-REPLICATES-AND-GROWS**:\n- Per-seed \u0394R\u00b2(pp_sum over base) at (u=3.5, w=240): **+0.055/+0.049/+0.051/+0.050/+0.048** \u2014 all five above 0.03, cross-seed sd **0.0025**, SE(mean) **0.0011**\n- CI excludes zero on 5/",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_671d5841_b9ed74d8",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "671d5841",
+    "status": "available",
+    "timestamp": "2026-09-04T00:07:56.254356+00:00",
+    "title": "Deepening: FACT round-46 #2 \u2014 PPOW-MULTISEED: the prime-power lift replicates across seeds "
   },
   {
     "consumed_by_exp_id": "",
@@ -2334,20 +2320,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:59.281523+00:00",
     "title": "Existential-Risk-Optimization: Absolute Bounds on AI Alignment Failure Probabilities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 0688a872 (Q=0.840), which proved 566 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-48 #1, cron iteration (exp 509, assessment v283). Paper 132's residual gap item (3): effectivizing MA-1.\n\n**EQUIDISTRIBUTION-CONFIRMED**: max per-class deviation from Li(x)/\u03c6(m) at x=2\u00b3\u2070 = **0.000446** relative \u2014 well below 0.001; the 4/3 cap's constants hold to three significant figures.\n\nH2 ",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_0688a872_09078f8e",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "0688a872",
-    "status": "available",
-    "timestamp": "2026-09-03T21:44:03.719231+00:00",
-    "title": "Deepening: FACT round-48 #1 \u2014 MA1-EFFECTIVE: equidistribution holds to three significant fi"
   },
   {
     "consumed_by_exp_id": "",
@@ -3333,6 +3305,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T09:39:53.845380+00:00",
     "title": "Deepening: NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine g"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 575f19d4 (Q=0.780), which proved 54 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-45 #2, cron iteration (exp 501, assessment v277). Paper 167's driver question answered.\n\n**NEITHER** \u2014 both pre-stated hypotheses fail; the truth is intermediate. Four-cell design (window {240, 960} \u00d7 u {2.5, 3.5}, 8 populations):\n- \u0394(240) = **+0.1073** [0.0973, 0.1148] \u2014 reproduces paper 167 ",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_575f19d4_6b2666ea",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "575f19d4",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:32.322732+00:00",
+    "title": "Deepening: FACT round-45 #2 \u2014 U-HARDEN: the u-sensitivity is mostly intrinsic, partly resol"
   },
   {
     "consumed_by_exp_id": "",
@@ -15028,6 +15014,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "An independently keyed T-valued tag divides the silent-error bound by T at unchanged scan cost, as proved this cycle. The conjecture is that the mass removed from the silent set reappears exactly as abstention mass, so the tagged scheme saturates the converse silent + abstain >= 1 - |Code| p_max and is Pareto-optimal among decoders of the same code size.\n\nFor the tagged scheme of exists_tagged_balanced_scheme, silent mass + abstain mass = 1 - M T p_max + O(1/T), and no scheme over Fin (M T) has both strictly smaller silent mass and strictly smaller abstention mass.\n\nCompute abstainMass for the tagged hashScheme explicitly and compare with silentMass_add_abstainMass_ge; formalize the Pareto statement as a two-coordinate domination claim.\n\nTagging is the canonical optimal way to spend code length on safety, closing the design space for almost-lossless compression with a reject option.\n\nThere is slack in the tagged decoder, and a better allocation of tag bits versus codeword bits exists.",
+    "domains": [],
+    "id": "fd_4664",
+    "priority_score": 0.5925000000000001,
+    "research_mode": "team",
+    "source_exp_id": "60926357",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:06.446835+00:00",
+    "title": "Pareto Optimality of Tagged Decoders"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The finite-key machinery here is parametric in the rational rate rho and in the threshold zero Q*, so a certified positive rate for two-way post-processing above 11 % QBER would immediately extend the whole parameter table and the two-sided break-even law. The conjecture is that the same integer-certificate technique certifies positivity of the advantage-distillation rate up to roughly 20 % QBER.\n\nFor the two-way advantage-distillation rate r\u2082(Q), there are integer certificates proving r\u2082(Q) > 0 for every rational Q \u2264 0.19, and the corresponding break-even block sizes obey the same \u0398((Q\u2082*\u2212Q)^{-2}) law.\n\nDefine r\u2082 in Lean, derive its rational form analogous to secureKeyRate_ratio_eq, and search for the optimal pair (m, num/den) of the hybrid certificate at Q = 0.15, 0.18, 0.19.\n\nThe certified QKD parameter table extends past the one-way threshold, and the deployment moral (finite-key corrections dominate) is shown to be threshold-independent.\n\nTwo-way protocols have a genuinely different finite-key structure, isolating where the O(\u221an) accounting of this thread stops applying.",
     "domains": [],
     "id": "fd_3845",
@@ -16093,6 +16091,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every scheme obeys silent + abstain >= 1 - |Code| * p_max. The conjecture is that this converse is tight along its whole length: decoders interpolate continuously between never abstaining and never lying by choosing on which ambiguous codewords to commit.\n\nFor every finite source mu, code size M with M * p_max <= 1, and every s in [0, 1 - M * p_max], there is a scheme over Fin M with silent mass exactly s (up to one atom) and abstention mass 1 - M * p_max - s.\n\nConstruct the interpolating decoder as decodeList generalized to commit on a chosen finset of codewords, compute both masses, and prove the pair meets silentMass_add_abstainMass_ge with equality.\n\nThe trade-off is an exact conservation law, giving compression with a reject option a complete first-order theory.\n\nThere is a strictly convex correction term, revealing extra structure in how ambiguity is distributed across codewords.",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_4661",
+    "priority_score": 0.5647238473759407,
+    "research_mode": "team",
+    "source_exp_id": "60926357",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:04.884852+00:00",
+    "title": "Exact Silent-Error / Abstention Pareto Curve"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 3 shows the slack orbit of a geometric demand ladder is dense exactly when log_2 alpha is irrational. The effective question is how long one must wait for a slack within epsilon of the ceiling 2, and the answer should be governed by the continuants of log_2 alpha via the three-distance theorem.\n\nThe least n with slack(alpha^n) > 2 - epsilon satisfies q_k <= n <= q_{k+1} where q_k are the continued-fraction denominators of log_2 alpha and k is minimal with 1/q_k < c*epsilon.\n\nFormalise the three-distance theorem for the orbit fract(-n theta) and derive two-sided hitting-time bounds; test numerically against alpha = 3 and alpha = golden ratio squared.\n\nTurns the qualitative sharpness result into a schedule-length guarantee: one can certify how many rounds an exchange needs before it demonstrably nears the worst case.\n\nDensity would be non-effective for some alpha, pointing to Liouville-type growth ratios as pathological scheduler inputs.",
     "domains": [
       "Geometry",
@@ -16960,6 +16973,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T10:07:23.344204+00:00",
     "title": "Strict Schur-Concavity of the Mixed Attention Budget"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Group-wise silent-error control currently costs a covering factor r+1 for r protected groups. For disjoint groups the collision masses of the regions add up to the global collision mass, so a single threshold should suffice; for overlapping groups a matching covering construction should show Theta(r) is unavoidable.\n\nIf the groups G_1,...,G_r are pairwise disjoint then a single key achieves per-group silent mass <= (2 + o(1)) * mu(G_i minus codebook) * |l| / M, whereas for overlapping groups there are instances forcing a factor Omega(r).\n\nAdd a disjointness hypothesis to exists_groupwise_silent_scheme and try to prove the improved constant by summing the region masses; for the lower bound, generalize exists_covering_of_density_gt_one to r bad sets of density just above 1/r.\n\nFair silent-error control is free for a partition of the population, which is the practically relevant case.\n\nEven disjoint subpopulations pay a covering price, meaning fairness constraints are intrinsically costly in derandomized compression.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4662",
+    "priority_score": 0.564321073974695,
+    "research_mode": "team",
+    "source_exp_id": "60926357",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:05.411460+00:00",
+    "title": "Disjoint-Group Collapse of the r+1 Covering Factor"
   },
   {
     "consumed_by_exp_id": "",
@@ -30430,6 +30458,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The condition 1/c1 + 1/c2 <= 1 that limits two-sided derandomization comes from Markov's inequality applied to the collision mass. For a 4-wise independent hash family the collision mass has a computable variance, so the density of bad keys drops from 1/c to O(1/(c-1)^2). Summing those densities admits pairs strictly outside the Markov hyperbola, pushing the total error constant below (1+sqrt(delta))^2.\n\nFor a 4-wise independent family H : Fin K -> alpha -> Fin M, the number of keys whose collision mass on a region A exceeds c times its average is at most K/((c-1)^2 * M * mu(A)); consequently for every eta > 0 there are thresholds with 1/c1 + 1/c2 > 1 admitting a good key, and the achievable total constant tends to 1 as M -> infinity.\n\nFormalize Var-based counting as card_badMassVar_lt in the style of card_badMassC_lt, then re-run exists_multi_good_key with the new density bound; compare the resulting total constant to frontier_total_constant_ge numerically for delta = 1e-2, 1e-4.\n\nThe (1+sqrt(delta))^2 optimum is specific to first-moment derandomization, and higher independence buys the first-moment optimum 1 with a single key.\n\nThe hyperbola is intrinsic to key-selection by counting, strengthening exists_covering_of_density_gt_one into a genuine method barrier.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4660",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "60926357",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:04.366270+00:00",
+    "title": "Chebyshev Breach of the Fractional Covering Boundary"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Converting the balanced constant into code length shows the derandomized scheme spends exactly 2 log(1 + sqrt(delta)) extra bits relative to the first-moment bound. The conjecture is that this is the exact price of key selection, matching the entropy-form converse to o(sqrt(delta)).\n\nlog M >= log |l| + 2 log(1 + sqrt(delta)) - log(epsilon - delta) is achievable, and no scheme selected by first-order collision statistics achieves log M smaller than log |l| + 2 log(1 + sqrt(delta)) - log(epsilon - delta) - o(sqrt(delta)).\n\nState the achievability half by taking logarithms in exists_balanced_almost_lossless_scheme, and compare with log_card_code_ge_of_success on a flat source.\n\nThe derandomization penalty is a closed-form entropy quantity, completing the rate sandwich of almost_lossless_rate_sandwich with an exact constant.\n\nEither achievability or the converse is loose, localizing the remaining slack in the sandwich.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4663",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "60926357",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:05.924878+00:00",
+    "title": "Exact Derandomization Penalty in Min-Entropy Units"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -43050,19 +43107,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "C1 (settled, in a stronger form)."
   },
   {
-    "consumed_by_exp_id": "60926357",
-    "description": "**Conjecture C (sharper silent-error constant) \u2014 PROVED.**\n  `AlmostLosslessTunableMarkov.lean` generalises the Markov step to an arbitrary\n  threshold (`card_badMassC_lt`, sub-conjecture C1) and splits the key space\n  with any pair `1/c\u2081 + 1/c\u2082 \u2264 1` (`exists_tunable_good_key`).  With\n  `c\u2081 = 1+\u03b7`, `c\u2082 = 1+1/\u03b7` this yields\n  `exists_tunable_almost_lossless_scheme`: silent corruption\n  `\u2264 (1+\u03b7)\u00b7\u03b4\u00b7|l|/M` and failure `\u2264 \u03b4 + (1+1/\u03b7)\u00b7|l|/M`, cost exactly `|l|`.  The\n  silent constant can therefore be pushed to the first-moment optimum `1`; the\n  cycle-2 theorem is the case `\u03b7 = 1`.",
-    "domains": [],
-    "id": "fd_1540",
-    "phase": "A",
-    "priority_score": 0.4302222222222222,
-    "research_mode": "team",
-    "source_exp_id": "ef01dce6",
-    "status": "in_progress",
-    "timestamp": "2026-08-18T18:57:21.765957+00:00",
-    "title": "Conjecture C (sharper silent-error constant) \u2014 PROVED.*"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "**Conjecture D (coordinatewise block decoding is optimal) \u2014 converse half\n  PROVED.**  `block_cost_ge_of_coordinatewise` shows that `b` independent\n  coordinate decoders that are correct on an `n`-symbol codebook are forced, on\n  some product input, to spend `\u2265 b\u00b7log\u2082 n` queries in total, matching the\n  `b\u00b7(log\u2082 n + 3)` cost of the sorted block decoder.  What is *not* proved is\n  that a non-coordinatewise decoder cannot do better; see Conjecture G below.",
     "domains": [],
@@ -44048,6 +44092,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T19:21:00.041660+00:00",
     "title": "C. Valuation cells at non-coprime auxiliary scales"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that two nested cells determine the slope only to within the factor\n`4/3` (upper bound `|D| \u2264 L/N\u2081` versus witness `D = 3L/(4N\u2081)`), and \u2014 by\n`ladder_identifiability_limit` \u2014 determine the *intrinsic drop* no better than\n`L/(4\u00b7N_fine)`, because a window only ever evaluates the response at its own rates. This\ngap should close geometrically in the number of cells, exactly as a Richardson tableau does.\n**Why now?** The two-cell case is settled in both directions in this cycle, so only the\n`k`-cell rate and its constant remain open.\n\n**Conjecture.** A ladder of `k` nested windows `N, cN, \u2026, c^{k\u22121}N` identifies the intrinsic\nlevel `I` to within `\u0398(c^{\u2212(k\u22121)})` and no better, with matching constants of ratio `c/(c\u22121)`.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4666",
+    "priority_score": 0.41125445772287245,
+    "research_mode": "team",
+    "source_exp_id": "575f19d4",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:21.866822+00:00",
+    "title": "Minimax identifiability of the share from `k` nested cells"
   },
   {
     "consumed_by_exp_id": "",
@@ -50145,5 +50203,64 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T21:44:13.619717+00:00",
     "title": "\"The one-loop `\u03b5`-expansion coefficients are monotone in `N`\"* is false"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "(`PPowMultiseedLayerDecay.lean`) \u2014 the previously open\n   Direction 4 is now a theorem in its qualitative-rate form.  Writing the\n   layer masses in prime coordinates,\n   `layerMass k N = \u2211_{p \u2264 N} log p \u00b7 \u230aN/p^k\u230b` (`layerMass_eq_sum_primes`),\n   the halving estimate `\u230aN/p^{k+1}\u230b \u2264 \u230aN/p^k\u230b/2` for every prime gives\n   **geometric decay** `layerMass (k+1) N \u2264 layerMass k N / 2`\n   (`layerMass_succ_le_half`), hence `layerMass (k+j) N \u2264 layerMass k N / 2^j`\n   (`layerMass_add_le_geometric`) and the tail bound\n   `\u2211_{j<m} layerMass (k+j) N \u2264 2\u00b7layerMass k N` (`sum_tail_layerMass_le`).\n   Summing over all levels sandwiches the whole lift by its first layer,\n   `layerMass 2 N \u2264 windowMass 1 N \u2264 2\u00b7layerMass 2 N`\n   (`layerMass_two_sandwich`): **all** higher-order prime-power features\n   together cannot contribute more than the `p\u00b2` feature already does.\n   `layerMass_eq_zero_of_lt` records that the level-`k` mass vanishes for\n   `N < 2^k`.",
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_4659",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "671d5841",
+    "status": "available",
+    "timestamp": "2026-09-04T00:07:39.911333+00:00",
+    "title": "Cycle 8"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that rank granularity is not noise to be averaged away but a\n*deterministic* map `\u03b8 \u21a6 \u2308\u03b8N\u2309/N` whose only free parameter is where the gate sits inside its\ncell \u2014 so randomising that offset turns the resolution component into a quantity with a\ncomputable law, `L/(2N)` per gate, instead of a residual to be fitted. **Why now?** The\nnamed follow-up already proposes decoupling `B` from `vmed`; `cross_window_pure_resolution`\nshows that decoupling alone makes `D` a pure residual difference, and\n`cellAvg_resid_locally_linear` says the offset average then has a closed form, so the\nexperiment becomes a direct measurement of the local slope rather than a share estimate.\n\n**Conjecture.** In a decoupled design with the gate offset drawn uniformly inside its rank\ncell, `E[\u0394(N)] = \u0394(\u221e) + (L\u2082 \u2212 L\u2081)/(2N)` exactly, with no fitted constant.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4665",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "575f19d4",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:21.232159+00:00",
+    "title": "Offset-randomised gating (the decoupled follow-up, sharpened)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that whether the refinement moves a gate is a lattice question about\n`\u2308\u03b8N\u2309`, and for gates generated by an affine ladder `\u03b8_j = m + u_j s` the pattern of moved\nand unmoved gates is governed by the continued-fraction expansion of `sN`, not by the\npopulation at all. **Why now?** `grids_agree_iff` and `agreement_cell_volume` pin the\nuniform-offset probability at `1 \u2212 1/c`; the next question is the *joint* law across the\ngates of one sweep, which is a three-distance problem.\n\n**Conjecture.** For gates `\u03b8_j = m + j\u00b7s` and window `N`, the number of `j \u2264 J` whose\nrealised rate is unchanged by a `c`-fold refinement is `J/c + O(log J)` for every irrational\n`sN`, with the error controlled by the partial quotients of `sN`.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4667",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "575f19d4",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:22.403339+00:00",
+    "title": "Grid-agreement arithmetic and the three-distance structure"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that all the certificates here are driven by one number, the local\nLipschitz constant of the response across the strip, and that the reported `D` already forces\n`L \u2265 8.30`; a response with an unbounded local slope (a heavy tail with an atom-like cliff)\nbreaks the whole accounting. **Why now?** The `L \u2265 8.30` floor is now a theorem, so it can be\nchecked directly against the measured response curve of exp 501 rather than assumed.\n\n**Conjecture.** Every population reproducing `\u0394(240) \u2248 0.107` and `D \u2248 0.044` has a strip\nresponse whose local slope exceeds `8.3` somewhere between the two gates; equivalently, no\n`8`-Lipschitz response reproduces the reported pair.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Offset-Randomised Gate Resolution Law\",\n    \"domain\": \"Logic\",\n    \"description\": \"Randomising the gate offset inside its rank cell replaces the fitted c/N residual by a closed-form one. The offset-averaged residual of a locally linear response is exactly L/(2N) per gate, so a decoupled design measures the local slope directly instead of estimating a share. This converts the round's headline share question into a calibration question with a known answer.\",\n    \"conjecture\": \"In a decoupled design with the gate offset uniform inside its rank cell, E[Delta(N)] = Delta(inf) + (L2 - L1)/(2N) exactly, with no fitted constant.\",\n    \"test\": \"Formalise the uniform-offset expectation as cellAvg and extend cellAvg_resid_locally_linear from one cell to a full sweep; experimentally, re-run exp 501 with the gate offset randomised and fit only the intercept.\",\n    \"if_true\": \"The resolution component becomes measurable rather than inferred, and the 41%/54% ambiguity disappears.\",\n    \"if_false\": \"The response is not locally linear across a rank cell, so all c/N extrapolations in the thread (including the paper's) are unjustified.\",\n    \"proof_strategy\": \"Cell-wise interval integration as in cellAvg_resid_locally_linear, then additivity over the cells of the sweep and a Lipschitz remainder for the nonlinear part.\",\n    \"catalog_references\": [\"Catalog.Logic.UHardenOffsetAverage\", \"Catalog.Logic.UHardenResolutionSplit\"]\n  },\n  {\n    \"title\": \"Sign Rigidity of the Nested Window Effect\",\n    \"domain\": \"Logic\",\n    \"description\": \"On the offset-averaged model the measured drop overstates the smooth drop by (L2 - L1)/(2N), so a positive cross-window difference is equivalent to the response being steeper at the hard gate. For a nonincreasing tail density the inequality goes the other way, making the reported D > 0 incompatible with pure rank granularity.\",\n    \"conjecture\": \"For every population whose score density is nonincreasing across the strip, the offset-averaged nested design satisfies D <= 0.\",\n    \"test\": \"Formalise 'nonincreasing density' as concavity of the survival response on the strip and derive L2 <= L1; then apply hard_gate_steeper_iff.\",\n    \"if_true\": \"The observed D > 0 is attributable to the B-versus-vmed coupling,",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4668",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "575f19d4",
+    "status": "available",
+    "timestamp": "2026-09-04T00:08:23.135290+00:00",
+    "title": "Beyond Lipschitz: quantifying reweighting for heavy tails"
   }
 ];
