@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ed4056bf",
-      "domain": "Physics",
-      "key_insight": "# Future directions — after TDIAL-U108 (round-69 #2, exp 544)\n\nThree research cycles were run in this session. Everything listed below as *proved* compiles\nin Lean 4 / Mathlib with 0 `sorry` and only",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 51,
-      "timestamp": "2026-09-01T05:09:22",
-      "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
-    },
-    {
       "cycle_id": "1aa0b577",
       "domain": "Probability",
       "key_insight": "# Future directions — after the NET-90 symmetric-mixture bump\n\nSix research cycles produced a complete structural account of the mixing-ratio\nresponse of the attention key budget: a sup-convolution mo",
@@ -499,19 +489,19 @@
       "theorem_count": 129,
       "timestamp": "2026-09-04T00:07:55",
       "title": "FACT round-46 #2 — PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with windo"
+    },
+    {
+      "cycle_id": "60926357",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — after Cycle 3 (silent-error constants)\n\n## Where the thread stands\n\nCycle 2 proved that one derandomized key can control failure and silent\ncorruption at once, with constant `2`",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-09-04T00:08:12",
+      "title": "Conjecture C (sharper silent-error constant) — PROVED.*"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f49038d4",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — curvature of universal-compression model pools\n\nThis cycle introduced the curvature `κ = 1 − min_{j∈Ω}(C(Ω) − C(Ω∖{j}))/C({j})`\nof a candidate pool for the Shtarkov-sum price fun",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-22T23:36:27",
-      "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` where `Ω` is the who"
-    },
     {
       "cycle_id": "aa2d71a2",
       "domain": "Combinatorics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 129,
       "timestamp": "2026-09-04T00:07:55",
       "title": "FACT round-46 #2 — PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with windo"
+    },
+    {
+      "cycle_id": "60926357",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — after Cycle 3 (silent-error constants)\n\n## Where the thread stands\n\nCycle 2 proved that one derandomized key can control failure and silent\ncorruption at once, with constant `2`",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-09-04T00:08:12",
+      "title": "Conjecture C (sharper silent-error constant) — PROVED.*"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c90a227e",
-      "domain": "Novelty",
-      "name": "multinomial_mul_prob_pow_le_one",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c9885d74",
-      "domain": "Physics",
-      "name": "encoder_apply",
-      "quality": 0.83
-    },
     {
       "cycle_id": "c9885d74",
       "domain": "Physics",
@@ -2803,9 +2791,21 @@
       "domain": "Probability",
       "name": "TSS_nonneg",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "60926357",
+      "domain": "MachineLearning",
+      "name": "succeeds_or_silentError_of_neverAbstains",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "60926357",
+      "domain": "MachineLearning",
+      "name": "silentMass_add_abstainMass_ge",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-09-04T00:07:55",
+  "last_updated": "2026-09-04T00:08:12",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "59651b5d",
-        "quality": 0.79,
-        "theorems": 62,
-        "title": "FACT round-69 #1 — TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190"
-      },
-      {
         "cycle_id": "7934932a",
         "quality": 0.84,
         "theorems": 87,
@@ -3575,6 +3569,12 @@
         "quality": 0.86,
         "theorems": 18,
         "title": "Sturmian Structure of the Argmax Staircase"
+      },
+      {
+        "cycle_id": "60926357",
+        "quality": 0.85,
+        "theorems": 28,
+        "title": "Conjecture C (sharper silent-error constant) — PROVED.*"
       }
     ],
     "Novelty": [
