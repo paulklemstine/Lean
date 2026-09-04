@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "26c8c1ed",
-      "domain": "MachineLearning",
-      "key_insight": "# FUTURE DIRECTIONS — after TDIAL-U104 (round-68 #2, exp 541)\n\n## What this cycle established\n\nThe bitlen-104 rung (`pooled ρ = 0.500`, CI `[0.456, 0.545]`, seeds `0.493 / 0.499 / 0.509`)\nwas analysed",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 155,
-      "timestamp": "2026-09-01T10:08:38",
-      "title": "FACT round-68 #2 — TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
-    },
-    {
       "cycle_id": "00fe96df",
       "domain": "Computation",
       "key_insight": "# Future directions — the tail-precision thread\n\nThree cycles of the hypothesize → experiment → analyse → critique loop produced three\ncomplete strands of theory:\n\n* **Propagation and sensitivity** —",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-09-04T04:34:54",
       "title": "FACT round-45 #1 — U35-LOCALIZED: above the floor everywhere, degrades everywhere (paper 167)"
+    },
+    {
+      "cycle_id": "f5f0f634",
+      "domain": "Applications",
+      "key_insight": "# Future directions — prime-power hits and the smoothness budget\n\nDerived from the three research cycles of this project.\n\n## What this cycle established\n\n**Survived and proved.** A divisibility hit i",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 42,
+      "timestamp": "2026-09-04T04:35:13",
+      "title": "FACT round-46 #1 — MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d221a4de",
-      "domain": "Probability",
-      "key_insight": "# FUTURE DIRECTIONS — FACTOR-LOCAL-ET, after cycles 1–7\n\n## What survived this cycle\n\n1. **Slope identifiability** (`PowerBand.abs_logSlope_sub_le`).  Multiplicative\n   model error enters a two-point",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 89,
-      "timestamp": "2026-08-23T04:53:36",
-      "title": "FACT round-41 #5 — FACTOR-LOCAL-ET: unified across-k scaling on one population (paper 154)"
-    },
     {
       "cycle_id": "9b10b60b",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 63,
       "timestamp": "2026-09-04T04:34:54",
       "title": "FACT round-45 #1 — U35-LOCALIZED: above the floor everywhere, degrades everywhere (paper 167)"
+    },
+    {
+      "cycle_id": "f5f0f634",
+      "domain": "Applications",
+      "key_insight": "# Future directions — prime-power hits and the smoothness budget\n\nDerived from the three research cycles of this project.\n\n## What this cycle established\n\n**Survived and proved.** A divisibility hit i",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 42,
+      "timestamp": "2026-09-04T04:35:13",
+      "title": "FACT round-46 #1 — MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8c9b3d94",
-      "domain": "Combinatorics",
-      "name": "partial_cov_formula",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "8c9b3d94",
-      "domain": "Combinatorics",
-      "name": "partial_var_formula",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "8ec45b40",
-      "domain": "NumberTheory",
-      "name": "bisimilar_refl",
-      "quality": 0.85
-    },
     {
       "cycle_id": "8ec45b40",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "u35_no_deep_breach",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "f5f0f634",
+      "domain": "Applications",
+      "name": "bigOmega_eq_sum_primeFactors",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f5f0f634",
+      "domain": "Applications",
+      "name": "bigOmega_eq_sum_primesBelow",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f5f0f634",
+      "domain": "Applications",
+      "name": "factorization_le_log_two",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-04T04:34:54",
+  "last_updated": "2026-09-04T04:35:13",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bc20ce21",
-        "quality": 0.82,
-        "theorems": 56,
-        "title": "P2 (from K)"
-      },
-      {
         "cycle_id": "0c164125",
         "quality": 0.78,
         "theorems": 88,
@@ -3141,6 +3135,12 @@
         "quality": 0.86,
         "theorems": 83,
         "title": "NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE — GPTQ4+top-k degrades WORSE than sum "
+      },
+      {
+        "cycle_id": "f5f0f634",
+        "quality": 0.82,
+        "theorems": 42,
+        "title": "FACT round-46 #1 — MID-PRIME-HUNT: prime-power hits carry the tight-u residual ("
       }
     ],
     "Bridges": [
