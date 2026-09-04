@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "17866175",
-      "domain": "Probability",
-      "key_insight": "# Future directions — after NET-89 (mixed-domain key budgets)\n\nFifteen cycles of the loop produced, all machine-checked and sorry-free:\n\n* **Cycle 1** (`Catalog/Probability/NET89MixedDomainKnee.lean`)",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 198,
-      "timestamp": "2026-09-01T10:07:58",
-      "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knees {12,20}: starts at"
-    },
-    {
       "cycle_id": "d451fd97",
       "domain": "Novelty",
       "key_insight": "# Future directions — backward-error semantics for floating-point chaotic programs\n\nDerived from the five research cycles formalised in\n`Catalog/Novelty/FloatBackwardErrorHorner.lean`,\n`Catalog/Novelt",
@@ -499,19 +489,19 @@
       "theorem_count": 54,
       "timestamp": "2026-09-04T00:08:31",
       "title": "FACT round-45 #2 — U-HARDEN: the u-sensitivity is mostly intrinsic, partly resolution (paper 168)"
+    },
+    {
+      "cycle_id": "63061d5b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the κ-sufficiency / scale-stability cycle\n\nThis cycle turned the three experimental verdicts into theorems about an explicit model whose\ncell distribution is *exactly* arit",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-09-04T04:34:37",
+      "title": "FACT round-95 #4 — KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES — composition order κ r"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bc20ce21",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — after the eigenvalue-model sign law\n\nFour research cycles produced, in `Catalog/Applications/WeilDualitySign/`:\n\n* **Cycle 1** (`EigenvalueModel.lean`) — the exact sign law\n  `∏",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-23T03:17:01",
-      "title": "P2 (from K)"
-    },
     {
       "cycle_id": "78e6d19a",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 54,
       "timestamp": "2026-09-04T00:08:31",
       "title": "FACT round-45 #2 — U-HARDEN: the u-sensitivity is mostly intrinsic, partly resolution (paper 168)"
+    },
+    {
+      "cycle_id": "63061d5b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the κ-sufficiency / scale-stability cycle\n\nThis cycle turned the three experimental verdicts into theorems about an explicit model whose\ncell distribution is *exactly* arit",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 88,
+      "timestamp": "2026-09-04T04:34:37",
+      "title": "FACT round-95 #4 — KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES — composition order κ r"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5f5fd816",
-      "domain": "Pythagorean",
-      "name": "card_Units56",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5f5fd816",
-      "domain": "Pythagorean",
-      "name": "totient_56",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a9de2f0b",
-      "domain": "Combinatorics",
-      "name": "spearmanSq_sub",
-      "quality": 0.78
-    },
     {
       "cycle_id": "a9de2f0b",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "kinkResp_eq_linResp_of_ge",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "63061d5b",
+      "domain": "Novelty",
+      "name": "mem_cell",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "63061d5b",
+      "domain": "Novelty",
+      "name": "cell_subset",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "63061d5b",
+      "domain": "Novelty",
+      "name": "cell_eq_iff",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-04T00:08:31",
+  "last_updated": "2026-09-04T04:34:37",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "df74e96c",
-        "quality": 0.83,
-        "theorems": 73,
-        "title": "FACT round-76 #1 — GAP-L7-FALSIFICATION (verified): L7 FALSE-IN-PRINCIPLE as dra"
-      },
-      {
         "cycle_id": "51790419",
         "quality": 0.79,
         "theorems": 106,
@@ -3637,6 +3631,12 @@
         "quality": 0.86,
         "theorems": 95,
         "title": "Uniqueness of the Two-Point Transreal Compactification"
+      },
+      {
+        "cycle_id": "63061d5b",
+        "quality": 0.84,
+        "theorems": 88,
+        "title": "FACT round-95 #4 — KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES — c"
       }
     ],
     "NumberTheory": [
