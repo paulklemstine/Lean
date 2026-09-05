@@ -10,6 +10,10 @@ Declarations: 29
 
 noncomputable section
 
+/-- The `n`-th Catalan number.  (Supplied here as Mathlib's `catalan`: the
+auto-generated file used `catalanNum` without carrying its definition along.) -/
+def catalanNum (n : ℕ) : ℕ := catalan n
+
 /-- An EML neuron function: f(x) = exp(w₁·x + b₁) − ln(w₂·x + b₂). -/
 def emlNeuronFn (w₁ b₁ w₂ b₂ : ℝ) : ℝ → ℝ :=
   fun x => Real.exp (w₁ * x + b₁) - Real.log (w₂ * x + b₂)
@@ -41,7 +45,7 @@ theorem eml_nonvanishing (x₀ : ℝ) :
 /-- The exp-only EML neuron is continuous everywhere. -/
 theorem eml_exp_neuron_continuous (w₁ b₁ : ℝ) :
     Continuous (fun x => Real.exp (w₁ * x + b₁)) := by
-  exact continuous_exp.comp (continuous_const.mul continuous_id |>.add continuous_const)
+  exact Real.continuous_exp.comp (continuous_const.mul continuous_id |>.add continuous_const)
 
 /-- exp(x) is exactly representable by a single EML neuron. -/
 theorem exp_is_eml_neuron :
@@ -83,7 +87,7 @@ theorem double_exp_composition (a b c d : ℝ) (x : ℝ) :
 Auto-generated from theorem catalog database.
 Domain: EML
 Declarations: 29] -/
-theorem catalan_0 : catalanNum 0 = 1 := rfl
+theorem catalan_0 : catalanNum 0 = 1 := by simp [catalanNum]
 
 /-- [Section: # CatalogBuild.EML.UniversalApproximation
 Auto-generated from theorem catalog database.

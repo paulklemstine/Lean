@@ -151,9 +151,3 @@ structure TropicalJacobian (G : MetricGraph) where
   dim_eq_genus : (dimension : ℤ) = G.genus
 
 end
-
-end
-
-end
-
-end

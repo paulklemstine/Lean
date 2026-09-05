@@ -1,5 +1,13 @@
 import Mathlib
 
+open Matrix
+
+/-- The Pell numbers `0, 1, 2, 5, 12, 29, …`. -/
+def pellNum : ℕ → ℤ
+  | 0 => 0
+  | 1 => 1
+  | (n + 2) => 2 * pellNum (n + 1) + pellNum n
+
 /-! # CatalogBuild.Pythagorean.Core.NewHypotheses
 
 Auto-generated from theorem catalog database.

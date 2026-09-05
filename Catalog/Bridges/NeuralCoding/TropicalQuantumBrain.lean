@@ -42,6 +42,10 @@ theorem tropMul'_distrib_right (a b c : ℝ) :
 -- PART II: ReLU AS TROPICAL ADDITION
 -- ============================================================================
 
+/-- ReLU, as a tropical operation.  (Supplied here: the auto-generated file used
+`relu'` without carrying its definition along.) -/
+def relu' (x : ℝ) : ℝ := max x 0
+
 /-- ReLU is tropical addition with the multiplicative identity:
 ReLU(x) = x ⊕ 0 = max(x, 0) -/
 theorem relu'_eq_tropAdd_zero (x : ℝ) : relu' x = tropAdd' x 0 := by
@@ -209,6 +213,6 @@ theorem consciousness_positive {beta beta_c sigma : ℝ}
     (hbeta : 0 < beta) :
     0 < consciousnessFunctional beta beta_c sigma := by
   unfold consciousnessFunctional
-  exact mul_pos hbeta (exp_pos _)
+  exact mul_pos hbeta (Real.exp_pos _)
 
 end

@@ -1,4 +1,5 @@
--- MISSING MODULE (not present in this repository): import Shared.PosetTheory.FibonacciApparitionSheaf
+import Mathlib
+import Shared.PosetTheory.FibonacciApparitionSheaf
 /-! # Entry points and primitive Fibonacci divisors
 
 The entry point of a prime is its least positive Fibonacci index of apparition.

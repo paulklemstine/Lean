@@ -447,10 +447,12 @@ end KTheoryNeural
 
 -- !-- Merged from KTheoryNeuralAdvanced.lean (auto-dedup) -- !--
 
+/-!
   Algebraic K-Theory of Neural Architectures — Advanced Theorems
   Bridge: extends the core K-theoretic framework with deeper results on
   projective stability, Whitehead lemma analogs, spectral certification bounds,
   and connections to quantum computing and cryptographic security.
+-/
 namespace KTheoryNeural.Advanced
 /-! ## I. Projective Stability Theorems (Deep K₀ Results)
 Bridge: the stabilization theorem for K₀ shows that adding free summands
@@ -503,6 +505,7 @@ theorem frobenius_bound_on_lipschitz (n : ℕ) (entries : Fin n → Fin n → �
     ∑ i : Fin n, ∑ j : Fin n, entries i j ^ 2 ≤ n ^ 2 * B := by
   calc ∑ i : Fin n, ∑ j : Fin n, entries i j ^ 2
       ≤ ∑ i : Fin n, ∑ _j : Fin n, B := by
+        apply Finset.sum_le_sum; intro i _
         apply Finset.sum_le_sum; intro j _
         exact hB i j
     _ = ∑ _i : Fin n, (n : ℝ) * B := by
@@ -603,7 +606,8 @@ theorem quantum_compression_advantage (d : ℕ) (_hd : 1 ≤ d) :
     classified by a K₂-analog, bounded by the Steinberg interaction count. -/
 theorem entanglement_interaction_bound (d : ℕ) :
     d * (d - 1) / 2 ≤ d ^ 2 := by
-  have : d * (d - 1) ≤ d ^ 2 := by nlinarith [Nat.sub_le d 1]
+  have h : d * (d - 1) ≤ d ^ 2 := by nlinarith [Nat.sub_le d 1]
+  exact le_trans (Nat.div_le_self _ 2) h
 /-! ## VII. Hamiltonian Certification for Quantum Layers
 Bridge: quantum neural network layers are described by Hamiltonians.
 The K-theoretic certification extends to unitary groups via the
@@ -625,6 +629,7 @@ theorem hamiltonian_composition_bound (E₁ E₂ E_max t : ℝ)
     Real.exp (E₁ * t) * Real.exp (E₂ * t) ≤ Real.exp (2 * E_max * t) := by
   rw [← Real.exp_add]
   apply Real.exp_le_exp.mpr
+  nlinarith
 /-! ## VIII. Tropical Geometry Connections
 Bridge: tropical geometry provides a "shadow" of K-theoretic certification
 in the min-plus semiring. Tropical eigenvalues approximate classical

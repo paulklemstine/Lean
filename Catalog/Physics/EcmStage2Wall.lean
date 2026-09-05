@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Shared.ECMStage1SmoothPart
+import Shared.ECMStage1SmoothPart
 
 /-!
 # The ECM "self-destruction wall" is an accounting artifact, not a method failure

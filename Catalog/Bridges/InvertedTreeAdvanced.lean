@@ -28,6 +28,20 @@ def berggren_q (a b c : ℤ) : ℤ := 2*a + b - 2*c
 /-- The h-parameter: universal parent hypotenuse. -/
 def berggren_h (a b c : ℤ) : ℤ := -2*a - 2*b + 3*c
 
+/-- Inverse Berggren transform `B₁⁻¹`.  (Supplied here: the auto-generated file used
+`invB₁`, `invB₂`, `invB₃` without carrying their definitions along; they are the
+matrix inverses of `fwdB₁`, `fwdB₂`, `fwdB₃`.) -/
+def invB₁ (a b c : ℤ) : ℤ × ℤ × ℤ :=
+  (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
+
+/-- Inverse Berggren transform `B₂⁻¹`. -/
+def invB₂ (a b c : ℤ) : ℤ × ℤ × ℤ :=
+  (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
+/-- Inverse Berggren transform `B₃⁻¹`. -/
+def invB₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
+  (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
 /-- **Component Sharing (1,2)**: B₁⁻¹ and B₂⁻¹ share the same first component. -/
 theorem invB₁_fst_eq_invB₂_fst (a b c : ℤ) :
     (invB₁ a b c).1 = (invB₂ a b c).1 := by
@@ -189,6 +203,10 @@ theorem root_parent : invB₂ 3 4 5 = (1, 0, 1) := by native_decide
 -- Section 6: Lorentz Form Preservation
 -- ═══════════════════════════════════════════════════════════════
 
+/-- The Lorentz form `a² + b² - c²` preserved by the Berggren transforms.  (Supplied
+here: the auto-generated file used `lorentzQ` without carrying its definition along.) -/
+def lorentzQ (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
+
 theorem invB₁_preserves_Q (a b c : ℤ) :
     lorentzQ (invB₁ a b c).1 (invB₁ a b c).2.1 (invB₁ a b c).2.2 = lorentzQ a b c := by
   simp [lorentzQ, invB₁]; ring
@@ -230,6 +248,15 @@ theorem descent_decrease (a b c : ℤ) :
 -- ═══════════════════════════════════════════════════════════════
 -- Section 8: Descent Bounds
 -- ═══════════════════════════════════════════════════════════════
+
+/-- **Triangle inequality for integer Pythagorean triples**: if `a, b > 0` and
+`a² + b² = c²` then `c < a + b`.  (For `c ≤ 0` this is immediate; for `c > 0` it
+follows from `(a+b)² = c² + 2ab > c²`.) -/
+theorem ppt_triangle_ineq (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
+    (hpyth : a ^ 2 + b ^ 2 = c ^ 2) : c < a + b := by
+  rcases le_or_lt c 0 with hc | hc
+  · linarith
+  · nlinarith
 
 /-- Hypotenuse strictly decreases during descent. -/
 theorem hyp_decreases (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
@@ -430,5 +457,5 @@ theorem ppt_20_21_29 : (20 : ℤ)^2 + 21^2 = 29^2 := by norm_num
 #print axioms ghost_pythagorean
 #print axioms euclid_branch1
 #print axioms parent_hyp_is_sum_of_squares
-#print axioms branch_exclusive_12
-#print axioms pq_diff
+-- (`#print axioms` for `branch_exclusive_12` and `pq_diff` removed: no such
+-- declarations exist in this development.)

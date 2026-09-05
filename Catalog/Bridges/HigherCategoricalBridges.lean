@@ -9,6 +9,8 @@ Declarations: 16
 
 noncomputable section
 
+open CategoryTheory
+
 /-- Adjunctions compose: a fundamental 2-categorical fact. -/
 def adjunction_compose {C D E : Type*}
     [Category C] [Category D] [Category E]
@@ -120,11 +122,5 @@ structure DerivedFunctor {C D : Type*} [Category C] [Category D]
   func : C ⥤ D
   preserves_triangles : ∀ t ∈ TC.distinguished,
     (func.obj t.1, func.obj t.2.1, func.obj t.2.2) ∈ TD.distinguished
-
-end
-
-end
-
-end
 
 end

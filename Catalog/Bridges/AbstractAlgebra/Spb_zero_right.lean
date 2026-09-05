@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Shared.Spb_zero_right
 
 Auto-generated from theorem catalog database.
@@ -5,24 +7,31 @@ Domain: Bridges
 Declarations: 14
 -/
 
-import Mathlib
 
 noncomputable section
 
-/-- Zero is a right identity for SPB. -/
-theorem spb_zero_right (x : ℝ) : spb x 0 = x := by
-  simp [spb]
+/-- The Cayley transform `cayley x = (1 + x i) / (1 - x i)`. -/
+def cayley (x : ℝ) : ℂ := (1 + x * Complex.I) / (1 - x * Complex.I)
 
+open Real Matrix
 
-/-- Zero is a left identity for SPB. -/
-theorem spb_zero_left (x : ℝ) : spb 0 x = x := by
-  simp [spb]
+/-- The cross ratio of four reals. -/
+def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
 
+/-- The SPB matrix `M(a) = !![1, a; -a, 1]`. -/
+def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
 
 /-- The SPB (Stereographic Projection Bridge) operation.
 `spb x y = (x + y) / (1 - x * y)` -/
 def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
+/-- Zero is a right identity for SPB. -/
+theorem spb_zero_right (x : ℝ) : spb x 0 = x := by
+  simp [spb]
+
+/-- Zero is a left identity for SPB. -/
+theorem spb_zero_left (x : ℝ) : spb 0 x = x := by
+  simp [spb]
 
 theorem spb_assoc (x y z : ℝ) (hxy : x * y ≠ 1) (hyz : y * z ≠ 1)
     (hxyz : x * spb y z ≠ 1) (hxyz' : spb x y * z ≠ 1) :
@@ -39,20 +48,6 @@ theorem spb_assoc (x y z : ℝ) (hxy : x * y ≠ 1) (hyz : y * z ≠ 1)
   · contrapose! hxy; linarith;
   · contrapose! hxy; linarith
 
-
-theorem spb_double (a : ℝ) (ha : cos a ≠ 0) (h2a : cos (2 * a) ≠ 0) :
-    tan (2 * a) = spb (tan a) (tan a) := by
-  convert SPB.spb_tan_add a a _ _ _ using 1 <;> simp_all +decide [ Real.tan_eq_sin_div_cos, Real.sin_two_mul, Real.cos_two_mul ];
-  · rw [ Real.sin_add, Real.cos_add ] ; ring;
-    rw [ Real.sin_sq ] ; ring;
-  · rw [ ← two_mul, Real.cos_two_mul ] ; aesop
-
-
-/-- The SPB inverse of `x` is `-x`: `spb(x, -x) = 0`. -/
-theorem spb_neg_self (x : ℝ) : spb x (-x) = 0 := by
-  simp [spb]
-
-
 theorem spb_tan_add (a b : ℝ) (ha : cos a ≠ 0) (hb : cos b ≠ 0)
     (hab : cos (a + b) ≠ 0) :
     tan (a + b) = spb (tan a) (tan b) := by
@@ -60,6 +55,16 @@ theorem spb_tan_add (a b : ℝ) (ha : cos a ≠ 0) (hb : cos b ≠ 0)
   simp_all +decide [ Real.tan_eq_sin_div_cos, Real.sin_add, Real.cos_add ];
   grind
 
+theorem spb_double (a : ℝ) (ha : cos a ≠ 0) (h2a : cos (2 * a) ≠ 0) :
+    tan (2 * a) = spb (tan a) (tan a) := by
+  convert spb_tan_add a a _ _ _ using 1 <;> simp_all +decide [ Real.tan_eq_sin_div_cos, Real.sin_two_mul, Real.cos_two_mul ];
+  · rw [ Real.sin_add, Real.cos_add ] ; ring;
+    rw [ Real.sin_sq ] ; ring;
+  · rw [ ← two_mul, Real.cos_two_mul ] ; aesop
+
+/-- The SPB inverse of `x` is `-x`: `spb(x, -x) = 0`. -/
+theorem spb_neg_self (x : ℝ) : spb x (-x) = 0 := by
+  simp [spb]
 
 /-- SPB of `x` with itself gives the double formula: `2x/(1-x²)`. -/
 theorem spb_self (x : ℝ) (h : x * x ≠ 1) : spb x x = 2 * x / (1 - x * x) := by
@@ -68,26 +73,22 @@ theorem spb_self (x : ℝ) (h : x * x ≠ 1) : spb x x = 2 * x / (1 - x * x) := 
   rw [div_eq_div_iff h1 h1]
   ring
 
-
 /-- SPB distributes over negation: `spb(-x, -y) = -spb(x, y)`. -/
 theorem spb_neg_neg (x y : ℝ) : spb (-x) (-y) = -spb x y := by
   simp [spb, neg_mul, neg_neg]
   ring_nf
 
-
 theorem spb_cancel_right (x y : ℝ) (hxy : x * y ≠ 1)
     (hy : y ^ 2 ≠ 1) (h : spb x y * (-y) ≠ 1) :
     spb (spb x y) (-y) = x := by
-  unfold SPB.spb at *;
+  unfold spb at *;
   rw [ div_eq_iff ];
   · linarith [ div_mul_cancel₀ ( x + y ) ( sub_ne_zero_of_ne <| Ne.symm hxy ) ];
   · grind +locals
 
-
 /-- SPB is commutative. -/
 theorem spb_comm (x y : ℝ) : spb x y = spb y x := by
   simp [spb, add_comm, mul_comm]
-
 
 theorem spb_triple (a : ℝ) (ha : cos a ≠ 0) (h2a : cos (2 * a) ≠ 0)
     (h3a : cos (3 * a) ≠ 0)
@@ -98,12 +99,10 @@ theorem spb_triple (a : ℝ) (ha : cos a ≠ 0) (h2a : cos (2 * a) ≠ 0)
   field_simp;
   ring
 
-
 theorem spb_cocycle (x y z : ℝ) (hxy : x * y ≠ 1) (hyz : y * z ≠ 1) :
     (1 - x * y) * (1 - spb x y * z) = (1 - y * z) * (1 - x * spb y z) := by
   unfold spb;
   grind
-
 
 theorem spb_cayley (x y : ℝ) (hxy : x * y ≠ 1) :
     cayley (spb x y) = cayley x * cayley y := by
@@ -111,6 +110,5 @@ theorem spb_cayley (x y : ℝ) (hxy : x * y ≠ 1) :
   norm_num [ Complex.ext_iff, div_eq_mul_inv ];
   norm_num [ Complex.normSq ] ; ring;
   grind
-
 
 end

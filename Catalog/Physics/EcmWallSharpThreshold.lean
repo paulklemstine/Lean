@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Physics.EcmStage2Wall
+import Physics.EcmStage2Wall
 
 /-!
 # The wall, exactly located: `lcm(1..B)`, the sharp firing threshold, and the true cost

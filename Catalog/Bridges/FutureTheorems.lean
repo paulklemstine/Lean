@@ -64,23 +64,25 @@ theorem softplus_not_polynomial' :
 
 /-! ## Softplus Lipschitz Properties -/
 
-/-
-Softplus is 1-Lipschitz: |σ(x) - σ(y)| ≤ |x - y| for all x, y.
--/
-theorem softplus_lipschitz : LipschitzWith 1 softplus := by
-  have h_deriv : ∀ x, deriv softplus x = logisticSigmoid x := by
-    exact?;
-  apply_rules [ lipschitzWith_of_nnnorm_deriv_le ];
-  · exact?;
-  · norm_num [ ← NNReal.coe_le_coe, h_deriv ];
-    exact fun x => abs_le.mpr ⟨ by rw [ logisticSigmoid ] ; rw [ le_div_iff₀ ] <;> linarith [ Real.exp_pos x ], by rw [ logisticSigmoid ] ; rw [ div_le_iff₀ ] <;> linarith [ Real.exp_pos x ] ⟩
+-- `softplus_lipschitz` is already proved in
+-- `MachineLearning.ShefferFunction.Lean.SoftplusBasic`, which this file imports through
+-- `ShefferAlgebra`; the duplicate copy that used to sit here has been removed.
 
 /-! ## Sigmoid Additional Properties -/
 
-/-- Sigmoid satisfies S(x) + S(-x) = 1 -/
-theorem sigmoid_complement (x : ℝ) : logisticSigmoid x + logisticSigmoid (-x) = 1 := by
-  have := logisticSigmoid_symmetry x
+-- `sigmoid_complement` is likewise already proved in `SoftplusBasic`; the duplicate
+-- copy that used to sit here has been removed.
+
+/-- Sigmoid reflection: `S(-x) = 1 - S(x)`.  (Supplied here from `sigmoid_complement`:
+the file used it without carrying it along.) -/
+theorem logisticSigmoid_symmetry (x : ℝ) : logisticSigmoid (-x) = 1 - logisticSigmoid x := by
+  have := sigmoid_complement x
   linarith
+
+/-- `exp (softplus x) = 1 + exp x`.  (Supplied here: the file used it without carrying
+it along.) -/
+theorem softplus_exp_identity (x : ℝ) : Real.exp (softplus x) = 1 + Real.exp x := by
+  rw [softplus, Real.exp_log (one_add_exp_pos x)]
 
 /-
 Sigmoid is strictly monotone increasing
