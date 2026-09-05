@@ -1027,34 +1027,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Round-41 #4, cron iteration (exp 485, assessment v262). The gating replication papers 150\u2013152 needed.\n\n**LIFT-DOES-NOT-REPLICATE**: across 5 fully independent populations (1200 Ns \u00d7 240 values each), mean \u0394R\u00b2(ph13) = **+0.0008 \u00b1 0.0053** (zero within noise); mean \u0394R\u00b2(pair coincidences) = **+0.0030 \u00b1 0.0119**; pair-vs-phase indistinguishable (+0.0022 \u00b1 0.0160); no baseline correlation (r = 0.06/0.09).\n\nThe +0.03 readings of exps 482r/484 were population luck (base R\u00b2 itself spans 0.56\u20130.62 across the same seeds). Papers 150/151/152 resolve fully: singleton phases, high-prime phases, AND pair coincidences all add ~nothing beyond the footprint dial. The split-ceiling excess remains unexplained by every tested encoding \u2014 possibly intrinsic to the dial family's same-window realized-divisibility information.\n\n**The footprint dial of paper 145 stands as the final form**: rate(N) \u2248 \u03b2\u2080 + \u03b2\u2081\u00b7w(N) + \u03b2\u2082\u00b7d(N), ~200 Euler tests per candidate, R\u00b2 \u2248 0.59 at u=2.5.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp485_multiseed_phase.py + exp485_result.json, seeds 20260910\u201314.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3606",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T07:00:59.866155+00:00",
-    "title": "FACT round-41 #4 \u2014 MULTISEED-PHASE: the lift class does not replicate (paper 153)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-41 #3, cron iteration (exp 484, assessment v261). Paper 150's redirect executed.\n\n**JOINT-ALIGN-TRANSFERS / H3-FAIL**: pair-coincidence features c_pq = #{j: p|v_j AND q|v_j} add **+0.0310** out-of-sample R\u00b2 (CI [0.010, 0.053]) over the footprint dial \u2014 clearing the pre-stated +0.03 \u2014 and **transfer cross-window at ratio 0.51** (> 0.5), unlike singleton phases' negative transfer in exp 482. Coincidence structure is window-position-invariant, exactly the pre-stated guess. Combined R\u00b2 = 0.634 (H3 misses by 0.016).\n\nFLAG: this implementation's re-run of the ph13 arm reads +0.0305 where exp 482 read +0.0082 \u2014 population variance or convention drift, unresolved; the pair result stands independently.\n\nThe split-ceiling excess has its first positive explanatory lever: intersection counts beyond union-counts and singleton offsets.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp484_joint_align.py + exp484_result.json, seed 20260903.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3607",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T07:00:59.867376+00:00",
-    "title": "FACT round-41 #3 \u2014 JOINT-ALIGN: cross-prime coincidences transfer where singleton phases fail (paper 152)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
