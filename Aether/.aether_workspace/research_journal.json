@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6d23453a",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — after TDIAL-U84 (paper 188)\n\nThree research cycles were run on the U84 record (pooled Spearman `0.558`, CI\n`[0.536, 0.581]`, band floor `0.55`, margin `+0.008`, seeds 20261190–92",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-09-01T18:33:33",
-      "title": "FACT round-67 #1 — TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
-    },
-    {
       "cycle_id": "b4f872e1",
       "domain": "Physics",
       "key_insight": "# Future directions — knee theory for attention profiles\n\n## What the formal cycles settled\n\n1. **Two distinct tax mechanisms.** A delay shifts the knee by exactly `+d`; an\n   `m`-th root of the decay",
@@ -499,19 +489,19 @@
       "theorem_count": 605,
       "timestamp": "2026-09-04T21:30:12",
       "title": "FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
+    },
+    {
+      "cycle_id": "79cda873",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — ECM-plane completion, round 42 #4\n\nDerived from the four formal cycles in this run:\n\n* `Catalog/Tropical/ECMPlaneCompletion.lean` — min-plus algebra of cost profiles, the\n  corne",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-09-05T00:07:43",
+      "title": "FACT round-42 #4 — ECM-PLANE-COMPLETION: five methods, one population, one functional (paper 158)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0c164125",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — NET-73 and the limited-memory axis\n\nThree research cycles were run and formalised:\n\n1. **Refutation.** Tokens-per-word explains none of the domain shift: on the\n   four uncensore",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-08-23T07:48:35",
-      "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*) = -0.40, R2 = 0.00"
-    },
     {
       "cycle_id": "3eae19ad",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 605,
       "timestamp": "2026-09-04T21:30:12",
       "title": "FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
+    },
+    {
+      "cycle_id": "79cda873",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — ECM-plane completion, round 42 #4\n\nDerived from the four formal cycles in this run:\n\n* `Catalog/Tropical/ECMPlaneCompletion.lean` — min-plus algebra of cost profiles, the\n  corne",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-09-05T00:07:43",
+      "title": "FACT round-42 #4 — ECM-PLANE-COMPLETION: five methods, one population, one functional (paper 158)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "24e44638",
-      "domain": "Novelty",
-      "name": "pinf_ne_ninf",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "24e44638",
-      "domain": "Novelty",
-      "name": "pinf_notMem_range_fin",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "24e44638",
-      "domain": "Novelty",
-      "name": "ninf_notMem_range_fin",
-      "quality": 0.86
-    },
     {
       "cycle_id": "ed88da41",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "E_add",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "79cda873",
+      "domain": "Tropical",
+      "name": "env_le",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "79cda873",
+      "domain": "Tropical",
+      "name": "exists_leader",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "79cda873",
+      "domain": "Tropical",
+      "name": "env_eq_of_leader",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-09-04T21:30:12",
+  "last_updated": "2026-09-05T00:07:43",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "560d610e",
-        "quality": 0.82,
-        "theorems": 93,
-        "title": "The finite-state class and its bound were constructed this cycle"
-      },
-      {
         "cycle_id": "3b08d230",
         "quality": 0.86,
         "theorems": 154,
@@ -4009,6 +4003,12 @@
         "quality": 0.82,
         "theorems": 88,
         "title": "Real-Parameter Scale Flow on Knee Chains"
+      },
+      {
+        "cycle_id": "79cda873",
+        "quality": 0.79,
+        "theorems": 64,
+        "title": "FACT round-42 #4 — ECM-PLANE-COMPLETION: five methods, one population, one funct"
       }
     ]
   }
