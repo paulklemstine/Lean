@@ -956,20 +956,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Round-40 #5, cron iteration (exp 479, assessment v258). Composition test of papers 137 x 143/146.\n\n**H1 REFUTED \u2014 and the refutation maps the interval law's scope**: descending order reproduced at 5.23\u00d7 (anchor 5.19\u00d7), but the extracted 90% window is (\u03b1=0.9, \u03bc/M=0.79) \u2014 far outside paper 143's band \u2014 and committed scanning there recovers only **69.7%** of the gain; per-draw corr(desc, committed) = \u22120.32. Balance strata confirm the gradient (35.96\u00d7 local gain most-balanced quartile, <1 in low-M deciles).\n\nThe two-number law prices the SINGLE-WINDOW oracle family; real magnitude posteriors are multi-modal across balance strata \u2014 paper 137 remains the correct measurement object for position, 143/146/148 the theory for genuinely-interval oracles.\n\nFLAG: agent's DC1 analytic cross-check diverged (brute-force paths agree, 0 mismatches) \u2014 disclosed, analytic numbers unused.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp479_magnitude_interval.py + exp479_result.json, seed 20260831.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3592",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T05:43:53.955756+00:00",
-    "title": "FACT round-40 #5 \u2014 MAGNITUDE-INTERVAL: position information is not a single interval (paper 149)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(\u03b1) concave piecewise-linear \u2014 intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **\u2192 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) \u2014 placement doubles what width buys. Best cell: right x=1/16 \u03b1=1 \u2192 **14.69\u00d7**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny \u03b1 \u2014 that family can never reach magnitude-ordering gains.\n- Crossing for 5.19\u00d7: \u03b1* = 0.832 (x=1/64) \u2192 0.996 (x=1/8) \u2014 narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling \u2014 order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at \u221aN' = rightmost-interval commitment with CAL capacity \u2192 0.\n\nVerification: exhaustive permutations M=5\u20138 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=\u221272.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
     "domains": [
       "Novelty"
@@ -1797,6 +1783,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b58657bf (Q=0.820), which proved 63 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Because entropy alone cannot certify\n   a budget, a deployable pipeline must fit `(C, r)` in `1 - M(k) \u2264 C r\u1d4f` and\n   report the two-sided sandwich `g\u00b2/E \u2264 k* \u2264 N`. Quantifying the fit's\n   uncertainty and propagating it to the budget is the natural next step.",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_b58657bf_0cd88681",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:45.086773+00:00",
+    "title": "Deepening: A tail-exponent measurement protocol"
   },
   {
     "consumed_by_exp_id": "",
@@ -11321,6 +11321,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Two-head merging already obeys a max law for the knee and a min law for the energy floor. The conjecture is that both persist for arbitrary finite families, so that a model-level certificate can be assembled from per-head measurements without any cross-head data.\n\nFor heads w\u2081, \u2026, w_m with positive weights, min_j k*(w_j) \u2264 k*(\u03a3 w_j) \u2264 max_j k*(w_j) and min_j g\u00b2/E(w_j) \u2264 g\u00b2/E(\u03a3 w_j) \u2264 max_j g\u00b2/E(w_j).\n\nInduct on m in Lean using kstar_add_le_max, min_le_kstar_add, energy_add_le_max and energy_floor_add_ge_min; verify attainment with two explicit head families.\n\nPer-head measurement suffices to certify the model budget, a large practical saving.\n\nCross-head correlations enter the budget, and the merged profile must be measured directly.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_4725",
+    "priority_score": 0.6717179487179489,
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:32.800062+00:00",
+    "title": "Worst-Head Law for Multi-Head Aggregation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two independent lower bounds on the number of adjacent transpositions needed to move Spearman's rho by a given amount are now proved: a linear-in-margin bound of order margin*n^2 and an l1-accumulation bound of order sqrt(margin)*n^{3/2}. The conjecture is that their maximum is tight up to constants, with the crossover at K ~ n^{3/2} marking a change of extremal configuration. Settling it would give the exact metric cost of dial erosion.\n\nFor every n >= 2 and every delta in (0,2) there is a chain of adjacent transpositions of length O(max(delta*n^2, sqrt(delta)*n^{3/2})) taking the identity ranking to a ranking with Spearman rho <= 1 - delta.\n\nConstruct explicit chains (bubble cascades of a fixed block, and block reversals) and compute their exact rho via the proved transposition identity; formalise the resulting upper bound alongside spearman_ge_of_chain_from_id.\n\nThe Kendall cost of a prescribed Spearman drop is determined up to constants, making 'gradual versus cliff' a quantitative, grid-free statement.\n\nThere is an unexploited conserved quantity beyond step size and l1 accumulation, and the true cost has a third regime.",
     "domains": [
       "Combinatorics"
@@ -11332,6 +11346,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T18:33:22.340019+00:00",
     "title": "Kendall\u2013Spearman Budget Duality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved floor k* \u2265 g\u00b2/E is the \u03b1 = 2 rung of a H\u00f6lder ladder of entropy certificates. The conjecture is that every order \u03b1 > 1 gives a valid floor with gate exponent equal to the H\u00f6lder conjugate, and that the ladder degenerates exactly at the Shannon end. It matters because it identifies which entropy a deployable pipeline must measure.\n\nFor every \u03b1 > 1 and every positive profile on n keys, k*(n, g) \u2265 g^(\u03b1/(\u03b1-1)) \u00b7 exp(H_\u03b1), where H_\u03b1 is the R\u00e9nyi entropy of the normalised profile; the bound fails for \u03b1 = 1.\n\nFormalise H\u00f6lder for the head sum in Lean (generalising sq_retained_le_mul_energy) and re-run the spike counterexample to confirm failure at \u03b1 = 1.\n\nA single tunable statistic replaces the \u2113\u00b2-energy, and the optimal \u03b1 can be chosen per gate.\n\nThe \u03b1 = 2 certificate is structurally special, which strengthens the case for reporting collision entropy specifically.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_4723",
+    "priority_score": 0.6716666666666669,
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:31.589824+00:00",
+    "title": "R\u00e9nyi Ladder of Budget Certificates"
   },
   {
     "consumed_by_exp_id": "",
@@ -14376,6 +14404,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T09:52:38.469731+00:00",
     "title": "Cubic Starvation Threshold for Rank Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The fitted ratio damps data error like the d-th root, but the deployed quantity is the budget, not the ratio. The conjecture is that the damping survives the log-inversion, so the reported budget error decays like 1/d in the probe separation. This turns experiment design into a provable guarantee.\n\nThere is an absolute constant c such that for data errors \u03b5 < 1/2 and probes k\u2081 < k\u2082 = k\u2081 + d, budgetOfFit \u0108 r\u0302 \u03c4 \u2264 budgetOfFit C r \u03c4 + c \u00b7 \u03b5 \u00b7 budgetOfFit C r \u03c4 / d.\n\nCompose fitRatio_error_bound with budgetOfFit_mono in Lean and bound the resulting logarithmic expression by elementary inequalities (log(1+x) \u2264 x).\n\nDeployment can pick d from a target budget tolerance, with no distributional assumptions.\n\nThe reported budget is more fragile than the fitted exponent, and confidence boxes must be widened non-uniformly.",
+    "domains": [],
+    "id": "fd_4724",
+    "priority_score": 0.5928260869565218,
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:32.156348+00:00",
+    "title": "Optimal Probe Placement for Two-Point Tail Fits"
   },
   {
     "consumed_by_exp_id": "",
@@ -18515,17 +18555,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Context-Scaling of the Mixing Premium"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "de8ca052",
     "description": "The Heisenberg group formalised here should sit as a normal subgroup inside a semidirect product with SL\u2082(\u211d) acting on chirped Gaussian windows. The approach is to add the chirp generator to the two existing generators (translation and modulation) and check the Weyl cocycle extends. This bridges the algebra of the window with the symplectic geometry of phase space.\n\nThe assignment s \u21a6 gaussC s extends to an SL\u2082(\u211d)-equivariant family of chirped Gaussians exp(-\u03c0(\u03b1+i\u03b2)t\u00b2) intertwining the linear symplectic action on (a,b) with the Gabor transform, and Heis is normal in the resulting semidirect product.\n\nDefine the chirp operator in Lean, verify the cocycle condition against the existing Heis group instance, and check that the Fourier transform corresponds to the rotation by \u03c0/2 using fourier_gaussC and fourier_transOp/fourier_modOp.\n\ngaussSpectral becomes one coordinate of an equivariant family, and monotonicity in the width is revealed as the action of the diagonal one-parameter subgroup \u2014 a structural explanation, not a computation.\n\nThe obstruction will be a genuine cocycle class, which would show that the discrete (multiset-supported) Gabor transform has a metaplectic anomaly absent in the continuous theory.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "fd_3769",
+    "phase": "A",
     "priority_score": 0.5630327484832426,
     "research_mode": "team",
     "source_exp_id": "ccf34fd5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T23:36:07.078696+00:00",
     "title": "Metaplectic Extension of the Gabor Window Action"
   },
@@ -30545,6 +30586,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-05T16:05:33.260773+00:00",
     "title": "Matrix Transfer-Deficit Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "On an exact geometric tail the reported budget equals the knee, so the razor bracket collapses to a point. The conjecture quantifies how this degrades under multiplicative measurement noise, predicting an identification window that shrinks like 1/d in the probe separation, and asserts that the window is optimal.\n\nWith tail data known to multiplicative accuracy \u03b5 and probes separated by d, the reported budget differs from k*(n, \u03c4) by at most \u2308log((1+\u03b5)/(1-\u03b5)) / (d log(1/r))\u2309 + 1 keys, and no estimator from the same data achieves a smaller window.\n\nCompose kstar_exact_of_tail_exact with fitRatio_error_bound in Lean; for optimality, exhibit two profiles consistent with the same noisy data whose knees differ by the stated amount.\n\nA deployment can convert a noise level into an explicit key-level confidence interval for the knee.\n\nNoise interacts with the ceiling rounding non-linearly and the report needs a wider, data-dependent interval.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4726",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:33.368100+00:00",
+    "title": "Knee Identifiability under Noisy Tail Measurements"
   },
   {
     "consumed_by_exp_id": "",
@@ -44471,19 +44526,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:01.582437+00:00",
     "title": "Scoping is preserved by capture-avoiding substitution"
-  },
-  {
-    "consumed_by_exp_id": "b58657bf",
-    "description": "Because entropy alone cannot certify\n   a budget, a deployable pipeline must fit `(C, r)` in `1 - M(k) \u2264 C r\u1d4f` and\n   report the two-sided sandwich `g\u00b2/E \u2264 k* \u2264 N`. Quantifying the fit's\n   uncertainty and propagating it to the budget is the natural next step.",
-    "domains": [],
-    "id": "fd_3899",
-    "phase": "A",
-    "priority_score": 0.4087272727272728,
-    "research_mode": "team",
-    "source_exp_id": "198a9f40",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T01:59:07.236528+00:00",
-    "title": "A tail-exponent measurement protocol"
   },
   {
     "consumed_by_exp_id": "",

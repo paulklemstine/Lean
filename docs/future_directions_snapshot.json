@@ -1295,25 +1295,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Round-40 #5, cron iteration (exp 479, assessment v258). Composition test of papers 137 x 143/146.\n\n**H1 REFUTED — and the refutation maps the interval law's scope**: descending order reproduced at 5.23× (anchor 5.19×), but the extracted 90% window is (α=0.9, μ/M=0.79) — far outside paper 143's band — and committed scanning there recovers only **69.7%** of the gain; per-draw corr(desc, committed) = −0.32. Balance strata confirm the gradient (35.96× local gain most-balanced quartile, <1 in low-M deciles).\n\nThe two-number law prices the SINGLE-WINDOW oracle family; real magnitude posteriors are multi-modal across balance strata — paper 137 remains the correct measurement object for position, 143/146/148 the theory for genuinely-interval oracles.\n\nFLAG: agent's DC1 analytic cross-check diverged (brute-force paths agree, 0 mismatches) — disclosed, analytic numbers unused.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp479_magnitude_interval.py + exp479_result.json, seed 20260831.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3592",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T05:43:53.955756+00:00",
-    "title": "FACT round-40 #5 — MAGNITUDE-INTERVAL: position information is not a single interval (paper 149)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(α) concave piecewise-linear — intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **→ 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) — placement doubles what width buys. Best cell: right x=1/16 α=1 → **14.69×**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny α — that family can never reach magnitude-ordering gains.\n- Crossing for 5.19×: α* = 0.832 (x=1/64) → 0.996 (x=1/8) — narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling — order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at √N' = rightmost-interval commitment with CAL capacity → 0.\n\nVerification: exhaustive permutations M=5–8 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=−72.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
     "domain_bridges": [],
     "domains": [
@@ -2442,6 +2423,25 @@
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b58657bf (Q=0.820), which proved 63 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Because entropy alone cannot certify\n   a budget, a deployable pipeline must fit `(C, r)` in `1 - M(k) ≤ C rᵏ` and\n   report the two-sided sandwich `g²/E ≤ k* ≤ N`. Quantifying the fit's\n   uncertainty and propagating it to the budget is the natural next step.",
+    "domain_bridges": [],
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_b58657bf_0cd88681",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:45.086773+00:00",
+    "title": "Deepening: A tail-exponent measurement protocol"
   },
   {
     "ambition_level": "extension",
@@ -15687,6 +15687,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Shared.AttentionBudgetScaling",
+      "Shared.AttentionBudgetEnergyGeometry"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Two-head merging already obeys a max law for the knee and a min law for the energy floor. The conjecture is that both persist for arbitrary finite families, so that a model-level certificate can be assembled from per-head measurements without any cross-head data.\n\nFor heads w₁, …, w_m with positive weights, min_j k*(w_j) ≤ k*(Σ w_j) ≤ max_j k*(w_j) and min_j g²/E(w_j) ≤ g²/E(Σ w_j) ≤ max_j g²/E(w_j).\n\nInduct on m in Lean using kstar_add_le_max, min_le_kstar_add, energy_add_le_max and energy_floor_add_ge_min; verify attainment with two explicit head families.\n\nPer-head measurement suffices to certify the model budget, a large practical saving.\n\nCross-head correlations enter the budget, and the merged profile must be measured directly.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_4725",
+    "lineage_refs": [],
+    "priority_score": 0.6717179487179489,
+    "proof_strategy": "The induction step is the two-head case applied to (w₁ + ⋯ + w_{m-1}) and w_m; the only care needed is that the partial sums remain positive profiles.",
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:32.800062+00:00",
+    "title": "Worst-Head Law for Multi-Head Aggregation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Novelty.TDialU84ApproachNotCrossed",
       "Catalog.Novelty.TDialU84CrossingDichotomy"
     ],
@@ -15705,6 +15727,28 @@
     "status": "available",
     "timestamp": "2026-09-01T18:33:22.340019+00:00",
     "title": "Kendall–Spearman Budget Duality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.AttentionBudgetTailFit",
+      "Shared.AttentionBudgetEntropyCertificates"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved floor k* ≥ g²/E is the α = 2 rung of a Hölder ladder of entropy certificates. The conjecture is that every order α > 1 gives a valid floor with gate exponent equal to the Hölder conjugate, and that the ladder degenerates exactly at the Shannon end. It matters because it identifies which entropy a deployable pipeline must measure.\n\nFor every α > 1 and every positive profile on n keys, k*(n, g) ≥ g^(α/(α-1)) · exp(H_α), where H_α is the Rényi entropy of the normalised profile; the bound fails for α = 1.\n\nFormalise Hölder for the head sum in Lean (generalising sq_retained_le_mul_energy) and re-run the spike counterexample to confirm failure at α = 1.\n\nA single tunable statistic replaces the ℓ²-energy, and the optimal α can be chosen per gate.\n\nThe α = 2 certificate is structurally special, which strengthens the case for reporting collision entropy specifically.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_4723",
+    "lineage_refs": [],
+    "priority_score": 0.6716666666666669,
+    "proof_strategy": "Replace Cauchy–Schwarz by Hölder with exponents (α, α/(α-1)) in the head-sum estimate; the tail term is controlled exactly as in sq_retained_le_mul_energy, and the Shannon failure is inherited from shannon_floor_refuted.",
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:31.589824+00:00",
+    "title": "Rényi Ladder of Budget Certificates"
   },
   {
     "ambition_level": "extension",
@@ -20523,6 +20567,25 @@
     "status": "available",
     "timestamp": "2026-09-03T09:52:38.469731+00:00",
     "title": "Cubic Starvation Threshold for Rank Dials"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.AttentionBudgetTailFit"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The fitted ratio damps data error like the d-th root, but the deployed quantity is the budget, not the ratio. The conjecture is that the damping survives the log-inversion, so the reported budget error decays like 1/d in the probe separation. This turns experiment design into a provable guarantee.\n\nThere is an absolute constant c such that for data errors ε < 1/2 and probes k₁ < k₂ = k₁ + d, budgetOfFit Ĉ r̂ τ ≤ budgetOfFit C r τ + c · ε · budgetOfFit C r τ / d.\n\nCompose fitRatio_error_bound with budgetOfFit_mono in Lean and bound the resulting logarithmic expression by elementary inequalities (log(1+x) ≤ x).\n\nDeployment can pick d from a target budget tolerance, with no distributional assumptions.\n\nThe reported budget is more fragile than the fitted exponent, and confidence boxes must be widened non-uniformly.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4724",
+    "lineage_refs": [],
+    "priority_score": 0.5928260869565218,
+    "proof_strategy": "Write budgetOfFit as ⌈log((1-τ)/C)/log r⌉ and use that a multiplicative perturbation a^{1/d} of r is an additive perturbation (log a)/d of log r; then estimate the resulting ceiling difference.",
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:32.156348+00:00",
+    "title": "Optimal Probe Placement for Two-Point Tail Fits"
   },
   {
     "ambition_level": "extension",
@@ -26922,7 +26985,7 @@
       "Algebra.SmoothWindows.GaussianWindow",
       "Algebra.SmoothWindows.ScaleSpace"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "de8ca052",
     "description": "The Heisenberg group formalised here should sit as a normal subgroup inside a semidirect product with SL₂(ℝ) acting on chirped Gaussian windows. The approach is to add the chirp generator to the two existing generators (translation and modulation) and check the Weyl cocycle extends. This bridges the algebra of the window with the symplectic geometry of phase space.\n\nThe assignment s ↦ gaussC s extends to an SL₂(ℝ)-equivariant family of chirped Gaussians exp(-π(α+iβ)t²) intertwining the linear symplectic action on (a,b) with the Gabor transform, and Heis is normal in the resulting semidirect product.\n\nDefine the chirp operator in Lean, verify the cocycle condition against the existing Heis group instance, and check that the Fourier transform corresponds to the rotation by π/2 using fourier_gaussC and fourier_transOp/fourier_modOp.\n\ngaussSpectral becomes one coordinate of an equivariant family, and monotonicity in the width is revealed as the action of the diagonal one-parameter subgroup — a structural explanation, not a computation.\n\nThe obstruction will be a genuine cocycle class, which would show that the discrete (multiset-supported) Gabor transform has a metaplectic anomaly absent in the continuous theory.",
     "domain_bridges": [],
     "domains": [
@@ -26935,7 +26998,7 @@
     "proof_strategy": "Extend heisRep by the chirp multiplication operator; verify the three Bruhat relations; use fourier_gaussC to compute the action of the Weyl element on the Gaussian ray; conclude normality of Heis from the commutator formula modOp_transOp.",
     "research_mode": "team",
     "source_exp_id": "ccf34fd5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T23:36:07.078696+00:00",
     "title": "Metaplectic Extension of the Gabor Window Action"
   },
@@ -43794,6 +43857,28 @@
     "status": "available",
     "timestamp": "2026-09-05T16:05:33.260773+00:00",
     "title": "Matrix Transfer-Deficit Identity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.AttentionBudgetFitSharpness",
+      "Shared.AttentionBudgetTailFit"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "On an exact geometric tail the reported budget equals the knee, so the razor bracket collapses to a point. The conjecture quantifies how this degrades under multiplicative measurement noise, predicting an identification window that shrinks like 1/d in the probe separation, and asserts that the window is optimal.\n\nWith tail data known to multiplicative accuracy ε and probes separated by d, the reported budget differs from k*(n, τ) by at most ⌈log((1+ε)/(1-ε)) / (d log(1/r))⌉ + 1 keys, and no estimator from the same data achieves a smaller window.\n\nCompose kstar_exact_of_tail_exact with fitRatio_error_bound in Lean; for optimality, exhibit two profiles consistent with the same noisy data whose knees differ by the stated amount.\n\nA deployment can convert a noise level into an explicit key-level confidence interval for the knee.\n\nNoise interacts with the ceiling rounding non-linearly and the report needs a wider, data-dependent interval.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4726",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Noise enters only through log r̂; the d-th root damping becomes an additive perturbation log((1+ε)/(1-ε))/d of log r, and the budget is the inversion of a log r-linear equation, so the perturbation transfers with an explicit Lipschitz constant. Optimality follows from a two-profile indistinguishability construction.",
+    "research_mode": "team",
+    "source_exp_id": "b58657bf",
+    "status": "available",
+    "timestamp": "2026-09-05T21:15:33.368100+00:00",
+    "title": "Knee Identifiability under Noisy Tail Measurements"
   },
   {
     "ambition_level": "extension",
@@ -62735,23 +62820,6 @@
     "status": "available",
     "timestamp": "2026-08-21T06:25:01.582437+00:00",
     "title": "Scoping is preserved by capture-avoiding substitution"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "b58657bf",
-    "description": "Because entropy alone cannot certify\n   a budget, a deployable pipeline must fit `(C, r)` in `1 - M(k) ≤ C rᵏ` and\n   report the two-sided sandwich `g²/E ≤ k* ≤ N`. Quantifying the fit's\n   uncertainty and propagating it to the budget is the natural next step.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_3899",
-    "lineage_refs": [],
-    "priority_score": 0.4087272727272728,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "198a9f40",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T01:59:07.236528+00:00",
-    "title": "A tail-exponent measurement protocol"
   },
   {
     "ambition_level": "extension",

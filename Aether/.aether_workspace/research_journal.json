@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "384c4d0f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — after the NET-66 one-octave law\n\nThe formal cycle in `Catalog/Combinatorics/OctaveShiftLaw.lean`,\n`Catalog/Combinatorics/GridRazorBracket.lean`,\n`Catalog/Combinatorics/OctaveShif",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 103,
-      "timestamp": "2026-09-02T00:17:08",
-      "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING — 1.5B chain breaks at 2048 ({16,16,20}); b"
-    },
-    {
       "cycle_id": "79285565",
       "domain": "Shared",
       "key_insight": "# Future Directions — Pole-order obstruction (after cycles 3–8)\n\n## What the current cycles established\n\nSix new Lean files extend the catalog files `Shared/PoleOrderObstruction.lean`\n(cycle 1) and `S",
@@ -499,19 +489,19 @@
       "theorem_count": 120,
       "timestamp": "2026-09-05T16:05:47",
       "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
+    },
+    {
+      "cycle_id": "b58657bf",
+      "domain": "Shared",
+      "key_insight": "# Future directions — tail-exponent measurement protocol for attention budgets\n\nThis cycle turned the catalog's qualitative knee theory (`Shared.AttentionBudgetKnee`,\n`Shared.AttentionBudgetScaling`,",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-09-05T21:15:44",
+      "title": "A tail-exponent measurement protocol"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "258afb8b",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — NET-72 (THE-FRENCH-KNEE-EXCEEDS-THE-GRID)\n\nThis cycle established four things about the memory knee of an attention\nprofile:\n\n1. a failed budget sweep certifies **only** a lower",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-23T13:03:22",
-      "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID — no grid point reaches the bar on French prose (knee >24 @"
-    },
     {
       "cycle_id": "242b27e9",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 120,
       "timestamp": "2026-09-05T16:05:47",
       "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
+    },
+    {
+      "cycle_id": "b58657bf",
+      "domain": "Shared",
+      "key_insight": "# Future directions — tail-exponent measurement protocol for attention budgets\n\nThis cycle turned the catalog's qualitative knee theory (`Shared.AttentionBudgetKnee`,\n`Shared.AttentionBudgetScaling`,",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-09-05T21:15:44",
+      "title": "A tail-exponent measurement protocol"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "671d5841",
-      "domain": "Probability",
-      "name": "mem_fibre",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "671d5841",
-      "domain": "Probability",
-      "name": "sum_over_fibres",
-      "quality": 0.86
-    },
     {
       "cycle_id": "671d5841",
       "domain": "Probability",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "sum_stdAddChar_mul",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "b58657bf",
+      "domain": "Shared",
+      "name": "weight_le_head",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b58657bf",
+      "domain": "Shared",
+      "name": "energy_le_head_div_headMass",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-05T16:05:47",
+  "last_updated": "2026-09-05T21:15:44",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "4be48a30",
-        "quality": 0.78,
-        "theorems": 51,
-        "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (kn"
-      },
-      {
         "cycle_id": "93d08ac5",
         "quality": 0.82,
         "theorems": 30,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 46,
         "title": "FACT round-49 #1 — T-DIAL-56: the bitlen-stability has a practical floor (paper "
+      },
+      {
+        "cycle_id": "b58657bf",
+        "quality": 0.82,
+        "theorems": 63,
+        "title": "A tail-exponent measurement protocol"
       }
     ],
     "Tropical": [

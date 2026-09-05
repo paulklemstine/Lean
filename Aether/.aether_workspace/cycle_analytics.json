@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-05T16:05:50.097943+00:00",
+  "last_updated": "2026-09-05T21:15:47.380743+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -73821,6 +73821,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-05T16:05:49.671516+00:00",
       "title": "FACT round-41 #1 \u2014 PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Shared",
+      "duration_seconds": 10571.14460349083,
+      "end_time": 1788642904.9095838,
+      "files_integrated": 4,
+      "job_id": "b58657bf",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1788632333.7649803,
+      "strategy_count": 0,
+      "theorem_count": 63,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 62,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-05T21:15:47.013187+00:00",
+      "title": "A tail-exponent measurement protocol"
     }
   ]
 }

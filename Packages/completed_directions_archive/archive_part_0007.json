@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-05T16:05:33Z",
-  "count": 121,
+  "archived_at": "2026-09-05T21:15:33Z",
+  "count": 122,
   "directions": [
     {
       "id": "fd_3695",
@@ -4795,6 +4795,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 252
+    },
+    {
+      "id": "fd_3899",
+      "title": "A tail-exponent measurement protocol",
+      "description": "Because entropy alone cannot certify\n   a budget, a deployable pipeline must fit `(C, r)` in `1 - M(k) ≤ C rᵏ` and\n   report the two-sided sandwich `g²/E ≤ k* ≤ N`. Quantifying the fit's\n   uncertainty and propagating it to the budget is the natural next step.",
+      "source_exp_id": "198a9f40",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/198a9f40",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4087272727272728,
+      "status": "completed",
+      "consumed_by_exp_id": "b58657bf",
+      "timestamp": "2026-08-24T01:59:07.236528+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-05T16:07:51.569711+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }
