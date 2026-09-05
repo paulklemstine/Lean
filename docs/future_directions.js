@@ -1786,20 +1786,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle b58657bf (Q=0.820), which proved 63 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Because entropy alone cannot certify\n   a budget, a deployable pipeline must fit `(C, r)` in `1 - M(k) \u2264 C r\u1d4f` and\n   report the two-sided sandwich `g\u00b2/E \u2264 k* \u2264 N`. Quantifying the fit's\n   uncertainty and propagating it to the budget is the natural next step.",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_b58657bf_0cd88681",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "b58657bf",
-    "status": "available",
-    "timestamp": "2026-09-05T21:15:45.086773+00:00",
-    "title": "Deepening: A tail-exponent measurement protocol"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domains": [
       "NumberTheory"
@@ -2725,20 +2711,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 575f19d4 (Q=0.780), which proved 54 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-45 #2, cron iteration (exp 501, assessment v277). Paper 167's driver question answered.\n\n**NEITHER** \u2014 both pre-stated hypotheses fail; the truth is intermediate. Four-cell design (window {240, 960} \u00d7 u {2.5, 3.5}, 8 populations):\n- \u0394(240) = **+0.1073** [0.0973, 0.1148] \u2014 reproduces paper 167 ",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_575f19d4_6b2666ea",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "575f19d4",
-    "status": "available",
-    "timestamp": "2026-09-04T00:08:32.322732+00:00",
-    "title": "Deepening: FACT round-45 #2 \u2014 U-HARDEN: the u-sensitivity is mostly intrinsic, partly resol"
   },
   {
     "consumed_by_exp_id": "",
