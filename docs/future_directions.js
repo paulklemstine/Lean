@@ -1055,20 +1055,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Round-42 #2, cron iteration (exp 488, assessment v265). Paper 155's deferred true-lcm ECM, paired against its lite sibling on identical populations.\n\n**LCM-SUPERSET-DOMINANCE**: lcm finds **1200/1200 at BOTH ks** (zero censoring vs lite's 37/45) and strictly contains lite's find set (all 45 lite-censored rescued, zero lost); per-curve success ~4.8\u00d7 higher; found-only meanT LOWER despite ~2.3\u00d7 more ops per curve; total-ops-to-factor advantage confirmed (1.92\u00d7). Across-k slope 0.398 \u2014 birthday-class, no toy-scale separation from L_p[1/2,\u221a2].\n\nAdopted: true-lcm as the lab's canonical stage-1 operator.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp488_true_ecm.py + exp488_result.json + exp488_LEDGER.md, seed 20260922.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3619",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T07:46:53.285748+00:00",
-    "title": "FACT round-42 #2 \u2014 TRUE-ECM: lcm arm strictly dominates (paper 156)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -1154,20 +1140,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-04T18:26:13.298441+00:00",
     "title": "Deepening: Riemann Convergence of Bhattacharyya Angle Sums"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8d588bfb (Q=0.850), which proved 2138 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-42 #5, cron iteration (exp 486-full, assessment v268). The full version of paper 154's plane with bootstrap-CI pooled fits (n=6000/arm).\n\n**PLANE-MEASURED-ECM-WALL**: TD \u03b1 = **1.0009 [1.000, 1.002]** exact; \u03c1-balanced \u03b1 = **0.4994 [0.485, 0.510]** \u2014 birthday bound to three decimals; Fermat-uni",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_8d588bfb_aac46b66",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "8d588bfb",
-    "status": "available",
-    "timestamp": "2026-09-05T04:29:55.045622+00:00",
-    "title": "Deepening: FACT round-42 #5 \u2014 FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge"
   },
   {
     "consumed_by_exp_id": "",
@@ -1868,34 +1840,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a7aa0976 (Q=0.820), which proved 98 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-42 #3, cron iteration (exp 489, assessment v266).\n\n**FULL-PINNING-AT-DEGREE-SEVEN**: the cyclic degree-7 subfield of Q(\u03b6\u2082\u2089) (conductor 29, C\u2082\u2088/\u27e8g\u2077\u27e9 \u2245 C\u2087) confirms every pre-stated prediction \u2014 T(p)=1 iff dlog\u22610 mod 7; densities {1/7, 6/7}; I(p mod 29; T) = H(T) = 0.5917 EXACTLY (empirical 0.59",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_a7aa0976_9d7d2514",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "a7aa0976",
-    "status": "available",
-    "timestamp": "2026-09-05T00:08:02.758924+00:00",
-    "title": "Deepening: FACT round-42 #3 \u2014 DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle b3a54ad0 (Q=0.820), which proved 84 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both regimes are proved unconditionally here\n(`sum_card_V4_of_isSquare_three`, `sum_card_V4_of_not_isSquare_three`), together with the\nreciprocity input for the classes `1, 5, 7 mod 12`; the general statement needs only the\nfactorisation of `\u03c8_n` over `\u211a(N)` plus the same fibre-counting bijection fa",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_b3a54ad0_82f8e9df",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "b3a54ad0",
-    "status": "available",
-    "timestamp": "2026-09-05T00:08:20.326669+00:00",
-    "title": "Deepening: Both regimes are proved unconditionally here"
   },
   {
     "consumed_by_exp_id": "",
