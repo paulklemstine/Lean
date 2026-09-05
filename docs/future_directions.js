@@ -1072,20 +1072,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 41afeb86 (Q=0.870), which proved 120 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-41 #1, cron iteration (exp 482, assessment v259). Paper 147's named follow-up.\n\n**PHASE-SUBTHRESHOLD-LIFT / H3-FAIL**: root-position phases mod {3,5,7,11,13} (cos/sin + QR-indicator, extended to 29) add only +0.008/+0.004 out-of-sample R\u00b2 over the footprint dial (CIs span 0; phase-only WORSE t",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_41afeb86_078a6751",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "41afeb86",
-    "status": "available",
-    "timestamp": "2026-09-05T16:05:47.663598+00:00",
-    "title": "Deepening: FACT round-41 #1 \u2014 PHASE-FEATURES: low-prime phases are sub-threshold and window"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 569bc76d (Q=0.880), which proved 156 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
     "domains": [
       "Bridges"
@@ -2739,20 +2725,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 79cda873 (Q=0.790), which proved 64 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-42 #4, cron iteration (exp 490, assessment v267). Paper 154's deferred ECM column completed properly by its author-agent (marks exp487 SUPERSEDED).\n\n**ECM-PLANE-COMPLETION** (H1/H2/H3 confirmed):\n- ECM across-k \u03b1 = **0.761 (B1=50) / 0.718 (B1=250)** \u2014 strictly between \u03c1 and trial division.\n- F",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_79cda873_1f71f4b1",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "79cda873",
-    "status": "available",
-    "timestamp": "2026-09-05T00:07:43.601387+00:00",
-    "title": "Deepening: FACT round-42 #4 \u2014 ECM-PLANE-COMPLETION: five methods, one population, one funct"
   },
   {
     "consumed_by_exp_id": "",
