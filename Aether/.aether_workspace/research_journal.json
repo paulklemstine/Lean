@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b4f872e1",
-      "domain": "Physics",
-      "key_insight": "# Future directions — knee theory for attention profiles\n\n## What the formal cycles settled\n\n1. **Two distinct tax mechanisms.** A delay shifts the knee by exactly `+d`; an\n   `m`-th root of the decay",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-09-01T18:33:49",
-      "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY — extended grid pins k*(fr@1024)=40, exactly double English prose's"
-    },
-    {
       "cycle_id": "f7361634",
       "domain": "Applications",
       "key_insight": "# Future directions — margin scarcity as the portability predictor\n\nDerived from the three research cycles in `Catalog/Applications/`:\n\n* Cycle 1 — `MarginScarcityPortability.lean`, `MarginScarcityCor",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-09-05T00:07:43",
       "title": "FACT round-42 #4 — ECM-PLANE-COMPLETION: five methods, one population, one functional (paper 158)"
+    },
+    {
+      "cycle_id": "a7aa0976",
+      "domain": "Physics",
+      "key_insight": "# Future directions from the degree-7 rung of the abelian splitting-type ladder\n\nThis run closed the degree-7 rung (the cyclic septic subfield of `Q(ζ₂₉)`),\ngeneralised the ladder's Galois machinery f",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 98,
+      "timestamp": "2026-09-05T00:08:02",
+      "title": "FACT round-42 #3 — DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3eae19ad",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after the U64 zero-fit dial cycle\n\nTwo research cycles were run on the round-61 #1 record\n(`U64-DIAL-HOLDS-COUNT-PARITY`, exp 530).\n\n**Cycle 1** produced the *tie-attenuation law",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 86,
-      "timestamp": "2026-08-23T08:50:02",
-      "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count parity (paper 185)"
-    },
     {
       "cycle_id": "0ef4aed2",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 64,
       "timestamp": "2026-09-05T00:07:43",
       "title": "FACT round-42 #4 — ECM-PLANE-COMPLETION: five methods, one population, one functional (paper 158)"
+    },
+    {
+      "cycle_id": "a7aa0976",
+      "domain": "Physics",
+      "key_insight": "# Future directions from the degree-7 rung of the abelian splitting-type ladder\n\nThis run closed the degree-7 rung (the cyclic septic subfield of `Q(ζ₂₉)`),\ngeneralised the ladder's Galois machinery f",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 98,
+      "timestamp": "2026-09-05T00:08:02",
+      "title": "FACT round-42 #3 — DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ed88da41",
-      "domain": "Bridges",
-      "name": "catalog",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "ed88da41",
-      "domain": "Bridges",
-      "name": "catalog",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "ed88da41",
-      "domain": "Bridges",
-      "name": "eml_generates_neg_one",
-      "quality": 0.88
-    },
     {
       "cycle_id": "d00ca27a",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "env_eq_of_leader",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "a7aa0976",
+      "domain": "Physics",
+      "name": "lb4_2",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a7aa0976",
+      "domain": "Physics",
+      "name": "lb4_4",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a7aa0976",
+      "domain": "Physics",
+      "name": "lb4_16",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-05T00:07:43",
+  "last_updated": "2026-09-05T00:08:02",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "7af52a9c",
-        "quality": 0.86,
-        "theorems": 5,
-        "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagore"
-      },
-      {
         "cycle_id": "40d19005",
         "quality": 0.84,
         "theorems": 122,
@@ -3761,6 +3755,12 @@
         "quality": 0.78,
         "theorems": 69,
         "title": "General `O(N)` model"
+      },
+      {
+        "cycle_id": "a7aa0976",
+        "quality": 0.82,
+        "theorems": 98,
+        "title": "FACT round-42 #3 — DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
       }
     ],
     "Probability": [
