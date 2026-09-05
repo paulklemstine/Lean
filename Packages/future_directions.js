@@ -955,21 +955,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
   },
   {
-    "consumed_by_exp_id": "41afeb86",
-    "description": "Round-41 #1, cron iteration (exp 482, assessment v259). Paper 147's named follow-up.\n\n**PHASE-SUBTHRESHOLD-LIFT / H3-FAIL**: root-position phases mod {3,5,7,11,13} (cos/sin + QR-indicator, extended to 29) add only +0.008/+0.004 out-of-sample R\u00b2 over the footprint dial (CIs span 0; phase-only WORSE than baseline at \u22120.077). **H2 CONFIRMED**: cross-window phase gain goes significantly negative \u2014 window-locality supported as the mechanism behind paper 147's split-ceiling excess. H3 refuted (R\u00b2 = 0.608 < 0.70).\n\nThe split-ceiling excess remains unexplained by any tested feature class \u2014 candidates narrow to higher-prime phase patterns or same-window leakage of realized-divisibility features (base dial drops 0.60 \u2192 0.40 cross-window).\n\nProvenance note: the agent's L0 audit voided the coordinator's inline quick attempt (cross-window arm trained and tested on the same half; wrong offset definition; encoding collision) \u2014 its clean reimplementation is authoritative.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp482_phase_features.py + exp482_result.json, seed 20260901.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3591",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T05:43:53.954629+00:00",
-    "title": "FACT round-41 #1 \u2014 PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-40 #5, cron iteration (exp 479, assessment v258). Composition test of papers 137 x 143/146.\n\n**H1 REFUTED \u2014 and the refutation maps the interval law's scope**: descending order reproduced at 5.23\u00d7 (anchor 5.19\u00d7), but the extracted 90% window is (\u03b1=0.9, \u03bc/M=0.79) \u2014 far outside paper 143's band \u2014 and committed scanning there recovers only **69.7%** of the gain; per-draw corr(desc, committed) = \u22120.32. Balance strata confirm the gradient (35.96\u00d7 local gain most-balanced quartile, <1 in low-M deciles).\n\nThe two-number law prices the SINGLE-WINDOW oracle family; real magnitude posteriors are multi-modal across balance strata \u2014 paper 137 remains the correct measurement object for position, 143/146/148 the theory for genuinely-interval oracles.\n\nFLAG: agent's DC1 analytic cross-check diverged (brute-force paths agree, 0 mismatches) \u2014 disclosed, analytic numbers unused.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp479_magnitude_interval.py + exp479_result.json, seed 20260831.",
     "domains": [
@@ -1084,6 +1069,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 41afeb86 (Q=0.870), which proved 120 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-41 #1, cron iteration (exp 482, assessment v259). Paper 147's named follow-up.\n\n**PHASE-SUBTHRESHOLD-LIFT / H3-FAIL**: root-position phases mod {3,5,7,11,13} (cos/sin + QR-indicator, extended to 29) add only +0.008/+0.004 out-of-sample R\u00b2 over the footprint dial (CIs span 0; phase-only WORSE t",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_41afeb86_078a6751",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "41afeb86",
+    "status": "available",
+    "timestamp": "2026-09-05T16:05:47.663598+00:00",
+    "title": "Deepening: FACT round-41 #1 \u2014 PHASE-FEATURES: low-prime phases are sub-threshold and window"
   },
   {
     "consumed_by_exp_id": "",
@@ -14453,6 +14452,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-02T21:51:05.392795+00:00",
     "title": "Orthogonality of Repetition and Prior Refinements"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A split between in-window and cross-window R-squared has exactly two possible sources: a feature that carries a copy of the realized target, or a genuine change of the feature-target covariance between windows. The transfer identity turns the split into a squared coefficient miss, and the miss must be attributable to one of the two. This converts the open split-ceiling excess into a two-measurement protocol.\n\nIf the in-window R-squared exceeds the cross-window R-squared by Delta, then either some feature correlates at level at least sqrt(Delta) with the realized training target, or the feature-target covariances of the two windows differ by at least sqrt(Delta) times the norms.\n\nFormalize the two-window model with explicit training and test residuals, prove the disjunction from transfer_deficit_eq and coefficient_miss_lower_bound, then evaluate both branches on the exp-482 logs.\n\nThe split-ceiling excess is decided by direct measurement, with no further model fitting.\n\nA third mechanism exists, most plausibly estimation variance in the training coefficient; that would need a probabilistic rather than deterministic ceiling.",
+    "domains": [],
+    "id": "fd_4719",
+    "priority_score": 0.5927272727272728,
+    "research_mode": "team",
+    "source_exp_id": "41afeb86",
+    "status": "available",
+    "timestamp": "2026-09-05T16:05:31.612170+00:00",
+    "title": "Leakage-Transfer Dichotomy for Split Ceilings"
   },
   {
     "consumed_by_exp_id": "",
@@ -30507,6 +30518,64 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The QR/phase Gram of an m-frequency design is a star graph: one exact coupling per active channel. Its smallest eigenvalue should be exactly 1 - sqrt(2m/(p-1)), interpolating between the proved single-frequency constant and the proved degeneracy at a full half period. This turns the number of frequencies carried by a dial into a closed-form capacity.\n\nFor an odd prime p and m distinct half-period frequencies, the normalised Gram of (cos_k, sin_k for the m frequencies, QR) has smallest eigenvalue exactly 1 - sqrt(2m/(p-1)), and the corresponding lift ceiling is (2m+1) eps^2 / (1 - sqrt(2m/(p-1))).\n\nAssemble the star-graph Gram from qr_phaseSin_gram_exact / qr_phaseCos_gram_exact and the phase orthogonality lemmas, compute its characteristic polynomial, and check the endpoints against block_stability_constant_eq (m = 1) and qr_eq_combo_phaseDesign (m = (p-1)/2).\n\nDesign capacity becomes computable from the frequency count alone, and the exp-482 single-frequency choice is provably the least favourable one for the QR feature.\n\nThe couplings at different frequencies are not equal in the normalised metric, which would contradict the constancy of |gaussSum| across nonzero frequencies and localise an anomalous frequency class.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_4718",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "41afeb86",
+    "status": "available",
+    "timestamp": "2026-09-05T16:05:31.044423+00:00",
+    "title": "Frequency-Restriction Capacity Law for Phase Designs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both inputs to the block ceiling decay with the prime: the Gram coupling provably as sqrt(2/(p-1)), strictly decreasing, and the residual correlation conjecturally as p^{-1/2} by square-root cancellation. If so, the total lift from all prime blocks up to P grows only like log log P, so extending the phase design cannot reach the registered bar at any P.\n\nIf the per-feature residual correlation at prime p satisfies eps_p = O(p^{-1/2}), then the total lift of all prime phase blocks with p <= P is O(eps^2 log log P).\n\nCombine total_block_ceiling with the per-block ceiling phase_block_lift_ceiling_gaussDelta and the assumed decay, summing over primes with Mertens' theorem; measure eps_p empirically for p up to 700 to test the decay hypothesis itself.\n\nHigher-prime phase patterns are eliminated as an explanation of the split-ceiling excess, leaving same-window leakage as the sole surviving candidate.\n\nSome prime class carries an anomalously large residual correlation, which would itself be the discovery, and would localize the excess to that class.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4720",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "41afeb86",
+    "status": "available",
+    "timestamp": "2026-09-05T16:05:32.158280+00:00",
+    "title": "Higher-Prime Phase Saturation Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Over ZMod(pq) the additive phase features and the Jacobi symbol should form a design whose Gram is diagonal except for couplings of modulus sqrt(pq), inherited from twisted multiplicativity of the Jacobi Gauss sum. The channel dichotomy should then be governed by pq mod 4 rather than by p and q separately, matching the known phase collapse of Jacobi Gauss sums.\n\nFor distinct odd primes p, q and any frequency k coprime to pq, the coupling between the Jacobi feature and the phase at frequency k over ZMod(pq) has modulus sqrt(pq) and lies entirely in the cosine channel if pq = 1 mod 4 and in the sine channel otherwise.\n\nExtend chiC to the Jacobi character mod pq, reuse gaussSum_sq for the composite quadratic character, and compute the real and imaginary parts as in the prime case; cross-check numerically for pq in {15, 21, 33, 35}.\n\nThe whole ceiling apparatus applies verbatim to composite moduli, which is the regime the factoring dials actually sample.\n\nThe composite Gram has extra couplings, meaning the per-prime block decomposition is not the right basis for composite windows.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4721",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "41afeb86",
+    "status": "available",
+    "timestamp": "2026-09-05T16:05:32.711085+00:00",
+    "title": "Jacobi-Phase Gram over Composite Moduli"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The scalar identity gain - oosGain = (beta - beta*)^2 ||f||^2 should lift to a quadratic form: for a vector of features with test Gram S and covariance c, the deficit of a transported coefficient vector is the Mahalanobis norm of beta - S^{-1} c in the metric S. This makes the window-locality certificates multivariate, matching how the dials are actually fitted.\n\nFor an invertible test-window Gram S, the deficit of a transported coefficient vector beta equals (beta - S^{-1} c)^T S (beta - S^{-1} c), and the observed 0.600 -> 0.400 collapse corresponds to a deficit of Mahalanobis length sqrt(0.2).\n\nFormalize the multivariate least-squares gain over a finite index type, prove the completed-square identity for the quadratic form, and specialise to the one-dimensional case to recover transfer_deficit_eq.\n\nAll window-locality certificates in the thread become multivariate, closing the last informal step in the exp-482 argument.\n\nThe Gram is singular on the test window, which itself certifies that the design is degenerate there and that the cross-window comparison is not well posed.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4722",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "41afeb86",
+    "status": "available",
+    "timestamp": "2026-09-05T16:05:33.260773+00:00",
+    "title": "Matrix Transfer-Deficit Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -44432,14 +44501,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scoping is preserved by capture-avoiding substitution"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b58657bf",
     "description": "Because entropy alone cannot certify\n   a budget, a deployable pipeline must fit `(C, r)` in `1 - M(k) \u2264 C r\u1d4f` and\n   report the two-sided sandwich `g\u00b2/E \u2264 k* \u2264 N`. Quantifying the fit's\n   uncertainty and propagating it to the budget is the natural next step.",
     "domains": [],
     "id": "fd_3899",
+    "phase": "A",
     "priority_score": 0.4087272727272728,
     "research_mode": "team",
     "source_exp_id": "198a9f40",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T01:59:07.236528+00:00",
     "title": "A tail-exponent measurement protocol"
   },

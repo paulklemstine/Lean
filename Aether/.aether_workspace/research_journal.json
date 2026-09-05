@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "108711a9",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — after the degree-12 semiprime arm\n\nThis cycle closed the semiprime half of the degree-12 splitting-type programme\nand, in doing so, replaced three per-order enumerations by three",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-09-02T00:16:48",
-      "title": "FACT round-55 #2 — D12-SEMIPRIME: the degree-12 semiprime pair channel matches law (paper 183)"
-    },
-    {
       "cycle_id": "384c4d0f",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — after the NET-66 one-octave law\n\nThe formal cycle in `Catalog/Combinatorics/OctaveShiftLaw.lean`,\n`Catalog/Combinatorics/GridRazorBracket.lean`,\n`Catalog/Combinatorics/OctaveShif",
@@ -499,19 +489,19 @@
       "theorem_count": 2138,
       "timestamp": "2026-09-05T04:29:54",
       "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
+    },
+    {
+      "cycle_id": "41afeb86",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after PHASE-SUBTHRESHOLD-LIFT (paper 150, exp 482)\n\nThis thread replaced the empirical statements of exp 482 with theorems, in five cycles:\n\n* the phase block's tiny lift (`+0.00",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 120,
+      "timestamp": "2026-09-05T16:05:47",
+      "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3d2c810c",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThree things are now established. The measured code knees — 12 keys at context 512 and 16\nat context 1024 — follow from exactly two bracketing readings each. The code/prose gap of",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-08-23T11:36:25",
-      "title": "NET-68: CODE-NEEDS-FEWER-KEYS — domain jump to Python shifts the knee chain down one fine step ({12,"
-    },
     {
       "cycle_id": "258afb8b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 2138,
       "timestamp": "2026-09-05T04:29:54",
       "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
+    },
+    {
+      "cycle_id": "41afeb86",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after PHASE-SUBTHRESHOLD-LIFT (paper 150, exp 482)\n\nThis thread replaced the empirical statements of exp 482 with theorems, in five cycles:\n\n* the phase block's tiny lift (`+0.00",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 120,
+      "timestamp": "2026-09-05T16:05:47",
+      "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e2f91544",
-      "domain": "Physics",
-      "name": "admissible_ne_neg_eight",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e2f91544",
-      "domain": "Physics",
-      "name": "admissible_pos_denom",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e2f91544",
-      "domain": "Physics",
-      "name": "betaON_one",
-      "quality": 0.78
-    },
     {
       "cycle_id": "671d5841",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "eml_generates_neg_one",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "41afeb86",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "41afeb86",
+      "domain": "Novelty",
+      "name": "conj_stdAddChar",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "41afeb86",
+      "domain": "Novelty",
+      "name": "sum_stdAddChar_mul",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-09-05T04:29:54",
+  "last_updated": "2026-09-05T16:05:47",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3c91f334",
-        "quality": 0.84,
-        "theorems": 124,
-        "title": "Each conjecture below is stated so that it can be *falsified* by a single Lean\nc"
-      },
-      {
         "cycle_id": "eb1faf15",
         "quality": 0.84,
         "theorems": 114,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 84,
         "title": "Both regimes are proved unconditionally here"
+      },
+      {
+        "cycle_id": "41afeb86",
+        "quality": 0.87,
+        "theorems": 120,
+        "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window"
       }
     ],
     "NumberTheory": [

@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-05T04:29:39Z",
-  "count": 120,
+  "archived_at": "2026-09-05T16:05:33Z",
+  "count": 121,
   "directions": [
     {
       "id": "fd_3695",
@@ -4755,6 +4755,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 261
+    },
+    {
+      "id": "fd_3591",
+      "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)",
+      "description": "Round-41 #1, cron iteration (exp 482, assessment v259). Paper 147's named follow-up.\n\n**PHASE-SUBTHRESHOLD-LIFT / H3-FAIL**: root-position phases mod {3,5,7,11,13} (cos/sin + QR-indicator, extended to 29) add only +0.008/+0.004 out-of-sample R² over the footprint dial (CIs span 0; phase-only WORSE than baseline at −0.077). **H2 CONFIRMED**: cross-window phase gain goes significantly negative — window-locality supported as the mechanism behind paper 147's split-ceiling excess. H3 refuted (R² = 0.608 < 0.70).\n\nThe split-ceiling excess remains unexplained by any tested feature class — candidates narrow to higher-prime phase patterns or same-window leakage of realized-divisibility features (base dial drops 0.60 → 0.40 cross-window).\n\nProvenance note: the agent's L0 audit voided the coordinator's inline quick attempt (cross-window arm trained and tested on the same half; wrong offset definition; encoding collision) — its clean reimplementation is authoritative.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp482_phase_features.py + exp482_result.json, seed 20260901.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "41afeb86",
+      "timestamp": "2026-08-22T05:43:53.954629+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.87,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-09-05T04:32:13.950010+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 252
     }
   ]
 }
