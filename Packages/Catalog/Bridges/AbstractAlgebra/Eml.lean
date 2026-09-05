@@ -1,5 +1,7 @@
 import Mathlib
 
+open Real
+
 /-! # CatalogBuild.Shared.Eml
 
 Auto-generated from theorem catalog database.
@@ -8,6 +10,9 @@ Declarations: 17
 -/
 
 noncomputable section
+
+/-- The EML operation -/
+def eml (a b : ℝ) : ℝ := exp a - log b
 
 /-- [Section: # CatalogBuild.Shared.Eml
 Auto-generated from theorem catalog database.

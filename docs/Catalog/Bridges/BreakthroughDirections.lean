@@ -1,5 +1,7 @@
 import Mathlib
 
+open Real
+
 /-! # CatalogBuild.Bridges.BreakthroughDirections
 
 Auto-generated from theorem catalog database.

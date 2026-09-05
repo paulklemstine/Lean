@@ -9,6 +9,41 @@ Declarations: 8
 
 noncomputable section
 
+/-- The SPB (stereographic projection bridge) operation. -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
+
+/-- The tangent addition formula in SPB form. -/
+theorem tan_add_eq_spb (x y : ℝ) (hx : Real.cos x ≠ 0) (hy : Real.cos y ≠ 0) :
+    Real.tan (x + y) = spb (Real.tan x) (Real.tan y) := by
+  have hd : 1 - Real.tan x * Real.tan y
+      = (Real.cos x * Real.cos y - Real.sin x * Real.sin y) / (Real.cos x * Real.cos y) := by
+    rw [Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos]
+    field_simp
+  by_cases h : Real.cos (x + y) = 0
+  · have h0 : Real.cos x * Real.cos y - Real.sin x * Real.sin y = 0 := by
+      rw [← Real.cos_add]; exact h
+    unfold spb
+    rw [hd, h0, zero_div, div_zero, Real.tan_eq_sin_div_cos, h, div_zero]
+  · unfold spb
+    rw [Real.tan_eq_sin_div_cos (x + y), Real.sin_add, Real.cos_add,
+        Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos]
+    rw [Real.cos_add] at h
+    field_simp
+
+/-- Zero is a left identity for SPB. -/
+theorem spb_zero_left (x : ℝ) : spb 0 x = x := by simp [spb]
+
+/-- Zero is a right identity for SPB. -/
+theorem spb_zero_right (x : ℝ) : spb x 0 = x := by simp [spb]
+
+open Real Matrix
+
+/-- The cross ratio of four reals. -/
+def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
+
+/-- The SPB matrix `M(a) = !![1, a; -a, 1]`. -/
+def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
+
 /-- [Section: # CatalogBuild.Shared.Spb_hasDerivAt_snd
 Auto-generated from theorem catalog database.
 Domain: EML

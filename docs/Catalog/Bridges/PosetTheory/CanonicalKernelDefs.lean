@@ -26,6 +26,14 @@ equivalence classes and the restricted critical group.
 import Mathlib
 import Logic.GraphTheory.Defs
 
+/-- The combinatorial graph Laplacian matrix. -/
+def graphLaplacian {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] : Matrix V V ℤ :=
+  fun i j =>
+    if i = j then (G.degree i : ℤ)
+    else if G.Adj i j then -1
+    else 0
+
 open Finset BigOperators
 
 variable {V : Type*} [Fintype V] [DecidableEq V]

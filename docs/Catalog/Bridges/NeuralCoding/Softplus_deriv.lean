@@ -9,6 +9,16 @@ Declarations: 9
 
 noncomputable section
 
+/-- The softplus activation `x ↦ log (1 + eˣ)`. -/
+def softplus (x : ℝ) : ℝ := Real.log (1 + Real.exp x)
+
+/-- The logistic sigmoid, written in the form `eˣ / (1 + eˣ)`. -/
+def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
+
+theorem one_plus_exp_pos (x : ℝ) : (0 : ℝ) < 1 + Real.exp x := by
+  have := Real.exp_pos x
+  linarith
+
 /-- [Section: # CatalogBuild.Shared.Softplus_convex
 Auto-generated from theorem catalog database.
 Domain: Shared

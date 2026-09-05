@@ -352,7 +352,8 @@ theorem M_det_sq : M.det ^ 2 = 1 := by native_decide
 #print axioms det_M6
 #print axioms M_lorentz
 #print axioms syndrome_identity
-#print axioms pq_diff
+-- (`#print axioms pq_diff` removed: `pq_diff` is declared in
+-- `Bridges/AbstractAlgebra/Ghost.lean`, which this module does not import.)
 #print axioms error_detection_a
 #print axioms M00_are_squares
 #print axioms nsw_values

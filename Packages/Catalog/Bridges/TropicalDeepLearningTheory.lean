@@ -103,6 +103,11 @@ theorem transformer_expressiveness (h d_k depth : ℕ) (hh : 1 ≤ h) (hdk : 1 �
   Nat.one_le_pow depth (h * d_k)
     (Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (by omega) (by omega)))
 
+/-- ReLU is idempotent.  (Supplied here: the auto-generated file used
+`relu_idempotent` without carrying it along.) -/
+theorem relu_idempotent (x : ℝ) : max (max x 0) 0 = max x 0 := by
+  rw [max_assoc, max_self]
+
 /-- Saturated attention is idempotent: applying argmax twice = applying once. -/
 theorem saturated_attention_idempotent (x : ℝ) :
     max (max x 0) 0 = max x 0 := relu_idempotent x
@@ -144,7 +149,7 @@ theorem lse_ge_max (beta x y : ℝ) (hbeta : 0 < beta) :
     max x y ≤ LSE_two beta x y := by
   unfold LSE_two
   field_simp;
-  rw [ le_log_iff_exp_le ( by positivity ) ];
+  rw [ Real.le_log_iff_exp_le ( by positivity ) ];
   cases max_cases x y <;> simp +decide [ *, mul_comm ];
   · positivity;
   · positivity
@@ -303,8 +308,9 @@ theorem idempotent_fixed_points {α : Type*} (f : α → α) (hf : f ∘ f = f) 
 /-- ReLU is idempotent (restated for emphasis). -/
 theorem relu_idem (x : ℝ) : max (max x 0) 0 = max x 0 := relu_idempotent x
 
-/-- Tropical max is idempotent. -/
-theorem max_idem (a : ℝ) : max a a = a := max_self a
+/-- Tropical max is idempotent.  (Renamed from `max_idem`, which now clashes with
+Mathlib's `max_idem`.) -/
+theorem tropical_max_idem (a : ℝ) : max a a = a := max_self a
 
 /-- Lattice projection is idempotent (abstract version). -/
 theorem projection_idem {α : Type*} (proj : α → α) (h : proj ∘ proj = proj) :

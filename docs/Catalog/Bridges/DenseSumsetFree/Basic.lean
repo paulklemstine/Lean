@@ -114,4 +114,25 @@ lemma DistinctSums.subset {A B A' B' : Finset ℕ} (h : DistinctSums A B)
   fun a₁ ha₁ b₁ hb₁ a₂ ha₂ b₂ hb₂ he =>
     h a₁ (hA ha₁) b₁ (hB hb₁) a₂ (hA ha₂) b₂ (hB hb₂) he
 
+/-- An elementary analytic bound used by the scale computations:
+`(log x)² ≤ 16 √x` for `x ≥ 1`.  (Supplied here: the development used it but the
+statement was missing from the repository.)  The proof applies `log t ≤ t - 1` to
+`t = x^{1/4}`. -/
+theorem log_sq_le_sqrt {x : ℝ} (hx : 1 ≤ x) : (Real.log x) ^ 2 ≤ 16 * Real.sqrt x := by
+  have hx0 : (0:ℝ) ≤ x := by linarith
+  have hs0 : 0 ≤ Real.sqrt x := Real.sqrt_nonneg x
+  have hss : Real.sqrt (Real.sqrt x) ^ 2 = Real.sqrt x := Real.sq_sqrt hs0
+  have hlogss : Real.log (Real.sqrt (Real.sqrt x)) = Real.log x / 4 := by
+    rw [Real.log_sqrt hs0, Real.log_sqrt hx0]
+    ring
+  have hlt : Real.log (Real.sqrt (Real.sqrt x)) ≤ Real.sqrt (Real.sqrt x) - 1 := by
+    have hpos : 0 < Real.sqrt (Real.sqrt x) :=
+      Real.sqrt_pos.mpr (Real.sqrt_pos.mpr (by linarith))
+    exact Real.log_le_sub_one_of_pos hpos
+  have hlognn : 0 ≤ Real.log x := Real.log_nonneg hx
+  have hkey : Real.log x ≤ 4 * Real.sqrt (Real.sqrt x) := by
+    rw [hlogss] at hlt
+    linarith [Real.sqrt_nonneg (Real.sqrt x)]
+  nlinarith [Real.sqrt_nonneg (Real.sqrt x), hss]
+
 end DenseSumsetFree

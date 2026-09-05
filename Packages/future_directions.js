@@ -1068,36 +1068,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-42 #5 \u2014 FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
   },
   {
-    "consumed_by_exp_id": "79cda873",
-    "description": "Round-42 #4, cron iteration (exp 490, assessment v267). Paper 154's deferred ECM column completed properly by its author-agent (marks exp487 SUPERSEDED).\n\n**ECM-PLANE-COMPLETION** (H1/H2/H3 confirmed):\n- ECM across-k \u03b1 = **0.761 (B1=50) / 0.718 (B1=250)** \u2014 strictly between \u03c1 and trial division.\n- Factor-locality SHARP: \u0394\u03b1 \u2264 0.03 for \u03c1/ECM under uniform-vs-balanced draws; only intercepts move. TD shifts 1.00 \u2192 1.14 replicating paper 89's 1.09.\n- H3 AT THE EDGE: c_ECM \u2212 c_\u03c1 = **+3.04 bits common-currency / 10.29\u00d7 wall time** \u2014 toy-scale overhead exactly at the order line.\n\nFull (\u03b1, c) table for five methods \u00d7 two regimes recorded. Ledger: \u03c1 cycle-lock pathology fixed; batched-gcd quantization had erased the \u221ap law (per-iteration gcd restored \u03b1=0.512 vs paper 154's 0.52).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp490_ecm_completion.py + exp490_result.json, seed 20260921.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3617",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:46:53.283073+00:00",
-    "title": "FACT round-42 #4 \u2014 ECM-PLANE-COMPLETION: five methods, one population, one functional (paper 158)"
-  },
-  {
-    "consumed_by_exp_id": "a7aa0976",
-    "description": "Round-42 #3, cron iteration (exp 489, assessment v266).\n\n**FULL-PINNING-AT-DEGREE-SEVEN**: the cyclic degree-7 subfield of Q(\u03b6\u2082\u2089) (conductor 29, C\u2082\u2088/\u27e8g\u2077\u27e9 \u2245 C\u2087) confirms every pre-stated prediction \u2014 T(p)=1 iff dlog\u22610 mod 7; densities {1/7, 6/7}; I(p mod 29; T) = H(T) = 0.5917 EXACTLY (empirical 0.5914); semiprime pair 0.0112 vs law 0.0111; Is(7)-projection 0.1161 = Bin(2,1/7) closed form.\n\nLEDGER disclosure: the coordinator-supplied anchor 'Is(7)=0.0103' was actually G(7) (the OR channel) \u2014 caught by the measurement landing at 0.116.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp489_degree_seven.py + exp489_result.json, seed 20260923.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3618",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:46:53.284429+00:00",
-    "title": "FACT round-42 #3 \u2014 DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-42 #2, cron iteration (exp 488, assessment v265). Paper 155's deferred true-lcm ECM, paired against its lite sibling on identical populations.\n\n**LCM-SUPERSET-DOMINANCE**: lcm finds **1200/1200 at BOTH ks** (zero censoring vs lite's 37/45) and strictly contains lite's find set (all 45 lite-censored rescued, zero lost); per-curve success ~4.8\u00d7 higher; found-only meanT LOWER despite ~2.3\u00d7 more ops per curve; total-ops-to-factor advantage confirmed (1.92\u00d7). Across-k slope 0.398 \u2014 birthday-class, no toy-scale separation from L_p[1/2,\u221a2].\n\nAdopted: true-lcm as the lab's canonical stage-1 operator.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp488_true_ecm.py + exp488_result.json + exp488_LEDGER.md, seed 20260922.",
     "domains": [
@@ -1173,20 +1143,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 2d4305e2 (Q=0.880), which proved 605 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-42 #6, cron iteration (exp 491, assessment v269).\n\n**TABLES-SHUT**: all four fork channels (g/OR, Is/split-count, A/AND, X/XOR) computed exactly for n = 2..25.\n- **H1 CONFIRMED**: Is \u2265 max(g,A,X) at every n (no violations); A \u2265 g everywhere; **A overtakes X exactly at n=8** \u2014 paper 74's crosso",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_2d4305e2_cfc988b7",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "2d4305e2",
-    "status": "available",
-    "timestamp": "2026-09-04T21:30:13.049782+00:00",
-    "title": "Deepening: FACT round-42 #6 \u2014 TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 569bc76d (Q=0.880), which proved 156 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
     "domains": [
       "Bridges"
@@ -1212,20 +1168,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-04T18:26:13.298441+00:00",
     "title": "Deepening: Riemann Convergence of Bhattacharyya Angle Sums"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle d00ca27a (Q=0.860), which proved 18 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The upper bracketing degree of the binomial weights is \u230a(n+1)\u03b1\u230b with \u03b1 = p/(p+q), a Beatty sequence. The conjecture is that the increment word of the argmax staircase is the Sturmian word of slope \u03b1, so the combinatorics of binomial peaks is the combinatorics of a circle rotation.\n\nThe word w n = la",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_d00ca27a_cf6fb764",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "d00ca27a",
-    "status": "available",
-    "timestamp": "2026-09-03T18:40:36.516082+00:00",
-    "title": "Deepening: Sturmian Structure of the Argmax Staircase"
   },
   {
     "consumed_by_exp_id": "",
@@ -1926,6 +1868,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T07:10:28.798674+00:00",
     "title": "Deepening: Kneser input for many lines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a7aa0976 (Q=0.820), which proved 98 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-42 #3, cron iteration (exp 489, assessment v266).\n\n**FULL-PINNING-AT-DEGREE-SEVEN**: the cyclic degree-7 subfield of Q(\u03b6\u2082\u2089) (conductor 29, C\u2082\u2088/\u27e8g\u2077\u27e9 \u2245 C\u2087) confirms every pre-stated prediction \u2014 T(p)=1 iff dlog\u22610 mod 7; densities {1/7, 6/7}; I(p mod 29; T) = H(T) = 0.5917 EXACTLY (empirical 0.59",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_a7aa0976_9d7d2514",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "a7aa0976",
+    "status": "available",
+    "timestamp": "2026-09-05T00:08:02.758924+00:00",
+    "title": "Deepening: FACT round-42 #3 \u2014 DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b3a54ad0 (Q=0.820), which proved 84 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both regimes are proved unconditionally here\n(`sum_card_V4_of_isSquare_three`, `sum_card_V4_of_not_isSquare_three`), together with the\nreciprocity input for the classes `1, 5, 7 mod 12`; the general statement needs only the\nfactorisation of `\u03c8_n` over `\u211a(N)` plus the same fibre-counting bijection fa",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_b3a54ad0_82f8e9df",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "b3a54ad0",
+    "status": "available",
+    "timestamp": "2026-09-05T00:08:20.326669+00:00",
+    "title": "Deepening: Both regimes are proved unconditionally here"
   },
   {
     "consumed_by_exp_id": "",
@@ -2854,6 +2824,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 79cda873 (Q=0.790), which proved 64 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-42 #4, cron iteration (exp 490, assessment v267). Paper 154's deferred ECM column completed properly by its author-agent (marks exp487 SUPERSEDED).\n\n**ECM-PLANE-COMPLETION** (H1/H2/H3 confirmed):\n- ECM across-k \u03b1 = **0.761 (B1=50) / 0.718 (B1=250)** \u2014 strictly between \u03c1 and trial division.\n- F",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_79cda873_1f71f4b1",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "79cda873",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:43.601387+00:00",
+    "title": "Deepening: FACT round-42 #4 \u2014 ECM-PLANE-COMPLETION: five methods, one population, one funct"
   },
   {
     "consumed_by_exp_id": "",
@@ -13931,15 +13915,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Block-Size Sawtooth for Interleaved Key Budgets"
   },
   {
-    "consumed_by_exp_id": "0b20dfc4",
+    "consumed_by_exp_id": "",
     "description": "Swapping uniform for balanced draws moves the tie ceiling by less than 0.07 in rho. We conjecture a general budget: two draw laws whose modal fractions differ by delta have ceilings within delta of each other, which turns every law-swap experiment into a falsifiable prediction with an explicit tie budget.\n\nFor tie profiles L, L' with modal fractions a, a' one has |sqrt(spearmanSq L) - sqrt(spearmanSq L')| <= |a - a'| + O(1/n), and the bound is attained by two-block profiles.\n\nProve the Lipschitz bound from the mass-fraction floor and the dominant-block upper law, then check sharpness on two-block families.\n\nAny recorded law-to-law dial movement above the modal-fraction gap is provably a response effect.\n\nCeilings can move more than modal fractions and law-swap comparisons need the full profile.",
     "domains": [],
     "id": "fd_4562",
-    "phase": "A",
     "priority_score": 0.593360655737705,
     "research_mode": "team",
     "source_exp_id": "54a9fda9",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-09-02T09:40:23.378521+00:00",
     "title": "Universal Law-Change Capacity in Modal Fraction"
   },
@@ -14014,6 +13997,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T10:08:08.251381+00:00",
     "title": "Syntactic Criterion for Structural Backward Error"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved work lower bound p/(2B) for a sequential-multiples ECM arm implies that with a fixed stage-one bound B\u2081 the measured across-k exponent must drift upward to 1 like 1 \u2212 log\u2082B\u2081/k. The measured 0.761 at k \u2248 18 is then a window coordinate, not a method constant, and the drift is a sharp, cheap prediction.\n\nFor a fixed stage-one bound B\u2081, the two-point exponent measured between sizes k\u2081 < k\u2082 satisfies \u03b1 = 1 \u2212 log\u2082B\u2081/k + O(1/k\u00b2) as the window moves out; concretely \u03b1(32) \u2248 0.82 and \u03b1(64) \u2248 0.91 for B\u2081 = 50.\n\nRe-run exp 490 with k sweeping 16 to 40 at fixed B\u2081 = 50 and fit the exponent per window; formally, sharpen ECMPlane.ecm_total_work_lower_bound to a matching upper bound so that the drift is two-sided.\n\nThe ECM column of every toy-scale table must be reported with its window, and cross-paper comparisons of \u03b1 become meaningless without one.\n\nThe cost functional contains a p-dependent factor beyond the point-operation count, so the common currency is mis-specified.",
+    "domains": [],
+    "id": "fd_4700",
+    "priority_score": 0.5933050847457628,
+    "research_mode": "team",
+    "source_exp_id": "79cda873",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:26.864821+00:00",
+    "title": "Fixed-Bound Exponent Drift Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -14422,6 +14417,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-31T23:52:38.294146+00:00",
     "title": "Resolution-Relative Floor Windows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The subexponential arm was proved to eventually beat every arm of positive exponent, but only qualitatively. The conjecture asks for an explicit crossover size in bits with a two-sided error bound, obtained by solving c\u221a(log p \u00b7 log log p) = \u03b1 log p.\n\nFor every c > 0 and \u03b1 > 0 the crossover size k*(c, \u03b1) in bits is finite and satisfies k* = \u0398((c/\u03b1)\u00b2 log k*), with an explicitly computable threshold beyond which the subexponential arm is strictly cheaper.\n\nSharpen ECMSubexp.subexp_lt_power to an explicit threshold instead of an eventually-filter statement, then evaluate at c = 1, \u03b1 = 0.512 and compare with the numeric table in ComputationalEvidence.md.\n\nToy-scale experiments can be placed relative to the crossover, so a measured interior exponent can be objectively labelled pre- or post-crossover.\n\nThe crossover is not effectively computable from the L-constant alone, meaning heuristic ECM constants carry more information than the exponent.",
+    "domains": [],
+    "id": "fd_4702",
+    "priority_score": 0.5929166666666668,
+    "research_mode": "team",
+    "source_exp_id": "79cda873",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:28.022602+00:00",
+    "title": "Explicit Crossover Scale of Subexponential Versus Birthday Arms"
   },
   {
     "consumed_by_exp_id": "",
@@ -14878,6 +14885,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T09:52:39.849105+00:00",
     "title": "Polylogarithmic Tie Count for Smooth-Pool Dials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A summed fibre count over the image of a map is always the cardinality of its source; this is why the \u03c8\u2083 count is regime-independent while the \u03c8\u2082 count is not. The conjecture pins down exactly when a division-polynomial family can display a regime split.\n\nFor monic f of degree m over \ud835\udd3d_p, \u03a3_{b \u2260 0} #{x : f(x) = b} = p - 1 whenever f restricts to a bijection of \ud835\udd3d_p, and a regime split in a twist family requires the non-linear factor of \u03c8_n to fail to be of the form x^m - c.\n\nFormalise the general fibre-count lemma and test the criterion against \u03c8\u2082 (split) and \u03c8\u2083 (no split) as proved here.\n\nGives a decision criterion for which division polynomials can exhibit reciprocity-driven dichotomies.\n\nProduces an explicit family whose summed count depends on p beyond the fibre-count mechanism.",
+    "domains": [],
+    "id": "fd_4712",
+    "priority_score": 0.591875,
+    "research_mode": "team",
+    "source_exp_id": "b3a54ad0",
+    "status": "available",
+    "timestamp": "2026-09-05T00:08:13.583078+00:00",
+    "title": "Fibre-Count Cancellation Principle"
   },
   {
     "consumed_by_exp_id": "",
@@ -16633,6 +16652,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The lower envelope of a finite family of affine cost profiles is a tropical polynomial in one variable. This run proved both directions for a triple; the conjecture is the general statement that the leader set is exactly the vertex set of the lower convex hull of the exponent-intercept point set.\n\nFor a finite family F of cost profiles, arm i leads at some real k if and only if (\u03b1_i, c_i) is a vertex of the lower convex hull of {(\u03b1_j, c_j)}.\n\nReduce an arbitrary family to the triple formed by a candidate and its two hull neighbours and apply leads_of_below_hull and never_leader_of_above_hull; validate on the five-method table of exp 490.\n\nThe operational content of any method table is a convex polygon with at most n\u22121 corners, and method selection is a hull computation.\n\nSome arms lead only on measure-zero sets of target sizes, so the leader relation must be replaced by a strict variant.",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_4701",
+    "priority_score": 0.5642775835349151,
+    "research_mode": "team",
+    "source_exp_id": "79cda873",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:27.444338+00:00",
+    "title": "Newton-Polygon Duality for n-Arm Method Tables"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Combining `PCPBridge.lean` with the simulator of\n   `ThreeColoringZK.lean` should yield a *zero-knowledge PCP*: the verifier's local view of\n   the randomized proof string is simulable. The counting lemma `perm3_pair_count`\n   generalizes to `k` queries as long as the queried vertices carry pairwise distinct\n   colours, which fails in general \u2014 quantifying the resulting leakage is an interesting\n   combinatorial question.",
     "domains": [
       "Algebra",
@@ -17260,6 +17294,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T17:30:28.587029+00:00",
     "title": "Artin-Symbol Identification of the Representation Bits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Batched gcd replaces a detection time T by m\u2308T/m\u2309. The proved dichotomy says all p-dependence is erased below the block size and the exponent survives with at most one bit of intercept drift above it. The conjecture upgrades this to a statement about the whole measured plane.\n\nBlock quantisation induces a map on measured chord slopes whose image is contained in {0} \u222a [\u03b1, \u03b1 + 1/(k\u2082 \u2212 k\u2081)]: no exponent strictly between 0 and the true exponent can be produced by batching alone.\n\nFormalise the induced map on two-point chord slopes and prove the containment; simulate a rho run over a range of block sizes and confirm no intermediate slopes appear.\n\nInstrumentation artefacts become certifiable: a reported slope strictly between 0 and the true exponent cannot come from batching.\n\nBatching interacts with the detection-time distribution, so slope corruption is statistical rather than arithmetic.",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_4703",
+    "priority_score": 0.5639567524217843,
+    "research_mode": "team",
+    "source_exp_id": "79cda873",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:28.617571+00:00",
+    "title": "Quantisation as a Piecewise-Affine Tropical Map on Cost Data"
   },
   {
     "consumed_by_exp_id": "",
@@ -30346,6 +30395,124 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-04T21:29:57.470917+00:00",
     "title": "Correlated Forks and the Survival of the Split Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Rho and ECM keep their exponent under uniform-versus-balanced draws while trial division shifts 1.00 to 1.14. This run formalised the corner criterion (equal exponents iff the two-regime tropical polynomial has empty corner locus) and a quantitative version confining any hidden corner to |k*| \u2265 \u03b4/\u03b5.\n\nA cost functional depends only on the hidden prime p, and not on the ambient modulus N, if and only if its measured exponent is invariant across all draw laws; a measured shift \u0394\u03b1 > \u03b5 with intercept gap \u03b4 certifies non-locality with the corner confined to |k*| \u2265 \u03b4/\u0394\u03b1.\n\nInstantiate the criterion for a cost functional defined on pairs (p, N) and prove the equivalence; experimentally, re-measure trial division on a third draw law and check the predicted corner location.\n\nLocality becomes a measurable, certifiable property of an algorithm rather than an informal description.\n\nExponent invariance is necessary but not sufficient for locality, and a finer invariant such as the intercept's dependence on the balance ratio is needed.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_4704",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "79cda873",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:29.213190+00:00",
+    "title": "Exponent-Shift Certificates of Cost Non-Locality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The split-count channel of a prime cyclic degree decays like q^{-2}, and the numerics indicate the sharp second-order form q^2 Isplit(q) = log2 q + 2 log2 e + O(1/q), with the OR channel obeying q^2 G(q) -> log2 e - 1. Both constants are pure entropy curvature, carrying no arithmetic information about the field. Proving them turns the ladder's empirical decay table into a theorem.\n\nFor prime q, q^2 * Isplit q - log2 q -> 2 log2 e and q^2 * IOR q -> log2 e - 1 as q -> infinity.\n\nExpand the closed forms Isplit_prime and IOR_prime with Real.log estimates for log(1 - 1/q); verify against exact values at q = 7, 101, 1009, 10007, 100003.\n\nThe whole prime ladder collapses to a one-parameter universal curve; every rung's channel value is predicted to O(1/q^3) without new computation.\n\nA genuine arithmetic correction term exists, and the residual would be a new invariant of the cyclic degree.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4705",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a7aa0976",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:52.580646+00:00",
+    "title": "Second-Order Decay Constant of the Prime-Degree Split Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The splitting type is multiplicative under the Chinese Remainder Theorem, and computation shows the unordered type-pair channel is exactly additive over coprime factorisations while the split-count channel is not. The surprise is that symmetrisation, a non-injective recoding, preserves additivity.\n\nFor coprime m, n >= 1, Ipair (m * n) = Ipair m + Ipair n.\n\nTransport the box of exponents along the CRT bijection using mutInfo_image_injOn, apply mutInfo_prod to the ordered type pair, and control the min/max symmetrisation with a fibre-partition argument.\n\nThe entire type-pair ladder is determined by its prime-power rungs, and every composite degree becomes a finite sum of known closed forms.\n\nSymmetrisation interacts with CRT, and the failure would locate an arithmetic obstruction in the unordered read-out.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_4706",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a7aa0976",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:53.211329+00:00",
+    "title": "CRT Additivity of the Unordered Type-Pair Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conditioned on the semiprime's residue, the split count and the OR bit have identical conditional entropy, so the two channels differ only by unconditional entropies. The conjecture is that the whole lattice of coarsenings of the type pair realises exactly three mutual-information values, with an explicit asymptotic ratio.\n\nFor prime q every read-out factoring through typePair q has mutual information with prodRes q in {0, IOR q, Isplit q}, and Isplit q / IOR q = (log2 q + 2 log2 e)/(log2 e - 1) + o(1).\n\nEnumerate the five partitions of the three-element type-pair state space and evaluate each channel with uEnt_congr_fibers and condEnt_congr_fibers.\n\nThe information geometry of the semiprime channel is completely classified at prime degree.\n\nSome coarsening breaks the conditional-entropy coincidence, exposing a fibre of prodRes on which the split count is not two-valued.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4707",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a7aa0976",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:53.751227+00:00",
+    "title": "Three-Point Coarsening Spectrum of the Semiprime Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Two reported anchors of this round were audited: 0.0103 matched the OR channel G(7) to five decimals, while 0.1161 matched no degree-7 statistic. The conjecture is that reported figures which fail their stated channel are always exact values of a neighbouring channel or rung, making misattribution detectable rather than merely noisy.\n\nEvery ladder anchor that fails its stated definition coincides, to reported precision, with the exact value of another channel in the table {Ipair, Isplit, IOR} at some prime rung; in particular the round-50 anchor Is(11) = 0.116 is the degree-7 value 0.11410... .\n\nTabulate certified closed-form values of the three channels for all prime degrees up to 50 and match each reported anchor against the table with integer-witness brackets.\n\nAnchor auditing becomes mechanical: each reported number is either certified or attributed to a specific definitional slip.\n\nSome anchors are genuine measurement noise, and confidence intervals rather than exact matching are required.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4708",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a7aa0976",
+    "status": "available",
+    "timestamp": "2026-09-05T00:07:54.356485+00:00",
+    "title": "Cross-Rung Anchor Misattribution Principle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extends the proven n = 2 and n = 3 fibre counts to all n. The summed number of roots of the n-division polynomial across a quadratic twist family should depend only on the Frobenius class in the n-division field. This would turn a Galois-theoretic invariant into an elementary counting statement.\n\nFor E_d : y\u00b2 = x\u00b3 - a d\u00b2 x, the sum over d \u2208 \ud835\udd3d_p^\u00d7 of the number of roots of \u03c8_n^{(d)} equals (p-1)\u00b7c_n(Frob_p), where c_n is a class function on Gal(\u211a(E[n])/\u211a).\n\nFormalise \u03c8_n for n = 4, 5 over ZMod p, compute the summed count by decide for p \u2264 60, and compare with the predicted class function.\n\nGives an elementary local invariant computing Frobenius classes in division fields.\n\nIsolates the twist-dependence that obstructs the class-function shape, pointing to a genuinely non-abelian correction term.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4709",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b3a54ad0",
+    "status": "available",
+    "timestamp": "2026-09-05T00:08:11.825869+00:00",
+    "title": "Higher Division-Polynomial Fibre Dichotomy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proven split criterion is exactly a quadratic-character condition, so the set of split primes has density one half. Quantifying the error term links the torsion structure to the zeros of a quadratic Dirichlet L-function.\n\nFor squarefree a, #{p \u2264 X : E_a(\ud835\udd3d_p)[2] \u2245 V\u2084} = \u03c0(X)/2 + O(X^{1/2+\u03b5}) under GRH.\n\nCombine sum_card_V4_gen with Mathlib's Dirichlet density results and check the count numerically for X \u2264 10^5.\n\nProvides a fully explicit torsion-structure density with L-function error control.\n\nIndicates a bias in the split primes not explained by the quadratic character alone.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4710",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b3a54ad0",
+    "status": "available",
+    "timestamp": "2026-09-05T00:08:12.377346+00:00",
+    "title": "Klein-Four Density in Twist Families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 2-torsion subgroup of any Weierstrass curve over a field of odd characteristic is determined by the splitting of a single cubic. The proof already given for y\u00b2 = x\u00b3 - cx uses only P + P = 0 \u27fa P = -P, which is model-independent.\n\nFor any Weierstrass curve W over a field of characteristic \u2260 2, the subgroup {P : P + P = 0} of W.Point is Klein four iff 4x\u00b3 + b\u2082x\u00b2 + 2b\u2084x + b\u2086 splits completely, of order two iff it has exactly one root, and trivial otherwise.\n\nGeneralise mem_E2_some_iff and E2_set_eq_of_isSquare to arbitrary a\u2081, a\u2082, a\u2083, a\u2084, a\u2086 and re-derive IsAddKleinFour.\n\nSupplies Mathlib with a complete 2-torsion classification for affine Weierstrass curves.\n\nWould reveal a characteristic or singularity corner case in the nonsingularity condition.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4711",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b3a54ad0",
+    "status": "available",
+    "timestamp": "2026-09-05T00:08:12.943498+00:00",
+    "title": "Exponent-Two Subgroup Classification for Weierstrass Points"
   },
   {
     "consumed_by_exp_id": "",
@@ -44334,19 +44501,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:32.339302+00:00",
     "title": "Parametrised families and bifurcation"
-  },
-  {
-    "consumed_by_exp_id": "b3a54ad0",
-    "description": "Both regimes are proved unconditionally here\n(`sum_card_V4_of_isSquare_three`, `sum_card_V4_of_not_isSquare_three`), together with the\nreciprocity input for the classes `1, 5, 7 mod 12`; the general statement needs only the\nfactorisation of `\u03c8_n` over `\u211a(N)` plus the same fibre-counting bijection factor by factor.",
-    "domains": [],
-    "id": "fd_1734",
-    "phase": "A",
-    "priority_score": 0.40820833333333334,
-    "research_mode": "team",
-    "source_exp_id": "a0dce043",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T17:46:03.842645+00:00",
-    "title": "Both regimes are proved unconditionally here"
   },
   {
     "consumed_by_exp_id": "",

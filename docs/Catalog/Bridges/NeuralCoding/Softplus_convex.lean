@@ -9,6 +9,32 @@ Declarations: 9
 
 noncomputable section
 
+/-- The softplus activation `x ↦ log (1 + eˣ)`. -/
+def softplus (x : ℝ) : ℝ := Real.log (1 + Real.exp x)
+
+/-- The logistic sigmoid, written in the form `eˣ / (1 + eˣ)`. -/
+def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
+
+theorem one_plus_exp_pos (x : ℝ) : (0 : ℝ) < 1 + Real.exp x := by
+  have := Real.exp_pos x
+  linarith
+
+/-- [Section: # CatalogBuild.Shared.Softplus_convex
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 9] -/
+theorem softplus_deriv (x : ℝ) : deriv softplus x = logisticSigmoid x := by
+  apply HasDerivAt.deriv;
+  convert HasDerivAt.log ( HasDerivAt.add ( hasDerivAt_const _ _ ) ( Real.hasDerivAt_exp x ) ) _ using 1 <;> norm_num [ logisticSigmoid ];
+  positivity
+
+/-- Softplus is differentiable -/
+theorem softplus_differentiable : Differentiable ℝ softplus := by
+  unfold softplus
+  apply Differentiable.log
+  · exact differentiable_const 1 |>.add Real.differentiable_exp
+  · intro x; exact ne_of_gt (one_plus_exp_pos x)
+
 /-- [Section: # CatalogBuild.Shared.Softplus_differentiable
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -41,13 +67,6 @@ theorem softplus_gt_id (x : ℝ) : softplus x > x := by
     _ < Real.log (1 + Real.exp x) := by
         apply Real.log_lt_log (Real.exp_pos x) h1
 
-/-- Softplus is differentiable -/
-theorem softplus_differentiable : Differentiable ℝ softplus := by
-  unfold softplus
-  apply Differentiable.log
-  · exact differentiable_const 1 |>.add Real.differentiable_exp
-  · intro x; exact ne_of_gt (one_plus_exp_pos x)
-
 /-- Softplus is strictly monotone increasing -/
 theorem softplus_strictMono : StrictMono softplus := by
   intro a b hab
@@ -55,15 +74,6 @@ theorem softplus_strictMono : StrictMono softplus := by
   apply Real.log_lt_log
   · exact one_plus_exp_pos a
   · linarith [Real.exp_lt_exp.mpr hab]
-
-/-- [Section: # CatalogBuild.Shared.Softplus_convex
-Auto-generated from theorem catalog database.
-Domain: Shared
-Declarations: 9] -/
-theorem softplus_deriv (x : ℝ) : deriv softplus x = logisticSigmoid x := by
-  apply HasDerivAt.deriv;
-  convert HasDerivAt.log ( HasDerivAt.add ( hasDerivAt_const _ _ ) ( Real.hasDerivAt_exp x ) ) _ using 1 <;> norm_num [ logisticSigmoid ];
-  positivity
 
 /-- Softplus at zero equals log 2 -/
 theorem softplus_zero : softplus 0 = Real.log 2 := by

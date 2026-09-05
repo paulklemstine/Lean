@@ -1,5 +1,9 @@
 import Mathlib
 
+open Matrix
+
+open Finset
+
 /-! # CatalogBuild.Algebra.EigenvalueRepulsion
 
 Auto-generated from theorem catalog database.

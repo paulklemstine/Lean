@@ -1,117 +1,118 @@
 import Mathlib
 
 /-!
-# The Fibonacci rank of apparition
+# Ranks of apparition for Fibonacci numbers
 
-Two catalog files (`Shared.NumberTheory.CarmichaelCompositeEntryPoint` and
-`MachineLearning.Primitive_Prime_Divisors_for_Composite_Index_Fibonacci_Numbers`)
-build on the rank-of-apparition theory through the module path
-`Shared.PosetTheory.FibonacciApparitionSheaf`, which was missing from the
-repository, so those two modules could not be compiled at all.  This file supplies
-the theory they use, from scratch:
+This module supplies the "rank of apparition" theory that the entry-point files
+(`Shared/NumberTheory/CarmichaelCompositeEntryPoint.lean` and
+`Bridges/CarmichaelCompositeEntryPoint.lean`) are stated in terms of.  It was
+referenced by those files but absent from the repository, so it is reconstructed
+and proved here from scratch.
 
-* `HasFibRank p` — `p` divides some Fibonacci number of positive index;
-* `hasFibRank_of_pos` — this holds for **every** positive modulus, proved by
-  pigeonhole on the pairs `(F k, F (k+1))` in `ZMod p` together with the
-  reversibility of the Fibonacci recursion;
-* `fibRank p` — the least such index (the rank of apparition);
-* `fibRank_pos`, `dvd_fib_fibRank`, `fibRank_min` — its defining properties;
-* `fibRank_dvd_iff` — the divisibility criterion `p ∣ F n ↔ fibRank p ∣ n`,
-  proved from `Nat.fib_gcd`.
+## Main results
+
+* `hasFibRank_of_pos` — every positive `p` divides some positive-index Fibonacci
+  number.  The proof is the classical pigeonhole argument: the pair
+  `(F n, F (n+1))` takes finitely many values in `ZMod p`, and the Fibonacci step
+  map `(x, y) ↦ (y, x + y)` is injective, so the pair sequence is *purely*
+  periodic and returns to `(F 0, F 1) = (0, 1)`.
+* `fibRank` — the rank of apparition, the least positive index at which `p`
+  appears, with `fibRank_pos`, `dvd_fib_fibRank` and the minimality property
+  `fibRank_min`.
+* `fibRank_dvd_iff` — `p ∣ F n ↔ fibRank p ∣ n`, deduced from
+  `Nat.fib_gcd` together with minimality.
 -/
 
 namespace FibonacciApparitionSheaf
 
-/-- `p` has a rank of apparition: it divides a Fibonacci number of positive index. -/
-def HasFibRank (p : ℕ) : Prop := ∃ k, 0 < k ∧ p ∣ Nat.fib k
+/-- `p` has a rank of apparition: it divides some Fibonacci number of positive index. -/
+def HasFibRank (p : ℕ) : Prop := ∃ n, 0 < n ∧ p ∣ Nat.fib n
 
-/-- **Every positive modulus has a rank of apparition.**  The pair
-`(F k, F (k+1))` takes finitely many values in `ZMod p`, so it repeats; the
-Fibonacci recursion is reversible, so the repetition can be pushed back to index
-`0`, where `F 0 = 0`. -/
+/-- The rank of apparition of `p`: the least positive index `n` with `p ∣ F n`
+(and `0` if no such index exists). -/
+noncomputable def fibRank (p : ℕ) : ℕ := sInf {n | 0 < n ∧ p ∣ Nat.fib n}
+
+/-- **Every positive integer has a rank of apparition.**  The pair `(F n, F (n+1))`
+mod `p` takes finitely many values and the Fibonacci step map is injective, so the
+pair sequence is purely periodic; its period is an index where `p ∣ F n`. -/
 theorem hasFibRank_of_pos (p : ℕ) (hp : 0 < p) : HasFibRank p := by
   haveI : NeZero p := ⟨hp.ne'⟩
-  set f : ℕ → ZMod p × ZMod p :=
-    fun k => ((Nat.fib k : ZMod p), (Nat.fib (k + 1) : ZMod p)) with hf
-  have step : ∀ i j : ℕ, f (i + 1) = f (j + 1) → f i = f j := by
-    intro i j h
-    have h1 : ((Nat.fib (i + 1) : ZMod p)) = (Nat.fib (j + 1) : ZMod p) :=
-      congrArg Prod.fst h
-    have h2 : ((Nat.fib (i + 2) : ZMod p)) = (Nat.fib (j + 2) : ZMod p) :=
-      congrArg Prod.snd h
-    have e : ∀ m : ℕ,
-        ((Nat.fib m : ZMod p)) = (Nat.fib (m + 2) : ZMod p) - (Nat.fib (m + 1) : ZMod p) := by
-      intro m
-      rw [Nat.fib_add_two]
-      push_cast
-      ring
-    have : ((Nat.fib i : ZMod p)) = (Nat.fib j : ZMod p) := by
-      rw [e i, e j, h1, h2]
-    simp only [hf, Prod.mk.injEq]
-    exact ⟨this, h1⟩
-  have key : ∀ i j : ℕ, i ≤ j → f i = f j → f 0 = f (j - i) := by
-    intro i
-    induction i with
-    | zero => intro j _ h; simpa using h
-    | succ i ih =>
-        intro j hij h
-        obtain ⟨j', rfl⟩ : ∃ j', j = j' + 1 := ⟨j - 1, by omega⟩
-        have hstep := step i j' h
-        have h2 := ih j' (by omega) hstep
-        simpa [Nat.succ_sub_succ] using h2
-  obtain ⟨a, b, hab, hfab⟩ := Finite.exists_ne_map_eq_of_infinite f
-  rcases lt_or_gt_of_ne hab with hlt | hlt
-  · refine ⟨b - a, by omega, ?_⟩
-    have h0 := key a b hlt.le hfab
-    have : ((Nat.fib (b - a) : ZMod p)) = 0 := by
-      have := congrArg Prod.fst h0
-      simp only [hf] at this
-      simpa using this.symm
-    exact (ZMod.natCast_eq_zero_iff _ p).mp this
-  · refine ⟨a - b, by omega, ?_⟩
-    have h0 := key b a hlt.le hfab.symm
-    have : ((Nat.fib (a - b) : ZMod p)) = 0 := by
-      have := congrArg Prod.fst h0
-      simp only [hf] at this
-      simpa using this.symm
-    exact (ZMod.natCast_eq_zero_iff _ p).mp this
+  set f : ℕ → ZMod p × ZMod p := fun n => ((Nat.fib n : ZMod p), (Nat.fib (n + 1) : ZMod p))
+    with hf
+  set S : ZMod p × ZMod p → ZMod p × ZMod p := fun q => (q.2, q.1 + q.2) with hS
+  have hstep : ∀ n, f (n + 1) = S (f n) := by
+    intro n
+    simp only [hf, hS, Nat.fib_add_two]
+    push_cast
+    simp
+  have hiter : ∀ k n, f (n + k) = S^[k] (f n) := by
+    intro k
+    induction k with
+    | zero => intro n; simp
+    | succ k ih =>
+        intro n
+        have h : n + (k + 1) = (n + k) + 1 := by ring
+        rw [h, hstep (n + k), ih n, Function.iterate_succ_apply']
+  have hSinj : Function.Injective S := by
+    intro a b hab
+    simp only [hS, Prod.mk.injEq] at hab
+    obtain ⟨h1, h2⟩ := hab
+    have h3 : a.1 = b.1 := by
+      rw [h1] at h2
+      exact add_right_cancel h2
+    exact Prod.ext h3 h1
+  have key : ∀ i j : ℕ, i < j → f i = f j → HasFibRank p := by
+    intro i j hij hfij
+    refine ⟨j - i, by omega, ?_⟩
+    have h1 : f (0 + i) = S^[i] (f 0) := hiter i 0
+    have h2 : f ((j - i) + i) = S^[i] (f (j - i)) := hiter i (j - i)
+    have hji : (j - i) + i = j := by omega
+    rw [hji] at h2
+    have h3 : S^[i] (f 0) = S^[i] (f (j - i)) := by
+      rw [← h1, ← h2]
+      simpa using hfij
+    have hf0 := (Function.Injective.iterate hSinj i) h3
+    have h4 : ((Nat.fib (j - i) : ℕ) : ZMod p) = 0 := by
+      have h5 := congrArg Prod.fst hf0
+      simp [hf] at h5
+      exact h5.symm
+    exact (ZMod.natCast_eq_zero_iff _ p).mp h4
+  obtain ⟨i, j, hne, hfij⟩ := Finite.exists_ne_map_eq_of_infinite f
+  rcases lt_or_gt_of_ne hne with h | h
+  · exact key i j h hfij
+  · exact key j i h hfij.symm
 
-/-- The rank of apparition of `p`: the least positive index `k` with `p ∣ F k`. -/
-noncomputable def fibRank (p : ℕ) : ℕ := sInf {k | 0 < k ∧ p ∣ Nat.fib k}
+/-- The rank of apparition is positive. -/
+theorem fibRank_pos {p : ℕ} (h : HasFibRank p) : 0 < fibRank p :=
+  (Nat.sInf_mem h).1
 
-theorem fibRank_mem {p : ℕ} (h : HasFibRank p) : 0 < fibRank p ∧ p ∣ Nat.fib (fibRank p) := by
-  obtain ⟨k, hk⟩ := h
-  exact Nat.sInf_mem (⟨k, hk⟩ : {k | 0 < k ∧ p ∣ Nat.fib k}.Nonempty)
+/-- `p` divides the Fibonacci number at its rank of apparition. -/
+theorem dvd_fib_fibRank {p : ℕ} (h : HasFibRank p) : p ∣ Nat.fib (fibRank p) :=
+  (Nat.sInf_mem h).2
 
-theorem fibRank_pos {p : ℕ} (h : HasFibRank p) : 0 < fibRank p := (fibRank_mem h).1
-
-theorem dvd_fib_fibRank {p : ℕ} (h : HasFibRank p) : p ∣ Nat.fib (fibRank p) := (fibRank_mem h).2
-
-/-- Minimality of the rank of apparition. -/
+/-- Minimality: `p` divides no Fibonacci number of smaller positive index. -/
 theorem fibRank_min {p k : ℕ} (hk : 0 < k) (hlt : k < fibRank p) : ¬ p ∣ Nat.fib k := by
   intro hdvd
   exact Nat.notMem_of_lt_sInf hlt ⟨hk, hdvd⟩
 
-/-- **The divisibility criterion**: `p` divides `F n` exactly when its rank of
-apparition divides `n`. -/
+/-- **Divisibility criterion**: `p ∣ F n` exactly when the rank of apparition divides `n`. -/
 theorem fibRank_dvd_iff {p : ℕ} (h : HasFibRank p) (n : ℕ) :
     p ∣ Nat.fib n ↔ fibRank p ∣ n := by
-  rcases Nat.eq_zero_or_pos n with rfl | hn
-  · simp
   constructor
   · intro hdvd
-    have hgcd : p ∣ Nat.gcd (Nat.fib n) (Nat.fib (fibRank p)) :=
-      Nat.dvd_gcd hdvd (dvd_fib_fibRank h)
-    have hfib : p ∣ Nat.fib (Nat.gcd n (fibRank p)) := by
-      rw [Nat.fib_gcd]; exact hgcd
-    have hpos : 0 < Nat.gcd n (fibRank p) := Nat.gcd_pos_of_pos_left _ hn
-    have hle : Nat.gcd n (fibRank p) ≤ fibRank p :=
-      Nat.le_of_dvd (fibRank_pos h) (Nat.gcd_dvd_right _ _)
-    have heq : Nat.gcd n (fibRank p) = fibRank p := by
-      rcases lt_or_eq_of_le hle with hlt | heq
-      · exact absurd hfib (fibRank_min hpos hlt)
-      · exact heq
-    exact heq ▸ Nat.gcd_dvd_left _ _
+    rcases Nat.eq_zero_or_pos n with rfl | hn
+    · exact dvd_zero _
+    · have hg : p ∣ Nat.fib (Nat.gcd n (fibRank p)) := by
+        rw [Nat.fib_gcd]
+        exact Nat.dvd_gcd hdvd (dvd_fib_fibRank h)
+      have hgpos : 0 < Nat.gcd n (fibRank p) := Nat.gcd_pos_of_pos_left _ hn
+      have hgle : Nat.gcd n (fibRank p) ≤ fibRank p :=
+        Nat.le_of_dvd (fibRank_pos h) (Nat.gcd_dvd_right _ _)
+      have hgeq : Nat.gcd n (fibRank p) = fibRank p := by
+        rcases lt_or_eq_of_le hgle with hlt | heq
+        · exact absurd hg (fibRank_min hgpos hlt)
+        · exact heq
+      exact hgeq ▸ Nat.gcd_dvd_left n (fibRank p)
   · intro hdvd
     exact dvd_trans (dvd_fib_fibRank h) (Nat.fib_dvd _ _ hdvd)
 

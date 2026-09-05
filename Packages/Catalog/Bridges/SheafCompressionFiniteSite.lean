@@ -261,4 +261,5 @@ theorem yoneda_separated_of_morphism_separated
 end SheafCompression
 
 end
-end s of a presheaf via restriction maps.
+-- (The auto-merged file ended with a stray `end` and a truncated fragment of a
+-- doc-comment, "end s of a presheaf via restriction maps."; both are removed here.)

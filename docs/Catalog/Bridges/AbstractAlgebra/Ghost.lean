@@ -847,10 +847,19 @@ theorem hyp13_minus_hyp23 (a b c d : ℤ) :
 theorem hyp23_decrease (b c d : ℤ) (hbc : b + c > d) :
     -2*b - 2*c + 3*d < d := by linarith
 
+/-- **Triangle inequality for positive Pythagorean quadruples**: if `a² + b² + c² = d²`
+with all entries positive then `a + b + c > d`.  (The auto-generated file used this
+statement without carrying it along; it is supplied and proved here.) -/
+theorem pq_triangle (a b c d : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (hq : isPQ a b c d) (hd : 0 < d) : a + b + c > d := by
+  unfold isPQ at hq
+  nlinarith [mul_pos ha hb, mul_pos hb hc, mul_pos ha hc]
+
 theorem descent_exists (a b c d : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hq : isPQ a b c d) (hd : 0 < d) :
     -2*a - 2*b + 3*d < d ∨ -2*a - 2*c + 3*d < d ∨ -2*b - 2*c + 3*d < d := by
   have htri := pq_triangle a b c d ha hb hc hq hd
+  unfold isPQ at hq
   by_contra hno
   push_neg at hno
   obtain ⟨h1, h2, h3⟩ := hno
@@ -906,9 +915,16 @@ theorem descent_exists (a b c d : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   -- bc ≥ a·a = a² (since b ≥ a and c ≥ a). So 2bc ≥ 2a² > a². ✓
   -- This means (b+c)² > d² when a ≤ b ≤ c, so b+c > d!
   -- Let me prove this properly.
-  have h_sq : (b + c)^2 > d^2 := by
-    gcongr ; nlinarith [ hq.symm ];
-  nlinarith only [ ha, hb, hc, hd, htri, h1, h2, h3, h_sq ]
+  -- If no pair of legs exceeds `d`, squaring the three inequalities gives
+  -- `2bc ≤ a²`, `2ac ≤ b²`, `2ab ≤ c²`, whose product forces `8 ≤ 1`.
+  have hab : a + b ≤ d := by linarith
+  have hac : a + c ≤ d := by linarith
+  have hbc : b + c ≤ d := by linarith
+  have k1 : 2*b*c ≤ a^2 := by nlinarith
+  have k2 : 2*a*c ≤ b^2 := by nlinarith
+  have k3 : 2*a*b ≤ c^2 := by nlinarith
+  nlinarith [mul_pos ha hb, mul_pos hb hc, mul_pos ha hc, mul_pos (mul_pos ha hb) hc,
+    mul_le_mul k1 k2 (by positivity) (by positivity)]
 
 -- ═══════════════════════════════════════════════════════════════
 -- Section 11: O(3,1;ℤ) Matrix Verification

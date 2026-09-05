@@ -112,5 +112,4 @@ theorem degreeNormalization_dichotomy [Fintype G.Edge] (D : TreeCutDecomposition
         convert DegreeNormalizedTreeCut.eventually_const_or_diverges _ _ using 1;
         exact hmono
 
-end JacobianConjecture
 end TreeCutDecomposition

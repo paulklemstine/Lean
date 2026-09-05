@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f7361634",
-      "domain": "Applications",
-      "key_insight": "# Future directions — margin scarcity as the portability predictor\n\nDerived from the three research cycles in `Catalog/Applications/`:\n\n* Cycle 1 — `MarginScarcityPortability.lean`, `MarginScarcityCor",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 42,
-      "timestamp": "2026-09-01T21:48:29",
-      "title": "Margin Scarcity as the Portability Predictor"
-    },
-    {
-      "cycle_id": "f3ffa89b",
-      "domain": "Applications",
-      "key_insight": "# Future directions — after TDIAL-U80 (round-66 #1, exp 534)\n\nTwo cycles were run on the U80 record.  Cycle 1\n(`Catalog/Applications/TDialU80FloorResolution.lean`) built the geometry of a\nrapidity-sym",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-09-02T00:16:08",
-      "title": "FACT round-66 #1 — TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 187)"
-    },
-    {
       "cycle_id": "d4f58bc3",
       "domain": "Applications",
       "key_insight": "# Future directions — NET-83 super-additive integration\n\nDerived from three research cycles, recorded in\n`Catalog/Applications/NET83SuperAdditiveIntegration.lean` (cycles 1–2) and\n`Catalog/Application",
@@ -499,29 +479,29 @@
       "theorem_count": 98,
       "timestamp": "2026-09-05T00:08:02",
       "title": "FACT round-42 #3 — DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
+    },
+    {
+      "cycle_id": "b3a54ad0",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the results now formalised in `Catalog/Novelty/`:\n\n* `KleinFourTwoTorsionReciprocity.lean` — both regimes of the summed 2-torsion count\n  (`sum_card_V4_of_isSquare_th",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-05T00:08:19",
+      "title": "Both regimes are proved unconditionally here"
+    },
+    {
+      "cycle_id": "0b20dfc4",
+      "domain": "Applications",
+      "key_insight": "# Future directions: law-change capacity of tie ceilings\n\nDerived from the three research cycles in `Catalog/Applications/ModalFractionCapacity.lean`,\n`ModalFractionCapacitySharp.lean` and `ModalFract",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-05T00:08:40",
+      "title": "Universal Law-Change Capacity in Modal Fraction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0ef4aed2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after round-65 #1 (TDIAL-U76, exp 533)\n\n## What this cycle settled\n\nFour Lean files (`Catalog/Novelty/ZeroFitDialU76.lean`,\n`ZeroFitDialPerturbation.lean`, `ZeroFitDialEffectiveB",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-23T09:44:21",
-      "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
-    },
-    {
-      "cycle_id": "b8859dfd",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Parity-corrected asymptotics for the information-free game\n\nThis cycle established, with complete Lean 4 proofs and no `sorry`, that the\ninformation-free werewolf/village game ha",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-23T10:41:17",
-      "title": "Parity-corrected asymptotics for the information-free game"
-    },
     {
       "cycle_id": "04d3a29d",
       "domain": "Cryptography",
@@ -2501,45 +2481,29 @@
       "theorem_count": 98,
       "timestamp": "2026-09-05T00:08:02",
       "title": "FACT round-42 #3 — DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
+    },
+    {
+      "cycle_id": "b3a54ad0",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the results now formalised in `Catalog/Novelty/`:\n\n* `KleinFourTwoTorsionReciprocity.lean` — both regimes of the summed 2-torsion count\n  (`sum_card_V4_of_isSquare_th",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-05T00:08:19",
+      "title": "Both regimes are proved unconditionally here"
+    },
+    {
+      "cycle_id": "0b20dfc4",
+      "domain": "Applications",
+      "key_insight": "# Future directions: law-change capacity of tie ceilings\n\nDerived from the three research cycles in `Catalog/Applications/ModalFractionCapacity.lean`,\n`ModalFractionCapacitySharp.lean` and `ModalFract",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-05T00:08:40",
+      "title": "Universal Law-Change Capacity in Modal Fraction"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d00ca27a",
-      "domain": "MachineLearning",
-      "name": "klFinDist_nonneg",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "d00ca27a",
-      "domain": "MachineLearning",
-      "name": "klFinDist_self",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "d00ca27a",
-      "domain": "MachineLearning",
-      "name": "change_of_measure",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "8aeaf6ab",
-      "domain": "Pythagorean",
-      "name": "ceiling_shape_diff",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "8aeaf6ab",
-      "domain": "Pythagorean",
-      "name": "ceiling_shape_bound",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "776b8f2a",
-      "domain": "NumberTheory",
-      "name": "sub_div_le_log_div",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0688a872",
       "domain": "Bridges",
@@ -2803,9 +2767,45 @@
       "domain": "Physics",
       "name": "lb4_16",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "b3a54ad0",
+      "domain": "Novelty",
+      "name": "psi2_split",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b3a54ad0",
+      "domain": "Novelty",
+      "name": "psi2_factor",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b3a54ad0",
+      "domain": "Novelty",
+      "name": "psi2_irreducible_quadratic_factor",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0b20dfc4",
+      "domain": "Applications",
+      "name": "modalBlock_nil",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0b20dfc4",
+      "domain": "Applications",
+      "name": "modalBlock_cons",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0b20dfc4",
+      "domain": "Applications",
+      "name": "le_modalBlock",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-05T00:08:02",
+  "last_updated": "2026-09-05T00:08:40",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0c164125",
-        "quality": 0.78,
-        "theorems": 88,
-        "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*"
-      },
-      {
         "cycle_id": "3d2c810c",
         "quality": 0.82,
         "theorems": 91,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 42,
         "title": "FACT round-46 #1 — MID-PRIME-HUNT: prime-power hits carry the tight-u residual ("
+      },
+      {
+        "cycle_id": "0b20dfc4",
+        "quality": 0.82,
+        "theorems": 84,
+        "title": "Universal Law-Change Capacity in Modal Fraction"
       }
     ],
     "Bridges": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d451fd97",
-        "quality": 0.82,
-        "theorems": 70,
-        "title": "Backward-error semantics for floating-point chaotic programs"
-      },
-      {
         "cycle_id": "3c91f334",
         "quality": 0.84,
         "theorems": 124,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 63,
         "title": "FACT round-45 #1 — U35-LOCALIZED: above the floor everywhere, degrades everywher"
+      },
+      {
+        "cycle_id": "b3a54ad0",
+        "quality": 0.82,
+        "theorems": 84,
+        "title": "Both regimes are proved unconditionally here"
       }
     ],
     "NumberTheory": [

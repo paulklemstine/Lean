@@ -7,11 +7,16 @@ and vanishes nowhere, which are the hypotheses needed for Stone-Weierstrass.
 -/
 
 import Mathlib
--- import ShefferAI.Lean.SoftplusBasic
+import Bridges.NeuralCoding.Softplus_strictMono
 
 open Real
 
 noncomputable section
+
+/-- Softplus is strictly positive: `log (1 + eˣ) > log 1 = 0`. -/
+theorem softplus_pos (x : ℝ) : 0 < softplus x := by
+  have h : (1 : ℝ) < 1 + Real.exp x := by nlinarith [Real.exp_pos x]
+  simpa [softplus] using Real.log_pos h
 
 /-! ## Depth-1 Sheffer Expressions -/
 

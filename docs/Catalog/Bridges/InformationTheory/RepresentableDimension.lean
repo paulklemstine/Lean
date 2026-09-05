@@ -42,6 +42,11 @@ open Finset Fintype CategoryTheory
 
 noncomputable section
 
+/-- A probe family is a `Finset` of objects. -/
+abbrev ProbeFamily (Ob : Type*) := Finset Ob
+
+variable {Ob : Type u} [Fintype Ob] [DecidableEq Ob]
+
 universe u v
 
 set_option linter.unusedSectionVars false

@@ -9,6 +9,17 @@ Declarations: 5
 
 noncomputable section
 
+open Real Matrix
+
+/-- The cross ratio of four reals. -/
+def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
+
+/-- The SPB matrix `M(a) = !![1, a; -a, 1]`. -/
+def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
+
+/-- The SPB (stereographic projection bridge) operation. -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
+
 /-- [Section: # CatalogBuild.Shared.Spb_zero
 Auto-generated from theorem catalog database.
 Domain: EML

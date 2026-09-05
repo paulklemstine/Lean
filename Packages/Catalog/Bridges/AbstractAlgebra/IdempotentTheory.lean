@@ -9,6 +9,12 @@ Declarations: 10
 
 noncomputable section
 
+/-- The complement of an idempotent is idempotent. -/
+theorem idempotent_complement {R : Type*} [Ring R] (e : R) (he : e * e = e) :
+    (1 - e) * (1 - e) = 1 - e := by
+  simp [sub_mul, mul_sub, he, sub_sub, sub_self]
+
+
 /-- e·(1-e) = 0 for an idempotent. -/
 theorem idempotent_orthogonal_right {R : Type*} [Ring R] (e : R) (he : e * e = e) :
     e * (1 - e) = 0 := by

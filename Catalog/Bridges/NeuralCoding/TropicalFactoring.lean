@@ -49,6 +49,9 @@ theorem padic_val_gcd {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
   · assumption;
   · assumption
 
+/-- The `p`-adic valuation of an lcm is the max of the valuations.  (The header line of
+this declaration was lost in the auto-generated file and is restored here.) -/
+theorem padic_val_lcm {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
     (ha : 0 < a) (hb : 0 < b) :
     padicValNat p (Nat.lcm a b) = max (padicValNat p a) (padicValNat p b) := by
   have := @Nat.factorization_lcm a b;

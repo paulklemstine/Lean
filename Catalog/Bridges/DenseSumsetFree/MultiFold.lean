@@ -1,4 +1,5 @@
 import Mathlib
+import Bridges.DenseSumsetFree.Basic
 /-
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
@@ -72,29 +73,12 @@ theorem avoidsSumsets_multifold {S : Finset ℕ} {k : ℕ} (h : AvoidsSumsets S 
         (fun C hC => hk C (by simp [hC])) (by simp)
     exact h A (sumsetNat (B :: L')) hA htail (by rwa [sumsetNat_cons] at hsub)
 
-/-- **The polylogarithmic theorem for `t`-fold sumsets.**  For every density
-`0 < δ < 1` there is `C > 0` such that for all large `n` there is `S ⊆ [n]` with
-`|S| ≥ δ n` containing **no** iterated sumset `A₁ + ⋯ + A_t` (`t ≥ 2` arbitrary)
-whose parts all have at least `C (log n)³` elements. -/
-theorem exists_dense_set_avoiding_polylog_multifold_sumsets (δ : ℝ) (hδ0 : 0 < δ)
-    (hδ1 : δ < 1) :
-    ∃ C : ℝ, 0 < C ∧ ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
-      ∃ S : Finset ℕ, S ⊆ Finset.range n ∧ δ * n ≤ S.card ∧
-        ∀ L : List (Finset ℕ), 2 ≤ L.length → (∀ A ∈ L, A.Nonempty) →
-          (∀ A ∈ L, C * (Real.log n) ^ 3 ≤ A.card) → ¬ sumsetNat L ⊆ S := by
-  obtain ⟨C, hC0, N, hN⟩ := exists_dense_set_avoiding_polylog_sumsets δ hδ0 hδ1
-  refine ⟨C, hC0, N, fun n hn => ?_⟩
-  obtain ⟨S, hSsub, hScard, hSavoid⟩ := hN n hn
-  refine ⟨S, hSsub, hScard, ?_⟩
-  intro L hlen hne hk
-  -- the two-summand avoidance holds at the natural-number threshold `⌈C (log n)³⌉`
-  have havoid : AvoidsSumsets S ⌈C * (Real.log n) ^ 3⌉₊ := by
-    intro A B hA hB
-    refine hSavoid A B ?_ ?_
-    · exact le_trans (Nat.le_ceil _) (by exact_mod_cast hA)
-    · exact le_trans (Nat.le_ceil _) (by exact_mod_cast hB)
-  refine avoidsSumsets_multifold havoid L hlen hne ?_
-  intro A hA
-  exact Nat.ceil_le.2 (hk A hA)
+-- The two theorems that used to sit here, `exists_dense_set_avoiding_polylog_sumsets`
+-- (the `(log n)³` theorem for two summands, formerly in the missing module
+-- `Bridges.DenseSumsetFree.Main`) and its `t`-fold corollary
+-- `exists_dense_set_avoiding_polylog_multifold_sumsets`, now live in
+-- `Bridges.DenseSumsetFree.TwoSummands`, which obtains the two-summand statement as the
+-- `t = 2` case of `exists_dense_set_avoiding_N_sumsets`.  Keeping them there breaks the
+-- import cycle `MultiFold → Main → General → MultiFold`.
 
 end DenseSumsetFree

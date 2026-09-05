@@ -22,6 +22,9 @@ def stereoY (t : ℝ) : ℝ := (1 - t ^ 2) / (1 + t ^ 2)
 
 
 
+/-- `1 + t²` never vanishes. -/
+theorem one_plus_sq_ne_zero (t : ℝ) : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
+
 /-- [Section: # CatalogBuild.Geometry.Stereographic.StereographicBridge
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
@@ -48,6 +51,14 @@ theorem stereo_y_lower_bound (t : ℝ) : -1 ≤ stereoY t := by
 
 
 
+
+/-- Stereographic projection inverts the parametrisation: projecting `(x, y)` back from
+the north pole returns the parameter `t`. -/
+theorem stereo_round_trip (t : ℝ) : stereoX t / (1 + stereoY t) = t := by
+  have h : (1 : ℝ) + t ^ 2 ≠ 0 := one_plus_sq_ne_zero t
+  unfold stereoX stereoY
+  field_simp
+  ring
 
 theorem stereo_frozen_crystal :
     {t : ℝ | stereoX t / (1 + stereoY t) = t} = Set.univ := by

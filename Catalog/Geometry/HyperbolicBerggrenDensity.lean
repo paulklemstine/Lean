@@ -1,4 +1,4 @@
-import Catalog.Geometry.HyperbolicBerggrenGeodesicsII
+import Geometry.HyperbolicBerggrenGeodesicsII
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle III: quadratic ball growth

@@ -7,6 +7,8 @@ Domain: Speculative/RosettaStone
 Declarations: 13
 -/
 
+variable {α : Type*} {X : Type*} [TopologicalSpace X]
+
 /-- In any semilattice, meet is idempotent. -/
 theorem inf_idempotent [SemilatticeInf α] (a : α) : a ⊓ a = a := inf_idem a
 
@@ -34,8 +36,9 @@ theorem closure_idempotent_set (s : Set X) :
     closure (closure s) = closure s :=
   isClosed_closure.closure_eq
 
-/-- Interior ⊆ set ⊆ closure. -/
-theorem interior_subset_closure (s : Set X) :
+/-- Interior ⊆ set ⊆ closure.  (Renamed from `interior_subset_closure`, which clashes
+with Mathlib's lemma of that name.) -/
+theorem interior_subset_closure_of_set (s : Set X) :
     interior s ⊆ closure s :=
   interior_subset.trans subset_closure
 

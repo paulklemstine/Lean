@@ -9,6 +9,10 @@ Declarations: 26
 
 noncomputable section
 
+/-- The rectified linear unit.  (Restated here from `Shared/NeuralCoding/Relu.lean`;
+the auto-generated file used it without carrying the definition along.) -/
+def relu (x : ℝ) : ℝ := max x 0
+
 /-- ReLU is monotone: preserves the tropical order. -/
 theorem relu_monotone : Monotone relu :=
   fun _ _ h => max_le_max h le_rfl
@@ -32,6 +36,15 @@ theorem logsumexp_le_max_plus_log2 (x y : ℝ) :
   have := Real.exp_le_exp.2 hx
   have := Real.exp_le_exp.2 hy
   linarith
+
+/-- LogSumExp dominates the max (the tropical limit is a lower bound). -/
+theorem logsumexp_ge_max (x y : ℝ) :
+    max x y ≤ Real.log (Real.exp x + Real.exp y) := by
+  have h : Real.exp (max x y) ≤ Real.exp x + Real.exp y := by
+    rcases le_total x y with hxy | hxy
+    · rw [max_eq_right hxy]; nlinarith [Real.exp_pos x]
+    · rw [max_eq_left hxy]; nlinarith [Real.exp_pos y]
+  exact (Real.le_log_iff_exp_le (by positivity)).mpr h
 
 /-- The LogSumExp sandwich: max ≤ LSE ≤ max + log 2.
 This is the fundamental bound showing tropical = quantum up to log 2. -/

@@ -2,7 +2,7 @@ import Mathlib
 import Bridges.NeuralCoding.MaxPlusDefs
 import Bridges.NeuralCoding.MaxPlusLemmas
 import Bridges.TropicalAlgebra.EigenvectorIteration
-import Speculative.AutoResearch.TropicalWalkPerron
+import Bridges.TropicalWalkPerron
 
 /-!
 # Tropical Perron-Frobenius Theorem

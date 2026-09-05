@@ -9,6 +9,8 @@ Declarations: 12
 
 noncomputable section
 
+open CategoryTheory
+
 /-- Bridge composition: adjunctions compose. -/
 def bridge_composition {C D E : Type*}
     [Category C] [Category D] [Category E]

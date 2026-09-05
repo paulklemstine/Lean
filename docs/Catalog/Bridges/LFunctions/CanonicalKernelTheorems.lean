@@ -1,3 +1,6 @@
+import Mathlib
+import Logic.GraphTheory.Defs
+
 /-
 Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
@@ -47,7 +50,6 @@ constants, which in turn controls chip-firing normal forms.
   finite graph" (2007)
 -/
 
-import Mathlib
 
 open Finset BigOperators
 
@@ -466,46 +468,59 @@ theorem harmonic_tree_attachment_forces_unique_firing
   · exact fun h => hsep.elim fun v hv => hv <| by have := congr_fun h v; norm_num at this; linarith;
 
 
--- !-- Merged from CanonicalKernelDefs.lean (auto-dedup) -- !--
-
-This file introduces the foundational definitions for the canonical tropical
-kernel theory, connecting harmonic functions on graph subsets to chip-firing
-equivalence classes and the restricted critical group.
-* `IsHarmonicOn` — a function satisfies the discrete Laplace equation on a subset
-* `NormalizedOn` — a function sums to zero on a subset (mean-zero normalization)
-* `SeparatedOn` — the restriction-faithfulness separation hypothesis
-* `FiringEquivalentOn` — two functions differ by a Laplacian image supported on a subset
-* `IsTreeAttachmentAlong` — a set T is attached to S as a tree
-* `RestrictedLaplacianImage` — the image of the restricted Laplacian on S
-* `harmonicKernel` — the set of harmonic functions on S
-* Baker, M. and Norine, S. "Riemann–Roch and Abel–Jacobi theory on a finite graph" (2007)
-import Logic.GraphTheory.Defs
-/-! ### Harmonic Functions on Subsets -/
-    if for every vertex `v ∈ S`, the Laplacian of `f` at `v` vanishes:
-    `∑ w, L(v,w) · f(w) = 0`.
-    This is the discrete analogue of harmonicity in potential theory. -/
-  ∀ v ∈ S, ∑ w : V, graphLaplacian G v w * f w = 0
-/-- A function is **normalized on** `S` if its values sum to zero over `S`:
-    `∑ v ∈ S, f(v) = 0`. This removes the constant-function ambiguity
-    from the harmonic kernel. -/
-/-- The **separation hypothesis** for `S` in `G`: if two harmonic functions on `S`
-    are both normalized on `S` and agree on every vertex of `S`, then they are
-    equal everywhere. This ensures that harmonic extensions from `S` are unique
-    and encodes the geometric idea that `S` "sees" enough of the graph. -/
-    Laplacian image of a function supported on `S`. This is the algebraic
-    expression of chip-firing: `g = f + L · c` where `c` is supported on `S`. -/
-    ∀ v, g v = f v + ∑ w : V, graphLaplacian G v w * c w
-/-- A subset `T` is a **tree attachment along** `S` in `G` if:
-    1. `S` and `T` are disjoint,
-    2. Every vertex in `T` has at most one neighbor in `S`,
-    3. The induced subgraph on `T` is acyclic (forest),
-    4. Every vertex in `T` has a path to `S` through `T`. -/
-/-- The **restricted Laplacian image** on `S`: the set of functions that arise
-    as `L · c` for some `c` supported on `S`. This is the chip-firing lattice
-    restricted to `S`. -/
-    ∀ v, h v = ∑ w : V, graphLaplacian G v w * c w}
-/-- The **harmonic kernel** on `S`: the set of all functions harmonic on `S`. -/
-/-- A function is **constant** if it takes a single value everywhere. -/
-def IsConstant (f : V → ℤ) : Prop :=
-/-- Two functions are **equivalent modulo constants** if they differ by
-    a constant function. -/
+-- NOTE: the auto-merged block below was syntactically broken: the merge kept the
+-- doc-comments of `CanonicalKernelDefs.lean` but dropped the declaration headers and
+-- bodies they belong to, so the text was not parseable Lean.  It is preserved verbatim
+-- as comments; the intact definitions live in `Bridges/PosetTheory/CanonicalKernelDefs.lean`.
+-- -- !-- Merged from CanonicalKernelDefs.lean (auto-dedup) -- !--
+--
+-- This file introduces the foundational definitions for the canonical tropical
+-- kernel theory, connecting harmonic functions on graph subsets to chip-firing
+-- equivalence classes and the restricted critical group.
+-- * `IsHarmonicOn` — a function satisfies the discrete Laplace equation on a subset
+-- * `NormalizedOn` — a function sums to zero on a subset (mean-zero normalization)
+-- * `SeparatedOn` — the restriction-faithfulness separation hypothesis
+-- * `FiringEquivalentOn` — two functions differ by a Laplacian image supported on a subset
+-- * `IsTreeAttachmentAlong` — a set T is attached to S as a tree
+-- * `RestrictedLaplacianImage` — the image of the restricted Laplacian on S
+-- * `harmonicKernel` — the set of harmonic functions on S
+-- * Baker, M. and Norine, S. "Riemann–Roch and Abel–Jacobi theory on a finite graph" (2007)
+-- /-! ### Harmonic Functions on Subsets -/
+--     if for every vertex `v ∈ S`, the Laplacian of `f` at `v` vanishes:
+--     `∑ w, L(v,w) · f(w) = 0`.
+--     This is the discrete analogue of harmonicity in potential theory. -/
+--   ∀ v ∈ S, ∑ w : V, graphLaplacian G v w * f w = 0
+--
+-- /-- A function is **normalized on** `S` if its values sum to zero over `S`:
+--     `∑ v ∈ S, f(v) = 0`. This removes the constant-function ambiguity
+--     from the harmonic kernel. -/
+--
+-- /-- The **separation hypothesis** for `S` in `G`: if two harmonic functions on `S`
+--     are both normalized on `S` and agree on every vertex of `S`, then they are
+--     equal everywhere. This ensures that harmonic extensions from `S` are unique
+--     and encodes the geometric idea that `S` "sees" enough of the graph. -/
+--     Laplacian image of a function supported on `S`. This is the algebraic
+--     expression of chip-firing: `g = f + L · c` where `c` is supported on `S`. -/
+--     ∀ v, g v = f v + ∑ w : V, graphLaplacian G v w * c w
+--
+-- /-- A subset `T` is a **tree attachment along** `S` in `G` if:
+--     1. `S` and `T` are disjoint,
+--     2. Every vertex in `T` has at most one neighbor in `S`,
+--     3. The induced subgraph on `T` is acyclic (forest),
+--     4. Every vertex in `T` has a path to `S` through `T`. -/
+--
+-- /-- The **restricted Laplacian image** on `S`: the set of functions that arise
+--     as `L · c` for some `c` supported on `S`. This is the chip-firing lattice
+--     restricted to `S`. -/
+--     ∀ v, h v = ∑ w : V, graphLaplacian G v w * c w}
+--
+-- /-- The **harmonic kernel** on `S`: the set of all functions harmonic on `S`. -/
+--
+-- /-- A function is **constant** if it takes a single value everywhere. -/
+-- def IsConstant (f : V → ℤ) : Prop :=
+--
+-- /-- Two functions are **equivalent modulo constants** if they differ by
+--     a constant function. -/
+--
+--
+--

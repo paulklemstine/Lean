@@ -21,6 +21,14 @@ open Finset Real
 
 variable {Ω : Type*} [Fintype Ω]
 
+/-- A finite probability distribution: nonnegative weights summing to one. -/
+def IsProb (P : Ω → ℝ) : Prop := (∀ p, 0 ≤ P p) ∧ ∑ p, P p = 1
+
+/-- The Kullback–Leibler divergence `KL(Q ‖ P)`, with the usual convention
+`0 · log(0/p) = 0`. -/
+def klDiv (Q P : Ω → ℝ) : ℝ := ∑ p, if Q p = 0 then (0 : ℝ) else Q p * Real.log (Q p / P p)
+
+
 /-
 The key pointwise inequality: for q ≥ 0 and p > 0,
 `q * log(q/p) ≥ q - p`, which is equivalent to `log(x) ≤ x - 1` applied to `x = p/q`.

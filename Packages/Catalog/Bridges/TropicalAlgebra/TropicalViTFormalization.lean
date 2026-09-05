@@ -9,6 +9,13 @@ Declarations: 20
 
 noncomputable section
 
+/-- Tropical addition is `max`.  (Supplied here: the auto-generated file used `tAdd`
+and `tMul` without carrying their definitions along.) -/
+def tAdd (a b : ℝ) : ℝ := max a b
+
+/-- Tropical multiplication is ordinary addition. -/
+def tMul (a b : ℝ) : ℝ := a + b
+
 /-- Tropical semiring: addition is idempotent -/
 theorem tAdd_idempotent (a : ℝ) : tAdd a a = a := max_self a
 

@@ -9,6 +9,14 @@ Declarations: 14
 
 noncomputable section
 
+/-- ReLU.  (Supplied here: the auto-generated file used `relu` and `logSumExp`
+without carrying their definitions along.) -/
+def relu (x : ℝ) : ℝ := max x 0
+
+/-- The log-sum-exp of a finite family. -/
+def logSumExp {ι : Type*} (s : Finset ι) (f : ι → ℝ) : ℝ :=
+  Real.log (∑ j ∈ s, Real.exp (f j))
+
 /-- ReLU is definitionally max(x, 0) -/
 theorem relu_eq_max (x : ℝ) : relu x = max x 0 := rfl
 
