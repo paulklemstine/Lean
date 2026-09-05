@@ -1294,7 +1294,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "41afeb86",
     "description": "Round-41 #1, cron iteration (exp 482, assessment v259). Paper 147's named follow-up.\n\n**PHASE-SUBTHRESHOLD-LIFT / H3-FAIL**: root-position phases mod {3,5,7,11,13} (cos/sin + QR-indicator, extended to 29) add only +0.008/+0.004 out-of-sample R² over the footprint dial (CIs span 0; phase-only WORSE than baseline at −0.077). **H2 CONFIRMED**: cross-window phase gain goes significantly negative — window-locality supported as the mechanism behind paper 147's split-ceiling excess. H3 refuted (R² = 0.608 < 0.70).\n\nThe split-ceiling excess remains unexplained by any tested feature class — candidates narrow to higher-prime phase patterns or same-window leakage of realized-divisibility features (base dial drops 0.60 → 0.40 cross-window).\n\nProvenance note: the agent's L0 audit voided the coordinator's inline quick attempt (cross-window arm trained and tested on the same half; wrong offset definition; encoding collision) — its clean reimplementation is authoritative.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp482_phase_features.py + exp482_result.json, seed 20260901.",
     "domain_bridges": [],
     "domains": [
@@ -1306,7 +1306,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T05:43:53.954629+00:00",
     "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
   },
@@ -1423,25 +1423,6 @@
     "status": "available",
     "timestamp": "2026-08-22T07:00:59.867376+00:00",
     "title": "FACT round-41 #3 — JOINT-ALIGN: cross-prime coincidences transfer where singleton phases fail (paper 152)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "8d588bfb",
-    "description": "Round-42 #5, cron iteration (exp 486-full, assessment v268). The full version of paper 154's plane with bootstrap-CI pooled fits (n=6000/arm).\n\n**PLANE-MEASURED-ECM-WALL**: TD α = **1.0009 [1.000, 1.002]** exact; ρ-balanced α = **0.4994 [0.485, 0.510]** — birthday bound to three decimals; Fermat-uniform α = **0.9932** = the exact p/2 law; arm-invariance first-order for td/ρ, Fermat strongly non-invariant as predicted.\n\n**HEADLINE: the ECM self-destruction wall** — when B1 ≳ min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] = ∞. ECM refuses a single α on toy range (−0.86 to +0.04); the honest object is {(α,c)(B1)} behind validity edge **B1 ≲ min(p,q)/2**. H2b refuted: lpf/ω proxies capture none of ECM's drivers (powersmoothness across the 4√p window does).\n\nCloses paper 132's residual item (2) with that qualification. Ledger: two superseded buggy runs disclosed; ECM denominator validated pre-data.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp486_full_plane.py + exp486_full_result.json, seed 20260920.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3616",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:46:53.281697+00:00",
-    "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -1587,6 +1568,25 @@
     "status": "available",
     "timestamp": "2026-09-04T18:26:13.298441+00:00",
     "title": "Deepening: Riemann Convergence of Bhattacharyya Angle Sums"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 8d588bfb (Q=0.850), which proved 2138 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-42 #5, cron iteration (exp 486-full, assessment v268). The full version of paper 154's plane with bootstrap-CI pooled fits (n=6000/arm).\n\n**PLANE-MEASURED-ECM-WALL**: TD α = **1.0009 [1.000, 1.002]** exact; ρ-balanced α = **0.4994 [0.485, 0.510]** — birthday bound to three decimals; Fermat-uni",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_8d588bfb_aac46b66",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8d588bfb",
+    "status": "available",
+    "timestamp": "2026-09-05T04:29:55.045622+00:00",
+    "title": "Deepening: FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge"
   },
   {
     "ambition_level": "grand_challenge",
@@ -43716,6 +43716,123 @@
     "status": "available",
     "timestamp": "2026-09-05T00:08:12.943498+00:00",
     "title": "Exponent-Two Subgroup Classification for Weierstrass Points"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.ECMWallThresholdFormula",
+      "Bridges.ECMSelfDestructionWall",
+      "Shared.ECMStage1OrderCompletion"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The exact wall threshold equals the largest prime power occurring in the Hasse window. We conjecture this is always at least p/2, which would turn the heuristic validity edge B1 ≲ min(p,q)/2 into a theorem. The approach replaces prime-gap input by smooth-number counts in short intervals.\n\nFor every prime p ≥ 19, max over n in [p+1-2√p, p+1+2√p] of the largest prime power exactly dividing n is at least p/2.\n\nCompute windowMaxPP p for all primes p up to 10^7 and compare with p/2; formalise the resulting bound against ECMWall.isLeast_wall.\n\nThe measured validity edge B1 ≲ min(p,q)/2 becomes an unconditional theorem, and ECM cost fits below the edge are provably meaningful.\n\nThere are primes whose whole Hasse window is p/2-powersmooth, i.e. ECM self-destructs at bounds far below the Hasse top — a much stronger failure mode than currently proved.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4713",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Count B-powersmooth integers in an interval of length 4√p via a Rankin/Dickman upper bound; show the count is smaller than the interval length for B = p/2, hence some element has a large prime power factor.",
+    "research_mode": "team",
+    "source_exp_id": "8d588bfb",
+    "status": "available",
+    "timestamp": "2026-09-05T04:29:37.841087+00:00",
+    "title": "Prime-Power Floor for the ECM Self-Destruction Wall"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.ECMSelfDestructionWall",
+      "Bridges.ECMWallThresholdFormula"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Between the two local walls B*(p) and B*(q) an ECM run splits deterministically rather than probabilistically. We conjecture this corridor has width proportional to q. This identifies a bound regime where ECM is not a randomized algorithm at all.\n\nFor primes p < q, every B with B*(p) ≤ B < B*(q) makes every curve whose order at q is not B-powersmooth split N = pq, and the corridor has width at least q/2 - 2p.\n\nFormalise the corridor from ECMWall.one_sided_crossing_splits plus a lower bound on B*(q); measure the split rate empirically inside the corridor.\n\nECM parameter selection for unbalanced moduli acquires a provably deterministic regime, changing expected-time analyses.\n\nThe corridor is degenerate, so the joint wall is effectively a single threshold and min(p,q) fully determines validity.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "NumberTheory"
+    ],
+    "id": "fd_4714",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Combine one_sided_crossing_splits with the prime-power floor of direction 1 applied at q, and a powersmoothness survival argument at q.",
+    "research_mode": "team",
+    "source_exp_id": "8d588bfb",
+    "status": "available",
+    "timestamp": "2026-09-05T04:29:38.307512+00:00",
+    "title": "Deterministic-Split Corridor of Unbalanced Semiprimes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.FactorLocalExponentRigidity",
+      "Bridges.FactorLocalExponentPlane",
+      "Bridges.FermatArmDerivative"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Exponent rigidity is now proved: any cost bracketed by the exact halting laws has fitted exponent tending to 1, 1, 1/2. The open question is the rate. On the arm q = 2p the Fermat fit equals 1 + log(3/2 - sqrt 2)/log p exactly, so the leading correction is a 1/log p term whose coefficient is the logarithm of the exact constant; we conjecture this pattern holds for every arm and algorithm, and that on toy ranges a different, discreteness term dominates.\n\nFor each algorithm in the plane the fitted exponent has an expansion alpha + c1/log p + O(1/log^2 p) with c1 = log(constant of the exact cost law); in particular a measured Fermat deficit of 0.0068 requires log p >= log(1/(3/2 - sqrt 2))/0.0068, so on p <= 10^6 the deficit must come from the rounding of the halting index instead.\n\nExtend Bridges.FactorLocalExponentRigidity.fermat_logb_exact from q = 2p to arbitrary bounded-ratio arms and to the integer-valued halting index; compare the resulting two-term prediction with fitted exponents over p up to 10^6.\n\nFitted exponents and their confidence intervals become fully explainable: the plane's asymptotics plus a computable finite-size term.\n\nSome algorithm in the plane has a fit error not of order 1/log p, indicating a cost mechanism outside the exact halting laws.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_4715",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Take logs of the exact cost identities rather than of the sandwiches, isolate the constant, and bound the rounding contribution of the integer halting index separately.",
+    "research_mode": "team",
+    "source_exp_id": "8d588bfb",
+    "status": "available",
+    "timestamp": "2026-09-05T04:29:38.771994+00:00",
+    "title": "Finite-Size Expansion of Fitted Cost Exponents"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.FactorLocalExponentPlane",
+      "Bridges.FermatArmDerivative"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Arm-invariance of a cost law is exactly the statement that its derivative in the second prime vanishes to the relevant order. Trial division has an identically zero derivative, Fermat's is bounded below by a positive constant, and rho's should be O(p^{1/2}/q). This reframes an empirical invariance test as calculus on exact cost formulas.\n\nd/dq of the rho collision threshold at fixed p is O(p^{1/2}/q); the Fermat half, d/dq of the gap equals 1/2 - sqrt(p)/(2 sqrt(q)) >= 1/2 - 1/(2 sqrt 2) > 0 for q >= 2p, is already proved in Bridges.FermatArmDerivative.\n\nDifferentiate the birthday threshold in Lean using Mathlib's deriv API and bound the result, mirroring the proved Fermat computation.\n\nThe observed first-order invariance of td/rho and non-invariance of Fermat become a single derivative computation.\n\nInvariance is not captured by first derivatives and a genuinely statistical notion of arm dependence is needed.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4716",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Use fermat_gap_eq to get a differentiable closed form, apply Real.deriv_sqrt, and bound the rho threshold derivative through the two-sided birthday bracket.",
+    "research_mode": "team",
+    "source_exp_id": "8d588bfb",
+    "status": "available",
+    "timestamp": "2026-09-05T04:29:39.218659+00:00",
+    "title": "Arm-Invariance as Vanishing q-Derivative"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.ECMWallThresholdFormula",
+      "Shared.ECMStage1FiringRate"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved identity firingCount = number of B-powersmooth window elements suggests the ECM dose-response curve is a Dickman rho function of log p / log B, saturating exactly at windowMaxPP p. This would replace the folklore collision heuristic by an exact smooth-number law.\n\nfiringCount(p,B)/|W(p)| = rho(log p / log B) + o(1) uniformly for B ≤ p^{1/2}, with saturation to 1 exactly at B = windowMaxPP p.\n\nCompute firingCount for p up to 10^6 across a grid of B and fit against Dickman rho; formalise the saturation endpoint (already proved) and the monotonicity skeleton.\n\nECM's stage-1 success curve gets an exact analytic description, and the measured (α,c)(B1) family becomes a reparametrised Dickman function.\n\nPowersmoothness density in short intervals deviates from the global Dickman law, which is itself a significant smooth-number phenomenon.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4717",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Combine firingCount_eq_powersmoothCount with short-interval smooth-number estimates; the saturation endpoint follows from firingCount_saturates_iff.",
+    "research_mode": "team",
+    "source_exp_id": "8d588bfb",
+    "status": "available",
+    "timestamp": "2026-09-05T04:29:39.682835+00:00",
+    "title": "Dickman Dose-Response for Stage-1 Firing"
   },
   {
     "ambition_level": "extension",

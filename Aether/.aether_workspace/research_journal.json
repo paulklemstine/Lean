@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d4f58bc3",
-      "domain": "Applications",
-      "key_insight": "# Future directions — NET-83 super-additive integration\n\nDerived from three research cycles, recorded in\n`Catalog/Applications/NET83SuperAdditiveIntegration.lean` (cycles 1–2) and\n`Catalog/Application",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 83,
-      "timestamp": "2026-09-02T00:16:28",
-      "title": "NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE — GPTQ4+top-k degrades WORSE than sum of parts (14.0% vs e"
-    },
-    {
       "cycle_id": "108711a9",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — after the degree-12 semiprime arm\n\nThis cycle closed the semiprime half of the degree-12 splitting-type programme\nand, in doing so, replaced three per-order enumerations by three",
@@ -499,19 +489,19 @@
       "theorem_count": 84,
       "timestamp": "2026-09-05T00:08:40",
       "title": "Universal Law-Change Capacity in Modal Fraction"
+    },
+    {
+      "cycle_id": "8d588bfb",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — after the plane was measured and the ECM wall located\n\nThis cycle proved three exact cost laws (trial division `α = 1`, birthday `α = 1/2`\ntwo-sided, Fermat's exact `(p+q)/2` law",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 2138,
+      "timestamp": "2026-09-05T04:29:54",
+      "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "04d3a29d",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions: the guarded transfer principle\n\nThis cycle formalised, in `Catalog/Cryptography/Transreal/`, the following:\n\n* `Core.lean` — the four-constructor carrier `Transreal = fin ℝ | pinf",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 104,
-      "timestamp": "2026-08-23T11:36:10",
-      "title": "Guarded transfer principle for real analysis"
-    },
     {
       "cycle_id": "3d2c810c",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 84,
       "timestamp": "2026-09-05T00:08:40",
       "title": "Universal Law-Change Capacity in Modal Fraction"
+    },
+    {
+      "cycle_id": "8d588bfb",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — after the plane was measured and the ECM wall located\n\nThis cycle proved three exact cost laws (trial division `α = 1`, birthday `α = 1/2`\ntwo-sided, Fermat's exact `(p+q)/2` law",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 2138,
+      "timestamp": "2026-09-05T04:29:54",
+      "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0688a872",
-      "domain": "Bridges",
-      "name": "catalog",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "0688a872",
-      "domain": "Bridges",
-      "name": "catalog",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "0688a872",
-      "domain": "Bridges",
-      "name": "eml_generates_neg_one",
-      "quality": 0.84
-    },
     {
       "cycle_id": "e2f91544",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "le_modalBlock",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "8d588bfb",
+      "domain": "Bridges",
+      "name": "catalog",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "8d588bfb",
+      "domain": "Bridges",
+      "name": "catalog",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "8d588bfb",
+      "domain": "Bridges",
+      "name": "eml_generates_neg_one",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-09-05T00:08:40",
+  "last_updated": "2026-09-05T04:29:54",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "05978b53",
-        "quality": 0.89,
-        "theorems": 95,
-        "title": "Conjecture. `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at"
-      },
-      {
         "cycle_id": "569bc76d",
         "quality": 0.88,
         "theorems": 156,
@@ -3203,6 +3197,12 @@
         "quality": 0.86,
         "theorems": 118,
         "title": "FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
+      },
+      {
+        "cycle_id": "8d588bfb",
+        "quality": 0.85,
+        "theorems": 2138,
+        "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge"
       }
     ],
     "Combinatorics": [

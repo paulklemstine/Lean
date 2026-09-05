@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-05T00:08:13Z",
-  "count": 119,
+  "archived_at": "2026-09-05T04:29:39Z",
+  "count": 120,
   "directions": [
     {
       "id": "fd_3695",
@@ -4715,6 +4715,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_3616",
+      "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)",
+      "description": "Round-42 #5, cron iteration (exp 486-full, assessment v268). The full version of paper 154's plane with bootstrap-CI pooled fits (n=6000/arm).\n\n**PLANE-MEASURED-ECM-WALL**: TD α = **1.0009 [1.000, 1.002]** exact; ρ-balanced α = **0.4994 [0.485, 0.510]** — birthday bound to three decimals; Fermat-uniform α = **0.9932** = the exact p/2 law; arm-invariance first-order for td/ρ, Fermat strongly non-invariant as predicted.\n\n**HEADLINE: the ECM self-destruction wall** — when B1 ≳ min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] = ∞. ECM refuses a single α on toy range (−0.86 to +0.04); the honest object is {(α,c)(B1)} behind validity edge **B1 ≲ min(p,q)/2**. H2b refuted: lpf/ω proxies capture none of ECM's drivers (powersmoothness across the 4√p window does).\n\nCloses paper 132's residual item (2) with that qualification. Ledger: two superseded buggy runs disclosed; ECM denominator validated pre-data.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp486_full_plane.py + exp486_full_result.json, seed 20260920.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "8d588bfb",
+      "timestamp": "2026-08-22T07:46:53.281697+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.85,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-04T09:41:49.195201+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 261
     }
   ]
 }
