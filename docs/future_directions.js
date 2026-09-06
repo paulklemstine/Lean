@@ -2745,21 +2745,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
-    "domains": [
-      "Physics",
-      "Logic"
-    ],
-    "id": "seed_018",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hilbert 6: Axiomatization of Physics"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domains": [
       "Analysis",
@@ -14543,14 +14528,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Overfit Scaling Law for a Provably Null Dial"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd7f5ffb",
     "description": "Pitch-class reduction modulo twelve is injective on decimal digits, so octave equivalence is vacuous there, but it fails from base thirteen on. We conjecture a sharp threshold with quantitative divergence of the interval-class and interval histograms.\n\nPitch-class reduction is injective on base-b digits iff b <= 12; for b >= 13 there are melodies whose interval-class and interval histograms differ in total variation by at least (b - 12)/b.\n\nGeneralize pitchClass_inj_of_lt to arbitrary bases, then construct explicit melodies in base b >= 13 whose folded histogram collapses two distinct interval values.\n\nMod-12 analyses of digit melodies are provably content-free precisely in the bases used by decimal studies.\n\nOctave folding carries information even below base thirteen, which would change how interval classes should be reported.",
     "domains": [],
     "id": "fd_3876",
+    "phase": "A",
     "priority_score": 0.5922972972972974,
     "research_mode": "team",
     "source_exp_id": "620a1130",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T18:49:47.188327+00:00",
     "title": "Base Threshold for Octave-Equivalence Faithfulness"
   },
