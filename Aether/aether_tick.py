@@ -1019,77 +1019,16 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     _clean_catalog_retry_dirs()
 
 
-    # ── Self-healing & Quality Control: Automatic Aristotle Direction Tournament ──
+    # ── Self-healing & Quality Control: Direction Health Check ──
     try:
         from research_memory import FutureDirectionsManager
-        from direction_tournament import DirectionTournament
         fd_heal = FutureDirectionsManager(extractor.workspace)
         stats = fd_heal.get_stats()
         if stats.get("retried_directions", 0) > 0:
             print(f"[Retry] {stats['retried_directions']} retried directions, "
                   f"rate={stats.get('retry_rate',0):.1%}, avg_attempts={stats.get('avg_attempts',0):.2f}")
-        
-        # Trigger Option B Direction Tournament when available directions > 1000
-        avail_dirs = stats.get("available", 0)
-        if avail_dirs > 1000:
-            # Skip if a tournament job is already inflight
-            tournament_already_inflight = any(
-                getattr(j, 'direction_id', '') == '__direction_tournament__'
-                for j in extractor.inflight.values()
-            )
-            if tournament_already_inflight:
-                print(f"[Tournament] Available directions={avail_dirs} > 1000 but tournament job already inflight — skipping.")
-            else:
-                local_inflight = extractor._count_inflight_dispatched()
-                server_running = await _safe_get_active_jobs_count(extractor.aristotle)
-                current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
-                if current_inflight >= max_inflight:
-                    print(f"[Tournament] Skipping tournament: at max_inflight ({current_inflight}/{max_inflight})")
-                else:
-                    dt = DirectionTournament(workspace=extractor.workspace)
-                    batch = dt.get_candidate_batch(batch_size=10)
-                    dispatched_ids = [d.id for d in batch] if batch else []
-                    if batch and len(batch) >= 5:
-                        print(f"[Tournament] Available directions={avail_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
-                        prompt = dt.build_tournament_prompt(batch, target_winners=2)
-                        if hasattr(extractor, 'aristotle') and extractor.aristotle and hasattr(extractor.aristotle, 'submit_lean_project_only'):
-                            import tempfile
-                            with tempfile.TemporaryDirectory() as tmp_dir:
-                                tmp_path = Path(tmp_dir)
-                                (tmp_path / "lakefile.lean").write_text("import Lake\nopen Lake DSL\npackage tournament\n@default_target lean_lib Tournament where srcDir := \".\"")
-                                (tmp_path / "Tournament.lean").write_text("import Mathlib\n-- Direction Tournament Evaluation")
-                                (tmp_path / "TOURNAMENT_PROMPT.md").write_text(prompt)
-                                try:
-                                    proj_id = await extractor.aristotle.submit_lean_project_only(
-                                        prompt=prompt,
-                                        project_dir=tmp_path
-                                    )
-                                    print(f"[Tournament] Successfully queued Aristotle evaluation project: {proj_id}")
-                                    # Track tournament job in inflight so results get polled & processed
-                                    from knowledge_extractor import ResearchJob, ResearchConcept
-                                    tournament_job = ResearchJob(
-                                        job_id=f"tournament_{proj_id[:8]}",
-                                        cycle_n=0,
-                                        concept=ResearchConcept(
-                                            title="Direction Tournament Evaluation",
-                                            domain="meta",
-                                            concept_description="Aristotle evaluates candidate directions for quality pruning",
-                                            mathematical_framing="Direction tournament: select top directions by mathematical merit"
-                                        ),
-                                        prompt=prompt,
-                                        project_id=proj_id,
-                                        status="dispatched",
-                                        dispatch_time=time.time(),
-                                        direction_id="__direction_tournament__",
-                                        tournament_dispatched_ids=dispatched_ids,
-                                    )
-                                    extractor.inflight[proj_id] = tournament_job
-                                    extractor._save_inflight()
-                                    print(f"[Tournament] Tournament job {proj_id[:8]} added to inflight for polling")
-                                except Exception as sub_err:
-                                    print(f"[Tournament] Aristotle submission note: {sub_err}")
     except Exception as e:
-        print(f"[Tournament] Automatic direction tournament check: {e}")
+        print(f"[Retry] Direction stats check: {e}")
 
     # ── Auto-rebalance: prune overrepresented domains ──
     try:
@@ -1579,6 +1518,84 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         # If we hit a queue-full error, do not attempt the novelty fallback
         # because it would consume more directions while Aristotle is full.
         extractor._save_inflight()
+
+    # ── Self-healing & Quality Control: Automatic Aristotle Direction Tournament ──
+    # STRICT GATE: Only evaluated after all primary research (retries, Phase B packaging,
+    # injected issues, Phase A exploration) has been dispatched. Real math and packaging always come first.
+    try:
+        if os.environ.get("AETHER_DISABLE_TOURNAMENT", "").lower() in ("1", "true", "yes"):
+            print("[Tournament] Direction tournament explicitly disabled via AETHER_DISABLE_TOURNAMENT.")
+        else:
+            from research_memory import FutureDirectionsManager
+            from direction_tournament import DirectionTournament
+            fd_tournament = FutureDirectionsManager(extractor.workspace)
+            stats = fd_tournament.get_stats()
+            avail_dirs = stats.get("available", 0)
+            if avail_dirs > 1000:
+                tournament_already_inflight = any(
+                    getattr(j, 'direction_id', '') == '__direction_tournament__'
+                    for j in extractor.inflight.values()
+                )
+                # HARD GATE: Never run if any research jobs are queued/waiting
+                pending_research_jobs = [
+                    j for j in extractor.inflight.values()
+                    if getattr(j, 'direction_id', '') != '__direction_tournament__'
+                    and getattr(j, 'status', '') in ("retry_queued", "dispatch_queued", "queued")
+                ]
+                local_inflight = extractor._count_inflight_dispatched()
+                server_running = await _safe_get_active_jobs_count(extractor.aristotle)
+                current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
+
+                if tournament_already_inflight:
+                    print(f"[Tournament] Available directions={avail_dirs} > 1000 but tournament job already inflight — skipping.")
+                elif pending_research_jobs:
+                    print(f"[Tournament] Skipping tournament: {len(pending_research_jobs)} pending research/packaging job(s) waiting for Aristotle slots.")
+                elif current_inflight >= max_inflight or current_inflight >= 1:
+                    print(f"[Tournament] Skipping tournament: slots reserved for primary research (current_inflight={current_inflight}/{max_inflight})")
+                else:
+                    dt = DirectionTournament(workspace=extractor.workspace)
+                    batch = dt.get_candidate_batch(batch_size=10)
+                    dispatched_ids = [d.id for d in batch] if batch else []
+                    if batch and len(batch) >= 5:
+                        print(f"[Tournament] Available directions={avail_dirs} > 1000 and cluster idle. Running Direction Tournament for {len(batch)} candidates...")
+                        prompt = dt.build_tournament_prompt(batch, target_winners=2)
+                        if hasattr(extractor, 'aristotle') and extractor.aristotle and hasattr(extractor.aristotle, 'submit_lean_project_only'):
+                            import tempfile
+                            with tempfile.TemporaryDirectory() as tmp_dir:
+                                tmp_path = Path(tmp_dir)
+                                (tmp_path / "lakefile.lean").write_text("import Lake\nopen Lake DSL\npackage tournament\n@default_target lean_lib Tournament where srcDir := \".\"")
+                                (tmp_path / "Tournament.lean").write_text("import Mathlib\n-- Direction Tournament Evaluation")
+                                (tmp_path / "TOURNAMENT_PROMPT.md").write_text(prompt)
+                                try:
+                                    proj_id = await extractor.aristotle.submit_lean_project_only(
+                                        prompt=prompt,
+                                        project_dir=tmp_path
+                                    )
+                                    print(f"[Tournament] Successfully queued Aristotle evaluation project: {proj_id}")
+                                    from knowledge_extractor import ResearchJob, ResearchConcept
+                                    tournament_job = ResearchJob(
+                                        job_id=f"tournament_{proj_id[:8]}",
+                                        cycle_n=0,
+                                        concept=ResearchConcept(
+                                            title="Direction Tournament Evaluation",
+                                            domain="meta",
+                                            concept_description="Aristotle evaluates candidate directions for quality pruning",
+                                            mathematical_framing="Direction tournament: select top directions by mathematical merit"
+                                        ),
+                                        prompt=prompt,
+                                        project_id=proj_id,
+                                        status="dispatched",
+                                        dispatch_time=time.time(),
+                                        direction_id="__direction_tournament__",
+                                        tournament_dispatched_ids=dispatched_ids,
+                                    )
+                                    extractor.inflight[proj_id] = tournament_job
+                                    extractor._save_inflight()
+                                    print(f"[Tournament] Tournament job {proj_id[:8]} added to inflight for polling")
+                                except Exception as sub_err:
+                                    print(f"[Tournament] Aristotle submission note: {sub_err}")
+    except Exception as e:
+        print(f"[Tournament] Automatic direction tournament check: {e}")
 
     # Reconcile in_progress directions to match active inflight jobs (true state at tick end).
     # Every active job's direction (keyed by direction_id, falling back to consumed_by_exp_id)
