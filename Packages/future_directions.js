@@ -43576,14 +43576,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Clebsch\u2013Gordan local Euler-factor identity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00aa6ad9",
     "description": "Replace uniform full-register reset by a joint memory `(X,Y)` where `Y` is retained. The natural exact cost is conditional entropy `H(X|Y)`, not `H(X)`. A useful next theorem would combine a finite conditional-entropy identity with an input-wise Jarzynski relation and recover the present `n`-bit result when the side register is trivial.",
     "domains": [],
     "id": "fd_2426",
+    "phase": "A",
     "priority_score": 0.4252222222222223,
     "research_mode": "team",
     "source_exp_id": "43fa6482",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:09.509836+00:00",
     "title": "Conditional information with retained side memory"
   },
