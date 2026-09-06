@@ -2728,20 +2728,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 88e58a70 (Q=0.780), which proved 55 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-52 #1, cron iteration (exp 517). The zero-fit dial's regime-invariance extends to bitlen 48.\n\n**DIAL-HOLDS-UNIFORM-48**: Spearman(T, rate) = **0.777** / **0.755** / **0.801** across three seeds on uniform draws at bitlen 48 \u2014 all inside [0.55, 0.85]; T beats the bare QR-count by +0.09 to +0.13",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_88e58a70_9e16cd0e",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "88e58a70",
-    "status": "available",
-    "timestamp": "2026-09-03T09:51:52.444615+00:00",
-    "title": "Deepening: FACT round-52 #1 \u2014 T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at b"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle a9de2f0b (Q=0.780), which proved 71 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-55 #1, cron iteration (exp 523). The most comprehensive single-dial robustness sweep.\n\n**BKEY-MIXED-ZONE**: the T-dial's Spearman declines GRADUALLY with both bitlen and u \u2014 no cliff, no convention artifact, no threshold effect. Full 4-bitlen \u00d7 3-u grid: sp(T) ranges 0.53\u20130.79; decline is smoo",
     "domains": [
       "Combinatorics"
