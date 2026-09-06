@@ -2728,20 +2728,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle a9de2f0b (Q=0.780), which proved 71 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-55 #1, cron iteration (exp 523). The most comprehensive single-dial robustness sweep.\n\n**BKEY-MIXED-ZONE**: the T-dial's Spearman declines GRADUALLY with both bitlen and u \u2014 no cliff, no convention artifact, no threshold effect. Full 4-bitlen \u00d7 3-u grid: sp(T) ranges 0.53\u20130.79; decline is smoo",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_a9de2f0b_2e766fe4",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "a9de2f0b",
-    "status": "available",
-    "timestamp": "2026-09-03T00:18:01.217939+00:00",
-    "title": "Deepening: FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff ("
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle e2f91544 (Q=0.780), which proved 69 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Parameterize the coefficients by `N` and prove the standard first terms of the critical exponents uniformly in the admissible range of `N`.",
     "domains": [
       "Physics"
@@ -49774,14 +49760,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "scaling theorems for Euler bricks and hypothetical perfect cuboids;"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51c13071",
     "description": "Implement fast-doubling Fibonacci modulo `p\u00b2` and prove it agrees with `Nat.fib % p\u00b2`.\n   This should permit much larger kernel-checked finite bounds without expanding Fibonacci\n   numerals.",
     "domains": [],
     "id": "fd_2824",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "5bb368e2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:21.385736+00:00",
     "title": "Implement fast-doubling Fibonacci modulo `p\u00b2` and prove it agrees with `Nat.fib % p\u00b2`."
   },
