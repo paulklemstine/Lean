@@ -1612,6 +1612,8 @@ Research mode: {concept.research_mode}
         """Return True if the error indicates Aristotle's queue is full."""
         err_str = str(error).lower()
         return any(kw in err_str for kw in [
+            "too many projects in progress",
+            "too many projects",
             "too many requests in progress",
             "too many requests",
             "rate limit",
