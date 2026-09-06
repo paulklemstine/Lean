@@ -49422,14 +49422,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berlekamp\u2013Massey"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f56dc2e8",
     "description": "Separate formal power-series identities from analytic estimates and investigate hypotheses under which truncation errors have certified neighborhoods and constants.",
     "domains": [],
     "id": "fd_2636",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "89e28e84",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:16.263288+00:00",
     "title": "Higher-order remainder control"
   },
