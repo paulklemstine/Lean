@@ -2745,20 +2745,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_036",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Beal's Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
     "domains": [
       "Computation",
@@ -47097,16 +47083,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "the conjecture predicts that no finite non-lattice `S \u2286 \u2124` (e.g. `{0,1,4}`)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8513f12",
     "description": "A closed form for `\u2211_{k \u2264 a} S(n,k)` for every fixed `a \u2265 4`.  The cases `a = 2` and\n   `a = 3` are now proved here (`card_orbits_binary`, `card_orbits_ternary`), and the\n   pattern of the two proofs \u2014 expand the truncated row, apply `stirling2_succ_succ` to each\n   term, and close with `omega` \u2014 suggests that for each fixed `a` the orbit count satisfies\n   the linear recurrence with characteristic roots `1, 2, \u2026, a`; the conjecture is that this\n   holds uniformly in `a` and matches `\u2211_{j \u2264 a} (-1)^{a-j} j^n / (j! (a-j)!)`.",
     "domains": [
       "Logic"
     ],
     "id": "fd_1658",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "daf80a32",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T01:52:09.352092+00:00",
     "title": "A closed form for `\u2211_{k \u2264 a} S(n,k)` for every fixed `a \u2265 4`."
   },
