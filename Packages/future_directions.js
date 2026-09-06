@@ -2728,20 +2728,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle e2f91544 (Q=0.780), which proved 69 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Parameterize the coefficients by `N` and prove the standard first terms of the critical exponents uniformly in the admissible range of `N`.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_e2f91544_bcfa25ad",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "e2f91544",
-    "status": "available",
-    "timestamp": "2026-09-03T21:44:20.156512+00:00",
-    "title": "Deepening: General `O(N)` model"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
     "domains": [
       "Algebra",
@@ -14160,14 +14146,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Beatty Interleaving and the Return-Time Multiplier"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b6717af8",
     "description": "The proved estimate franel(2m+1)*(3m+1) <= 8^(2m+1) is off by a factor of about 2.7 from the true asymptotics franel(n) ~ 2*sqrt(3)*8^n/(3*pi*n). Sharpening it would make the inversion threshold provable uniformly in parity with no finite case check.\n\nFor all n >= 1, 2*franel(n)*n <= 8^n, with the constant 2 asymptotically optimal up to sqrt(3)/pi.\n\nInduction on n using the Franel recurrence (n+1)^2 F(n+1) = (7n^2+7n+2) F(n) + 8 n^2 F(n-1), verified numerically for n <= 40 by exact evaluation.\n\nOne clean estimate replaces both parity cases and the small-bitlen checks in the threshold theorem.\n\nThe crude max-times-total bound is essentially the only elementary route, and thresholds must stay case-split.",
     "domains": [],
     "id": "fd_3932",
+    "phase": "A",
     "priority_score": 0.5930392156862746,
     "research_mode": "team",
     "source_exp_id": "9f4b7d2b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-24T05:02:36.888610+00:00",
     "title": "Sharp Constant for Odd Franel Cube Sums"
   },
