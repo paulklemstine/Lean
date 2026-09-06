@@ -47848,14 +47848,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The coprime case is proved (`coeff_delta_dvd_of_coprime`) and the failure"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2175e849",
     "description": "All coefficients of `F_a` are nonnegative **if and only if** `b m \u2265 0`\nfor every `m \u2265 1`.  The forward direction is proved (`coeff_nonneg_of_bCoeff_nonneg`);\nthe converse is open.  Sharper form: if `b m\u2080 < 0` for some `m\u2080`, then `c(n\u22121) < 0`\nfor some `n \u2264 2 m\u2080`.",
     "domains": [],
     "id": "fd_1732",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3b08d230",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T16:51:11.081136+00:00",
     "title": "All coefficients of `F_a` are nonnegative if and only if"
   },

@@ -67375,7 +67375,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2175e849",
     "description": "All coefficients of `F_a` are nonnegative **if and only if** `b m ≥ 0`\nfor every `m ≥ 1`.  The forward direction is proved (`coeff_nonneg_of_bCoeff_nonneg`);\nthe converse is open.  Sharper form: if `b m₀ < 0` for some `m₀`, then `c(n−1) < 0`\nfor some `n ≤ 2 m₀`.",
     "domain_bridges": [],
     "domains": [],
@@ -67385,7 +67385,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3b08d230",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T16:51:11.081136+00:00",
     "title": "All coefficients of `F_a` are nonnegative if and only if"
   },
