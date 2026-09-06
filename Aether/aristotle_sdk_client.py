@@ -13,6 +13,7 @@ import ssl
 import tarfile
 import tempfile
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, Dict, Any
 
@@ -265,18 +266,39 @@ class AristotleSDKClient:
     async def cancel_project(self, project_id: str) -> bool:
         """Cancel a running project on Aristotle server via the cancel API.
 
-        Fetches the Project object by ID and cancels its running task.
+        Fetches the Project object by ID, cancels its running tasks,
+        or calls project.cancel() if available.
         Returns True if successful, False otherwise.
         """
         try:
             project = await Project.from_id(project_id)
-            if hasattr(project, "cancel"):
+            canceled_any = False
+            # Try canceling through project's active tasks
+            try:
+                tasks, _ = await project.get_tasks(limit=10)
+                for task in tasks:
+                    status_name = getattr(task.status, "name", str(getattr(task, "status", "")))
+                    if status_name in ("QUEUED", "IN_PROGRESS"):
+                        if hasattr(task, "cancel"):
+                            cancel_res = task.cancel()
+                            if asyncio.iscoroutine(cancel_res):
+                                await cancel_res
+                            print(f"[Aristotle] Canceled active task {task.agent_task_id} for project {project_id}")
+                            canceled_any = True
+            except Exception as task_err:
+                print(f"[Aristotle] Task inspection failed during cancel for {project_id}: {task_err}")
+
+            if canceled_any:
+                print(f"[Aristotle] Successfully canceled running task(s) for project {project_id}")
+                return True
+
+            if callable(getattr(project, "cancel", None)):
                 cancel_res = project.cancel()
                 if asyncio.iscoroutine(cancel_res):
                     await cancel_res
                 print(f"[Aristotle] Successfully canceled project {project_id}")
                 return True
-            elif hasattr(aristotlelib, "cancel"):
+            elif callable(getattr(aristotlelib, "cancel", None)):
                 cancel_res = aristotlelib.cancel(project_id=project_id)
                 if asyncio.iscoroutine(cancel_res):
                     await cancel_res
@@ -287,6 +309,43 @@ class AristotleSDKClient:
         except Exception as e:
             print(f"[Aristotle] Error canceling project {project_id}: {e}")
             return False
+
+    async def cleanup_stale_server_tasks(self, max_age_hours: float = 4.0) -> int:
+        """Find and cancel orphaned/stuck running tasks on Aristotle server older than max_age_hours."""
+        try:
+            res = await Project.list_projects(limit=30)
+            projs = res[0] if isinstance(res, tuple) else res
+            canceled_count = 0
+            now = datetime.now(timezone.utc)
+            for p in projs:
+                st = getattr(p, "status", None)
+                if st == ProjectStatus.RUNNING:
+                    # Check age
+                    created_raw = getattr(p, "created_at", None)
+                    is_stale = False
+                    if created_raw:
+                        try:
+                            if isinstance(created_raw, str):
+                                created_dt = datetime.fromisoformat(created_raw.replace("Z", "+00:00"))
+                            elif isinstance(created_raw, (int, float)):
+                                created_dt = datetime.fromtimestamp(created_raw, tz=timezone.utc)
+                            else:
+                                created_dt = created_raw
+                            age_hours = (now - created_dt).total_seconds() / 3600.0
+                            if age_hours >= max_age_hours:
+                                is_stale = True
+                                print(f"[Aristotle] Project {p.project_id} running for {age_hours:.1f}h (>= {max_age_hours}h cap)")
+                        except Exception:
+                            pass
+                    if is_stale:
+                        print(f"[Aristotle] Cleaning up stale running server project {p.project_id}...")
+                        success = await self.cancel_project(p.project_id)
+                        if success:
+                            canceled_count += 1
+            return canceled_count
+        except Exception as e:
+            print(f"[Aristotle] Failed during cleanup_stale_server_tasks: {e}")
+            return 0
 
     async def download_result(
         self,

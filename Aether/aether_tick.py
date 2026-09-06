@@ -452,6 +452,15 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     except Exception as e:
         print(f"[Tick] Warning: queued job purge failed: {e}")
 
+    # 1c. Clean up remote zombie/orphaned tasks on Aristotle server older than 4h
+    if hasattr(extractor, "aristotle") and extractor.aristotle and hasattr(extractor.aristotle, "cleanup_stale_server_tasks"):
+        try:
+            cleaned_remote = await extractor.aristotle.cleanup_stale_server_tasks(max_age_hours=4.0)
+            if cleaned_remote:
+                print(f"[Tick] Cleaned up {cleaned_remote} stale zombie project(s) on Aristotle server")
+        except Exception as e:
+            print(f"[Tick] Remote server task cleanup warning: {e}")
+
     # 2. Ground-truth capacity check: query Aristotle server for active job count
     server_count_at_start = await _safe_get_active_jobs_count(extractor.aristotle)
     local_count_at_start = extractor._count_inflight_dispatched()
