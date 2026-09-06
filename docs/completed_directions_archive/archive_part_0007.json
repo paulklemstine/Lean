@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-06T05:58:29Z",
-  "count": 123,
+  "archived_at": "2026-09-06T15:54:04Z",
+  "count": 124,
   "directions": [
     {
       "id": "fd_3695",
@@ -4878,6 +4878,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_3949",
+      "title": "FACT round-74 #3 — SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3) = 165x unbalanced / 21x balanced, r(12) = 240x [220,261]) but saturate EXACTLY at the isolation ceiling (100% pinned at k=20, zero barrier events) while fixed batteries price linearly or carry literally ZERO bits in the balanced stratum — one pricing structure, two faces; paper-138 linearity reconciled",
+      "description": "**FACT round-74 #3 · exp 563 · paper 212 · seed 20260824 · wall 2.0 s**\n\nResolves the hint-pricing tension between paper 138's linear no-synergy law and the rounds-70/71 \"sequential hints compound\" observation by isolating **adaptivity** (posterior conditioning between queries). n = 800 bitlen-40 semiprimes in two strata (600 BALANCED ρ ∈ [1, 1.01] / 200 UNBALANCED ρ ∈ [7.5, 8.5]), k ∈ {0,1,2,3,6,9,12,14,16,20,24}, idealized truthful `p ≤ t?` oracle, downstream Fermat-order scan priced in divisibility tests; arms ADAPT (bisection) / NONADAPT (uniform battery) / ADAPTQ/NONADAPTQ (draw-law-calibrated) / SHAM (cost gate).\n\n**Pre-registered verdict rules evaluated verbatim → COMPOUND-CONFIRMED-HALVING-FAIL** (the UNBALANCED stratum alone reads GEOMETRIC-COMPOUND-ISOLATION-CAPPED — every prediction passes there including the strict slope).\n\n**(1) Compounding real + superlinear + pure adaptivity (H1a/H1c CONFIRMED).** s_adapt(12)/s_adapt(3) = 165.2× unbalanced / 20.8× balanced (CIs exclude linear 4×); premium over the matched fixed battery at k = 12 = **239.5× [220.1, 261.0]** unbalanced / **20.8× [19.5, 22.3]** balanced, with r(1) = **1.00 EXACTLY** in all four pairs — nothing to adapt to at one query.\n\n**(2) Hard isolation cap, zero barrier events (H1b CONFIRMED).** 100% of N pinned at k = 20 = ⌈log₂ W⌉; s(≥20) = T₀ exactly (1072.43 balanced / 2.862e5 unbalanced); max s ≤ T₀ × 1.01 everywhere → NO barrier event. Pin sits at the integer-bits cap above the prime-isolation bound ≈ 17 — barriers 4/8 UPHELD and now PRICED: external position info pays ISOLATION-COST per query.\n\n**(3) Halving slope (the FAIL clause).** Aligned A10 test: −0.6589 PASS unbalanced; −0.5836 FAIL balanced, 16% off −ln2 (band-entry phase correlation; the width-halving law itself is EXACT: V2a 720 deterministic steps, V2b closed form vs dense grid 1.9%).\n\n**(4) HEADLINE SURPRISE (ledger catch A5).** Balanced semiprimes pin min(p,q) against √N → a uniform FIXED battery carries **LITERALLY ZERO BITS** (s ≡ 1.00 exactly at every k ≤ 24 across all 600 N): non-adaptive batteries are waste-proof in the balanced stratum, and the adaptivity premium grows from exactly 1 into the hundreds.\n\n**Net economics (H3 CONFIRMED).** k_opt = 10/18 measured vs log₂((T₀−1)·ln2/c_q) = 9.54/17.60 predicted; s_net_max = 89.0 / 14245. SHAM gate PASSED both strata (never helps, never inflates).\n\n**RECONCILIATION — one pricing structure, two faces.** Paper 138's linear no-synergy pricing holds for NON-adaptive batteries (zero usable bits ⇒ zero speedup, exactly as the balanced collapse shows); sequential ADAPTIVE hints compound superlinearly but saturate EXACTLY at the isolation-cost ceiling. New hint-taxonomy entry: adaptive sequential hints price geometrically up to isolation cost. This resolves the tension flagged when rounds 70–71 noted \"sequential hints COMPOUND\" vs paper 138's linearity.\n\nBarriers: #4/#8 upheld + priced; #2 untouched (idealized external channel by design); no barrier event ⇒ no re-verification triggered. Validations V0/V1/V4/V5 all clean; zero-parameter theory curve wins fit selection in both strata.\n\nLedger catches, none adverse post-fix: A5 uniform-prior zero-bit collapse (smoke-caught pre-full-run; uniform curves retained as reference diagnostics per AMENDMENT-1); even-median bisection stall (lower-median fix); V2 MC-noise → deterministic dense-grid enumeration; V5 expectation-vs-bound constant fix; sham luck/inflation clause split.\n\nPaper: ResearchOutput/NewMathematics/212_SeqhintCompoundLaw.md.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "601f1720",
+      "timestamp": "2026-08-24T07:22:53.232489+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.85,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-28T14:28:31.010889+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 356
     }
   ]
 }

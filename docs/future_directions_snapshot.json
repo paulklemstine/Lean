@@ -19637,25 +19637,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Computation.SpectralPoissonVsGUE"
-    ],
-    "consumed_by_exp_id": "0c24f2ff",
-    "description": "The spacing variances 0 (rigid), 3 pi / 8 - 1 (GUE) and 1 (Poisson) are already proved to be strictly ordered. Extend this to the full moment sequence and conjecture that the second moment alone classifies the regime of a finite spectrum up to fluctuations of order n^{-1/2}.\n\nThe k-th moments of the Wigner surmise and of the exponential law agree only at k = 0 and k = 1, and the second moment separates all three regimes with an explicit gap.\n\nIterate the antiderivative recursion used for the second and fourth Gaussian moments to get all even moments in closed form, then compare with k factorial.\n\nA single computable statistic classifies finite spectra, with a proved separation constant.\n\nSome higher moment coincidence exists, indicating an unexpected relation between the Wigner surmise and the exponential law.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_4164",
-    "lineage_refs": [],
-    "priority_score": 0.5933333333333334,
-    "proof_strategy": "Induction on k using integration by parts on (0, infinity), with the Gaussian half-integral as base case.",
-    "research_mode": "team",
-    "source_exp_id": "05a687ab",
-    "status": "in_progress",
-    "timestamp": "2026-08-25T14:05:22.674761+00:00",
-    "title": "Moment Fingerprint Classification"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Probability.PositionalRateLinkHarmonic",
       "Probability.PositionalRateLinkIdentifiability"
     ],
@@ -69050,7 +69031,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "794ffb3f",
     "description": "define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture;",
     "domain_bridges": [],
     "domains": [],
@@ -69060,7 +69041,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "7fb32c18",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:38.580543+00:00",
     "title": "define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture;"
   },

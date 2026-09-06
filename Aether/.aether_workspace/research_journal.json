@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4d41e431",
-      "domain": "Bridges",
-      "key_insight": "# Future directions: degree-graded exactness for the reflective chart calculus\n\nThe project builds a reflective calculus `NExpr n` of polynomial expressions in `n` chart\ncoordinates and organises its",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 161,
-      "timestamp": "2026-09-02T09:38:58",
-      "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
-    },
-    {
       "cycle_id": "a75b3939",
       "domain": "Probability",
       "key_insight": "# FUTURE DIRECTIONS — after NET-59, rounds 12–18\n\n## What the completed cycles established\n\nWorking in an exact finite-probability model (layers = Markov channels on finite\nstate spaces, damage = tota",
@@ -499,19 +489,19 @@
       "theorem_count": 79,
       "timestamp": "2026-09-06T05:58:40",
       "title": "Metaplectic Extension of the Gabor Window Action"
+    },
+    {
+      "cycle_id": "0c24f2ff",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Moment Fingerprint Classification\n\nDerived from the five research cycles formalized in\n`Catalog/Algebra/MomentFingerprintClassification.lean`,\n`…Duality.lean`, `…Positivity.lean`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 102,
+      "timestamp": "2026-09-06T15:54:14",
+      "title": "Moment Fingerprint Classification"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e4ce2d9a",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-71 (THE-TOKENIZER-TAX-IS-FOUR-KEYS)\n\nRound 24 closed the domain axis with a fourth corpus (German prose) and produced, in\nLean, four sorry-free files:\n\n* `Catalog/Logic",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 115,
-      "timestamp": "2026-08-23T13:47:36",
-      "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly one fine step ({20,24}"
-    },
     {
       "cycle_id": "7797dc46",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 79,
       "timestamp": "2026-09-06T05:58:40",
       "title": "Metaplectic Extension of the Gabor Window Action"
+    },
+    {
+      "cycle_id": "0c24f2ff",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Moment Fingerprint Classification\n\nDerived from the five research cycles formalized in\n`Catalog/Algebra/MomentFingerprintClassification.lean`,\n`…Duality.lean`, `…Positivity.lean`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 102,
+      "timestamp": "2026-09-06T15:54:14",
+      "title": "Moment Fingerprint Classification"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "575f19d4",
-      "domain": "Logic",
-      "name": "linResp_antitone",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "575f19d4",
-      "domain": "Logic",
-      "name": "linResp_lip",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "575f19d4",
-      "domain": "Logic",
-      "name": "kinkResp_eq_linResp_of_ge",
-      "quality": 0.78
-    },
     {
       "cycle_id": "63061d5b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "chi_quarter_im",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "0c24f2ff",
+      "domain": "Algebra",
+      "name": "surmiseMoment_gamma",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0c24f2ff",
+      "domain": "Algebra",
+      "name": "surmiseMoment_succ_succ",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0c24f2ff",
+      "domain": "Algebra",
+      "name": "gueMoment_eq_surmise",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-06T05:58:40",
+  "last_updated": "2026-09-06T15:54:14",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "9fb758b1",
-        "quality": 0.82,
-        "theorems": 54,
-        "title": "C1 (drift constant is the standard deviation) — PROVED.*"
-      },
-      {
         "cycle_id": "d3d53c1e",
         "quality": 0.82,
         "theorems": 88,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 103,
         "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST — independent wikitext shard replicates the "
+      },
+      {
+        "cycle_id": "0c24f2ff",
+        "quality": 0.82,
+        "theorems": 102,
+        "title": "Moment Fingerprint Classification"
       }
     ],
     "Applications": [

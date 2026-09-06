@@ -13838,19 +13838,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "R\u00e9nyi-Order Interpolation of Alignment Drift Constants"
   },
   {
-    "consumed_by_exp_id": "0c24f2ff",
-    "description": "The spacing variances 0 (rigid), 3 pi / 8 - 1 (GUE) and 1 (Poisson) are already proved to be strictly ordered. Extend this to the full moment sequence and conjecture that the second moment alone classifies the regime of a finite spectrum up to fluctuations of order n^{-1/2}.\n\nThe k-th moments of the Wigner surmise and of the exponential law agree only at k = 0 and k = 1, and the second moment separates all three regimes with an explicit gap.\n\nIterate the antiderivative recursion used for the second and fourth Gaussian moments to get all even moments in closed form, then compare with k factorial.\n\nA single computable statistic classifies finite spectra, with a proved separation constant.\n\nSome higher moment coincidence exists, indicating an unexpected relation between the Wigner surmise and the exponential law.",
-    "domains": [],
-    "id": "fd_4164",
-    "phase": "A",
-    "priority_score": 0.5933333333333334,
-    "research_mode": "team",
-    "source_exp_id": "05a687ab",
-    "status": "in_progress",
-    "timestamp": "2026-08-25T14:05:22.674761+00:00",
-    "title": "Moment Fingerprint Classification"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The edge-decile mass is now proved to be a strictly increasing bijection from the window ratios (1, infinity) onto (1/10, 1), so each tercile identifies one ratio. To convert the exp-580 non-rejection into a positive equivalence claim, the inverse map needs an explicit modulus of continuity on the observed range of masses.\n\nOn any compact subinterval [m0, m1] of (1/10, 1) the inverse of m -> decileMass r 0 is Lipschitz with an explicit constant C(m0, m1), and applying it to the measured masses 0.229 / 0.245 / 0.230 yields window-ratio intervals that overlap pairwise.\n\nBound the derivative of r -> harmCDF r (1/10) from below on the relevant ratio range, invoke the inverse function bound, and propagate bootstrap intervals for the three tercile masses through the resulting Lipschitz constant.\n\nPositional universality is upgraded from a failure to reject into a quantified equivalence claim about one identified parameter.\n\nThe inverse is too steep at the observed masses to certify equivalence, so a larger sample or a second shape parameter is required.",
     "domains": [],
@@ -49042,14 +49029,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "investigate arithmetic properties only after the analytic definition and cutoff data are certified."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "794ffb3f",
     "description": "define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;",
     "domains": [],
     "id": "fd_2322",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "7fb32c18",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:38.580543+00:00",
     "title": "define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;"
   },
