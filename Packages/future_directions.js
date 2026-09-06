@@ -19075,17 +19075,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "State-Complexity Lower Bound from Sylvester Genus"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24ee7435",
     "description": "The Maslov gap and the top-1 margin bound each other two-sidedly. Conjecture that for random score vectors the gap concentrates, producing a sharp threshold at margin ~ log n separating tropical (max-like) from diffuse (soft) layers.\n\nFor x with i.i.d. sub-Gaussian coordinates and top-1 margin m, the Maslov gap concentrates around log(1 + (n-1) E e^{-m}) with fluctuations O(1/sqrt n), so the tropical/diffuse boundary is a sharp threshold in m at log n.\n\nProve concentration for the Gaussian case in Lean using the two-sided bounds maslovGap_le_of_margin and margin_le_of_maslovGap, then check numerically against measured per-layer gap medians.\n\nCrystallization is a property of the margin distribution, not of the trained weights, and can be predicted before training.\n\nThe tail's large Maslov gap reflects weight structure and must be explained by the learned attention geometry.",
     "domains": [
       "Tropical",
       "Geometry"
     ],
     "id": "fd_3749",
+    "phase": "A",
     "priority_score": 0.5602391855553482,
     "research_mode": "team",
     "source_exp_id": "6cdc8533",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T21:36:18.360516+00:00",
     "title": "Tropical Crystallization Threshold"
   },
