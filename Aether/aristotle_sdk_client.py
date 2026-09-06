@@ -56,13 +56,19 @@ class AristotleSDKClient:
     async def get_active_jobs_count(self) -> int:
         """Get the number of currently running jobs on the Aristotle server."""
         try:
-            res = await aristotlelib.Project.list_projects()
+            # Query server with status=RUNNING filter for ground-truth active count
+            res = await Project.list_projects(limit=100, status=ProjectStatus.RUNNING)
             projs = res[0] if isinstance(res, tuple) else res
-            running = [p for p in projs if getattr(p, "status", None) == aristotlelib.ProjectStatus.RUNNING]
-            return len(running)
+            return len(projs)
         except Exception as e:
-            print(f"[Aristotle] Failed to list projects: {e}")
-            return -1
+            try:
+                res = await Project.list_projects(limit=50)
+                projs = res[0] if isinstance(res, tuple) else res
+                running = [p for p in projs if getattr(p, "status", None) == ProjectStatus.RUNNING]
+                return len(running)
+            except Exception as e2:
+                print(f"[Aristotle] Failed to list projects: {e2}")
+                return -1
 
     async def submit_lean_project_only(
         self,
@@ -311,37 +317,107 @@ class AristotleSDKClient:
             return False
 
     async def cleanup_stale_server_tasks(self, max_age_hours: float = 4.0) -> int:
-        """Find and cancel orphaned/stuck running tasks on Aristotle server older than max_age_hours."""
+        """Find and cancel orphaned/stuck running tasks on Aristotle server older than max_age_hours.
+
+        Performs a deep audit across server projects (with pagination) and active tasks.
+        Cancels any task or project that has been running/queued for >= max_age_hours.
+        """
         try:
-            res = await Project.list_projects(limit=30)
-            projs = res[0] if isinstance(res, tuple) else res
-            canceled_count = 0
             now = datetime.now(timezone.utc)
-            for p in projs:
+            all_projs = []
+            seen_ids = set()
+
+            # 1. Query server-side filtered RUNNING projects (up to 100)
+            try:
+                running_res, _ = await Project.list_projects(limit=100, status=ProjectStatus.RUNNING)
+                for p in running_res:
+                    if p.project_id not in seen_ids:
+                        all_projs.append(p)
+                        seen_ids.add(p.project_id)
+            except Exception as e:
+                print(f"[Aristotle Audit] Note: Server status-filtered query note: {e}")
+
+            # 2. Paginate through recent projects (up to 300 projects across 3 pages)
+            pagination_key = None
+            for page in range(3):
+                try:
+                    projs, next_key = await Project.list_projects(pagination_key=pagination_key, limit=100)
+                    for p in projs:
+                        if p.project_id not in seen_ids:
+                            all_projs.append(p)
+                            seen_ids.add(p.project_id)
+                    if not next_key or not projs:
+                        break
+                    pagination_key = next_key
+                except Exception as page_err:
+                    print(f"[Aristotle Audit] Pagination page {page+1} note: {page_err}")
+                    break
+
+            canceled_count = 0
+            active_tasks_found = []
+
+            for p in all_projs:
+                # Determine project age
+                created_raw = getattr(p, "created_at", None)
+                age_hours = None
+                if created_raw:
+                    try:
+                        if isinstance(created_raw, str):
+                            created_dt = datetime.fromisoformat(created_raw.replace("Z", "+00:00"))
+                        elif isinstance(created_raw, (int, float)):
+                            created_dt = datetime.fromtimestamp(created_raw, tz=timezone.utc)
+                        else:
+                            created_dt = created_raw
+                        if created_dt.tzinfo is None:
+                            created_dt = created_dt.replace(tzinfo=timezone.utc)
+                        age_hours = (now - created_dt).total_seconds() / 3600.0
+                    except Exception:
+                        pass
+
                 st = getattr(p, "status", None)
-                if st == ProjectStatus.RUNNING:
-                    # Check age
-                    created_raw = getattr(p, "created_at", None)
-                    is_stale = False
-                    if created_raw:
-                        try:
-                            if isinstance(created_raw, str):
-                                created_dt = datetime.fromisoformat(created_raw.replace("Z", "+00:00"))
-                            elif isinstance(created_raw, (int, float)):
-                                created_dt = datetime.fromtimestamp(created_raw, tz=timezone.utc)
-                            else:
-                                created_dt = created_raw
-                            age_hours = (now - created_dt).total_seconds() / 3600.0
-                            if age_hours >= max_age_hours:
-                                is_stale = True
-                                print(f"[Aristotle] Project {p.project_id} running for {age_hours:.1f}h (>= {max_age_hours}h cap)")
-                        except Exception:
-                            pass
-                    if is_stale:
-                        print(f"[Aristotle] Cleaning up stale running server project {p.project_id}...")
-                        success = await self.cancel_project(p.project_id)
-                        if success:
-                            canceled_count += 1
+                st_name = getattr(st, "name", str(st))
+
+                # Inspect tasks on any project that is RUNNING, or recent projects without completed files
+                should_inspect_tasks = (
+                    st == ProjectStatus.RUNNING
+                    or st_name == "RUNNING"
+                    or (not getattr(p, "has_files", False) and (age_hours is None or age_hours < 72.0))
+                )
+
+                if should_inspect_tasks:
+                    try:
+                        tasks, _ = await p.get_tasks(limit=5)
+                        for task in tasks:
+                            task_st = getattr(task.status, "name", str(getattr(task, "status", "")))
+                            if task_st in ("QUEUED", "IN_PROGRESS"):
+                                task_age = age_hours if age_hours is not None else 0.0
+                                active_tasks_found.append((p.project_id, task.agent_task_id, task_st, task_age))
+                                if task_age >= max_age_hours:
+                                    print(f"[Aristotle Cleanup] Canceling stale active task {task.agent_task_id} on project {p.project_id} (status={task_st}, age={task_age:.1f}h >= {max_age_hours}h cap)...")
+                                    try:
+                                        if hasattr(task, "cancel"):
+                                            c_res = task.cancel()
+                                            if asyncio.iscoroutine(c_res):
+                                                await c_res
+                                        canceled_count += 1
+                                    except Exception as c_err:
+                                        print(f"[Aristotle Cleanup] Failed canceling task {task.agent_task_id}: {c_err}")
+                                        if await self.cancel_project(p.project_id):
+                                            canceled_count += 1
+                    except Exception:
+                        # Fallback for projects where get_tasks failed
+                        if st == ProjectStatus.RUNNING and age_hours is not None and age_hours >= max_age_hours:
+                            print(f"[Aristotle Cleanup] Project {p.project_id} status=RUNNING with age={age_hours:.1f}h; canceling project...")
+                            if await self.cancel_project(p.project_id):
+                                canceled_count += 1
+
+            if active_tasks_found:
+                print(f"[Aristotle Audit] Found {len(active_tasks_found)} active task(s) on server:")
+                for pid, tid, tstatus, tage in active_tasks_found:
+                    print(f"  * Project {pid[:8]} / Task {tid[:8]}: {tstatus} (age: {tage:.1f}h)")
+            else:
+                print(f"[Aristotle Audit] No active/queued tasks found across {len(all_projs)} audited projects.")
+
             return canceled_count
         except Exception as e:
             print(f"[Aristotle] Failed during cleanup_stale_server_tasks: {e}")
