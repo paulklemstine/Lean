@@ -1480,6 +1480,13 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
         slots_available = max(0, max_inflight - current_inflight)
 
+        # Prioritize Phase B packaging: reserve slots for any pending Phase B jobs
+        queued_phase_b = [j for j in extractor.inflight.values() if j.status in ("retry_queued", "dispatch_queued") and getattr(j, "phase", "") in ("B", "B_dispatched")]
+        if queued_phase_b and slots_available > 0:
+            reserved_b = min(len(queued_phase_b), slots_available)
+            slots_available -= reserved_b
+            print(f"[Tick] Reserving {reserved_b} slot(s) for pending Phase B packaging jobs; {slots_available} remaining for new Phase A")
+
         if novelty_slots > 0:
             standard_slots = max(0, slots_available - novelty_slots)
             wild_slots = min(novelty_slots, slots_available)
