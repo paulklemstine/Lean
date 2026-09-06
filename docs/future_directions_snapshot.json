@@ -2428,6 +2428,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle de8ca052 (Q=0.820), which proved 79 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Heisenberg group formalised here should sit as a normal subgroup inside a semidirect product with SL₂(ℝ) acting on chirped Gaussian windows. The approach is to add the chirp generator to the two existing generators (translation and modulation) and check the Weyl cocycle extends. This bridges the",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_de8ca052_ac6edde9",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "de8ca052",
+    "status": "available",
+    "timestamp": "2026-09-06T05:58:40.847967+00:00",
+    "title": "Deepening: Metaplectic Extension of the Gabor Window Action"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domain_bridges": [],
     "domains": [
@@ -19639,7 +19658,7 @@
     "catalog_references": [
       "Computation.SpectralPoissonVsGUE"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c24f2ff",
     "description": "The spacing variances 0 (rigid), 3 pi / 8 - 1 (GUE) and 1 (Poisson) are already proved to be strictly ordered. Extend this to the full moment sequence and conjecture that the second moment alone classifies the regime of a finite spectrum up to fluctuations of order n^{-1/2}.\n\nThe k-th moments of the Wigner surmise and of the exponential law agree only at k = 0 and k = 1, and the second moment separates all three regimes with an explicit gap.\n\nIterate the antiderivative recursion used for the second and fourth Gaussian moments to get all even moments in closed form, then compare with k factorial.\n\nA single computable statistic classifies finite spectra, with a proved separation constant.\n\nSome higher moment coincidence exists, indicating an unexpected relation between the Wigner surmise and the exponential law.",
     "domain_bridges": [],
     "domains": [],
@@ -19649,7 +19668,7 @@
     "proof_strategy": "Induction on k using integration by parts on (0, infinity), with the Gaussian half-integral as base case.",
     "research_mode": "team",
     "source_exp_id": "05a687ab",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-25T14:05:22.674761+00:00",
     "title": "Moment Fingerprint Classification"
   },
@@ -26939,30 +26958,6 @@
     "status": "available",
     "timestamp": "2026-09-01T10:07:24.519808+00:00",
     "title": "Context-Scaling of the Mixing Premium"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Algebra.SmoothWindows.GaborOperators",
-      "Algebra.SmoothWindows.GaussianWindow",
-      "Algebra.SmoothWindows.ScaleSpace"
-    ],
-    "consumed_by_exp_id": "de8ca052",
-    "description": "The Heisenberg group formalised here should sit as a normal subgroup inside a semidirect product with SL₂(ℝ) acting on chirped Gaussian windows. The approach is to add the chirp generator to the two existing generators (translation and modulation) and check the Weyl cocycle extends. This bridges the algebra of the window with the symplectic geometry of phase space.\n\nThe assignment s ↦ gaussC s extends to an SL₂(ℝ)-equivariant family of chirped Gaussians exp(-π(α+iβ)t²) intertwining the linear symplectic action on (a,b) with the Gabor transform, and Heis is normal in the resulting semidirect product.\n\nDefine the chirp operator in Lean, verify the cocycle condition against the existing Heis group instance, and check that the Fourier transform corresponds to the rotation by π/2 using fourier_gaussC and fourier_transOp/fourier_modOp.\n\ngaussSpectral becomes one coordinate of an equivariant family, and monotonicity in the width is revealed as the action of the diagonal one-parameter subgroup — a structural explanation, not a computation.\n\nThe obstruction will be a genuine cocycle class, which would show that the discrete (multiset-supported) Gabor transform has a metaplectic anomaly absent in the continuous theory.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_3769",
-    "lineage_refs": [],
-    "priority_score": 0.5630327484832426,
-    "proof_strategy": "Extend heisRep by the chirp multiplication operator; verify the three Bruhat relations; use fourier_gaussC to compute the action of the Weyl element on the Gaussian ray; conclude normality of Heis from the commutator formula modOp_transOp.",
-    "research_mode": "team",
-    "source_exp_id": "ccf34fd5",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T23:36:07.078696+00:00",
-    "title": "Metaplectic Extension of the Gabor Window Action"
   },
   {
     "ambition_level": "extension",
@@ -43841,6 +43836,120 @@
     "status": "available",
     "timestamp": "2026-09-05T21:15:33.368100+00:00",
     "title": "Knee Identifiability under Noisy Tail Measurements"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Algebra.SmoothWindows.GaborOperators",
+      "Algebra.SmoothWindows.GaussianWindow",
+      "Geometry.MetaplecticAnomaly"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Normalise the window operators implementing the SL2(R) action on chirped Gaussians and measure the failure of multiplicativity. The claim is that the failure is a nontrivial {+/-1}-valued 2-cocycle, trivial on the Borel subgroup and supported on the Weyl element. This would exhibit the metaplectic double cover concretely inside time-frequency analysis.\n\nThere is m : SL2(R) x SL2(R) -> {+/-1} with rho(M) rho(N) = m(M,N) rho(MN) for the normalised chirped-Gaussian operators, m is a nontrivial 2-cocycle class, and its restriction to the lower Borel subgroup is a coboundary.\n\nFormalise rho on the three generators using fourier_gaussChirp (which already supplies the constant 1/tau^(1/2)), compute rho(S)^2 against the identity using fourier_fourier_gaborAtom, and verify cocycle triviality on the Borel using dilOp_chirpOp_dilOp and dilMat_shearMat_dilMat.\n\nThe metaplectic double cover is realised explicitly on the Gabor window family, giving a signed composition law for chirped windows.\n\nA choice of branch of tau^(1/2) removes the sign on the chirped Gaussian family, meaning the anomaly is confined to translated atoms as in metaplectic_anomaly_projective.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4727",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Track the branch of the square root through the generator relations; the sign appears exactly where S^2 = -1 acts trivially on the upper half plane while parity acts nontrivially on atoms (metaplectic_anomaly).",
+    "research_mode": "team",
+    "source_exp_id": "de8ca052",
+    "status": "available",
+    "timestamp": "2026-09-06T05:58:26.915257+00:00",
+    "title": "Maslov Sign Cocycle for Chirped Gabor Windows"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Geometry.MetaplecticAnomaly",
+      "Geometry.MetaplecticGabor"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved criterion that a chirp shear preserves the integer Heisenberg lattice exactly when 2c is an integer identifies the surviving symmetry group as an arithmetic one. The conjecture is that the discrete Gabor transform carries the theta multiplier system of the congruence subgroup Gamma_theta. This ties the discrete anomaly to classical modular arithmetic.\n\nThe subgroup of SL2(R) preserving the lattice-supported Gabor windows is SL2(Z), and its lift to window operators is the order-four theta multiplier system on Gamma_theta, restricting to signs on shears with 2c in Z.\n\nExtend chirpShear_mapsTo_heisLattice_iff to all three generators, then compare the resulting multiplier with the theta multiplier on Mathlib's congruence subgroups.\n\nThe discrete (multiset-supported) Gabor transform has an arithmetic anomaly absent from the continuous theory.\n\nThe lattice symmetries lift without signs, so discretisation destroys rather than refines the metaplectic structure.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4728",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Compute the shear, diagonal and rotation actions on lattice-supported atoms; the generators S and T of SL2(Z) inherit the signs already isolated at S^2 = -1.",
+    "research_mode": "team",
+    "source_exp_id": "de8ca052",
+    "status": "available",
+    "timestamp": "2026-09-06T05:58:27.448129+00:00",
+    "title": "Theta Multiplier Obstruction for the Discrete Gabor Lattice"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Algebra.SmoothWindows.GaussianWindow",
+      "Geometry.MetaplecticChirpedGaussian"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Chirping moves a window off the imaginary geodesic of the Siegel upper half plane, which is where the catalog's real Gaussians live. The conjecture is that the uncertainty product of a chirped Gaussian is a monotone function of the hyperbolic distance to that geodesic. This converts an analytic inequality into a statement about hyperbolic geometry.\n\nFor G_{alpha,beta} the time-frequency uncertainty product equals (1/2) cosh d(z, i R_+), where z = i/(alpha + i beta) and d is the hyperbolic distance in the upper half plane.\n\nCompute the two Gaussian second moments in Lean for exp(-pi(alpha+i beta)t^2), then compare with the explicit hyperbolic distance to the imaginary axis.\n\nMinimisers of the uncertainty product are characterised geometrically as the points of one geodesic, an SL2(R)-covariant sharpening of the classical statement.\n\nThe uncertainty product is not an SL2-covariant function of the Siegel parameter, and the chirp degrees of freedom must be treated analytically rather than geometrically.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4729",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Both sides are invariant under the diagonal subgroup, so it suffices to verify the identity on the orbit of a single point and to check invariance using siegelPt_chirp and siegelPt_dilate.",
+    "research_mode": "team",
+    "source_exp_id": "de8ca052",
+    "status": "available",
+    "timestamp": "2026-09-06T05:58:27.977610+00:00",
+    "title": "Hyperbolic Distance Formula for the Gabor Uncertainty Product"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Algebra.SmoothWindows.ScaleSpace",
+      "Geometry.MetaplecticChirpedGaussian"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Monotonicity of the Gaussian scale space in the width was reinterpreted as the action of the diagonal one-parameter subgroup. The conjecture upgrades this from monotone to analytic: the orbit function should satisfy a first-order ODE whose right-hand side is a Gaussian-weighted second moment of the ordinate multiset.\n\nFor every finite multiset S of ordinates and every s > 0 the function u -> gaussSpectral S (e^u s) is real-analytic and satisfies d/du F(u) = 2 pi sum_t (t^2 / (e^{2u} s^2)) gaussWin (e^u s) t / (1/4 + t^2).\n\nDifferentiate the finite sum term by term in Lean and identify the derivative with the stated moment; then check the moment is the generator of the diagonal action on the window family.\n\nThe scale space becomes a solution of a group-theoretic flow, giving quantitative control on how fast detected mass grows with window width.\n\nMonotonicity is an accident of the exponential and does not reflect the group action, weakening the structural reading of the scale space.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_4730",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Differentiate gaussWin along the orbit using the chain rule, then recognise the result as the infinitesimal generator of dilOp acting on the window.",
+    "research_mode": "team",
+    "source_exp_id": "de8ca052",
+    "status": "available",
+    "timestamp": "2026-09-06T05:58:28.511193+00:00",
+    "title": "Casimir ODE for the Gaussian Scale Space"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Geometry.MetaplecticGabor",
+      "Geometry.MetaplecticBorelOrbit"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Faithfulness is already proved for the Heisenberg group extended by chirps. The conjecture extends it to the full Borel extension, including dilations, and adds a minimality statement: no proper subgroup of the Borel acts transitively on the chirped Gaussian family.\n\nThe representation of Heis semidirect B (B the lower Borel subgroup of SL2(R)) on window space is injective, and every subgroup of B acting transitively on the chirped Gaussian family equals B.\n\nExtend metaRep to the dilation factor using dilAutHom and gaborAct_dilShear, then repeat the rigidity argument of coeff_eq_zero_of_chi_quadratic with the window modulus detecting the dilation parameter.\n\nThe Borel extension is the exact symmetry group of the window family, with no redundancy and no smaller transitive subgroup.\n\nSome dilation acts trivially or a one-parameter subgroup already acts transitively, indicating that the two-parameter family is really one-parameter in disguise.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4731",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Modulus of the window pins the dilation parameter, the quadratic character pins the chirp and modulation, and the Gaussian maximum pins the translation, exactly as in metaRep_injective.",
+    "research_mode": "team",
+    "source_exp_id": "de8ca052",
+    "status": "available",
+    "timestamp": "2026-09-06T05:58:29.037331+00:00",
+    "title": "Faithfulness of the Heisenberg-by-Borel Window Representation"
   },
   {
     "ambition_level": "extension",

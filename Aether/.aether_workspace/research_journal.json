@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "79285565",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Pole-order obstruction (after cycles 3–8)\n\n## What the current cycles established\n\nSix new Lean files extend the catalog files `Shared/PoleOrderObstruction.lean`\n(cycle 1) and `S",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 106,
-      "timestamp": "2026-09-02T04:39:28",
-      "title": "Pole-order obstruction"
-    },
-    {
       "cycle_id": "4d41e431",
       "domain": "Bridges",
       "key_insight": "# Future directions: degree-graded exactness for the reflective chart calculus\n\nThe project builds a reflective calculus `NExpr n` of polynomial expressions in `n` chart\ncoordinates and organises its",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-09-05T21:15:44",
       "title": "A tail-exponent measurement protocol"
+    },
+    {
+      "cycle_id": "de8ca052",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — metaplectic extension of the Gabor window action\n\nThe cycle just completed established, with fully checked Lean proofs:\n\n* the chirp operator `C_c f (t) = e^{2πi c t²} f(t)` norm",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-09-06T05:58:40",
+      "title": "Metaplectic Extension of the Gabor Window Action"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "242b27e9",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Finite-Key Bounds on a Certified Asymptotic Core\n\nThis thread produced five Lean files in `Catalog/Applications/`, all sorry-free:\n\n* `BB84FiniteKeyBounds.lean` — the Padé `[1/1]",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-23T13:03:36",
-      "title": "Finite-Key Bounds on a Certified Asymptotic Core"
-    },
     {
       "cycle_id": "e4ce2d9a",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 63,
       "timestamp": "2026-09-05T21:15:44",
       "title": "A tail-exponent measurement protocol"
+    },
+    {
+      "cycle_id": "de8ca052",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — metaplectic extension of the Gabor window action\n\nThe cycle just completed established, with fully checked Lean proofs:\n\n* the chirp operator `C_c f (t) = e^{2πi c t²} f(t)` norm",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-09-06T05:58:40",
+      "title": "Metaplectic Extension of the Gabor Window Action"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "671d5841",
-      "domain": "Probability",
-      "name": "TSS_nonneg",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "60926357",
-      "domain": "MachineLearning",
-      "name": "succeeds_or_silentError_of_neverAbstains",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "60926357",
-      "domain": "MachineLearning",
-      "name": "silentMass_add_abstainMass_ge",
-      "quality": 0.85
-    },
     {
       "cycle_id": "575f19d4",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "energy_le_head_div_headMass",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "de8ca052",
+      "domain": "Geometry",
+      "name": "chi_half_ne_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "de8ca052",
+      "domain": "Geometry",
+      "name": "chi_im",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "de8ca052",
+      "domain": "Geometry",
+      "name": "chi_quarter_im",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-05T21:15:44",
+  "last_updated": "2026-09-06T05:58:40",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "d11810a4",
-        "quality": 0.82,
-        "theorems": 57,
-        "title": "Derived from the three files of this line of work:"
-      },
-      {
         "cycle_id": "5b26e37d",
         "quality": 0.8,
         "theorems": 66,
@@ -3451,6 +3445,12 @@
         "quality": 0.82,
         "theorems": 92,
         "title": "FACT round-44 #2 — T-DIAL-AXES: regime holds, u breaks (paper 166)"
+      },
+      {
+        "cycle_id": "de8ca052",
+        "quality": 0.82,
+        "theorems": 79,
+        "title": "Metaplectic Extension of the Gabor Window Action"
       }
     ],
     "Logic": [
