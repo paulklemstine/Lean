@@ -2745,21 +2745,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
-    "domains": [
-      "Analysis",
-      "NumberTheory"
-    ],
-    "id": "seed_027",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Euler-Mascheroni Constant Irrationality"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
     "domains": [
       "NumberTheory"
@@ -48676,14 +48661,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit depth selection"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ee6e7ec",
     "description": "Generalize the compiler from \u03c0 to any positive irrational real, and instantiate it for `sqrt 2` and `e` where the necessary irrationality results are available.",
     "domains": [],
     "id": "fd_2105",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "7b55a6e4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:39.545078+00:00",
     "title": "Other constants"
   },
