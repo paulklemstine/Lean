@@ -20,6 +20,15 @@ open Function
 
 namespace SortingEntropyWork
 
+/-- The information erased by the sorting map, with no positivity hypothesis on `n`:
+the permutation group of `Fin n` is nonempty for every `n`, so the image of the
+constant sorting map is always a singleton. -/
+theorem sorting_info_erased_of_all (n : ℕ) :
+    infoErased (sortingFunction n) = Real.logb 2 n.factorial := by
+  unfold infoErased sortingFunction
+  norm_num [Fintype.card_perm]
+  rw [Finset.image_const] <;> aesop
+
 /-- The shape of a binary comparison tree. -/
 inductive ComparisonTree where
   | leaf : ComparisonTree
@@ -103,15 +112,6 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
 bound; irreversible sorting erases exactly `log₂(n!)` bits; and every reversible
 implementation needs at least `n!` history states.
 -/
-/-- `sorting_info_erased` without its (unnecessary) positivity hypothesis: for `n = 0`
-the permutation group is still a one-point type, so both sides vanish. -/
-theorem sorting_info_erased' (n : ℕ) :
-    infoErased (sortingFunction n) = Real.logb 2 n.factorial := by
-  rcases Nat.eq_zero_or_pos n with rfl | hn
-  · unfold infoErased sortingFunction
-    norm_num [Fintype.card_perm]
-  · exact sorting_info_erased n hn
-
 theorem factorial_controls_comparisons_entropy_and_history
     (t : ComparisonTree) (n : ℕ) (hs : SortsOrderings t n)
     (Aux : Type*) [Fintype Aux]
@@ -121,7 +121,7 @@ theorem factorial_controls_comparisons_entropy_and_history
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
       refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · exact sorting_info_erased' n
+      · exact sorting_info_erased_of_all n
       · convert sorting_history_lower_bound n Aux e hc using 1;
         simp +decide [ Fintype.card_perm ]
 
@@ -132,9 +132,9 @@ the change of base in `log₂(n!)`.
 -/
 theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
+      have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
       unfold landauerGap landauerCost
-      rw [sorting_info_erased' n, Real.logb]
-      have h2 : (0:ℝ) < Real.log 2 := Real.log_pos (by norm_num)
+      rw [sorting_info_erased_of_all, Real.logb]
       field_simp
 
 /-

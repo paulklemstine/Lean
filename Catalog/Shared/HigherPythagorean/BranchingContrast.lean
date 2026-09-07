@@ -1,8 +1,7 @@
 import Mathlib
-import Catalog.Shared.Ispythquadruple.IsPythQuadruple
-import Catalog.Shared.HigherPythagorean.LorentzCore
-import Catalog.Shared.HigherPythagorean.QuadrupleTree
-
+import Shared.Ispythquadruple.IsPythQuadruple
+import Shared.HigherPythagorean.LorentzCore
+import Shared.HigherPythagorean.QuadrupleTree
 /-!
 # Branching: why the Berggren tree is a tree in dimension 2 and **not** in dimension 3
 

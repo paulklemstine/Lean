@@ -1,6 +1,5 @@
 import Mathlib
-import Catalog.Shared.NumberTheory.IsSmooth
-
+import Shared.NumberTheory.IsSmooth
 /-!
 # Rigorous sparsity of the smooth pool, from the exponent-vector injection
 
