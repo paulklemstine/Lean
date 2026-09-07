@@ -1,6 +1,5 @@
 import Mathlib
-import Catalog.Shared.ECMStage1SmoothPart
-
+import Shared.ECMStage1SmoothPart
 /-!
 # Dose response of the stage-1 bound: monotone, but a staircase that saturates
 

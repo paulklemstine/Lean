@@ -13,8 +13,7 @@ Two applications of `FourierCyclic.uncertainty_sum_zmod`:
 -/
 
 import Mathlib
-import Catalog.Shared.FourierUncertaintySum
-
+import Shared.FourierUncertaintySum
 open Finset FourierFA
 
 namespace FourierCyclic

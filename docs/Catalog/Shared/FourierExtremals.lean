@@ -18,9 +18,8 @@ Main results:
 -/
 
 import Mathlib
-import Catalog.Shared.FourierFiniteAbelian
-import Catalog.Shared.FourierSubgroupDuality
-
+import Shared.FourierFiniteAbelian
+import Shared.FourierSubgroupDuality
 open Finset ComplexConjugate
 
 namespace FourierFA

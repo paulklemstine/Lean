@@ -21,9 +21,8 @@ Main results:
 -/
 
 import Mathlib
-import Catalog.Shared.FourierCyclic
-import Catalog.Shared.ChebotarevMinors
-
+import Shared.FourierCyclic
+import Shared.ChebotarevMinors
 open Finset FourierFA
 
 namespace FourierCyclic

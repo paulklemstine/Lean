@@ -1,7 +1,6 @@
 import Mathlib
-import Catalog.Shared.Ispythquadruple.IsPythQuadruple
-import Catalog.Shared.HigherPythagorean.LorentzCore
-
+import Shared.Ispythquadruple.IsPythQuadruple
+import Shared.HigherPythagorean.LorentzCore
 /-!
 # The Pythagorean quadruple graph: the `n = 3` Berggren machinery
 

@@ -1,9 +1,8 @@
 import Mathlib
-import Catalog.Shared.Ispythquadruple.IsPythQuadruple
-import Catalog.Shared.HigherPythagorean.LorentzCore
-import Catalog.Shared.HigherPythagorean.QuadrupleTree
-import Catalog.Shared.HigherPythagorean.BranchingContrast
-
+import Shared.Ispythquadruple.IsPythQuadruple
+import Shared.HigherPythagorean.LorentzCore
+import Shared.HigherPythagorean.QuadrupleTree
+import Shared.HigherPythagorean.BranchingContrast
 /-!
 # The harmonic branching law for Pythagorean quadruples
 

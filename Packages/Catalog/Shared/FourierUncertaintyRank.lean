@@ -18,10 +18,9 @@ Main results:
 -/
 
 import Mathlib
-import Catalog.Shared.FourierCyclic
-import Catalog.Shared.ChebotarevMinors
-import Catalog.Shared.FourierUncertaintySum
-
+import Shared.FourierCyclic
+import Shared.ChebotarevMinors
+import Shared.FourierUncertaintySum
 open Finset FourierFA
 
 namespace FourierCyclic

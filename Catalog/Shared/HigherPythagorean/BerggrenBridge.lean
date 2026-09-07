@@ -1,9 +1,8 @@
 import Mathlib
-import Catalog.Bridges.BerggrenTrees.BerggrenPythagoreanCore
-import Catalog.Shared.HigherPythagorean.LorentzCore
-import Catalog.Shared.HigherPythagorean.QuadrupleTree
-import Catalog.Shared.HigherPythagorean.BranchingContrast
-
+import Bridges.BerggrenTrees.BerggrenPythagoreanCore
+import Shared.HigherPythagorean.LorentzCore
+import Shared.HigherPythagorean.QuadrupleTree
+import Shared.HigherPythagorean.BranchingContrast
 /-!
 # Bridge to the classical Berggren moves, and the child count
 

@@ -1,6 +1,5 @@
 import Mathlib
-import Catalog.Shared.QSRelationPoolRandom
-
+import Shared.QSRelationPoolRandom
 /-!
 # Why the two factors of two cancel: they are the same `2`
 

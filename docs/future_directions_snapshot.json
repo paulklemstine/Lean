@@ -68084,7 +68084,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1d81bcc",
     "description": "Define hyperbolic components, centers, and internal-angle parametrizations. With that infrastructure, formulate the theorem relating a reduced angle denominator to component period.",
     "domain_bridges": [],
     "domains": [],
@@ -68094,7 +68094,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0ebc2749",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:43.619970+00:00",
     "title": "Hyperbolic components and internal angles"
   },

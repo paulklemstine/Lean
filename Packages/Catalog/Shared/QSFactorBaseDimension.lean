@@ -1,7 +1,6 @@
 import Mathlib
-import Catalog.Shared.QSRelationPoolRandom
-import Catalog.Shared.SmoothCountSparsity
-
+import Shared.QSRelationPoolRandom
+import Shared.SmoothCountSparsity
 /-!
 # The factor base the relations actually live in, and the `𝔽₂` dimension bound
 

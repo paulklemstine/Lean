@@ -1,6 +1,6 @@
 import Mathlib
-import Shared.NumberTheory.CarmichaelHelpers
-import Shared.NumberTheory.CarmichaelComposite
+import Shared.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelProof
 
 /-! # Computational verification of Carmichael's theorem
 
@@ -65,12 +65,12 @@ lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
     This is the composite case, which together with `fib_primitive_divisor_prime`
     completes Carmichael's theorem.
 
-    Repaired statement: the available input `fib_carmichael` is proved on the
-    verified range `13 ≤ n ≤ 10000` only (the unbounded tail is the open frontier
-    of this development, see `Shared.NumberTheory.CarmichaelComposite`), so the
-    bound `n ≤ 10000` is carried here as an explicit hypothesis. -/
+    Repaired statement: the available input `fib_carmichael_composite` is proved
+    on the verified range `13 ≤ n ≤ 10000` only (the unbounded tail remains the
+    open frontier of this development), so the bound `n ≤ 10000` is carried here
+    as an explicit hypothesis. -/
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
     (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) :=
-  fib_carmichael n hn hn2
+  fib_carmichael_composite n hn hn2 hn_comp

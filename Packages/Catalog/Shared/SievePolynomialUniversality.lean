@@ -1,6 +1,5 @@
 import Mathlib
-import Catalog.Shared.QSRelationPoolRandom
-
+import Shared.QSRelationPoolRandom
 /-!
 # Universality of on-average random-equivalence for sieve polynomials
 

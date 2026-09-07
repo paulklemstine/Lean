@@ -1,6 +1,5 @@
 import Mathlib
-import Catalog.Shared.ECMStage1OrderCompletion
-
+import Shared.ECMStage1OrderCompletion
 /-!
 # Exact stage-1 firing rates, the gcd staircase, and why the collision model is the wrong one
 

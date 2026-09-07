@@ -48364,14 +48364,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalize all 256 rule tables from rule numbers and prove that rule-number decoding is a bijection with `LocalRule`."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1d81bcc",
     "description": "Define hyperbolic components, centers, and internal-angle parametrizations. With that infrastructure, formulate the theorem relating a reduced angle denominator to component period.",
     "domains": [],
     "id": "fd_1904",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "0ebc2749",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:43.619970+00:00",
     "title": "Hyperbolic components and internal angles"
   },

@@ -1,6 +1,5 @@
 import Mathlib
-import Catalog.Shared.ECMStage1FiringRate
-
+import Shared.ECMStage1FiringRate
 /-!
 # The smooth part is the whole story: structure of the stage-1 firing count
 

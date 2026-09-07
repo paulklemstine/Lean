@@ -1,6 +1,5 @@
 import Mathlib
-import Catalog.Shared.ECMStage1DoseResponse
-
+import Shared.ECMStage1DoseResponse
 /-!
 # A long flat run in the schedule: the pigeonhole behind the observed non-uniformity
 

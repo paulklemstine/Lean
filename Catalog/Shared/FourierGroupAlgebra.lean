@@ -17,8 +17,7 @@ Main results:
 -/
 
 import Mathlib
-import Catalog.Shared.FourierFiniteAbelian
-
+import Shared.FourierFiniteAbelian
 open Finset ComplexConjugate
 
 namespace FourierFA
