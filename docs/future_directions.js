@@ -1086,6 +1086,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle cc3115b2 (Q=0.850), which proved 103 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** A finite hyperreal projection-valued measure with finite matrix entries descends under entrywise standard part to an ordinary projection-valued measure if and only if its projections are pairwise orthogonal up to infinitesimal operator norm and its total projection is infinitesimally",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_cc3115b2_49a61096",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "cc3115b2",
+    "status": "available",
+    "timestamp": "2026-09-07T10:00:18.204364+00:00",
+    "title": "Deepening: Standard-part projection-valued measures"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f2707534 (Q=0.920), which proved 115 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves Talagrand's concentration inequality for functions on product probability spaces with the weighted Hamming metric, giving exponential bounds on large deviations of 1-Lipschitz functionals of independent random variables.",
     "domains": [
       "Probability"
@@ -9805,6 +9819,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Eigenvalues of approximately idempotent finite-entry hyperreal matrices should cluster in the halos of 0 and 1 only, with an appreciable gap. The approach uses that X\u00b2\u2212X annihilates the observed matrix exactly, together with the exact symmetric model supplied by rigidity. It would give a non-Archimedean analogue of spectral projections.\n\nIf A has finite entries and A*A \u2248 A, then every eigenvalue of A is infinitesimally close to 0 or to 1, and rank (stMat A) counts those close to 1.\n\nDevelop hyperreal eigenvalue notions for symmetric matrices in Lean and combine with polyEval_eq_zero_of_approx and exists_symm_exactPVMH_approx.\n\nApproximate projections are spectrally rigid; observation acts as an exact spectral projection.\n\nThere exist approximate idempotents with eigenvalues at appreciable distance from {0,1}, bounding the reach of the functional-calculus theorem.",
+    "domains": [
+      "Tropical",
+      "Physics"
+    ],
+    "id": "fd_4738",
+    "priority_score": 0.7102972972972974,
+    "research_mode": "team",
+    "source_exp_id": "cc3115b2",
+    "status": "available",
+    "timestamp": "2026-09-07T10:00:03.111844+00:00",
+    "title": "Infinitesimal Spectral Gap Dichotomy"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The depth-graded silver zeta (1 \u2212 3\u03b5^{-2s})^{-1} is an Ihara-type zeta of a 3-regular tree with edge length 2 log(1+\u221a2). Its pole set, now an exact theorem, should be the spectrum of a self-adjoint transfer operator attached to the Berggren substitution, giving a fully explicit Hilbert\u2013P\u00f3lya model.\n\nThere is a self-adjoint operator T on L\u00b2(\u211d/(\u03c0/log(1+\u221a2))\u2124) whose spectrum equals {Im s : 1 \u2212 3\u03b5^{-2s} = 0}, unitarily equivalent to the transfer operator of the substitution w \u21a6 {Lw, Mw, Rw} acting on \u2124[\u221a2]-scaled functions.\n\nConstruct T explicitly as multiplication after Fourier transform, formalize the unitary equivalence, and prove the spectrum coincides with the pole set proved in silver_denom_eq_zero_iff.\n\nThe Berggren critical line becomes an operator spectrum, an exactly solvable Hilbert\u2013P\u00f3lya model in which the mechanism is completely transparent.\n\nThe arithmetic pole set of the silver zeta is not of spectral origin, delimiting how far the Hilbert\u2013P\u00f3lya heuristic reaches for tree zetas.",
     "domains": [
       "Pythagorean",
@@ -13214,6 +13243,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Approximate PVMs modulo infinitesimal equivalence should be equivalent, as a structured object, to real PVMs. The approach combines surjectivity of observation, identification of its fibres with halos, and the new rigidity theorem. It matters because it would turn the descent theorem into a classification.\n\nThe quotient of finite-entry approximate PVMs by entrywise infinitesimal equivalence is in bijection with real PVMs, compatibly with coarse-graining, ranks and Born weights.\n\nDefine the quotient type in Lean, build the bijection from stMat and hyperMat, and prove commutation with coarse and bornWeight.\n\nThe non-Archimedean theory carries no information beyond the real theory, but does so functorially \u2014 a clean classification result.\n\nSome structure (e.g. a merging or a state) fails to descend, isolating genuinely non-Archimedean data.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_4740",
+    "priority_score": 0.6423684210526317,
+    "research_mode": "team",
+    "source_exp_id": "cc3115b2",
+    "status": "available",
+    "timestamp": "2026-09-07T10:00:04.218148+00:00",
+    "title": "Halo Quotient as a Moduli Object"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every set map between pointed magmas induces a pseudofunctor of codiscrete bicategories, and round trips are invisible to 2-cells. This suggests that the construction is a genuine 2-categorical left adjoint lifting Mathlib's adjunction between objects of a category and codiscrete categories.\n\nM |-> MagmaBicat M extends to a 2-functor from pointed sets to bicategories that is adjoint to taking the 1-cells of the unique object, and it is an equivalence onto one-object bicategories with codiscrete hom-categories.\n\nBuild the unit and counit in Lean using mapPseudofunctor, verify the triangle identities up to invertible modifications, and compare with CategoryTheory.Codiscrete.adj.\n\nThe codiscrete construction is characterised universally, so coherence-by-codiscreteness is not an ad hoc trick but a right/left adjoint phenomenon.\n\nCoherence data cannot be produced adjointly at the bicategorical level, indicating that pseudofunctoriality on all set maps is an accident of thinness.",
     "domains": [
       "Bridges"
@@ -14107,6 +14150,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The internal (hyperreal) Shannon entropy of an approximate PVM should have the observed entropy as its standard part, with an infinitesimal but generally nonzero defect. The approach transfers negMulLog to the hyperreals and controls it on the compact simplex. It quantifies the information destroyed by non-Archimedean measurement error.\n\nFor a finite-entry approximate PVM and a finite hyperreal unit vector, the internal entropy is finite, its standard part is the observed entropy, and the defect is a nonzero infinitesimal for the \u03b5-channel.\n\nTransfer negMulLog to \u211d*, prove st of the internal entropy equals observedEntropy of the descended PVM, and compute the defect for epsChannel.\n\nObservation is entropy-continuous, and the defect is a new infinitesimal invariant of a measurement.\n\nEntropy fails to commute with standard part, revealing a discontinuity of information under observation.",
+    "domains": [],
+    "id": "fd_4741",
+    "priority_score": 0.5931250000000001,
+    "research_mode": "team",
+    "source_exp_id": "cc3115b2",
+    "status": "available",
+    "timestamp": "2026-09-07T10:00:04.784968+00:00",
+    "title": "Hyperreal Entropy Defect"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The finite-size correction to the p-adic ceiling decays like p^{-2b}, uniformly in the base. Hence every valuation-type dial saturates well before the bitlens used in the FACT rounds, and any residual bitlen dependence is diagnostic of a non-tie mechanism.\n\nFor all p >= 2 and b >= 40, rho^2(p,b) - 3p/(p^2+p+1) < 10^{-24}.\n\nStrengthen padic_ceiling_close to a uniform numeric statement and instantiate at b = 40.\n\nProvides a one-line falsification test for every future bitlen sweep in the programme.\n\nSome base has anomalously slow saturation, contradicting the closed form.",
     "domains": [],
     "id": "fd_3826",
@@ -14130,15 +14185,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Beatty Interleaving and the Return-Time Multiplier"
   },
   {
-    "consumed_by_exp_id": "b6717af8",
+    "consumed_by_exp_id": "",
     "description": "The proved estimate franel(2m+1)*(3m+1) <= 8^(2m+1) is off by a factor of about 2.7 from the true asymptotics franel(n) ~ 2*sqrt(3)*8^n/(3*pi*n). Sharpening it would make the inversion threshold provable uniformly in parity with no finite case check.\n\nFor all n >= 1, 2*franel(n)*n <= 8^n, with the constant 2 asymptotically optimal up to sqrt(3)/pi.\n\nInduction on n using the Franel recurrence (n+1)^2 F(n+1) = (7n^2+7n+2) F(n) + 8 n^2 F(n-1), verified numerically for n <= 40 by exact evaluation.\n\nOne clean estimate replaces both parity cases and the small-bitlen checks in the threshold theorem.\n\nThe crude max-times-total bound is essentially the only elementary route, and thresholds must stay case-split.",
     "domains": [],
     "id": "fd_3932",
-    "phase": "A",
     "priority_score": 0.5930392156862746,
     "research_mode": "team",
     "source_exp_id": "9f4b7d2b",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-24T05:02:36.888610+00:00",
     "title": "Sharp Constant for Odd Franel Cube Sums"
   },
@@ -14203,15 +14257,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Depth-Hypotenuse Bracket for the Berggren Tree"
   },
   {
-    "consumed_by_exp_id": "0730f5f8",
+    "consumed_by_exp_id": "",
     "description": "Cycle 2 proved that a finite ladder cannot distinguish a positive floor from finite extinction: two explicit continuations match all seven recorded rungs, one floored at 0.218 and one reaching zero at bitlen 160. Identifiability must therefore come from a rate hypothesis. The conjecture is that the recorded ladder admits no uniform contraction factor, so the Aitken floor estimate in the catalog is not licensed by the data.\n\nThe unconditional half is proved: any q bounding the six recorded step ratios satisfies q >= 2, while every q-contractive ladder with q < 1 has the explicit floor rho_n - |d_n|/(1-q). The open half is that the least noise level making the ladder 1/2-contractive exceeds the model-free noise floor 0.0101 derived from step-ratio mismatch.\n\nFormalise a noise-subtracted contraction hypothesis over the rationals, minimise the admissible eta on the six recorded steps, and compare with the recorded noise floor.\n\nThe plateau and extinction readings of the thread are formally unresolved by all data recorded so far, and the next experiment must be designed to bound the contraction factor rather than to add another rung.\n\nA uniform contraction factor exists, the floor is identifiable, and the extinction forecasts are excluded.",
     "domains": [],
     "id": "fd_4477",
-    "phase": "A",
     "priority_score": 0.592972972972973,
     "research_mode": "team",
     "source_exp_id": "26c8c1ed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-09-01T10:08:27.248376+00:00",
     "title": "Rate-Bounded Identifiability of a Dial Floor"
   },
@@ -14528,15 +14581,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Overfit Scaling Law for a Provably Null Dial"
   },
   {
-    "consumed_by_exp_id": "cd7f5ffb",
+    "consumed_by_exp_id": "",
     "description": "Pitch-class reduction modulo twelve is injective on decimal digits, so octave equivalence is vacuous there, but it fails from base thirteen on. We conjecture a sharp threshold with quantitative divergence of the interval-class and interval histograms.\n\nPitch-class reduction is injective on base-b digits iff b <= 12; for b >= 13 there are melodies whose interval-class and interval histograms differ in total variation by at least (b - 12)/b.\n\nGeneralize pitchClass_inj_of_lt to arbitrary bases, then construct explicit melodies in base b >= 13 whose folded histogram collapses two distinct interval values.\n\nMod-12 analyses of digit melodies are provably content-free precisely in the bases used by decimal studies.\n\nOctave folding carries information even below base thirteen, which would change how interval classes should be reported.",
     "domains": [],
     "id": "fd_3876",
-    "phase": "A",
     "priority_score": 0.5922972972972974,
     "research_mode": "team",
     "source_exp_id": "620a1130",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-23T18:49:47.188327+00:00",
     "title": "Base Threshold for Octave-Equivalence Faithfulness"
   },
@@ -19116,18 +19168,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "State-Complexity Lower Bound from Sylvester Genus"
   },
   {
-    "consumed_by_exp_id": "24ee7435",
+    "consumed_by_exp_id": "",
     "description": "The Maslov gap and the top-1 margin bound each other two-sidedly. Conjecture that for random score vectors the gap concentrates, producing a sharp threshold at margin ~ log n separating tropical (max-like) from diffuse (soft) layers.\n\nFor x with i.i.d. sub-Gaussian coordinates and top-1 margin m, the Maslov gap concentrates around log(1 + (n-1) E e^{-m}) with fluctuations O(1/sqrt n), so the tropical/diffuse boundary is a sharp threshold in m at log n.\n\nProve concentration for the Gaussian case in Lean using the two-sided bounds maslovGap_le_of_margin and margin_le_of_maslovGap, then check numerically against measured per-layer gap medians.\n\nCrystallization is a property of the margin distribution, not of the trained weights, and can be predicted before training.\n\nThe tail's large Maslov gap reflects weight structure and must be explained by the learned attention geometry.",
     "domains": [
       "Tropical",
       "Geometry"
     ],
     "id": "fd_3749",
-    "phase": "A",
     "priority_score": 0.5602391855553482,
     "research_mode": "team",
     "source_exp_id": "6cdc8533",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T21:36:18.360516+00:00",
     "title": "Tropical Crystallization Threshold"
   },
@@ -30634,6 +30685,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-07T02:22:58.178318+00:00",
     "title": "Separation-Distributivity Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The standard-part map should be provably outside the internal, transfer-accessible fragment of the hyperreals. The approach is to exhibit a saturation obstruction to definability of the halo relation. This delimits which results of the programme could ever be reduced to real linear algebra.\n\nThere is no first-order formula over the ordered field language defining the standard part on finite hyperreals, hence stMat is an external map.\n\nFormalize the halo relation and derive a contradiction with countable saturation of the hyperreal ultrapower, or exhibit an internal set argument in Lean.\n\nEvery theorem here that mentions st is genuinely external and cannot be obtained by transfer.\n\nThe whole development could be internalized and reduced to real matrix identities.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4737",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cc3115b2",
+    "status": "available",
+    "timestamp": "2026-09-07T10:00:02.488458+00:00",
+    "title": "Transfer-Principle Ceiling for Observation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The descent theorem should hold verbatim in the ultrapower of any finite-dimensional real C*-algebra, with bounded norm replacing finite entries. The approach abstracts the two ingredients actually used: finiteness and the trace-rank identity for idempotents. It would move the result from coordinates to operator algebras.\n\nIn the ultrapower of a finite-dimensional real C*-algebra, a bounded family has projection-valued standard part iff it is approximately orthogonal and approximately complete, and the observed traces are integers summing to the dimension.\n\nRestate the definitions norm-theoretically using infinitesimalEntries_iff_mulVec, then reprove descent for a general finite-dimensional algebra in Lean.\n\nThe programme becomes coordinate-free and applies to arbitrary finite-dimensional operator systems.\n\nThe matrix trace-rank identity is essential, isolating the exact obstruction to abstraction.",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_4739",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cc3115b2",
+    "status": "available",
+    "timestamp": "2026-09-07T10:00:03.648358+00:00",
+    "title": "Ultraproduct Descent for Finite-Dimensional C*-Algebras"
   },
   {
     "consumed_by_exp_id": "",
@@ -42404,15 +42484,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "C2. Adaptive grids collapse the bracket: bisection to a two-seed knee of width 1"
   },
   {
-    "consumed_by_exp_id": "5e853931",
+    "consumed_by_exp_id": "",
     "description": "**Conjecture:** two domains have equal knees at *all* gates iff their demand\nmultisets have equal upper-tail counting functions, and equal knees on a gate\n*window* of width `w` iff the counting functions agree on the corresponding\ncount band.  Hence \"MATH-READS-AS-PROSE\" is testable with a single tail\nhistogram, without any sweep.\n*The key insight is* that the knee is an order statistic, so agreement of knees\non an interval of gates is exactly agreement of the inverse distribution\nfunction on the corresponding interval of ranks.\n*Why now?* It converts a 6-point sweep per cell into one histogram per corpus,\nmaking the 7B cell and the non-English domains affordable.",
     "domains": [],
     "id": "fd_3869",
-    "phase": "A",
     "priority_score": 0.43887499999999996,
     "research_mode": "team",
     "source_exp_id": "86b92df3",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-23T18:49:22.805817+00:00",
     "title": "D2 \u2014 Knee stability is equivalent to tail-exchangeability"
   },
@@ -42565,14 +42644,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Load-balancing converse: the maximum bucket load"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd463ee8",
     "description": "**Conjecture.** There are explicit integers `q`, `n\u2080`, and a rational constant `c > 3` such that for every `n \u2265 n\u2080`, a labeling into a finite vector space produces a weakly `D\u2086`-free family in `2^[n]` of cardinality at least `c` times the largest middle-layer cardinality.\n\nThe key insight is that interval exclusion is deterministic; only the lower bound on the number of selected sets requires probabilistic rank estimates. Replacing asymptotic error terms by explicit Gaussian-binomial inequalities should therefore yield a finite threshold.\n\nWhy now? The closure obstruction and positivity of the gain numerator have been isolated, leaving a sharply defined quantitative counting problem.",
     "domains": [],
     "id": "fd_2031",
+    "phase": "A",
     "priority_score": 0.4384285714285714,
     "research_mode": "team",
     "source_exp_id": "ae36b246",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:18.826834+00:00",
     "title": "A finite, explicit improvement over three middle layers"
   },
@@ -42725,14 +42805,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scalar generality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "69567235",
     "description": "**Conjecture.** For the pooled train/test window population of a fixed model, the ANOVA ceiling\n`1 - SS_within/SS_tot` lies below `0.5`; consequently no content head, however deep, exceeds\n`R\u00b2 = 0.5`, and the measured linear `0.329` already captures more than two thirds of what any\ncontent function can achieve.\n\n**The key insight is** that `SS_within` is measurable directly \u2014 it needs only repeated key\ncontents across windows and no model of the predictor \u2014 so the ceiling of the entire nonlinear\nclass can be *measured* rather than searched for.\n\n**Why now?** `Rsq_le_intrinsic_ceiling` plus `intrinsic_ceiling_attained` make the ceiling an\nexact supremum, and `ssWithin_eq_zero_of_injective` identifies precisely the pooling regime in\nwhich the measurement is meaningful.\n\n**If true:** the nonlinear arm of the roadmap can be cancelled on quantitative grounds.\n**If false:** a deep content head is worth building, and the relational ceiling (D1) becomes the\nbinding constraint instead.\n\n---",
     "domains": [],
     "id": "fd_4574",
+    "phase": "A",
     "priority_score": 0.43799999999999994,
     "research_mode": "team",
     "source_exp_id": "fe441855",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-02T18:44:19.204025+00:00",
     "title": "D3. Nonlinear probe ceiling on the pooled window population"
   },
@@ -42954,19 +43035,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:42.096968+00:00",
     "title": "Effective infinitude with a height window"
-  },
-  {
-    "consumed_by_exp_id": "cc3115b2",
-    "description": "**Conjecture.** A finite hyperreal projection-valued measure with finite matrix entries descends under entrywise standard part to an ordinary projection-valued measure if and only if its projections are pairwise orthogonal up to infinitesimal operator norm and its total projection is infinitesimally close to the identity.\n\nThe key insight is that polynomial identities defining projections and orthogonality should survive standard part, while approximate hypotheses capture the natural measurement errors of non-Archimedean states.\n\n**Why now?** Scalar standard-part normalization and support collapse are established; the next falsifiable step is to determine exactly which matrix identities survive observation.",
-    "domains": [],
-    "id": "fd_1807",
-    "phase": "A",
-    "priority_score": 0.4364444444444444,
-    "research_mode": "team",
-    "source_exp_id": "dcd7a4b2",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:17.706981+00:00",
-    "title": "Standard-part projection-valued measures"
   },
   {
     "consumed_by_exp_id": "",
@@ -43663,15 +43731,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Clebsch\u2013Gordan local Euler-factor identity"
   },
   {
-    "consumed_by_exp_id": "00aa6ad9",
+    "consumed_by_exp_id": "",
     "description": "Replace uniform full-register reset by a joint memory `(X,Y)` where `Y` is retained. The natural exact cost is conditional entropy `H(X|Y)`, not `H(X)`. A useful next theorem would combine a finite conditional-entropy identity with an input-wise Jarzynski relation and recover the present `n`-bit result when the side register is trivial.",
     "domains": [],
     "id": "fd_2426",
-    "phase": "A",
     "priority_score": 0.4252222222222223,
     "research_mode": "team",
     "source_exp_id": "43fa6482",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:24:09.509836+00:00",
     "title": "Conditional information with retained side memory"
   },
@@ -47173,17 +47240,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "the conjecture predicts that no finite non-lattice `S \u2286 \u2124` (e.g. `{0,1,4}`)"
   },
   {
-    "consumed_by_exp_id": "a8513f12",
+    "consumed_by_exp_id": "",
     "description": "A closed form for `\u2211_{k \u2264 a} S(n,k)` for every fixed `a \u2265 4`.  The cases `a = 2` and\n   `a = 3` are now proved here (`card_orbits_binary`, `card_orbits_ternary`), and the\n   pattern of the two proofs \u2014 expand the truncated row, apply `stirling2_succ_succ` to each\n   term, and close with `omega` \u2014 suggests that for each fixed `a` the orbit count satisfies\n   the linear recurrence with characteristic roots `1, 2, \u2026, a`; the conjecture is that this\n   holds uniformly in `a` and matches `\u2211_{j \u2264 a} (-1)^{a-j} j^n / (j! (a-j)!)`.",
     "domains": [
       "Logic"
     ],
     "id": "fd_1658",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "daf80a32",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T01:52:09.352092+00:00",
     "title": "A closed form for `\u2211_{k \u2264 a} S(n,k)` for every fixed `a \u2265 4`."
   },
@@ -47936,15 +48002,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The coprime case is proved (`coeff_delta_dvd_of_coprime`) and the failure"
   },
   {
-    "consumed_by_exp_id": "2175e849",
+    "consumed_by_exp_id": "",
     "description": "All coefficients of `F_a` are nonnegative **if and only if** `b m \u2265 0`\nfor every `m \u2265 1`.  The forward direction is proved (`coeff_nonneg_of_bCoeff_nonneg`);\nthe converse is open.  Sharper form: if `b m\u2080 < 0` for some `m\u2080`, then `c(n\u22121) < 0`\nfor some `n \u2264 2 m\u2080`.",
     "domains": [],
     "id": "fd_1732",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3b08d230",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T16:51:11.081136+00:00",
     "title": "All coefficients of `F_a` are nonnegative if and only if"
   },
@@ -48451,15 +48516,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalize all 256 rule tables from rule numbers and prove that rule-number decoding is a bijection with `LocalRule`."
   },
   {
-    "consumed_by_exp_id": "e1d81bcc",
+    "consumed_by_exp_id": "",
     "description": "Define hyperbolic components, centers, and internal-angle parametrizations. With that infrastructure, formulate the theorem relating a reduced angle denominator to component period.",
     "domains": [],
     "id": "fd_1904",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "0ebc2749",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:21:43.619970+00:00",
     "title": "Hyperbolic components and internal angles"
   },
@@ -48740,15 +48804,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit depth selection"
   },
   {
-    "consumed_by_exp_id": "8ee6e7ec",
+    "consumed_by_exp_id": "",
     "description": "Generalize the compiler from \u03c0 to any positive irrational real, and instantiate it for `sqrt 2` and `e` where the necessary irrationality results are available.",
     "domains": [],
     "id": "fd_2105",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "7b55a6e4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:22:39.545078+00:00",
     "title": "Other constants"
   },
@@ -49497,15 +49560,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berlekamp\u2013Massey"
   },
   {
-    "consumed_by_exp_id": "f56dc2e8",
+    "consumed_by_exp_id": "",
     "description": "Separate formal power-series identities from analytic estimates and investigate hypotheses under which truncation errors have certified neighborhoods and constants.",
     "domains": [],
     "id": "fd_2636",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "89e28e84",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:25:16.263288+00:00",
     "title": "Higher-order remainder control"
   },
@@ -49786,15 +49848,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "scaling theorems for Euler bricks and hypothetical perfect cuboids;"
   },
   {
-    "consumed_by_exp_id": "51c13071",
+    "consumed_by_exp_id": "",
     "description": "Implement fast-doubling Fibonacci modulo `p\u00b2` and prove it agrees with `Nat.fib % p\u00b2`.\n   This should permit much larger kernel-checked finite bounds without expanding Fibonacci\n   numerals.",
     "domains": [],
     "id": "fd_2824",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "5bb368e2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:26:21.385736+00:00",
     "title": "Implement fast-doubling Fibonacci modulo `p\u00b2` and prove it agrees with `Nat.fib % p\u00b2`."
   },

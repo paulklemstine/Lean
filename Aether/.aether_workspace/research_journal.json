@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fe7714ae",
-      "domain": "Physics",
-      "key_insight": "# Future directions — spherical-cap power ceilings for near-threshold correlation tests\n\nDerived from three research cycles on `Catalog/Physics/SphericalCapPowerCeiling.lean`,\n`…Sharp.lean` and `…Hold",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-09-02T09:39:34",
-      "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
-    },
-    {
       "cycle_id": "0bdc483a",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — after the NET-62 grid-quantization round\n\nThree files were added under `Catalog/NumberTheory/`, all compiling with zero `sorry`s:\n\n* `GridKneeQuantization.lean` — grids, the read",
@@ -499,19 +489,19 @@
       "theorem_count": 582,
       "timestamp": "2026-09-07T02:23:11",
       "title": "define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture"
+    },
+    {
+      "cycle_id": "cc3115b2",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Standard-part projection-valued measures\n\n## Status of the programme\n\nThe mission conjecture is proved, sorry-free, in the form\n\n> for a family of hyperreal matrices with **finit",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-09-07T10:00:17",
+      "title": "Standard-part projection-valued measures"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f099f0f6",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Burnside Moment Hierarchy\n\nDerived from the analysis and adversarial review of the five research cycles recorded in\n`Catalog/Logic/MomentHierarchy.lean` (core hierarchy) and\n`Cat",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-23T15:37:32",
-      "title": "Moment hierarchy"
-    },
     {
       "cycle_id": "4caf1d72",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 582,
       "timestamp": "2026-09-07T02:23:11",
       "title": "define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture"
+    },
+    {
+      "cycle_id": "cc3115b2",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Standard-part projection-valued measures\n\n## Status of the programme\n\nThe mission conjecture is proved, sorry-free, in the form\n\n> for a family of hyperreal matrices with **finit",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-09-07T10:00:17",
+      "title": "Standard-part projection-valued measures"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3831c02e",
-      "domain": "Novelty",
-      "name": "about",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "3831c02e",
-      "domain": "Novelty",
-      "name": "sqDev_single_le",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "3831c02e",
-      "domain": "Novelty",
-      "name": "u35_no_deep_breach",
-      "quality": 0.78
-    },
     {
       "cycle_id": "f5f0f634",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "requires",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "cc3115b2",
+      "domain": "Algebra",
+      "name": "genuinely",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "cc3115b2",
+      "domain": "Algebra",
+      "name": "is",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "cc3115b2",
+      "domain": "Algebra",
+      "name": "produces",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-09-07T02:23:11",
+  "last_updated": "2026-09-07T10:00:17",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "d3d53c1e",
-        "quality": 0.82,
-        "theorems": 88,
-        "title": "Parallel residual blocks obey a tensor-product certificate"
-      },
-      {
         "cycle_id": "2111d025",
         "quality": 0.78,
         "theorems": 68,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 102,
         "title": "Moment Fingerprint Classification"
+      },
+      {
+        "cycle_id": "cc3115b2",
+        "quality": 0.85,
+        "theorems": 103,
+        "title": "Standard-part projection-valued measures"
       }
     ],
     "Applications": [
