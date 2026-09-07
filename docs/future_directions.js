@@ -1786,6 +1786,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 794ffb3f (Q=0.820), which proved 582 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_794ffb3f_1605ed0e",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "794ffb3f",
+    "status": "available",
+    "timestamp": "2026-09-07T02:23:12.003859+00:00",
+    "title": "Deepening: define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  deco"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle de8ca052 (Q=0.820), which proved 79 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Heisenberg group formalised here should sit as a normal subgroup inside a semidirect product with SL\u2082(\u211d) acting on chirped Gaussian windows. The approach is to add the chirp generator to the two existing generators (translation and modulation) and check the Weyl cocycle extends. This bridges the",
     "domains": [
       "Geometry"
@@ -12425,6 +12439,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Completely multiplicative functions have been identified with path weights of the multiplicative evolutionary flow. We conjecture that summing a path weight over all objects with a common normal form factorises as a product over labels, which for natSystem and w p = p^{-s} is exactly the Euler product. The point is that the factorisation is a statement about multisets, not about analysis.\n\nFor a label weight w with values in (-1,1) the sum of pathWeight Q w over the objects of a normal-form class equals the product over labels l of (1 - w l)^{-1}; at natSystem with w p = p^{-s} this is the Euler product for zeta.\n\nFormalise the sum over the sub-multiset parametrisation given by classification_of_future, prove the finite-alphabet case by induction on the label set, then pass to the limit.\n\nThe Euler product becomes a corollary of the decomposition theorem, valid in any separated saturated quotient system.\n\nSummation over objects is not controlled by the invariant alone, exposing an analytic obstruction invisible to the multiset bookkeeping.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4735",
+    "priority_score": 0.6700588235294119,
+    "research_mode": "team",
+    "source_exp_id": "794ffb3f",
+    "status": "available",
+    "timestamp": "2026-09-07T02:22:58.710128+00:00",
+    "title": "Euler Products from Path Weights"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
     "domains": [
       "Novelty",
@@ -14907,6 +14935,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T19:38:08.791559+00:00",
     "title": "Rank Threshold for Nowhere-Vanishing Twisted Sections"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Termination was proved necessary for the existence of normal forms, but label conservation never uses the rank. We conjecture the theory extends to rank-free systems with an invariant valued in multisets extended by an infinite element, finite exactly where a complete path exists.\n\nFor a step relation satisfying label_unique and exchange but no rank condition, there is an invariant D : alpha -> Multiset Lambda + {infinity} with D x = l ::m D y for every step x --l--> y, finite exactly on objects admitting a complete path.\n\nIsolate the rank-free fragment of EvolutionaryPathCore, define D by well-founded recursion on the terminating part and by infinity elsewhere, and check the loop system loopStep gets value infinity.\n\nThe decomposition theory covers non-terminating rewriting systems and infinite-dimensional analogues of composition series.\n\nCoherence of labels genuinely needs termination, sharpening termination_is_necessary from an existence statement to a coherence statement.",
+    "domains": [],
+    "id": "fd_4736",
+    "priority_score": 0.5909459459459461,
+    "research_mode": "team",
+    "source_exp_id": "794ffb3f",
+    "status": "available",
+    "timestamp": "2026-09-07T02:22:59.236621+00:00",
+    "title": "Non-Terminating Evolutionary Systems"
   },
   {
     "consumed_by_exp_id": "",
@@ -30549,6 +30589,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-06T05:58:29.037331+00:00",
     "title": "Faithfulness of the Heisenberg-by-Borel Window Representation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In a separated, saturated quotient system the label lists of complete evolutionary paths out of x are exactly the permutations of decomp x. We conjecture the resulting count is the multinomial coefficient of the invariant multiset, giving a closed formula for the number of maximal chains. This turns a structural theorem into an enumerative one.\n\nIf Q is separated and saturated and decomp Q x = M, then the number of complete evolutionary paths out of x equals |M|! / prod_l (count l M)!.\n\nFormalise a Fintype on {ls : List Lambda // (ls : Multiset Lambda) = M} and prove its cardinality is the multinomial coefficient; instantiate at natSystem and compare with the verified table for n <= 60.\n\nMaximal-chain counts in divisor lattices, subset lattices and composition-series lattices all become instances of one formula.\n\nSome saturated system realises orderings with multiplicity, which would refute complete_path_labels_iff and force a refinement of Saturated.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4732",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "794ffb3f",
+    "status": "available",
+    "timestamp": "2026-09-07T02:22:57.129011+00:00",
+    "title": "Multinomial Path Census"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The normal-subgroup lattice of a finite group, with steps labelled by the isomorphism type of the quotient, should be a QuotientSystem. Its exchange axiom is exactly the Zassenhaus butterfly lemma. The abstract decomposition theorem would then reprove Jordan-Holder.\n\nFor a finite group G the relation 'N is a maximal normal subgroup of M, labelled by M/N' satisfies rank_lt, label_unique and exchange, so EvolPath.jordan_holder specialises to the Jordan-Holder theorem.\n\nDefine the system on the subgroup lattice of a finite group in Lean and discharge the three fields, then derive uniqueness of composition factors from EvolPath.jordan_holder.\n\nJordan-Holder is exhibited as an order-theoretic consequence of one group-theoretic lemma, and the same core serves modules, rings and finite sets.\n\nLabels by isomorphism type fail label_unique, indicating that composition factors must be indexed by subquotients rather than by iso classes.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_4733",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "794ffb3f",
+    "status": "available",
+    "timestamp": "2026-09-07T02:22:57.656200+00:00",
+    "title": "Butterfly Certification of Composition Series"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Separation was shown to be exactly what makes the decomposition invariant faithful on futures. We conjecture that, for saturated systems, separation is equivalent to distributivity of the interval poset of reachable stages, giving a lattice-theoretic characterisation of a purely dynamical condition.\n\nA saturated quotient system Q is separated if and only if for every x the poset of stages reachable from x is distributive, in which case it is isomorphic to the lattice of sub-multisets of decomp x.\n\nProve the forward direction from classification_of_future, and for the converse build two distinct same-label steps out of any non-distributive interval, as in diamondSystem.\n\nFaithfulness of the universal multiset representation becomes checkable by inspecting the order structure alone.\n\nThere is a separated system with a non-distributive future poset, which would separate faithfulness from distributivity and demand a finer invariant.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4734",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "794ffb3f",
+    "status": "available",
+    "timestamp": "2026-09-07T02:22:58.178318+00:00",
+    "title": "Separation-Distributivity Correspondence"
   },
   {
     "consumed_by_exp_id": "",
@@ -48966,19 +49051,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:23:38.201645+00:00",
     "title": "investigate arithmetic properties only after the analytic definition and cutoff data are certified."
-  },
-  {
-    "consumed_by_exp_id": "794ffb3f",
-    "description": "define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;",
-    "domains": [],
-    "id": "fd_2322",
-    "phase": "B",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "7fb32c18",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:23:38.580543+00:00",
-    "title": "define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;"
   },
   {
     "consumed_by_exp_id": "",

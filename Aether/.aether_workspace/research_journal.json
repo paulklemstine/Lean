@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a75b3939",
-      "domain": "Probability",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-59, rounds 12–18\n\n## What the completed cycles established\n\nWorking in an exact finite-probability model (layers = Markov channels on finite\nstate spaces, damage = tota",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 147,
-      "timestamp": "2026-09-02T09:39:18",
-      "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK — solo-layer top-k profiles are flat (all 24 layers within"
-    },
-    {
       "cycle_id": "fe7714ae",
       "domain": "Physics",
       "key_insight": "# Future directions — spherical-cap power ceilings for near-threshold correlation tests\n\nDerived from three research cycles on `Catalog/Physics/SphericalCapPowerCeiling.lean`,\n`…Sharp.lean` and `…Hold",
@@ -499,19 +489,19 @@
       "theorem_count": 102,
       "timestamp": "2026-09-06T15:54:14",
       "title": "Moment Fingerprint Classification"
+    },
+    {
+      "cycle_id": "794ffb3f",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Quotient Steps, Evolutionary Paths, Decomposition\n\nDerived from the three research cycles recorded in `Catalog/Shared/`:\n\n* `EvolutionaryPathCore.lean` — the two requested defini",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 582,
+      "timestamp": "2026-09-07T02:23:11",
+      "title": "define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7797dc46",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Known versus unresolved cards\n\nThe cycle just completed established, with machine-checked proofs:\n\n* the **splitting theorem** `E[total payoff] = d` for `d` resolved cards plus a",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 95,
-      "timestamp": "2026-08-23T15:37:18",
-      "title": "Known versus unresolved cards."
-    },
     {
       "cycle_id": "f099f0f6",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 102,
       "timestamp": "2026-09-06T15:54:14",
       "title": "Moment Fingerprint Classification"
+    },
+    {
+      "cycle_id": "794ffb3f",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Quotient Steps, Evolutionary Paths, Decomposition\n\nDerived from the three research cycles recorded in `Catalog/Shared/`:\n\n* `EvolutionaryPathCore.lean` — the two requested defini",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 582,
+      "timestamp": "2026-09-07T02:23:11",
+      "title": "define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "63061d5b",
-      "domain": "Novelty",
-      "name": "mem_cell",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "63061d5b",
-      "domain": "Novelty",
-      "name": "cell_subset",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "63061d5b",
-      "domain": "Novelty",
-      "name": "cell_eq_iff",
-      "quality": 0.84
-    },
     {
       "cycle_id": "3831c02e",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "gueMoment_eq_surmise",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "794ffb3f",
+      "domain": "Shared",
+      "name": "rules",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "794ffb3f",
+      "domain": "Shared",
+      "name": "therefore",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "794ffb3f",
+      "domain": "Shared",
+      "name": "requires",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-06T15:54:14",
+  "last_updated": "2026-09-07T02:23:11",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "93d08ac5",
-        "quality": 0.82,
-        "theorems": 30,
-        "title": "For `d ≥ 1`, `N ≥ 2`, the thickness of the outermost equal-volume"
-      },
-      {
         "cycle_id": "4c991400",
         "quality": 0.8,
         "theorems": 65,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 63,
         "title": "A tail-exponent measurement protocol"
+      },
+      {
+        "cycle_id": "794ffb3f",
+        "quality": 0.82,
+        "theorems": 582,
+        "title": "define “quotient step” and “evolutionary path” before attempting the full\n  deco"
       }
     ],
     "Tropical": [
