@@ -434,6 +434,12 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
     novelty_slots: number of dispatch slots reserved for novelty/wild directions
     """
+    from adaptive_concurrency import AdaptiveConcurrencyManager
+    adaptive_mgr = AdaptiveConcurrencyManager(extractor.workspace, default_max=max_inflight)
+    effective_max_inflight = adaptive_mgr.get_effective_max_inflight(max_inflight)
+    if effective_max_inflight < max_inflight:
+        print(f"[AutoTune] Adaptive concurrency active: effective_max_inflight={effective_max_inflight} (configured={max_inflight})")
+
     # 1. Poll inflight jobs first to update completed/IDLE jobs and refresh local status
     try:
         completed_jobs = await extractor.poll_all()
@@ -988,8 +994,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     for pid, job in list(extractor.inflight.items()):
         if job.status == "dispatch_queued":
             job.status = "retry_queued"
-            job.retry_queued_time = time.time()
-            print(f"[Tick] Converted dispatch-queued job {job.job_id[:8]} to retry-queued")
+            if not getattr(job, "retry_queued_time", 0.0):
+                job.retry_queued_time = getattr(job, "preparing_started", 0.0) or getattr(job, "dispatch_time", 0.0) or time.time()
+            print(f"[Tick] Converted dispatch-queued job {job.job_id[:8]} to retry-queued (ts={job.retry_queued_time:.0f})")
     extractor._save_inflight()
 
     # Prune completed/failed/integrated/rejected jobs from inflight to prevent unbounded growth
@@ -1171,10 +1178,16 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             retry_count += 1
 
     # 3. Retry or dispatch any queued jobs first, before discovering new directions.
+    queue_full_circuit_breaker = False
     queued_jobs = [j for j in extractor.inflight.values() if j.status in ("retry_queued", "dispatch_queued")]
     if queued_jobs:
-        # Prioritize Phase B packaging jobs (phase == "B") over Phase A discovery
-        queued_jobs.sort(key=lambda j: (0 if getattr(j, "phase", "") == "B" else 1, getattr(j, "retry_queued_time", 0.0)))
+        # Prioritize Phase B packaging jobs (phase == "B") over Phase A discovery,
+        # and preserve strict FIFO (oldest queue timestamp first) within each phase.
+        def _queue_sort_key(j):
+            is_b = 0 if getattr(j, "phase", "") in ("B", "B_dispatched") else 1
+            ts = getattr(j, "retry_queued_time", 0.0) or getattr(j, "preparing_started", 0.0) or getattr(j, "dispatch_time", 0.0) or 0.0
+            return (is_b, ts if ts > 0 else 1e12)
+        queued_jobs.sort(key=_queue_sort_key)
         server_running = await _safe_get_active_jobs_count(extractor.aristotle)
     else:
         server_running = -1
@@ -1182,8 +1195,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     for queued in queued_jobs:
         local_inflight = extractor._count_inflight_dispatched()
         current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
-        if current_inflight >= max_inflight:
-            print(f"[Tick] No capacity to drain queued jobs ({current_inflight}/{max_inflight} inflight, {server_running} on server)")
+        if current_inflight >= effective_max_inflight:
+            print(f"[Tick] No capacity to drain queued jobs ({current_inflight}/{effective_max_inflight} inflight, {server_running} on server)")
             break
         try:
             queued.status = "preparing"
@@ -1194,22 +1207,26 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             # the attempt that queued the job — otherwise it would later discard
             # a successful integration as a "failure".
             extractor._mark_requeued_dispatch_success(queued, project_id)
+            if server_running >= 0:
+                server_running += 1
+            adaptive_mgr.record_dispatch_success(current_active=current_inflight + 1, configured_max=max_inflight)
             print(f"[Tick] Dispatched queued job {project_id[:8]}: {queued.concept.title[:60]}")
+            extractor._save_inflight()
         except Exception as e:
             if extractor._is_queue_full_error(e):
-                print(f"[Tick] Aristotle queue still full; leaving job {queued.job_id[:8]} queued")
-                queued.status = "retry_queued" if getattr(queued, "phase", "") == "B" or getattr(queued, "retry_count", 0) > 0 else "dispatch_queued"
+                print(f"[CircuitBreaker] Aristotle queue full for {queued.job_id[:8]}; circuit breaker OPEN. Tripping queued drain.")
+                queued.status = "retry_queued" if getattr(queued, "phase", "") in ("B", "B_dispatched") or getattr(queued, "retry_count", 0) > 0 else "dispatch_queued"
                 queued.project_id = None
+                queue_full_circuit_breaker = True
+                adaptive_mgr.record_queue_full(current_active=current_inflight)
+                extractor._save_inflight()
+                break
             else:
                 print(f"[Tick] Queued job dispatch failed for {queued.job_id[:8]}: {e}")
                 queued.status = "failed"
                 queued.error_message = f"Queued job dispatch failed: {e}"
                 extractor._release_direction(queued)
-        
-        # We just dispatched a job, so the server running count goes up
-        if server_running >= 0:
-            server_running += 1
-        extractor._save_inflight()
+                extractor._save_inflight()
 
     # 3b. Refresh external signal feed (arXiv/OEIS/LMFDB → FutureDirections)
     try:
@@ -1219,18 +1236,28 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     except Exception as e:
         print(f"[Tick] External signal refresh failed: {e}")
 
-    # 4. Dispatch new jobs up to max_inflight (with novelty track)
+    # 4. Dispatch new jobs up to effective_max_inflight (with novelty track)
     local_inflight = extractor._count_inflight_dispatched()
     server_running = await _safe_get_active_jobs_count(extractor.aristotle)
     current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
-    print(f"[Tick] Inflight check: {local_inflight} local tracking, {server_running} actual on server -> using {current_inflight}")
-    slots_available = max(0, max_inflight - current_inflight)
+    print(f"[Tick] Inflight check: {local_inflight} local tracking, {server_running} actual on server -> using {current_inflight} (effective_max={effective_max_inflight})")
+    slots_available = max(0, effective_max_inflight - current_inflight)
 
-    # ── HARD GUARD: refuse to dispatch if already at or over max_inflight ──
+    if queue_full_circuit_breaker:
+        print(f"[CircuitBreaker] Circuit breaker active from queued drain; skipping all new dispatches this tick.")
+        slots_available = 0
+
+    # ── HARD GUARD: refuse to dispatch if already at or over effective_max_inflight ──
     # This catches stale-file scenarios where the local count under-reports.
-    if server_running >= 0 and server_running >= max_inflight:
-        print(f"[Guard] Server reports {server_running} active jobs — at/over max_inflight={max_inflight}. "
+    if server_running >= 0 and server_running >= effective_max_inflight:
+        print(f"[Guard] Server reports {server_running} active jobs — at/over effective_max_inflight={effective_max_inflight}. "
               f"Skipping ALL dispatching this tick.")
+        slots_available = 0
+
+    # ── DISCOVERY GATE: If queued jobs are waiting for slots, drain them first ──
+    remaining_queued = [j for j in extractor.inflight.values() if getattr(j, "status", None) in ("retry_queued", "dispatch_queued")]
+    if remaining_queued and slots_available > 0:
+        print(f"[Tick] Discovery gate: {len(remaining_queued)} queued job(s) pending; holding {slots_available} slot(s) for queued work and skipping new discovery.")
         slots_available = 0
 
     # Domain saturation: exclude domains with ≥3 inflight jobs from new dispatches
@@ -1379,22 +1406,28 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     except Exception as _cap_e:
                         print(f"[Tick] Attempt-cap issue close failed: {_cap_e}")
                 for fd in injected:
+                    if queue_full_circuit_breaker:
+                        print(f"[CircuitBreaker] Circuit breaker active; skipping injected issue dispatch: {fd.title}")
+                        break
                     local_inflight = extractor._count_inflight_dispatched()
                     server_running = await _safe_get_active_jobs_count(extractor.aristotle)
                     current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
-                    if current_inflight >= max_inflight:
-                        print(f"[Tick] Reached max_inflight ({max_inflight}); leaving injected issue queued: {fd.title}")
+                    if current_inflight >= effective_max_inflight:
+                        print(f"[Tick] Reached effective_max_inflight ({effective_max_inflight}); leaving injected issue queued: {fd.title}")
                         break
                     print(f"[Tick] Dispatching injected issue: {fd.title}")
                     try:
                         job = extractor.discover(forced_direction=fd)
-                        job = await extractor.dispatch_async(job, max_inflight=max_inflight)
+                        job = await extractor.dispatch_async(job, max_inflight=effective_max_inflight)
                         if job.project_id:
                             extractor.inflight[job.project_id] = job
+                            adaptive_mgr.record_dispatch_success(current_active=current_inflight + 1, configured_max=max_inflight)
                             print(f"[Tick] Dispatched injected issue {job.project_id[:8]}: {job.concept.title[:60]}")
                             _signal_dashboard_update(job.project_id[:8], "dispatched")
                         elif getattr(job, "status", None) in ("dispatch_queued", "retry_queued"):
-                            print(f"[Tick] Queued injected issue {job.job_id[:8]}: {job.concept.title[:60]} (at max_inflight)")
+                            print(f"[CircuitBreaker] Queued injected issue {job.job_id[:8]}: {job.concept.title[:60]} (at capacity); circuit breaker tripped")
+                            queue_full_circuit_breaker = True
+                            adaptive_mgr.record_queue_full(current_active=current_inflight)
                             extractor._save_inflight()
                             break
                         else:
@@ -1406,6 +1439,11 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                             if extractor._is_auth_error(_err):
                                 extractor._refund_attempt(job)
                     except Exception as inner_e:
+                        if extractor._is_queue_full_error(inner_e):
+                            print(f"[CircuitBreaker] Injected issue hit queue full; tripping circuit breaker")
+                            queue_full_circuit_breaker = True
+                            adaptive_mgr.record_queue_full(current_active=current_inflight)
+                            break
                         print(f"[Tick] Inner error dispatching injected issue: {inner_e}")
                         import traceback
                         traceback.print_exc()
@@ -1415,9 +1453,16 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
         # Recalculate slots available in case injected issues consumed them
         local_inflight = extractor._count_inflight_dispatched()
-        server_running = await extractor.aristotle.get_active_jobs_count()
+        server_running = await _safe_get_active_jobs_count(extractor.aristotle)
         current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
-        slots_available = max(0, max_inflight - current_inflight)
+        slots_available = max(0, effective_max_inflight - current_inflight)
+
+        # Discovery gate & circuit breaker:
+        remaining_queued = [j for j in extractor.inflight.values() if getattr(j, "status", None) in ("retry_queued", "dispatch_queued")]
+        if queue_full_circuit_breaker:
+            slots_available = 0
+        elif remaining_queued:
+            slots_available = 0
 
         # Prioritize Phase B packaging: reserve slots for any pending Phase B jobs
         queued_phase_b = [j for j in extractor.inflight.values() if j.status in ("retry_queued", "dispatch_queued") and getattr(j, "phase", "") in ("B", "B_dispatched")]
@@ -1435,26 +1480,30 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             wild_slots = 0
             print(f"[Tick] {slots_available} dispatch slots available")
 
-        queue_full = False
+        queue_full = queue_full_circuit_breaker
 
         # Dispatch standard/unrestricted directions
         for _ in range(standard_slots):
-            if queue_full:
+            if queue_full or queue_full_circuit_breaker:
                 break
             job = None
             try:
                 # When novelty_slots is 0, do not exclude Novelty from candidate directions
                 excluded = saturated_domains if novelty_slots == 0 else (["Novelty"] + saturated_domains)
                 job = extractor.discover(domain_filter=None, exclude_domains=excluded)
-                job = await extractor.dispatch_async(job, max_inflight=max_inflight)
+                job = await extractor.dispatch_async(job, max_inflight=effective_max_inflight)
                 if job.project_id:
                     extractor.inflight[job.project_id] = job
+                    adaptive_mgr.record_dispatch_success(current_active=current_inflight + 1, configured_max=max_inflight)
                     print(f"[Tick] Dispatched {job.project_id[:8]}: {job.concept.title[:60]}")
                     _signal_dashboard_update(job.project_id[:8], "dispatched")
                 elif getattr(job, "status", None) in ("dispatch_queued", "retry_queued"):
-                    print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
+                    print(f"[CircuitBreaker] Aristotle queue full; leaving job {job.job_id[:8]} queued and tripping circuit breaker")
                     queue_full = True
+                    queue_full_circuit_breaker = True
+                    adaptive_mgr.record_queue_full(current_active=current_inflight)
                     extractor._save_inflight()
+                    break
                 else:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
@@ -1463,11 +1512,15 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                         extractor._refund_attempt(job)
             except Exception as e:
                 if job is not None and (extractor._is_queue_full_error(e) or job.status == "dispatch_queued"):
-                    print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
+                    print(f"[CircuitBreaker] Aristotle queue full; leaving job {job.job_id[:8]} queued and tripping circuit breaker")
                     job.status = "retry_queued"
-                    job.retry_queued_time = time.time()
+                    if not getattr(job, "retry_queued_time", 0.0):
+                        job.retry_queued_time = time.time()
                     extractor.inflight[job.job_id] = job
                     queue_full = True
+                    queue_full_circuit_breaker = True
+                    adaptive_mgr.record_queue_full(current_active=current_inflight)
+                    break
                 elif job is not None:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch error: {e}, direction released")
@@ -1478,22 +1531,27 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
         # Dispatch novelty/wild directions if explicitly requested via novelty_slots
         for _ in range(wild_slots):
-            if queue_full:
+            if queue_full or queue_full_circuit_breaker:
                 break
             job = None
             try:
                 job = extractor.discover(domain_filter="Novelty")
-                job = await extractor.dispatch_async(job, max_inflight=max_inflight)
+                job = await extractor.dispatch_async(job, max_inflight=effective_max_inflight)
                 if job.project_id:
                     extractor.inflight[job.project_id] = job
+                    adaptive_mgr.record_dispatch_success(current_active=current_inflight + 1, configured_max=max_inflight)
                     print(f"[Tick] Dispatched [NOVELTY] {job.project_id[:8]}: {job.concept.title[:60]}")
                     _signal_dashboard_update(job.project_id[:8], "dispatched_novelty")
-                elif job.status == "dispatch_queued":
-                    print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
+                elif job.status in ("dispatch_queued", "retry_queued"):
+                    print(f"[CircuitBreaker] Aristotle queue full; leaving job {job.job_id[:8]} queued and tripping circuit breaker")
                     job.status = "retry_queued"
-                    job.retry_queued_time = time.time()
+                    if not getattr(job, "retry_queued_time", 0.0):
+                        job.retry_queued_time = time.time()
                     extractor.inflight[job.job_id] = job
                     queue_full = True
+                    queue_full_circuit_breaker = True
+                    adaptive_mgr.record_queue_full(current_active=current_inflight)
+                    break
                 else:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
@@ -1502,11 +1560,15 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                         extractor._refund_attempt(job)
             except Exception as e:
                 if job is not None and (extractor._is_queue_full_error(e) or job.status == "dispatch_queued"):
-                    print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
+                    print(f"[CircuitBreaker] Aristotle queue full; leaving job {job.job_id[:8]} queued and tripping circuit breaker")
                     job.status = "retry_queued"
-                    job.retry_queued_time = time.time()
+                    if not getattr(job, "retry_queued_time", 0.0):
+                        job.retry_queued_time = time.time()
                     extractor.inflight[job.job_id] = job
                     queue_full = True
+                    queue_full_circuit_breaker = True
+                    adaptive_mgr.record_queue_full(current_active=current_inflight)
+                    break
                 elif job is not None:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch error: {e}, direction released")

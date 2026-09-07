@@ -606,7 +606,7 @@ class KnowledgeExtractor:
         if current_active >= max_inflight:
             print(f"[Dispatch-B] Queueing Phase B for {job.job_id[:8]}: at max_inflight ({current_active}/{max_inflight})")
             job.status = "retry_queued"
-            job.retry_queued_time = time.time()
+            job.retry_queued_time = getattr(job, "retry_queued_time", 0.0) or time.time()
             job.project_id = old_project_id
             if old_project_id and old_project_id in self.inflight:
                 del self.inflight[old_project_id]
@@ -630,7 +630,7 @@ class KnowledgeExtractor:
             if self._is_queue_full_error(e):
                 print(f"[Dispatch-B] Aristotle queue full for {job.job_id[:8]}; queuing Phase B")
                 job.status = "retry_queued"
-                job.retry_queued_time = time.time()
+                job.retry_queued_time = getattr(job, "retry_queued_time", 0.0) or time.time()
                 job.project_id = old_project_id
                 if old_project_id and old_project_id in self.inflight:
                     del self.inflight[old_project_id]
@@ -719,7 +719,7 @@ class KnowledgeExtractor:
         if current_active >= max_inflight:
             print(f"[Retry-Dispatch] Queueing retry for {job.job_id[:8]}: at max_inflight ({current_active}/{max_inflight})")
             job.status = "retry_queued"
-            job.retry_queued_time = time.time()
+            job.retry_queued_time = getattr(job, "retry_queued_time", 0.0) or time.time()
             job.project_id = old_project_id  # keep old id placeholder; will dispatch from queued state
             if old_project_id and old_project_id in self.inflight:
                 del self.inflight[old_project_id]
@@ -745,7 +745,7 @@ class KnowledgeExtractor:
             if self._is_queue_full_error(e):
                 print(f"[Retry-Dispatch] Aristotle queue full for {job.job_id[:8]}; queuing retry")
                 job.status = "retry_queued"
-                job.retry_queued_time = time.time()
+                job.retry_queued_time = getattr(job, "retry_queued_time", 0.0) or time.time()
                 job.project_id = old_project_id
                 if old_project_id and old_project_id in self.inflight:
                     del self.inflight[old_project_id]
@@ -986,7 +986,7 @@ class KnowledgeExtractor:
         if current_active >= max_inflight:
             print(f"[Dispatch] Queueing job {job.job_id[:8]}: at max_inflight ({current_active}/{max_inflight})")
             job.status = "dispatch_queued"
-            job.retry_queued_time = time.time()
+            job.retry_queued_time = getattr(job, "retry_queued_time", 0.0) or time.time()
             self.inflight[job.job_id] = job
             self._save_inflight()
             return job
@@ -1029,7 +1029,7 @@ class KnowledgeExtractor:
             self._save_inflight()
             if self._is_queue_full_error(e):
                 job.status = "dispatch_queued"
-                job.retry_queued_time = time.time()
+                job.retry_queued_time = getattr(job, "retry_queued_time", 0.0) or time.time()
                 job.error_message = f"Queue full: {e}"
                 self.inflight[job.job_id] = job
                 self._save_inflight()
@@ -1060,7 +1060,7 @@ class KnowledgeExtractor:
         if current_active >= max_inflight:
             print(f"[Dispatch] Queueing job {job.job_id[:8]}: at max_inflight ({current_active}/{max_inflight})")
             job.status = "dispatch_queued"
-            job.retry_queued_time = time.time()
+            job.retry_queued_time = getattr(job, "retry_queued_time", 0.0) or time.time()
             self.inflight[job.job_id] = job
             self._save_inflight()
             return job
@@ -1101,7 +1101,7 @@ class KnowledgeExtractor:
                 # Leave the job in a recoverable state so the caller can release
                 # the direction back to available and retry later.
                 job.status = "dispatch_queued"
-                job.retry_queued_time = time.time()
+                job.retry_queued_time = getattr(job, "retry_queued_time", 0.0) or time.time()
                 job.error_message = f"Queue full: {e}"
                 self.inflight[job.job_id] = job
                 self._save_inflight()
@@ -1174,7 +1174,8 @@ class KnowledgeExtractor:
         )
 
         # For continuing research threads, append cumulative context.
-        if job.thread_id and job.cycle_index > 0:
+        cycle_idx = getattr(job, "cycle_index", 0)
+        if isinstance(cycle_idx, (int, float)) and job.thread_id and cycle_idx > 0:
             thread_context = self._build_thread_context(job)
             if thread_context:
                 base_prompt += "\n\n" + thread_context
