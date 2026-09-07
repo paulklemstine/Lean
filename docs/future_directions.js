@@ -43779,14 +43779,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Computational exploration"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e050cc19",
     "description": "There are explicit functions represented by depth `L+1` networks of size polynomial in `L` such that any depth-`L` ReLU network approximating them within a fixed uniform tolerance has size exponential in `L`.  A polynomial-size depth-`L` approximating family for the explicit witnesses falsifies the conjecture.",
     "domains": [],
     "id": "fd_2744",
+    "phase": "A",
     "priority_score": 0.42487500000000006,
     "research_mode": "team",
     "source_exp_id": "ee0c99e7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:52.835917+00:00",
     "title": "Depth-`L` lower bound from oscillations"
   },
