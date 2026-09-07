@@ -14175,14 +14175,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Depth-Hypotenuse Bracket for the Berggren Tree"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0730f5f8",
     "description": "Cycle 2 proved that a finite ladder cannot distinguish a positive floor from finite extinction: two explicit continuations match all seven recorded rungs, one floored at 0.218 and one reaching zero at bitlen 160. Identifiability must therefore come from a rate hypothesis. The conjecture is that the recorded ladder admits no uniform contraction factor, so the Aitken floor estimate in the catalog is not licensed by the data.\n\nThe unconditional half is proved: any q bounding the six recorded step ratios satisfies q >= 2, while every q-contractive ladder with q < 1 has the explicit floor rho_n - |d_n|/(1-q). The open half is that the least noise level making the ladder 1/2-contractive exceeds the model-free noise floor 0.0101 derived from step-ratio mismatch.\n\nFormalise a noise-subtracted contraction hypothesis over the rationals, minimise the admissible eta on the six recorded steps, and compare with the recorded noise floor.\n\nThe plateau and extinction readings of the thread are formally unresolved by all data recorded so far, and the next experiment must be designed to bound the contraction factor rather than to add another rung.\n\nA uniform contraction factor exists, the floor is identifiable, and the extinction forecasts are excluded.",
     "domains": [],
     "id": "fd_4477",
+    "phase": "A",
     "priority_score": 0.592972972972973,
     "research_mode": "team",
     "source_exp_id": "26c8c1ed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-01T10:08:27.248376+00:00",
     "title": "Rate-Bounded Identifiability of a Dial Floor"
   },
@@ -42870,14 +42871,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective infinitude with a height window"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc3115b2",
     "description": "**Conjecture.** A finite hyperreal projection-valued measure with finite matrix entries descends under entrywise standard part to an ordinary projection-valued measure if and only if its projections are pairwise orthogonal up to infinitesimal operator norm and its total projection is infinitesimally close to the identity.\n\nThe key insight is that polynomial identities defining projections and orthogonality should survive standard part, while approximate hypotheses capture the natural measurement errors of non-Archimedean states.\n\n**Why now?** Scalar standard-part normalization and support collapse are established; the next falsifiable step is to determine exactly which matrix identities survive observation.",
     "domains": [],
     "id": "fd_1807",
+    "phase": "A",
     "priority_score": 0.4364444444444444,
     "research_mode": "team",
     "source_exp_id": "dcd7a4b2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:17.706981+00:00",
     "title": "Standard-part projection-valued measures"
   },
@@ -48970,7 +48972,7 @@ window.FUTURE_DIRECTIONS = [
     "description": "define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;",
     "domains": [],
     "id": "fd_2322",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "7fb32c18",
