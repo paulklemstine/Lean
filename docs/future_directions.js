@@ -12104,6 +12104,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Seek an explicit selection rule on the interior layer of a four-layer window whose link graphs are bipartite, hence triangle-free, giving a weakly D6-free family of size at least (3 + 1/100)\u00b7C(n, n/2). The rule should depend on S only through the intersection sizes with a nested family of test sets, turning the exclusion condition into finitely many residue constraints. This would settle the existence of a constant c > 3.\n\nThere are explicit n0 and test sets X1 \u2282 ... \u2282 Xt \u2286 [n] such that keeping layers k, k+1, k+3 in full plus {S in layer k+2 : (|S \u2229 Xi|)_i in E} is weakly D6-free of size \u2265 (3 + 1/100)\u00b7C(n, floor(n/2)) for all n \u2265 n0.\n\nFormalise the rule, verify triangle-freeness of every link graph via WeakD6.fourLayer_weaklyD6Free_iff, and bound the kept fraction by exact binomial identities.\n\nThe conjectured constant c > 3 exists with an explicit threshold n0, beating three middle layers.\n\nEvidence that the true asymptotic constant for weak D6-freeness equals 3, matching the layer bound.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4742",
+    "priority_score": 0.6709591836734695,
+    "research_mode": "team",
+    "source_exp_id": "fd463ee8",
+    "status": "available",
+    "timestamp": "2026-09-07T22:16:24.218179+00:00",
+    "title": "Bipartite-Link Threshold Construction for Weak D6-Freeness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved sandwich |X|^k \u2264 |G|\u00b7o_k \u2264 |G|\u00b7|X|^k pins the exponential growth rate of the hierarchy at |X|. The conjecture sharpens this to an exact second-order expansion controlled by the second largest fixed-point count, making the hierarchy a spectral probe of the action.\n\n|G|\u00b7o_k = |X|^k + m\u00b7r^k + O(s^k) where r is the largest fixed-point count among nonidentity elements, m the number of elements attaining it, and s < r.\n\nSplit the moment sum by the value of |X^g| and bound the tail; formalise as an inequality with explicit constants rather than an asymptotic statement.\n\nOrbit counts on tuples determine the fixed-point spectrum of the action, an inverse-problem statement.\n\nCancellation among elements with equal fixed-point counts would have to be exhibited, contradicting positivity.",
     "domains": [
       "Physics"
@@ -12311,6 +12325,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T03:19:50.704969+00:00",
     "title": "Coverage Algebra for Unions of Covariate Blocks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalise both the interval-exclusion criterion and the Mantel ceiling from height 3 to height m: in an (m+1)-layer window a weak copy of D_(2^m-2) is exactly a full interval, and links become K_m-free hypergraphs, so Tur\u00e1n's theorem replaces Mantel.\n\nFor every m \u2265 3, the largest weakly D_(2^m-2)-free family in 2^[n] has size (m + Theta(1/n))\u00b7C(n, floor(n/2)).\n\nProve the height-m interval-count lemma (2^m - 2 interior sets), then repeat the link double count with Mathlib's Turan bound.\n\nA complete asymptotic theory of weak diamond-freeness by layers, with explicit finite corrections.\n\nSome height admits a genuinely better-than-layers construction, isolating the first interesting case.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4743",
+    "priority_score": 0.6702972972972975,
+    "research_mode": "team",
+    "source_exp_id": "fd463ee8",
+    "status": "available",
+    "timestamp": "2026-09-07T22:16:24.999642+00:00",
+    "title": "Turan Hierarchy for Weak D_(2^m-2)-Free Families"
   },
   {
     "consumed_by_exp_id": "",
@@ -42642,19 +42670,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T11:45:02.931520+00:00",
     "title": "Load-balancing converse: the maximum bucket load"
-  },
-  {
-    "consumed_by_exp_id": "fd463ee8",
-    "description": "**Conjecture.** There are explicit integers `q`, `n\u2080`, and a rational constant `c > 3` such that for every `n \u2265 n\u2080`, a labeling into a finite vector space produces a weakly `D\u2086`-free family in `2^[n]` of cardinality at least `c` times the largest middle-layer cardinality.\n\nThe key insight is that interval exclusion is deterministic; only the lower bound on the number of selected sets requires probabilistic rank estimates. Replacing asymptotic error terms by explicit Gaussian-binomial inequalities should therefore yield a finite threshold.\n\nWhy now? The closure obstruction and positivity of the gain numerator have been isolated, leaving a sharply defined quantitative counting problem.",
-    "domains": [],
-    "id": "fd_2031",
-    "phase": "A",
-    "priority_score": 0.4384285714285714,
-    "research_mode": "team",
-    "source_exp_id": "ae36b246",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:22:18.826834+00:00",
-    "title": "A finite, explicit improvement over three middle layers"
   },
   {
     "consumed_by_exp_id": "",

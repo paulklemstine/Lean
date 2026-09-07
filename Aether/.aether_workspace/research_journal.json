@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0bdc483a",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — after the NET-62 grid-quantization round\n\nThree files were added under `Catalog/NumberTheory/`, all compiling with zero `sorry`s:\n\n* `GridKneeQuantization.lean` — grids, the read",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-09-02T09:39:53",
-      "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID — 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now stri"
-    },
-    {
       "cycle_id": "53c2b4c2",
       "domain": "Physics",
       "key_insight": "# Future directions — after the NET-74 audit and tail-mechanism cycle\n\nThree cycles were run on the NET-74 round-25 verdict\n(\"TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR\").\n\n**Cycle 1 (audit).**",
@@ -499,19 +489,19 @@
       "theorem_count": 103,
       "timestamp": "2026-09-07T10:00:17",
       "title": "Standard-part projection-valued measures"
+    },
+    {
+      "cycle_id": "fd463ee8",
+      "domain": "Physics",
+      "key_insight": "# Future directions — beating three middle layers for weakly `D₆`-free families\n\n## What this cycle established (all formalised, 0 sorries)\n\nWorking in `2^[n]` with the *weak* containment order (`Weak",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-09-07T22:16:37",
+      "title": "A finite, explicit improvement over three middle layers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4caf1d72",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Escape Criterion Iteration (Novelty thread)\n\n## What this cycle established\n\nStarting from `Catalog/Novelty/MandelbrotQuadraticEscape.lean` (which proved divergence of the\n*criti",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-08-23T16:44:29",
-      "title": "Escape criterion iteration"
-    },
     {
       "cycle_id": "43ad4483",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 103,
       "timestamp": "2026-09-07T10:00:17",
       "title": "Standard-part projection-valued measures"
+    },
+    {
+      "cycle_id": "fd463ee8",
+      "domain": "Physics",
+      "key_insight": "# Future directions — beating three middle layers for weakly `D₆`-free families\n\n## What this cycle established (all formalised, 0 sorries)\n\nWorking in `2^[n]` with the *weak* containment order (`Weak",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-09-07T22:16:37",
+      "title": "A finite, explicit improvement over three middle layers"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f5f0f634",
-      "domain": "Applications",
-      "name": "bigOmega_eq_sum_primeFactors",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f5f0f634",
-      "domain": "Applications",
-      "name": "bigOmega_eq_sum_primesBelow",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f5f0f634",
-      "domain": "Applications",
-      "name": "factorization_le_log_two",
-      "quality": 0.82
-    },
     {
       "cycle_id": "5109f84c",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "produces",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "fd463ee8",
+      "domain": "Physics",
+      "name": "sumLabel_union_of_disjoint",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "fd463ee8",
+      "domain": "Physics",
+      "name": "layer_k_subset_selected",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "fd463ee8",
+      "domain": "Physics",
+      "name": "layer_k1_subset_selected",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-07T10:00:17",
+  "last_updated": "2026-09-07T22:16:37",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "40d19005",
-        "quality": 0.84,
-        "theorems": 122,
-        "title": "OEIS sequence: Stack polyominoes with square core."
-      },
-      {
         "cycle_id": "497c96d6",
         "quality": 0.82,
         "theorems": 88,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 98,
         "title": "FACT round-42 #3 — DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
+      },
+      {
+        "cycle_id": "fd463ee8",
+        "quality": 0.72,
+        "theorems": 61,
+        "title": "A finite, explicit improvement over three middle layers"
       }
     ],
     "Probability": [
