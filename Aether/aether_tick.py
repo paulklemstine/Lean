@@ -452,7 +452,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     # blocking fresh dispatches. Each is released so its direction re-enters
     # the pool (where the injected-issue gate then filters closed-issue ones).
     try:
-        purged_queued = extractor.purge_stale_queued_jobs(max_age_hours=6)
+        purged_queued = extractor.purge_stale_queued_jobs(max_age_hours=48)
         if purged_queued:
             print(f"[Tick] Purged {purged_queued} stale queued job(s) that could not dispatch")
     except Exception as e:

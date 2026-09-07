@@ -144,7 +144,7 @@ class ResearchJob:
 MAX_RESUME_BUDGET = 2
 
 
-def _stale_queued_jobs_to_purge(inflight, max_age_hours: int = 6, now: float = None):
+def _stale_queued_jobs_to_purge(inflight, max_age_hours: int = 48, now: float = None):
     """Return [(pid, job)] for queued jobs stuck longer than max_age_hours.
 
     Queued (retry_queued/dispatch_queued/queued) jobs that cannot reach
@@ -329,7 +329,7 @@ class KnowledgeExtractor:
             data[pid] = d
         path.write_text(json.dumps(data, indent=2))
 
-    def purge_stale_queued_jobs(self, max_age_hours: int = 6) -> int:
+    def purge_stale_queued_jobs(self, max_age_hours: int = 48) -> int:
         """Drop queued jobs that have been stuck too long to ever dispatch.
 
         Each stale queued job is released (its direction returns to available)
