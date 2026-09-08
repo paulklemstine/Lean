@@ -1114,6 +1114,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e6e33149 (Q=0.860), which proved 76 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Label merges can manufacture apparent conditional independence but can never hide a genuine dependence. Extending the data-processing inequality to conditional mutual information would show that all collision artifacts in routing tables are false negatives, never false positives, fixing the sign of ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_e6e33149_84c64139",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "e6e33149",
+    "status": "available",
+    "timestamp": "2026-09-08T21:07:14.213299+00:00",
+    "title": "Deepening: One-Sidedness of Conditional-Independence Artifacts"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f2707534 (Q=0.920), which proved 115 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves Talagrand's concentration inequality for functions on product probability spaces with the weighted Hamming metric, giving exponential bounds on large deviations of 1-Lipschitz functionals of independent random variables.",
     "domains": [
       "Probability"
@@ -12413,6 +12427,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The error bar loss \u2264 destroyed label entropy is attained on the two-setting parity population. The conjecture is that the extremal populations for k dial settings are exactly the parity-like ones, in which the response is a deterministic function of the dial inside each context.\n\nFor every k there is a population on k dial settings and a merge onto \u2308k/2\u2309 labels attaining equality in CMI_loss_le_label_entropy_loss, and the equality cases are exactly the populations whose response is deterministic in the dial within each context.\n\nConstruct the family explicitly for k = 2,3,4 and verify equality in Lean by direct computation, then prove the general characterisation from the loss identity.\n\nThe observable error bar is optimal: no smaller function of the label table can bound the artifact.\n\nA strictly better observable bound exists, sharpening every reported routing table.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4753",
+    "priority_score": 0.6701428571428573,
+    "research_mode": "team",
+    "source_exp_id": "e6e33149",
+    "status": "available",
+    "timestamp": "2026-09-08T21:07:01.364020+00:00",
+    "title": "Parity Extremals for the Observable Error Bar"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prime hypotenuses of the tree are exactly the primes \u2261 1 mod 4, each at a unique node. The tree-specific question is therefore not how many primes there are below H, but how they are distributed across depths, where the silver poles at Re s = \u03c3\u2080 predict an oscillation of frequency \u03c0/log(1+\u221a2).\n\n\u03c0_tree(H) = \u00bd Li(H) + O(H exp(\u2212c\u221alog H)), and the number of prime nodes of depth at most d is \u224d (3+2\u221a2)^d/d with a secondary oscillatory term of frequency \u03c0/log(1+\u221a2).\n\nDerive the first statement from prime_hyp_iff plus the prime number theorem in arithmetic progressions; test the second numerically by counting prime hypotenuses per depth slice up to depth 12 and fitting the oscillation.\n\nThe tree has a prime number theorem whose error term is genuinely controlled by its own silver poles \u2014 the analogue of zero-controlled error terms in the classical theory.\n\nThe depth distribution of prime nodes is governed by the arithmetic of m\u00b2+n\u00b2 alone and carries no trace of the silver spectrum.",
     "domains": [
       "NumberTheory"
@@ -14985,19 +15013,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T22:42:02.334776+00:00",
     "title": "Skew-Product Descent Operator for abc Quality"
-  },
-  {
-    "consumed_by_exp_id": "e6e33149",
-    "description": "Label merges can manufacture apparent conditional independence but can never hide a genuine dependence. Extending the data-processing inequality to conditional mutual information would show that all collision artifacts in routing tables are false negatives, never false positives, fixing the sign of every possible error in the reported tables.\n\nFor any labelling f and any joint weight on X x Y x Z, I(f(X);Y|Z) <= I(X;Y|Z), with equality for injective f; consequently a reported conditional independence may be an artifact while a reported dependence never is.\n\nSlice the conditional mutual information over z and apply the existing per-slice machinery (H_joint_sub and D_superadditive) uniformly in z.\n\nAll per-dial routing tables inherit a proven one-sided error guarantee.\n\nConditional readings would need independent verification, and the claim that the single-dial tables are unaffected by chaining bugs would require a separate argument.",
-    "domains": [],
-    "id": "fd_3599",
-    "phase": "A",
-    "priority_score": 0.5915517241379311,
-    "research_mode": "team",
-    "source_exp_id": "0e0f4ea6",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T07:00:03.109954+00:00",
-    "title": "One-Sidedness of Conditional-Independence Artifacts"
   },
   {
     "consumed_by_exp_id": "",
@@ -30873,6 +30888,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-08T09:51:59.032230+00:00",
     "title": "Superlinear-Height Threshold Dichotomy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Merging the conditioning variable can raise or lower the reading, as two explicit witnesses show. The conjecture identifies the sign with an interaction-information invariant of the merged context blocks, predicting in advance which direction a context collision moves the table.\n\nFor a context merge g, I(X;Y|g(Z)) - I(X;Y|Z) equals the interaction information of the merged blocks, and is nonnegative exactly when the merged contexts are exchangeable for the pair (X,Y).\n\nUse CMI_eq_MI_sub_MI to rewrite both sides as differences of ordinary mutual informations and apply the unconditional data-processing inequality to each term separately.\n\nContext-column collisions become predictable rather than merely two-sided, restoring a usable guarantee on the context axis.\n\nContext merges are irreducibly unsigned and conditional readings must be recomputed, never patched, when the context encoding changes.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4752",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e6e33149",
+    "status": "available",
+    "timestamp": "2026-09-08T21:07:00.613642+00:00",
+    "title": "Interaction-Information Index for Context Merges"
   },
   {
     "consumed_by_exp_id": "",
