@@ -9469,7 +9469,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef58a044",
     "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields — each birthday level adds exactly the algebraic closures needed.",
     "domain_bridges": [],
     "domains": [
@@ -9483,7 +9483,7 @@
     "proof_strategy": "Define No_alpha = {surreals with birthday < alpha}. No_0 = empty. No_1 = {0} = {{|}}. No_2 = {-1, 0, 1} (three surreals). No_3 = {-2, -1/2, -1, -1/4, 0, 1/4, 1/2, 1, 2} (but actually No_3 has 7 surreals). By day omega: No_omega = all dyadic rationals m/2^n for m in Z, n in N. This is a field: the dyadic rationals are closed under +, -, *, / (for nonzero). Proof: m/2^n + k/2^l = (m*2^l + k*2^n)/2^{n+l} which is dyadic. Product: (m/2^n)(k/2^l) = mk/2^{n+l}. Reciprocal: 1/(m/2^n) = 2^n/m which is rational (not always dyadic). Wait: 1/3 is not dyadic. So No_omega is not closed under reciprocals of odd denominators. Correction: No_omega is the ring of dyadic rationals, not a field. The field of fractions is Q (all rationals). Conjecture revised: the field of fractions of No_omega is Q, the rationals. No_{omega^2} includes all real numbers that can be constructed by day omega^2, which includes all real algebraic numbers (since each algebraic number has a finite Dedekind cut representation). Test: enumerate surreals by birthday and verify field closure.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
