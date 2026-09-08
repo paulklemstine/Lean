@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "53c2b4c2",
-      "domain": "Physics",
-      "key_insight": "# Future directions — after the NET-74 audit and tail-mechanism cycle\n\nThree cycles were run on the NET-74 round-25 verdict\n(\"TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR\").\n\n**Cycle 1 (audit).**",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 138,
-      "timestamp": "2026-09-02T09:40:12",
-      "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR — Spearman(top8-mass, k*) = +0.80 strongest "
-    },
-    {
       "cycle_id": "54a9fda9",
       "domain": "Cryptography",
       "key_insight": "# Future directions — BALANCED-BKEY, after round-54 #1 (exp 523)\n\nTwo full scientific cycles were run on the `DIAL-ROBUST` verdict.\n\n**Cycle 1 (uniform keys, `bitlen × cap`).**  The exact ceiling fact",
@@ -499,19 +489,19 @@
       "theorem_count": 61,
       "timestamp": "2026-09-07T22:16:37",
       "title": "A finite, explicit improvement over three middle layers"
+    },
+    {
+      "cycle_id": "69567235",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after D3 (nonlinear probe ceiling on the pooled window population)\n\n## What this cycle settled\n\nWorking from `Novelty.NET58RelationalImportance` (`Rsq_le_intrinsic_ceiling`,\n`intri",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-09-08T00:32:32",
+      "title": "D3. Nonlinear probe ceiling on the pooled window population"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "43ad4483",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — radix-growth thresholds and iterated logarithms\n\nDerived from the verified results in `Catalog/Physics/RadixGrowthThreshold.lean`\n(all theorems there compile with `import Mathlib",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-23T17:35:38",
-      "title": "A radix-growth threshold"
-    },
     {
       "cycle_id": "6f1d7e50",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 61,
       "timestamp": "2026-09-07T22:16:37",
       "title": "A finite, explicit improvement over three middle layers"
+    },
+    {
+      "cycle_id": "69567235",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after D3 (nonlinear probe ceiling on the pooled window population)\n\n## What this cycle settled\n\nWorking from `Novelty.NET58RelationalImportance` (`Rsq_le_intrinsic_ceiling`,\n`intri",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-09-08T00:32:32",
+      "title": "D3. Nonlinear probe ceiling on the pooled window population"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5109f84c",
-      "domain": "Geometry",
-      "name": "F_nonneg",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5109f84c",
-      "domain": "Geometry",
-      "name": "F_comm",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5109f84c",
-      "domain": "Geometry",
-      "name": "F_dist_triangle",
-      "quality": 0.82
-    },
     {
       "cycle_id": "135e0dcb",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "layer_k1_subset_selected",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "69567235",
+      "domain": "Bridges",
+      "name": "sum_sq_split",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "69567235",
+      "domain": "Bridges",
+      "name": "ssBetween_nonneg",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "69567235",
+      "domain": "Bridges",
+      "name": "anova_decomposition",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-09-07T22:16:37",
+  "last_updated": "2026-09-08T00:32:32",
   "open_questions": [
     {
       "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "569bc76d",
-        "quality": 0.88,
-        "theorems": 156,
-        "title": "Ellipsoids"
-      },
-      {
         "cycle_id": "3596d147",
         "quality": 0.8,
         "theorems": 66,
@@ -3203,6 +3197,12 @@
         "quality": 0.85,
         "theorems": 2138,
         "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge"
+      },
+      {
+        "cycle_id": "69567235",
+        "quality": 0.85,
+        "theorems": 92,
+        "title": "D3. Nonlinear probe ceiling on the pooled window population"
       }
     ],
     "Combinatorics": [

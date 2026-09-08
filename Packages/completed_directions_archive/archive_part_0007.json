@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-07T22:16:25Z",
-  "count": 127,
+  "archived_at": "2026-09-08T00:32:21Z",
+  "count": 128,
   "directions": [
     {
       "id": "fd_3695",
@@ -5032,6 +5032,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_3950",
+      "title": "FACT round-74 #2 — ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor information (max |z| +2.29, MI ≤ 0.09 bits vs 1–3-bit residue dials); its 2.0× read beats the 4/3 cap ONLY as the N-invariant parity skip (paired z vs fixed dial = 0.0) — constant-shave, not a barrier event; triplet-tree campaign CLOSED",
+      "description": "**FACT round-74 #2 · exp 564 · paper 211 · seed 20260824 · wall 76.4 s**\n\nThird face of the Berggren triplet-tree campaign: does the mod-N orbit's revealed residue set (exp555/paper 205's under-sampling) carry per-N factor information, and can an orbit dial beat the residues-cap-4/3 (barrier 4)? n = 800 bitlen-40 semiprimes (500 balanced / 300 ratio-4), moduli m ∈ {3,4,5,7,8,16}, logN-decile-stratified permutation nulls, paper-132 filter accounting.\n\n**Pre-registered hypotheses (verbatim): H1** \"orbit revealed-set MI fully accounted for by ordinary residue-dial content; measured speedup ≤ 4/3 within CI; = matched-random dial\" — **CONFIRMED with one scope refinement. H2** (speedup > 4/3 surviving replication + sham + N-computability) — **gate false; no barrier event.**\n\n**Design amendments disclosed pre-run:** (1) the exp555 root-BFS never wraps mod N at bitlen-40 budgets (depth ≈ 9, coords ~10⁴ ≪ N ~10¹²) → root revealed set N-INVARIANT across all 800 N at all six moduli — the task premise (\"which subset varies with N\") fails for the root component; characterization arm only. (2) Live test = generic components (10 random Pythagorean seeds × 1500 nodes): supports saturate instantly (exactly m classes at every modulus, component length uniform), variation only in frequencies/orbit-length.\n\n**Information null (H1):** over 48 cells max |z| joint = +2.29 (topshare@16), max |z| conditional = +1.78; feature MI ≤ 0.09 bits vs ordinary residue-dial baselines I(N mod m; p mod m) = 1.00–3.00 bits. Nothing beyond ordinary residue content.\n\n**Filter law check at θ = ½ (sqrt-descending TD):**\n- RAND-MATCH 1.3387 CI[1.3008, 1.382] vs prediction 4/3 = 1.3333 — **cap law confirmed to ~0.4%**; SHAM co-inflation control clean CI[1.2717, 1.3579].\n- ORBIT reads 2.0000 CI[2.0, 2.0], failure rate 0.000 — BUT **paired z vs UNIV fixed dial = 0.0 EXACTLY**: it IS the parity skip (root-orbit legs always odd). An N-invariant universal exclusion table computable blind from N alone; exceeds 4/3 with zero per-N information ⇒ constant-shave, NOT a barrier event.\n- NET-loaded: every arm < 1 (0.20–0.75) — paper-131 lesson replicated. Replication gate not triggered.\n\n**New scope note on barrier 4:** the cap law presumes P(p kept) = θ exchangeability; deterministic exclusions escape via P(p kept) = 1 — an N-invariant structural dial can exceed 4/3 without carrying any information. The cap bounds information-bearing dials; blind structural exclusions are worth exactly their constant factor.\n\n**Barriers:** #2 consistent; #4 UPHELD + scope note; #5 EXTENDED to mod-N orbit projections; #6 restated as primitive-triple congruences; #8 unchanged. N-computability audit recompute-identical 3/3 both arms (no factor in any code path).\n\nLedger: three catches all fixed BEFORE the full run (empty-walk BFS — children never enqueued, caught by timing probe; odd-multiplier population-split bug — empty train half; g-unbound ×2); none adverse post-run.\n\n**Campaign CLOSED.** With paper 199 (two-tree closure synthesis of the four-strength seal), paper 205 (modular dynamics), and paper 210 (oracle bound unrealized), ALL faces of the user's triplet-tree proposal are now measured. Paper: ResearchOutput/NewMathematics/211_OrbitDialCapTest.md.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "6060f6d0",
+      "timestamp": "2026-08-24T07:22:53.233965+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-28T14:28:41.850876+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 355
     }
   ]
 }

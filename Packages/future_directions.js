@@ -12639,6 +12639,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The repeated-pair certificate for the nonlinear ceiling is now known to be complete exactly when no key content occurs in more than two pooled windows: completeness holds at two and fails at three. The remaining question is quantitative, namely how much of the within-content dispersion a matching can see on a fiber of size m, and whether reweighting by fiber size restores completeness for every design.\n\nOn fibers of size m the worst-case ratio of the best matching bound to SS_within equals 2/m, and the reweighted certificate sum over contents of (2/card_y) * gap_y^2 > SS_tot is complete for all pooling designs.\n\nCompute the extremal configuration for each m (one point at one end, m-1 at the other), formalize the resulting ratio, and prove or refute completeness of the reweighted test.\n\nThe ceiling can be measured completely from repeated pairs in any pooling design, at a known price in fiber size.\n\nComplete measurement requires full fiber statistics beyond pairwise gaps.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4744",
+    "priority_score": 0.6698750000000001,
+    "research_mode": "team",
+    "source_exp_id": "69567235",
+    "status": "available",
+    "timestamp": "2026-09-08T00:32:20.159479+00:00",
+    "title": "Worst-Case Yield of Matching Certificates on Large Fibers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved equivalence markoff_uniqueness_iff_min_determined shows the middle entry is always forced by the outer pair. Hence the open uniqueness conjecture is a statement about the minimum alone, a strictly one-variable problem.\n\nUniqueness of the ordered Markoff triple given its maximum is equivalent to uniqueness of the minimum, and holds unconditionally for all maxima in the classified x = 1 and x = 2 fibres.\n\nProve uniqueness for maxima lying in the silver branch using markoff_min_two_classification, then attempt congruence obstructions for general maxima.\n\nA new, strictly smaller formulation of the Markoff uniqueness conjecture, with two infinite families settled.\n\nA counterexample to the reduction would be a counterexample to uniqueness itself, hence a famous result.",
     "domains": [
       "NumberTheory"
@@ -14165,14 +14179,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renyi-2 Threshold Law for Certifiable Portability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b011f56",
     "description": "A/X was proved to cross 1 between n = 7 and n = 8 and to tend to infinity. The conjecture is that this crossing is the only one, i.e. A \u2212 X is negative on (2,7] and positive on [8,\u221e). Establishing monotonicity of A/X on [8,\u221e) closes the gap.\n\nA n > X n for all real n \u2265 8 and A n < X n for all real 2 < n \u2264 7.\n\nCombine a sharpened finite-n bound on X\u00b7n\u00b2 with log\u2082 n \u2265 3 for large n, and check the remaining finitely many cases by integer certificates.\n\nThe comparison table of the two channels is completely determined by one integer inequality per side.\n\nA second crossing exists at small n, and the model has a hidden resonance between log\u2082 n and the entropy deficit.",
     "domains": [],
     "id": "fd_4687",
+    "phase": "A",
     "priority_score": 0.5931250000000001,
     "research_mode": "team",
     "source_exp_id": "fbb2311e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-04T18:25:45.086248+00:00",
     "title": "Uniqueness of the A/X Crossing"
   },
@@ -14919,6 +14934,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T08:00:42.372461+00:00",
     "title": "Certified Decimal Enclosure of Euler's Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Importances are measured with noise, which inflates within-fiber dispersion and biases the measured ceiling downwards. Quantifying the bias by the design's degrees of freedom yields a debiased estimator whose crossing of 0.5 is the honest D3 test.\n\nUnder content-independent additive noise of variance sigma^2, the expected measured ceiling is below the true ceiling by sigma^2 * (n - |kappa|) / SS_tot.\n\nModel the noise as an extra window dimension and compute both sums of squares exactly on the tunable quad family.\n\nReported ceilings near 0.5 must be corrected upwards, possibly reversing a D3 verdict.\n\nRaw measured ceilings are conservative and can be used directly.",
+    "domains": [],
+    "id": "fd_4746",
+    "priority_score": 0.5915909090909092,
+    "research_mode": "team",
+    "source_exp_id": "69567235",
+    "status": "available",
+    "timestamp": "2026-09-08T00:32:21.243340+00:00",
+    "title": "Noise Debiasing of the Measured Ceiling"
   },
   {
     "consumed_by_exp_id": "",
@@ -30745,6 +30772,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Replicating windows leaves the ceiling unchanged, so any movement of the measured ceiling under pooling must come from genuinely new context variation. The conjecture makes this a rank condition on the window-by-content importance matrix.\n\nIf W is a subpopulation of W' and every content occurs in every window, the pooled ceiling is monotone after reweighting by the harmonic mean of fiber sizes, with equality exactly when the added windows are affine images of the old ones.\n\nFormalize pooled ceilings for nested window sets using pooled_ssWithin_eq_dispersion and compare via the ANOVA decomposition.\n\nMeasured ceilings can be extrapolated from small window samples with a controlled direction of bias.\n\nCeiling measurements are sample dependent and must be reported with the exact window set.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4745",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "69567235",
+    "status": "available",
+    "timestamp": "2026-09-08T00:32:20.705340+00:00",
+    "title": "Window-Pooling Monotonicity of the ANOVA Ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -42818,19 +42859,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:27.698986+00:00",
     "title": "Scalar generality"
-  },
-  {
-    "consumed_by_exp_id": "69567235",
-    "description": "**Conjecture.** For the pooled train/test window population of a fixed model, the ANOVA ceiling\n`1 - SS_within/SS_tot` lies below `0.5`; consequently no content head, however deep, exceeds\n`R\u00b2 = 0.5`, and the measured linear `0.329` already captures more than two thirds of what any\ncontent function can achieve.\n\n**The key insight is** that `SS_within` is measurable directly \u2014 it needs only repeated key\ncontents across windows and no model of the predictor \u2014 so the ceiling of the entire nonlinear\nclass can be *measured* rather than searched for.\n\n**Why now?** `Rsq_le_intrinsic_ceiling` plus `intrinsic_ceiling_attained` make the ceiling an\nexact supremum, and `ssWithin_eq_zero_of_injective` identifies precisely the pooling regime in\nwhich the measurement is meaningful.\n\n**If true:** the nonlinear arm of the roadmap can be cancelled on quantitative grounds.\n**If false:** a deep content head is worth building, and the relational ceiling (D1) becomes the\nbinding constraint instead.\n\n---",
-    "domains": [],
-    "id": "fd_4574",
-    "phase": "A",
-    "priority_score": 0.43799999999999994,
-    "research_mode": "team",
-    "source_exp_id": "fe441855",
-    "status": "in_progress",
-    "timestamp": "2026-09-02T18:44:19.204025+00:00",
-    "title": "D3. Nonlinear probe ceiling on the pooled window population"
   },
   {
     "consumed_by_exp_id": "",
