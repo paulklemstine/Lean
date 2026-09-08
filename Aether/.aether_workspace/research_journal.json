@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "54a9fda9",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — BALANCED-BKEY, after round-54 #1 (exp 523)\n\nTwo full scientific cycles were run on the `DIAL-ROBUST` verdict.\n\n**Cycle 1 (uniform keys, `bitlen × cap`).**  The exact ceiling fact",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 71,
-      "timestamp": "2026-09-02T09:40:31",
-      "title": "FACT round-54 #1 — BALANCED-BKEY: the T-dial is robust across bitlen and u (paper 181)"
-    },
-    {
       "cycle_id": "aa167cd7",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\nDerived from five research cycles, all fully verified (0 sorries):\n\n| file | cycle |\n|------|-------|\n| `Catalog/NumberTheory/AsymptoticGermInterpretation.lean` | 1 — rank scale,",
@@ -499,19 +489,19 @@
       "theorem_count": 92,
       "timestamp": "2026-09-08T00:32:32",
       "title": "D3. Nonlinear probe ceiling on the pooled window population"
+    },
+    {
+      "cycle_id": "e050cc19",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — depth-`L` lower bounds from oscillations\n\n## What this project established (all `sorry`-free, five Lean files)\n\n**`Catalog/Algebra/DepthLOscillationLowerBound.lean` — knot calcul",
+      "quality_score": 0.88,
+      "sorry_count": 1,
+      "theorem_count": 93,
+      "timestamp": "2026-09-08T09:52:11",
+      "title": "Depth-`L` lower bound from oscillations"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6f1d7e50",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Cut-indexed defects\n\nThis cycle introduced finite tensor-network **cut data** (`CutData n q`), proved\nthe **cut-wise Singleton inequality** in three progressively sharper forms\n(",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-08-23T17:35:52",
-      "title": "Cut-indexed defects"
-    },
     {
       "cycle_id": "86b92df3",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 92,
       "timestamp": "2026-09-08T00:32:32",
       "title": "D3. Nonlinear probe ceiling on the pooled window population"
+    },
+    {
+      "cycle_id": "e050cc19",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — depth-`L` lower bounds from oscillations\n\n## What this project established (all `sorry`-free, five Lean files)\n\n**`Catalog/Algebra/DepthLOscillationLowerBound.lean` — knot calcul",
+      "quality_score": 0.88,
+      "sorry_count": 1,
+      "theorem_count": 93,
+      "timestamp": "2026-09-08T09:52:11",
+      "title": "Depth-`L` lower bound from oscillations"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "135e0dcb",
-      "domain": "Bridges",
-      "name": "mem_rootSet_iff",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "135e0dcb",
-      "domain": "Bridges",
-      "name": "rootCount_eq_card_zmod",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "135e0dcb",
-      "domain": "Bridges",
-      "name": "rootCount_eq_legendreSym_add_one",
-      "quality": 0.86
-    },
     {
       "cycle_id": "fbb2311e",
       "domain": "Combinatorics",
@@ -2803,17 +2785,28 @@
       "domain": "Bridges",
       "name": "anova_decomposition",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "e050cc19",
+      "domain": "Algebra",
+      "name": "for",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "e050cc19",
+      "domain": "Algebra",
+      "name": "PWA",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "e050cc19",
+      "domain": "Algebra",
+      "name": "PWA",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-09-08T00:32:32",
+  "last_updated": "2026-09-08T09:52:11",
   "open_questions": [
-    {
-      "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
-      "cycle_id": "f3cf4755",
-      "domain": "MachineLearning",
-      "sorry_count": 2,
-      "timestamp": "2026-08-07T09:24:12"
-    },
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
       "cycle_id": "6753d65f",
@@ -3016,16 +3009,17 @@
       "domain": "Combinatorics",
       "sorry_count": 1,
       "timestamp": "2026-08-26T11:46:34"
+    },
+    {
+      "context": "All results are unconditional and proved without `sorry`.",
+      "cycle_id": "e050cc19",
+      "domain": "Algebra",
+      "sorry_count": 1,
+      "timestamp": "2026-09-08T09:52:11"
     }
   ],
   "research_threads": {
     "Algebra": [
-      {
-        "cycle_id": "2111d025",
-        "quality": 0.78,
-        "theorems": 68,
-        "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGE"
-      },
       {
         "cycle_id": "733effba",
         "quality": 0.82,
@@ -3079,6 +3073,12 @@
         "quality": 0.85,
         "theorems": 103,
         "title": "Standard-part projection-valued measures"
+      },
+      {
+        "cycle_id": "e050cc19",
+        "quality": 0.88,
+        "theorems": 93,
+        "title": "Depth-`L` lower bound from oscillations"
       }
     ],
     "Applications": [

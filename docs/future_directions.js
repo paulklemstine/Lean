@@ -1100,6 +1100,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e050cc19 (Q=0.880), which proved 93 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: There are explicit functions represented by depth `L+1` networks of size polynomial in `L` such that any depth-`L` ReLU network approximating them within a fixed uniform tolerance has size exponential in `L`.  A polynomial-size depth-`L` approximating family for the explicit witnesses falsifies the ",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_e050cc19_fe3ff41f",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "e050cc19",
+    "status": "available",
+    "timestamp": "2026-09-08T09:52:11.711660+00:00",
+    "title": "Deepening: Depth-`L` lower bound from oscillations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f2707534 (Q=0.920), which proved 115 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves Talagrand's concentration inequality for functions on product probability spaces with the weighted Hamming metric, giving exponential bounds on large deviations of 1-Lipschitz functionals of independent random variables.",
     "domains": [
       "Probability"
@@ -14972,14 +14986,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Skew-Product Descent Operator for abc Quality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e6e33149",
     "description": "Label merges can manufacture apparent conditional independence but can never hide a genuine dependence. Extending the data-processing inequality to conditional mutual information would show that all collision artifacts in routing tables are false negatives, never false positives, fixing the sign of every possible error in the reported tables.\n\nFor any labelling f and any joint weight on X x Y x Z, I(f(X);Y|Z) <= I(X;Y|Z), with equality for injective f; consequently a reported conditional independence may be an artifact while a reported dependence never is.\n\nSlice the conditional mutual information over z and apply the existing per-slice machinery (H_joint_sub and D_superadditive) uniformly in z.\n\nAll per-dial routing tables inherit a proven one-sided error guarantee.\n\nConditional readings would need independent verification, and the claim that the single-dial tables are unaffected by chaining bugs would require a separate argument.",
     "domains": [],
     "id": "fd_3599",
+    "phase": "A",
     "priority_score": 0.5915517241379311,
     "research_mode": "team",
     "source_exp_id": "0e0f4ea6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T07:00:03.109954+00:00",
     "title": "One-Sidedness of Conditional-Independence Artifacts"
   },
@@ -30786,6 +30801,80 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let k(L,w) be the largest sawtooth tower height computable exactly by a depth-L width-w ReLU network on one input. This project proves c*L <= k(L,2^c+1) <= (c+3)L+2. The conjecture is that the truth is L*log2(w-1) up to an additive constant, so that each layer contributes exactly log2(w-1) bits of oscillation and the remaining slack is an artefact of the knot normalisation.\n\nThere is an absolute constant C with |k(L,w) - L * log2 (w-1)| <= C for all w >= 3 and L >= 1.\n\nSharpen ReluDepth.PWA.relu_step to at most |S|+1 new knots by carrying a sorted knot list instead of a Finset closed with {0,1}; re-derive knotBound w (L+1) = w * knotBound w L + w and combine with dyad_tower_isNet.\n\nThe depth/width trade-off for sawtooth towers becomes an exact law and relu_depth_separation is tight up to an additive constant in the exponent.\n\nConstruction and counting differ by more than an additive constant, exposing a genuine loss in piecewise-affine counting as a lower-bound method.",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_4747",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e050cc19",
+    "status": "available",
+    "timestamp": "2026-09-08T09:51:56.824793+00:00",
+    "title": "Unit-Base Tower-Height Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A univariate ReLU network computes a difference of two convex piecewise affine functions, i.e. a tropical rational function. Its knots are the corner loci of two tropical polynomials and layer composition corresponds to iterated Minkowski sums of Newton polytopes, so knot counting becomes vertex counting for zonotope-like bodies.\n\nThe knot count of a depth-L width-w univariate ReLU network equals the number of vertices of an iterated Minkowski sum of L polytopes with at most w+1 vertices each; in particular monotone-weight (convex) networks have at most L*w knots and cannot separate depth at all.\n\nFormalise the tropicalisation of LayerUnits, prove closure of the difference-of-convex class under relu with explicit vertex bookkeeping, and compare with knotBound by #eval on small random networks.\n\nKnot counting becomes polytope combinatorics and isolates sign alternation as the sole source of depth power.\n\nDifference-of-convex representations lose knots, so tropical degree is not a faithful complexity measure for ReLU depth.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4748",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e050cc19",
+    "status": "available",
+    "timestamp": "2026-09-08T09:51:57.390341+00:00",
+    "title": "Tropical Newton-Polytope Certificate for Knot Counts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This project proves that a piecewise affine function with |S| knots has integrated error at least (2^(k-1) - |S|)/(16 * 2^k) against the sawtooth tower. The constant 1/16 per tooth comes from a crude estimate; the extremal problem of best L1 affine approximation to a unit tent has value 1/4 of the tooth width, so the sharp bound should be four times larger and independent of any slack.\n\nFor PWA S f the integral over [0,1] of |f - tri^[k]| is at least (1/4)(1 - |S| / 2^(k-1)), and the constant 1/4 is attained by the constant function 1/2 on each tooth.\n\nSolve the one-tooth extremal problem in Lean: minimise the integral of |a x + b - tent| over affine (a,b), by symmetrisation (averaging a minimiser with its reflection) plus a one-variable computation; then rerun the tooth-counting argument of sawtooth_L1_lower_bound.\n\nThe average-case separation reaches the information-theoretic optimum and matches the sup-norm tolerance 1/4 used throughout the project.\n\nAffine functions can track tents better than the symmetric heuristic suggests, and the L1 and sup-norm thresholds genuinely differ.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4749",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e050cc19",
+    "status": "available",
+    "timestamp": "2026-09-08T09:51:57.943929+00:00",
+    "title": "Sharp L-one Constant for Tent Approximation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "MIsNet.restrict shows that restricting a multivariate ReLU network to a line preserves depth and width, so ridge witnesses give dimension-free separations and can never exhibit a dimension-dependent lower bound. Any amplification must therefore come from witnesses that oscillate in every direction, such as x -> tri^[k](sum of coordinates) or radial towers.\n\nFor the witness x -> tri^[k](x_1 + ... + x_D) on the unit cube, every depth-L network approximating it within 1/4 has width at least 2^(Omega(D k / L)), strictly more than the dimension-free bound 2^(k/L - 3) obtained by line restriction.\n\nRestrict to many parallel lines simultaneously and count knots along each, or bound the number of full-dimensional affine cells of a depth-L width-w network by (2w)^(DL) and compare with the number of cells of the witness.\n\nDepth separations amplify with dimension, matching the intuition behind Eldan-Shamir type results in a purely piecewise-linear setting.\n\nDimension provably cannot amplify oscillation-based lower bounds, which would confine this technique to essentially univariate phenomena.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4750",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e050cc19",
+    "status": "available",
+    "timestamp": "2026-09-08T09:51:58.493547+00:00",
+    "title": "Dimension Amplification Beyond Ridge Witnesses"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Towers of height L + log2 L - 1 collapse to depth L with width L+1 (polynomial size), while height L^2+4 forces width at least 2^(L-1)-1. The conjecture is a sharp dichotomy at height Theta(L log L): polynomial-size depth-L approximation is possible exactly when k = O(L log L).\n\nFor every polynomial p there is L0 such that for L >= L0 the tower tri^[k] is approximable within 1/4 by a depth-L network of width p(L) if and only if k <= C * L * log2 (p(L)) for an absolute constant C.\n\nThe forward direction is dyad_tower_isNet with 2^c+1 = p(L); the converse follows from relu_oscillation_bound. Formalise as a single iff, tracking the additive constants.\n\nThe depth hierarchy for sawtooth witnesses is completely characterised by the ratio k/(L log w).\n\nThere are witnesses of intermediate height whose complexity escapes oscillation counting, forcing a new lower-bound technique.",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_4751",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e050cc19",
+    "status": "available",
+    "timestamp": "2026-09-08T09:51:59.032230+00:00",
+    "title": "Superlinear-Height Threshold Dichotomy"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -43820,19 +43909,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:23:34.829477+00:00",
     "title": "Computational exploration"
-  },
-  {
-    "consumed_by_exp_id": "e050cc19",
-    "description": "There are explicit functions represented by depth `L+1` networks of size polynomial in `L` such that any depth-`L` ReLU network approximating them within a fixed uniform tolerance has size exponential in `L`.  A polynomial-size depth-`L` approximating family for the explicit witnesses falsifies the conjecture.",
-    "domains": [],
-    "id": "fd_2744",
-    "phase": "A",
-    "priority_score": 0.42487500000000006,
-    "research_mode": "team",
-    "source_exp_id": "ee0c99e7",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:52.835917+00:00",
-    "title": "Depth-`L` lower bound from oscillations"
   },
   {
     "consumed_by_exp_id": "",
