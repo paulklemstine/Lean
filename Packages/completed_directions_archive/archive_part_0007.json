@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-08T21:07:01Z",
-  "count": 130,
+  "archived_at": "2026-09-08T23:23:29Z",
+  "count": 131,
   "directions": [
     {
       "id": "fd_3695",
@@ -5151,6 +5151,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_3951",
+      "title": "FACT round-74 #1 — ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-computable policy (strict crediting 0% both seeds); barrier-6 circularity quantified at 73-77% of peak",
+      "description": "**FACT round-74 #1 · exp 565 · paper 210 · seeds 20260824/20260825 · wall 55.8 s**\n\nQuestion: is the oracle navigation-sensor peak of paper 197 — I(1{d≤B}; b₁) = 0.479797 bits at B = 22758 (hit-rate 0.2053) — realizable by any N-computable query policy, or only by factor-conditioned posteriors (barrier 6)?\n\nFrame reused verbatim from exp549; budget = distinct information-bearing queries over a 295-item menu; discriminative policies fit on a labeled train split, evaluated test-time N-only; two seeds; MI bias-corrected.\n\n**Reproduction gate: PASS BIT-EXACTLY.** Seed-20260824 population regenerated from exp549's code path matches all 11 published fine-grid points to the last digit (peak delta = 0.000000). Fresh seed B: peak 0.4948 at the same B = 22758.\n\n**Pre-registered verdict (rules verbatim from exp565_prereg.json): H1 false, H2 not triggered → GAP-PARTIAL.**\n- Lenient pooled crediting: ADAPTIVE-NB/BATTERY realize 0.167–0.172 bits = **33.8–35.9% of peak**, credited on seed A only.\n- STRICT within-logN-strata crediting: **0% for EVERY N-only policy on BOTH seeds.**\n- No policy ≥ 50% anywhere; sham clean (max raw 0.0020 bits, credited 0).\n\n**Mechanism — disclosed post-hoc amendment A1 (documented separately from the pre-registered verdicts):** the entire lenient signal is the between-magnitude-strata population base-rate channel created by the population design (support-edge coupling in indep/unilog, q ≤ 2²² truncation in ratio), read out by parabola-mirror ensembles: PARONLY-battery ≈ full battery (0.161–0.167 vs 0.164–0.172); MODONLY residues ≈ 0 (0.0008–0.0032 — paper 81's seal holds jointly); pooled z +118..+128 stable but dead within strata (z_within32 ≤ 2.3); flat in B past ~64 queries (class exhausts at 295).\n\nDecisive split: within-strata geometric excess carried by the ORACLE = **0.3634–0.3687 bits = 73.5–76.8% of peak** (z 82–90); best N-only policy = **≤ 0.0018 bits = 0.25–0.50%** of it. FULL-ORACLE anchor hint=b₁: 0.9563–0.9627 bits ≈ 200% of peak.\n\n**Answer: the peak remains UNREALIZED.** It splits into ~74–77% within-strata geometry + ~23–26% population-prior slice; realizing 1{d ≤ B} requires d = M − isqrt(N) (median d = 215782 against menu exhaustion at 295 queries; a full Fermat scan at peak budget misses 79.5% of samples).\n\n**Barriers:** #6 CIRCULARITY CONFIRMED AND QUANTIFIED (gap = 73–77% of peak — first quantified circularity measurement). #2 does NOT seal b₁ a priori (p↔q-symmetric via max/min; residue null EMPIRICAL, extends paper 81 to joint NB resolution). #4/#5 consistent. #1/#3/#7/#8 unengaged.\n\nLedger: one disclosed amendment cycle, none adverse; pre-registered rules still evaluated verbatim. Honest limit: the ~24% between-strata slice is a property of this lab population's size-ratio coupling, not of semiprimes generally.\n\nThis closes the \"unrealized 0.48-bit oracle bound\" face of the Berggren triplet-tree × energy-spectrum campaign (rounds 70–72, papers 192–197) — a strengthening of closure, not a breakthrough. Paper: ResearchOutput/NewMathematics/210_OracleRealizationGap.md.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "90e1e335",
+      "timestamp": "2026-08-24T07:22:53.235459+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.8,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-29T02:15:02.048624+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 354
     }
   ]
 }

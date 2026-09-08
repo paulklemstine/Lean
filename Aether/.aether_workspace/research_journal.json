@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "240c61ef",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — union-closed families, abundance, and the closure operation\n\nDerived from the four research cycles in `Catalog/Computation/UnionClosedAdjoinTop.lean`,\n`UnionClosedAbundanceAverag",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-09-02T18:44:09",
-      "title": "Adjoining the top member preserves a witness"
-    },
-    {
       "cycle_id": "fe441855",
       "domain": "Novelty",
       "key_insight": "# Future directions — after NET-58 (CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE)\n\nThis cycle established three nested ceilings for KV-cache eviction driven by key content:\n\n1. **affine probes** are blin",
@@ -499,19 +489,19 @@
       "theorem_count": 76,
       "timestamp": "2026-09-08T21:07:13",
       "title": "One-Sidedness of Conditional-Independence Artifacts"
+    },
+    {
+      "cycle_id": "4b011f56",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — fork-channel resonance\n\nDerived from the analysis and adversarial review of\n`Catalog/Novelty/ForkChannelCrossingUniqueness.lean` and\n`Catalog/Novelty/ForkChannelSecondCrossing.le",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-09-08T23:23:41",
+      "title": "Uniqueness of the A/X Crossing"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "620a1130",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — temporal lags versus pitch intervals\n\nThis cycle established a complete separation of the two variables that the original\n\"lag 12 ≈ octave\" reading conflated:\n\n* the **temporal**",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 111,
-      "timestamp": "2026-08-23T18:49:52",
-      "title": "Separate temporal and pitch lags"
-    },
     {
       "cycle_id": "147eac16",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 76,
       "timestamp": "2026-09-08T21:07:13",
       "title": "One-Sidedness of Conditional-Independence Artifacts"
+    },
+    {
+      "cycle_id": "4b011f56",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — fork-channel resonance\n\nDerived from the analysis and adversarial review of\n`Catalog/Novelty/ForkChannelCrossingUniqueness.lean` and\n`Catalog/Novelty/ForkChannelSecondCrossing.le",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-09-08T23:23:41",
+      "title": "Uniqueness of the A/X Crossing"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5b4963ae",
-      "domain": "Pythagorean",
-      "name": "sqrtVelVec_ofLp",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "5b4963ae",
-      "domain": "Pythagorean",
-      "name": "norm_sqrtVelVec",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "5b4963ae",
-      "domain": "Pythagorean",
-      "name": "norm_sqrtVelVec_eq_sqrt",
-      "quality": 0.86
-    },
     {
       "cycle_id": "2d4305e2",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "CMI_loss_nonneg",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "4b011f56",
+      "domain": "Novelty",
+      "name": "deficit_eq_forkCollision",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "4b011f56",
+      "domain": "Novelty",
+      "name": "X_mul_sq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "4b011f56",
+      "domain": "Novelty",
+      "name": "X_pos",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-08T21:07:13",
+  "last_updated": "2026-09-08T23:23:41",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6d23453a",
-        "quality": 0.79,
-        "theorems": 94,
-        "title": "FACT round-67 #1 — TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
-      },
-      {
         "cycle_id": "fe441855",
         "quality": 0.82,
         "theorems": 65,
@@ -3637,6 +3631,12 @@
         "quality": 0.86,
         "theorems": 76,
         "title": "One-Sidedness of Conditional-Independence Artifacts"
+      },
+      {
+        "cycle_id": "4b011f56",
+        "quality": 0.82,
+        "theorems": 57,
+        "title": "Uniqueness of the A/X Crossing"
       }
     ],
     "NumberTheory": [

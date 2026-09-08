@@ -14222,19 +14222,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renyi-2 Threshold Law for Certifiable Portability"
   },
   {
-    "consumed_by_exp_id": "4b011f56",
-    "description": "A/X was proved to cross 1 between n = 7 and n = 8 and to tend to infinity. The conjecture is that this crossing is the only one, i.e. A \u2212 X is negative on (2,7] and positive on [8,\u221e). Establishing monotonicity of A/X on [8,\u221e) closes the gap.\n\nA n > X n for all real n \u2265 8 and A n < X n for all real 2 < n \u2264 7.\n\nCombine a sharpened finite-n bound on X\u00b7n\u00b2 with log\u2082 n \u2265 3 for large n, and check the remaining finitely many cases by integer certificates.\n\nThe comparison table of the two channels is completely determined by one integer inequality per side.\n\nA second crossing exists at small n, and the model has a hidden resonance between log\u2082 n and the entropy deficit.",
-    "domains": [],
-    "id": "fd_4687",
-    "phase": "A",
-    "priority_score": 0.5931250000000001,
-    "research_mode": "team",
-    "source_exp_id": "fbb2311e",
-    "status": "in_progress",
-    "timestamp": "2026-09-04T18:25:45.086248+00:00",
-    "title": "Uniqueness of the A/X Crossing"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The internal (hyperreal) Shannon entropy of an approximate PVM should have the observed entropy as its standard part, with an infinitesimal but generally nonzero defect. The approach transfers negMulLog to the hyperreals and controls it on the compact simplex. It quantifies the information destroyed by non-Archimedean measurement error.\n\nFor a finite-entry approximate PVM and a finite hyperreal unit vector, the internal entropy is finite, its standard part is the observed entropy, and the defect is a nonzero infinitesimal for the \u03b5-channel.\n\nTransfer negMulLog to \u211d*, prove st of the internal entropy equals observedEntropy of the descended PVM, and compute the defect for epsChannel.\n\nObservation is entropy-continuous, and the defect is a new infinitesimal invariant of a measurement.\n\nEntropy fails to commute with standard part, revealing a discontinuity of information under observation.",
     "domains": [],
@@ -30902,6 +30889,63 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-08T21:07:00.613642+00:00",
     "title": "Interaction-Information Index for Context Merges"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replacing the entropy deficit 1/n^2 by 1/n^s gives a one-parameter family R_s n = log2 n + n^(-s). The derivative has exactly one sign change, at n_s = (s log 2)^(1/s), so R_s is unimodal for every s > 0 and the crossing count is decided by comparing the critical value R_s(n_s) with the level 3. This converts a family of channel comparisons into a single scalar threshold problem.\n\nFor every s > 0 the equation log2 n + n^(-s) = 3 has exactly two positive solutions iff R_s(n_s) < 3, exactly one iff R_s(n_s) = 3, and none otherwise, where n_s = (s log 2)^(1/s).\n\nFormalize R_s, prove StrictAntiOn on (0, n_s] and StrictMonoOn on [n_s, infinity) from the sign of 1/(n log 2) - s/n^(s+1), then use injectivity on each branch plus the intermediate value theorem.\n\nThe s = 2 result becomes one point of a complete phase diagram, and the merge threshold in s is an explicitly computable constant.\n\nSome exponent produces a non-unimodal resonance, which would contradict the single sign change of the derivative and reveal an error in the model.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4754",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4b011f56",
+    "status": "available",
+    "timestamp": "2026-09-08T23:23:27.164455+00:00",
+    "title": "Resonance Level Sets for General Deficit Exponents"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Bracketing the transcendental crossing r by a dyadic rational p/2^k reduces, via the proved integer criterion, to a single inequality between p^(p^2) and a power of 2. Since p is roughly 8*2^k, the exponent p^2 grows like 4^k, so certificate size doubles twice per extra binary digit of accuracy. This makes the cost of formal bracketing an explicitly predictable quantity.\n\nThe minimal bit-length of an integer certificate of the form p^(p^2) vs 2^(m) that brackets r to k binary digits is Theta(4^k); at k = 6 the certificate already exceeds 10^7 bits.\n\nInstantiate the criterion at successive dyadic points 63/8, 253/32, 507/64, 1013/128 and record the certificate bit-lengths; compare against the predicted 4^k law.\n\nFormal bracketing of r has a hard, quantified ceiling, and continued-fraction or interval-Newton methods become mandatory beyond it.\n\nA shorter certificate family exists, which would itself be a new tool for formalizing transcendental constants.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4755",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4b011f56",
+    "status": "available",
+    "timestamp": "2026-09-08T23:23:27.787201+00:00",
+    "title": "Certificate Complexity of the Transcendental Crossing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The unique physical crossing r solves 2^(3 r^2 - 1) = r^(r^2), an exponential-algebraic equation, whereas the second crossing is the rational number 1/2. The pair therefore separates cleanly into an exactly solvable and a conjecturally transcendental point, giving a concrete test case for Schanuel-type transcendence criteria.\n\nr is transcendental; in particular r is irrational and log2 r is irrational.\n\nFirst formalize the finite step: for explicit N, refine the dyadic bracket to width below 1/N^2 and conclude that r is not a rational with denominator at most N.\n\nThe crossing spectrum of the fork channel consists of one rational and one transcendental point, an exact dichotomy.\n\nr would be algebraic, forcing a hidden algebraic relation between log 2 and r and contradicting standard transcendence heuristics.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4756",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4b011f56",
+    "status": "available",
+    "timestamp": "2026-09-08T23:23:28.393737+00:00",
+    "title": "Transcendence of the Physical Fork Crossing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The two fork channels differ only in whether one and the same entropy deficit degrades them additively or multiplicatively. The number of arities at which they agree is therefore an invariant of the degradation pair rather than of the channels, and equals the number of solutions of a level-set equation for a unimodal functional. This bridges an information-theoretic comparison to a degree count in one dimension.\n\nFor any smooth strictly convex deficit d on (0, infinity) with d(0+) = infinity and d(infinity) = 0, the set {n > 0 : log2 n + d n = c} has cardinality 0, 1 or 2, with cardinality 2 exactly when c exceeds the unique critical value of log2 n + d n.\n\nFormalize the abstract statement with d as a hypothesis-carrying variable and rerun the two-branch monotonicity argument used for d n = 1/n^2.\n\nThe two-crossing theorem becomes a special case of a general degree principle applicable to every degradation model in the catalog.\n\nStrict convexity is not the right hypothesis, and the correct condition would identify exactly which deficits admit more than two crossings.",
+    "domains": [
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "fd_4757",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4b011f56",
+    "status": "available",
+    "timestamp": "2026-09-08T23:23:29.017810+00:00",
+    "title": "Crossing Count as a Degree Invariant of Degradation Pairs"
   },
   {
     "consumed_by_exp_id": "",
@@ -48029,14 +48073,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite-alphabet Pinsker"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4c85503d",
     "description": "For every `k` in the achievable range there is a\n   unique `\u03b2 > 0` with `KL(\u03c0*_\u03b2\u2016\u03c0_SFT) = k`, and `\u03c0*_\u03b2` maximises `\ud835\udd3c_p[r]` subject\n   to `KL(p\u2016\u03c0_SFT) \u2264 k` (the duality core of Conjecture 2).",
     "domains": [],
     "id": "fd_1721",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "5be71780",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T14:00:37.026590+00:00",
     "title": "Constrained = penalised"
   },
