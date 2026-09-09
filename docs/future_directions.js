@@ -6911,7 +6911,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Combinatorics"
     ],
-    "id": "fd_4760",
+    "id": "fd_4761",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2609.09042v1",
@@ -14148,14 +14148,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Log-Periodic Mean of the Pin Overcharge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e2d17bd0",
     "description": "Saturation at B* = 400 was measured under the harmonic weight; this cycle proves that no uniform window bound survives the passage to alpha = 1/2. The positive counterpart is a rescaling law expressing the saturation scale at exponent alpha in terms of the one at exponent 1.\n\nIf the harmonic dial saturates at B*, then the alpha-dial saturates at B*_alpha = Theta(B*^(1/(2-2alpha))) for 0 <= alpha < 1, and does not saturate for alpha <= 1/2 in the strong (uniform) sense.\n\nCompute R^2(alpha) as a function of the window edge B on the stored counts for B in {50, 100, 200, 400, 800} at alpha in {0.5, 1}, and compare the fitted saturation points against the predicted exponent.\n\nEvery recorded saturation constant in the lab can be transported to the sqrt-weight by an explicit formula.\n\nSaturation is data-driven rather than mass-driven, and each weight requires its own measurement.",
     "domains": [],
     "id": "fd_4272",
+    "phase": "A",
     "priority_score": 0.5932142857142858,
     "research_mode": "team",
     "source_exp_id": "837a61ec",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-26T10:53:30.490497+00:00",
     "title": "Rescaling Law for Window Saturation Scales"
   },
