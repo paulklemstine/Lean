@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fe441855",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — after NET-58 (CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE)\n\nThis cycle established three nested ceilings for KV-cache eviction driven by key content:\n\n1. **affine probes** are blin",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-09-02T18:44:30",
-      "title": "NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE — linear probes recover only R2~0.33 of key future"
-    },
-    {
       "cycle_id": "efbccac8",
       "domain": "Algebra",
       "key_insight": "# Future directions — NET-57 corpus algebra of the attention knee\n\nFour formalisation cycles produced a self-contained algebraic theory of the retention\nknee in `Catalog/Algebra/`:\n\n| file | content |",
@@ -499,19 +489,19 @@
       "theorem_count": 57,
       "timestamp": "2026-09-08T23:23:41",
       "title": "Uniqueness of the A/X Crossing"
+    },
+    {
+      "cycle_id": "4c85503d",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — Tropical / \"Constrained = penalised\" (Phase A, v19c)\n\nThis cycle formalised the duality core of Conjecture 2 over a finite outcome set:\n\n* the **duality identity** `t·(𝔼_{p_t}[r]",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-09-09T16:35:24",
+      "title": "Constrained = penalised"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "147eac16",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — after TDIAL-U52 (round-58 #1, exp 528)\n\nThree Lean files were added this cycle, all `sorry`-free:\n\n* `Catalog/MachineLearning/ZeroFitDialUnif52.lean` — the tie geometry of the **",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-23T19:35:56",
-      "title": "FACT round-58 #1 — TDIAL-U52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
-    },
     {
       "cycle_id": "3a849502",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 57,
       "timestamp": "2026-09-08T23:23:41",
       "title": "Uniqueness of the A/X Crossing"
+    },
+    {
+      "cycle_id": "4c85503d",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — Tropical / \"Constrained = penalised\" (Phase A, v19c)\n\nThis cycle formalised the duality core of Conjecture 2 over a finite outcome set:\n\n* the **duality identity** `t·(𝔼_{p_t}[r]",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-09-09T16:35:24",
+      "title": "Constrained = penalised"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2d4305e2",
-      "domain": "MachineLearning",
-      "name": "E_prod",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "2d4305e2",
-      "domain": "MachineLearning",
-      "name": "E_congr",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "2d4305e2",
-      "domain": "MachineLearning",
-      "name": "E_add",
-      "quality": 0.88
-    },
     {
       "cycle_id": "79cda873",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "X_pos",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "4c85503d",
+      "domain": "Tropical",
+      "name": "partitionFn_pos",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "4c85503d",
+      "domain": "Tropical",
+      "name": "tilted_pos",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "4c85503d",
+      "domain": "Tropical",
+      "name": "tilted_sum_one",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-08T23:23:41",
+  "last_updated": "2026-09-09T16:35:24",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "3b08d230",
-        "quality": 0.86,
-        "theorems": 154,
-        "title": "is a finitely supported `a : ℕ → ℤ` with"
-      },
-      {
         "cycle_id": "620a1130",
         "quality": 0.82,
         "theorems": 111,
@@ -4009,6 +4003,12 @@
         "quality": 0.79,
         "theorems": 64,
         "title": "FACT round-42 #4 — ECM-PLANE-COMPLETION: five methods, one population, one funct"
+      },
+      {
+        "cycle_id": "4c85503d",
+        "quality": 0.86,
+        "theorems": 68,
+        "title": "Constrained = penalised"
       }
     ]
   }

@@ -1058,6 +1058,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4c85503d (Q=0.860), which proved 68 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every `k` in the achievable range there is a\n   unique `\u03b2 > 0` with `KL(\u03c0*_\u03b2\u2016\u03c0_SFT) = k`, and `\u03c0*_\u03b2` maximises `\ud835\udd3c_p[r]` subject\n   to `KL(p\u2016\u03c0_SFT) \u2264 k` (the duality core of Conjecture 2).",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_4c85503d_27420a51",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "4c85503d",
+    "status": "available",
+    "timestamp": "2026-09-09T16:35:25.278339+00:00",
+    "title": "Deepening: Constrained = penalised"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 569bc76d (Q=0.880), which proved 156 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
     "domains": [
       "Bridges"
@@ -9531,6 +9545,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Convergence to the tropical corner should be exponential at a rate given by the gap between the largest and second-largest reward values, in analogy with a spectral gap controlling mixing. The conjecture pins both the rate and the leading constants.\n\nWith delta the gap between max r and the largest strictly smaller reward value, and w = pi0(argmax r), one has L - k(t) = Theta(t e^{-delta t}) and max r - E_t[r] = Theta(e^{-delta t}) with constant ((1-w)/w)(max r - min r) up to 1 + o(1).\n\nDefine tropicalGap as a Finset.min' over the non-argmax outcomes, prove matching upper and lower bounds by splitting Z(t) into argmax and near-argmax parts, and check the constants numerically on rewards with three distinct levels.\n\nGives an a priori schedule for annealing beta in KL-regularised alignment: beta ~ 1/(delta^{-1} log(1/eps)).\n\nThe rate is governed by a more subtle multiplicity-weighted quantity than the plain second-level gap.",
+    "domains": [
+      "Combinatorics",
+      "Tropical"
+    ],
+    "id": "fd_4764",
+    "priority_score": 0.7109166666666668,
+    "research_mode": "team",
+    "source_exp_id": "4c85503d",
+    "status": "available",
+    "timestamp": "2026-09-09T16:35:10.688925+00:00",
+    "title": "Tropical Spectral Gap Rate for Zero-Temperature Alignment"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Recast the Moser\u2013Tardos analysis as a finite injective encoding of resampling logs by witness trees, avoiding infinite random sequences entirely. The existing finite weighted probability framework supplies the LLL side; only the combinatorial encoding is missing. This would make the constructive LLL fully formal with an explicit running-time bound.\n\nFor instances with e*p*(d+1) <= 1 there is an injection from non-terminating Moser\u2013Tardos logs of length T into a set of size 2^n * (d+1)^T * p^T, forcing T = O(n*d*log(1/p)).\n\nFormalize the witness-tree encoding of logs in Lean, prove injectivity, derive the length bound; sanity-check on random 3-SAT instances by evaluation.\n\nThe probabilistic method becomes algorithmic with a verified complexity bound.\n\nRandomness is essential to Moser\u2013Tardos and the constructivization is only semi-effective.",
     "domains": [
       "Computation",
@@ -12356,6 +12385,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-24T05:02:37.395785+00:00",
     "title": "Fractal Ceiling Wobble for Non-Dyadic Sample Sizes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The constrained value function V(k) is concave with marginal price exactly the inverse temperature. The conjecture upgrades the chord bracket already proved into global two-sided bounds on V, quantifying how much reward a fixed KL budget can buy. This is the quantitative content of 'constrained = penalised'.\n\nFor 0 < k < L, E_{pi0}[r] + k/t(k) <= V(k) <= E_{pi0}[r] + (max r - E_{pi0}[r])(1 - exp(-k)), where t(k) is the unique tilt with KL(p_{t(k)}||pi0) = k.\n\nDefine V as an sSup over the KL ball (nonempty and bounded above by constrained_value_eq_frontier), prove concavity from frontier_concave, then integrate the shadow-price bracket along a partition of [0,k].\n\nGives a closed-form, verifiable budget-to-reward exchange rate for KL-regularised alignment, usable as a certificate.\n\nThe frontier has curvature not captured by endpoint temperatures and a second-order (variance) term is unavoidable.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4762",
+    "priority_score": 0.6705000000000002,
+    "research_mode": "team",
+    "source_exp_id": "4c85503d",
+    "status": "available",
+    "timestamp": "2026-09-09T16:35:09.765789+00:00",
+    "title": "Sharp Alignment Tax from the Shadow-Price Bracket"
   },
   {
     "consumed_by_exp_id": "",
@@ -31008,6 +31051,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The defect of Maslov dequantization, t*max r - log Z(t), is bounded by the tropical ceiling and converges to it. The conjecture is that the defect is monotone increasing and its limit is exactly the ceiling, so dequantization has a canonical finite obstruction rather than a vanishing error.\n\nThe function t -> t*rewardMax r - log (partitionFn pi0 r t) is monotone nondecreasing on [0, infinity) and tends to tropicalCeiling pi0 r.\n\nProve monotonicity from convexOn_logPartition (the defect is the gap between a convex function and its asymptotic slope line), then reuse log_partitionFn_sandwich for the limit.\n\nMaslov dequantization acquires a computable 'defect invariant' equal to -log of the argmax mass, linking tropical limits to information-theoretic budgets.\n\nThe defect oscillates and the ceiling is only a supremum, weakening the geometric picture of the tropical corner.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_4763",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4c85503d",
+    "status": "available",
+    "timestamp": "2026-09-09T16:35:10.227171+00:00",
+    "title": "Maslov Defect as a Finite Tropical Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replacing the scalar reward by a vector reward turns the one-parameter tilted path into an exponential family over a parameter polytope. The conjecture is that the achievable reward region converges, as the KL budget grows, to the max-plus convex hull of the reward rows, with a ceiling attached to every face equal to minus the log reference mass of that face.\n\nFor r : iota -> R^m and p_theta(i) proportional to pi0(i) exp(<theta, r(i)>), the closure of the union over k of the achievable reward regions equals the tropical (max-plus) convex hull of {r(i)}, and the KL ceiling of the face F is -log pi0(F).\n\nRe-parametrise the file over theta in a finite-dimensional inner product space; reprove duality_identity and convexOn_logPartition verbatim; compute the m = 2, three-outcome case by hand and compare with the tropical hull.\n\nMulti-objective alignment duality becomes a statement in tropical convex geometry, with the face lattice of the Newton polytope indexing the reachable trade-offs.\n\nVector tilting reaches only a proper subregion and the correspondence with tropical hulls requires an extra normalisation.",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_4765",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4c85503d",
+    "status": "available",
+    "timestamp": "2026-09-09T16:35:11.157200+00:00",
+    "title": "Vector Rewards and Tropical Polytope Frontiers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -42935,14 +43008,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Load-balancing converse: the maximum bucket load"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01cb7b4b",
     "description": "**Conjecture.** There is an absolute constant `C` such that snakes of lengths `L` in `Q_m` and `K` in `Q_n` can be combined into a snake in `Q_(m+n)` of length at least `(L+1)(K+1) - C(L+K)`.\n\nThe key insight is that Cartesian products naturally create long grid walks, and all offending chords are localized near changes between factors. A bounded family of separator coordinates may repair those interfaces without destroying the multiplicative main term.\n\n**Why now?** Record searches currently proceed dimension by dimension. A successful product theorem would turn isolated records into systematic lower bounds in higher dimensions and would explain which transition motifs transfer across dimensions.",
     "domains": [],
     "id": "fd_2347",
+    "phase": "A",
     "priority_score": 0.4384285714285714,
     "research_mode": "team",
     "source_exp_id": "bf4ad478",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:47.701559+00:00",
     "title": "Product constructions with bounded chord repair"
   },
@@ -48130,19 +48204,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T14:00:36.756159+00:00",
     "title": "Finite-alphabet Pinsker"
-  },
-  {
-    "consumed_by_exp_id": "4c85503d",
-    "description": "For every `k` in the achievable range there is a\n   unique `\u03b2 > 0` with `KL(\u03c0*_\u03b2\u2016\u03c0_SFT) = k`, and `\u03c0*_\u03b2` maximises `\ud835\udd3c_p[r]` subject\n   to `KL(p\u2016\u03c0_SFT) \u2264 k` (the duality core of Conjecture 2).",
-    "domains": [],
-    "id": "fd_1721",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "5be71780",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T14:00:37.026590+00:00",
-    "title": "Constrained = penalised"
   },
   {
     "consumed_by_exp_id": "",
