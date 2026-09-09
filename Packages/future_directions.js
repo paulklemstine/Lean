@@ -6862,6 +6862,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Generic Nullity of Generalized Commutators' and formalize its key results. Abstract: We study the generic nullity of generalized commutator operators \\[L_{\\mathbf{A}}(X)=s_{k+1}(A_1,\\cdots,A_k,X)\\] on matrix algebras, where $s_{k+1}$ denotes the standard polynomial. Dixon and Pressman conjectured an explicit formula for the generic nullity of $L_{\\mathbf{A}}$, and Brassil and Reichstein proved the conjecture when $k$ is even. In this paper, we settle the remaining case where $k$ is odd. Our proof first treats the boundary cases $k=2n-3$ in dimensions $n$ and $n+1$ using degree decompositions and graph-theoretic interpretations of alternating trace forms, and then establishes a dimension-extension argument from $n$ to $n+2$. Consequently, together with the result of Brassil and Reichstein, we obtain a complete proof of the Dixon-Pressman generic nullity conjecture over any field of characteristic zero.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4758",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.06339v1",
+    "status": "available",
+    "timestamp": "2026-09-09T01:37:18.894345+00:00",
+    "title": "ArXiv paper: Generic Nullity of Generalized Commutators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Exponential Sampling Lower Bounds for Polynomial Sources' and formalize its key results. Abstract: A degree-$d$ polynomial source is the output of a polynomial map of degree at most $d$ over $\\mathbb{F}_2$ on arbitrarily many uniform random bits. Khodabandeh and Shinkar (FOCS '26) proved that $\\mathrm{Ber}(1/3)^{\\otimes N}$ has statistical distance $1-o(1)$ from every constant-degree polynomial source and conjectured exponentially small overlap. Independently of Khodabandeh and Shinkar, Byramji, Kane, Morris, and Ostuni (RANDOM '26) asked for an explicit target distribution at distance $1-\\exp(-N^{\u03a9_d(1)})$. We resolve both questions. For every fixed $d\\geq1$, every degree-$d$ polynomial source has overlap at most $\\exp(-c_dN)$ with $\\mathrm{Ber}(1/3)^{\\otimes N}$, where $c_d>0$ is independent of the seed length. For quadratics, $c_2=2^{-26}$ suffices. We amplify Khodabandeh and Shinkar's uniform separation of acceptance probabilities from non-dyadic parameters (numbers not of the form $a/2^b$ for integers $a$ and $b\\geq0$). The result extends to other non-dyadic Bernoulli parameter",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4758",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.06371v1",
+    "status": "available",
+    "timestamp": "2026-09-09T01:37:22.475553+00:00",
+    "title": "ArXiv paper: Exponential Sampling Lower Bounds for Polynomial Sources"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -6990,7 +7019,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "ef58a044",
+    "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields \u2014 each birthday level adds exactly the algebraic closures needed.",
     "domains": [
       "Novelty",
@@ -6998,11 +7027,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_169",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
