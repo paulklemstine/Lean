@@ -9345,7 +9345,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_4758",
+    "id": "fd_4759",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -9354,6 +9354,46 @@
     "status": "available",
     "timestamp": "2026-09-09T01:37:22.475553+00:00",
     "title": "ArXiv paper: Exponential Sampling Lower Bounds for Polynomial Sources"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The Archimedean place is a blurred interval at infinity' and formalize its key results. Abstract: Classically, the places of $\\mathbb{Q}$ are often regarded as a one-point compactification of $\\mathrm{Spec}(\\mathbb{Z})$, with the real place corresponding to a formal ``prime'' added at infinity. Re-examining this picture from a topos-theoretic perspective reveals a subtler geometry: while the non-Archimedean places are identified with singletons indexed by the non-zero prime ideals of $\\mathbb{Z}$, the Archimedean place is represented by the space of upper reals $\\overleftarrow{[0,1]}$, which may be informally thought of as the unit interval equipped with a non-Hausdorff topology. On a technical level, our analysis brings together geometric logic and descent techniques from topos theory, distinguishing standard descent from lax descent toposes both at the level of sheaves and of the geometric theories they classify. More broadly, this paper brings into conversation two parallel distinctions: on the number-theoretic side, between Archimedean and non-Archimedean phenomena, and on the ",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4760",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2609.09117v1",
+    "status": "available",
+    "timestamp": "2026-09-09T06:39:46.418580+00:00",
+    "title": "ArXiv paper: The Archimedean place is a blurred interval at infinity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Rook characters as symmetric functions' and formalize its key results. Abstract: We give several characterizations of an inhomogeneous basis of the ring of symmetric functions whose evaluations are the character values of the irreducible representations of the rook monoid (symmetric inverse semigroup). Using Schur--Weyl duality, we show that the transition coefficients of this basis with the power symmetric basis are the characters of the propagating partition algebra (dual symmetric inverse monoid algebra). In addition, the structure coefficients of this basis are equal to the coefficients in the smash (or Heisenberg) product of Schur functions.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4760",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2609.09042v1",
+    "status": "available",
+    "timestamp": "2026-09-09T06:39:49.499175+00:00",
+    "title": "ArXiv paper: Rook characters as symmetric functions"
   },
   {
     "ambition_level": "extension",
