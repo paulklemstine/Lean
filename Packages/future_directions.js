@@ -46718,14 +46718,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The two measured normalised costs and their exact ratio `3/2` are proved; the"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c4155a3",
     "description": "as `q\u207b\u00b9 \u00b7 (unit of \u2102\u27e6X\u27e7)`.  The\nNewton-type coefficient identities at levels `1` and `2` were proved; level `k`\nwas not.",
     "domains": [],
     "id": "fd_1576",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3da67f84",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T05:14:47.205129+00:00",
     "title": "as `q\u207b\u00b9 \u00b7 (unit of \u2102\u27e6X\u27e7)`.  The"
   },

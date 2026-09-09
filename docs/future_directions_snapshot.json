@@ -65908,7 +65908,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c4155a3",
     "description": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The\nNewton-type coefficient identities at levels `1` and `2` were proved; level `k`\nwas not.",
     "domain_bridges": [],
     "domains": [],
@@ -65918,7 +65918,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3da67f84",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T05:14:47.205129+00:00",
     "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
   },
