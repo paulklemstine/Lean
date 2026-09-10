@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f3a0d241",
-      "domain": "Pythagorean",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-55 (THE-KNEE-IS-SIZE-INVARIANT)\n\nThis cycle proved that a size-invariant attention budget follows from three separate\nstructural mechanisms — exact homogeneity of the r",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 49,
-      "timestamp": "2026-09-02T18:45:07",
-      "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT — Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-h"
-    },
-    {
       "cycle_id": "ee56ba3a",
       "domain": "Novelty",
       "key_insight": "# Future directions — after the oracle/policy separation\n\nThe formal round closed three things: the oracle-to-policy gap is maximal (a full unit) for\n*every* causally honest evictor at any budget belo",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-09-10T04:57:04",
       "title": "Product constructions with bounded chord repair"
+    },
+    {
+      "cycle_id": "ad3686b6",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — comonotone repair distance (Bridges thread, cycle v19c)\n\n## What this cycle settled\n\nWorking over `Catalog.UniformDial` (`Combinatorics.UniformDialDrawInvariance`,\n`Combinatorics",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-09-10T17:41:24",
+      "title": "Comonotone Repair Distance"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4be48a30",
-      "domain": "Shared",
-      "key_insight": "# Future directions — the attention-budget knee\n\n## What is now established\n\nA model-free theory of the measured object — the top-$k$ retained attention mass, its knee\n$k^*(n)$, and the context sensit",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 51,
-      "timestamp": "2026-08-23T22:39:22",
-      "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scal"
-    },
     {
       "cycle_id": "c38d70d3",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 64,
       "timestamp": "2026-09-10T04:57:04",
       "title": "Product constructions with bounded chord repair"
+    },
+    {
+      "cycle_id": "ad3686b6",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — comonotone repair distance (Bridges thread, cycle v19c)\n\n## What this cycle settled\n\nWorking over `Catalog.UniformDial` (`Combinatorics.UniformDialDrawInvariance`,\n`Combinatorics",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-09-10T17:41:24",
+      "title": "Comonotone Repair Distance"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a7aa0976",
-      "domain": "Physics",
-      "name": "lb4_2",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a7aa0976",
-      "domain": "Physics",
-      "name": "lb4_4",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a7aa0976",
-      "domain": "Physics",
-      "name": "lb4_16",
-      "quality": 0.82
-    },
     {
       "cycle_id": "b3a54ad0",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "fibRank_pos",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "ad3686b6",
+      "domain": "Bridges",
+      "name": "uniformWeights_total",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "ad3686b6",
+      "domain": "Bridges",
+      "name": "uniform_wcov_identity",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "ad3686b6",
+      "domain": "Bridges",
+      "name": "uniform_wcov_le_of_repairDist",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-09-10T04:57:04",
+  "last_updated": "2026-09-10T17:41:24",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "3596d147",
-        "quality": 0.8,
-        "theorems": 66,
-        "title": "FACT round-74 #4 — MA1-EFFECTIVITY-SWEEP: quadratic-character L-value magnitude "
-      },
-      {
         "cycle_id": "be2e1d6c",
         "quality": 0.87,
         "theorems": 172,
@@ -3203,6 +3197,12 @@
         "quality": 0.85,
         "theorems": 92,
         "title": "D3. Nonlinear probe ceiling on the pooled window population"
+      },
+      {
+        "cycle_id": "ad3686b6",
+        "quality": 0.83,
+        "theorems": 82,
+        "title": "Comonotone Repair Distance"
       }
     ],
     "Combinatorics": [

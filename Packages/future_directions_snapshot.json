@@ -2482,6 +2482,25 @@
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle ad3686b6 (Q=0.830), which proved 82 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Quantify how far a population is from comonotone by the least ℓ¹ perturbation of the rates that removes all discordant pairs, and relate it two-sidedly to the discordance mass that governs the triage rule.\n\nIf δ is the least ℓ¹ perturbation of y making (x, y + δ) comonotone, then δ² ≤ Δ ≤ 2·δ·range(",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_ad3686b6_65f6917a",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ad3686b6",
+    "status": "available",
+    "timestamp": "2026-09-10T17:41:25.145493+00:00",
+    "title": "Deepening: Comonotone Repair Distance"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -21032,7 +21051,7 @@
       "Catalog.Physics.TDialU108Capacity",
       "Catalog.Physics.TDialU108BandLoss"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "63101e70",
     "description": "Exact identifiability shows one rung plus a ratio bound leaves an interval of length d0 r/(1-r) of admissible plateaus. Conjecture that each additional measured rung contracts this interval by exactly the factor r, giving a closed formula for the number of extra rungs needed to identify the plateau to within the U108 CI half-width. This converts 'measure more rungs' into a costed experimental plan.\n\nAfter m further rungs the admissible plateau interval has length d0 r^{m+1}/(1-r), so identification to within 0.0445 needs ceil(log(0.0445 (1-r)/(d0 r))/log r) rungs, i.e. three at r = 1/2 and d0 = 0.0259.\n\nGeneralise plateau_set_exact to a prefix of m measured rungs and compute the resulting interval length in Lean.\n\nThe programme has an explicit stopping rule for the bitlen ladder.\n\nPlateau identification is either cheaper or impossible, and the ladder design must change.",
     "domain_bridges": [],
     "domains": [],
@@ -21042,7 +21061,7 @@
     "proof_strategy": "Induct on the number of prescribed initial steps, applying plateau_attainable to the shifted sequence at each stage.",
     "research_mode": "team",
     "source_exp_id": "ed4056bf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-01T05:09:09.904683+00:00",
     "title": "Rung Budget for Plateau Identification"
   },
@@ -21489,6 +21508,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Bridges.ComonotoneRepairDial",
+      "Combinatorics.UniformDialRegimeHomotopy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The identity 2|ι|² wcov = C − Δ plus the sharp lower bound gives an upper cap on the dial in terms of the repair distance. A matching lower bound is impossible from δ alone, by irreducibility; the conjecture identifies the minimal extra parameter.\n\nThere are constants such that 2|ι|² wcov ≥ c · S − 2|ι| R δ, where S is the total footprint spread ∑ᵢⱼ |xᵢ − x_j| times the rate spread, and no bound of this form holds with S omitted.\n\nFormalise the candidate bound on the uniform regime; falsify the S-free version using the pair of populations of discordance_not_determined_by_repairDist.\n\nThe QS triage rule becomes two-sided: the dial is pinned between explicit functions of two interpretable parameters.\n\nAny lower cap needs full pairwise data, strengthening the irreducibility statement to a quantitative information bound.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4778",
+    "lineage_refs": [],
+    "priority_score": 0.5920588235294119,
+    "proof_strategy": "Bound concordanceMass from below by the spread using the pointwise inequality max(t,0) ≥ t, then combine with uniform_wcov_identity and the sharp lower bound.",
+    "research_mode": "team",
+    "source_exp_id": "ad3686b6",
+    "status": "available",
+    "timestamp": "2026-09-10T17:41:11.624327+00:00",
+    "title": "Second Parameter for a Two-Sided Dial Budget"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Combinatorics.TDialPlateau60"
     ],
     "consumed_by_exp_id": "",
@@ -21867,25 +21906,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Combinatorics.UniformDialRegimeHomotopy"
-    ],
-    "consumed_by_exp_id": "ad3686b6",
-    "description": "Quantify how far a population is from comonotone by the least ℓ¹ perturbation of the rates that removes all discordant pairs, and relate it two-sidedly to the discordance mass that governs the triage rule.\n\nIf δ is the least ℓ¹ perturbation of y making (x, y + δ) comonotone, then δ² ≤ Δ ≤ 2·δ·range(x).\n\nFormalize the repair distance as an infimum over rearrangement-compatible perturbations and prove both inequalities against Catalog.UniformDial.discordanceMass.\n\nThe QS triage rule can be stated with a single interpretable population parameter.\n\nDiscordance mass carries information not visible to any ℓ¹ repair, and pairwise data is irreducible.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_3784",
-    "lineage_refs": [],
-    "priority_score": 0.5915517241379311,
-    "proof_strategy": "Upper bound by explicitly repairing with the monotone rearrangement of y; lower bound by summing the discordant pair deficits along an inversion-minimizing chain.",
-    "research_mode": "team",
-    "source_exp_id": "aa2d71a2",
-    "status": "in_progress",
-    "timestamp": "2026-08-23T03:16:36.030753+00:00",
-    "title": "Comonotone Repair Distance"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Catalog.Applications.WeilDualitySign.EigenvalueModel",
       "Catalog.Applications.WeilDualitySign.Witnesses"
     ],
@@ -21961,6 +21981,26 @@
     "status": "available",
     "timestamp": "2026-08-21T19:38:08.791559+00:00",
     "title": "Rank Threshold for Nowhere-Vanishing Twisted Sections"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Combinatorics.UniformDialDrawInvariance",
+      "Bridges.ComonotoneRepairStability"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Monotone re-encodings preserve comonotonicity and the sign of the dial. Conjecture: they distort the repair distance by at most the ratio of rate gaps, and no universal dimension-free constant exists. This measures how much repair information a Spearman-type statistic destroys.\n\nThere is no universal constant c with repairDist (rank x) (rank y) ≤ c · repairDist x y for all finite populations, but the bound holds with c = 1 / (minimal positive rate gap).\n\nSearch populations with clustered rates for unbounded ratios; formalise the gap-dependent bound using the certificate lemma violation_le_repairDist.\n\nRank-based dials need an explicit gap parameter before their repair budgets can be compared with raw ones.\n\nRanking is uniformly repair-stable, allowing all triage rules to be stated on ranks alone.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4776",
+    "lineage_refs": [],
+    "priority_score": 0.5910526315789475,
+    "proof_strategy": "Upper bound via the isotonic envelope of the ranked data; lower bound via a family with one large and many tiny rate gaps.",
+    "research_mode": "team",
+    "source_exp_id": "ad3686b6",
+    "status": "available",
+    "timestamp": "2026-09-10T17:41:10.772543+00:00",
+    "title": "Rank Re-Encoding Distortion of the Repair Distance"
   },
   {
     "ambition_level": "extension",
@@ -44813,6 +44853,52 @@
     "status": "available",
     "timestamp": "2026-09-10T04:56:52.951505+00:00",
     "title": "Antipodal Ladder for Exact Snake Numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.ComonotoneRepairStability",
+      "Bridges.ComonotoneRepairDistance"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The comonotone repair distance is the ℓ¹ distance from the rate vector to the isotonic cone of the footprint preorder. Conjecture: an optimal repair can always be chosen with coordinates drawn from the multiset of observed rates. This makes the repair distance a finite combinatorial minimum and hence decidable on concrete populations.\n\nFor all finite x, y there is d in RepairSet x y with l1norm d = repairDist x y and (y + d) i in the set of values of y for every i.\n\nFormalise the vertex argument for the piecewise-linear ℓ¹ objective on the isotonic polyhedron; verify by exhaustive search against repairDist on all populations with values in a small finite grid.\n\nrepairDist becomes computable, so triage rules can be checked by decide/native_decide on concrete data.\n\nThere is a population whose unique optimal repair uses a new rate value, which would reveal a genuinely continuous obstruction in the isotonic geometry.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4775",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Use repairDist_attained to get a minimiser, then push it to a vertex by moving any coordinate not equal to an observed value along the piecewise-linear objective without increasing cost.",
+    "research_mode": "team",
+    "source_exp_id": "ad3686b6",
+    "status": "available",
+    "timestamp": "2026-09-10T17:41:10.344326+00:00",
+    "title": "Vertex Normal Form for ℓ¹ Isotonic Repairs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.ComonotoneRepairSharpness",
+      "Bridges.ComonotoneRepairStability"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The repair distance vanishes exactly on comonotone populations, is positively homogeneous, and is 1-Lipschitz in ℓ¹. Conjecture: it is a convex gauge whose unit ball is the ℓ¹ ball plus the isotonic cone, making rate space a normed geometry with the comonotone populations as origin.\n\nRepairSet x y is convex and repairDist x (y + y') ≤ repairDist x y + repairDist x y' for all rate vectors, so repairDist x · is a sublinear gauge with zero set the isotonic cone.\n\nProve convexity of RepairSet from the pairwise definition, then subadditivity by adding optimal repairs; check numerically on random triples of rate vectors.\n\nPopulations acquire a metric structure in which triage thresholds are balls, enabling geometric statements about families of populations.\n\nSubadditivity fails, which would exhibit the isotonic cone as non-convex in the relevant translate and force a quasi-norm formulation.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4777",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Convexity: the defining inequalities are linear in d for fixed pair; subadditivity: sum of optimal repairs is admissible for the summed rates, then apply repairDist_le_of_mem.",
+    "research_mode": "team",
+    "source_exp_id": "ad3686b6",
+    "status": "available",
+    "timestamp": "2026-09-10T17:41:11.201309+00:00",
+    "title": "Gauge Geometry of the Comonotone Cone"
   },
   {
     "ambition_level": "extension",

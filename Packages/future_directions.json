@@ -155864,14 +155864,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Catalog.Physics.TDialU108Capacity",
         "Catalog.Physics.TDialU108BandLoss"
       ],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "63101e70",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -155881,7 +155881,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_4460",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-09-10T17:42:21.270224+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -155896,7 +155896,7 @@
       "source": "",
       "source_exp_id": "ed4056bf",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/ed4056bf",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-09-01T05:09:09.904683+00:00",
       "title": "Rung Budget for Plateau Identification"
@@ -163431,7 +163431,7 @@
       "depth_estimate": 3,
       "description": "The indices at which the mode of the binomial weights advances form a Beatty-type set; the gaps between consecutive advances should take at most three values, determined by the continued fraction of the slope. This transfers the Steinhaus three-distance theorem to the combinatorics of binomial peaks. It would give exact, non-asymptotic control of how often the peak moves.\n\nFor α = p/(p+q) irrational and every N, the set of gaps between consecutive n < N with incWord α n = 1 has at most three distinct values, and these are consecutive continued-fraction denominators of α.\n\nFormalize the return-time function of the rotation x ↦ x + α on the orbit {(m+1)α} and prove the three-gap statement, then transport it along pref_eq_floor_fract.\n\nExact gap statistics for the movement of binomial modes, and a bridge from Mathlib's continued fractions to the catalog's unimodality machinery.\n\nThe staircase would carry extra arithmetic beyond the rotation, contradicting the level description proved this cycle; a counterexample would locate the failure precisely.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges"
       ],
@@ -165319,7 +165319,7 @@
       "depth_estimate": 3,
       "description": "The sub-Gaussian tail 2 exp(-t^2) is now proved in Bridges.QRLottoDialHoeffding, but it is lossy far out: the coin amplitudes 2/p are tiny relative to the variance scale, and the dial is bounded above by sum 2/p deterministically. A Bennett/Bernstein analysis of the exactly computed moment generating function should replace the Gaussian tail by a Poissonian one and expose the hard support cap.\n\nWith V = sum 1/p^2 and a = max 2/p, the upper tail satisfies P(T - sum 1/p >= t) <= exp(-(V/a^2) h(a t / V)) where h(u) = (1+u) log(1+u) - u, and the tail is exactly zero for t > sum 1/p.\n\nFeed the Bennett bound for the exact single-coin MGF sum_exp_coin into the existing Chernoff step chernoff_card_le_param, and compare the resulting bound with dial_tail numerically for factor bases up to 400.\n\nThe dial's far tail is governed by the largest weight 2/3 rather than by the variance, so extreme yield outliers are exponentially rarer than the Gaussian model predicts.\n\nThe Gaussian rate is already optimal, meaning the small primes dominate the tail behaviour and the dial's outliers are driven by a bounded number of coordinates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory",
         "Bridges"
@@ -167738,7 +167738,7 @@
       "depth_estimate": 3,
       "description": "Approximate PVMs modulo infinitesimal equivalence should be equivalent, as a structured object, to real PVMs. The approach combines surjectivity of observation, identification of its fibres with halos, and the new rigidity theorem. It matters because it would turn the descent theorem into a classification.\n\nThe quotient of finite-entry approximate PVMs by entrywise infinitesimal equivalence is in bijection with real PVMs, compatibly with coarse-graining, ranks and Born weights.\n\nDefine the quotient type in Lean, build the bijection from stMat and hyperMat, and prove commutation with coarse and bornWeight.\n\nThe non-Archimedean theory carries no information beyond the real theory, but does so functorially — a clean classification result.\n\nSome structure (e.g. a merging or a state) fails to descend, isolating genuinely non-Archimedean data.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -168468,7 +168468,7 @@
       "depth_estimate": 3,
       "description": "The two fork channels differ only in whether one and the same entropy deficit degrades them additively or multiplicatively. The number of arities at which they agree is therefore an invariant of the degradation pair rather than of the channels, and equals the number of solutions of a level-set equation for a unimodal functional. This bridges an information-theoretic comparison to a degree count in one dimension.\n\nFor any smooth strictly convex deficit d on (0, infinity) with d(0+) = infinity and d(infinity) = 0, the set {n > 0 : log2 n + d n = c} has cardinality 0, 1 or 2, with cardinality 2 exactly when c exceeds the unique critical value of log2 n + d n.\n\nFormalize the abstract statement with d as a hypothesis-carrying variable and rerun the two-branch monotonicity argument used for d n = 1/n^2.\n\nThe two-crossing theorem becomes a special case of a general degree principle applicable to every degradation model in the catalog.\n\nStrict convexity is not the right hypothesis, and the correct condition would identify exactly which deficits admit more than two crossings.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Bridges"
@@ -174065,7 +174065,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 569bc76d (Q=0.880), which proved 156 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Bridges"
       ],
@@ -178850,6 +178850,46 @@
       "thread_id": "",
       "timestamp": "2026-08-13T21:10:17.113889+00:00",
       "title": "Deepening: The 3SUM-Birthday-Bound Hierarchy"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle ad3686b6 (Q=0.830), which proved 82 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Quantify how far a population is from comonotone by the least ℓ¹ perturbation of the rates that removes all discordant pairs, and relate it two-sidedly to the discordance mass that governs the triage rule.\n\nIf δ is the least ℓ¹ perturbation of y making (x, y + δ) comonotone, then δ² ≤ Δ ≤ 2·δ·range(",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "push_ad3686b6_65f6917a",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9299999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "ad3686b6",
+      "source_path": "Comonotone Repair Distance",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-10T17:41:25.145493+00:00",
+      "title": "Deepening: Comonotone Repair Distance"
     },
     {
       "ambition_level": "grand_challenge",
