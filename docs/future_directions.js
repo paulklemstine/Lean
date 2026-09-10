@@ -46902,7 +46902,7 @@ window.FUTURE_DIRECTIONS = [
     "description": "as `q\u207b\u00b9 \u00b7 (unit of \u2102\u27e6X\u27e7)`.  The\nNewton-type coefficient identities at levels `1` and `2` were proved; level `k`\nwas not.",
     "domains": [],
     "id": "fd_1576",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3da67f84",
