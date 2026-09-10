@@ -82,7 +82,7 @@ theorem joint_restrict (d : ι → Dial Ω) {S T : Finset ι} (h : S ⊆ T) :
   funext x i
   rfl
 
-omit [Fintype ι] [DecidableEq ι] in
+omit [Nonempty Ω] [Fintype ι] [DecidableEq ι] in
 /-- **Monotone scaling (data processing).**  Adding dials to the battery can
 never decrease the joint capacity.  This is the exact content of the measured
 chain `7.9455 → 10.4462 → 12.1080`. -/
@@ -94,7 +94,7 @@ theorem capacity_mono (d : ι → Dial Ω) {S T : Finset ι} (h : S ⊆ T) :
   rw [capacity, capacity, Hb, Hb]
   gcongr
 
-omit [Fintype ι] [DecidableEq ι] in
+omit [Nonempty Ω] [Fintype ι] [DecidableEq ι] in
 /-- **Strict scaling criterion.**  If the larger sub-battery `T` contains a dial
 that separates two individuals which the smaller sub-battery `S` confuses, then
 the joint capacity strictly increases.  This is what turns the measured chain
@@ -159,7 +159,7 @@ theorem capacity_le_logb_prod (d : ι → Dial Ω) (S : Finset ι) :
     exact_mod_cast img_joint_card_le d S
   exact Real.logb_le_logb_of_le (by norm_num) hpos hle
 
-omit [Fintype ι] [DecidableEq ι] in
+omit [Nonempty Ω] [Fintype ι] [DecidableEq ι] in
 /-- **Sparse-table bias.**  Whatever the moduli, a capacity measured on a
 population of `N` individuals is at most `log₂ N` bits. -/
 theorem capacity_le_logb_pop (d : ι → Dial Ω) (S : Finset ι) :
@@ -267,7 +267,8 @@ theorem capacity_eq_logb_pop_of_injective {α : Type*} {f : Ω → α} (hf : Fun
     rw [H, Finset.sum_congr rfl (fun a ha => by rw [hcnt a ha])]
     rw [Finset.sum_const, hcard, nsmul_eq_mul]
     have hN : (0 : ℝ) < (Fintype.card Ω : ℝ) := by exact_mod_cast Fintype.card_pos
-    push_cast
+    have hN' : ((Fintype.card Ω : ℕ) : ℝ) ≠ 0 := ne_of_gt hN
+    simp only [Nat.cast_one, Real.log_one, sub_zero, one_div]
     field_simp
   rw [Hb, hH, Real.logb]
 

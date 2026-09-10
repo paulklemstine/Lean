@@ -96,7 +96,7 @@ theorem interior_argmax_realizable (v : ℕ → Fin n → ℝ)
     intro k hk
     show dot (v k) (sumCols v t) = if k < t then dot (v k) (v k) else 0
     exact dot_sumCols_of_orth horth htm.le hk
-  refine Model.unique_interior_argmax (rho := 1) M htm.le ht ?_ ?_ ?_ ?_
+  refine Model.unique_interior_argmax (rho := 1) M ht ?_ ?_ ?_ ?_
   · intro i hi
     rw [one_mul, hA i (by omega), if_pos hi]
     ring

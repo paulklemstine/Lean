@@ -245,7 +245,7 @@ last two are pure noise. -/
 theorem hadamardExample_interior_argmax :
     ∀ B ≤ 4, B ≠ 2 → hadamardExample.R2 (fun _ => 1) B
       < hadamardExample.R2 (fun _ => 1) 2 := by
-  refine Model.unique_interior_argmax (rho := 1) hadamardExample (by omega) (by omega)
+  refine Model.unique_interior_argmax (rho := 1) hadamardExample (by omega)
     ?_ ?_ ?_ ?_
   · intro i hi
     rw [hadamardExample_a (by omega), hadamardExample_s (by omega), if_pos hi]

@@ -1,13 +1,13 @@
 import Mathlib
 
+open Matrix
+
 /-! # CatalogBuild.Shared.SpbMatrix
 
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 8
 -/
-
-open Matrix
 
 noncomputable section
 
@@ -18,6 +18,11 @@ def spbMatrix (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
 /-- The determinant of the SPB matrix is 1 + a². -/
 theorem spbMatrix_det (a : ℝ) : (spbMatrix a).det = 1 + a ^ 2 := by
   simp [spbMatrix, det_fin_two]; ring
+
+/-- The trace of the SPB matrix is `2`, independently of `a`. -/
+theorem spbMatrix_trace (a : ℝ) : (spbMatrix a).trace = 2 := by
+  simp [spbMatrix, Matrix.trace_fin_two]
+  norm_num
 
 /-- The SPB matrix determinant is always positive. -/
 theorem spbMatrix_det_pos (a : ℝ) : (spbMatrix a).det > 0 := by
@@ -50,15 +55,9 @@ theorem spbMatrix_det_ne_zero (a : ℝ) : (spbMatrix a).det ≠ 0 := by
 theorem spbMatrix_zero : spbMatrix 0 = 1 := by
   simp [spbMatrix]; ext i j; fin_cases i <;> fin_cases j <;> simp
 
-/-- The trace of the SPB matrix is 2. -/
-theorem spbMatrix_trace (a : ℝ) : (spbMatrix a).trace = 2 := by
-  simp [spbMatrix, Matrix.trace_fin_two]
-  norm_num
-
 /-- det of the product = product of dets. -/
 theorem spbMatrix_det_mul (a b : ℝ) :
     (spbMatrix a * spbMatrix b).det = (1 + a ^ 2) * (1 + b ^ 2) := by
   rw [det_mul, spbMatrix_det, spbMatrix_det]
-
 
 end
