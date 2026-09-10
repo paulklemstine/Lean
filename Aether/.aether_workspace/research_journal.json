@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "efbccac8",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — NET-57 corpus algebra of the attention knee\n\nFour formalisation cycles produced a self-contained algebraic theory of the retention\nknee in `Catalog/Algebra/`:\n\n| file | content |",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 103,
-      "timestamp": "2026-09-02T18:44:48",
-      "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST — independent wikitext shard replicates the knees exactly ({16,3"
-    },
-    {
       "cycle_id": "f3a0d241",
       "domain": "Pythagorean",
       "key_insight": "# FUTURE DIRECTIONS — after NET-55 (THE-KNEE-IS-SIZE-INVARIANT)\n\nThis cycle proved that a size-invariant attention budget follows from three separate\nstructural mechanisms — exact homogeneity of the r",
@@ -499,19 +489,19 @@
       "theorem_count": 68,
       "timestamp": "2026-09-09T16:35:24",
       "title": "Constrained = penalised"
+    },
+    {
+      "cycle_id": "01cb7b4b",
+      "domain": "Algebra",
+      "key_insight": "# Future directions: product constructions for snake-in-the-box codes\n\n## What this cycle established\n\nWorking with snakes (induced paths) in hypercubes indexed by an arbitrary finite\ncoordinate set —",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-09-10T04:57:04",
+      "title": "Product constructions with bounded chord repair"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3a849502",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — from the median breakdown theorem outward\n\nThis cycle closed the assignment (the sharpness half of the breakdown theorem on\nthe two measured normalised distributions) and then ke",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 107,
-      "timestamp": "2026-08-23T20:40:20",
-      "title": "The breakdown theorem is formalised and the two measured normalised distributions"
-    },
     {
       "cycle_id": "4be48a30",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 68,
       "timestamp": "2026-09-09T16:35:24",
       "title": "Constrained = penalised"
+    },
+    {
+      "cycle_id": "01cb7b4b",
+      "domain": "Algebra",
+      "key_insight": "# Future directions: product constructions for snake-in-the-box codes\n\n## What this cycle established\n\nWorking with snakes (induced paths) in hypercubes indexed by an arbitrary finite\ncoordinate set —",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-09-10T04:57:04",
+      "title": "Product constructions with bounded chord repair"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "79cda873",
-      "domain": "Tropical",
-      "name": "env_le",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "79cda873",
-      "domain": "Tropical",
-      "name": "exists_leader",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "79cda873",
-      "domain": "Tropical",
-      "name": "env_eq_of_leader",
-      "quality": 0.79
-    },
     {
       "cycle_id": "a7aa0976",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "tilted_sum_one",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "01cb7b4b",
+      "domain": "Algebra",
+      "name": "hasFibRank_of_pos",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "01cb7b4b",
+      "domain": "Algebra",
+      "name": "fibRank_mem",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "01cb7b4b",
+      "domain": "Algebra",
+      "name": "fibRank_pos",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-09T16:35:24",
+  "last_updated": "2026-09-10T04:57:04",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "733effba",
-        "quality": 0.82,
-        "theorems": 74,
-        "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUC"
-      },
-      {
         "cycle_id": "94eeec9f",
         "quality": 0.83,
         "theorems": 46,
@@ -3079,6 +3073,12 @@
         "quality": 0.88,
         "theorems": 93,
         "title": "Depth-`L` lower bound from oscillations"
+      },
+      {
+        "cycle_id": "01cb7b4b",
+        "quality": 0.78,
+        "theorems": 64,
+        "title": "Product constructions with bounded chord repair"
       }
     ],
     "Applications": [

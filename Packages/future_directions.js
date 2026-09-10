@@ -2798,6 +2798,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 01cb7b4b (Q=0.780), which proved 64 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** There is an absolute constant `C` such that snakes of lengths `L` in `Q_m` and `K` in `Q_n` can be combined into a snake in `Q_(m+n)` of length at least `(L+1)(K+1) - C(L+K)`.\n\nThe key insight is that Cartesian products naturally create long grid walks, and all offending chords are l",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_01cb7b4b_42816b79",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "01cb7b4b",
+    "status": "available",
+    "timestamp": "2026-09-10T04:57:05.158170+00:00",
+    "title": "Deepening: Product constructions with bounded chord repair"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
     "domains": [
       "Algebra",
@@ -6955,13 +6969,42 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_4766",
+    "id": "fd_4767",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2609.10302v1",
     "status": "available",
     "timestamp": "2026-09-10T01:26:29.500224+00:00",
     "title": "ArXiv paper: Faltings' Isogeny Theorem via Equidistribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'From Nilspace Theory to Simplicial Homotopy Theory' and formalize its key results. Abstract: We construct a faithful functor from the category of cubespaces, arising in structured ergodic theory and nilspace theory, to the category of (condensed) simplicial sets. This functor translates the weak structure theorem of a nilspace to a Postnikov tower of the corresponding simplicial set. In particular, nilspaces are mapped to Kan complexes and the structure groups of the nilspace correspond to the simplicial homotopy groups of the Kan complex. The functor is constructed via pullback along a special cosimplicial cubical set, whose combinatorial properties may be of independent interest.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4773",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.10437v1",
+    "status": "available",
+    "timestamp": "2026-09-10T04:57:19.939703+00:00",
+    "title": "ArXiv paper: From Nilspace Theory to Simplicial Homotopy Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Noetherian forms of free non-symmetric operads' and formalize its key results. Abstract: In this paper, we study certain categories of labeled finite rooted ordered trees over a fixed set of labels where each label is equipped with an arity: a fixed number of children that the vertex with the given label must have. Equivalently, these are expression trees for operations in a free non-symmetric operad. A morphism between these trees matches a pruning of one tree (a prefix) with an entire subtree of another (a suffix). We characterize such categories, up to isomorphism, in terms of suitable exactness properties. It turns out that these categories exhibit strong algebraic behavior, in the sense that every such category, when appended with a strict initial object, has a particularly nice noetherian form.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4774",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.10501v1",
+    "status": "available",
+    "timestamp": "2026-09-10T04:57:23.169100+00:00",
+    "title": "ArXiv paper: Noetherian forms of free non-symmetric operads"
   },
   {
     "consumed_by_exp_id": "",
@@ -14798,6 +14841,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Superadditivity s(m)+s(n) <= s(m+n) is now a theorem, so Fekete's lemma applies to s(n)/n; the multiplicative analogue needs the product theorem. The conjecture is that lim s(n)/2^n exists and equals the supremum of the product-construction densities.\n\nlim_{n} s(n)/2^n exists and equals sup_n (s(n)+1)/2^n; moreover s(m)s(n) <= 2 s(m+n) is asymptotically the correct multiplicative relation, i.e. the factor 2 cannot be replaced by 1 without the escape theorem.\n\nFormalize Fekete for the superadditive sequence snakeNum via Mathlib; then compare with the comb bound snakeNum_comb_le to derive two-sided estimates for s(2n)/s(n)^2.\n\nA certified numerical ladder for lambda with rigorously decreasing upper bounds.\n\nThe snake density oscillates, which would be a striking structural phenomenon and would explain the irregularity of record tables.",
+    "domains": [],
+    "id": "fd_4770",
+    "priority_score": 0.5922972972972974,
+    "research_mode": "team",
+    "source_exp_id": "01cb7b4b",
+    "status": "available",
+    "timestamp": "2026-09-10T04:56:51.862772+00:00",
+    "title": "Fekete Limit for Snake Density"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Laurent coefficients of the 194-fold product in degrees 2k-194 are the elementary symmetric functions of the head table. Newton's inequalities for real-rooted polynomials predict log-concavity of these coefficients, giving a new structural constraint on any candidate head table.\n\nFor the Monster head table t, e_{k-1}(t) e_{k+1}(t) <= e_k(t)^2 for all 1 <= k <= 193, and e_k(t) != 0 for all k <= 194.\n\nFormalize Newton's inequality for the polynomial prod (X + t_i) over R and combine with coeff_headProduct_esymm; evaluate on candidate tables.\n\nThe moonshine product has a unimodal coefficient profile, constraining admissible head tables.\n\nThe first failing index k exposes a sign pattern in the character values chi_196883(g).",
     "domains": [],
     "id": "fd_4184",
@@ -14819,6 +14874,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-29T09:03:53.796757+00:00",
     "title": "Multivariate Contrast Ceiling for Vector-Valued Carriers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The comb loses exactly one connector cell per interface, so the loss of a product construction is proportional to the number of direction changes. The conjecture is that every snake can be normalised to have few direction changes at cost O(n), making record search in high dimension a search over turn-minimal snakes only.\n\nEvery snake of length L in Q_n can be transformed into a snake of length at least L - O(n) whose comb decomposition has O(L/n) direction changes.\n\nFormalize a 'turn count' for snakes in the product setting (number of s where combRow changes) and prove the comb attains the minimum; test the normalisation on the known records for n <= 7 by search.\n\nRecord searches can be restricted to a normal form, a large practical reduction of the search space.\n\nDirection changes are essential to long snakes, so product methods will always lose a constant fraction.",
+    "domains": [],
+    "id": "fd_4771",
+    "priority_score": 0.5921910112359552,
+    "research_mode": "team",
+    "source_exp_id": "01cb7b4b",
+    "status": "available",
+    "timestamp": "2026-09-10T04:56:52.413349+00:00",
+    "title": "Turn-Minimal Normal Form for Record Snakes"
   },
   {
     "consumed_by_exp_id": "",
@@ -14867,6 +14934,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T03:19:34.680441+00:00",
     "title": "Quantitative Stability of the Maximally Entangled Orbit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Because the 3/4 cap is caused by 4-cycles of the metric product, adding a bounded number of fresh coordinates should destroy exactly those 4-cycles. The conjecture asserts that with c extra coordinates one recovers the full multiplicative main term (L+1)(K+1) - o(LK). This is the only surviving route to the original conjecture.\n\nThere is an absolute c such that for all snakes of lengths L in Q_m and K in Q_n there is a snake in Q_{m+n+c} of length at least (1-o(1))(L+1)(K+1).\n\nDefine vertices Sum.elim (p i) (q j) augmented by a separator bit b(i,j) in Fin c -> Bool and re-run the two verification lemmas (step and chord) in the style of isSnake_comb; test small cases (L=K=4) by exhaustive search over separator patterns.\n\nThe original conjecture holds after a bounded dimension shift, turning isolated records into systematic higher-dimensional lower bounds.\n\nThe obstruction is not local to 4-cycles but genuinely metric, and product constructions are permanently capped below the multiplicative main term.",
+    "domains": [],
+    "id": "fd_4769",
+    "priority_score": 0.5921428571428572,
+    "research_mode": "team",
+    "source_exp_id": "01cb7b4b",
+    "status": "available",
+    "timestamp": "2026-09-10T04:56:51.324954+00:00",
+    "title": "Separator-Coordinate Escape Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -15133,14 +15212,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Skew-Product Descent Operator for abc Quality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad3686b6",
     "description": "Quantify how far a population is from comonotone by the least \u2113\u00b9 perturbation of the rates that removes all discordant pairs, and relate it two-sidedly to the discordance mass that governs the triage rule.\n\nIf \u03b4 is the least \u2113\u00b9 perturbation of y making (x, y + \u03b4) comonotone, then \u03b4\u00b2 \u2264 \u0394 \u2264 2\u00b7\u03b4\u00b7range(x).\n\nFormalize the repair distance as an infimum over rearrangement-compatible perturbations and prove both inequalities against Catalog.UniformDial.discordanceMass.\n\nThe QS triage rule can be stated with a single interpretable population parameter.\n\nDiscordance mass carries information not visible to any \u2113\u00b9 repair, and pairwise data is irreducible.",
     "domains": [],
     "id": "fd_3784",
+    "phase": "A",
     "priority_score": 0.5915517241379311,
     "research_mode": "team",
     "source_exp_id": "aa2d71a2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T03:16:36.030753+00:00",
     "title": "Comonotone Repair Distance"
   },
@@ -31110,6 +31190,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The maximum induced path in the grid P_a \u25a1 P_b is conjectured to have (2/3)ab + O(a+b) vertices. This would pin down the exact power of the product construction for snake-in-the-box codes, improving both our 1/2 construction and our 3/4 cap. It matters because every product-based record search is bounded by this quantity.\n\nmax induced path in P_a \u25a1 P_b has (2/3)ab + O(a+b) vertices; hence every snake supported on a product of snakes of lengths L, K has at most (2/3)(L+1)(K+1) + O(L+K) vertices, and this is attained.\n\nReplace the local 2x2 bound in SnakeProduct.product_support_card_bound by a discharging argument over 2x3 blocks with charge transferred across turns; for the lower bound, exhibit explicit row/col functions as in combRow/combCol and reuse isSnake_comb's proof skeleton.\n\nThe product theorem becomes tight: s(m+n) >= (2/3) s(m) s(n) - O(s(m)+s(n)), a 33% improvement on the proved constant.\n\nEither the cap 3/4 is attained (so stacking of 2-row strips is possible and record searches should use it) or the truth is below 2/3, indicating a hidden global obstruction.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4768",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "01cb7b4b",
+    "status": "available",
+    "timestamp": "2026-09-10T04:56:50.757255+00:00",
+    "title": "Two-Thirds Law for Induced Paths in Product Grids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Our proof that s(2)=2 uses only uniqueness of antipodes. Iterating this inside subcubes should give certified exact values s(3)=4, s(4)=7 and a general upper bound below 2^{n-1}, without exhaustive search.\n\ns(3)=4, s(4)=7, and s(n) <= 2^{n-1} - 2^{n-4} for n >= 4, all provable by antipode/subcube arguments.\n\nExtend snake_dim_two_le: for a snake in Q_n, project to a subcube Q_2 and count how many indices can share the same projection; combine with hdist_le_card.\n\nA certified table of exact snake numbers and the first formal nontrivial upper bound on lambda.\n\nExact values genuinely require search, justifying a verified-search (decide/native_decide) approach instead.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4772",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "01cb7b4b",
+    "status": "available",
+    "timestamp": "2026-09-10T04:56:52.951505+00:00",
+    "title": "Antipodal Ladder for Exact Snake Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -43035,19 +43143,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T11:45:02.931520+00:00",
     "title": "Load-balancing converse: the maximum bucket load"
-  },
-  {
-    "consumed_by_exp_id": "01cb7b4b",
-    "description": "**Conjecture.** There is an absolute constant `C` such that snakes of lengths `L` in `Q_m` and `K` in `Q_n` can be combined into a snake in `Q_(m+n)` of length at least `(L+1)(K+1) - C(L+K)`.\n\nThe key insight is that Cartesian products naturally create long grid walks, and all offending chords are localized near changes between factors. A bounded family of separator coordinates may repair those interfaces without destroying the multiplicative main term.\n\n**Why now?** Record searches currently proceed dimension by dimension. A successful product theorem would turn isolated records into systematic lower bounds in higher dimensions and would explain which transition motifs transfer across dimensions.",
-    "domains": [],
-    "id": "fd_2347",
-    "phase": "B",
-    "priority_score": 0.4384285714285714,
-    "research_mode": "team",
-    "source_exp_id": "bf4ad478",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:23:47.701559+00:00",
-    "title": "Product constructions with bounded chord repair"
   },
   {
     "consumed_by_exp_id": "",
