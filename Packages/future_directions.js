@@ -50444,14 +50444,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "CoxeterLength.lean"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e02e0b5",
     "description": "These are the three concrete follow-ups produced by the cycle that proved\n`Singmaster.mult_eq_two_add_interior`, `Singmaster.mult_3003 = 8` and\n`Singmaster.mult_ne_five_or_seven_of_lt`.",
     "domains": [],
     "id": "fd_3050",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "344e2e8a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:27:42.857684+00:00",
     "title": "Next-cycle sub-conjectures (v19c thread continuation)"
   },
