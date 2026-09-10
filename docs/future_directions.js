@@ -6935,6 +6935,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Inertial multiplicity bounds for two dimensional projective representations and bounds for the number of $\\operatorname{PSL}_2(\\mathbb{F}_q)$ and $\\operatorname{PGL}_2(\\mathbb{F}_q)$ number fields' and formalize its key results. Abstract: We prove upper bounds for certain number field counting functions using Serre's modularity conjecture (now a theorem of Khare--Wintenberger). These results are comparable to sharp upper bounds for the number of abelian extensions with fixed or bounded discriminant, with Serre's modularity conjecture playing the role of class field theory.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4766",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.10245v1",
+    "status": "available",
+    "timestamp": "2026-09-10T01:26:26.042604+00:00",
+    "title": "ArXiv paper: Inertial multiplicity bounds for two dimensional projective representations and bounds for the number of $\\operatorname{PSL}_2(\\mathbb{F}_q)$ and $\\operatorname{PGL}_2(\\mathbb{F}_q)$ numb"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Faltings' Isogeny Theorem via Equidistribution' and formalize its key results. Abstract: We give a new proof of Faltings' isogeny theorem. More precisely, we show that Yuan's non-archimedean equidistribution theorem can be used to \"pump\" homomorphisms and semisimplicity from finite fields to number fields, thereby reducing Faltings' theorem directly to Tate's theorem.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4766",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.10302v1",
+    "status": "available",
+    "timestamp": "2026-09-10T01:26:29.500224+00:00",
+    "title": "ArXiv paper: Faltings' Isogeny Theorem via Equidistribution"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -14191,15 +14221,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Log-Periodic Mean of the Pin Overcharge"
   },
   {
-    "consumed_by_exp_id": "e2d17bd0",
+    "consumed_by_exp_id": "",
     "description": "Saturation at B* = 400 was measured under the harmonic weight; this cycle proves that no uniform window bound survives the passage to alpha = 1/2. The positive counterpart is a rescaling law expressing the saturation scale at exponent alpha in terms of the one at exponent 1.\n\nIf the harmonic dial saturates at B*, then the alpha-dial saturates at B*_alpha = Theta(B*^(1/(2-2alpha))) for 0 <= alpha < 1, and does not saturate for alpha <= 1/2 in the strong (uniform) sense.\n\nCompute R^2(alpha) as a function of the window edge B on the stored counts for B in {50, 100, 200, 400, 800} at alpha in {0.5, 1}, and compare the fitted saturation points against the predicted exponent.\n\nEvery recorded saturation constant in the lab can be transported to the sqrt-weight by an explicit formula.\n\nSaturation is data-driven rather than mass-driven, and each weight requires its own measurement.",
     "domains": [],
     "id": "fd_4272",
-    "phase": "A",
     "priority_score": 0.5932142857142858,
     "research_mode": "team",
     "source_exp_id": "837a61ec",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-26T10:53:30.490497+00:00",
     "title": "Rescaling Law for Window Saturation Scales"
   },
@@ -43012,7 +43041,7 @@ window.FUTURE_DIRECTIONS = [
     "description": "**Conjecture.** There is an absolute constant `C` such that snakes of lengths `L` in `Q_m` and `K` in `Q_n` can be combined into a snake in `Q_(m+n)` of length at least `(L+1)(K+1) - C(L+K)`.\n\nThe key insight is that Cartesian products naturally create long grid walks, and all offending chords are localized near changes between factors. A bounded family of separator coordinates may repair those interfaces without destroying the multiplicative main term.\n\n**Why now?** Record searches currently proceed dimension by dimension. A successful product theorem would turn isolated records into systematic lower bounds in higher dimensions and would explain which transition motifs transfer across dimensions.",
     "domains": [],
     "id": "fd_2347",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.4384285714285714,
     "research_mode": "team",
     "source_exp_id": "bf4ad478",
