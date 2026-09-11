@@ -20547,26 +20547,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Catalog.Applications.BatchSmoothnessYield",
-      "Catalog.Applications.BatchSmoothnessCost"
-    ],
-    "consumed_by_exp_id": "e0933184",
-    "description": "The per-candidate cost of batching a stream is A/k + c + q·k^(μ−1) where μ is the big-integer multiplication exponent. We conjecture a unique minimiser k* = (A/((μ−1)q))^(1/μ), degenerating to 'bigger is always better' as μ → 1. This explains the measured word-model reversal as a property of schoolbook arithmetic rather than of batching.\n\nFor A, q > 0 and 1 < μ ≤ 2, the function k ↦ A/k + c + q·k^(μ−1) on (0,∞) attains its infimum at exactly one point k* = (A/((μ−1)q))^(1/μ), and the infimum is c − q + μ(μ−1)^{(1−μ)/μ}A^{(μ−1)/μ}q^{1/μ}.\n\nFormalise with Real.rpow; differentiate or apply weighted AM-GM. The μ = 2 case is already proved as BatchYield.blockCost_eq_opt_iff.\n\nCrossover thresholds for batch smoothness testing scale as a root of the setup/penalty ratio, so GMP-level constant factors relocate but never remove the optimum.\n\nThe optimum is not unique or not of root type, indicating additional structure (e.g. cache effects) in the cost model.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_4370",
-    "lineage_refs": [],
-    "priority_score": 0.5931481481481482,
-    "proof_strategy": "Weighted AM-GM on the two nonconstant terms, with equality analysis via strict convexity of x ↦ x^(μ−1) plus Real.rpow_natCast bridging.",
-    "research_mode": "team",
-    "source_exp_id": "3f9d41d2",
-    "status": "in_progress",
-    "timestamp": "2026-08-29T18:30:48.485663+00:00",
-    "title": "Square-Root Law for Optimal Batch Size under Sub-Quadratic Multiplication"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Catalog.Novelty.KVDecisionDissociation"
     ],
     "consumed_by_exp_id": "",
@@ -60290,6 +60270,23 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that a memory hierarchy makes the multiplication exponent a\n*step function* of the batch size, so the global cost is a finite gluing of root\nlaws, each valid on its own tier, and the true optimum is the best of finitely many\ntier-local optima — a discrete selection problem sitting on top of a continuous\none. **Why now?** The universal-collapse theorem shows that a single-tier model has\nexactly one optimum; therefore any measured second local minimum is direct evidence\nof a tier boundary, and the collapse gives a parameter-free way to detect it.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4788",
+    "lineage_refs": [],
+    "priority_score": 0.4393684210526315,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e0933184",
+    "status": "available",
+    "timestamp": "2026-09-11T20:06:53.668542+00:00",
+    "title": "Direction 1 — Cache-tier cost laws and piecewise root optima"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For pseudo-orbits of the parameter-four logistic map that remain a certified distance from the critical point, a product of local derivative envelopes yields an exponentially smaller shadowing budget than the uniform factor `4^N`, and this adaptive budget is asymptotically sharp on periodic itineraries.\n\nThe key insight is that the interval-wide Lipschitz constant four discards orbit information; local derivative products retain the actual itinerary-dependent amplification.\n\n**Why now?** Forward invariance and the global certificate are established, providing a baseline against which a local, itinerary-sensitive refinement can be quantitatively compared.",
     "domain_bridges": [],
     "domains": [],
@@ -70858,7 +70855,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b4f715c2",
     "description": "Replace `2 ∈ ℤ` by an element\n   `a` in a domain and identify hypotheses under which `⋂ n, (a^n) = 0`.\n   This points toward the Krull intersection theorem rather than a new\n   ascending-chain invariant.",
     "domain_bridges": [],
     "domains": [],
@@ -70868,7 +70865,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "bf94368f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:33.905669+00:00",
     "title": "General separated principal filtrations"
   },
@@ -72081,5 +72078,24 @@
     "status": "available",
     "timestamp": "2026-09-11T05:13:23.611460+00:00",
     "title": "Sharper selection rules."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the balance principle proved here never used the\nspecific form `k^(μ−1)`; it used only that the penalty is multiplicatively convex\nand that the amortised setup `A/k` is multiplicatively convex with the opposite\nslope. Replacing `k^(μ−1)` by an arbitrary regularly varying penalty `P(k)` should\ngive a unique optimum wherever `kP′(k)/P(k)` crosses `1`, with the root law as the\nconstant-index case. **Why now?** FFT-based multiplication is `k log k log log k`,\nnot a pure power: its index is *slowly varying*, so it lies exactly in the regime\nwhere the general theorem, but not the pure root law, applies.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4789",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e0933184",
+    "status": "available",
+    "timestamp": "2026-09-11T20:06:54.255720+00:00",
+    "title": "Direction 2 — Root laws for arbitrary superadditive penalty profiles"
   }
 ]

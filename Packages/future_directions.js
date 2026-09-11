@@ -14430,19 +14430,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimax Optimality of Endpoint Scan Orders"
   },
   {
-    "consumed_by_exp_id": "e0933184",
-    "description": "The per-candidate cost of batching a stream is A/k + c + q\u00b7k^(\u03bc\u22121) where \u03bc is the big-integer multiplication exponent. We conjecture a unique minimiser k* = (A/((\u03bc\u22121)q))^(1/\u03bc), degenerating to 'bigger is always better' as \u03bc \u2192 1. This explains the measured word-model reversal as a property of schoolbook arithmetic rather than of batching.\n\nFor A, q > 0 and 1 < \u03bc \u2264 2, the function k \u21a6 A/k + c + q\u00b7k^(\u03bc\u22121) on (0,\u221e) attains its infimum at exactly one point k* = (A/((\u03bc\u22121)q))^(1/\u03bc), and the infimum is c \u2212 q + \u03bc(\u03bc\u22121)^{(1\u2212\u03bc)/\u03bc}A^{(\u03bc\u22121)/\u03bc}q^{1/\u03bc}.\n\nFormalise with Real.rpow; differentiate or apply weighted AM-GM. The \u03bc = 2 case is already proved as BatchYield.blockCost_eq_opt_iff.\n\nCrossover thresholds for batch smoothness testing scale as a root of the setup/penalty ratio, so GMP-level constant factors relocate but never remove the optimum.\n\nThe optimum is not unique or not of root type, indicating additional structure (e.g. cache effects) in the cost model.",
-    "domains": [],
-    "id": "fd_4370",
-    "phase": "A",
-    "priority_score": 0.5931481481481482,
-    "research_mode": "team",
-    "source_exp_id": "3f9d41d2",
-    "status": "in_progress",
-    "timestamp": "2026-08-29T18:30:48.485663+00:00",
-    "title": "Square-Root Law for Optimal Batch Size under Sub-Quadratic Multiplication"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The collision-mass criterion 4\u00b7eps\u00b2 separates certifiable from uncertifiable positions. The conjecture is that this is a genuine threshold: above the critical entropy nothing is certifiable, below it almost everything is. The upper half is already proved.\n\nWith H*(eps) = 2\u00b7log(1/(2\u00b7eps)), positions with Renyi-2 entropy above H* are never margin-certified, and for score vectors with collision mass bounded away from 4\u00b7eps\u00b2 a positive fraction is certified.\n\nProve the converse of diffuse_not_certified under an anti-concentration hypothesis on the score vector, in Catalog/Applications/MarginScarcityEntropy.lean.\n\nPortability screening reduces to a single entropy histogram per block.\n\nCollision mass is too coarse and a higher Renyi order is needed.",
     "domains": [],
@@ -42656,6 +42643,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**The key insight is** that a memory hierarchy makes the multiplication exponent a\n*step function* of the batch size, so the global cost is a finite gluing of root\nlaws, each valid on its own tier, and the true optimum is the best of finitely many\ntier-local optima \u2014 a discrete selection problem sitting on top of a continuous\none. **Why now?** The universal-collapse theorem shows that a single-tier model has\nexactly one optimum; therefore any measured second local minimum is direct evidence\nof a tier boundary, and the collapse gives a parameter-free way to detect it.",
+    "domains": [],
+    "id": "fd_4788",
+    "priority_score": 0.4393684210526315,
+    "research_mode": "team",
+    "source_exp_id": "e0933184",
+    "status": "available",
+    "timestamp": "2026-09-11T20:06:53.668542+00:00",
+    "title": "Direction 1 \u2014 Cache-tier cost laws and piecewise root optima"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For pseudo-orbits of the parameter-four logistic map that remain a certified distance from the critical point, a product of local derivative envelopes yields an exponentially smaller shadowing budget than the uniform factor `4^N`, and this adaptive budget is asymptotically sharp on periodic itineraries.\n\nThe key insight is that the interval-wide Lipschitz constant four discards orbit information; local derivative products retain the actual itinerary-dependent amplification.\n\n**Why now?** Forward invariance and the global certificate are established, providing a baseline against which a local, itinerary-sensitive refinement can be quantitatively compared.",
     "domains": [],
     "id": "fd_1849",
@@ -50275,14 +50274,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compact subsets are order-bounded and have extrema"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b4f715c2",
     "description": "Replace `2 \u2208 \u2124` by an element\n   `a` in a domain and identify hypotheses under which `\u22c2 n, (a^n) = 0`.\n   This points toward the Krull intersection theorem rather than a new\n   ascending-chain invariant.",
     "domains": [],
     "id": "fd_2691",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "bf94368f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:33.905669+00:00",
     "title": "General separated principal filtrations"
   },
@@ -51155,5 +51155,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-11T05:13:23.611460+00:00",
     "title": "Sharper selection rules."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The key insight is** that the balance principle proved here never used the\nspecific form `k^(\u03bc\u22121)`; it used only that the penalty is multiplicatively convex\nand that the amortised setup `A/k` is multiplicatively convex with the opposite\nslope. Replacing `k^(\u03bc\u22121)` by an arbitrary regularly varying penalty `P(k)` should\ngive a unique optimum wherever `kP\u2032(k)/P(k)` crosses `1`, with the root law as the\nconstant-index case. **Why now?** FFT-based multiplication is `k log k log log k`,\nnot a pure power: its index is *slowly varying*, so it lies exactly in the regime\nwhere the general theorem, but not the pure root law, applies.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4789",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "e0933184",
+    "status": "available",
+    "timestamp": "2026-09-11T20:06:54.255720+00:00",
+    "title": "Direction 2 \u2014 Root laws for arbitrary superadditive penalty profiles"
   }
 ];

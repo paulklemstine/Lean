@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-11T14:00:26Z",
-  "count": 137,
+  "archived_at": "2026-09-11T20:06:54Z",
+  "count": 138,
   "directions": [
     {
       "id": "fd_3695",
@@ -5423,6 +5423,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 353
+    },
+    {
+      "id": "fd_3953",
+      "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) but testing is only 11.6% of per-factor work; word model reverses at large pools",
+      "description": "Round-73 #3, exp 561. **BATCH-WINS-TESTING.** Product-tree batch smoothness-testing vs solo trial division at fixed B=100, bitlen 40, pools k in {1,8,64,512}: best delta +0.104 (flat op model, k=512); batch beats solo at EVERY measured pool size in the flat model (no crossover below solo). The WORD model REVERSES at large k (delta −62.6 at k=512 — big-int intermediates dominate); word-model crossover vs solo at M* ≈ 1715 candidates. Exact-match audit PASS: batch-detected smooth set == per-item trial division on 500/500 samples (tree-vs-trial, direct-vs-trial, vector: 0 mismatches). E1 bound quantified: solo TESTING share of per-factor ops = 11.56%, so the saving is capped there even if testing were free — realized +0.104 sits just under. Finding phase strictly per-N (rho identical across arms by construction; qs_splits_total = 0 at bitlen 40/FB100 — yield far below quota).\n\nHonest placement: constant-shaving on a KNOWN method (batch smoothness testing is standard QS/NFS machinery, barrier 8) — engineering calibration of the method stratum, not an asymptotic result; zero class movement. Deployment caveat: GMP-level constant factors flip the sign past k≈1715 candidates.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp561_batch.py + exp561_result.json.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "3f9d41d2",
+      "timestamp": "2026-08-24T07:22:53.238419+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.74,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-29T09:05:22.981714+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 352
     }
   ]
 }
