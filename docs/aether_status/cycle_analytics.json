@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-11T05:13:37.064039+00:00",
+  "last_updated": "2026-09-11T14:00:39.231811+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -74543,6 +74543,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-11T05:13:36.708776+00:00",
       "title": "as `q\u207b\u00b9 \u00b7 (unit of \u2102\u27e6X\u27e7)`.  The"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Combinatorics",
+      "duration_seconds": 14864.827946662903,
+      "end_time": 1789135190.656801,
+      "files_integrated": 4,
+      "job_id": "63101e70",
+      "outcome_quality": 0.81,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.81,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5395,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.81,
+        "novelty": 0.81,
+        "proof_depth": 0.81,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1789120325.8288543,
+      "strategy_count": 0,
+      "theorem_count": 38,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 33,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-11T14:00:38.880541+00:00",
+      "title": "Rung Budget for Plateau Identification"
     }
   ]
 }

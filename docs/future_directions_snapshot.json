@@ -21107,26 +21107,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Catalog.Physics.TDialU108Capacity",
-      "Catalog.Physics.TDialU108BandLoss"
-    ],
-    "consumed_by_exp_id": "63101e70",
-    "description": "Exact identifiability shows one rung plus a ratio bound leaves an interval of length d0 r/(1-r) of admissible plateaus. Conjecture that each additional measured rung contracts this interval by exactly the factor r, giving a closed formula for the number of extra rungs needed to identify the plateau to within the U108 CI half-width. This converts 'measure more rungs' into a costed experimental plan.\n\nAfter m further rungs the admissible plateau interval has length d0 r^{m+1}/(1-r), so identification to within 0.0445 needs ceil(log(0.0445 (1-r)/(d0 r))/log r) rungs, i.e. three at r = 1/2 and d0 = 0.0259.\n\nGeneralise plateau_set_exact to a prefix of m measured rungs and compute the resulting interval length in Lean.\n\nThe programme has an explicit stopping rule for the bitlen ladder.\n\nPlateau identification is either cheaper or impossible, and the ladder design must change.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_4460",
-    "lineage_refs": [],
-    "priority_score": 0.5925609756097562,
-    "proof_strategy": "Induct on the number of prescribed initial steps, applying plateau_attainable to the shifted sequence at each stage.",
-    "research_mode": "team",
-    "source_exp_id": "ed4056bf",
-    "status": "in_progress",
-    "timestamp": "2026-09-01T05:09:09.904683+00:00",
-    "title": "Rung Budget for Plateau Identification"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Catalog.Logic.NET71DiagonalRigidity",
       "Catalog.Applications.NET68BudgetTorsor",
       "Catalog.Applications.NET68DomainJumpBudgetLaw"
@@ -22084,6 +22064,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Physics.TDialU108BandLoss",
+      "Catalog.Physics.TDialU108Capacity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For several simultaneously fading dials the joint admissible plateau region is a product of intervals, so pooling cannot shrink the uncertainty below the worst individual interval. Combined with the existing capacity bound this quantifies the failure of the ensemble strategy.\n\nFor k dials with common ratio bound r the joint plateau set is the product of the individual exact intervals, and the pooled plateau ranges over an interval of length at least max_i r·d_m^{(i)}/(1-r).\n\nProve the product structure by independent splices, then push it through the Fisher-z pooling map.\n\nEnsembling weak dials cannot restore band membership, strengthening the U108 band-loss verdict.\n\nCorrelated fades do average and ensembles are a viable recovery route.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4787",
+    "lineage_refs": [],
+    "priority_score": 0.5907142857142857,
+    "proof_strategy": "Independent splice constructions per dial plus monotonicity of the pooling map in each argument.",
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:25.884934+00:00",
+    "title": "Non-Averaging of Multi-Dial Plateaus"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Applications.PTEMassSubmultiplicative",
       "Applications.PTEIdealWitnesses"
     ],
@@ -22120,6 +22120,25 @@
     "status": "available",
     "timestamp": "2026-09-04T18:26:06.434427+00:00",
     "title": "Multiplicative Tensorisation of Bhattacharyya Angles"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Physics.TDialU108BandLoss"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Rather than assuming the ratio bound r, extract it from the ladder. The set of ratios consistent with the data is a half-line above the largest observed step ratio, and substituting its infimum should give the tightest data-only plateau interval.\n\nThe admissible set of pairs (r, L) is a polyhedron whose L-projection equals [p(m+1) - r*·d_m/(1-r*), p(m+1)] with r* = max_k d_{k+1}/d_k over the measured prefix.\n\nFormalise the (r, L) admissible region and prove the projection identity; check numerically on the U108 rho ladder.\n\nPlateau forecasts need no external ratio certificate.\n\nExternal certification of r is unavoidable and the programme must measure it separately.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4785",
+    "lineage_refs": [],
+    "priority_score": 0.5905882352941177,
+    "proof_strategy": "Monotonicity of the interval endpoint in r plus the existing exact-set theorem applied at each admissible r.",
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:24.758033+00:00",
+    "title": "Self-Certifying Deceleration Ratio"
   },
   {
     "ambition_level": "extension",
@@ -44958,6 +44977,71 @@
     "status": "available",
     "timestamp": "2026-09-10T17:41:11.201309+00:00",
     "title": "Gauge Geometry of the Comonotone Cone"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Physics.TDialU108Capacity",
+      "Catalog.Physics.TDialU108BandLoss"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Measured rungs need not be consecutive. Because the exact admissible plateau interval depends only on the last observed step, a schedule with widening gaps should retain the same identification power at fewer measurements. This converts ladder design into a discrete optimisation over observed step ratios.\n\nFor any increasing schedule n_0 < n_1 < ... the admissible plateau set after observing p(n_0),...,p(n_j) is exactly [p(n_j) - r^{g}·d/(1-r), p(n_j)] where d is the last observed block drop and g the last gap, so doubling gaps loses only a constant factor.\n\nGeneralise plateauSet_prefix_eq_Icc from consecutive indices to an arbitrary finite index set and compute the resulting interval; instantiate at geometric schedules.\n\nLadder cost drops from linear to logarithmic in the target precision.\n\nConsecutive measurement is information-theoretically necessary and the ladder cost is irreducibly linear.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4783",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Reuse the splice construction, replacing the single-step junction constraint by a block constraint obtained from the geometric tail bound over the gap.",
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:23.621314+00:00",
+    "title": "Skipped-Rung Ladder Schedules"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Physics.TDialU108Capacity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The 2eta identification floor under noisy rungs is now proved; the exact noisy admissible set is not. The conjecture is that noise enters exactly twice: as a rigid shift of the plateau and as an inflation of the last observed step from d_m to d_m + 2eta.\n\nWith rung values known to within eta, the admissible plateau set after the prefix is exactly [p(m+1) - eta - r(d_m + 2eta)/(1-r), p(m+1) + eta], of length 2eta + r(d_m + 2eta)/(1-r).\n\nCompute noisyPlateauSet exactly by adapting the splice construction to a perturbed prefix and matching the geometric tail bound.\n\nThe stopping rule saturates at a computable precision; measuring past it is provably wasted effort.\n\nNoise interacts with the ladder nontrivially and adaptive designs may beat the naive floor.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4784",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Perturb the junction inequality in spliceFade_admissible by eta and re-derive both endpoints; the geometric tail bound is unchanged.",
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:24.188716+00:00",
+    "title": "Exact Noisy Plateau Interval"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Physics.TDialU108Capacity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Measurements at higher bitlen cost more. With error decaying geometrically in the number of rungs but cost growing polynomially in the bitlen index, the optimal design under a fixed budget should still be geometric in error.\n\nFor any cost c(n) = O(n^k), the minimal achievable identification error under total budget B is Theta(d_0 r^B).\n\nFormalise a cost model and prove matching upper and lower bounds on the achievable interval length.\n\nThe exponential gain per rung is robust to realistic cost models.\n\nCost weighting caps the useful ladder length and the design must be redrawn.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4786",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Upper bound by the geometric schedule; lower bound by the exact-set theorem applied to the last affordable rung.",
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:25.302090+00:00",
+    "title": "Cost-Weighted Ladder Budget"
   },
   {
     "ambition_level": "extension",
@@ -70213,7 +70297,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1494cb60",
     "description": "Prove\n   `⟦m+n, k⟧_q = ∑_j q^{(m-j)(k-j)} ⟦m,j⟧_q ⟦n,k-j⟧_q`, the q-Vandermonde\n   convolution, and the q-binomial theorem\n   `∏_{i=0}^{n-1}(1 + q^i x) = ∑_k q^{k(k-1)/2} ⟦n,k⟧_q x^k`.",
     "domain_bridges": [],
     "domains": [],
@@ -70223,7 +70307,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3984694e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:38.904868+00:00",
     "title": "q-Vandermonde / q-binomial theorem"
   },

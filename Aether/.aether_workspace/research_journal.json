@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c90a227e",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — from the multiset erasure ledger\n\nThis cycle generalised the catalog's factorial erasure baseline `log₂(n!)`\n(`Computation.ReversibleSortingBennett`) to multisets with repeated k",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-09-02T21:51:11",
-      "title": "Generalize from permutations of distinct elements to multisets with repeated keys."
-    },
-    {
       "cycle_id": "c9885d74",
       "domain": "Physics",
       "key_insight": "# Future Directions — Reed–Solomon, MDS codes, and their algebraic environment\n\nDerived from the verified results in `Catalog/Physics/ReedSolomonMDS.lean`:\nthe encoder `degreeLT F k →ₗ[F] (Fin n → F)`",
@@ -499,19 +489,19 @@
       "theorem_count": 42,
       "timestamp": "2026-09-11T05:13:36",
       "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
+    },
+    {
+      "cycle_id": "63101e70",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — plateau identifiability and the cost of a ladder\n\n## What this cycle settled\n\n1. **Exact `m`-rung identifiability** (`plateauSet_prefix_eq_Icc`).  Measuring a prefix\n   `p 0, …,",
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-09-11T14:00:37",
+      "title": "Rung Budget for Plateau Identification"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "58176b8d",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — parity geometry of the zero-fit dial (round-63 #1, exp 532)\n\nTwo Lean files were added in this cycle:\n\n* `Catalog/Algebra/ZeroFitDialU72Parity.lean` — Gram positivity for three r",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 60,
-      "timestamp": "2026-08-24T01:59:38",
-      "title": "FACT round-63 #1 — TDIAL-U72: the zero-fit dial holds at bitlen 72 with count parity (paper 185)"
-    },
     {
       "cycle_id": "499e80a3",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 42,
       "timestamp": "2026-09-11T05:13:36",
       "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
+    },
+    {
+      "cycle_id": "63101e70",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — plateau identifiability and the cost of a ladder\n\n## What this cycle settled\n\n1. **Exact `m`-rung identifiability** (`plateauSet_prefix_eq_Icc`).  Measuring a prefix\n   `p 0, …,",
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-09-11T14:00:37",
+      "title": "Rung Budget for Plateau Identification"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8d588bfb",
-      "domain": "Bridges",
-      "name": "catalog",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "8d588bfb",
-      "domain": "Bridges",
-      "name": "catalog",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "8d588bfb",
-      "domain": "Bridges",
-      "name": "eml_generates_neg_one",
-      "quality": 0.85
-    },
     {
       "cycle_id": "41afeb86",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "finsuppAntidiag_support_card_le",
       "quality": 0.70417
+    },
+    {
+      "cycle_id": "63101e70",
+      "domain": "Combinatorics",
+      "name": "AdmissibleFade",
+      "quality": 0.81
+    },
+    {
+      "cycle_id": "63101e70",
+      "domain": "Combinatorics",
+      "name": "plateauSet_mono_ratio",
+      "quality": 0.81
+    },
+    {
+      "cycle_id": "63101e70",
+      "domain": "Combinatorics",
+      "name": "plateauLength_mono_ratio",
+      "quality": 0.81
     }
   ],
-  "last_updated": "2026-09-11T05:13:36",
+  "last_updated": "2026-09-11T14:00:37",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "1bcec21a",
-        "quality": 0.78,
-        "theorems": 68,
-        "title": "Canonical alpha-connections"
-      },
-      {
         "cycle_id": "95a534e1",
         "quality": 0.81,
         "theorems": 63,
@@ -3265,6 +3259,12 @@
         "quality": 0.72,
         "theorems": 37,
         "title": "FACT round-43 #1 — TABLE-CLOSURE FULL: the exact asymptotic constants of the for"
+      },
+      {
+        "cycle_id": "63101e70",
+        "quality": 0.81,
+        "theorems": 38,
+        "title": "Rung Budget for Plateau Identification"
       }
     ],
     "Computation": [

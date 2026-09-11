@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-11T05:13:24Z",
-  "count": 136,
+  "archived_at": "2026-09-11T14:00:26Z",
+  "count": 137,
   "directions": [
     {
       "id": "fd_3695",
@@ -5383,6 +5383,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_3952",
+      "title": "FACT round-73 #4 — SCALE-SMOOTHNESS-DEVIATION: x²−N smoothness is random-level at u=6–8.5 (tightest bound |r−1|≤0.217); per-N clustering and QR dial both die above u≈7",
+      "description": "Round-73 #4, exp 562, status 04_final_time_capped. **RANDOM-AT-SCALE.** First direct measurement of the standing directive's scale-smoothness frontier cell (u≥6), the properly-controlled redo of round-26 #3's underpowered SUBEXP-STRATUM attempt: is x²−N's B-smoothness (B=1000) different from size-matched randomness at u = log v/log B in {5,6,7,8}? Controls exactly histogram-matched on (bitlen, mantissa-octant); shared gcd-chain primorial code path both populations; assert pipeline 844 cases incl 24 adversarial vs exhaustive strip, 0 mismatches; ~1.49e9 candidates tested PER ARM across bins; 4000 N-clusters/bin; cluster bootstrap n=2000.\n\nResult r(u) = p_cand/p_ctrl: 1.011 [0.947,1.075] @ u≈5.96; 0.949 [0.783,1.152] @ 6.95; 0.900 [0.455,1.700] @ 7.93; 1.200 [0.500,3.000] @ 8.26 — ALL CIs cover 1. Trend slope +0.036 log-r/u, CI [−0.255,+0.345], p=0.831 — FLAT. Tightest 95% bound |r−1| ≤ 0.2168 (bin u=6). All pre-stated deviation rules FALSE → RANDOM-AT-SCALE.\n\nSecondary structure (real, confined to the low-u face): N-level overdispersion D=1.61 [1.50,1.73] vs Poisson PERSISTS at bin 5 then DIES (~1.00 by bins 7–8); QR-dial grip decays with u: Spearman(per-N rate, QR frac) 0.32 (perm p=7e-4) → 0.04.\n\nCross-check vs paper 130: its ratios 0.88–0.91 (u<4.75, scales to 2^44) were attributed to a finite-x Dickman correction SHARED WITH CONTROLS ('relation pool ensemble-equals unrestricted random'). This experiment extends that random-pool claim to u ≤ 8.5 — CONSISTENT, no novelty claimed against it. Honest placement: directly on the asymptotic-goal frontier; NULL within bound |r−1|≤0.217 — no O(1) smoothness edge from quadratic-polynomial structure at these scales. Truncation disclosed: N≤2^80 with x≤4√N tops out near u≈8.5; production-scale u≥9 stays open, as does why the dispersion dies between u≈6 and 7. Time-capped: bins 7/8 event counts tiny (18v20, 12v10), CIs wide.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp562_scale_smoothness.py + exp562_result.json.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "062fc32a",
+      "timestamp": "2026-08-24T07:22:53.236958+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-29T02:15:13.730723+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 353
     }
   ]
 }

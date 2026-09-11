@@ -14767,19 +14767,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Power Threshold for the Lag-Averaged Pair Statistic"
   },
   {
-    "consumed_by_exp_id": "63101e70",
-    "description": "Exact identifiability shows one rung plus a ratio bound leaves an interval of length d0 r/(1-r) of admissible plateaus. Conjecture that each additional measured rung contracts this interval by exactly the factor r, giving a closed formula for the number of extra rungs needed to identify the plateau to within the U108 CI half-width. This converts 'measure more rungs' into a costed experimental plan.\n\nAfter m further rungs the admissible plateau interval has length d0 r^{m+1}/(1-r), so identification to within 0.0445 needs ceil(log(0.0445 (1-r)/(d0 r))/log r) rungs, i.e. three at r = 1/2 and d0 = 0.0259.\n\nGeneralise plateau_set_exact to a prefix of m measured rungs and compute the resulting interval length in Lean.\n\nThe programme has an explicit stopping rule for the bitlen ladder.\n\nPlateau identification is either cheaper or impossible, and the ladder design must change.",
-    "domains": [],
-    "id": "fd_4460",
-    "phase": "A",
-    "priority_score": 0.5925609756097562,
-    "research_mode": "team",
-    "source_exp_id": "ed4056bf",
-    "status": "in_progress",
-    "timestamp": "2026-09-01T05:09:09.904683+00:00",
-    "title": "Rung Budget for Plateau Identification"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every domain measured so far pays 4 extra keys per context doubling. The conjecture is that a long-range-structured corpus breaks this, and that the failure is observable as a crossover of budget laws rather than as a small deviation, at which point the mixed-workload envelope leaves the class of budget laws entirely.\n\nThere is a corpus whose increment differs from 4; for any such corpus no exchange law relates it to the ladder, and the envelope of it with German prose is not a budget law.\n\nMeasure one long-range corpus (LaTeX with cross-references) at ctx 512, 1024 and 2048; formally, check the hypotheses of Catalog.NET71.exchange_fails_of_inc_ne and of NET68's envelope_not_a_law against the fitted increments.\n\nDeployment tables become genuinely two-dimensional: no single base-plus-increment law can size a mixed workload, and the crossover context must be computed per pair of domains.\n\nThe universal increment survives its sharpest test, promoting it from a fitted regularity to a candidate scale law of the architecture.",
     "domains": [],
@@ -15357,6 +15344,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For several simultaneously fading dials the joint admissible plateau region is a product of intervals, so pooling cannot shrink the uncertainty below the worst individual interval. Combined with the existing capacity bound this quantifies the failure of the ensemble strategy.\n\nFor k dials with common ratio bound r the joint plateau set is the product of the individual exact intervals, and the pooled plateau ranges over an interval of length at least max_i r\u00b7d_m^{(i)}/(1-r).\n\nProve the product structure by independent splices, then push it through the Fisher-z pooling map.\n\nEnsembling weak dials cannot restore band membership, strengthening the U108 band-loss verdict.\n\nCorrelated fades do average and ensembles are a viable recovery route.",
+    "domains": [],
+    "id": "fd_4787",
+    "priority_score": 0.5907142857142857,
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:25.884934+00:00",
+    "title": "Non-Averaging of Multi-Dial Plateaus"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The invariant minMass is submultiplicative but not multiplicative (strict at (2,2)). We conjecture that the multiplicativity defect is always positive beyond the trivial windows and that the invariant is log-concave in the window length.\n\nminMass(K)^2 >= minMass(K-1) * minMass(K+1) for all K >= 2, and minMass K1 * minMass K2 > minMass (K1+K2) for all K1, K2 >= 2.\n\nCheck against the certified values 2,4,6,...,20,?,24 and against any new witness; formalise the general inequality by an interpolation argument on seeds.\n\nminMass has a Fekete limit computed by its small values, giving the exact growth base as an infimum over certified windows.\n\nSome window is anomalously expensive, which would localise the failure of the linear law to a specific K.",
     "domains": [],
     "id": "fd_3548",
@@ -15378,6 +15377,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-04T18:26:06.434427+00:00",
     "title": "Multiplicative Tensorisation of Bhattacharyya Angles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Rather than assuming the ratio bound r, extract it from the ladder. The set of ratios consistent with the data is a half-line above the largest observed step ratio, and substituting its infimum should give the tightest data-only plateau interval.\n\nThe admissible set of pairs (r, L) is a polyhedron whose L-projection equals [p(m+1) - r*\u00b7d_m/(1-r*), p(m+1)] with r* = max_k d_{k+1}/d_k over the measured prefix.\n\nFormalise the (r, L) admissible region and prove the projection identity; check numerically on the U108 rho ladder.\n\nPlateau forecasts need no external ratio certificate.\n\nExternal certification of r is unavoidable and the programme must measure it separately.",
+    "domains": [],
+    "id": "fd_4785",
+    "priority_score": 0.5905882352941177,
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:24.758033+00:00",
+    "title": "Self-Certifying Deceleration Ratio"
   },
   {
     "consumed_by_exp_id": "",
@@ -31316,6 +31327,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-10T17:41:11.201309+00:00",
     "title": "Gauge Geometry of the Comonotone Cone"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Measured rungs need not be consecutive. Because the exact admissible plateau interval depends only on the last observed step, a schedule with widening gaps should retain the same identification power at fewer measurements. This converts ladder design into a discrete optimisation over observed step ratios.\n\nFor any increasing schedule n_0 < n_1 < ... the admissible plateau set after observing p(n_0),...,p(n_j) is exactly [p(n_j) - r^{g}\u00b7d/(1-r), p(n_j)] where d is the last observed block drop and g the last gap, so doubling gaps loses only a constant factor.\n\nGeneralise plateauSet_prefix_eq_Icc from consecutive indices to an arbitrary finite index set and compute the resulting interval; instantiate at geometric schedules.\n\nLadder cost drops from linear to logarithmic in the target precision.\n\nConsecutive measurement is information-theoretically necessary and the ladder cost is irreducibly linear.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4783",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:23.621314+00:00",
+    "title": "Skipped-Rung Ladder Schedules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 2eta identification floor under noisy rungs is now proved; the exact noisy admissible set is not. The conjecture is that noise enters exactly twice: as a rigid shift of the plateau and as an inflation of the last observed step from d_m to d_m + 2eta.\n\nWith rung values known to within eta, the admissible plateau set after the prefix is exactly [p(m+1) - eta - r(d_m + 2eta)/(1-r), p(m+1) + eta], of length 2eta + r(d_m + 2eta)/(1-r).\n\nCompute noisyPlateauSet exactly by adapting the splice construction to a perturbed prefix and matching the geometric tail bound.\n\nThe stopping rule saturates at a computable precision; measuring past it is provably wasted effort.\n\nNoise interacts with the ladder nontrivially and adaptive designs may beat the naive floor.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4784",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:24.188716+00:00",
+    "title": "Exact Noisy Plateau Interval"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Measurements at higher bitlen cost more. With error decaying geometrically in the number of rungs but cost growing polynomially in the bitlen index, the optimal design under a fixed budget should still be geometric in error.\n\nFor any cost c(n) = O(n^k), the minimal achievable identification error under total budget B is Theta(d_0 r^B).\n\nFormalise a cost model and prove matching upper and lower bounds on the achievable interval length.\n\nThe exponential gain per rung is robust to realistic cost models.\n\nCost weighting caps the useful ladder length and the design must be redrawn.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4786",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "63101e70",
+    "status": "available",
+    "timestamp": "2026-09-11T14:00:25.302090+00:00",
+    "title": "Cost-Weighted Ladder Budget"
   },
   {
     "consumed_by_exp_id": "",
@@ -49824,14 +49878,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "q-factorial product formula"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1494cb60",
     "description": "Prove\n   `\u27e6m+n, k\u27e7_q = \u2211_j q^{(m-j)(k-j)} \u27e6m,j\u27e7_q \u27e6n,k-j\u27e7_q`, the q-Vandermonde\n   convolution, and the q-binomial theorem\n   `\u220f_{i=0}^{n-1}(1 + q^i x) = \u2211_k q^{k(k-1)/2} \u27e6n,k\u27e7_q x^k`.",
     "domains": [],
     "id": "fd_2520",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3984694e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:38.904868+00:00",
     "title": "q-Vandermonde / q-binomial theorem"
   },
