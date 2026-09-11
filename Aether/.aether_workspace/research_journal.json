@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5c95862a",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n*Build status.* Every Lean file of this thread compiles against mathlib4 (Lean 4.28.0) with\nno `sorry` and no non-standard axioms; the whole catalog (all declared libraries) build",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-09-02T21:50:57",
-      "title": "FACT round-51 #3 — T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 (paper 184)"
-    },
-    {
       "cycle_id": "c90a227e",
       "domain": "Novelty",
       "key_insight": "# Future directions — from the multiset erasure ledger\n\nThis cycle generalised the catalog's factorial erasure baseline `log₂(n!)`\n(`Computation.ReversibleSortingBennett`) to multisets with repeated k",
@@ -499,19 +489,19 @@
       "theorem_count": 100,
       "timestamp": "2026-09-11T00:33:23",
       "title": "Next-cycle sub-conjectures (v19c thread continuation)"
+    },
+    {
+      "cycle_id": "5c4155a3",
+      "domain": "Bridges",
+      "key_insight": "",
+      "quality_score": 0.70417,
+      "sorry_count": 0,
+      "theorem_count": 42,
+      "timestamp": "2026-09-11T05:13:36",
+      "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "198a9f40",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — the geometry of retention knees\n\n## What survived, what failed\n\n**Survived.** Every order-theoretic statement about the knee: monotonicity in the\ngate, the fail/pass certificate,",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-24T01:59:21",
-      "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR — fine grid confirms k*(2048)=24 with healthy margins; 0.5B cha"
-    },
     {
       "cycle_id": "58176b8d",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 100,
       "timestamp": "2026-09-11T00:33:23",
       "title": "Next-cycle sub-conjectures (v19c thread continuation)"
+    },
+    {
+      "cycle_id": "5c4155a3",
+      "domain": "Bridges",
+      "key_insight": "",
+      "quality_score": 0.70417,
+      "sorry_count": 0,
+      "theorem_count": 42,
+      "timestamp": "2026-09-11T05:13:36",
+      "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0b20dfc4",
-      "domain": "Applications",
-      "name": "modalBlock_nil",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0b20dfc4",
-      "domain": "Applications",
-      "name": "modalBlock_cons",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0b20dfc4",
-      "domain": "Applications",
-      "name": "le_modalBlock",
-      "quality": 0.82
-    },
     {
       "cycle_id": "8d588bfb",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "self_le_choose",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "5c4155a3",
+      "domain": "Bridges",
+      "name": "coeff_prod_normalized_level",
+      "quality": 0.70417
+    },
+    {
+      "cycle_id": "5c4155a3",
+      "domain": "Bridges",
+      "name": "finsuppAntidiag_le",
+      "quality": 0.70417
+    },
+    {
+      "cycle_id": "5c4155a3",
+      "domain": "Bridges",
+      "name": "finsuppAntidiag_support_card_le",
+      "quality": 0.70417
     }
   ],
-  "last_updated": "2026-09-11T00:33:23",
+  "last_updated": "2026-09-11T05:13:36",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "be2e1d6c",
-        "quality": 0.87,
-        "theorems": 172,
-        "title": "FACT rounds 70–71 SYNTHESIS — THE TWO-TREE CLOSURE: Pythagorean trees sealed at "
-      },
-      {
         "cycle_id": "ecb169bf",
         "quality": 0.86,
         "theorems": 88,
@@ -3203,6 +3197,12 @@
         "quality": 0.83,
         "theorems": 82,
         "title": "Comonotone Repair Distance"
+      },
+      {
+        "cycle_id": "5c4155a3",
+        "quality": 0.70417,
+        "theorems": 42,
+        "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
       }
     ],
     "Combinatorics": [

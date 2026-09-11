@@ -7036,6 +7036,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Cusp restrictions and Bunke--Naumann invariants with level structure' and formalize its key results. Abstract: Restriction to the full cusp divisor of a modular curve defines a secondary invariant whose rational indeterminacy comes from a single global modular form. For every integral weakly holomorphic level-one modular form $h$ of weight divisible by four, we prove that the imported value $[h/2]$ vanishes at every nontrivial $\u0393_0(N)$ level. The construction localizes coefficients before completion and rationalizes only after passing to homotopy groups. At odd prime level, we identify the full cusp spectrum as a product of two real Tate factors and construct a single holomorphic weight-two correction. This correction yields an actual integral global homotopy class and a rational global source class satisfying the equality required for joint annihilation. The equality transports to every odd composite level, while even levels follow by inverting two. At level three, the Mahowald--Rezk homotopy calculation leaves only the periodic $\u03bd$ family in stems $8K+3$. A cusp-residue homomorphism detects i",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4781",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.11924v1",
+    "status": "available",
+    "timestamp": "2026-09-11T05:13:57.535734+00:00",
+    "title": "ArXiv paper: Cusp restrictions and Bunke--Naumann invariants with level structure"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Unfriendly partitions of locally finite Borel graphs' and formalize its key results. Abstract: We answer in the negative the question of Thomas, recorded by Conley, Conley--Marks--Unger, and Conley--Tamuz, of whether every locally finite Borel graph admits a Borel unfriendly partition. Our counterexample has unbounded degree and is closed on a zero-dimensional Polish space; its connectedness relation is hyperfinite, and its components are bipartite and one-ended. Every unfriendly colouring is proper. Together with a parity obstruction, this rigidity rules out Baire measurable colourings that are unfriendly on a comeager set, and measurable colourings that are unfriendly almost everywhere for a quasi-invariant probability of finite average degree. In the positive direction, a Borel graph of maximum degree at most four admits a Borel unfriendly colouring whenever each component contains a cycle or a vertex of degree at most two. This reduces the Borel problem in maximum degree three to cubic forests and, with a theorem of Conley--Marks--Unger, gives Baire measurable unfriendly col",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_4782",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.11919v1",
+    "status": "available",
+    "timestamp": "2026-09-11T05:14:00.833383+00:00",
+    "title": "ArXiv paper: Unfriendly partitions of locally finite Borel graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -14400,14 +14430,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimax Optimality of Endpoint Scan Orders"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e0933184",
     "description": "The per-candidate cost of batching a stream is A/k + c + q\u00b7k^(\u03bc\u22121) where \u03bc is the big-integer multiplication exponent. We conjecture a unique minimiser k* = (A/((\u03bc\u22121)q))^(1/\u03bc), degenerating to 'bigger is always better' as \u03bc \u2192 1. This explains the measured word-model reversal as a property of schoolbook arithmetic rather than of batching.\n\nFor A, q > 0 and 1 < \u03bc \u2264 2, the function k \u21a6 A/k + c + q\u00b7k^(\u03bc\u22121) on (0,\u221e) attains its infimum at exactly one point k* = (A/((\u03bc\u22121)q))^(1/\u03bc), and the infimum is c \u2212 q + \u03bc(\u03bc\u22121)^{(1\u2212\u03bc)/\u03bc}A^{(\u03bc\u22121)/\u03bc}q^{1/\u03bc}.\n\nFormalise with Real.rpow; differentiate or apply weighted AM-GM. The \u03bc = 2 case is already proved as BatchYield.blockCost_eq_opt_iff.\n\nCrossover thresholds for batch smoothness testing scale as a root of the setup/penalty ratio, so GMP-level constant factors relocate but never remove the optimum.\n\nThe optimum is not unique or not of root type, indicating additional structure (e.g. cache effects) in the cost model.",
     "domains": [],
     "id": "fd_4370",
+    "phase": "A",
     "priority_score": 0.5931481481481482,
     "research_mode": "team",
     "source_exp_id": "3f9d41d2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-29T18:30:48.485663+00:00",
     "title": "Square-Root Law for Optimal Batch Size under Sub-Quadratic Multiplication"
   },
@@ -46924,19 +46955,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The two measured normalised costs and their exact ratio `3/2` are proved; the"
   },
   {
-    "consumed_by_exp_id": "5c4155a3",
-    "description": "as `q\u207b\u00b9 \u00b7 (unit of \u2102\u27e6X\u27e7)`.  The\nNewton-type coefficient identities at levels `1` and `2` were proved; level `k`\nwas not.",
-    "domains": [],
-    "id": "fd_1576",
-    "phase": "B",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "3da67f84",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T05:14:47.205129+00:00",
-    "title": "as `q\u207b\u00b9 \u00b7 (unit of \u2102\u27e6X\u27e7)`.  The"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The unique factorization theorem\n`exists_unique_unit_factorization` makes the \"vary the unit parts\" step a finite\nmanipulation in `1 + X\u2102\u27e6X\u27e7` rather than an analytic argument.",
     "domains": [],
@@ -51068,5 +51086,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-04T04:35:03.819464+00:00",
     "title": "Higher-order tolls and the joint feature lattice"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Sharper selection rules. Vanishing of the constant term halves the locality bound; more\ngenerally, vanishing of a_0, ..., a_{d-1} in every factor improves it to k/(d+1). Are there\narithmetic hypotheses on moonshine coefficients (congruences, replicability) that yield\nfurther structural restrictions on the surviving exponent vectors?",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4780",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5c4155a3",
+    "status": "available",
+    "timestamp": "2026-09-11T05:13:23.611460+00:00",
+    "title": "Sharper selection rules."
   }
 ];
