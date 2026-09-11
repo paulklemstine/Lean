@@ -1440,6 +1440,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0e02e0b5 (Q=0.850), which proved 100 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: These are the three concrete follow-ups produced by the cycle that proved\n`Singmaster.mult_eq_two_add_interior`, `Singmaster.mult_3003 = 8` and\n`Singmaster.mult_ne_five_or_seven_of_lt`.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_0e02e0b5_a6d89474",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0e02e0b5",
+    "status": "available",
+    "timestamp": "2026-09-11T00:33:23.876832+00:00",
+    "title": "Deepening: Next-cycle sub-conjectures (v19c thread continuation)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4c85503d (Q=0.860), which proved 68 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every `k` in the achievable range there is a\n   unique `β > 0` with `KL(π*_β‖π_SFT) = k`, and `π*_β` maximises `𝔼_p[r]` subject\n   to `KL(p‖π_SFT) ≤ k` (the duality core of Conjecture 2).",
     "domain_bridges": [],
     "domains": [
@@ -58628,6 +58647,23 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Classify `C(N,k) = C(N-2,k+r)` for small `r`, and more generally\n   `C(N,k) = C(N',k')` with `N - N'` bounded. Does each such equation carry a pair of Vieta\n   involutions, and is its solution set again a linear-recurrence ladder — or empty? A negative\n   answer for every shift would be strong evidence for Singmaster's conjecture; a positive answer\n   would produce a new infinite family, possibly with multiplicity `≥ 8`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4779",
+    "lineage_refs": [],
+    "priority_score": 0.4474285714285714,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0e02e0b5",
+    "status": "available",
+    "timestamp": "2026-09-11T00:33:12.250273+00:00",
+    "title": "Two-row shifts"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize random sampling without replacement and finite-key concentration bounds connecting observed test-bit QBER to the unobserved phase-error rate.",
     "domain_bridges": [],
     "domains": [
@@ -71170,23 +71206,6 @@
     "status": "available",
     "timestamp": "2026-08-21T06:27:27.855159+00:00",
     "title": "CoxeterLength.lean"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "0e02e0b5",
-    "description": "These are the three concrete follow-ups produced by the cycle that proved\n`Singmaster.mult_eq_two_add_interior`, `Singmaster.mult_3003 = 8` and\n`Singmaster.mult_ne_five_or_seven_of_lt`.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_3050",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "344e2e8a",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:27:42.857684+00:00",
-    "title": "Next-cycle sub-conjectures (v19c thread continuation)"
   },
   {
     "ambition_level": "extension",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ee56ba3a",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — after the oracle/policy separation\n\nThe formal round closed three things: the oracle-to-policy gap is maximal (a full unit) for\n*every* causally honest evictor at any budget belo",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-09-02T18:45:27",
-      "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN — streaming heavy-hitter eviction retains 0.86-0.92"
-    },
-    {
       "cycle_id": "5c95862a",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\n*Build status.* Every Lean file of this thread compiles against mathlib4 (Lean 4.28.0) with\nno `sorry` and no non-standard axioms; the whole catalog (all declared libraries) build",
@@ -499,19 +489,19 @@
       "theorem_count": 82,
       "timestamp": "2026-09-10T17:41:24",
       "title": "Comonotone Repair Distance"
+    },
+    {
+      "cycle_id": "0e02e0b5",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — Singmaster multiplicity thread\n\n## What the thread has established\n\nSix sorry-free files of developed theory, all verified, and depending only on the standard\nfoundational axioms",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-09-11T00:33:23",
+      "title": "Next-cycle sub-conjectures (v19c thread continuation)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c38d70d3",
-      "domain": "Probability",
-      "key_insight": "# Future directions — NET-64 knee axis (after six research cycles)\n\nCycle 1 established the grid-artifact calculus (a sweep reports the *ceiling of\nthe true knee in its grid*), the margin-based replic",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 141,
-      "timestamp": "2026-08-23T23:36:49",
-      "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT — corpus-B fine knee at 2048 is also 24; the {"
-    },
     {
       "cycle_id": "198a9f40",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 82,
       "timestamp": "2026-09-10T17:41:24",
       "title": "Comonotone Repair Distance"
+    },
+    {
+      "cycle_id": "0e02e0b5",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — Singmaster multiplicity thread\n\n## What the thread has established\n\nSix sorry-free files of developed theory, all verified, and depending only on the standard\nfoundational axioms",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-09-11T00:33:23",
+      "title": "Next-cycle sub-conjectures (v19c thread continuation)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b3a54ad0",
-      "domain": "Novelty",
-      "name": "psi2_split",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b3a54ad0",
-      "domain": "Novelty",
-      "name": "psi2_factor",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b3a54ad0",
-      "domain": "Novelty",
-      "name": "psi2_irreducible_quadratic_factor",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0b20dfc4",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "uniform_wcov_le_of_repairDist",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "0e02e0b5",
+      "domain": "NumberTheory",
+      "name": "choose_le_choose_half",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "0e02e0b5",
+      "domain": "NumberTheory",
+      "name": "choose_le_choose_left",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "0e02e0b5",
+      "domain": "NumberTheory",
+      "name": "self_le_choose",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-09-10T17:41:24",
+  "last_updated": "2026-09-11T00:33:23",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "2a9ba724",
-        "quality": 0.8,
-        "theorems": 98,
-        "title": "Per-tag reflection depths are freely realizable"
-      },
-      {
         "cycle_id": "ea4eae2e",
         "quality": 0.78,
         "theorems": 50,
@@ -3699,6 +3693,12 @@
         "quality": 0.82,
         "theorems": 131,
         "title": "FACT round-45 #3 — TIGHT-U-RECAL: reweighting cannot recover the tight-u drop (p"
+      },
+      {
+        "cycle_id": "0e02e0b5",
+        "quality": 0.85,
+        "theorems": 100,
+        "title": "Next-cycle sub-conjectures (v19c thread continuation)"
       }
     ],
     "Physics": [
