@@ -35,7 +35,7 @@ presentation.
 -/
 
 import Mathlib
-import Catalog.Applications.ExternalInterpretationDefinability
+import Applications.ExternalInterpretationDefinability
 
 namespace ExternalInterpretationGalois
 

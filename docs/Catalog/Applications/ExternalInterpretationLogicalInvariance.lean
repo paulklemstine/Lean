@@ -34,7 +34,7 @@ be so.
   orbit is non-trivial and there are at least two meanings.
 -/
 
-import Catalog.Applications.ExternalInterpretationDefinability
+import Applications.ExternalInterpretationDefinability
 
 namespace ExternalInterpretationLogicalInvariance
 

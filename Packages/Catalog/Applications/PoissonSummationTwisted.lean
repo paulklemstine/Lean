@@ -34,9 +34,9 @@ precisely the hypothesis that separates the rigid regime from the vacuous one.
 -/
 
 import Mathlib
-import Catalog.Shared.FourierFiniteAbelian
-import Catalog.Shared.FourierSubgroupDuality
-import Catalog.Applications.PoissonSummationConverse
+import Shared.FourierFiniteAbelian
+import Shared.FourierSubgroupDuality
+import Applications.PoissonSummationConverse
 
 open Finset Fintype ComplexConjugate
 

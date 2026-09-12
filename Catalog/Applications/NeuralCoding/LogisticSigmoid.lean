@@ -1,6 +1,6 @@
 import Mathlib
-import Shared.Logic.One_plus_exp_pos
 import Shared.NeuralCoding.Softplus
+import Shared.Logic.One_plus_exp_pos
 
 /-! # CatalogBuild.Shared.LogisticSigmoid
 
@@ -10,6 +10,10 @@ Declarations: 6
 -/
 
 noncomputable section
+
+-- The positivity fact `one_plus_exp_pos` and the definition of `softplus` are
+-- imported from `Shared.Logic.One_plus_exp_pos` and `Shared.NeuralCoding.Softplus`
+-- respectively; redefining them here would clash with those modules.
 
 /-- The logistic sigmoid function S(x) = eˣ / (1 + eˣ), the derivative of softplus -/
 def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)

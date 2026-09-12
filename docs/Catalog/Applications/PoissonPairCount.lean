@@ -21,9 +21,9 @@ order it collapses to exactly two pairs.
 -/
 
 import Mathlib
-import Catalog.Shared.FourierFiniteAbelian
-import Catalog.Shared.FourierSubgroupDuality
-import Catalog.Applications.PoissonSummationConverse
+import Shared.FourierFiniteAbelian
+import Shared.FourierSubgroupDuality
+import Applications.PoissonSummationConverse
 
 open Finset Fintype ComplexConjugate
 

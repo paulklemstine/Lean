@@ -43,8 +43,8 @@ Critique (Critic): the direct-sum construction needs the *same* `Q` on both summ
   the twist needs `c ≠ 0`.  Both hypotheses are recorded explicitly.
 -/
 import Mathlib
-import Catalog.Applications.WeilDualitySign.EigenvalueModel
-import Catalog.Applications.WeilDualitySign.CentralParity
+import Applications.WeilDualitySign.EigenvalueModel
+import Applications.WeilDualitySign.CentralParity
 
 open Finset
 open scoped Classical

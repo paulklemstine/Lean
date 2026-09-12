@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-11T20:06:54Z",
-  "count": 138,
+  "archived_at": "2026-09-12T09:16:20Z",
+  "count": 139,
   "directions": [
     {
       "id": "fd_3695",
@@ -5463,6 +5463,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 352
+    },
+    {
+      "id": "fd_2691",
+      "title": "General separated principal filtrations",
+      "description": "Replace `2 ∈ ℤ` by an element\n   `a` in a domain and identify hypotheses under which `⋂ n, (a^n) = 0`.\n   This points toward the Krull intersection theorem rather than a new\n   ascending-chain invariant.",
+      "source_exp_id": "bf94368f",
+      "source_path": "resplit_migration",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4,
+      "status": "completed",
+      "consumed_by_exp_id": "b4f715c2",
+      "timestamp": "2026-08-21T06:25:33.905669+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-11T20:07:56.307078+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

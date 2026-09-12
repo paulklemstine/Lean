@@ -28,10 +28,10 @@ coset.  No structure theory of finite abelian groups is used anywhere.
 -/
 
 import Mathlib
-import Catalog.Shared.FourierFiniteAbelian
-import Catalog.Shared.FourierSubgroupDuality
-import Catalog.Applications.PoissonSummationConverse
-import Catalog.Applications.PoissonSummationTwisted
+import Shared.FourierFiniteAbelian
+import Shared.FourierSubgroupDuality
+import Applications.PoissonSummationConverse
+import Applications.PoissonSummationTwisted
 
 open Finset Fintype ComplexConjugate
 

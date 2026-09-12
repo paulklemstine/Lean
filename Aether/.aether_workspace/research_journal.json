@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5f5fd816",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — after the degree-12 composite rung\n\n## What this cycle established\n\nFormally, with zero `sorry`:\n\n1. `[Q(ζ₅₆) : Q] = 24`, the involution `conj56` attached to `-1` has order 2, an",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 118,
-      "timestamp": "2026-09-03T00:17:40",
-      "title": "FACT round-50 — DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper "
-    },
-    {
       "cycle_id": "a9de2f0b",
       "domain": "Combinatorics",
       "key_insight": "# FUTURE DIRECTIONS — BKEY-MIXED-ZONE (round-55 #1, exp 523)\n\n## What this cycle established\n\nThree compiling, sorry-free Lean files in `Catalog/Combinatorics/`:\n\n1. `BKeyMixedZoneGradualDecline.lean`",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-09-11T20:07:05",
       "title": "Square-Root Law for Optimal Batch Size under Sub-Quadratic Multiplication"
+    },
+    {
+      "cycle_id": "b4f715c2",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — general separated principal filtrations\n\nDerived from the verified content of\n\n* `Catalog/Shared/SeparatedPrincipalFiltration.lean` (core theory),\n* `Catalog/Shared/SeparatedPrin",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-09-12T09:16:31",
+      "title": "General separated principal filtrations"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2292d7e8",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — after C4 (first order) and N2 (sharp threshold)\n\n## What this cycle established\n\nAll statements below are formalized and proved sorry-free in\n`Catalog/Computation/RLHFThreshold/`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-24T04:10:35",
-      "title": "C4 (reward hacking is a covariance) — PROVED at first order.*"
-    },
     {
       "cycle_id": "05978b53",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-09-11T20:07:05",
       "title": "Square-Root Law for Optimal Batch Size under Sub-Quadratic Multiplication"
+    },
+    {
+      "cycle_id": "b4f715c2",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — general separated principal filtrations\n\nDerived from the verified content of\n\n* `Catalog/Shared/SeparatedPrincipalFiltration.lean` (core theory),\n* `Catalog/Shared/SeparatedPrin",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-09-12T09:16:31",
+      "title": "General separated principal filtrations"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b58657bf",
-      "domain": "Shared",
-      "name": "weight_le_head",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b58657bf",
-      "domain": "Shared",
-      "name": "energy_le_head_div_headMass",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "de8ca052",
-      "domain": "Geometry",
-      "name": "chi_half_ne_one",
-      "quality": 0.82
-    },
     {
       "cycle_id": "de8ca052",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "word_crossover_agrees",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "b4f715c2",
+      "domain": "Shared",
+      "name": "filt_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "b4f715c2",
+      "domain": "Shared",
+      "name": "filt_eq_pow",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "b4f715c2",
+      "domain": "Shared",
+      "name": "mem_filt",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-11T20:07:05",
+  "last_updated": "2026-09-12T09:16:31",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "4c991400",
-        "quality": 0.8,
-        "theorems": 65,
-        "title": "Matrix-level modular action"
-      },
-      {
         "cycle_id": "6247b80f",
         "quality": 0.82,
         "theorems": 101,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 582,
         "title": "define “quotient step” and “evolutionary path” before attempting the full\n  deco"
+      },
+      {
+        "cycle_id": "b4f715c2",
+        "quality": 0.78,
+        "theorems": 85,
+        "title": "General separated principal filtrations"
       }
     ],
     "Tropical": [

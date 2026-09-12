@@ -51,8 +51,8 @@ solution, so the nonemptiness hypothesis in the classification cannot be dropped
 -/
 
 import Mathlib
-import Catalog.Shared.FourierFiniteAbelian
-import Catalog.Shared.FourierSubgroupDuality
+import Shared.FourierFiniteAbelian
+import Shared.FourierSubgroupDuality
 
 open Finset Fintype ComplexConjugate
 

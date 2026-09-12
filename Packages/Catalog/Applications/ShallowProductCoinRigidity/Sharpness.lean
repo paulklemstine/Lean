@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026. Released under the Apache 2.0 license.
 -/
-import Catalog.Applications.ShallowProductCoinRigidity.Core
+import Applications.ShallowProductCoinRigidity.Core
 
 /-!
 # How sharp is the rigidity gap?
@@ -92,9 +92,11 @@ theorem gap_constant_le (c : ℝ)
 /-- The constant `2/9` of `bipAmp_sq_le_card_sub` really is admissible for the
 L-shape, so the bracket `[2/9, 3014418/7890481]` is nonempty. -/
 theorem gap_constant_two_ninths_admissible (f g : Bool → ℂ) (hf : IsCoin f) (hg : IsCoin g) :
-    ‖bipAmp Lshape f g‖ ^ 2 ≤ (Lshape.card : ℝ) - 2 / 9 :=
-  bipAmp_sq_le_card_sub Lshape f g hf hg (a := true) (b := false) (a' := false) (b' := true)
-    (by decide) (by decide) (by decide)
+    ‖bipAmp Lshape f g‖ ^ 2 ≤ (Lshape.card : ℝ) - 2 / 9 := by
+  -- `Core` in fact proves the sharper loss `2/7 ≥ 2/9`, so the claim follows a fortiori.
+  have h := bipAmp_sq_le_card_sub Lshape f g hf hg (a := true) (b := false) (a' := false)
+    (b' := true) (by decide) (by decide) (by decide)
+  linarith
 
 /-! ### A matching lower bound: rows are always achievable -/
 

@@ -46,9 +46,9 @@ Critique (Critic): the logarithm `L` is a *choice*; different branches change `Î
   needs `Q` real or positive, so the bridge applies to any weight.
 -/
 import Mathlib
-import Catalog.Applications.WeilDualitySign.EigenvalueModel
-import Catalog.Applications.WeilDualitySign.CentralParity
-import Catalog.Applications.BSD.FunctionalEquation
+import Applications.WeilDualitySign.EigenvalueModel
+import Applications.WeilDualitySign.CentralParity
+import Applications.BSD.FunctionalEquation
 
 open Finset
 

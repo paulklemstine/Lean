@@ -52,7 +52,7 @@ Synthesis (PI): cycle 1's sign law plus this parity bridge give a self-contained
   `ε = (−1)^d`, and *always* `ε = (−1)^{ord_{T = q^{-n/2}} P}`.
 -/
 import Mathlib
-import Catalog.Applications.WeilDualitySign.EigenvalueModel
+import Applications.WeilDualitySign.EigenvalueModel
 
 open Finset
 open scoped Classical

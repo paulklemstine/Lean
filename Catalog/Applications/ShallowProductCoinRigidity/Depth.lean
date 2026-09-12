@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026. Released under the Apache 2.0 license.
 -/
-import Catalog.Applications.ShallowProductCoinRigidity.Core
+import Applications.ShallowProductCoinRigidity.Core
 
 /-!
 # Rigidity gap at fixed depth `n`
@@ -133,7 +133,10 @@ theorem depthProdCoin_sq_gap (R : Finset (∀ i, α i)) (f : ∀ i, α i → ℂ
     (a := (e x).1) (b := (e x).2) (a' := (e y).1) (b' := (e y).2)
     (by simpa using hex) (by simpa using hey) hout
   rw [hamp, ← hcard]
-  exact hgap
+  -- `Core` proves the sharper inequality with the constant `3`; the stated form with `4`
+  -- follows from it because `t·(4m+1) ≤ 4m²` whenever `3t·m + t ≤ 3m²` and `t ≥ 0`.
+  have hnn : (0 : ℝ) ≤ ‖bipAmp R' (f i₀) (tailCoin f i₀)‖ ^ 2 := sq_nonneg _
+  linarith [hgap, hnn]
 
 /-- Multiplicative form: `‖A(ψ)‖² ≤ (1 - c)·|R|` with the explicit constant
 `c = 1/(4|R|+1) > 0`, uniform over all depths and all register alphabets. -/

@@ -31,7 +31,7 @@ recoverable from structural truth:
     (`P3_labels_not_recoverable`) while vertex *degrees* survive.
 -/
 
-import Catalog.Applications.ExternalInterpretationDefinability
+import Applications.ExternalInterpretationDefinability
 
 namespace ExternalInterpretationGraphs
 

@@ -3852,6 +3852,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b4f715c2 (Q=0.780), which proved 85 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Replace `2 ∈ ℤ` by an element\n   `a` in a domain and identify hypotheses under which `⋂ n, (a^n) = 0`.\n   This points toward the Krull intersection theorem rather than a new\n   ascending-chain invariant.",
+    "domain_bridges": [],
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_b4f715c2_0977f711",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b4f715c2",
+    "status": "available",
+    "timestamp": "2026-09-12T09:16:31.961884+00:00",
+    "title": "Deepening: General separated principal filtrations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
     "domain_bridges": [],
     "domains": [
@@ -45025,6 +45044,96 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.SeparatedPrincipalFiltration",
+      "Shared.SeparatedPrincipalFiltrationStructure"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Study the set of elements of a domain whose principal filtration is separated as a ring invariant. We proved it is divisibility-upward-closed, multiplicatively absorbing, and equal to the non-units in any WfDvdMonoid domain. The conjecture pins down exactly when that last equality holds.\n\nFor a domain R, Sep(R) = R \\ R^x if and only if R has no nonzero ideal I with I = aI for a non-unit a, equivalently every height-one localisation has archimedean value group.\n\nFormalise Sep(R) as a predicate, prove closure properties (done), and test the equivalence on D+M constructions and valuation rings of rank 1 and 2.\n\nSeparation becomes a computable archimedean condition on localisations, replacing chain conditions.\n\nThere is a domain with no rank-2 valuation obstruction yet a nonzero infinitely divisible ideal, which would be a new pathology.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4790",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Use the greatest-fixed-point description of the intersection plus the equivalence between separation and existence of an N-valued height; translate heights into archimedean value monoids.",
+    "research_mode": "team",
+    "source_exp_id": "b4f715c2",
+    "status": "available",
+    "timestamp": "2026-09-12T09:16:18.052352+00:00",
+    "title": "Height Spectrum of a Domain"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.SeparatedPrincipalFiltrationStructure"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We proved that the intersection of the powers of a principal ideal is the greatest fixed point of I -> (a)I, and rederived the Noetherian case from Nakayama applied to that fixed point. The conjecture extends this to arbitrary finitely generated ideals and asks for a calculus of the operator I -> gfp.\n\nFor a finitely generated ideal I of a domain, the intersection of all powers of I is the greatest fixed point of J -> I*J, and gfp is meet-multiplicative on comaximal ideals.\n\nFormalise the two lemmas iInf_pow_le_mul and le_iInf_pow_of_le_mul for general finitely generated I, then the comaximal meet formula.\n\nKrull intersection becomes a lattice-theoretic theorem with the chain condition isolated in a single Nakayama step.\n\nThe fixed-point description is special to principal ideals, which itself explains why principal filtrations are better behaved.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_4791",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Induction on n for the containment I <= I^n whenever I <= I*I, plus Nakayama for finitely generated fixed points; comaximality via the Chinese remainder decomposition.",
+    "research_mode": "team",
+    "source_exp_id": "b4f715c2",
+    "status": "available",
+    "timestamp": "2026-09-12T09:16:18.736389+00:00",
+    "title": "Knaster-Tarski Form of the Krull Intersection Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.SeparatedPrincipalFiltrationValuation",
+      "Shared.SeparatedPrincipalFiltrationExamples"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The a-adic absolute value constructed here works for any prime with separated filtration, including in the non-Noetherian UFD Q[X0,X1,...]. The conjecture asserts that the resulting completions are complete but not locally compact exactly in the non-Noetherian case of this family.\n\nThe X0-adic completion of Q[X0,X1,...] is isomorphic to a power series ring over Q[X1,X2,...] and is complete but not locally compact, while the 2-adic completion of Z is locally compact.\n\nConstruct the completion isomorphism formally and compute the induced metric balls; compare with the Z case already available in Mathlib.\n\nGives a topological invariant of the completion detecting a finiteness property of the base ring.\n\nLocal compactness fails to see the difference, indicating the metric forgets too much and pushing attention to the residue rings.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4792",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Use injectivity into the adic completion (already proved) plus a direct limit description of the quotients by powers of X0.",
+    "research_mode": "team",
+    "source_exp_id": "b4f715c2",
+    "status": "available",
+    "timestamp": "2026-09-12T09:16:19.285760+00:00",
+    "title": "Local Compactness Detects Noetherianity in Adic Completions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.SeparatedPrincipalFiltration",
+      "Shared.SeparatedPrincipalFiltrationStructure"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Separation is equivalent to the existence of an N-valued height function, and the a-adic order is the minimal one. The conjecture asks for computable height functions, turning the Krull intersection theorem into an effective statement with explicit exponents.\n\nFor a Noetherian domain given by a finite presentation and a non-unit a, there is a computable N : R -> N with x in (a^{N(x)}) implying x = 0, and N can be taken linear in the degrees of a Groebner presentation.\n\nImplement N for quotients of polynomial rings, verify on examples, and formalise the certificate-checking step in Lean.\n\nProvides effective Krull bounds and machine-checkable separation certificates.\n\nShows that separation, though equivalent to a height function, admits no uniformly computable height, a genuine effectivity obstruction.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4793",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Extract a height from a Groebner presentation via degree bounds, then invoke ord_le_of_height to compare with the minimal height.",
+    "research_mode": "team",
+    "source_exp_id": "b4f715c2",
+    "status": "available",
+    "timestamp": "2026-09-12T09:16:19.835701+00:00",
+    "title": "Effective Separation Certificates"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : ℝ → ℝ` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k → ℝ` and `p q : ℝ`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r ≤ k` needs no convexity, no differentiability, and no\nsign pattern — only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
@@ -70851,23 +70960,6 @@
     "status": "available",
     "timestamp": "2026-08-21T06:25:25.799539+00:00",
     "title": "Compact subsets are order-bounded and have extrema"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "b4f715c2",
-    "description": "Replace `2 ∈ ℤ` by an element\n   `a` in a domain and identify hypotheses under which `⋂ n, (a^n) = 0`.\n   This points toward the Krull intersection theorem rather than a new\n   ascending-chain invariant.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_2691",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "bf94368f",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:33.905669+00:00",
-    "title": "General separated principal filtrations"
   },
   {
     "ambition_level": "extension",
