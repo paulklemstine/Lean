@@ -64575,7 +64575,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a118b9c6",
     "description": "The present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.",
     "domain_bridges": [],
     "domains": [],
@@ -64585,7 +64585,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "642478f0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:18.113407+00:00",
     "title": "Effective reconstruction"
   },

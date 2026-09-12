@@ -45723,14 +45723,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C3.  The subgroup count as an invariant of the class field tower"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a118b9c6",
     "description": "The present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.",
     "domains": [],
     "id": "fd_2456",
+    "phase": "A",
     "priority_score": 0.40020833333333333,
     "research_mode": "team",
     "source_exp_id": "642478f0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:18.113407+00:00",
     "title": "Effective reconstruction"
   },
