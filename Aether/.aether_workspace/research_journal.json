@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a9de2f0b",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — BKEY-MIXED-ZONE (round-55 #1, exp 523)\n\n## What this cycle established\n\nThree compiling, sorry-free Lean files in `Catalog/Combinatorics/`:\n\n1. `BKeyMixedZoneGradualDecline.lean`",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 71,
-      "timestamp": "2026-09-03T00:18:00",
-      "title": "FACT round-55 #1 — BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
-    },
-    {
       "cycle_id": "8c9b3d94",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — after EXTENDED-DIAL-ABSENT (round-51 #1)\n\nThree research cycles were run on the negative result \"the prime-power feature's\ncontribution does not replicate\". What survived formali",
@@ -499,19 +489,19 @@
       "theorem_count": 85,
       "timestamp": "2026-09-12T09:16:31",
       "title": "General separated principal filtrations"
+    },
+    {
+      "cycle_id": "1494cb60",
+      "domain": "Applications",
+      "key_insight": "# Future directions — Gaussian binomials after the q-Vandermonde cycle\n\nWhat this cycle established (all sorry-free, in `Catalog/Applications/`):\n\n* `qBinom` over an arbitrary commutative semiring, bo",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 431,
+      "timestamp": "2026-09-12T12:57:40",
+      "title": "q-Vandermonde / q-binomial theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "05978b53",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Polarisation cancellation in exponential–logarithmic gates\n\n## Where this cycle landed\n\nThe mission conjecture was\n\n> `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attain",
-      "quality_score": 0.89,
-      "sorry_count": 4,
-      "theorem_count": 95,
-      "timestamp": "2026-08-24T05:02:27",
-      "title": "Conjecture. `sup_{[0,1]²} |prodGate h x y − x y| = h²/3 + O(h⁴)`, attained at"
-    },
     {
       "cycle_id": "9f4b7d2b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 85,
       "timestamp": "2026-09-12T09:16:31",
       "title": "General separated principal filtrations"
+    },
+    {
+      "cycle_id": "1494cb60",
+      "domain": "Applications",
+      "key_insight": "# Future directions — Gaussian binomials after the q-Vandermonde cycle\n\nWhat this cycle established (all sorry-free, in `Catalog/Applications/`):\n\n* `qBinom` over an arbitrary commutative semiring, bo",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 431,
+      "timestamp": "2026-09-12T12:57:40",
+      "title": "q-Vandermonde / q-binomial theorem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "de8ca052",
-      "domain": "Geometry",
-      "name": "chi_im",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "de8ca052",
-      "domain": "Geometry",
-      "name": "chi_quarter_im",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0c24f2ff",
-      "domain": "Algebra",
-      "name": "surmiseMoment_gamma",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0c24f2ff",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "mem_filt",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "1494cb60",
+      "domain": "Applications",
+      "name": "card_orbits_sum",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "1494cb60",
+      "domain": "Applications",
+      "name": "meaningLoss_sum",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "1494cb60",
+      "domain": "Applications",
+      "name": "meaningLoss_eq_zero_iff_rigid",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-12T09:16:31",
+  "last_updated": "2026-09-12T12:57:40",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3d2c810c",
-        "quality": 0.82,
-        "theorems": 91,
-        "title": "NET-68: CODE-NEEDS-FEWER-KEYS — domain jump to Python shifts the knee chain down"
-      },
-      {
         "cycle_id": "242b27e9",
         "quality": 0.85,
         "theorems": 55,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 84,
         "title": "Universal Law-Change Capacity in Modal Fraction"
+      },
+      {
+        "cycle_id": "1494cb60",
+        "quality": 0.82,
+        "theorems": 431,
+        "title": "q-Vandermonde / q-binomial theorem"
       }
     ],
     "Bridges": [

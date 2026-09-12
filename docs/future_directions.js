@@ -1856,6 +1856,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 1494cb60 (Q=0.820), which proved 431 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove\n   `\u27e6m+n, k\u27e7_q = \u2211_j q^{(m-j)(k-j)} \u27e6m,j\u27e7_q \u27e6n,k-j\u27e7_q`, the q-Vandermonde\n   convolution, and the q-binomial theorem\n   `\u220f_{i=0}^{n-1}(1 + q^i x) = \u2211_k q^{k(k-1)/2} \u27e6n,k\u27e7_q x^k`.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_1494cb60_dbd4daca",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "1494cb60",
+    "status": "available",
+    "timestamp": "2026-09-12T12:57:40.909525+00:00",
+    "title": "Deepening: q-Vandermonde / q-binomial theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -14828,14 +14842,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Slack Budget for the T-versus-Count Advantage"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc88cab4",
     "description": "The increment depends on signed second moments, while R-squared readings are sign-blind. A single explicit pair of populations already defeats any predictor built from the three marginal variance shares; the conjecture upgrades this from one pair to a robust family.\n\nThere is no function F with Delta-R-squared = F(R2(x,y), R2(z,y), R2(x,z)) valid on all finite populations, and the set of population pairs witnessing the failure contains an open set in moment space.\n\nPerturb the constructed pair (rateSB, rateSC) within the moment parametrisation and show the increment gap stays bounded away from zero on a neighbourhood, using pgain_moment_formula.\n\nReporting protocols must record signed covariances; sign-blind dashboards cannot certify or refute an augmentation.\n\nSome extra invariant pins the sign down, which would be a genuinely new constraint on admissible populations.",
     "domains": [],
     "id": "fd_4607",
+    "phase": "A",
     "priority_score": 0.5925000000000001,
     "research_mode": "team",
     "source_exp_id": "8c9b3d94",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-03T00:18:10.435870+00:00",
     "title": "Inadmissibility of Sign-Blind Dial Reporting"
   },
@@ -15294,6 +15309,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T13:12:56.909442+00:00",
     "title": "Volume Fraction of the Thick Block"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Cauchy series inverse proved in this cycle should satisfy its own convolution identity, the inverse-series analogue of q-Vandermonde. The approach is to feed the factorisation of the product prod_{i<m+n}(1 - q^i X) through PowerSeries.coeff_mul exactly as was done with Polynomial.coeff_mul. It matters because it completes the symmetry between the two q-binomial theorems.\n\nThere is an explicit exponent e(m,n,j,k), linear in m and quadratic in j and k, such that qBinom q (m+n+k-1) k = sum_{j<=k} q^{e(m,n,j,k)} * qBinom q (m+j-1) j * qBinom q (n+k-j-1) (k-j).\n\nDetermine e by an #eval sweep over q in {-2,2,3}, m,n <= 5, k <= 6, then prove by coefficient extraction from qBinom_cauchy.\n\nGives the negative-index companion of q-Vandermonde and, at q = 1, the classical hockey-stick/negative Vandermonde identity.\n\nNo exponent of the predicted shape exists, which would show the inverse series is not multiplicatively self-similar and would demand a different normalisation of the Cauchy coefficients.",
+    "domains": [],
+    "id": "fd_4798",
+    "priority_score": 0.5915116279069769,
+    "research_mode": "team",
+    "source_exp_id": "1494cb60",
+    "status": "available",
+    "timestamp": "2026-09-12T12:57:28.862925+00:00",
+    "title": "Negative q-Vandermonde Convolution"
   },
   {
     "consumed_by_exp_id": "",
@@ -31430,6 +31457,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-12T09:16:19.835701+00:00",
     "title": "Effective Separation Certificates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A product of two Rogers-Szego polynomials should expand in the Rogers-Szego basis with structure constants given by Gaussian binomials times a q-Pochhammer factor. The approach is a double induction against the coupled ladder proved in this cycle, after fixing the q-power weights by a small-case search. It matters because it makes the Gaussian triangle into an algebra with explicit structure constants.\n\nThere exist exponents e(m,n,k) such that H_m(x) H_n(x) = sum_{k <= min(m,n)} q^{e(m,n,k)} * qBinom q m k * qBinom q n k * qPoch q k * H_{m+n-2k}(x) for all m, n over any commutative ring.\n\nDetermine e by an #eval sweep over q in {-2,2,3}, x in {-1,2,5}, m,n <= 6, then prove by induction on m using qRS_rec and qRSW_succ from Catalog/Applications/QBinomialRogersSzego.lean.\n\nThe Rogers-Szego family becomes a linearizable basis, giving an algebraic route to moment computations for the q-Hermite orthogonality measure.\n\nNo exponent of the predicted shape exists, showing that the ladder does not close under multiplication and that the correct structure constants involve a genuinely different weight.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4794",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "1494cb60",
+    "status": "available",
+    "timestamp": "2026-09-12T12:57:26.667618+00:00",
+    "title": "Carlitz Linearization of Rogers-Szego Products"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the recursively defined qBinom literally counts k-dimensional subspaces of F_q^n, turning the catalog's Grassmann line-count definitions into theorems. The approach is an induction matching the two q-Pascal recurrences to hyperplane intersection and projection. This closes the loop between the algebraic identities proved here and the geometry that motivates them.\n\nFor a finite field with q elements, the number of k-dimensional subspaces of an n-dimensional vector space equals qBinom q n k, and the total number of subspaces equals qGalois q n.\n\nState it as Fintype.card of the subtype of Submodules with finrank = k and prove by induction on n; verify small cases (n <= 4, q in {2,3}) by decide or by explicit enumeration.\n\nShared.GrassmannJq2.numLines and numLinesThroughPoint acquire genuine geometric proofs, and Galois numbers gain their combinatorial meaning inside the catalog.\n\nThe recursive definition would have to disagree with subspace counts at some n, contradicting the verified q = 2 table; the realistic failure mode is instead that the Lean formalisation of the count is intractable rather than false.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4795",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "1494cb60",
+    "status": "available",
+    "timestamp": "2026-09-12T12:57:27.224513+00:00",
+    "title": "Grassmannian Enumeration Bridge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The coefficient vector of the Gaussian polynomial qBinom X n k is conjecturally symmetric and unimodal, a classical theorem of Sylvester with no elementary induction proof. The approach is either Proctor's sl_2 linear-algebra argument or O'Hara's partition decomposition. It matters because unimodality is the prototype of a positivity phenomenon that resists recursive proof.\n\nFor k <= n the coefficients c_i of qBinom (X : Z[X]) n k satisfy c_i = c_{k(n-k)-i} and c_i <= c_{i+1} whenever 2i+1 <= k(n-k).\n\nFormalise symmetry first (it follows from the reciprocal of the product formula), then attack unimodality; pre-test coefficient vectors for n <= 12 by #eval.\n\nMathlib gains a nontrivial positivity theorem and, with Direction 2, a proof that Grassmannian Betti numbers are unimodal.\n\nA counterexample would contradict a classical theorem, so a failure would instead indicate an error in the degree normalisation k(n-k) used in the statement.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4796",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "1494cb60",
+    "status": "available",
+    "timestamp": "2026-09-12T12:57:27.760674+00:00",
+    "title": "Sylvester Unimodality of Gaussian Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "At a primitive d-th root of unity the Gaussian binomial should factor as an ordinary binomial coefficient times a residual Gaussian binomial, the q-analogue of Lucas' theorem. The approach is to specialise the q-Vandermonde convolution proved here at the splitting n = d*(n/d) + n%d. It matters because it converts a polynomial identity into arithmetic information about divisibility by cyclotomic polynomials.\n\nIf zeta is a primitive d-th root of unity in a commutative ring then qBinom zeta n k = (Nat.choose (n/d) (k/d)) * qBinom zeta (n%d) (k%d); equivalently the d-th cyclotomic polynomial divides qBinom X n k exactly when adding k and n-k in base d produces a carry.\n\nVerify in Z[zeta_d] or in a quotient ring for d <= 5 and n <= 12 by #eval on cyclotomic remainders, then prove using qBinom_vandermonde together with qBinom zeta d j = 0 for 0 < j < d.\n\nGives a complete cyclotomic factorisation criterion for Gaussian polynomials and a q-analogue of Kummer's carry theorem.\n\nThe vanishing qBinom zeta d j = 0 for 0 < j < d must fail in the chosen ring, pinpointing a hypothesis (torsion, or d not invertible) that the statement needs.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4797",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "1494cb60",
+    "status": "available",
+    "timestamp": "2026-09-12T12:57:28.311919+00:00",
+    "title": "Cyclotomic q-Lucas Spectrum"
   },
   {
     "consumed_by_exp_id": "",
@@ -49949,19 +50035,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:38.677615+00:00",
     "title": "q-factorial product formula"
-  },
-  {
-    "consumed_by_exp_id": "1494cb60",
-    "description": "Prove\n   `\u27e6m+n, k\u27e7_q = \u2211_j q^{(m-j)(k-j)} \u27e6m,j\u27e7_q \u27e6n,k-j\u27e7_q`, the q-Vandermonde\n   convolution, and the q-binomial theorem\n   `\u220f_{i=0}^{n-1}(1 + q^i x) = \u2211_k q^{k(k-1)/2} \u27e6n,k\u27e7_q x^k`.",
-    "domains": [],
-    "id": "fd_2520",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "3984694e",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:38.904868+00:00",
-    "title": "q-Vandermonde / q-binomial theorem"
   },
   {
     "consumed_by_exp_id": "",
