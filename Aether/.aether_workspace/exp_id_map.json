@@ -2265,5 +2265,6 @@
   "63101e70": "rung_budget_for_plateau_identification.json",
   "e0933184": "square_root_law_for_optimal_batch_size_under_sub_q.json",
   "b4f715c2": "general_separated_principal_filtrations.json",
-  "1494cb60": "q_vandermonde__q_binomial_theorem.json"
+  "1494cb60": "q_vandermonde__q_binomial_theorem.json",
+  "a118b9c6": "effective_reconstruction.json"
 }
