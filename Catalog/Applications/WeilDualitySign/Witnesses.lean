@@ -43,7 +43,7 @@ Critique (Critic): all witnesses are genuine inhabitants of `DualEigensystem` (t
   is an equation between explicit complex numbers, not a vacuous implication.
 -/
 import Mathlib
-import Catalog.Applications.WeilDualitySign.EigenvalueModel
+import Applications.WeilDualitySign.EigenvalueModel
 
 open Finset
 

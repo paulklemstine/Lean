@@ -23,7 +23,7 @@ interpretations.  This file develops `ℓ` as a structural invariant.
   counts exactly the "duplicate" elements inside orbits.
 -/
 
-import Catalog.Applications.ExternalInterpretationLogicalInvariance
+import Applications.ExternalInterpretationLogicalInvariance
 
 namespace ExternalInterpretationAdditivity
 

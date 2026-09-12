@@ -36,11 +36,11 @@ Nothing beyond the character table and the triangle inequality is used.
 -/
 
 import Mathlib
-import Catalog.Shared.FourierFiniteAbelian
-import Catalog.Shared.FourierSubgroupDuality
-import Catalog.Applications.PoissonSummationConverse
-import Catalog.Applications.PoissonSummationTwisted
-import Catalog.Applications.UncertaintyExtremals
+import Shared.FourierFiniteAbelian
+import Shared.FourierSubgroupDuality
+import Applications.PoissonSummationConverse
+import Applications.PoissonSummationTwisted
+import Applications.UncertaintyExtremals
 
 open Finset Fintype ComplexConjugate
 
