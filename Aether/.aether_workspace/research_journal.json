@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8c9b3d94",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — after EXTENDED-DIAL-ABSENT (round-51 #1)\n\nThree research cycles were run on the negative result \"the prime-power feature's\ncontribution does not replicate\". What survived formali",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 96,
-      "timestamp": "2026-09-03T00:18:20",
-      "title": "FACT round-51 #1 — EXTENDED-DIAL: the prime-power feature does not replicate (paper 181)"
-    },
-    {
       "cycle_id": "8ec45b40",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — semantic resolution of observational languages\n\n## What this cycle established\n\nWorking inside the catalog's tag-indexed Kripke semantics `satF R V`\n(`NumberTheory.TagFrameSemant",
@@ -499,19 +489,19 @@
       "theorem_count": 431,
       "timestamp": "2026-09-12T12:57:40",
       "title": "q-Vandermonde / q-binomial theorem"
+    },
+    {
+      "cycle_id": "a118b9c6",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — effective reconstruction\n\nThis cycle separated three notions that the finite theory of\n`Catalog/Novelty/BoundedError.lean` conflates:\n\n* **fibre constancy** of a quantity along a",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 47,
+      "timestamp": "2026-09-12T18:31:43",
+      "title": "Effective reconstruction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9f4b7d2b",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — after the exact-bitlen-48 cycle (exp 527)\n\n## What this cycle established\n\nFour formally verified layers, all in `Catalog/Novelty/`:\n\n1. **One-bit shift law.** Uniform sampling a",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 81,
-      "timestamp": "2026-08-24T05:02:44",
-      "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
-    },
     {
       "cycle_id": "33808f71",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 431,
       "timestamp": "2026-09-12T12:57:40",
       "title": "q-Vandermonde / q-binomial theorem"
+    },
+    {
+      "cycle_id": "a118b9c6",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — effective reconstruction\n\nThis cycle separated three notions that the finite theory of\n`Catalog/Novelty/BoundedError.lean` conflates:\n\n* **fibre constancy** of a quantity along a",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 47,
+      "timestamp": "2026-09-12T18:31:43",
+      "title": "Effective reconstruction"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0c24f2ff",
-      "domain": "Algebra",
-      "name": "surmiseMoment_succ_succ",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0c24f2ff",
-      "domain": "Algebra",
-      "name": "gueMoment_eq_surmise",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "794ffb3f",
-      "domain": "Shared",
-      "name": "rules",
-      "quality": 0.82
-    },
     {
       "cycle_id": "794ffb3f",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "meaningLoss_eq_zero_iff_rigid",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a118b9c6",
+      "domain": "Novelty",
+      "name": "leastRep_spec",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a118b9c6",
+      "domain": "Novelty",
+      "name": "fibreConstant_leastRep",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a118b9c6",
+      "domain": "Novelty",
+      "name": "computable_leastRep",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-12T12:57:40",
+  "last_updated": "2026-09-12T18:31:43",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "fe441855",
-        "quality": 0.82,
-        "theorems": 65,
-        "title": "NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE — linear probes recover only R"
-      },
-      {
         "cycle_id": "ee56ba3a",
         "quality": 0.8,
         "theorems": 91,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 57,
         "title": "Uniqueness of the A/X Crossing"
+      },
+      {
+        "cycle_id": "a118b9c6",
+        "quality": 0.82,
+        "theorems": 47,
+        "title": "Effective reconstruction"
       }
     ],
     "NumberTheory": [

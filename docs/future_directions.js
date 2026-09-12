@@ -1898,6 +1898,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a118b9c6 (Q=0.820), which proved 47 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_a118b9c6_7c629e08",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "a118b9c6",
+    "status": "available",
+    "timestamp": "2026-09-12T18:31:43.790914+00:00",
+    "title": "Deepening: Effective reconstruction"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle de8ca052 (Q=0.820), which proved 79 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Heisenberg group formalised here should sit as a normal subgroup inside a semidirect product with SL\u2082(\u211d) acting on chirped Gaussian windows. The approach is to add the chirp generator to the two existing generators (translation and modulation) and check the Weyl cocycle extends. This bridges the",
     "domains": [
       "Geometry"
@@ -12505,6 +12519,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The canonical approximation approxDec converges with modulus equal to any preimage of the received record. We conjecture that computable decodability is exactly computable domination of that modulus, and that error density can still vanish when domination fails. This isolates growth of least preimages as the single quantitative invariant.\n\nA computable channel admits a total computable decoder iff the least-preimage function of its range is dominated by a computable function; and there is a channel where domination fails while the budget-N error density tends to zero.\n\nFormalise the least-preimage modulus, prove the equivalence with exists_computable_selector_of_bounded, and construct the density example by a slow enumeration.\n\nDecodability becomes a purely growth-rate condition, computable from the enumeration speed of the range.\n\nDensity and domination are independent, meaning accuracy and definability remain genuinely separate axes.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_4800",
+    "priority_score": 0.6706190476190478,
+    "research_mode": "team",
+    "source_exp_id": "a118b9c6",
+    "status": "available",
+    "timestamp": "2026-09-12T18:31:29.348364+00:00",
+    "title": "Modulus Dichotomy for Limit-Computable Decoders"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Fractal foams have non-integer effective branching. Extending the cost to a real base beta > 1 should preserve maximality (an order-theoretic fact) while making the depth a locally constant function of beta with an explicitly algebraic jump set.\n\nFor real beta > 1 the largest d with (beta^(d+1)-1)/(beta-1) <= T equals floor(log_beta((beta-1)T+1)) - 1, and as a function of beta it is left-continuous, non-increasing, with jumps exactly at the algebraic numbers solving (beta^(d+1)-1)/(beta-1) = T.\n\nRestate Core with cost : natural -> real and reprove maximality; then derive the closed form with Real.logb and Nat.floor, and analyse the jump set by the intermediate value theorem.\n\nThe whole depth theory becomes available for fractal / non-integer branching geometries, with a rigidity statement about where depth can change.\n\nNon-integer branching produces a genuinely different depth law, which would be evidence that integrality of B is physically essential.",
     "domains": [
       "Algebra"
@@ -15369,6 +15397,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-07T02:22:59.236621+00:00",
     "title": "Non-Terminating Evolutionary Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We proved every computable decoder on an undecodable channel errs on an infinite set. We conjecture the error set is quantitatively large: a positive fraction of the non-blank states below N are misdecoded along a computable subsequence of N. Finite patching would be refined to a stage-wise patching argument.\n\nFor the diagonal trace channel there is c > 0 such that for every computable dec, #{n < N : dec (obsDiag n) \u2260 fDiag n} \u2265 c \u00b7 #{n < N : obsDiag n \u2260 0} for infinitely many N.\n\nFormalise the counting functions and attempt a stage-wise patch: if the density were eventually below c, patch the finitely many dense blocks to build an exact computable decoder.\n\nThe effective Fano bound becomes quantitative and directly comparable with the finite bound |S| - rate of BoundedError.lean.\n\nErrors can be made sparse, so undecodability is compatible with asymptotically perfect accuracy \u2014 itself a striking privacy-utility statement.",
+    "domains": [],
+    "id": "fd_4801",
+    "priority_score": 0.5908333333333334,
+    "research_mode": "team",
+    "source_exp_id": "a118b9c6",
+    "status": "available",
+    "timestamp": "2026-09-12T18:31:29.941823+00:00",
+    "title": "Positive-Density Effective Fano Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -31519,6 +31559,49 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every c.e. Turing degree should be realised as the exact difficulty of decoding some computable channel. The four-way equivalence reduces this to realising degrees as ranges of computable functions, where Post-style constructions apply. This would turn a single halting-type obstruction into a complete classification.\n\nFor every c.e. degree d there is a computable obs : \u2115 \u2192 \u2115 such that the canonical representative leastRep obs has a decoder computable exactly in d, and no lower degree suffices.\n\nFormalise a simple set construction, take obs to enumerate it with controlled fibres, and prove the decoding problem Turing equivalent to that set using effective_decoding_tfae.\n\nEffective reconstruction is classified by the c.e. degrees, giving a complete invariant for channel decodability.\n\nDecoding problems occupy a proper subclass of the c.e. degrees, itself a strong structural theorem.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_4799",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a118b9c6",
+    "status": "available",
+    "timestamp": "2026-09-12T18:31:28.788078+00:00",
+    "title": "Degree Spectrum of Effective Decoding Problems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sharp rate-distortion law of BoundedError.lean picks one centre per cover element by choice. We conjecture that this selection is irreducibly non-effective in the infinite-window limit, so the covering number can be computable while no computable channel attains it.\n\nThere is a computable d : \u2115 \u2192 \u2115 \u2192 \u2115 and a budget D whose window covering numbers are computable but for which no computable channel with computable decoder achieves distortion D at asymptotically optimal rate.\n\nEncode the diagonal trace channel into a dissimilarity so that achieving optimal rate forces a uniform selection on a Sigma-1 non-Delta-1 range.\n\nPrivacy-utility optimality is not effectively attainable: optimal surveillance schemes exist but cannot be built.\n\nCovering-number optimality is effectively attainable, so the classical law survives relativisation intact.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4802",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a118b9c6",
+    "status": "available",
+    "timestamp": "2026-09-12T18:31:30.516333+00:00",
+    "title": "Effective Failure of the Rate-Distortion Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Selector is a uniformisation statement, so the computable separation proved here should have an exact descriptive-set-theoretic counterpart: Borel decodability of all Borel fibre-constant quantities iff the range admits a Borel uniformisation. The diagonal trace channel lifts to Baire space with a Sigma-0-1 non-Delta-0-1 range.\n\nFor a continuous f : Baire space \u2192 Baire space, every Borel fibre-constant quantity has a Borel decoder iff the range of f admits a Borel uniformising selector; the lift of obsDiag witnesses failure.\n\nFormalise the canonical representative for continuous maps and mirror effective_decoding_tfae with Borel in place of computable.\n\nThe lightface theorems here are shadows of a boldface uniformisation theorem, unifying computability and descriptive set theory for reconstruction.\n\nBoldface selection is strictly easier, pinpointing effectivity rather than definability as the obstruction.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4803",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a118b9c6",
+    "status": "available",
+    "timestamp": "2026-09-12T18:31:31.098582+00:00",
+    "title": "Borel Uniformisation Analogue for Continuous Channels"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -45882,19 +45965,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "C3.  The subgroup count as an invariant of the class field tower"
   },
   {
-    "consumed_by_exp_id": "a118b9c6",
-    "description": "The present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.",
-    "domains": [],
-    "id": "fd_2456",
-    "phase": "A",
-    "priority_score": 0.40020833333333333,
-    "research_mode": "team",
-    "source_exp_id": "642478f0",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:18.113407+00:00",
-    "title": "Effective reconstruction"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The lcm reduction is already formal, so a conditional proof needs only the\ntorus version of Artin's conjecture; the failures visible in the table of\n`ComputationalEvidence.md` (`p = 17, 29, 41, 59`) give a ready-made test set.",
     "domains": [
@@ -50433,14 +50503,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "General negative radix"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87769612",
     "description": "For\n   every `n \u2265 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.",
     "domains": [],
     "id": "fd_2716",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "9d058f1b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:43.986328+00:00",
     "title": "Genuinely dependent solutions at every nontrivial finite cardinality"
   },
