@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "88e58a70",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — the zero-fit dial and its arithmetic baselines\n\n## What this cycle established\n\n1. **Prime independence.** The bare quadratic-residue baseline has tie ceiling exactly\n   $\\rho^2",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-09-03T09:51:52",
-      "title": "FACT round-52 #1 — T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
-    },
-    {
       "cycle_id": "98caf022",
       "domain": "Tropical",
       "key_insight": "# Future directions — real-parameter scale flow on knee chains\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.\n\n## What survived this cycle\n\n* **The extension exists and is cano",
@@ -499,19 +489,19 @@
       "theorem_count": 569,
       "timestamp": "2026-09-13T11:45:25",
       "title": "Genuinely dependent solutions at every nontrivial finite cardinality"
+    },
+    {
+      "cycle_id": "cb6515e1",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## Status of the assigned conjecture\n\n**Refuted.** For the seven canonical interval representatives of\n`Novelty.SonicCounterpointCategory`, the reflexive-transitive closure of\n`Ca",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 95,
+      "timestamp": "2026-09-13T18:12:37",
+      "title": "Seven-state strong-connectivity conjecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6c27d6f0",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — tropical epistasis of layer ablations\n\nThe formal development establishes:\n\n* pruning cost is the increase of a **tropical (min-plus) minimum** over surviving\n  computation paths",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 107,
-      "timestamp": "2026-08-24T07:22:28",
-      "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR — L22+L23 solo costs sum to 0.06pts but joint pruning c"
-    },
     {
       "cycle_id": "3be10ac1",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 569,
       "timestamp": "2026-09-13T11:45:25",
       "title": "Genuinely dependent solutions at every nontrivial finite cardinality"
+    },
+    {
+      "cycle_id": "cb6515e1",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## Status of the assigned conjecture\n\n**Refuted.** For the seven canonical interval representatives of\n`Novelty.SonicCounterpointCategory`, the reflexive-transitive closure of\n`Ca",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 95,
+      "timestamp": "2026-09-13T18:12:37",
+      "title": "Seven-state strong-connectivity conjecture"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fd463ee8",
-      "domain": "Physics",
-      "name": "sumLabel_union_of_disjoint",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "fd463ee8",
-      "domain": "Physics",
-      "name": "layer_k_subset_selected",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "fd463ee8",
-      "domain": "Physics",
-      "name": "layer_k1_subset_selected",
-      "quality": 0.72
-    },
     {
       "cycle_id": "69567235",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "mutualInfo_term_bound",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "cb6515e1",
+      "domain": "Novelty",
+      "name": "canonicalMotion_iff_register",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "cb6515e1",
+      "domain": "Novelty",
+      "name": "canonicalMotion_refl",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "cb6515e1",
+      "domain": "Novelty",
+      "name": "canonicalMotion_symm",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-13T11:45:25",
+  "last_updated": "2026-09-13T18:12:37",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ee56ba3a",
-        "quality": 0.8,
-        "theorems": 91,
-        "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN — streaming heavy-hitter evicti"
-      },
-      {
         "cycle_id": "c90a227e",
         "quality": 0.82,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 47,
         "title": "Effective reconstruction"
+      },
+      {
+        "cycle_id": "cb6515e1",
+        "quality": 0.82,
+        "theorems": 95,
+        "title": "Seven-state strong-connectivity conjecture"
       }
     ],
     "NumberTheory": [

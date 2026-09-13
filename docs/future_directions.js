@@ -932,6 +932,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle cb6515e1 (Q=0.820), which proved 95 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the seven canonical interval representatives formalized in `SonicCounterpointCategory.lean`, the reflexive-transitive closure of `CanonicalMotion` is total: every interval reaches every other interval. A single unreachable ordered pair refutes this claim.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_cb6515e1_9ec59a23",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "cb6515e1",
+    "status": "available",
+    "timestamp": "2026-09-13T18:12:38.048120+00:00",
+    "title": "Deepening: Seven-state strong-connectivity conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle de8ca052 (Q=0.820), which proved 79 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Heisenberg group formalised here should sit as a normal subgroup inside a semidirect product with SL\u2082(\u211d) acting on chirped Gaussian windows. The approach is to add the chirp generator to the two existing generators (translation and modulation) and check the Weyl cocycle extends. This bridges the",
     "domains": [
       "Geometry"
@@ -1846,16 +1860,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
   },
   {
-    "consumed_by_exp_id": "a2c90992",
+    "consumed_by_exp_id": "5c150b3f",
     "description": "**Domain**: Pythagorean <-> Algebra\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid \u2014 integral matrices preserving the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2, living on the null cone \u2014 is a shadow of the arithmetic of the even Lorentzian Leech lattice II(25,1), the 26-dimensional lattice at the heart of Conway's \"holy construction,\" whose automorphism group hosts the Conway group Co0 and, through the moonshine module, the Monster \u2014 the largest sporadic simple group. The conjecture: the tree's combinatorial structure (nodes, branches, 3-adic boundary) is realized by the hole structure of the Leech lattice \u2014 deep holes \u2194 Niemeier lattices \u2014 so that the Berggren tree provides an explicit pythagorean parametrization of the Niemeier lattice family, and the groupoid embeds in the Lorentzian lattice's automorphism group, bridging Pythagorean triples to Monstrous moonshine.\n\n**Test**: Formalize the embedding of the (2,1)-signature null cone into II(25,1) and the action of the Berggren generators on the Lorentzian lattice. Prove or refute: (i) the groupoid embeds in the positive Lorentz group of II(25,1) \u2014 equivalently in the Conway group's Lorentzian extension; (ii) the tree's nodes and branches map to the deep-hole/Niemeier structure respecting the ternary branching; (iii) the McKay-Thompson trace series \u2014 whose moment structure the catalog already formalized via the Bell-criterion package \u2014 acquire a tree-parametrized organization.\n\n**Why now**: Monstrous moonshine \u2014 the j-function connection proved by Borcherds (Fields Medal) \u2014 is the most spectacular bridge in modern mathematics, and its natural habitat is precisely a Lorentzian lattice with null-cone structure: the same geometric substrate as the Berggren tree. The catalog's moonshine package built the trace-series and moment machinery; the Lorentzian-lattice bridge from the tree is the missing geometric link. Both structures are integral Lorentzian geometries, and the question of whether the tree's combinatorics lives in the Leech lattice's hole structure is the natural next moonshot.\n\n**If true**: A pythagorean parametrization of the Niemeier lattices and an embedding of the Berggren groupoid into the Monster's natural habitat \u2014 a bridge from the oldest mathematics (Pythagoras) to the most extraordinary object in group theory, with the tree as an explicit combinatorial model for the geometry of moonshine.\n\n**If false**: The groupoid does not embed, or the tree's branching does not match the hole structure \u2014 a precise theorem about which Lorentzian arithmetic the tree actually realizes, clarifying the boundary between elementary Pythagorean geometry and the Leech lattice's exceptional structure.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1784",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T03:17:34.067416+00:00",
     "title": "Moonshine from the Null Cone \u2014 The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
   },
@@ -12647,6 +12662,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The connectivity of a counterpoint system under a melodic-step bound is determined by the consecutive gaps of its interval ladder. Instantiating the proved gap-graph criterion for other scales yields a critical step width for each tuning system. This turns a stylistic question into a computable invariant.\n\nFor every finite ladder S of a tuning system, the width-w motion graph on S is connected iff w is at least the maximal consecutive gap of S; in particular 12-TET diatonic consonances have critical width 3 and 19-TET analogues have critical width 5.\n\nInstantiate SonicCounterpoint.GapGraph.conn_iff_consecutiveGapBound at the ladder of each tuning and discharge the gap computation by decide.\n\nA uniform formal classification of counterpoint connectivity across tunings.\n\nSome ladder admits connectivity without a bounded consecutive gap, refuting the criterion's specialization and exposing a modelling error.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4812",
+    "priority_score": 0.6703684210526317,
+    "research_mode": "team",
+    "source_exp_id": "cb6515e1",
+    "status": "available",
+    "timestamp": "2026-09-13T18:12:23.715969+00:00",
+    "title": "Register Spectrum of Arbitrary Consonance Ladders"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Monotone degradation was derived purely from the single-crossing property of linear families. A combiner that violates single crossing should be able to improve on both pure arms, so the negative NET-61 result is about the additive parametrisation rather than about content signals as such.\n\nThere exist a, p, v and a combiner f monotone in each argument such that the top-B set of f(a,p) strictly beats the top-B set of a + lambda*p for every lambda >= 0.\n\nSearch small instances for such an f; then formalise one witness in Lean with a forced-kept-set argument like topSet_eq_initial_of_strictAnti.\n\nThe refutation of P1 is a statement about additive scoring, and nonlinear gating becomes the natural next experimental arm.\n\nAny monotone combiner is trapped on the same trade-off path, strengthening the law to all monotone score combinations.",
     "domains": [
       "Algebra"
@@ -13417,6 +13446,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T19:36:26.622949+00:00",
     "title": "Amplitude-Dispersion Law for Group-Wise Repair"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the free-bass dyad system all consonances communicate, so the number of legal motions needed to join two of them is a genuine metric. This cycle proves the unison-to-octave distance is exactly three, by a four-semitones-per-step potential bound and an explicit maximally contrary geodesic. The remaining question is the whole distance matrix.\n\nFor all consonances i and j the minimal number of PermittedMotion steps joining a sonority of interval i to one of interval j equals the ceiling of the semitone difference divided by four; consequently the free-bass counterpoint graph on the simple consonances has diameter exactly three.\n\nLower bounds follow from interval_change_le_of_reachableIn; upper bounds require exhibiting one explicit counted path per unordered pair and checking legality by normalization.\n\nA complete quantitative metric invariant for the formalized counterpoint category.\n\nSome pair needs an extra step, showing the consonance constraint, not the step width, controls the metric.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_4814",
+    "priority_score": 0.6692500000000001,
+    "research_mode": "team",
+    "source_exp_id": "cb6515e1",
+    "status": "available",
+    "timestamp": "2026-09-13T18:12:24.831160+00:00",
+    "title": "Free-Bass Distance Matrix and Diameter Three"
   },
   {
     "consumed_by_exp_id": "",
@@ -15054,6 +15097,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-10T04:56:51.324954+00:00",
     "title": "Separator-Coordinate Escape Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Freezing the bass is what disconnects the seven canonical states. Parameterizing by the maximal bass displacement b per step should give connectivity for every b at least 1, since a bass step of one semitone already lets the interval move by three. The resulting two-parameter phase diagram separates rule content from realization artifact.\n\nWith melodic width 2 and bass displacement bound b, the seven consonances are mutually reachable iff b >= 1.\n\nDefine the b-parameterized dyad relation, prove reachability by adapting the contrary-motion spine, and prove the b = 0 case from the register invariant.\n\nThe refutation is confirmed as a pure artifact of the frozen bass.\n\nSome intermediate regime is disconnected, revealing a second obstruction beyond the register decomposition.",
+    "domains": [],
+    "id": "fd_4813",
+    "priority_score": 0.5921428571428572,
+    "research_mode": "team",
+    "source_exp_id": "cb6515e1",
+    "status": "available",
+    "timestamp": "2026-09-13T18:12:24.273731+00:00",
+    "title": "Bass Mobility Phase Diagram for First-Species Motion"
   },
   {
     "consumed_by_exp_id": "",
@@ -31721,6 +31776,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The ban on similar motion into a perfect consonance is vacuous on canonical representatives and, as proved, leaves the full rule symmetric. Strengthening it to the historical directional form (forbidding approach but not departure) should break symmetry and turn the reachability preorder into a non-groupoid. Locating that boundary isolates the stylistic content of the rule.\n\nThe directional variant of the perfect-consonance rule is not symmetric, and its reflexive-transitive closure on dyads is a preorder that is not a groupoid.\n\nDefine the directional rule, exhibit a legal motion whose retrograde is illegal, and prove the closure has a non-invertible morphism.\n\nA precise formal separation between symmetric and directional counterpoint rules.\n\nDirectionality is already implied by the symmetric rule, collapsing the two formulations.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4815",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cb6515e1",
+    "status": "available",
+    "timestamp": "2026-09-13T18:12:25.380063+00:00",
+    "title": "Symmetry Boundary of the Perfect-Consonance Prohibition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved criterion identifies gap graphs on finite subsets of the integers as a subclass of unit-interval graphs whose components are the maximal runs with gaps at most w. Their clique number, chromatic number and component count should all be readable off the sorted list in one pass. A complete formal classification would give a reusable combinatorial library.\n\nFor finite S subset of Z and width w, the components of the gap graph are exactly the maximal runs of consecutive elements with gaps at most w, and the chromatic number equals the clique number, namely the maximal number of elements of S inside any window of length w.\n\nFormalize the sorted-run decomposition, prove the component characterization from conn_iff_consecutiveGapBound, and prove perfection by a greedy colouring induction.\n\nA reusable formal theory of integer gap graphs with musical and scheduling applications.\n\nSome window configuration separates chromatic from clique number, contradicting the unit-interval embedding and signalling a subtle error.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_4816",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cb6515e1",
+    "status": "available",
+    "timestamp": "2026-09-13T18:12:25.946551+00:00",
+    "title": "Structure Theory of Integer Gap Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -45696,19 +45780,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:21:43.821987+00:00",
     "title": "Lyapunov conventions"
-  },
-  {
-    "consumed_by_exp_id": "cb6515e1",
-    "description": "For the seven canonical interval representatives formalized in `SonicCounterpointCategory.lean`, the reflexive-transitive closure of `CanonicalMotion` is total: every interval reaches every other interval. A single unreachable ordered pair refutes this claim.",
-    "domains": [],
-    "id": "fd_2821",
-    "phase": "A",
-    "priority_score": 0.40754166666666664,
-    "research_mode": "team",
-    "source_exp_id": "5c8fc610",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:26:20.266643+00:00",
-    "title": "Seven-state strong-connectivity conjecture"
   },
   {
     "consumed_by_exp_id": "",
