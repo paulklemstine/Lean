@@ -12,6 +12,17 @@ from pathlib import Path
 import os
 import sys
 
+# gh issue list returns only the 30 most recently updated issues by default.
+# With more open approved-direction issues than that, the dispatch gate's
+# open_issue_numbers never contained the older queued directions, so they were
+# never dispatched (regression fixed 2026-09-12).
+GH_ISSUE_LIST_LIMIT = 500
+
+# New injected directions land at 0.90 — above the 0.80 LLM-pruning-protection
+# threshold, so they stay protected without distorting priority sorts by an
+# order of magnitude over every other direction.
+INJECTED_PRIORITY = 0.90
+
 def run_gh_command(args):
     """Run a gh CLI command and return its stdout as a string or parsed JSON."""
     try:
@@ -39,7 +50,8 @@ def run_gh_command(args):
 def fetch_injected_directions():
     """Fetch open issues with the 'approved-direction' label."""
     print("[GitHub Injector] Checking for approved directions from GitHub issues...")
-    output = run_gh_command(["issue", "list", "--state", "open", "--label", "approved-direction", "--json", "number,title,body"])
+    output = run_gh_command(["issue", "list", "--state", "open", "--label", "approved-direction",
+                             "--limit", str(GH_ISSUE_LIST_LIMIT), "--json", "number,title,body"])
     
     if not output:
         return []
@@ -122,7 +134,7 @@ def inject_directions_into_memory(workspace_path: Path):
             "title": title,
             "domains": ["Novelty"],  # Default domain, will be bypassed anyway
             "description": body,
-            "priority_score": 1000.0,  # Massively high priority
+            "priority_score": INJECTED_PRIORITY,  # above the 0.80 prune-protection threshold
             "status": "available",
             "source": "github_injection",
             "github_issue": issue_number,

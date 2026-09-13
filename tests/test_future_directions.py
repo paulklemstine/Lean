@@ -500,3 +500,64 @@ class TestClosureVerification:
         mgr = self._mgr_with_injected(mkdtemp(), issue=167)
         n = mgr.prune_closed_issue_directions(open_issue_numbers=[])
         assert n == 1  # legacy callers unchanged
+
+
+class TestInjectionFetchAndPriority:
+    """fetch_injected_directions must see ALL open approved-direction issues,
+    and newly injected directions must land at a normal priority.
+
+    Regression 2026-09-12: gh issue list defaults to 30 results, so with 101
+    open issues the dispatch gate only ever saw the 30 most recently updated
+    (the newer result-style issues). The queued direction issues were an
+    "open-list miss" every tick and were never dispatched.
+    """
+
+    def test_fetch_requests_more_than_default_page(self):
+        import github_injector
+        from unittest.mock import patch
+
+        captured = {}
+
+        def fake_gh(args):
+            captured["args"] = args
+            return "[]"
+
+        with patch.object(github_injector, "run_gh_command", side_effect=fake_gh):
+            issues = github_injector.fetch_injected_directions()
+
+        assert issues == []
+        args = captured["args"]
+        assert args[:2] == ["issue", "list"]
+        assert "--limit" in args, (
+            "gh issue list defaults to 30 results; the open-issues list must "
+            "request enough to cover all approved-direction issues"
+        )
+        limit = int(args[args.index("--limit") + 1])
+        assert limit >= 500, f"--limit must cover all open issues, got {limit}"
+
+    def test_new_injection_gets_normal_priority(self):
+        import json
+
+        import github_injector
+        from unittest.mock import patch
+
+        tmpdir = mkdtemp()
+        (Path(tmpdir) / "future_directions.json").write_text(json.dumps(
+            {"directions": []}))
+        issue = {"number": 417, "title": "Injected Direction: Test",
+                 "body": "Do the thing"}
+
+        def fake_gh(args):
+            return json.dumps([issue])
+
+        with patch.object(github_injector, "run_gh_command", side_effect=fake_gh):
+            n = github_injector.inject_directions_into_memory(Path(tmpdir))
+
+        assert n == 1
+        data = json.loads((Path(tmpdir) / "future_directions.json").read_text())
+        d = data["directions"][0]
+        assert d["priority_score"] == 0.90, (
+            "Newly injected directions must land at a normal priority (0.90), "
+            f"not 1000 — got {d['priority_score']}"
+        )
+        assert d["source"] == "github_injection" and d["github_issue"] == 417
