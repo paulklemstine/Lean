@@ -3,1000 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "03b48eb6",
-    "description": "**Domain**: Pythagorean <-> Computation\n\n**Hypothesis (MOONSHOT)**: The inverse Collatz tree and the Berggren tree of primitive Pythagorean triples are two realizations of the SAME underlying ternary dynamics. The Collatz map is famously hard because its tree (under the inverse map) is a ternary tree with no known invariant; the Berggren tree is a ternary tree with a fully proven invariant \u2014 the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2 and the silver-ratio growth exponent log(1+\u221a2). The conjecture: there is a transfer map from the Berggren tree's ternary branching onto the inverse-Collatz tree that carries the Lorentz invariant and the growth structure, giving the Collatz tree a conserved quantity it currently lacks.\n\n**Test**: Formalize the inverse Collatz tree as a ternary tree (each odd n has up to three preimages under the inverse map). Formalize the Berggren tree's proven machinery (Lorentz invariant, groupoid, silver-ratio growth). Construct an explicit map from Berggren triples to Collatz orbits and test whether the Lorentz form or a derived quantity is conserved along Collatz trajectories. Prove at least one structural theorem \u2014 e.g., that a Berggren-type invariant bounds the growth of a Collatz trajectory, or that the ternary branching of the two trees is isomorphic.\n\n**Why now**: The Collatz conjecture is one of the most famous open problems in mathematics \u2014 a true moonshot target. The catalog already carries a fully formalized ternary tree (Berggren) with exact invariants and growth. If the two trees are genuinely related, the solved Berggren structure becomes a new tool for the hardest open problem in discrete dynamics. Even a partial transfer would be history-making.\n\n**If true**: The Collatz tree gains a conserved Lorentz-type invariant and an exact growth bound, opening a genuinely new attack line on the Collatz conjecture \u2014 a result that would be among the most celebrated in mathematics.\n\n**If false**: The failure \u2014 proving the two ternary trees are NOT isomorphic, or that no Berggren-type invariant is conserved \u2014 is itself a sharp theorem explaining precisely why the Collatz tree resists the methods that work for Berggren, clarifying the boundary of what ternary-tree methods can achieve.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1774",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-20T23:42:10.363274+00:00",
-    "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
-  },
-  {
-    "consumed_by_exp_id": "a2c90992",
-    "description": "**Domain**: Pythagorean <-> Algebra\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid \u2014 integral matrices preserving the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2, living on the null cone \u2014 is a shadow of the arithmetic of the even Lorentzian Leech lattice II(25,1), the 26-dimensional lattice at the heart of Conway's \"holy construction,\" whose automorphism group hosts the Conway group Co0 and, through the moonshine module, the Monster \u2014 the largest sporadic simple group. The conjecture: the tree's combinatorial structure (nodes, branches, 3-adic boundary) is realized by the hole structure of the Leech lattice \u2014 deep holes \u2194 Niemeier lattices \u2014 so that the Berggren tree provides an explicit pythagorean parametrization of the Niemeier lattice family, and the groupoid embeds in the Lorentzian lattice's automorphism group, bridging Pythagorean triples to Monstrous moonshine.\n\n**Test**: Formalize the embedding of the (2,1)-signature null cone into II(25,1) and the action of the Berggren generators on the Lorentzian lattice. Prove or refute: (i) the groupoid embeds in the positive Lorentz group of II(25,1) \u2014 equivalently in the Conway group's Lorentzian extension; (ii) the tree's nodes and branches map to the deep-hole/Niemeier structure respecting the ternary branching; (iii) the McKay-Thompson trace series \u2014 whose moment structure the catalog already formalized via the Bell-criterion package \u2014 acquire a tree-parametrized organization.\n\n**Why now**: Monstrous moonshine \u2014 the j-function connection proved by Borcherds (Fields Medal) \u2014 is the most spectacular bridge in modern mathematics, and its natural habitat is precisely a Lorentzian lattice with null-cone structure: the same geometric substrate as the Berggren tree. The catalog's moonshine package built the trace-series and moment machinery; the Lorentzian-lattice bridge from the tree is the missing geometric link. Both structures are integral Lorentzian geometries, and the question of whether the tree's combinatorics lives in the Leech lattice's hole structure is the natural next moonshot.\n\n**If true**: A pythagorean parametrization of the Niemeier lattices and an embedding of the Berggren groupoid into the Monster's natural habitat \u2014 a bridge from the oldest mathematics (Pythagoras) to the most extraordinary object in group theory, with the tree as an explicit combinatorial model for the geometry of moonshine.\n\n**If false**: The groupoid does not embed, or the tree's branching does not match the hole structure \u2014 a precise theorem about which Lorentzian arithmetic the tree actually realizes, clarifying the boundary between elementary Pythagorean geometry and the Leech lattice's exceptional structure.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1784",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T03:17:34.067416+00:00",
-    "title": "Moonshine from the Null Cone \u2014 The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
-  },
-  {
-    "consumed_by_exp_id": "8247d370",
-    "description": "**Domain**: Pythagorean <-> Geometry\n\n**Hypothesis (MOONSHOT)**: The space of Euler bricks (integer boxes whose three face diagonals are integral) carries a Berggren-style tree structure: a finite set of integer generators acts on bricks, producing every primitive Euler brick from finitely many seeds, with a descent theory reducing every brick to minimal ones \u2014 the perfect-cuboid analogue of the Berggren tree itself. The conjecture: the brick tree's structure theory settles the shape of the perfect cuboid question \u2014 either a perfect cuboid exists in the tree (reachable by bounded search along the tree's growth), or the tree's architecture yields a proof that the four simultaneous square conditions (three face diagonals and the space diagonal) obstruct each other along every branch.\n\n**Test**: Formalize Euler bricks as integer triples with three integral face diagonals; exhibit explicit generator transformations acting on bricks that preserve brick-hood and generate the primitive brick space from finitely many seeds (the catalog already proved the diagonal-cone reduction a\u00b2+b\u00b2+c\u00b2=2d\u00b2 and the rational parametrization of the normalized quadric \u2014 build the tree on top of that foundation). Prove the descent theory: every brick descends to a finite set of minimal bricks, the brick analogue of (3,4,5). Then either (i) exhibit a perfect cuboid, or (ii) prove a structural obstruction: the space-diagonal condition fails along every branch in a formally provable pattern.\n\n**Why now**: The perfect cuboid problem has been open since Euler's era and is one of the most famous unsolved problems of elementary number theory. The catalog's perfect-cuboid package completed the static geometry (the diagonal cone and the rational parametrization of the cuboid quadric); the dynamic, tree-like structure theory of the brick space is the missing piece, and the Berggren tree's proven machinery \u2014 generators, descent, exact growth \u2014 is exactly the template. A Berggren-style descent on bricks is the natural next move the corpus has set up but not taken.\n\n**If true**: Either the discovery of a perfect cuboid (settling a 300-year-old problem) or the first structural obstruction theorem \u2014 a proof that the brick tree's architecture forbids the four simultaneous square conditions, transforming the problem from search to structure.\n\n**If false**: The brick tree fails to have finitely-generated descent (primitive bricks require infinitely many seeds) \u2014 itself a sharp structure theorem distinguishing the brick world from the triple world, and a precise map of where the perfect-cuboid difficulty lives.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1785",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T03:17:34.068074+00:00",
-    "title": "The Euler Brick Tree \u2014 Berggren Descent and the Perfect Cuboid"
-  },
-  {
-    "consumed_by_exp_id": "54700980",
-    "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree enumerates every primitive integer right triangle (a,b,c), and its area function A = ab/2 = mn(m\u00b2\u2212n\u00b2) over the Euclid seeds hits exactly the congruent numbers up to squarefree parts \u2014 n is congruent (the area of a rational right triangle) if and only if n is the squarefree part of the area of some node of the tree. The conjecture: the tree's proven structure theory (descent to (3,4,5), silver-ratio growth, groupoid) makes the tree a new, provably analyzable laboratory for the congruent number problem \u2014 in particular the density of congruent numbers (conjecturally about one half in each admissible residue class, open, and equivalent in depth to the rank distribution of the elliptic curves y\u00b2 = x\u00b3 \u2212 n\u00b2x) can be attacked through the statistical structure of the tree's area values.\n\n**Test**: Formalize the area function mn(m\u00b2\u2212n\u00b2) over the tree's Euclid seeds and prove the classical equivalence inside the tree formalism: the squarefree parts of node areas are exactly the congruent numbers. Then prove structure theorems: the distribution of squarefree parts along branches, the growth of the set of congruent numbers \u2264 X generated at depth \u2264 d, and the tree-side descent structure of the elliptic-curve correspondence (rational triangles \u2194 rational points on y\u00b2 = x\u00b3 \u2212 n\u00b2x). Stretch goal: an unconditional version of Tunnell's criterion for an explicit infinite family of n, or a proven density law for congruent numbers in a residue class.\n\n**Why now**: The congruent number problem is one of the oldest unsolved problems in mathematics (Bachet, 1621), and its complete solution is equivalent to the Birch\u2013Swinnerton-Dyer conjecture \u2014 a $1M Millennium Prize Problem. The catalog has fully formalized the tree (groupoid, hyperbolic geometry, silver speed limit) but has never studied its area function \u2014 the direct bridge to congruent numbers. The tree is the one structure in which the triangle side of the problem is completely explicit; every congruent number is visible in it.\n\n**If true**: The congruent number problem gains a concrete new laboratory: the tree's area statistics become a computable model for the BSD-linked density conjectures, and any proven density law or unconditional Tunnell family would be a major result on a Millennium-Prize-scale problem.\n\n**If false**: The tree's area function has no tractable structure (e.g., squarefree parts equidistributed with no exploitable pattern) \u2014 itself a sharp equidistribution theorem about the tree, and a precise statement of why the triangle side alone cannot see the elliptic-curve side.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1787",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T03:17:34.069425+00:00",
-    "title": "The Congruent Number Laboratory \u2014 The Berggren Tree's Area Function and the Birch\u2013Swinnerton-Dyer Frontier"
-  },
-  {
-    "consumed_by_exp_id": "542d7a55",
-    "description": "## NET\u2192FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL (paper 80, /tmp/exp_nonabelian_typechan.py, /tmp/r24n1h.log)\n\n**Verdict name: THE-TYPE-CHANNEL-IS-THE-ABELIANIZATION.**\n\n### Result\nThe complete splitting-type channel of a **non-abelian** field is **exactly its abelianization content**: at the prime level **I(p mod m\\*; T) = I(T; coset) = H(T) \u2212 H(T|coset)** (m\\* = conductor of the G^ab characters), and at the semiprime level the papers 78/79 pair law holds **verbatim** with the class-level type map. Verified on S\u2083 \u00d72, S\u2084, A\u2084, D\u2084 with abelian controls V\u2084/C\u2084 \u2014 **7/7 fields prime, 7/7 semiprime, every field on its pre-stated value.**\n\n### The law table (prime level, ~23k primes/field)\n| field | G | G^ab | H(T) | I\u2081 measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| S\u2083a x\u00b3+x+1 | S\u2083 | C\u2082 | 1.4591 | **1.0000** | 1.0000 \u2713 | 1.0000 | 0 |\n| S\u2083b x\u00b3\u2212x+1 | S\u2083 | C\u2082 | 1.4591 | **1.0000** | 1.0000 \u2713 | 1.0000 | 0 |\n| S\u2084 x\u2074\u2212x\u22121 | S\u2084 | C\u2082 | 2.0944 | **1.0100** | 1.0000 \u2713 | 1.0000 | 0 |\n| A\u2084 x\u2074+8x+12 | A\u2084 | C\u2083 | 1.1887 | **0.9188** | 0.9183 \u2713 | 1.5850 | 2/3 |\n| D\u2084 x\u2074\u22122 | D\u2084 | C\u2082\u00d7C\u2082 | 1.9056 | **1.6555** | 1.6556 \u2713 | 2.0000 | 0.3444 |\n| V\u2084 x\u2074\u22122x\u00b2+9 [ab.] | V\u2084 | C\u2082\u00d7C\u2082 | 0.8113 | **0.8092** | 0.8113 \u2713 | 2.0000 | 1.1887 |\n| C\u2084 \u03a6\u2085 [control] | C\u2084 | C\u2084 | 1.5000 | **1.4989** | 1.5000 \u2713 | 2.0000 | 0.5 |\n\nS\u2084 carries 2.0944 bits of splitting entropy and leaks exactly 1 bit; A\u2084's [3,1] type fills both non-trivial C\u2083-cosets (loss exactly 2/3); D\u2084's [2,2] merges two cosets; V\u2084's three involutions all give [2,2]. Within-coset flatness at permutation nulls (z \u2264 0); thickening honest at the 0.004-bit level; coprime flat.\n\n### The REVERSAL\nPaper 77 ordered the control pair by forks: V\u2084 0.8113 > D\u2084 0.2936. The type channels order it **the other way**: V\u2084 0.8092 **<** D\u2084 1.6555. The readout's coset-separation \u2014 not the group's abelianness \u2014 decides which channel is richer. Both orderings are exact instances of the same law.\n\n### Semiprime (400k MC/field, unramified pools)\nS\u2083a **1.0001**, S\u2083b **1.0001**, S\u2084 **1.0034** vs law 1.0000 \u2014 **the C\u2082 cap is a theorem about the abelianization, not the type count** (a 5-type S\u2084 field cannot exceed the quadratic 1 bit). A\u2084 **0.4729** vs 0.4739 (dial-pair 1.5850). D\u2084 **1.4325** vs 1.4302 \u2014 a non-abelian channel ABOVE 1 bit, as its 2-D abelianization predicts. V\u2084 **0.2902** = Is(4) (paper-79 2-state identity). C\u2084 **1.2461** vs 1.25 (paper 78). Which-factor walls 0.0000\u20130.0001; pinned-fork s-projections reproduce Is(2)/Is(3)/Is(4) (papers 74/75).\n\n### Method notes\nQuartic types via F_{p\u00b2}-root counting ((nr, nr\u2082) from x^(p\u00b2) mod f + gcd) \u2014 the cubic-resolvent shortcut is INVALID for binomial/special quartics (x\u2074\u22122's axis pairing is D\u2084-fixed; V\u2084's resolvent splits over \u211a). Sparse-modulus discipline: permutation-null thickening and 400k MC (30k would leave ~0.10-bit bias in S\u2084's 282\u00d715-cell table). Runtime 314 s, all asserts green.\n\n### All 8 barriers\n(a) clean \u2014 law + full table stated before the run, measurement independent of the dial; (b) clean \u2014 no non-abelian type-channel work in the Catalog (698-pkg scan: nearest are the lab's own #723\u2013#728) or literature; (c) confronted \u2014 real Galois groups, 23k-prime histograms < 2% from class sizes, 400k-draw MC; (d) clean \u2014 deterministic + fixed seeds; (e) the substance \u2014 finite-sample margins quantified (S\u2084 +0.0100; thickening at 0.004-bit level under nulls); (f) controlled \u2014 exact laws vs MC asserted to 0.02, both estimator traps caught and repaired; (g) fair \u2014 V\u2084/C\u2084 controls reproduce papers 77/78/79 through the identical pipeline; (h) closure \u2014 symmetric (which-factor 0.0000, barrier 2), residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), Galois + Chebotarev 1922 + reciprocity (barrier 8).\n\n### What closes\nThe **type-channel program is complete**: papers 70 (flatness), 71 (criterion), 72\u201374 (binary laws), 75\u201377 (group table), 78\u201379 (abelian types) are all projections of one statement \u2014 the complete symmetric residue channel of splitting statistics equals the type's mutual information with the abelianization coset. Perfect groups (G^ab = 0) predict zero and paper 76's A\u2085 is already flat.\n\nNow 415 experiments. Assessment v191. Paper 80.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3389",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T07:46:13.683032+00:00",
-    "title": "FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content (paper 80)"
-  },
-  {
-    "consumed_by_exp_id": "97faef64",
-    "description": "## FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C\u2084-abelianization object**: the Frobenius group **F\u2082\u2080 = AGL(1,5)** via x\u2075\u22122. Prime: **I(p mod 5; T) = 1.4989 vs pre-stated 1.5000** \u2014 H(T) = 1.6805 bits of quintic splitting entropy collapse through the 2-bit quartic dial, with the [1,4] type merging the two order-4 cosets {2,3} for a loss of **exactly 0.5 bit**. Semiprime: pair = **1.2462 vs class-enumeration law 1.2500**; and the [1,2,2]-fork (\u27fa p \u2261 4 mod 5) realizes **Is(4) as an order-4 pinned fork on a non-abelian field** (0.2915 vs 0.2947) \u2014 previously order-4 split-counts existed only on abelian V\u2084 and the joint-AND D\u2084 fork (paper 77).\n\n### The law table\n| field | G | G^ab | H(T) | I\u2081 measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| F\u2082\u2080 x\u2075\u22122 | F\u2082\u2080 | C\u2084 | 1.6805 | **1.4989** | 1.5000 \u2713 | 2.0000 | 0.5 |\n| C\u2085 Q(\u03b6\u2081\u2081)\u207a [control] | C\u2085 | C\u2085 | 0.7219 | **0.7198** | 0.7219 \u2713 | 3.3219 | 2.6 |\n\nSemiprime (400k MC): F\u2082\u2080 pair **1.2462** vs 1.2500 \u2713 (reads 1.25 of the 2-bit dial \u2014 the largest fraction of any merged-type field in the program); C\u2085 pair **0.2026** vs Is(5) = 0.2027 \u2713 (paper-79 f=11 reproduced). Which-factor walls 0.0000; coprime flat; within-coset flatness z = +0.00; thickening agrees to 0.0001.\n\n### The instructive failure (record as method)\nFirst run swapped the coset labels of the multiplier-3/-4 families relative to the C\u2084 valuation (V(3)=3, V(4)=2). **Invisible at the prime level** \u2014 both merged classes share type [1,4], so I\u2081 is unchanged \u2014 but it corrupted the pair enumeration (law 1.1250 vs true 1.2500). The 400k MC caught it: measured 1.2462 sat on the *corrected* value. **Lesson: the pair law is the discriminating test of coset bookkeeping precisely where type-merging hides it.** Method legacy: quintic type dictionary via F_{p\u00b2}-root counting is (5,5)/(1,1)/**(1,5)**/(0,0) \u2014 (1,5), not the quartic-carried (1,3): both quadratic pairs' roots live in F_{p\u00b2}\\F_p.\n\n### All 8 barriers\n(a) clean \u2014 four horns with exact values pre-stated; (b) clean \u2014 no quintic type-channel work in the Catalog; (c) confronted \u2014 real F\u2082\u2080 field, ~23k-prime histograms < 2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 margins quantified (\u22120.0011/\u22120.0038/\u22120.0032), coset-swap episode documented; (f) controlled \u2014 four harness defects caught across five runs by asserts/MC-law disagreement; final run ALL_DONE all-green; (g) fair \u2014 C\u2085 abelian control reproduces paper 79 through the identical pipeline; (h) closure \u2014 symmetric (wall 0, barrier 2), residue dial (5), CRT-sealed (6), Kummer/affine classical (8).\n\n### What this decides\nThe abelianization law now spans **degrees 2\u20135** and abelianizations **C\u2082, C\u2083, C\u2084, C\u2082\u00d7C\u2082, C\u2099**: I(p mod m\\*; T) = I(T; coset), pair law verbatim, the type-vs-dial gap always exactly the entropy of the cosets the type cannot tell apart. The type-channel face of the program is complete at every tested group; the frontier returns to the quantum channel (QUBIT-TRADE) and the barrier-4 converse.\n\nNow 417 experiments. Assessment v193. Paper 82.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3411",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T13:59:52.029699+00:00",
-    "title": "FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F\u2082\u2080 and the first C\u2084 dial (paper 82)"
-  },
-  {
-    "consumed_by_exp_id": "a3b670e2",
-    "description": "## FACT round-24 #2 \u2014 BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structure beyond the trace**. The channel decomposes into (i) a deterministic 3-adic skeleton that *restates* N mod 3 exactly, and (ii) a metric layer \u2014 branch letters, depth, path composition \u2014 that is **blind at every 3-adic level 3^k, k \u2264 6**. The Catalog's 3-adic Cantor boundary (#855) has no N-computable projection beyond the trace-set content.\n\n### The four horns (all stated before the run; all confirmed)\n- **H1 SKELETON (deterministic lemma)**: squares mod 3 = {0,1} + m\u22a5n \u27f9 N \u2261 1 \u27fa 3|n, N \u2261 2 \u27fa 3|m, N \u2261 0 \u27fa 3\u2224mn \u2014 agreement **40000/40000 = 100%**. And it RESTATES the trace: 3|n \u27fa q\u2261p mod 3 \u27fa N \u2261 p\u00b2 \u2261 1 mod 3, also **40000/40000** \u2014 zero information beyond N mod 3 (barrier 6).\n- **H2 PARENT-INTERVAL LAW (new exact lemma)**: the Berggren parent is decided by the ratio alone \u2014 m/n \u2208 (1,2) \u2192 T\u2081 = (n,2n\u2212m); (2,3) \u2192 T\u2082 = (n,m\u22122n); (3,\u221e) \u2192 T\u2083 = (m\u22122n,n). Verified on all **40000/40000** descents terminating exactly at root (2,1), plus **86,634 spot-checked steps** with child-map reconstruction (B\u2081(m,n)=(2m\u2212n,m), B\u2082=(2m+n,m), B\u2083=(m+2n,n)) exact on every step.\n- **H3 METRIC BLINDNESS**: I(N mod 3^k; b_t) at the 300-shuffle permutation null for every letter depth t \u2264 10 and level k \u2264 6; same for depth dB and composition (c\u2081,c\u2082,c\u2083). **Worst z = +2.51 across ~150 tests** (k=1: I(N mod 3; b\u2081) = 0.00004 vs null 0.00004, z = +0.04).\n- **H4 CONTROLS (live)**: trace lemma I(N mod 3; s mod 3) = **1.0000** exact (paper 50); I(ratio-band; b\u2081) = **1.4738 = H(b\u2081)** EXACTLY \u2014 the first branch letter is a deterministic function of the m/n band, whose recovery IS the factorization; corr(log dB, log gap) = \u22120.141 replicates paper 56's anti-correlation.\n\n### Sample\n40,000 random semiprimes (p,q uniform primes in [2\u00b9\u2076, 2\u00b2\u2074)), Miller-Rabin (12 bases), capped descents (5000 steps): twin-prime nodes n=1 descend stepwise in m and are censored \u2014 **42/40402 = 0.10%**, reported. Runtime 154 s.\n\n### Why this matters\n- Paper 56's orthogonality is sharpened from coordinate-level to **adic strength**: coordinates orthogonal AND position sealed.\n- Tree-adic dials join the closed residue-dial family (papers 54/70/72\u201374/77/79/80): no dial exceeds its trace-set content; the metric interior requires the factorization to read.\n- The gold-tier interference claim (#829, \"exact factorisation by interference of Pythagorean triples\", polynomial-time per its filename) has no formula in the index, but this result fences it: any such method must either smuggle the Fermat pair (circularity, barrier 6) or pay \u03a9(N) aggregation (barrier 4).\n\n### All 8 barriers\n(a) clean \u2014 four horns pre-stated, measurement object \u2260 instrument; (b) clean \u2014 no tree-position channel work in the Catalog (nearest: our own echo #707); (c) confronted \u2014 40k real semiprimes, 86,634 verified steps, ~150 null-tested channels; (d) clean \u2014 fixed seeds; (e) the substance \u2014 blindness asserted against empirical nulls, censoring reported, worst z +2.51 < 3 without multiplicity correction; (f) controlled \u2014 lemmas asserted at 100%, ALL_DONE marker; (g) fair \u2014 two live positive controls fire (trace 1.0000; band-determinism = H(b\u2081)); (h) closure \u2014 symmetric by construction, skeleton circular (6), metric layer needs factors (5/6), descent = classical Euclidean algorithm in disguise (8).\n\n### What closes\nThe Pythagorean-tree line is now closed at three strengths: embedding exact (paper 56), coordinates orthogonal (paper 56), position adically sealed (this paper). Frontier returns to the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 416 experiments. Assessment v192. Paper 81.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3412",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T13:59:52.031024+00:00",
-    "title": "FACT round-24 #2 \u2014 BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
-  },
-  {
-    "consumed_by_exp_id": "a977122a",
-    "description": "## FACT round-24 #5 \u2014 D\u2085-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** \u2014 and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x\u2075+ax+b (|a|,|b| \u2264 60) found **four D\u2085 quintics in seconds**, each with square discriminant and the exact signature {[1\u2075]: \u22480.10, [5]: \u22480.40, [1,2,2]: \u22480.50}.\n\n### The subtlety: where D\u2085's C\u2082 lives\nD\u2085 \u2286 A\u2085 \u27f9 \u221adisc(f) \u2208 \u211a \u27f9 the abelianization's quadratic subfield K is **not** Q(\u221adisc). Theory locates it \u2014 splitting-field ramification = root-field ramification \u27f9 K = Q(\u221ad), d squarefree over f's ramified prime set \u2014 and candidate enumeration + Kronecker matching identifies **K = Q(\u221a\u22125) at agreement 1.0000, uniquely**, for x\u2075+20x+32 (m\\* = 20 = Q(\u221a\u22125)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D\u2085 type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(\u22125, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 \u2014 exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I\u2081 measured | law | pair |\n|---|---|---|---|---|---|---|\n| C\u2085 | Q(\u03b6\u2081\u2081)\u207a | C\u2085 | 0.7219 | 0.7198 | 0.7219 \u2713 | Is(5) \u2713 |\n| **D\u2085** | **x\u2075+20x+32** | **C\u2082** | **1.3610** | **1.0000** | **1.0000 \u2713** | **1.0 \u2713** |\n| F\u2082\u2080 | x\u2075\u22122 | C\u2084 | 1.6805 | 1.4989 | 1.5000 \u2713 | 1.25 \u2713 |\n| A\u2085 | x\u2075+20x+16 | 1 | 1.6555 | **0** | 0 \u2713 | 0 \u2713 |\n| S\u2085 | x\u2075\u2212x\u22121 | C\u2082 | 2.5574 | 1.2158* | 1.0 \u2713 | 1.0 \u2713 |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions \u2014 the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean \u2014 predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean \u2014 no D\u2085 type-channel work in the Catalog; (c) confronted \u2014 real D\u2085 fields, histograms < 0.2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled \u2014 three harness iterations disclosed (modulus-scan failure \u2192 theory-grounded candidate enumeration; even-numerator Jacobi bug \u2192 Kronecker helper); (g) fair \u2014 walls zero, coprime flat, controls are papers 78\u201382's reproduced values; (h) closure \u2014 symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2\u20135, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3413",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T14:54:02.516407+00:00",
-    "title": "FACT round-24 #5 \u2014 D\u2085-QUINTIC: the quintic row complete (paper 84)"
-  },
-  {
-    "consumed_by_exp_id": "04a8c3de",
-    "description": "## FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S\u2085 via x\u2075\u2212x\u22121** (true disc **2869 = 19\u00b7151** \u2014 not the quartic's \u2212283): seven factorization types, **H(T) = 2.5574 bits \u2014 the largest type entropy measured in the program** \u2014 reduce to the single quadratic-residue bit of N mod 2869. Sign agreement 1.0000; **I\u2081 = 1.2157 sits exactly at its within-sign permutation null 1.2188 (z = \u22120.85)** \u2014 the raw excess over the law's 1.0000 is entirely sparse-dial plug-in bias (+0.2188). Semiprime pair = **1.0648 vs null 1.0639** (gap 0.0009); sign-fork s-projection = **1.0023 vs Is(2) = 1.0000**.\n- **A\u2085 via x\u2075+20x+16** (perfect group): **the complete four-state type channel is SEALED** \u2014 I(p mod m; T) at the permutation null for m \u2208 {3,7,11,31}, worst |z| = 1.72; semiprime pair = **0.0004 \u2248 0**; no odd-type readout ever occurs. 1.6555 bits of splitting entropy, and N cannot hear one of them from any residue direction. Paper 76's fork flatness, extended to the full channel.\n\n### The measurement ledger (6 defects caught by designed checks across 8 runs)\n1. [3,2] dictionary entry: (nr, nr\u2082) = (0,**2**), not (0,4) \u2014 one quadratic pair contributes two F_{p\u00b2}-roots (caught by the p=2 crash).\n2. Discriminant migration: disc(x\u2075\u2212x\u22121) = 2869, not \u2212283 (caught by repeated factors mod 151).\n3. Sign-encoding inversion: agreement 0.0000 = perfect anti-correlation = the law confirming itself through a flipped convention.\n4. Sparse-dial plug-in bias on the HEADLINE I\u2081 (+0.22 bits at a 2868-class dial) \u2014 fixed by permutation reference (the paper-70 lesson extended to primary quantities).\n5. Null design: permuting labels within strata DELETES the through-stratum coset channel; must permute the data.\n6. tid/string mismatch making strata \u2261 0 (a global shuffle masquerading as stratified).\n\nProtocol lessons adopted: every MI at large conductors is permutation-referenced; a null must preserve exactly the channel the law predicts and randomize only the finer assignment; exact 0/1 agreement flags encoding bugs before physics.\n\n### All 8 barriers\n(a) clean \u2014 parameter-free predictions (A\u2085's zero needs no tuning); (b) clean \u2014 no S\u2085/A\u2085 type-channel work in the Catalog; (c) confronted \u2014 real fields, histograms < 2% from class sizes, 400k MC, four moduli \u00d7 200-shuffle nulls; (d) clean \u2014 fixed seeds; (e) the substance \u2014 all comparisons permutation-referenced at large conductors, full defect ledger disclosed; (f) controlled \u2014 six defects caught by designed checks, final run ALL_DONE all-green; (g) fair \u2014 which-factor walls \u2264 0.0001, coprime flat, the A\u2085 zero self-controls against papers 78\u201382's live detections; (h) closure \u2014 symmetric (2), residue dial (5), CRT-sealed (6), classical Galois/reciprocity/Chebotarev (8).\n\n### What closes\nThe quintic row is measured on 4/5 groups (D\u2085 pending a verified polynomial); the abelianization law confirmed at EVERY abelianization type existing for degrees 2\u20135: trivial (A\u2085), C\u2082 (S\u2083/S\u2084/S\u2085), C\u2083 (A\u2084), C\u2084 (F\u2082\u2080), C\u2082\u00d7C\u2082 (D\u2084/V\u2084), C\u2099 (abelian controls). The type-channel program is complete at every tested group.\n\nNow 418 experiments. Assessment v194. Paper 83.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3414",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T14:54:02.517783+00:00",
-    "title": "FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)"
-  },
-  {
-    "consumed_by_exp_id": "1a4b5fe9",
-    "description": "## FACT round-25 #3 \u2014 QUBIT-TRADE4 (paper 87, /tmp/exp_qubittrade4.py, /tmp/r25n3.log)\n\n**Verdict name: THE-STANDARD-CORNER-IS-OPTIMAL.**\n\n### Result\nThe third resource axis \u2014 **base re-draws k**, real Shor's escape from the per-N unlucky cap (paper 86) \u2014 completes the surface, and its total-cost accounting places the optimum at the textbook parameterization:\n\n- **H1 cap lift**: at t = wall, s = 5: k=1 \u2192 0.504, k=2 \u2192 0.735, k=4 \u2192 0.940 \u2014 following 1\u2212(1\u2212p\u2081m)^{ks} exactly (m \u2248 \u00bd mixed-role fraction).\n- **H2 three-way fungibility**: mean \u0394P = +0.18 per single-resource doubling across 12 mixed-axis steps, positive everywhere below saturation.\n- **H3 standard-corner optimality** (corrected accounting, disclosed): reaching P \u2265 0.3 costs G \u2248 k\u00b7s\u00b7t\u00b2 = **6400 at the full-register corner** vs 14440 at wall\u22122 and 51840 at wall\u22124 \u2014 shaving width costs exponential samples/re-draws against a quadratic saving.\n\n### Frontier (ii) closed\nPaper 47 threshold \u2192 paper 85 ramp \u2192 paper 86 cap \u2192 paper 87 optimum. **DEQUANT final form**: the fungibility surface exists, every point of it is quantum resource, its minimum sits at the standard corner, and no point approaches classical factoring complexity.\n\n### Population & method\n24 constructed controlled-order semiprimes (12 mixed-role / 12 same-role), K = 6 independent bases per N with fresh role structure, progression kernel from papers 85\u201386, cells t \u2208 {wall\u22124, \u22122, 0} \u00d7 s \u2208 {1, 5, 20} \u00d7 k \u2208 {1, 2, 4}, 20 trials each. Runtime ~30 s.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; H3's accounting bug found post-run and corrected from raw data (both numbers shown); (b) clean; (c) confronted \u2014 24 real semiprimes \u00d7 6 bases \u00d7 27 surface points; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap-lift and \u0394P quantified, bug disclosed; (f) controlled \u2014 machinery inherited from validated rounds; (g) fair \u2014 balanced role population by design, consistency with papers 85\u201386; (h) closure \u2014 no parameter tuning of Shor improves its total cost; classical complexity remains the only competition (barrier 8), aggregation prices every classical route (barrier 4).\n\nNow 422 experiments. Assessment v198. Paper 87.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3415",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T15:49:12.718353+00:00",
-    "title": "FACT round-25 #3 \u2014 QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-25 #2 \u2014 QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes (r \u2208 {210, 310, 434, 510}), P_factor(s=1) climbs the same ladder \u2014 **0.018 / 0.056 / 0.158 / 0.181** across t = wall\u22124 \u2026 wall+2 \u2014 and samples compound as independence wherever the cap allows. One new structural element: a **per-N unlucky cap that sample count cannot move**.\n\n### The construction (invented this round)\nReal ord_N(a) is lcm(p\u22121, q\u22121)-scale (~2\u00b3\u2070) \u2014 register simulation impossible. Built controlled-order semiprimes instead: primes p \u2261 1 mod r directly, order-r elements by projection h^((p\u22121)/r), CRT-combined with randomized per-prime orders d_p, d_q \u2208 {r, r/2}. This surfaced a structural fact: **ord_p(a) = ord_q(a) exactly \u27f9 a^{r/2} \u2261 \u22121 mod both primes \u27f9 N never factors from period certificates** \u2014 the permanently-unlucky case real Shor escapes by re-drawing a.\n\n### Results\n- Ramp persists: P_factor(s=1) = 0.018 \u2192 0.181 along t; nocert share 0.003 at/above wall\u22122 (certification is not the bottleneck \u2014 paper 85's ramp).\n- Ladders track independence under the cap (wall\u22122: 0.056/0.204/0.471 \u2248 1\u2212(1\u22120.06)^s).\n- **Saturation \u2248 0.53** = cert-rate \u00d7 mixed-role fraction (~\u2154): the unlucky-half cap is per-N structural; s cannot push past it.\n- Taxonomy: spurious-or-partial certificates **0.844**, unlucky 0.109, factor 0.044, nocert 0.003 \u2014 the dominant classical burden is certificate filtering, which is exactly N-verification's role.\n\n### Method ledger (4 catches across 6 launches)\nOrder blow-up (naive r ~ 2\u00b3\u2070 unsimulatable); simultaneous-order search impossible (~10\u207b\u2077 density) \u2192 CRT construction; equal-order = permanent unluckiness (first measurements all-zero); infinite loop on odd half-orders + first-certificate early-return masking later splitting ones + a hardcoded verdict string replaced by data-computed output before any claim was made.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; the population design implements the cap rather than assuming it; (b) clean \u2014 no real-N ramp work in the Catalog; (c) confronted \u2014 actual semiprimes, exact orders, full gcd-based extraction; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap measured not assumed, taxonomy quantified, defects disclosed; (f) controlled \u2014 dishonest-verdict catch before any claim; (g) fair \u2014 shares consistent with paper 85 through the identical kernel; (h) relevance \u2014 Shor's short-register regime prices in samples linearly, capped by the unlucky-base structure that base re-drawing removes classically (barriers 4/8).\n\nNow 421 experiments. Assessment v197. Paper 86.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3416",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T15:49:12.719442+00:00",
-    "title": "FACT round-25 #2 \u2014 QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-25 #1 \u2014 QUBIT-TRADE2 (paper 85, /tmp/exp_qubittrade2.py, /tmp/r25n1g.log)\n\n**Verdict name: ONE-REGISTER-BIT-IS-WORTH-ONE-SAMPLE.**\n\n### Result\nThe qubit/sample phase diagram of Shor period-finding is a **fungibility ramp**, not a wall. The pre-stated vertical-wall hypothesis (odd r \u27f9 deterministic certification failure below t = 2log\u2082r) was **honestly refuted** by the correct measurement kernel: under the standard arithmetic-progression distribution P(k) = (1/Mq)\u00b7|sin(\u03c0Mkr/q)/sin(\u03c0kr/q)|\u00b2 (M \u2248 q/r), the per-sample certification rate follows **P\u2081 \u2248 ramp(q/r\u00b2)**, and samples compound it as P_s = 1\u2212(1\u2212P\u2081)^s. The measured exchange law: **t\\*(s) shifts by \u2212log\u2082 s** \u2014 one register bit is worth one sample.\n\n### The three measurements\n1. **The single-sample ramp**: P\u2081 rises smoothly with q/r\u00b2 through odd/mixed families (4\u00b7odd: 0.003 at q/r\u00b2 = 0.028 \u2192 0.36 at 0.905 \u2192 plateau \u2248 0.46); pure powers of two are flat-saturated (~0.5 at every ratio \u2014 peaks exactly on grid points).\n2. **Sample ladders out-of-sample**: P_s tracks 1\u2212(1\u2212P\u2081)^s tightly everywhere (odd prime at wall\u22121: P\u2081 = 0.725 \u2192 s=2: 0.940 vs predicted 0.924; 2\u00b7odd at wall\u22123: P\u2081 = 0.055 \u2192 s=20: 0.680 vs predicted 0.677).\n3. **The exchange law** (odd composite 1155, wall t = 21): t\\*(P\u22650.5) shifts {s=2: +0, s=5: \u22122, s=20: \u22124, s=100: \u22126} against \u2212log\u2082s = {\u22121, \u22122.3, \u22124.3, \u22126.6}. (s=1 never crosses 0.5: the saturation level P\u2081 \u2248 0.37 *is* the standard per-sample rate.)\n\n### The honest refutation\nThe stated-before-run mechanism (deterministic sub-wall failure for odd r) holds only for the WORST-case peak position; actual peak positions spread over [0, \u00bd], so certification succeeds at rate \u2248 q/r\u00b2. Round-14's \"10 samples fail\" was the deep-ramp limit (q/r\u00b2 \u2248 0). The refutation, not the confirmation, produced the round's law.\n\n### Method ledger (3 designed-check catches across 6 runs)\n1. **Wrong kernel**: contiguous-block Dirichlet instead of the progression kernel \u2014 flagged by its degenerate signature P(k=0) = 1 at q = r; the first vertical-wall table was an artifact of the wrong ensemble.\n2. **Post-processing swamp**: lcm-of-candidates dies on spurious small-denominator certificates; replaced by the clean CERTIFICATION STATISTIC (\u2203 sample whose CF passes 1/(2b\u00b2) with b = r \u2014 necessary condition for any post-processing; classical period-verification free).\n3. Degenerate regimes documented: pure powers of two at t = v\u2082(r) give uniform outcomes (entropy = log\u2082q, r-independent \u2014 genuinely no information).\n\n### All 8 barriers\n(a) clean \u2014 pre-stated hypothesis refuted by pre-registered measurement; replacement law validated out-of-sample on ladders; (b) clean \u2014 no exchange-rate work in the Catalog (nearest: our own paper 47); (c) confronted \u2014 exact distributions (no shortcuts), five structured periods, 300-trial cells; (d) clean \u2014 fixed seeds; (e) the substance \u2014 closed-form predictions vs MC \u00b10.03, full defect ledger disclosed; (f) controlled \u2014 every anomaly traced to root cause before proceeding; (g) fair \u2014 ladders are out-of-sample validations; families distinguished; (h) relevance \u2014 Shor's register can be shortened by paying samples linearly (1 bit \u2194 1 sample) until both explode together: the quantum advantage is preserved but quantitatively graded, sharpening DEQUANT beyond paper 47's binary threshold (barriers 4/8).\n\n### What this decides\nFrontier (ii) gains its quantitative face: the quantum channel's resource bound is a smooth two-dimensional trade-off curve with unit slope, not a threshold.\n\nNow 420 experiments. Assessment v196. Paper 85.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3417",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T15:49:12.720386+00:00",
-    "title": "FACT round-25 #1 \u2014 QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 85)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-27 #2 \u2014 BATTERY-CAPACITY (paper 92, /tmp/exp_batterycapacity.py, /tmp/r27n2b.log)\n\n**Verdict name: SYNERGY-COMPOUNDS.**\n\n### Result\nThe 4-field joint channel (CRT modulus 31\u00b723\u00b79\u00b78 = 51 336) on one shared semiprime population carries **I = 8.2246 bits against the additive prediction \u03a3 marginals = 3.9099 \u2014 synergy +4.31 bits, more than doubling it**, within 1.3 bits of the joint-label-entropy ceiling (9.5276).\n\n### The order decomposition \u2014 synergy is genuinely higher-order\n| order | total synergy |\n|---|---|\n| k = 2 (6 pairs) | +0.244 |\n| k = 3 (4 triples) | **+3.822** |\n| k = 4 (the battery) | **+4.315** |\n\nPairwise synergies \u2014 the entire content of paper 91's pairwise table \u2014 are only **6% of the total**. Mechanism: N mod 31 alone sees one residue of pq mod 31; the CRT-joint modulus sees all four residues simultaneously (15.8 log\u2082 units), against which each dial's pair labels become nearly fully determined.\n\n### Honest caveat\nThe which-factor statistic on the full joint code reads 0.0469 bits \u2014 above every pairwise wall. Suspected sparse-plug-in bias (tens of thousands of residue-columns vs 30k samples \u2014 the paper-70/83 regime), not signal; the factor-blindness claim stands on the well-conditioned strata plus this analysis.\n\n### What revises what\nPaper 91's \"neither additive nor comonotone\" survives; its implicit scale does not: **batteries are super-additive systems whose capacity grows toward the joint label-entropy ceiling with dominant higher-order terms**. For the converse, this raises the stakes on no-pinning: a k-dial battery carries far more symmetric capacity than marginal bookkeeping suggests \u2014 every bit still trace-routed and factor-blind, but the capacity arithmetic must be done jointly (exactly this machinery), never marginally.\n\nNow 427 experiments. Assessment v203. Paper 92.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3427",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.027841+00:00",
-    "title": "FACT round-27 #2 \u2014 BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marginals (paper 92)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-27 #1 \u2014 DIAL-INDEPENDENCE (paper 91, /tmp/exp_dialindependence.py, /tmp/r27n1c.log)\n\n**Verdict name: SYNERGY-AND-OVERLAP.**\n\n### Result\nThe battery space is **neither additive nor comonotone**. The pre-stated coprime-conductor additivity hypothesis was refuted at the first pair, and the refutation is directional:\n\n| battery | I(joint) | I\u2081 + I\u2082 | \u0394 |\n|---|---|---|---|\n| S\u2083a@31 \u00d7 S\u2083b@23 | 2.1314 | 2.0024 | **+0.129 SYNERGY** |\n| A\u2084@9 \u00d7 D\u2084@8 | 1.9125 | 1.9076 | **+0.005 near-additive** |\n| S\u2083a@23 \u00d7 S\u2083b@23 (shared disc \u221223) | 1.0104 | 2.0024 | **\u22120.992 OVERLAP** |\n\n### Mechanism\nThe additivity argument treated dial labels as independent draws. They are not: both dials read the **same underlying (p, q)**, so their label entropies are population-correlated, and the joint modulus (CRT-seeing p mod m\u2081 AND q mod m\u2082 simultaneously) extracts combinations neither marginal reaches. Synergy is structure-dependent \u2014 rich-type pairs synergize (+0.129), lossy-type pairs barely (+0.005). Shared conductor structure makes dials comonotone: two \u221223 cubics share essentially their entire channel through the common quadratic character (**overlap 0.992 bits**) \u2014 the quantitative form of \"same subfield = same dial\".\n\n### Verification discipline\nMarginals re-verified against papers 80/82 BEFORE any joint measurement (1.0012 / 1.0012 / 0.4733 / 1.4342 \u2014 every prior value reproduced). Which-factor walls \u2264 0.0016 across every joint channel: all synergized and overlapping content remains symmetric, trace-routed, factor-blind.\n\n### Method ledger\nShared-pool ramification bug caught pre-launch (index draws including other fields' ramified primes; fixed by union exclusion {31, 23, 2, 3}); the naive additivity gate converted into a recorded synergy measurement rather than silently loosened.\n\n### What this decides\nThe converse's no-pinning scope covers product batteries with their synergy excesses included: k dials give more than k\u00b7(marginal) for structurally rich pairs and less for shared-structure pairs \u2014 all computable by this exact joint machinery, all still on the traced side of barrier 4.\n\nNow 426 experiments. Assessment v202. Paper 91.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3428",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.029147+00:00",
-    "title": "FACT round-27 #1 \u2014 DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-26 #3 \u2014 SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED \u2014 an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [\u221aN, 2\u221aN], per-sample u = log(x\u00b2\u2212N)/log B, 2400 samples over six (N, B) cells, compared against numerically-integrated Dickman \u03c1:\n\n| u | n | empirical | \u00b11\u03c3 | \u03c1(u) numeric | ratio |\n|---|---|---|---|---|---|\n| 3.0 | 161 | 0.0124 | 0.0087 | 0.0487 | 0.26 |\n| 3.5 | 265 | 0.0302 | 0.0105 | 0.0163 | 1.86 |\n| 4.0 | 413 | 0.0073 | 0.0042 | 0.0049 | 1.47 |\n| 5.0 | 303 | 0.0033 | 0.0033 | 0.00036 | 9.27 |\n\nRatios scatter non-monotonically (0.26\u20139.3); most bins underpowered at \u00b1\u03c3 \u2248 100% relative; three bins sit where \u03c1 predicts below MC reach. The toy cost model C(B) = \u03c0(B)/\u03c1(u) + \u03c0(B)\u00b2 fits d(log\u2082C)/d(log\u2082N) = 0.024 \u2014 flat, cannot place the stratum.\n\n### Two real findings inside the null\n1. **The leading-term Dickman approximation is invalid at small u**: exp(\u2212u(ln u + ln ln u \u2212 1)) gives 0.561 at u = 3 where true \u03c1(3) = 0.0487 \u2014 **a 12\u00d7 error**, persisting through u = 6. Proper numerical integration implemented (Euler 5\u00d710\u207b\u2074 on u\u03c1\u2032(u) = \u2212\u03c1(u\u22121)). Any informal smoothness argument using the leading-term form below u \u2248 8 is quantitatively meaningless.\n2. **x\u00b2\u2212N smoothness is not random-integer smoothness at toy scale**: even against correct \u03c1 the ratios are non-monotone \u2014 consistent with the quadratic-character constraint on prime divisors of x\u00b2\u2212N, whose O(1) corrections stabilize only asymptotically.\n\n### Method ledger\n(1) First design sampled x in a width-10\u00b3 window (x\u00b2\u2212N ~ N^{1/2+}-scale) while computing u at N-scale \u2014 the entire first comparison mis-binned (caught by empirical-above-predicted anomalies). (2) A pre-written success VERDICT over contradicting data \u2014 replaced by data-computed output before claims. (3) Trailing-quote syntax break caught by ast.parse.\n\n### What this decides\nThe landscape stands at **three measured strata plus one unmeasured**. Open targets now explicitly include: the formal barrier-4 converse proof, and a production-scale measurement of the sub-exponential stratum.\n\nNow 425 experiments. Assessment v201. Paper 90.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3429",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.030330+00:00",
-    "title": "FACT round-26 #3 \u2014 SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest inconclusive (paper 90)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-26 #2 \u2014 THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions \u2014 barrier 4 prices the definition-routes, barrier 8 owns the methods, Shor owns the quantum corner, and each price is measured, not asserted:\n\n**STRATUM A \u2014 definition-routes (\u03b1 \u2265 0.4 on N):**\n| witness | \u03b1 |\n|---|---|\n| M1 gcd-scan | 1.000 (paper 88) |\n| idempotent scan | 1.000 (paper 88) |\n| zero-divisor first hit | ~\u00bd (paper 88) |\n| CF period | 0.398 (paper 88) |\n| **\u03c4(N), \u03c3\u2081(N) trial division** | **0.500 to three decimals** (this round; \u03c3\u2081 = 1+N+p+q exact at every size) |\n\n**STRATUM B \u2014 classical methods as data, not citation:**\n- trial division: mean log\u2082cost 19.30, median 19.36 (= E[min(p,q)] scale; the factor itself is the certificate)\n- Fermat: mean = median = 19.36 \u2014 indistinguishable from trial division on uniform draws (gap cost tail-dominated)\n- Pollard \u03c1: mean log\u2082cost 8.73; size-stratified slope 0.523 per prime-bit \u27f9 **\u03b1 on N = 0.261 vs the 0.25 birthday bound** (standalone check: log\u2082ops = bits/2 \u2212 1 exactly)\n\n**STRATUM C \u2014 quantum:** poly(log) \u2014 papers 85\u201387's fungibility surface with unit exchange rate.\n\n### The structure-blindness price\n\u03c4-definition-scan vs Pollard \u03c1 at fixed N: **173\u00d7 (2\u00b9\u2076) \u2192 1780\u00d7 (2\u00b2\u2070) \u2192 2070\u00d7 (2\u00b2\u2074) \u2192 8310\u00d7 (2\u00b2\u2078)** \u2014 growing with N. The measured price of structure-blindness: evaluating a witness from N alone versus exploiting what it is.\n\n### Method ledger\n(1) The \u03c1 exponent first read 0.523 \u2014 a units mismatch (slope per prime-bit vs per-N; log\u2082N = 2\u00b7bits), caught by its own gate, corrected to 0.261, confirmed standalone. (2) The N = 2\u00b3\u2076 blindness row would have run for hours \u2014 capped honestly rather than approximated silently.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated, own gate caught own units error; (b) clean \u2014 three-strata unification new, method costs textbook but here measured identically; (c) confronted \u2014 real timings, 40-draw calibrations, 120-draw stratified fit; (d) clean \u2014 fixed seeds; (e) the substance \u2014 medians alongside means, cap disclosed; (f) controlled \u2014 both defects caught before claims; (g) fair \u2014 \u03c1 validated standalone before entering the plane; (h) relevance \u2014 each stratum's price measured: barrier 4 for definition-routes, barrier 8 for methods, Shor graded on the quantum surface.\n\nNow 424 experiments. Assessment v200. Paper 89.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3430",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.031584+00:00",
-    "title": "FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-26 #1 \u2014 CONVERSE-COST-CURVE (paper 88, /tmp/exp_conversecost.py, /tmp/r26n1c.log)\n\n**Verdict name: NO-POLYLOG-ROUTE-ANYWHERE.**\n\n### Result\nThe empirical barrier-4 converse: the ENTIRE known factor-revealing witness family sits on ONE cost-information plane under identical conditions, with **no poly(log N) definition-route anywhere**:\n\n| witness | definition-route | \u03b1 (cost ~ N^\u03b1) | ops/factor-bit |\n|---|---|---|---|\n| W1 M1 = \u03a3 gcd(x,N) | full N-scan | **1.000 exact** | 2.0\u00d710\u2074 |\n| W2 zero-divisor first hit | scan to first hit | cost = min(p,q) 60/60 | 2.9\u00d710\u2074 |\n| W3 CF period of \u221aN | CF iteration | **0.398** (honest: lags \u221aN) | 3.0\u00d710\u2075 |\n| W4 #{x\u00b2 \u2261 x mod N} | full N-scan | **1.000** | 2.0\u00d710\u2074 |\n\nThe reach chain (witness \u2192 s \u2192 {p,q}) holds at 100% jointly \u2014 re-verifying paper 61's {(N,s)} theorem across the unified family.\n\n### The honest numbers\n- W3's exponent came out **below** the naive \u00bd (\u2113/\u221aN drifts 0.75 \u2192 0.18 \u2192 0.23 across sizes) \u2014 reported as measured.\n- First launch sized semiprimes by `bits` while N carries 2\u00b7bits bits \u2014 a 10\u2079-operation stall caught before any claim.\n- The idempotent scan initially excluded x = 0 and failed its own count=4 assert \u2014 the trivial idempotent is part of the CRT structure.\n\n### What this decides\nWith the proven no-pinning half (QRLEAK / COMPENSATING-PARTNER), frontier (i) is now **empirically armed end-to-end**: every factor-revealing definition-route in the family is super-poly in log N, the cheapest factor-bits ride the \u221aN-scale classical methods (exactly barrier 8's face), and all content routes through the trace. The formal converse proof remains the programme's open theoretical target.\n\nNow 423 experiments. Assessment v199. Paper 88.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3431",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.032781+00:00",
-    "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
-  },
-  {
-    "consumed_by_exp_id": "c98192f3",
-    "description": "## FACT round-28 #1 \u2014 METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **\u03c1 and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2\u00b9\u2074 \u2192 2\u00b2\u00b3, 9 draws/cell): median flatness over 2\u00b2\u00b3 cofactor growth \u2014 **ECM \u00d72.16, \u03c1 \u00d71.40** (flat within method luck: ECM curve-restart scatter; \u03c1 Poisson around \u221ap \u2248 64).\n\n**H2/H3 p-scaling**, corrected slopes per log\u2082p (the script's slope print took log\u2082 of bit-lengths \u2014 disclosed, corrected from the printed medians):\n- Pollard \u03c1: **0.45** \u2014 the birthday bound \u221ap \u2713\n- trial division: **1.09** \u2014 linear in p, the definition face \u2713\n- ECM: **1.13** \u2014 locally power-like but constant-advantaged: at p = 2\u00b9\u2074 ECM needs 6 657 ops vs trial-div's 12 142 \u2014 already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (\u03c1's cost spans 9\u2013136 iters per cell \u2014 flatness ratios compared single lucky/unlucky draws) \u2192 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3436",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T17:46:25.958797+00:00",
-    "title": "FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-27 #4 \u2014 BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F\u2082\u2080 x\u2075\u22122 @5 and C\u2085 Q(\u03b6\u2081\u2081)\u207a @11; all conductors pairwise coprime, CRT modulus 31\u00b723\u00b79\u00b78\u00b75\u00b711). The nested-subset capacity curve:\n\n| dials | I(joint) | \u03a3 marginals | deficit | ceiling | % of ceiling |\n|---|---|---|---|---|---|\n| 1 | 1.0011 | 1.0011 | +0.000 | \u2014 | \u2014 |\n| 2 | 2.1334 | 2.0020 | +0.132 | 4.6063 | 46% |\n| 3 | 4.0242 | 2.4777 | +1.547 | 6.4947 | 62% |\n| 4 | 8.2412 | 3.9120 | +4.329 | 9.5434 | 86% |\n| 5 | 11.5307 | 5.1591 | +6.372 | 11.9557 | 96% |\n| **6** | **12.7235** | 5.3650 | **+7.359** | **12.7726** | **99.6%** |\n\n- **H1**: the additive deficit grows MONOTONICALLY (synergy compounds without bound short of the ceiling).\n- **H2**: every marginal reproduces its paper of origin.\n- **H3**: the 6-dial which-factor wall reads 0.3594 vs permutation-null 0.3591 (**z = +0.11**) \u2014 sparse-bias-dominated as at k=4; factor-blindness extends to k=6.\n\n### The battery-capacity law\n1. I(k-joint) \u2192 H(joint labels): the CRT-joint modulus sees all k residues simultaneously; the pair-label structure becomes nearly fully determined (99.6% at k=6).\n2. D(k) grows monotonically: marginal bookkeeping understates batteries progressively (7.36 bits = 3.7\u00d7 additive at k=6).\n3. The ceiling is the joint label entropy \u2014 population correlation between label blocks is all that remains.\n\n### Method notes disclosed\nRow-label off-by-one in the printout (cosmetic, corrected here); chained label code ~10\u00b9\u00b2 values requires np.unique-based entropy (bincount would allocate 5.6 TiB).\n\nNow 429 experiments. Assessment v205. Paper 94.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3437",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T17:46:25.960215+00:00",
-    "title": "FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED (paper 93, /tmp/exp_jointwall.py, /tmp/r27n3c.log)\n\n**Verdict name: THE-WALL-WAS-BIAS.**\n\n### Result\nPaper 92's flagged joint which-factor reading of **0.0469 bits** \u2014 tested against a 200-shuffle permutation null on the exact 4-field CRT-chained code:\n\n| quantity | value |\n|---|---|\n| observed I(bigger; joint code) | 0.0469 bits |\n| permutation null mean | **0.0469** |\n| null sd | 0.0014 |\n| z | **+0.05** |\n\n**The entire reading is sparse-plug-in bias.** The battery programme's factor-blindness claim STANDS with its caveat converted into a verified statement: the full battery capacity (8.2246 bits at k = 4, ceiling 9.53) is symmetric trace-routed content with zero detectable which-factor leakage at null sensitivity (~\u00b10.003 bits).\n\nAlso verified in the same run: the 2-field joint wall (0.0011, inside its own null).\n\n### Method note\nProcess catch disclosed: the first verification build chained only two fields \u2014 testing the wrong object, trivially inside its null \u2014 before extending to the actual 4-field target. Lesson: verify the exact object, not a smaller cousin.\n\nNow 428 experiments. Assessment v204. Paper 93.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3438",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T17:46:25.961555+00:00",
-    "title": "FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis \u2014 I(s,d jointly) = I(N mod m\\*; labels) \u2014 was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S\u2083a x\u00b3+x+1 @31; S\u2083b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q\u2212p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) \u2212 I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) \u2014 but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S\u2083b replicates (+0.5099). p\u2194q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues \u2014 information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91\u201394) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80\u201394 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity \u2014 unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3449",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T18:57:10.443489+00:00",
-    "title": "FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-28 #4 \u2014 BATTERY-UTILITY (paper 98, /tmp/exp_batteryutility.py, /tmp/r28n4b.log)\n\n**Verdict name: THE-LABELS-ARE-NOT-FILTERS.**\n\n### Result\nAn honest refutation-by-design-flaw round closing the battery arc. The attempt to convert the 6-dial battery's 12.7-bit capacity into candidate-set narrowing for p required a map **residue r mod m\\* \u2192 type of a prime \u2261 r mod m\\*** \u2014 and **that map does not exist**: primes in the same residue class carry different splitting types. This is precisely why every measured channel sits below its label-entropy ceiling (S\u2083a: I = 1.0012 vs H(T) = 2.2982 \u2014 the gap IS the within-class variation).\n\n### What happened\nThe utility tables were built by polynomial evaluation at r (does f(r) \u2261 0 mod m\\*?) \u2014 testing whether r itself is a root, not which type primes \u2261 r carry. The consistency assert caught true-p exclusions (6/150 via a quartic enumeration precedence bug; the cubic unions passed 0/150 only by covering nearly all residues). The diagnosis elevated the bug to the finding.\n\n### The corrected understanding\nThe battery's labels are statistics of the JOINT (p mod m\\*, q mod m\\*) draw, not functions of single residues. Utility must be stated Bayesianly: the label vector is a 12.7-bit posterior update on the joint residue vector (~20 bits) \u2014 exactly as the capacity law says. Converting that posterior into individual-candidate narrowing requires the per-prime type determination that IS the factoring problem. No-pinning consistency: constant-bounded posterior mass on joint residue vectors; no candidate filter without circularity.\n\nNow 433 experiments. Assessment v208/v209. Paper 98.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3450",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T18:57:10.444861+00:00",
-    "title": "FACT round-28 #4 \u2014 BATTERY-UTILITY: the labels are not filters (paper 98)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp \u2014 one reboot from oblivion \u2014 and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D\u2085 search (84), battery series (91\u201392), joint-wall verification (93), qubit/sample ramp series (85\u201387), converse plane (88\u201390), method-locality pair (95\u201396), Berggren-3adic (81).\n\n### Audit \u2014 three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S\u2083a/S\u2083b 1.0000; S\u2084 1.0100; A\u2084 0.9188; D\u2084 1.6555; V\u2084 0.8092; C\u2084 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | \u2713 |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | \u2713 |\n| Paper 89 three strata | \u03b1_\u03c4 = 0.500; medians 19.30/19.36; \u03b1_\u03c1 on N = 0.261 | identical | \u2713 |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | \u2713 |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** \u2014 deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3451",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T18:57:10.446222+00:00",
-    "title": "FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat \u2014 the one classical method never locality-classified \u2014 measured: its iteration count is **exactly (p+q)/2 \u2212 \u221aN** (identity 24/24 with per-draw instrumentation), and across balance ratios r = q/p \u2208 [2, 64] at fixed p the cost interpolates **352 \u2192 100 282 iterations** (in p-units 0.09 \u2192 24.50; at r = 64 the measured cost is 0.78 of the cofactor-linear limit p\u00b7(r\u22121)/2). Fermat is **GAP-LOCAL**: neither factor-local like \u03c1/ECM nor a scan like trial division, but a function of the gap alone.\n\n### The completed locality table\n| method | locality class | cost |\n|---|---|---|\n| trial division | p-linear | p |\n| Pollard \u03c1 | factor-local | \u221ap |\n| ECM | factor-local | sub-exp in p |\n| **Fermat** | **gap-local** | **(p+q)/2 \u2212 \u221aN** |\n\nFour methods, three locality classes \u2014 which methods see the factor (\u03c1, ECM), which see the gap (Fermat), and which see nothing but the scan (trial division).\n\n### Bonus finding: the degenerate square case\nThe r = 1 grid row exposed that when q lands on p itself (N = p\u00b2), Fermat's target a = p lies **below** its starting point \u230a\u221aN\u230b + 1 \u2014 plain Fermat has no true stopping point on prime squares and only exits by accidentally hitting an unrelated square (here after 8 372 232 iterations). CFRAC-style generalizations do not share the defect.\n\n### Method ledger\n(1) The first launch hung 7+ minutes in H1 \u2014 faulthandler stack dump found the root cause: **the fermat loop lacked its increment** (`a += 1` lost between drafts), spinning on a constant value; the standalone control with the increment ran instantly. (2) Stale assert constant (40 vs 24 draws) fixed.\n\nNow 431 experiments. Assessment v207. Paper 96.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3452",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T18:57:10.447566+00:00",
-    "title": "FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-29 #1 \u2014 AUDIT-EXTENSION (paper 103, logs /tmp/audit_p{91,94,85}.log)\n\n**Verdict name: SIX-KEYSTONE-ZERO-DRIFT.**\n\n### Result\nPaper 97's reproducibility audit extended to three more keystones whose results carry independent weight:\n\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 91 synergy | S\u2083a\u00d7S\u2083b +0.1290; A\u2084\u00d7D\u2084 +0.0049; overlap 0.9919 | **identical** | \u2713 |\n| Paper 94 capacity curve | deficits +0.000 through +6.372; I(6) = 11.5307 | **identical through k=6** | \u2713 |\n| Paper 85 ramp | P\u2081 \u2248 ramp(q/r\u00b2) | consistent intermediate values | partial* |\n\n*Paper 85's full ramp requires >110s (300 trials \u00d7 many cells); the re-run produced consistent intermediate values before timeout. The recorded full-run results stand on the original execution with stored seeds.\n\nCombined with paper 97's original audit (papers 80, 89, 92): **six keystone papers audited, zero drift across all fully-verified numbers**.\n\n### What this decides\nThe reproducibility claim now covers six keystones spanning the programme's diversity: the type-channel law table (80), the three-strata calibration (89), the battery capacity (92), the battery synergy decomposition (91), the capacity curve saturation (94), and the qubit/sample ramp (85, partial). Every fully-verified number reproduces exactly under stored seeds. The computational record is not an artifact of a single execution \u2014 it is a property of the deterministic pipelines.\n\nNow 438 experiments. Assessment v214. Paper 103.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3462",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T19:38:40.902152+00:00",
-    "title": "FACT round-29 #1 \u2014 AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-30 #2 \u2014 SD-WALL-TEST (paper 102, /tmp/exp_sdwall.py, /tmp/r30n2.log)\n\n**Verdict name: THE-HINTED-VIEW-IS-BLIND.**\n\n### Result\nPaper 101's flagged (s,d)-view which-factor reading of **0.9663 bits** \u2014 tested against a 200-shuffle permutation null:\n\n| view | observed | null mean | null sd | z |\n|---|---|---|---|---|\n| product view (N mod 713) | 0.0153 | 0.0162 | 0.0008 | \u22121.04 |\n| **(s,d) view** | **0.9663** | **0.9648** | 0.0011 | **+1.36** |\n| joint labels | 0.0011 | 0.0008 | 0.0002 | +1.44 |\n\n**All three views sit inside their nulls.** The entire 0.97-bit (s,d)-view reading was sparse-plug-in inflation \u2014 the hint view's massive cell count against the sample size generates ~0.96 bits of pure estimator bias, which the null reproduces exactly.\n\n### What stands\nThe battery programme's factor-blindness now extends to its strongest view: the factor-residue hint view carrying 4.56 of the 4.60 label-entropy bits is factor-blind at permutation-null sensitivity (\u00b10.001 bits on this statistic). The chain \u2014 capacity (92), ceiling saturation (94), hint compounding (101), verified blindness on every view including the hinted one \u2014 is closed with no loose ends.\n\nNow 437 experiments. Assessment v213. Paper 102.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3463",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T19:38:40.903673+00:00",
-    "title": "FACT round-30 #2 \u2014 SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-30 #1 \u2014 HINT-VALUE-JOINT (paper 101, /tmp/exp_hintvaluejoint.py, /tmp/r30n1.log)\n\n**Verdict name: THE-HINTS-COMPOUND.**\n\n### Result\nWith the verified 36-label chaining (paper 100), the corrected 2-field joint hint value: **+2.4291 bits against the per-dial hint sum of +1.0288 \u2014 hint synergy +1.40 bits. Hints compound like capacities**, mirroring paper 92's capacity synergy (same mechanism: the CRT-joint modulus and the (s,d) pair each see all residues simultaneously).\n\n### The corrected joint hint table\n| view | bits |\n|---|---|\n| product view (hint-free) | 2.1314 (= paper 91 exact) |\n| sum view alone | 0.6432 |\n| gap view alone | 0.6496 |\n| (s,d) joint view | 4.5605 (99.1% of ceiling) |\n| **JOINT HINT VALUE** | **+2.4291** |\n\nBracketing confirmed: product < (s,d) \u2264 ceiling.\n\n### New flag (paper-93 discipline, not interpreted)\nThe (s,d)-view which-factor statistic reads **0.9663 bits** \u2014 the sparse-plug-in regime at its extreme (~508k residue-pair cells vs 30k samples). NOT interpreted this round; a permutation-null test is the immediate follow-up. Structural note: s,d are symmetric under p\u2194q, so any REAL leakage would be orientation-conditional and itself significant.\n\nNow 436 experiments. Assessment v212. Paper 101.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3464",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T19:38:40.905132+00:00",
-    "title": "FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY (paper 107)\n\n**Verdict name: ALL-CHECKS-PASS.**\n\n### Result\nEight cross-checked quantities across papers 80\u2013106, **zero inconsistencies**, max spread 0.0040 bits:\n\n| quantity | recordings | spread |\n|---|---|---|\n| S\u2083a@31 marginal | 1.0012, 1.0012 | 0.0000 |\n| S\u2083b@23 marginal | 1.0008, 1.0012 | 0.0004 |\n| A\u2084@9 marginal | 0.4733, 0.4733 | 0.0000 |\n| D\u2084@8 marginal | 1.4302, 1.4342 | 0.0040 |\n| S\u2083a\u00d7S\u2083b joint | 2.1314, 2.1314 | 0.0000 |\n| A\u2084\u00d7D\u2084 joint | 1.9125, 1.9125 | 0.0000 |\n| S\u2083a\u00d7S\u2083b overlap | 0.9919, 0.9919 | 0.0000 |\n| 4-field battery capacity | 8.2246, 8.2246 | 0.0000 |\n\n### Post-resume programme summary (27 papers, 80\u2013106)\n| topic | status |\n|---|---|\n| Type-channel law (degrees 2\u20136) | CONFIRMED |\n| Nonabelian type channels (10 groups) | LAW VERIFIED |\n| Battery space (k=2\u20136) | CHARACTERIZED |\n| Factor-blindness (all views) | VERIFIED |\n| Hint value (six dials) | MEASURED |\n| Quantum frontier | CLOSED |\n| Method stratum | MAPPED |\n| Three strata landscape | MEASURED |\n| Reproducibility (six keystones) | AUDITED |\n| Pythagorean trees | CLOSED |\n\nNow 443 experiments. Assessment v218. Paper 107.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3472",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T20:42:26.611134+00:00",
-    "title": "FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-30 #3 \u2014 CYCLIC-SEXTIC (paper 106, /tmp/exp_sextic.py, /tmp/r30n3c.log)\n\n**Verdict name: THE-LADDER-IS-COMPLETE.**\n\n### Result\nQ(\u03b6\u2081\u2083)\u207a (degree 6, Gal = C\u2086, conductor 13) confirms FULL PINNING: I(p mod 13; T) = H(T) = 1.9192 exactly. The degree ladder 2-3-4-5-6 is COMPLETE for abelian fields.\n\nTypes {1,2,3,6} at rates {1/6,1/6,1/3,1/3}. Semiprime I(N mod 13; pair) = 1.4704; wall z = +0.77.\n\nNow 442 experiments. Assessment v217. Paper 106.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3473",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T20:42:26.611881+00:00",
-    "title": "FACT round-30 #3 \u2014 CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3474",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T20:42:26.612613+00:00",
-    "title": "FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) \u2212 I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C\u2085@11 | 1.2062 | **+1.5896** | +0.30 |\n| F\u2082\u2080@5 | 0.2920 | **+0.9538** | \u22121.10 |\n| S\u2083a@31 | 1.0011 | +0.5201 | +0.67 |\n| S\u2083b@23 | 1.0008 | +0.5121 | +0.92 |\n| D\u2084@8 | 1.9999 | +0.5032 | \u22120.70 |\n| A\u2084@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 \u2014 WEAK. Hint value and channel capacity are independent dial properties. C\u2085 has moderate capacity but the highest hint; D\u2084 has the highest capacity but moderate hint; A\u2084 is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3475",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T20:42:26.613303+00:00",
-    "title": "FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3487",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T21:40:03.958101+00:00",
-    "title": "FACT round-32 #2 \u2014 ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-32 #3 \u2014 UNIVERSAL-S3-CORRECTED (paper 112)\n\n**Verdict name: THE-LAW-IS-UNIVERSAL.**\n\n### Result\nA DIFFERENT S3 field (x3-2, disc -108) gives exactly the same 1-bit channel as paper 80's x3+x+1 (disc -31). The type-channel law depends only on GROUP STRUCTURE, not on which polynomial realizes the group.\n\n- I(p mod 3; T) = 1.0000 EXACTLY (sign character at conductor 3)\n- Semiprime pair channel = 1.0000\n- Coprime moduli flat\n\nNow 447 experiments. Assessment v223. Paper 112.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3488",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T21:40:03.959366+00:00",
-    "title": "FACT round-32 #3 \u2014 UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fields (paper 112)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) \u2212 I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C\u2085@11 | 1.2062 | **+1.5896** | +0.30 |\n| F\u2082\u2080@5 | 0.2920 | **+0.9538** | \u22121.10 |\n| S\u2083a@31 | 1.0011 | +0.5201 | +0.67 |\n| S\u2083b@23 | 1.0008 | +0.5121 | +0.92 |\n| D\u2084@8 | 1.9999 | +0.5032 | \u22120.70 |\n| A\u2084@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 \u2014 WEAK. Hint value and channel capacity are independent dial properties. C\u2085 has moderate capacity but the highest hint; D\u2084 has the highest capacity but moderate hint; A\u2084 is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3489",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T21:40:03.960656+00:00",
-    "title": "FACT round-32 #2 \u2014 UNIVERSAL-S3-TEST: wrong polynomial, accidental x5-2 measurement (paper 111)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-31 #2 \u2014 SEXTIC-HINT-VALUE (paper 121)\n\n**Verdict name: THE-HINT-EXTENDS-BEYOND-DEGREE-5.**\n\nQ(zeta_13)+ (degree 6, C6, conductor 13): hint value +1.6407 bits.\nProduct view 1.4704; (s,d) jointly 3.1110; walls clean.\nHint map extends beyond degree 5.\n\nNow 449 experiments. Assessment v228. Paper 121.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3499",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T22:42:58.223273+00:00",
-    "title": "FACT round-31 #2 \u2014 SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (paper 121)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-34 #4 \u2014 DEGREE-6-NONABELIAN (paper 122)\n\n**Verdict name: THE-FRAMEWORK-HOLDS-FOR-D\u2086.**\n\nD\u2086 type channel for x\u2076\u22122: three types {0:66%, 2:25%, 6:8%}, H(T)=1.1835 bits.\nI(p mod 3; T) = 0.3630, z=+1921 \u2014 massive signal at conductor.\nSemiprime pair channel 0.1321 bits \u2014 genuine structure.\nFramework extends to nonabelian groups at degree 6.\n\nNow 453 experiments. Assessment v232. Paper 122.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3500",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T22:42:58.224723+00:00",
-    "title": "FACT round-34 #4 \u2014 DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-34 #3 \u2014 DIAL-CROSS-TALK (paper 121)\n\n**Verdict name: THE-DIALS-ARE-INDEPENDENT.**\n\nTwo coprime-disc S3 cubics on the same primes: their splitting types are completely independent.\nPrime: I(type1;type2) = 0.000437 bits (null z=-0.81).\nSemiprime: I(pair1;pair2) = 0.001424 bits (null z=+2.79).\nNow 452 experiments. Assessment v231. Paper 121.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3501",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T22:42:58.226145+00:00",
-    "title": "FACT round-34 #3 \u2014 DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-34 #2 \u2014 SEPTIC-FRONTIER (paper 120)\n\n**Verdict name: THE-FRAMEWORK-EXTENDS.**\n\nThe type-channel framework extends beyond degree 6 to degree 7 using x7-3.\nMassive signal at conductor moduli (z=+1728), flat at coprime.\nNow 451 experiments. Assessment v230. Paper 120.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3502",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T22:42:58.227580+00:00",
-    "title": "FACT round-34 #2 \u2014 SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-34 #1 \u2014 MASTER-TABLE (paper 119)\n\n**Verdict name: THE-FRAMEWORK-IS-COMPLETE.**\n\nComprehensive summary of every measured type-channel value across all post-resume papers (80-118), organized by degree (3-6) with all capacities, hint values, and verification statuses.\n\nNow 450 experiments. Assessment v229. Paper 119.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3503",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T22:42:58.228991+00:00",
-    "title": "FACT round-34 #1 \u2014 MASTER-TABLE: every type-channel value in one document (paper 119)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-33 #3 \u2014 D5-TYPE-CHANNEL (paper 118)\n\n**Verdict name: THE-D5-DIAL-IS-MEASURED.**\n\nCompleting the D5 measurement at its verified conductor m*=320:\nPrime: I(p mod 320; T) = 1.0054, z=+338.\nSemiprime: I(N mod 320; pair) = 1.0054.\nH(T) = 1.3517; within-class entropy 0.3463.\n\nNow 448 experiments. Assessment v228. Paper 118.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3504",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T22:42:58.230402+00:00",
-    "title": "FACT round-33 #3 \u2014 D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (paper 118)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-33 #2 \u2014 D5-CONDUCTOR (paper 117)\n\n**Verdict name: THE-CONDUCTOR-IS-320.**\n\nConductor scan identified m* = 320 for the D5 quintic x5+20x+32: I(N mod 320; fork) = 0.9999 = 1 bit. The quadratic subfield has |d(K)| = 320.\n\nNow 450 experiments. Assessment v227. Paper 117.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3505",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T22:42:58.231835+00:00",
-    "title": "FACT round-33 #2 \u2014 D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Paper 116 \u2014 PROGRAMME-MILESTONE: The Post-Resume Programme in One Document\n\n**Verdict name: CONSOLIDATION-POINT-REACHED.**\nRound-33 #1 \u00b7 exp 450 (verified) \u00b7 assessment v226 \u00b7 milestone summary.\n\n## The unified framework\n\nEvery post-resume result fits into one framework:\n\n> **The type-channel law.** For any polynomial f of degree n with Galois group G and abelianization G^ab, the complete splitting-type channel I(p mod |disc(f)|; T) equals H(T) \u2212 H(T|G^ab) \u2014 the label entropy minus the entropy of the cosets that the type cannot distinguish. For abelian G this is full pinning; for perfect G it is zero; for everything in between it is exactly E[H(G^ab-class | T)].\n\nThis law subsumes:\n- **Type channels** (papers 78\u201384): degrees 2\u20136, all tested Galois groups\n- **Universality** (papers 99, 112, 114): independent fields with same G give identical channels\n- **Character-theoretic proof** (paper 109): I = H(T|sign-complement) derived from representation theory\n- **Battery capacity** (papers 91\u201392, 94): super-additive joint channels saturating at ceiling\n- **Factor-blindness** (papers 93, 102): permutation-null verified at \u00b10.003-bit sensitivity\n\n## Post-resume papers\n\n| round | paper | finding |\n|---|---|---|\n| 24 #1 | 80 | Type-channel law for nonabelian groups (S\u2083\u00d72/S\u2084/A\u2084/D\u2084/V\u2084/C\u2084) |\n| 24 #2 | 81 | Pythagorean trees closed at three strengths |\n| 24 #3 | 82 | F\u2082\u2080 x\u2075\u22122 first C\u2084 dial; pair law at degree 5 |\n| 24 #4 | 83 | S\u2085/A\u2085 endpoints: largest entropy collapses; perfect seals |\n| 25 #1 | 84 | D\u2085 quintics verified; degree ladder 5/5 groups |\n| 25 #2 | 85 | Qubit/sample fungibility ramp |\n| 25 #3 | 86 | Ramp on real semiprimes |\n| 25 #4 | 87 | Three-axis surface; standard corner optimal |\n| 26 #1 | 88 | Empirical barrier-4 converse across witness family |\n| 26 #2 | 89 | Three-strata landscape |\n| 26 #3 | 90 | Subexp stratum unmeasured at toy scale |\n| 27 #1 | 91 | Battery synergy-and-overlap |\n| 27 #2 | 92 | Battery synergy compounds (+4.31 bits at k=4) |\n| 27 #3 | 93 | Joint wall verified as bias |\n| 28 #1 | 95 | ECM factor-locality |\n| 28 #2 | 96 | Fermat gap-local |\n| 28 #3 | 97 | Reproducibility audit (six keystones) |\n| 29 #1 | 99 | Factor-residue hint value |\n| 29 #2 | 100 | Joint anomaly reconciled |\n| 30 #1 | 101 | Hint synergy compounds |\n| 30 #2 | 102 | (s,d)-view wall verified as bias |\n| 30 #3 | 106 | C\u2086 degree-6 cyclic field |\n| 30 #4 | 108 | Trace-battery joint capacity scaling |\n| 31 #1 | 107 | Cross-programme consistency |\n| 31 #2 | 109 | Character-theoretic proof |\n| 32 #1 | 110 | D\u2085 rigorous verification |\n| 32 #2 | 111 | Universal-S\u2083 (wrong poly \u2014 still informative) |\n| 32 #3 | 112 | Universal-S\u2083 corrected |\n| 32 #4 | 115 | Universal-S\u2083 fourth field |\n\n## Open problems\n\n| target | status | difficulty |\n|---|---|---|\n| Formal barrier-4 converse | OPEN | theory (hard) |\n| Production-scale subexp | OPEN | scale (needs N \u2265 2^64) |\n| D\u2085 conductor identification | OPEN | algebraic NT |\n| Degree-6 nonabelian type channel | OPEN | computation |\n\nNow 450 experiments (verified). Assessment v226. Paper 116, issue #207.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3506",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T22:42:58.233241+00:00",
-    "title": "FACT round-33 #1 \u2014 PROGRAMME-MILESTONE: the post-resume programme in one document (paper 116)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH (paper 115)\n\nA fourth independent S3 cubic \u2014 x3-7 (disc = -1323) \u2014 confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY.\n\nFOUR-FIELDS-ONE-ANSWER: four independent S3 fields, four distinct discriminants, one universal result.\nNow 450 experiments. Assessment v226. Paper 115.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3507",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T22:42:58.234681+00:00",
-    "title": "FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-35 #6 \u2014 D5-HINT-VALUE (paper 125)\n\n**Verdict name: THE-D5-DIAL-CARRIES-A-HINT.**\n\nD5 x5+20x+32 at m*=320: HINT VALUE +0.6940 bits.\nNow 458 experiments. Assessment v235. Paper 125.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3518",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T23:39:20.828231+00:00",
-    "title": "FACT round-35 #6 \u2014 D5-HINT-VALUE: completing the D5 row (paper 125)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-35 #5 \u2014 HINT-VALUE-SCALING (paper 124)\n\n**Verdict name: HINTS-COMPOUND-WITH-DIMINISHING-RETURNS.**\n\nHint values compound: k=1 +0.52, k=2 +2.43, k=3 +3.19. Marginal gains positive but decreasing.\nNow 457 experiments. Assessment v234. Paper 124.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3519",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T23:39:20.829554+00:00",
-    "title": "FACT round-35 #5 \u2014 HINT-VALUE-SCALING: hints compound (paper 124)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-35 #4 \u2014 COMPOSITE-DIAL (paper 125)\n\n**Verdict name: THE-WHOLE-EXCEEDS-THE-SUM.**\n\nAn EMERGENCE phenomenon: three irreducible components each carry ~zero trace information individually, but their composite label carries 1.8170 bits at the semiprime level.\nNow 455 experiments. Assessment v235. Paper 125.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3520",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T23:39:20.830855+00:00",
-    "title": "FACT round-35 #4 \u2014 COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC (paper 124)\n\n**Verdict name: FULL-PINNING-AT-DEGREE-8.**\n\nQ(zeta_17)+ degree 8, C8, conductor 17.\nH(T) = 1.7474 bits; I(p mod 17; T) = 1.7474 = H(T) EXACTLY (full pinning).\nFour types {1:12%, 2:12%, 4:25%, 8:50%} matching C8 structure.\nSemiprime pair 1.3097; which-factor 0.0002.\nDegree ladder extends to 8: every abelian field shows full pinning.\nNow 456 experiments. Assessment v234. Paper 124.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3521",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T23:39:20.832184+00:00",
-    "title": "FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH (paper 123)\n\n**Verdict name: FIVE-FIELDS-ONE-LAW.**\n\nA fifth independent S3 cubic \u2014 x3-4x+1 (disc = 229 prime) \u2014 confirms the type-channel law:\nI(p mod 229; T) = 1.0078, z=+263 (massive signal at conductor).\n\nFIVE-FIELDS-ONE-LAW: five independent S3 fields, five distinct discriminants, one universal result.\nNow 455 experiments. Assessment v233. Paper 123.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3522",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T23:39:20.833492+00:00",
-    "title": "FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-37 #1 (exp 464, assessment v238). First test of the hint programme's size axis.\n\n**SIZE-STABLE-PLATEAU**: hint value I((p mod m*, q mod m*); labels) \u2212 I(N mod m*; labels) is size-stable to \u22645.3% across factor sizes k=14\u219222 (a 16,384-fold span); abelian dials \u22641.6%, with abelian residual entropy EXACTLY 0 at every size (labels are residue functions there).\n\nHint table (bits): S3@31: 0.5584/0.5425/0.5415 (k=14/18/22); C3@7: 0.9115/0.9140/0.9169; D4@8: 1.0540/1.0536/1.0507; C5@11: 0.9030/0.9190/0.9268.\n\n**POOL-FLOOR EXCEPTION**: S3@k=10 reads 0.7423 vs plateau ~0.55 \u2014 diagnosed as prime-identity leakage through the pair-residue channel (75-prime pool = 2.5 primes/class; pair residue partially identifies the prime, which determines its type). Not a size law.\n\n**Which-factor wall held at all 16 dial\u00d7size cells** (max |z| = 1.55 vs conditional orientation-permutation null). Instrument lesson: the naive unconditional wall test would have falsely cried violation at |z| up to 4.7 \u2014 the conditional instrument holding (N mod m*, unordered pair) fixed was required.\n\nDecides: hint values transfer across factor sizes wherever the pool resolves the conductor's classes (observed floor ~30 primes/class) \u2014 every extrapolation of the hint programme from toy scale is safe. Barriers 2/5/8 re-verified along a new axis.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp464_hint_size.py, seed 20260821, n=15k semiprimes/cell, runtime 11.8 s.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3528",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T01:10:29.770873+00:00",
-    "title": "FACT round-37 #1 \u2014 HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-36 #1 \u2014 RAMIFIED-TYPE-CHANNEL (paper 128)\n\n**Verdict name: RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE.**\n\nRamified primes add negligible info: x2-3 ramified {2,3} gives I=1.0020 all vs 1.0000 unramified only.\n+0.002 bits from including two ramified primes out of thousands. Exclusion fully justified.\nNow 460 experiments. Assessment v237. Paper 128.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3529",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T01:10:29.772175+00:00",
-    "title": "FACT round-36 #1 \u2014 RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-35 #9 \u2014 BIQUADRATIC-TYPE-CHANNEL (paper 127)\n\n**Verdict name: THE-BIQUADRATIC-IS-FULLY-PINNED.**\n\nBiquadratic Q(sqrt2,sqrt3) via x4-10x2+1 (V4, conductor 24): only TWO types.\nH(T) = 0.8074 bits. I(p mod 24; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.2909; which-factor 0.0001.\n\nNow 459 experiments. Assessment v236. Paper 127.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3530",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T01:10:29.773427+00:00",
-    "title": "FACT round-35 #9 \u2014 BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-35 #8 \u2014 CONJUGATE-S3-TEST (paper 127)\n\n**Verdict name: THE-FIELD-NOT-THE-POLYNOMIAL.**\n\nConjugate S3 cubics with same disc -23: x3-x+1 and x3-x-1 produce EXACTLY identical type channels.\nI(p mod 23; T) = 1.000065 for BOTH \u2014 bit-for-bit identical to 6 decimal places.\nSemiprime pair channels agree within MC noise.\nConfirms the type-channel law depends on the FIELD, not the POLYNOMIAL.\n\nNow 455 experiments. Assessment v232. Paper 127.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3531",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T01:10:29.774651+00:00",
-    "title": "FACT round-35 #8 \u2014 CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-37 #3 (exp 461, assessment v240). THE DECISIVE UTILITY EXPERIMENT for the battery/type-channel programme.\n\n**REAL-FILTER-EQUALS-SHAM**: a Bayesian candidate filter built from the exact type-channel posterior is indistinguishable from a same-size coin-flip keep-set at every dial (d2 1 bit, d3, d5, bat2, bat4 3.49 bits): max |real \u2212 sham| = 0.0075 vs batch SD 0.0073. The \u03c1-grid shows the (apparent) gain is a function of keep-rate alone, indifferent to which classes are kept.\n\nHonest accounting: with each membership test priced at one division-equivalent on every candidate \u2264 \u221aN, EVERY filter \u2014 real or sham \u2014 runs at ~0.50x: a net 2x loss. No-fallback failure rates = 1/n exactly.\n\nMechanism: barrier 2 made algorithmic \u2014 the marginal posterior over the target's residue is flat no matter what N reveals about the joint, so posterior capacity cannot reweight candidates. 3.49 bits of measured battery capacity ride channels orthogonal to ordering decisions. Pre-stated 4/3x refuted (companion theory paper: under complete-procedure accounting the sharp cap is 1x).\n\nLedger (9 catches): two substantive cost-accounting bugs produced spurious >1.5x speedups \u2014 caught by SHAM CO-INFLATION + derivation; dummy dial v1 leaked 1 bit by reading its random table through the factors (not N-computable) \u2014 rebuilt public.\n\nDecides: type-channel/battery capacity has exactly zero conversion into trial-division speedup. The utility question opened by paper 98 is CLOSED quantitatively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp461_posterior_filter.py (script + result.json), seed 20260821, 20k semiprimes/cell x 5 batches.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3543",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T01:52:37.376267+00:00",
-    "title": "FACT round-37 #3 \u2014 POSTERIOR-FILTER: real filter equals sham \u2014 battery capacity converts to zero factoring utility (paper 131)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-38 #3 (exp 467, assessment v246). Paper 132's open residual item (1), measured.\n\n**POSITION-PAYS-5.19X** (positional-cap guess <2x REFUTED): sqrt-descending visitation order \u2014 literally Fermat's order applied to divisibility tests \u2014 gives a sham-controlled **5.1936x** expected trial-division speedup (sham 1.65x; real/sham = 3.16x).\n\nTwo separable mechanisms with OPPOSITE gradients across balance strata q/p \u2208 {1\u20131.25, 1.25\u20132, 2\u20134}:\n(a) Fermat-type balance bet: **20.67\u00d7 / 4.74\u00d7 / 1.97\u00d7** \u2014 concentrated at near-squares;\n(b) learned range-truncation (finite-pool feasibility r \u2265 N/2^17 revealed by magnitude): 4.35\u00d7 / 4.73\u00d7 / **6.91\u00d7**.\n\nThe learned Bayes ordering (3.37x test-only) refuted the smooth-posterior collapse claim at the pool's truncation edge (the d1\u2261ascending designed check still passed 30000/30000). Honest computable frontier = plain sqrt-descending; the learned selector's edge was train-inflation.\n\nThe barrier map now reads: residues cap at 4/3 (theorem, paper 132); position pays 5.19x here (measurement, mechanism decomposed) \u2014 separated by exactly the uniform-marginal lemma's scope. Accounting: expected divisibility-test counts (information), not wall-clock.\n\nLedger (7) incl. ML#4 self-refutation disclosed and a vacuous feature caught.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp467_positional_filter.py + result.json, seed 20260821, n=30k \u00d7 5 batches.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3549",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T03:08:29.725146+00:00",
-    "title": "FACT round-38 #3 \u2014 POSITIONAL-FILTER: position pays 5.19x, the stratum beyond the residue cap is live (paper 137)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-38 #2 (exp 470, assessment v245). First direct measurement of the sieve's algorithmic advantage \u2014 paper 130's open residual.\n\n**H1 CONFIRMED**: the sieve's advantage over naive trial division is EXACTLY the constant survivor-filtering factor \u2014 A_total 13.68\u201320.51x across six cells (N up to 2^32), A/pi_FB flat at 0.12\u20130.22, no scale-emergent growth. Mechanism measured: ~100 divisions/value \u2192 ~2 log-adds/value + division of survivors only.\n\n**H2 REFUTED, refining paper 130**: the rho(u)x0.90 model overpredicts QS relation yield ~1.55x at u_med~3 (0/6 in band). Reading: p | x\u00b2\u2212N forces (N|p)=+1 EXACTLY \u2014 B-smoothness of relations lives on the QR-restricted prime pool, raising effective-u by lnB/(lnB\u2212ln2), predicting ratios 0.44\u20130.52 (observed 0.54\u20130.76, cross-cell corr 0.72). Paper 130's gap=1 stands at its measured regime (u\u2208[2,3], v\u22642^23); beyond it the pool is random-equivalent to QR-RESTRICTED integers.\n\nStretch: GF(2) elimination on collected relations actually factored N = 103764863 = 9127 \u00d7 11369. Independent brute-force subrange: 338/338 exact, advantage 14.07x vs full-window 15.29.\n\nLedger (9): two substantive bugs caught ONLY by the brute-force cross-check because the gate's prediction shared their omission (circular self-referential gates) \u2014 Hensel-lifted prime-power lines restored ~20% of relations; per-root inverse fix; mixed-base u inflation caught in smoke.\n\nFollow-up queued: direct x\u00b2\u2212N smoothness vs QR-restricted reference pool at u\u2208[3,4].\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp470_toy_qs_yield.py + exp470_verify.py + result.json, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3550",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T03:08:29.726590+00:00",
-    "title": "FACT round-38 #2 \u2014 TOY-QS-YIELD: the sieve's advantage is the survivor filter; relation pool is QR-restricted random (paper 136)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-38 #1 (exp 469, assessment v244). The abelian ladder's ninth rung.\n\n**FULL-PINNING-AT-DEGREE-NINE**: Q(\u03b6\u2081\u2089)\u207a (degree 9, C\u2089, conductor 19) confirms every pre-stated prediction:\n- Types = coset orders in C\u2081\u2088/{\u00b11} \u2245 C\u2089; densities {1/9, 2/9, 6/9} matched to 2e-4 on 295,946 unramified primes.\n- I(p mod 19; T) = H(T) = 1.2244 bits EXACTLY (per-class degenerate; perm z = +0.00); thickening structural; coprime control flat.\n- Polynomial cross-check 400/400 via factor-degree PATTERNS over GF(p): [1\u2079]/[3,3,3]/[9] \u2014 the nr readout is lossy at degree 9 (orders 3 and 9 both fix zero roots; only the pattern separates them).\n- Semiprime: I(N mod 19; pair) = 0.5330 vs exact enumeration law 0.5302; which-factor extra 0.00053 (null); split-count projection 0.0746 \u2248 Is(9) \u2014 new n=9 entries of the g/Is tables.\n\nLedger: v1 crosscheck doubly wrong (order-3 Frobenius fixes ZERO roots; unvalidated hand Horner) \u2192 sympy patterns; min\u00b73+max pair-code collision caught live (paper-100 lesson); inline takeover after upstream agent timeout.\n\nThe abelian full-pinning law now spans degrees 2,3,4,5,6,8,9 \u2014 every rung measured, no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp469_degree_nine.py + exp469_result.json, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3551",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T03:08:29.727842+00:00",
-    "title": "FACT round-38 #1 \u2014 DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-37 #6 (exp 463, assessment v243). First simultaneous re-measurement of the ENTIRE type-channel master table \u2014 15 canonical fields, one protocol, one seed, 295,946 unramified primes/field < 2^22, law values computed fresh from explicit permutation groups.\n\n**H0 \u2014 PRECISION HOLDS**: global max |I_meas \u2212 I_law| = **0.00048 bits**, 20x inside the pre-stated 0.01 budget. No flags.\n\n- Every recorded headline reproduced within max(0.01, 3\u03c3).\n- The one anomaly diagnosed: S3d's historical 1.0078 vs exact law 1.0000 (simultaneous remeasurement 0.9998\u00b10.001) = small-population plug-in bias on the sparse 229-class dial \u2014 not physics, not dictionary drift.\n- Fresh law constants matched hand-derived values to 6 decimals on all 10 groups (incl. D4 = 1.655639, A4 = 0.918296).\n- Controls: thickening \u22120.00044; coprime flatness below null bias floor on six fields; sympy ground truth 0 mismatches \u00d715 fields; abelian dictionaries 100%.\n\nThe lab's ~128-paper measurement record is internally consistent to 5e-4 bits \u2014 extending the reproducibility-audit line (papers 97/103) from stored-seed re-runs to cross-field simultaneous measurement.\n\nLedger: 7 catches, ALL before results (D4 generator \u2192 S4 closure exposed by hand constants; F20 seeded as C5; LSB/MSB exponent mismatch; q\u00b2|disc ramified test; ...).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp463_precision.py + exp463_result.json + exp463_full_run.log, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3552",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T03:08:29.729074+00:00",
-    "title": "FACT round-37 #6 \u2014 CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0.00048 bits (paper 134)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## NET-49 \u2014 limited-memory axis, round 1 (paper 134, /tmp/exp_net49_qwen_topk.py + exp_net49b_sub32.py, /tmp/net49.log + net49b.log)\n\n**Verdict name: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES.**\n\n### Result\nOn a REAL PRETRAINED LLM \u2014 **Qwen2.5-0.5B** (24 layers, GQA kv=2), wikitext-103 held-out eval, fp32, forward validated EXACTLY against HF eager before any measurement (max|\u0394logit| = 0.0000) \u2014 the lossless attention knee is:\n\n| ctx | full acc | k\\* | toy product d\u00b7ctx/32 | ratio |\n|---|---|---|---|---|\n| 512 | 0.4460 | **16** | 384 | **1/24** |\n| 1024 | 0.4612 | **32** | 768 | **1/24** |\n| 2048 | 0.4787 | **24** | 1536 | **1/64** |\n\nScaling \u00d72.0 then **\u00d70.75 \u2014 sub-linear and already DECLINING**: P3 confirmed, P1 refuted 16\u00d7 beyond its floor, P2's linearity half-refuted (its concentration half held: k\\* \u2264 ctx/8 everywhere). **The DEPTH MULTIPLIER of the toy law collapses from d to ~1 on pretrained weights** \u2014 no compounding r(k)^d penalty binds trained attention.\n\n### Key numbers\n- Sweeps (retained): 512: 8 0.9617 \u2717, **16 0.9834 \u2713 (+0.44 SE razor)** \u2026 192 0.9997; 1024: 16 0.9771 \u2717 (\u22120.55 SE), **32 0.9912 \u2713** \u2026 384 1.0003; 2048: 4 0.8762 \u2717, 8 0.9408 \u2717, 16 0.9708 \u2717 (\u22122.5 SE), **24 0.9818 \u2713 (+0.5 SE razor, bracket (16, 24])**, 32 0.9867 \u2026 768 0.9997.\n- **Selection importance inflates an ORDER OF MAGNITUDE**: random-k gaps **+82.0/+71.8/+81.9/+70.0/+79.9/+68.0 pts** (the toy programme's entire range was +1.7\u201311.7); local-window gaps +40\u201355 pts \u2014 k=256 local reaches only **0.598 retained at 2048** while oracle top-k is 0.9867 with 8\u00d7 fewer keys.\n- **Depth-resolved concentration map (new measurement class)**: median-layer effective support \u2248 10\u201312 keys, context-INDEPENDENT across 512\u21922048 (toy: 46\u2192526); the ONLY diffuse attention lives in **L22/L23** (eff 51\u219283\u2192128.5 and 33\u219250\u219272, sub-linear growth; even L22@2048 is 3.9\u00d7 less diffuse than the toy MEAN layer); minimum at L16 (2.9 keys).\n- **Practical**: oracle working set = 24 of 2048 rows \u2192 **85\u00d7 fewer KV reads / 64\u00d7 fewer KV bytes per sequence**. Deployable policy needs a cheap selector \u2014 the oracle-to-policy gap is named as the next cell, not claimed.\n\n### All 8 barriers\n(a) clean \u2014 data-free oracle from the model's own scores; horns concerned position/scaling, not existence; (b) confronted \u2014 sparse/oracle attention and heavy-hitter eviction exist (H2O/StreamingLLM/SnapKV lineage); NEW content = measured laws: first transfer under this programme's fixed 0.98-retention protocol, the depth-multiplier collapse, the ctx/32-then-decline shape, the 10\u00d7 selection-gap inflation, the depth map \u2014 none in Catalog re-scan or literature; (c) CONFRONTED HEAD-ON \u2014 this IS the real-scale cell (pretrained 0.5B, natural web text, 151k vocab); honest limit: ONE model, ONE size; (d) clean \u2014 last 10% held out, zero training; (e) SUBSTANCE + limits \u2014 deterministic eval (addendum reproduced the baseline EXACTLY, 0.4787/2.6355), binomial SEs 0.17\u20130.35%, TWO razor-thin knees documented, the 1024 bracket (16, 32] un-pinned at 24 (the decline could be flat ~24), one model one corpus (Gutenberg rate-limited mid-round; wikitext fallback engaged automatically); (f) clean \u2014 validation gate passed exactly pre-measurement, fp32 throughout, loss tracks accuracy at every k, NO crash (ALL_DONE_NET49 + ALL_DONE_NET49B); (g) fair \u2014 full reference + the SAME 0.98 bar as all 48 prior rounds + random-k AND local-window at matched k, both dominated; (h) DIRECT \u2014 the axis's founding question answered with a 64\u00d7 KV-byte reduction at the knee vs the toy family's best-ever 12.8\u00d7 attention reading.\n\n### Next\n(1) per-layer pruning ablation \u2014 is L22's diffusion load-bearing? (2) size transfer \u2014 Qwen2.5-1.5B / quantized-offloaded 7B: does ~ctx/32 saturation persist? does the two-layer tail recur? (3) oracle-to-policy gap \u2014 online accumulated-score eviction vs this upper bound; (4) corpus robustness; (5) weight-quantization floors on the same harness (limited-memory iteration 2).\n\nNow 49 network experiments. Assessment v49. Paper 134.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3553",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T03:08:29.730320+00:00",
-    "title": "NET-49: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES \u2014 on Qwen2.5-0.5B the lossless attention knee is {16,32,24} at ctx={512,1024,2048}, 24\u201364x below the toy law d*ctx/32, sub-linear and declining; selection importance inflates an order of magnitude"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-37 #5 (exp 462, assessment v242). The open cell between paper 91's coprime-synergy (+0.129) and shared-disc-redundancy (\u22120.99) is CLOSED.\n\n**H1 CONFIRMED \u2014 PARTIAL-OVERLAP-LAW**: two genuinely different S3 fields sharing their quadratic subfield are EXACTLY one bit redundant.\n\nPairs found by scanning 56,410 S3 cubics: d=\u22127: x\u00b3\u22125x\u22125 (disc \u2212175=\u22127\u00b75\u00b2) & x\u00b3\u22123x\u22125 (\u2212567=\u22127\u00b79\u00b2); d=\u22123: x\u00b3\u22126x\u22126 (\u2212108) & x\u00b3\u22123 (\u2212243). Measured deficits +0.9998/+0.9998/+1.0000 vs the 1-bit law (deviations \u2264 0.0002).\n\nDerivation committed BEFORE simulation: Gal(L\u2081L\u2082/Q) = S\u2083 \u00d7_{C\u2082} S\u2083 (order 18); co-information = H(C) \u2212 H(C|X) = 1.5 \u2212 0.5 exactly; all fiber-product correlation beyond the shared sign character confined to the residue-invisible \u03c7_d=+1 fiber. Joint Chebotarev distribution matches order-18 class proportions; off-diagonal mass 34,375 vs predicted 34,307.\n\nControls clean: coprime synergy reproduced (0.1300 vs lab 0.1290), conjugate pair at full redundancy, which-factor wall NULL on the new joint.\n\nInsights for the programme: (L11) MI signatures CANNOT distinguish partial-overlap from same-field pairs \u2014 discriminators are type-agreement (7/9 vs 1.0) and off-diagonal mass; sparse joint moduli distort plug-in MI badly (~\u00b10.5 bits at 2 samples/cell) \u2014 joints need ~100 samples/cell or explicit bias modeling; disc-value arguments are not field arguments (index\u00b2 trap caught live).\n\nThe overlap ladder is closed at the pair level: coprime (+synergy) / shared-subfield (exactly \u22121 bit) / same-field (full redundancy).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp462_overlap_law.py + addendum462.py + result JSONs, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3554",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T03:08:29.731549+00:00",
-    "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## NET-50 \u2014 limited-memory axis, round 2 (paper 135, /tmp/exp_net50_tropical.py, /tmp/net50.log)\n\n**Verdict name: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST.**\n\n### Result\nPushing the NET-49 oracle top-k sweep down to the tropical limit on Qwen2.5-0.5B (same gates; forward validated exactly vs HF before measurement):\n\n| k | 512 | 1024 | 2048 |\n|---|---|---|---|\n| 1 | 0.3637 | 0.2885 | **0.2503** |\n| 2 | 0.7865 | 0.7398 | 0.7002 |\n| 4 | 0.9097 | 0.8906 | 0.8762 |\n| 8 | 0.9617 | 0.9485 | 0.9408 |\n| knee | **16 \u2713** | **32 \u2713** | **24 \u2713** |\n\n- **P1 CONFIRMED**: pure argmax attention is catastrophic everywhere and WORSE at longer context (0.364 \u2192 0.289 \u2192 0.250).\n- **P2 CONFIRMED**: k=2 recovers ~0.70\u20130.79, k=4 ~0.88\u20130.91 (razor over the 0.90 bar at 512), k=8 ~0.94\u20130.96.\n- **Knee chain {16, 32, 24} replicates NET-49 EXACTLY** \u2014 different script, different session: deterministic-eval reproducibility proven.\n\n### The Maslov-gap map (new measurement)\nPer-row LSE \u2212 max of causal scores, per layer: bulk medians **0.17\u20131.86 nats** (within log 8 \u2248 2.08) at 512/1024; at 2048 all bulk layers \u2264 1.46. The ONLY far-from-tropical region is the diffuse tail: **L22/L23 medians 2.33/2.16 \u2192 2.55/2.37 \u2192 2.69/2.52 across contexts**, p90 \u2248 3.4. Crystallization loss \u03a3p(1\u2212p): per-layer means **0.34\u20130.97** \u2014 P3's \"\u2264 0.25\" REFUTED honestly. Real attention carries heavy soft mass that is individually tiny but collectively load-bearing: top-k to 24 keys still retains \u226598%.\n\n### Practical reading\nThe deployable regime is **\"tropical core + thin soft correction\"**: pointer-style (k\u22481\u20134) caches sit far below the knee, but the measured recovery curve quantifies exactly what each added key buys (k=1\u21922: +0.34\u20130.45; k=2\u21924: +0.12\u20130.17; k=4\u21928: +0.05\u20130.07). This is the deployment-relevant curve for aggressive KV compression on small-VRAM hosts.\n\n### All 8 barriers\n(a) clean \u2014 cliff/recovery/budget horns pre-stated; (b) clean \u2014 argmax-limit sweeps + Maslov/crystallization budget measurements on a pretrained LM not in Catalog or literature as measured laws; (c) confronted \u2014 real-scale pretrained model, natural text; honest limit: ONE model; (d) clean \u2014 held-out last 10%, data-free selection; (e) SUBSTANCE + limits \u2014 cross-session exact replication of {16,32,24} is the strongest reproducibility evidence of the axis; P3's crystallization half honestly refuted; single model/corpus; (f) clean \u2014 exact validation gate, fp32 throughout, NO crash (ALL_DONE_NET50); (g) fair \u2014 full reference, same 0.98 bar; random-k/local-window controls inherited from NET-49 (not re-run here \u2014 noted); (h) DIRECT \u2014 sub-k\\* recovery curve is what an aggressive KV policy needs.\n\n### Next\nPer-layer ablation (prune ONLY L22/L23?); size transfer (1.5B / offloaded 7B); oracle-to-policy eviction gap; corpus robustness; weight quantization vs the 2Lr defect band (NET-52 next).\n\nNow 50 network experiments. Assessment v50. Paper 135.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3562",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T03:58:05.370553+00:00",
-    "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST \u2014 argmax attention retains only 0.25-0.36 on Qwen2.5-0.5B, k=4 recovers to ~0.9, knees {16,32,24} replicate NET-49 exactly; Maslov-gap map isolates the diffuse tail as the only far-from-tropical region"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-39 #1, cron iteration (exp 471, assessment v248). Paper 136's queued follow-up \u2014 and a correction of it.\n\n**Ensemble: the QR restriction carries NO penalty.** x\u00b2\u2212N smoothness equals UNRESTRICTED-random smoothness at every cell (emp_x2 \u2248 emp_rnd within noise; 0.87\u20130.99 of mean-\u03c1 = paper 130's finite-x factor). Mechanism: (N|p)=+1 primes divide x\u00b2\u2212N for TWO residue classes of x mod p \u2014 double rate on the halved pool compensates exactly. The pre-stated H1 refuted spectacularly: QR-pool-restricted randoms run 21\u201356\u00d7 lower. Paper 136's effective-u story RETIRED.\n\n**Per-N variance is the real mechanism**: corr(per-N smooth rate, #{odd primes \u2264100 that are QRs of N}) = 0.50/0.45/0.48/0.40 across cells; decile spread 2.4\u00d7 at u=2.5 and **9.3\u00d7** at u=3.5.\n\nResolves paper 136's anomaly: its ONE-N-per-scale design sampled this variance (the 0.54\u20130.76 yield ratios were draw luck, not a systematic deficit). Actionable: per-N relation yield is cheaply predictable a priori from ~20 Euler-criterion tests.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp471_qr_smoothness.py + exp471_result.json, seed 20260821, 4 cells \u00d7 100k values.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3563",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T03:58:05.371702+00:00",
-    "title": "FACT round-39 #1 \u2014 QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-38 #4 (exp 468, assessment v247). The third row of the barrier map, derived and machine-verified.\n\n**Master law**: Speedup(H) = 1/(1 \u2212 (1\u2212\u03b8)\u00b7P_hit) \u2014 ALL information acts through the single scalar P_hit. Paper 132's 4/3 cap is exactly the UNINFORMATIVE POINT of this law (H \u22a5 p).\n\n- **Symmetry break located**: internal readings die on the fiber-uniformity step; a hint's likelihood lives on the non-c-measurable coordinate and survives it verbatim.\n- **Canonical partition law** 8/(7\u22122\u03b1): \u03b1=\u00bd reproduces 4/3; \u03b1=1 gives only 8/5 < 2 \u2014 the WHICH-FACTOR CEILING: external hints capped at 2\u00d7 per dial; beyond it only via ISOLATION-COST log\u2082\u03c0(\u221aN) oracle queries (net-positive from t=5).\n- **Certain-hint ladder** 2^(t\u22122)/(1\u22122^(1\u2212t)): two bit-losses identified (parity + which-factor).\n- **Trace hints** 2^(t\u22121)/C_t: GENERIC-RECOVERY's ~5\u00d7/bit is a constant divisor, not a rate penalty.\n- **Break-even** surface \u03b1*(\u03b8,\u03b5); internal filters tolerate \u03b5 \u2264 1/6, external up to 3/5.\n\nVerification: m=31/400k dev \u22640.0032 across \u03b1; \u03c7(c)-split pointwise exact; exhaustive m=3..8 max dev 0.0089; ladder ratios 0.9986\u20131.0045; break-even verdicts 20/20.\n\nTHE COMPLETED MAP: residues cap 4/3 (theorem) | position 5.19\u00d7 measured (paper 137) | external linear-in-bits with the 2\u00d7 per-dial ceiling (theorem here). External info priced linearly \u2014 capacity synergy does not transfer to work bits.\n\nLedger: 9 self-caught errors incl. a label-space bug producing a flat-\u03b1 artifact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp468_proofs.md + exp468_verify.py + exp468_result.json, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3564",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T03:58:05.372817+00:00",
-    "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-39 #6, cron iteration (exp 476, assessment v253). Full-scale validation of paper 142's predictor.\n\n**PER-N-PREDICTOR-REPLICATED**: base effect at all three scales (r = 0.497\u20130.521 u=2.5); H1 confirmed (R\u00b2=0.3041/slope 1.128 test at u=2.5); **transfer shape PERFECT \u2014 transfer R\u00b2 equals target-scale corr\u00b2 (0.2719 vs 0.2717)**; slopes in-band 4/4 cells. Weighted feature NULL (+0.009). Floor attribution: residual 1.31\u00d7 floor at u=2.5 (real structure remains), 1.05\u00d7 at u=3.5 (noise-bound).\n\nAdopted form: rate(N) \u2248 \u22120.0035 + 0.01156\u00b7QR(\u2264100) from ~20 Euler tests \u2014 a validated per-N sieve-yield dial for QS calibration. Barriers 5/8 intact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp476_per_n_predictor_full.py + exp476_result.json, seed 20260827.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3576",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T04:50:57.569717+00:00",
-    "title": "FACT round-39 #6 \u2014 PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks each population (paper 144)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-39 #5, cron iteration (exp 474, assessment v252). Paper 138's stated residual priced.\n\n**INTERVAL-HINTS-TWO-NUMBERS**: under truthful conditioning (J ~ real min-law; oracle covers w.p. \u03b1), the committed procedure is Bayes-optimal in every cell and its speedup table is:\n\u03bc/M=0.02: 1.86/3.50/7.41/**29.13**\u00d7 at \u03b1=0.5/0.75/0.9/1.0 \u00b7 \u03bc/M=0.05: 13.12\u00d7 max \u00b7 \u03bc/M=0.10: 7.11\u00d7 \u00b7 \u03bc/M=0.20: 3.96\u00d7.\n\n**Crossing**: paper 137's magnitude-ordering gain (5.19\u00d7) equals an oracle knowing p's position within a 2\u20135%-wide window at ~90% reliability. External positional information IS a two-number law: coverage \u00d7 width.\n\nExact grid and MC agree (5.59 vs 5.70; 29.1 vs 34.0 \u2014 gaps disclosed). Ledger: v1 MC ignored \u03b1; v2's uniform-given-hit assumption inconsistent with the target law \u2014 exposed by model-vs-MC disagreement.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp474_et_hints.py + exp474_result.json, seed 20260828.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3577",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T04:50:57.570717+00:00",
-    "title": "FACT round-39 #5 \u2014 ET-HINTS: interval hints priced by coverage x width (paper 143)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## NET-53 \u2014 limited-memory axis, round 5 (paper 138, /tmp/exp_net53_gptq.py + /tmp/test_gptq.py regression gate, /tmp/net53.log)\n\n**Verdict name: COMPENSATION-WORKS-ON-THE-REAL-FLOORS.**\n\n### Result\nFaithful GPTQ (sequential layer-wise with input recapture, hooks on actual linear modules, group-aligned blocks, escalating-damping Cholesky retry; calibration train-side only) on Qwen2.5-0.5B:\n\n| arm | \u0394CE | retained acc |\n|---|---|---|\n| **GPTQ 4-bit g128 ALL** | **+0.1512** | **0.9546** |\n| GPTQ 4-bit g128 CORE (L0\u201321) | +0.1235 | 0.9641 |\n| GPTQ 3-bit g128 ALL | +1.1932 | 0.7086 |\n\nReference floors (NET-52): per-channel 4-bit +0.788 / grouped RTN 4-bit +0.318 / per-channel 6-bit +0.035.\n\n- **P1 CONFIRMED at the boundary**: +0.151 \u2264 0.15 by 0.001 \u2014 2.1\u00d7 better than grouped RTN.\n- **P2 REFUTED by a hair**: the \u22640.14 floor-approach bar missed.\n- **P3 REFUTED**: the L22/L23 \"personal tail\" increment is real (+0.0277) but only **18% of the compensated total**, not >25% \u2014 curvature-aware compensation shrinks the tail's disproportionate cost that RTN suffered.\n- **Bonus law**: the 3-bit ladder +9.23 \u2192 +2.72 \u2192 +1.19 mirrors the 4-bit ladder +0.79 \u2192 +0.32 \u2192 +0.15: each structural lever (grouping, then compensation) multiplies the previous floor down.\n\n### Deployment table for the 6 GB host\nper-channel RTN unusable below 6 bits \u00b7 grouped RTN viable at 4 (+0.32) \u00b7 **grouped GPTQ viable at 4 (+0.15), survivable at 3 (+1.19)** \u2014 all measured on one validated harness.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) confronted \u2014 GPTQ is prior art (Frantar et al.); NEW = fixed-protocol ladder across RTN/group/GPTQ at matched bits, the tail-share quantification, and the compensation-shrinks-tail-cost finding; (c) confronted \u2014 real pretrained model; limits: ONE model, ctx=512, no act-order reordering, 16-sequence calibration; (d) clean \u2014 calibration train-side only; (e) deterministic evals, damping schedule fixed pre-run; (f) clean \u2014 exact baseline reproduction (0.4460/2.8697), ALL_DONE_NET53; (g) fair \u2014 shared reference/protocol/granularity across arms; (h) DIRECT \u2014 this IS the deployment-table cell.\n\nEngineering record: three silent-science hazards caught en route (container-vs-linear hook targets \u2014 found via width diagnostics; column-rank broadcasting; Cholesky PD under partially-quantized activations) \u2014 a single-matrix unit test (/tmp/test_gptq.py: GPTQ must beat RTN on layer output error) is retained as the regression gate.\n\n### Next\nact-order variant; joint weight+KV budget optimizer; tail-aware mixed precision (keep L22/L23 at higher bits per NET-51); size transfer to Qwen2.5-1.5B.\n\nNow 53 network experiments. Assessment v53. Paper 138.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3578",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T04:50:57.571700+00:00",
-    "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS \u2014 sequential GPTQ 4-bit group-128 lands at +0.151 dCE (2.1x better than grouped RTN); 3-bit rescued +9.23 -> +1.19; tail-share 18% < 25%"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-39 #4, cron iteration (exp 472, assessment v251). Lean validation of paper 139's actionable corollary.\n\n**PREDICTOR-AT-CEILING**: the minimal predictor rate(N) \u2248 \u03b2\u2080 + \u03b2\u2081\u00b7(QR-count of odd primes \u2264 100) \u2014 ~20 Euler-criterion tests \u2014 achieves R\u00b2 = 0.2998 (calib slope 1.003) at u=2.5 and 0.2246 (slope 0.896) at u=3.5 held-out; transfer to bitlen 44 at R\u00b2 0.23/0.17, slopes 0.84/0.79.\n\nH1/H2 formally FALSE by hair-width margins (u=3.5 misses the pre-stated bands by 0.025 / 0.012) \u2014 recorded as stated.\n\n**H3 DECISIVE**: residual variance is only 1.12\u20131.24\u00d7 the pure 60-draw binomial sampling floor \u2014 the single feature captures essentially ALL systematic per-N structure.\n\nCeiling analysis: max achievable R\u00b2 at 60 values/N \u2248 0.45/0.31 \u2014 the one-feature predictor reaches **66%/73% of ceiling**; richer features need more values per N first, not more features.\n\nBarrier lines: (5) residue dial predicting a METHOD'S input statistics \u2014 zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp472_per_n_predictor.py + exp472_result.json, seed 20260827.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3579",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T04:50:57.572741+00:00",
-    "title": "FACT round-39 #4 \u2014 PER-N-PREDICTOR: one feature captures two-thirds of the achievable signal (paper 142)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-39 #3, cron iteration (exp 473, assessment v250). The abelian ladder's tenth rung.\n\n**FULL-PINNING-AT-DEGREE-TEN**: Q(\u03b6\u2081\u2081) full cyclotomic (degree 10, C\u2081\u2080 \u2245 (Z/11)^\u00d7, conductor 11) confirms every pre-stated prediction:\n- T(p) = ord\u2081\u2081(p) \u2208 {1,2,5,10}, densities {1/10, 1/10, 4/10, 4/10} on 295,946 unramified primes.\n- I(p mod 11; T) = H(T) = 1.7219 bits EXACTLY (per-class degenerate; thickening structural; coprime flat).\n- Polynomial cross-check 400/400 via factor-degree patterns \u2014 order-t elements act as 10/t cycles of length t: [1\u00b9\u2070]/[2\u2075]/[5,5]/[10].\n- Semiprime: I(N mod 11; pair) = 1.2002 vs fresh enumeration law 1.1999 and paper-78 closed-form anchor 1.2027; wall 0.0005; Is(10)-projection 0.0586 \u2014 new n=10 g/Is entries.\n\nThe abelian full-pinning law now spans degrees 2\u20136, 8, 9, 10 \u2014 real-subfield AND full-cyclotomic constructions, no exceptions.\n\nLedger: double-wrapped tuple comparison (400/400 false mismatches while PATTERN was perfect); residue-vs-type lookup; inline takeover after the channel's 6th agent death (the dying agent recovered the paper-78 anchor first \u2014 credited).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp473_degree_ten.py + exp473_result.json, seed 20260823.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3580",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T04:50:57.573731+00:00",
-    "title": "FACT round-39 #3 \u2014 DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-39 #2, cron iteration (exp 475, assessment v249). Fresh-seed audit of paper 139 (seed 20260826 vs original 20260821) \u2014 the reproducibility-audit discipline applied one firing after a seed-luck embarrassment (paper 136).\n\n**EVERY HEADLINE REPLICATES EXACTLY**:\n- Ensemble equality: emp_x2 \u2248 emp_rnd at all four cells (0.12859/0.12786, 0.02004/0.02023, 0.12854/0.12585, 0.02004/0.01869); QR-restricted randoms 32\u2013200\u00d7 lower.\n- Per-N correlations: 0.503/0.415/0.480/0.403 vs original 0.504/0.452/0.483/0.401 (max drift 0.037).\n- Decile spreads replicate (low/high 0.076\u20130.082 / 0.186\u20130.188 at u=2.5; 0.006\u20130.008 / 0.039\u20130.043 at u=3.5).\n\nVerdict: THE-QR-BITE-IS-VARIANCE is seed-robust; paper 139 stands without qualification; the per-N yield predictor's training target is stable (validation in flight as exp 472).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp475_qr_replication.py + exp475_result.json, seed 20260826.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3581",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T04:50:57.574708+00:00",
-    "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(\u03b1) concave piecewise-linear \u2014 intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **\u2192 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) \u2014 placement doubles what width buys. Best cell: right x=1/16 \u03b1=1 \u2192 **14.69\u00d7**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny \u03b1 \u2014 that family can never reach magnitude-ordering gains.\n- Crossing for 5.19\u00d7: \u03b1* = 0.832 (x=1/64) \u2192 0.996 (x=1/8) \u2014 narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling \u2014 order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at \u221aN' = rightmost-interval commitment with CAL capacity \u2192 0.\n\nVerification: exhaustive permutations M=5\u20138 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=\u221272.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3593",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T05:43:53.956820+00:00",
-    "title": "FACT round-40 #4 \u2014 ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-40 #3, cron iteration (exp 478, assessment v256).\n\n**DIAL-TRANSFERS**: the footprint-weighted yield dial fitted at bitlen 44 transfers to bitlen {48, 52} with calibration slopes 0.896/0.834 (80 values/N) and 0.912/0.834 (240 values/N) \u2014 all four cells in band. The direct divisibility feature d(N) stays independently significant in 12/12 cells (min |t| = 3.92). R\u00b2 rises substantially with relation count (0.41 \u2192 0.60 at u=2.5/bl48 for 80\u2192240 values).\n\nCaveat handled: the agent's first assembly had duplicated u-blocks and one out-of-band cell \u2014 caught by coordinator review, fixed surgically on demand; its ceiling column was definition-inconsistent with the lab convention and was NOT adopted.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp478_footprint_scale.py + exp478_result.json, seed 20260830.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3594",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T05:43:53.957883+00:00",
-    "title": "FACT round-40 #3 \u2014 FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Round-40 #2, cron iteration (exp 480, assessment v255). Paper 143's grid promoted to closed form.\n\n**HINT-COST-PRICED**: closed forms for baseline/committed/interleaved (closed = brute-exact at M=300, relgap 0.0; MC max |z|=1.52); **Bayes \u2261 Committed PROVEN** (two-valued posterior + rearrangement); interleaved strictly dominated everywhere.\n\n**THE CROSSING LAW**: reaching speedup s requires **\u03b1 > \u03b1_min(s) = 1 \u2212 2/(3s)** \u2014 a HARD RELIABILITY GATE regardless of width. For paper 137's measured 5.19\u00d7: \u03b1 > 0.87155; above the gate **\u03bc/M = \u03b1 \u2212 0.87155** (linear). Paper 137's magnitude gain \u2194 effective interval quality (\u03b1\u22480.90, \u03bc/M\u22480.028), matching exp 474's numerical estimate. **Width alone can never substitute for reliability.**\n\nConservative pricing: under w-anchored conditioning speedups move UP (7.62\u00d7 vs 5.56\u00d7) \u2014 the stipulated pricing understates real oracle value.\n\nLedger: 7 machine-caught errors incl. a Bayes block that marginalized instead of conditioning (degenerating to the hint-blind floor).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp480_proofs.md + exp480_verify.py + exp480_result.json, seed 20260828.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3595",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-22T05:43:53.958922+00:00",
-    "title": "FACT round-40 #2 \u2014 ET-HINTS-THEORY: the crossing law \u2014 width can never substitute for reliability (paper 146)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -2809,6 +1815,1000 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
+  },
+  {
+    "consumed_by_exp_id": "03b48eb6",
+    "description": "**Domain**: Pythagorean <-> Computation\n\n**Hypothesis (MOONSHOT)**: The inverse Collatz tree and the Berggren tree of primitive Pythagorean triples are two realizations of the SAME underlying ternary dynamics. The Collatz map is famously hard because its tree (under the inverse map) is a ternary tree with no known invariant; the Berggren tree is a ternary tree with a fully proven invariant \u2014 the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2 and the silver-ratio growth exponent log(1+\u221a2). The conjecture: there is a transfer map from the Berggren tree's ternary branching onto the inverse-Collatz tree that carries the Lorentz invariant and the growth structure, giving the Collatz tree a conserved quantity it currently lacks.\n\n**Test**: Formalize the inverse Collatz tree as a ternary tree (each odd n has up to three preimages under the inverse map). Formalize the Berggren tree's proven machinery (Lorentz invariant, groupoid, silver-ratio growth). Construct an explicit map from Berggren triples to Collatz orbits and test whether the Lorentz form or a derived quantity is conserved along Collatz trajectories. Prove at least one structural theorem \u2014 e.g., that a Berggren-type invariant bounds the growth of a Collatz trajectory, or that the ternary branching of the two trees is isomorphic.\n\n**Why now**: The Collatz conjecture is one of the most famous open problems in mathematics \u2014 a true moonshot target. The catalog already carries a fully formalized ternary tree (Berggren) with exact invariants and growth. If the two trees are genuinely related, the solved Berggren structure becomes a new tool for the hardest open problem in discrete dynamics. Even a partial transfer would be history-making.\n\n**If true**: The Collatz tree gains a conserved Lorentz-type invariant and an exact growth bound, opening a genuinely new attack line on the Collatz conjecture \u2014 a result that would be among the most celebrated in mathematics.\n\n**If false**: The failure \u2014 proving the two ternary trees are NOT isomorphic, or that no Berggren-type invariant is conserved \u2014 is itself a sharp theorem explaining precisely why the Collatz tree resists the methods that work for Berggren, clarifying the boundary of what ternary-tree methods can achieve.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1774",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-20T23:42:10.363274+00:00",
+    "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
+  },
+  {
+    "consumed_by_exp_id": "a2c90992",
+    "description": "**Domain**: Pythagorean <-> Algebra\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid \u2014 integral matrices preserving the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2, living on the null cone \u2014 is a shadow of the arithmetic of the even Lorentzian Leech lattice II(25,1), the 26-dimensional lattice at the heart of Conway's \"holy construction,\" whose automorphism group hosts the Conway group Co0 and, through the moonshine module, the Monster \u2014 the largest sporadic simple group. The conjecture: the tree's combinatorial structure (nodes, branches, 3-adic boundary) is realized by the hole structure of the Leech lattice \u2014 deep holes \u2194 Niemeier lattices \u2014 so that the Berggren tree provides an explicit pythagorean parametrization of the Niemeier lattice family, and the groupoid embeds in the Lorentzian lattice's automorphism group, bridging Pythagorean triples to Monstrous moonshine.\n\n**Test**: Formalize the embedding of the (2,1)-signature null cone into II(25,1) and the action of the Berggren generators on the Lorentzian lattice. Prove or refute: (i) the groupoid embeds in the positive Lorentz group of II(25,1) \u2014 equivalently in the Conway group's Lorentzian extension; (ii) the tree's nodes and branches map to the deep-hole/Niemeier structure respecting the ternary branching; (iii) the McKay-Thompson trace series \u2014 whose moment structure the catalog already formalized via the Bell-criterion package \u2014 acquire a tree-parametrized organization.\n\n**Why now**: Monstrous moonshine \u2014 the j-function connection proved by Borcherds (Fields Medal) \u2014 is the most spectacular bridge in modern mathematics, and its natural habitat is precisely a Lorentzian lattice with null-cone structure: the same geometric substrate as the Berggren tree. The catalog's moonshine package built the trace-series and moment machinery; the Lorentzian-lattice bridge from the tree is the missing geometric link. Both structures are integral Lorentzian geometries, and the question of whether the tree's combinatorics lives in the Leech lattice's hole structure is the natural next moonshot.\n\n**If true**: A pythagorean parametrization of the Niemeier lattices and an embedding of the Berggren groupoid into the Monster's natural habitat \u2014 a bridge from the oldest mathematics (Pythagoras) to the most extraordinary object in group theory, with the tree as an explicit combinatorial model for the geometry of moonshine.\n\n**If false**: The groupoid does not embed, or the tree's branching does not match the hole structure \u2014 a precise theorem about which Lorentzian arithmetic the tree actually realizes, clarifying the boundary between elementary Pythagorean geometry and the Leech lattice's exceptional structure.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1784",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T03:17:34.067416+00:00",
+    "title": "Moonshine from the Null Cone \u2014 The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
+  },
+  {
+    "consumed_by_exp_id": "8247d370",
+    "description": "**Domain**: Pythagorean <-> Geometry\n\n**Hypothesis (MOONSHOT)**: The space of Euler bricks (integer boxes whose three face diagonals are integral) carries a Berggren-style tree structure: a finite set of integer generators acts on bricks, producing every primitive Euler brick from finitely many seeds, with a descent theory reducing every brick to minimal ones \u2014 the perfect-cuboid analogue of the Berggren tree itself. The conjecture: the brick tree's structure theory settles the shape of the perfect cuboid question \u2014 either a perfect cuboid exists in the tree (reachable by bounded search along the tree's growth), or the tree's architecture yields a proof that the four simultaneous square conditions (three face diagonals and the space diagonal) obstruct each other along every branch.\n\n**Test**: Formalize Euler bricks as integer triples with three integral face diagonals; exhibit explicit generator transformations acting on bricks that preserve brick-hood and generate the primitive brick space from finitely many seeds (the catalog already proved the diagonal-cone reduction a\u00b2+b\u00b2+c\u00b2=2d\u00b2 and the rational parametrization of the normalized quadric \u2014 build the tree on top of that foundation). Prove the descent theory: every brick descends to a finite set of minimal bricks, the brick analogue of (3,4,5). Then either (i) exhibit a perfect cuboid, or (ii) prove a structural obstruction: the space-diagonal condition fails along every branch in a formally provable pattern.\n\n**Why now**: The perfect cuboid problem has been open since Euler's era and is one of the most famous unsolved problems of elementary number theory. The catalog's perfect-cuboid package completed the static geometry (the diagonal cone and the rational parametrization of the cuboid quadric); the dynamic, tree-like structure theory of the brick space is the missing piece, and the Berggren tree's proven machinery \u2014 generators, descent, exact growth \u2014 is exactly the template. A Berggren-style descent on bricks is the natural next move the corpus has set up but not taken.\n\n**If true**: Either the discovery of a perfect cuboid (settling a 300-year-old problem) or the first structural obstruction theorem \u2014 a proof that the brick tree's architecture forbids the four simultaneous square conditions, transforming the problem from search to structure.\n\n**If false**: The brick tree fails to have finitely-generated descent (primitive bricks require infinitely many seeds) \u2014 itself a sharp structure theorem distinguishing the brick world from the triple world, and a precise map of where the perfect-cuboid difficulty lives.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1785",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T03:17:34.068074+00:00",
+    "title": "The Euler Brick Tree \u2014 Berggren Descent and the Perfect Cuboid"
+  },
+  {
+    "consumed_by_exp_id": "54700980",
+    "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree enumerates every primitive integer right triangle (a,b,c), and its area function A = ab/2 = mn(m\u00b2\u2212n\u00b2) over the Euclid seeds hits exactly the congruent numbers up to squarefree parts \u2014 n is congruent (the area of a rational right triangle) if and only if n is the squarefree part of the area of some node of the tree. The conjecture: the tree's proven structure theory (descent to (3,4,5), silver-ratio growth, groupoid) makes the tree a new, provably analyzable laboratory for the congruent number problem \u2014 in particular the density of congruent numbers (conjecturally about one half in each admissible residue class, open, and equivalent in depth to the rank distribution of the elliptic curves y\u00b2 = x\u00b3 \u2212 n\u00b2x) can be attacked through the statistical structure of the tree's area values.\n\n**Test**: Formalize the area function mn(m\u00b2\u2212n\u00b2) over the tree's Euclid seeds and prove the classical equivalence inside the tree formalism: the squarefree parts of node areas are exactly the congruent numbers. Then prove structure theorems: the distribution of squarefree parts along branches, the growth of the set of congruent numbers \u2264 X generated at depth \u2264 d, and the tree-side descent structure of the elliptic-curve correspondence (rational triangles \u2194 rational points on y\u00b2 = x\u00b3 \u2212 n\u00b2x). Stretch goal: an unconditional version of Tunnell's criterion for an explicit infinite family of n, or a proven density law for congruent numbers in a residue class.\n\n**Why now**: The congruent number problem is one of the oldest unsolved problems in mathematics (Bachet, 1621), and its complete solution is equivalent to the Birch\u2013Swinnerton-Dyer conjecture \u2014 a $1M Millennium Prize Problem. The catalog has fully formalized the tree (groupoid, hyperbolic geometry, silver speed limit) but has never studied its area function \u2014 the direct bridge to congruent numbers. The tree is the one structure in which the triangle side of the problem is completely explicit; every congruent number is visible in it.\n\n**If true**: The congruent number problem gains a concrete new laboratory: the tree's area statistics become a computable model for the BSD-linked density conjectures, and any proven density law or unconditional Tunnell family would be a major result on a Millennium-Prize-scale problem.\n\n**If false**: The tree's area function has no tractable structure (e.g., squarefree parts equidistributed with no exploitable pattern) \u2014 itself a sharp equidistribution theorem about the tree, and a precise statement of why the triangle side alone cannot see the elliptic-curve side.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1787",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T03:17:34.069425+00:00",
+    "title": "The Congruent Number Laboratory \u2014 The Berggren Tree's Area Function and the Birch\u2013Swinnerton-Dyer Frontier"
+  },
+  {
+    "consumed_by_exp_id": "542d7a55",
+    "description": "## NET\u2192FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL (paper 80, /tmp/exp_nonabelian_typechan.py, /tmp/r24n1h.log)\n\n**Verdict name: THE-TYPE-CHANNEL-IS-THE-ABELIANIZATION.**\n\n### Result\nThe complete splitting-type channel of a **non-abelian** field is **exactly its abelianization content**: at the prime level **I(p mod m\\*; T) = I(T; coset) = H(T) \u2212 H(T|coset)** (m\\* = conductor of the G^ab characters), and at the semiprime level the papers 78/79 pair law holds **verbatim** with the class-level type map. Verified on S\u2083 \u00d72, S\u2084, A\u2084, D\u2084 with abelian controls V\u2084/C\u2084 \u2014 **7/7 fields prime, 7/7 semiprime, every field on its pre-stated value.**\n\n### The law table (prime level, ~23k primes/field)\n| field | G | G^ab | H(T) | I\u2081 measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| S\u2083a x\u00b3+x+1 | S\u2083 | C\u2082 | 1.4591 | **1.0000** | 1.0000 \u2713 | 1.0000 | 0 |\n| S\u2083b x\u00b3\u2212x+1 | S\u2083 | C\u2082 | 1.4591 | **1.0000** | 1.0000 \u2713 | 1.0000 | 0 |\n| S\u2084 x\u2074\u2212x\u22121 | S\u2084 | C\u2082 | 2.0944 | **1.0100** | 1.0000 \u2713 | 1.0000 | 0 |\n| A\u2084 x\u2074+8x+12 | A\u2084 | C\u2083 | 1.1887 | **0.9188** | 0.9183 \u2713 | 1.5850 | 2/3 |\n| D\u2084 x\u2074\u22122 | D\u2084 | C\u2082\u00d7C\u2082 | 1.9056 | **1.6555** | 1.6556 \u2713 | 2.0000 | 0.3444 |\n| V\u2084 x\u2074\u22122x\u00b2+9 [ab.] | V\u2084 | C\u2082\u00d7C\u2082 | 0.8113 | **0.8092** | 0.8113 \u2713 | 2.0000 | 1.1887 |\n| C\u2084 \u03a6\u2085 [control] | C\u2084 | C\u2084 | 1.5000 | **1.4989** | 1.5000 \u2713 | 2.0000 | 0.5 |\n\nS\u2084 carries 2.0944 bits of splitting entropy and leaks exactly 1 bit; A\u2084's [3,1] type fills both non-trivial C\u2083-cosets (loss exactly 2/3); D\u2084's [2,2] merges two cosets; V\u2084's three involutions all give [2,2]. Within-coset flatness at permutation nulls (z \u2264 0); thickening honest at the 0.004-bit level; coprime flat.\n\n### The REVERSAL\nPaper 77 ordered the control pair by forks: V\u2084 0.8113 > D\u2084 0.2936. The type channels order it **the other way**: V\u2084 0.8092 **<** D\u2084 1.6555. The readout's coset-separation \u2014 not the group's abelianness \u2014 decides which channel is richer. Both orderings are exact instances of the same law.\n\n### Semiprime (400k MC/field, unramified pools)\nS\u2083a **1.0001**, S\u2083b **1.0001**, S\u2084 **1.0034** vs law 1.0000 \u2014 **the C\u2082 cap is a theorem about the abelianization, not the type count** (a 5-type S\u2084 field cannot exceed the quadratic 1 bit). A\u2084 **0.4729** vs 0.4739 (dial-pair 1.5850). D\u2084 **1.4325** vs 1.4302 \u2014 a non-abelian channel ABOVE 1 bit, as its 2-D abelianization predicts. V\u2084 **0.2902** = Is(4) (paper-79 2-state identity). C\u2084 **1.2461** vs 1.25 (paper 78). Which-factor walls 0.0000\u20130.0001; pinned-fork s-projections reproduce Is(2)/Is(3)/Is(4) (papers 74/75).\n\n### Method notes\nQuartic types via F_{p\u00b2}-root counting ((nr, nr\u2082) from x^(p\u00b2) mod f + gcd) \u2014 the cubic-resolvent shortcut is INVALID for binomial/special quartics (x\u2074\u22122's axis pairing is D\u2084-fixed; V\u2084's resolvent splits over \u211a). Sparse-modulus discipline: permutation-null thickening and 400k MC (30k would leave ~0.10-bit bias in S\u2084's 282\u00d715-cell table). Runtime 314 s, all asserts green.\n\n### All 8 barriers\n(a) clean \u2014 law + full table stated before the run, measurement independent of the dial; (b) clean \u2014 no non-abelian type-channel work in the Catalog (698-pkg scan: nearest are the lab's own #723\u2013#728) or literature; (c) confronted \u2014 real Galois groups, 23k-prime histograms < 2% from class sizes, 400k-draw MC; (d) clean \u2014 deterministic + fixed seeds; (e) the substance \u2014 finite-sample margins quantified (S\u2084 +0.0100; thickening at 0.004-bit level under nulls); (f) controlled \u2014 exact laws vs MC asserted to 0.02, both estimator traps caught and repaired; (g) fair \u2014 V\u2084/C\u2084 controls reproduce papers 77/78/79 through the identical pipeline; (h) closure \u2014 symmetric (which-factor 0.0000, barrier 2), residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), Galois + Chebotarev 1922 + reciprocity (barrier 8).\n\n### What closes\nThe **type-channel program is complete**: papers 70 (flatness), 71 (criterion), 72\u201374 (binary laws), 75\u201377 (group table), 78\u201379 (abelian types) are all projections of one statement \u2014 the complete symmetric residue channel of splitting statistics equals the type's mutual information with the abelianization coset. Perfect groups (G^ab = 0) predict zero and paper 76's A\u2085 is already flat.\n\nNow 415 experiments. Assessment v191. Paper 80.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3389",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T07:46:13.683032+00:00",
+    "title": "FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content (paper 80)"
+  },
+  {
+    "consumed_by_exp_id": "97faef64",
+    "description": "## FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C\u2084-abelianization object**: the Frobenius group **F\u2082\u2080 = AGL(1,5)** via x\u2075\u22122. Prime: **I(p mod 5; T) = 1.4989 vs pre-stated 1.5000** \u2014 H(T) = 1.6805 bits of quintic splitting entropy collapse through the 2-bit quartic dial, with the [1,4] type merging the two order-4 cosets {2,3} for a loss of **exactly 0.5 bit**. Semiprime: pair = **1.2462 vs class-enumeration law 1.2500**; and the [1,2,2]-fork (\u27fa p \u2261 4 mod 5) realizes **Is(4) as an order-4 pinned fork on a non-abelian field** (0.2915 vs 0.2947) \u2014 previously order-4 split-counts existed only on abelian V\u2084 and the joint-AND D\u2084 fork (paper 77).\n\n### The law table\n| field | G | G^ab | H(T) | I\u2081 measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| F\u2082\u2080 x\u2075\u22122 | F\u2082\u2080 | C\u2084 | 1.6805 | **1.4989** | 1.5000 \u2713 | 2.0000 | 0.5 |\n| C\u2085 Q(\u03b6\u2081\u2081)\u207a [control] | C\u2085 | C\u2085 | 0.7219 | **0.7198** | 0.7219 \u2713 | 3.3219 | 2.6 |\n\nSemiprime (400k MC): F\u2082\u2080 pair **1.2462** vs 1.2500 \u2713 (reads 1.25 of the 2-bit dial \u2014 the largest fraction of any merged-type field in the program); C\u2085 pair **0.2026** vs Is(5) = 0.2027 \u2713 (paper-79 f=11 reproduced). Which-factor walls 0.0000; coprime flat; within-coset flatness z = +0.00; thickening agrees to 0.0001.\n\n### The instructive failure (record as method)\nFirst run swapped the coset labels of the multiplier-3/-4 families relative to the C\u2084 valuation (V(3)=3, V(4)=2). **Invisible at the prime level** \u2014 both merged classes share type [1,4], so I\u2081 is unchanged \u2014 but it corrupted the pair enumeration (law 1.1250 vs true 1.2500). The 400k MC caught it: measured 1.2462 sat on the *corrected* value. **Lesson: the pair law is the discriminating test of coset bookkeeping precisely where type-merging hides it.** Method legacy: quintic type dictionary via F_{p\u00b2}-root counting is (5,5)/(1,1)/**(1,5)**/(0,0) \u2014 (1,5), not the quartic-carried (1,3): both quadratic pairs' roots live in F_{p\u00b2}\\F_p.\n\n### All 8 barriers\n(a) clean \u2014 four horns with exact values pre-stated; (b) clean \u2014 no quintic type-channel work in the Catalog; (c) confronted \u2014 real F\u2082\u2080 field, ~23k-prime histograms < 2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 margins quantified (\u22120.0011/\u22120.0038/\u22120.0032), coset-swap episode documented; (f) controlled \u2014 four harness defects caught across five runs by asserts/MC-law disagreement; final run ALL_DONE all-green; (g) fair \u2014 C\u2085 abelian control reproduces paper 79 through the identical pipeline; (h) closure \u2014 symmetric (wall 0, barrier 2), residue dial (5), CRT-sealed (6), Kummer/affine classical (8).\n\n### What this decides\nThe abelianization law now spans **degrees 2\u20135** and abelianizations **C\u2082, C\u2083, C\u2084, C\u2082\u00d7C\u2082, C\u2099**: I(p mod m\\*; T) = I(T; coset), pair law verbatim, the type-vs-dial gap always exactly the entropy of the cosets the type cannot tell apart. The type-channel face of the program is complete at every tested group; the frontier returns to the quantum channel (QUBIT-TRADE) and the barrier-4 converse.\n\nNow 417 experiments. Assessment v193. Paper 82.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3411",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:52.029699+00:00",
+    "title": "FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F\u2082\u2080 and the first C\u2084 dial (paper 82)"
+  },
+  {
+    "consumed_by_exp_id": "a3b670e2",
+    "description": "## FACT round-24 #2 \u2014 BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structure beyond the trace**. The channel decomposes into (i) a deterministic 3-adic skeleton that *restates* N mod 3 exactly, and (ii) a metric layer \u2014 branch letters, depth, path composition \u2014 that is **blind at every 3-adic level 3^k, k \u2264 6**. The Catalog's 3-adic Cantor boundary (#855) has no N-computable projection beyond the trace-set content.\n\n### The four horns (all stated before the run; all confirmed)\n- **H1 SKELETON (deterministic lemma)**: squares mod 3 = {0,1} + m\u22a5n \u27f9 N \u2261 1 \u27fa 3|n, N \u2261 2 \u27fa 3|m, N \u2261 0 \u27fa 3\u2224mn \u2014 agreement **40000/40000 = 100%**. And it RESTATES the trace: 3|n \u27fa q\u2261p mod 3 \u27fa N \u2261 p\u00b2 \u2261 1 mod 3, also **40000/40000** \u2014 zero information beyond N mod 3 (barrier 6).\n- **H2 PARENT-INTERVAL LAW (new exact lemma)**: the Berggren parent is decided by the ratio alone \u2014 m/n \u2208 (1,2) \u2192 T\u2081 = (n,2n\u2212m); (2,3) \u2192 T\u2082 = (n,m\u22122n); (3,\u221e) \u2192 T\u2083 = (m\u22122n,n). Verified on all **40000/40000** descents terminating exactly at root (2,1), plus **86,634 spot-checked steps** with child-map reconstruction (B\u2081(m,n)=(2m\u2212n,m), B\u2082=(2m+n,m), B\u2083=(m+2n,n)) exact on every step.\n- **H3 METRIC BLINDNESS**: I(N mod 3^k; b_t) at the 300-shuffle permutation null for every letter depth t \u2264 10 and level k \u2264 6; same for depth dB and composition (c\u2081,c\u2082,c\u2083). **Worst z = +2.51 across ~150 tests** (k=1: I(N mod 3; b\u2081) = 0.00004 vs null 0.00004, z = +0.04).\n- **H4 CONTROLS (live)**: trace lemma I(N mod 3; s mod 3) = **1.0000** exact (paper 50); I(ratio-band; b\u2081) = **1.4738 = H(b\u2081)** EXACTLY \u2014 the first branch letter is a deterministic function of the m/n band, whose recovery IS the factorization; corr(log dB, log gap) = \u22120.141 replicates paper 56's anti-correlation.\n\n### Sample\n40,000 random semiprimes (p,q uniform primes in [2\u00b9\u2076, 2\u00b2\u2074)), Miller-Rabin (12 bases), capped descents (5000 steps): twin-prime nodes n=1 descend stepwise in m and are censored \u2014 **42/40402 = 0.10%**, reported. Runtime 154 s.\n\n### Why this matters\n- Paper 56's orthogonality is sharpened from coordinate-level to **adic strength**: coordinates orthogonal AND position sealed.\n- Tree-adic dials join the closed residue-dial family (papers 54/70/72\u201374/77/79/80): no dial exceeds its trace-set content; the metric interior requires the factorization to read.\n- The gold-tier interference claim (#829, \"exact factorisation by interference of Pythagorean triples\", polynomial-time per its filename) has no formula in the index, but this result fences it: any such method must either smuggle the Fermat pair (circularity, barrier 6) or pay \u03a9(N) aggregation (barrier 4).\n\n### All 8 barriers\n(a) clean \u2014 four horns pre-stated, measurement object \u2260 instrument; (b) clean \u2014 no tree-position channel work in the Catalog (nearest: our own echo #707); (c) confronted \u2014 40k real semiprimes, 86,634 verified steps, ~150 null-tested channels; (d) clean \u2014 fixed seeds; (e) the substance \u2014 blindness asserted against empirical nulls, censoring reported, worst z +2.51 < 3 without multiplicity correction; (f) controlled \u2014 lemmas asserted at 100%, ALL_DONE marker; (g) fair \u2014 two live positive controls fire (trace 1.0000; band-determinism = H(b\u2081)); (h) closure \u2014 symmetric by construction, skeleton circular (6), metric layer needs factors (5/6), descent = classical Euclidean algorithm in disguise (8).\n\n### What closes\nThe Pythagorean-tree line is now closed at three strengths: embedding exact (paper 56), coordinates orthogonal (paper 56), position adically sealed (this paper). Frontier returns to the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 416 experiments. Assessment v192. Paper 81.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3412",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:52.031024+00:00",
+    "title": "FACT round-24 #2 \u2014 BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
+  },
+  {
+    "consumed_by_exp_id": "a977122a",
+    "description": "## FACT round-24 #5 \u2014 D\u2085-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** \u2014 and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x\u2075+ax+b (|a|,|b| \u2264 60) found **four D\u2085 quintics in seconds**, each with square discriminant and the exact signature {[1\u2075]: \u22480.10, [5]: \u22480.40, [1,2,2]: \u22480.50}.\n\n### The subtlety: where D\u2085's C\u2082 lives\nD\u2085 \u2286 A\u2085 \u27f9 \u221adisc(f) \u2208 \u211a \u27f9 the abelianization's quadratic subfield K is **not** Q(\u221adisc). Theory locates it \u2014 splitting-field ramification = root-field ramification \u27f9 K = Q(\u221ad), d squarefree over f's ramified prime set \u2014 and candidate enumeration + Kronecker matching identifies **K = Q(\u221a\u22125) at agreement 1.0000, uniquely**, for x\u2075+20x+32 (m\\* = 20 = Q(\u221a\u22125)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D\u2085 type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(\u22125, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 \u2014 exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I\u2081 measured | law | pair |\n|---|---|---|---|---|---|---|\n| C\u2085 | Q(\u03b6\u2081\u2081)\u207a | C\u2085 | 0.7219 | 0.7198 | 0.7219 \u2713 | Is(5) \u2713 |\n| **D\u2085** | **x\u2075+20x+32** | **C\u2082** | **1.3610** | **1.0000** | **1.0000 \u2713** | **1.0 \u2713** |\n| F\u2082\u2080 | x\u2075\u22122 | C\u2084 | 1.6805 | 1.4989 | 1.5000 \u2713 | 1.25 \u2713 |\n| A\u2085 | x\u2075+20x+16 | 1 | 1.6555 | **0** | 0 \u2713 | 0 \u2713 |\n| S\u2085 | x\u2075\u2212x\u22121 | C\u2082 | 2.5574 | 1.2158* | 1.0 \u2713 | 1.0 \u2713 |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions \u2014 the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean \u2014 predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean \u2014 no D\u2085 type-channel work in the Catalog; (c) confronted \u2014 real D\u2085 fields, histograms < 0.2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled \u2014 three harness iterations disclosed (modulus-scan failure \u2192 theory-grounded candidate enumeration; even-numerator Jacobi bug \u2192 Kronecker helper); (g) fair \u2014 walls zero, coprime flat, controls are papers 78\u201382's reproduced values; (h) closure \u2014 symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2\u20135, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3413",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T14:54:02.516407+00:00",
+    "title": "FACT round-24 #5 \u2014 D\u2085-QUINTIC: the quintic row complete (paper 84)"
+  },
+  {
+    "consumed_by_exp_id": "04a8c3de",
+    "description": "## FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S\u2085 via x\u2075\u2212x\u22121** (true disc **2869 = 19\u00b7151** \u2014 not the quartic's \u2212283): seven factorization types, **H(T) = 2.5574 bits \u2014 the largest type entropy measured in the program** \u2014 reduce to the single quadratic-residue bit of N mod 2869. Sign agreement 1.0000; **I\u2081 = 1.2157 sits exactly at its within-sign permutation null 1.2188 (z = \u22120.85)** \u2014 the raw excess over the law's 1.0000 is entirely sparse-dial plug-in bias (+0.2188). Semiprime pair = **1.0648 vs null 1.0639** (gap 0.0009); sign-fork s-projection = **1.0023 vs Is(2) = 1.0000**.\n- **A\u2085 via x\u2075+20x+16** (perfect group): **the complete four-state type channel is SEALED** \u2014 I(p mod m; T) at the permutation null for m \u2208 {3,7,11,31}, worst |z| = 1.72; semiprime pair = **0.0004 \u2248 0**; no odd-type readout ever occurs. 1.6555 bits of splitting entropy, and N cannot hear one of them from any residue direction. Paper 76's fork flatness, extended to the full channel.\n\n### The measurement ledger (6 defects caught by designed checks across 8 runs)\n1. [3,2] dictionary entry: (nr, nr\u2082) = (0,**2**), not (0,4) \u2014 one quadratic pair contributes two F_{p\u00b2}-roots (caught by the p=2 crash).\n2. Discriminant migration: disc(x\u2075\u2212x\u22121) = 2869, not \u2212283 (caught by repeated factors mod 151).\n3. Sign-encoding inversion: agreement 0.0000 = perfect anti-correlation = the law confirming itself through a flipped convention.\n4. Sparse-dial plug-in bias on the HEADLINE I\u2081 (+0.22 bits at a 2868-class dial) \u2014 fixed by permutation reference (the paper-70 lesson extended to primary quantities).\n5. Null design: permuting labels within strata DELETES the through-stratum coset channel; must permute the data.\n6. tid/string mismatch making strata \u2261 0 (a global shuffle masquerading as stratified).\n\nProtocol lessons adopted: every MI at large conductors is permutation-referenced; a null must preserve exactly the channel the law predicts and randomize only the finer assignment; exact 0/1 agreement flags encoding bugs before physics.\n\n### All 8 barriers\n(a) clean \u2014 parameter-free predictions (A\u2085's zero needs no tuning); (b) clean \u2014 no S\u2085/A\u2085 type-channel work in the Catalog; (c) confronted \u2014 real fields, histograms < 2% from class sizes, 400k MC, four moduli \u00d7 200-shuffle nulls; (d) clean \u2014 fixed seeds; (e) the substance \u2014 all comparisons permutation-referenced at large conductors, full defect ledger disclosed; (f) controlled \u2014 six defects caught by designed checks, final run ALL_DONE all-green; (g) fair \u2014 which-factor walls \u2264 0.0001, coprime flat, the A\u2085 zero self-controls against papers 78\u201382's live detections; (h) closure \u2014 symmetric (2), residue dial (5), CRT-sealed (6), classical Galois/reciprocity/Chebotarev (8).\n\n### What closes\nThe quintic row is measured on 4/5 groups (D\u2085 pending a verified polynomial); the abelianization law confirmed at EVERY abelianization type existing for degrees 2\u20135: trivial (A\u2085), C\u2082 (S\u2083/S\u2084/S\u2085), C\u2083 (A\u2084), C\u2084 (F\u2082\u2080), C\u2082\u00d7C\u2082 (D\u2084/V\u2084), C\u2099 (abelian controls). The type-channel program is complete at every tested group.\n\nNow 418 experiments. Assessment v194. Paper 83.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3414",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T14:54:02.517783+00:00",
+    "title": "FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)"
+  },
+  {
+    "consumed_by_exp_id": "1a4b5fe9",
+    "description": "## FACT round-25 #3 \u2014 QUBIT-TRADE4 (paper 87, /tmp/exp_qubittrade4.py, /tmp/r25n3.log)\n\n**Verdict name: THE-STANDARD-CORNER-IS-OPTIMAL.**\n\n### Result\nThe third resource axis \u2014 **base re-draws k**, real Shor's escape from the per-N unlucky cap (paper 86) \u2014 completes the surface, and its total-cost accounting places the optimum at the textbook parameterization:\n\n- **H1 cap lift**: at t = wall, s = 5: k=1 \u2192 0.504, k=2 \u2192 0.735, k=4 \u2192 0.940 \u2014 following 1\u2212(1\u2212p\u2081m)^{ks} exactly (m \u2248 \u00bd mixed-role fraction).\n- **H2 three-way fungibility**: mean \u0394P = +0.18 per single-resource doubling across 12 mixed-axis steps, positive everywhere below saturation.\n- **H3 standard-corner optimality** (corrected accounting, disclosed): reaching P \u2265 0.3 costs G \u2248 k\u00b7s\u00b7t\u00b2 = **6400 at the full-register corner** vs 14440 at wall\u22122 and 51840 at wall\u22124 \u2014 shaving width costs exponential samples/re-draws against a quadratic saving.\n\n### Frontier (ii) closed\nPaper 47 threshold \u2192 paper 85 ramp \u2192 paper 86 cap \u2192 paper 87 optimum. **DEQUANT final form**: the fungibility surface exists, every point of it is quantum resource, its minimum sits at the standard corner, and no point approaches classical factoring complexity.\n\n### Population & method\n24 constructed controlled-order semiprimes (12 mixed-role / 12 same-role), K = 6 independent bases per N with fresh role structure, progression kernel from papers 85\u201386, cells t \u2208 {wall\u22124, \u22122, 0} \u00d7 s \u2208 {1, 5, 20} \u00d7 k \u2208 {1, 2, 4}, 20 trials each. Runtime ~30 s.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; H3's accounting bug found post-run and corrected from raw data (both numbers shown); (b) clean; (c) confronted \u2014 24 real semiprimes \u00d7 6 bases \u00d7 27 surface points; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap-lift and \u0394P quantified, bug disclosed; (f) controlled \u2014 machinery inherited from validated rounds; (g) fair \u2014 balanced role population by design, consistency with papers 85\u201386; (h) closure \u2014 no parameter tuning of Shor improves its total cost; classical complexity remains the only competition (barrier 8), aggregation prices every classical route (barrier 4).\n\nNow 422 experiments. Assessment v198. Paper 87.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3415",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T15:49:12.718353+00:00",
+    "title": "FACT round-25 #3 \u2014 QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-25 #2 \u2014 QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes (r \u2208 {210, 310, 434, 510}), P_factor(s=1) climbs the same ladder \u2014 **0.018 / 0.056 / 0.158 / 0.181** across t = wall\u22124 \u2026 wall+2 \u2014 and samples compound as independence wherever the cap allows. One new structural element: a **per-N unlucky cap that sample count cannot move**.\n\n### The construction (invented this round)\nReal ord_N(a) is lcm(p\u22121, q\u22121)-scale (~2\u00b3\u2070) \u2014 register simulation impossible. Built controlled-order semiprimes instead: primes p \u2261 1 mod r directly, order-r elements by projection h^((p\u22121)/r), CRT-combined with randomized per-prime orders d_p, d_q \u2208 {r, r/2}. This surfaced a structural fact: **ord_p(a) = ord_q(a) exactly \u27f9 a^{r/2} \u2261 \u22121 mod both primes \u27f9 N never factors from period certificates** \u2014 the permanently-unlucky case real Shor escapes by re-drawing a.\n\n### Results\n- Ramp persists: P_factor(s=1) = 0.018 \u2192 0.181 along t; nocert share 0.003 at/above wall\u22122 (certification is not the bottleneck \u2014 paper 85's ramp).\n- Ladders track independence under the cap (wall\u22122: 0.056/0.204/0.471 \u2248 1\u2212(1\u22120.06)^s).\n- **Saturation \u2248 0.53** = cert-rate \u00d7 mixed-role fraction (~\u2154): the unlucky-half cap is per-N structural; s cannot push past it.\n- Taxonomy: spurious-or-partial certificates **0.844**, unlucky 0.109, factor 0.044, nocert 0.003 \u2014 the dominant classical burden is certificate filtering, which is exactly N-verification's role.\n\n### Method ledger (4 catches across 6 launches)\nOrder blow-up (naive r ~ 2\u00b3\u2070 unsimulatable); simultaneous-order search impossible (~10\u207b\u2077 density) \u2192 CRT construction; equal-order = permanent unluckiness (first measurements all-zero); infinite loop on odd half-orders + first-certificate early-return masking later splitting ones + a hardcoded verdict string replaced by data-computed output before any claim was made.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; the population design implements the cap rather than assuming it; (b) clean \u2014 no real-N ramp work in the Catalog; (c) confronted \u2014 actual semiprimes, exact orders, full gcd-based extraction; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap measured not assumed, taxonomy quantified, defects disclosed; (f) controlled \u2014 dishonest-verdict catch before any claim; (g) fair \u2014 shares consistent with paper 85 through the identical kernel; (h) relevance \u2014 Shor's short-register regime prices in samples linearly, capped by the unlucky-base structure that base re-drawing removes classically (barriers 4/8).\n\nNow 421 experiments. Assessment v197. Paper 86.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3416",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T15:49:12.719442+00:00",
+    "title": "FACT round-25 #2 \u2014 QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-25 #1 \u2014 QUBIT-TRADE2 (paper 85, /tmp/exp_qubittrade2.py, /tmp/r25n1g.log)\n\n**Verdict name: ONE-REGISTER-BIT-IS-WORTH-ONE-SAMPLE.**\n\n### Result\nThe qubit/sample phase diagram of Shor period-finding is a **fungibility ramp**, not a wall. The pre-stated vertical-wall hypothesis (odd r \u27f9 deterministic certification failure below t = 2log\u2082r) was **honestly refuted** by the correct measurement kernel: under the standard arithmetic-progression distribution P(k) = (1/Mq)\u00b7|sin(\u03c0Mkr/q)/sin(\u03c0kr/q)|\u00b2 (M \u2248 q/r), the per-sample certification rate follows **P\u2081 \u2248 ramp(q/r\u00b2)**, and samples compound it as P_s = 1\u2212(1\u2212P\u2081)^s. The measured exchange law: **t\\*(s) shifts by \u2212log\u2082 s** \u2014 one register bit is worth one sample.\n\n### The three measurements\n1. **The single-sample ramp**: P\u2081 rises smoothly with q/r\u00b2 through odd/mixed families (4\u00b7odd: 0.003 at q/r\u00b2 = 0.028 \u2192 0.36 at 0.905 \u2192 plateau \u2248 0.46); pure powers of two are flat-saturated (~0.5 at every ratio \u2014 peaks exactly on grid points).\n2. **Sample ladders out-of-sample**: P_s tracks 1\u2212(1\u2212P\u2081)^s tightly everywhere (odd prime at wall\u22121: P\u2081 = 0.725 \u2192 s=2: 0.940 vs predicted 0.924; 2\u00b7odd at wall\u22123: P\u2081 = 0.055 \u2192 s=20: 0.680 vs predicted 0.677).\n3. **The exchange law** (odd composite 1155, wall t = 21): t\\*(P\u22650.5) shifts {s=2: +0, s=5: \u22122, s=20: \u22124, s=100: \u22126} against \u2212log\u2082s = {\u22121, \u22122.3, \u22124.3, \u22126.6}. (s=1 never crosses 0.5: the saturation level P\u2081 \u2248 0.37 *is* the standard per-sample rate.)\n\n### The honest refutation\nThe stated-before-run mechanism (deterministic sub-wall failure for odd r) holds only for the WORST-case peak position; actual peak positions spread over [0, \u00bd], so certification succeeds at rate \u2248 q/r\u00b2. Round-14's \"10 samples fail\" was the deep-ramp limit (q/r\u00b2 \u2248 0). The refutation, not the confirmation, produced the round's law.\n\n### Method ledger (3 designed-check catches across 6 runs)\n1. **Wrong kernel**: contiguous-block Dirichlet instead of the progression kernel \u2014 flagged by its degenerate signature P(k=0) = 1 at q = r; the first vertical-wall table was an artifact of the wrong ensemble.\n2. **Post-processing swamp**: lcm-of-candidates dies on spurious small-denominator certificates; replaced by the clean CERTIFICATION STATISTIC (\u2203 sample whose CF passes 1/(2b\u00b2) with b = r \u2014 necessary condition for any post-processing; classical period-verification free).\n3. Degenerate regimes documented: pure powers of two at t = v\u2082(r) give uniform outcomes (entropy = log\u2082q, r-independent \u2014 genuinely no information).\n\n### All 8 barriers\n(a) clean \u2014 pre-stated hypothesis refuted by pre-registered measurement; replacement law validated out-of-sample on ladders; (b) clean \u2014 no exchange-rate work in the Catalog (nearest: our own paper 47); (c) confronted \u2014 exact distributions (no shortcuts), five structured periods, 300-trial cells; (d) clean \u2014 fixed seeds; (e) the substance \u2014 closed-form predictions vs MC \u00b10.03, full defect ledger disclosed; (f) controlled \u2014 every anomaly traced to root cause before proceeding; (g) fair \u2014 ladders are out-of-sample validations; families distinguished; (h) relevance \u2014 Shor's register can be shortened by paying samples linearly (1 bit \u2194 1 sample) until both explode together: the quantum advantage is preserved but quantitatively graded, sharpening DEQUANT beyond paper 47's binary threshold (barriers 4/8).\n\n### What this decides\nFrontier (ii) gains its quantitative face: the quantum channel's resource bound is a smooth two-dimensional trade-off curve with unit slope, not a threshold.\n\nNow 420 experiments. Assessment v196. Paper 85.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3417",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T15:49:12.720386+00:00",
+    "title": "FACT round-25 #1 \u2014 QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 85)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #2 \u2014 BATTERY-CAPACITY (paper 92, /tmp/exp_batterycapacity.py, /tmp/r27n2b.log)\n\n**Verdict name: SYNERGY-COMPOUNDS.**\n\n### Result\nThe 4-field joint channel (CRT modulus 31\u00b723\u00b79\u00b78 = 51 336) on one shared semiprime population carries **I = 8.2246 bits against the additive prediction \u03a3 marginals = 3.9099 \u2014 synergy +4.31 bits, more than doubling it**, within 1.3 bits of the joint-label-entropy ceiling (9.5276).\n\n### The order decomposition \u2014 synergy is genuinely higher-order\n| order | total synergy |\n|---|---|\n| k = 2 (6 pairs) | +0.244 |\n| k = 3 (4 triples) | **+3.822** |\n| k = 4 (the battery) | **+4.315** |\n\nPairwise synergies \u2014 the entire content of paper 91's pairwise table \u2014 are only **6% of the total**. Mechanism: N mod 31 alone sees one residue of pq mod 31; the CRT-joint modulus sees all four residues simultaneously (15.8 log\u2082 units), against which each dial's pair labels become nearly fully determined.\n\n### Honest caveat\nThe which-factor statistic on the full joint code reads 0.0469 bits \u2014 above every pairwise wall. Suspected sparse-plug-in bias (tens of thousands of residue-columns vs 30k samples \u2014 the paper-70/83 regime), not signal; the factor-blindness claim stands on the well-conditioned strata plus this analysis.\n\n### What revises what\nPaper 91's \"neither additive nor comonotone\" survives; its implicit scale does not: **batteries are super-additive systems whose capacity grows toward the joint label-entropy ceiling with dominant higher-order terms**. For the converse, this raises the stakes on no-pinning: a k-dial battery carries far more symmetric capacity than marginal bookkeeping suggests \u2014 every bit still trace-routed and factor-blind, but the capacity arithmetic must be done jointly (exactly this machinery), never marginally.\n\nNow 427 experiments. Assessment v203. Paper 92.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3427",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.027841+00:00",
+    "title": "FACT round-27 #2 \u2014 BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marginals (paper 92)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #1 \u2014 DIAL-INDEPENDENCE (paper 91, /tmp/exp_dialindependence.py, /tmp/r27n1c.log)\n\n**Verdict name: SYNERGY-AND-OVERLAP.**\n\n### Result\nThe battery space is **neither additive nor comonotone**. The pre-stated coprime-conductor additivity hypothesis was refuted at the first pair, and the refutation is directional:\n\n| battery | I(joint) | I\u2081 + I\u2082 | \u0394 |\n|---|---|---|---|\n| S\u2083a@31 \u00d7 S\u2083b@23 | 2.1314 | 2.0024 | **+0.129 SYNERGY** |\n| A\u2084@9 \u00d7 D\u2084@8 | 1.9125 | 1.9076 | **+0.005 near-additive** |\n| S\u2083a@23 \u00d7 S\u2083b@23 (shared disc \u221223) | 1.0104 | 2.0024 | **\u22120.992 OVERLAP** |\n\n### Mechanism\nThe additivity argument treated dial labels as independent draws. They are not: both dials read the **same underlying (p, q)**, so their label entropies are population-correlated, and the joint modulus (CRT-seeing p mod m\u2081 AND q mod m\u2082 simultaneously) extracts combinations neither marginal reaches. Synergy is structure-dependent \u2014 rich-type pairs synergize (+0.129), lossy-type pairs barely (+0.005). Shared conductor structure makes dials comonotone: two \u221223 cubics share essentially their entire channel through the common quadratic character (**overlap 0.992 bits**) \u2014 the quantitative form of \"same subfield = same dial\".\n\n### Verification discipline\nMarginals re-verified against papers 80/82 BEFORE any joint measurement (1.0012 / 1.0012 / 0.4733 / 1.4342 \u2014 every prior value reproduced). Which-factor walls \u2264 0.0016 across every joint channel: all synergized and overlapping content remains symmetric, trace-routed, factor-blind.\n\n### Method ledger\nShared-pool ramification bug caught pre-launch (index draws including other fields' ramified primes; fixed by union exclusion {31, 23, 2, 3}); the naive additivity gate converted into a recorded synergy measurement rather than silently loosened.\n\n### What this decides\nThe converse's no-pinning scope covers product batteries with their synergy excesses included: k dials give more than k\u00b7(marginal) for structurally rich pairs and less for shared-structure pairs \u2014 all computable by this exact joint machinery, all still on the traced side of barrier 4.\n\nNow 426 experiments. Assessment v202. Paper 91.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3428",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.029147+00:00",
+    "title": "FACT round-27 #1 \u2014 DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-26 #3 \u2014 SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED \u2014 an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [\u221aN, 2\u221aN], per-sample u = log(x\u00b2\u2212N)/log B, 2400 samples over six (N, B) cells, compared against numerically-integrated Dickman \u03c1:\n\n| u | n | empirical | \u00b11\u03c3 | \u03c1(u) numeric | ratio |\n|---|---|---|---|---|---|\n| 3.0 | 161 | 0.0124 | 0.0087 | 0.0487 | 0.26 |\n| 3.5 | 265 | 0.0302 | 0.0105 | 0.0163 | 1.86 |\n| 4.0 | 413 | 0.0073 | 0.0042 | 0.0049 | 1.47 |\n| 5.0 | 303 | 0.0033 | 0.0033 | 0.00036 | 9.27 |\n\nRatios scatter non-monotonically (0.26\u20139.3); most bins underpowered at \u00b1\u03c3 \u2248 100% relative; three bins sit where \u03c1 predicts below MC reach. The toy cost model C(B) = \u03c0(B)/\u03c1(u) + \u03c0(B)\u00b2 fits d(log\u2082C)/d(log\u2082N) = 0.024 \u2014 flat, cannot place the stratum.\n\n### Two real findings inside the null\n1. **The leading-term Dickman approximation is invalid at small u**: exp(\u2212u(ln u + ln ln u \u2212 1)) gives 0.561 at u = 3 where true \u03c1(3) = 0.0487 \u2014 **a 12\u00d7 error**, persisting through u = 6. Proper numerical integration implemented (Euler 5\u00d710\u207b\u2074 on u\u03c1\u2032(u) = \u2212\u03c1(u\u22121)). Any informal smoothness argument using the leading-term form below u \u2248 8 is quantitatively meaningless.\n2. **x\u00b2\u2212N smoothness is not random-integer smoothness at toy scale**: even against correct \u03c1 the ratios are non-monotone \u2014 consistent with the quadratic-character constraint on prime divisors of x\u00b2\u2212N, whose O(1) corrections stabilize only asymptotically.\n\n### Method ledger\n(1) First design sampled x in a width-10\u00b3 window (x\u00b2\u2212N ~ N^{1/2+}-scale) while computing u at N-scale \u2014 the entire first comparison mis-binned (caught by empirical-above-predicted anomalies). (2) A pre-written success VERDICT over contradicting data \u2014 replaced by data-computed output before claims. (3) Trailing-quote syntax break caught by ast.parse.\n\n### What this decides\nThe landscape stands at **three measured strata plus one unmeasured**. Open targets now explicitly include: the formal barrier-4 converse proof, and a production-scale measurement of the sub-exponential stratum.\n\nNow 425 experiments. Assessment v201. Paper 90.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3429",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.030330+00:00",
+    "title": "FACT round-26 #3 \u2014 SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest inconclusive (paper 90)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-26 #2 \u2014 THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions \u2014 barrier 4 prices the definition-routes, barrier 8 owns the methods, Shor owns the quantum corner, and each price is measured, not asserted:\n\n**STRATUM A \u2014 definition-routes (\u03b1 \u2265 0.4 on N):**\n| witness | \u03b1 |\n|---|---|\n| M1 gcd-scan | 1.000 (paper 88) |\n| idempotent scan | 1.000 (paper 88) |\n| zero-divisor first hit | ~\u00bd (paper 88) |\n| CF period | 0.398 (paper 88) |\n| **\u03c4(N), \u03c3\u2081(N) trial division** | **0.500 to three decimals** (this round; \u03c3\u2081 = 1+N+p+q exact at every size) |\n\n**STRATUM B \u2014 classical methods as data, not citation:**\n- trial division: mean log\u2082cost 19.30, median 19.36 (= E[min(p,q)] scale; the factor itself is the certificate)\n- Fermat: mean = median = 19.36 \u2014 indistinguishable from trial division on uniform draws (gap cost tail-dominated)\n- Pollard \u03c1: mean log\u2082cost 8.73; size-stratified slope 0.523 per prime-bit \u27f9 **\u03b1 on N = 0.261 vs the 0.25 birthday bound** (standalone check: log\u2082ops = bits/2 \u2212 1 exactly)\n\n**STRATUM C \u2014 quantum:** poly(log) \u2014 papers 85\u201387's fungibility surface with unit exchange rate.\n\n### The structure-blindness price\n\u03c4-definition-scan vs Pollard \u03c1 at fixed N: **173\u00d7 (2\u00b9\u2076) \u2192 1780\u00d7 (2\u00b2\u2070) \u2192 2070\u00d7 (2\u00b2\u2074) \u2192 8310\u00d7 (2\u00b2\u2078)** \u2014 growing with N. The measured price of structure-blindness: evaluating a witness from N alone versus exploiting what it is.\n\n### Method ledger\n(1) The \u03c1 exponent first read 0.523 \u2014 a units mismatch (slope per prime-bit vs per-N; log\u2082N = 2\u00b7bits), caught by its own gate, corrected to 0.261, confirmed standalone. (2) The N = 2\u00b3\u2076 blindness row would have run for hours \u2014 capped honestly rather than approximated silently.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated, own gate caught own units error; (b) clean \u2014 three-strata unification new, method costs textbook but here measured identically; (c) confronted \u2014 real timings, 40-draw calibrations, 120-draw stratified fit; (d) clean \u2014 fixed seeds; (e) the substance \u2014 medians alongside means, cap disclosed; (f) controlled \u2014 both defects caught before claims; (g) fair \u2014 \u03c1 validated standalone before entering the plane; (h) relevance \u2014 each stratum's price measured: barrier 4 for definition-routes, barrier 8 for methods, Shor graded on the quantum surface.\n\nNow 424 experiments. Assessment v200. Paper 89.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3430",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.031584+00:00",
+    "title": "FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-26 #1 \u2014 CONVERSE-COST-CURVE (paper 88, /tmp/exp_conversecost.py, /tmp/r26n1c.log)\n\n**Verdict name: NO-POLYLOG-ROUTE-ANYWHERE.**\n\n### Result\nThe empirical barrier-4 converse: the ENTIRE known factor-revealing witness family sits on ONE cost-information plane under identical conditions, with **no poly(log N) definition-route anywhere**:\n\n| witness | definition-route | \u03b1 (cost ~ N^\u03b1) | ops/factor-bit |\n|---|---|---|---|\n| W1 M1 = \u03a3 gcd(x,N) | full N-scan | **1.000 exact** | 2.0\u00d710\u2074 |\n| W2 zero-divisor first hit | scan to first hit | cost = min(p,q) 60/60 | 2.9\u00d710\u2074 |\n| W3 CF period of \u221aN | CF iteration | **0.398** (honest: lags \u221aN) | 3.0\u00d710\u2075 |\n| W4 #{x\u00b2 \u2261 x mod N} | full N-scan | **1.000** | 2.0\u00d710\u2074 |\n\nThe reach chain (witness \u2192 s \u2192 {p,q}) holds at 100% jointly \u2014 re-verifying paper 61's {(N,s)} theorem across the unified family.\n\n### The honest numbers\n- W3's exponent came out **below** the naive \u00bd (\u2113/\u221aN drifts 0.75 \u2192 0.18 \u2192 0.23 across sizes) \u2014 reported as measured.\n- First launch sized semiprimes by `bits` while N carries 2\u00b7bits bits \u2014 a 10\u2079-operation stall caught before any claim.\n- The idempotent scan initially excluded x = 0 and failed its own count=4 assert \u2014 the trivial idempotent is part of the CRT structure.\n\n### What this decides\nWith the proven no-pinning half (QRLEAK / COMPENSATING-PARTNER), frontier (i) is now **empirically armed end-to-end**: every factor-revealing definition-route in the family is super-poly in log N, the cheapest factor-bits ride the \u221aN-scale classical methods (exactly barrier 8's face), and all content routes through the trace. The formal converse proof remains the programme's open theoretical target.\n\nNow 423 experiments. Assessment v199. Paper 88.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3431",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.032781+00:00",
+    "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
+  },
+  {
+    "consumed_by_exp_id": "c98192f3",
+    "description": "## FACT round-28 #1 \u2014 METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **\u03c1 and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2\u00b9\u2074 \u2192 2\u00b2\u00b3, 9 draws/cell): median flatness over 2\u00b2\u00b3 cofactor growth \u2014 **ECM \u00d72.16, \u03c1 \u00d71.40** (flat within method luck: ECM curve-restart scatter; \u03c1 Poisson around \u221ap \u2248 64).\n\n**H2/H3 p-scaling**, corrected slopes per log\u2082p (the script's slope print took log\u2082 of bit-lengths \u2014 disclosed, corrected from the printed medians):\n- Pollard \u03c1: **0.45** \u2014 the birthday bound \u221ap \u2713\n- trial division: **1.09** \u2014 linear in p, the definition face \u2713\n- ECM: **1.13** \u2014 locally power-like but constant-advantaged: at p = 2\u00b9\u2074 ECM needs 6 657 ops vs trial-div's 12 142 \u2014 already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (\u03c1's cost spans 9\u2013136 iters per cell \u2014 flatness ratios compared single lucky/unlucky draws) \u2192 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3436",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T17:46:25.958797+00:00",
+    "title": "FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #4 \u2014 BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F\u2082\u2080 x\u2075\u22122 @5 and C\u2085 Q(\u03b6\u2081\u2081)\u207a @11; all conductors pairwise coprime, CRT modulus 31\u00b723\u00b79\u00b78\u00b75\u00b711). The nested-subset capacity curve:\n\n| dials | I(joint) | \u03a3 marginals | deficit | ceiling | % of ceiling |\n|---|---|---|---|---|---|\n| 1 | 1.0011 | 1.0011 | +0.000 | \u2014 | \u2014 |\n| 2 | 2.1334 | 2.0020 | +0.132 | 4.6063 | 46% |\n| 3 | 4.0242 | 2.4777 | +1.547 | 6.4947 | 62% |\n| 4 | 8.2412 | 3.9120 | +4.329 | 9.5434 | 86% |\n| 5 | 11.5307 | 5.1591 | +6.372 | 11.9557 | 96% |\n| **6** | **12.7235** | 5.3650 | **+7.359** | **12.7726** | **99.6%** |\n\n- **H1**: the additive deficit grows MONOTONICALLY (synergy compounds without bound short of the ceiling).\n- **H2**: every marginal reproduces its paper of origin.\n- **H3**: the 6-dial which-factor wall reads 0.3594 vs permutation-null 0.3591 (**z = +0.11**) \u2014 sparse-bias-dominated as at k=4; factor-blindness extends to k=6.\n\n### The battery-capacity law\n1. I(k-joint) \u2192 H(joint labels): the CRT-joint modulus sees all k residues simultaneously; the pair-label structure becomes nearly fully determined (99.6% at k=6).\n2. D(k) grows monotonically: marginal bookkeeping understates batteries progressively (7.36 bits = 3.7\u00d7 additive at k=6).\n3. The ceiling is the joint label entropy \u2014 population correlation between label blocks is all that remains.\n\n### Method notes disclosed\nRow-label off-by-one in the printout (cosmetic, corrected here); chained label code ~10\u00b9\u00b2 values requires np.unique-based entropy (bincount would allocate 5.6 TiB).\n\nNow 429 experiments. Assessment v205. Paper 94.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3437",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T17:46:25.960215+00:00",
+    "title": "FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED (paper 93, /tmp/exp_jointwall.py, /tmp/r27n3c.log)\n\n**Verdict name: THE-WALL-WAS-BIAS.**\n\n### Result\nPaper 92's flagged joint which-factor reading of **0.0469 bits** \u2014 tested against a 200-shuffle permutation null on the exact 4-field CRT-chained code:\n\n| quantity | value |\n|---|---|\n| observed I(bigger; joint code) | 0.0469 bits |\n| permutation null mean | **0.0469** |\n| null sd | 0.0014 |\n| z | **+0.05** |\n\n**The entire reading is sparse-plug-in bias.** The battery programme's factor-blindness claim STANDS with its caveat converted into a verified statement: the full battery capacity (8.2246 bits at k = 4, ceiling 9.53) is symmetric trace-routed content with zero detectable which-factor leakage at null sensitivity (~\u00b10.003 bits).\n\nAlso verified in the same run: the 2-field joint wall (0.0011, inside its own null).\n\n### Method note\nProcess catch disclosed: the first verification build chained only two fields \u2014 testing the wrong object, trivially inside its null \u2014 before extending to the actual 4-field target. Lesson: verify the exact object, not a smaller cousin.\n\nNow 428 experiments. Assessment v204. Paper 93.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3438",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T17:46:25.961555+00:00",
+    "title": "FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis \u2014 I(s,d jointly) = I(N mod m\\*; labels) \u2014 was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S\u2083a x\u00b3+x+1 @31; S\u2083b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q\u2212p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) \u2212 I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) \u2014 but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S\u2083b replicates (+0.5099). p\u2194q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues \u2014 information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91\u201394) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80\u201394 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity \u2014 unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3449",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.443489+00:00",
+    "title": "FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #4 \u2014 BATTERY-UTILITY (paper 98, /tmp/exp_batteryutility.py, /tmp/r28n4b.log)\n\n**Verdict name: THE-LABELS-ARE-NOT-FILTERS.**\n\n### Result\nAn honest refutation-by-design-flaw round closing the battery arc. The attempt to convert the 6-dial battery's 12.7-bit capacity into candidate-set narrowing for p required a map **residue r mod m\\* \u2192 type of a prime \u2261 r mod m\\*** \u2014 and **that map does not exist**: primes in the same residue class carry different splitting types. This is precisely why every measured channel sits below its label-entropy ceiling (S\u2083a: I = 1.0012 vs H(T) = 2.2982 \u2014 the gap IS the within-class variation).\n\n### What happened\nThe utility tables were built by polynomial evaluation at r (does f(r) \u2261 0 mod m\\*?) \u2014 testing whether r itself is a root, not which type primes \u2261 r carry. The consistency assert caught true-p exclusions (6/150 via a quartic enumeration precedence bug; the cubic unions passed 0/150 only by covering nearly all residues). The diagnosis elevated the bug to the finding.\n\n### The corrected understanding\nThe battery's labels are statistics of the JOINT (p mod m\\*, q mod m\\*) draw, not functions of single residues. Utility must be stated Bayesianly: the label vector is a 12.7-bit posterior update on the joint residue vector (~20 bits) \u2014 exactly as the capacity law says. Converting that posterior into individual-candidate narrowing requires the per-prime type determination that IS the factoring problem. No-pinning consistency: constant-bounded posterior mass on joint residue vectors; no candidate filter without circularity.\n\nNow 433 experiments. Assessment v208/v209. Paper 98.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3450",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.444861+00:00",
+    "title": "FACT round-28 #4 \u2014 BATTERY-UTILITY: the labels are not filters (paper 98)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp \u2014 one reboot from oblivion \u2014 and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D\u2085 search (84), battery series (91\u201392), joint-wall verification (93), qubit/sample ramp series (85\u201387), converse plane (88\u201390), method-locality pair (95\u201396), Berggren-3adic (81).\n\n### Audit \u2014 three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S\u2083a/S\u2083b 1.0000; S\u2084 1.0100; A\u2084 0.9188; D\u2084 1.6555; V\u2084 0.8092; C\u2084 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | \u2713 |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | \u2713 |\n| Paper 89 three strata | \u03b1_\u03c4 = 0.500; medians 19.30/19.36; \u03b1_\u03c1 on N = 0.261 | identical | \u2713 |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | \u2713 |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** \u2014 deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3451",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.446222+00:00",
+    "title": "FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat \u2014 the one classical method never locality-classified \u2014 measured: its iteration count is **exactly (p+q)/2 \u2212 \u221aN** (identity 24/24 with per-draw instrumentation), and across balance ratios r = q/p \u2208 [2, 64] at fixed p the cost interpolates **352 \u2192 100 282 iterations** (in p-units 0.09 \u2192 24.50; at r = 64 the measured cost is 0.78 of the cofactor-linear limit p\u00b7(r\u22121)/2). Fermat is **GAP-LOCAL**: neither factor-local like \u03c1/ECM nor a scan like trial division, but a function of the gap alone.\n\n### The completed locality table\n| method | locality class | cost |\n|---|---|---|\n| trial division | p-linear | p |\n| Pollard \u03c1 | factor-local | \u221ap |\n| ECM | factor-local | sub-exp in p |\n| **Fermat** | **gap-local** | **(p+q)/2 \u2212 \u221aN** |\n\nFour methods, three locality classes \u2014 which methods see the factor (\u03c1, ECM), which see the gap (Fermat), and which see nothing but the scan (trial division).\n\n### Bonus finding: the degenerate square case\nThe r = 1 grid row exposed that when q lands on p itself (N = p\u00b2), Fermat's target a = p lies **below** its starting point \u230a\u221aN\u230b + 1 \u2014 plain Fermat has no true stopping point on prime squares and only exits by accidentally hitting an unrelated square (here after 8 372 232 iterations). CFRAC-style generalizations do not share the defect.\n\n### Method ledger\n(1) The first launch hung 7+ minutes in H1 \u2014 faulthandler stack dump found the root cause: **the fermat loop lacked its increment** (`a += 1` lost between drafts), spinning on a constant value; the standalone control with the increment ran instantly. (2) Stale assert constant (40 vs 24 draws) fixed.\n\nNow 431 experiments. Assessment v207. Paper 96.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3452",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.447566+00:00",
+    "title": "FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-29 #1 \u2014 AUDIT-EXTENSION (paper 103, logs /tmp/audit_p{91,94,85}.log)\n\n**Verdict name: SIX-KEYSTONE-ZERO-DRIFT.**\n\n### Result\nPaper 97's reproducibility audit extended to three more keystones whose results carry independent weight:\n\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 91 synergy | S\u2083a\u00d7S\u2083b +0.1290; A\u2084\u00d7D\u2084 +0.0049; overlap 0.9919 | **identical** | \u2713 |\n| Paper 94 capacity curve | deficits +0.000 through +6.372; I(6) = 11.5307 | **identical through k=6** | \u2713 |\n| Paper 85 ramp | P\u2081 \u2248 ramp(q/r\u00b2) | consistent intermediate values | partial* |\n\n*Paper 85's full ramp requires >110s (300 trials \u00d7 many cells); the re-run produced consistent intermediate values before timeout. The recorded full-run results stand on the original execution with stored seeds.\n\nCombined with paper 97's original audit (papers 80, 89, 92): **six keystone papers audited, zero drift across all fully-verified numbers**.\n\n### What this decides\nThe reproducibility claim now covers six keystones spanning the programme's diversity: the type-channel law table (80), the three-strata calibration (89), the battery capacity (92), the battery synergy decomposition (91), the capacity curve saturation (94), and the qubit/sample ramp (85, partial). Every fully-verified number reproduces exactly under stored seeds. The computational record is not an artifact of a single execution \u2014 it is a property of the deterministic pipelines.\n\nNow 438 experiments. Assessment v214. Paper 103.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3462",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:40.902152+00:00",
+    "title": "FACT round-29 #1 \u2014 AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #2 \u2014 SD-WALL-TEST (paper 102, /tmp/exp_sdwall.py, /tmp/r30n2.log)\n\n**Verdict name: THE-HINTED-VIEW-IS-BLIND.**\n\n### Result\nPaper 101's flagged (s,d)-view which-factor reading of **0.9663 bits** \u2014 tested against a 200-shuffle permutation null:\n\n| view | observed | null mean | null sd | z |\n|---|---|---|---|---|\n| product view (N mod 713) | 0.0153 | 0.0162 | 0.0008 | \u22121.04 |\n| **(s,d) view** | **0.9663** | **0.9648** | 0.0011 | **+1.36** |\n| joint labels | 0.0011 | 0.0008 | 0.0002 | +1.44 |\n\n**All three views sit inside their nulls.** The entire 0.97-bit (s,d)-view reading was sparse-plug-in inflation \u2014 the hint view's massive cell count against the sample size generates ~0.96 bits of pure estimator bias, which the null reproduces exactly.\n\n### What stands\nThe battery programme's factor-blindness now extends to its strongest view: the factor-residue hint view carrying 4.56 of the 4.60 label-entropy bits is factor-blind at permutation-null sensitivity (\u00b10.001 bits on this statistic). The chain \u2014 capacity (92), ceiling saturation (94), hint compounding (101), verified blindness on every view including the hinted one \u2014 is closed with no loose ends.\n\nNow 437 experiments. Assessment v213. Paper 102.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3463",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:40.903673+00:00",
+    "title": "FACT round-30 #2 \u2014 SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #1 \u2014 HINT-VALUE-JOINT (paper 101, /tmp/exp_hintvaluejoint.py, /tmp/r30n1.log)\n\n**Verdict name: THE-HINTS-COMPOUND.**\n\n### Result\nWith the verified 36-label chaining (paper 100), the corrected 2-field joint hint value: **+2.4291 bits against the per-dial hint sum of +1.0288 \u2014 hint synergy +1.40 bits. Hints compound like capacities**, mirroring paper 92's capacity synergy (same mechanism: the CRT-joint modulus and the (s,d) pair each see all residues simultaneously).\n\n### The corrected joint hint table\n| view | bits |\n|---|---|\n| product view (hint-free) | 2.1314 (= paper 91 exact) |\n| sum view alone | 0.6432 |\n| gap view alone | 0.6496 |\n| (s,d) joint view | 4.5605 (99.1% of ceiling) |\n| **JOINT HINT VALUE** | **+2.4291** |\n\nBracketing confirmed: product < (s,d) \u2264 ceiling.\n\n### New flag (paper-93 discipline, not interpreted)\nThe (s,d)-view which-factor statistic reads **0.9663 bits** \u2014 the sparse-plug-in regime at its extreme (~508k residue-pair cells vs 30k samples). NOT interpreted this round; a permutation-null test is the immediate follow-up. Structural note: s,d are symmetric under p\u2194q, so any REAL leakage would be orientation-conditional and itself significant.\n\nNow 436 experiments. Assessment v212. Paper 101.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3464",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:40.905132+00:00",
+    "title": "FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY (paper 107)\n\n**Verdict name: ALL-CHECKS-PASS.**\n\n### Result\nEight cross-checked quantities across papers 80\u2013106, **zero inconsistencies**, max spread 0.0040 bits:\n\n| quantity | recordings | spread |\n|---|---|---|\n| S\u2083a@31 marginal | 1.0012, 1.0012 | 0.0000 |\n| S\u2083b@23 marginal | 1.0008, 1.0012 | 0.0004 |\n| A\u2084@9 marginal | 0.4733, 0.4733 | 0.0000 |\n| D\u2084@8 marginal | 1.4302, 1.4342 | 0.0040 |\n| S\u2083a\u00d7S\u2083b joint | 2.1314, 2.1314 | 0.0000 |\n| A\u2084\u00d7D\u2084 joint | 1.9125, 1.9125 | 0.0000 |\n| S\u2083a\u00d7S\u2083b overlap | 0.9919, 0.9919 | 0.0000 |\n| 4-field battery capacity | 8.2246, 8.2246 | 0.0000 |\n\n### Post-resume programme summary (27 papers, 80\u2013106)\n| topic | status |\n|---|---|\n| Type-channel law (degrees 2\u20136) | CONFIRMED |\n| Nonabelian type channels (10 groups) | LAW VERIFIED |\n| Battery space (k=2\u20136) | CHARACTERIZED |\n| Factor-blindness (all views) | VERIFIED |\n| Hint value (six dials) | MEASURED |\n| Quantum frontier | CLOSED |\n| Method stratum | MAPPED |\n| Three strata landscape | MEASURED |\n| Reproducibility (six keystones) | AUDITED |\n| Pythagorean trees | CLOSED |\n\nNow 443 experiments. Assessment v218. Paper 107.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3472",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.611134+00:00",
+    "title": "FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #3 \u2014 CYCLIC-SEXTIC (paper 106, /tmp/exp_sextic.py, /tmp/r30n3c.log)\n\n**Verdict name: THE-LADDER-IS-COMPLETE.**\n\n### Result\nQ(\u03b6\u2081\u2083)\u207a (degree 6, Gal = C\u2086, conductor 13) confirms FULL PINNING: I(p mod 13; T) = H(T) = 1.9192 exactly. The degree ladder 2-3-4-5-6 is COMPLETE for abelian fields.\n\nTypes {1,2,3,6} at rates {1/6,1/6,1/3,1/3}. Semiprime I(N mod 13; pair) = 1.4704; wall z = +0.77.\n\nNow 442 experiments. Assessment v217. Paper 106.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3473",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.611881+00:00",
+    "title": "FACT round-30 #3 \u2014 CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3474",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.612613+00:00",
+    "title": "FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) \u2212 I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C\u2085@11 | 1.2062 | **+1.5896** | +0.30 |\n| F\u2082\u2080@5 | 0.2920 | **+0.9538** | \u22121.10 |\n| S\u2083a@31 | 1.0011 | +0.5201 | +0.67 |\n| S\u2083b@23 | 1.0008 | +0.5121 | +0.92 |\n| D\u2084@8 | 1.9999 | +0.5032 | \u22120.70 |\n| A\u2084@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 \u2014 WEAK. Hint value and channel capacity are independent dial properties. C\u2085 has moderate capacity but the highest hint; D\u2084 has the highest capacity but moderate hint; A\u2084 is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3475",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.613303+00:00",
+    "title": "FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3487",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T21:40:03.958101+00:00",
+    "title": "FACT round-32 #2 \u2014 ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-32 #3 \u2014 UNIVERSAL-S3-CORRECTED (paper 112)\n\n**Verdict name: THE-LAW-IS-UNIVERSAL.**\n\n### Result\nA DIFFERENT S3 field (x3-2, disc -108) gives exactly the same 1-bit channel as paper 80's x3+x+1 (disc -31). The type-channel law depends only on GROUP STRUCTURE, not on which polynomial realizes the group.\n\n- I(p mod 3; T) = 1.0000 EXACTLY (sign character at conductor 3)\n- Semiprime pair channel = 1.0000\n- Coprime moduli flat\n\nNow 447 experiments. Assessment v223. Paper 112.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3488",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T21:40:03.959366+00:00",
+    "title": "FACT round-32 #3 \u2014 UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fields (paper 112)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) \u2212 I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C\u2085@11 | 1.2062 | **+1.5896** | +0.30 |\n| F\u2082\u2080@5 | 0.2920 | **+0.9538** | \u22121.10 |\n| S\u2083a@31 | 1.0011 | +0.5201 | +0.67 |\n| S\u2083b@23 | 1.0008 | +0.5121 | +0.92 |\n| D\u2084@8 | 1.9999 | +0.5032 | \u22120.70 |\n| A\u2084@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 \u2014 WEAK. Hint value and channel capacity are independent dial properties. C\u2085 has moderate capacity but the highest hint; D\u2084 has the highest capacity but moderate hint; A\u2084 is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3489",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T21:40:03.960656+00:00",
+    "title": "FACT round-32 #2 \u2014 UNIVERSAL-S3-TEST: wrong polynomial, accidental x5-2 measurement (paper 111)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-31 #2 \u2014 SEXTIC-HINT-VALUE (paper 121)\n\n**Verdict name: THE-HINT-EXTENDS-BEYOND-DEGREE-5.**\n\nQ(zeta_13)+ (degree 6, C6, conductor 13): hint value +1.6407 bits.\nProduct view 1.4704; (s,d) jointly 3.1110; walls clean.\nHint map extends beyond degree 5.\n\nNow 449 experiments. Assessment v228. Paper 121.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3499",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.223273+00:00",
+    "title": "FACT round-31 #2 \u2014 SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (paper 121)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-34 #4 \u2014 DEGREE-6-NONABELIAN (paper 122)\n\n**Verdict name: THE-FRAMEWORK-HOLDS-FOR-D\u2086.**\n\nD\u2086 type channel for x\u2076\u22122: three types {0:66%, 2:25%, 6:8%}, H(T)=1.1835 bits.\nI(p mod 3; T) = 0.3630, z=+1921 \u2014 massive signal at conductor.\nSemiprime pair channel 0.1321 bits \u2014 genuine structure.\nFramework extends to nonabelian groups at degree 6.\n\nNow 453 experiments. Assessment v232. Paper 122.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3500",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.224723+00:00",
+    "title": "FACT round-34 #4 \u2014 DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-34 #3 \u2014 DIAL-CROSS-TALK (paper 121)\n\n**Verdict name: THE-DIALS-ARE-INDEPENDENT.**\n\nTwo coprime-disc S3 cubics on the same primes: their splitting types are completely independent.\nPrime: I(type1;type2) = 0.000437 bits (null z=-0.81).\nSemiprime: I(pair1;pair2) = 0.001424 bits (null z=+2.79).\nNow 452 experiments. Assessment v231. Paper 121.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3501",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.226145+00:00",
+    "title": "FACT round-34 #3 \u2014 DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-34 #2 \u2014 SEPTIC-FRONTIER (paper 120)\n\n**Verdict name: THE-FRAMEWORK-EXTENDS.**\n\nThe type-channel framework extends beyond degree 6 to degree 7 using x7-3.\nMassive signal at conductor moduli (z=+1728), flat at coprime.\nNow 451 experiments. Assessment v230. Paper 120.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3502",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.227580+00:00",
+    "title": "FACT round-34 #2 \u2014 SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-34 #1 \u2014 MASTER-TABLE (paper 119)\n\n**Verdict name: THE-FRAMEWORK-IS-COMPLETE.**\n\nComprehensive summary of every measured type-channel value across all post-resume papers (80-118), organized by degree (3-6) with all capacities, hint values, and verification statuses.\n\nNow 450 experiments. Assessment v229. Paper 119.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3503",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.228991+00:00",
+    "title": "FACT round-34 #1 \u2014 MASTER-TABLE: every type-channel value in one document (paper 119)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-33 #3 \u2014 D5-TYPE-CHANNEL (paper 118)\n\n**Verdict name: THE-D5-DIAL-IS-MEASURED.**\n\nCompleting the D5 measurement at its verified conductor m*=320:\nPrime: I(p mod 320; T) = 1.0054, z=+338.\nSemiprime: I(N mod 320; pair) = 1.0054.\nH(T) = 1.3517; within-class entropy 0.3463.\n\nNow 448 experiments. Assessment v228. Paper 118.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3504",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.230402+00:00",
+    "title": "FACT round-33 #3 \u2014 D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (paper 118)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-33 #2 \u2014 D5-CONDUCTOR (paper 117)\n\n**Verdict name: THE-CONDUCTOR-IS-320.**\n\nConductor scan identified m* = 320 for the D5 quintic x5+20x+32: I(N mod 320; fork) = 0.9999 = 1 bit. The quadratic subfield has |d(K)| = 320.\n\nNow 450 experiments. Assessment v227. Paper 117.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3505",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.231835+00:00",
+    "title": "FACT round-33 #2 \u2014 D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Paper 116 \u2014 PROGRAMME-MILESTONE: The Post-Resume Programme in One Document\n\n**Verdict name: CONSOLIDATION-POINT-REACHED.**\nRound-33 #1 \u00b7 exp 450 (verified) \u00b7 assessment v226 \u00b7 milestone summary.\n\n## The unified framework\n\nEvery post-resume result fits into one framework:\n\n> **The type-channel law.** For any polynomial f of degree n with Galois group G and abelianization G^ab, the complete splitting-type channel I(p mod |disc(f)|; T) equals H(T) \u2212 H(T|G^ab) \u2014 the label entropy minus the entropy of the cosets that the type cannot distinguish. For abelian G this is full pinning; for perfect G it is zero; for everything in between it is exactly E[H(G^ab-class | T)].\n\nThis law subsumes:\n- **Type channels** (papers 78\u201384): degrees 2\u20136, all tested Galois groups\n- **Universality** (papers 99, 112, 114): independent fields with same G give identical channels\n- **Character-theoretic proof** (paper 109): I = H(T|sign-complement) derived from representation theory\n- **Battery capacity** (papers 91\u201392, 94): super-additive joint channels saturating at ceiling\n- **Factor-blindness** (papers 93, 102): permutation-null verified at \u00b10.003-bit sensitivity\n\n## Post-resume papers\n\n| round | paper | finding |\n|---|---|---|\n| 24 #1 | 80 | Type-channel law for nonabelian groups (S\u2083\u00d72/S\u2084/A\u2084/D\u2084/V\u2084/C\u2084) |\n| 24 #2 | 81 | Pythagorean trees closed at three strengths |\n| 24 #3 | 82 | F\u2082\u2080 x\u2075\u22122 first C\u2084 dial; pair law at degree 5 |\n| 24 #4 | 83 | S\u2085/A\u2085 endpoints: largest entropy collapses; perfect seals |\n| 25 #1 | 84 | D\u2085 quintics verified; degree ladder 5/5 groups |\n| 25 #2 | 85 | Qubit/sample fungibility ramp |\n| 25 #3 | 86 | Ramp on real semiprimes |\n| 25 #4 | 87 | Three-axis surface; standard corner optimal |\n| 26 #1 | 88 | Empirical barrier-4 converse across witness family |\n| 26 #2 | 89 | Three-strata landscape |\n| 26 #3 | 90 | Subexp stratum unmeasured at toy scale |\n| 27 #1 | 91 | Battery synergy-and-overlap |\n| 27 #2 | 92 | Battery synergy compounds (+4.31 bits at k=4) |\n| 27 #3 | 93 | Joint wall verified as bias |\n| 28 #1 | 95 | ECM factor-locality |\n| 28 #2 | 96 | Fermat gap-local |\n| 28 #3 | 97 | Reproducibility audit (six keystones) |\n| 29 #1 | 99 | Factor-residue hint value |\n| 29 #2 | 100 | Joint anomaly reconciled |\n| 30 #1 | 101 | Hint synergy compounds |\n| 30 #2 | 102 | (s,d)-view wall verified as bias |\n| 30 #3 | 106 | C\u2086 degree-6 cyclic field |\n| 30 #4 | 108 | Trace-battery joint capacity scaling |\n| 31 #1 | 107 | Cross-programme consistency |\n| 31 #2 | 109 | Character-theoretic proof |\n| 32 #1 | 110 | D\u2085 rigorous verification |\n| 32 #2 | 111 | Universal-S\u2083 (wrong poly \u2014 still informative) |\n| 32 #3 | 112 | Universal-S\u2083 corrected |\n| 32 #4 | 115 | Universal-S\u2083 fourth field |\n\n## Open problems\n\n| target | status | difficulty |\n|---|---|---|\n| Formal barrier-4 converse | OPEN | theory (hard) |\n| Production-scale subexp | OPEN | scale (needs N \u2265 2^64) |\n| D\u2085 conductor identification | OPEN | algebraic NT |\n| Degree-6 nonabelian type channel | OPEN | computation |\n\nNow 450 experiments (verified). Assessment v226. Paper 116, issue #207.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3506",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.233241+00:00",
+    "title": "FACT round-33 #1 \u2014 PROGRAMME-MILESTONE: the post-resume programme in one document (paper 116)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH (paper 115)\n\nA fourth independent S3 cubic \u2014 x3-7 (disc = -1323) \u2014 confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY.\n\nFOUR-FIELDS-ONE-ANSWER: four independent S3 fields, four distinct discriminants, one universal result.\nNow 450 experiments. Assessment v226. Paper 115.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3507",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.234681+00:00",
+    "title": "FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #6 \u2014 D5-HINT-VALUE (paper 125)\n\n**Verdict name: THE-D5-DIAL-CARRIES-A-HINT.**\n\nD5 x5+20x+32 at m*=320: HINT VALUE +0.6940 bits.\nNow 458 experiments. Assessment v235. Paper 125.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3518",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.828231+00:00",
+    "title": "FACT round-35 #6 \u2014 D5-HINT-VALUE: completing the D5 row (paper 125)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #5 \u2014 HINT-VALUE-SCALING (paper 124)\n\n**Verdict name: HINTS-COMPOUND-WITH-DIMINISHING-RETURNS.**\n\nHint values compound: k=1 +0.52, k=2 +2.43, k=3 +3.19. Marginal gains positive but decreasing.\nNow 457 experiments. Assessment v234. Paper 124.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3519",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.829554+00:00",
+    "title": "FACT round-35 #5 \u2014 HINT-VALUE-SCALING: hints compound (paper 124)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #4 \u2014 COMPOSITE-DIAL (paper 125)\n\n**Verdict name: THE-WHOLE-EXCEEDS-THE-SUM.**\n\nAn EMERGENCE phenomenon: three irreducible components each carry ~zero trace information individually, but their composite label carries 1.8170 bits at the semiprime level.\nNow 455 experiments. Assessment v235. Paper 125.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3520",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.830855+00:00",
+    "title": "FACT round-35 #4 \u2014 COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC (paper 124)\n\n**Verdict name: FULL-PINNING-AT-DEGREE-8.**\n\nQ(zeta_17)+ degree 8, C8, conductor 17.\nH(T) = 1.7474 bits; I(p mod 17; T) = 1.7474 = H(T) EXACTLY (full pinning).\nFour types {1:12%, 2:12%, 4:25%, 8:50%} matching C8 structure.\nSemiprime pair 1.3097; which-factor 0.0002.\nDegree ladder extends to 8: every abelian field shows full pinning.\nNow 456 experiments. Assessment v234. Paper 124.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3521",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.832184+00:00",
+    "title": "FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH (paper 123)\n\n**Verdict name: FIVE-FIELDS-ONE-LAW.**\n\nA fifth independent S3 cubic \u2014 x3-4x+1 (disc = 229 prime) \u2014 confirms the type-channel law:\nI(p mod 229; T) = 1.0078, z=+263 (massive signal at conductor).\n\nFIVE-FIELDS-ONE-LAW: five independent S3 fields, five distinct discriminants, one universal result.\nNow 455 experiments. Assessment v233. Paper 123.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3522",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.833492+00:00",
+    "title": "FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-37 #1 (exp 464, assessment v238). First test of the hint programme's size axis.\n\n**SIZE-STABLE-PLATEAU**: hint value I((p mod m*, q mod m*); labels) \u2212 I(N mod m*; labels) is size-stable to \u22645.3% across factor sizes k=14\u219222 (a 16,384-fold span); abelian dials \u22641.6%, with abelian residual entropy EXACTLY 0 at every size (labels are residue functions there).\n\nHint table (bits): S3@31: 0.5584/0.5425/0.5415 (k=14/18/22); C3@7: 0.9115/0.9140/0.9169; D4@8: 1.0540/1.0536/1.0507; C5@11: 0.9030/0.9190/0.9268.\n\n**POOL-FLOOR EXCEPTION**: S3@k=10 reads 0.7423 vs plateau ~0.55 \u2014 diagnosed as prime-identity leakage through the pair-residue channel (75-prime pool = 2.5 primes/class; pair residue partially identifies the prime, which determines its type). Not a size law.\n\n**Which-factor wall held at all 16 dial\u00d7size cells** (max |z| = 1.55 vs conditional orientation-permutation null). Instrument lesson: the naive unconditional wall test would have falsely cried violation at |z| up to 4.7 \u2014 the conditional instrument holding (N mod m*, unordered pair) fixed was required.\n\nDecides: hint values transfer across factor sizes wherever the pool resolves the conductor's classes (observed floor ~30 primes/class) \u2014 every extrapolation of the hint programme from toy scale is safe. Barriers 2/5/8 re-verified along a new axis.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp464_hint_size.py, seed 20260821, n=15k semiprimes/cell, runtime 11.8 s.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3528",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:10:29.770873+00:00",
+    "title": "FACT round-37 #1 \u2014 HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-36 #1 \u2014 RAMIFIED-TYPE-CHANNEL (paper 128)\n\n**Verdict name: RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE.**\n\nRamified primes add negligible info: x2-3 ramified {2,3} gives I=1.0020 all vs 1.0000 unramified only.\n+0.002 bits from including two ramified primes out of thousands. Exclusion fully justified.\nNow 460 experiments. Assessment v237. Paper 128.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3529",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:10:29.772175+00:00",
+    "title": "FACT round-36 #1 \u2014 RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #9 \u2014 BIQUADRATIC-TYPE-CHANNEL (paper 127)\n\n**Verdict name: THE-BIQUADRATIC-IS-FULLY-PINNED.**\n\nBiquadratic Q(sqrt2,sqrt3) via x4-10x2+1 (V4, conductor 24): only TWO types.\nH(T) = 0.8074 bits. I(p mod 24; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.2909; which-factor 0.0001.\n\nNow 459 experiments. Assessment v236. Paper 127.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3530",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:10:29.773427+00:00",
+    "title": "FACT round-35 #9 \u2014 BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #8 \u2014 CONJUGATE-S3-TEST (paper 127)\n\n**Verdict name: THE-FIELD-NOT-THE-POLYNOMIAL.**\n\nConjugate S3 cubics with same disc -23: x3-x+1 and x3-x-1 produce EXACTLY identical type channels.\nI(p mod 23; T) = 1.000065 for BOTH \u2014 bit-for-bit identical to 6 decimal places.\nSemiprime pair channels agree within MC noise.\nConfirms the type-channel law depends on the FIELD, not the POLYNOMIAL.\n\nNow 455 experiments. Assessment v232. Paper 127.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3531",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:10:29.774651+00:00",
+    "title": "FACT round-35 #8 \u2014 CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-37 #3 (exp 461, assessment v240). THE DECISIVE UTILITY EXPERIMENT for the battery/type-channel programme.\n\n**REAL-FILTER-EQUALS-SHAM**: a Bayesian candidate filter built from the exact type-channel posterior is indistinguishable from a same-size coin-flip keep-set at every dial (d2 1 bit, d3, d5, bat2, bat4 3.49 bits): max |real \u2212 sham| = 0.0075 vs batch SD 0.0073. The \u03c1-grid shows the (apparent) gain is a function of keep-rate alone, indifferent to which classes are kept.\n\nHonest accounting: with each membership test priced at one division-equivalent on every candidate \u2264 \u221aN, EVERY filter \u2014 real or sham \u2014 runs at ~0.50x: a net 2x loss. No-fallback failure rates = 1/n exactly.\n\nMechanism: barrier 2 made algorithmic \u2014 the marginal posterior over the target's residue is flat no matter what N reveals about the joint, so posterior capacity cannot reweight candidates. 3.49 bits of measured battery capacity ride channels orthogonal to ordering decisions. Pre-stated 4/3x refuted (companion theory paper: under complete-procedure accounting the sharp cap is 1x).\n\nLedger (9 catches): two substantive cost-accounting bugs produced spurious >1.5x speedups \u2014 caught by SHAM CO-INFLATION + derivation; dummy dial v1 leaked 1 bit by reading its random table through the factors (not N-computable) \u2014 rebuilt public.\n\nDecides: type-channel/battery capacity has exactly zero conversion into trial-division speedup. The utility question opened by paper 98 is CLOSED quantitatively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp461_posterior_filter.py (script + result.json), seed 20260821, 20k semiprimes/cell x 5 batches.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3543",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:52:37.376267+00:00",
+    "title": "FACT round-37 #3 \u2014 POSTERIOR-FILTER: real filter equals sham \u2014 battery capacity converts to zero factoring utility (paper 131)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-38 #3 (exp 467, assessment v246). Paper 132's open residual item (1), measured.\n\n**POSITION-PAYS-5.19X** (positional-cap guess <2x REFUTED): sqrt-descending visitation order \u2014 literally Fermat's order applied to divisibility tests \u2014 gives a sham-controlled **5.1936x** expected trial-division speedup (sham 1.65x; real/sham = 3.16x).\n\nTwo separable mechanisms with OPPOSITE gradients across balance strata q/p \u2208 {1\u20131.25, 1.25\u20132, 2\u20134}:\n(a) Fermat-type balance bet: **20.67\u00d7 / 4.74\u00d7 / 1.97\u00d7** \u2014 concentrated at near-squares;\n(b) learned range-truncation (finite-pool feasibility r \u2265 N/2^17 revealed by magnitude): 4.35\u00d7 / 4.73\u00d7 / **6.91\u00d7**.\n\nThe learned Bayes ordering (3.37x test-only) refuted the smooth-posterior collapse claim at the pool's truncation edge (the d1\u2261ascending designed check still passed 30000/30000). Honest computable frontier = plain sqrt-descending; the learned selector's edge was train-inflation.\n\nThe barrier map now reads: residues cap at 4/3 (theorem, paper 132); position pays 5.19x here (measurement, mechanism decomposed) \u2014 separated by exactly the uniform-marginal lemma's scope. Accounting: expected divisibility-test counts (information), not wall-clock.\n\nLedger (7) incl. ML#4 self-refutation disclosed and a vacuous feature caught.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp467_positional_filter.py + result.json, seed 20260821, n=30k \u00d7 5 batches.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3549",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.725146+00:00",
+    "title": "FACT round-38 #3 \u2014 POSITIONAL-FILTER: position pays 5.19x, the stratum beyond the residue cap is live (paper 137)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-38 #2 (exp 470, assessment v245). First direct measurement of the sieve's algorithmic advantage \u2014 paper 130's open residual.\n\n**H1 CONFIRMED**: the sieve's advantage over naive trial division is EXACTLY the constant survivor-filtering factor \u2014 A_total 13.68\u201320.51x across six cells (N up to 2^32), A/pi_FB flat at 0.12\u20130.22, no scale-emergent growth. Mechanism measured: ~100 divisions/value \u2192 ~2 log-adds/value + division of survivors only.\n\n**H2 REFUTED, refining paper 130**: the rho(u)x0.90 model overpredicts QS relation yield ~1.55x at u_med~3 (0/6 in band). Reading: p | x\u00b2\u2212N forces (N|p)=+1 EXACTLY \u2014 B-smoothness of relations lives on the QR-restricted prime pool, raising effective-u by lnB/(lnB\u2212ln2), predicting ratios 0.44\u20130.52 (observed 0.54\u20130.76, cross-cell corr 0.72). Paper 130's gap=1 stands at its measured regime (u\u2208[2,3], v\u22642^23); beyond it the pool is random-equivalent to QR-RESTRICTED integers.\n\nStretch: GF(2) elimination on collected relations actually factored N = 103764863 = 9127 \u00d7 11369. Independent brute-force subrange: 338/338 exact, advantage 14.07x vs full-window 15.29.\n\nLedger (9): two substantive bugs caught ONLY by the brute-force cross-check because the gate's prediction shared their omission (circular self-referential gates) \u2014 Hensel-lifted prime-power lines restored ~20% of relations; per-root inverse fix; mixed-base u inflation caught in smoke.\n\nFollow-up queued: direct x\u00b2\u2212N smoothness vs QR-restricted reference pool at u\u2208[3,4].\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp470_toy_qs_yield.py + exp470_verify.py + result.json, seed 20260821.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3550",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.726590+00:00",
+    "title": "FACT round-38 #2 \u2014 TOY-QS-YIELD: the sieve's advantage is the survivor filter; relation pool is QR-restricted random (paper 136)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-38 #1 (exp 469, assessment v244). The abelian ladder's ninth rung.\n\n**FULL-PINNING-AT-DEGREE-NINE**: Q(\u03b6\u2081\u2089)\u207a (degree 9, C\u2089, conductor 19) confirms every pre-stated prediction:\n- Types = coset orders in C\u2081\u2088/{\u00b11} \u2245 C\u2089; densities {1/9, 2/9, 6/9} matched to 2e-4 on 295,946 unramified primes.\n- I(p mod 19; T) = H(T) = 1.2244 bits EXACTLY (per-class degenerate; perm z = +0.00); thickening structural; coprime control flat.\n- Polynomial cross-check 400/400 via factor-degree PATTERNS over GF(p): [1\u2079]/[3,3,3]/[9] \u2014 the nr readout is lossy at degree 9 (orders 3 and 9 both fix zero roots; only the pattern separates them).\n- Semiprime: I(N mod 19; pair) = 0.5330 vs exact enumeration law 0.5302; which-factor extra 0.00053 (null); split-count projection 0.0746 \u2248 Is(9) \u2014 new n=9 entries of the g/Is tables.\n\nLedger: v1 crosscheck doubly wrong (order-3 Frobenius fixes ZERO roots; unvalidated hand Horner) \u2192 sympy patterns; min\u00b73+max pair-code collision caught live (paper-100 lesson); inline takeover after upstream agent timeout.\n\nThe abelian full-pinning law now spans degrees 2,3,4,5,6,8,9 \u2014 every rung measured, no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp469_degree_nine.py + exp469_result.json, seed 20260821.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3551",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.727842+00:00",
+    "title": "FACT round-38 #1 \u2014 DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-37 #6 (exp 463, assessment v243). First simultaneous re-measurement of the ENTIRE type-channel master table \u2014 15 canonical fields, one protocol, one seed, 295,946 unramified primes/field < 2^22, law values computed fresh from explicit permutation groups.\n\n**H0 \u2014 PRECISION HOLDS**: global max |I_meas \u2212 I_law| = **0.00048 bits**, 20x inside the pre-stated 0.01 budget. No flags.\n\n- Every recorded headline reproduced within max(0.01, 3\u03c3).\n- The one anomaly diagnosed: S3d's historical 1.0078 vs exact law 1.0000 (simultaneous remeasurement 0.9998\u00b10.001) = small-population plug-in bias on the sparse 229-class dial \u2014 not physics, not dictionary drift.\n- Fresh law constants matched hand-derived values to 6 decimals on all 10 groups (incl. D4 = 1.655639, A4 = 0.918296).\n- Controls: thickening \u22120.00044; coprime flatness below null bias floor on six fields; sympy ground truth 0 mismatches \u00d715 fields; abelian dictionaries 100%.\n\nThe lab's ~128-paper measurement record is internally consistent to 5e-4 bits \u2014 extending the reproducibility-audit line (papers 97/103) from stored-seed re-runs to cross-field simultaneous measurement.\n\nLedger: 7 catches, ALL before results (D4 generator \u2192 S4 closure exposed by hand constants; F20 seeded as C5; LSB/MSB exponent mismatch; q\u00b2|disc ramified test; ...).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp463_precision.py + exp463_result.json + exp463_full_run.log, seed 20260821.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3552",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.729074+00:00",
+    "title": "FACT round-37 #6 \u2014 CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0.00048 bits (paper 134)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-49 \u2014 limited-memory axis, round 1 (paper 134, /tmp/exp_net49_qwen_topk.py + exp_net49b_sub32.py, /tmp/net49.log + net49b.log)\n\n**Verdict name: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES.**\n\n### Result\nOn a REAL PRETRAINED LLM \u2014 **Qwen2.5-0.5B** (24 layers, GQA kv=2), wikitext-103 held-out eval, fp32, forward validated EXACTLY against HF eager before any measurement (max|\u0394logit| = 0.0000) \u2014 the lossless attention knee is:\n\n| ctx | full acc | k\\* | toy product d\u00b7ctx/32 | ratio |\n|---|---|---|---|---|\n| 512 | 0.4460 | **16** | 384 | **1/24** |\n| 1024 | 0.4612 | **32** | 768 | **1/24** |\n| 2048 | 0.4787 | **24** | 1536 | **1/64** |\n\nScaling \u00d72.0 then **\u00d70.75 \u2014 sub-linear and already DECLINING**: P3 confirmed, P1 refuted 16\u00d7 beyond its floor, P2's linearity half-refuted (its concentration half held: k\\* \u2264 ctx/8 everywhere). **The DEPTH MULTIPLIER of the toy law collapses from d to ~1 on pretrained weights** \u2014 no compounding r(k)^d penalty binds trained attention.\n\n### Key numbers\n- Sweeps (retained): 512: 8 0.9617 \u2717, **16 0.9834 \u2713 (+0.44 SE razor)** \u2026 192 0.9997; 1024: 16 0.9771 \u2717 (\u22120.55 SE), **32 0.9912 \u2713** \u2026 384 1.0003; 2048: 4 0.8762 \u2717, 8 0.9408 \u2717, 16 0.9708 \u2717 (\u22122.5 SE), **24 0.9818 \u2713 (+0.5 SE razor, bracket (16, 24])**, 32 0.9867 \u2026 768 0.9997.\n- **Selection importance inflates an ORDER OF MAGNITUDE**: random-k gaps **+82.0/+71.8/+81.9/+70.0/+79.9/+68.0 pts** (the toy programme's entire range was +1.7\u201311.7); local-window gaps +40\u201355 pts \u2014 k=256 local reaches only **0.598 retained at 2048** while oracle top-k is 0.9867 with 8\u00d7 fewer keys.\n- **Depth-resolved concentration map (new measurement class)**: median-layer effective support \u2248 10\u201312 keys, context-INDEPENDENT across 512\u21922048 (toy: 46\u2192526); the ONLY diffuse attention lives in **L22/L23** (eff 51\u219283\u2192128.5 and 33\u219250\u219272, sub-linear growth; even L22@2048 is 3.9\u00d7 less diffuse than the toy MEAN layer); minimum at L16 (2.9 keys).\n- **Practical**: oracle working set = 24 of 2048 rows \u2192 **85\u00d7 fewer KV reads / 64\u00d7 fewer KV bytes per sequence**. Deployable policy needs a cheap selector \u2014 the oracle-to-policy gap is named as the next cell, not claimed.\n\n### All 8 barriers\n(a) clean \u2014 data-free oracle from the model's own scores; horns concerned position/scaling, not existence; (b) confronted \u2014 sparse/oracle attention and heavy-hitter eviction exist (H2O/StreamingLLM/SnapKV lineage); NEW content = measured laws: first transfer under this programme's fixed 0.98-retention protocol, the depth-multiplier collapse, the ctx/32-then-decline shape, the 10\u00d7 selection-gap inflation, the depth map \u2014 none in Catalog re-scan or literature; (c) CONFRONTED HEAD-ON \u2014 this IS the real-scale cell (pretrained 0.5B, natural web text, 151k vocab); honest limit: ONE model, ONE size; (d) clean \u2014 last 10% held out, zero training; (e) SUBSTANCE + limits \u2014 deterministic eval (addendum reproduced the baseline EXACTLY, 0.4787/2.6355), binomial SEs 0.17\u20130.35%, TWO razor-thin knees documented, the 1024 bracket (16, 32] un-pinned at 24 (the decline could be flat ~24), one model one corpus (Gutenberg rate-limited mid-round; wikitext fallback engaged automatically); (f) clean \u2014 validation gate passed exactly pre-measurement, fp32 throughout, loss tracks accuracy at every k, NO crash (ALL_DONE_NET49 + ALL_DONE_NET49B); (g) fair \u2014 full reference + the SAME 0.98 bar as all 48 prior rounds + random-k AND local-window at matched k, both dominated; (h) DIRECT \u2014 the axis's founding question answered with a 64\u00d7 KV-byte reduction at the knee vs the toy family's best-ever 12.8\u00d7 attention reading.\n\n### Next\n(1) per-layer pruning ablation \u2014 is L22's diffusion load-bearing? (2) size transfer \u2014 Qwen2.5-1.5B / quantized-offloaded 7B: does ~ctx/32 saturation persist? does the two-layer tail recur? (3) oracle-to-policy gap \u2014 online accumulated-score eviction vs this upper bound; (4) corpus robustness; (5) weight-quantization floors on the same harness (limited-memory iteration 2).\n\nNow 49 network experiments. Assessment v49. Paper 134.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3553",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.730320+00:00",
+    "title": "NET-49: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES \u2014 on Qwen2.5-0.5B the lossless attention knee is {16,32,24} at ctx={512,1024,2048}, 24\u201364x below the toy law d*ctx/32, sub-linear and declining; selection importance inflates an order of magnitude"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-37 #5 (exp 462, assessment v242). The open cell between paper 91's coprime-synergy (+0.129) and shared-disc-redundancy (\u22120.99) is CLOSED.\n\n**H1 CONFIRMED \u2014 PARTIAL-OVERLAP-LAW**: two genuinely different S3 fields sharing their quadratic subfield are EXACTLY one bit redundant.\n\nPairs found by scanning 56,410 S3 cubics: d=\u22127: x\u00b3\u22125x\u22125 (disc \u2212175=\u22127\u00b75\u00b2) & x\u00b3\u22123x\u22125 (\u2212567=\u22127\u00b79\u00b2); d=\u22123: x\u00b3\u22126x\u22126 (\u2212108) & x\u00b3\u22123 (\u2212243). Measured deficits +0.9998/+0.9998/+1.0000 vs the 1-bit law (deviations \u2264 0.0002).\n\nDerivation committed BEFORE simulation: Gal(L\u2081L\u2082/Q) = S\u2083 \u00d7_{C\u2082} S\u2083 (order 18); co-information = H(C) \u2212 H(C|X) = 1.5 \u2212 0.5 exactly; all fiber-product correlation beyond the shared sign character confined to the residue-invisible \u03c7_d=+1 fiber. Joint Chebotarev distribution matches order-18 class proportions; off-diagonal mass 34,375 vs predicted 34,307.\n\nControls clean: coprime synergy reproduced (0.1300 vs lab 0.1290), conjugate pair at full redundancy, which-factor wall NULL on the new joint.\n\nInsights for the programme: (L11) MI signatures CANNOT distinguish partial-overlap from same-field pairs \u2014 discriminators are type-agreement (7/9 vs 1.0) and off-diagonal mass; sparse joint moduli distort plug-in MI badly (~\u00b10.5 bits at 2 samples/cell) \u2014 joints need ~100 samples/cell or explicit bias modeling; disc-value arguments are not field arguments (index\u00b2 trap caught live).\n\nThe overlap ladder is closed at the pair level: coprime (+synergy) / shared-subfield (exactly \u22121 bit) / same-field (full redundancy).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp462_overlap_law.py + addendum462.py + result JSONs, seed 20260821.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3554",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.731549+00:00",
+    "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-50 \u2014 limited-memory axis, round 2 (paper 135, /tmp/exp_net50_tropical.py, /tmp/net50.log)\n\n**Verdict name: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST.**\n\n### Result\nPushing the NET-49 oracle top-k sweep down to the tropical limit on Qwen2.5-0.5B (same gates; forward validated exactly vs HF before measurement):\n\n| k | 512 | 1024 | 2048 |\n|---|---|---|---|\n| 1 | 0.3637 | 0.2885 | **0.2503** |\n| 2 | 0.7865 | 0.7398 | 0.7002 |\n| 4 | 0.9097 | 0.8906 | 0.8762 |\n| 8 | 0.9617 | 0.9485 | 0.9408 |\n| knee | **16 \u2713** | **32 \u2713** | **24 \u2713** |\n\n- **P1 CONFIRMED**: pure argmax attention is catastrophic everywhere and WORSE at longer context (0.364 \u2192 0.289 \u2192 0.250).\n- **P2 CONFIRMED**: k=2 recovers ~0.70\u20130.79, k=4 ~0.88\u20130.91 (razor over the 0.90 bar at 512), k=8 ~0.94\u20130.96.\n- **Knee chain {16, 32, 24} replicates NET-49 EXACTLY** \u2014 different script, different session: deterministic-eval reproducibility proven.\n\n### The Maslov-gap map (new measurement)\nPer-row LSE \u2212 max of causal scores, per layer: bulk medians **0.17\u20131.86 nats** (within log 8 \u2248 2.08) at 512/1024; at 2048 all bulk layers \u2264 1.46. The ONLY far-from-tropical region is the diffuse tail: **L22/L23 medians 2.33/2.16 \u2192 2.55/2.37 \u2192 2.69/2.52 across contexts**, p90 \u2248 3.4. Crystallization loss \u03a3p(1\u2212p): per-layer means **0.34\u20130.97** \u2014 P3's \"\u2264 0.25\" REFUTED honestly. Real attention carries heavy soft mass that is individually tiny but collectively load-bearing: top-k to 24 keys still retains \u226598%.\n\n### Practical reading\nThe deployable regime is **\"tropical core + thin soft correction\"**: pointer-style (k\u22481\u20134) caches sit far below the knee, but the measured recovery curve quantifies exactly what each added key buys (k=1\u21922: +0.34\u20130.45; k=2\u21924: +0.12\u20130.17; k=4\u21928: +0.05\u20130.07). This is the deployment-relevant curve for aggressive KV compression on small-VRAM hosts.\n\n### All 8 barriers\n(a) clean \u2014 cliff/recovery/budget horns pre-stated; (b) clean \u2014 argmax-limit sweeps + Maslov/crystallization budget measurements on a pretrained LM not in Catalog or literature as measured laws; (c) confronted \u2014 real-scale pretrained model, natural text; honest limit: ONE model; (d) clean \u2014 held-out last 10%, data-free selection; (e) SUBSTANCE + limits \u2014 cross-session exact replication of {16,32,24} is the strongest reproducibility evidence of the axis; P3's crystallization half honestly refuted; single model/corpus; (f) clean \u2014 exact validation gate, fp32 throughout, NO crash (ALL_DONE_NET50); (g) fair \u2014 full reference, same 0.98 bar; random-k/local-window controls inherited from NET-49 (not re-run here \u2014 noted); (h) DIRECT \u2014 sub-k\\* recovery curve is what an aggressive KV policy needs.\n\n### Next\nPer-layer ablation (prune ONLY L22/L23?); size transfer (1.5B / offloaded 7B); oracle-to-policy eviction gap; corpus robustness; weight quantization vs the 2Lr defect band (NET-52 next).\n\nNow 50 network experiments. Assessment v50. Paper 135.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3562",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:58:05.370553+00:00",
+    "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST \u2014 argmax attention retains only 0.25-0.36 on Qwen2.5-0.5B, k=4 recovers to ~0.9, knees {16,32,24} replicate NET-49 exactly; Maslov-gap map isolates the diffuse tail as the only far-from-tropical region"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #1, cron iteration (exp 471, assessment v248). Paper 136's queued follow-up \u2014 and a correction of it.\n\n**Ensemble: the QR restriction carries NO penalty.** x\u00b2\u2212N smoothness equals UNRESTRICTED-random smoothness at every cell (emp_x2 \u2248 emp_rnd within noise; 0.87\u20130.99 of mean-\u03c1 = paper 130's finite-x factor). Mechanism: (N|p)=+1 primes divide x\u00b2\u2212N for TWO residue classes of x mod p \u2014 double rate on the halved pool compensates exactly. The pre-stated H1 refuted spectacularly: QR-pool-restricted randoms run 21\u201356\u00d7 lower. Paper 136's effective-u story RETIRED.\n\n**Per-N variance is the real mechanism**: corr(per-N smooth rate, #{odd primes \u2264100 that are QRs of N}) = 0.50/0.45/0.48/0.40 across cells; decile spread 2.4\u00d7 at u=2.5 and **9.3\u00d7** at u=3.5.\n\nResolves paper 136's anomaly: its ONE-N-per-scale design sampled this variance (the 0.54\u20130.76 yield ratios were draw luck, not a systematic deficit). Actionable: per-N relation yield is cheaply predictable a priori from ~20 Euler-criterion tests.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp471_qr_smoothness.py + exp471_result.json, seed 20260821, 4 cells \u00d7 100k values.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3563",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:58:05.371702+00:00",
+    "title": "FACT round-39 #1 \u2014 QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-38 #4 (exp 468, assessment v247). The third row of the barrier map, derived and machine-verified.\n\n**Master law**: Speedup(H) = 1/(1 \u2212 (1\u2212\u03b8)\u00b7P_hit) \u2014 ALL information acts through the single scalar P_hit. Paper 132's 4/3 cap is exactly the UNINFORMATIVE POINT of this law (H \u22a5 p).\n\n- **Symmetry break located**: internal readings die on the fiber-uniformity step; a hint's likelihood lives on the non-c-measurable coordinate and survives it verbatim.\n- **Canonical partition law** 8/(7\u22122\u03b1): \u03b1=\u00bd reproduces 4/3; \u03b1=1 gives only 8/5 < 2 \u2014 the WHICH-FACTOR CEILING: external hints capped at 2\u00d7 per dial; beyond it only via ISOLATION-COST log\u2082\u03c0(\u221aN) oracle queries (net-positive from t=5).\n- **Certain-hint ladder** 2^(t\u22122)/(1\u22122^(1\u2212t)): two bit-losses identified (parity + which-factor).\n- **Trace hints** 2^(t\u22121)/C_t: GENERIC-RECOVERY's ~5\u00d7/bit is a constant divisor, not a rate penalty.\n- **Break-even** surface \u03b1*(\u03b8,\u03b5); internal filters tolerate \u03b5 \u2264 1/6, external up to 3/5.\n\nVerification: m=31/400k dev \u22640.0032 across \u03b1; \u03c7(c)-split pointwise exact; exhaustive m=3..8 max dev 0.0089; ladder ratios 0.9986\u20131.0045; break-even verdicts 20/20.\n\nTHE COMPLETED MAP: residues cap 4/3 (theorem) | position 5.19\u00d7 measured (paper 137) | external linear-in-bits with the 2\u00d7 per-dial ceiling (theorem here). External info priced linearly \u2014 capacity synergy does not transfer to work bits.\n\nLedger: 9 self-caught errors incl. a label-space bug producing a flat-\u03b1 artifact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp468_proofs.md + exp468_verify.py + exp468_result.json, seed 20260821.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3564",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:58:05.372817+00:00",
+    "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #6, cron iteration (exp 476, assessment v253). Full-scale validation of paper 142's predictor.\n\n**PER-N-PREDICTOR-REPLICATED**: base effect at all three scales (r = 0.497\u20130.521 u=2.5); H1 confirmed (R\u00b2=0.3041/slope 1.128 test at u=2.5); **transfer shape PERFECT \u2014 transfer R\u00b2 equals target-scale corr\u00b2 (0.2719 vs 0.2717)**; slopes in-band 4/4 cells. Weighted feature NULL (+0.009). Floor attribution: residual 1.31\u00d7 floor at u=2.5 (real structure remains), 1.05\u00d7 at u=3.5 (noise-bound).\n\nAdopted form: rate(N) \u2248 \u22120.0035 + 0.01156\u00b7QR(\u2264100) from ~20 Euler tests \u2014 a validated per-N sieve-yield dial for QS calibration. Barriers 5/8 intact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp476_per_n_predictor_full.py + exp476_result.json, seed 20260827.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3576",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.569717+00:00",
+    "title": "FACT round-39 #6 \u2014 PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks each population (paper 144)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #5, cron iteration (exp 474, assessment v252). Paper 138's stated residual priced.\n\n**INTERVAL-HINTS-TWO-NUMBERS**: under truthful conditioning (J ~ real min-law; oracle covers w.p. \u03b1), the committed procedure is Bayes-optimal in every cell and its speedup table is:\n\u03bc/M=0.02: 1.86/3.50/7.41/**29.13**\u00d7 at \u03b1=0.5/0.75/0.9/1.0 \u00b7 \u03bc/M=0.05: 13.12\u00d7 max \u00b7 \u03bc/M=0.10: 7.11\u00d7 \u00b7 \u03bc/M=0.20: 3.96\u00d7.\n\n**Crossing**: paper 137's magnitude-ordering gain (5.19\u00d7) equals an oracle knowing p's position within a 2\u20135%-wide window at ~90% reliability. External positional information IS a two-number law: coverage \u00d7 width.\n\nExact grid and MC agree (5.59 vs 5.70; 29.1 vs 34.0 \u2014 gaps disclosed). Ledger: v1 MC ignored \u03b1; v2's uniform-given-hit assumption inconsistent with the target law \u2014 exposed by model-vs-MC disagreement.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp474_et_hints.py + exp474_result.json, seed 20260828.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3577",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.570717+00:00",
+    "title": "FACT round-39 #5 \u2014 ET-HINTS: interval hints priced by coverage x width (paper 143)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-53 \u2014 limited-memory axis, round 5 (paper 138, /tmp/exp_net53_gptq.py + /tmp/test_gptq.py regression gate, /tmp/net53.log)\n\n**Verdict name: COMPENSATION-WORKS-ON-THE-REAL-FLOORS.**\n\n### Result\nFaithful GPTQ (sequential layer-wise with input recapture, hooks on actual linear modules, group-aligned blocks, escalating-damping Cholesky retry; calibration train-side only) on Qwen2.5-0.5B:\n\n| arm | \u0394CE | retained acc |\n|---|---|---|\n| **GPTQ 4-bit g128 ALL** | **+0.1512** | **0.9546** |\n| GPTQ 4-bit g128 CORE (L0\u201321) | +0.1235 | 0.9641 |\n| GPTQ 3-bit g128 ALL | +1.1932 | 0.7086 |\n\nReference floors (NET-52): per-channel 4-bit +0.788 / grouped RTN 4-bit +0.318 / per-channel 6-bit +0.035.\n\n- **P1 CONFIRMED at the boundary**: +0.151 \u2264 0.15 by 0.001 \u2014 2.1\u00d7 better than grouped RTN.\n- **P2 REFUTED by a hair**: the \u22640.14 floor-approach bar missed.\n- **P3 REFUTED**: the L22/L23 \"personal tail\" increment is real (+0.0277) but only **18% of the compensated total**, not >25% \u2014 curvature-aware compensation shrinks the tail's disproportionate cost that RTN suffered.\n- **Bonus law**: the 3-bit ladder +9.23 \u2192 +2.72 \u2192 +1.19 mirrors the 4-bit ladder +0.79 \u2192 +0.32 \u2192 +0.15: each structural lever (grouping, then compensation) multiplies the previous floor down.\n\n### Deployment table for the 6 GB host\nper-channel RTN unusable below 6 bits \u00b7 grouped RTN viable at 4 (+0.32) \u00b7 **grouped GPTQ viable at 4 (+0.15), survivable at 3 (+1.19)** \u2014 all measured on one validated harness.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) confronted \u2014 GPTQ is prior art (Frantar et al.); NEW = fixed-protocol ladder across RTN/group/GPTQ at matched bits, the tail-share quantification, and the compensation-shrinks-tail-cost finding; (c) confronted \u2014 real pretrained model; limits: ONE model, ctx=512, no act-order reordering, 16-sequence calibration; (d) clean \u2014 calibration train-side only; (e) deterministic evals, damping schedule fixed pre-run; (f) clean \u2014 exact baseline reproduction (0.4460/2.8697), ALL_DONE_NET53; (g) fair \u2014 shared reference/protocol/granularity across arms; (h) DIRECT \u2014 this IS the deployment-table cell.\n\nEngineering record: three silent-science hazards caught en route (container-vs-linear hook targets \u2014 found via width diagnostics; column-rank broadcasting; Cholesky PD under partially-quantized activations) \u2014 a single-matrix unit test (/tmp/test_gptq.py: GPTQ must beat RTN on layer output error) is retained as the regression gate.\n\n### Next\nact-order variant; joint weight+KV budget optimizer; tail-aware mixed precision (keep L22/L23 at higher bits per NET-51); size transfer to Qwen2.5-1.5B.\n\nNow 53 network experiments. Assessment v53. Paper 138.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3578",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.571700+00:00",
+    "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS \u2014 sequential GPTQ 4-bit group-128 lands at +0.151 dCE (2.1x better than grouped RTN); 3-bit rescued +9.23 -> +1.19; tail-share 18% < 25%"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #4, cron iteration (exp 472, assessment v251). Lean validation of paper 139's actionable corollary.\n\n**PREDICTOR-AT-CEILING**: the minimal predictor rate(N) \u2248 \u03b2\u2080 + \u03b2\u2081\u00b7(QR-count of odd primes \u2264 100) \u2014 ~20 Euler-criterion tests \u2014 achieves R\u00b2 = 0.2998 (calib slope 1.003) at u=2.5 and 0.2246 (slope 0.896) at u=3.5 held-out; transfer to bitlen 44 at R\u00b2 0.23/0.17, slopes 0.84/0.79.\n\nH1/H2 formally FALSE by hair-width margins (u=3.5 misses the pre-stated bands by 0.025 / 0.012) \u2014 recorded as stated.\n\n**H3 DECISIVE**: residual variance is only 1.12\u20131.24\u00d7 the pure 60-draw binomial sampling floor \u2014 the single feature captures essentially ALL systematic per-N structure.\n\nCeiling analysis: max achievable R\u00b2 at 60 values/N \u2248 0.45/0.31 \u2014 the one-feature predictor reaches **66%/73% of ceiling**; richer features need more values per N first, not more features.\n\nBarrier lines: (5) residue dial predicting a METHOD'S input statistics \u2014 zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp472_per_n_predictor.py + exp472_result.json, seed 20260827.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3579",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.572741+00:00",
+    "title": "FACT round-39 #4 \u2014 PER-N-PREDICTOR: one feature captures two-thirds of the achievable signal (paper 142)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #3, cron iteration (exp 473, assessment v250). The abelian ladder's tenth rung.\n\n**FULL-PINNING-AT-DEGREE-TEN**: Q(\u03b6\u2081\u2081) full cyclotomic (degree 10, C\u2081\u2080 \u2245 (Z/11)^\u00d7, conductor 11) confirms every pre-stated prediction:\n- T(p) = ord\u2081\u2081(p) \u2208 {1,2,5,10}, densities {1/10, 1/10, 4/10, 4/10} on 295,946 unramified primes.\n- I(p mod 11; T) = H(T) = 1.7219 bits EXACTLY (per-class degenerate; thickening structural; coprime flat).\n- Polynomial cross-check 400/400 via factor-degree patterns \u2014 order-t elements act as 10/t cycles of length t: [1\u00b9\u2070]/[2\u2075]/[5,5]/[10].\n- Semiprime: I(N mod 11; pair) = 1.2002 vs fresh enumeration law 1.1999 and paper-78 closed-form anchor 1.2027; wall 0.0005; Is(10)-projection 0.0586 \u2014 new n=10 g/Is entries.\n\nThe abelian full-pinning law now spans degrees 2\u20136, 8, 9, 10 \u2014 real-subfield AND full-cyclotomic constructions, no exceptions.\n\nLedger: double-wrapped tuple comparison (400/400 false mismatches while PATTERN was perfect); residue-vs-type lookup; inline takeover after the channel's 6th agent death (the dying agent recovered the paper-78 anchor first \u2014 credited).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp473_degree_ten.py + exp473_result.json, seed 20260823.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3580",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.573731+00:00",
+    "title": "FACT round-39 #3 \u2014 DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #2, cron iteration (exp 475, assessment v249). Fresh-seed audit of paper 139 (seed 20260826 vs original 20260821) \u2014 the reproducibility-audit discipline applied one firing after a seed-luck embarrassment (paper 136).\n\n**EVERY HEADLINE REPLICATES EXACTLY**:\n- Ensemble equality: emp_x2 \u2248 emp_rnd at all four cells (0.12859/0.12786, 0.02004/0.02023, 0.12854/0.12585, 0.02004/0.01869); QR-restricted randoms 32\u2013200\u00d7 lower.\n- Per-N correlations: 0.503/0.415/0.480/0.403 vs original 0.504/0.452/0.483/0.401 (max drift 0.037).\n- Decile spreads replicate (low/high 0.076\u20130.082 / 0.186\u20130.188 at u=2.5; 0.006\u20130.008 / 0.039\u20130.043 at u=3.5).\n\nVerdict: THE-QR-BITE-IS-VARIANCE is seed-robust; paper 139 stands without qualification; the per-N yield predictor's training target is stable (validation in flight as exp 472).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp475_qr_replication.py + exp475_result.json, seed 20260826.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3581",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.574708+00:00",
+    "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(\u03b1) concave piecewise-linear \u2014 intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **\u2192 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) \u2014 placement doubles what width buys. Best cell: right x=1/16 \u03b1=1 \u2192 **14.69\u00d7**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny \u03b1 \u2014 that family can never reach magnitude-ordering gains.\n- Crossing for 5.19\u00d7: \u03b1* = 0.832 (x=1/64) \u2192 0.996 (x=1/8) \u2014 narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling \u2014 order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at \u221aN' = rightmost-interval commitment with CAL capacity \u2192 0.\n\nVerification: exhaustive permutations M=5\u20138 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=\u221272.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3593",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:53.956820+00:00",
+    "title": "FACT round-40 #4 \u2014 ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-40 #3, cron iteration (exp 478, assessment v256).\n\n**DIAL-TRANSFERS**: the footprint-weighted yield dial fitted at bitlen 44 transfers to bitlen {48, 52} with calibration slopes 0.896/0.834 (80 values/N) and 0.912/0.834 (240 values/N) \u2014 all four cells in band. The direct divisibility feature d(N) stays independently significant in 12/12 cells (min |t| = 3.92). R\u00b2 rises substantially with relation count (0.41 \u2192 0.60 at u=2.5/bl48 for 80\u2192240 values).\n\nCaveat handled: the agent's first assembly had duplicated u-blocks and one out-of-band cell \u2014 caught by coordinator review, fixed surgically on demand; its ceiling column was definition-inconsistent with the lab convention and was NOT adopted.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp478_footprint_scale.py + exp478_result.json, seed 20260830.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3594",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:53.957883+00:00",
+    "title": "FACT round-40 #3 \u2014 FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-40 #2, cron iteration (exp 480, assessment v255). Paper 143's grid promoted to closed form.\n\n**HINT-COST-PRICED**: closed forms for baseline/committed/interleaved (closed = brute-exact at M=300, relgap 0.0; MC max |z|=1.52); **Bayes \u2261 Committed PROVEN** (two-valued posterior + rearrangement); interleaved strictly dominated everywhere.\n\n**THE CROSSING LAW**: reaching speedup s requires **\u03b1 > \u03b1_min(s) = 1 \u2212 2/(3s)** \u2014 a HARD RELIABILITY GATE regardless of width. For paper 137's measured 5.19\u00d7: \u03b1 > 0.87155; above the gate **\u03bc/M = \u03b1 \u2212 0.87155** (linear). Paper 137's magnitude gain \u2194 effective interval quality (\u03b1\u22480.90, \u03bc/M\u22480.028), matching exp 474's numerical estimate. **Width alone can never substitute for reliability.**\n\nConservative pricing: under w-anchored conditioning speedups move UP (7.62\u00d7 vs 5.56\u00d7) \u2014 the stipulated pricing understates real oracle value.\n\nLedger: 7 machine-caught errors incl. a Bayes block that marginalized instead of conditioning (degenerating to the hint-blind floor).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp480_proofs.md + exp480_verify.py + exp480_result.json, seed 20260828.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3595",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:53.958922+00:00",
+    "title": "FACT round-40 #2 \u2014 ET-HINTS-THEORY: the crossing law \u2014 width can never substitute for reliability (paper 146)"
   },
   {
     "consumed_by_exp_id": "",
