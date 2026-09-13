@@ -18,10 +18,9 @@ import sys
 # never dispatched (regression fixed 2026-09-12).
 GH_ISSUE_LIST_LIMIT = 500
 
-# New injected directions land at 0.90 — above the 0.80 LLM-pruning-protection
-# threshold, so they stay protected without distorting priority sorts by an
-# order of magnitude over every other direction.
-INJECTED_PRIORITY = 0.90
+# New injected directions land at 1000 — massively high priority, top of the
+# pool. (Briefly 0.90 in 2026-09-12; reverted at owner request the same day.)
+INJECTED_PRIORITY = 1000.0
 
 def run_gh_command(args):
     """Run a gh CLI command and return its stdout as a string or parsed JSON."""
@@ -134,7 +133,7 @@ def inject_directions_into_memory(workspace_path: Path):
             "title": title,
             "domains": ["Novelty"],  # Default domain, will be bypassed anyway
             "description": body,
-            "priority_score": INJECTED_PRIORITY,  # above the 0.80 prune-protection threshold
+            "priority_score": INJECTED_PRIORITY,  # Massively high priority
             "status": "available",
             "source": "github_injection",
             "github_issue": issue_number,

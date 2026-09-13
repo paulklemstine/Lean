@@ -556,8 +556,8 @@ class TestInjectionFetchAndPriority:
         assert n == 1
         data = json.loads((Path(tmpdir) / "future_directions.json").read_text())
         d = data["directions"][0]
-        assert d["priority_score"] == 0.90, (
-            "Newly injected directions must land at a normal priority (0.90), "
-            f"not 1000 — got {d['priority_score']}"
+        assert d["priority_score"] == 1000.0, (
+            "Newly injected directions must land at priority 1000 "
+            f"— got {d['priority_score']}"
         )
         assert d["source"] == "github_injection" and d["github_issue"] == 417

@@ -133,8 +133,7 @@ External research directions are submitted as GitHub issues labeled
    default once starved the dispatch gate of all but the newest issues —
    fixed 2026-09-12), appends each as a `FutureDirection`
    with `source="github_injection"`, `github_issue=<number>`,
-   `priority_score=0.90` (above the 0.80 prune-protection threshold;
-   pre-2026-09-12 injections used 1000). Dedup counts **all** existing
+   `priority_score=1000` (top of the pool). Dedup counts **all** existing
    injected directions (any status) by `github_issue`, so an issue already
    injected once is never re-injected — even if the direction was later pruned.
 2. **Dispatch gate** (`dispatchable_injected_directions`): an injected
@@ -146,7 +145,7 @@ External research directions are submitted as GitHub issues labeled
 3. **Tournament exemption** (`get_candidate_batch` / `apply_tournament_outcomes`):
    injected directions are never tournament candidates and the live tournament
    write-back (`DirectionTournament.apply_tournament_outcomes`, called from
-   `knowledge_extractor.py`) never prunes them. Their (then) `priority_score=1000`
+   `knowledge_extractor.py`) never prunes them. Their `priority_score=1000`
    would otherwise sort them to the FRONT of every candidate batch (sorted by
    `-priority_score`), getting them tournament-rejected — with empty
    justifications — before the dedicated dispatch path ever ran (regression
