@@ -11,11 +11,11 @@ Domain: Shared
 Declarations: 8
 -/
 
-open Real SPB
+open Real
 
 noncomputable section
 
-/-- The tangent addition law in SPB form.  Unlike `SPB.spb_tan_add` this needs no
+/-- The tangent addition law in SPB form.  Unlike `spb_tan_add` this needs no
 hypothesis on `cos (a + b)`: when `cos (a + b) = 0` both sides are `0`, because
 division by zero is `0`. -/
 theorem tan_add_eq_spb (a b : ℝ) (ha : cos a ≠ 0) (hb : cos b ≠ 0) :
@@ -27,9 +27,9 @@ theorem tan_add_eq_spb (a b : ℝ) (ha : cos a ≠ 0) (hb : cos b ≠ 0) :
       rw [Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos]
       field_simp
       linarith [h1]
-    rw [Real.tan_eq_sin_div_cos, h, div_zero, SPB.spb, h2, div_zero]
+    rw [Real.tan_eq_sin_div_cos, h, div_zero, spb, h2, div_zero]
   · rw [Real.cos_add] at h
-    rw [SPB.spb, Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos,
+    rw [spb, Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos,
       Real.sin_add, Real.cos_add]
     field_simp
 

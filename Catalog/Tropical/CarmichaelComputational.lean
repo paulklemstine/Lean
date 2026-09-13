@@ -1,6 +1,6 @@
 import Mathlib
 import Shared.CarmichaelHelper
-import Shared.NumberTheory.CarmichaelComposite
+import Shared.NumberTheory.CarmichaelProof
 
 /-! # Computational verification of Carmichael's theorem
 
@@ -63,16 +63,14 @@ lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
     strictly divides n (so p divides F(d) for proper d | n).
 
     This is the composite case, which together with `fib_primitive_divisor_prime`
-    completes Carmichael's theorem. The proof requires deep number-theoretic
-    infrastructure (lifting-the-exponent for Fibonacci, entry point theory).
-    Currently an open formalization challenge.
+    completes Carmichael's theorem.
 
-    NOTE (repair): the statement below carries the extra hypothesis `n ≤ 10000`.
-    The unbounded composite case is exactly the open frontier described in
-    `Shared.NumberTheory.CarmichaelComposite`; on the certified range the result
-    follows from the assembled theorem there. -/
+    Repaired statement: the available input `fib_carmichael_composite` is proved
+    on the verified range `13 ≤ n ≤ 10000` only (the unbounded tail remains the
+    open frontier of this development), so the bound `n ≤ 10000` is carried here
+    as an explicit hypothesis. -/
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
     (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael n hn hn2
+      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) :=
+  fib_carmichael_composite n hn hn2 hn_comp
