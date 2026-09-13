@@ -14870,19 +14870,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Slack Budget for the T-versus-Count Advantage"
   },
   {
-    "consumed_by_exp_id": "cc88cab4",
-    "description": "The increment depends on signed second moments, while R-squared readings are sign-blind. A single explicit pair of populations already defeats any predictor built from the three marginal variance shares; the conjecture upgrades this from one pair to a robust family.\n\nThere is no function F with Delta-R-squared = F(R2(x,y), R2(z,y), R2(x,z)) valid on all finite populations, and the set of population pairs witnessing the failure contains an open set in moment space.\n\nPerturb the constructed pair (rateSB, rateSC) within the moment parametrisation and show the increment gap stays bounded away from zero on a neighbourhood, using pgain_moment_formula.\n\nReporting protocols must record signed covariances; sign-blind dashboards cannot certify or refute an augmentation.\n\nSome extra invariant pins the sign down, which would be a genuinely new constraint on admissible populations.",
-    "domains": [],
-    "id": "fd_4607",
-    "phase": "A",
-    "priority_score": 0.5925000000000001,
-    "research_mode": "team",
-    "source_exp_id": "8c9b3d94",
-    "status": "in_progress",
-    "timestamp": "2026-09-03T00:18:10.435870+00:00",
-    "title": "Inadmissibility of Sign-Blind Dial Reporting"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "An independently keyed T-valued tag divides the silent-error bound by T at unchanged scan cost, as proved this cycle. The conjecture is that the mass removed from the silent set reappears exactly as abstention mass, so the tagged scheme saturates the converse silent + abstain >= 1 - |Code| p_max and is Pareto-optimal among decoders of the same code size.\n\nFor the tagged scheme of exists_tagged_balanced_scheme, silent mass + abstain mass = 1 - M T p_max + O(1/T), and no scheme over Fin (M T) has both strictly smaller silent mass and strictly smaller abstention mass.\n\nCompute abstainMass for the tagged hashScheme explicitly and compare with silentMass_add_abstainMass_ge; formalize the Pareto statement as a two-coordinate domination claim.\n\nTagging is the canonical optimal way to spend code length on safety, closing the design space for almost-lossless compression with a reject option.\n\nThere is slack in the tagged decoder, and a better allocation of tag bits versus codeword bits exists.",
     "domains": [],
@@ -31602,6 +31589,63 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For an augmentation by k features the dashboard reports all pairwise variance shares; the increment additionally needs the triple-product signs on the triangles of the correlation graph. The conjecture is that the undetectable sign patterns form the coboundary group of that graph, so exactly binom(k+1,2) - k bits are missing. This turns the one-bit result of this cycle into a cohomological count.\n\nFor features z_1..z_k the increment of the multiple R-squared is a function of the pairwise variance shares together with the signs of the triple products rho_ab rho_bc rho_ca over triangles of K_{k+2}, and the group of sign patterns invisible to a sign-blind dashboard is exactly the coboundary group B^1 of the sign cochain complex, of index 2^(binom(k+1,2)-k).\n\nFormalise the Schur-complement form of the multiple-feature increment, define the sign cochain complex on K_{k+2}, and prove invariance under coboundaries plus a separating family of populations for each nonzero cohomology class; check k = 2 explicitly on four- and five-key populations.\n\nReporting protocols need exactly binom(k+1,2) - k extra bits per augmentation, a precise and checkable disclosure standard.\n\nEither fewer bits suffice (an unexpected rigidity among realisable correlation matrices) or more are needed, indicating that positive-definiteness interacts with the sign data.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4804",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cc88cab4",
+    "status": "available",
+    "timestamp": "2026-09-13T00:56:34.789490+00:00",
+    "title": "Sign Cohomology of Multi-Feature Augmentation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The set of population pairs that agree on all three dial readings but disagree on the increment is cut out by three equations on pair space. The conjecture asserts maximal rank, hence a smooth submanifold of codimension three, on which the increment gap is a nonconstant smooth function bounded below on compact pieces.\n\nFor n >= 4 keys the set of pairs of n-key populations with equal R2(x,y), R2(z,y), R2(x,z) and unequal increment is a smooth submanifold of codimension three in pair space, and the increment gap attains a positive minimum on each compact subset of it.\n\nCompute the differential of the three matching maps at the family point (b,u) = (1/10,1/2) and check its rank is three; then apply the implicit function theorem formalised in Mathlib.\n\nSign-masking is generic rather than exceptional, and the two-parameter family found here is a chart of a full-dimensional phenomenon.\n\nThe matching conditions degenerate, meaning matched pairs are confined to a thin set and sign-blind dashboards fail only on rare configurations.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4805",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cc88cab4",
+    "status": "available",
+    "timestamp": "2026-09-13T00:56:35.194420+00:00",
+    "title": "Manifold Structure of the Matched-Pair Witness Locus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Sparse 0/1 features have increment at most B^2 times their density. Combining this with the exact ambiguity amplitude should yield a density below which sign blindness cannot mislead by more than epsilon, converting a qualitative recommendation into a reporting threshold.\n\nFor a 0/1 feature of density delta and residual bounded by B in supremum norm, the ambiguity amplitude of the dashboard reading is at most 4*B*sqrt(delta)/sigma_yy; hence sign-blind reporting is epsilon-admissible whenever delta < epsilon^2*sigma_yy^2/(16*B^2).\n\nBound the triple product by |sigma_zy| / sqrt(sigma_yy sigma_zz) and combine with the sparse-feature Cauchy-Schwarz bound already proved in the catalog; verify numerically on prime-power indicators over key ranges 1..N for N up to 10^4.\n\nDashboards may legitimately omit signs for provably sparse features, and the threshold is explicitly checkable from logged data.\n\nEven vanishing-density features can carry unbounded sign ambiguity, strengthening the case for mandatory signed reporting.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4806",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cc88cab4",
+    "status": "available",
+    "timestamp": "2026-09-13T00:56:35.532883+00:00",
+    "title": "Density Threshold for Admissible Sign-Blind Reporting"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This cycle proves no function of the dial readings determines the sign, so any pinning invariant must come from side information. For arithmetically defined features the sign may be forced by mean values of multiplicative functions, making sign-blind reporting admissible in that restricted universe.\n\nIf the footprint is completely additive and the augmenting feature is the indicator of a multiplicatively defined set of positive density, then the sign of the triple product is eventually constant in the key range 1..N; the constancy fails for sets whose indicator has no multiplicative structure.\n\nCompute the triple-product sign for prime-power, squarefree and smooth-number indicators against the additive footprint log-of-largest-prime-factor for N up to 10^5, then formalise the stabilisation using a mean-value estimate.\n\nThere is a genuine extra invariant pinning the sign down in the arithmetic setting, and sign-blind dashboards are admissible there.\n\nNo arithmetic structure rescues sign blindness, and signed covariances must always be recorded.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4807",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cc88cab4",
+    "status": "available",
+    "timestamp": "2026-09-13T00:56:35.876672+00:00",
+    "title": "Arithmetic Pinning of the Triple-Product Sign"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -45579,14 +45623,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lyapunov conventions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb6515e1",
     "description": "For the seven canonical interval representatives formalized in `SonicCounterpointCategory.lean`, the reflexive-transitive closure of `CanonicalMotion` is total: every interval reaches every other interval. A single unreachable ordered pair refutes this claim.",
     "domains": [],
     "id": "fd_2821",
+    "phase": "A",
     "priority_score": 0.40754166666666664,
     "research_mode": "team",
     "source_exp_id": "5c8fc610",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:20.266643+00:00",
     "title": "Seven-state strong-connectivity conjecture"
   },

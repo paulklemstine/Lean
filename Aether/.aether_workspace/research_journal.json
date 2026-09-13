@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8ec45b40",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — semantic resolution of observational languages\n\n## What this cycle established\n\nWorking inside the catalog's tag-indexed Kripke semantics `satF R V`\n(`NumberTheory.TagFrameSemant",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-09-03T04:39:05",
-      "title": "Bisimulation versus isomorphism as semantic resolution"
-    },
-    {
       "cycle_id": "42a2aa0b",
       "domain": "Shared",
       "key_insight": "# Future directions after the degree-11 rung\n\nThe verified content of this cycle is:\n\n* the arithmetic pinning law at degree 11 (`realDeg_23_prime_iff`);\n* the universal pinning theorem for **all** fi",
@@ -499,19 +489,19 @@
       "theorem_count": 47,
       "timestamp": "2026-09-12T18:31:43",
       "title": "Effective reconstruction"
+    },
+    {
+      "cycle_id": "cc88cab4",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — after the sign-blind dial cycle\n\n## What this cycle settled\n\nWorking from `Catalog.Combinatorics.ExtendedDialMomentGeometry` (five-moment formula\n`pgain_moment_formula`, the supp",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-09-13T00:56:46",
+      "title": "Inadmissibility of Sign-Blind Dial Reporting"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "33808f71",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — NET-69 round 22 (selection-theoretic layer)\n\n## What this cycle established\n\nThree Lean files in `Catalog/Novelty/`:\n\n* `ProbeRetentionLimits.lean` — the exchange inequality for",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-08-24T05:02:59",
-      "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL — probes recover only R2=0.32 on code too; probe-only l"
-    },
     {
       "cycle_id": "fdd9261c",
       "domain": "NumberTheory",
@@ -2501,21 +2491,19 @@
       "theorem_count": 47,
       "timestamp": "2026-09-12T18:31:43",
       "title": "Effective reconstruction"
+    },
+    {
+      "cycle_id": "cc88cab4",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — after the sign-blind dial cycle\n\n## What this cycle settled\n\nWorking from `Catalog.Combinatorics.ExtendedDialMomentGeometry` (five-moment formula\n`pgain_moment_formula`, the supp",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-09-13T00:56:46",
+      "title": "Inadmissibility of Sign-Blind Dial Reporting"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "794ffb3f",
-      "domain": "Shared",
-      "name": "therefore",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "794ffb3f",
-      "domain": "Shared",
-      "name": "requires",
-      "quality": 0.82
-    },
     {
       "cycle_id": "cc3115b2",
       "domain": "Algebra",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "computable_leastRep",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "cc88cab4",
+      "domain": "Algebra",
+      "name": "R2_lt_one_of_partial_pos",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "cc88cab4",
+      "domain": "Algebra",
+      "name": "sign_blind_ambiguity_dichotomy",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-09-12T18:31:43",
+  "last_updated": "2026-09-13T00:56:46",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "94eeec9f",
-        "quality": 0.83,
-        "theorems": 46,
-        "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg "
-      },
-      {
         "cycle_id": "25df59ed",
         "quality": 0.86,
         "theorems": 48,
@@ -3079,6 +3073,12 @@
         "quality": 0.78,
         "theorems": 64,
         "title": "Product constructions with bounded chord repair"
+      },
+      {
+        "cycle_id": "cc88cab4",
+        "quality": 0.86,
+        "theorems": 76,
+        "title": "Inadmissibility of Sign-Blind Dial Reporting"
       }
     ],
     "Applications": [
