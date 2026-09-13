@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-13T00:56:36Z",
-  "count": 142,
+  "archived_at": "2026-09-13T11:45:13Z",
+  "count": 143,
   "directions": [
     {
       "id": "fd_3695",
@@ -5617,6 +5617,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 364
+    },
+    {
+      "id": "fd_2716",
+      "title": "Genuinely dependent solutions at every nontrivial finite cardinality",
+      "description": "For\n   every `n ≥ 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.",
+      "source_exp_id": "9d058f1b",
+      "source_path": "resplit_migration",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4,
+      "status": "completed",
+      "consumed_by_exp_id": "87769612",
+      "timestamp": "2026-08-21T06:25:43.986328+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.85,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-12T18:33:46.372560+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "42a2aa0b",
-      "domain": "Shared",
-      "key_insight": "# Future directions after the degree-11 rung\n\nThe verified content of this cycle is:\n\n* the arithmetic pinning law at degree 11 (`realDeg_23_prime_iff`);\n* the universal pinning theorem for **all** fi",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-09-03T04:39:23",
-      "title": "FACT round-50 — DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper"
-    },
-    {
       "cycle_id": "88e58a70",
       "domain": "Cryptography",
       "key_insight": "# Future directions — the zero-fit dial and its arithmetic baselines\n\n## What this cycle established\n\n1. **Prime independence.** The bare quadratic-residue baseline has tie ceiling exactly\n   $\\rho^2",
@@ -499,19 +489,19 @@
       "theorem_count": 76,
       "timestamp": "2026-09-13T00:56:46",
       "title": "Inadmissibility of Sign-Blind Dial Reporting"
+    },
+    {
+      "cycle_id": "87769612",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — dependent tropical fibre families\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Tropical/DependentFibers/` (all statements there are proved, with n",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 569,
+      "timestamp": "2026-09-13T11:45:25",
+      "title": "Genuinely dependent solutions at every nontrivial finite cardinality"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fdd9261c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — normalized `q`-series, the corrected product, and beyond\n\nThis cycle formalized the `q⁻¹ + O(1)` normalization, the pole order of finite\nproducts, and then went further: the *cor",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-24T07:22:12",
-      "title": "Define Laurent q-series with the standard `q⁻¹ + O(q)` normalization and formalize the pole\n   order"
-    },
     {
       "cycle_id": "6c27d6f0",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 76,
       "timestamp": "2026-09-13T00:56:46",
       "title": "Inadmissibility of Sign-Blind Dial Reporting"
+    },
+    {
+      "cycle_id": "87769612",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — dependent tropical fibre families\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Tropical/DependentFibers/` (all statements there are proved, with n",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 569,
+      "timestamp": "2026-09-13T11:45:25",
+      "title": "Genuinely dependent solutions at every nontrivial finite cardinality"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cc3115b2",
-      "domain": "Algebra",
-      "name": "genuinely",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "cc3115b2",
-      "domain": "Algebra",
-      "name": "is",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "cc3115b2",
-      "domain": "Algebra",
-      "name": "produces",
-      "quality": 0.85
-    },
     {
       "cycle_id": "fd463ee8",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "sign_blind_ambiguity_dichotomy",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "87769612",
+      "domain": "Tropical",
+      "name": "outMarginal_nonneg",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "87769612",
+      "domain": "Tropical",
+      "name": "outMarginal_sum_one",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "87769612",
+      "domain": "Tropical",
+      "name": "mutualInfo_term_bound",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-09-13T00:56:46",
+  "last_updated": "2026-09-13T11:45:25",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "620a1130",
-        "quality": 0.82,
-        "theorems": 111,
-        "title": "Separate temporal and pitch lags"
-      },
-      {
         "cycle_id": "6c27d6f0",
         "quality": 0.82,
         "theorems": 107,
@@ -4009,6 +4003,12 @@
         "quality": 0.86,
         "theorems": 68,
         "title": "Constrained = penalised"
+      },
+      {
+        "cycle_id": "87769612",
+        "quality": 0.85,
+        "theorems": 569,
+        "title": "Genuinely dependent solutions at every nontrivial finite cardinality"
       }
     ]
   }

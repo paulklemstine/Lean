@@ -120,6 +120,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 87769612 (Q=0.850), which proved 569 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For\n   every `n \u2265 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_87769612_f70ce7ad",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "87769612",
+    "status": "available",
+    "timestamp": "2026-09-13T11:45:25.640558+00:00",
+    "title": "Deepening: Genuinely dependent solutions at every nontrivial finite cardinality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle cc3115b2 (Q=0.850), which proved 103 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** A finite hyperreal projection-valued measure with finite matrix entries descends under entrywise standard part to an ordinary projection-valued measure if and only if its projections are pairwise orthogonal up to infinitesimal operator norm and its total projection is infinitesimally",
     "domains": [
       "Algebra"
@@ -1817,16 +1831,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "03b48eb6",
+    "consumed_by_exp_id": "caf9cc55",
     "description": "**Domain**: Pythagorean <-> Computation\n\n**Hypothesis (MOONSHOT)**: The inverse Collatz tree and the Berggren tree of primitive Pythagorean triples are two realizations of the SAME underlying ternary dynamics. The Collatz map is famously hard because its tree (under the inverse map) is a ternary tree with no known invariant; the Berggren tree is a ternary tree with a fully proven invariant \u2014 the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2 and the silver-ratio growth exponent log(1+\u221a2). The conjecture: there is a transfer map from the Berggren tree's ternary branching onto the inverse-Collatz tree that carries the Lorentz invariant and the growth structure, giving the Collatz tree a conserved quantity it currently lacks.\n\n**Test**: Formalize the inverse Collatz tree as a ternary tree (each odd n has up to three preimages under the inverse map). Formalize the Berggren tree's proven machinery (Lorentz invariant, groupoid, silver-ratio growth). Construct an explicit map from Berggren triples to Collatz orbits and test whether the Lorentz form or a derived quantity is conserved along Collatz trajectories. Prove at least one structural theorem \u2014 e.g., that a Berggren-type invariant bounds the growth of a Collatz trajectory, or that the ternary branching of the two trees is isomorphic.\n\n**Why now**: The Collatz conjecture is one of the most famous open problems in mathematics \u2014 a true moonshot target. The catalog already carries a fully formalized ternary tree (Berggren) with exact invariants and growth. If the two trees are genuinely related, the solved Berggren structure becomes a new tool for the hardest open problem in discrete dynamics. Even a partial transfer would be history-making.\n\n**If true**: The Collatz tree gains a conserved Lorentz-type invariant and an exact growth bound, opening a genuinely new attack line on the Collatz conjecture \u2014 a result that would be among the most celebrated in mathematics.\n\n**If false**: The failure \u2014 proving the two ternary trees are NOT isomorphic, or that no Berggren-type invariant is conserved \u2014 is itself a sharp theorem explaining precisely why the Collatz tree resists the methods that work for Berggren, clarifying the boundary of what ternary-tree methods can achieve.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1774",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T23:42:10.363274+00:00",
     "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
   },
@@ -9820,6 +9835,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T23:36:05.952683+00:00",
     "title": "Gaussian Extremality of the Discrete Gabor Uncertainty Product"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Min-plus aggregation over a divisor lattice is constant because the lattice has a least element, whereas aggregation over monomials of a tropical polynomial is never constant. The conjecture is that this dichotomy is governed purely by the existence of a global minimum of the weighted index poset.\n\nFor a family of finite index posets with a strictly monotone weight, the argmin family is cardinality-constant if and only if each poset has a least element for the weight order.\n\nFormalise weighted index posets in Lean, prove the easy direction from divisorArgmin_eq_one, and test the converse on the monomial poset of a tropical polynomial.\n\nExplains uniformly why arithmetic tropicalisations lose information while geometric ones do not.\n\nThere are constant families without least elements, so constancy also depends on the weight, not just the poset.",
+    "domains": [
+      "Tropical",
+      "Combinatorics"
+    ],
+    "id": "fd_4811",
+    "priority_score": 0.7106190476190477,
+    "research_mode": "team",
+    "source_exp_id": "87769612",
+    "status": "available",
+    "timestamp": "2026-09-13T11:45:13.381300+00:00",
+    "title": "Poset Dichotomy for Min-Plus Aggregation"
   },
   {
     "consumed_by_exp_id": "",
@@ -31646,6 +31676,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For non-convex coefficient vectors the total multiplicity excess of a tropical polynomial falls short of its degree. The conjecture identifies the shortfall with the number of lower-hull lattice points that are not monomials of the minimum. This closes the gap between the general inequality and the convex equality already proved.\n\nFor every n and c, n - sum over x of (|fiber n c x| - 1) equals the number of lattice points on the lower convex hull of {(i, c i) : i <= n} that are not attained as fibre elements.\n\nFormalise the lower hull of the coefficient graph in Lean, then prove the identity by induction over hull edges using fiber_order and fiber_sumCoeff_eq_Icc.\n\nGives an exact tropical fundamental theorem valid without convexity, with the defect as an explicit hull invariant.\n\nThen the defect depends on more than the hull, and the correct invariant must involve the position of the invisible monomials.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4808",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "87769612",
+    "status": "available",
+    "timestamp": "2026-09-13T11:45:11.627117+00:00",
+    "title": "Lattice-Length Defect of Tropical Fibre Families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The one-variable family of argmin fibres is never cardinality-constant. The conjecture extends this to tropical polynomials in several variables, where fibres are subsets of the monomial support. The proof route mimics the explicit crossing-point construction.\n\nFor every tropical polynomial in d variables whose support has at least two elements, there are points p and q with |support-argmin at p| not equal to |support-argmin at q|.\n\nDefine the multivariate fibre in Lean over rational points of R^d and prove corner existence by maximising (c 0 - c i) along a generic direction.\n\nNon-constancy of tropical fibre families is a dimension-independent structural fact, and tropical hypersurfaces are never empty for nontrivial support.\n\nSome multivariate support configurations admit constant argmin cardinality, which would be a striking degeneracy worth classifying.",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_4809",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "87769612",
+    "status": "available",
+    "timestamp": "2026-09-13T11:45:12.281427+00:00",
+    "title": "Multivariate Corner Existence and Non-Constancy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The fibre family is constant off at most n points and jumps at corners. The conjecture is that it is the stalk family of a constructible cosheaf whose Euler characteristic equals the degree. This would recast the degree bound as a topological count.\n\nThe assignment x -> fiber n c x extends to a constructible cosheaf on the tropical line whose Euler characteristic, computed as (number of strata of dimension 1) minus (sum of corner jumps), equals -n for convex c.\n\nDefine the stratification induced by cornerSet, verify constructibility using cornerSet_finite, and compute the Euler characteristic from multiplicity_sum_convex_eq.\n\nProvides a topological proof of the tropical fundamental theorem and a template for sheaf-theoretic tropical intersection theory.\n\nThe jumps fail to glue, indicating that the correct object is a quiver representation rather than a cosheaf.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_4810",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "87769612",
+    "status": "available",
+    "timestamp": "2026-09-13T11:45:12.829738+00:00",
+    "title": "Constructible Cosheaf Structure on the Tropical Line"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -50546,19 +50621,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:35.012688+00:00",
     "title": "General negative radix"
-  },
-  {
-    "consumed_by_exp_id": "87769612",
-    "description": "For\n   every `n \u2265 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.",
-    "domains": [],
-    "id": "fd_2716",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "9d058f1b",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:43.986328+00:00",
-    "title": "Genuinely dependent solutions at every nontrivial finite cardinality"
   },
   {
     "consumed_by_exp_id": "",
