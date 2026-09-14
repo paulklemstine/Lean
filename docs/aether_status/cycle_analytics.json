@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-13T18:12:39.277781+00:00",
+  "last_updated": "2026-09-14T13:04:43.293654+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -74887,6 +74887,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-13T18:12:38.918152+00:00",
       "title": "Seven-state strong-connectivity conjecture"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "MachineLearning",
+      "duration_seconds": 24710.306742191315,
+      "end_time": 1789391054.004798,
+      "files_integrated": 4,
+      "job_id": "5c150b3f",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.83,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5485,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.83,
+        "novelty": 0.83,
+        "proof_depth": 0.83,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1789366343.6980557,
+      "strategy_count": 0,
+      "theorem_count": 188,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 152,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-14T13:04:43.013950+00:00",
+      "title": "Moonshine from the Null Cone \u2014 The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
     }
   ]
 }

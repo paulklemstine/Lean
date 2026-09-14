@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "98caf022",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — real-parameter scale flow on knee chains\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.\n\n## What survived this cycle\n\n* **The extension exists and is cano",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-09-03T09:52:09",
-      "title": "Real-Parameter Scale Flow on Knee Chains"
-    },
-    {
       "cycle_id": "14592ce7",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — after T-DIAL-60-PLATEAU\n\nThe formal cycle in `Catalog/Combinatorics/TDialPlateau60.lean` replaced the empirical\nstatement \"the bitlen degradation plateaus at ≈ 0.44\" by two exact",
@@ -499,19 +489,19 @@
       "theorem_count": 95,
       "timestamp": "2026-09-13T18:12:37",
       "title": "Seven-state strong-connectivity conjecture"
+    },
+    {
+      "cycle_id": "5c150b3f",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — Moonshine from the null cone (after cycle v19c)\n\n## Build status\n\n`lake build` now completes successfully on the whole repository (all declared library\ntargets, no errors), and n",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 188,
+      "timestamp": "2026-09-14T13:04:41",
+      "title": "Moonshine from the Null Cone — The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3be10ac1",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — TDIAL-BITLEN cycle (round-56 #1, exp 526)\n\n## What this cycle established\n\nFour sorry-free Lean files in `Catalog/Pythagorean/`:\n\n* `ZeroFitDialRelationRate48.lean` — the *coarse",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-24T09:05:56",
-      "title": "FACT round-56 #1 — TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
-    },
     {
       "cycle_id": "c293906f",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 95,
       "timestamp": "2026-09-13T18:12:37",
       "title": "Seven-state strong-connectivity conjecture"
+    },
+    {
+      "cycle_id": "5c150b3f",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — Moonshine from the null cone (after cycle v19c)\n\n## Build status\n\n`lake build` now completes successfully on the whole repository (all declared library\ntargets, no errors), and n",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 188,
+      "timestamp": "2026-09-14T13:04:41",
+      "title": "Moonshine from the Null Cone — The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "69567235",
-      "domain": "Bridges",
-      "name": "sum_sq_split",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "69567235",
-      "domain": "Bridges",
-      "name": "ssBetween_nonneg",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "69567235",
-      "domain": "Bridges",
-      "name": "anova_decomposition",
-      "quality": 0.85
-    },
     {
       "cycle_id": "e050cc19",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "canonicalMotion_symm",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "5c150b3f",
+      "domain": "MachineLearning",
+      "name": "bil_add_left",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "5c150b3f",
+      "domain": "MachineLearning",
+      "name": "bil_add_right",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "5c150b3f",
+      "domain": "MachineLearning",
+      "name": "smul_left",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-09-13T18:12:37",
+  "last_updated": "2026-09-14T13:04:41",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "217690eb",
-        "quality": 0.82,
-        "theorems": 67,
-        "title": "FACT round-83 #4 — NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR"
-      },
-      {
         "cycle_id": "92ebc5bc",
         "quality": 0.78,
         "theorems": 50,
@@ -3575,6 +3569,12 @@
         "quality": 0.88,
         "theorems": 605,
         "title": "FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
+      },
+      {
+        "cycle_id": "5c150b3f",
+        "quality": 0.83,
+        "theorems": 188,
+        "title": "Moonshine from the Null Cone — The Berggren Groupoid, the Lorentzian Leech Latti"
       }
     ],
     "Novelty": [
