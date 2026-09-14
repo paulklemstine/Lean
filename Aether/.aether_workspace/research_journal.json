@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "14592ce7",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — after T-DIAL-60-PLATEAU\n\nThe formal cycle in `Catalog/Combinatorics/TDialPlateau60.lean` replaced the empirical\nstatement \"the bitlen degradation plateaus at ≈ 0.44\" by two exact",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-09-03T09:52:28",
-      "title": "FACT round-49 #2 — T-DIAL-60: the degradation plateaus (paper 179)"
-    },
-    {
       "cycle_id": "025e0adb",
       "domain": "Shared",
       "key_insight": "# FUTURE_DIRECTIONS — after T-DIAL-56 (paper 178, exp 511)\n\n## What this cycle established\n\nFive new `Catalog/Shared` files, all sorry-free:\n\n| file | content |\n|------|---------|\n| `TieBlockRankCeili",
@@ -499,19 +489,19 @@
       "theorem_count": 188,
       "timestamp": "2026-09-14T13:04:41",
       "title": "Moonshine from the Null Cone — The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
+    },
+    {
+      "cycle_id": "caf9cc55",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — after the Collatz–Berggren bridge\n\n## What cycle 1 settled\n\nThe moonshot hypothesis (\"the inverse Collatz tree and the Berggren tree are two\nrealisations of the same ternary dyna",
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "theorem_count": 108,
+      "timestamp": "2026-09-14T18:35:57",
+      "title": "The Collatz-Berggren Bridge — Transferring the Lorentz Invariant to the Inverse Collatz Tree"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c293906f",
-      "domain": "Probability",
-      "key_insight": "# Future directions — NET-76, after the dilation / merging / token-matching cycles\n\nFour formal files were added in this thread, all sorry-free and using only the standard\naxioms:\n\n* `Catalog/Probabil",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 95,
-      "timestamp": "2026-08-24T10:05:21",
-      "title": "NET-76: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE — complete 5-domain × 2-context table: each domain's ent"
-    },
     {
       "cycle_id": "93d08ac5",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 188,
       "timestamp": "2026-09-14T13:04:41",
       "title": "Moonshine from the Null Cone — The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
+    },
+    {
+      "cycle_id": "caf9cc55",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — after the Collatz–Berggren bridge\n\n## What cycle 1 settled\n\nThe moonshot hypothesis (\"the inverse Collatz tree and the Berggren tree are two\nrealisations of the same ternary dyna",
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "theorem_count": 108,
+      "timestamp": "2026-09-14T18:35:57",
+      "title": "The Collatz-Berggren Bridge — Transferring the Lorentz Invariant to the Inverse Collatz Tree"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e050cc19",
-      "domain": "Algebra",
-      "name": "for",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "e050cc19",
-      "domain": "Algebra",
-      "name": "PWA",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "e050cc19",
-      "domain": "Algebra",
-      "name": "PWA",
-      "quality": 0.88
-    },
     {
       "cycle_id": "e6e33149",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "smul_left",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "caf9cc55",
+      "domain": "Probability",
+      "name": "SyrPred",
+      "quality": 0.81
+    },
+    {
+      "cycle_id": "caf9cc55",
+      "domain": "Probability",
+      "name": "predSet_eq_empty_of_three_dvd",
+      "quality": 0.81
+    },
+    {
+      "cycle_id": "caf9cc55",
+      "domain": "Probability",
+      "name": "two_pow_two_mul_mod_three",
+      "quality": 0.81
     }
   ],
-  "last_updated": "2026-09-14T13:04:41",
+  "last_updated": "2026-09-14T18:35:57",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "7b0f4515",
-        "quality": 0.84,
-        "theorems": 13,
-        "title": "FACT round-83 #1 — SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION "
-      },
-      {
         "cycle_id": "1a774383",
         "quality": 0.78,
         "theorems": 103,
@@ -3823,6 +3817,12 @@
         "quality": 0.86,
         "theorems": 129,
         "title": "FACT round-46 #2 — PPOW-MULTISEED: the prime-power lift replicates across seeds "
+      },
+      {
+        "cycle_id": "caf9cc55",
+        "quality": 0.81,
+        "theorems": 108,
+        "title": "The Collatz-Berggren Bridge — Transferring the Lorentz Invariant to the Inverse "
       }
     ],
     "Pythagorean": [

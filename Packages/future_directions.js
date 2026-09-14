@@ -974,6 +974,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle caf9cc55 (Q=0.810), which proved 108 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Domain**: Pythagorean <-> Computation\n\n**Hypothesis (MOONSHOT)**: The inverse Collatz tree and the Berggren tree of primitive Pythagorean triples are two realizations of the SAME underlying ternary dynamics. The Collatz map is famously hard because its tree (under the inverse map) is a ternary tre",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_caf9cc55_d8078a5d",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "caf9cc55",
+    "status": "available",
+    "timestamp": "2026-09-14T18:35:58.272700+00:00",
+    "title": "Deepening: The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domains": [
       "NumberTheory"
@@ -1859,21 +1873,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "caf9cc55",
-    "description": "**Domain**: Pythagorean <-> Computation\n\n**Hypothesis (MOONSHOT)**: The inverse Collatz tree and the Berggren tree of primitive Pythagorean triples are two realizations of the SAME underlying ternary dynamics. The Collatz map is famously hard because its tree (under the inverse map) is a ternary tree with no known invariant; the Berggren tree is a ternary tree with a fully proven invariant \u2014 the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2 and the silver-ratio growth exponent log(1+\u221a2). The conjecture: there is a transfer map from the Berggren tree's ternary branching onto the inverse-Collatz tree that carries the Lorentz invariant and the growth structure, giving the Collatz tree a conserved quantity it currently lacks.\n\n**Test**: Formalize the inverse Collatz tree as a ternary tree (each odd n has up to three preimages under the inverse map). Formalize the Berggren tree's proven machinery (Lorentz invariant, groupoid, silver-ratio growth). Construct an explicit map from Berggren triples to Collatz orbits and test whether the Lorentz form or a derived quantity is conserved along Collatz trajectories. Prove at least one structural theorem \u2014 e.g., that a Berggren-type invariant bounds the growth of a Collatz trajectory, or that the ternary branching of the two trees is isomorphic.\n\n**Why now**: The Collatz conjecture is one of the most famous open problems in mathematics \u2014 a true moonshot target. The catalog already carries a fully formalized ternary tree (Berggren) with exact invariants and growth. If the two trees are genuinely related, the solved Berggren structure becomes a new tool for the hardest open problem in discrete dynamics. Even a partial transfer would be history-making.\n\n**If true**: The Collatz tree gains a conserved Lorentz-type invariant and an exact growth bound, opening a genuinely new attack line on the Collatz conjecture \u2014 a result that would be among the most celebrated in mathematics.\n\n**If false**: The failure \u2014 proving the two ternary trees are NOT isomorphic, or that no Berggren-type invariant is conserved \u2014 is itself a sharp theorem explaining precisely why the Collatz tree resists the methods that work for Berggren, clarifying the boundary of what ternary-tree methods can achieve.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1774",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T23:42:10.363274+00:00",
-    "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
-  },
-  {
     "consumed_by_exp_id": "841548e6",
     "description": "**Domain**: Pythagorean <-> Geometry\n\n**Hypothesis (MOONSHOT)**: The space of Euler bricks (integer boxes whose three face diagonals are integral) carries a Berggren-style tree structure: a finite set of integer generators acts on bricks, producing every primitive Euler brick from finitely many seeds, with a descent theory reducing every brick to minimal ones \u2014 the perfect-cuboid analogue of the Berggren tree itself. The conjecture: the brick tree's structure theory settles the shape of the perfect cuboid question \u2014 either a perfect cuboid exists in the tree (reachable by bounded search along the tree's growth), or the tree's architecture yields a proof that the four simultaneous square conditions (three face diagonals and the space diagonal) obstruct each other along every branch.\n\n**Test**: Formalize Euler bricks as integer triples with three integral face diagonals; exhibit explicit generator transformations acting on bricks that preserve brick-hood and generate the primitive brick space from finitely many seeds (the catalog already proved the diagonal-cone reduction a\u00b2+b\u00b2+c\u00b2=2d\u00b2 and the rational parametrization of the normalized quadric \u2014 build the tree on top of that foundation). Prove the descent theory: every brick descends to a finite set of minimal bricks, the brick analogue of (3,4,5). Then either (i) exhibit a perfect cuboid, or (ii) prove a structural obstruction: the space-diagonal condition fails along every branch in a formally provable pattern.\n\n**Why now**: The perfect cuboid problem has been open since Euler's era and is one of the most famous unsolved problems of elementary number theory. The catalog's perfect-cuboid package completed the static geometry (the diagonal cone and the rational parametrization of the cuboid quadric); the dynamic, tree-like structure theory of the brick space is the missing piece, and the Berggren tree's proven machinery \u2014 generators, descent, exact growth \u2014 is exactly the template. A Berggren-style descent on bricks is the natural next move the corpus has set up but not taken.\n\n**If true**: Either the discovery of a perfect cuboid (settling a 300-year-old problem) or the first structural obstruction theorem \u2014 a proof that the brick tree's architecture forbids the four simultaneous square conditions, transforming the problem from search to structure.\n\n**If false**: The brick tree fails to have finitely-generated descent (primitive bricks require infinitely many seeds) \u2014 itself a sharp structure theorem distinguishing the brick world from the triple world, and a precise map of where the perfect-cuboid difficulty lives.\n",
     "domains": [
@@ -1889,16 +1888,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Euler Brick Tree \u2014 Berggren Descent and the Perfect Cuboid"
   },
   {
-    "consumed_by_exp_id": "54700980",
+    "consumed_by_exp_id": "6f1658d7",
     "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree enumerates every primitive integer right triangle (a,b,c), and its area function A = ab/2 = mn(m\u00b2\u2212n\u00b2) over the Euclid seeds hits exactly the congruent numbers up to squarefree parts \u2014 n is congruent (the area of a rational right triangle) if and only if n is the squarefree part of the area of some node of the tree. The conjecture: the tree's proven structure theory (descent to (3,4,5), silver-ratio growth, groupoid) makes the tree a new, provably analyzable laboratory for the congruent number problem \u2014 in particular the density of congruent numbers (conjecturally about one half in each admissible residue class, open, and equivalent in depth to the rank distribution of the elliptic curves y\u00b2 = x\u00b3 \u2212 n\u00b2x) can be attacked through the statistical structure of the tree's area values.\n\n**Test**: Formalize the area function mn(m\u00b2\u2212n\u00b2) over the tree's Euclid seeds and prove the classical equivalence inside the tree formalism: the squarefree parts of node areas are exactly the congruent numbers. Then prove structure theorems: the distribution of squarefree parts along branches, the growth of the set of congruent numbers \u2264 X generated at depth \u2264 d, and the tree-side descent structure of the elliptic-curve correspondence (rational triangles \u2194 rational points on y\u00b2 = x\u00b3 \u2212 n\u00b2x). Stretch goal: an unconditional version of Tunnell's criterion for an explicit infinite family of n, or a proven density law for congruent numbers in a residue class.\n\n**Why now**: The congruent number problem is one of the oldest unsolved problems in mathematics (Bachet, 1621), and its complete solution is equivalent to the Birch\u2013Swinnerton-Dyer conjecture \u2014 a $1M Millennium Prize Problem. The catalog has fully formalized the tree (groupoid, hyperbolic geometry, silver speed limit) but has never studied its area function \u2014 the direct bridge to congruent numbers. The tree is the one structure in which the triangle side of the problem is completely explicit; every congruent number is visible in it.\n\n**If true**: The congruent number problem gains a concrete new laboratory: the tree's area statistics become a computable model for the BSD-linked density conjectures, and any proven density law or unconditional Tunnell family would be a major result on a Millennium-Prize-scale problem.\n\n**If false**: The tree's area function has no tractable structure (e.g., squarefree parts equidistributed with no exploitable pattern) \u2014 itself a sharp equidistribution theorem about the tree, and a precise statement of why the triangle side alone cannot see the elliptic-curve side.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1787",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T03:17:34.069425+00:00",
     "title": "The Congruent Number Laboratory \u2014 The Berggren Tree's Area Function and the Birch\u2013Swinnerton-Dyer Frontier"
   },
@@ -10033,6 +10033,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Since conservation is impossible, seek monotonicity: pull the Berggren Lorentz form back along the proved ternary embedding and ask for a quantitative Lyapunov function on the embedded subtree.\n\nThe embedding F from Berggren words to odd numbers can be chosen so that a Berggren-derived functional decreases strictly along every edge of the image subtree, at a rate bounded below by a constant.\n\nCompute the pullback on the three explicit lifts, prove monotonicity letter by letter, and quantify the decrement.\n\nA Lyapunov certificate for an explicitly described infinite family of Collatz trajectories.\n\nThe embedded subtree is invariant-free even for monotone functionals, reinforcing the rank-one rigidity picture.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_4824",
+    "priority_score": 0.710340425531915,
+    "research_mode": "team",
+    "source_exp_id": "caf9cc55",
+    "status": "available",
+    "timestamp": "2026-09-14T18:35:42.831335+00:00",
+    "title": "Lyapunov Subtrees of the Inverse Collatz Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Tasting at random with two-sided error should save at most a cubic factor over deterministic tasting. The approach is to average the deterministic covering argument that already proves D \u2264 C0\u00b7C1 in this cycle. It quantifies how much a cook gains by guessing where to taste.\n\nFor every dish f, tasteCost f \u2264 c \u00b7 R_{1/3}(f)^3 for an absolute constant c.\n\nDefine randomised taste trees as PMFs over Taste n, prove the certificate-overlap lemma survives averaging, and check the bound numerically on the exhaustive n \u2264 3 census.\n\nRandomness is essentially useless in the kitchen, matching the classical polynomial-equivalence phenomenon.\n\nThere is a recipe where random tasting is superpolynomially better, an unexpected culinary use of randomness.",
     "domains": [
       "Algebra",
@@ -13043,6 +13058,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Combine the proved cycle equation with the two-sided weight bounds to confine any nontrivial Syracuse cycle to an exponentially thin neighbourhood of the line S = L log2 3. The cycle minimum is squeezed between an exponential upper bound coming from the weight cocycle and a lower bound coming from the fibre structure.\n\nEvery nontrivial Syracuse cycle satisfies 0 < S - L log2 3 < log2(1 + 2/m) with m the cycle minimum; in particular no cycle satisfies 2*3^L <= 2^S once m exceeds 2*(3/2)^L.\n\nFormalize the logarithmic reformulation of syr_cycle_two_heavy_bound and combine it with continued-fraction bounds for log2 3 in Lean.\n\nFormally verified, explicit exclusion regions for nontrivial Collatz cycles.\n\nThe weight cocycle is larger than the bound suggests, pointing to unexpected 2-adic structure in cycle words.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4822",
+    "priority_score": 0.669808510638298,
+    "research_mode": "team",
+    "source_exp_id": "caf9cc55",
+    "status": "available",
+    "timestamp": "2026-09-14T18:35:41.679974+00:00",
+    "title": "Critical-Line Confinement of Syracuse Cycles"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved equivalence markoff_uniqueness_iff_min_determined shows the middle entry is always forced by the outer pair. Hence the open uniqueness conjecture is a statement about the minimum alone, a strictly one-variable problem.\n\nUniqueness of the ordered Markoff triple given its maximum is equivalent to uniqueness of the minimum, and holds unconditionally for all maxima in the classified x = 1 and x = 2 fibres.\n\nProve uniqueness for maxima lying in the silver branch using markoff_min_two_classification, then attempt congruence obstructions for general maxima.\n\nA new, strictly smaller formulation of the Markoff uniqueness conjecture, with two infinite families settled.\n\nA counterexample to the reduction would be a counterexample to uniqueness itself, hence a famous result.",
     "domains": [
       "NumberTheory"
@@ -13586,6 +13615,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T04:50:21.417515+00:00",
     "title": "Unit-Fair Greedy Scheduling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Upgrade the proved growth window 29/5 <= c_{n+1}/c_n <= 6 for the Berggren B-spine into an exact closed form and an exponential error bound governed by the conjugate Pell root.\n\nc_n = A(3+2 sqrt 2)^n + B(3-2 sqrt 2)^n with A + B = 5, and |c_{n+1}/c_n - (3+2 sqrt 2)| <= C (3-2 sqrt 2)^(2n).\n\nSolve the two-term recurrence in Lean over the real numbers and bound the conjugate term; compare with bHyp_lower and bHyp_upper.\n\nAn exact silver-ratio growth law for the Berggren spine, sharpening the catalog's Pell results.\n\nThe spine has an additional arithmetic correction, worth isolating.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_4823",
+    "priority_score": 0.6684545454545456,
+    "research_mode": "team",
+    "source_exp_id": "caf9cc55",
+    "status": "available",
+    "timestamp": "2026-09-14T18:35:42.298314+00:00",
+    "title": "Silver-Ratio Spectral Gap for Pell Spines"
   },
   {
     "consumed_by_exp_id": "",
@@ -31858,6 +31901,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-14T13:04:26.974834+00:00",
     "title": "Frame Complements in Rank-26 Even Lorentzian Lattices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Interpret the Collatz word identity as a cocycle condition over the free monoid of 2-adic valuations and classify conserved quantities cohomologically. Berggren conservation corresponds to a vanishing cocycle; the Collatz failure is measured by one explicit class. This converts a qualitative 'no invariant' statement into a computable obstruction.\n\nA function f is invariant along Syracuse edges iff the weight cocycle w(ks) is a coboundary for the affine action of the free monoid on Z[1/6]; this happens only for constant f.\n\nFormalize the monoid action and the coboundary condition; derive no_nonconstant_polynomial_invariant as a corollary, then extend to rational functions.\n\nA single cohomology class explains all failed invariant searches for 3n+1 maps.\n\nSome noncoboundary invariant exists, which would be a genuinely new conserved quantity for Collatz.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_4821",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "caf9cc55",
+    "status": "available",
+    "timestamp": "2026-09-14T18:35:41.133723+00:00",
+    "title": "Affine Cocycle Obstruction Classes"
   },
   {
     "consumed_by_exp_id": "",

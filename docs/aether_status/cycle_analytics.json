@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-14T13:04:43.293654+00:00",
+  "last_updated": "2026-09-14T18:35:59.509176+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -74930,6 +74930,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-14T13:04:43.013950+00:00",
       "title": "Moonshine from the Null Cone \u2014 The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 19842.256673812866,
+      "end_time": 1789410927.2938719,
+      "files_integrated": 4,
+      "job_id": "caf9cc55",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.81,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5395,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.81,
+        "novelty": 0.81,
+        "proof_depth": 0.81,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.81,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1789391085.037198,
+      "strategy_count": 0,
+      "theorem_count": 108,
+      "theorem_novelty_disproof": 6,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 88,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-14T18:35:59.149030+00:00",
+      "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
     }
   ]
 }
