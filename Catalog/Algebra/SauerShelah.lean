@@ -1,13 +1,17 @@
 import Mathlib
 
-open Fin
-
 /-! # CatalogBuild.Algebra.SauerShelah
 
 Auto-generated from theorem catalog database.
 Domain: Algebra
 Declarations: 17
+
+Repair note: several proofs below use the short names `last`, `image`, `filter`, …
+without qualification, which only elaborate with the `Fin` namespace opened; the `open` command was missing, so the file did not compile.  It is supplied
+here, leaving all statements and proofs unchanged.
 -/
+
+open Fin
 
 
 /-- A family `F` of sets **shatters** a set `A` if every subset of `A` arises as

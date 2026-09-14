@@ -14,6 +14,12 @@ quantities that are often conflated:
 The same factorial controls all three, but raw comparison count does not itself measure
 thermodynamic work: redundant comparisons may be inserted without changing the computed
 map or its erased information.
+
+Repair note: `sorting_info_erased` (in `Computation.ReversibleSortingBennett`) carries the
+hypothesis `1 ≤ n`, which the two theorems below silently omitted, so they did not
+compile.  The hypothesis is now carried explicitly by
+`factorial_controls_comparisons_entropy_and_history` and `sorting_landauer_gap_exact`;
+nothing else changed.
 -/
 
 open Function
@@ -103,8 +109,6 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
 bound; irreversible sorting erases exactly `log₂(n!)` bits; and every reversible
 implementation needs at least `n!` history states.
 -/
-/-- Repaired statement: the available input `sorting_info_erased` is stated for `1 ≤ n`,
-so that hypothesis is carried here explicitly. -/
 theorem factorial_controls_comparisons_entropy_and_history
     (t : ComparisonTree) (n : ℕ) (hn : 1 ≤ n) (hs : SortsOrderings t n)
     (Aux : Type*) [Fintype Aux]
@@ -122,11 +126,9 @@ theorem factorial_controls_comparisons_entropy_and_history
 input permutation costs `kT · log(n!)`.  The factor `log 2` in the per-bit cost cancels
 the change of base in `log₂(n!)`.
 -/
-/-- Repaired statement: `sorting_info_erased` is available for `1 ≤ n`, so that
-hypothesis is carried here explicitly. -/
 theorem sorting_landauer_gap_exact (n : ℕ) (hn : 1 ≤ n) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
+      have hlog : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
       unfold landauerGap landauerCost
       rw [sorting_info_erased n hn, Real.logb]
       field_simp
