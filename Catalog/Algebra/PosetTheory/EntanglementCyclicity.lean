@@ -1,6 +1,7 @@
+import Shared.CarmichaelHelper
 import Mathlib
 import Shared.HilbertSpace.NoncommutativeFibonacci
-import Shared.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelHelpers
 
 /-!
 # Cyclicity forced by a finite noncommutative state space

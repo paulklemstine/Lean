@@ -1,0 +1,16 @@
+import Tropical.EulerBrickTree.Growth
+import Tropical.EulerBrickTree.Search
+import Tropical.EulerBrickTree.Primitive
+import Tropical.EulerBrickTree.Branch
+import Tropical.EulerBrickTree.Sharpness
+#print axioms EulerBrickTree.treeReach_iff_ppt
+#print axioms EulerBrickTree.brick_perfect_iff
+#print axioms EulerBrickTree.depthNodes_card
+#print axioms EulerBrickTree.brickLevel_card
+#print axioms EulerBrickTree.infinite_obstructed_family
+#print axioms EulerBrickTree.no_perfect_cuboid_depth_le_three
+#print axioms EulerBrickTree.primitiveBrick_720_dvd
+#print axioms EulerBrickTree.brick_descent
+#print axioms EulerBrickTree.obstructed_branch_from_15_8_17
+#print axioms EulerBrickTree.mod7_no_binary_subtree
+#print axioms EulerBrickTree.mod7_branch_sharp_at_15_8_17

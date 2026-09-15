@@ -1,5 +1,6 @@
-import Mathlib
 import Shared.CarmichaelHelper
+import Mathlib
+import Shared.NumberTheory.CarmichaelHelpers
 import Applications.ProofAutomation.FibonacciTactics
 
 /-!
