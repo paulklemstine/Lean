@@ -1,4 +1,7 @@
-import Tropical.DependentFibers.Main
+import Tropical.DependentFibers.Compositions
+import Tropical.DependentFibers.NonConstant
+import Tropical.DependentFibers.Semiring
+import Tropical.DependentFibers.Sharpness
 
 /-!
 # Lab notes: kernel-checked fibre data for the dependent-fibre thread

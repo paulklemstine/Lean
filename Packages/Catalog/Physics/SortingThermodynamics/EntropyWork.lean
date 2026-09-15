@@ -14,12 +14,6 @@ quantities that are often conflated:
 The same factorial controls all three, but raw comparison count does not itself measure
 thermodynamic work: redundant comparisons may be inserted without changing the computed
 map or its erased information.
-
-Repair note: `sorting_info_erased` (in `Computation.ReversibleSortingBennett`) carries the
-hypothesis `1 ≤ n`, which the two theorems below silently omitted, so they did not
-compile.  The hypothesis is now carried explicitly by
-`factorial_controls_comparisons_entropy_and_history` and `sorting_landauer_gap_exact`;
-nothing else changed.
 -/
 
 open Function
@@ -117,9 +111,10 @@ theorem factorial_controls_comparisons_entropy_and_history
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-      refine ⟨comparison_lower_bound t n hs, sorting_info_erased n hn, ?_⟩
-      convert sorting_history_lower_bound n Aux e hc using 1
-      simp +decide [ Fintype.card_perm ]
+      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
+      · convert sorting_info_erased n hn;
+      · convert sorting_history_lower_bound n Aux e hc using 1;
+        simp +decide [ Fintype.card_perm ]
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
@@ -128,10 +123,8 @@ the change of base in `log₂(n!)`.
 -/
 theorem sorting_landauer_gap_exact (n : ℕ) (hn : 1 ≤ n) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      have hlog : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
-      unfold landauerGap landauerCost
-      rw [sorting_info_erased n hn, Real.logb]
-      field_simp
+      convert congr_arg _ ( sorting_info_erased n hn ) using 1;
+      unfold landauerCost; rw [ Real.logb ] ; ring; norm_num;
 
 /-
 The Landauer work assigned to irreversible sorting is unchanged when redundant
