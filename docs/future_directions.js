@@ -120,6 +120,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6f1658d7 (Q=0.880), which proved 76 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree enumerates every primitive integer right triangle (a,b,c), and its area function A = ab/2 = mn(m\u00b2\u2212n\u00b2) over the Euclid seeds hits exactly the congruent numbers up to squarefree parts \u2014 n is congruent (the area of a",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_6f1658d7_45a96470",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "6f1658d7",
+    "status": "available",
+    "timestamp": "2026-09-15T18:59:37.500287+00:00",
+    "title": "Deepening: The Congruent Number Laboratory \u2014 The Berggren Tree's Area Function and the Birc"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 87769612 (Q=0.850), which proved 569 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For\n   every `n \u2265 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.",
     "domains": [
       "Tropical"
@@ -1873,21 +1887,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "6f1658d7",
-    "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree enumerates every primitive integer right triangle (a,b,c), and its area function A = ab/2 = mn(m\u00b2\u2212n\u00b2) over the Euclid seeds hits exactly the congruent numbers up to squarefree parts \u2014 n is congruent (the area of a rational right triangle) if and only if n is the squarefree part of the area of some node of the tree. The conjecture: the tree's proven structure theory (descent to (3,4,5), silver-ratio growth, groupoid) makes the tree a new, provably analyzable laboratory for the congruent number problem \u2014 in particular the density of congruent numbers (conjecturally about one half in each admissible residue class, open, and equivalent in depth to the rank distribution of the elliptic curves y\u00b2 = x\u00b3 \u2212 n\u00b2x) can be attacked through the statistical structure of the tree's area values.\n\n**Test**: Formalize the area function mn(m\u00b2\u2212n\u00b2) over the tree's Euclid seeds and prove the classical equivalence inside the tree formalism: the squarefree parts of node areas are exactly the congruent numbers. Then prove structure theorems: the distribution of squarefree parts along branches, the growth of the set of congruent numbers \u2264 X generated at depth \u2264 d, and the tree-side descent structure of the elliptic-curve correspondence (rational triangles \u2194 rational points on y\u00b2 = x\u00b3 \u2212 n\u00b2x). Stretch goal: an unconditional version of Tunnell's criterion for an explicit infinite family of n, or a proven density law for congruent numbers in a residue class.\n\n**Why now**: The congruent number problem is one of the oldest unsolved problems in mathematics (Bachet, 1621), and its complete solution is equivalent to the Birch\u2013Swinnerton-Dyer conjecture \u2014 a $1M Millennium Prize Problem. The catalog has fully formalized the tree (groupoid, hyperbolic geometry, silver speed limit) but has never studied its area function \u2014 the direct bridge to congruent numbers. The tree is the one structure in which the triangle side of the problem is completely explicit; every congruent number is visible in it.\n\n**If true**: The congruent number problem gains a concrete new laboratory: the tree's area statistics become a computable model for the BSD-linked density conjectures, and any proven density law or unconditional Tunnell family would be a major result on a Millennium-Prize-scale problem.\n\n**If false**: The tree's area function has no tractable structure (e.g., squarefree parts equidistributed with no exploitable pattern) \u2014 itself a sharp equidistribution theorem about the tree, and a precise statement of why the triangle side alone cannot see the elliptic-curve side.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1787",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T03:17:34.069425+00:00",
-    "title": "The Congruent Number Laboratory \u2014 The Berggren Tree's Area Function and the Birch\u2013Swinnerton-Dyer Frontier"
-  },
-  {
     "consumed_by_exp_id": "173bd3d0",
     "description": "## NET\u2192FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL (paper 80, /tmp/exp_nonabelian_typechan.py, /tmp/r24n1h.log)\n\n**Verdict name: THE-TYPE-CHANNEL-IS-THE-ABELIANIZATION.**\n\n### Result\nThe complete splitting-type channel of a **non-abelian** field is **exactly its abelianization content**: at the prime level **I(p mod m\\*; T) = I(T; coset) = H(T) \u2212 H(T|coset)** (m\\* = conductor of the G^ab characters), and at the semiprime level the papers 78/79 pair law holds **verbatim** with the class-level type map. Verified on S\u2083 \u00d72, S\u2084, A\u2084, D\u2084 with abelian controls V\u2084/C\u2084 \u2014 **7/7 fields prime, 7/7 semiprime, every field on its pre-stated value.**\n\n### The law table (prime level, ~23k primes/field)\n| field | G | G^ab | H(T) | I\u2081 measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| S\u2083a x\u00b3+x+1 | S\u2083 | C\u2082 | 1.4591 | **1.0000** | 1.0000 \u2713 | 1.0000 | 0 |\n| S\u2083b x\u00b3\u2212x+1 | S\u2083 | C\u2082 | 1.4591 | **1.0000** | 1.0000 \u2713 | 1.0000 | 0 |\n| S\u2084 x\u2074\u2212x\u22121 | S\u2084 | C\u2082 | 2.0944 | **1.0100** | 1.0000 \u2713 | 1.0000 | 0 |\n| A\u2084 x\u2074+8x+12 | A\u2084 | C\u2083 | 1.1887 | **0.9188** | 0.9183 \u2713 | 1.5850 | 2/3 |\n| D\u2084 x\u2074\u22122 | D\u2084 | C\u2082\u00d7C\u2082 | 1.9056 | **1.6555** | 1.6556 \u2713 | 2.0000 | 0.3444 |\n| V\u2084 x\u2074\u22122x\u00b2+9 [ab.] | V\u2084 | C\u2082\u00d7C\u2082 | 0.8113 | **0.8092** | 0.8113 \u2713 | 2.0000 | 1.1887 |\n| C\u2084 \u03a6\u2085 [control] | C\u2084 | C\u2084 | 1.5000 | **1.4989** | 1.5000 \u2713 | 2.0000 | 0.5 |\n\nS\u2084 carries 2.0944 bits of splitting entropy and leaks exactly 1 bit; A\u2084's [3,1] type fills both non-trivial C\u2083-cosets (loss exactly 2/3); D\u2084's [2,2] merges two cosets; V\u2084's three involutions all give [2,2]. Within-coset flatness at permutation nulls (z \u2264 0); thickening honest at the 0.004-bit level; coprime flat.\n\n### The REVERSAL\nPaper 77 ordered the control pair by forks: V\u2084 0.8113 > D\u2084 0.2936. The type channels order it **the other way**: V\u2084 0.8092 **<** D\u2084 1.6555. The readout's coset-separation \u2014 not the group's abelianness \u2014 decides which channel is richer. Both orderings are exact instances of the same law.\n\n### Semiprime (400k MC/field, unramified pools)\nS\u2083a **1.0001**, S\u2083b **1.0001**, S\u2084 **1.0034** vs law 1.0000 \u2014 **the C\u2082 cap is a theorem about the abelianization, not the type count** (a 5-type S\u2084 field cannot exceed the quadratic 1 bit). A\u2084 **0.4729** vs 0.4739 (dial-pair 1.5850). D\u2084 **1.4325** vs 1.4302 \u2014 a non-abelian channel ABOVE 1 bit, as its 2-D abelianization predicts. V\u2084 **0.2902** = Is(4) (paper-79 2-state identity). C\u2084 **1.2461** vs 1.25 (paper 78). Which-factor walls 0.0000\u20130.0001; pinned-fork s-projections reproduce Is(2)/Is(3)/Is(4) (papers 74/75).\n\n### Method notes\nQuartic types via F_{p\u00b2}-root counting ((nr, nr\u2082) from x^(p\u00b2) mod f + gcd) \u2014 the cubic-resolvent shortcut is INVALID for binomial/special quartics (x\u2074\u22122's axis pairing is D\u2084-fixed; V\u2084's resolvent splits over \u211a). Sparse-modulus discipline: permutation-null thickening and 400k MC (30k would leave ~0.10-bit bias in S\u2084's 282\u00d715-cell table). Runtime 314 s, all asserts green.\n\n### All 8 barriers\n(a) clean \u2014 law + full table stated before the run, measurement independent of the dial; (b) clean \u2014 no non-abelian type-channel work in the Catalog (698-pkg scan: nearest are the lab's own #723\u2013#728) or literature; (c) confronted \u2014 real Galois groups, 23k-prime histograms < 2% from class sizes, 400k-draw MC; (d) clean \u2014 deterministic + fixed seeds; (e) the substance \u2014 finite-sample margins quantified (S\u2084 +0.0100; thickening at 0.004-bit level under nulls); (f) controlled \u2014 exact laws vs MC asserted to 0.02, both estimator traps caught and repaired; (g) fair \u2014 V\u2084/C\u2084 controls reproduce papers 77/78/79 through the identical pipeline; (h) closure \u2014 symmetric (which-factor 0.0000, barrier 2), residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), Galois + Chebotarev 1922 + reciprocity (barrier 8).\n\n### What closes\nThe **type-channel program is complete**: papers 70 (flatness), 71 (criterion), 72\u201374 (binary laws), 75\u201377 (group table), 78\u201379 (abelian types) are all projections of one statement \u2014 the complete symmetric residue channel of splitting statistics equals the type's mutual information with the abelianization coset. Perfect groups (G^ab = 0) predict zero and paper 76's A\u2085 is already flat.\n\nNow 415 experiments. Assessment v191. Paper 80.\n",
     "domains": [
@@ -1918,16 +1917,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F\u2082\u2080 and the first C\u2084 dial (paper 82)"
   },
   {
-    "consumed_by_exp_id": "a3b670e2",
+    "consumed_by_exp_id": "9c40082c",
     "description": "## FACT round-24 #2 \u2014 BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structure beyond the trace**. The channel decomposes into (i) a deterministic 3-adic skeleton that *restates* N mod 3 exactly, and (ii) a metric layer \u2014 branch letters, depth, path composition \u2014 that is **blind at every 3-adic level 3^k, k \u2264 6**. The Catalog's 3-adic Cantor boundary (#855) has no N-computable projection beyond the trace-set content.\n\n### The four horns (all stated before the run; all confirmed)\n- **H1 SKELETON (deterministic lemma)**: squares mod 3 = {0,1} + m\u22a5n \u27f9 N \u2261 1 \u27fa 3|n, N \u2261 2 \u27fa 3|m, N \u2261 0 \u27fa 3\u2224mn \u2014 agreement **40000/40000 = 100%**. And it RESTATES the trace: 3|n \u27fa q\u2261p mod 3 \u27fa N \u2261 p\u00b2 \u2261 1 mod 3, also **40000/40000** \u2014 zero information beyond N mod 3 (barrier 6).\n- **H2 PARENT-INTERVAL LAW (new exact lemma)**: the Berggren parent is decided by the ratio alone \u2014 m/n \u2208 (1,2) \u2192 T\u2081 = (n,2n\u2212m); (2,3) \u2192 T\u2082 = (n,m\u22122n); (3,\u221e) \u2192 T\u2083 = (m\u22122n,n). Verified on all **40000/40000** descents terminating exactly at root (2,1), plus **86,634 spot-checked steps** with child-map reconstruction (B\u2081(m,n)=(2m\u2212n,m), B\u2082=(2m+n,m), B\u2083=(m+2n,n)) exact on every step.\n- **H3 METRIC BLINDNESS**: I(N mod 3^k; b_t) at the 300-shuffle permutation null for every letter depth t \u2264 10 and level k \u2264 6; same for depth dB and composition (c\u2081,c\u2082,c\u2083). **Worst z = +2.51 across ~150 tests** (k=1: I(N mod 3; b\u2081) = 0.00004 vs null 0.00004, z = +0.04).\n- **H4 CONTROLS (live)**: trace lemma I(N mod 3; s mod 3) = **1.0000** exact (paper 50); I(ratio-band; b\u2081) = **1.4738 = H(b\u2081)** EXACTLY \u2014 the first branch letter is a deterministic function of the m/n band, whose recovery IS the factorization; corr(log dB, log gap) = \u22120.141 replicates paper 56's anti-correlation.\n\n### Sample\n40,000 random semiprimes (p,q uniform primes in [2\u00b9\u2076, 2\u00b2\u2074)), Miller-Rabin (12 bases), capped descents (5000 steps): twin-prime nodes n=1 descend stepwise in m and are censored \u2014 **42/40402 = 0.10%**, reported. Runtime 154 s.\n\n### Why this matters\n- Paper 56's orthogonality is sharpened from coordinate-level to **adic strength**: coordinates orthogonal AND position sealed.\n- Tree-adic dials join the closed residue-dial family (papers 54/70/72\u201374/77/79/80): no dial exceeds its trace-set content; the metric interior requires the factorization to read.\n- The gold-tier interference claim (#829, \"exact factorisation by interference of Pythagorean triples\", polynomial-time per its filename) has no formula in the index, but this result fences it: any such method must either smuggle the Fermat pair (circularity, barrier 6) or pay \u03a9(N) aggregation (barrier 4).\n\n### All 8 barriers\n(a) clean \u2014 four horns pre-stated, measurement object \u2260 instrument; (b) clean \u2014 no tree-position channel work in the Catalog (nearest: our own echo #707); (c) confronted \u2014 40k real semiprimes, 86,634 verified steps, ~150 null-tested channels; (d) clean \u2014 fixed seeds; (e) the substance \u2014 blindness asserted against empirical nulls, censoring reported, worst z +2.51 < 3 without multiplicity correction; (f) controlled \u2014 lemmas asserted at 100%, ALL_DONE marker; (g) fair \u2014 two live positive controls fire (trace 1.0000; band-determinism = H(b\u2081)); (h) closure \u2014 symmetric by construction, skeleton circular (6), metric layer needs factors (5/6), descent = classical Euclidean algorithm in disguise (8).\n\n### What closes\nThe Pythagorean-tree line is now closed at three strengths: embedding exact (paper 56), coordinates orthogonal (paper 56), position adically sealed (this paper). Frontier returns to the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 416 experiments. Assessment v192. Paper 81.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3412",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T13:59:52.031024+00:00",
     "title": "FACT round-24 #2 \u2014 BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
   },
@@ -32006,6 +32006,79 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-15T10:12:37.972232+00:00",
     "title": "Cube-Hypotenuse Characterization of Tree Bricks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved descent for primes p \u2261 3 mod 8 used only the distribution of the prime among the four coprime factors of a node area and its residue mod 8. Generalising the splitting lemma from a prime to a squarefree modulus should produce a finite decision table of non-congruent square classes, covering 2p and pq families.\n\nFor squarefree s whose prime factors' residues mod 8 lie in an explicit 'closable' list (including 2p and pq with p \u2261 q \u2261 3 mod 8), no admissible Euclid seed satisfies euclidArea m n = s k\u00b2, hence s is not congruent.\n\nGeneralise split_prime_sq to squarefree s, enumerate the resulting shapes, and mechanise the mod-8 elimination as a decision procedure over ZMod 8.\n\nA complete algorithmic description of the non-congruent numbers reachable by tree-side 2-descent, extending Genocchi's theorem.\n\nSome closable-looking class survives the local analysis, pinpointing exactly where global (Heegner-point) input becomes necessary.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4832",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6f1658d7",
+    "status": "available",
+    "timestamp": "2026-09-15T18:59:21.125419+00:00",
+    "title": "Squarefree Modulus Descent Table"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The descent step acts on the mod-8 data of a node's Euclid parameters by a finite automaton. Conjecturally the squarefree part of a node area determines this data up to the action of the three Berggren generators, which act through a Klein four-group. This would recast 2-descent as a combinatorial automaton on the tree.\n\nThere is a map \u03ba from admissible parameters to (\u2124/8)\u02e3 \u00d7 (\u2124/8)\u02e3, depending only on (m,n) mod 16, invariant under the descent step and equivariant for the three generators, whose value obstructs area = s\u00b7square for s in explicit residue classes.\n\nCompute \u03ba symbolically along mA, mB, mC in Euclid coordinates, prove equivariance by decide over ZMod 16, and prove invariance under descent_step.\n\nTunnell-type congruence conditions become statements about a finite automaton acting on the Berggren tree.\n\nThe mod-8 data is not descent-invariant, showing that 2-descent genuinely needs global, not local, information.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4833",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6f1658d7",
+    "status": "available",
+    "timestamp": "2026-09-15T18:59:21.614328+00:00",
+    "title": "Berggren Square-Class Automaton"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Along the Pell spine the areas obey the silver law A_d = 2t\u00b2 + (\u22121)^{d+1} t with t = P_d P_{d+1}. The conjecture is that the squarefree parts of these areas are pairwise distinct, so the spine alone produces infinitely many congruent numbers, at an explicitly controlled rate.\n\nFor d \u2260 e with d, e \u2265 1, the squarefree parts of A_d and A_e differ; moreover #{d : sqfree(A_d) \u2264 X} = O(log X).\n\nUse spine_area_silver to factor A_d = t(2t \u00b1 1) into coprime pieces and show that equality of square classes forces a Pell equation with exponentially separated solutions.\n\nA proved, explicit infinite family of congruent numbers generated by the silver-ratio spine.\n\nRepetitions in the spine's square classes would reveal hidden multiplicative relations among Pell numbers.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4834",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6f1658d7",
+    "status": "available",
+    "timestamp": "2026-09-15T18:59:22.088653+00:00",
+    "title": "Distinctness of Pell-Spine Square Classes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "At depth d the tree has 3^d nodes; the conjecture is that almost all of them have distinct area square classes, so the number of congruent numbers produced by depth d grows like 3^{d+1}/2. Properness of the area function reduces this to excluding products of two node areas being squares.\n\n#{squarefree parts of areas at depth \u2264 d} = 3^{d+1}/2 + O(3^{d(1/2+\u03b5)}).\n\nEnumerate depth-d nodes in Euclid coordinates, and prove that A(m,n)A(m',n') = square forces (m,n) = (m',n') under height bounds.\n\nAn effective lower bound for the counting function of congruent numbers produced by an explicit algorithm.\n\nSystematic coincidences of square classes would give new multiplicative identities between Pythagorean areas.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4835",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6f1658d7",
+    "status": "available",
+    "timestamp": "2026-09-15T18:59:22.554379+00:00",
+    "title": "Depth-Counting of Congruent Square Classes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved bijection between nodes of a fixed square class and positive-x rational points of y\u00b2 = x\u00b3 \u2212 s\u00b2x turns node counting into point counting. The conjecture is that the number of nodes of square class s with first Euclid parameter at most M grows like a power of log M whose exponent is the Mordell\u2013Weil rank of the curve.\n\n#{(m,n) admissible : m \u2264 M, euclidArea m n = s k\u00b2} ~ c_s (log M)^{r_s/2}, where r_s = rank E_s.\n\nTabulate node multiplicities for s = 5, 6, 7, 34, 41 against known ranks; formalise the height comparison between m and the canonical height of the associated point.\n\nThe tree becomes a computable rank-detection device, giving a combinatorial model for the BSD-linked density conjectures.\n\nThe height distortion between Euclid parameters and canonical heights is not logarithmic, quantifying exactly how the triangle side blurs the elliptic-curve side.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4836",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6f1658d7",
+    "status": "available",
+    "timestamp": "2026-09-15T18:59:23.035190+00:00",
+    "title": "Area Multiplicity as a Rank Oracle"
   },
   {
     "consumed_by_exp_id": "",

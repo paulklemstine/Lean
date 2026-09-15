@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "24e44638",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe cycle reported here started from the conjecture that the natural topology\n`EReal ⊔ {Φ}` on the four-constructor transreal carrier is forced by\n\"compact Hausdorff + open line +",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 95,
-      "timestamp": "2026-09-03T14:36:20",
-      "title": "Uniqueness of the Two-Point Transreal Compactification"
-    },
-    {
       "cycle_id": "ed88da41",
       "domain": "Bridges",
       "key_insight": "# Future directions — OR-dial invariance, washout, and what comes next\n\nThis thread has established, with complete Lean 4 proofs and no `sorry`, the following\nstructural laws for the semiprime / multi",
@@ -499,19 +489,19 @@
       "theorem_count": 354,
       "timestamp": "2026-09-15T10:12:50",
       "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
+    },
+    {
+      "cycle_id": "6f1658d7",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — the Berggren tree as a congruent number laboratory\n\nThis cycle established the bridge: the squarefree parts of the areas of the Berggren\ntree's nodes are *exactly* the congruent",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-09-15T18:59:37",
+      "title": "The Congruent Number Laboratory — The Berggren Tree's Area Function and the Birch–Swinnerton-Dyer Fr"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "95bfbbbf",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — after the NET-78 audit\n\nThree research cycles were run on the NET-78 verdict\n*THE-INCREMENT-ACCELERATES-AT-4096*. What survived, what failed, and what each\nfailure teaches:\n\n* **",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 81,
-      "timestamp": "2026-08-24T10:55:10",
-      "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 — knee jumps to k*=40 (increment +16/doubling vs prior +4)"
-    },
     {
       "cycle_id": "59651b5d",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 354,
       "timestamp": "2026-09-15T10:12:50",
       "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
+    },
+    {
+      "cycle_id": "6f1658d7",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — the Berggren tree as a congruent number laboratory\n\nThis cycle established the bridge: the squarefree parts of the areas of the Berggren\ntree's nodes are *exactly* the congruent",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-09-15T18:59:37",
+      "title": "The Congruent Number Laboratory — The Berggren Tree's Area Function and the Birch–Swinnerton-Dyer Fr"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4b011f56",
-      "domain": "Novelty",
-      "name": "deficit_eq_forkCollision",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4b011f56",
-      "domain": "Novelty",
-      "name": "X_mul_sq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4b011f56",
-      "domain": "Novelty",
-      "name": "X_pos",
-      "quality": 0.82
-    },
     {
       "cycle_id": "4c85503d",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "catalog",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "6f1658d7",
+      "domain": "Combinatorics",
+      "name": "as",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "6f1658d7",
+      "domain": "Combinatorics",
+      "name": "triArea_mk",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "6f1658d7",
+      "domain": "Combinatorics",
+      "name": "triArea_euclidTriple",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-09-15T10:12:50",
+  "last_updated": "2026-09-15T18:59:37",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "95a534e1",
-        "quality": 0.81,
-        "theorems": 63,
-        "title": "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES — feature"
-      },
-      {
         "cycle_id": "b50cc5ce",
         "quality": 0.85,
         "theorems": 21,
@@ -3265,6 +3259,12 @@
         "quality": 0.81,
         "theorems": 38,
         "title": "Rung Budget for Plateau Identification"
+      },
+      {
+        "cycle_id": "6f1658d7",
+        "quality": 0.88,
+        "theorems": 76,
+        "title": "The Congruent Number Laboratory — The Berggren Tree's Area Function and the Birc"
       }
     ],
     "Computation": [

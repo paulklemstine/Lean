@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-15T10:12:51.354218+00:00",
+  "last_updated": "2026-09-15T18:59:38.559153+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75016,6 +75016,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-15T10:12:51.116473+00:00",
       "title": "The Euler Brick Tree \u2014 Berggren Descent and the Perfect Cuboid"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Combinatorics",
+      "duration_seconds": 13943.656999111176,
+      "end_time": 1789498748.9712193,
+      "files_integrated": 4,
+      "job_id": "6f1658d7",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.88,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.571,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.88,
+        "novelty": 0.88,
+        "proof_depth": 0.88,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1789484805.3142202,
+      "strategy_count": 0,
+      "theorem_count": 76,
+      "theorem_novelty_disproof": 5,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 66,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-15T18:59:38.192121+00:00",
+      "title": "The Congruent Number Laboratory \u2014 The Berggren Tree's Area Function and the Birch\u2013Swinnerton-Dyer Fr"
     }
   ]
 }
