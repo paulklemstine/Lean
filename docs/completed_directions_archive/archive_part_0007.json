@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-14T18:35:43Z",
-  "count": 146,
+  "archived_at": "2026-09-15T10:12:38Z",
+  "count": 147,
   "directions": [
     {
       "id": "fd_3695",
@@ -5773,6 +5773,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 162
+    },
+    {
+      "id": "fd_1785",
+      "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid",
+      "description": "**Domain**: Pythagorean <-> Geometry\n\n**Hypothesis (MOONSHOT)**: The space of Euler bricks (integer boxes whose three face diagonals are integral) carries a Berggren-style tree structure: a finite set of integer generators acts on bricks, producing every primitive Euler brick from finitely many seeds, with a descent theory reducing every brick to minimal ones — the perfect-cuboid analogue of the Berggren tree itself. The conjecture: the brick tree's structure theory settles the shape of the perfect cuboid question — either a perfect cuboid exists in the tree (reachable by bounded search along the tree's growth), or the tree's architecture yields a proof that the four simultaneous square conditions (three face diagonals and the space diagonal) obstruct each other along every branch.\n\n**Test**: Formalize Euler bricks as integer triples with three integral face diagonals; exhibit explicit generator transformations acting on bricks that preserve brick-hood and generate the primitive brick space from finitely many seeds (the catalog already proved the diagonal-cone reduction a²+b²+c²=2d² and the rational parametrization of the normalized quadric — build the tree on top of that foundation). Prove the descent theory: every brick descends to a finite set of minimal bricks, the brick analogue of (3,4,5). Then either (i) exhibit a perfect cuboid, or (ii) prove a structural obstruction: the space-diagonal condition fails along every branch in a formally provable pattern.\n\n**Why now**: The perfect cuboid problem has been open since Euler's era and is one of the most famous unsolved problems of elementary number theory. The catalog's perfect-cuboid package completed the static geometry (the diagonal cone and the rational parametrization of the cuboid quadric); the dynamic, tree-like structure theory of the brick space is the missing piece, and the Berggren tree's proven machinery — generators, descent, exact growth — is exactly the template. A Berggren-style descent on bricks is the natural next move the corpus has set up but not taken.\n\n**If true**: Either the discovery of a perfect cuboid (settling a 300-year-old problem) or the first structural obstruction theorem — a proof that the brick tree's architecture forbids the four simultaneous square conditions, transforming the problem from search to structure.\n\n**If false**: The brick tree fails to have finitely-generated descent (primitive bricks require infinitely many seeds) — itself a sharp structure theorem distinguishing the brick world from the triple world, and a precise map of where the perfect-cuboid difficulty lives.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "841548e6",
+      "timestamp": "2026-08-21T03:17:34.068074+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.83,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-14T13:06:21.767079+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 169
     }
   ]
 }

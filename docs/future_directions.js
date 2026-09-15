@@ -1873,21 +1873,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "841548e6",
-    "description": "**Domain**: Pythagorean <-> Geometry\n\n**Hypothesis (MOONSHOT)**: The space of Euler bricks (integer boxes whose three face diagonals are integral) carries a Berggren-style tree structure: a finite set of integer generators acts on bricks, producing every primitive Euler brick from finitely many seeds, with a descent theory reducing every brick to minimal ones \u2014 the perfect-cuboid analogue of the Berggren tree itself. The conjecture: the brick tree's structure theory settles the shape of the perfect cuboid question \u2014 either a perfect cuboid exists in the tree (reachable by bounded search along the tree's growth), or the tree's architecture yields a proof that the four simultaneous square conditions (three face diagonals and the space diagonal) obstruct each other along every branch.\n\n**Test**: Formalize Euler bricks as integer triples with three integral face diagonals; exhibit explicit generator transformations acting on bricks that preserve brick-hood and generate the primitive brick space from finitely many seeds (the catalog already proved the diagonal-cone reduction a\u00b2+b\u00b2+c\u00b2=2d\u00b2 and the rational parametrization of the normalized quadric \u2014 build the tree on top of that foundation). Prove the descent theory: every brick descends to a finite set of minimal bricks, the brick analogue of (3,4,5). Then either (i) exhibit a perfect cuboid, or (ii) prove a structural obstruction: the space-diagonal condition fails along every branch in a formally provable pattern.\n\n**Why now**: The perfect cuboid problem has been open since Euler's era and is one of the most famous unsolved problems of elementary number theory. The catalog's perfect-cuboid package completed the static geometry (the diagonal cone and the rational parametrization of the cuboid quadric); the dynamic, tree-like structure theory of the brick space is the missing piece, and the Berggren tree's proven machinery \u2014 generators, descent, exact growth \u2014 is exactly the template. A Berggren-style descent on bricks is the natural next move the corpus has set up but not taken.\n\n**If true**: Either the discovery of a perfect cuboid (settling a 300-year-old problem) or the first structural obstruction theorem \u2014 a proof that the brick tree's architecture forbids the four simultaneous square conditions, transforming the problem from search to structure.\n\n**If false**: The brick tree fails to have finitely-generated descent (primitive bricks require infinitely many seeds) \u2014 itself a sharp structure theorem distinguishing the brick world from the triple world, and a precise map of where the perfect-cuboid difficulty lives.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1785",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T03:17:34.068074+00:00",
-    "title": "The Euler Brick Tree \u2014 Berggren Descent and the Perfect Cuboid"
-  },
-  {
     "consumed_by_exp_id": "6f1658d7",
     "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree enumerates every primitive integer right triangle (a,b,c), and its area function A = ab/2 = mn(m\u00b2\u2212n\u00b2) over the Euclid seeds hits exactly the congruent numbers up to squarefree parts \u2014 n is congruent (the area of a rational right triangle) if and only if n is the squarefree part of the area of some node of the tree. The conjecture: the tree's proven structure theory (descent to (3,4,5), silver-ratio growth, groupoid) makes the tree a new, provably analyzable laboratory for the congruent number problem \u2014 in particular the density of congruent numbers (conjecturally about one half in each admissible residue class, open, and equivalent in depth to the rank distribution of the elliptic curves y\u00b2 = x\u00b3 \u2212 n\u00b2x) can be attacked through the statistical structure of the tree's area values.\n\n**Test**: Formalize the area function mn(m\u00b2\u2212n\u00b2) over the tree's Euclid seeds and prove the classical equivalence inside the tree formalism: the squarefree parts of node areas are exactly the congruent numbers. Then prove structure theorems: the distribution of squarefree parts along branches, the growth of the set of congruent numbers \u2264 X generated at depth \u2264 d, and the tree-side descent structure of the elliptic-curve correspondence (rational triangles \u2194 rational points on y\u00b2 = x\u00b3 \u2212 n\u00b2x). Stretch goal: an unconditional version of Tunnell's criterion for an explicit infinite family of n, or a proven density law for congruent numbers in a residue class.\n\n**Why now**: The congruent number problem is one of the oldest unsolved problems in mathematics (Bachet, 1621), and its complete solution is equivalent to the Birch\u2013Swinnerton-Dyer conjecture \u2014 a $1M Millennium Prize Problem. The catalog has fully formalized the tree (groupoid, hyperbolic geometry, silver speed limit) but has never studied its area function \u2014 the direct bridge to congruent numbers. The tree is the one structure in which the triangle side of the problem is completely explicit; every congruent number is visible in it.\n\n**If true**: The congruent number problem gains a concrete new laboratory: the tree's area statistics become a computable model for the BSD-linked density conjectures, and any proven density law or unconditional Tunnell family would be a major result on a Millennium-Prize-scale problem.\n\n**If false**: The tree's area function has no tractable structure (e.g., squarefree parts equidistributed with no exploitable pattern) \u2014 itself a sharp equidistribution theorem about the tree, and a precise statement of why the triangle side alone cannot see the elliptic-curve side.\n",
     "domains": [
@@ -1918,16 +1903,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content (paper 80)"
   },
   {
-    "consumed_by_exp_id": "97faef64",
+    "consumed_by_exp_id": "903508ab",
     "description": "## FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C\u2084-abelianization object**: the Frobenius group **F\u2082\u2080 = AGL(1,5)** via x\u2075\u22122. Prime: **I(p mod 5; T) = 1.4989 vs pre-stated 1.5000** \u2014 H(T) = 1.6805 bits of quintic splitting entropy collapse through the 2-bit quartic dial, with the [1,4] type merging the two order-4 cosets {2,3} for a loss of **exactly 0.5 bit**. Semiprime: pair = **1.2462 vs class-enumeration law 1.2500**; and the [1,2,2]-fork (\u27fa p \u2261 4 mod 5) realizes **Is(4) as an order-4 pinned fork on a non-abelian field** (0.2915 vs 0.2947) \u2014 previously order-4 split-counts existed only on abelian V\u2084 and the joint-AND D\u2084 fork (paper 77).\n\n### The law table\n| field | G | G^ab | H(T) | I\u2081 measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| F\u2082\u2080 x\u2075\u22122 | F\u2082\u2080 | C\u2084 | 1.6805 | **1.4989** | 1.5000 \u2713 | 2.0000 | 0.5 |\n| C\u2085 Q(\u03b6\u2081\u2081)\u207a [control] | C\u2085 | C\u2085 | 0.7219 | **0.7198** | 0.7219 \u2713 | 3.3219 | 2.6 |\n\nSemiprime (400k MC): F\u2082\u2080 pair **1.2462** vs 1.2500 \u2713 (reads 1.25 of the 2-bit dial \u2014 the largest fraction of any merged-type field in the program); C\u2085 pair **0.2026** vs Is(5) = 0.2027 \u2713 (paper-79 f=11 reproduced). Which-factor walls 0.0000; coprime flat; within-coset flatness z = +0.00; thickening agrees to 0.0001.\n\n### The instructive failure (record as method)\nFirst run swapped the coset labels of the multiplier-3/-4 families relative to the C\u2084 valuation (V(3)=3, V(4)=2). **Invisible at the prime level** \u2014 both merged classes share type [1,4], so I\u2081 is unchanged \u2014 but it corrupted the pair enumeration (law 1.1250 vs true 1.2500). The 400k MC caught it: measured 1.2462 sat on the *corrected* value. **Lesson: the pair law is the discriminating test of coset bookkeeping precisely where type-merging hides it.** Method legacy: quintic type dictionary via F_{p\u00b2}-root counting is (5,5)/(1,1)/**(1,5)**/(0,0) \u2014 (1,5), not the quartic-carried (1,3): both quadratic pairs' roots live in F_{p\u00b2}\\F_p.\n\n### All 8 barriers\n(a) clean \u2014 four horns with exact values pre-stated; (b) clean \u2014 no quintic type-channel work in the Catalog; (c) confronted \u2014 real F\u2082\u2080 field, ~23k-prime histograms < 2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 margins quantified (\u22120.0011/\u22120.0038/\u22120.0032), coset-swap episode documented; (f) controlled \u2014 four harness defects caught across five runs by asserts/MC-law disagreement; final run ALL_DONE all-green; (g) fair \u2014 C\u2085 abelian control reproduces paper 79 through the identical pipeline; (h) closure \u2014 symmetric (wall 0, barrier 2), residue dial (5), CRT-sealed (6), Kummer/affine classical (8).\n\n### What this decides\nThe abelianization law now spans **degrees 2\u20135** and abelianizations **C\u2082, C\u2083, C\u2084, C\u2082\u00d7C\u2082, C\u2099**: I(p mod m\\*; T) = I(T; coset), pair law verbatim, the type-vs-dial gap always exactly the entropy of the cosets the type cannot tell apart. The type-channel face of the program is complete at every tested group; the frontier returns to the quantum channel (QUBIT-TRADE) and the barrier-4 converse.\n\nNow 417 experiments. Assessment v193. Paper 82.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3411",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T13:59:52.029699+00:00",
     "title": "FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F\u2082\u2080 and the first C\u2084 dial (paper 82)"
   },
@@ -7136,6 +7122,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-11T05:14:00.833383+00:00",
     "title": "ArXiv paper: Unfriendly partitions of locally finite Borel graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Interval endomorphism algebras of posets: Reedy structure, combinatorics, and homological theory' and formalize its key results. Abstract: Let $P$ be a finite connected poset and let $\u039b_P$ be the opposite endomorphism algebra of the direct sum of all interval representations of $P$ over a field. Via projectivization, this algebra governs resolutions relative to interval-decomposable representations, which arise naturally in persistence theory. We first show that $\u039b_P$ carries a Reedy algebra structure in the sense of Dalezios--\u0160\u0165ov\u00ed\u010dek. Its Reedy degree is given by the cardinality of the indexing interval, and the induced quasi-hereditary order is given by reverse interval cardinality. With respect to the resulting quasi-hereditary structure, we give a concrete combinatorial description of the standard modules and construct explicit projective resolutions of these modules. Using these resolutions, we reduce the calculation of standard--simple Ext groups to the reduced cohomology of simplicial complexes determined by the interval combinatorics. Order reversal gives the corresponding simple--costandard formula. Building on ",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_4830",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.15927v1",
+    "status": "available",
+    "timestamp": "2026-09-15T10:13:34.106834+00:00",
+    "title": "ArXiv paper: Interval endomorphism algebras of posets: Reedy structure, combinatorics, and homological theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Augmented singular cohomology, uniform matroids, and real-rootedness' and formalize its key results. Abstract: We study the singular cohomology rings of toric varieties associated with several fans arising from uniform matroids. These rings generalize the Chow and augmented Chow rings of matroids. For the singular cohomology ring arising from the augmented Bergman fan of a uniform matroid, we construct an explicit basis derived from the retral basis for the singular cohomology ring of a uniform matroid introduced by the first author. We prove that the augmented Bergman fan does not yield a singular cohomology ring that satisfies the quasi-projective Strong Lefschetz property, whereas a suitable modification of the fan does. We then investigate the zeros of the corresponding refined Hodge--Poincar\u00e9 polynomials. For uniform matroids, we prove that the refined Hodge--Poincar\u00e9 polynomials associated with both the singular cohomology ring and the modified augmented singular cohomology ring are real-rooted. The former result resolves a conjecture of the first author. These results extend the real-roo",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_4831",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.15946v1",
+    "status": "available",
+    "timestamp": "2026-09-15T10:13:37.712562+00:00",
+    "title": "ArXiv paper: Augmented singular cohomology, uniform matroids, and real-rootedness"
   },
   {
     "consumed_by_exp_id": "",
@@ -31917,6 +31933,79 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-14T18:35:41.133723+00:00",
     "title": "Affine Cocycle Obstruction Classes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The perfect-cuboid condition on the Saunderson brick tree is equivalent to a square value of w^4+16u^2v^2, i.e. to a rational point on s^2 = t^4+18t^2+1. We conjecture that curve has only trivial points and propose an elementary complete 2-descent through its Jacobian y^2 = x(x+16)(x+20), whose full 2-torsion makes the descent branches finite and explicit. Proving it would rule out perfect cuboids in an entire parametric family.\n\nFor coprime integers u,v with uv != 0, u^4 + 18u^2v^2 + v^4 is never a perfect square; equivalently no node of the Euler brick tree carries a perfect cuboid.\n\nFormalize the three 2-descent branches d | 320 as coprime factorizations x = d e^2 of the Jacobian, and close each branch by parity and quadratic-residue arguments in Lean, using brick_perfect_iff to transfer the conclusion to the tree.\n\nFirst proof that a complete parametric family of Euler bricks contains no perfect cuboid, converting the tree question from search to structure.\n\nA perfect cuboid, or at least a nontrivial point on a classical quartic, would be exhibited; either outcome is a major arithmetic discovery.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4825",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "841548e6",
+    "status": "available",
+    "timestamp": "2026-09-15T10:12:36.439170+00:00",
+    "title": "Rank-Zero Descent for the Brick Quartic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Because the perfect-cuboid condition is itself Pythagorean, (w^2, 4uv, s), a hypothetical perfect node produces a second primitive triple. We conjecture the Berggren parent of this diagonal triple is again the diagonal triple of a smaller perfect node, giving an infinite descent. This would prove nonexistence without any elliptic-curve input.\n\nIf (u,v,w) is a tree node with w^4+16u^2v^2 = s^2, then the Berggren parent of the primitive triple (w^2, 4uv, s) is the diagonal triple of a tree node of strictly smaller hypotenuse.\n\nFormalize the diagonal triple map, compute its interaction with invB1, invB2, invB3 symbolically, and check the descent property in Lean for the three parent cases.\n\nAn elementary Fermat-style proof that the brick tree contains no perfect cuboid.\n\nThe failure locus identifies exactly which tree branches can support the fourth square condition, sharpening the search space.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_4826",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "841548e6",
+    "status": "available",
+    "timestamp": "2026-09-15T10:12:36.818519+00:00",
+    "title": "Double Berggren Descent on Diagonal Triples"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Each prime p kills a definite proportion of tree nodes through nonresidue values of the quartic. We conjecture these proportions converge, level by level, to the stationary distribution of a finite Markov chain given by the generators acting on residues modulo p, so that the survival density is computable exactly for each finite set of primes and is always positive.\n\nFor each finite set S of primes there is c(S) > 0 with (number of depth-n nodes surviving all p in S)/3^n -> c(S) > 0 as n -> infinity, and the set of nodes certified by S contains no binary subtree.\n\nModel the generator action on the Pythagorean cone modulo p as a finite state machine, compute its stationary distribution by decidable linear algebra over ZMod p, compute the greatest two-generator-closed subset of the certified states as in the proof of mod7_no_binary_subtree, and compare against the measured densities of ComputationalEvidence.md.\n\nA precise quantitative theory of how far congruences can go, and a proof that no finite set of local conditions settles the perfect cuboid problem on the tree.\n\nSome finite set of primes kills all sufficiently deep nodes, which would immediately finish the perfect-cuboid question on the tree.",
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_4827",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "841548e6",
+    "status": "available",
+    "timestamp": "2026-09-15T10:12:37.211303+00:00",
+    "title": "Local Obstruction Density Along Tree Levels"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Body cuboids keep the space diagonal and two face diagonals integral and drop the third face condition. We conjecture that they also form a single-seed tree under an explicit generator set with exact 3^n growth, proved by the same injectivity-plus-disjointness scheme used for the Euler brick tree.\n\nThere is a finite generator set acting on body cuboids with one seed such that every primitive body cuboid is reached exactly once, and level n has exactly 3^n elements.\n\nSearch for candidate generators as integral matrices preserving the relevant quadric, then verify injectivity and pairwise image disjointness symbolically and formalize the resulting tree in Lean.\n\nA second brick-type tree, allowing a direct comparison of which square condition destroys finite generation.\n\nBody cuboids need infinitely many seeds, a sharp structural separation between the two relaxations of the perfect cuboid problem.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4828",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "841548e6",
+    "status": "available",
+    "timestamp": "2026-09-15T10:12:37.592164+00:00",
+    "title": "Body-Cuboid Tree with Ternary Growth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every brick in the tree has a face diagonal equal to w^3, a perfect cube. We conjecture this property characterizes the family: a primitive Euler brick with a cube face diagonal is, up to order and scaling, a Saunderson brick. The proof route is unique factorization in the Gaussian integers.\n\nIf (x,y,z) is a primitive Euler brick with x^2+y^2 = n^6 for some integer n, then (x,y,z) equals brick(u,v,w) up to signs and permutation for some primitive Pythagorean triple (u,v,w) with w = n.\n\nFactor x+iy in Z[i], use primitivity to force the Gaussian factor to be an associate of a cube, and match the real and imaginary parts against the Saunderson formulas in Lean.\n\nAn intrinsic characterization of the brick tree, independent of the generator, tightening the link between the tree and all Euler bricks.\n\nExtra bricks with cube face diagonals exist outside the family, indicating additional seeds are needed for a full brick tree.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4829",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "841548e6",
+    "status": "available",
+    "timestamp": "2026-09-15T10:12:37.972232+00:00",
+    "title": "Cube-Hypotenuse Characterization of Tree Bricks"
   },
   {
     "consumed_by_exp_id": "",

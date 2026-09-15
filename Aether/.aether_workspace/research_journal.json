@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "025e0adb",
-      "domain": "Shared",
-      "key_insight": "# FUTURE_DIRECTIONS — after T-DIAL-56 (paper 178, exp 511)\n\n## What this cycle established\n\nFive new `Catalog/Shared` files, all sorry-free:\n\n| file | content |\n|------|---------|\n| `TieBlockRankCeili",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-09-03T09:52:48",
-      "title": "FACT round-49 #1 — T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
-    },
-    {
       "cycle_id": "24e44638",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThe cycle reported here started from the conjecture that the natural topology\n`EReal ⊔ {Φ}` on the four-constructor transreal carrier is forced by\n\"compact Hausdorff + open line +",
@@ -499,19 +489,19 @@
       "theorem_count": 108,
       "timestamp": "2026-09-14T18:35:57",
       "title": "The Collatz-Berggren Bridge — Transferring the Lorentz Invariant to the Inverse Collatz Tree"
+    },
+    {
+      "cycle_id": "841548e6",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — the Euler Brick Tree\n\nThis cycle built the dynamic layer over the catalog's static perfect-cuboid\ngeometry: a brick generator over the Berggren tree, the descent/structure\ntheore",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 354,
+      "timestamp": "2026-09-15T10:12:50",
+      "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "93d08ac5",
-      "domain": "Shared",
-      "key_insight": "# Future directions — equal-volume shell peelings of Euclidean balls\n\nDerived from the three cycles formalised in\n`Catalog/Shared/ShellThicknessSharp.lean`,\n`Catalog/Shared/ShellThicknessMonotone.lean",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-08-24T10:05:36",
-      "title": "For `d ≥ 1`, `N ≥ 2`, the thickness of the outermost equal-volume"
-    },
     {
       "cycle_id": "95bfbbbf",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 108,
       "timestamp": "2026-09-14T18:35:57",
       "title": "The Collatz-Berggren Bridge — Transferring the Lorentz Invariant to the Inverse Collatz Tree"
+    },
+    {
+      "cycle_id": "841548e6",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — the Euler Brick Tree\n\nThis cycle built the dynamic layer over the catalog's static perfect-cuboid\ngeometry: a brick generator over the Berggren tree, the descent/structure\ntheore",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 354,
+      "timestamp": "2026-09-15T10:12:50",
+      "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e6e33149",
-      "domain": "Novelty",
-      "name": "MI_loss_eq",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "e6e33149",
-      "domain": "Novelty",
-      "name": "CMI_loss_eq",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "e6e33149",
-      "domain": "Novelty",
-      "name": "CMI_loss_nonneg",
-      "quality": 0.86
-    },
     {
       "cycle_id": "4b011f56",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "two_pow_two_mul_mod_three",
       "quality": 0.81
+    },
+    {
+      "cycle_id": "841548e6",
+      "domain": "Tropical",
+      "name": "catalog",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "841548e6",
+      "domain": "Tropical",
+      "name": "mem_proj",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "841548e6",
+      "domain": "Tropical",
+      "name": "catalog",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-09-14T18:35:57",
+  "last_updated": "2026-09-15T10:12:50",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "6c27d6f0",
-        "quality": 0.82,
-        "theorems": 107,
-        "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR — L22+L23 solo costs sum to 0.06pts"
-      },
-      {
         "cycle_id": "6f277833",
         "quality": 0.83,
         "theorems": 63,
@@ -4009,6 +4003,12 @@
         "quality": 0.85,
         "theorems": 569,
         "title": "Genuinely dependent solutions at every nontrivial finite cardinality"
+      },
+      {
+        "cycle_id": "841548e6",
+        "quality": 0.83,
+        "theorems": 354,
+        "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
       }
     ]
   }
