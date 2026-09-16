@@ -116082,11 +116082,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a977122a",
+      "consumed_by_exp_id": "078881d5",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -116098,7 +116098,7 @@
       ],
       "github_issue": 176,
       "id": "fd_3413",
-      "last_attempt_time": "2026-08-21T19:39:19.192537+00:00",
+      "last_attempt_time": "2026-09-16T05:13:34.079221+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -116113,7 +116113,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-21T14:54:02.516407+00:00",
       "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
@@ -142431,7 +142431,7 @@
       "depth_estimate": 3,
       "description": "After reindexing from the centre, shell thickness is the discrete derivative of j^{1/d} scaled by R N^{-1/d}. Counting shells thicker than a budget therefore becomes counting lattice points under a power curve. The conjecture is an exact closed form for the count, refining the Theta(R/(d delta)) bounds proved in this cycle.\n\nthickCount R d N delta = max{m <= N : R N^{-1/d} (m^{1/d} - (m-1)^{1/d}) > delta}, and for d >= 2 this equals min(N, floor((R/(d delta))^{d/(d-1)} N^{-1/(d-1)}) + O(1)).\n\nThe two-sided bounds peeling_thick_decay and peeling_thick_lower already pin the count to two consecutive integers (thickCount_pinned); test the exact value numerically at the boundary j^{d-1} N = (R/(d delta))^d and formalise the tie-break.\n\nThe uniform bound 1 + R/(d delta) becomes an exact asymptotic, and the peak location N* = Theta(R/(2 d delta)) is explained.\n\nThe discrete derivative must fail to be squeezed by its endpoints, indicating a genuinely arithmetic obstruction at small m.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -146016,7 +146016,7 @@
       "depth_estimate": 3,
       "description": "Cut-offs below 0.1123 are provably degenerate for all 96-bit moduli and 0.2072 is provably not. We conjecture the exact supremum of universally degenerate cut-offs is the infimum of the crossing curve, (sqrt 6 - 2)/4, approached as N tends to 2^96 from below.\n\nsup {c : for all 96-bit N and all j with u(j) <= c one has j^2 - N < 2^95} = (sqrt 6 - 2)/4, and the supremum is not attained.\n\nSharpen sharp_degeneracy from the rational 2246/20000 to arbitrary c < (sqrt 6 - 2)/4, and construct for each epsilon a modulus below 2^96 with a full-size residue at position (sqrt 6 - 2)/4 + epsilon.\n\nThe degeneracy phenomenon is characterised by a single quadratic irrationality.\n\nThe discrete threshold is strictly below the continuum infimum, which would mean lattice effects survive at 96 bits and contradict fraction_bridge.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -154262,7 +154262,7 @@
       "depth_estimate": 3,
       "description": "Prefix-sum dominance implies cost dominance but is only partial, whereas cost is total. The induced structure should be a lattice whose minimal elements are exactly the mass-sorted enumerations, so distance-to-optimal becomes a structural rather than scalar quantity.\n\nOn a fixed mass vector the front-loading preorder on enumerations is a lattice whose minima are the mass-sorted orders, and the cost gap is monotone in the lattice distance.\n\nFormalise the dominance order on permutations, prove minimality via the exchange theorem, and check lattice axioms on small cases by decide.\n\nAudits can report a structural distance-to-optimal instead of a single speedup.\n\nOnly scalar cost comparison is available and partial audits stay incomparable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Cryptography",
         "Logic"
@@ -156313,7 +156313,7 @@
       "depth_estimate": 3,
       "description": "The Pell case is now a theorem (pellQ_dvd_iff, pellQ_gcd_law): the half-companion sequence is divisibility-graded by parity of the index quotient, and its gcd is either Q(gcd) or 1. We conjecture that the same parity grading holds for the companion sequence of every Lucas pair (a, -1), with an extra factor 2 exactly when a is odd. This would isolate strong divisibility as a norm-form phenomenon and the parity grading as a property of the unit index lattice.\n\nLet V 0 = 2, V 1 = a, V (n+2) = a V (n+1) + V n and g = gcd m n. Then gcd (V m) (V n) = V g when m/g and n/g are both odd, and gcd (V m) (V n) divides 2 otherwise, with value 2 attained exactly when a is odd.\n\nParameterise the Pell development by a: reprove V m ∣ U (2m), strong divisibility of U, gcd (U m) (V m) ∣ 2 and the congruence V (b + 2m) ≡ c · V b mod V m, then rerun the proof of pellQ_gcd_law verbatim; test numerically on a = 1 (Lucas, where gcd (L 3) (L 6) = 2) and a = 3.\n\nEvery real quadratic order gets a complete companion gcd calculus, and the Pell theorem becomes the a even, 2-torsion-free instance.\n\nSome Lucas pair produces a gcd value exceeding 2, meaning the index lattice grading is not by ℤ/2 alone and an extra ramification invariant is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Cryptography"
@@ -156445,7 +156445,7 @@
       "depth_estimate": 3,
       "description": "The exact error identity |Q n − P n √2| = (√2−1)^n is now a theorem. We conjecture that the spine lists all best rational approximations to √2, with the side of approximation dictated by the parity of n, and that the constant 1/(2√2) is optimal.\n\nFor every rational a/b with 1 ≤ b < P (n+1) and (a,b) ≠ (Q n, P n), |√2 − a/b| > |√2 − Q n / P n|; moreover P n² · |√2 − Q n / P n| → 1/(2√2).\n\nFormalise a pigeonhole argument on the lattice ℤ + ℤ√2 using pell_error_exact and the exact classification pell_unit_classification; test numerically for b ≤ 10^5.\n\nA fully formal, continued-fraction-free proof that the Pell spine is the sequence of best approximations, transferable to every real quadratic unit.\n\nA better approximation off the spine would contradict pell_unit_classification, so failure would expose a gap in the norm-one description of good approximations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Pythagorean",
         "Cryptography"
@@ -158175,7 +158175,7 @@
       "depth_estimate": 3,
       "description": "Integer exchange rates are now classified: rate p is rigid, every rate is consistent, and the measured 1.5B cell at ctx 2048 forces p = 1. The open half is q > 1, the rational rates p/q given by invariance of the table under the sublattice generated by (q, p). Settling it turns a fitted constant into a discrete invariant of the measurement.\n\nA rational exchange rate p/q admits a monotone non-constant clamped knee table if and only if p ≥ 1, and every such table is a function of the single variable q·j − p·s truncated at 0.\n\nExtend RateFamily with a second index q (exchange : F (s+q) (j+p) = F s j) and prove the classification; experimentally, the s = 2 cell separates rate 1 ({16,16,16,20}) from rate 1/2 ({16,16,20,24}).\n\nBudget tables for every scale are generated by one chain plus one integer invariant, and the 7B cell becomes a prediction rather than a measurement.\n\nThe scale axis is not a monoid action and per-scale chains must be measured independently.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography"
       ],
@@ -158430,7 +158430,7 @@
       "depth_estimate": 3,
       "description": "Study the map from replication depth d to the set of admissible root exponents of the d-th replication of the Monster product. The approach is to combine the proven equivalence n-th root ⟺ n ∣ 194d with elementary divisor arithmetic. It matters because it turns a moonshine-flavoured question into an exactly solvable lattice problem.\n\nThe map d ↦ divisors(194 d) from replication depth to root spectrum is an order isomorphism onto its image, refining the proved minimal-depth formula n / gcd(n, 194).\n\nBuild the map into the divisor lattice on top of exists_pow_eq_replicate_iff_depth and prove monotonicity and reflection of the order.\n\nReplication depth becomes a computable invariant of a moonshine product.\n\nThe root spectrum depends on more than the pole order after replication, contradicting the proven criterion.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography"
       ],
@@ -159312,7 +159312,7 @@
       "depth_estimate": 3,
       "description": "Generalise the n = 5 enumeration to arbitrary sample size: compute the exact permutation-null size of a |ρ| ≥ t bar for every n, and prove monotonicity so that a threshold with a stated false-positive rate can be chosen in advance.\n\nFor each n the set of attainable Spearman values is the lattice {1 - 6D/(n(n²-1))} and the exact size of the |ρ| ≥ t test is a computable rational, decreasing in n for fixed t.\n\nProve the d² identity for general n from ∑ r = n(n+1)/2 and ∑ r² = n(n+1)(2n+1)/6, then formalise the size function and verify n = 4,5,6 by enumeration.\n\nEvery future round can pre-register a bar with a known false-positive rate instead of the conventional 0.7.\n\nNon-monotone size in n would mean small-sample bars cannot be compared across rounds at all.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography"
       ],
@@ -159902,7 +159902,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3 shows that a *single* member of size `k` can force nothing better than\n`|F| ≤ (2^{k−1}+1)·deg`, and that this is attained.  **Conjecture: for a union-closed family\nin which every nonempty member has size at least `k`, the best possible abundance ratio\ndegrades exactly like `2^{k−1}+1`, i.e. the extremal family `insert A (A.erase a).powerset`\nis the unique extremiser up to isomorphism.**  The key insight is that the extremal family is\na power set with a single \"cap\", so extremality is a statement about how much of a Boolean\nlattice can sit below one cap.  Why now?  Both sides are already formalised, so uniqueness is\nthe only missing ingredient, and it can be probed by enumerating extremisers on `Fin 4`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -160933,7 +160933,7 @@
       "depth_estimate": 3,
       "description": "The MDS property alone pins down the number of codewords of each weight. Conjecture the closed formula A_w = C(n,w) Σ_j (-1)^j C(w,j)(q^{w-d+1-j} - 1) for an [n,k,n-k+1] code over a field with q elements. The proof route is inclusion–exclusion over coordinate subsets, using that every k-subset is an information set.\n\nFor every [n,k,n-k+1] linear code over F_q and every w ≥ d = n-k+1, the number of codewords of Hamming weight w equals C(n,w) Σ_{j=0}^{w-d} (-1)^j C(w,j) (q^{w-d+1-j} - 1).\n\nFormalize the count of codewords vanishing outside a subset S as q^{max(0, k - (n - #S))} using restrict_bijective_of_mds, then apply Möbius inversion on the subset lattice.\n\nThe complete weight distribution of Reed–Solomon codes becomes a corollary, with no field-specific input.\n\nSome MDS code has a weight distribution not determined by its parameters, contradicting the information-set count and revealing an error in the subset-counting step.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -161705,7 +161705,7 @@
       "depth_estimate": 3,
       "description": "Depth measures how far an observer looks, multiplicity how wide. The conjecture asserts these coordinates never interact: parametric witness families exist for every prescribed depth and degree defect, and the invariant lattice they generate has exactly two limit points.\n\nFor all k and d there are pointed models that are depth-k equivalent and bisimilar yet whose root out-degrees differ by exactly d; and the lattice of invariants generated by the depth-k and degree-j observations has exactly the two limit points BisimInv and IsoInv.\n\nGeneralize multR to a family with d duplicated successors, prove bisimilarity by the same class-kernel argument, and compute out-degrees by decide; then prove the lattice statement from the separation witnesses.\n\nThe observational lattice is a product of two independent chains, so any observational language is classified by a pair of numbers.\n\nDepth-bounded counting is strictly more expressive than the two coordinates separately, revealing a genuinely two-dimensional observational logic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography",
         "Logic"
@@ -162583,7 +162583,7 @@
       "depth_estimate": 3,
       "description": "**The key insight is** that isolating nullity was used only to keep the\nuncovered core inside the line; dropping it allows `null` to attach to an end,\nproducing genuinely new models (e.g. the three-point remainder collapsing to a\nsegment).  Classifying compact Hausdorff topologies with `fin` an open embedding\nand *no* condition on `null` would describe the full lattice.  **Why now?** All\nthe machinery is parameterised over the topology, so the axiom can be dropped\none clause at a time.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Cryptography",
         "Logic"
@@ -164314,7 +164314,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For fixed $B$ and $x \\to \\infty$, the $p^2$-hit fraction\nsatisfies\n$$\\frac{\\mathrm{hit}(p^2)}{\\Psi_B(x)} \\;=\\; \\frac{\\Psi_B(x/p^2)}{\\Psi_B(x)} \\longrightarrow 1,$$\nwith the sharp second-order rate\n$$1 - \\pi(B)\\cdot\\frac{2\\log p}{\\log x} + O\\big((\\log x)^{-2}\\big),$$\nand for $B$ growing with $x$ in the tight-$u$ regime the fraction is\n$$\\frac{\\rho\\!\\left(u - \\frac{2\\log p}{\\log B}\\right)}{\\rho(u)} + o(1),$$\nwhere $\\rho$ is the Dickman function.\n\nThe key insight is that the rescaling identity turns *every* question about hit\nfeatures into a question about $\\Psi_B$ at two nearby arguments, so the entire\npredictive content of the feature is the local logarithmic derivative of\n$\\Psi_B$.\n\n**Why now?** The exact identity is already established; the missing ingredient is\nonly an asymptotic for $\\Psi_B$, for which the fixed-$B$ case is elementary\nlattice-point counting that the two-sided abundance bracket already\nhalf-provides.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -164395,7 +164395,7 @@
       "depth_estimate": 3,
       "description": "Two prime-power features fire together exactly as often as a single feature at\nthe product modulus. This should extend to a full inclusion–exclusion over\narbitrary squarefull moduli, converting the entire joint hit-feature distribution\ninto a lattice of rescaled smooth counts — and thereby into an analytically\npredictable correlation structure for the design matrix of any yield model built\non these features.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Cryptography"
@@ -166850,7 +166850,7 @@
       "depth_estimate": 3,
       "description": "The normal-subgroup lattice of a finite group, with steps labelled by the isomorphism type of the quotient, should be a QuotientSystem. Its exchange axiom is exactly the Zassenhaus butterfly lemma. The abstract decomposition theorem would then reprove Jordan-Holder.\n\nFor a finite group G the relation 'N is a maximal normal subgroup of M, labelled by M/N' satisfies rank_lt, label_unique and exchange, so EvolPath.jordan_holder specialises to the Jordan-Holder theorem.\n\nDefine the system on the subgroup lattice of a finite group in Lean and discharge the three fields, then derive uniqueness of composition factors from EvolPath.jordan_holder.\n\nJordan-Holder is exhibited as an order-theoretic consequence of one group-theoretic lemma, and the same core serves modules, rings and finite sets.\n\nLabels by isomorphism type fail label_unique, indicating that composition factors must be indexed by subquotients rather than by iso classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -169292,7 +169292,7 @@
       "depth_estimate": 3,
       "description": "We proved that the intersection of the powers of a principal ideal is the greatest fixed point of I -> (a)I, and rederived the Noetherian case from Nakayama applied to that fixed point. The conjecture extends this to arbitrary finitely generated ideals and asks for a calculus of the operator I -> gfp.\n\nFor a finitely generated ideal I of a domain, the intersection of all powers of I is the greatest fixed point of J -> I*J, and gfp is meet-multiplicative on comaximal ideals.\n\nFormalise the two lemmas iInf_pow_le_mul and le_iInf_pow_of_le_mul for general finitely generated I, then the comaximal meet formula.\n\nKrull intersection becomes a lattice-theoretic theorem with the chain condition isolated in a single Nakayama step.\n\nThe fixed-point description is special to principal ideals, which itself explains why principal filtrations are better behaved.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -170456,7 +170456,7 @@
       "depth_estimate": 3,
       "description": "Any labelling of tree nodes by the 24 Niemeier lattices already has an infinite fibre. The stronger tree-theoretic statement is that some infinite geodesic is monochromatic, which is the correct formulation of a hole/branch correspondence surviving the refutation of the naive one.\n\nFor every f from Berggren addresses to Fin 24 there is an infinite word w in {A,B,C} such that all prefixes of w have the same f-value.\n\nApply Koenig's lemma to the finitely branching tree of addresses whose colour class is infinite below them.\n\nA canonical Niemeier class attached to a boundary point of the tree, reinstating a weak hole correspondence.\n\nAn explicit colouring with no monochromatic ray, sharpening the refutation of hypothesis (ii).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -171436,6 +171436,47 @@
       "thread_id": "",
       "timestamp": "2026-09-16T05:12:26.530747+00:00",
       "title": "Abelianization Bound for Residue-Dial Factoring Speedups"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Investigate the ArXiv paper 'Kemeny's constant via matrix compression and eigenvalue interlacing' and formalize its key results. Abstract: Kemeny's constant quantifies the expected time for a random walk to reach a randomly chosen vertex, capturing global properties of a Markov chain. We develop a matrix-analytic framework for bounding Kemeny's constant of a finite connected weighted graph using degree-weighted compressions of the normalized adjacency matrix, pinching inequalities, and eigenvalue interlacing. Our main partition theorem gives lower bounds in terms of the compressed spectrum, with complete equality characterizations, and converts structural graph information into spectrally computable estimates. For instance, when applied to proper color partitions, the proposed method yields a sharp lower bound on Kemeny's constant in terms of the chromatic number \\[ K(G)\\ge n-2+\\frac{1}{χ(G)}, \\] which extends a bipartite bound of Ciardo, Dahl, and Kirkland (2022) to arbitrary chromatic number, and which is incomparable with the normalized Hoffman bound by Chung (1997). For unweighted graphs, we also characterize all equa",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics",
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "fd_4841",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Bypassed",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2609.17481v1",
+      "source_path": "http://arxiv.org/abs/2609.17481v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-16T05:13:12.674668+00:00",
+      "title": "ArXiv paper: Kemeny's constant via matrix compression and eigenvalue interlacing"
     },
     {
       "ambition_level": "extension",
@@ -172716,6 +172757,46 @@
       "thread_id": "",
       "timestamp": "2026-08-18T21:38:31.314157+00:00",
       "title": "Deepening: Aggregate dichotomy"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 173bd3d0 (Q=0.840), which proved 198 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET→FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL (paper 80, /tmp/exp_nonabelian_typechan.py, /tmp/r24n1h.log)\n\n**Verdict name: THE-TYPE-CHANNEL-IS-THE-ABELIANIZATION.**\n\n### Result\nThe complete splitting-type channel of a **non-abelian** field is **exactly its abelianization content**: at the prime",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Cryptography"
+      ],
+      "github_issue": 0,
+      "id": "push_173bd3d0_56819732",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.94,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "173bd3d0",
+      "source_path": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abel",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-16T05:12:42.043381+00:00",
+      "title": "Deepening: FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abel"
     },
     {
       "ambition_level": "extension",
@@ -202958,8 +203039,8 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
     "cross_domain_bridge",
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ed88da41",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — OR-dial invariance, washout, and what comes next\n\nThis thread has established, with complete Lean 4 proofs and no `sorry`, the following\nstructural laws for the semiprime / multi",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 749,
-      "timestamp": "2026-09-03T18:40:18",
-      "title": "FACT round-48 #2 — T-DIAL-UNIF-HB: the dial holds at the regime × bitlen intersection (paper 177)"
-    },
-    {
       "cycle_id": "d00ca27a",
       "domain": "MachineLearning",
       "key_insight": "# Future directions: the Sturmian structure of binomial peaks\n\nThis cycle established, with sorry-free Lean 4 proofs (files\n`Catalog/MachineLearning/SturmianArgmaxStaircase.lean`,\n`Catalog/MachineLear",
@@ -499,19 +489,19 @@
       "theorem_count": 76,
       "timestamp": "2026-09-15T18:59:37",
       "title": "The Congruent Number Laboratory — The Berggren Tree's Area Function and the Birch–Swinnerton-Dyer Fr"
+    },
+    {
+      "cycle_id": "173bd3d0",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nThe verified core of this cycle is the identification\n\n  `I(residue class ; splitting type) = I(abelianization coset ; splitting type)\n     = H(T) - H(T | coset)`,\n\nthe cap `I ≤ l",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 198,
+      "timestamp": "2026-09-16T05:12:41",
+      "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content ("
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "59651b5d",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — after TDIAL-U92 (round-69 #1, exp 538)\n\nTwo cycles of the loop were run in this session.\n\n**Cycle 1** (`Catalog/MachineLearning/ZeroFitDialFloor92.lean`) asked what could produce",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-24T11:45:21",
-      "title": "FACT round-69 #1 — TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
-    },
     {
       "cycle_id": "c96b94a8",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 76,
       "timestamp": "2026-09-15T18:59:37",
       "title": "The Congruent Number Laboratory — The Berggren Tree's Area Function and the Birch–Swinnerton-Dyer Fr"
+    },
+    {
+      "cycle_id": "173bd3d0",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nThe verified core of this cycle is the identification\n\n  `I(residue class ; splitting type) = I(abelianization coset ; splitting type)\n     = H(T) - H(T | coset)`,\n\nthe cap `I ≤ l",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 198,
+      "timestamp": "2026-09-16T05:12:41",
+      "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content ("
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4c85503d",
-      "domain": "Tropical",
-      "name": "partitionFn_pos",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "4c85503d",
-      "domain": "Tropical",
-      "name": "tilted_pos",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "4c85503d",
-      "domain": "Tropical",
-      "name": "tilted_sum_one",
-      "quality": 0.86
-    },
     {
       "cycle_id": "01cb7b4b",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "triArea_euclidTriple",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "173bd3d0",
+      "domain": "Cryptography",
+      "name": "condEntropy_eq_sum",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "173bd3d0",
+      "domain": "Cryptography",
+      "name": "condEntropy_cell_nonneg",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "173bd3d0",
+      "domain": "Cryptography",
+      "name": "condEntropy_cell_eq_zero_iff",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-15T18:59:37",
+  "last_updated": "2026-09-16T05:12:41",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "d4951edd",
-        "quality": 0.82,
-        "theorems": 85,
-        "title": "FACT round-70 #5 — PRICE-2ADIC-LETTERS: the Price tree's alphabet lives at 2-adi"
-      },
-      {
         "cycle_id": "969a5dc4",
         "quality": 0.85,
         "theorems": 88,
@@ -3389,6 +3383,12 @@
         "quality": 0.78,
         "theorems": 55,
         "title": "FACT round-52 #1 — T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at b"
+      },
+      {
+        "cycle_id": "173bd3d0",
+        "quality": 0.84,
+        "theorems": 198,
+        "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abel"
       }
     ],
     "Geometry": [

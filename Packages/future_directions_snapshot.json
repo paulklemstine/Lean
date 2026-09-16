@@ -1171,6 +1171,25 @@
     "title": "Existential-Risk-Optimization: Absolute Bounds on AI Alignment Failure Probabilities"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 173bd3d0 (Q=0.840), which proved 198 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET→FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL (paper 80, /tmp/exp_nonabelian_typechan.py, /tmp/r24n1h.log)\n\n**Verdict name: THE-TYPE-CHANNEL-IS-THE-ABELIANIZATION.**\n\n### Result\nThe complete splitting-type channel of a **non-abelian** field is **exactly its abelianization content**: at the prime",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_173bd3d0_56819732",
+    "lineage_refs": [],
+    "priority_score": 0.94,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "173bd3d0",
+    "status": "available",
+    "timestamp": "2026-09-16T05:12:42.043381+00:00",
+    "title": "Deepening: FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abel"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -2559,25 +2578,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "173bd3d0",
-    "description": "## NET→FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL (paper 80, /tmp/exp_nonabelian_typechan.py, /tmp/r24n1h.log)\n\n**Verdict name: THE-TYPE-CHANNEL-IS-THE-ABELIANIZATION.**\n\n### Result\nThe complete splitting-type channel of a **non-abelian** field is **exactly its abelianization content**: at the prime level **I(p mod m\\*; T) = I(T; coset) = H(T) − H(T|coset)** (m\\* = conductor of the G^ab characters), and at the semiprime level the papers 78/79 pair law holds **verbatim** with the class-level type map. Verified on S₃ ×2, S₄, A₄, D₄ with abelian controls V₄/C₄ — **7/7 fields prime, 7/7 semiprime, every field on its pre-stated value.**\n\n### The law table (prime level, ~23k primes/field)\n| field | G | G^ab | H(T) | I₁ measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| S₃a x³+x+1 | S₃ | C₂ | 1.4591 | **1.0000** | 1.0000 ✓ | 1.0000 | 0 |\n| S₃b x³−x+1 | S₃ | C₂ | 1.4591 | **1.0000** | 1.0000 ✓ | 1.0000 | 0 |\n| S₄ x⁴−x−1 | S₄ | C₂ | 2.0944 | **1.0100** | 1.0000 ✓ | 1.0000 | 0 |\n| A₄ x⁴+8x+12 | A₄ | C₃ | 1.1887 | **0.9188** | 0.9183 ✓ | 1.5850 | 2/3 |\n| D₄ x⁴−2 | D₄ | C₂×C₂ | 1.9056 | **1.6555** | 1.6556 ✓ | 2.0000 | 0.3444 |\n| V₄ x⁴−2x²+9 [ab.] | V₄ | C₂×C₂ | 0.8113 | **0.8092** | 0.8113 ✓ | 2.0000 | 1.1887 |\n| C₄ Φ₅ [control] | C₄ | C₄ | 1.5000 | **1.4989** | 1.5000 ✓ | 2.0000 | 0.5 |\n\nS₄ carries 2.0944 bits of splitting entropy and leaks exactly 1 bit; A₄'s [3,1] type fills both non-trivial C₃-cosets (loss exactly 2/3); D₄'s [2,2] merges two cosets; V₄'s three involutions all give [2,2]. Within-coset flatness at permutation nulls (z ≤ 0); thickening honest at the 0.004-bit level; coprime flat.\n\n### The REVERSAL\nPaper 77 ordered the control pair by forks: V₄ 0.8113 > D₄ 0.2936. The type channels order it **the other way**: V₄ 0.8092 **<** D₄ 1.6555. The readout's coset-separation — not the group's abelianness — decides which channel is richer. Both orderings are exact instances of the same law.\n\n### Semiprime (400k MC/field, unramified pools)\nS₃a **1.0001**, S₃b **1.0001**, S₄ **1.0034** vs law 1.0000 — **the C₂ cap is a theorem about the abelianization, not the type count** (a 5-type S₄ field cannot exceed the quadratic 1 bit). A₄ **0.4729** vs 0.4739 (dial-pair 1.5850). D₄ **1.4325** vs 1.4302 — a non-abelian channel ABOVE 1 bit, as its 2-D abelianization predicts. V₄ **0.2902** = Is(4) (paper-79 2-state identity). C₄ **1.2461** vs 1.25 (paper 78). Which-factor walls 0.0000–0.0001; pinned-fork s-projections reproduce Is(2)/Is(3)/Is(4) (papers 74/75).\n\n### Method notes\nQuartic types via F_{p²}-root counting ((nr, nr₂) from x^(p²) mod f + gcd) — the cubic-resolvent shortcut is INVALID for binomial/special quartics (x⁴−2's axis pairing is D₄-fixed; V₄'s resolvent splits over ℚ). Sparse-modulus discipline: permutation-null thickening and 400k MC (30k would leave ~0.10-bit bias in S₄'s 282×15-cell table). Runtime 314 s, all asserts green.\n\n### All 8 barriers\n(a) clean — law + full table stated before the run, measurement independent of the dial; (b) clean — no non-abelian type-channel work in the Catalog (698-pkg scan: nearest are the lab's own #723–#728) or literature; (c) confronted — real Galois groups, 23k-prime histograms < 2% from class sizes, 400k-draw MC; (d) clean — deterministic + fixed seeds; (e) the substance — finite-sample margins quantified (S₄ +0.0100; thickening at 0.004-bit level under nulls); (f) controlled — exact laws vs MC asserted to 0.02, both estimator traps caught and repaired; (g) fair — V₄/C₄ controls reproduce papers 77/78/79 through the identical pipeline; (h) closure — symmetric (which-factor 0.0000, barrier 2), residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), Galois + Chebotarev 1922 + reciprocity (barrier 8).\n\n### What closes\nThe **type-channel program is complete**: papers 70 (flatness), 71 (criterion), 72–74 (binary laws), 75–77 (group table), 78–79 (abelian types) are all projections of one statement — the complete symmetric residue channel of splitting statistics equals the type's mutual information with the abelianization coset. Perfect groups (G^ab = 0) predict zero and paper 76's A₅ is already flat.\n\nNow 415 experiments. Assessment v191. Paper 80.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3389",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T07:46:13.683032+00:00",
-    "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content (paper 80)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "903508ab",
     "description": "## FACT round-24 #3 — QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C₄-abelianization object**: the Frobenius group **F₂₀ = AGL(1,5)** via x⁵−2. Prime: **I(p mod 5; T) = 1.4989 vs pre-stated 1.5000** — H(T) = 1.6805 bits of quintic splitting entropy collapse through the 2-bit quartic dial, with the [1,4] type merging the two order-4 cosets {2,3} for a loss of **exactly 0.5 bit**. Semiprime: pair = **1.2462 vs class-enumeration law 1.2500**; and the [1,2,2]-fork (⟺ p ≡ 4 mod 5) realizes **Is(4) as an order-4 pinned fork on a non-abelian field** (0.2915 vs 0.2947) — previously order-4 split-counts existed only on abelian V₄ and the joint-AND D₄ fork (paper 77).\n\n### The law table\n| field | G | G^ab | H(T) | I₁ measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| F₂₀ x⁵−2 | F₂₀ | C₄ | 1.6805 | **1.4989** | 1.5000 ✓ | 2.0000 | 0.5 |\n| C₅ Q(ζ₁₁)⁺ [control] | C₅ | C₅ | 0.7219 | **0.7198** | 0.7219 ✓ | 3.3219 | 2.6 |\n\nSemiprime (400k MC): F₂₀ pair **1.2462** vs 1.2500 ✓ (reads 1.25 of the 2-bit dial — the largest fraction of any merged-type field in the program); C₅ pair **0.2026** vs Is(5) = 0.2027 ✓ (paper-79 f=11 reproduced). Which-factor walls 0.0000; coprime flat; within-coset flatness z = +0.00; thickening agrees to 0.0001.\n\n### The instructive failure (record as method)\nFirst run swapped the coset labels of the multiplier-3/-4 families relative to the C₄ valuation (V(3)=3, V(4)=2). **Invisible at the prime level** — both merged classes share type [1,4], so I₁ is unchanged — but it corrupted the pair enumeration (law 1.1250 vs true 1.2500). The 400k MC caught it: measured 1.2462 sat on the *corrected* value. **Lesson: the pair law is the discriminating test of coset bookkeeping precisely where type-merging hides it.** Method legacy: quintic type dictionary via F_{p²}-root counting is (5,5)/(1,1)/**(1,5)**/(0,0) — (1,5), not the quartic-carried (1,3): both quadratic pairs' roots live in F_{p²}\\F_p.\n\n### All 8 barriers\n(a) clean — four horns with exact values pre-stated; (b) clean — no quintic type-channel work in the Catalog; (c) confronted — real F₂₀ field, ~23k-prime histograms < 2% from class sizes, 400k MC; (d) clean — fixed seeds; (e) the substance — margins quantified (−0.0011/−0.0038/−0.0032), coset-swap episode documented; (f) controlled — four harness defects caught across five runs by asserts/MC-law disagreement; final run ALL_DONE all-green; (g) fair — C₅ abelian control reproduces paper 79 through the identical pipeline; (h) closure — symmetric (wall 0, barrier 2), residue dial (5), CRT-sealed (6), Kummer/affine classical (8).\n\n### What this decides\nThe abelianization law now spans **degrees 2–5** and abelianizations **C₂, C₃, C₄, C₂×C₂, Cₙ**: I(p mod m\\*; T) = I(T; coset), pair law verbatim, the type-vs-dial gap always exactly the entropy of the cosets the type cannot tell apart. The type-channel face of the program is complete at every tested group; the frontier returns to the quantum channel (QUBIT-TRADE) and the barrier-4 converse.\n\nNow 417 experiments. Assessment v193. Paper 82.\n",
     "domain_bridges": [],
@@ -2616,7 +2616,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "a977122a",
+    "consumed_by_exp_id": "078881d5",
     "description": "## FACT round-24 #5 — D₅-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** — and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x⁵+ax+b (|a|,|b| ≤ 60) found **four D₅ quintics in seconds**, each with square discriminant and the exact signature {[1⁵]: ≈0.10, [5]: ≈0.40, [1,2,2]: ≈0.50}.\n\n### The subtlety: where D₅'s C₂ lives\nD₅ ⊆ A₅ ⟹ √disc(f) ∈ ℚ ⟹ the abelianization's quadratic subfield K is **not** Q(√disc). Theory locates it — splitting-field ramification = root-field ramification ⟹ K = Q(√d), d squarefree over f's ramified prime set — and candidate enumeration + Kronecker matching identifies **K = Q(√−5) at agreement 1.0000, uniquely**, for x⁵+20x+32 (m\\* = 20 = Q(√−5)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D₅ type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(−5, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 — exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I₁ measured | law | pair |\n|---|---|---|---|---|---|---|\n| C₅ | Q(ζ₁₁)⁺ | C₅ | 0.7219 | 0.7198 | 0.7219 ✓ | Is(5) ✓ |\n| **D₅** | **x⁵+20x+32** | **C₂** | **1.3610** | **1.0000** | **1.0000 ✓** | **1.0 ✓** |\n| F₂₀ | x⁵−2 | C₄ | 1.6805 | 1.4989 | 1.5000 ✓ | 1.25 ✓ |\n| A₅ | x⁵+20x+16 | 1 | 1.6555 | **0** | 0 ✓ | 0 ✓ |\n| S₅ | x⁵−x−1 | C₂ | 2.5574 | 1.2158* | 1.0 ✓ | 1.0 ✓ |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions — the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean — predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean — no D₅ type-channel work in the Catalog; (c) confronted — real D₅ fields, histograms < 0.2% from class sizes, 400k MC; (d) clean — fixed seeds; (e) the substance — the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled — three harness iterations disclosed (modulus-scan failure → theory-grounded candidate enumeration; even-numerator Jacobi bug → Kronecker helper); (g) fair — walls zero, coprime flat, controls are papers 78–82's reproduced values; (h) closure — symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2–5, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
     "domain_bridges": [],
     "domains": [
@@ -2628,7 +2628,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T14:54:02.516407+00:00",
     "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
   },
@@ -9705,6 +9705,26 @@
     "status": "available",
     "timestamp": "2026-09-15T10:13:37.712562+00:00",
     "title": "ArXiv paper: Augmented singular cohomology, uniform matroids, and real-rootedness"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Kemeny's constant via matrix compression and eigenvalue interlacing' and formalize its key results. Abstract: Kemeny's constant quantifies the expected time for a random walk to reach a randomly chosen vertex, capturing global properties of a Markov chain. We develop a matrix-analytic framework for bounding Kemeny's constant of a finite connected weighted graph using degree-weighted compressions of the normalized adjacency matrix, pinching inequalities, and eigenvalue interlacing. Our main partition theorem gives lower bounds in terms of the compressed spectrum, with complete equality characterizations, and converts structural graph information into spectrally computable estimates. For instance, when applied to proper color partitions, the proposed method yields a sharp lower bound on Kemeny's constant in terms of the chromatic number \\[ K(G)\\ge n-2+\\frac{1}{χ(G)}, \\] which extends a bipartite bound of Ciardo, Dahl, and Kirkland (2022) to arbitrary chromatic number, and which is incomparable with the normalized Hoffman bound by Chung (1997). For unweighted graphs, we also characterize all equa",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4841",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2609.17481v1",
+    "status": "available",
+    "timestamp": "2026-09-16T05:13:12.674668+00:00",
+    "title": "ArXiv paper: Kemeny's constant via matrix compression and eigenvalue interlacing"
   },
   {
     "ambition_level": "extension",
@@ -46123,6 +46143,96 @@
     "status": "available",
     "timestamp": "2026-09-15T18:59:23.035190+00:00",
     "title": "Area Multiplicity as a Rank Oracle"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.NonabelianTypeChannel.GroupChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The general theorem already proves that a perfect Galois group has an identically zero type channel. The missing piece is a machine-checked certificate that the smallest perfect group, A5, is perfect in the Finset language used by the development. Completing it turns the predicted flatness of the quintic case into a theorem.\n\nThe derived subgroup of A5 is A5, hence for every residue readout and every splitting-type readout the prime-level and semiprime-level channels of an A5 field vanish identically.\n\nEither evaluate the commutator certificate by kernel computation over the 3600 pairs of A5, or bridge Mathlib's simplicity of A5 to the Finset certificate and apply typeChannel_eq_zero_of_perfect.\n\nSupplies the zero row of the law table and closes the perfect-group case of the programme.\n\nWould contradict the simplicity of A5, so a failure can only be a defect of the Finset-to-Subgroup bridge.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4837",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Nonabelian simple implies the derived subgroup is a nontrivial normal subgroup, hence everything; transport along the carrier Finset.",
+    "research_mode": "team",
+    "source_exp_id": "173bd3d0",
+    "status": "available",
+    "timestamp": "2026-09-16T05:12:25.075660+00:00",
+    "title": "Perfect-Group Flatness Certificate for the Alternating Group on Five Letters"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.NonabelianTypeChannel.Semiprime",
+      "Cryptography.NonabelianTypeChannel.Entropy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The prime and semiprime layers are the first two rungs of a ladder indexed by the number of prime factors. The conjecture is that the ladder decays to zero unless the abelianization has exponent two, where it stabilises. This separates fields by how much residue information survives multiplication.\n\nLet I_k be the mutual information between the coset of a product of k independent uniform Frobenius elements and the multiset of their splitting types. Then I_k is non-increasing in k, tends to 0 whenever the abelianization has an element of order greater than 2, and is eventually constant and positive when the abelianization has exponent 2.\n\nEvaluate I_3 and I_4 for the six groups with the same Finset entropy machinery, then prove monotonicity from the data-processing inequality for the product map.\n\nExtends the pair law to arbitrary almost-primes and explains the special role of quadratic-type abelianizations.\n\nA counterexample with an increase at some rung would show the product readout is not a data-processing chain, forcing a revision of the semiprime model.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4838",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Write the k-fold product coset as a Markov chain over the abelianization and apply the proved cap and Gibbs inequalities rung by rung.",
+    "research_mode": "team",
+    "source_exp_id": "173bd3d0",
+    "status": "available",
+    "timestamp": "2026-09-16T05:12:25.573465+00:00",
+    "title": "Almost-Prime Ladder of Type Channels"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.NonabelianTypeChannel.Completeness",
+      "Cryptography.NonabelianTypeChannel.GroupChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "In all six evaluated fields the loss between the channel and its abelianization cap is a rational combination of logarithms of small integers counting how many cosets each splitting type meets. The conjecture turns that into a formula, making the loss computable from the character table alone.\n\nThe loss log2 of the index minus the channel equals the sum over splitting types t of p(t) times log2 of the number of abelianization cosets met by the conjugacy classes of type t, provided each such coset is met with equal weight.\n\nProve the flatness-within-a-type step by a Lagrange argument inside a class, then compare with the six evaluated losses 0, 0, 2/3, 3L3/8 - 1/4, 3L3/4, 1/2.\n\nReduces the whole law table to class-size arithmetic and removes the need for any entropy computation per field.\n\nSome type meets its cosets with unequal weights, which would pinpoint a group where conjugacy classes distribute unevenly over the abelianization.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4839",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Use loss_eq to replace the loss by a conditional entropy, then condEntropy_eq_sum plus uniformity of the coset distribution inside a class.",
+    "research_mode": "team",
+    "source_exp_id": "173bd3d0",
+    "status": "available",
+    "timestamp": "2026-09-16T05:12:26.048826+00:00",
+    "title": "Class-Size Deficit Formula"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.ResidueDial.Core",
+      "Cryptography.NonabelianTypeChannel.Semiprime"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The catalog's residue-dial law bounds the speedup a congruence filter buys a scanning factoring algorithm. The type channel bounds how much a splitting-shape oracle can tell about the residue. Combining them should bound the speedup of a shape oracle by the abelianization index of the field used.\n\nIn the single-pass scan model, an adversary who learns the splitting type of a semiprime in a fixed Galois field obtains a speedup bounded by a monotone function of the semiprime channel I2, hence by log2 of the index of the derived subgroup, so index-two fields never beat the quadratic-symbol dial.\n\nExpress the scan cost as a functional of the joint distribution of the dial and the target class, show monotonicity in mutual information, and instantiate with the exact I2 values proved here.\n\nGives a provable ceiling on shape-oracle attacks in terms of a single group invariant.\n\nThe scan cost is not monotone in mutual information, which would identify a distribution where a low-information oracle nevertheless reorders the scan very effectively.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4840",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Couple the dial-aware scan to the conditional distribution of the target class given the readout and bound the resulting cost by Pinsker-type inequalities against the proved channel values.",
+    "research_mode": "team",
+    "source_exp_id": "173bd3d0",
+    "status": "available",
+    "timestamp": "2026-09-16T05:12:26.530747+00:00",
+    "title": "Abelianization Bound for Residue-Dial Factoring Speedups"
   },
   {
     "ambition_level": "extension",
