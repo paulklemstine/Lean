@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d00ca27a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions: the Sturmian structure of binomial peaks\n\nThis cycle established, with sorry-free Lean 4 proofs (files\n`Catalog/MachineLearning/SturmianArgmaxStaircase.lean`,\n`Catalog/MachineLear",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-09-03T18:40:36",
-      "title": "Sturmian Structure of the Argmax Staircase"
-    },
-    {
       "cycle_id": "8aeaf6ab",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — after T-DIAL-BITLEN (paper 175)\n\nThe bitlen axis closed the deployment envelope of the zero-fit dial: seed-stability\n(paper 165), regime-invariance (paper 162), and now bitlen-st",
@@ -499,19 +489,19 @@
       "theorem_count": 198,
       "timestamp": "2026-09-16T05:12:41",
       "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content ("
+    },
+    {
+      "cycle_id": "903508ab",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — after the abelianization law at degree five\n\nThis cycle closed the degree-five type channel of the Frobenius field `F₂₀ = AGL(1,5)`\n(`Catalog/Bridges/QuinticTypeChannelF20.lean`,",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 169,
+      "timestamp": "2026-09-16T14:58:07",
+      "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F₂₀ and the first C₄"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c96b94a8",
-      "domain": "Pythagorean",
-      "key_insight": "# FUTURE_DIRECTIONS — TDIAL-U88 (FACT round-68 #1, exp 536)\n\nFour research cycles were run on the round-68 finding: the uniform ladder of the zero-fit dial\nmisses the `0.55` band for the first time at",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 188,
-      "timestamp": "2026-08-24T13:14:21",
-      "title": "FACT round-68 #1 — TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
-    },
     {
       "cycle_id": "6f277833",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 198,
       "timestamp": "2026-09-16T05:12:41",
       "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content ("
+    },
+    {
+      "cycle_id": "903508ab",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — after the abelianization law at degree five\n\nThis cycle closed the degree-five type channel of the Frobenius field `F₂₀ = AGL(1,5)`\n(`Catalog/Bridges/QuinticTypeChannelF20.lean`,",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 169,
+      "timestamp": "2026-09-16T14:58:07",
+      "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F₂₀ and the first C₄"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "01cb7b4b",
-      "domain": "Algebra",
-      "name": "hasFibRank_of_pos",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "01cb7b4b",
-      "domain": "Algebra",
-      "name": "fibRank_mem",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "01cb7b4b",
-      "domain": "Algebra",
-      "name": "fibRank_pos",
-      "quality": 0.78
-    },
     {
       "cycle_id": "ad3686b6",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "condEntropy_cell_eq_zero_iff",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "903508ab",
+      "domain": "Bridges",
+      "name": "lbs_14",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "903508ab",
+      "domain": "Bridges",
+      "name": "lbs_42",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "903508ab",
+      "domain": "Bridges",
+      "name": "lbs_seven_gt",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-16T05:12:41",
+  "last_updated": "2026-09-16T14:58:07",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "ecb169bf",
-        "quality": 0.86,
-        "theorems": 88,
-        "title": "FACT round-72 #2/#3 — TREE-SIEVE invalid-as-stated (random-gcd lottery); MULTI-T"
-      },
-      {
         "cycle_id": "b96d5582",
         "quality": 0.86,
         "theorems": 102,
@@ -3203,6 +3197,12 @@
         "quality": 0.70417,
         "theorems": 42,
         "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
+      },
+      {
+        "cycle_id": "903508ab",
+        "quality": 0.82,
+        "theorems": 169,
+        "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, "
       }
     ],
     "Combinatorics": [

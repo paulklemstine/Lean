@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-16T05:12:26Z",
-  "count": 149,
+  "archived_at": "2026-09-16T14:57:53Z",
+  "count": 150,
   "directions": [
     {
       "id": "fd_3695",
@@ -5893,6 +5893,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 172
+    },
+    {
+      "id": "fd_3411",
+      "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F₂₀ and the first C₄ dial (paper 82)",
+      "description": "## FACT round-24 #3 — QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C₄-abelianization object**: the Frobenius group **F₂₀ = AGL(1,5)** via x⁵−2. Prime: **I(p mod 5; T) = 1.4989 vs pre-stated 1.5000** — H(T) = 1.6805 bits of quintic splitting entropy collapse through the 2-bit quartic dial, with the [1,4] type merging the two order-4 cosets {2,3} for a loss of **exactly 0.5 bit**. Semiprime: pair = **1.2462 vs class-enumeration law 1.2500**; and the [1,2,2]-fork (⟺ p ≡ 4 mod 5) realizes **Is(4) as an order-4 pinned fork on a non-abelian field** (0.2915 vs 0.2947) — previously order-4 split-counts existed only on abelian V₄ and the joint-AND D₄ fork (paper 77).\n\n### The law table\n| field | G | G^ab | H(T) | I₁ measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| F₂₀ x⁵−2 | F₂₀ | C₄ | 1.6805 | **1.4989** | 1.5000 ✓ | 2.0000 | 0.5 |\n| C₅ Q(ζ₁₁)⁺ [control] | C₅ | C₅ | 0.7219 | **0.7198** | 0.7219 ✓ | 3.3219 | 2.6 |\n\nSemiprime (400k MC): F₂₀ pair **1.2462** vs 1.2500 ✓ (reads 1.25 of the 2-bit dial — the largest fraction of any merged-type field in the program); C₅ pair **0.2026** vs Is(5) = 0.2027 ✓ (paper-79 f=11 reproduced). Which-factor walls 0.0000; coprime flat; within-coset flatness z = +0.00; thickening agrees to 0.0001.\n\n### The instructive failure (record as method)\nFirst run swapped the coset labels of the multiplier-3/-4 families relative to the C₄ valuation (V(3)=3, V(4)=2). **Invisible at the prime level** — both merged classes share type [1,4], so I₁ is unchanged — but it corrupted the pair enumeration (law 1.1250 vs true 1.2500). The 400k MC caught it: measured 1.2462 sat on the *corrected* value. **Lesson: the pair law is the discriminating test of coset bookkeeping precisely where type-merging hides it.** Method legacy: quintic type dictionary via F_{p²}-root counting is (5,5)/(1,1)/**(1,5)**/(0,0) — (1,5), not the quartic-carried (1,3): both quadratic pairs' roots live in F_{p²}\\F_p.\n\n### All 8 barriers\n(a) clean — four horns with exact values pre-stated; (b) clean — no quintic type-channel work in the Catalog; (c) confronted — real F₂₀ field, ~23k-prime histograms < 2% from class sizes, 400k MC; (d) clean — fixed seeds; (e) the substance — margins quantified (−0.0011/−0.0038/−0.0032), coset-swap episode documented; (f) controlled — four harness defects caught across five runs by asserts/MC-law disagreement; final run ALL_DONE all-green; (g) fair — C₅ abelian control reproduces paper 79 through the identical pipeline; (h) closure — symmetric (wall 0, barrier 2), residue dial (5), CRT-sealed (6), Kummer/affine classical (8).\n\n### What this decides\nThe abelianization law now spans **degrees 2–5** and abelianizations **C₂, C₃, C₄, C₂×C₂, Cₙ**: I(p mod m\\*; T) = I(T; coset), pair law verbatim, the type-vs-dial gap always exactly the entropy of the cosets the type cannot tell apart. The type-channel face of the program is complete at every tested group; the frontier returns to the quantum channel (QUBIT-TRADE) and the barrier-4 converse.\n\nNow 417 experiments. Assessment v193. Paper 82.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "903508ab",
+      "timestamp": "2026-08-21T13:59:52.029699+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-15T10:13:56.893909+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 174
     }
   ]
 }

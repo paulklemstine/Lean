@@ -1307,6 +1307,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 903508ab (Q=0.820), which proved 169 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-24 #3 — QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C₄-abelianization object**: the Frobenius group **F₂₀",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_903508ab_a481f20b",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "903508ab",
+    "status": "available",
+    "timestamp": "2026-09-16T14:58:08.263966+00:00",
+    "title": "Deepening: FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle a118b9c6 (Q=0.820), which proved 47 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.",
     "domain_bridges": [],
     "domains": [
@@ -2578,25 +2597,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "903508ab",
-    "description": "## FACT round-24 #3 — QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C₄-abelianization object**: the Frobenius group **F₂₀ = AGL(1,5)** via x⁵−2. Prime: **I(p mod 5; T) = 1.4989 vs pre-stated 1.5000** — H(T) = 1.6805 bits of quintic splitting entropy collapse through the 2-bit quartic dial, with the [1,4] type merging the two order-4 cosets {2,3} for a loss of **exactly 0.5 bit**. Semiprime: pair = **1.2462 vs class-enumeration law 1.2500**; and the [1,2,2]-fork (⟺ p ≡ 4 mod 5) realizes **Is(4) as an order-4 pinned fork on a non-abelian field** (0.2915 vs 0.2947) — previously order-4 split-counts existed only on abelian V₄ and the joint-AND D₄ fork (paper 77).\n\n### The law table\n| field | G | G^ab | H(T) | I₁ measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| F₂₀ x⁵−2 | F₂₀ | C₄ | 1.6805 | **1.4989** | 1.5000 ✓ | 2.0000 | 0.5 |\n| C₅ Q(ζ₁₁)⁺ [control] | C₅ | C₅ | 0.7219 | **0.7198** | 0.7219 ✓ | 3.3219 | 2.6 |\n\nSemiprime (400k MC): F₂₀ pair **1.2462** vs 1.2500 ✓ (reads 1.25 of the 2-bit dial — the largest fraction of any merged-type field in the program); C₅ pair **0.2026** vs Is(5) = 0.2027 ✓ (paper-79 f=11 reproduced). Which-factor walls 0.0000; coprime flat; within-coset flatness z = +0.00; thickening agrees to 0.0001.\n\n### The instructive failure (record as method)\nFirst run swapped the coset labels of the multiplier-3/-4 families relative to the C₄ valuation (V(3)=3, V(4)=2). **Invisible at the prime level** — both merged classes share type [1,4], so I₁ is unchanged — but it corrupted the pair enumeration (law 1.1250 vs true 1.2500). The 400k MC caught it: measured 1.2462 sat on the *corrected* value. **Lesson: the pair law is the discriminating test of coset bookkeeping precisely where type-merging hides it.** Method legacy: quintic type dictionary via F_{p²}-root counting is (5,5)/(1,1)/**(1,5)**/(0,0) — (1,5), not the quartic-carried (1,3): both quadratic pairs' roots live in F_{p²}\\F_p.\n\n### All 8 barriers\n(a) clean — four horns with exact values pre-stated; (b) clean — no quintic type-channel work in the Catalog; (c) confronted — real F₂₀ field, ~23k-prime histograms < 2% from class sizes, 400k MC; (d) clean — fixed seeds; (e) the substance — margins quantified (−0.0011/−0.0038/−0.0032), coset-swap episode documented; (f) controlled — four harness defects caught across five runs by asserts/MC-law disagreement; final run ALL_DONE all-green; (g) fair — C₅ abelian control reproduces paper 79 through the identical pipeline; (h) closure — symmetric (wall 0, barrier 2), residue dial (5), CRT-sealed (6), Kummer/affine classical (8).\n\n### What this decides\nThe abelianization law now spans **degrees 2–5** and abelianizations **C₂, C₃, C₄, C₂×C₂, Cₙ**: I(p mod m\\*; T) = I(T; coset), pair law verbatim, the type-vs-dial gap always exactly the entropy of the cosets the type cannot tell apart. The type-channel face of the program is complete at every tested group; the frontier returns to the quantum channel (QUBIT-TRADE) and the barrier-4 converse.\n\nNow 417 experiments. Assessment v193. Paper 82.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3411",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T13:59:52.029699+00:00",
-    "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F₂₀ and the first C₄ dial (paper 82)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "9c40082c",
     "description": "## FACT round-24 #2 — BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structure beyond the trace**. The channel decomposes into (i) a deterministic 3-adic skeleton that *restates* N mod 3 exactly, and (ii) a metric layer — branch letters, depth, path composition — that is **blind at every 3-adic level 3^k, k ≤ 6**. The Catalog's 3-adic Cantor boundary (#855) has no N-computable projection beyond the trace-set content.\n\n### The four horns (all stated before the run; all confirmed)\n- **H1 SKELETON (deterministic lemma)**: squares mod 3 = {0,1} + m⊥n ⟹ N ≡ 1 ⟺ 3|n, N ≡ 2 ⟺ 3|m, N ≡ 0 ⟺ 3∤mn — agreement **40000/40000 = 100%**. And it RESTATES the trace: 3|n ⟺ q≡p mod 3 ⟺ N ≡ p² ≡ 1 mod 3, also **40000/40000** — zero information beyond N mod 3 (barrier 6).\n- **H2 PARENT-INTERVAL LAW (new exact lemma)**: the Berggren parent is decided by the ratio alone — m/n ∈ (1,2) → T₁ = (n,2n−m); (2,3) → T₂ = (n,m−2n); (3,∞) → T₃ = (m−2n,n). Verified on all **40000/40000** descents terminating exactly at root (2,1), plus **86,634 spot-checked steps** with child-map reconstruction (B₁(m,n)=(2m−n,m), B₂=(2m+n,m), B₃=(m+2n,n)) exact on every step.\n- **H3 METRIC BLINDNESS**: I(N mod 3^k; b_t) at the 300-shuffle permutation null for every letter depth t ≤ 10 and level k ≤ 6; same for depth dB and composition (c₁,c₂,c₃). **Worst z = +2.51 across ~150 tests** (k=1: I(N mod 3; b₁) = 0.00004 vs null 0.00004, z = +0.04).\n- **H4 CONTROLS (live)**: trace lemma I(N mod 3; s mod 3) = **1.0000** exact (paper 50); I(ratio-band; b₁) = **1.4738 = H(b₁)** EXACTLY — the first branch letter is a deterministic function of the m/n band, whose recovery IS the factorization; corr(log dB, log gap) = −0.141 replicates paper 56's anti-correlation.\n\n### Sample\n40,000 random semiprimes (p,q uniform primes in [2¹⁶, 2²⁴)), Miller-Rabin (12 bases), capped descents (5000 steps): twin-prime nodes n=1 descend stepwise in m and are censored — **42/40402 = 0.10%**, reported. Runtime 154 s.\n\n### Why this matters\n- Paper 56's orthogonality is sharpened from coordinate-level to **adic strength**: coordinates orthogonal AND position sealed.\n- Tree-adic dials join the closed residue-dial family (papers 54/70/72–74/77/79/80): no dial exceeds its trace-set content; the metric interior requires the factorization to read.\n- The gold-tier interference claim (#829, \"exact factorisation by interference of Pythagorean triples\", polynomial-time per its filename) has no formula in the index, but this result fences it: any such method must either smuggle the Fermat pair (circularity, barrier 6) or pay Ω(N) aggregation (barrier 4).\n\n### All 8 barriers\n(a) clean — four horns pre-stated, measurement object ≠ instrument; (b) clean — no tree-position channel work in the Catalog (nearest: our own echo #707); (c) confronted — 40k real semiprimes, 86,634 verified steps, ~150 null-tested channels; (d) clean — fixed seeds; (e) the substance — blindness asserted against empirical nulls, censoring reported, worst z +2.51 < 3 without multiplicity correction; (f) controlled — lemmas asserted at 100%, ALL_DONE marker; (g) fair — two live positive controls fire (trace 1.0000; band-determinism = H(b₁)); (h) closure — symmetric by construction, skeleton circular (6), metric layer needs factors (5/6), descent = classical Euclidean algorithm in disguise (8).\n\n### What closes\nThe Pythagorean-tree line is now closed at three strengths: embedding exact (paper 56), coordinates orthogonal (paper 56), position adically sealed (this paper). Frontier returns to the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 416 experiments. Assessment v192. Paper 81.\n",
     "domain_bridges": [],
@@ -2635,7 +2635,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "04a8c3de",
+    "consumed_by_exp_id": "aa0d333b",
     "description": "## FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S₅ via x⁵−x−1** (true disc **2869 = 19·151** — not the quartic's −283): seven factorization types, **H(T) = 2.5574 bits — the largest type entropy measured in the program** — reduce to the single quadratic-residue bit of N mod 2869. Sign agreement 1.0000; **I₁ = 1.2157 sits exactly at its within-sign permutation null 1.2188 (z = −0.85)** — the raw excess over the law's 1.0000 is entirely sparse-dial plug-in bias (+0.2188). Semiprime pair = **1.0648 vs null 1.0639** (gap 0.0009); sign-fork s-projection = **1.0023 vs Is(2) = 1.0000**.\n- **A₅ via x⁵+20x+16** (perfect group): **the complete four-state type channel is SEALED** — I(p mod m; T) at the permutation null for m ∈ {3,7,11,31}, worst |z| = 1.72; semiprime pair = **0.0004 ≈ 0**; no odd-type readout ever occurs. 1.6555 bits of splitting entropy, and N cannot hear one of them from any residue direction. Paper 76's fork flatness, extended to the full channel.\n\n### The measurement ledger (6 defects caught by designed checks across 8 runs)\n1. [3,2] dictionary entry: (nr, nr₂) = (0,**2**), not (0,4) — one quadratic pair contributes two F_{p²}-roots (caught by the p=2 crash).\n2. Discriminant migration: disc(x⁵−x−1) = 2869, not −283 (caught by repeated factors mod 151).\n3. Sign-encoding inversion: agreement 0.0000 = perfect anti-correlation = the law confirming itself through a flipped convention.\n4. Sparse-dial plug-in bias on the HEADLINE I₁ (+0.22 bits at a 2868-class dial) — fixed by permutation reference (the paper-70 lesson extended to primary quantities).\n5. Null design: permuting labels within strata DELETES the through-stratum coset channel; must permute the data.\n6. tid/string mismatch making strata ≡ 0 (a global shuffle masquerading as stratified).\n\nProtocol lessons adopted: every MI at large conductors is permutation-referenced; a null must preserve exactly the channel the law predicts and randomize only the finer assignment; exact 0/1 agreement flags encoding bugs before physics.\n\n### All 8 barriers\n(a) clean — parameter-free predictions (A₅'s zero needs no tuning); (b) clean — no S₅/A₅ type-channel work in the Catalog; (c) confronted — real fields, histograms < 2% from class sizes, 400k MC, four moduli × 200-shuffle nulls; (d) clean — fixed seeds; (e) the substance — all comparisons permutation-referenced at large conductors, full defect ledger disclosed; (f) controlled — six defects caught by designed checks, final run ALL_DONE all-green; (g) fair — which-factor walls ≤ 0.0001, coprime flat, the A₅ zero self-controls against papers 78–82's live detections; (h) closure — symmetric (2), residue dial (5), CRT-sealed (6), classical Galois/reciprocity/Chebotarev (8).\n\n### What closes\nThe quintic row is measured on 4/5 groups (D₅ pending a verified polynomial); the abelianization law confirmed at EVERY abelianization type existing for degrees 2–5: trivial (A₅), C₂ (S₃/S₄/S₅), C₃ (A₄), C₄ (F₂₀), C₂×C₂ (D₄/V₄), Cₙ (abelian controls). The type-channel program is complete at every tested group.\n\nNow 418 experiments. Assessment v194. Paper 83.\n",
     "domain_bridges": [],
     "domains": [
@@ -2647,7 +2647,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T14:54:02.517783+00:00",
     "title": "FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)"
   },
@@ -46233,6 +46233,123 @@
     "status": "available",
     "timestamp": "2026-09-16T05:12:26.530747+00:00",
     "title": "Abelianization Bound for Residue-Dial Factoring Speedups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.QuinticTypeChannelF20",
+      "Shared.CyclicTypeChannel",
+      "NumberTheory.CharacterOneBit"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the information a splitting type transmits about the abelianization dial depends only on the multiset of pairs (density, number of merged cosets), and not on which cosets are merged nor on the Galois group. The proved merged-coset law gives the formula; the conjecture asserts it is complete, i.e. it is a full invariant of the channel. This explains why relabelling cosets is invisible at the prime level.\n\nFor any finite Chebotarev box s with type T and dial D uniform inside every T-fibre, I(T ; D) = H(D) - sum_t P(t) log2 k(t), and any two such channels with the same multiset {(P(t), k(t))} have equal I(T ; D).\n\nFormalize as a theorem over an arbitrary Finset using QuinticF20.dial_gap_eq_merge_entropy, then instantiate on F20 with both the correct and the swapped coset labelling to confirm equality.\n\nThe prime-level type channel is a pure partition invariant; all group-theoretic content of the abelianization law is exhausted by counting merges.\n\nThere is a residual group-theoretic term at the prime level, and the coset-swap invisibility of F20 is a coincidence of C4.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4842",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Both channels equal H(D) minus the same merge sum by the proved law; equality of the multisets makes the sums equal term by term after a reindexing bijection.",
+    "research_mode": "team",
+    "source_exp_id": "903508ab",
+    "status": "available",
+    "timestamp": "2026-09-16T14:57:51.212521+00:00",
+    "title": "Merge-Pattern Invariance of the Single-Prime Type Channel"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.QuinticTypeChannelF20Pair",
+      "Shared.CyclicTypeChannelValues"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The semiprime observation N mod m is the convolution of two independent dial draws, so the pair channel should be a functional of the merge blocks through the characters of C_m. The F20 data point (blocks {0},{1,3},{2}, value 5/4) and its swapped corruption (blocks {0},{1,2},{3}, value 9/8) are two evaluations of that functional differing by exactly 1/8.\n\nFor a merge pattern given by a partition B of C_m, the pair channel I({T(p),T(q)} ; N mod m) is determined by the Fourier coefficients of the block indicator functions of B, and equals 5/4 for B = {{0},{1,3},{2}} and 9/8 for B = {{0},{1,2},{3}} in C_4.\n\nFormalize the pair channel for an arbitrary partition of ZMod m as in QuinticF20Pair, evaluate the C_4 partitions by decide, and compare with the conjectured character-sum expression.\n\nThe pair law becomes computable from the merge pattern alone, and the coincidence I_pair(F20) = Ipair 4 is explained as equality of blocks with those of ordType 4.\n\nThe pair channel depends on more than the blocks, e.g. on the within-coset refinement, contradicting the observed independence of the [1^5]/[5] split.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4843",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Expand the conditional entropies of the product-class fibres as convolutions of block indicators, diagonalize the convolution by characters of C_m, and collect the resulting log terms.",
+    "research_mode": "team",
+    "source_exp_id": "903508ab",
+    "status": "available",
+    "timestamp": "2026-09-16T14:57:51.782686+00:00",
+    "title": "Character-Sum Formula for the Semiprime Pair Law"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.QuinticTypeChannelF20",
+      "Bridges.QuinticTypeChannelF20Converse",
+      "Shared.CyclicTypeChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Generalize the F20 computation to the affine group AGL(1,q) acting on q points, the Galois group of a generic radical extension x^q - a. The cycle type of x -> a x + b is [1^q], [q], or one fixed point plus (q-1)/d cycles of length d, so the merge pattern is the divisor lattice of q-1 and the abelianization dial is C_{q-1}.\n\nFor AGL(1,q) with q prime, I(p mod q ; T) = log2 (q-1) - sum over divisors d>1 of (q-1) of (phi(d)/(q-1)) * log2 phi(d) + correction from the identity coset, specializing to 3/2 at q = 5.\n\nInstantiate the merged-coset law for q = 7 and q = 11 with kernel-checked fibre data, and compare with the closed form.\n\nA whole infinite family of non-abelian type channels is evaluated in closed form, extending the abelianization law past a single degree.\n\nThe divisor-lattice merge pattern is not the right invariant at higher q, isolating q = 5 as special.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4844",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Count the elements of AGL(1,q) by multiplier order, apply the merged-coset law with c t equal to the coset size q, and evaluate the resulting sum using the totient count of elements of each order.",
+    "research_mode": "team",
+    "source_exp_id": "903508ab",
+    "status": "available",
+    "timestamp": "2026-09-16T14:57:52.340471+00:00",
+    "title": "Affine Frobenius Ladder AGL(1,q) at Prime Degree q"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.QuinticTypeChannelF20Pair",
+      "NumberTheory.CharacterOneBit"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "At the prime level, loss equals merging exactly (proved converse). At the pair level F20 loses 3/4 of its 2-bit dial while the prime level loses only 1/2 of 2 bits, so merging interacts with pairing in a non-obvious way. Conjecture a repair inequality bounding the pair-level loss by a function of the prime-level merge data.\n\nFor every merge pattern, H(N mod m) - I(pair ; N mod m) is at most twice the prime-level loss H(D) - I(T ; D), with equality iff every block is a subgroup coset.\n\nEvaluate both sides for the correct and swapped F20 patterns (losses 3/4 vs 7/8 against prime-level loss 1/2) and for the catalog's C_4, C_6 cyclotomic channels.\n\nA general data-processing style bound linking the single-prime and semiprime layers, usable to certify semiprime channels without new computations.\n\nThe two layers are informationally independent, and each merge pattern must be evaluated separately at the pair level.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4845",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Write the pair loss as a conditional mutual information and apply the chain rule plus subadditivity of conditional entropy over the two independent Frobenius draws.",
+    "research_mode": "team",
+    "source_exp_id": "903508ab",
+    "status": "available",
+    "timestamp": "2026-09-16T14:57:52.901610+00:00",
+    "title": "Pair-Level Converse and the Merge Repair Inequality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.QuinticTypeChannelF20Pair",
+      "Shared.CyclicTypeChannelCap"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The [1,2,2]-fork of F20 reproduces the catalog's Isplit 4 exactly because its indicator is the pullback of a single coset of the abelianization. Conjecture that this is general: any splitting type whose fibre is a full coset of the abelianization produces the cyclotomic split-count channel of that coset's group, regardless of the non-abelian structure above it.\n\nIf the fibre of a type value t is exactly the preimage of one element of the abelianization C_m, then the semiprime split-count channel of the indicator of t equals Isplit m of the catalog.\n\nFormalize the pullback as a measure-preserving map from the Frobenius box to the C_m box and transport mutInfo along it; check against the proved QuinticF20Pair.quintic_fork_eq_Isplit_four.\n\nNon-abelian forks are reduced to abelian ones once and for all, giving order-4 and higher pinned forks on arbitrary fields.\n\nThe F20 fork coincidence depends on the uniformity of the translation part, and non-abelian forks carry genuinely new values.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4846",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Build the fibrewise-constant bijection between the Frobenius box and C_m x (translation) and prove mutInfo invariance under a fibre-size-preserving surjection.",
+    "research_mode": "team",
+    "source_exp_id": "903508ab",
+    "status": "available",
+    "timestamp": "2026-09-16T14:57:53.455891+00:00",
+    "title": "Coset-Pullback Principle for Split-Count Forks"
   },
   {
     "ambition_level": "extension",
