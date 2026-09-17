@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-17T09:42:22Z",
-  "count": 152,
+  "archived_at": "2026-09-17T14:30:01Z",
+  "count": 153,
   "directions": [
     {
       "id": "fd_3695",
@@ -6013,6 +6013,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 176
+    },
+    {
+      "id": "fd_3414",
+      "title": "FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)",
+      "description": "## FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S₅ via x⁵−x−1** (true disc **2869 = 19·151** — not the quartic's −283): seven factorization types, **H(T) = 2.5574 bits — the largest type entropy measured in the program** — reduce to the single quadratic-residue bit of N mod 2869. Sign agreement 1.0000; **I₁ = 1.2157 sits exactly at its within-sign permutation null 1.2188 (z = −0.85)** — the raw excess over the law's 1.0000 is entirely sparse-dial plug-in bias (+0.2188). Semiprime pair = **1.0648 vs null 1.0639** (gap 0.0009); sign-fork s-projection = **1.0023 vs Is(2) = 1.0000**.\n- **A₅ via x⁵+20x+16** (perfect group): **the complete four-state type channel is SEALED** — I(p mod m; T) at the permutation null for m ∈ {3,7,11,31}, worst |z| = 1.72; semiprime pair = **0.0004 ≈ 0**; no odd-type readout ever occurs. 1.6555 bits of splitting entropy, and N cannot hear one of them from any residue direction. Paper 76's fork flatness, extended to the full channel.\n\n### The measurement ledger (6 defects caught by designed checks across 8 runs)\n1. [3,2] dictionary entry: (nr, nr₂) = (0,**2**), not (0,4) — one quadratic pair contributes two F_{p²}-roots (caught by the p=2 crash).\n2. Discriminant migration: disc(x⁵−x−1) = 2869, not −283 (caught by repeated factors mod 151).\n3. Sign-encoding inversion: agreement 0.0000 = perfect anti-correlation = the law confirming itself through a flipped convention.\n4. Sparse-dial plug-in bias on the HEADLINE I₁ (+0.22 bits at a 2868-class dial) — fixed by permutation reference (the paper-70 lesson extended to primary quantities).\n5. Null design: permuting labels within strata DELETES the through-stratum coset channel; must permute the data.\n6. tid/string mismatch making strata ≡ 0 (a global shuffle masquerading as stratified).\n\nProtocol lessons adopted: every MI at large conductors is permutation-referenced; a null must preserve exactly the channel the law predicts and randomize only the finer assignment; exact 0/1 agreement flags encoding bugs before physics.\n\n### All 8 barriers\n(a) clean — parameter-free predictions (A₅'s zero needs no tuning); (b) clean — no S₅/A₅ type-channel work in the Catalog; (c) confronted — real fields, histograms < 2% from class sizes, 400k MC, four moduli × 200-shuffle nulls; (d) clean — fixed seeds; (e) the substance — all comparisons permutation-referenced at large conductors, full defect ledger disclosed; (f) controlled — six defects caught by designed checks, final run ALL_DONE all-green; (g) fair — which-factor walls ≤ 0.0001, coprime flat, the A₅ zero self-controls against papers 78–82's live detections; (h) closure — symmetric (2), residue dial (5), CRT-sealed (6), classical Galois/reciprocity/Chebotarev (8).\n\n### What closes\nThe quintic row is measured on 4/5 groups (D₅ pending a verified polynomial); the abelianization law confirmed at EVERY abelianization type existing for degrees 2–5: trivial (A₅), C₂ (S₃/S₄/S₅), C₃ (A₄), C₄ (F₂₀), C₂×C₂ (D₄/V₄), Cₙ (abelian controls). The type-channel program is complete at every tested group.\n\nNow 418 experiments. Assessment v194. Paper 83.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "aa0d333b",
+      "timestamp": "2026-08-21T14:54:02.517783+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.83,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-16T14:58:43.671699+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 175
     }
   ]
 }

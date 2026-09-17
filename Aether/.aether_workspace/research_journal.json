@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0688a872",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — MA-1 effectivity (round 48, exp 509)\n\n## What this cycle settled\n\nThe recorded claim \"the 4/3 cap's constants hold to three significant figures\" is now a\ntheorem *conditional on",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 566,
-      "timestamp": "2026-09-03T21:44:03",
-      "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
-    },
-    {
       "cycle_id": "e2f91544",
       "domain": "Physics",
       "key_insight": "# Future directions from the `O(N)` `ε`-expansion cycle\n\nThis cycle parameterised the Wilson–Fisher analysis of the one-component\n`φ⁴` theory by the symmetry index `N` and proved the standard first te",
@@ -499,19 +489,19 @@
       "theorem_count": 5,
       "timestamp": "2026-09-17T09:42:36",
       "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
+    },
+    {
+      "cycle_id": "aa0d333b",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after the S₅ / A₅ quintic endpoints\n\n## What the four cycles closed\n\n1. **Endpoints** (`Catalog/MachineLearning/QuinticTypeChannelS5A5.lean`): exact splitting\n   entropies `H(T)",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 145,
+      "timestamp": "2026-09-17T14:30:18",
+      "title": "FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals ("
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7934932a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — sharp total-variation normalization\n\nThis cycle replaced the deliberately crude `ℓ¹` distinguishing bound by the\nattained factor-`1/2` characterization\n\n`d_TV(p, q) = max_{A ⊆ X}",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-24T14:04:04",
-      "title": "Sharper normalization"
-    },
     {
       "cycle_id": "9d509f0a",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 5,
       "timestamp": "2026-09-17T09:42:36",
       "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
+    },
+    {
+      "cycle_id": "aa0d333b",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after the S₅ / A₅ quintic endpoints\n\n## What the four cycles closed\n\n1. **Endpoints** (`Catalog/MachineLearning/QuinticTypeChannelS5A5.lean`): exact splitting\n   entropies `H(T)",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 145,
+      "timestamp": "2026-09-17T14:30:18",
+      "title": "FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals ("
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5c4155a3",
-      "domain": "Bridges",
-      "name": "coeff_prod_normalized_level",
-      "quality": 0.70417
-    },
-    {
-      "cycle_id": "5c4155a3",
-      "domain": "Bridges",
-      "name": "finsuppAntidiag_le",
-      "quality": 0.70417
-    },
-    {
-      "cycle_id": "5c4155a3",
-      "domain": "Bridges",
-      "name": "finsuppAntidiag_support_card_le",
-      "quality": 0.70417
-    },
     {
       "cycle_id": "63101e70",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "fib_dvd_gcd",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "aa0d333b",
+      "domain": "MachineLearning",
+      "name": "We",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "aa0d333b",
+      "domain": "MachineLearning",
+      "name": "for",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "aa0d333b",
+      "domain": "MachineLearning",
+      "name": "fib_dvd_gcd",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-09-17T09:42:36",
+  "last_updated": "2026-09-17T14:30:18",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "b3980a1a",
-        "quality": 0.82,
-        "theorems": 110,
-        "title": "Strengthen certified computation"
-      },
-      {
         "cycle_id": "7ae2917a",
         "quality": 0.82,
         "theorems": 63,
@@ -3575,6 +3569,12 @@
         "quality": 0.84,
         "theorems": 5,
         "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
+      },
+      {
+        "cycle_id": "aa0d333b",
+        "quality": 0.83,
+        "theorems": 145,
+        "title": "FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS: the largest entropy collapses, the p"
       }
     ],
     "Novelty": [

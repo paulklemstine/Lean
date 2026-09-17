@@ -932,6 +932,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle aa0d333b (Q=0.830), which proved 145 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S\u2085 via x\u2075\u2212x\u22121** (true disc **2869 ",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_aa0d333b_0f80b6cc",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "aa0d333b",
+    "status": "available",
+    "timestamp": "2026-09-17T14:30:19.305588+00:00",
+    "title": "Deepening: FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS: the largest entropy collapses, the p"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle ad3686b6 (Q=0.830), which proved 82 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Quantify how far a population is from comonotone by the least \u2113\u00b9 perturbation of the rates that removes all discordant pairs, and relate it two-sidedly to the discordance mass that governs the triage rule.\n\nIf \u03b4 is the least \u2113\u00b9 perturbation of y making (x, y + \u03b4) comonotone, then \u03b4\u00b2 \u2264 \u0394 \u2264 2\u00b7\u03b4\u00b7range(",
     "domains": [
       "Bridges"
@@ -1943,21 +1957,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "aa0d333b",
-    "description": "## FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S\u2085 via x\u2075\u2212x\u22121** (true disc **2869 = 19\u00b7151** \u2014 not the quartic's \u2212283): seven factorization types, **H(T) = 2.5574 bits \u2014 the largest type entropy measured in the program** \u2014 reduce to the single quadratic-residue bit of N mod 2869. Sign agreement 1.0000; **I\u2081 = 1.2157 sits exactly at its within-sign permutation null 1.2188 (z = \u22120.85)** \u2014 the raw excess over the law's 1.0000 is entirely sparse-dial plug-in bias (+0.2188). Semiprime pair = **1.0648 vs null 1.0639** (gap 0.0009); sign-fork s-projection = **1.0023 vs Is(2) = 1.0000**.\n- **A\u2085 via x\u2075+20x+16** (perfect group): **the complete four-state type channel is SEALED** \u2014 I(p mod m; T) at the permutation null for m \u2208 {3,7,11,31}, worst |z| = 1.72; semiprime pair = **0.0004 \u2248 0**; no odd-type readout ever occurs. 1.6555 bits of splitting entropy, and N cannot hear one of them from any residue direction. Paper 76's fork flatness, extended to the full channel.\n\n### The measurement ledger (6 defects caught by designed checks across 8 runs)\n1. [3,2] dictionary entry: (nr, nr\u2082) = (0,**2**), not (0,4) \u2014 one quadratic pair contributes two F_{p\u00b2}-roots (caught by the p=2 crash).\n2. Discriminant migration: disc(x\u2075\u2212x\u22121) = 2869, not \u2212283 (caught by repeated factors mod 151).\n3. Sign-encoding inversion: agreement 0.0000 = perfect anti-correlation = the law confirming itself through a flipped convention.\n4. Sparse-dial plug-in bias on the HEADLINE I\u2081 (+0.22 bits at a 2868-class dial) \u2014 fixed by permutation reference (the paper-70 lesson extended to primary quantities).\n5. Null design: permuting labels within strata DELETES the through-stratum coset channel; must permute the data.\n6. tid/string mismatch making strata \u2261 0 (a global shuffle masquerading as stratified).\n\nProtocol lessons adopted: every MI at large conductors is permutation-referenced; a null must preserve exactly the channel the law predicts and randomize only the finer assignment; exact 0/1 agreement flags encoding bugs before physics.\n\n### All 8 barriers\n(a) clean \u2014 parameter-free predictions (A\u2085's zero needs no tuning); (b) clean \u2014 no S\u2085/A\u2085 type-channel work in the Catalog; (c) confronted \u2014 real fields, histograms < 2% from class sizes, 400k MC, four moduli \u00d7 200-shuffle nulls; (d) clean \u2014 fixed seeds; (e) the substance \u2014 all comparisons permutation-referenced at large conductors, full defect ledger disclosed; (f) controlled \u2014 six defects caught by designed checks, final run ALL_DONE all-green; (g) fair \u2014 which-factor walls \u2264 0.0001, coprime flat, the A\u2085 zero self-controls against papers 78\u201382's live detections; (h) closure \u2014 symmetric (2), residue dial (5), CRT-sealed (6), classical Galois/reciprocity/Chebotarev (8).\n\n### What closes\nThe quintic row is measured on 4/5 groups (D\u2085 pending a verified polynomial); the abelianization law confirmed at EVERY abelianization type existing for degrees 2\u20135: trivial (A\u2085), C\u2082 (S\u2083/S\u2084/S\u2085), C\u2083 (A\u2084), C\u2084 (F\u2082\u2080), C\u2082\u00d7C\u2082 (D\u2084/V\u2084), C\u2099 (abelian controls). The type-channel program is complete at every tested group.\n\nNow 418 experiments. Assessment v194. Paper 83.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3414",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T14:54:02.517783+00:00",
-    "title": "FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)"
-  },
-  {
     "consumed_by_exp_id": "6bf15a63",
     "description": "## FACT round-25 #3 \u2014 QUBIT-TRADE4 (paper 87, /tmp/exp_qubittrade4.py, /tmp/r25n3.log)\n\n**Verdict name: THE-STANDARD-CORNER-IS-OPTIMAL.**\n\n### Result\nThe third resource axis \u2014 **base re-draws k**, real Shor's escape from the per-N unlucky cap (paper 86) \u2014 completes the surface, and its total-cost accounting places the optimum at the textbook parameterization:\n\n- **H1 cap lift**: at t = wall, s = 5: k=1 \u2192 0.504, k=2 \u2192 0.735, k=4 \u2192 0.940 \u2014 following 1\u2212(1\u2212p\u2081m)^{ks} exactly (m \u2248 \u00bd mixed-role fraction).\n- **H2 three-way fungibility**: mean \u0394P = +0.18 per single-resource doubling across 12 mixed-axis steps, positive everywhere below saturation.\n- **H3 standard-corner optimality** (corrected accounting, disclosed): reaching P \u2265 0.3 costs G \u2248 k\u00b7s\u00b7t\u00b2 = **6400 at the full-register corner** vs 14440 at wall\u22122 and 51840 at wall\u22124 \u2014 shaving width costs exponential samples/re-draws against a quadratic saving.\n\n### Frontier (ii) closed\nPaper 47 threshold \u2192 paper 85 ramp \u2192 paper 86 cap \u2192 paper 87 optimum. **DEQUANT final form**: the fungibility surface exists, every point of it is quantum resource, its minimum sits at the standard corner, and no point approaches classical factoring complexity.\n\n### Population & method\n24 constructed controlled-order semiprimes (12 mixed-role / 12 same-role), K = 6 independent bases per N with fresh role structure, progression kernel from papers 85\u201386, cells t \u2208 {wall\u22124, \u22122, 0} \u00d7 s \u2208 {1, 5, 20} \u00d7 k \u2208 {1, 2, 4}, 20 trials each. Runtime ~30 s.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; H3's accounting bug found post-run and corrected from raw data (both numbers shown); (b) clean; (c) confronted \u2014 24 real semiprimes \u00d7 6 bases \u00d7 27 surface points; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap-lift and \u0394P quantified, bug disclosed; (f) controlled \u2014 machinery inherited from validated rounds; (g) fair \u2014 balanced role population by design, consistency with papers 85\u201386; (h) closure \u2014 no parameter tuning of Shor improves its total cost; classical complexity remains the only competition (barrier 8), aggregation prices every classical route (barrier 4).\n\nNow 422 experiments. Assessment v198. Paper 87.\n",
     "domains": [
@@ -1973,16 +1972,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-25 #3 \u2014 QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c73f4ca7",
     "description": "## FACT round-25 #2 \u2014 QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes (r \u2208 {210, 310, 434, 510}), P_factor(s=1) climbs the same ladder \u2014 **0.018 / 0.056 / 0.158 / 0.181** across t = wall\u22124 \u2026 wall+2 \u2014 and samples compound as independence wherever the cap allows. One new structural element: a **per-N unlucky cap that sample count cannot move**.\n\n### The construction (invented this round)\nReal ord_N(a) is lcm(p\u22121, q\u22121)-scale (~2\u00b3\u2070) \u2014 register simulation impossible. Built controlled-order semiprimes instead: primes p \u2261 1 mod r directly, order-r elements by projection h^((p\u22121)/r), CRT-combined with randomized per-prime orders d_p, d_q \u2208 {r, r/2}. This surfaced a structural fact: **ord_p(a) = ord_q(a) exactly \u27f9 a^{r/2} \u2261 \u22121 mod both primes \u27f9 N never factors from period certificates** \u2014 the permanently-unlucky case real Shor escapes by re-drawing a.\n\n### Results\n- Ramp persists: P_factor(s=1) = 0.018 \u2192 0.181 along t; nocert share 0.003 at/above wall\u22122 (certification is not the bottleneck \u2014 paper 85's ramp).\n- Ladders track independence under the cap (wall\u22122: 0.056/0.204/0.471 \u2248 1\u2212(1\u22120.06)^s).\n- **Saturation \u2248 0.53** = cert-rate \u00d7 mixed-role fraction (~\u2154): the unlucky-half cap is per-N structural; s cannot push past it.\n- Taxonomy: spurious-or-partial certificates **0.844**, unlucky 0.109, factor 0.044, nocert 0.003 \u2014 the dominant classical burden is certificate filtering, which is exactly N-verification's role.\n\n### Method ledger (4 catches across 6 launches)\nOrder blow-up (naive r ~ 2\u00b3\u2070 unsimulatable); simultaneous-order search impossible (~10\u207b\u2077 density) \u2192 CRT construction; equal-order = permanent unluckiness (first measurements all-zero); infinite loop on odd half-orders + first-certificate early-return masking later splitting ones + a hardcoded verdict string replaced by data-computed output before any claim was made.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; the population design implements the cap rather than assuming it; (b) clean \u2014 no real-N ramp work in the Catalog; (c) confronted \u2014 actual semiprimes, exact orders, full gcd-based extraction; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap measured not assumed, taxonomy quantified, defects disclosed; (f) controlled \u2014 dishonest-verdict catch before any claim; (g) fair \u2014 shares consistent with paper 85 through the identical kernel; (h) relevance \u2014 Shor's short-register regime prices in samples linearly, capped by the unlucky-base structure that base re-drawing removes classically (barriers 4/8).\n\nNow 421 experiments. Assessment v197. Paper 86.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3416",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T15:49:12.719442+00:00",
     "title": "FACT round-25 #2 \u2014 QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
   },
@@ -32372,6 +32372,79 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-17T09:42:22.099544+00:00",
     "title": "Quadratic Resolvent Identification for D5 Quintics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact law I(phi ; T) = log2 |image phi| was proved under the hypothesis that the type read-out refines the dial. The conjecture asserts that this hypothesis is exactly the boundary: without refinement the value drops, by the merged-coset sum. F20 realises the strict case with 3/2 against log2 4 = 2.\n\nFor a finite group G, a homomorphism phi into an abelian group and a conjugacy-invariant read-out T, equality I(phi ; T) = log2 |image phi| holds if and only if T x = T y implies phi x = phi y; otherwise the deficit equals the average over types of the entropy of phi on the type fibre.\n\nCombine hom_dial_exact_law with condEnt_eq_sum_merged of Bridges.QuinticTypeChannelF20 and check the F20 instance numerically against its proved value 3/2.\n\nEvery type-channel value becomes computable from conjugacy-class data plus a single refinement test.\n\nSome non-refining pair still attains the cap, meaning conditional entropy can vanish without pointwise determination.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_4857",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "aa0d333b",
+    "status": "available",
+    "timestamp": "2026-09-17T14:29:58.536224+00:00",
+    "title": "Strictness Boundary for the Homomorphic Dial Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "With the dial side pinned at one bit in every degree, the whole degree dependence of the symmetric channel sits in the conjugacy-class histogram. The conjecture is that the residual grows like the square root of the degree, matching Hardy-Ramanujan asymptotics for the partition function.\n\nH(cycleType) on S_n equals log2 n! minus the average of log2 of the class sizes, and grows as c times the square root of n for an explicit constant c; the residual H(cycleType | sign) is this minus one.\n\nProve the exact identity from uEnt_eq_countSum for general n, then estimate the class-size sum using the hook-length or cycle-index formula.\n\nThe channel programme acquires an asymptotic law valid for all degrees, not just tabulated small cases.\n\nThe class-size entropy has a different growth rate, which would itself be a notable statement about random permutations.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4858",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "aa0d333b",
+    "status": "available",
+    "timestamp": "2026-09-17T14:29:59.112903+00:00",
+    "title": "Partition Asymptotics of the Symmetric Residual"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "One direction is proved: perfect groups seal the channel. The converse should follow from the exact dial entropy log2 |image phi|, which is positive as soon as the abelianization is nontrivial.\n\nA finite group G is perfect if and only if I(phi ; T) = 0 for every homomorphism phi from G to an abelian group and every read-out T.\n\nFormalise the converse: choose a prime q dividing the order of G^ab, build a surjection onto C_q, and apply uEnt_hom_eq_logb_image with T = phi itself.\n\nThe information-theoretic seal becomes a group-theoretic characterisation, completing the programme's structural side.\n\nA non-perfect group would be sealed, contradicting the exactness of the dial entropy formula.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4859",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "aa0d333b",
+    "status": "available",
+    "timestamp": "2026-09-17T14:29:59.668864+00:00",
+    "title": "Perfection Equals Seal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Each transitive subgroup of S5 should be separated by its residual entropy, an exact rational combination of 1, log2 3 and log2 5 read off from its class histogram. Three of five values are already theorems.\n\nThe residuals H(T | abelian dial) of C5, D5, F20, A5 and S5 are pairwise distinct and explicitly computable.\n\nCompute the dihedral and cyclic class histograms by kernel evaluation, feed them through uEnt_eq_countSum, and separate the five values by certified rational brackets as in lb3_lower and lb5_upper.\n\nSplitting statistics alone determine the Galois group of a quintic, field-independently.\n\nTwo transitive quintic groups share a residual, so a finer read-out than the cycle type is required.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4860",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "aa0d333b",
+    "status": "available",
+    "timestamp": "2026-09-17T14:30:00.234409+00:00",
+    "title": "Residual Entropy Fingerprint of Transitive Quintic Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The abelianization cap bounds what a single residue dial hears. For solvable groups the derived series should provide a whole ladder of dials whose information increments are the logarithms of the successive derived quotients, with the non-solvable case stopping at the abelianization.\n\nFor finite solvable G with derived series of length d, iterated dials along the series transmit a total of log2 |G| bits in increments log2 |G^i / G^(i+1)|; for non-solvable G the total is capped at log2 |G^ab| for abelian dials.\n\nDefine the iterated dial as the tuple of images in the successive derived quotients and compute its entropy by uEnt_hom_eq_logb_image applied to each quotient map.\n\nThe channel programme extends from abelian read-outs to the full solvable ladder, with F20 as the first nontrivial rung.\n\nSolvability does not translate into additivity of information, indicating that the quotients interfere.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4861",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "aa0d333b",
+    "status": "available",
+    "timestamp": "2026-09-17T14:30:00.853672+00:00",
+    "title": "Derived-Series Filtration of the Type Channel"
   },
   {
     "consumed_by_exp_id": "",
