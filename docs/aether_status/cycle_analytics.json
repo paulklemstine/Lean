@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-17T00:02:10.449575+00:00",
+  "last_updated": "2026-09-17T09:42:38.586718+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75188,6 +75188,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-17T00:02:10.092367+00:00",
       "title": "FACT round-24 #2 \u2014 BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "MachineLearning",
+      "duration_seconds": 17679.859203338623,
+      "end_time": 1789638127.9987752,
+      "files_integrated": 5,
+      "job_id": "078881d5",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.84,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.553,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.84,
+        "novelty": 0.84,
+        "proof_depth": 0.84,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1789620448.139572,
+      "strategy_count": 0,
+      "theorem_count": 5,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-17T09:42:38.118434+00:00",
+      "title": "FACT round-24 #5 \u2014 D\u2085-QUINTIC: the quintic row complete (paper 84)"
     }
   ]
 }

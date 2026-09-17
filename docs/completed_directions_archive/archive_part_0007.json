@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-17T00:01:54Z",
-  "count": 151,
+  "archived_at": "2026-09-17T09:42:22Z",
+  "count": 152,
   "directions": [
     {
       "id": "fd_3695",
@@ -5973,6 +5973,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 173
+    },
+    {
+      "id": "fd_3413",
+      "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)",
+      "description": "## FACT round-24 #5 — D₅-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** — and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x⁵+ax+b (|a|,|b| ≤ 60) found **four D₅ quintics in seconds**, each with square discriminant and the exact signature {[1⁵]: ≈0.10, [5]: ≈0.40, [1,2,2]: ≈0.50}.\n\n### The subtlety: where D₅'s C₂ lives\nD₅ ⊆ A₅ ⟹ √disc(f) ∈ ℚ ⟹ the abelianization's quadratic subfield K is **not** Q(√disc). Theory locates it — splitting-field ramification = root-field ramification ⟹ K = Q(√d), d squarefree over f's ramified prime set — and candidate enumeration + Kronecker matching identifies **K = Q(√−5) at agreement 1.0000, uniquely**, for x⁵+20x+32 (m\\* = 20 = Q(√−5)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D₅ type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(−5, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 — exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I₁ measured | law | pair |\n|---|---|---|---|---|---|---|\n| C₅ | Q(ζ₁₁)⁺ | C₅ | 0.7219 | 0.7198 | 0.7219 ✓ | Is(5) ✓ |\n| **D₅** | **x⁵+20x+32** | **C₂** | **1.3610** | **1.0000** | **1.0000 ✓** | **1.0 ✓** |\n| F₂₀ | x⁵−2 | C₄ | 1.6805 | 1.4989 | 1.5000 ✓ | 1.25 ✓ |\n| A₅ | x⁵+20x+16 | 1 | 1.6555 | **0** | 0 ✓ | 0 ✓ |\n| S₅ | x⁵−x−1 | C₂ | 2.5574 | 1.2158* | 1.0 ✓ | 1.0 ✓ |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions — the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean — predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean — no D₅ type-channel work in the Catalog; (c) confronted — real D₅ fields, histograms < 0.2% from class sizes, 400k MC; (d) clean — fixed seeds; (e) the substance — the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled — three harness iterations disclosed (modulus-scan failure → theory-grounded candidate enumeration; even-numerator Jacobi bug → Kronecker helper); (g) fair — walls zero, coprime flat, controls are papers 78–82's reproduced values; (h) closure — symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2–5, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "078881d5",
+      "timestamp": "2026-08-21T14:54:02.516407+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.84,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-16T05:13:34.079221+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 176
     }
   ]
 }

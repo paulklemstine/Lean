@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "776b8f2a",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — after NO-RECAL-RECOVERY (round-45 #3, exp 503)\n\n## What this cycle established\n\nThree Lean files (all sorry-free) turn the empirical \"refitting the footprint\nweights at tight `u`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 131,
-      "timestamp": "2026-09-03T18:41:17",
-      "title": "FACT round-45 #3 — TIGHT-U-RECAL: reweighting cannot recover the tight-u drop (paper 170)"
-    },
-    {
       "cycle_id": "0688a872",
       "domain": "Bridges",
       "key_insight": "# Future directions — MA-1 effectivity (round 48, exp 509)\n\n## What this cycle settled\n\nThe recorded claim \"the 4/3 cap's constants hold to three significant figures\" is now a\ntheorem *conditional on",
@@ -499,19 +489,19 @@
       "theorem_count": 98,
       "timestamp": "2026-09-17T00:02:09",
       "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
+    },
+    {
+      "cycle_id": "078881d5",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — from the completed quintic row\n\nThis cycle formalized the type/coset channel of a finite group and closed the transitive\nquintic row in exact closed form, plus two results the ex",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-09-17T09:42:36",
+      "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f45042dc",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions from the NET-79 Pythagorean knee round\n\nFive files were added under `Catalog/Pythagorean/`, all compiling with zero `sorry`s:\n\n* `NET79GeometricRatioKnee.lean` — retained mass is a",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 86,
-      "timestamp": "2026-08-24T13:14:47",
-      "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-44 fails); accelerat"
-    },
     {
       "cycle_id": "7934932a",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 98,
       "timestamp": "2026-09-17T00:02:09",
       "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
+    },
+    {
+      "cycle_id": "078881d5",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — from the completed quintic row\n\nThis cycle formalized the type/coset channel of a finite group and closed the transitive\nquintic row in exact closed form, plus two results the ex",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-09-17T09:42:36",
+      "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0e02e0b5",
-      "domain": "NumberTheory",
-      "name": "choose_le_choose_half",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "0e02e0b5",
-      "domain": "NumberTheory",
-      "name": "choose_le_choose_left",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "0e02e0b5",
-      "domain": "NumberTheory",
-      "name": "self_le_choose",
-      "quality": 0.85
-    },
     {
       "cycle_id": "5c4155a3",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "fermatPair_pwitA",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "078881d5",
+      "domain": "MachineLearning",
+      "name": "We",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "078881d5",
+      "domain": "MachineLearning",
+      "name": "for",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "078881d5",
+      "domain": "MachineLearning",
+      "name": "fib_dvd_gcd",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-17T00:02:09",
+  "last_updated": "2026-09-17T09:42:36",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "92ebc5bc",
-        "quality": 0.78,
-        "theorems": 50,
-        "title": "FACT round-88 #2 — EDGE-CAP (exp 594 FINAL): H0 — SPIKE STEEPNESS UNIDENTIFIABLE"
-      },
-      {
         "cycle_id": "b3980a1a",
         "quality": 0.82,
         "theorems": 110,
@@ -3575,6 +3569,12 @@
         "quality": 0.83,
         "theorems": 188,
         "title": "Moonshine from the Null Cone — The Berggren Groupoid, the Lorentzian Leech Latti"
+      },
+      {
+        "cycle_id": "078881d5",
+        "quality": 0.84,
+        "theorems": 5,
+        "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
       }
     ],
     "Novelty": [

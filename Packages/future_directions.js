@@ -876,6 +876,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 078881d5 (Q=0.840), which proved 5 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-24 #5 \u2014 D\u2085-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** \u2014 and the round invented its own object: no literature polynomial was ne",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_078881d5_abfab8e7",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "078881d5",
+    "status": "available",
+    "timestamp": "2026-09-17T09:42:37.230057+00:00",
+    "title": "Deepening: FACT round-24 #5 \u2014 D\u2085-QUINTIC: the quintic row complete (paper 84)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 173bd3d0 (Q=0.840), which proved 198 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET\u2192FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL (paper 80, /tmp/exp_nonabelian_typechan.py, /tmp/r24n1h.log)\n\n**Verdict name: THE-TYPE-CHANNEL-IS-THE-ABELIANIZATION.**\n\n### Result\nThe complete splitting-type channel of a **non-abelian** field is **exactly its abelianization content**: at the prime",
     "domains": [
       "Cryptography"
@@ -1929,28 +1943,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "078881d5",
-    "description": "## FACT round-24 #5 \u2014 D\u2085-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** \u2014 and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x\u2075+ax+b (|a|,|b| \u2264 60) found **four D\u2085 quintics in seconds**, each with square discriminant and the exact signature {[1\u2075]: \u22480.10, [5]: \u22480.40, [1,2,2]: \u22480.50}.\n\n### The subtlety: where D\u2085's C\u2082 lives\nD\u2085 \u2286 A\u2085 \u27f9 \u221adisc(f) \u2208 \u211a \u27f9 the abelianization's quadratic subfield K is **not** Q(\u221adisc). Theory locates it \u2014 splitting-field ramification = root-field ramification \u27f9 K = Q(\u221ad), d squarefree over f's ramified prime set \u2014 and candidate enumeration + Kronecker matching identifies **K = Q(\u221a\u22125) at agreement 1.0000, uniquely**, for x\u2075+20x+32 (m\\* = 20 = Q(\u221a\u22125)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D\u2085 type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(\u22125, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 \u2014 exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I\u2081 measured | law | pair |\n|---|---|---|---|---|---|---|\n| C\u2085 | Q(\u03b6\u2081\u2081)\u207a | C\u2085 | 0.7219 | 0.7198 | 0.7219 \u2713 | Is(5) \u2713 |\n| **D\u2085** | **x\u2075+20x+32** | **C\u2082** | **1.3610** | **1.0000** | **1.0000 \u2713** | **1.0 \u2713** |\n| F\u2082\u2080 | x\u2075\u22122 | C\u2084 | 1.6805 | 1.4989 | 1.5000 \u2713 | 1.25 \u2713 |\n| A\u2085 | x\u2075+20x+16 | 1 | 1.6555 | **0** | 0 \u2713 | 0 \u2713 |\n| S\u2085 | x\u2075\u2212x\u22121 | C\u2082 | 2.5574 | 1.2158* | 1.0 \u2713 | 1.0 \u2713 |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions \u2014 the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean \u2014 predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean \u2014 no D\u2085 type-channel work in the Catalog; (c) confronted \u2014 real D\u2085 fields, histograms < 0.2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled \u2014 three harness iterations disclosed (modulus-scan failure \u2192 theory-grounded candidate enumeration; even-numerator Jacobi bug \u2192 Kronecker helper); (g) fair \u2014 walls zero, coprime flat, controls are papers 78\u201382's reproduced values; (h) closure \u2014 symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2\u20135, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3413",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T14:54:02.516407+00:00",
-    "title": "FACT round-24 #5 \u2014 D\u2085-QUINTIC: the quintic row complete (paper 84)"
-  },
-  {
     "consumed_by_exp_id": "aa0d333b",
     "description": "## FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S\u2085 via x\u2075\u2212x\u22121** (true disc **2869 = 19\u00b7151** \u2014 not the quartic's \u2212283): seven factorization types, **H(T) = 2.5574 bits \u2014 the largest type entropy measured in the program** \u2014 reduce to the single quadratic-residue bit of N mod 2869. Sign agreement 1.0000; **I\u2081 = 1.2157 sits exactly at its within-sign permutation null 1.2188 (z = \u22120.85)** \u2014 the raw excess over the law's 1.0000 is entirely sparse-dial plug-in bias (+0.2188). Semiprime pair = **1.0648 vs null 1.0639** (gap 0.0009); sign-fork s-projection = **1.0023 vs Is(2) = 1.0000**.\n- **A\u2085 via x\u2075+20x+16** (perfect group): **the complete four-state type channel is SEALED** \u2014 I(p mod m; T) at the permutation null for m \u2208 {3,7,11,31}, worst |z| = 1.72; semiprime pair = **0.0004 \u2248 0**; no odd-type readout ever occurs. 1.6555 bits of splitting entropy, and N cannot hear one of them from any residue direction. Paper 76's fork flatness, extended to the full channel.\n\n### The measurement ledger (6 defects caught by designed checks across 8 runs)\n1. [3,2] dictionary entry: (nr, nr\u2082) = (0,**2**), not (0,4) \u2014 one quadratic pair contributes two F_{p\u00b2}-roots (caught by the p=2 crash).\n2. Discriminant migration: disc(x\u2075\u2212x\u22121) = 2869, not \u2212283 (caught by repeated factors mod 151).\n3. Sign-encoding inversion: agreement 0.0000 = perfect anti-correlation = the law confirming itself through a flipped convention.\n4. Sparse-dial plug-in bias on the HEADLINE I\u2081 (+0.22 bits at a 2868-class dial) \u2014 fixed by permutation reference (the paper-70 lesson extended to primary quantities).\n5. Null design: permuting labels within strata DELETES the through-stratum coset channel; must permute the data.\n6. tid/string mismatch making strata \u2261 0 (a global shuffle masquerading as stratified).\n\nProtocol lessons adopted: every MI at large conductors is permutation-referenced; a null must preserve exactly the channel the law predicts and randomize only the finer assignment; exact 0/1 agreement flags encoding bugs before physics.\n\n### All 8 barriers\n(a) clean \u2014 parameter-free predictions (A\u2085's zero needs no tuning); (b) clean \u2014 no S\u2085/A\u2085 type-channel work in the Catalog; (c) confronted \u2014 real fields, histograms < 2% from class sizes, 400k MC, four moduli \u00d7 200-shuffle nulls; (d) clean \u2014 fixed seeds; (e) the substance \u2014 all comparisons permutation-referenced at large conductors, full defect ledger disclosed; (f) controlled \u2014 six defects caught by designed checks, final run ALL_DONE all-green; (g) fair \u2014 which-factor walls \u2264 0.0001, coprime flat, the A\u2085 zero self-controls against papers 78\u201382's live detections; (h) closure \u2014 symmetric (2), residue dial (5), CRT-sealed (6), classical Galois/reciprocity/Chebotarev (8).\n\n### What closes\nThe quintic row is measured on 4/5 groups (D\u2085 pending a verified polynomial); the abelianization law confirmed at EVERY abelianization type existing for degrees 2\u20135: trivial (A\u2085), C\u2082 (S\u2083/S\u2084/S\u2085), C\u2083 (A\u2084), C\u2084 (F\u2082\u2080), C\u2082\u00d7C\u2082 (D\u2084/V\u2084), C\u2099 (abelian controls). The type-channel program is complete at every tested group.\n\nNow 418 experiments. Assessment v194. Paper 83.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3414",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -32301,6 +32300,78 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-17T00:01:53.708915+00:00",
     "title": "Uniformity of the Boundary Pushforward"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Express the type/coset mutual information of any finite group directly in terms of its character table: the information is the abelianization entropy minus the expected log of the number of abelian cosets each cycle type straddles. The quintic row is the base case, with F20 the only non-saturating cell. Proving it turns each Chebotarev measurement into a closed-form character-theoretic quantity.\n\nFor a finite group G with abelianization A and cycle-type observable T, I(T;C) = log2 |A| - sum_t p(t) * log2 k_t, where k_t is the number of A-cosets met by the classes of cycle type t.\n\nFormalize the conditional distribution of the coset given a type as uniform on the k_t hit cosets, then compute I via TypeChannel.Joint.gap_eq; verify against the five quintic cells and all transitive sextic groups.\n\nEvery Chebotarev type-channel measurement becomes a character-table computation, removing the need for Monte Carlo entirely.\n\nThere exist groups where the coset distribution on a fixed cycle type is non-uniform, which would itself be a new structural phenomenon worth isolating.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4852",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "078881d5",
+    "status": "available",
+    "timestamp": "2026-09-17T09:42:19.768754+00:00",
+    "title": "Character-Table Rank Formula for Type-Coset Information"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The gap between log2|G^ab| and the measured information is 0 for C5, D5, A5, S5 and exactly 1/2 for F20. We conjecture the deficit is always a dyadic rational, forced by the powers-of-two structure of coset collisions. A single sextic group with a type straddling three cosets would refute it.\n\nFor every transitive G <= S_n the deficit log2|G^ab| - I(T;C) is a dyadic rational, and is either 0 or at least 1/|G^ab|.\n\nCompute the deficit in closed form for all transitive groups of degree 6 and 7 using the rank formula, and check whether any k_t is not a power of two.\n\nDeficits form a discrete spectrum, so measured information values can be certified from a finite lookup rather than estimated.\n\nIrrational deficits appear, and the type channel has a genuinely transcendental invariant beyond the abelianization order.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4853",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "078881d5",
+    "status": "available",
+    "timestamp": "2026-09-17T09:42:20.356538+00:00",
+    "title": "Dyadic Quantization of the Saturation Deficit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the semiprime pair law to k independent primes: the joint type vector still carries exactly log2|A| bits about the product coset, while every proper sub-product remains perfectly hidden. This quantifies what a factorization adversary can and cannot extract from residues of a k-almost-prime.\n\nFor k independent uniform Frobenius classes, I((T_1,...,T_k); C_1...C_k) = log2|A| whenever the type determines the coset, and I(C_1...C_k ; C_j) = 0 for each j when k >= 2.\n\nInduct on k using the jointly-surjective product homomorphism lemma p_ofGroup_hom_pair, instantiating at D5 with A = C2.\n\nThe which-factor wall is structural at every arity, giving an unconditional information-theoretic barrier for residue-based factoring heuristics.\n\nSome arity leaks partial factor information, which would be an exploitable asymmetry.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4854",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "078881d5",
+    "status": "available",
+    "timestamp": "2026-09-17T09:42:20.930211+00:00",
+    "title": "Multi-Prime Wall Hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Measured histograms differ from exact class frequencies by a finite-sample error. We conjecture an explicit modulus of continuity for the mutual information in total-variation distance, turning experimental agreement to four decimals into a rigorous bound on the true value.\n\nIf two joint tables on the same alphabets are within total variation eps, their mutual informations differ by at most C(|iota|,|kappa|) * eps * log2(1/eps) for an explicit constant.\n\nProve uniform continuity of negMulLog with modulus t log(1/t) and sum over the finitely many cells; test numerically by perturbing the D5 table.\n\nEvery measured cell of the program can be upgraded to a certified interval containing the exact closed form.\n\nMutual information is unstable near zero-probability cells, and measurements near a vanishing type rate cannot be certified at all.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4855",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "078881d5",
+    "status": "available",
+    "timestamp": "2026-09-17T09:42:21.509810+00:00",
+    "title": "Entropy Stability Under Chebotarev Discrepancy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a D5 quintic the abelianization character is not the discriminant character; it is the character of a quadratic field ramified only at the primes dividing the polynomial discriminant. We conjecture that the split/inert pattern of the factorization types singles out that field uniquely among the finitely many candidates.\n\nLet f be a D5 quintic with square discriminant and ramified prime set S. There is exactly one squarefree d supported on S such that the Kronecker symbol (d|p) equals the reflection indicator of f at every unramified p, and Q(sqrt d) is the quadratic subfield of the splitting field.\n\nFormalize the correspondence between the reflection indicator and the Artin symbol of the quadratic resolvent, then prove uniqueness from the fact that two distinct quadratic characters disagree on a positive density of primes.\n\nThe conductor m* of any D5 quintic is computable from its type histogram alone, making the residue dial fully algorithmic.\n\nThe type histogram is not a complete invariant for the resolvent, and the identification step needs genuine class-field-theoretic input.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4856",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "078881d5",
+    "status": "available",
+    "timestamp": "2026-09-17T09:42:22.099544+00:00",
+    "title": "Quadratic Resolvent Identification for D5 Quintics"
   },
   {
     "consumed_by_exp_id": "",
