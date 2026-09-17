@@ -148,6 +148,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 9c40082c (Q=0.870), which proved 98 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-24 #2 \u2014 BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structu",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_9c40082c_cd568186",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "9c40082c",
+    "status": "available",
+    "timestamp": "2026-09-17T00:02:09.414564+00:00",
+    "title": "Deepening: FACT round-24 #2 \u2014 BERGGREN-3ADIC: the tree position of the N-node is adically s"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle cc3115b2 (Q=0.850), which proved 103 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** A finite hyperreal projection-valued measure with finite matrix entries descends under entrywise standard part to an ordinary projection-valued measure if and only if its projections are pairwise orthogonal up to infinitesimal operator norm and its total projection is infinitesimally",
     "domains": [
       "Algebra"
@@ -1915,21 +1929,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "9c40082c",
-    "description": "## FACT round-24 #2 \u2014 BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structure beyond the trace**. The channel decomposes into (i) a deterministic 3-adic skeleton that *restates* N mod 3 exactly, and (ii) a metric layer \u2014 branch letters, depth, path composition \u2014 that is **blind at every 3-adic level 3^k, k \u2264 6**. The Catalog's 3-adic Cantor boundary (#855) has no N-computable projection beyond the trace-set content.\n\n### The four horns (all stated before the run; all confirmed)\n- **H1 SKELETON (deterministic lemma)**: squares mod 3 = {0,1} + m\u22a5n \u27f9 N \u2261 1 \u27fa 3|n, N \u2261 2 \u27fa 3|m, N \u2261 0 \u27fa 3\u2224mn \u2014 agreement **40000/40000 = 100%**. And it RESTATES the trace: 3|n \u27fa q\u2261p mod 3 \u27fa N \u2261 p\u00b2 \u2261 1 mod 3, also **40000/40000** \u2014 zero information beyond N mod 3 (barrier 6).\n- **H2 PARENT-INTERVAL LAW (new exact lemma)**: the Berggren parent is decided by the ratio alone \u2014 m/n \u2208 (1,2) \u2192 T\u2081 = (n,2n\u2212m); (2,3) \u2192 T\u2082 = (n,m\u22122n); (3,\u221e) \u2192 T\u2083 = (m\u22122n,n). Verified on all **40000/40000** descents terminating exactly at root (2,1), plus **86,634 spot-checked steps** with child-map reconstruction (B\u2081(m,n)=(2m\u2212n,m), B\u2082=(2m+n,m), B\u2083=(m+2n,n)) exact on every step.\n- **H3 METRIC BLINDNESS**: I(N mod 3^k; b_t) at the 300-shuffle permutation null for every letter depth t \u2264 10 and level k \u2264 6; same for depth dB and composition (c\u2081,c\u2082,c\u2083). **Worst z = +2.51 across ~150 tests** (k=1: I(N mod 3; b\u2081) = 0.00004 vs null 0.00004, z = +0.04).\n- **H4 CONTROLS (live)**: trace lemma I(N mod 3; s mod 3) = **1.0000** exact (paper 50); I(ratio-band; b\u2081) = **1.4738 = H(b\u2081)** EXACTLY \u2014 the first branch letter is a deterministic function of the m/n band, whose recovery IS the factorization; corr(log dB, log gap) = \u22120.141 replicates paper 56's anti-correlation.\n\n### Sample\n40,000 random semiprimes (p,q uniform primes in [2\u00b9\u2076, 2\u00b2\u2074)), Miller-Rabin (12 bases), capped descents (5000 steps): twin-prime nodes n=1 descend stepwise in m and are censored \u2014 **42/40402 = 0.10%**, reported. Runtime 154 s.\n\n### Why this matters\n- Paper 56's orthogonality is sharpened from coordinate-level to **adic strength**: coordinates orthogonal AND position sealed.\n- Tree-adic dials join the closed residue-dial family (papers 54/70/72\u201374/77/79/80): no dial exceeds its trace-set content; the metric interior requires the factorization to read.\n- The gold-tier interference claim (#829, \"exact factorisation by interference of Pythagorean triples\", polynomial-time per its filename) has no formula in the index, but this result fences it: any such method must either smuggle the Fermat pair (circularity, barrier 6) or pay \u03a9(N) aggregation (barrier 4).\n\n### All 8 barriers\n(a) clean \u2014 four horns pre-stated, measurement object \u2260 instrument; (b) clean \u2014 no tree-position channel work in the Catalog (nearest: our own echo #707); (c) confronted \u2014 40k real semiprimes, 86,634 verified steps, ~150 null-tested channels; (d) clean \u2014 fixed seeds; (e) the substance \u2014 blindness asserted against empirical nulls, censoring reported, worst z +2.51 < 3 without multiplicity correction; (f) controlled \u2014 lemmas asserted at 100%, ALL_DONE marker; (g) fair \u2014 two live positive controls fire (trace 1.0000; band-determinism = H(b\u2081)); (h) closure \u2014 symmetric by construction, skeleton circular (6), metric layer needs factors (5/6), descent = classical Euclidean algorithm in disguise (8).\n\n### What closes\nThe Pythagorean-tree line is now closed at three strengths: embedding exact (paper 56), coordinates orthogonal (paper 56), position adically sealed (this paper). Frontier returns to the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 416 experiments. Assessment v192. Paper 81.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3412",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T13:59:52.031024+00:00",
-    "title": "FACT round-24 #2 \u2014 BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
-  },
-  {
     "consumed_by_exp_id": "078881d5",
     "description": "## FACT round-24 #5 \u2014 D\u2085-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** \u2014 and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x\u2075+ax+b (|a|,|b| \u2264 60) found **four D\u2085 quintics in seconds**, each with square discriminant and the exact signature {[1\u2075]: \u22480.10, [5]: \u22480.40, [1,2,2]: \u22480.50}.\n\n### The subtlety: where D\u2085's C\u2082 lives\nD\u2085 \u2286 A\u2085 \u27f9 \u221adisc(f) \u2208 \u211a \u27f9 the abelianization's quadratic subfield K is **not** Q(\u221adisc). Theory locates it \u2014 splitting-field ramification = root-field ramification \u27f9 K = Q(\u221ad), d squarefree over f's ramified prime set \u2014 and candidate enumeration + Kronecker matching identifies **K = Q(\u221a\u22125) at agreement 1.0000, uniquely**, for x\u2075+20x+32 (m\\* = 20 = Q(\u221a\u22125)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D\u2085 type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(\u22125, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 \u2014 exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I\u2081 measured | law | pair |\n|---|---|---|---|---|---|---|\n| C\u2085 | Q(\u03b6\u2081\u2081)\u207a | C\u2085 | 0.7219 | 0.7198 | 0.7219 \u2713 | Is(5) \u2713 |\n| **D\u2085** | **x\u2075+20x+32** | **C\u2082** | **1.3610** | **1.0000** | **1.0000 \u2713** | **1.0 \u2713** |\n| F\u2082\u2080 | x\u2075\u22122 | C\u2084 | 1.6805 | 1.4989 | 1.5000 \u2713 | 1.25 \u2713 |\n| A\u2085 | x\u2075+20x+16 | 1 | 1.6555 | **0** | 0 \u2713 | 0 \u2713 |\n| S\u2085 | x\u2075\u2212x\u22121 | C\u2082 | 2.5574 | 1.2158* | 1.0 \u2713 | 1.0 \u2713 |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions \u2014 the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean \u2014 predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean \u2014 no D\u2085 type-channel work in the Catalog; (c) confronted \u2014 real D\u2085 fields, histograms < 0.2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled \u2014 three harness iterations disclosed (modulus-scan failure \u2192 theory-grounded candidate enumeration; even-numerator Jacobi bug \u2192 Kronecker helper); (g) fair \u2014 walls zero, coprime flat, controls are papers 78\u201382's reproduced values; (h) closure \u2014 symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2\u20135, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
     "domains": [
@@ -1960,16 +1959,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)"
   },
   {
-    "consumed_by_exp_id": "1a4b5fe9",
+    "consumed_by_exp_id": "6bf15a63",
     "description": "## FACT round-25 #3 \u2014 QUBIT-TRADE4 (paper 87, /tmp/exp_qubittrade4.py, /tmp/r25n3.log)\n\n**Verdict name: THE-STANDARD-CORNER-IS-OPTIMAL.**\n\n### Result\nThe third resource axis \u2014 **base re-draws k**, real Shor's escape from the per-N unlucky cap (paper 86) \u2014 completes the surface, and its total-cost accounting places the optimum at the textbook parameterization:\n\n- **H1 cap lift**: at t = wall, s = 5: k=1 \u2192 0.504, k=2 \u2192 0.735, k=4 \u2192 0.940 \u2014 following 1\u2212(1\u2212p\u2081m)^{ks} exactly (m \u2248 \u00bd mixed-role fraction).\n- **H2 three-way fungibility**: mean \u0394P = +0.18 per single-resource doubling across 12 mixed-axis steps, positive everywhere below saturation.\n- **H3 standard-corner optimality** (corrected accounting, disclosed): reaching P \u2265 0.3 costs G \u2248 k\u00b7s\u00b7t\u00b2 = **6400 at the full-register corner** vs 14440 at wall\u22122 and 51840 at wall\u22124 \u2014 shaving width costs exponential samples/re-draws against a quadratic saving.\n\n### Frontier (ii) closed\nPaper 47 threshold \u2192 paper 85 ramp \u2192 paper 86 cap \u2192 paper 87 optimum. **DEQUANT final form**: the fungibility surface exists, every point of it is quantum resource, its minimum sits at the standard corner, and no point approaches classical factoring complexity.\n\n### Population & method\n24 constructed controlled-order semiprimes (12 mixed-role / 12 same-role), K = 6 independent bases per N with fresh role structure, progression kernel from papers 85\u201386, cells t \u2208 {wall\u22124, \u22122, 0} \u00d7 s \u2208 {1, 5, 20} \u00d7 k \u2208 {1, 2, 4}, 20 trials each. Runtime ~30 s.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; H3's accounting bug found post-run and corrected from raw data (both numbers shown); (b) clean; (c) confronted \u2014 24 real semiprimes \u00d7 6 bases \u00d7 27 surface points; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap-lift and \u0394P quantified, bug disclosed; (f) controlled \u2014 machinery inherited from validated rounds; (g) fair \u2014 balanced role population by design, consistency with papers 85\u201386; (h) closure \u2014 no parameter tuning of Shor improves its total cost; classical complexity remains the only competition (barrier 8), aggregation prices every classical route (barrier 4).\n\nNow 422 experiments. Assessment v198. Paper 87.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3415",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T15:49:12.718353+00:00",
     "title": "FACT round-25 #3 \u2014 QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
   },
@@ -13661,6 +13661,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-14T18:35:42.298314+00:00",
     "title": "Silver-Ratio Spectral Gap for Pell Spines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Letter blindness and depth blindness are each proved at every modulus, but by different witness families. The conjecture asks for one family realizing every (letter, depth) combination inside a single residue class of N, sealing the joint channel and ruling out correlations between the two coordinates as a side channel.\n\nFor every M \u2265 2, every X \u2208 {A,B,C} and every D \u2208 \u2115 there is a Fermat pair p with N(p) \u2261 1 (mod M), letterOf p = X and Berggren depth at least D.\n\nExtend the proper witnesses (4M\u22121,2M), (4M+1,2M), (6M+1,2M) by descending along C-steps that preserve n \u2261 0 and m \u2261 \u00b11 mod M; formalize the resulting family.\n\nThe joint tree-position channel is closed, not just its marginals.\n\nLetter and depth would be jointly constrained inside a class, giving a genuine two-dimensional residue channel worth attacking.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_4848",
+    "priority_score": 0.6683488372093025,
+    "research_mode": "team",
+    "source_exp_id": "9c40082c",
+    "status": "available",
+    "timestamp": "2026-09-17T00:01:52.129545+00:00",
+    "title": "Joint Letter\u2013Depth Blindness"
   },
   {
     "consumed_by_exp_id": "",
@@ -32228,6 +32242,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-16T14:57:53.455891+00:00",
     "title": "Coset-Pullback Principle for Split-Count Forks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The positionwise seal is proved: every letter at every depth is free inside one residue class, given all shallower letters. The remaining conjecture is that an arbitrary prescribed prefix, not only a run of C letters followed by one free letter, is realizable inside a fixed residue class of N modulo any M.\n\nFor every odd M \u2265 3, every L \u2208 \u2115 and every word u of length L over {A,B,C}, there is a Fermat pair p with FermatPair p, N(p) \u2261 1 (mod M), whose Berggren word has u as a prefix.\n\nFormalize the coprime-representative lemma, then transport the class of (1,0) back through the word matrix; verify computationally for M = 3^k and short words u.\n\nNo finite-order projection of the tree address is N-measurable: the position channel is closed at every order.\n\nSome prefix length carries residue information, which would be an exploitable factoring channel and would contradict the experimental nulls.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_4847",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9c40082c",
+    "status": "available",
+    "timestamp": "2026-09-17T00:01:51.669083+00:00",
+    "title": "Prefix-Level Archimedean\u2013Adic Decoupling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Reading the branch letters is reading thresholds on the ratio m/n. The conjecture asserts that logarithmically many letters already localize m/n well enough to recover m and n, hence the factors. This fences any claimed polynomial-time factoring by Pythagorean-triple interference.\n\nThere is a polynomial-time algorithm that, given N and the first c\u00b7log N Berggren letters of the N-node, outputs the factorisation of N.\n\nFormalize the continued-fraction localisation and its error bound; empirically factor semiprimes from truncated letter sequences.\n\nAny tree-position factoring method is circular: it presupposes the Fermat pair (barrier 6).\n\nThere would be room for a position oracle strictly weaker than factoring, reopening the interference line.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4849",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9c40082c",
+    "status": "available",
+    "timestamp": "2026-09-17T00:01:52.581079+00:00",
+    "title": "Band-Oracle Factoring Equivalence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Berggren descent is the subtractive Euclidean algorithm on (m,n) = ((q+p)/2,(q\u2212p)/2). The depth should therefore equal the sum of the continued-fraction partial quotients of m/n, explaining the observed anti-correlation between depth and prime gap and the extremal role of twin-type nodes.\n\ndepth(N) = \u03a3 a\u1d62 + O(1), where [a\u2080; a\u2081, \u2026] is the continued-fraction expansion of (q+p)/(q\u2212p); in particular depth \u224d (q+p)/(q\u2212p) for balanced semiprimes.\n\nFormalize the descent-to-Euclid dictionary and prove the bound; check numerically against the spine identity 2\u00b7depth + 3 = m + n.\n\nThe depth channel is a classical Euclid statistic, closing it as a source of new information (barrier 8).\n\nDepth would carry tree-specific information beyond Euclid, worth a separate channel test.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_4850",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9c40082c",
+    "status": "available",
+    "timestamp": "2026-09-17T00:01:53.132104+00:00",
+    "title": "Depth\u2013Gap Continued-Fraction Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The free monoid on three Berggren letters presents the tree boundary as a Cantor set. The conjecture is that the pushforward of its natural measure under N mod M is uniform on the classes permitted by the 3-adic skeleton, upgrading exact blindness to an information identity.\n\nFor every M coprime to 3, the distribution of N mod M over nodes of depth \u2264 D converges, as D \u2192 \u221e, to the uniform distribution on the residues compatible with the skeleton; hence I(N mod M ; position) = H(skeleton).\n\nEstimate the pushforward numerically for M \u2264 100 and D \u2264 20; formalize via equidistribution of the induced matrix products modulo M.\n\nThe seal becomes an equality of informations, the strongest possible closure of the tree-position channel.\n\nA biased pushforward would be a measurable, possibly exploitable, residue channel.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4851",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9c40082c",
+    "status": "available",
+    "timestamp": "2026-09-17T00:01:53.708915+00:00",
+    "title": "Uniformity of the Boundary Pushforward"
   },
   {
     "consumed_by_exp_id": "",

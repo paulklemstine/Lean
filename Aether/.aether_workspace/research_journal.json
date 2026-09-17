@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8aeaf6ab",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — after T-DIAL-BITLEN (paper 175)\n\nThe bitlen axis closed the deployment envelope of the zero-fit dial: seed-stability\n(paper 165), regime-invariance (paper 162), and now bitlen-st",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 82,
-      "timestamp": "2026-09-03T18:40:56",
-      "title": "FACT round-47 #1 — T-DIAL-BITLEN: the zero-fit dial is bitlen-stable (paper 175)"
-    },
-    {
       "cycle_id": "776b8f2a",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — after NO-RECAL-RECOVERY (round-45 #3, exp 503)\n\n## What this cycle established\n\nThree Lean files (all sorry-free) turn the empirical \"refitting the footprint\nweights at tight `u`",
@@ -499,19 +489,19 @@
       "theorem_count": 169,
       "timestamp": "2026-09-16T14:58:07",
       "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F₂₀ and the first C₄"
+    },
+    {
+      "cycle_id": "9c40082c",
+      "domain": "Cryptography",
+      "key_insight": "# FUTURE DIRECTIONS — after BERGGREN-3ADIC (tree position of the N-node)\n\n## What this cycle established (formally, 0 sorries)\n\n1. **Skeleton = trace.**  For every coprime `(m,n)`, `N = m² − n²` satis",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 98,
+      "timestamp": "2026-09-17T00:02:09",
+      "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6f277833",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — after C3 (the even/odd dichotomy of the one-bit cap)\n\n## What this cycle settled\n\nWorking with the catalogue channel\n`Ipair n = I( {T(p), T(q)} ; (p+q) mod n )`, `T(a) = n / gcd(",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-24T13:14:33",
-      "title": "C3. The even/odd dichotomy of the one-bit cap"
-    },
     {
       "cycle_id": "f45042dc",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 169,
       "timestamp": "2026-09-16T14:58:07",
       "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F₂₀ and the first C₄"
+    },
+    {
+      "cycle_id": "9c40082c",
+      "domain": "Cryptography",
+      "key_insight": "# FUTURE DIRECTIONS — after BERGGREN-3ADIC (tree position of the N-node)\n\n## What this cycle established (formally, 0 sorries)\n\n1. **Skeleton = trace.**  For every coprime `(m,n)`, `N = m² − n²` satis",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 98,
+      "timestamp": "2026-09-17T00:02:09",
+      "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ad3686b6",
-      "domain": "Bridges",
-      "name": "uniformWeights_total",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "ad3686b6",
-      "domain": "Bridges",
-      "name": "uniform_wcov_identity",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "ad3686b6",
-      "domain": "Bridges",
-      "name": "uniform_wcov_le_of_repairDist",
-      "quality": 0.83
-    },
     {
       "cycle_id": "0e02e0b5",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "lbs_seven_gt",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9c40082c",
+      "domain": "Cryptography",
+      "name": "forbids",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "9c40082c",
+      "domain": "Cryptography",
+      "name": "letter_of_factorization",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "9c40082c",
+      "domain": "Cryptography",
+      "name": "fermatPair_pwitA",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-09-16T14:58:07",
+  "last_updated": "2026-09-17T00:02:09",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "969a5dc4",
-        "quality": 0.85,
-        "theorems": 88,
-        "title": "FACT round-70 #4 — DEPTH-DECAY: the magnitude channel sees only the first steps "
-      },
-      {
         "cycle_id": "a22e921b",
         "quality": 0.78,
         "theorems": 58,
@@ -3389,6 +3383,12 @@
         "quality": 0.84,
         "theorems": 198,
         "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abel"
+      },
+      {
+        "cycle_id": "9c40082c",
+        "quality": 0.87,
+        "theorems": 98,
+        "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically s"
       }
     ],
     "Geometry": [

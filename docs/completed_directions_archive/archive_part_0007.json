@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-16T14:57:53Z",
-  "count": 150,
+  "archived_at": "2026-09-17T00:01:54Z",
+  "count": 151,
   "directions": [
     {
       "id": "fd_3695",
@@ -5933,6 +5933,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 174
+    },
+    {
+      "id": "fd_3412",
+      "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)",
+      "description": "## FACT round-24 #2 — BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structure beyond the trace**. The channel decomposes into (i) a deterministic 3-adic skeleton that *restates* N mod 3 exactly, and (ii) a metric layer — branch letters, depth, path composition — that is **blind at every 3-adic level 3^k, k ≤ 6**. The Catalog's 3-adic Cantor boundary (#855) has no N-computable projection beyond the trace-set content.\n\n### The four horns (all stated before the run; all confirmed)\n- **H1 SKELETON (deterministic lemma)**: squares mod 3 = {0,1} + m⊥n ⟹ N ≡ 1 ⟺ 3|n, N ≡ 2 ⟺ 3|m, N ≡ 0 ⟺ 3∤mn — agreement **40000/40000 = 100%**. And it RESTATES the trace: 3|n ⟺ q≡p mod 3 ⟺ N ≡ p² ≡ 1 mod 3, also **40000/40000** — zero information beyond N mod 3 (barrier 6).\n- **H2 PARENT-INTERVAL LAW (new exact lemma)**: the Berggren parent is decided by the ratio alone — m/n ∈ (1,2) → T₁ = (n,2n−m); (2,3) → T₂ = (n,m−2n); (3,∞) → T₃ = (m−2n,n). Verified on all **40000/40000** descents terminating exactly at root (2,1), plus **86,634 spot-checked steps** with child-map reconstruction (B₁(m,n)=(2m−n,m), B₂=(2m+n,m), B₃=(m+2n,n)) exact on every step.\n- **H3 METRIC BLINDNESS**: I(N mod 3^k; b_t) at the 300-shuffle permutation null for every letter depth t ≤ 10 and level k ≤ 6; same for depth dB and composition (c₁,c₂,c₃). **Worst z = +2.51 across ~150 tests** (k=1: I(N mod 3; b₁) = 0.00004 vs null 0.00004, z = +0.04).\n- **H4 CONTROLS (live)**: trace lemma I(N mod 3; s mod 3) = **1.0000** exact (paper 50); I(ratio-band; b₁) = **1.4738 = H(b₁)** EXACTLY — the first branch letter is a deterministic function of the m/n band, whose recovery IS the factorization; corr(log dB, log gap) = −0.141 replicates paper 56's anti-correlation.\n\n### Sample\n40,000 random semiprimes (p,q uniform primes in [2¹⁶, 2²⁴)), Miller-Rabin (12 bases), capped descents (5000 steps): twin-prime nodes n=1 descend stepwise in m and are censored — **42/40402 = 0.10%**, reported. Runtime 154 s.\n\n### Why this matters\n- Paper 56's orthogonality is sharpened from coordinate-level to **adic strength**: coordinates orthogonal AND position sealed.\n- Tree-adic dials join the closed residue-dial family (papers 54/70/72–74/77/79/80): no dial exceeds its trace-set content; the metric interior requires the factorization to read.\n- The gold-tier interference claim (#829, \"exact factorisation by interference of Pythagorean triples\", polynomial-time per its filename) has no formula in the index, but this result fences it: any such method must either smuggle the Fermat pair (circularity, barrier 6) or pay Ω(N) aggregation (barrier 4).\n\n### All 8 barriers\n(a) clean — four horns pre-stated, measurement object ≠ instrument; (b) clean — no tree-position channel work in the Catalog (nearest: our own echo #707); (c) confronted — 40k real semiprimes, 86,634 verified steps, ~150 null-tested channels; (d) clean — fixed seeds; (e) the substance — blindness asserted against empirical nulls, censoring reported, worst z +2.51 < 3 without multiplicity correction; (f) controlled — lemmas asserted at 100%, ALL_DONE marker; (g) fair — two live positive controls fire (trace 1.0000; band-determinism = H(b₁)); (h) closure — symmetric by construction, skeleton circular (6), metric layer needs factors (5/6), descent = classical Euclidean algorithm in disguise (8).\n\n### What closes\nThe Pythagorean-tree line is now closed at three strengths: embedding exact (paper 56), coordinates orthogonal (paper 56), position adically sealed (this paper). Frontier returns to the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 416 experiments. Assessment v192. Paper 81.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "9c40082c",
+      "timestamp": "2026-08-21T13:59:52.031024+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.87,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-15T19:00:13.476038+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 173
     }
   ]
 }
