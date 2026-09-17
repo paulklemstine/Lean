@@ -162,6 +162,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c73f4ca7 (Q=0.850), which proved 57 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-25 #2 \u2014 QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_c73f4ca7_70440526",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "c73f4ca7",
+    "status": "available",
+    "timestamp": "2026-09-17T23:46:40.945317+00:00",
+    "title": "Deepening: FACT round-25 #2 \u2014 QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle cc3115b2 (Q=0.850), which proved 103 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Conjecture.** A finite hyperreal projection-valued measure with finite matrix entries descends under entrywise standard part to an ordinary projection-valued measure if and only if its projections are pairwise orthogonal up to infinitesimal operator norm and its total projection is infinitesimally",
     "domains": [
       "Algebra"
@@ -1970,21 +1984,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-21T15:49:12.718353+00:00",
     "title": "FACT round-25 #3 \u2014 QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
-  },
-  {
-    "consumed_by_exp_id": "c73f4ca7",
-    "description": "## FACT round-25 #2 \u2014 QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes (r \u2208 {210, 310, 434, 510}), P_factor(s=1) climbs the same ladder \u2014 **0.018 / 0.056 / 0.158 / 0.181** across t = wall\u22124 \u2026 wall+2 \u2014 and samples compound as independence wherever the cap allows. One new structural element: a **per-N unlucky cap that sample count cannot move**.\n\n### The construction (invented this round)\nReal ord_N(a) is lcm(p\u22121, q\u22121)-scale (~2\u00b3\u2070) \u2014 register simulation impossible. Built controlled-order semiprimes instead: primes p \u2261 1 mod r directly, order-r elements by projection h^((p\u22121)/r), CRT-combined with randomized per-prime orders d_p, d_q \u2208 {r, r/2}. This surfaced a structural fact: **ord_p(a) = ord_q(a) exactly \u27f9 a^{r/2} \u2261 \u22121 mod both primes \u27f9 N never factors from period certificates** \u2014 the permanently-unlucky case real Shor escapes by re-drawing a.\n\n### Results\n- Ramp persists: P_factor(s=1) = 0.018 \u2192 0.181 along t; nocert share 0.003 at/above wall\u22122 (certification is not the bottleneck \u2014 paper 85's ramp).\n- Ladders track independence under the cap (wall\u22122: 0.056/0.204/0.471 \u2248 1\u2212(1\u22120.06)^s).\n- **Saturation \u2248 0.53** = cert-rate \u00d7 mixed-role fraction (~\u2154): the unlucky-half cap is per-N structural; s cannot push past it.\n- Taxonomy: spurious-or-partial certificates **0.844**, unlucky 0.109, factor 0.044, nocert 0.003 \u2014 the dominant classical burden is certificate filtering, which is exactly N-verification's role.\n\n### Method ledger (4 catches across 6 launches)\nOrder blow-up (naive r ~ 2\u00b3\u2070 unsimulatable); simultaneous-order search impossible (~10\u207b\u2077 density) \u2192 CRT construction; equal-order = permanent unluckiness (first measurements all-zero); infinite loop on odd half-orders + first-certificate early-return masking later splitting ones + a hardcoded verdict string replaced by data-computed output before any claim was made.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; the population design implements the cap rather than assuming it; (b) clean \u2014 no real-N ramp work in the Catalog; (c) confronted \u2014 actual semiprimes, exact orders, full gcd-based extraction; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap measured not assumed, taxonomy quantified, defects disclosed; (f) controlled \u2014 dishonest-verdict catch before any claim; (g) fair \u2014 shares consistent with paper 85 through the identical kernel; (h) relevance \u2014 Shor's short-register regime prices in samples linearly, capped by the unlucky-base structure that base re-drawing removes classically (barriers 4/8).\n\nNow 421 experiments. Assessment v197. Paper 86.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3416",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T15:49:12.719442+00:00",
-    "title": "FACT round-25 #2 \u2014 QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
   },
   {
     "consumed_by_exp_id": "24d71196",
@@ -32446,6 +32445,81 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-17T14:30:00.853672+00:00",
     "title": "Derived-Series Filtration of the Type Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The abstract bound proved this session says at most half of the pairs in a product of two even-order cyclic groups have equal two-adic order valuations. The conjecture transports it to residue bases modulo a semiprime, so that at least half of all units admit a splitting period certificate. It matters because it turns the abstract density into a statement about the actual bases a factoring algorithm draws.\n\nFor distinct odd primes p and q, at least half of the units a modulo N = p q satisfy v2(ordMod a p) not equal to v2(ordMod a q), hence admit an exponent m with a period certificate splitting N.\n\nTransport card_unlucky_pairs_le_half along the Chinese Remainder isomorphism of unit groups, matching ordMod a p with the order of the first coordinate.\n\nExpected number of base re-draws before a splitting base is at most two, proved end to end.\n\nThe unit group decomposition fails to preserve the valuation statistics, and the density argument needs a different route.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4862",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c73f4ca7",
+    "status": "available",
+    "timestamp": "2026-09-17T23:46:25.201257+00:00",
+    "title": "Chinese Remainder Transfer of the Unlucky Density Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replace the one-half inequality by an exact formula. The valuation profile of a cyclic group is geometric, so the probability that two independent uniform elements have equal two-adic order valuation is a finite geometric sum in the two valuations of the group orders. This would explain the measured share numerically rather than only bounding it.\n\nFor cyclic groups of orders 2^e1 m1 and 2^e2 m2 with m1, m2 odd, the number of pairs with equal two-adic order valuation equals the product of the group orders times a closed-form dyadic rational depending only on e1 and e2, equal to one half exactly when e1 = e2 = 1.\n\nCompute the cardinality of each level set exactly, as the difference of two index-two-style subgroup counts, and sum the products over levels.\n\nThe measured unlucky share becomes a predicted quantity for any prescribed prime shape.\n\nLevel-set cardinalities depend on more than the two-adic valuation of the group order.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4863",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c73f4ca7",
+    "status": "available",
+    "timestamp": "2026-09-17T23:46:25.768795+00:00",
+    "title": "Closed Form for the Unlucky Share"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalize the sharp criterion from semiprimes to arbitrary odd squarefree moduli. The claim is that the gcd of a halved period with N isolates the set of primes whose order has maximal two-adic valuation, so splitting is possible exactly when the valuation function is non-constant.\n\nFor N = p_1 ... p_k with distinct odd primes and a unit a, gcd(a^(L/2) - 1, N) with L the exact order equals the product of those p_i with v2(ord_{p_i} a) strictly below the maximum; a splitting certificate exists iff the valuations are not all equal.\n\nFormalize with a Finset of primes, replacing the two-factor gcd bookkeeping by a coprime factorization argument.\n\nThe per-N cap generalizes verbatim beyond semiprimes, and the gcd step is a level-set extractor rather than a factor extractor.\n\nMulti-prime moduli admit splitting behaviour not controlled by the two-adic valuation profile alone.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_4864",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c73f4ca7",
+    "status": "available",
+    "timestamp": "2026-09-17T23:46:26.319023+00:00",
+    "title": "Valuation Level Sets for Multi-Prime Moduli"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The measured taxonomy shows classical certificate filtering dominates the cost. The conjecture prices that cost exactly: the expected number of verification calls before the first splitting certificate is the reciprocal of the product of certification rate and mixed-role fraction, and the ramp is the exact distribution function of that waiting time.\n\nFor i.i.d. certificates with splitting probability c = certRate * mixedFraction > 0, the expected index of the first splitting certificate equals 1/c, and popRamp s = 1 - (1-c)^s is the exact CDF of that waiting time.\n\nFormalize a geometric random variable over the certificate stream and identify its CDF with the ramp; compute the expectation.\n\nThe ramp is not merely an empirical fit but the exact distribution function of the classical stopping time.\n\nCertificates are correlated across samples, and the independence model overstates the value of extra samples.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_4865",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c73f4ca7",
+    "status": "available",
+    "timestamp": "2026-09-17T23:46:26.873574+00:00",
+    "title": "Geometric Waiting Time for Certificate Filtering"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The construction realizes any per-prime order dividing p-1 independently at each prime. The conjecture is that the unlucky share of such a family is therefore a design parameter, tunable to any prescribed dyadic value by choosing the order distribution, giving a benchmark class with prescribed quantum-classical trade-off.\n\nFor every r congruent to 2 mod 4 and every pair of divisors (d_p, d_q) of r there are infinitely many semiprimes p q with p, q congruent to 1 mod r carrying a base of exactly those per-prime orders; the resulting family has unlucky share equal to the probability that the two sampled valuations agree.\n\nCombine the realization lemma proved here with Dirichlet's theorem on primes in arithmetic progressions, then compute the share from the sampling distribution.\n\nBenchmarks with prescribed factoring hardness under period-certificate post-processing can be generated on demand.\n\nOrder realization interacts with primality constraints, and some order profiles are unreachable for large moduli.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4866",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "c73f4ca7",
+    "status": "available",
+    "timestamp": "2026-09-17T23:46:27.433037+00:00",
+    "title": "Tunable Unlucky Share in Order-Controlled Families"
   },
   {
     "consumed_by_exp_id": "",

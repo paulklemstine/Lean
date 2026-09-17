@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-17T14:30:20.725891+00:00",
+  "last_updated": "2026-09-17T23:46:42.288888+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75274,6 +75274,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-17T14:30:20.239563+00:00",
       "title": "FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals ("
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Bridges",
+      "duration_seconds": 7311.342900753021,
+      "end_time": 1789688770.3978937,
+      "files_integrated": 5,
+      "job_id": "c73f4ca7",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.85,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5575,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.85,
+        "novelty": 0.85,
+        "proof_depth": 0.85,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1789681459.054993,
+      "strategy_count": 0,
+      "theorem_count": 57,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 51,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-17T23:46:41.835949+00:00",
+      "title": "FACT round-25 #2 \u2014 QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
     }
   ]
 }

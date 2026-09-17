@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-17T14:30:01Z",
-  "count": 153,
+  "archived_at": "2026-09-17T23:46:27Z",
+  "count": 154,
   "directions": [
     {
       "id": "fd_3695",
@@ -6053,6 +6053,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 175
+    },
+    {
+      "id": "fd_3416",
+      "title": "FACT round-25 #2 — QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)",
+      "description": "## FACT round-25 #2 — QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes (r ∈ {210, 310, 434, 510}), P_factor(s=1) climbs the same ladder — **0.018 / 0.056 / 0.158 / 0.181** across t = wall−4 … wall+2 — and samples compound as independence wherever the cap allows. One new structural element: a **per-N unlucky cap that sample count cannot move**.\n\n### The construction (invented this round)\nReal ord_N(a) is lcm(p−1, q−1)-scale (~2³⁰) — register simulation impossible. Built controlled-order semiprimes instead: primes p ≡ 1 mod r directly, order-r elements by projection h^((p−1)/r), CRT-combined with randomized per-prime orders d_p, d_q ∈ {r, r/2}. This surfaced a structural fact: **ord_p(a) = ord_q(a) exactly ⟹ a^{r/2} ≡ −1 mod both primes ⟹ N never factors from period certificates** — the permanently-unlucky case real Shor escapes by re-drawing a.\n\n### Results\n- Ramp persists: P_factor(s=1) = 0.018 → 0.181 along t; nocert share 0.003 at/above wall−2 (certification is not the bottleneck — paper 85's ramp).\n- Ladders track independence under the cap (wall−2: 0.056/0.204/0.471 ≈ 1−(1−0.06)^s).\n- **Saturation ≈ 0.53** = cert-rate × mixed-role fraction (~⅔): the unlucky-half cap is per-N structural; s cannot push past it.\n- Taxonomy: spurious-or-partial certificates **0.844**, unlucky 0.109, factor 0.044, nocert 0.003 — the dominant classical burden is certificate filtering, which is exactly N-verification's role.\n\n### Method ledger (4 catches across 6 launches)\nOrder blow-up (naive r ~ 2³⁰ unsimulatable); simultaneous-order search impossible (~10⁻⁷ density) → CRT construction; equal-order = permanent unluckiness (first measurements all-zero); infinite loop on odd half-orders + first-certificate early-return masking later splitting ones + a hardcoded verdict string replaced by data-computed output before any claim was made.\n\n### All 8 barriers\n(a) clean — horns pre-stated; the population design implements the cap rather than assuming it; (b) clean — no real-N ramp work in the Catalog; (c) confronted — actual semiprimes, exact orders, full gcd-based extraction; (d) clean — fixed seeds; (e) the substance — cap measured not assumed, taxonomy quantified, defects disclosed; (f) controlled — dishonest-verdict catch before any claim; (g) fair — shares consistent with paper 85 through the identical kernel; (h) relevance — Shor's short-register regime prices in samples linearly, capped by the unlucky-base structure that base re-drawing removes classically (barriers 4/8).\n\nNow 421 experiments. Assessment v197. Paper 86.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "c73f4ca7",
+      "timestamp": "2026-08-21T15:49:12.719442+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.85,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-17T14:31:00.766552+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 178
     }
   ]
 }
