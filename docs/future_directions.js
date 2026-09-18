@@ -1971,21 +1971,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "6bf15a63",
-    "description": "## FACT round-25 #3 \u2014 QUBIT-TRADE4 (paper 87, /tmp/exp_qubittrade4.py, /tmp/r25n3.log)\n\n**Verdict name: THE-STANDARD-CORNER-IS-OPTIMAL.**\n\n### Result\nThe third resource axis \u2014 **base re-draws k**, real Shor's escape from the per-N unlucky cap (paper 86) \u2014 completes the surface, and its total-cost accounting places the optimum at the textbook parameterization:\n\n- **H1 cap lift**: at t = wall, s = 5: k=1 \u2192 0.504, k=2 \u2192 0.735, k=4 \u2192 0.940 \u2014 following 1\u2212(1\u2212p\u2081m)^{ks} exactly (m \u2248 \u00bd mixed-role fraction).\n- **H2 three-way fungibility**: mean \u0394P = +0.18 per single-resource doubling across 12 mixed-axis steps, positive everywhere below saturation.\n- **H3 standard-corner optimality** (corrected accounting, disclosed): reaching P \u2265 0.3 costs G \u2248 k\u00b7s\u00b7t\u00b2 = **6400 at the full-register corner** vs 14440 at wall\u22122 and 51840 at wall\u22124 \u2014 shaving width costs exponential samples/re-draws against a quadratic saving.\n\n### Frontier (ii) closed\nPaper 47 threshold \u2192 paper 85 ramp \u2192 paper 86 cap \u2192 paper 87 optimum. **DEQUANT final form**: the fungibility surface exists, every point of it is quantum resource, its minimum sits at the standard corner, and no point approaches classical factoring complexity.\n\n### Population & method\n24 constructed controlled-order semiprimes (12 mixed-role / 12 same-role), K = 6 independent bases per N with fresh role structure, progression kernel from papers 85\u201386, cells t \u2208 {wall\u22124, \u22122, 0} \u00d7 s \u2208 {1, 5, 20} \u00d7 k \u2208 {1, 2, 4}, 20 trials each. Runtime ~30 s.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; H3's accounting bug found post-run and corrected from raw data (both numbers shown); (b) clean; (c) confronted \u2014 24 real semiprimes \u00d7 6 bases \u00d7 27 surface points; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap-lift and \u0394P quantified, bug disclosed; (f) controlled \u2014 machinery inherited from validated rounds; (g) fair \u2014 balanced role population by design, consistency with papers 85\u201386; (h) closure \u2014 no parameter tuning of Shor improves its total cost; classical complexity remains the only competition (barrier 8), aggregation prices every classical route (barrier 4).\n\nNow 422 experiments. Assessment v198. Paper 87.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3415",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T15:49:12.718353+00:00",
-    "title": "FACT round-25 #3 \u2014 QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
-  },
-  {
     "consumed_by_exp_id": "24d71196",
     "description": "## FACT round-25 #1 \u2014 QUBIT-TRADE2 (paper 85, /tmp/exp_qubittrade2.py, /tmp/r25n1g.log)\n\n**Verdict name: ONE-REGISTER-BIT-IS-WORTH-ONE-SAMPLE.**\n\n### Result\nThe qubit/sample phase diagram of Shor period-finding is a **fungibility ramp**, not a wall. The pre-stated vertical-wall hypothesis (odd r \u27f9 deterministic certification failure below t = 2log\u2082r) was **honestly refuted** by the correct measurement kernel: under the standard arithmetic-progression distribution P(k) = (1/Mq)\u00b7|sin(\u03c0Mkr/q)/sin(\u03c0kr/q)|\u00b2 (M \u2248 q/r), the per-sample certification rate follows **P\u2081 \u2248 ramp(q/r\u00b2)**, and samples compound it as P_s = 1\u2212(1\u2212P\u2081)^s. The measured exchange law: **t\\*(s) shifts by \u2212log\u2082 s** \u2014 one register bit is worth one sample.\n\n### The three measurements\n1. **The single-sample ramp**: P\u2081 rises smoothly with q/r\u00b2 through odd/mixed families (4\u00b7odd: 0.003 at q/r\u00b2 = 0.028 \u2192 0.36 at 0.905 \u2192 plateau \u2248 0.46); pure powers of two are flat-saturated (~0.5 at every ratio \u2014 peaks exactly on grid points).\n2. **Sample ladders out-of-sample**: P_s tracks 1\u2212(1\u2212P\u2081)^s tightly everywhere (odd prime at wall\u22121: P\u2081 = 0.725 \u2192 s=2: 0.940 vs predicted 0.924; 2\u00b7odd at wall\u22123: P\u2081 = 0.055 \u2192 s=20: 0.680 vs predicted 0.677).\n3. **The exchange law** (odd composite 1155, wall t = 21): t\\*(P\u22650.5) shifts {s=2: +0, s=5: \u22122, s=20: \u22124, s=100: \u22126} against \u2212log\u2082s = {\u22121, \u22122.3, \u22124.3, \u22126.6}. (s=1 never crosses 0.5: the saturation level P\u2081 \u2248 0.37 *is* the standard per-sample rate.)\n\n### The honest refutation\nThe stated-before-run mechanism (deterministic sub-wall failure for odd r) holds only for the WORST-case peak position; actual peak positions spread over [0, \u00bd], so certification succeeds at rate \u2248 q/r\u00b2. Round-14's \"10 samples fail\" was the deep-ramp limit (q/r\u00b2 \u2248 0). The refutation, not the confirmation, produced the round's law.\n\n### Method ledger (3 designed-check catches across 6 runs)\n1. **Wrong kernel**: contiguous-block Dirichlet instead of the progression kernel \u2014 flagged by its degenerate signature P(k=0) = 1 at q = r; the first vertical-wall table was an artifact of the wrong ensemble.\n2. **Post-processing swamp**: lcm-of-candidates dies on spurious small-denominator certificates; replaced by the clean CERTIFICATION STATISTIC (\u2203 sample whose CF passes 1/(2b\u00b2) with b = r \u2014 necessary condition for any post-processing; classical period-verification free).\n3. Degenerate regimes documented: pure powers of two at t = v\u2082(r) give uniform outcomes (entropy = log\u2082q, r-independent \u2014 genuinely no information).\n\n### All 8 barriers\n(a) clean \u2014 pre-stated hypothesis refuted by pre-registered measurement; replacement law validated out-of-sample on ladders; (b) clean \u2014 no exchange-rate work in the Catalog (nearest: our own paper 47); (c) confronted \u2014 exact distributions (no shortcuts), five structured periods, 300-trial cells; (d) clean \u2014 fixed seeds; (e) the substance \u2014 closed-form predictions vs MC \u00b10.03, full defect ledger disclosed; (f) controlled \u2014 every anomaly traced to root cause before proceeding; (g) fair \u2014 ladders are out-of-sample validations; families distinguished; (h) relevance \u2014 Shor's register can be shortened by paying samples linearly (1 bit \u2194 1 sample) until both explode together: the quantum advantage is preserved but quantitatively graded, sharpening DEQUANT beyond paper 47's binary threshold (barriers 4/8).\n\n### What this decides\nFrontier (ii) gains its quantitative face: the quantum channel's resource bound is a smooth two-dimensional trade-off curve with unit slope, not a threshold.\n\nNow 420 experiments. Assessment v196. Paper 85.\n",
     "domains": [
@@ -2001,16 +1986,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-25 #1 \u2014 QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 85)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b5786d61",
     "description": "## FACT round-27 #2 \u2014 BATTERY-CAPACITY (paper 92, /tmp/exp_batterycapacity.py, /tmp/r27n2b.log)\n\n**Verdict name: SYNERGY-COMPOUNDS.**\n\n### Result\nThe 4-field joint channel (CRT modulus 31\u00b723\u00b79\u00b78 = 51 336) on one shared semiprime population carries **I = 8.2246 bits against the additive prediction \u03a3 marginals = 3.9099 \u2014 synergy +4.31 bits, more than doubling it**, within 1.3 bits of the joint-label-entropy ceiling (9.5276).\n\n### The order decomposition \u2014 synergy is genuinely higher-order\n| order | total synergy |\n|---|---|\n| k = 2 (6 pairs) | +0.244 |\n| k = 3 (4 triples) | **+3.822** |\n| k = 4 (the battery) | **+4.315** |\n\nPairwise synergies \u2014 the entire content of paper 91's pairwise table \u2014 are only **6% of the total**. Mechanism: N mod 31 alone sees one residue of pq mod 31; the CRT-joint modulus sees all four residues simultaneously (15.8 log\u2082 units), against which each dial's pair labels become nearly fully determined.\n\n### Honest caveat\nThe which-factor statistic on the full joint code reads 0.0469 bits \u2014 above every pairwise wall. Suspected sparse-plug-in bias (tens of thousands of residue-columns vs 30k samples \u2014 the paper-70/83 regime), not signal; the factor-blindness claim stands on the well-conditioned strata plus this analysis.\n\n### What revises what\nPaper 91's \"neither additive nor comonotone\" survives; its implicit scale does not: **batteries are super-additive systems whose capacity grows toward the joint label-entropy ceiling with dominant higher-order terms**. For the converse, this raises the stakes on no-pinning: a k-dial battery carries far more symmetric capacity than marginal bookkeeping suggests \u2014 every bit still trace-routed and factor-blind, but the capacity arithmetic must be done jointly (exactly this machinery), never marginally.\n\nNow 427 experiments. Assessment v203. Paper 92.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3427",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T16:52:15.027841+00:00",
     "title": "FACT round-27 #2 \u2014 BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marginals (paper 92)"
   },
@@ -15593,6 +15579,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-11T14:00:25.884934+00:00",
     "title": "Non-Averaging of Multi-Dial Plateaus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The optimality inequality is currently proved for shaves of at most half the register. Numerically it holds for every shave short of annihilating the register. The route is concavity of d -> d*log 2 + 2*log(T-d), which forces the minimum to an endpoint.\n\nFor every integer T >= 8 and every 1 <= d <= T-1, (5/4)*T^2 < 2^d*(T-d)^2, and the same with exponent 3 in place of 2.\n\nProve the two endpoint cases (d = 1 by nlinarith; d = T-1 by the induction m^2 < 2^(m-1) for m >= 7) and interpolate by concavity of the logarithm of the left-hand side.\n\nThe standard corner beats every width configuration whatsoever, not merely moderate shaves.\n\nThere is a genuine deep-shave regime where a tiny register with astronomically many shots is competitive, which would reopen the trade-off question.",
+    "domains": [],
+    "id": "fd_4868",
+    "priority_score": 0.5907142857142857,
+    "research_mode": "team",
+    "source_exp_id": "6bf15a63",
+    "status": "available",
+    "timestamp": "2026-09-18T01:38:46.840869+00:00",
+    "title": "Endpoint Concavity for the Deep-Shave Trade-Off"
   },
   {
     "consumed_by_exp_id": "",
@@ -32520,6 +32518,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-17T23:46:27.433037+00:00",
     "title": "Tunable Unlucky Share in Order-Controlled Families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replace the union-bound floor and the efficiency hypothesis of the optimality theorem by the exact least repetition count N(q,P) = min{n : 1-(1-q)^n >= P}. The two-sided estimate P/q <= N(q,P) <= 1 + ln(1/(1-P))/q pins N within an additive constant, which is enough to derive the efficiency hypothesis instead of assuming it. This makes standard-corner optimality unconditional in its cost bookkeeping.\n\nFor 0 < q <= 1/2 and 0 < P < 1, the least n with 1-(1-q)^n >= P satisfies P/q <= N(q,P) <= 1 + ln(1/(1-P))/q; consequently, for T >= 8 and 1 <= d <= T/2, N(q0/2^d, P)*(T-d)^2 > N(q0,P)*T^2.\n\nFormalise N by Nat.find, prove the lower bound from succProb_le_mul and the upper bound from 1-q <= exp(-q), then rerun the two_pow_mul_sq_gt comparison with the derived constants.\n\nStandard-corner optimality holds with no hypothesis on the corner configuration beyond its definition.\n\nThere is a regime where the exact count is far from both bounds, and the optimum depends on rounding rather than on the exponential/quadratic race.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4867",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6bf15a63",
+    "status": "available",
+    "timestamp": "2026-09-18T01:38:46.263743+00:00",
+    "title": "Ceiling-Exact Repetition Law for Bernoulli Resource Surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalise the surface from a single configuration to a schedule that spends n_i shots at width T-d_i. The failure probability factorises over the schedule, so the cost-constrained optimum is attained at a vertex of the budget simplex. The conjecture is that this vertex is always the full-register one.\n\nFor any schedule (d_i, n_i) with 1 - prod_i (1-q0*2^(-d_i))^(n_i) >= P and all d_i <= T/2, the total cost sum_i n_i*(T-d_i)^2 exceeds the full-register cost n_0*T^2 whenever some d_i >= 1.\n\nInduct on the length of the schedule using succProb_failure_pow to factorise the failure probability, then apply the single-configuration inequality termwise.\n\nAdaptivity across widths buys nothing: the textbook parameterisation is optimal even against schedulers.\n\nA mixed schedule beats the corner, and the resource surface has a genuinely non-vertex optimum.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4869",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6bf15a63",
+    "status": "available",
+    "timestamp": "2026-09-18T01:38:47.406994+00:00",
+    "title": "Adaptive Multi-Width Schedules and Vertex Optimality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Standard-corner optimality is proved for width costs t^2 and t^3. For a width cost c^t the bookkeeping reverses: shaving a bit divides the cost by c while only doubling the shot requirement. The conjecture identifies c = 2 as the exact crossover between corner-optimal and corner-suboptimal cost models.\n\nIf the width cost is c^t with c > 2, then for all large T the optimum of the resource surface is at a strictly positive shave; if the width cost is polynomial in t, the optimum is at d = 0 for all T >= 8.\n\nCompute the ratio cost(d+1)/cost(d) = 2/c for exponential models and 2*(1-1/(T-d))^k for polynomial models and compare with 1.\n\nThe verdict is exactly a statement about polynomial-cost registers, with a clean dichotomy at base two.\n\nThe crossover depends on the target probability as well, and the dichotomy is two-parameter.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4870",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6bf15a63",
+    "status": "available",
+    "timestamp": "2026-09-18T01:38:47.977919+00:00",
+    "title": "Cost-Exponent Dichotomy at Base Two"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The doubling increment of the surface is exactly the Bernoulli variance P(1-P), which suggests the surface has a second-moment structure not captured by mean success probability. Modelling the number of shots to first success as a geometric variable makes the cost of a run random, and the conjecture is that the corner minimises every quantile of it.\n\nLet C_d = G_d * (T-d)^2 where G_d is geometric with parameter q0*2^(-d). Then for T >= 8 and 1 <= d <= T/2, C_0 is stochastically dominated by C_d.\n\nExhibit a monotone coupling of the geometric variables through the inverse-CDF map and compare the scaled quantiles using the existing trade-off inequality.\n\nCorner optimality is distributional, not merely in expectation: no risk profile prefers a shaved register.\n\nA shaved register offers a better tail at the cost of a worse mean, which would be a genuinely new trade-off axis.",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_4871",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6bf15a63",
+    "status": "available",
+    "timestamp": "2026-09-18T01:38:48.553976+00:00",
+    "title": "Quantile Optimality of the Standard Corner"
   },
   {
     "consumed_by_exp_id": "",

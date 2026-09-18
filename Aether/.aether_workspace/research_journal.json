@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "671d5841",
-      "domain": "Probability",
-      "key_insight": "# Future directions — PPOW-MULTISEED (round-46 #2, exp 506)\n\nEight cycles of the hypothesise → experiment → analyse → critique loop turned the\nempirical claim *\"the prime-power feature `pp_sum` lifts",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 129,
-      "timestamp": "2026-09-04T00:07:55",
-      "title": "FACT round-46 #2 — PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with windo"
-    },
-    {
       "cycle_id": "60926357",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — after Cycle 3 (silent-error constants)\n\n## Where the thread stands\n\nCycle 2 proved that one derandomized key can control failure and silent\ncorruption at once, with constant `2`",
@@ -499,19 +489,19 @@
       "theorem_count": 57,
       "timestamp": "2026-09-17T23:46:40",
       "title": "FACT round-25 #2 — QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
+    },
+    {
+      "cycle_id": "6bf15a63",
+      "domain": "Shared",
+      "key_insight": "# Future directions — from the three-axis resource surface (paper 87)\n\nThe formalised core of round-25 #3 is now two files:\n\n* `Catalog/Shared/QubitTradeResourceSurface.lean` — the surface itself: the",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-09-18T01:39:02",
+      "title": "FACT round-25 #3 — QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "99ec0ece",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Computational Complexity of Recipes\n\nDerived from three research cycles on the query (\"tasting\") model of recipe complexity in\n`Catalog/Novelty/KitchenQueryComplexity.lean`,\n`Cat",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-08-24T15:57:45",
-      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
-    },
     {
       "cycle_id": "a331ba56",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 57,
       "timestamp": "2026-09-17T23:46:40",
       "title": "FACT round-25 #2 — QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
+    },
+    {
+      "cycle_id": "6bf15a63",
+      "domain": "Shared",
+      "key_insight": "# Future directions — from the three-axis resource surface (paper 87)\n\nThe formalised core of round-25 #3 is now two files:\n\n* `Catalog/Shared/QubitTradeResourceSurface.lean` — the surface itself: the",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-09-18T01:39:02",
+      "title": "FACT round-25 #3 — QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e0933184",
-      "domain": "Computation",
-      "name": "batchWordM_le_iff_le_crossover",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "e0933184",
-      "domain": "Computation",
-      "name": "crossover_two",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "e0933184",
-      "domain": "Computation",
-      "name": "word_crossover_agrees",
-      "quality": 0.82
-    },
     {
       "cycle_id": "b4f715c2",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "pow_eq_one_iff_ordMod_dvd",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "6bf15a63",
+      "domain": "Shared",
+      "name": "cube_lt_two_pow",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6bf15a63",
+      "domain": "Shared",
+      "name": "corner_cost_lt_sqrt_search",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6bf15a63",
+      "domain": "Shared",
+      "name": "surface_cost_exponential_in_shave",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-17T23:46:40",
+  "last_updated": "2026-09-18T01:39:02",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "6247b80f",
-        "quality": 0.82,
-        "theorems": 101,
-        "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
-      },
-      {
         "cycle_id": "9524045a",
         "quality": 0.78,
         "theorems": 67,
@@ -3947,6 +3941,12 @@
         "quality": 0.78,
         "theorems": 85,
         "title": "General separated principal filtrations"
+      },
+      {
+        "cycle_id": "6bf15a63",
+        "quality": 0.72,
+        "theorems": 38,
+        "title": "FACT round-25 #3 — QUBIT-TRADE4: the three-axis resource surface, standard-corne"
       }
     ],
     "Tropical": [

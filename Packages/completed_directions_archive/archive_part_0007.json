@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-17T23:46:27Z",
-  "count": 154,
+  "archived_at": "2026-09-18T01:38:48Z",
+  "count": 155,
   "directions": [
     {
       "id": "fd_3695",
@@ -6093,6 +6093,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 178
+    },
+    {
+      "id": "fd_3415",
+      "title": "FACT round-25 #3 — QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)",
+      "description": "## FACT round-25 #3 — QUBIT-TRADE4 (paper 87, /tmp/exp_qubittrade4.py, /tmp/r25n3.log)\n\n**Verdict name: THE-STANDARD-CORNER-IS-OPTIMAL.**\n\n### Result\nThe third resource axis — **base re-draws k**, real Shor's escape from the per-N unlucky cap (paper 86) — completes the surface, and its total-cost accounting places the optimum at the textbook parameterization:\n\n- **H1 cap lift**: at t = wall, s = 5: k=1 → 0.504, k=2 → 0.735, k=4 → 0.940 — following 1−(1−p₁m)^{ks} exactly (m ≈ ½ mixed-role fraction).\n- **H2 three-way fungibility**: mean ΔP = +0.18 per single-resource doubling across 12 mixed-axis steps, positive everywhere below saturation.\n- **H3 standard-corner optimality** (corrected accounting, disclosed): reaching P ≥ 0.3 costs G ≈ k·s·t² = **6400 at the full-register corner** vs 14440 at wall−2 and 51840 at wall−4 — shaving width costs exponential samples/re-draws against a quadratic saving.\n\n### Frontier (ii) closed\nPaper 47 threshold → paper 85 ramp → paper 86 cap → paper 87 optimum. **DEQUANT final form**: the fungibility surface exists, every point of it is quantum resource, its minimum sits at the standard corner, and no point approaches classical factoring complexity.\n\n### Population & method\n24 constructed controlled-order semiprimes (12 mixed-role / 12 same-role), K = 6 independent bases per N with fresh role structure, progression kernel from papers 85–86, cells t ∈ {wall−4, −2, 0} × s ∈ {1, 5, 20} × k ∈ {1, 2, 4}, 20 trials each. Runtime ~30 s.\n\n### All 8 barriers\n(a) clean — horns pre-stated; H3's accounting bug found post-run and corrected from raw data (both numbers shown); (b) clean; (c) confronted — 24 real semiprimes × 6 bases × 27 surface points; (d) clean — fixed seeds; (e) the substance — cap-lift and ΔP quantified, bug disclosed; (f) controlled — machinery inherited from validated rounds; (g) fair — balanced role population by design, consistency with papers 85–86; (h) closure — no parameter tuning of Shor improves its total cost; classical complexity remains the only competition (barrier 8), aggregation prices every classical route (barrier 4).\n\nNow 422 experiments. Assessment v198. Paper 87.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "6bf15a63",
+      "timestamp": "2026-08-21T15:49:12.718353+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-17T00:02:52.154031+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 179
     }
   ]
 }
