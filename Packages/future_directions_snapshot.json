@@ -1361,6 +1361,25 @@
     "title": "Deepening: q-Vandermonde / q-binomial theorem"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 24d71196 (Q=0.820), which proved 83 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-25 #1 — QUBIT-TRADE2 (paper 85, /tmp/exp_qubittrade2.py, /tmp/r25n1g.log)\n\n**Verdict name: ONE-REGISTER-BIT-IS-WORTH-ONE-SAMPLE.**\n\n### Result\nThe qubit/sample phase diagram of Shor period-finding is a **fungibility ramp**, not a wall. The pre-stated vertical-wall hypothesis (odd r ⟹ d",
+    "domain_bridges": [],
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_24d71196_a7a04448",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "24d71196",
+    "status": "available",
+    "timestamp": "2026-09-18T19:06:40.389667+00:00",
+    "title": "Deepening: FACT round-25 #1 — QUBIT-TRADE2: one register bit is worth one sample, the fungi"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -2692,25 +2711,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "24d71196",
-    "description": "## FACT round-25 #1 — QUBIT-TRADE2 (paper 85, /tmp/exp_qubittrade2.py, /tmp/r25n1g.log)\n\n**Verdict name: ONE-REGISTER-BIT-IS-WORTH-ONE-SAMPLE.**\n\n### Result\nThe qubit/sample phase diagram of Shor period-finding is a **fungibility ramp**, not a wall. The pre-stated vertical-wall hypothesis (odd r ⟹ deterministic certification failure below t = 2log₂r) was **honestly refuted** by the correct measurement kernel: under the standard arithmetic-progression distribution P(k) = (1/Mq)·|sin(πMkr/q)/sin(πkr/q)|² (M ≈ q/r), the per-sample certification rate follows **P₁ ≈ ramp(q/r²)**, and samples compound it as P_s = 1−(1−P₁)^s. The measured exchange law: **t\\*(s) shifts by −log₂ s** — one register bit is worth one sample.\n\n### The three measurements\n1. **The single-sample ramp**: P₁ rises smoothly with q/r² through odd/mixed families (4·odd: 0.003 at q/r² = 0.028 → 0.36 at 0.905 → plateau ≈ 0.46); pure powers of two are flat-saturated (~0.5 at every ratio — peaks exactly on grid points).\n2. **Sample ladders out-of-sample**: P_s tracks 1−(1−P₁)^s tightly everywhere (odd prime at wall−1: P₁ = 0.725 → s=2: 0.940 vs predicted 0.924; 2·odd at wall−3: P₁ = 0.055 → s=20: 0.680 vs predicted 0.677).\n3. **The exchange law** (odd composite 1155, wall t = 21): t\\*(P≥0.5) shifts {s=2: +0, s=5: −2, s=20: −4, s=100: −6} against −log₂s = {−1, −2.3, −4.3, −6.6}. (s=1 never crosses 0.5: the saturation level P₁ ≈ 0.37 *is* the standard per-sample rate.)\n\n### The honest refutation\nThe stated-before-run mechanism (deterministic sub-wall failure for odd r) holds only for the WORST-case peak position; actual peak positions spread over [0, ½], so certification succeeds at rate ≈ q/r². Round-14's \"10 samples fail\" was the deep-ramp limit (q/r² ≈ 0). The refutation, not the confirmation, produced the round's law.\n\n### Method ledger (3 designed-check catches across 6 runs)\n1. **Wrong kernel**: contiguous-block Dirichlet instead of the progression kernel — flagged by its degenerate signature P(k=0) = 1 at q = r; the first vertical-wall table was an artifact of the wrong ensemble.\n2. **Post-processing swamp**: lcm-of-candidates dies on spurious small-denominator certificates; replaced by the clean CERTIFICATION STATISTIC (∃ sample whose CF passes 1/(2b²) with b = r — necessary condition for any post-processing; classical period-verification free).\n3. Degenerate regimes documented: pure powers of two at t = v₂(r) give uniform outcomes (entropy = log₂q, r-independent — genuinely no information).\n\n### All 8 barriers\n(a) clean — pre-stated hypothesis refuted by pre-registered measurement; replacement law validated out-of-sample on ladders; (b) clean — no exchange-rate work in the Catalog (nearest: our own paper 47); (c) confronted — exact distributions (no shortcuts), five structured periods, 300-trial cells; (d) clean — fixed seeds; (e) the substance — closed-form predictions vs MC ±0.03, full defect ledger disclosed; (f) controlled — every anomaly traced to root cause before proceeding; (g) fair — ladders are out-of-sample validations; families distinguished; (h) relevance — Shor's register can be shortened by paying samples linearly (1 bit ↔ 1 sample) until both explode together: the quantum advantage is preserved but quantitatively graded, sharpening DEQUANT beyond paper 47's binary threshold (barriers 4/8).\n\n### What this decides\nFrontier (ii) gains its quantitative face: the quantum channel's resource bound is a smooth two-dimensional trade-off curve with unit slope, not a threshold.\n\nNow 420 experiments. Assessment v196. Paper 85.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3417",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T15:49:12.720386+00:00",
-    "title": "FACT round-25 #1 — QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 85)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "a55a0103",
     "description": "## FACT round-27 #1 — DIAL-INDEPENDENCE (paper 91, /tmp/exp_dialindependence.py, /tmp/r27n1c.log)\n\n**Verdict name: SYNERGY-AND-OVERLAP.**\n\n### Result\nThe battery space is **neither additive nor comonotone**. The pre-stated coprime-conductor additivity hypothesis was refuted at the first pair, and the refutation is directional:\n\n| battery | I(joint) | I₁ + I₂ | Δ |\n|---|---|---|---|\n| S₃a@31 × S₃b@23 | 2.1314 | 2.0024 | **+0.129 SYNERGY** |\n| A₄@9 × D₄@8 | 1.9125 | 1.9076 | **+0.005 near-additive** |\n| S₃a@23 × S₃b@23 (shared disc −23) | 1.0104 | 2.0024 | **−0.992 OVERLAP** |\n\n### Mechanism\nThe additivity argument treated dial labels as independent draws. They are not: both dials read the **same underlying (p, q)**, so their label entropies are population-correlated, and the joint modulus (CRT-seeing p mod m₁ AND q mod m₂ simultaneously) extracts combinations neither marginal reaches. Synergy is structure-dependent — rich-type pairs synergize (+0.129), lossy-type pairs barely (+0.005). Shared conductor structure makes dials comonotone: two −23 cubics share essentially their entire channel through the common quadratic character (**overlap 0.992 bits**) — the quantitative form of \"same subfield = same dial\".\n\n### Verification discipline\nMarginals re-verified against papers 80/82 BEFORE any joint measurement (1.0012 / 1.0012 / 0.4733 / 1.4342 — every prior value reproduced). Which-factor walls ≤ 0.0016 across every joint channel: all synergized and overlapping content remains symmetric, trace-routed, factor-blind.\n\n### Method ledger\nShared-pool ramification bug caught pre-launch (index draws including other fields' ramified primes; fixed by union exclusion {31, 23, 2, 3}); the naive additivity gate converted into a recorded synergy measurement rather than silently loosened.\n\n### What this decides\nThe converse's no-pinning scope covers product batteries with their synergy excesses included: k dials give more than k·(marginal) for structurally rich pairs and less for shared-structure pairs — all computable by this exact joint machinery, all still on the traced side of barrier 4.\n\nNow 426 experiments. Assessment v202. Paper 91.\n",
     "domain_bridges": [],
@@ -2730,7 +2730,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "020da4dc",
     "description": "## FACT round-26 #3 — SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED — an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [√N, 2√N], per-sample u = log(x²−N)/log B, 2400 samples over six (N, B) cells, compared against numerically-integrated Dickman ρ:\n\n| u | n | empirical | ±1σ | ρ(u) numeric | ratio |\n|---|---|---|---|---|---|\n| 3.0 | 161 | 0.0124 | 0.0087 | 0.0487 | 0.26 |\n| 3.5 | 265 | 0.0302 | 0.0105 | 0.0163 | 1.86 |\n| 4.0 | 413 | 0.0073 | 0.0042 | 0.0049 | 1.47 |\n| 5.0 | 303 | 0.0033 | 0.0033 | 0.00036 | 9.27 |\n\nRatios scatter non-monotonically (0.26–9.3); most bins underpowered at ±σ ≈ 100% relative; three bins sit where ρ predicts below MC reach. The toy cost model C(B) = π(B)/ρ(u) + π(B)² fits d(log₂C)/d(log₂N) = 0.024 — flat, cannot place the stratum.\n\n### Two real findings inside the null\n1. **The leading-term Dickman approximation is invalid at small u**: exp(−u(ln u + ln ln u − 1)) gives 0.561 at u = 3 where true ρ(3) = 0.0487 — **a 12× error**, persisting through u = 6. Proper numerical integration implemented (Euler 5×10⁻⁴ on uρ′(u) = −ρ(u−1)). Any informal smoothness argument using the leading-term form below u ≈ 8 is quantitatively meaningless.\n2. **x²−N smoothness is not random-integer smoothness at toy scale**: even against correct ρ the ratios are non-monotone — consistent with the quadratic-character constraint on prime divisors of x²−N, whose O(1) corrections stabilize only asymptotically.\n\n### Method ledger\n(1) First design sampled x in a width-10³ window (x²−N ~ N^{1/2+}-scale) while computing u at N-scale — the entire first comparison mis-binned (caught by empirical-above-predicted anomalies). (2) A pre-written success VERDICT over contradicting data — replaced by data-computed output before claims. (3) Trailing-quote syntax break caught by ast.parse.\n\n### What this decides\nThe landscape stands at **three measured strata plus one unmeasured**. Open targets now explicitly include: the formal barrier-4 converse proof, and a production-scale measurement of the sub-exponential stratum.\n\nNow 425 experiments. Assessment v201. Paper 90.\n",
     "domain_bridges": [],
     "domains": [
@@ -2742,7 +2742,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T16:52:15.030330+00:00",
     "title": "FACT round-26 #3 — SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest inconclusive (paper 90)"
   },
@@ -46995,6 +46995,99 @@
     "status": "available",
     "timestamp": "2026-09-18T16:20:59.095232+00:00",
     "title": "Symmetry-Enforced Joint Factor Blindness"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.ShorPeakCertificationRamp",
+      "Shared.QubitSampleExchangeLaw"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Shor measurement distribution concentrates on the r peaks with Fejér-type mass. Conjecture: each certifiable peak carries at least 4/(pi^2 r) of the total mass, so the physically weighted certification probability is at least (4/pi^2) times the uniform-model rate #certPeaks/r proved in this cycle. This upgrades the exact combinatorial ramp to a statement about the real quantum channel.\n\nFor q, r with gcd(q,r)=1 and any peak j whose nearest grid point k satisfies |k/q - j/r| <= 1/(2r^2), the Shor outcome probability P(k) is at least 4/(pi^2 r); consequently the certification probability is at least (4/pi^2)*(#certPeaks q r)/r.\n\nFormalise the Dirichlet kernel sum in Lean, prove the single-peak bound |sin(M x)/sin(x)|^2 >= (2M/pi)^2 for |x| <= pi/(2M), and sum over the certifiable peaks counted by card_certPeaks.\n\nThe proved ramp and exchange law transfer verbatim to the physical distribution, with a single absolute constant.\n\nThe uniform peak model overstates the rate for some family of periods, and the exchange law would need a period-dependent correction.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_4877",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Reduce to the one-variable inequality sin(t) >= 2t/pi on [0, pi/2], then bound the Dirichlet kernel at distance at most q/(2r^2) from a peak and combine with the exact peak count.",
+    "research_mode": "team",
+    "source_exp_id": "24d71196",
+    "status": "available",
+    "timestamp": "2026-09-18T19:06:23.584315+00:00",
+    "title": "Dirichlet-Mass Domination of the Uniform Peak Model"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.ShorInformativeRamp",
+      "Shared.ShorRampSharpness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This cycle proves that the number of informative certificates equals twice the number of totatives of r in [1, floor(q/2r)]. Conjecture: that count is (phi(r)/r)*B*(1+o(1)) uniformly for B >= r^epsilon, so the informative ramp is the full ramp scaled by phi(r)/r. The quantum resource bound then inherits a sieve error term.\n\nFor every epsilon > 0 there is delta > 0 such that whenever B = floor(q/(2r)) >= r^epsilon, the totative count of r in [1,B] is (phi(r)/r)*B + O(B^(1-delta)).\n\nFormalise the Legendre sieve with the Mobius function over r.primeFactors and bound the error by 2^omega(r); compare against the exact counts tabulated in the Lab Notes of Shared.ShorInformativeRamp.\n\nThe informative ramp is exactly the ramp thinned by phi(r)/r, so smooth periods cost a predictable constant factor in samples.\n\nPeriods with many small prime factors have an anomalously thin informative ramp, and the trade-off is not uniform in r.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_4878",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Inclusion-exclusion over the squarefree divisors of r, with the standard 2^omega(r) error, plus the divisor bound to control omega(r).",
+    "research_mode": "team",
+    "source_exp_id": "24d71196",
+    "status": "available",
+    "timestamp": "2026-09-18T19:06:24.062345+00:00",
+    "title": "Short-Interval Sieve Law for the Informative Ramp"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.ShorInformativeRamp",
+      "Shared.ShorPeakCertificationRamp"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Below q = 2r no outcome admits a numerator coprime to r, so the obstruction is deterministic and combinatorial rather than statistical. Conjecture: this makes the linear wall immune to any post-processing that outputs a fraction with denominator r, including lattice reduction and classical period verification.\n\nIf q < 2r and gcd(q,r) = 1, then for every measurement outcome k in [0,q) and every j with 0 < j < r and gcd(j,r) = 1 one has |k/q - j/r| > 1/(2r^2); hence no algorithm whose certificate is such a fraction succeeds at width below log2(2r).\n\nAlready proved for the convergent criterion as deterministic_failure_below_two_mul; extend by formalising a general certificate predicate and showing the same emptiness statement.\n\nShor's register cannot be shortened below log2 r + 1 bits by any amount of classical post-processing, giving a hard floor to the qubit/sample trade.\n\nSome post-processing recovers the period from non-coprime numerators, and the floor moves down.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_4879",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "The residue argument: q < 2r forces the certifying residue block to be the single residue 0, which forces r | j and hence j = 0.",
+    "research_mode": "team",
+    "source_exp_id": "24d71196",
+    "status": "available",
+    "timestamp": "2026-09-18T19:06:24.452068+00:00",
+    "title": "Post-Processing-Free Linear Wall"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.QubitTradeResourceSurface",
+      "Shared.QubitTradeCornerSeparation",
+      "Shared.QubitSampleExchangeLaw"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The sample axis and the register axis are fungible with unit slope, while the base re-draw axis of the earlier resource-surface work is not: the optimum sits at the full-register corner. Conjecture: an axis is fungible with the register width exactly when it enters the exchange coordinate c*s*2^t multiplicatively, and is a threshold axis otherwise.\n\nFor a resource surface P = 1-(1-q0*f(a))^(n) with cost g(a)*n, the 50 percent contour is a straight line in (log a, log n) if and only if f is multiplicative along the axis; otherwise the cost-optimal configuration is an endpoint.\n\nInstantiate the framework of Shared.QubitTradeResourceSurface with further axes (gate error rate, modulus size) and check whether contour_band-style two-sided bounds hold.\n\nA single criterion classifies every resource axis of a quantum algorithm as tradeable or not.\n\nFungibility is a property of the particular arithmetic of period finding rather than of the probabilistic shape of the surface.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_4880",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Compare the union bound and the reverse Bernoulli bound along each axis; multiplicativity is exactly what makes both rails scale identically.",
+    "research_mode": "team",
+    "source_exp_id": "24d71196",
+    "status": "available",
+    "timestamp": "2026-09-18T19:06:24.917776+00:00",
+    "title": "Fungible Versus Threshold Axes in Resource Surfaces"
   },
   {
     "ambition_level": "extension",

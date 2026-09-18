@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "575f19d4",
-      "domain": "Logic",
-      "key_insight": "# Future directions — u-hardening, rank resolution, and threshold reweighting\n\nDerived from the three verified files of this cycle:\n\n* `Catalog/Logic/UHardenResolutionSplit.lean` — the rank-grid model",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 54,
-      "timestamp": "2026-09-04T00:08:31",
-      "title": "FACT round-45 #2 — U-HARDEN: the u-sensitivity is mostly intrinsic, partly resolution (paper 168)"
-    },
-    {
       "cycle_id": "63061d5b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — after the κ-sufficiency / scale-stability cycle\n\nThis cycle turned the three experimental verdicts into theorems about an explicit model whose\ncell distribution is *exactly* arit",
@@ -499,19 +489,19 @@
       "theorem_count": 107,
       "timestamp": "2026-09-18T16:21:14",
       "title": "FACT round-27 #2 — BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marg"
+    },
+    {
+      "cycle_id": "24d71196",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after QUBIT-TRADE2 (the fungibility ramp)\n\n## What this cycle settled\n\nThree Lean files now carry the qubit/sample trade-off of Shor period finding as\ntheorems rather than measur",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-09-18T19:06:40",
+      "title": "FACT round-25 #1 — QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 8"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "194ffa72",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — from the exact off-resonance window formula\n\nAll results referenced below live in `Catalog/NumberTheory/OffResonanceWindow.lean`,\nwhich compiles with **zero `sorry`** and only th",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-24T17:48:11",
-      "title": "Exact off-resonance window formula"
-    },
     {
       "cycle_id": "a3cbf41f",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 107,
       "timestamp": "2026-09-18T16:21:14",
       "title": "FACT round-27 #2 — BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marg"
+    },
+    {
+      "cycle_id": "24d71196",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after QUBIT-TRADE2 (the fungibility ramp)\n\n## What this cycle settled\n\nThree Lean files now carry the qubit/sample trade-off of Shor period finding as\ntheorems rather than measur",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-09-18T19:06:40",
+      "title": "FACT round-25 #1 — QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 8"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1494cb60",
-      "domain": "Applications",
-      "name": "card_orbits_sum",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "1494cb60",
-      "domain": "Applications",
-      "name": "meaningLoss_sum",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "1494cb60",
-      "domain": "Applications",
-      "name": "meaningLoss_eq_zero_iff_rigid",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a118b9c6",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "info_empty",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "24d71196",
+      "domain": "Shared",
+      "name": "one_sub_pow_mul_le_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "24d71196",
+      "domain": "Shared",
+      "name": "succProb_half_of_one_le",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "24d71196",
+      "domain": "Shared",
+      "name": "succProb_lt_half",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-18T16:21:14",
+  "last_updated": "2026-09-18T19:06:40",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "9524045a",
-        "quality": 0.78,
-        "theorems": 67,
-        "title": "FACT round-88 #1 — LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED — exp570'"
-      },
-      {
         "cycle_id": "342e465c",
         "quality": 0.82,
         "theorems": 97,
@@ -3947,6 +3941,12 @@
         "quality": 0.72,
         "theorems": 38,
         "title": "FACT round-25 #3 — QUBIT-TRADE4: the three-axis resource surface, standard-corne"
+      },
+      {
+        "cycle_id": "24d71196",
+        "quality": 0.82,
+        "theorems": 83,
+        "title": "FACT round-25 #1 — QUBIT-TRADE2: one register bit is worth one sample, the fungi"
       }
     ],
     "Tropical": [
