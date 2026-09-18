@@ -918,6 +918,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b5786d61 (Q=0.840), which proved 107 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-27 #2 \u2014 BATTERY-CAPACITY (paper 92, /tmp/exp_batterycapacity.py, /tmp/r27n2b.log)\n\n**Verdict name: SYNERGY-COMPOUNDS.**\n\n### Result\nThe 4-field joint channel (CRT modulus 31\u00b723\u00b79\u00b78 = 51 336) on one shared semiprime population carries **I = 8.2246 bits against the additive prediction \u03a3 ",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_b5786d61_84b2911b",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "b5786d61",
+    "status": "available",
+    "timestamp": "2026-09-18T16:21:14.821398+00:00",
+    "title": "Deepening: FACT round-27 #2 \u2014 BATTERY-CAPACITY: synergy compounds, the 4-field joint more t"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -1984,21 +1998,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-21T15:49:12.720386+00:00",
     "title": "FACT round-25 #1 \u2014 QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 85)"
-  },
-  {
-    "consumed_by_exp_id": "b5786d61",
-    "description": "## FACT round-27 #2 \u2014 BATTERY-CAPACITY (paper 92, /tmp/exp_batterycapacity.py, /tmp/r27n2b.log)\n\n**Verdict name: SYNERGY-COMPOUNDS.**\n\n### Result\nThe 4-field joint channel (CRT modulus 31\u00b723\u00b79\u00b78 = 51 336) on one shared semiprime population carries **I = 8.2246 bits against the additive prediction \u03a3 marginals = 3.9099 \u2014 synergy +4.31 bits, more than doubling it**, within 1.3 bits of the joint-label-entropy ceiling (9.5276).\n\n### The order decomposition \u2014 synergy is genuinely higher-order\n| order | total synergy |\n|---|---|\n| k = 2 (6 pairs) | +0.244 |\n| k = 3 (4 triples) | **+3.822** |\n| k = 4 (the battery) | **+4.315** |\n\nPairwise synergies \u2014 the entire content of paper 91's pairwise table \u2014 are only **6% of the total**. Mechanism: N mod 31 alone sees one residue of pq mod 31; the CRT-joint modulus sees all four residues simultaneously (15.8 log\u2082 units), against which each dial's pair labels become nearly fully determined.\n\n### Honest caveat\nThe which-factor statistic on the full joint code reads 0.0469 bits \u2014 above every pairwise wall. Suspected sparse-plug-in bias (tens of thousands of residue-columns vs 30k samples \u2014 the paper-70/83 regime), not signal; the factor-blindness claim stands on the well-conditioned strata plus this analysis.\n\n### What revises what\nPaper 91's \"neither additive nor comonotone\" survives; its implicit scale does not: **batteries are super-additive systems whose capacity grows toward the joint label-entropy ceiling with dominant higher-order terms**. For the converse, this raises the stakes on no-pinning: a k-dial battery carries far more symmetric capacity than marginal bookkeeping suggests \u2014 every bit still trace-routed and factor-blind, but the capacity arithmetic must be done jointly (exactly this machinery), never marginally.\n\nNow 427 experiments. Assessment v203. Paper 92.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3427",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T16:52:15.027841+00:00",
-    "title": "FACT round-27 #2 \u2014 BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marginals (paper 92)"
   },
   {
     "consumed_by_exp_id": "a55a0103",
@@ -15031,6 +15030,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The budget proved here bounds synergy by the total unused per-dial code capacity. Characterising its equality cases would convert the bound into a diagnostic: which batteries actually spend their whole code budget on synergy.\n\nEquality in synergy \u2264 \u03a3 (dial code entropy \u2212 dial capacity) holds iff the dial readings are jointly independent and the joint code determines the label.\n\nTrack the two inequalities used (code ceiling and subadditivity of joint entropy) and prove their equality cases in the finitary calculus; check on the parity batteries, where both are tight.\n\nMeasured shortfall against the budget becomes a quantitative measure of dial redundancy.\n\nSome other mechanism can saturate the budget, revealing a further invariant of batteries.",
+    "domains": [],
+    "id": "fd_4876",
+    "priority_score": 0.5923684210526317,
+    "research_mode": "team",
+    "source_exp_id": "b5786d61",
+    "status": "available",
+    "timestamp": "2026-09-18T16:20:59.698250+00:00",
+    "title": "Equality Cases of the Synergy Budget"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The finite-key machinery here is parametric in the rational rate rho and in the threshold zero Q*, so a certified positive rate for two-way post-processing above 11 % QBER would immediately extend the whole parameter table and the two-sided break-even law. The conjecture is that the same integer-certificate technique certifies positivity of the advantage-distillation rate up to roughly 20 % QBER.\n\nFor the two-way advantage-distillation rate r\u2082(Q), there are integer certificates proving r\u2082(Q) > 0 for every rational Q \u2264 0.19, and the corresponding break-even block sizes obey the same \u0398((Q\u2082*\u2212Q)^{-2}) law.\n\nDefine r\u2082 in Lean, derive its rational form analogous to secureKeyRate_ratio_eq, and search for the optimal pair (m, num/den) of the hybrid certificate at Q = 0.15, 0.18, 0.19.\n\nThe certified QKD parameter table extends past the one-way threshold, and the deployment moral (finite-key corrections dominate) is shown to be threshold-independent.\n\nTwo-way protocols have a genuinely different finite-key structure, isolating where the O(\u221an) accounting of this thread stops applying.",
     "domains": [],
     "id": "fd_3845",
@@ -15499,6 +15510,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A code with far more residue columns than samples reads a spurious positive information. The conjecture bounds that bias by a function of the column-to-sample ratio, which would retire the honest caveat of paper 92 about the 0.0469-bit which-factor reading. The finitary calculus applies verbatim because the plug-in estimate is the exact information of the empirical population.\n\nFor a statistic with R columns measured on N samples, the plug-in trace information exceeds the population value by at most log2(1 + R/N) + o(1).\n\nFormalise the empirical-population reading, bound the empirical joint entropy above by the occupancy entropy, and compare against simulations at R/N ratios spanning the paper-70/83 regime.\n\nThe 0.0469-bit reading is bias, and factor-blindness survives on the full joint code, not just on well-conditioned strata.\n\nThe full joint code carries genuine which-factor signal, which would contradict the no-pinning programme.",
+    "domains": [],
+    "id": "fd_4874",
+    "priority_score": 0.5913414634146342,
+    "research_mode": "team",
+    "source_exp_id": "b5786d61",
+    "status": "available",
+    "timestamp": "2026-09-18T16:20:58.504839+00:00",
+    "title": "Sparse Plug-In Bias Bound for Residue Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Markoff binary tree embeds depth-preservingly in the Berggren ternary tree, but the arithmetic sizes grow at different exponential rates, silver versus golden. The conjecture quantifies the resulting distortion by the ratio of the two logarithmic growth rates.\n\nThe embedding is an isometry for the word metric and has arithmetic distortion exactly log(3+2*sqrt 2)/log((3+sqrt 5)/2).\n\nFormalize the limits log(bHyp n)/n and log(markoffSpine n)/n and compute their ratio.\n\nA precise metric dictionary between the two trees, replacing the false isometric transfer.\n\nGrowth along generic branches differs from growth along spines, revealing branch-dependent exponents.",
     "domains": [],
     "id": "fd_3396",
@@ -15652,6 +15675,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-26T01:59:57.780019+00:00",
     "title": "Bulk-Exponent Readout from Two Truncations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This cycle proved the two extreme order profiles: purely additive and purely order-k. The conjecture is that everything between is realisable, so that an observed order decomposition constrains nothing beyond the ceilings. Parity on sub-cubes supplies pure order-r atoms and products add profiles.\n\nFor every k and every nonnegative (s_2,\u2026,s_k) with \u03a3 s_r \u2264 Hb L there is a k-dial binary battery whose total synergy at each order r equals s_r.\n\nConstruct product batteries of parity atoms of each order, compute their order profiles with the finitary calculus, and prove closure under products and scaling by population duplication.\n\nThe pairwise tables of papers 91 and 92 carry no structural information beyond the ceilings.\n\nOrder profiles are constrained, and the constraint is a new invariant of dial batteries.",
+    "domains": [],
+    "id": "fd_4873",
+    "priority_score": 0.5901612903225807,
+    "research_mode": "team",
+    "source_exp_id": "b5786d61",
+    "status": "available",
+    "timestamp": "2026-09-18T16:20:57.857115+00:00",
+    "title": "Order-Profile Realisability Cone"
   },
   {
     "consumed_by_exp_id": "",
@@ -32578,6 +32613,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-18T01:38:48.553976+00:00",
     "title": "Quantile Optimality of the Standard Corner"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The capacity deficit of a battery against the joint label-entropy ceiling should contract by a constant factor with each dial that separates a fixed fraction of confused pairs. The approach is to identify the deficit with the conditional entropy proved monotone in this cycle and to convert a separation rate into a multiplicative decay. It would turn the measured 8.2246-vs-9.5276 gap into a predictive law.\n\nIf each added dial separates at least a fraction c of the pairs confused by the current sub-battery, then Hb L - info (S \u222a {i}) \u2264 (1 - c) (Hb L - info S).\n\nFormalise the deficit as condH, prove a one-step contraction from a fibre-splitting hypothesis, and check the rate numerically on CRT batteries of increasing width.\n\nBattery width can be sized in advance for a target capacity, and the round-27 shortfall becomes a measurement of the separation rate.\n\nCapacity growth is not rate-controlled by separation alone, so some dials add fibres without reducing label uncertainty.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_4872",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b5786d61",
+    "status": "available",
+    "timestamp": "2026-09-18T16:20:57.236833+00:00",
+    "title": "Geometric Ceiling-Approach Law for CRT Dial Batteries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Super-additivity moves capacity about symmetric labels but should never create capacity about the antisymmetric which-factor label. The conjecture localises blindness in a symmetry of the population that fixes all dial readings and swaps the label, and propagates it to every sub-battery by data processing.\n\nIf an involution of the population fixes every dial reading and exchanges the two factors, then the joint capacity of the whole battery about the which-factor label is 0.\n\nFormalise the involution hypothesis, prove condH equals the label entropy for the joint code, and instantiate on the CRT semiprime battery.\n\nNo-pinning holds jointly, not merely dial-by-dial, closing the converse direction of the programme.\n\nSome battery pins the factor, and the symmetry hypothesis identifies exactly where it fails.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4875",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b5786d61",
+    "status": "available",
+    "timestamp": "2026-09-18T16:20:59.095232+00:00",
+    "title": "Symmetry-Enforced Joint Factor Blindness"
   },
   {
     "consumed_by_exp_id": "",

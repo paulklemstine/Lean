@@ -151019,7 +151019,7 @@
       "depth_estimate": 3,
       "description": "The safe KV bit width is a function of bits minus log2 of the context length, because n logits inside a bounded window force a minimum consecutive gap of R/n. The formal criterion SafeBits A R n b is invariant under (n, b) -> (2n, b+1), so the cliff must translate along the context axis at exactly one bit per doubling. This turns an untested limit of NET-92 into a sharp prediction.\n\nFor a fixed model, the minimal quality-preserving KV bit width satisfies b*(2n) = b*(n) + 1 up to one bit, for all context lengths n in the trained range.\n\nRerun the NET-92 arm grid at ctx 4096, 8192 and 32768 and locate the free/annihilated bracket; compare with the theorem SafeBits_ctx_pow and minSafeBits_double.\n\nKV precision budgets must be specified per context length, and long-context deployments need 2-3 more KV bits than the ctx-2048 measurement suggests.\n\nThe logit window is not bounded independently of context (logit norms grow with n), which would itself be a strong structural finding about attention.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -154712,7 +154712,7 @@
       "depth_estimate": 3,
       "description": "Invert the robustness bound: a mixture with relative composition drift δ can shrink a relative excess by at most the factor (1-δ)/(1+δ), so absorbing amplitude A requires δ ≥ A/(2+A). This turns a single-geometry verdict into a scale-free necessary condition on any future mixture model. It is a two-line consequence of mixPred_drift_bounds but has not been stated as a design rule.\n\nAny cell mixture absorbing a relative excess A must exhibit maximal per-cell composition drift δ ≥ A/(2+A); for A = 0.1774 this is δ ≥ 0.0815, thirty times the measured 0.00269.\n\nFormalize as a theorem in Shared.MixtureRateDialBaseline: from the two-sided drift bounds derive the contrapositive of H0_excess_survives_measured with δ as a variable.\n\nEvery future mixture baseline can be rejected or accepted from its measured drift alone, before fitting.\n\nThe two-sided drift bound is not tight and some non-uniform drift pattern absorbs more than (1-δ)/(1+δ) allows.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -157550,7 +157550,7 @@
       "depth_estimate": 3,
       "description": "Selection stability is gated by the proved 2*eps score margin and the threshold is sharp. Adding a distribution on the top-k boundary gap converts the gate into an expected cost, and separates the two NET-83 mechanisms by their order in the quantization scale.\n\nIf the top-k boundary gap has density bounded by C near 0, the expected flip contribution to the interaction is at most 2*C*eps*diam(values); flips dominate for small eps (linear) and noise dominates for large eps (quadratic).\n\nFormalise a finite gap ensemble, bound the flip probability by the contrapositive of selection_stable_of_margin, and bound the loss on the flip event by the value diameter.\n\nA quantitative safety rule for 4-bit quantization at a given attention budget.\n\nFlip costs are superlinear, implying heavy-tailed sensitivity of sparse attention to quantization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -158988,7 +158988,7 @@
       "depth_estimate": 3,
       "description": "Interpolate the proved geometric and Pareto knee bounds by a single power-law family: if the residual after r+j keys decays like R·j^(-α), the knee should satisfy k* - r ≍ (R/(1-τ))^(1/α). This turns per-domain tail-shape analysis into a law with one measurable exponent.\n\nFor every attention profile whose residual satisfies R/(j+1)^α ≤ 1 - cum(r+j) ≤ R'/(j+1)^α with α ≥ 1, the knee obeys c₁(R/(1-τ))^(1/α) ≤ k* - r ≤ c₂(R'/(1-τ))^(1/α) with absolute constants c₁, c₂.\n\nFormalise the α-indexed staged profile in Lean and prove both inequalities; check the α → ∞ limit reduces to the existing geometric bound.\n\nThe knee becomes predictable from a single fitted exponent per domain, replacing the current correlational reporting.\n\nThe knee depends on more than the leading tail exponent, and any per-domain summary must retain at least two tail parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -159075,7 +159075,7 @@
       "depth_estimate": 3,
       "description": "The proved invariance of the knee under modifications of the capture curve below tolerance is a monoid action on profiles. Classify the invariants of that action to determine exactly which head statistics can appear in any knee law.\n\nEvery function of an attention profile that is invariant under all tolerance-preserving head modifications factors through the residual curve beyond the head budget; in particular no function of the top-r mass alone is invariant unless it is constant.\n\nDefine the monoid of admissible head modifications in Lean, prove the knee is invariant, and prove the factorisation for the induced quotient.\n\nHead statistics are ruled out a priori as knee predictors, replacing correlational refutation with a structural one.\n\nSome head statistic survives the action and becomes the natural candidate predictor.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -159201,7 +159201,7 @@
       "depth_estimate": 3,
       "description": "The floor law gives rho^2 > 1 - a^2 for modal mass fraction a, and a 15:1 profile violates the 0.53 floor. The two bounds bracket the cliff in the window 0.848 to 0.938 of modal mass. We conjecture the critical value is exactly sqrt(1 - 0.53^2), attained by two-block profiles.\n\nsup over profiles with modal fraction a of spearmanSq equals 1 - a^2 + O(1/n), and inf equals 1 - a^2 - O(1/n); hence the 0.53 floor holds iff a <= sqrt(1 - 0.2809) = 0.848002...\n\nProve the two-block family [an, (1-a)n] has spearmanSq tending to 1 - a^2, and combine with mass_fraction_floor.\n\nThe robustness envelope acquires a sharp boundary expressible purely in modal mass, independent of bitlen and cap.\n\nThe floor depends on more than the modal block and the envelope needs a finer invariant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning"
       ],
@@ -160261,7 +160261,7 @@
       "depth_estimate": 3,
       "description": "Replication at 1.5B parameters, at longer contexts, and across a broader corpus, to establish\nwhether the retention bands and the size of the gap are stable properties of trained attention or\nartefacts of one model and one context length.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning"
       ],
@@ -167345,7 +167345,7 @@
       "depth_estimate": 3,
       "description": "Towers of height L + log2 L - 1 collapse to depth L with width L+1 (polynomial size), while height L^2+4 forces width at least 2^(L-1)-1. The conjecture is a sharp dichotomy at height Theta(L log L): polynomial-size depth-L approximation is possible exactly when k = O(L log L).\n\nFor every polynomial p there is L0 such that for L >= L0 the tower tri^[k] is approximable within 1/4 by a depth-L network of width p(L) if and only if k <= C * L * log2 (p(L)) for an absolute constant C.\n\nThe forward direction is dyad_tower_isNet with 2^c+1 = p(L); the converse follows from relu_oscillation_bound. Formalise as a single iff, tracking the additive constants.\n\nThe depth hierarchy for sawtooth witnesses is completely characterised by the ratio k/(L log w).\n\nThere are witnesses of intermediate height whose complexity escapes oscillation counting, forcing a new lower-bound technique.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -169402,7 +169402,7 @@
       "depth_estimate": 3,
       "description": "The canonical approximation approxDec converges with modulus equal to any preimage of the received record. We conjecture that computable decodability is exactly computable domination of that modulus, and that error density can still vanish when domination fails. This isolates growth of least preimages as the single quantitative invariant.\n\nA computable channel admits a total computable decoder iff the least-preimage function of its range is dominated by a computable function; and there is a channel where domination fails while the budget-N error density tends to zero.\n\nFormalise the least-preimage modulus, prove the equivalence with exists_computable_selector_of_bounded, and construct the density example by a slow enumeration.\n\nDecodability becomes a purely growth-rate condition, computable from the enumeration speed of the range.\n\nDensity and domination are independent, meaning accuracy and definability remain genuinely separate axes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "MachineLearning"
       ],
@@ -173128,7 +173128,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 078881d5 (Q=0.840), which proved 5 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-24 #5 — D₅-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** — and the round invented its own object: no literature polynomial was ne",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "MachineLearning"
       ],
@@ -178088,7 +178088,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 5c150b3f (Q=0.830), which proved 188 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Domain**: Pythagorean <-> Algebra\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid — integral matrices preserving the Lorentz form a²+b²−c², living on the null cone — is a shadow of the arithmetic of the even Lorentzian Leech lattice II(25,1), the 26-dimensional lattice at the heart of Conway's \"",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "MachineLearning"
       ],
@@ -182448,7 +182448,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle aa0d333b (Q=0.830), which proved 145 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S₅ via x⁵−x−1** (true disc **2869 ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -183153,6 +183153,46 @@
       "thread_id": "",
       "timestamp": "2026-08-30T12:55:29.031428+00:00",
       "title": "Deepening: Test curvature only after identifiability"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle b5786d61 (Q=0.840), which proved 107 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-27 #2 — BATTERY-CAPACITY (paper 92, /tmp/exp_batterycapacity.py, /tmp/r27n2b.log)\n\n**Verdict name: SYNERGY-COMPOUNDS.**\n\n### Result\nThe 4-field joint channel (CRT modulus 31·23·9·8 = 51 336) on one shared semiprime population carries **I = 8.2246 bits against the additive prediction Σ ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "MachineLearning"
+      ],
+      "github_issue": 0,
+      "id": "push_b5786d61_84b2911b",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.94,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "b5786d61",
+      "source_path": "FACT round-27 #2 — BATTERY-CAPACITY: synergy compounds, the 4-field joint more t",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-18T16:21:14.821398+00:00",
+      "title": "Deepening: FACT round-27 #2 — BATTERY-CAPACITY: synergy compounds, the 4-field joint more t"
     },
     {
       "ambition_level": "extension",

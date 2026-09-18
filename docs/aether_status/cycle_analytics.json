@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-18T01:39:03.451483+00:00",
+  "last_updated": "2026-09-18T16:21:16.149956+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75360,6 +75360,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-18T01:39:03.106449+00:00",
       "title": "FACT round-25 #3 \u2014 QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "MachineLearning",
+      "duration_seconds": 15941.27378487587,
+      "end_time": 1789748441.1338806,
+      "files_integrated": 4,
+      "job_id": "b5786d61",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.84,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.553,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.84,
+        "novelty": 0.84,
+        "proof_depth": 0.84,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1789732499.8600957,
+      "strategy_count": 0,
+      "theorem_count": 107,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 95,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-18T16:21:15.697267+00:00",
+      "title": "FACT round-27 #2 \u2014 BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marg"
     }
   ]
 }

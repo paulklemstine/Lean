@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "60926357",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — after Cycle 3 (silent-error constants)\n\n## Where the thread stands\n\nCycle 2 proved that one derandomized key can control failure and silent\ncorruption at once, with constant `2`",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-09-04T00:08:12",
-      "title": "Conjecture C (sharper silent-error constant) — PROVED.*"
-    },
-    {
       "cycle_id": "575f19d4",
       "domain": "Logic",
       "key_insight": "# Future directions — u-hardening, rank resolution, and threshold reweighting\n\nDerived from the three verified files of this cycle:\n\n* `Catalog/Logic/UHardenResolutionSplit.lean` — the rank-grid model",
@@ -499,19 +489,19 @@
       "theorem_count": 38,
       "timestamp": "2026-09-18T01:39:02",
       "title": "FACT round-25 #3 — QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
+    },
+    {
+      "cycle_id": "b5786d61",
+      "domain": "MachineLearning",
+      "key_insight": "# FUTURE DIRECTIONS — after BATTERY-CAPACITY (round 27 #2, paper 92)\n\n## What this cycle established\n\nFormalised in `Catalog/MachineLearning/BatterySynergy/` (all `sorry`-free, only\nthe standard axiom",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 107,
+      "timestamp": "2026-09-18T16:21:14",
+      "title": "FACT round-27 #2 — BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marg"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a331ba56",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — complementation symmetry of framed puzzles\n\nThis cycle settled the mission conjecture in a stronger and sharper form.  What\nwas proved (all sorry-free, in `Catalog/Novelty/`):\n\n*",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 117,
-      "timestamp": "2026-08-24T15:58:01",
-      "title": "Complementation as a free involution"
-    },
     {
       "cycle_id": "194ffa72",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 38,
       "timestamp": "2026-09-18T01:39:02",
       "title": "FACT round-25 #3 — QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
+    },
+    {
+      "cycle_id": "b5786d61",
+      "domain": "MachineLearning",
+      "key_insight": "# FUTURE DIRECTIONS — after BATTERY-CAPACITY (round 27 #2, paper 92)\n\n## What this cycle established\n\nFormalised in `Catalog/MachineLearning/BatterySynergy/` (all `sorry`-free, only\nthe standard axiom",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 107,
+      "timestamp": "2026-09-18T16:21:14",
+      "title": "FACT round-27 #2 — BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marg"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b4f715c2",
-      "domain": "Shared",
-      "name": "filt_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "b4f715c2",
-      "domain": "Shared",
-      "name": "filt_eq_pow",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "b4f715c2",
-      "domain": "Shared",
-      "name": "mem_filt",
-      "quality": 0.78
-    },
     {
       "cycle_id": "1494cb60",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "surface_cost_exponential_in_shave",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "b5786d61",
+      "domain": "MachineLearning",
+      "name": "info_nonneg",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "b5786d61",
+      "domain": "MachineLearning",
+      "name": "MI_eq_zero_of_const",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "b5786d61",
+      "domain": "MachineLearning",
+      "name": "info_empty",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-09-18T01:39:02",
+  "last_updated": "2026-09-18T16:21:14",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "7ae2917a",
-        "quality": 0.82,
-        "theorems": 63,
-        "title": "Composition of PCP locality with commitment hiding"
-      },
-      {
         "cycle_id": "17477782",
         "quality": 0.9,
         "theorems": 22,
@@ -3575,6 +3569,12 @@
         "quality": 0.83,
         "theorems": 145,
         "title": "FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS: the largest entropy collapses, the p"
+      },
+      {
+        "cycle_id": "b5786d61",
+        "quality": 0.84,
+        "theorems": 107,
+        "title": "FACT round-27 #2 — BATTERY-CAPACITY: synergy compounds, the 4-field joint more t"
       }
     ],
     "Novelty": [
