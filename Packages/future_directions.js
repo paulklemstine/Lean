@@ -2001,16 +2001,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-27 #2 \u2014 BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marginals (paper 92)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a55a0103",
     "description": "## FACT round-27 #1 \u2014 DIAL-INDEPENDENCE (paper 91, /tmp/exp_dialindependence.py, /tmp/r27n1c.log)\n\n**Verdict name: SYNERGY-AND-OVERLAP.**\n\n### Result\nThe battery space is **neither additive nor comonotone**. The pre-stated coprime-conductor additivity hypothesis was refuted at the first pair, and the refutation is directional:\n\n| battery | I(joint) | I\u2081 + I\u2082 | \u0394 |\n|---|---|---|---|\n| S\u2083a@31 \u00d7 S\u2083b@23 | 2.1314 | 2.0024 | **+0.129 SYNERGY** |\n| A\u2084@9 \u00d7 D\u2084@8 | 1.9125 | 1.9076 | **+0.005 near-additive** |\n| S\u2083a@23 \u00d7 S\u2083b@23 (shared disc \u221223) | 1.0104 | 2.0024 | **\u22120.992 OVERLAP** |\n\n### Mechanism\nThe additivity argument treated dial labels as independent draws. They are not: both dials read the **same underlying (p, q)**, so their label entropies are population-correlated, and the joint modulus (CRT-seeing p mod m\u2081 AND q mod m\u2082 simultaneously) extracts combinations neither marginal reaches. Synergy is structure-dependent \u2014 rich-type pairs synergize (+0.129), lossy-type pairs barely (+0.005). Shared conductor structure makes dials comonotone: two \u221223 cubics share essentially their entire channel through the common quadratic character (**overlap 0.992 bits**) \u2014 the quantitative form of \"same subfield = same dial\".\n\n### Verification discipline\nMarginals re-verified against papers 80/82 BEFORE any joint measurement (1.0012 / 1.0012 / 0.4733 / 1.4342 \u2014 every prior value reproduced). Which-factor walls \u2264 0.0016 across every joint channel: all synergized and overlapping content remains symmetric, trace-routed, factor-blind.\n\n### Method ledger\nShared-pool ramification bug caught pre-launch (index draws including other fields' ramified primes; fixed by union exclusion {31, 23, 2, 3}); the naive additivity gate converted into a recorded synergy measurement rather than silently loosened.\n\n### What this decides\nThe converse's no-pinning scope covers product batteries with their synergy excesses included: k dials give more than k\u00b7(marginal) for structurally rich pairs and less for shared-structure pairs \u2014 all computable by this exact joint machinery, all still on the traced side of barrier 4.\n\nNow 426 experiments. Assessment v202. Paper 91.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3428",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T16:52:15.029147+00:00",
     "title": "FACT round-27 #1 \u2014 DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
   },
