@@ -1459,6 +1459,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a55a0103 (Q=0.820), which proved 96 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-27 #1 — DIAL-INDEPENDENCE (paper 91, /tmp/exp_dialindependence.py, /tmp/r27n1c.log)\n\n**Verdict name: SYNERGY-AND-OVERLAP.**\n\n### Result\nThe battery space is **neither additive nor comonotone**. The pre-stated coprime-conductor additivity hypothesis was refuted at the first pair, and th",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_a55a0103_71d024a7",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a55a0103",
+    "status": "available",
+    "timestamp": "2026-09-18T23:40:33.889426+00:00",
+    "title": "Deepening: FACT round-27 #1 — DIAL-INDEPENDENCE: synergy and overlap in the battery space ("
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle cb6515e1 (Q=0.820), which proved 95 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the seven canonical interval representatives formalized in `SonicCounterpointCategory.lean`, the reflexive-transitive closure of `CanonicalMotion` is total: every interval reaches every other interval. A single unreachable ordered pair refutes this claim.",
     "domain_bridges": [],
     "domains": [
@@ -2711,25 +2730,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "a55a0103",
-    "description": "## FACT round-27 #1 — DIAL-INDEPENDENCE (paper 91, /tmp/exp_dialindependence.py, /tmp/r27n1c.log)\n\n**Verdict name: SYNERGY-AND-OVERLAP.**\n\n### Result\nThe battery space is **neither additive nor comonotone**. The pre-stated coprime-conductor additivity hypothesis was refuted at the first pair, and the refutation is directional:\n\n| battery | I(joint) | I₁ + I₂ | Δ |\n|---|---|---|---|\n| S₃a@31 × S₃b@23 | 2.1314 | 2.0024 | **+0.129 SYNERGY** |\n| A₄@9 × D₄@8 | 1.9125 | 1.9076 | **+0.005 near-additive** |\n| S₃a@23 × S₃b@23 (shared disc −23) | 1.0104 | 2.0024 | **−0.992 OVERLAP** |\n\n### Mechanism\nThe additivity argument treated dial labels as independent draws. They are not: both dials read the **same underlying (p, q)**, so their label entropies are population-correlated, and the joint modulus (CRT-seeing p mod m₁ AND q mod m₂ simultaneously) extracts combinations neither marginal reaches. Synergy is structure-dependent — rich-type pairs synergize (+0.129), lossy-type pairs barely (+0.005). Shared conductor structure makes dials comonotone: two −23 cubics share essentially their entire channel through the common quadratic character (**overlap 0.992 bits**) — the quantitative form of \"same subfield = same dial\".\n\n### Verification discipline\nMarginals re-verified against papers 80/82 BEFORE any joint measurement (1.0012 / 1.0012 / 0.4733 / 1.4342 — every prior value reproduced). Which-factor walls ≤ 0.0016 across every joint channel: all synergized and overlapping content remains symmetric, trace-routed, factor-blind.\n\n### Method ledger\nShared-pool ramification bug caught pre-launch (index draws including other fields' ramified primes; fixed by union exclusion {31, 23, 2, 3}); the naive additivity gate converted into a recorded synergy measurement rather than silently loosened.\n\n### What this decides\nThe converse's no-pinning scope covers product batteries with their synergy excesses included: k dials give more than k·(marginal) for structurally rich pairs and less for shared-structure pairs — all computable by this exact joint machinery, all still on the traced side of barrier 4.\n\nNow 426 experiments. Assessment v202. Paper 91.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3428",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T16:52:15.029147+00:00",
-    "title": "FACT round-27 #1 — DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "020da4dc",
     "description": "## FACT round-26 #3 — SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED — an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [√N, 2√N], per-sample u = log(x²−N)/log B, 2400 samples over six (N, B) cells, compared against numerically-integrated Dickman ρ:\n\n| u | n | empirical | ±1σ | ρ(u) numeric | ratio |\n|---|---|---|---|---|---|\n| 3.0 | 161 | 0.0124 | 0.0087 | 0.0487 | 0.26 |\n| 3.5 | 265 | 0.0302 | 0.0105 | 0.0163 | 1.86 |\n| 4.0 | 413 | 0.0073 | 0.0042 | 0.0049 | 1.47 |\n| 5.0 | 303 | 0.0033 | 0.0033 | 0.00036 | 9.27 |\n\nRatios scatter non-monotonically (0.26–9.3); most bins underpowered at ±σ ≈ 100% relative; three bins sit where ρ predicts below MC reach. The toy cost model C(B) = π(B)/ρ(u) + π(B)² fits d(log₂C)/d(log₂N) = 0.024 — flat, cannot place the stratum.\n\n### Two real findings inside the null\n1. **The leading-term Dickman approximation is invalid at small u**: exp(−u(ln u + ln ln u − 1)) gives 0.561 at u = 3 where true ρ(3) = 0.0487 — **a 12× error**, persisting through u = 6. Proper numerical integration implemented (Euler 5×10⁻⁴ on uρ′(u) = −ρ(u−1)). Any informal smoothness argument using the leading-term form below u ≈ 8 is quantitatively meaningless.\n2. **x²−N smoothness is not random-integer smoothness at toy scale**: even against correct ρ the ratios are non-monotone — consistent with the quadratic-character constraint on prime divisors of x²−N, whose O(1) corrections stabilize only asymptotically.\n\n### Method ledger\n(1) First design sampled x in a width-10³ window (x²−N ~ N^{1/2+}-scale) while computing u at N-scale — the entire first comparison mis-binned (caught by empirical-above-predicted anomalies). (2) A pre-written success VERDICT over contradicting data — replaced by data-computed output before claims. (3) Trailing-quote syntax break caught by ast.parse.\n\n### What this decides\nThe landscape stands at **three measured strata plus one unmeasured**. Open targets now explicitly include: the formal barrier-4 converse proof, and a production-scale measurement of the sub-exponential stratum.\n\nNow 425 experiments. Assessment v201. Paper 90.\n",
     "domain_bridges": [],
@@ -2749,7 +2749,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cfb5ebd4",
     "description": "## FACT round-26 #2 — THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions — barrier 4 prices the definition-routes, barrier 8 owns the methods, Shor owns the quantum corner, and each price is measured, not asserted:\n\n**STRATUM A — definition-routes (α ≥ 0.4 on N):**\n| witness | α |\n|---|---|\n| M1 gcd-scan | 1.000 (paper 88) |\n| idempotent scan | 1.000 (paper 88) |\n| zero-divisor first hit | ~½ (paper 88) |\n| CF period | 0.398 (paper 88) |\n| **τ(N), σ₁(N) trial division** | **0.500 to three decimals** (this round; σ₁ = 1+N+p+q exact at every size) |\n\n**STRATUM B — classical methods as data, not citation:**\n- trial division: mean log₂cost 19.30, median 19.36 (= E[min(p,q)] scale; the factor itself is the certificate)\n- Fermat: mean = median = 19.36 — indistinguishable from trial division on uniform draws (gap cost tail-dominated)\n- Pollard ρ: mean log₂cost 8.73; size-stratified slope 0.523 per prime-bit ⟹ **α on N = 0.261 vs the 0.25 birthday bound** (standalone check: log₂ops = bits/2 − 1 exactly)\n\n**STRATUM C — quantum:** poly(log) — papers 85–87's fungibility surface with unit exchange rate.\n\n### The structure-blindness price\nτ-definition-scan vs Pollard ρ at fixed N: **173× (2¹⁶) → 1780× (2²⁰) → 2070× (2²⁴) → 8310× (2²⁸)** — growing with N. The measured price of structure-blindness: evaluating a witness from N alone versus exploiting what it is.\n\n### Method ledger\n(1) The ρ exponent first read 0.523 — a units mismatch (slope per prime-bit vs per-N; log₂N = 2·bits), caught by its own gate, corrected to 0.261, confirmed standalone. (2) The N = 2³⁶ blindness row would have run for hours — capped honestly rather than approximated silently.\n\n### All 8 barriers\n(a) clean — horns pre-stated, own gate caught own units error; (b) clean — three-strata unification new, method costs textbook but here measured identically; (c) confronted — real timings, 40-draw calibrations, 120-draw stratified fit; (d) clean — fixed seeds; (e) the substance — medians alongside means, cap disclosed; (f) controlled — both defects caught before claims; (g) fair — ρ validated standalone before entering the plane; (h) relevance — each stratum's price measured: barrier 4 for definition-routes, barrier 8 for methods, Shor graded on the quantum surface.\n\nNow 424 experiments. Assessment v200. Paper 89.\n",
     "domain_bridges": [],
     "domains": [
@@ -2761,7 +2761,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T16:52:15.031584+00:00",
     "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)"
   },
@@ -13536,6 +13536,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "MachineLearning.BatterySynergy.MultiDialOverlap",
+      "MachineLearning.BatterySynergy.Capacity",
+      "MachineLearning.BatterySynergy.ParityWitness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Study the set function S ↦ info d L S on the lattice of sub-batteries. The three-dial parity battery refutes naive submodularity of capacity, so the target is the sharp statement: joint code entropy is submodular, and capacity is supermodular exactly on batteries whose readings are pairwise independent. The width-k co-information law localises every modularity defect at a pair conditioned on its predecessors.\n\nH(joint ·) is submodular on Finset ι, and if the readings are pairwise independent then info d L (S ∪ T) + info d L (S ∩ T) ≥ info d L S + info d L T.\n\nFormalise submodularity of H(joint) by the insertion lemma jread_insert_fibers plus condH_pair_le; test the supermodular half on the parity batteries of ParityWitness.lean and OverlapWitness.lean before proving.\n\nBattery design becomes a lattice-optimisation problem with greedy guarantees for capacity under independence.\n\nCapacity has no lattice structure, and battery selection is genuinely combinatorial at every width.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_4881",
+    "lineage_refs": [],
+    "priority_score": 0.7104358974358975,
+    "proof_strategy": "Telescope multi_coinformation_identity along an ordering of S ∖ T, then apply condTotalCorr_nonneg to the increments.",
+    "research_mode": "team",
+    "source_exp_id": "a55a0103",
+    "status": "available",
+    "timestamp": "2026-09-18T23:40:18.152411+00:00",
+    "title": "Submodularity Defects of Battery Capacity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Bridges.MaxCutLocalSearch",
       "Bridges.MaxCutDerandomized"
     ],
@@ -15311,6 +15335,30 @@
     "status": "available",
     "timestamp": "2026-08-21T20:41:53.530292+00:00",
     "title": "Bounded-Depth Realisation of Bisimulation Distance"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.BatterySynergy.MultiDialOverlap",
+      "MachineLearning.BatterySynergy.ParityBattery",
+      "MachineLearning.BatterySynergy.Capacity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Co-information is the Mobius transform of entropy on the subset lattice. The conjecture is that the width-k deficit expands as a signed sum of higher-order co-informations, giving an order decomposition whose order-two truncation is the pairwise table of paper 91.\n\ntotalCorr f S − condTotalCorr L f S = Σ_{T ⊆ S, 2 ≤ T.card} (−1)^{T.card} * coinfo L f T, where coinfo is the alternating entropy sum over subsets of T.\n\nDefine coinfo by Finset.powerset alternating sums, verify the identity by decide on small batteries, then prove by Mobius inversion over the subset lattice.\n\nThe pairwise synergy table becomes the first term of a controlled expansion, quantifying when pair data suffices.\n\nHigher-order synergy is not generated by inclusion-exclusion of entropies, so joint measurement is irreducible at every order.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_4885",
+    "lineage_refs": [],
+    "priority_score": 0.7089459459459461,
+    "proof_strategy": "Apply Finset.sum_powerset Mobius inversion to the entropy function T ↦ H (jread f T) and match terms with the proved width-k identity.",
+    "research_mode": "team",
+    "source_exp_id": "a55a0103",
+    "status": "available",
+    "timestamp": "2026-09-18T23:40:19.654468+00:00",
+    "title": "Mobius Order Decomposition of Battery Overlap"
   },
   {
     "ambition_level": "extension",
@@ -47088,6 +47136,73 @@
     "status": "available",
     "timestamp": "2026-09-18T19:06:24.917776+00:00",
     "title": "Fungible Versus Threshold Axes in Resource Surfaces"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.BatterySynergy.MultiDialOverlap",
+      "MachineLearning.BatterySynergy.Capacity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Part II bounds synergy by the per-dial unused code capacity. The conjecture sharpens this at arbitrary width by subtracting a tax proportional to the residual label uncertainty, giving a two-sided bracket together with the proved overlap bound.\n\nmultiSynergy L f S ≤ Σ_{i ∈ S} (H (f i) − MI L (f i)) − (S.card − 1) * (H L − MI L (jread f S)).\n\nProve a conditional analogue of capacity_le_sum_dials by induction with condH_pair_le, then combine with multiSynergy_le_condTotalCorr; check numerically on random batteries first.\n\nSynergy budgets become computable from marginal data alone, bounding how much a CRT product battery can ever gain.\n\nSynergy can exceed the unused code budget, so joint measurement is unavoidable for every battery.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4882",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Bound condTotalCorr by Σ condH (f i) L and then relate condH (f i) L to H (f i) − MI L (f i) using the definition of MI.",
+    "research_mode": "team",
+    "source_exp_id": "a55a0103",
+    "status": "available",
+    "timestamp": "2026-09-18T23:40:18.530400+00:00",
+    "title": "Unused-Code Ceiling for Width-k Synergy"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.BatterySynergy.CoInformation",
+      "MachineLearning.BatterySynergy.MutualInformation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Total overlap was proved for dials whose partitions are comparable. The conjecture is that comparability is also necessary if total overlap is demanded uniformly in the label, turning the slogan 'same subfield = same dial' into an exact partition-theoretic criterion.\n\noverlap L f g = min (MI L f) (MI L g) for all labels L if and only if the fibre partition of f refines that of g or vice versa.\n\nFormalise the contrapositive: given two crossing cells, construct an explicit label separating them and compute that the overlap drops strictly below the minimum.\n\nRedundancy detection among dials reduces to a partition comparison, with no information measurement needed.\n\nThere are incomparable dial pairs that are informationally redundant for every label, a strictly finer equivalence than refinement.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4883",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Use MI_eq_of_same_fibers to reduce to partitions, then take L to be the indicator of one crossing cell and compute the three entropies directly.",
+    "research_mode": "team",
+    "source_exp_id": "a55a0103",
+    "status": "available",
+    "timestamp": "2026-09-18T23:40:18.897146+00:00",
+    "title": "Refinement Criterion for Comonotone Dials"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.BatterySynergy.MutualInformation",
+      "MachineLearning.BatterySynergy.CoInformation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Two dials that agree on all but an epsilon-fraction of the population should be nearly redundant. A Fano-type continuity estimate for the catalog's empirical entropy would convert the exact refinement theorem into a robust one, which is what a measured table with finite samples actually needs.\n\nIf the readings f and g differ on at most an epsilon-fraction of the population then overlap L f g ≥ min (MI L f) (MI L g) − c * epsilon * Real.log (1 / epsilon) for an absolute constant c.\n\nProve an entropy-continuity lemma from the psi cell calculus, then apply it to the pair statistic; validate the constant numerically on random perturbed dials.\n\nMeasured overlaps are stable under sampling noise, so finite-population tables certify structural redundancy.\n\nRedundancy is discontinuous, and small perturbations of a dial can restore a full marginal of capacity.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4884",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Bound the difference of H over two statistics differing on a small set using psi_sum_le and the log-sum inequality already proved in part I.",
+    "research_mode": "team",
+    "source_exp_id": "a55a0103",
+    "status": "available",
+    "timestamp": "2026-09-18T23:40:19.279626+00:00",
+    "title": "Continuity of Overlap under Sparse Disagreement"
   },
   {
     "ambition_level": "extension",

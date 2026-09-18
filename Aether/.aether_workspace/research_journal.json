@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "63061d5b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after the κ-sufficiency / scale-stability cycle\n\nThis cycle turned the three experimental verdicts into theorems about an explicit model whose\ncell distribution is *exactly* arit",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-09-04T04:34:37",
-      "title": "FACT round-95 #4 — KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES — composition order κ r"
-    },
-    {
       "cycle_id": "3831c02e",
       "domain": "Novelty",
       "key_insight": "# Future directions — after U35-LOCALIZED (round-45 #1, exp 500)\n\n## What this cycle established\n\nFive Lean files (`Catalog/Novelty/U35SubfloorCap.lean`, `U35PairedDrop.lean`,\n`U35USensitivityForecast",
@@ -499,19 +489,19 @@
       "theorem_count": 83,
       "timestamp": "2026-09-18T19:06:40",
       "title": "FACT round-25 #1 — QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 8"
+    },
+    {
+      "cycle_id": "a55a0103",
+      "domain": "MachineLearning",
+      "key_insight": "# FUTURE DIRECTIONS — after SYNERGY-AND-OVERLAP (paper 91, round-27 #1)\n\n## What this cycle established\n\nThree new files in `Catalog/MachineLearning/BatterySynergy/` extend the existing\ncapacity calcu",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-09-18T23:40:33",
+      "title": "FACT round-27 #1 — DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a3cbf41f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThree strands of theory were developed in this cycle:\n\n* **The narrowing law.** The bracket that a fail/pass pair licenses; protection\n  as head dominance of retention curves; the",
-      "quality_score": 0.81,
-      "sorry_count": 0,
-      "theorem_count": 51,
-      "timestamp": "2026-08-24T17:48:26",
-      "title": "NET-87: CODE-AT-4096-IS-PROTECTED — code knee @4096 is 32 vs prose 40; domain factor narrows at long"
-    },
     {
       "cycle_id": "d4951edd",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 83,
       "timestamp": "2026-09-18T19:06:40",
       "title": "FACT round-25 #1 — QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 8"
+    },
+    {
+      "cycle_id": "a55a0103",
+      "domain": "MachineLearning",
+      "key_insight": "# FUTURE DIRECTIONS — after SYNERGY-AND-OVERLAP (paper 91, round-27 #1)\n\n## What this cycle established\n\nThree new files in `Catalog/MachineLearning/BatterySynergy/` extend the existing\ncapacity calcu",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-09-18T23:40:33",
+      "title": "FACT round-27 #1 — DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a118b9c6",
-      "domain": "Novelty",
-      "name": "leastRep_spec",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a118b9c6",
-      "domain": "Novelty",
-      "name": "fibreConstant_leastRep",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a118b9c6",
-      "domain": "Novelty",
-      "name": "computable_leastRep",
-      "quality": 0.82
-    },
     {
       "cycle_id": "cc88cab4",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "succProb_lt_half",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a55a0103",
+      "domain": "MachineLearning",
+      "name": "tri_eq_pr",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a55a0103",
+      "domain": "MachineLearning",
+      "name": "pr_eq_pair",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a55a0103",
+      "domain": "MachineLearning",
+      "name": "readMI_eq",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-18T19:06:40",
+  "last_updated": "2026-09-18T23:40:33",
   "open_questions": [
     {
       "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "17477782",
-        "quality": 0.9,
-        "theorems": 22,
-        "title": "Completeness / compactness"
-      },
-      {
         "cycle_id": "26c8c1ed",
         "quality": 0.88,
         "theorems": 155,
@@ -3575,6 +3569,12 @@
         "quality": 0.84,
         "theorems": 107,
         "title": "FACT round-27 #2 — BATTERY-CAPACITY: synergy compounds, the 4-field joint more t"
+      },
+      {
+        "cycle_id": "a55a0103",
+        "quality": 0.82,
+        "theorems": 96,
+        "title": "FACT round-27 #1 — DIAL-INDEPENDENCE: synergy and overlap in the battery space ("
       }
     ],
     "Novelty": [
