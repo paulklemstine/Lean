@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-18T23:40:34.798581+00:00",
+  "last_updated": "2026-09-19T14:51:58.482076+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75489,6 +75489,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-18T23:40:34.454518+00:00",
       "title": "FACT round-27 #1 \u2014 DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Algebra",
+      "duration_seconds": 11555.104097366333,
+      "end_time": 1789829489.217534,
+      "files_integrated": 4,
+      "job_id": "020da4dc",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1789817934.1134367,
+      "strategy_count": 0,
+      "theorem_count": 301,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 228,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-19T14:51:58.119774+00:00",
+      "title": "FACT round-26 #3 \u2014 SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest incon"
     }
   ]
 }

@@ -2013,21 +2013,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "020da4dc",
-    "description": "## FACT round-26 #3 \u2014 SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED \u2014 an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [\u221aN, 2\u221aN], per-sample u = log(x\u00b2\u2212N)/log B, 2400 samples over six (N, B) cells, compared against numerically-integrated Dickman \u03c1:\n\n| u | n | empirical | \u00b11\u03c3 | \u03c1(u) numeric | ratio |\n|---|---|---|---|---|---|\n| 3.0 | 161 | 0.0124 | 0.0087 | 0.0487 | 0.26 |\n| 3.5 | 265 | 0.0302 | 0.0105 | 0.0163 | 1.86 |\n| 4.0 | 413 | 0.0073 | 0.0042 | 0.0049 | 1.47 |\n| 5.0 | 303 | 0.0033 | 0.0033 | 0.00036 | 9.27 |\n\nRatios scatter non-monotonically (0.26\u20139.3); most bins underpowered at \u00b1\u03c3 \u2248 100% relative; three bins sit where \u03c1 predicts below MC reach. The toy cost model C(B) = \u03c0(B)/\u03c1(u) + \u03c0(B)\u00b2 fits d(log\u2082C)/d(log\u2082N) = 0.024 \u2014 flat, cannot place the stratum.\n\n### Two real findings inside the null\n1. **The leading-term Dickman approximation is invalid at small u**: exp(\u2212u(ln u + ln ln u \u2212 1)) gives 0.561 at u = 3 where true \u03c1(3) = 0.0487 \u2014 **a 12\u00d7 error**, persisting through u = 6. Proper numerical integration implemented (Euler 5\u00d710\u207b\u2074 on u\u03c1\u2032(u) = \u2212\u03c1(u\u22121)). Any informal smoothness argument using the leading-term form below u \u2248 8 is quantitatively meaningless.\n2. **x\u00b2\u2212N smoothness is not random-integer smoothness at toy scale**: even against correct \u03c1 the ratios are non-monotone \u2014 consistent with the quadratic-character constraint on prime divisors of x\u00b2\u2212N, whose O(1) corrections stabilize only asymptotically.\n\n### Method ledger\n(1) First design sampled x in a width-10\u00b3 window (x\u00b2\u2212N ~ N^{1/2+}-scale) while computing u at N-scale \u2014 the entire first comparison mis-binned (caught by empirical-above-predicted anomalies). (2) A pre-written success VERDICT over contradicting data \u2014 replaced by data-computed output before claims. (3) Trailing-quote syntax break caught by ast.parse.\n\n### What this decides\nThe landscape stands at **three measured strata plus one unmeasured**. Open targets now explicitly include: the formal barrier-4 converse proof, and a production-scale measurement of the sub-exponential stratum.\n\nNow 425 experiments. Assessment v201. Paper 90.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3429",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T16:52:15.030330+00:00",
-    "title": "FACT round-26 #3 \u2014 SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest inconclusive (paper 90)"
-  },
-  {
     "consumed_by_exp_id": "cfb5ebd4",
     "description": "## FACT round-26 #2 \u2014 THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions \u2014 barrier 4 prices the definition-routes, barrier 8 owns the methods, Shor owns the quantum corner, and each price is measured, not asserted:\n\n**STRATUM A \u2014 definition-routes (\u03b1 \u2265 0.4 on N):**\n| witness | \u03b1 |\n|---|---|\n| M1 gcd-scan | 1.000 (paper 88) |\n| idempotent scan | 1.000 (paper 88) |\n| zero-divisor first hit | ~\u00bd (paper 88) |\n| CF period | 0.398 (paper 88) |\n| **\u03c4(N), \u03c3\u2081(N) trial division** | **0.500 to three decimals** (this round; \u03c3\u2081 = 1+N+p+q exact at every size) |\n\n**STRATUM B \u2014 classical methods as data, not citation:**\n- trial division: mean log\u2082cost 19.30, median 19.36 (= E[min(p,q)] scale; the factor itself is the certificate)\n- Fermat: mean = median = 19.36 \u2014 indistinguishable from trial division on uniform draws (gap cost tail-dominated)\n- Pollard \u03c1: mean log\u2082cost 8.73; size-stratified slope 0.523 per prime-bit \u27f9 **\u03b1 on N = 0.261 vs the 0.25 birthday bound** (standalone check: log\u2082ops = bits/2 \u2212 1 exactly)\n\n**STRATUM C \u2014 quantum:** poly(log) \u2014 papers 85\u201387's fungibility surface with unit exchange rate.\n\n### The structure-blindness price\n\u03c4-definition-scan vs Pollard \u03c1 at fixed N: **173\u00d7 (2\u00b9\u2076) \u2192 1780\u00d7 (2\u00b2\u2070) \u2192 2070\u00d7 (2\u00b2\u2074) \u2192 8310\u00d7 (2\u00b2\u2078)** \u2014 growing with N. The measured price of structure-blindness: evaluating a witness from N alone versus exploiting what it is.\n\n### Method ledger\n(1) The \u03c1 exponent first read 0.523 \u2014 a units mismatch (slope per prime-bit vs per-N; log\u2082N = 2\u00b7bits), caught by its own gate, corrected to 0.261, confirmed standalone. (2) The N = 2\u00b3\u2076 blindness row would have run for hours \u2014 capped honestly rather than approximated silently.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated, own gate caught own units error; (b) clean \u2014 three-strata unification new, method costs textbook but here measured identically; (c) confronted \u2014 real timings, 40-draw calibrations, 120-draw stratified fit; (d) clean \u2014 fixed seeds; (e) the substance \u2014 medians alongside means, cap disclosed; (f) controlled \u2014 both defects caught before claims; (g) fair \u2014 \u03c1 validated standalone before entering the plane; (h) relevance \u2014 each stratum's price measured: barrier 4 for definition-routes, barrier 8 for methods, Shor graded on the quantum surface.\n\nNow 424 experiments. Assessment v200. Paper 89.\n",
     "domains": [
@@ -2058,16 +2043,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
   },
   {
-    "consumed_by_exp_id": "c98192f3",
+    "consumed_by_exp_id": "fbb83685",
     "description": "## FACT round-28 #1 \u2014 METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **\u03c1 and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2\u00b9\u2074 \u2192 2\u00b2\u00b3, 9 draws/cell): median flatness over 2\u00b2\u00b3 cofactor growth \u2014 **ECM \u00d72.16, \u03c1 \u00d71.40** (flat within method luck: ECM curve-restart scatter; \u03c1 Poisson around \u221ap \u2248 64).\n\n**H2/H3 p-scaling**, corrected slopes per log\u2082p (the script's slope print took log\u2082 of bit-lengths \u2014 disclosed, corrected from the printed medians):\n- Pollard \u03c1: **0.45** \u2014 the birthday bound \u221ap \u2713\n- trial division: **1.09** \u2014 linear in p, the definition face \u2713\n- ECM: **1.13** \u2014 locally power-like but constant-advantaged: at p = 2\u00b9\u2074 ECM needs 6 657 ops vs trial-div's 12 142 \u2014 already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (\u03c1's cost spans 9\u2013136 iters per cell \u2014 flatness ratios compared single lucky/unlucky draws) \u2192 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3436",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T17:46:25.958797+00:00",
     "title": "FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
   },
@@ -2868,6 +2854,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-10T04:57:05.158170+00:00",
     "title": "Deepening: Product constructions with bounded chord repair"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 020da4dc (Q=0.780), which proved 301 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-26 #3 \u2014 SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED \u2014 an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [\u221aN, 2\u221aN], ",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_020da4dc_496c68dc",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "020da4dc",
+    "status": "available",
+    "timestamp": "2026-09-19T14:51:57.399159+00:00",
+    "title": "Deepening: FACT round-26 #3 \u2014 SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy sc"
   },
   {
     "consumed_by_exp_id": "",
@@ -18580,6 +18580,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The proved cost floor uses n! >= 2^(n-1) and yields exp(2 sqrt(L log 2)). Replacing it by the Stirling-type bound n! >= (n/e)^n, already formalized here, should yield the correct L[1/2,1] constant 2 sqrt(L log L). The remaining work is a two-sided estimate of an infimum with no closed form.\n\ninf_{b>0} [ b + (L/b)(log(L/b) - 1) ] = (1 + o(1)) * 2 * sqrt(L log L) as L -> infinity.\n\nFormalize upper and lower bounds by freezing log(L/b) at log sqrt(L) and controlling the error, then check numerically against direct minimisation for L up to 10^4.\n\nThe toy model provably reproduces the classical L[1/2,1] running time of the quadratic sieve, placing the fourth stratum by proof rather than measurement.\n\nThe factorial tail bound loses a constant in the exponent, and the model cannot certify the classical constant without the true Dickman asymptotics.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_4887",
+    "priority_score": 0.5635033219176204,
+    "research_mode": "team",
+    "source_exp_id": "020da4dc",
+    "status": "available",
+    "timestamp": "2026-09-19T14:51:41.749403+00:00",
+    "title": "Sharp Sub-Exponential Floor from the Factorial Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Our harmonic theorem computes the informed player's value at the uniform prior. We conjecture that the uniform prior is the exact minimiser of that value over all priors on arrangements, so maximal uncertainty is the adversary's optimum. The value functional is a sum of expected posterior maxima and should be Schur-convex.\n\nFor every prior P on the u! arrangements, the optimal feedback value V(P) under unit scoring satisfies V(P) >= V(uniform) = H_u, with equality iff P is uniform; and V is Schur-convex in P.\n\nCompute V(P) by dynamic programming over posteriors for u <= 5 on a grid of priors, including all priors supported on two arrangements, and test the majorization order.\n\nThe 'no edge from uncertainty' slogan upgrades to a variational principle: uniform shuffling is the unique worst case for any predictor.\n\nSome structured prior is harder to predict than the uniform one, which would identify a new class of adversarial shuffles.",
     "domains": [
       "Algebra",
@@ -32775,6 +32790,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-18T23:40:19.279626+00:00",
     "title": "Continuity of Overlap under Sparse Disagreement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For quadratic sieve values the hit pattern mod p deviates from a random model only at lag zero, with pair correlation exactly p-1 at every nonzero lag. For degree d >= 3 polynomials the lag-c correlation counts points on an absolutely irreducible curve, so Weil's bound predicts a deviation of order sqrt(p). Establishing this separates the quadratic case from all higher degrees.\n\nFor irreducible f of degree d >= 3 over ZMod p and h(a) = #{x : f(x) = a}, one has sum_a h(a) h(a+c) = p + O_d(sqrt p) for all c != 0, with the O(sqrt p) term not identically zero, while for d = 2 the value is exactly p - 1 for all c != 0.\n\nFormalize the d=2 statement (done: pair_correlation) and compute the d=3 correlations for p up to a few hundred; then prove the Weil-type estimate for the curve f(y) - f(x) = c.\n\nThe random-surrogate heuristic for sieve pools is exact only for quadratics; higher-degree sieves (NFS) inherit an O(1/sqrt p) correlation defect.\n\nThe exact-randomness of lag correlations extends beyond degree two, strengthening the case that pool non-randomness lives entirely in the lag-zero variance.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_4886",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "020da4dc",
+    "status": "available",
+    "timestamp": "2026-09-19T14:51:41.286581+00:00",
+    "title": "Zero-Lag Concentration for Higher-Degree Sieve Pools"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All tail bounds are currently stated for the non-vacuous class DickmanUpper rather than for a constructed Dickman function, because Mathlib has none. Building rho band by band on [n, n+1] as an iterated interval integral would make every bound unconditional.\n\nThere is a Lean definition rho : R -> R, continuous, equal to 1 on [0,1], antitone, with u * rho u = integral of rho over [u-1,u] for all u >= 1, and rho u = 1 - log u on [1,2].\n\nDefine rho by strong recursion on the band index using intervalIntegral, prove the delay equation by the fundamental theorem of calculus, and discharge DickmanUpper for it.\n\nrho_three_le, the overshoot theorems and the cost floor become unconditional theorems about the Dickman function, and Mathlib gains a Dickman namespace.\n\nThe band construction fails to satisfy the delay equation at band boundaries, indicating that a genuine delay-ODE uniqueness theory is required first.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4888",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "020da4dc",
+    "status": "available",
+    "timestamp": "2026-09-19T14:51:42.211492+00:00",
+    "title": "Constructed Dickman Function in Lean"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The measured smooth-density ratios scattered between 0.26 and 9.3 with roughly 100 percent relative error. The per-prime dispersion proved here is 1 - 1/p at every prime, so the smooth-count estimator has variance exceeding the Poisson value by a factor that grows like log B. This predicts wider error bars and may reconcile the observed scatter.\n\nThe variance of the count of B-smooth values of x^2 - N over a sieve interval exceeds the independent-model variance by a factor asymptotic to c * log B for an absolute constant c > 0.\n\nProve the per-prime variance inflation 1 + 1/p, take the product over admissible primes using Mertens, and re-analyse the existing 2400-sample data with the inflated bars.\n\nThe round-26 null becomes consistent rather than anomalous, and future measurements get correct power calculations.\n\nThe scatter has a source other than per-prime dispersion, most likely the quadratic-character correlation between distinct primes.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4889",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "020da4dc",
+    "status": "available",
+    "timestamp": "2026-09-19T14:51:42.674527+00:00",
+    "title": "Variance-Corrected Error Bars for Smoothness Measurements"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The cost floor proved here is uniform in the factor-base parameter, which is the quantifier a barrier theorem needs. Widening the model to per-prime smoothness thresholds and a general relation budget should preserve the AM-GM obstruction and give a converse barrier for the fourth stratum.\n\nFor every strategy in the widened sieve model (arbitrary per-prime thresholds, arbitrary relation budget), the total cost is at least exp(c sqrt(L)) for an absolute c > 0.\n\nDefine the widened model in Lean, express its cost as a sum over primes plus the reciprocal smoothness probability, and reduce to the one-variable AM-GM bound already proved.\n\nNo sieve-model algorithm escapes the fourth stratum, giving the formal barrier-4 converse that the experiment listed as an open target.\n\nSome per-prime threshold schedule beats the uniform cut, which would be an algorithmic discovery in its own right.",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_4890",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "020da4dc",
+    "status": "available",
+    "timestamp": "2026-09-19T14:51:43.133722+00:00",
+    "title": "Barrier-4 Converse in a Widened Sieve Model"
   },
   {
     "consumed_by_exp_id": "",

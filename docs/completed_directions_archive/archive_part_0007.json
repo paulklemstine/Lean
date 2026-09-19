@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-18T23:40:19Z",
-  "count": 158,
+  "archived_at": "2026-09-19T14:51:43Z",
+  "count": 159,
   "directions": [
     {
       "id": "fd_3695",
@@ -6253,6 +6253,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 183
+    },
+    {
+      "id": "fd_3429",
+      "title": "FACT round-26 #3 — SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest inconclusive (paper 90)",
+      "description": "## FACT round-26 #3 — SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED — an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [√N, 2√N], per-sample u = log(x²−N)/log B, 2400 samples over six (N, B) cells, compared against numerically-integrated Dickman ρ:\n\n| u | n | empirical | ±1σ | ρ(u) numeric | ratio |\n|---|---|---|---|---|---|\n| 3.0 | 161 | 0.0124 | 0.0087 | 0.0487 | 0.26 |\n| 3.5 | 265 | 0.0302 | 0.0105 | 0.0163 | 1.86 |\n| 4.0 | 413 | 0.0073 | 0.0042 | 0.0049 | 1.47 |\n| 5.0 | 303 | 0.0033 | 0.0033 | 0.00036 | 9.27 |\n\nRatios scatter non-monotonically (0.26–9.3); most bins underpowered at ±σ ≈ 100% relative; three bins sit where ρ predicts below MC reach. The toy cost model C(B) = π(B)/ρ(u) + π(B)² fits d(log₂C)/d(log₂N) = 0.024 — flat, cannot place the stratum.\n\n### Two real findings inside the null\n1. **The leading-term Dickman approximation is invalid at small u**: exp(−u(ln u + ln ln u − 1)) gives 0.561 at u = 3 where true ρ(3) = 0.0487 — **a 12× error**, persisting through u = 6. Proper numerical integration implemented (Euler 5×10⁻⁴ on uρ′(u) = −ρ(u−1)). Any informal smoothness argument using the leading-term form below u ≈ 8 is quantitatively meaningless.\n2. **x²−N smoothness is not random-integer smoothness at toy scale**: even against correct ρ the ratios are non-monotone — consistent with the quadratic-character constraint on prime divisors of x²−N, whose O(1) corrections stabilize only asymptotically.\n\n### Method ledger\n(1) First design sampled x in a width-10³ window (x²−N ~ N^{1/2+}-scale) while computing u at N-scale — the entire first comparison mis-binned (caught by empirical-above-predicted anomalies). (2) A pre-written success VERDICT over contradicting data — replaced by data-computed output before claims. (3) Trailing-quote syntax break caught by ast.parse.\n\n### What this decides\nThe landscape stands at **three measured strata plus one unmeasured**. Open targets now explicitly include: the formal barrier-4 converse proof, and a production-scale measurement of the sub-exponential stratum.\n\nNow 425 experiments. Assessment v201. Paper 90.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "020da4dc",
+      "timestamp": "2026-08-21T16:52:15.030330+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-18T19:07:23.097552+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 182
     }
   ]
 }
