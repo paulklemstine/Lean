@@ -21,7 +21,7 @@ The lower bound for `K_n` is the interesting half: an effective divisor of degre
 size `s` avoiding `q` costs `s (n - s) ≥ n - 1` chips.  Hence such a divisor cannot cover `q`,
 and its rank is at most `0`.
 -/
-import Combinatorics.TropicalRiemannRoch.MetricGraph
+import Combinatorics.MetricGraph
 
 namespace TropicalRR
 

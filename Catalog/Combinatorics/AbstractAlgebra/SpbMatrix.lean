@@ -19,11 +19,6 @@ def spbMatrix (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
 theorem spbMatrix_det (a : ℝ) : (spbMatrix a).det = 1 + a ^ 2 := by
   simp [spbMatrix, det_fin_two]; ring
 
-/-- The trace of the SPB matrix is `2`, independently of `a`. -/
-theorem spbMatrix_trace (a : ℝ) : (spbMatrix a).trace = 2 := by
-  simp [spbMatrix, Matrix.trace_fin_two]
-  norm_num
-
 /-- The SPB matrix determinant is always positive. -/
 theorem spbMatrix_det_pos (a : ℝ) : (spbMatrix a).det > 0 := by
   rw [spbMatrix_det]; positivity
@@ -59,5 +54,10 @@ theorem spbMatrix_zero : spbMatrix 0 = 1 := by
 theorem spbMatrix_det_mul (a b : ℝ) :
     (spbMatrix a * spbMatrix b).det = (1 + a ^ 2) * (1 + b ^ 2) := by
   rw [det_mul, spbMatrix_det, spbMatrix_det]
+
+/-- The trace of the SPB matrix is `2`: both diagonal entries are `1`. -/
+theorem spbMatrix_trace (a : ℝ) : (spbMatrix a).trace = 2 := by
+  simp [spbMatrix, Matrix.trace_fin_two]
+  norm_num
 
 end
