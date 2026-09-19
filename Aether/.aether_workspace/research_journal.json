@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5109f84c",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — geometry of the Spearman `T`-dial (round-44 #2, exp 499)\n\nThis cycle re-founded the `T`-dial's Spearman reading on permutohedron geometry.  Four\ncompiling, sorry-free files were",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 92,
-      "timestamp": "2026-09-04T09:40:48",
-      "title": "FACT round-44 #2 — T-DIAL-AXES: regime holds, u breaks (paper 166)"
-    },
-    {
       "cycle_id": "135e0dcb",
       "domain": "Bridges",
       "key_insight": "# Future directions — QR lottery dial (Bridges, round-43 #4, paper 164)\n\n## What this cycle settled\n\nFive new files in `Catalog/Bridges/` prove, with zero sorries:\n\n1. **The dial is an expectation, no",
@@ -499,19 +489,19 @@
       "theorem_count": 596,
       "timestamp": "2026-09-19T21:46:55",
       "title": "FACT round-26 #1 — CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
+    },
+    {
+      "cycle_id": "cfb5ebd4",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions from the three-strata plane\n\nThe cycle just closed put three strata of the factoring landscape on one\ncoordinate — the measured exponent `α = lim log(cost)/log N` — and proved, rat",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-09-19T23:41:54",
+      "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (pa"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2a9ba724",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — after \"per-tag reflection depths are freely realizable\"\n\n## What this cycle settled\n\nThe conjecture, read literally (the theory `S` ranges over the common refinement of\n`capC` an",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 98,
-      "timestamp": "2026-08-24T20:49:57",
-      "title": "Per-tag reflection depths are freely realizable"
-    },
     {
       "cycle_id": "969a5dc4",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 596,
       "timestamp": "2026-09-19T21:46:55",
       "title": "FACT round-26 #1 — CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
+    },
+    {
+      "cycle_id": "cfb5ebd4",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions from the three-strata plane\n\nThe cycle just closed put three strata of the factoring landscape on one\ncoordinate — the measured exponent `α = lim log(cost)/log N` — and proved, rat",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-09-19T23:41:54",
+      "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (pa"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cb6515e1",
-      "domain": "Novelty",
-      "name": "canonicalMotion_refl",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "cb6515e1",
-      "domain": "Novelty",
-      "name": "canonicalMotion_symm",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5c150b3f",
-      "domain": "MachineLearning",
-      "name": "bil_add_left",
-      "quality": 0.83
-    },
     {
       "cycle_id": "5c150b3f",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "card_image_restrict_le",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "cfb5ebd4",
+      "domain": "Cryptography",
+      "name": "quantifies",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "cfb5ebd4",
+      "domain": "Cryptography",
+      "name": "HasExponent",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "cfb5ebd4",
+      "domain": "Cryptography",
+      "name": "hasExponent_of_log_sub_bounded",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-09-19T21:46:55",
+  "last_updated": "2026-09-19T23:41:54",
   "open_questions": [
     {
       "context": "Everything is `sorry`-free.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "a22e921b",
-        "quality": 0.78,
-        "theorems": 58,
-        "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ f"
-      },
-      {
         "cycle_id": "d59c6a1a",
         "quality": 0.85,
         "theorems": 37,
@@ -3389,6 +3383,12 @@
         "quality": 0.87,
         "theorems": 98,
         "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically s"
+      },
+      {
+        "cycle_id": "cfb5ebd4",
+        "quality": 0.78,
+        "theorems": 78,
+        "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on on"
       }
     ],
     "Geometry": [

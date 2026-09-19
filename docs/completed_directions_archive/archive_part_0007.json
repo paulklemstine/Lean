@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-19T21:46:42Z",
-  "count": 160,
+  "archived_at": "2026-09-19T23:41:41Z",
+  "count": 161,
   "directions": [
     {
       "id": "fd_3695",
@@ -6333,6 +6333,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 180
+    },
+    {
+      "id": "fd_3430",
+      "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)",
+      "description": "## FACT round-26 #2 — THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions — barrier 4 prices the definition-routes, barrier 8 owns the methods, Shor owns the quantum corner, and each price is measured, not asserted:\n\n**STRATUM A — definition-routes (α ≥ 0.4 on N):**\n| witness | α |\n|---|---|\n| M1 gcd-scan | 1.000 (paper 88) |\n| idempotent scan | 1.000 (paper 88) |\n| zero-divisor first hit | ~½ (paper 88) |\n| CF period | 0.398 (paper 88) |\n| **τ(N), σ₁(N) trial division** | **0.500 to three decimals** (this round; σ₁ = 1+N+p+q exact at every size) |\n\n**STRATUM B — classical methods as data, not citation:**\n- trial division: mean log₂cost 19.30, median 19.36 (= E[min(p,q)] scale; the factor itself is the certificate)\n- Fermat: mean = median = 19.36 — indistinguishable from trial division on uniform draws (gap cost tail-dominated)\n- Pollard ρ: mean log₂cost 8.73; size-stratified slope 0.523 per prime-bit ⟹ **α on N = 0.261 vs the 0.25 birthday bound** (standalone check: log₂ops = bits/2 − 1 exactly)\n\n**STRATUM C — quantum:** poly(log) — papers 85–87's fungibility surface with unit exchange rate.\n\n### The structure-blindness price\nτ-definition-scan vs Pollard ρ at fixed N: **173× (2¹⁶) → 1780× (2²⁰) → 2070× (2²⁴) → 8310× (2²⁸)** — growing with N. The measured price of structure-blindness: evaluating a witness from N alone versus exploiting what it is.\n\n### Method ledger\n(1) The ρ exponent first read 0.523 — a units mismatch (slope per prime-bit vs per-N; log₂N = 2·bits), caught by its own gate, corrected to 0.261, confirmed standalone. (2) The N = 2³⁶ blindness row would have run for hours — capped honestly rather than approximated silently.\n\n### All 8 barriers\n(a) clean — horns pre-stated, own gate caught own units error; (b) clean — three-strata unification new, method costs textbook but here measured identically; (c) confronted — real timings, 40-draw calibrations, 120-draw stratified fit; (d) clean — fixed seeds; (e) the substance — medians alongside means, cap disclosed; (f) controlled — both defects caught before claims; (g) fair — ρ validated standalone before entering the plane; (h) relevance — each stratum's price measured: barrier 4 for definition-routes, barrier 8 for methods, Shor graded on the quantum surface.\n\nNow 424 experiments. Assessment v200. Paper 89.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "cfb5ebd4",
+      "timestamp": "2026-08-21T16:52:15.031584+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-18T23:41:13.005221+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 181
     }
   ]
 }

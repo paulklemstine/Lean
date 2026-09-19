@@ -2027,21 +2027,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "cfb5ebd4",
-    "description": "## FACT round-26 #2 \u2014 THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions \u2014 barrier 4 prices the definition-routes, barrier 8 owns the methods, Shor owns the quantum corner, and each price is measured, not asserted:\n\n**STRATUM A \u2014 definition-routes (\u03b1 \u2265 0.4 on N):**\n| witness | \u03b1 |\n|---|---|\n| M1 gcd-scan | 1.000 (paper 88) |\n| idempotent scan | 1.000 (paper 88) |\n| zero-divisor first hit | ~\u00bd (paper 88) |\n| CF period | 0.398 (paper 88) |\n| **\u03c4(N), \u03c3\u2081(N) trial division** | **0.500 to three decimals** (this round; \u03c3\u2081 = 1+N+p+q exact at every size) |\n\n**STRATUM B \u2014 classical methods as data, not citation:**\n- trial division: mean log\u2082cost 19.30, median 19.36 (= E[min(p,q)] scale; the factor itself is the certificate)\n- Fermat: mean = median = 19.36 \u2014 indistinguishable from trial division on uniform draws (gap cost tail-dominated)\n- Pollard \u03c1: mean log\u2082cost 8.73; size-stratified slope 0.523 per prime-bit \u27f9 **\u03b1 on N = 0.261 vs the 0.25 birthday bound** (standalone check: log\u2082ops = bits/2 \u2212 1 exactly)\n\n**STRATUM C \u2014 quantum:** poly(log) \u2014 papers 85\u201387's fungibility surface with unit exchange rate.\n\n### The structure-blindness price\n\u03c4-definition-scan vs Pollard \u03c1 at fixed N: **173\u00d7 (2\u00b9\u2076) \u2192 1780\u00d7 (2\u00b2\u2070) \u2192 2070\u00d7 (2\u00b2\u2074) \u2192 8310\u00d7 (2\u00b2\u2078)** \u2014 growing with N. The measured price of structure-blindness: evaluating a witness from N alone versus exploiting what it is.\n\n### Method ledger\n(1) The \u03c1 exponent first read 0.523 \u2014 a units mismatch (slope per prime-bit vs per-N; log\u2082N = 2\u00b7bits), caught by its own gate, corrected to 0.261, confirmed standalone. (2) The N = 2\u00b3\u2076 blindness row would have run for hours \u2014 capped honestly rather than approximated silently.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated, own gate caught own units error; (b) clean \u2014 three-strata unification new, method costs textbook but here measured identically; (c) confronted \u2014 real timings, 40-draw calibrations, 120-draw stratified fit; (d) clean \u2014 fixed seeds; (e) the substance \u2014 medians alongside means, cap disclosed; (f) controlled \u2014 both defects caught before claims; (g) fair \u2014 \u03c1 validated standalone before entering the plane; (h) relevance \u2014 each stratum's price measured: barrier 4 for definition-routes, barrier 8 for methods, Shor graded on the quantum surface.\n\nNow 424 experiments. Assessment v200. Paper 89.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3430",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T16:52:15.031584+00:00",
-    "title": "FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)"
-  },
-  {
     "consumed_by_exp_id": "fbb83685",
     "description": "## FACT round-28 #1 \u2014 METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **\u03c1 and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2\u00b9\u2074 \u2192 2\u00b2\u00b3, 9 draws/cell): median flatness over 2\u00b2\u00b3 cofactor growth \u2014 **ECM \u00d72.16, \u03c1 \u00d71.40** (flat within method luck: ECM curve-restart scatter; \u03c1 Poisson around \u221ap \u2248 64).\n\n**H2/H3 p-scaling**, corrected slopes per log\u2082p (the script's slope print took log\u2082 of bit-lengths \u2014 disclosed, corrected from the printed medians):\n- Pollard \u03c1: **0.45** \u2014 the birthday bound \u221ap \u2713\n- trial division: **1.09** \u2014 linear in p, the definition face \u2713\n- ECM: **1.13** \u2014 locally power-like but constant-advantaged: at p = 2\u00b9\u2074 ECM needs 6 657 ops vs trial-div's 12 142 \u2014 already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (\u03c1's cost spans 9\u2013136 iters per cell \u2014 flatness ratios compared single lucky/unlucky draws) \u2192 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
     "domains": [
@@ -2057,16 +2042,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "643f7ea2",
     "description": "## FACT round-27 #4 \u2014 BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F\u2082\u2080 x\u2075\u22122 @5 and C\u2085 Q(\u03b6\u2081\u2081)\u207a @11; all conductors pairwise coprime, CRT modulus 31\u00b723\u00b79\u00b78\u00b75\u00b711). The nested-subset capacity curve:\n\n| dials | I(joint) | \u03a3 marginals | deficit | ceiling | % of ceiling |\n|---|---|---|---|---|---|\n| 1 | 1.0011 | 1.0011 | +0.000 | \u2014 | \u2014 |\n| 2 | 2.1334 | 2.0020 | +0.132 | 4.6063 | 46% |\n| 3 | 4.0242 | 2.4777 | +1.547 | 6.4947 | 62% |\n| 4 | 8.2412 | 3.9120 | +4.329 | 9.5434 | 86% |\n| 5 | 11.5307 | 5.1591 | +6.372 | 11.9557 | 96% |\n| **6** | **12.7235** | 5.3650 | **+7.359** | **12.7726** | **99.6%** |\n\n- **H1**: the additive deficit grows MONOTONICALLY (synergy compounds without bound short of the ceiling).\n- **H2**: every marginal reproduces its paper of origin.\n- **H3**: the 6-dial which-factor wall reads 0.3594 vs permutation-null 0.3591 (**z = +0.11**) \u2014 sparse-bias-dominated as at k=4; factor-blindness extends to k=6.\n\n### The battery-capacity law\n1. I(k-joint) \u2192 H(joint labels): the CRT-joint modulus sees all k residues simultaneously; the pair-label structure becomes nearly fully determined (99.6% at k=6).\n2. D(k) grows monotonically: marginal bookkeeping understates batteries progressively (7.36 bits = 3.7\u00d7 additive at k=6).\n3. The ceiling is the joint label entropy \u2014 population correlation between label blocks is all that remains.\n\n### Method notes disclosed\nRow-label off-by-one in the printout (cosmetic, corrected here); chained label code ~10\u00b9\u00b2 values requires np.unique-based entropy (bincount would allocate 5.6 TiB).\n\nNow 429 experiments. Assessment v205. Paper 94.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3437",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T17:46:25.960215+00:00",
     "title": "FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)"
   },
@@ -2881,6 +2867,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-12T09:16:31.961884+00:00",
     "title": "Deepening: General separated principal filtrations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle cfb5ebd4 (Q=0.780), which proved 78 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-26 #2 \u2014 THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions \u2014 barrier 4 prices the definition-routes, barrier 8 owns the metho",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_cfb5ebd4_7e20962f",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "cfb5ebd4",
+    "status": "available",
+    "timestamp": "2026-09-19T23:41:54.924452+00:00",
+    "title": "Deepening: FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on on"
   },
   {
     "consumed_by_exp_id": "",
@@ -15225,6 +15225,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-13T18:12:24.273731+00:00",
     "title": "Bass Mobility Phase Diagram for First-Species Motion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The ratio of the definition-route cost to the Pollard rho cost is exactly N^(1/4), the same exponent as Pollard rho itself. The conjecture is that this coincidence is forced: for any method stratum with exponent a and any definition-route with exponent 2a, the price of blindness equals the method cost, giving an exchange rate of one.\n\nIf a definition-route has exponent alpha and the best method exploiting the same structure has exponent alpha/2, then the blindness price has exponent alpha/2, i.e. price and method cost are asymptotically interchangeable.\n\nInstantiate exponent_gap_ratio for the pairs (scanProfile, rhoProfile), (scanProfile, L[1/3,c]) and (L[1/2], L[1/3]) and check which pairs realise the unit rate.\n\nThe plane carries a conserved quantity: ignorance and computation are exchangeable at a fixed rate within a stratum pair.\n\nThe unit rate is an accident of the birthday exponent, and the plane needs a second coordinate to describe blindness.",
+    "domains": [],
+    "id": "fd_4897",
+    "priority_score": 0.5921428571428572,
+    "research_mode": "team",
+    "source_exp_id": "cfb5ebd4",
+    "status": "available",
+    "timestamp": "2026-09-19T23:41:40.032612+00:00",
+    "title": "Unit Exchange Rate Between Blindness and Work"
   },
   {
     "consumed_by_exp_id": "",
@@ -32908,6 +32920,66 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-19T21:46:42.032049+00:00",
     "title": "Factoring Equivalence of the gcd-Sum Witness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every route to factoring through an arithmetic function f splits into the cost of evaluating f(N) from N alone and the cost of inverting the resulting equation. For sigma_1 the second half is O(1) by an explicit quadratic formula. The conjecture is that for every multiplicative f of bounded degree the inversion half is polynomial, so the measured exponent alpha always reports evaluation cost.\n\nFor every multiplicative arithmetic function f whose value on a semiprime N = pq is a polynomial in p and q of degree at most d, knowledge of N and f(N) determines p and q by an algorithm using poly(d, log N) bit operations.\n\nFormalise the degree-2 case (tau, sigma_1, sigma_2) in Lean following recoverSmallerFactor_eq; then test degree 3 and 4 symmetric-function routes computationally before attempting the general resultant argument.\n\nThe exponent of any definition-route equals the exponent of evaluating its witness, so Stratum A collapses to a single measurement problem.\n\nThere is an arithmetic witness whose inversion is itself hard, which would be a new source of one-way behaviour inside elementary number theory.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4895",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cfb5ebd4",
+    "status": "available",
+    "timestamp": "2026-09-19T23:41:38.911658+00:00",
+    "title": "Evaluation-Inversion Split for Arithmetic-Function Factoring Routes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Writing p = N^beta and q = N^(1-beta), trial division costs N^beta while Fermat costs (p+q)/2 - ceil(sqrt N), which is Theta(N^(1-2beta)) for beta < 1/2. The two exponents cross at beta = 1/3. The plane should therefore be a two-dimensional region rather than a set of points.\n\nFor semiprimes with p = N^beta, 0 < beta <= 1/2, the Fermat step count is Theta(N^(1-2beta)) and the trial-division step count is Theta(N^beta); the pointwise minimum of the two exponents is max(beta, 1-2beta) minimised at beta = 1/3 with value 1/3.\n\nState the Fermat count exactly using fermat_representation_dichotomy, bound (p+q)/2 - ceil(sqrt N) above and below by (q-p)^2/(8 sqrt N) times constants, and prove the exponent identities in the HasExponent calculus.\n\nNo classical elementary method beats exponent 1/3 on its worst balance, isolating Pollard rho's 1/4 as genuinely below the elementary floor.\n\nSome balance regime makes an elementary method reach exponent below 1/3, which would be a new elementary factoring bound.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_4896",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cfb5ebd4",
+    "status": "available",
+    "timestamp": "2026-09-19T23:41:39.476700+00:00",
+    "title": "Balance-Parameter Crossing of Fermat and Trial Division"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The split step of Shor's algorithm is entirely classical and is now proved: a nontrivial square root of 1 modulo pq yields a prime factor by one gcd. The conjecture closes the loop in the other direction, making multiplicative order computation and semiprime factoring polynomially equivalent without any quantum ingredient.\n\nThere is a classical polynomial-time reduction in both directions between computing the multiplicative order of a unit modulo a semiprime N and factoring N.\n\nFormalise the forward direction from order_halving_splits together with the standard random-a success probability at least 1/2; for the converse, compute orders from the factorisation via the CRT and Carmichael function in Lean.\n\nThe quantum stratum owns exactly one primitive \u2014 order-finding \u2014 and nothing else in the plane.\n\nOrder-finding is strictly harder than factoring, which would refine the picture of what Shor's algorithm actually buys.",
+    "domains": [
+      "Computation",
+      "NumberTheory"
+    ],
+    "id": "fd_4898",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cfb5ebd4",
+    "status": "available",
+    "timestamp": "2026-09-19T23:41:40.621064+00:00",
+    "title": "Classical Equivalence of Order-Finding and Semiprime Factoring"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A complete divisor-test set up to B must contain all but at most one prime below B, so its size is at least pi(B) - 1. The proof currently gives only a linear-in-bits bound because it uses Bertrand's postulate. Replacing Bertrand by a Chebyshev-type lower bound would make the candidate-list bound essentially B / log B, matching the true cost of trial division.\n\nEvery complete divisor-test set up to B has at least c B / log B elements for an absolute constant c > 0 and all sufficiently large B.\n\nFormalise a Chebyshev lower bound pi(B) >= c B / log B (via the central binomial coefficient) and compose with complete_test_set_card_ge.\n\nThe N^(1/2) cost of structure-blind trial division becomes an unconditional lower bound for the whole class of divisor-test strategies, not just the natural implementation.\n\nSome sparse candidate set splits every semiprime below B, which would be a surprising covering phenomenon among primes.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4899",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cfb5ebd4",
+    "status": "available",
+    "timestamp": "2026-09-19T23:41:41.180508+00:00",
+    "title": "Chebyshev-Sharp Hitting-Set Bound for Divisor Test Sets"
   },
   {
     "consumed_by_exp_id": "",

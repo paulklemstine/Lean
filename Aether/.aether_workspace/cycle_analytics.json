@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-19T21:46:57.911223+00:00",
+  "last_updated": "2026-09-19T23:41:56.185853+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75575,6 +75575,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-19T21:46:57.446586+00:00",
       "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 6846.460966587067,
+      "end_time": 1789861265.953152,
+      "files_integrated": 4,
+      "job_id": "cfb5ebd4",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1789854419.4921854,
+      "strategy_count": 0,
+      "theorem_count": 78,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 70,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-19T23:41:55.751341+00:00",
+      "title": "FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (pa"
     }
   ]
 }
