@@ -11,7 +11,7 @@ divisors: `ν_t` is exactly the `q`-reduced representative of its class when `q`
 Consequence: `K_{n+1}` carries at least `n!` pairwise inequivalent divisor classes of degree
 `g - 1` and rank `-1`.  (Computationally, `n!` is the exact number.)
 -/
-import Combinatorics.TropicalRiemannRoch.CompleteGraph
+import Combinatorics.CompleteGraph
 
 namespace TropicalRR
 

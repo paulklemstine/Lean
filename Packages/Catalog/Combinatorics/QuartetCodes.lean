@@ -515,14 +515,13 @@ theorem not_isAgreementThreshold_of_avoiding {n k : ℕ} (T : Fin k → Equiv.Pe
       ∃ i j, qcode (T i) a b c d ≠ qcode (T j) a b c d) :
     ¬ IsAgreementThreshold n k 4 := by
   intro hthr
-  obtain ⟨A, hAL, hA4, hcommon⟩ :=
-    hthr (Fin n) (Finset.univ : Finset (Fin n)) (fun i => catSystem (T i)) (by simp)
-  obtain ⟨A', hA'A, hA'card⟩ := Finset.exists_subset_card_eq hA4
-  obtain ⟨a, b, c, d, hab, hac, had, hbc, hbd, hcd, rfl⟩ := Finset.card_eq_four.mp hA'card
-  have hc' := commonAgreement_subset hA'A hcommon
+  obtain ⟨A, hA4, hcommon⟩ := hthr (fun i => catSystem (T i))
+  obtain ⟨a, b, c, d, hab, hac, had, hbc, hbd, hcd, rfl⟩ := Finset.card_eq_four.mp hA4
   obtain ⟨i, j, hij⟩ := hT a b c d hab hac had hbc hbd hcd
+  have hne : (Finset.univ : Finset (Fin k)).Nonempty := ⟨i, Finset.mem_univ i⟩
+  have hpair := (commonAgreement_iff_pairwise hne (fun i => catSystem (T i)) _).mp hcommon
   exact hij (qcode_eq_of_agreeOn hab hac had hbc hbd hcd
-    (commonAgreement_agreeOn hc' i (Finset.mem_univ i) j (Finset.mem_univ j)))
+    (hpair i (Finset.mem_univ i) j (Finset.mem_univ j)))
 
 /-- **Refutation of an agreement threshold.**  If `n^4 < 3^m` then `m+1` phylogenetic trees on
 `n` leaves need not share any quartet, so `n` leaves do not force a common agreement subtree on

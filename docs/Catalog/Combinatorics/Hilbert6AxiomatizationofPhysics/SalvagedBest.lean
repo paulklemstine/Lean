@@ -1,3 +1,18 @@
+/-
+# Hilbert's 6th problem: effect algebras — fragment superseded by the repaired module
+
+This file arrived as a *fragment*: its supporting definitions, imports and
+namespace header were missing, so it could not elaborate at all.  The complete,
+repaired development — same statements, definitions supplied, every proof
+carried out with no `sorry` — lives in `Shared.Hilbert6AxiomatizationofPhysics.SalvagedBest`,
+which is imported here so that this module re-exports it.
+
+The original fragment is preserved verbatim in the block comment below.
+-/
+import Shared.Hilbert6AxiomatizationofPhysics.SalvagedBest
+
+/- ORIGINAL FRAGMENT (does not elaborate on its own; kept for the record)
+
 theorem cancel_left (a b c d : E)
     (h1 : a ⊕ₑ b = some d) (h2 : a ⊕ₑ c = some d) : b = c := by
   obtain ⟨ f, hf1, hf2 ⟩ := ( ‹EffectAlgebra E›.oplus_assoc a b ( ‹EffectAlgebra E›.ortho d ) d ( ‹EffectAlgebra E›.eone ) ) h1 ( ‹EffectAlgebra E›.oplus_ortho d );
@@ -158,3 +173,4 @@ end EffectAlgebra
    commutative effect algebra is isomorphic to a power set EA 2^n.
 -/
 end UnitInterval
+-/

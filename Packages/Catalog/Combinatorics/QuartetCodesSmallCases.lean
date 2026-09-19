@@ -47,10 +47,45 @@ open Finset AgreementSubtrees
 
 namespace QuartetCodes
 
-/-- Raising the leaf bound weakens an agreement threshold. -/
+/-- Transporting a split system along the leaf inclusion `Fin m ↪ Fin m'`:
+each split of the larger system is pulled back to the first `m` leaves. -/
+private noncomputable def pullback {m m' : ℕ} (h : m ≤ m') (T : SplitSystem (Fin m')) :
+    SplitSystem (Fin m) :=
+  T.image (fun s => s.preimage (Fin.castLE h) ((Fin.castLE_injective h).injOn))
+
+/-- Pushing a pulled-back split forward again intersects with the image leaf set. -/
+private lemma image_preimage_inter {m m' : ℕ} (h : m ≤ m') (s : Finset (Fin m'))
+    (A : Finset (Fin m)) :
+    (s.preimage (Fin.castLE h) ((Fin.castLE_injective h).injOn) ∩ A).image (Fin.castLE h)
+      = s ∩ A.image (Fin.castLE h) := by
+  ext x
+  simp only [Finset.mem_image, Finset.mem_inter, Finset.mem_preimage]
+  constructor
+  · rintro ⟨a, ⟨has, haA⟩, rfl⟩
+    exact ⟨has, a, haA, rfl⟩
+  · rintro ⟨hxs, a, haA, rfl⟩
+    exact ⟨a, ⟨hxs, haA⟩, rfl⟩
+
+/-- Raising the leaf bound weakens an agreement threshold: a family on `m'` leaves is
+pulled back to the first `m` leaves, and the common agreement subtree found there is
+pushed forward again. -/
 theorem isAgreementThreshold_mono_leaves {m m' k q : ℕ} (h : m ≤ m')
-    (H : IsAgreementThreshold m k q) : IsAgreementThreshold m' k q :=
-  fun α _ L T hm' => H α L T (le_trans h hm')
+    (H : IsAgreementThreshold m k q) : IsAgreementThreshold m' k q := by
+  classical
+  intro T'
+  obtain ⟨A, hAcard, R, hR⟩ := H (fun i => pullback h (T' i))
+  refine ⟨A.image (Fin.castLE h), ?_, R.image (fun s => s.image (Fin.castLE h)), ?_⟩
+  · rw [Finset.card_image_of_injective _ (Fin.castLE_injective h), hAcard]
+  · intro i hi
+    have hrestrict : restrict (T' i) (A.image (Fin.castLE h))
+        = (restrict (pullback h (T' i)) A).image (fun s => s.image (Fin.castLE h)) := by
+      unfold AgreementSubtrees.restrict pullback
+      rw [Finset.image_image, Finset.image_image]
+      refine Finset.image_congr ?_
+      intro s _
+      simp only [Function.comp_apply]
+      exact (image_preimage_inter h s A).symm
+    rw [hrestrict, hR i hi]
 
 /-- The leaf order `0 ↦ 7, 1 ↦ 0, 2 ↦ 2, 3 ↦ 5, 4 ↦ 4, 5 ↦ 3, 6 ↦ 1, 7 ↦ 8, 8 ↦ 6`. -/
 def order9a : Equiv.Perm (Fin 9) :=

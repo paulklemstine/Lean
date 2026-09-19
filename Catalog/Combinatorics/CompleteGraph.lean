@@ -3,7 +3,7 @@
 
 Instantiating the Baker–Norine theory on `K_n`.
 -/
-import Combinatorics.TropicalRiemannRoch.Clifford
+import Combinatorics.Clifford
 
 namespace TropicalRR
 

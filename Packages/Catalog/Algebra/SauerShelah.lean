@@ -1,7 +1,5 @@
 import Mathlib
 
-open Fin
-
 /-! # CatalogBuild.Algebra.SauerShelah
 
 Auto-generated from theorem catalog database.
@@ -100,8 +98,8 @@ lemma eq_embed_proj_of_last_not_mem {n : ℕ} {S : Finset (Fin (n + 1))}
 
 lemma eq_embed_proj_union_last {n : ℕ} {S : Finset (Fin (n + 1))}
     (h : Fin.last n ∈ S) : S = embed (proj S) ∪ {Fin.last n} := by
-      ext x; by_cases hx : x = last n <;> simp_all +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one ] ;
-      · rwa [ show x = last n from Fin.ext hx ];
+      ext x; by_cases hx : x = Fin.last n <;> simp_all +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one ] ;
+      · rwa [ show x = Fin.last n from Fin.ext hx ];
       · simp +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one, hx, embed, proj ];
         exact ⟨ fun hx' => ⟨ ⟨ x, lt_of_le_of_ne ( Fin.le_last _ ) hx ⟩, by simpa [ Fin.ext_iff ] using hx', rfl ⟩, by rintro ⟨ a, ha, ha' ⟩ ; convert ha; aesop ⟩
 
@@ -114,7 +112,7 @@ lemma shatters_embed_of_union {n : ℕ} (F : Finset (Finset (Fin (n + 1))))
                     (F.filter (Fin.last n ∈ ·)).image proj) A) :
     Shatters F (embed A) := by
       intro B hB
-      obtain ⟨T, hT⟩ : ∃ T ∈ Finset.image proj ({x ∈ F | last n ∉ x}) ∪ Finset.image proj ({x ∈ F | last n ∈ x}), A ∩ T = proj B := by
+      obtain ⟨T, hT⟩ : ∃ T ∈ Finset.image proj ({x ∈ F | Fin.last n ∉ x}) ∪ Finset.image proj ({x ∈ F | Fin.last n ∈ x}), A ∩ T = proj B := by
         exact h _ ( Finset.subset_iff.mpr fun i hi => by
           simp_all +decide [ Finset.subset_iff, proj, embed ];
           cases hB hi ; aesop );

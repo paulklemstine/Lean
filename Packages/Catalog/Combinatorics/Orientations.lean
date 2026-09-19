@@ -13,7 +13,7 @@ Main results:
 * `TropicalRR.exists_nu_dominating` : a divisor satisfying the `q`-reduced firing condition
   and with value `≤ -1` at `q` is dominated by some `ν_t` (the "other" half).
 -/
-import Combinatorics.TropicalRiemannRoch.Reduced
+import Combinatorics.Reduced
 
 namespace TropicalRR
 
