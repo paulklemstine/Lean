@@ -2043,16 +2043,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d309ec20",
     "description": "## FACT round-26 #1 \u2014 CONVERSE-COST-CURVE (paper 88, /tmp/exp_conversecost.py, /tmp/r26n1c.log)\n\n**Verdict name: NO-POLYLOG-ROUTE-ANYWHERE.**\n\n### Result\nThe empirical barrier-4 converse: the ENTIRE known factor-revealing witness family sits on ONE cost-information plane under identical conditions, with **no poly(log N) definition-route anywhere**:\n\n| witness | definition-route | \u03b1 (cost ~ N^\u03b1) | ops/factor-bit |\n|---|---|---|---|\n| W1 M1 = \u03a3 gcd(x,N) | full N-scan | **1.000 exact** | 2.0\u00d710\u2074 |\n| W2 zero-divisor first hit | scan to first hit | cost = min(p,q) 60/60 | 2.9\u00d710\u2074 |\n| W3 CF period of \u221aN | CF iteration | **0.398** (honest: lags \u221aN) | 3.0\u00d710\u2075 |\n| W4 #{x\u00b2 \u2261 x mod N} | full N-scan | **1.000** | 2.0\u00d710\u2074 |\n\nThe reach chain (witness \u2192 s \u2192 {p,q}) holds at 100% jointly \u2014 re-verifying paper 61's {(N,s)} theorem across the unified family.\n\n### The honest numbers\n- W3's exponent came out **below** the naive \u00bd (\u2113/\u221aN drifts 0.75 \u2192 0.18 \u2192 0.23 across sizes) \u2014 reported as measured.\n- First launch sized semiprimes by `bits` while N carries 2\u00b7bits bits \u2014 a 10\u2079-operation stall caught before any claim.\n- The idempotent scan initially excluded x = 0 and failed its own count=4 assert \u2014 the trivial idempotent is part of the CRT structure.\n\n### What this decides\nWith the proven no-pinning half (QRLEAK / COMPENSATING-PARTNER), frontier (i) is now **empirically armed end-to-end**: every factor-revealing definition-route in the family is super-poly in log N, the cheapest factor-bits ride the \u221aN-scale classical methods (exactly barrier 8's face), and all content routes through the trace. The formal converse proof remains the programme's open theoretical target.\n\nNow 423 experiments. Assessment v199. Paper 88.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3431",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T16:52:15.032781+00:00",
     "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
   },

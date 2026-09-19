@@ -111,10 +111,9 @@ theorem factorial_controls_comparisons_entropy_and_history
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · convert sorting_info_erased n hn;
-      · convert sorting_history_lower_bound n Aux e hc using 1;
-        simp +decide [ Fintype.card_perm ]
+      refine ⟨ comparison_lower_bound t n hs, sorting_info_erased n hn, ?_ ⟩
+      convert sorting_history_lower_bound n Aux e hc using 1
+      simp +decide [ Fintype.card_perm ]
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
@@ -123,8 +122,10 @@ the change of base in `log₂(n!)`.
 -/
 theorem sorting_landauer_gap_exact (n : ℕ) (hn : 1 ≤ n) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      convert congr_arg _ ( sorting_info_erased n hn ) using 1;
-      unfold landauerCost; rw [ Real.logb ] ; ring; norm_num;
+      have hlog2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
+      unfold landauerGap landauerCost
+      rw [sorting_info_erased n hn, Real.logb]
+      field_simp
 
 /-
 The Landauer work assigned to irreversible sorting is unchanged when redundant

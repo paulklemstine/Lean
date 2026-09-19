@@ -2768,7 +2768,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d309ec20",
     "description": "## FACT round-26 #1 — CONVERSE-COST-CURVE (paper 88, /tmp/exp_conversecost.py, /tmp/r26n1c.log)\n\n**Verdict name: NO-POLYLOG-ROUTE-ANYWHERE.**\n\n### Result\nThe empirical barrier-4 converse: the ENTIRE known factor-revealing witness family sits on ONE cost-information plane under identical conditions, with **no poly(log N) definition-route anywhere**:\n\n| witness | definition-route | α (cost ~ N^α) | ops/factor-bit |\n|---|---|---|---|\n| W1 M1 = Σ gcd(x,N) | full N-scan | **1.000 exact** | 2.0×10⁴ |\n| W2 zero-divisor first hit | scan to first hit | cost = min(p,q) 60/60 | 2.9×10⁴ |\n| W3 CF period of √N | CF iteration | **0.398** (honest: lags √N) | 3.0×10⁵ |\n| W4 #{x² ≡ x mod N} | full N-scan | **1.000** | 2.0×10⁴ |\n\nThe reach chain (witness → s → {p,q}) holds at 100% jointly — re-verifying paper 61's {(N,s)} theorem across the unified family.\n\n### The honest numbers\n- W3's exponent came out **below** the naive ½ (ℓ/√N drifts 0.75 → 0.18 → 0.23 across sizes) — reported as measured.\n- First launch sized semiprimes by `bits` while N carries 2·bits bits — a 10⁹-operation stall caught before any claim.\n- The idempotent scan initially excluded x = 0 and failed its own count=4 assert — the trivial idempotent is part of the CRT structure.\n\n### What this decides\nWith the proven no-pinning half (QRLEAK / COMPENSATING-PARTNER), frontier (i) is now **empirically armed end-to-end**: every factor-revealing definition-route in the family is super-poly in log N, the cheapest factor-bits ride the √N-scale classical methods (exactly barrier 8's face), and all content routes through the trace. The formal converse proof remains the programme's open theoretical target.\n\nNow 423 experiments. Assessment v199. Paper 88.\n",
     "domain_bridges": [],
     "domains": [
@@ -2780,7 +2780,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T16:52:15.032781+00:00",
     "title": "FACT round-26 #1 — CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
   },

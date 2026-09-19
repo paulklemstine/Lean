@@ -178,6 +178,42 @@ theorem relu_bad_point_density (L w k : ℕ) (f : ℝ → ℝ) (hnet : IsNet w L
   have h2 := knotBound_le w L
   omega
 
+/-- **The depth separation.**  For `L ≥ 1`, a depth-`L`, width-`w` ReLU network that
+approximates the sawtooth tower `tri^[L^2+4]` within `1/4` on `[0,1]` must satisfy
+`2^L ≤ 2w + 2`: the width has to grow exponentially in the depth.  It is the quantitative
+form of the oscillation obstruction: the tower has `2^(L^2+4)` teeth while the network has
+only `O((2w+2)^L)` pieces to spend on them.  The hypothesis `1 ≤ L` is part of the
+interface used by `Algebra.MultivariateRidgeSeparation`; the counting argument below does
+not actually need it. -/
+theorem relu_depth_separation (L w : ℕ) (hL : 1 ≤ L) (f : ℝ → ℝ) (hnet : IsNet w L f)
+    (happrox : ∀ t ∈ Set.Icc (0:ℝ) 1, |f t - tri^[L^2+4] t| ≤ 1/4) :
+    2 ^ L ≤ 2 * w + 2 := by
+  classical
+  set k : ℕ := L^2 + 4 with hk
+  have hpow : (0:ℝ) < 2^k := by positivity
+  have hbad : ((Finset.range (2^k+1)).filter
+      (fun (j : ℕ) => ¬ |f ((j:ℝ)/2^k) - tri^[k] ((j:ℝ)/2^k)| ≤ 1/4)) = ∅ := by
+    rw [Finset.filter_eq_empty_iff]
+    intro j hj
+    simp only [not_not]
+    refine happrox _ ⟨by positivity, ?_⟩
+    rw [div_le_one hpow]
+    have hjle : j ≤ 2^k := Nat.lt_succ_iff.1 (Finset.mem_range.1 hj)
+    exact_mod_cast hjle
+  have h := relu_bad_point_density L w k f hnet
+  rw [hbad] at h
+  simp only [Finset.card_empty, zero_add] at h
+  by_contra hcon
+  push_neg at hcon
+  have h1 : (2*w+2)^L ≤ (2^L)^L := Nat.pow_le_pow_left hcon.le L
+  have h2 : (2^L)^L = 2^(L*L) := by rw [← pow_mul]
+  have h3 : 2^k = 16 * 2^(L*L) := by
+    rw [hk, show L^2 + 4 = 4 + L*L by ring, pow_add]
+    norm_num
+  have h4 : 1 ≤ 2^(L*L) := Nat.one_le_two_pow
+  rw [h2] at h1
+  omega
+
 end ReluDepth
 
 end
