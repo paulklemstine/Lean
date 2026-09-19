@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-19T14:51:58.482076+00:00",
+  "last_updated": "2026-09-19T21:46:57.911223+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75532,6 +75532,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-19T14:51:58.119774+00:00",
       "title": "FACT round-26 #3 \u2014 SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest incon"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Combinatorics",
+      "duration_seconds": 7720.316482543945,
+      "end_time": 1789854388.5524774,
+      "files_integrated": 4,
+      "job_id": "d309ec20",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.83,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5485,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.83,
+        "novelty": 0.83,
+        "proof_depth": 0.83,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.83,
+      "sorry_count": 2,
+      "sorry_density": 0.003355704697986577,
+      "start_time": 1789846668.2359948,
+      "strategy_count": 0,
+      "theorem_count": 596,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 468,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-19T21:46:57.446586+00:00",
+      "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
     }
   ]
 }

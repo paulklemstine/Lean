@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f5f0f634",
-      "domain": "Applications",
-      "key_insight": "# Future directions — prime-power hits and the smoothness budget\n\nDerived from the three research cycles of this project.\n\n## What this cycle established\n\n**Survived and proved.** A divisibility hit i",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 42,
-      "timestamp": "2026-09-04T04:35:13",
-      "title": "FACT round-46 #1 — MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
-    },
-    {
       "cycle_id": "5109f84c",
       "domain": "Geometry",
       "key_insight": "# Future directions — geometry of the Spearman `T`-dial (round-44 #2, exp 499)\n\nThis cycle re-founded the `T`-dial's Spearman reading on permutohedron geometry.  Four\ncompiling, sorry-free files were",
@@ -499,19 +489,19 @@
       "theorem_count": 301,
       "timestamp": "2026-09-19T14:51:57",
       "title": "FACT round-26 #3 — SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest incon"
+    },
+    {
+      "cycle_id": "d309ec20",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — after CONVERSE-COST-CURVE (paper 88 formalisation)\n\n## What the cycles established\n\nEight `sorry`-free Lean files (`Catalog/Combinatorics/ConverseCost*.lean`).\n\n**Cycle 1 — the m",
+      "quality_score": 0.83,
+      "sorry_count": 2,
+      "theorem_count": 596,
+      "timestamp": "2026-09-19T21:46:55",
+      "title": "FACT round-26 #1 — CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ed2d0af8",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Universal Properties of Humor (v19c thread)\n\nThis cycle established, sorry-free, in `Catalog/Applications/`:\n\n* **surprise is an exactly submodular valuation** on the refinement",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-08-24T19:46:15",
-      "title": "The Category Theory of Jokes: Universal Properties of Humor"
-    },
     {
       "cycle_id": "2a9ba724",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 301,
       "timestamp": "2026-09-19T14:51:57",
       "title": "FACT round-26 #3 — SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest incon"
+    },
+    {
+      "cycle_id": "d309ec20",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — after CONVERSE-COST-CURVE (paper 88 formalisation)\n\n## What the cycles established\n\nEight `sorry`-free Lean files (`Catalog/Combinatorics/ConverseCost*.lean`).\n\n**Cycle 1 — the m",
+      "quality_score": 0.83,
+      "sorry_count": 2,
+      "theorem_count": 596,
+      "timestamp": "2026-09-19T21:46:55",
+      "title": "FACT round-26 #1 — CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "87769612",
-      "domain": "Tropical",
-      "name": "outMarginal_sum_one",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "87769612",
-      "domain": "Tropical",
-      "name": "mutualInfo_term_bound",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "cb6515e1",
-      "domain": "Novelty",
-      "name": "canonicalMotion_iff_register",
-      "quality": 0.82
-    },
     {
       "cycle_id": "cb6515e1",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Algebra",
       "name": "tri_right",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "d309ec20",
+      "domain": "Combinatorics",
+      "name": "restrict_mono",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "d309ec20",
+      "domain": "Combinatorics",
+      "name": "restrict_mem_double_powerset",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "d309ec20",
+      "domain": "Combinatorics",
+      "name": "card_image_restrict_le",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-09-19T14:51:57",
+  "last_updated": "2026-09-19T21:46:55",
   "open_questions": [
-    {
-      "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
-      "cycle_id": "6753d65f",
-      "domain": "Bridges",
-      "sorry_count": 2,
-      "timestamp": "2026-08-13T15:22:02"
-    },
     {
       "context": "Everything is `sorry`-free.",
       "cycle_id": "ab9891cb",
@@ -3016,6 +3009,13 @@
       "domain": "Algebra",
       "sorry_count": 1,
       "timestamp": "2026-09-08T09:52:11"
+    },
+    {
+      "context": "carried out with no `sorry` — lives in `Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest`,; carried out with no `sorry` — lives in `Shared.Hilbert6AxiomatizationofPhysics.SalvagedBest`,",
+      "cycle_id": "d309ec20",
+      "domain": "Combinatorics",
+      "sorry_count": 2,
+      "timestamp": "2026-09-19T21:46:55"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "b50cc5ce",
-        "quality": 0.85,
-        "theorems": 21,
-        "title": "Test curvature only after identifiability"
-      },
-      {
         "cycle_id": "4467887a",
         "quality": 0.85,
         "theorems": 87,
@@ -3265,6 +3259,12 @@
         "quality": 0.88,
         "theorems": 76,
         "title": "The Congruent Number Laboratory — The Berggren Tree's Area Function and the Birc"
+      },
+      {
+        "cycle_id": "d309ec20",
+        "quality": 0.83,
+        "theorems": 596,
+        "title": "FACT round-26 #1 — CONVERSE-COST-CURVE: the empirical barrier-4 across the witne"
       }
     ],
     "Computation": [

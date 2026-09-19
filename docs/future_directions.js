@@ -988,6 +988,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle d309ec20 (Q=0.830), which proved 596 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-26 #1 \u2014 CONVERSE-COST-CURVE (paper 88, /tmp/exp_conversecost.py, /tmp/r26n1c.log)\n\n**Verdict name: NO-POLYLOG-ROUTE-ANYWHERE.**\n\n### Result\nThe empirical barrier-4 converse: the ENTIRE known factor-revealing witness family sits on ONE cost-information plane under identical conditions, ",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_d309ec20_4932305c",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "d309ec20",
+    "status": "available",
+    "timestamp": "2026-09-19T21:46:56.150729+00:00",
+    "title": "Deepening: FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witne"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 1494cb60 (Q=0.820), which proved 431 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove\n   `\u27e6m+n, k\u27e7_q = \u2211_j q^{(m-j)(k-j)} \u27e6m,j\u27e7_q \u27e6n,k-j\u27e7_q`, the q-Vandermonde\n   convolution, and the q-binomial theorem\n   `\u220f_{i=0}^{n-1}(1 + q^i x) = \u2211_k q^{k(k-1)/2} \u27e6n,k\u27e7_q x^k`.",
     "domains": [
       "Applications"
@@ -2026,21 +2040,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-21T16:52:15.031584+00:00",
     "title": "FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)"
-  },
-  {
-    "consumed_by_exp_id": "d309ec20",
-    "description": "## FACT round-26 #1 \u2014 CONVERSE-COST-CURVE (paper 88, /tmp/exp_conversecost.py, /tmp/r26n1c.log)\n\n**Verdict name: NO-POLYLOG-ROUTE-ANYWHERE.**\n\n### Result\nThe empirical barrier-4 converse: the ENTIRE known factor-revealing witness family sits on ONE cost-information plane under identical conditions, with **no poly(log N) definition-route anywhere**:\n\n| witness | definition-route | \u03b1 (cost ~ N^\u03b1) | ops/factor-bit |\n|---|---|---|---|\n| W1 M1 = \u03a3 gcd(x,N) | full N-scan | **1.000 exact** | 2.0\u00d710\u2074 |\n| W2 zero-divisor first hit | scan to first hit | cost = min(p,q) 60/60 | 2.9\u00d710\u2074 |\n| W3 CF period of \u221aN | CF iteration | **0.398** (honest: lags \u221aN) | 3.0\u00d710\u2075 |\n| W4 #{x\u00b2 \u2261 x mod N} | full N-scan | **1.000** | 2.0\u00d710\u2074 |\n\nThe reach chain (witness \u2192 s \u2192 {p,q}) holds at 100% jointly \u2014 re-verifying paper 61's {(N,s)} theorem across the unified family.\n\n### The honest numbers\n- W3's exponent came out **below** the naive \u00bd (\u2113/\u221aN drifts 0.75 \u2192 0.18 \u2192 0.23 across sizes) \u2014 reported as measured.\n- First launch sized semiprimes by `bits` while N carries 2\u00b7bits bits \u2014 a 10\u2079-operation stall caught before any claim.\n- The idempotent scan initially excluded x = 0 and failed its own count=4 assert \u2014 the trivial idempotent is part of the CRT structure.\n\n### What this decides\nWith the proven no-pinning half (QRLEAK / COMPENSATING-PARTNER), frontier (i) is now **empirically armed end-to-end**: every factor-revealing definition-route in the family is super-poly in log N, the cheapest factor-bits ride the \u221aN-scale classical methods (exactly barrier 8's face), and all content routes through the trace. The formal converse proof remains the programme's open theoretical target.\n\nNow 423 experiments. Assessment v199. Paper 88.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3431",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T16:52:15.032781+00:00",
-    "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
   },
   {
     "consumed_by_exp_id": "fbb83685",
@@ -32849,6 +32848,66 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-19T14:51:43.133722+00:00",
     "title": "Barrier-4 Converse in a Widened Sieve Model"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Strengthen the black-box barrier to the model where the algorithm is given N and may probe a predicate at fewer than min(p,q)^(1-eps) points. The approach couples two prime pairs drawn from the same size window so that the transcripts coincide. It matters because it moves the barrier from a hidden-modulus oracle to the realistic setting.\n\nFor every eps > 0 and every non-adaptive probe rule of size at most min(p,q)^(1-eps) there exist balanced semiprimes on which the rule never hits a non-unit, hence no factor is output.\n\nExtend ConverseCost.transcript_blind to probe sets depending on N, using the hit density p+q-1 out of N proved in ConverseCost.hits_card.\n\nThe scan plane provably has no sublinear-in-min(p,q) shortcut, sharpening the converse half of barrier 4.\n\nThere is a probe rule exploiting knowledge of N, which would be a concrete new factoring heuristic.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4891",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d309ec20",
+    "status": "available",
+    "timestamp": "2026-09-19T21:46:40.349811+00:00",
+    "title": "Sublinear Query Barrier with the Modulus Revealed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the product of route cost and delivered information is bounded below by the square root of N across the whole family. The approach combines the proved route-cost floor with the proved constancy of the idempotent counter. It matters because it turns the informal cost-information plane into a single inequality.\n\nFor every route in the family, cost(route) * content(route) >= sqrt(N)/2, where content counts the semiprimes of a fixed bit size that the witness value distinguishes.\n\nDefine content as the cardinality of a fibre of the witness map on semiprimes of fixed bit size and evaluate it for W1, W2 and W4 with the proved determination theorems.\n\nA quantitative version of barrier 4 covering all routes with one inequality.\n\nSome route beats the trade-off, identifying the first candidate for a cheap informative witness.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4892",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d309ec20",
+    "status": "available",
+    "timestamp": "2026-09-19T21:46:40.907971+00:00",
+    "title": "Cost-Content Inequality on the Witness Plane"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The odd square-root ladder is now proved; the even case provably breaks it, since ZMod 8 has four square roots of unity while omega(8) = 1. The conjecture is the exact correction factor contributed by the two-part of the modulus, which would complete the count for every modulus. It matters because the nontrivial square roots of unity are precisely the reveal witnesses of Fermat, CFRAC, Pell and Miller-Rabin.\n\nFor every N > 0, writing N = 2^k * m with m odd, Nat.card {x : ZMod N // x*x = 1} = c k * 2 ^ (m.primeFactors.card), where c 0 = c 1 = 1, c 2 = 2 and c k = 4 for k >= 3.\n\nCompute the local count modulo 2^k from the factorisation x^2 - 1 = (x-1)(x+1), in which both factors are even and exactly one is divisible by 4, then combine with the proved lemmas sqrtOne_card_crt and sqrtOne_card_prod.\n\nA complete count of square roots of unity for every modulus, hence the exact supply of reveal witnesses available to a factoring algorithm.\n\nSome power of two has an unexpected number of square roots of unity, which would contradict the structure of the units of Z/2^k.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4893",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d309ec20",
+    "status": "available",
+    "timestamp": "2026-09-19T21:46:41.477242+00:00",
+    "title": "Two-Adic Correction of the Square-Root Ladder"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalise that computing the gcd-sum of a semiprime is equivalent to factoring it. The approach uses the proved affine bridge between the gcd-sum and Euler's totient together with the quadratic recovery of the prime pair from N and s. It matters because it upgrades the empirical cost curve for W1 into a conditional hardness statement.\n\nThere is an explicit poly(log N)-time reduction that, given N = p*q and the value M1(N), outputs p and q, and conversely.\n\nFormalise the recovery map s = (4N + 1 - M1)/2 followed by the quadratic root extraction, proving correctness from sum_from_pillai and sum_rigidity.\n\nW1 is factoring-hard, so its Theta(N) definition route is not an artefact but a symptom.\n\nThe recovery step fails somewhere, which would be a surprising failure of the symmetric-function argument.",
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_4894",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d309ec20",
+    "status": "available",
+    "timestamp": "2026-09-19T21:46:42.032049+00:00",
+    "title": "Factoring Equivalence of the gcd-Sum Witness"
   },
   {
     "consumed_by_exp_id": "",
