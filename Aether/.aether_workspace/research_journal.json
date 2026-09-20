@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "135e0dcb",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — QR lottery dial (Bridges, round-43 #4, paper 164)\n\n## What this cycle settled\n\nFive new files in `Catalog/Bridges/` prove, with zero sorries:\n\n1. **The dial is an expectation, no",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 118,
-      "timestamp": "2026-09-04T18:25:35",
-      "title": "FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
-    },
-    {
       "cycle_id": "fbb2311e",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — fork channels and their exact asymptotic constants\n\nAll statements below are follow-ups to the fully proved results in\n`Catalog/Combinatorics/ForkChannelExactConstants.lean`, whe",
@@ -499,19 +489,19 @@
       "theorem_count": 78,
       "timestamp": "2026-09-19T23:41:54",
       "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (pa"
+    },
+    {
+      "cycle_id": "fbb83685",
+      "domain": "Physics",
+      "key_insight": "# FUTURE DIRECTIONS — after METHOD-LOCALITY (round 28 #1, cycles 1–4)\n\n## Build status\n\nAll five Lean files of this thread (`Catalog/Physics/MethodLocality*.lean`) compile against\nMathlib with no `sor",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 348,
+      "timestamp": "2026-09-20T16:21:48",
+      "title": "FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "969a5dc4",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — after the depth-decay theorems\n\nThis cycle pinned the reach of a fixed-precision magnitude sensor on the Berggren\n(Pythagorean) tree, in three independent registers:\n\n* **exists*",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-08-24T20:50:14",
-      "title": "FACT round-70 #4 — DEPTH-DECAY: the magnitude channel sees only the first steps (paper 195)"
-    },
     {
       "cycle_id": "886e75dc",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 78,
       "timestamp": "2026-09-19T23:41:54",
       "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (pa"
+    },
+    {
+      "cycle_id": "fbb83685",
+      "domain": "Physics",
+      "key_insight": "# FUTURE DIRECTIONS — after METHOD-LOCALITY (round 28 #1, cycles 1–4)\n\n## Build status\n\nAll five Lean files of this thread (`Catalog/Physics/MethodLocality*.lean`) compile against\nMathlib with no `sor",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 348,
+      "timestamp": "2026-09-20T16:21:48",
+      "title": "FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5c150b3f",
-      "domain": "MachineLearning",
-      "name": "bil_add_right",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "5c150b3f",
-      "domain": "MachineLearning",
-      "name": "smul_left",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "caf9cc55",
-      "domain": "Probability",
-      "name": "SyrPred",
-      "quality": 0.81
-    },
     {
       "cycle_id": "caf9cc55",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "hasExponent_of_log_sub_bounded",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "fbb83685",
+      "domain": "Physics",
+      "name": "firingSet_subset_range",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "fbb83685",
+      "domain": "Physics",
+      "name": "card_coFiringSet",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "fbb83685",
+      "domain": "Physics",
+      "name": "card_deadSet",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-19T23:41:54",
+  "last_updated": "2026-09-20T16:21:48",
   "open_questions": [
     {
       "context": "Everything is `sorry`-free.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "497c96d6",
-        "quality": 0.82,
-        "theorems": 88,
-        "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist"
-      },
-      {
         "cycle_id": "898d17cb",
         "quality": 0.82,
         "theorems": 84,
@@ -3761,6 +3755,12 @@
         "quality": 0.72,
         "theorems": 61,
         "title": "A finite, explicit improvement over three middle layers"
+      },
+      {
+        "cycle_id": "fbb83685",
+        "quality": 0.82,
+        "theorems": 348,
+        "title": "FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulu"
       }
     ],
     "Probability": [

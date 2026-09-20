@@ -116951,11 +116951,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "900e5fcb",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -116967,7 +116967,7 @@
       ],
       "github_issue": 191,
       "id": "fd_3449",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-09-20T16:22:31.073014+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -116982,7 +116982,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-21T18:57:10.443489+00:00",
       "title": "FACT round-29 #1 — THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
@@ -154983,7 +154983,7 @@
       "depth_estimate": 3,
       "description": "For profiles with a spectral gap the mixing premium should be independent of the context length, while gapless profiles should show a premium growing linearly in the context. The approach transports the existing decay dichotomy through the sup-convolution. It decides whether mixed budget tables need re-measurement per context level.\n\nGeometric decay implies k*_balanced(2N) - k*_pure(2N) is constant in N; a positive uniform weight floor implies it grows linearly in N.\n\nInstantiate the sup-convolution with the uniform profile and compute both knees in closed form; contrast with the geometric instance already proved uniformly in N.\n\nOne mixed measurement extrapolates across contexts for gap-possessing models.\n\nMixed budget tables must be re-measured at every context level.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Physics"
@@ -155109,7 +155109,7 @@
       "depth_estimate": 3,
       "description": "The two halves of the now two-sided estimator depend on the gate in opposite directions, so the width of the certified window for the per-key ratio is a function of the gate alone once the knee is fixed. We conjecture that this width is unimodal in the gate and attains its minimum at an interior point, giving an optimal gate at which a budget measurement is most informative about the spectrum.\n\nFor a fixed knee value K and context at least 2K, the width of the window between the largest candidate ratio refuted by the criterion at K-1 and the smallest floor rate excluded by the certificate q^(2K) <= (1 - tau)/tau is a unimodal function of tau on (0,1) with a unique minimiser strictly between 0 and 1, and that minimiser is bounded away from the value 0.99 used in the reported protocol.\n\nExpress both endpoints as explicit functions of tau in Lean, differentiate or use monotonicity of the two implicit criteria to prove unimodality, and evaluate the minimiser numerically for K equal to 10, 12 and 20.\n\nBudget measurements should be reported at the optimal gate, and existing tables can be re-analysed to give tighter spectral windows at no experimental cost.\n\nThe window width is monotone in the gate, so the informativeness of a measurement is maximised at an endpoint and gate choice reduces to a feasibility constraint.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -160328,7 +160328,7 @@
       "depth_estimate": 3,
       "description": "The Shannon ceiling is strict for every mixed multiset. We conjecture the deficit is exactly the Gaussian normalisation of the multinomial distribution, growing like ((r-1)/2) log2 n, which is the finite-size thermodynamic signature of key repetition.\n\nn*H(p) - log2(n!/prod m_i!) = ((r-1)/2)*log2 n + O(1) for multiplicity profiles with all m_i = Theta(n), where r is the number of occurring keys.\n\nCombine Stirling bounds for each factorial with the proved strict inequality; verify numerically for r = 2,3 and n up to a few hundred by kernel-checked rational bounds.\n\nPhysical sorters of repeated-key streams dissipate kT log 2 * H(p) per item with an explicit logarithmic finite-size correction.\n\nThe deficit has a different order, indicating that the empirical distribution is not the correct thermodynamic ensemble for finite multiset streams.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Physics"
@@ -160542,7 +160542,7 @@
       "depth_estimate": 3,
       "description": "Nested Reed–Solomon codes RS(k₁) ⊆ RS(k₂) with the computed dual dimensions give a CSS construction whose quantum parameters follow from the classical minimum distances proved here. Conjecture the resulting [[n, k₂-k₁, min(n-k₂+1, k₁+1)]] parameters and formalize the CSS bookkeeping over a finite field.\n\nFor 1 ≤ k₁ ≤ k₂ ≤ n, the CSS pair (RS(k₂), RS(k₁)⊥) yields a quantum code with n - (k₂ - k₁) stabilizer generators and distance at least min(n - k₂ + 1, k₁ + 1).\n\nProve the nesting RS(k₁) ⊆ RS(k₂) as a Submodule inclusion, combine with finrank_dualCode_code, and state the CSS distance bound as a weight statement about the quotient of the two codes.\n\nA fully verified family of quantum error-correcting codes derived from the classical results in this file.\n\nThe distance bound degrades on the quotient, pinpointing where classical minimum distance fails to control quantum distance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Physics"
@@ -164858,7 +164858,7 @@
       "depth_estimate": 3,
       "description": "The degree-one total-leakage sum rule was proved this cycle, together with the identity that its slack is the normalised variance of the readout's nonlinear part. The conjecture completes the picture: the p-biased product characters form an orthonormal basis, so the slack is exactly the spectral mass of degree at least two, and each fork channel is classified by the degree carrying its mass.\n\nFor the p-biased characters chi_S(x) = prod_{i in S} (1[x_i] - p)/sqrt(p(1-p)) and any readout F with Var F > 0, the squared coefficients E[F chi_S] over nonempty S sum to Var F; the degree-one part is sum_i corrSq(x_i, F), the split count is a pure degree-one readout, and every coordinatewise product readout has a geometric degree profile governed by its channel parameter.\n\nIndex the residual in E_residual_sq by subsets instead of coordinates, compute the Gram matrix of the characters from E_prod, and verify the spectral decomposition of the four channels by exact rational enumeration for N <= 6.\n\nFork channels acquire a spectral invariant, the degree profile, which explains the o(1/N) decay of the Boolean channels as geometric spread across degrees and gives a basis-free classification of readouts.\n\nThe p-biased product characters are not complete for the fork functional, which would mean the leakage budget is not exhausted by the interaction hierarchy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Physics"
@@ -165898,7 +165898,7 @@
       "depth_estimate": 3,
       "description": "The proved floor k* ≥ g²/E is the α = 2 rung of a Hölder ladder of entropy certificates. The conjecture is that every order α > 1 gives a valid floor with gate exponent equal to the Hölder conjugate, and that the ladder degenerates exactly at the Shannon end. It matters because it identifies which entropy a deployable pipeline must measure.\n\nFor every α > 1 and every positive profile on n keys, k*(n, g) ≥ g^(α/(α-1)) · exp(H_α), where H_α is the Rényi entropy of the normalised profile; the bound fails for α = 1.\n\nFormalise Hölder for the head sum in Lean (generalising sq_retained_le_mul_energy) and re-run the spike counterexample to confirm failure at α = 1.\n\nA single tunable statistic replaces the ℓ²-energy, and the optimal α can be chosen per gate.\n\nThe α = 2 certificate is structurally special, which strengthens the case for reporting collision entropy specifically.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -165981,7 +165981,7 @@
       "depth_estimate": 3,
       "description": "Two-head merging already obeys a max law for the knee and a min law for the energy floor. The conjecture is that both persist for arbitrary finite families, so that a model-level certificate can be assembled from per-head measurements without any cross-head data.\n\nFor heads w₁, …, w_m with positive weights, min_j k*(w_j) ≤ k*(Σ w_j) ≤ max_j k*(w_j) and min_j g²/E(w_j) ≤ g²/E(Σ w_j) ≤ max_j g²/E(w_j).\n\nInduct on m in Lean using kstar_add_le_max, min_le_kstar_add, energy_add_le_max and energy_floor_add_ge_min; verify attainment with two explicit head families.\n\nPer-head measurement suffices to certify the model budget, a large practical saving.\n\nCross-head correlations enter the budget, and the merged profile must be measured directly.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -166199,7 +166199,7 @@
       "depth_estimate": 3,
       "description": "Monotonicity of the Gaussian scale space in the width was reinterpreted as the action of the diagonal one-parameter subgroup. The conjecture upgrades this from monotone to analytic: the orbit function should satisfy a first-order ODE whose right-hand side is a Gaussian-weighted second moment of the ordinate multiset.\n\nFor every finite multiset S of ordinates and every s > 0 the function u -> gaussSpectral S (e^u s) is real-analytic and satisfies d/du F(u) = 2 pi sum_t (t^2 / (e^{2u} s^2)) gaussWin (e^u s) t / (1/4 + t^2).\n\nDifferentiate the finite sum term by term in Lean and identify the derivative with the stated moment; then check the moment is the generator of the diagonal action on the window family.\n\nThe scale space becomes a solution of a group-theoretic flow, giving quantitative control on how fast detected mass grows with window width.\n\nMonotonicity is an accident of the exponential and does not reflect the group action, weakening the structural reading of the scale space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Physics"
@@ -166544,7 +166544,7 @@
       "depth_estimate": 3,
       "description": "Eigenvalues of approximately idempotent finite-entry hyperreal matrices should cluster in the halos of 0 and 1 only, with an appreciable gap. The approach uses that X²−X annihilates the observed matrix exactly, together with the exact symmetric model supplied by rigidity. It would give a non-Archimedean analogue of spectral projections.\n\nIf A has finite entries and A*A ≈ A, then every eigenvalue of A is infinitesimally close to 0 or to 1, and rank (stMat A) counts those close to 1.\n\nDevelop hyperreal eigenvalue notions for symmetric matrices in Lean and combine with polyEval_eq_zero_of_approx and exists_symm_exactPVMH_approx.\n\nApproximate projections are spectrally rigid; observation acts as an exact spectral projection.\n\nThere exist approximate idempotents with eigenvalues at appreciable distance from {0,1}, bounding the reach of the functional-calculus theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Physics"
@@ -169979,7 +169979,7 @@
       "depth_estimate": 3,
       "description": "The Berggren embedding constructed here uses only an orthogonal (2,2,-2) frame, and fixes the frame's orthogonal complement pointwise. Determining that complement identifies the centraliser of the Berggren image inside the Lorentzian Conway group.\n\nIn a rank-26 even unimodular Lorentzian lattice every orthogonal (2,2,-2) frame has orthogonal complement even of rank 23 and determinant 8, fixed pointwise by the Berggren image.\n\nFormalise U (+) N models of even unimodular Lorentzian lattices and compute the complement of the explicit frame; verify the pointwise fixing from the reflection formula.\n\nAn explicit 23-dimensional centraliser for the Berggren subgroup inside Aut(II(25,1)).\n\nFrames fall into several orbits with different complements, giving a moduli statement instead.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Physics"
@@ -170153,7 +170153,7 @@
       "depth_estimate": 3,
       "description": "Upgrade the proved growth window 29/5 <= c_{n+1}/c_n <= 6 for the Berggren B-spine into an exact closed form and an exponential error bound governed by the conjugate Pell root.\n\nc_n = A(3+2 sqrt 2)^n + B(3-2 sqrt 2)^n with A + B = 5, and |c_{n+1}/c_n - (3+2 sqrt 2)| <= C (3-2 sqrt 2)^(2n).\n\nSolve the two-term recurrence in Lean over the real numbers and bound the conjugate term; compare with bHyp_lower and bHyp_upper.\n\nAn exact silver-ratio growth law for the Berggren spine, sharpening the catalog's Pell results.\n\nThe spine has an additional arithmetic correction, worth isolating.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -170197,7 +170197,7 @@
       "depth_estimate": 3,
       "description": "Since conservation is impossible, seek monotonicity: pull the Berggren Lorentz form back along the proved ternary embedding and ask for a quantitative Lyapunov function on the embedded subtree.\n\nThe embedding F from Berggren words to odd numbers can be chosen so that a Berggren-derived functional decreases strictly along every edge of the image subtree, at a rate bounded below by a constant.\n\nCompute the pullback on the three explicit lifts, prove monotonicity letter by letter, and quantify the decrement.\n\nA Lyapunov certificate for an explicitly described infinite family of Collatz trajectories.\n\nThe embedded subtree is invariant-free even for monotone functionals, reinforcing the rank-one rigidity picture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -187976,6 +187976,46 @@
       "thread_id": "",
       "timestamp": "2026-08-13T00:05:37.540810+00:00",
       "title": "Deepening: The Asymmetric CRT-Split of a^{N-1} is Factor-Blind, Closed"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle fbb83685 (Q=0.820), which proved 348 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-28 #1 — METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **ρ and ECM are factor-local** (cost dete",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "push_fbb83685_d1ad5309",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "fbb83685",
+      "source_path": "FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulu",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-20T16:21:48.472052+00:00",
+      "title": "Deepening: FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulu"
     },
     {
       "ambition_level": "extension",

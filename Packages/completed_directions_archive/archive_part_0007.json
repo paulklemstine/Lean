@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-19T23:41:41Z",
-  "count": 161,
+  "archived_at": "2026-09-20T16:21:35Z",
+  "count": 162,
   "directions": [
     {
       "id": "fd_3695",
@@ -6373,6 +6373,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 181
+    },
+    {
+      "id": "fd_3436",
+      "title": "FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)",
+      "description": "## FACT round-28 #1 — METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **ρ and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2¹⁴ → 2²³, 9 draws/cell): median flatness over 2²³ cofactor growth — **ECM ×2.16, ρ ×1.40** (flat within method luck: ECM curve-restart scatter; ρ Poisson around √p ≈ 64).\n\n**H2/H3 p-scaling**, corrected slopes per log₂p (the script's slope print took log₂ of bit-lengths — disclosed, corrected from the printed medians):\n- Pollard ρ: **0.45** — the birthday bound √p ✓\n- trial division: **1.09** — linear in p, the definition face ✓\n- ECM: **1.13** — locally power-like but constant-advantaged: at p = 2¹⁴ ECM needs 6 657 ops vs trial-div's 12 142 — already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (ρ's cost spans 9–136 iters per cell — flatness ratios compared single lucky/unlucky draws) → 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "fbb83685",
+      "timestamp": "2026-08-21T17:46:25.958797+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-19T14:52:42.137525+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 187
     }
   ]
 }

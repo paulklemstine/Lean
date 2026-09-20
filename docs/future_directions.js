@@ -1128,6 +1128,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle fbb83685 (Q=0.820), which proved 348 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-28 #1 \u2014 METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **\u03c1 and ECM are factor-local** (cost dete",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_fbb83685_d1ad5309",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "fbb83685",
+    "status": "available",
+    "timestamp": "2026-09-20T16:21:48.472052+00:00",
+    "title": "Deepening: FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulu"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle caf9cc55 (Q=0.810), which proved 108 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Domain**: Pythagorean <-> Computation\n\n**Hypothesis (MOONSHOT)**: The inverse Collatz tree and the Berggren tree of primitive Pythagorean triples are two realizations of the SAME underlying ternary dynamics. The Collatz map is famously hard because its tree (under the inverse map) is a ternary tre",
     "domains": [
       "Probability"
@@ -2027,21 +2041,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "fbb83685",
-    "description": "## FACT round-28 #1 \u2014 METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **\u03c1 and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2\u00b9\u2074 \u2192 2\u00b2\u00b3, 9 draws/cell): median flatness over 2\u00b2\u00b3 cofactor growth \u2014 **ECM \u00d72.16, \u03c1 \u00d71.40** (flat within method luck: ECM curve-restart scatter; \u03c1 Poisson around \u221ap \u2248 64).\n\n**H2/H3 p-scaling**, corrected slopes per log\u2082p (the script's slope print took log\u2082 of bit-lengths \u2014 disclosed, corrected from the printed medians):\n- Pollard \u03c1: **0.45** \u2014 the birthday bound \u221ap \u2713\n- trial division: **1.09** \u2014 linear in p, the definition face \u2713\n- ECM: **1.13** \u2014 locally power-like but constant-advantaged: at p = 2\u00b9\u2074 ECM needs 6 657 ops vs trial-div's 12 142 \u2014 already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (\u03c1's cost spans 9\u2013136 iters per cell \u2014 flatness ratios compared single lucky/unlucky draws) \u2192 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3436",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T17:46:25.958797+00:00",
-    "title": "FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
-  },
-  {
     "consumed_by_exp_id": "643f7ea2",
     "description": "## FACT round-27 #4 \u2014 BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F\u2082\u2080 x\u2075\u22122 @5 and C\u2085 Q(\u03b6\u2081\u2081)\u207a @11; all conductors pairwise coprime, CRT modulus 31\u00b723\u00b79\u00b78\u00b75\u00b711). The nested-subset capacity curve:\n\n| dials | I(joint) | \u03a3 marginals | deficit | ceiling | % of ceiling |\n|---|---|---|---|---|---|\n| 1 | 1.0011 | 1.0011 | +0.000 | \u2014 | \u2014 |\n| 2 | 2.1334 | 2.0020 | +0.132 | 4.6063 | 46% |\n| 3 | 4.0242 | 2.4777 | +1.547 | 6.4947 | 62% |\n| 4 | 8.2412 | 3.9120 | +4.329 | 9.5434 | 86% |\n| 5 | 11.5307 | 5.1591 | +6.372 | 11.9557 | 96% |\n| **6** | **12.7235** | 5.3650 | **+7.359** | **12.7726** | **99.6%** |\n\n- **H1**: the additive deficit grows MONOTONICALLY (synergy compounds without bound short of the ceiling).\n- **H2**: every marginal reproduces its paper of origin.\n- **H3**: the 6-dial which-factor wall reads 0.3594 vs permutation-null 0.3591 (**z = +0.11**) \u2014 sparse-bias-dominated as at k=4; factor-blindness extends to k=6.\n\n### The battery-capacity law\n1. I(k-joint) \u2192 H(joint labels): the CRT-joint modulus sees all k residues simultaneously; the pair-label structure becomes nearly fully determined (99.6% at k=6).\n2. D(k) grows monotonically: marginal bookkeeping understates batteries progressively (7.36 bits = 3.7\u00d7 additive at k=6).\n3. The ceiling is the joint label entropy \u2014 population correlation between label blocks is all that remains.\n\n### Method notes disclosed\nRow-label off-by-one in the printout (cosmetic, corrected here); chained label code ~10\u00b9\u00b2 values requires np.unique-based entropy (bincount would allocate 5.6 TiB).\n\nNow 429 experiments. Assessment v205. Paper 94.\n",
     "domains": [
@@ -2072,16 +2071,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "900e5fcb",
     "description": "## FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis \u2014 I(s,d jointly) = I(N mod m\\*; labels) \u2014 was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S\u2083a x\u00b3+x+1 @31; S\u2083b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q\u2212p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) \u2212 I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) \u2014 but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S\u2083b replicates (+0.5099). p\u2194q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues \u2014 information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91\u201394) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80\u201394 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity \u2014 unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3449",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T18:57:10.443489+00:00",
     "title": "FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
   },
@@ -32981,6 +32981,66 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-19T23:41:41.180508+00:00",
     "title": "Chebyshev-Sharp Hitting-Set Bound for Divisor Test Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every factoring method shown to be factor local is natural over the rings ZMod N and inherits the pigeonhole cost bound p. The conjecture asserts a converse obstruction: naturality over ZMod alone cannot produce worst-case cost below the square-root barrier, so sub-exponential behaviour must come from an auxiliary group family (elliptic curves) whose order varies with the curve. It would explain why ECM, and not any ring-level iteration, bends below the birthday exponent.\n\nFor every uniform step M (a natural family of maps on commutative rings) there are infinitely many primes p and seeds x0 with uniformTimeAtFactor M p x0 >= c * sqrt p for an absolute constant c > 0.\n\nFormalise the state map as a UniformStep, exhibit the orbit structure on ZMod p for the successor and squaring families, and search small primes for the extremal seeds; the successor family already attains the maximum p (collTime_succ_eq_self).\n\nThe sub-exponential advantage of ECM is provably external to ring-level iteration, and factor locality plus naturality cap ring methods at the square-root barrier.\n\nThere is a natural ring-level iteration beating the birthday barrier, which would be a new factoring method of independent interest.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4900",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "fbb83685",
+    "status": "available",
+    "timestamp": "2026-09-20T16:21:32.937232+00:00",
+    "title": "Naturality Obstruction for Sub-Exponential Factoring"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A Pollard rho run is wasted exactly when the first mod-p collision is also a mod-q collision, in which case the gcd returns N. The conjecture quantifies this coincidence for unbalanced semiprimes and predicts that waste is negligible whenever the factors differ in size.\n\nFor N = p*q with p < q, the number of seeds whose first mod-p collision pair also collides modulo q is at most C * sqrt p / q times the total number of seeds.\n\nEnumerate seeds for small unbalanced semiprimes, compare the observed waste rate with sqrt p / q, then formalise the count over the CRT product state space.\n\nPollard rho needs no restart policy for unbalanced moduli, and the reveal dichotomy collapses to its successful branch with probability tending to 1.\n\nThere is a hidden correlation between the two shadows, contradicting the independence heuristic underlying all rho cost models.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_4901",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "fbb83685",
+    "status": "available",
+    "timestamp": "2026-09-20T16:21:33.589897+00:00",
+    "title": "Simultaneous-Shadow Collision Rate"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A natural step can cost the full p, as the successor map shows, yet every measured quadratic anchor lands within a small constant of sqrt p. The conjecture separates the two regimes: bad seeds exist for the quadratic family, but they are exponentially rare in the birthday parameter.\n\nFor every prime p there exist c and x0 with rho length at least p/4, while the fraction of pairs (c, x0) with rho length exceeding lambda * sqrt p is at most exp(-lambda^2/2).\n\nExhaustively search (c, x0) for primes up to a few thousand to find the extremal rho length, and check the tail fraction against the Gaussian bound; the anchors p = 1009 and p = 4093 are already verified in Lean.\n\nThe 0.45 slope is a typical-case theorem with an explicit tail, and restart policies can be given provable guarantees.\n\nQuadratic maps are uniformly better behaved than random maps, which would sharpen the standard rho cost model.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_4902",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "fbb83685",
+    "status": "available",
+    "timestamp": "2026-09-20T16:21:34.147989+00:00",
+    "title": "Quadratic-Family Worst Case Versus Typical Case"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Reduction maps make the state spaces ZMod N a projective system over the divisibility order, and a uniform step is an endomorphism of that system. The conjecture computes the cost of a run modulo N from its costs on the prime-power components, turning factor locality into an exact decomposition rather than an inequality.\n\nFor a uniform step M and N with prime-power decomposition, the collision time of the orbit on ZMod N equals the least n at which every prime-power shadow has collided with a common witness index (proved for two coprime factors in seqColl_iff_shadows), and exceeds the maximal shadow time by Theta(sqrt(min p)) on average.\n\nExtend seqColl_iff_shadows from two coprime factors to an arbitrary prime-power decomposition, then measure the excess over the maximal shadow time by enumeration on small composite moduli.\n\nCost on any modulus reduces to prime-power data, completing the locality programme for all natural methods.\n\nThe interaction between shadows is genuinely non-local, bounding how far the locality verdict can be pushed beyond semiprimes.",
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_4903",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "fbb83685",
+    "status": "available",
+    "timestamp": "2026-09-20T16:21:34.711571+00:00",
+    "title": "Projective-System Cost Formula"
   },
   {
     "consumed_by_exp_id": "",
