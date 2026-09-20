@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fbb2311e",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — fork channels and their exact asymptotic constants\n\nAll statements below are follow-ups to the fully proved results in\n`Catalog/Combinatorics/ForkChannelExactConstants.lean`, whe",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-09-04T18:25:54",
-      "title": "FACT round-43 #1 — TABLE-CLOSURE FULL: the exact asymptotic constants of the fork channels (paper 16"
-    },
-    {
       "cycle_id": "5b4963ae",
       "domain": "Pythagorean",
       "key_insight": "# Future directions — after the calibration of the Fisher–Rao length\n\n## What this cycle settled\n\nThe open question of the mission was calibration: do the discrete Bhattacharyya angle\nsums converge to",
@@ -499,19 +489,19 @@
       "theorem_count": 348,
       "timestamp": "2026-09-20T16:21:48",
       "title": "FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
+    },
+    {
+      "cycle_id": "587eb79b",
+      "domain": "Computation",
+      "key_insight": "# Future directions — after the factor-blindness wall\n\nThe cycle just completed replaced an empirical verdict (\"the 0.0469-bit wall was bias, the\nbattery is factor-blind\") by four proved statements:",
+      "quality_score": 0.85,
+      "sorry_count": 2,
+      "theorem_count": 117,
+      "timestamp": "2026-09-20T23:30:23",
+      "title": "FACT round-27 #3 — JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (pa"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "886e75dc",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — after the magnitude-mirror seal (round 70, #6)\n\nThree cycles of the loop produced: (1) the structural identity that kills the\nenergy-ascent sensors, (2) an exact *characterisatio",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-24T22:45:54",
-      "title": "FACT round-70 #6 — MAGNITUDE-MIRROR: energy-ascent channel RETRACTED; the tree sealed against all re"
-    },
     {
       "cycle_id": "51837664",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 348,
       "timestamp": "2026-09-20T16:21:48",
       "title": "FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
+    },
+    {
+      "cycle_id": "587eb79b",
+      "domain": "Computation",
+      "key_insight": "# Future directions — after the factor-blindness wall\n\nThe cycle just completed replaced an empirical verdict (\"the 0.0469-bit wall was bias, the\nbattery is factor-blind\") by four proved statements:",
+      "quality_score": 0.85,
+      "sorry_count": 2,
+      "theorem_count": 117,
+      "timestamp": "2026-09-20T23:30:23",
+      "title": "FACT round-27 #3 — JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (pa"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "caf9cc55",
-      "domain": "Probability",
-      "name": "predSet_eq_empty_of_three_dvd",
-      "quality": 0.81
-    },
-    {
-      "cycle_id": "caf9cc55",
-      "domain": "Probability",
-      "name": "two_pow_two_mul_mod_three",
-      "quality": 0.81
-    },
-    {
-      "cycle_id": "841548e6",
-      "domain": "Tropical",
-      "name": "catalog",
-      "quality": 0.83
-    },
     {
       "cycle_id": "841548e6",
       "domain": "Tropical",
@@ -2803,17 +2785,28 @@
       "domain": "Physics",
       "name": "card_deadSet",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "587eb79b",
+      "domain": "Computation",
+      "name": "for",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "587eb79b",
+      "domain": "Computation",
+      "name": "applies",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "587eb79b",
+      "domain": "Computation",
+      "name": "is",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-09-20T16:21:48",
+  "last_updated": "2026-09-20T23:30:23",
   "open_questions": [
-    {
-      "context": "Everything is `sorry`-free.",
-      "cycle_id": "ab9891cb",
-      "domain": "Logic",
-      "sorry_count": 1,
-      "timestamp": "2026-08-13T21:10:16"
-    },
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
       "cycle_id": "9cc9a6e9",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 2,
       "timestamp": "2026-09-19T21:46:55"
+    },
+    {
+      "context": "No `sorry`; the only axioms used are `propext`, `Classical.choice`, `Quot.sound`.; No `sorry`; the only axioms used are `propext`, `Classical.choice`, `Quot.sound`.",
+      "cycle_id": "587eb79b",
+      "domain": "Computation",
+      "sorry_count": 2,
+      "timestamp": "2026-09-20T23:30:23"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "ed1b07dd",
-        "quality": 0.79,
-        "theorems": 63,
-        "title": "E3.  The margin does not"
-      },
-      {
         "cycle_id": "16c9261f",
         "quality": 0.78,
         "theorems": 66,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 55,
         "title": "Square-Root Law for Optimal Batch Size under Sub-Quadratic Multiplication"
+      },
+      {
+        "cycle_id": "587eb79b",
+        "quality": 0.85,
+        "theorems": 117,
+        "title": "FACT round-27 #3 — JOINT-WALL-VERIFIED: the battery's factor-blindness stands, t"
       }
     ],
     "Cryptography": [

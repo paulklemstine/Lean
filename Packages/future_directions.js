@@ -106,6 +106,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 587eb79b (Q=0.850), which proved 117 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED (paper 93, /tmp/exp_jointwall.py, /tmp/r27n3c.log)\n\n**Verdict name: THE-WALL-WAS-BIAS.**\n\n### Result\nPaper 92's flagged joint which-factor reading of **0.0469 bits** \u2014 tested against a 200-shuffle permutation null on the exact 4-field CRT-chained code:\n\n| qu",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_587eb79b_c21bd483",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "587eb79b",
+    "status": "available",
+    "timestamp": "2026-09-20T23:30:24.406969+00:00",
+    "title": "Deepening: FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, t"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5b4963ae (Q=0.860), which proved 62 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The discrete bound by sums of Bhattacharyya angles is now proved. The remaining question is calibration: do those sums converge to the Fisher-Rao length as the partition mesh tends to zero? A positive answer identifies the Fisher-Rao length functional with the length structure of the spherical metri",
     "domains": [
       "Pythagorean"
@@ -2054,21 +2068,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-21T17:46:25.960215+00:00",
     "title": "FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)"
-  },
-  {
-    "consumed_by_exp_id": "587eb79b",
-    "description": "## FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED (paper 93, /tmp/exp_jointwall.py, /tmp/r27n3c.log)\n\n**Verdict name: THE-WALL-WAS-BIAS.**\n\n### Result\nPaper 92's flagged joint which-factor reading of **0.0469 bits** \u2014 tested against a 200-shuffle permutation null on the exact 4-field CRT-chained code:\n\n| quantity | value |\n|---|---|\n| observed I(bigger; joint code) | 0.0469 bits |\n| permutation null mean | **0.0469** |\n| null sd | 0.0014 |\n| z | **+0.05** |\n\n**The entire reading is sparse-plug-in bias.** The battery programme's factor-blindness claim STANDS with its caveat converted into a verified statement: the full battery capacity (8.2246 bits at k = 4, ceiling 9.53) is symmetric trace-routed content with zero detectable which-factor leakage at null sensitivity (~\u00b10.003 bits).\n\nAlso verified in the same run: the 2-field joint wall (0.0011, inside its own null).\n\n### Method note\nProcess catch disclosed: the first verification build chained only two fields \u2014 testing the wrong object, trivially inside its null \u2014 before extending to the actual 4-field target. Lesson: verify the exact object, not a smaller cousin.\n\nNow 428 experiments. Assessment v204. Paper 93.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3438",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T17:46:25.961555+00:00",
-    "title": "FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
   },
   {
     "consumed_by_exp_id": "900e5fcb",
@@ -15730,6 +15729,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-18T16:20:57.857115+00:00",
     "title": "Order-Profile Realisability Cone"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For perfect squares the divisor population has one swap-fixed pair and the blindness theorem fails. Measurements give a reading of 0.1021871709 bits for tau(n)=9. The conjecture is a closed form in tau(n), turning the sharpness boundary into a quantitative law.\n\nFor a perfect square n with tau(n) divisors, the which-factor reading of any symmetric readout that separates unordered factor pairs equals H(lambda) - (tau(n)-1)/tau(n) bits.\n\nProve the cell decomposition of the joint table for square n and evaluate the single unbalanced cell; check numerically for tau(n) = 3, 5, 9, 15.\n\nFixed-point defects are an explicitly removable bias term in any leakage test.\n\nThe diagonal defect couples to the readout and cannot be quotiented away.",
+    "domains": [],
+    "id": "fd_4905",
+    "priority_score": 0.5901612903225807,
+    "research_mode": "team",
+    "source_exp_id": "587eb79b",
+    "status": "available",
+    "timestamp": "2026-09-20T23:30:07.715497+00:00",
+    "title": "Closed-Form Diagonal Defect for Square Divisor Populations"
   },
   {
     "consumed_by_exp_id": "",
@@ -33041,6 +33052,63 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-20T16:21:34.711571+00:00",
     "title": "Projective-System Cost Formula"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Orbit blindness is now proved: a fully invariant readout leaks exactly zero bits about a torsor label. The next question is graded invariance. If the readout is invariant only under a subgroup H of the symmetry group G, the conjecture is that the leakage is bounded by the logarithm of the index of H, with equality when the readout separates cosets.\n\nIf G acts on a finite population with torsor label lab and the readout c is H-invariant for a subgroup H of G, then 0 <= I(lab ; c) <= log2 of the index [G : H], with equality exactly when c separates the H-cosets.\n\nProve the coset-balance lemma for fibers and combine it with the max-entropy ceiling; then evaluate explicit readouts on the six-element triple population that are invariant under the alternating subgroup A3 but not under S3, and compare the reading with log2 2 = 1.\n\nLeakage is graded by the invariance subgroup, turning battery symmetry into a quantitative design budget.\n\nPartial symmetry can leak more than its coset count permits, so fiber balance is not inherited from subgroup orbits.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4904",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "587eb79b",
+    "status": "available",
+    "timestamp": "2026-09-20T23:30:07.146644+00:00",
+    "title": "Coset Leakage Law for Partially Symmetric Readouts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the sparse regime the plug-in reading equals the label entropy exactly. With collisions it drops. The conjecture brackets the drop by the coincidence rate, replacing the permutation null by a deterministic two-sided bound.\n\nFor a sample of size n whose code values collide on r samples, the plug-in reading satisfies H(lambda) - r/n <= Ihat <= H(lambda).\n\nFormalise Ihat = H(lambda) - H(lambda | code), bound the conditional entropy fiber by fiber, and validate on the 3995-sample prime-pair run where Ihat = 0.8985, H = 1.0000, r/n = 0.0996.\n\nWhich-factor leakage tests become deterministic: exceeding the bracket is signal, no shuffling required.\n\nCollisions can conspire and only a probabilistic bracket is available.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4906",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "587eb79b",
+    "status": "available",
+    "timestamp": "2026-09-20T23:30:08.277928+00:00",
+    "title": "Coincidence-Rate Bracket for Plug-In Leakage Readings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Blindness constrains one functional of the contingency table while capacity constrains the code marginal. The conjecture is that these are independent: symmetric batteries can approach the alphabet ceiling arbitrarily closely while leaking exactly zero which-factor bits.\n\nFor every k there exists a k-field symmetric battery whose readout entropy on a swap-closed off-diagonal population is within o(1) of log2 of the product of the squared moduli, while the which-factor mutual information is exactly 0.\n\nConstruct symmetric readouts with near-uniform fibers on populations of prime pairs and compare their entropy with the proved ceiling; formalise for an explicit family of moduli.\n\nFactor blindness is free; capacity shortfalls in real batteries are engineering artefacts.\n\nThere is a genuine capacity-blindness tradeoff, with an entropy defect bound to be determined.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4907",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "587eb79b",
+    "status": "available",
+    "timestamp": "2026-09-20T23:30:08.847088+00:00",
+    "title": "Zero-Cost Blindness at the Alphabet Ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Sufficiency is proved: readouts factoring through the traces are blind. The conjecture asserts the converse on divisor populations of non-squares, characterising blindness as Galois invariance rather than merely being implied by it.\n\nOn the ordered factorisations of a non-square n, a readout has zero which-factor leakage if and only if its fibers admit a swap-equivariant relabelling, equivalently if it factors through the unordered pair.\n\nAttempt the equivariant matching construction fiber by fiber; search small divisor populations for asymmetric readouts with balanced fibers.\n\nThe Galois-invariant part of a factorisation is exactly its observable part.\n\nAccidentally balanced asymmetric readouts exist, a genuine loophole in battery design rules.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4908",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "587eb79b",
+    "status": "available",
+    "timestamp": "2026-09-20T23:30:09.402695+00:00",
+    "title": "Trace Routing as a Characterisation of Blind Readouts"
   },
   {
     "consumed_by_exp_id": "",

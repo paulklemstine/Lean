@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-20T16:21:49.694359+00:00",
+  "last_updated": "2026-09-20T23:30:26.213181+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75661,6 +75661,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-20T16:21:49.332650+00:00",
       "title": "FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Computation",
+      "duration_seconds": 7175.714101076126,
+      "end_time": 1789946992.3441203,
+      "files_integrated": 4,
+      "job_id": "587eb79b",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.85,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5575,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.85,
+        "novelty": 0.85,
+        "proof_depth": 0.85,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.85,
+      "sorry_count": 2,
+      "sorry_density": 0.017094017094017096,
+      "start_time": 1789939816.6300192,
+      "strategy_count": 0,
+      "theorem_count": 117,
+      "theorem_novelty_disproof": 9,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 87,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-20T23:30:25.743313+00:00",
+      "title": "FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (pa"
     }
   ]
 }
