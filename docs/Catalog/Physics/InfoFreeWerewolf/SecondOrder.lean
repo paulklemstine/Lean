@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026. Released under Apache 2.0 license.
 -/
-import Catalog.Physics.InfoFreeWerewolf.ParityExpansion
+import Physics.InfoFreeWerewolf.ParityExpansion
 
 /-!
 # The second-order parity correction: the exact `1/n` term

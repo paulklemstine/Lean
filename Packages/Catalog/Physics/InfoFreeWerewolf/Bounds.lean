@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026. Released under Apache 2.0 license.
 -/
-import Catalog.Physics.InfoFreeWerewolf.Exact
+import Physics.InfoFreeWerewolf.Exact
 
 /-!
 # Two-sided bounds valid for every wolf count

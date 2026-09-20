@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026. Released under Apache 2.0 license.
 -/
-import Catalog.Physics.InfoFreeWerewolf.Bounds
+import Physics.InfoFreeWerewolf.Bounds
 
 /-!
 # Parity-corrected asymptotics of the information-free game

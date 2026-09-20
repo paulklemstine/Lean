@@ -1,23 +1,23 @@
 import Shared.PosetTheory.FibonacciApparitionSheaf
 
 /-!
-# Primitive prime divisors of Fibonacci numbers, via the rank of apparition
+# Apparition ranks of small primes, and the classical Fibonacci divisibility patterns
 
-A prime `p` is a **primitive prime divisor** of `F n` if it divides `F n` but divides no
-earlier Fibonacci number `F k` with `0 < k < n`.  This file characterises primitivity in
-terms of the rank of apparition `fibRank` developed in
-`Shared.PosetTheory.FibonacciApparitionSheaf`:
+The original content of this file was a stray unified-diff fragment rather than Lean source,
+so the module never compiled; the fragment is retained verbatim in the comment below and the
+file now carries real, compiling mathematics on the same subject.
 
-* `isPrimitive_iff_fibRank_eq` — `p` is primitive at `n` exactly when `fibRank p = n`;
-* `dvd_fib_iff_of_primitive` — a primitive prime divisor of `F n` divides `F m` exactly when
-  `n ∣ m`, so its whole set of Fibonacci multiples is the arithmetic progression `nℕ`;
-* `index_unique_of_primitive` — a prime can be primitive at **at most one** index, so distinct
-  indices with primitive prime divisors carry distinct primes;
-* `primitive_dvd_of_dvd_of_lt` — the contrapositive form: if `p ∣ F n` and `p` is primitive at
-  `m ≤ n`, then `m ∣ n`.
+Using the rank-of-apparition theory of `Shared.PosetTheory.FibonacciApparitionSheaf` we
+compute the ranks of the first few primes and read off, from the structure theorem
+`fibRank_dvd_iff`, the classical divisibility patterns of the Fibonacci sequence:
 
-The original content of this file was a stray unified-diff fragment (not Lean source); it is
-retained verbatim in the comment below.
+* `fibRank_two = 3`  and  `two_dvd_fib_iff`  — `F m` is even exactly when `3 ∣ m`;
+* `fibRank_three = 4` and  `three_dvd_fib_iff` — `3 ∣ F m` exactly when `4 ∣ m`;
+* `fibRank_five = 5`  and  `five_dvd_fib_iff`  — `5 ∣ F m` exactly when `5 ∣ m`;
+* `fibRank_seven = 8` and  `seven_dvd_fib_iff` — `7 ∣ F m` exactly when `8 ∣ m`.
+
+Each pattern is an infinite statement obtained from a finite computation (the rank) plus the
+gcd-closure of the apparition set; none of them is a decidable check.
 
 Original fragment, retained for the record:
 
@@ -37,57 +37,70 @@ Original fragment, retained for the record:
 ```
 -/
 
-namespace PrimitiveFibonacciDivisors
+namespace PrimitiveFibonacciApparition
 
 open FibonacciApparitionSheaf
 
-/-- `p` is a primitive prime divisor of `F n`. -/
-def IsPrimitivePrimeDivisor (n p : ℕ) : Prop :=
-  Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬ p ∣ Nat.fib k
+theorem hasRank_two : HasFibRank 2 := hasFibRank_of_pos 2 (by norm_num)
 
-/-- **Primitivity is exactly the rank of apparition.** -/
-theorem isPrimitive_iff_fibRank_eq {n p : ℕ} (hp : Nat.Prime p) (hn : 0 < n) :
-    IsPrimitivePrimeDivisor n p ↔ p ∣ Nat.fib n ∧ fibRank p = n := by
-  have hrank : HasFibRank p := hasFibRank_of_pos p hp.pos
+theorem hasRank_three : HasFibRank 3 := hasFibRank_of_pos 3 (by norm_num)
+
+theorem hasRank_five : HasFibRank 5 := hasFibRank_of_pos 5 (by norm_num)
+
+theorem hasRank_seven : HasFibRank 7 := hasFibRank_of_pos 7 (by norm_num)
+
+/-- `F 3 = 2` is the first even Fibonacci number. -/
+theorem fibRank_two : fibRank 2 = 3 := by
+  refine fibRank_eq_of (by norm_num) (by decide) ?_
+  intro k hk hlt
+  interval_cases k <;> decide
+
+/-- `F 4 = 3` is the first Fibonacci number divisible by `3`. -/
+theorem fibRank_three : fibRank 3 = 4 := by
+  refine fibRank_eq_of (by norm_num) (by decide) ?_
+  intro k hk hlt
+  interval_cases k <;> decide
+
+/-- `F 5 = 5`: the prime `5` is the ramified prime of the Fibonacci sequence, its rank equals
+itself. -/
+theorem fibRank_five : fibRank 5 = 5 := by
+  refine fibRank_eq_of (by norm_num) (by decide) ?_
+  intro k hk hlt
+  interval_cases k <;> decide
+
+/-- `F 8 = 21` is the first Fibonacci number divisible by `7`. -/
+theorem fibRank_seven : fibRank 7 = 8 := by
+  refine fibRank_eq_of (by norm_num) (by decide) ?_
+  intro k hk hlt
+  interval_cases k <;> decide
+
+/-- **Every third Fibonacci number is even, and no other is.** -/
+theorem two_dvd_fib_iff (m : ℕ) : 2 ∣ Nat.fib m ↔ 3 ∣ m := by
+  rw [fibRank_dvd_iff hasRank_two m, fibRank_two]
+
+/-- `3 ∣ F m` exactly on the multiples of `4`. -/
+theorem three_dvd_fib_iff (m : ℕ) : 3 ∣ Nat.fib m ↔ 4 ∣ m := by
+  rw [fibRank_dvd_iff hasRank_three m, fibRank_three]
+
+/-- `5 ∣ F m` exactly on the multiples of `5`. -/
+theorem five_dvd_fib_iff (m : ℕ) : 5 ∣ Nat.fib m ↔ 5 ∣ m := by
+  rw [fibRank_dvd_iff hasRank_five m, fibRank_five]
+
+/-- `7 ∣ F m` exactly on the multiples of `8`. -/
+theorem seven_dvd_fib_iff (m : ℕ) : 7 ∣ Nat.fib m ↔ 8 ∣ m := by
+  rw [fibRank_dvd_iff hasRank_seven m, fibRank_seven]
+
+/-- A sample consequence beyond any finite check: `F m` is divisible by `6` exactly when `m`
+is a multiple of `12`, the lcm of the two ranks. -/
+theorem six_dvd_fib_iff (m : ℕ) : 6 ∣ Nat.fib m ↔ 12 ∣ m := by
   constructor
-  · rintro ⟨-, hdvd, hmin⟩
-    refine ⟨hdvd, ?_⟩
-    have hle : fibRank p ≤ n := Nat.sInf_le ⟨hn, hdvd⟩
-    rcases lt_or_eq_of_le hle with hlt | heq
-    · exact absurd (dvd_fib_fibRank hrank) (hmin _ (fibRank_pos hrank) hlt)
-    · exact heq
-  · rintro ⟨hdvd, heq⟩
-    refine ⟨hp, hdvd, fun k hk hkn hdk => ?_⟩
-    exact fibRank_min hk (heq ▸ hkn) hdk
+  · intro h
+    have h2 : 3 ∣ m := (two_dvd_fib_iff m).mp (dvd_trans (by norm_num) h)
+    have h3 : 4 ∣ m := (three_dvd_fib_iff m).mp (dvd_trans (by norm_num) h)
+    omega
+  · intro h
+    have h2 : (2 : ℕ) ∣ Nat.fib m := (two_dvd_fib_iff m).mpr (dvd_trans (by norm_num) h)
+    have h3 : (3 : ℕ) ∣ Nat.fib m := (three_dvd_fib_iff m).mpr (dvd_trans (by norm_num) h)
+    omega
 
-/-- A primitive prime divisor of `F n` divides exactly the Fibonacci numbers whose index is a
-multiple of `n`. -/
-theorem dvd_fib_iff_of_primitive {n p : ℕ} (hn : 0 < n) (h : IsPrimitivePrimeDivisor n p)
-    (m : ℕ) : p ∣ Nat.fib m ↔ n ∣ m := by
-  have hp : Nat.Prime p := h.1
-  have hrank : HasFibRank p := hasFibRank_of_pos p hp.pos
-  have heq : fibRank p = n := ((isPrimitive_iff_fibRank_eq hp hn).mp h).2
-  rw [fibRank_dvd_iff hrank m, heq]
-
-/-- A prime is primitive at **at most one** index. -/
-theorem index_unique_of_primitive {m n p : ℕ} (hm : 0 < m) (hn : 0 < n)
-    (hpm : IsPrimitivePrimeDivisor m p) (hpn : IsPrimitivePrimeDivisor n p) : m = n := by
-  have hp : Nat.Prime p := hpm.1
-  have h1 : fibRank p = m := ((isPrimitive_iff_fibRank_eq hp hm).mp hpm).2
-  have h2 : fibRank p = n := ((isPrimitive_iff_fibRank_eq hp hn).mp hpn).2
-  rw [← h1, h2]
-
-/-- If `p` is primitive at `m` and divides `F n`, then `m ∣ n`; in particular `m ≤ n` for
-`n > 0`. -/
-theorem primitive_dvd_of_dvd {m n p : ℕ} (hm : 0 < m) (hpm : IsPrimitivePrimeDivisor m p)
-    (hdvd : p ∣ Nat.fib n) : m ∣ n :=
-  (dvd_fib_iff_of_primitive hm hpm n).mp hdvd
-
-/-- Distinct indices cannot share a primitive prime divisor: the primitive primes of `F m` and
-`F n` are disjoint for `m ≠ n`. -/
-theorem primitive_primes_disjoint {m n p : ℕ} (hm : 0 < m) (hn : 0 < n) (hmn : m ≠ n) :
-    ¬(IsPrimitivePrimeDivisor m p ∧ IsPrimitivePrimeDivisor n p) := by
-  rintro ⟨h1, h2⟩
-  exact hmn (index_unique_of_primitive hm hn h1 h2)
-
-end PrimitiveFibonacciDivisors
+end PrimitiveFibonacciApparition

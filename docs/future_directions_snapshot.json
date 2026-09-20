@@ -2787,7 +2787,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "587eb79b",
     "description": "## FACT round-27 #3 — JOINT-WALL-VERIFIED (paper 93, /tmp/exp_jointwall.py, /tmp/r27n3c.log)\n\n**Verdict name: THE-WALL-WAS-BIAS.**\n\n### Result\nPaper 92's flagged joint which-factor reading of **0.0469 bits** — tested against a 200-shuffle permutation null on the exact 4-field CRT-chained code:\n\n| quantity | value |\n|---|---|\n| observed I(bigger; joint code) | 0.0469 bits |\n| permutation null mean | **0.0469** |\n| null sd | 0.0014 |\n| z | **+0.05** |\n\n**The entire reading is sparse-plug-in bias.** The battery programme's factor-blindness claim STANDS with its caveat converted into a verified statement: the full battery capacity (8.2246 bits at k = 4, ceiling 9.53) is symmetric trace-routed content with zero detectable which-factor leakage at null sensitivity (~±0.003 bits).\n\nAlso verified in the same run: the 2-field joint wall (0.0011, inside its own null).\n\n### Method note\nProcess catch disclosed: the first verification build chained only two fields — testing the wrong object, trivially inside its null — before extending to the actual 4-field target. Lesson: verify the exact object, not a smaller cousin.\n\nNow 428 experiments. Assessment v204. Paper 93.\n",
     "domain_bridges": [],
     "domains": [
@@ -2799,7 +2799,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T17:46:25.961555+00:00",
     "title": "FACT round-27 #3 — JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
   },
