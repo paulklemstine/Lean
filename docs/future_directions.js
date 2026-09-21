@@ -1058,6 +1058,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 643f7ea2 (Q=0.820), which proved 56 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-27 #4 \u2014 BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F\u2082\u2080 x\u2075\u22122 @5 and C\u2085 Q(\u03b6\u2081\u2081)\u207a @11; all conductors pairwise coprime, CRT modulus 31\u00b723\u00b79\u00b78\u00b75\u00b711).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_643f7ea2_8a2ed3ee",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "643f7ea2",
+    "status": "available",
+    "timestamp": "2026-09-21T01:37:58.588190+00:00",
+    "title": "Deepening: FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-en"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 794ffb3f (Q=0.820), which proved 582 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;",
     "domains": [
       "Shared"
@@ -2055,21 +2069,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "643f7ea2",
-    "description": "## FACT round-27 #4 \u2014 BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F\u2082\u2080 x\u2075\u22122 @5 and C\u2085 Q(\u03b6\u2081\u2081)\u207a @11; all conductors pairwise coprime, CRT modulus 31\u00b723\u00b79\u00b78\u00b75\u00b711). The nested-subset capacity curve:\n\n| dials | I(joint) | \u03a3 marginals | deficit | ceiling | % of ceiling |\n|---|---|---|---|---|---|\n| 1 | 1.0011 | 1.0011 | +0.000 | \u2014 | \u2014 |\n| 2 | 2.1334 | 2.0020 | +0.132 | 4.6063 | 46% |\n| 3 | 4.0242 | 2.4777 | +1.547 | 6.4947 | 62% |\n| 4 | 8.2412 | 3.9120 | +4.329 | 9.5434 | 86% |\n| 5 | 11.5307 | 5.1591 | +6.372 | 11.9557 | 96% |\n| **6** | **12.7235** | 5.3650 | **+7.359** | **12.7726** | **99.6%** |\n\n- **H1**: the additive deficit grows MONOTONICALLY (synergy compounds without bound short of the ceiling).\n- **H2**: every marginal reproduces its paper of origin.\n- **H3**: the 6-dial which-factor wall reads 0.3594 vs permutation-null 0.3591 (**z = +0.11**) \u2014 sparse-bias-dominated as at k=4; factor-blindness extends to k=6.\n\n### The battery-capacity law\n1. I(k-joint) \u2192 H(joint labels): the CRT-joint modulus sees all k residues simultaneously; the pair-label structure becomes nearly fully determined (99.6% at k=6).\n2. D(k) grows monotonically: marginal bookkeeping understates batteries progressively (7.36 bits = 3.7\u00d7 additive at k=6).\n3. The ceiling is the joint label entropy \u2014 population correlation between label blocks is all that remains.\n\n### Method notes disclosed\nRow-label off-by-one in the printout (cosmetic, corrected here); chained label code ~10\u00b9\u00b2 values requires np.unique-based entropy (bincount would allocate 5.6 TiB).\n\nNow 429 experiments. Assessment v205. Paper 94.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3437",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T17:46:25.960215+00:00",
-    "title": "FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)"
-  },
-  {
     "consumed_by_exp_id": "900e5fcb",
     "description": "## FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis \u2014 I(s,d jointly) = I(N mod m\\*; labels) \u2014 was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S\u2083a x\u00b3+x+1 @31; S\u2083b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q\u2212p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) \u2212 I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) \u2014 but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S\u2083b replicates (+0.5099). p\u2194q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues \u2014 information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91\u201394) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80\u201394 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity \u2014 unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
     "domains": [
@@ -2085,16 +2084,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61cd19b1",
     "description": "## FACT round-28 #4 \u2014 BATTERY-UTILITY (paper 98, /tmp/exp_batteryutility.py, /tmp/r28n4b.log)\n\n**Verdict name: THE-LABELS-ARE-NOT-FILTERS.**\n\n### Result\nAn honest refutation-by-design-flaw round closing the battery arc. The attempt to convert the 6-dial battery's 12.7-bit capacity into candidate-set narrowing for p required a map **residue r mod m\\* \u2192 type of a prime \u2261 r mod m\\*** \u2014 and **that map does not exist**: primes in the same residue class carry different splitting types. This is precisely why every measured channel sits below its label-entropy ceiling (S\u2083a: I = 1.0012 vs H(T) = 2.2982 \u2014 the gap IS the within-class variation).\n\n### What happened\nThe utility tables were built by polynomial evaluation at r (does f(r) \u2261 0 mod m\\*?) \u2014 testing whether r itself is a root, not which type primes \u2261 r carry. The consistency assert caught true-p exclusions (6/150 via a quartic enumeration precedence bug; the cubic unions passed 0/150 only by covering nearly all residues). The diagnosis elevated the bug to the finding.\n\n### The corrected understanding\nThe battery's labels are statistics of the JOINT (p mod m\\*, q mod m\\*) draw, not functions of single residues. Utility must be stated Bayesianly: the label vector is a 12.7-bit posterior update on the joint residue vector (~20 bits) \u2014 exactly as the capacity law says. Converting that posterior into individual-candidate narrowing requires the per-prime type determination that IS the factoring problem. No-pinning consistency: constant-bounded posterior mass on joint residue vectors; no candidate filter without circularity.\n\nNow 433 experiments. Assessment v208/v209. Paper 98.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3450",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T18:57:10.444861+00:00",
     "title": "FACT round-28 #4 \u2014 BATTERY-UTILITY: the labels are not filters (paper 98)"
   },
@@ -15393,6 +15393,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-05T00:08:13.583078+00:00",
     "title": "Fibre-Count Cancellation Principle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Measured capacities are plug-in estimates from a finite sample and are positively biased. Bound the bias by the number of occupied cells over the sample size, and thereby show that a reported which-factor signal of the observed size is entirely bias around a structural zero.\n\nFor a sample of N individuals with M occupied joint cells, the expected plug-in mutual information exceeds the population value by at most (M-1)/(2N) * log e + o(1/N).\n\nFormalise the finite-population plug-in estimator in the counting framework and bound the expectation difference by a second-order expansion of x log x, checked numerically on the Z/31 x Z/23 x Z/9 x Z/8 battery.\n\nReported z-scores near zero can be certified as bias rather than signal, without a permutation null.\n\nPermutation nulls remain necessary, and reported walls cannot be read as structural zeros.",
+    "domains": [],
+    "id": "fd_4911",
+    "priority_score": 0.591875,
+    "research_mode": "team",
+    "source_exp_id": "643f7ea2",
+    "status": "available",
+    "timestamp": "2026-09-21T01:37:44.339048+00:00",
+    "title": "Cell-Count Bias Bound for Plug-In Capacity"
   },
   {
     "consumed_by_exp_id": "",
@@ -33109,6 +33121,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-20T23:30:09.402695+00:00",
     "title": "Trace Routing as a Characterisation of Blind Readouts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replace the global disambiguator bound on the ceiling gap by a local one. The gap between the label entropy and the battery capacity should be controlled by the number of distinct labels inside each cell of the joint reading, and be exactly the cell-weighted average of the per-cell label entropies. This turns a measured saturation percentage into a statement about residual ambiguity per cell.\n\nFor statistics C and L on a finite population, H L - MI C L = \u03a3_c (n_c/N) H_c(L), and hence H L - MI C L \u2264 log (max_c m_c) where m_c is the number of labels occurring in the C-cell c.\n\nFormalise per-cell entropy in the counting framework of Combinatorics.TraceBatteryEntropy and prove the identity by the same fiberwise regrouping used in TraceBattery.H_strong_subadditive; then derive the bound by the uniform-reference Gibbs term.\n\nA measured saturation percentage becomes a certified bound on the number of individuals a battery still confuses.\n\nThe counting entropy would fail the chain rule, which would invalidate the conditional reading of the ceiling gap.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4909",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "643f7ea2",
+    "status": "available",
+    "timestamp": "2026-09-21T01:37:43.104507+00:00",
+    "title": "Sharp Per-Cell Saturation Gap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalise factor blindness from an involution to a finite group acting on the population and preserving every dial. The capacity should see only the orbit-averaged label, so labels uniform on orbits are invisible and general labels are read exactly through their orbit averages.\n\nIf a finite group G acts on the population preserving every dial reading, then MI (joint) L = MI (joint) (orbit-average of L); in particular MI = 0 for every label whose distribution is uniform on each orbit.\n\nExtend TraceBattery.two_phi to cells split into n equal parts and repeat the cell-counting proof of MI_eq_zero_of_flip_symmetry with |G|-fold orbits.\n\nEvery which-factor-type wall in the catalog becomes an exact symmetry statement rather than a measured near-zero.\n\nOrbit structure alone would not control capacity, and non-uniform stabilisers would have to enter the law.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4910",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "643f7ea2",
+    "status": "available",
+    "timestamp": "2026-09-21T01:37:43.772575+00:00",
+    "title": "Orbit-Averaging Law for Group-Invariant Batteries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved deficit-growth law assumes exact independence of the new dial from the previous joint reading. Real batteries only have approximate independence, so the law should degrade gracefully with the independence defect.\n\nIf H(C_S, d_j) \u2265 H(C_S) + H(d_j) - eps then deficit(S union {j}) \u2265 deficit(S) - eps.\n\nReplace the equality hypothesis in TraceBattery.deficit_mono_of_independent by the inequality and track the slack through the single substitution in the proof.\n\nThe compounding-deficit verdict applies to finite populations where CRT independence is only approximate.\n\nSmall dependencies would be able to destroy synergy nonlinearly, making measured deficits uninterpretable.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_4912",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "643f7ea2",
+    "status": "available",
+    "timestamp": "2026-09-21T01:37:44.915186+00:00",
+    "title": "Stability of the Synergy Law under Approximate Independence"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5b4963ae",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — after the calibration of the Fisher–Rao length\n\n## What this cycle settled\n\nThe open question of the mission was calibration: do the discrete Bhattacharyya angle\nsums converge to",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-09-04T18:26:12",
-      "title": "Riemann Convergence of Bhattacharyya Angle Sums"
-    },
-    {
       "cycle_id": "2d4305e2",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — fork channels after the table closure\n\nThis cycle replaced the *measured* g/Is/A/X tables by exact algebra. The pivotal\nfinding is that the four channels are one rational profile",
@@ -499,19 +489,19 @@
       "theorem_count": 117,
       "timestamp": "2026-09-20T23:30:23",
       "title": "FACT round-27 #3 — JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (pa"
+    },
+    {
+      "cycle_id": "643f7ea2",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — after THE-CURVE-SATURATES-AT-THE-CEILING\n\n## What this cycle settled\n\nThe round-27 #4 report made four claims about a nested battery of dials read against a label:\nthe curve rise",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-09-21T01:37:58",
+      "title": "FACT round-27 #4 — BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "51837664",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — after the Two-Adic Price Law\n\nThis cycle closed the Price tree's 2-adic question in the exact form it was posed: the\naddress letters at positions 0 and 1 (counted from the leaf)",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 153,
-      "timestamp": "2026-08-24T23:36:39",
-      "title": "FACT round-71 #1 — TWO-ADIC-PRICE-LAW: two clicks of visibility then sealed; exact v2(p+q) mechanism"
-    },
     {
       "cycle_id": "ed1b07dd",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 117,
       "timestamp": "2026-09-20T23:30:23",
       "title": "FACT round-27 #3 — JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (pa"
+    },
+    {
+      "cycle_id": "643f7ea2",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — after THE-CURVE-SATURATES-AT-THE-CEILING\n\n## What this cycle settled\n\nThe round-27 #4 report made four claims about a nested battery of dials read against a label:\nthe curve rise",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-09-21T01:37:58",
+      "title": "FACT round-27 #4 — BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "841548e6",
-      "domain": "Tropical",
-      "name": "mem_proj",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "841548e6",
-      "domain": "Tropical",
-      "name": "catalog",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "6f1658d7",
-      "domain": "Combinatorics",
-      "name": "as",
-      "quality": 0.88
-    },
     {
       "cycle_id": "6f1658d7",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "is",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "643f7ea2",
+      "domain": "Bridges",
+      "name": "H_pair_swap",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "643f7ea2",
+      "domain": "Bridges",
+      "name": "MI_comm",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "643f7ea2",
+      "domain": "Bridges",
+      "name": "MI_nonneg",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-20T23:30:23",
+  "last_updated": "2026-09-21T01:37:58",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "4d41e431",
-        "quality": 0.89,
-        "theorems": 161,
-        "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
-      },
-      {
         "cycle_id": "ed88da41",
         "quality": 0.88,
         "theorems": 749,
@@ -3203,6 +3197,12 @@
         "quality": 0.85,
         "theorems": 57,
         "title": "FACT round-25 #2 — QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper "
+      },
+      {
+        "cycle_id": "643f7ea2",
+        "quality": 0.82,
+        "theorems": 56,
+        "title": "FACT round-27 #4 — BATTERY-SCALING: the capacity curve saturates at the label-en"
       }
     ],
     "Combinatorics": [

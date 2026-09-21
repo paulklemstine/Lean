@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-20T23:30:09Z",
-  "count": 163,
+  "archived_at": "2026-09-21T01:37:45Z",
+  "count": 164,
   "directions": [
     {
       "id": "fd_3695",
@@ -6453,6 +6453,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 185
+    },
+    {
+      "id": "fd_3437",
+      "title": "FACT round-27 #4 — BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)",
+      "description": "## FACT round-27 #4 — BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F₂₀ x⁵−2 @5 and C₅ Q(ζ₁₁)⁺ @11; all conductors pairwise coprime, CRT modulus 31·23·9·8·5·11). The nested-subset capacity curve:\n\n| dials | I(joint) | Σ marginals | deficit | ceiling | % of ceiling |\n|---|---|---|---|---|---|\n| 1 | 1.0011 | 1.0011 | +0.000 | — | — |\n| 2 | 2.1334 | 2.0020 | +0.132 | 4.6063 | 46% |\n| 3 | 4.0242 | 2.4777 | +1.547 | 6.4947 | 62% |\n| 4 | 8.2412 | 3.9120 | +4.329 | 9.5434 | 86% |\n| 5 | 11.5307 | 5.1591 | +6.372 | 11.9557 | 96% |\n| **6** | **12.7235** | 5.3650 | **+7.359** | **12.7726** | **99.6%** |\n\n- **H1**: the additive deficit grows MONOTONICALLY (synergy compounds without bound short of the ceiling).\n- **H2**: every marginal reproduces its paper of origin.\n- **H3**: the 6-dial which-factor wall reads 0.3594 vs permutation-null 0.3591 (**z = +0.11**) — sparse-bias-dominated as at k=4; factor-blindness extends to k=6.\n\n### The battery-capacity law\n1. I(k-joint) → H(joint labels): the CRT-joint modulus sees all k residues simultaneously; the pair-label structure becomes nearly fully determined (99.6% at k=6).\n2. D(k) grows monotonically: marginal bookkeeping understates batteries progressively (7.36 bits = 3.7× additive at k=6).\n3. The ceiling is the joint label entropy — population correlation between label blocks is all that remains.\n\n### Method notes disclosed\nRow-label off-by-one in the printout (cosmetic, corrected here); chained label code ~10¹² values requires np.unique-based entropy (bincount would allocate 5.6 TiB).\n\nNow 429 experiments. Assessment v205. Paper 94.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "643f7ea2",
+      "timestamp": "2026-08-21T17:46:25.960215+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-19T23:42:34.461599+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 186
     }
   ]
 }
