@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-21T01:37:59.848258+00:00",
+  "last_updated": "2026-09-21T19:39:34.683462+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75747,6 +75747,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-21T01:37:59.483297+00:00",
       "title": "FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Pythagorean",
+      "duration_seconds": 19023.8844435215,
+      "end_time": 1790019547.5214858,
+      "files_integrated": 4,
+      "job_id": "61cd19b1",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.8,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.535,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.8,
+        "novelty": 0.8,
+        "proof_depth": 0.8,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1790000523.6370423,
+      "strategy_count": 0,
+      "theorem_count": 56,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 46,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-21T19:39:34.369844+00:00",
+      "title": "FACT round-28 #4 \u2014 BATTERY-UTILITY: the labels are not filters (paper 98)"
     }
   ]
 }

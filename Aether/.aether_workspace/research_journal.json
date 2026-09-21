@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2d4305e2",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — fork channels after the table closure\n\nThis cycle replaced the *measured* g/Is/A/X tables by exact algebra. The pivotal\nfinding is that the four channels are one rational profile",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 605,
-      "timestamp": "2026-09-04T21:30:12",
-      "title": "FACT round-42 #6 — TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
-    },
-    {
       "cycle_id": "79cda873",
       "domain": "Tropical",
       "key_insight": "# Future directions — ECM-plane completion, round 42 #4\n\nDerived from the four formal cycles in this run:\n\n* `Catalog/Tropical/ECMPlaneCompletion.lean` — min-plus algebra of cost profiles, the\n  corne",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-09-21T01:37:58",
       "title": "FACT round-27 #4 — BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper"
+    },
+    {
+      "cycle_id": "61cd19b1",
+      "domain": "Pythagorean",
+      "key_insight": "# FUTURE DIRECTIONS — after `THE-LABELS-ARE-NOT-FILTERS` (FACT round-28 #4, paper 98)\n\nWhat this cycle established, formally:\n\n1. The cubic battery label splits exactly into a *free* abelian bit (`lab",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-09-21T19:39:33",
+      "title": "FACT round-28 #4 — BATTERY-UTILITY: the labels are not filters (paper 98)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ed1b07dd",
-      "domain": "Computation",
-      "key_insight": "# FUTURE DIRECTIONS — E3 thread, after four cycles\n\n## What this cycle settled\n\nThe conjecture was: *the median held-out logit margin is the same at `d = 4, 8,\n16` to within `±10 %`, and equals `128·L",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-24T23:36:54",
-      "title": "E3.  The margin does not"
-    },
     {
       "cycle_id": "eef05184",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 56,
       "timestamp": "2026-09-21T01:37:58",
       "title": "FACT round-27 #4 — BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper"
+    },
+    {
+      "cycle_id": "61cd19b1",
+      "domain": "Pythagorean",
+      "key_insight": "# FUTURE DIRECTIONS — after `THE-LABELS-ARE-NOT-FILTERS` (FACT round-28 #4, paper 98)\n\nWhat this cycle established, formally:\n\n1. The cubic battery label splits exactly into a *free* abelian bit (`lab",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-09-21T19:39:33",
+      "title": "FACT round-28 #4 — BATTERY-UTILITY: the labels are not filters (paper 98)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6f1658d7",
-      "domain": "Combinatorics",
-      "name": "triArea_mk",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "6f1658d7",
-      "domain": "Combinatorics",
-      "name": "triArea_euclidTriple",
-      "quality": 0.88
-    },
     {
       "cycle_id": "173bd3d0",
       "domain": "Cryptography",
@@ -2803,9 +2791,21 @@
       "domain": "Bridges",
       "name": "MI_nonneg",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "61cd19b1",
+      "domain": "Pythagorean",
+      "name": "gives",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "61cd19b1",
+      "domain": "Pythagorean",
+      "name": "cubeCount_eq_card",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-09-21T01:37:58",
+  "last_updated": "2026-09-21T19:39:33",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "539def03",
-        "quality": 0.83,
-        "theorems": 94,
-        "title": "Both endpoints are formalised and the numerics of Section 4 of"
-      },
-      {
         "cycle_id": "acd2f64e",
         "quality": 0.78,
         "theorems": 39,
@@ -3885,6 +3879,12 @@
         "quality": 0.86,
         "theorems": 62,
         "title": "Riemann Convergence of Bhattacharyya Angle Sums"
+      },
+      {
+        "cycle_id": "61cd19b1",
+        "quality": 0.8,
+        "theorems": 56,
+        "title": "FACT round-28 #4 — BATTERY-UTILITY: the labels are not filters (paper 98)"
       }
     ],
     "Shared": [

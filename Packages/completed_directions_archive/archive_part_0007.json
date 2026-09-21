@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-21T01:37:45Z",
-  "count": 164,
+  "archived_at": "2026-09-21T19:39:20Z",
+  "count": 165,
   "directions": [
     {
       "id": "fd_3695",
@@ -6493,6 +6493,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 186
+    },
+    {
+      "id": "fd_3450",
+      "title": "FACT round-28 #4 — BATTERY-UTILITY: the labels are not filters (paper 98)",
+      "description": "## FACT round-28 #4 — BATTERY-UTILITY (paper 98, /tmp/exp_batteryutility.py, /tmp/r28n4b.log)\n\n**Verdict name: THE-LABELS-ARE-NOT-FILTERS.**\n\n### Result\nAn honest refutation-by-design-flaw round closing the battery arc. The attempt to convert the 6-dial battery's 12.7-bit capacity into candidate-set narrowing for p required a map **residue r mod m\\* → type of a prime ≡ r mod m\\*** — and **that map does not exist**: primes in the same residue class carry different splitting types. This is precisely why every measured channel sits below its label-entropy ceiling (S₃a: I = 1.0012 vs H(T) = 2.2982 — the gap IS the within-class variation).\n\n### What happened\nThe utility tables were built by polynomial evaluation at r (does f(r) ≡ 0 mod m\\*?) — testing whether r itself is a root, not which type primes ≡ r carry. The consistency assert caught true-p exclusions (6/150 via a quartic enumeration precedence bug; the cubic unions passed 0/150 only by covering nearly all residues). The diagnosis elevated the bug to the finding.\n\n### The corrected understanding\nThe battery's labels are statistics of the JOINT (p mod m\\*, q mod m\\*) draw, not functions of single residues. Utility must be stated Bayesianly: the label vector is a 12.7-bit posterior update on the joint residue vector (~20 bits) — exactly as the capacity law says. Converting that posterior into individual-candidate narrowing requires the per-prime type determination that IS the factoring problem. No-pinning consistency: constant-bounded posterior mass on joint residue vectors; no candidate filter without circularity.\n\nNow 433 experiments. Assessment v208/v209. Paper 98.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "61cd19b1",
+      "timestamp": "2026-08-21T18:57:10.444861+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.8,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-21T01:38:38.816543+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 190
     }
   ]
 }

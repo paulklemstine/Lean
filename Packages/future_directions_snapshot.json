@@ -2825,25 +2825,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "61cd19b1",
-    "description": "## FACT round-28 #4 — BATTERY-UTILITY (paper 98, /tmp/exp_batteryutility.py, /tmp/r28n4b.log)\n\n**Verdict name: THE-LABELS-ARE-NOT-FILTERS.**\n\n### Result\nAn honest refutation-by-design-flaw round closing the battery arc. The attempt to convert the 6-dial battery's 12.7-bit capacity into candidate-set narrowing for p required a map **residue r mod m\\* → type of a prime ≡ r mod m\\*** — and **that map does not exist**: primes in the same residue class carry different splitting types. This is precisely why every measured channel sits below its label-entropy ceiling (S₃a: I = 1.0012 vs H(T) = 2.2982 — the gap IS the within-class variation).\n\n### What happened\nThe utility tables were built by polynomial evaluation at r (does f(r) ≡ 0 mod m\\*?) — testing whether r itself is a root, not which type primes ≡ r carry. The consistency assert caught true-p exclusions (6/150 via a quartic enumeration precedence bug; the cubic unions passed 0/150 only by covering nearly all residues). The diagnosis elevated the bug to the finding.\n\n### The corrected understanding\nThe battery's labels are statistics of the JOINT (p mod m\\*, q mod m\\*) draw, not functions of single residues. Utility must be stated Bayesianly: the label vector is a 12.7-bit posterior update on the joint residue vector (~20 bits) — exactly as the capacity law says. Converting that posterior into individual-candidate narrowing requires the per-prime type determination that IS the factoring problem. No-pinning consistency: constant-bounded posterior mass on joint residue vectors; no candidate filter without circularity.\n\nNow 433 experiments. Assessment v208/v209. Paper 98.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3450",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T18:57:10.444861+00:00",
-    "title": "FACT round-28 #4 — BATTERY-UTILITY: the labels are not filters (paper 98)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "79072e03",
     "description": "## FACT round-28 #3 — REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp — one reboot from oblivion — and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D₅ search (84), battery series (91–92), joint-wall verification (93), qubit/sample ramp series (85–87), converse plane (88–90), method-locality pair (95–96), Berggren-3adic (81).\n\n### Audit — three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S₃a/S₃b 1.0000; S₄ 1.0100; A₄ 0.9188; D₄ 1.6555; V₄ 0.8092; C₄ 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | ✓ |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | ✓ |\n| Paper 89 three strata | α_τ = 0.500; medians 19.30/19.36; α_ρ on N = 0.261 | identical | ✓ |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | ✓ |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** — deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
     "domain_bridges": [],
@@ -3771,6 +3752,25 @@
     "status": "available",
     "timestamp": "2026-08-22T05:43:53.958922+00:00",
     "title": "FACT round-40 #2 — ET-HINTS-THEORY: the crossing law — width can never substitute for reliability (paper 146)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 61cd19b1 (Q=0.800), which proved 56 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-28 #4 — BATTERY-UTILITY (paper 98, /tmp/exp_batteryutility.py, /tmp/r28n4b.log)\n\n**Verdict name: THE-LABELS-ARE-NOT-FILTERS.**\n\n### Result\nAn honest refutation-by-design-flaw round closing the battery arc. The attempt to convert the 6-dial battery's 12.7-bit capacity into candidate-set",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_61cd19b1_c48ff3be",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "61cd19b1",
+    "status": "available",
+    "timestamp": "2026-09-21T19:39:33.811197+00:00",
+    "title": "Deepening: FACT round-28 #4 — BATTERY-UTILITY: the labels are not filters (paper 98)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -47807,6 +47807,114 @@
     "status": "available",
     "timestamp": "2026-09-21T01:37:44.915186+00:00",
     "title": "Stability of the Synergy Law under Approximate Independence"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Pythagorean.BatteryUtilityLabelsNotFilters"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The cubic label of X^3-2 was shown non-periodic for every modulus up to 24 by explicit prime pairs. The conjecture removes the bound: no modulus whatsoever makes the label a function of the residue. The route is to show that periodicity forces the splitting field into a cyclotomic field, contradicting non-normality of Q(cbrt 2).\n\nFor every m >= 1 there exist primes p = q (mod m), both congruent to 1 mod 3, such that x^3 = 2 is solvable mod p and unsolvable mod q.\n\nFormalize: a period m implies the set of split primes is a union of classes mod m, implies Q(cbrt 2) is contained in Q(zeta_m); derive a contradiction from non-normality. Cross-check numerically for m up to 10^3.\n\nNo residue-based candidate filter exists for any non-abelian dial, at any modulus: the battery arc closes unconditionally.\n\nSome large modulus does carry a label table, and the battery gains genuine narrowing power at that modulus.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4913",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Periodicity gives a Dirichlet-character description of the split set; class field theory forces an abelian splitting field; compare with Gal(Q(cbrt 2, omega)/Q) = S3 and conclude.",
+    "research_mode": "team",
+    "source_exp_id": "61cd19b1",
+    "status": "available",
+    "timestamp": "2026-09-21T19:39:19.165859+00:00",
+    "title": "Unconditional Aperiodicity of Non-Abelian Splitting Labels"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Pythagorean.BatteryUtilityPosteriorGap"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The capacity law proved here bounds a dial by its own label entropy. The refinement bounds it by the entropy of the label's image in the abelianised Galois group, which is all a residue vector can see. Utility beyond that bound would require per-prime Frobenius determination.\n\nFor a label that is a class function on Gal(L/Q), I(p mod m ; label) <= H(label composed with the projection to the abelianisation of Gal(L/Q)).\n\nExtend FinChannel with a data-processing inequality and instantiate it for the S3 example, where the abelianisation is Z/2 and the bound is log 2.\n\nEvery battery dial has a computable, a priori utility ceiling determined by group theory alone.\n\nResidue vectors detect non-abelian information, contradicting the abelian nature of ray class groups.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4914",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Data processing for the condTerm calculus: conditioning on a coarser sigma-algebra cannot increase mutual information; combine with the fact that p mod m is measurable over the abelian quotient.",
+    "research_mode": "team",
+    "source_exp_id": "61cd19b1",
+    "status": "available",
+    "timestamp": "2026-09-21T19:39:19.511272+00:00",
+    "title": "Abelianisation Ceiling for Dial Mutual Information"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Pythagorean.BatteryUtilityPosteriorGap"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The corrected understanding is Bayesian: the label vector is a posterior update on the joint residue vector. The conjecture is that the update is constant-bounded, so no individual candidate is ever pinned. This is the quantitative form of no-pinning.\n\nIn the equidistribution model of a d-dial battery mod m*, the posterior of any single joint pair after the full label vector lies between c(d)/phi(m*)^2 and C(d)/phi(m*)^2 with c, C independent of m*.\n\nGeneralize the FinChannel product model to phi(m*)^2 cells with d independent symmetric labels and prove two-sided bounds; simulate for m* = 9, 13, 21.\n\nBattery capacity is provably non-convertible into candidate narrowing: the utility arc is closed with an explicit constant.\n\nSome dial combination does concentrate the posterior, and the battery becomes a genuine factoring aid.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4915",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Bayes on a product prior with symmetric-likelihood labels; bound each likelihood ratio by its range and multiply the d bounds.",
+    "research_mode": "team",
+    "source_exp_id": "61cd19b1",
+    "status": "available",
+    "timestamp": "2026-09-21T19:39:19.858601+00:00",
+    "title": "Constant-Factor Posterior Bound for d-Dial Batteries"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Pythagorean.BatteryUtilityLabelsNotFilters"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This cycle proved one half of the cubic label is a filter (p = 2 mod 3 forces exactly one root) and the other half is not. The conjecture states the exact boundary: root-count labels are residue-computable precisely for abelian splitting fields, with the conductor as the optimal modulus.\n\nFor monic irreducible f in Z[X], the map p -> #roots(f mod p) factors through p mod m for some m iff the splitting field of f is abelian over Q; the least such m is the conductor.\n\nThe case x^2 - 2 with modulus 8 is already formalized here; extend to arbitrary abelian probes via Kronecker-Weber and test the conductor claim on x^2 - 5, x^4 + 1 and cyclic cubics.\n\nA dial is usable exactly when its probe polynomial has abelian splitting field, giving a clean design rule for batteries.\n\nSome non-abelian probe is nevertheless residue-computable, which would be a new and surprising reciprocity law.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4916",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Frobenius conjugacy class determines the root count; residue classes determine the Frobenius exactly in the abelian case; conductor-discriminant for minimality.",
+    "research_mode": "team",
+    "source_exp_id": "61cd19b1",
+    "status": "available",
+    "timestamp": "2026-09-21T19:39:20.205531+00:00",
+    "title": "Abelian-Iff-Filterable Dichotomy for Root-Count Labels"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Pythagorean.BatteryUtilityPosteriorGap",
+      "Pythagorean.BatteryUtilityLabelsNotFilters"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The deficit H(T) - I equals the conditional entropy, an average of strictly positive within-class terms. A single mixed class already refutes the existence of a filter, so a battery can certify its own uselessness from samples alone.\n\nFor any dial, H(T) - I equals the expected entropy of the label within a residue class, and observing one class with two labels suffices to refute the residue-to-label table; the deficit is estimable to accuracy eps from O(1/eps^2) prime samples.\n\nCombine condEntropy_pos_of_two_labels with a Hoeffding-type bound on plug-in entropy estimates; validate on windows of 10^3 and 10^4 primes.\n\nRefutation becomes an inexpensive routine measurement rather than an arithmetic theorem per modulus.\n\nPlug-in entropy estimation is too biased at these sample sizes and the certification needs the arithmetic route.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4917",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Chain rule plus strict positivity of condTerm for split classes; concentration via bounded differences on the empirical joint law.",
+    "research_mode": "team",
+    "source_exp_id": "61cd19b1",
+    "status": "available",
+    "timestamp": "2026-09-21T19:39:20.549046+00:00",
+    "title": "Self-Certifying Gap Estimation for Battery Channels"
   },
   {
     "ambition_level": "extension",
