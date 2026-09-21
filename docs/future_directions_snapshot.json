@@ -2844,7 +2844,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79072e03",
     "description": "## FACT round-28 #3 — REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp — one reboot from oblivion — and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D₅ search (84), battery series (91–92), joint-wall verification (93), qubit/sample ramp series (85–87), converse plane (88–90), method-locality pair (95–96), Berggren-3adic (81).\n\n### Audit — three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S₃a/S₃b 1.0000; S₄ 1.0100; A₄ 0.9188; D₄ 1.6555; V₄ 0.8092; C₄ 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | ✓ |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | ✓ |\n| Paper 89 three strata | α_τ = 0.500; medians 19.30/19.36; α_ρ on N = 0.261 | identical | ✓ |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | ✓ |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** — deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
     "domain_bridges": [],
     "domains": [
@@ -2856,7 +2856,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T18:57:10.446222+00:00",
     "title": "FACT round-28 #3 — REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
   },

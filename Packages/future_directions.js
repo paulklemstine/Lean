@@ -2099,16 +2099,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-28 #4 \u2014 BATTERY-UTILITY: the labels are not filters (paper 98)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79072e03",
     "description": "## FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp \u2014 one reboot from oblivion \u2014 and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D\u2085 search (84), battery series (91\u201392), joint-wall verification (93), qubit/sample ramp series (85\u201387), converse plane (88\u201390), method-locality pair (95\u201396), Berggren-3adic (81).\n\n### Audit \u2014 three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S\u2083a/S\u2083b 1.0000; S\u2084 1.0100; A\u2084 0.9188; D\u2084 1.6555; V\u2084 0.8092; C\u2084 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | \u2713 |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | \u2713 |\n| Paper 89 three strata | \u03b1_\u03c4 = 0.500; medians 19.30/19.36; \u03b1_\u03c1 on N = 0.261 | identical | \u2713 |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | \u2713 |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** \u2014 deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3451",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T18:57:10.446222+00:00",
     "title": "FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
   },
