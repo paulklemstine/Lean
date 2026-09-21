@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-21T19:39:20Z",
-  "count": 165,
+  "archived_at": "2026-09-21T22:52:19Z",
+  "count": 166,
   "directions": [
     {
       "id": "fd_3695",
@@ -6533,6 +6533,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 190
+    },
+    {
+      "id": "fd_3449",
+      "title": "FACT round-29 #1 — THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)",
+      "description": "## FACT round-29 #1 — THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis — I(s,d jointly) = I(N mod m\\*; labels) — was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S₃a x³+x+1 @31; S₃b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q−p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) − I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) — but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S₃b replicates (+0.5099). p↔q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues — information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91–94) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80–94 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity — unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "900e5fcb",
+      "timestamp": "2026-08-21T18:57:10.443489+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-20T16:22:31.073014+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 191
     }
   ]
 }

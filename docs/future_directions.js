@@ -1086,6 +1086,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 900e5fcb (Q=0.820), which proved 117 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis \u2014 I(s,d jointly) = I(N mod m\\*; labels) \u2014 was **refuted in the interesting direction**: viewing the bat",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_900e5fcb_0b4b4343",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "900e5fcb",
+    "status": "available",
+    "timestamp": "2026-09-21T22:52:33.961947+00:00",
+    "title": "Deepening: FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (pape"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 903508ab (Q=0.820), which proved 169 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C\u2084-abelianization object**: the Frobenius group **F\u2082\u2080",
     "domains": [
       "Bridges"
@@ -2069,21 +2083,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "900e5fcb",
-    "description": "## FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis \u2014 I(s,d jointly) = I(N mod m\\*; labels) \u2014 was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S\u2083a x\u00b3+x+1 @31; S\u2083b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q\u2212p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) \u2212 I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) \u2014 but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S\u2083b replicates (+0.5099). p\u2194q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues \u2014 information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91\u201394) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80\u201394 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity \u2014 unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3449",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T18:57:10.443489+00:00",
-    "title": "FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
-  },
-  {
     "consumed_by_exp_id": "79072e03",
     "description": "## FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp \u2014 one reboot from oblivion \u2014 and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D\u2085 search (84), battery series (91\u201392), joint-wall verification (93), qubit/sample ramp series (85\u201387), converse plane (88\u201390), method-locality pair (95\u201396), Berggren-3adic (81).\n\n### Audit \u2014 three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S\u2083a/S\u2083b 1.0000; S\u2084 1.0100; A\u2084 0.9188; D\u2084 1.6555; V\u2084 0.8092; C\u2084 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | \u2713 |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | \u2713 |\n| Paper 89 three strata | \u03b1_\u03c4 = 0.500; medians 19.30/19.36; \u03b1_\u03c1 on N = 0.261 | identical | \u2713 |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | \u2713 |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** \u2014 deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
     "domains": [
@@ -2099,16 +2098,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c9eb490",
     "description": "## FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat \u2014 the one classical method never locality-classified \u2014 measured: its iteration count is **exactly (p+q)/2 \u2212 \u221aN** (identity 24/24 with per-draw instrumentation), and across balance ratios r = q/p \u2208 [2, 64] at fixed p the cost interpolates **352 \u2192 100 282 iterations** (in p-units 0.09 \u2192 24.50; at r = 64 the measured cost is 0.78 of the cofactor-linear limit p\u00b7(r\u22121)/2). Fermat is **GAP-LOCAL**: neither factor-local like \u03c1/ECM nor a scan like trial division, but a function of the gap alone.\n\n### The completed locality table\n| method | locality class | cost |\n|---|---|---|\n| trial division | p-linear | p |\n| Pollard \u03c1 | factor-local | \u221ap |\n| ECM | factor-local | sub-exp in p |\n| **Fermat** | **gap-local** | **(p+q)/2 \u2212 \u221aN** |\n\nFour methods, three locality classes \u2014 which methods see the factor (\u03c1, ECM), which see the gap (Fermat), and which see nothing but the scan (trial division).\n\n### Bonus finding: the degenerate square case\nThe r = 1 grid row exposed that when q lands on p itself (N = p\u00b2), Fermat's target a = p lies **below** its starting point \u230a\u221aN\u230b + 1 \u2014 plain Fermat has no true stopping point on prime squares and only exits by accidentally hitting an unrelated square (here after 8 372 232 iterations). CFRAC-style generalizations do not share the defect.\n\n### Method ledger\n(1) The first launch hung 7+ minutes in H1 \u2014 faulthandler stack dump found the root cause: **the fermat loop lacked its increment** (`a += 1` lost between drafts), spinning on a constant value; the standalone control with the increment ran instantly. (2) Stale assert constant (40 vs 24 draws) fixed.\n\nNow 431 experiments. Assessment v207. Paper 96.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3452",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T18:57:10.447566+00:00",
     "title": "FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
   },
@@ -15288,6 +15288,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The product view collapses exactly the pairs related by swapping the factors, whose fixed locus is the discriminant s^2 = 4N, i.e. d = 0. Conjecture: the entire hint value of a battery is carried by how its labels distinguish the two branches of the double cover (s,d) -> (s, d^2), so labels invariant under d -> -d have hint value zero except for the contribution of the ramification locus d = 0.\n\nIf the labels satisfy L x = L y whenever residueView x and residueView y agree in the first coordinate and are negatives in the second, then hintValue L P Q equals the hint value of the restricted battery supported on the ramification locus d = 0.\n\nFormalise the branch-swap action on the population, prove that swap-invariant labels factor through (s, d^2), and compare with the product view using SumDiffSplit.prodOf_neg_snd.\n\nThe hint value becomes a ramification invariant: it measures branch information of a degree-two cover, connecting the battery programme to the arithmetic of the conic s^2 - d^2 = 4N.\n\nSwap-invariant labels can still carry hint value, meaning the product view loses more than the branch, and the extra loss would be a new phenomenon to isolate.",
+    "domains": [],
+    "id": "fd_4922",
+    "priority_score": 0.5920588235294119,
+    "research_mode": "team",
+    "source_exp_id": "900e5fcb",
+    "status": "available",
+    "timestamp": "2026-09-21T22:52:19.012942+00:00",
+    "title": "Discriminant Locus as the Source of the Hint Value"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The measured rate variable has ~99% ties, so the empirical Spearman coefficient uses mid-ranks. We conjecture that the plateau survives ties with the floor replaced by the between-class fragmentation constant. This turns the 0.89% smooth rate from a nuisance parameter into a predictor of the plateau height.\n\nFor a rank map scrambled inside k tie-classes of sizes m_1,\u2026,m_k summing to n, the mid-rank Spearman coefficient equals 1 - 2\u2211 m_i\u00b3/(n\u00b3-n) + O(1/n\u00b2), independently of the within-class arrangement.\n\nExtend sqDisp_seg_eq to unequal segment lengths, define the mid-rank statistic, and prove the identity; validate against exhaustive enumeration for n \u2264 10.\n\nThe plateau height becomes computable from the smooth-rate histogram alone, giving a parameter-free prediction for the next bitlen.\n\nThe tie structure contributes a genuinely new term, and the reported coefficient is not comparable across bit lengths.",
     "domains": [],
     "id": "fd_4624",
@@ -15297,6 +15309,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-03T09:52:18.393685+00:00",
     "title": "Tie-Corrected Spearman Plateau in the Starved Regime"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This cycle produced a battery with maximal synergy and zero release, and one with maximal release. Conjecture: the pair (release, synergy) fills a full two-dimensional region of the square [0, H(T)]^2 cut out only by the proved inequalities, so no scalar summary of a routing table is faithful. The approach is to exhibit a two-parameter family of witness batteries and compute both coordinates exactly.\n\nFor every pair of rationals (r, s) with 0 <= r, s <= 1 there is a finite factor-residue battery with hintValue = r * Hb L and residueSynergy = s * Hb L, subject only to the proved constraints hintValue >= 0 and residueSynergy >= -min(I(s), I(d)).\n\nBuild batteries as disjoint unions of the ceiling witness and the synergy witness in prescribed proportions, and compute the two coordinates from fibre counts using TraceBattery.H_eq_log_sub_log_of_uniform.\n\nReporting a single hint value for a battery is provably lossy, and routing tables must be reported as at least a two-coordinate object.\n\nA hidden inequality links release and synergy, which would be a new information-theoretic constraint specific to quadratic coarsenings and worth isolating.",
+    "domains": [],
+    "id": "fd_4921",
+    "priority_score": 0.5920000000000001,
+    "research_mode": "team",
+    "source_exp_id": "900e5fcb",
+    "status": "available",
+    "timestamp": "2026-09-21T22:52:18.432947+00:00",
+    "title": "Release-Synergy Plane of a Routing Table"
   },
   {
     "consumed_by_exp_id": "",
@@ -33236,6 +33260,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-21T19:39:20.549046+00:00",
     "title": "Self-Certifying Gap Estimation for Battery Channels"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The hint value of a factor-residue battery vanishes exactly when the labels are conditionally independent of the factor pair given the product residue. Conjecture: this is equivalent to the purely combinatorial condition that, inside every fibre of the product map, the label distribution is the same across all sum/difference cells. The approach is to expand the conditional-entropy identity cell by cell and apply the equality case of Gibbs' inequality.\n\nFor a finite population with factor residues P, Q over a commutative ring with 1/2, hintValue L P Q = 0 if and only if for every value n of the product view and every value w of the joint residue view lying over n, the empirical label distribution on the cell {x : residueView x = w} equals the empirical label distribution on the fibre {x : productView x = n}.\n\nFormalise the cell-wise statement and prove both directions from SumDiffSynergy.hintValue_eq_zero_iff, using the equality case of the Gibbs step in Combinatorics.TraceBatteryEntropy; check it against the four witness batteries already in the catalog.\n\nThe COND-RANK conditioning capacity acquires a combinatorial certificate: zero hint value can be verified by comparing histograms, with no entropy computation and no floating point.\n\nThe vanishing locus of the hint value is strictly larger than the fibre-balance locus, which would mean plug-in readings of zero can arise from cancellation between cells and would undermine the use of a zero reading as evidence of product-measurability.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4918",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "900e5fcb",
+    "status": "available",
+    "timestamp": "2026-09-21T22:52:16.676090+00:00",
+    "title": "Intrinsic Fibre-Balance Criterion for Vanishing Hint Value"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The hyperbola ceiling proved this cycle is driven by the degenerate conic xy = 0. On the population of invertible factor pairs that conic disappears and every product fibre has exactly q-1 points, so the conditional entropy of the factor pair given the product should be exactly log(q-1). This predicts a strictly smaller hint budget for batteries built from primes, where zero residues never occur.\n\nFor the uniform battery on F* x F* over a finite field with q elements and any labelling, hintValue is at most log_2 (q-1); moreover H(s,d) - H(N) = log_2 (q-1) exactly.\n\nCompute cnt of the product view restricted to the unit population using card_hyperbola_ne_zero, derive H(N) = log(q-1) and H(s,d) = log((q-1)^2), then apply SumDiffUniform.hintValue_le_entropy_gap.\n\nFactor-residue hint values for prime-factor batteries must be compared against log_2 30 = 4.907 bits at m = 31, not against the 10-bit hint size, and the measured +0.5189 bits is 10.6% of the true budget.\n\nSome product fibre inside the unit population is not uniform, which would contradict the transitivity of the multiplicative group action and signal an error in the counting layer.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4919",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "900e5fcb",
+    "status": "available",
+    "timestamp": "2026-09-21T22:52:17.261328+00:00",
+    "title": "Unit-Group Hint Budget Below the Hyperbola Ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replace the pair (p,q) by a k-tuple of hidden residues and the product view by the top elementary symmetric function. The sum/difference split is then the k = 2 member of a hierarchy indexed by which elementary symmetric functions are revealed. The conjecture is that revealing the first j symmetric functions gives a hint value that is monotone in j, with strict increases exactly where the corresponding coincidence locus is nonempty.\n\nFor hidden residues X_1..X_k and labels T, the readings I(T ; e_1..e_j) are nondecreasing in j, equal I(T ; X_1..X_k) at j = k, and each step is strict for some labelling as soon as the map to (e_1..e_j) has a fibre with more than one point.\n\nDefine the symmetric-function views in Lean over a commutative ring with k! invertible, prove monotonicity by data processing, and realise strictness by a witness battery on a fibre of the e_j map, exactly as the k = 2 witnesses were built.\n\nThe hint value becomes a graded invariant of a factoring battery rather than a single number, and the round-29 reading is the first nontrivial grade of an entire filtration.\n\nMonotonicity can only fail if some e_j is not a function of e_1..e_k, so a failure would indicate that the chosen encoding of the residue tuple is not faithful, localising the anomaly in the encoding layer.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4920",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "900e5fcb",
+    "status": "available",
+    "timestamp": "2026-09-21T22:52:17.858197+00:00",
+    "title": "Symmetric-Function Hint Hierarchy for k Hidden Factors"
   },
   {
     "consumed_by_exp_id": "",
