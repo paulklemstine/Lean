@@ -1072,6 +1072,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 79072e03 (Q=0.820), which proved 71 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp \u2014 one reboot from oblivion \u2014 and no stored result had ever been re-run post-hoc. This round fixes t",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_79072e03_7cce70e5",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "79072e03",
+    "status": "available",
+    "timestamp": "2026-09-22T12:07:54.006509+00:00",
+    "title": "Deepening: FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 794ffb3f (Q=0.820), which proved 582 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;",
     "domains": [
       "Shared"
@@ -2083,21 +2097,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "79072e03",
-    "description": "## FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp \u2014 one reboot from oblivion \u2014 and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D\u2085 search (84), battery series (91\u201392), joint-wall verification (93), qubit/sample ramp series (85\u201387), converse plane (88\u201390), method-locality pair (95\u201396), Berggren-3adic (81).\n\n### Audit \u2014 three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S\u2083a/S\u2083b 1.0000; S\u2084 1.0100; A\u2084 0.9188; D\u2084 1.6555; V\u2084 0.8092; C\u2084 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | \u2713 |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | \u2713 |\n| Paper 89 three strata | \u03b1_\u03c4 = 0.500; medians 19.30/19.36; \u03b1_\u03c1 on N = 0.261 | identical | \u2713 |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | \u2713 |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** \u2014 deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3451",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T18:57:10.446222+00:00",
-    "title": "FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
-  },
-  {
     "consumed_by_exp_id": "0c9eb490",
     "description": "## FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat \u2014 the one classical method never locality-classified \u2014 measured: its iteration count is **exactly (p+q)/2 \u2212 \u221aN** (identity 24/24 with per-draw instrumentation), and across balance ratios r = q/p \u2208 [2, 64] at fixed p the cost interpolates **352 \u2192 100 282 iterations** (in p-units 0.09 \u2192 24.50; at r = 64 the measured cost is 0.78 of the cofactor-linear limit p\u00b7(r\u22121)/2). Fermat is **GAP-LOCAL**: neither factor-local like \u03c1/ECM nor a scan like trial division, but a function of the gap alone.\n\n### The completed locality table\n| method | locality class | cost |\n|---|---|---|\n| trial division | p-linear | p |\n| Pollard \u03c1 | factor-local | \u221ap |\n| ECM | factor-local | sub-exp in p |\n| **Fermat** | **gap-local** | **(p+q)/2 \u2212 \u221aN** |\n\nFour methods, three locality classes \u2014 which methods see the factor (\u03c1, ECM), which see the gap (Fermat), and which see nothing but the scan (trial division).\n\n### Bonus finding: the degenerate square case\nThe r = 1 grid row exposed that when q lands on p itself (N = p\u00b2), Fermat's target a = p lies **below** its starting point \u230a\u221aN\u230b + 1 \u2014 plain Fermat has no true stopping point on prime squares and only exits by accidentally hitting an unrelated square (here after 8 372 232 iterations). CFRAC-style generalizations do not share the defect.\n\n### Method ledger\n(1) The first launch hung 7+ minutes in H1 \u2014 faulthandler stack dump found the root cause: **the fermat loop lacked its increment** (`a += 1` lost between drafts), spinning on a constant value; the standalone control with the increment ran instantly. (2) Stale assert constant (40 vs 24 draws) fixed.\n\nNow 431 experiments. Assessment v207. Paper 96.\n",
     "domains": [
@@ -2113,16 +2112,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c5b75ba",
     "description": "## FACT round-29 #1 \u2014 AUDIT-EXTENSION (paper 103, logs /tmp/audit_p{91,94,85}.log)\n\n**Verdict name: SIX-KEYSTONE-ZERO-DRIFT.**\n\n### Result\nPaper 97's reproducibility audit extended to three more keystones whose results carry independent weight:\n\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 91 synergy | S\u2083a\u00d7S\u2083b +0.1290; A\u2084\u00d7D\u2084 +0.0049; overlap 0.9919 | **identical** | \u2713 |\n| Paper 94 capacity curve | deficits +0.000 through +6.372; I(6) = 11.5307 | **identical through k=6** | \u2713 |\n| Paper 85 ramp | P\u2081 \u2248 ramp(q/r\u00b2) | consistent intermediate values | partial* |\n\n*Paper 85's full ramp requires >110s (300 trials \u00d7 many cells); the re-run produced consistent intermediate values before timeout. The recorded full-run results stand on the original execution with stored seeds.\n\nCombined with paper 97's original audit (papers 80, 89, 92): **six keystone papers audited, zero drift across all fully-verified numbers**.\n\n### What this decides\nThe reproducibility claim now covers six keystones spanning the programme's diversity: the type-channel law table (80), the three-strata calibration (89), the battery capacity (92), the battery synergy decomposition (91), the capacity curve saturation (94), and the qubit/sample ramp (85, partial). Every fully-verified number reproduces exactly under stored seeds. The computational record is not an artifact of a single execution \u2014 it is a property of the deterministic pipelines.\n\nNow 438 experiments. Assessment v214. Paper 103.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3462",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T19:38:40.902152+00:00",
     "title": "FACT round-29 #1 \u2014 AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
   },
@@ -15069,6 +15069,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-18T16:20:59.698250+00:00",
     "title": "Equality Cases of the Synergy Budget"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An audit verdict should not be a boolean but a per-row certificate radius: the largest epsilon such that agreement within epsilon forces exact equality. This cycle computed both extremes, 1/(q r) on the rational stratum and 0 on the irrational stratum. The conjecture is that the radius is exactly the distance to the nearest distinct admissible value of the row.\n\nFor a row whose value lies in a prescribed admissible set S of reals, the certificate radius equals the isolation radius of the value in S, and equals zero exactly when the value is an accumulation point of S.\n\nFormalise the certificate radius as a definition, prove the two extreme cases already established, and prove the general identity with S the set of rationals with denominator at most Q.\n\nReproducibility audits acquire a quantitative, provable semantics instead of a digit comparison.\n\nCertification depends on more than isolation, e.g. on the arithmetic of the admissible set, which would refine the notion of an auditable stratum.",
+    "domains": [],
+    "id": "fd_4925",
+    "priority_score": 0.5923684210526317,
+    "research_mode": "team",
+    "source_exp_id": "79072e03",
+    "status": "available",
+    "timestamp": "2026-09-22T12:07:38.444708+00:00",
+    "title": "Certificate Radius of a Mixed Record"
   },
   {
     "consumed_by_exp_id": "",
@@ -33304,6 +33316,64 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-21T22:52:17.858197+00:00",
     "title": "Symmetric-Function Hint Hierarchy for k Hidden Factors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The semiprime type-pair channel of the cyclic group of order 2^k appears to have capacity exactly (4/3)(1 - 4^{-k}), whose numerators are the Jacobsthal numbers. The catalog proves this for k <= 4 by evaluation and enumeration confirms k = 5,6,7. A proof would turn a finite table into an infinite law and pin the supremum capacity at 4/3 bits.\n\nFor every k >= 1, Ipair (2^k) = (4/3) * (1 - 4^(-k)).\n\nFormalise the 2-adic valuation description of the type on Z/2^k, derive the conditional type-pair distribution given the norm class by induction on k, and evaluate the resulting telescoping entropy sum; cross-check against Ipair_two_pow_law for k <= 4.\n\nThe 2-adic tower of pair channels has an exact closed form with supremum 4/3, generalising the recorded four rows to all k.\n\nThe recorded rows are a low-k coincidence and the capacity has a correction term; locating the first deviation would isolate the mechanism.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4923",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "79072e03",
+    "status": "available",
+    "timestamp": "2026-09-22T12:07:37.300952+00:00",
+    "title": "Jacobsthal Capacity Law for the 2-Adic Pair Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This cycle proved that on constructible orders the type entropy H(T)(n) is rational exactly when n is a power of two. The conjecture removes the constructibility hypothesis, making the dichotomy a statement about all cyclic orders and thereby classifying which recorded entropies a rounded audit can certify.\n\nFor every n >= 1, H(T)(n) is rational if and only if n is a power of two.\n\nFormalise Q-linear independence of the logarithms of the primes, then apply it to the Euler-phi expansion H(T)(n) = log2 n - (1/n) * sum over d | n of phi(d) * log2 phi(d).\n\nThe certifiable stratum of the type record is exactly the 2-power orders; every other recorded entropy needs its closed form to be reproduced.\n\nThere is a non-2-power order whose Euler-phi sum conspires to cancel all irrational logarithms, which would be a striking totient identity in its own right.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4924",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "79072e03",
+    "status": "available",
+    "timestamp": "2026-09-22T12:07:37.870601+00:00",
+    "title": "Rationality Dichotomy for Cyclic Type Entropies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The one-variable case is now a theorem: unit orbits on Z/n are the gcd classes, so invariant readouts are exactly the functions of the splitting type. On ordered pairs the diagonal action has strictly finer orbits than the type pair, and the conjecture pins their number by a Burnside average whose fixed-point count is gcd(n, u-1) squared. This would quantify how much finer a reproducible pair observable can be than the recorded type pair.\n\nFor every n >= 1 the number of orbits of the diagonal unit action on (Z/n) x (Z/n) equals (1/phi(n)) * sum over units u of gcd(n, u-1)^2.\n\nFormalise the fixed-point set of u as the kernel of multiplication by u-1, show it has cardinality gcd(n, u-1), and apply the orbit-counting lemma; cross-check against the enumerated counts 1,4,5,10,7,20,9,22,17,28,13,50,15 for n <= 13.\n\nThe reproducible pair observables are counted exactly, bounding the information any generator-invariant semiprime statistic can carry above the recorded type pair.\n\nThe fixed-point count is not gcd(n, u-1) squared, which would reveal an extra interaction between the two coordinates of the diagonal action.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4926",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "79072e03",
+    "status": "available",
+    "timestamp": "2026-09-22T12:07:39.026488+00:00",
+    "title": "Burnside Orbit Census for the Diagonal Unit Action"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Enumeration indicates that the entropy of the unordered type pair equals twice the type entropy minus the non-collision probability, for every cyclic order. Proving it would give the marginal half of the pair-channel capacity in closed form for all n, from the Euler-phi type law alone.\n\nFor every n >= 1, Hpair n = 2 * HT n - (1 - sum over d | n of (phi(d)/n)^2).\n\nShow that the occupation number of an unordered key (a,b) is 2 N_a N_b for a != b and N_a^2 for a = b, then expand the entropy of the merged distribution and compare with the ordered-pair entropy 2 HT n.\n\nHpair has a closed form for every n; combined with the conditional term it yields Ipair, and in particular reduces the Jacobsthal law to a computation about norm classes.\n\nThe merging defect is not the collision probability, which would indicate that the type pair carries an extra symmetry beyond exchange.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_4927",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "79072e03",
+    "status": "available",
+    "timestamp": "2026-09-22T12:07:39.592532+00:00",
+    "title": "Collision Identity for the Semiprime Pair Entropy"
   },
   {
     "consumed_by_exp_id": "",

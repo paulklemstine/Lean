@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a7aa0976",
-      "domain": "Physics",
-      "key_insight": "# Future directions from the degree-7 rung of the abelian splitting-type ladder\n\nThis run closed the degree-7 rung (the cyclic septic subfield of `Q(ζ₂₉)`),\ngeneralised the ladder's Galois machinery f",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 98,
-      "timestamp": "2026-09-05T00:08:02",
-      "title": "FACT round-42 #3 — DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
-    },
-    {
       "cycle_id": "b3a54ad0",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nDerived from the results now formalised in `Catalog/Novelty/`:\n\n* `KleinFourTwoTorsionReciprocity.lean` — both regimes of the summed 2-torsion count\n  (`sum_card_V4_of_isSquare_th",
@@ -499,19 +489,19 @@
       "theorem_count": 117,
       "timestamp": "2026-09-21T22:52:33",
       "title": "FACT round-29 #1 — THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
+    },
+    {
+      "cycle_id": "79072e03",
+      "domain": "Computation",
+      "key_insight": "# Future directions — from \"the numbers reproduce\" to \"the numbers are theorems\"\n\nThis cycle replaced the *audit* reading of reproducibility (re-run the script, compare digits) by a\n*structural* one:",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-09-22T12:07:53",
+      "title": "FACT round-28 #3 — REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "80241759",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Parameter-derived depth (Physics, cycle v19c)\n\n## What this cycle established\n\nFor a concrete branching number `B` and a concrete information threshold `T`, the largest\nsupported",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 110,
-      "timestamp": "2026-08-25T03:14:24",
-      "title": "Parameter-derived depth"
-    },
     {
       "cycle_id": "22848dce",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 117,
       "timestamp": "2026-09-21T22:52:33",
       "title": "FACT round-29 #1 — THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
+    },
+    {
+      "cycle_id": "79072e03",
+      "domain": "Computation",
+      "key_insight": "# Future directions — from \"the numbers reproduce\" to \"the numbers are theorems\"\n\nThis cycle replaced the *audit* reading of reproducibility (re-run the script, compare digits) by a\n*structural* one:",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-09-22T12:07:53",
+      "title": "FACT round-28 #3 — REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "173bd3d0",
-      "domain": "Cryptography",
-      "name": "condEntropy_cell_nonneg",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "173bd3d0",
-      "domain": "Cryptography",
-      "name": "condEntropy_cell_eq_zero_iff",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "903508ab",
-      "domain": "Bridges",
-      "name": "lbs_14",
-      "quality": 0.82
-    },
     {
       "cycle_id": "903508ab",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "in",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "79072e03",
+      "domain": "Computation",
+      "name": "about",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "79072e03",
+      "domain": "Computation",
+      "name": "eq_of_close_rat",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "79072e03",
+      "domain": "Computation",
+      "name": "eq_of_close_rat_sharp",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-21T22:52:33",
+  "last_updated": "2026-09-22T12:07:53",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "16c9261f",
-        "quality": 0.78,
-        "theorems": 66,
-        "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival cur"
-      },
-      {
         "cycle_id": "4578ca8c",
         "quality": 0.86,
         "theorems": 45,
@@ -3327,6 +3321,12 @@
         "quality": 0.85,
         "theorems": 117,
         "title": "FACT round-27 #3 — JOINT-WALL-VERIFIED: the battery's factor-blindness stands, t"
+      },
+      {
+        "cycle_id": "79072e03",
+        "quality": 0.82,
+        "theorems": 71,
+        "title": "FACT round-28 #3 — REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit "
       }
     ],
     "Cryptography": [

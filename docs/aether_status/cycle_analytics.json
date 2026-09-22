@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-21T22:52:35.285547+00:00",
+  "last_updated": "2026-09-22T12:07:55.348846+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75833,6 +75833,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-21T22:52:34.835923+00:00",
       "title": "FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Computation",
+      "duration_seconds": 19244.522990226746,
+      "end_time": 1790078844.752282,
+      "files_integrated": 5,
+      "job_id": "79072e03",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1790059600.2292917,
+      "strategy_count": 0,
+      "theorem_count": 71,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 66,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-22T12:07:54.901958+00:00",
+      "title": "FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
     }
   ]
 }
