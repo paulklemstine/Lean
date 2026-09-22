@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-22T12:07:39Z",
-  "count": 167,
+  "archived_at": "2026-09-22T20:10:32Z",
+  "count": 168,
   "directions": [
     {
       "id": "fd_3695",
@@ -6613,6 +6613,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 189
+    },
+    {
+      "id": "fd_3452",
+      "title": "FACT round-28 #2 — THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)",
+      "description": "## FACT round-28 #2 — THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat — the one classical method never locality-classified — measured: its iteration count is **exactly (p+q)/2 − √N** (identity 24/24 with per-draw instrumentation), and across balance ratios r = q/p ∈ [2, 64] at fixed p the cost interpolates **352 → 100 282 iterations** (in p-units 0.09 → 24.50; at r = 64 the measured cost is 0.78 of the cofactor-linear limit p·(r−1)/2). Fermat is **GAP-LOCAL**: neither factor-local like ρ/ECM nor a scan like trial division, but a function of the gap alone.\n\n### The completed locality table\n| method | locality class | cost |\n|---|---|---|\n| trial division | p-linear | p |\n| Pollard ρ | factor-local | √p |\n| ECM | factor-local | sub-exp in p |\n| **Fermat** | **gap-local** | **(p+q)/2 − √N** |\n\nFour methods, three locality classes — which methods see the factor (ρ, ECM), which see the gap (Fermat), and which see nothing but the scan (trial division).\n\n### Bonus finding: the degenerate square case\nThe r = 1 grid row exposed that when q lands on p itself (N = p²), Fermat's target a = p lies **below** its starting point ⌊√N⌋ + 1 — plain Fermat has no true stopping point on prime squares and only exits by accidentally hitting an unrelated square (here after 8 372 232 iterations). CFRAC-style generalizations do not share the defect.\n\n### Method ledger\n(1) The first launch hung 7+ minutes in H1 — faulthandler stack dump found the root cause: **the fermat loop lacked its increment** (`a += 1` lost between drafts), spinning on a constant value; the standalone control with the increment ran instantly. (2) Stale assert constant (40 vs 24 draws) fixed.\n\nNow 431 experiments. Assessment v207. Paper 96.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "0c9eb490",
+      "timestamp": "2026-08-21T18:57:10.447566+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-21T22:53:19.104844+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 188
     }
   ]
 }

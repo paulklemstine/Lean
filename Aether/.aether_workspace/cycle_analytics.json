@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-22T12:07:55.348846+00:00",
+  "last_updated": "2026-09-22T20:10:49.004506+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -75876,6 +75876,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-22T12:07:54.901958+00:00",
       "title": "FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Shared",
+      "duration_seconds": 11572.063439130783,
+      "end_time": 1790107817.8018296,
+      "files_integrated": 4,
+      "job_id": "0c9eb490",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1790096245.7383904,
+      "strategy_count": 0,
+      "theorem_count": 45,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 39,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-22T20:10:48.549199+00:00",
+      "title": "FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
     }
   ]
 }

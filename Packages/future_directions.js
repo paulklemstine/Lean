@@ -1016,6 +1016,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0c9eb490 (Q=0.820), which proved 45 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat \u2014 the one classical method never locality-classified \u2014 measured: its iteration count is **exactly (p+q)/2 \u2212 \u221aN** (identity 24/24 with per-draw ",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_0c9eb490_112caef4",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "0c9eb490",
+    "status": "available",
+    "timestamp": "2026-09-22T20:10:47.653079+00:00",
+    "title": "Deepening: FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 1494cb60 (Q=0.820), which proved 431 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove\n   `\u27e6m+n, k\u27e7_q = \u2211_j q^{(m-j)(k-j)} \u27e6m,j\u27e7_q \u27e6n,k-j\u27e7_q`, the q-Vandermonde\n   convolution, and the q-binomial theorem\n   `\u220f_{i=0}^{n-1}(1 + q^i x) = \u2211_k q^{k(k-1)/2} \u27e6n,k\u27e7_q x^k`.",
     "domains": [
       "Applications"
@@ -2097,21 +2111,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "0c9eb490",
-    "description": "## FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat \u2014 the one classical method never locality-classified \u2014 measured: its iteration count is **exactly (p+q)/2 \u2212 \u221aN** (identity 24/24 with per-draw instrumentation), and across balance ratios r = q/p \u2208 [2, 64] at fixed p the cost interpolates **352 \u2192 100 282 iterations** (in p-units 0.09 \u2192 24.50; at r = 64 the measured cost is 0.78 of the cofactor-linear limit p\u00b7(r\u22121)/2). Fermat is **GAP-LOCAL**: neither factor-local like \u03c1/ECM nor a scan like trial division, but a function of the gap alone.\n\n### The completed locality table\n| method | locality class | cost |\n|---|---|---|\n| trial division | p-linear | p |\n| Pollard \u03c1 | factor-local | \u221ap |\n| ECM | factor-local | sub-exp in p |\n| **Fermat** | **gap-local** | **(p+q)/2 \u2212 \u221aN** |\n\nFour methods, three locality classes \u2014 which methods see the factor (\u03c1, ECM), which see the gap (Fermat), and which see nothing but the scan (trial division).\n\n### Bonus finding: the degenerate square case\nThe r = 1 grid row exposed that when q lands on p itself (N = p\u00b2), Fermat's target a = p lies **below** its starting point \u230a\u221aN\u230b + 1 \u2014 plain Fermat has no true stopping point on prime squares and only exits by accidentally hitting an unrelated square (here after 8 372 232 iterations). CFRAC-style generalizations do not share the defect.\n\n### Method ledger\n(1) The first launch hung 7+ minutes in H1 \u2014 faulthandler stack dump found the root cause: **the fermat loop lacked its increment** (`a += 1` lost between drafts), spinning on a constant value; the standalone control with the increment ran instantly. (2) Stale assert constant (40 vs 24 draws) fixed.\n\nNow 431 experiments. Assessment v207. Paper 96.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3452",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T18:57:10.447566+00:00",
-    "title": "FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
-  },
-  {
     "consumed_by_exp_id": "6c5b75ba",
     "description": "## FACT round-29 #1 \u2014 AUDIT-EXTENSION (paper 103, logs /tmp/audit_p{91,94,85}.log)\n\n**Verdict name: SIX-KEYSTONE-ZERO-DRIFT.**\n\n### Result\nPaper 97's reproducibility audit extended to three more keystones whose results carry independent weight:\n\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 91 synergy | S\u2083a\u00d7S\u2083b +0.1290; A\u2084\u00d7D\u2084 +0.0049; overlap 0.9919 | **identical** | \u2713 |\n| Paper 94 capacity curve | deficits +0.000 through +6.372; I(6) = 11.5307 | **identical through k=6** | \u2713 |\n| Paper 85 ramp | P\u2081 \u2248 ramp(q/r\u00b2) | consistent intermediate values | partial* |\n\n*Paper 85's full ramp requires >110s (300 trials \u00d7 many cells); the re-run produced consistent intermediate values before timeout. The recorded full-run results stand on the original execution with stored seeds.\n\nCombined with paper 97's original audit (papers 80, 89, 92): **six keystone papers audited, zero drift across all fully-verified numbers**.\n\n### What this decides\nThe reproducibility claim now covers six keystones spanning the programme's diversity: the type-channel law table (80), the three-strata calibration (89), the battery capacity (92), the battery synergy decomposition (91), the capacity curve saturation (94), and the qubit/sample ramp (85, partial). Every fully-verified number reproduces exactly under stored seeds. The computational record is not an artifact of a single execution \u2014 it is a property of the deterministic pipelines.\n\nNow 438 experiments. Assessment v214. Paper 103.\n",
     "domains": [
@@ -2127,16 +2126,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-29 #1 \u2014 AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a9c6b89",
     "description": "## FACT round-30 #2 \u2014 SD-WALL-TEST (paper 102, /tmp/exp_sdwall.py, /tmp/r30n2.log)\n\n**Verdict name: THE-HINTED-VIEW-IS-BLIND.**\n\n### Result\nPaper 101's flagged (s,d)-view which-factor reading of **0.9663 bits** \u2014 tested against a 200-shuffle permutation null:\n\n| view | observed | null mean | null sd | z |\n|---|---|---|---|---|\n| product view (N mod 713) | 0.0153 | 0.0162 | 0.0008 | \u22121.04 |\n| **(s,d) view** | **0.9663** | **0.9648** | 0.0011 | **+1.36** |\n| joint labels | 0.0011 | 0.0008 | 0.0002 | +1.44 |\n\n**All three views sit inside their nulls.** The entire 0.97-bit (s,d)-view reading was sparse-plug-in inflation \u2014 the hint view's massive cell count against the sample size generates ~0.96 bits of pure estimator bias, which the null reproduces exactly.\n\n### What stands\nThe battery programme's factor-blindness now extends to its strongest view: the factor-residue hint view carrying 4.56 of the 4.60 label-entropy bits is factor-blind at permutation-null sensitivity (\u00b10.001 bits on this statistic). The chain \u2014 capacity (92), ceiling saturation (94), hint compounding (101), verified blindness on every view including the hinted one \u2014 is closed with no loose ends.\n\nNow 437 experiments. Assessment v213. Paper 102.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3463",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T19:38:40.903673+00:00",
     "title": "FACT round-30 #2 \u2014 SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
   },
@@ -33374,6 +33374,81 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-22T12:07:39.592532+00:00",
     "title": "Collision Identity for the Semiprime Pair Entropy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every classical deterministic factoring method halts at the minimiser of some cost function on the ordered factorisations of N. Trial division minimises d, Fermat minimises (d + N/d)/2. The conjecture is that the locality class of a method (p-linear, gap-local, factor-local) is determined by the modulus of continuity of that cost function near the divisor it selects.\n\nFor any scan whose stopping point is sInf {f d e | d*e = N, d <= e} with f monotone in d, the cost is Theta(f(d0) - f(sqrt N)) where d0 is the selected divisor; trial division (f = d) and Fermat (f = (d+e)/2) are the two extreme monotone choices.\n\nFormalise the generic scan as sInf over the factorisation set, prove the Fermat and trial-division instances as corollaries of one theorem, then instantiate a third f and check the predicted cost against simulation.\n\nThe locality taxonomy becomes a theorem about cost functions, not a table of case studies.\n\nSome method's cost depends on data outside its factorisation set, exposing a genuinely non-divisor-local mechanism.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_4928",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0c9eb490",
+    "status": "available",
+    "timestamp": "2026-09-22T20:10:29.553518+00:00",
+    "title": "Divisor-Cost Locality Invariant for Deterministic Factoring Scans"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact zero-cost criterion ((p+q)/2 - 1)^2 <= p*q is now proved. It is equivalent to a factor gap of size O(sqrt p), so counting zero-cost semiprimes below x is a prime-pair counting problem at square-root distance. The conjecture pins the expected order of that count.\n\nThe number of semiprimes N = p*q <= x with fermatSteps N = 0 is x^{1/2 + o(1)}, and every such N satisfies q - p <= 2*sqrt(2p) + O(1).\n\nProve the gap form of the criterion in Lean, then count zero-cost semiprimes below successive bounds numerically and fit the exponent.\n\nBalanced-semiprime key generation must avoid an explicitly countable, square-root-dense family.\n\nZero-cost semiprimes are rarer than the gap heuristic predicts, implying unexpected repulsion between primes at square-root distance.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4929",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0c9eb490",
+    "status": "available",
+    "timestamp": "2026-09-22T20:10:30.121834+00:00",
+    "title": "Density of the Zero-Cost Semiprime Regime"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Running Fermat on k*N replaces the factor pair (p,q) by (kp,q). The bound 2*stop(kN) <= kp + q is proved; the question is how small the resulting cost can be made with k bounded by K, which is a Diophantine approximation question about q/p.\n\nFor every semiprime N = p*q with q/p = r, there is an odd k <= K with Fermat cost on kN at most C * N^{1/2} / K, so that searching all k <= K costs O(K + N^{1/2}/K), minimised at K = N^{1/4}.\n\nFormalise the cost bound for a given k, then combine with a continued-fraction approximation of r to exhibit the k achieving the bound; validate numerically on unbalanced semiprimes.\n\nLehman-style N^{1/3} factoring is recovered as a corollary of divisor-locality plus approximation.\n\nMultiplier steering is obstructed by the arithmetic of q/p, isolating semiprimes immune to the trick.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4930",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0c9eb490",
+    "status": "available",
+    "timestamp": "2026-09-22T20:10:30.690043+00:00",
+    "title": "Optimal Multiplier Exponent for Steered Fermat Scans"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The scan started at floor(sqrt N) halts instantly on squares and exactly one step late on odd non-squares. Its small-cost region therefore decides whether N has a divisor within a prescribed distance of sqrt N, at a cost equal to that distance.\n\nFor odd N, fermatSteps' N <= t if and only if N has a divisor d with d <= N/d and (d + N/d)/2 <= floor(sqrt N) + t, so bounded-cost repaired Fermat is an exact decision procedure for near-square-root divisors.\n\nProve both directions in Lean from fermatSteps'_eq_succ and fermat_cost_largest_divisor, then measure the cost of the resulting procedure on random N.\n\nBounded Fermat becomes a certified subroutine with an exact specification, usable inside larger factoring pipelines.\n\nThe stopping set of the repaired scan contains points not coming from factorisations, contradicting the difference-of-squares correspondence.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_4931",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0c9eb490",
+    "status": "available",
+    "timestamp": "2026-09-22T20:10:31.255237+00:00",
+    "title": "Repaired Fermat Scan as a Near-Square Decision Procedure"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "CFRAC visits values a with a^2 mod N small rather than a^2 - N square, and unlike plain Fermat it does not degenerate on prime squares. The conjecture is that its cost is not a function of the nearest divisor alone, placing it in a fourth locality class.\n\nThere exist two odd non-square N1, N2 with identical nearest-divisor data (same d and N/d) whose CFRAC costs differ by more than any function of that data, while their Fermat costs coincide exactly.\n\nFormalise the CFRAC stopping set in the same sInf style as fermatSums, then search computationally for a witness pair and formalise the two costs.\n\nThe taxonomy needs a fourth class: relation-local methods, which see the multiplicative structure of a^2 mod N rather than a single divisor.\n\nCFRAC is divisor-local too, and the taxonomy closes at three classes with a uniform proof.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_4932",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0c9eb490",
+    "status": "available",
+    "timestamp": "2026-09-22T20:10:31.817056+00:00",
+    "title": "Locality Class of Continued-Fraction Factoring"
   },
   {
     "consumed_by_exp_id": "",
