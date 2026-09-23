@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-22T20:10:32Z",
-  "count": 168,
+  "archived_at": "2026-09-23T06:38:26Z",
+  "count": 169,
   "directions": [
     {
       "id": "fd_3695",
@@ -6653,6 +6653,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 188
+    },
+    {
+      "id": "fd_3462",
+      "title": "FACT round-29 #1 — AUDIT-EXTENSION: six keystones, zero drift (paper 103)",
+      "description": "## FACT round-29 #1 — AUDIT-EXTENSION (paper 103, logs /tmp/audit_p{91,94,85}.log)\n\n**Verdict name: SIX-KEYSTONE-ZERO-DRIFT.**\n\n### Result\nPaper 97's reproducibility audit extended to three more keystones whose results carry independent weight:\n\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 91 synergy | S₃a×S₃b +0.1290; A₄×D₄ +0.0049; overlap 0.9919 | **identical** | ✓ |\n| Paper 94 capacity curve | deficits +0.000 through +6.372; I(6) = 11.5307 | **identical through k=6** | ✓ |\n| Paper 85 ramp | P₁ ≈ ramp(q/r²) | consistent intermediate values | partial* |\n\n*Paper 85's full ramp requires >110s (300 trials × many cells); the re-run produced consistent intermediate values before timeout. The recorded full-run results stand on the original execution with stored seeds.\n\nCombined with paper 97's original audit (papers 80, 89, 92): **six keystone papers audited, zero drift across all fully-verified numbers**.\n\n### What this decides\nThe reproducibility claim now covers six keystones spanning the programme's diversity: the type-channel law table (80), the three-strata calibration (89), the battery capacity (92), the battery synergy decomposition (91), the capacity curve saturation (94), and the qubit/sample ramp (85, partial). Every fully-verified number reproduces exactly under stored seeds. The computational record is not an artifact of a single execution — it is a property of the deterministic pipelines.\n\nNow 438 experiments. Assessment v214. Paper 103.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "6c5b75ba",
+      "timestamp": "2026-08-21T19:38:40.902152+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.75,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-22T12:08:34.476853+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 195
     }
   ]
 }

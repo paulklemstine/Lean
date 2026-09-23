@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0b20dfc4",
-      "domain": "Applications",
-      "key_insight": "# Future directions: law-change capacity of tie ceilings\n\nDerived from the three research cycles in `Catalog/Applications/ModalFractionCapacity.lean`,\n`ModalFractionCapacitySharp.lean` and `ModalFract",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-09-05T00:08:40",
-      "title": "Universal Law-Change Capacity in Modal Fraction"
-    },
-    {
       "cycle_id": "8d588bfb",
       "domain": "Bridges",
       "key_insight": "# Future directions — after the plane was measured and the ECM wall located\n\nThis cycle proved three exact cost laws (trial division `α = 1`, birthday `α = 1/2`\ntwo-sided, Fermat's exact `(p+q)/2` law",
@@ -499,19 +489,19 @@
       "theorem_count": 45,
       "timestamp": "2026-09-22T20:10:47",
       "title": "FACT round-28 #2 — THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
+    },
+    {
+      "cycle_id": "6c5b75ba",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — after SIX-KEYSTONE-ZERO-DRIFT (paper 103)\n\n## What the programme has established (all files sorry-free, all `lake build Catalog` clean)\n\n* `Catalog/NumberTheory/SixKeystoneZeroDr",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-09-23T06:38:41",
+      "title": "FACT round-29 #1 — AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "569bc76d",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Ellipsoids as Positive-Definite Images of Balls\n\n## What the thread has established\n\nEight Lean files in `Catalog/Bridges/` now carry a complete, `sorry`-free development.\n\n* `El",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 156,
-      "timestamp": "2026-08-25T05:49:54",
-      "title": "Ellipsoids"
-    },
     {
       "cycle_id": "40fe72ea",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 45,
       "timestamp": "2026-09-22T20:10:47",
       "title": "FACT round-28 #2 — THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
+    },
+    {
+      "cycle_id": "6c5b75ba",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — after SIX-KEYSTONE-ZERO-DRIFT (paper 103)\n\n## What the programme has established (all files sorry-free, all `lake build Catalog` clean)\n\n* `Catalog/NumberTheory/SixKeystoneZeroDr",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-09-23T06:38:41",
+      "title": "FACT round-29 #1 — AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9c40082c",
-      "domain": "Cryptography",
-      "name": "letter_of_factorization",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "9c40082c",
-      "domain": "Cryptography",
-      "name": "fermatPair_pwitA",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "078881d5",
-      "domain": "MachineLearning",
-      "name": "We",
-      "quality": 0.84
-    },
     {
       "cycle_id": "078881d5",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "fermat_cost_p_units_64",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "6c5b75ba",
+      "domain": "NumberTheory",
+      "name": "rot_run",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "6c5b75ba",
+      "domain": "NumberTheory",
+      "name": "rot_states",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "6c5b75ba",
+      "domain": "NumberTheory",
+      "name": "rot_states_card",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-09-22T20:10:47",
+  "last_updated": "2026-09-23T06:38:41",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "ea4eae2e",
-        "quality": 0.78,
-        "theorems": 50,
-        "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL a"
-      },
-      {
         "cycle_id": "a08d5a50",
         "quality": 0.86,
         "theorems": 119,
@@ -3699,6 +3693,12 @@
         "quality": 0.85,
         "theorems": 100,
         "title": "Next-cycle sub-conjectures (v19c thread continuation)"
+      },
+      {
+        "cycle_id": "6c5b75ba",
+        "quality": 0.75,
+        "theorems": 77,
+        "title": "FACT round-29 #1 — AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
       }
     ],
     "Physics": [

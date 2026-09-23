@@ -2111,21 +2111,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "6c5b75ba",
-    "description": "## FACT round-29 #1 \u2014 AUDIT-EXTENSION (paper 103, logs /tmp/audit_p{91,94,85}.log)\n\n**Verdict name: SIX-KEYSTONE-ZERO-DRIFT.**\n\n### Result\nPaper 97's reproducibility audit extended to three more keystones whose results carry independent weight:\n\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 91 synergy | S\u2083a\u00d7S\u2083b +0.1290; A\u2084\u00d7D\u2084 +0.0049; overlap 0.9919 | **identical** | \u2713 |\n| Paper 94 capacity curve | deficits +0.000 through +6.372; I(6) = 11.5307 | **identical through k=6** | \u2713 |\n| Paper 85 ramp | P\u2081 \u2248 ramp(q/r\u00b2) | consistent intermediate values | partial* |\n\n*Paper 85's full ramp requires >110s (300 trials \u00d7 many cells); the re-run produced consistent intermediate values before timeout. The recorded full-run results stand on the original execution with stored seeds.\n\nCombined with paper 97's original audit (papers 80, 89, 92): **six keystone papers audited, zero drift across all fully-verified numbers**.\n\n### What this decides\nThe reproducibility claim now covers six keystones spanning the programme's diversity: the type-channel law table (80), the three-strata calibration (89), the battery capacity (92), the battery synergy decomposition (91), the capacity curve saturation (94), and the qubit/sample ramp (85, partial). Every fully-verified number reproduces exactly under stored seeds. The computational record is not an artifact of a single execution \u2014 it is a property of the deterministic pipelines.\n\nNow 438 experiments. Assessment v214. Paper 103.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3462",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T19:38:40.902152+00:00",
-    "title": "FACT round-29 #1 \u2014 AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
-  },
-  {
     "consumed_by_exp_id": "5a9c6b89",
     "description": "## FACT round-30 #2 \u2014 SD-WALL-TEST (paper 102, /tmp/exp_sdwall.py, /tmp/r30n2.log)\n\n**Verdict name: THE-HINTED-VIEW-IS-BLIND.**\n\n### Result\nPaper 101's flagged (s,d)-view which-factor reading of **0.9663 bits** \u2014 tested against a 200-shuffle permutation null:\n\n| view | observed | null mean | null sd | z |\n|---|---|---|---|---|\n| product view (N mod 713) | 0.0153 | 0.0162 | 0.0008 | \u22121.04 |\n| **(s,d) view** | **0.9663** | **0.9648** | 0.0011 | **+1.36** |\n| joint labels | 0.0011 | 0.0008 | 0.0002 | +1.44 |\n\n**All three views sit inside their nulls.** The entire 0.97-bit (s,d)-view reading was sparse-plug-in inflation \u2014 the hint view's massive cell count against the sample size generates ~0.96 bits of pure estimator bias, which the null reproduces exactly.\n\n### What stands\nThe battery programme's factor-blindness now extends to its strongest view: the factor-residue hint view carrying 4.56 of the 4.60 label-entropy bits is factor-blind at permutation-null sensitivity (\u00b10.001 bits on this statistic). The chain \u2014 capacity (92), ceiling saturation (94), hint compounding (101), verified blindness on every view including the hinted one \u2014 is closed with no loose ends.\n\nNow 437 experiments. Assessment v213. Paper 102.\n",
     "domains": [
@@ -2141,16 +2126,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-30 #2 \u2014 SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ed62b99",
     "description": "## FACT round-30 #1 \u2014 HINT-VALUE-JOINT (paper 101, /tmp/exp_hintvaluejoint.py, /tmp/r30n1.log)\n\n**Verdict name: THE-HINTS-COMPOUND.**\n\n### Result\nWith the verified 36-label chaining (paper 100), the corrected 2-field joint hint value: **+2.4291 bits against the per-dial hint sum of +1.0288 \u2014 hint synergy +1.40 bits. Hints compound like capacities**, mirroring paper 92's capacity synergy (same mechanism: the CRT-joint modulus and the (s,d) pair each see all residues simultaneously).\n\n### The corrected joint hint table\n| view | bits |\n|---|---|\n| product view (hint-free) | 2.1314 (= paper 91 exact) |\n| sum view alone | 0.6432 |\n| gap view alone | 0.6496 |\n| (s,d) joint view | 4.5605 (99.1% of ceiling) |\n| **JOINT HINT VALUE** | **+2.4291** |\n\nBracketing confirmed: product < (s,d) \u2264 ceiling.\n\n### New flag (paper-93 discipline, not interpreted)\nThe (s,d)-view which-factor statistic reads **0.9663 bits** \u2014 the sparse-plug-in regime at its extreme (~508k residue-pair cells vs 30k samples). NOT interpreted this round; a permutation-null test is the immediate follow-up. Structural note: s,d are symmetric under p\u2194q, so any REAL leakage would be orientation-conditional and itself significant.\n\nNow 436 experiments. Assessment v212. Paper 101.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3464",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T19:38:40.905132+00:00",
     "title": "FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
   },
@@ -2881,6 +2867,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-19T23:41:54.924452+00:00",
     "title": "Deepening: FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on on"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 6c5b75ba (Q=0.750), which proved 77 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-29 #1 \u2014 AUDIT-EXTENSION (paper 103, logs /tmp/audit_p{91,94,85}.log)\n\n**Verdict name: SIX-KEYSTONE-ZERO-DRIFT.**\n\n### Result\nPaper 97's reproducibility audit extended to three more keystones whose results carry independent weight:\n\n| keystone | recorded | fresh re-run | verdict |\n|---|",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_6c5b75ba_f0136d34",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "6c5b75ba",
+    "status": "available",
+    "timestamp": "2026-09-23T06:38:42.382582+00:00",
+    "title": "Deepening: FACT round-29 #1 \u2014 AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
   },
   {
     "consumed_by_exp_id": "",
@@ -53199,5 +53199,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-11T20:06:54.255720+00:00",
     "title": "Direction 2 \u2014 Root laws for arbitrary superadditive penalty profiles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle IV proves that a single integer `N` controls the entire capacity column, but says\nnothing about how `N` decomposes. The key insight is that `N = t + c`, the tail length plus\nthe cycle length of the functional graph, so the deficit column measures `t + c` while the\n*repeat* structure measures `c`; a second statistic is needed to separate them. Why now?\nWith `orb_card_eq_min` in hand the remaining content is a purely combinatorial statement\nabout functional graphs, and for congruential maps `c` is an order of an affine map, i.e.\narithmetic.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_4933",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "6c5b75ba",
+    "status": "available",
+    "timestamp": "2026-09-23T06:38:24.810338+00:00",
+    "title": "Direction 2 \u2014 Tail\u2013Cycle Split of the Orbit Size"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle II proves the envelope (`cap_le_envelope`, `deficit_ge_envelope`) and cycle IV shows\nevery pipeline attains a *shifted* copy of it with `N` in place of `m`. The key insight is\nthat attaining the envelope with `N = m` is not an analytic property at all but a\ncongruence condition on `(a, c, m)`. Why now? With the envelope and the exact count law\nproved, the remaining content is purely arithmetic: which triples saturate.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4934",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "6c5b75ba",
+    "status": "available",
+    "timestamp": "2026-09-23T06:38:25.329985+00:00",
+    "title": "Direction 4 \u2014 Arithmetic Characterisation of Envelope-Attaining Pipelines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle V shows that full batch invariance is equivalent to iterated dynamics. The key\ninsight is that the hierarchy should already collapse at level two: invariance restricted\nto schedules of length at most two ought to force invariance for all schedules, while a\npipeline that only satisfies the empty-schedule law (no `hcons`) should admit\ncounterexamples at every level. Why now? `batchInvariant_iff_iterate` supplies the top of\nthe hierarchy, so the question is exactly how weak an audit can be and still certify\nabsence of hidden state.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Sub-Bit Synergy Obstruction for Soft Channels\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"Integer-period channels have quantised synergy: the joint capacity exceeds the stronger marginal by either zero or at least one bit. Any audited synergy strictly inside (0,1) therefore certifies a non-cyclic or estimator-level mechanism. Formalising the obstruction converts a numerical curiosity into a classification test for recorded synergy tables.\",\n    \"conjecture\": \"For all p, q \u2265 1, log\u2082(lcm p q) \u2212 max(log\u2082 p, log\u2082 q) \u2208 {0} \u222a [1, \u221e); and for a channel whose state space is a finite abelian group of exponent e, the same dichotomy holds with e in place of the period.\",\n    \"test\": \"Extend `synergy_gap` from cyclic periods to finite abelian channels by replacing the lcm of periods with the exponent of the product group, and verify no sub-bit synergy arises over all abelian groups of order \u2264 64.\",\n    \"if_true\": \"Every sub-bit synergy in the audited tables is provably non-periodic in origin, sharpening the interpretation of the synergy keystone.\",\n    \"if_false\": \"There is an abelian channel pair with sub-bit synergy, exhibiting a genuine continuum of synergy values and rehabilitating small recorded values.\",\n    \"proof_strategy\": \"Use gcd \u2223 min and properness to get min \u2265 2\u00b7gcd, then monotonicity of logb; for the abelian case replace divisibility of periods by divisibility of exponents via the structure theorem.\",\n    \"catalog_references\": [\"Catalog.NumberTheory.SixKeystoneSynergyGap\", \"Catalog.NumberTheory.SixKeystoneZeroDrift\"]\n  },\n  {\n    \"title\": \"Tail-Cycle Split of the Orbit Size\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"Cycle IV proves that the capacity column of any finite-window pipeline is min(k+1, N) for one orbit size N. The conjecture is that N is exactly the tail length plus the cycle length of the functional graph, so the deficit column alone cannot separate a long tail from a long cycle, and a second recorded statistic is provably necessary.\",\n    \"conjecture\": \"For f : \u2115 \u2192 \u2115 with orbit of s inside a finite window, the orbit size N of `orb_card_eq_min` equals t + c, where t is the least index with f^[t+c] s = f^[t] s for some c > 0 and c is the least such period; moreover for each N \u2265 2 there are pipelines with the same N and different (t, c).\",\n    \"test\": \"Formalise the tail/cycle decomposition of an eventually periodic orbit in Lean, pr",
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_4935",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "6c5b75ba",
+    "status": "available",
+    "timestamp": "2026-09-23T06:38:26.083021+00:00",
+    "title": "Direction 5 \u2014 Collapse Level of the Batch-Invariance Hierarchy"
   }
 ];
