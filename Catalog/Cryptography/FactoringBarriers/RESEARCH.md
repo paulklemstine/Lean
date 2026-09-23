@@ -127,10 +127,17 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   corrections carry **stated assumptions/heuristics**. *(Wiener is the separate
   small-`d` bound `d < N^{1/4}/3`; the "`1/4` p-leak" is Coppersmith's — do not
   conflate them.)* None breaks sound RSA.
-- **Complexity ceiling (evidence, not a method):** Boneh–Venkatesan gives
-  model-restricted evidence that breaking **low-exponent** RSA may be **easier than
-  factoring** — reinforcing that "recover the factor" is not the only attack
-  surface, but it is not itself a new factoring algorithm.
+- **Complexity ceiling — low-exponent RSA vs. factoring:** see **§4b**. The short
+  version, and a correction to a widely-repeated misreading: **Boneh–Venkatesan
+  (EUROCRYPT '98) proved _no attack_ and _no easier-algorithm_ claim** — it is a
+  **no-reduction result about proof *techniques*** (an algebraic, bit-blind
+  reduction proving "RSA-break ⇔ factoring" would itself secretly *be* a factoring
+  algorithm). In the **generic ring model the conclusion flips to equivalence**
+  (Brown 2005; Leander–Rupp 2006; Aggarwal–Maurer ePrint 2008/260, 2016). So BV
+  does not separate the problems — it **localizes** the boundary: any genuine
+  non-factoring break must be **non-generic**, i.e. manipulate the bit-representation
+  of `ℤ_N` (which is exactly what Coppersmith lattices do). Under standard padding
+  and `e = 65537` there is **no** known polynomial-time non-factoring attack.
 
 ---
 
@@ -184,6 +191,68 @@ factoring," and a "CAP-style analog machine," which circulate in popular
 accounts, could **not** be pinned to primary sources; the closest real works are
 the optical-interference and random-wave papers above. Treat those popular labels
 as unverified.
+
+### 4b. Low-exponent RSA vs. factoring — the corrected story
+
+This corrects a *very* widely-repeated misreading, so it is worth stating
+precisely (DOI-level verified).
+
+**What Boneh–Venkatesan actually proved.** Not an attack, and not a bound — a
+**no-reduction result about proof techniques**. From the abstract: they "provide
+evidence that breaking **low-exponent** RSA **cannot** be equivalent to factoring…
+an **algebraic** reduction from factoring to breaking low-exponent RSA can be
+converted into an efficient factoring algorithm… our results **do not expose any
+specific weakness** in the RSA system." The logic runs *backwards*: if you tried
+to prove the equivalence by exhibiting a small-query *algebraic* reduction, that
+reduction would itself be a factoring algorithm — so the technique is
+self-defeating. The model is **algebraic reductions** (straight-line programs over
+`ℤ_N` with `+,−,×`, **no division, no comparison, no bit manipulation**), for
+`e = 3`. So BV does *not* show low-`e` RSA is "easier to break."
+
+**The generic-ring model flips the conclusion to equivalence.** Aggarwal–Maurer
+(*Breaking RSA Generically is Equivalent to Factoring*, ePrint 2008/260, EUROCRYPT
+2009, IEEE ToIT 2016) prove a **generic ring** algorithm that breaks RSA can be
+converted into one that factors — for **arbitrary `e`** (preceded by Brown 2005,
+Leander–Rupp 2006; extended to preprocessing by Dachman-Soled–Loss–O'Neill 2022).
+
+**The precise direction, and the real content of BV.**
+- *Factoring ⇒ inverting RSA:* trivial, unconditional.
+- *Inverting RSA ⇒ factoring:* **open in the standard model** (Boneh's Open
+  Problem 1). BV supplies evidence it "may be 'no'" for small `e`;
+  Aggarwal–Maurer prove it **generically**.
+
+So the honest conclusion is that **BV localizes rather than separates**: its
+corollary (via Aggarwal–Maurer) is that *any* non-factoring break must be
+**non-generic** — it must manipulate the bit-representation of `ℤ_N`, which is
+exactly what Coppersmith's lattices do. The generic ring is the wrong place to
+look for a separation.
+
+**The known non-factoring attacks all require structure** (recover `m` unless
+noted): trivial `e`-th root (`m^e < N`); Coppersmith univariate (`m < N^{1/e}`);
+Franklin–Reiter (related message `m1 = a·m2 + b`, **no size bound on `m2`**);
+Coppersmith short-pad; Håstad broadcast (needs `e` ciphertexts, or `>e(e+1)/2`
+padded); known **high** bits of `m` (for `e = 3`, the top `2/3` of `m`). Note the
+consequential asymmetry: knowing the **high** bits of the *plaintext* helps, the
+**low** bits do not; for `d` it is the reverse. *Recovers **factor** / private
+key*, not plaintext: known high bits of `p` (top `¼` ⇒ factor, Coppersmith);
+partial-key exposure of `d`; Wiener / Boneh–Durfee. *Padding/decryption-oracle
+attacks* (Bleichenbacher, Manger) break RSA **encryption** without factoring but
+need an adaptive oracle and are `e`-independent — implementation attacks, not
+mathematical inversions.
+
+**Verdict for standard padding + `e = 65537`: no known polynomial-time
+non-factoring attack.** Arithmetic alone kills it: `N^{1/e} = 2^{2048/65537} ≈
+2^{0.031} ≈ 1.02`, so the small-message Coppersmith bound is *degenerate* (no
+message qualifies). *(Common error to avoid: this is ≈`2^0.03`, not ≈`2^2032`.)*
+PKCS#1 v1.5 / OAEP randomness makes the encoded message uniform in `ℤ_N`, which
+removes the structured-plaintext precondition. The only general route remains
+factoring (GNFS).
+
+**The sharpest open question** is *not* "is BV's separation genuine" (that is
+settled — against BV, in the generic model) but: **is there a black-box
+reduction from RSA inversion to factoring for `e = 3` in the standard model?**
+Neither direction is known. As one agent put it: a separation in a model that
+provably contains no real attack is a fact about the model, not about RSA.
 
 ## 5. The meta-barrier: every method collapses to one of four primitives
 
@@ -312,8 +381,13 @@ algorithm; each is a place where a genuine open problem still lives.
      tolerance** — they sit on the margin, they do not eat into it. None threatens
      correctly-implemented RSA.
 2. **Is low-exponent RSA easier than factoring?** — the Boneh–Venkatesan ceiling
-   question: does breaking `e`-small RSA reduce to factoring, or genuinely to
-   something easier? A model-independent separation would be a real result.
+   question, now sharply posed (§4b). BV proved **no attack** (it is a no-reduction
+   result about proof techniques), and the **generic ring model flips the answer to
+   equivalence** (Aggarwal–Maurer). So the real open question is: *is there a
+   standard-model black-box reduction from RSA inversion to factoring for `e = 3`?*
+   Neither direction is known. A model-independent separation — or refutation — would
+   be a genuine result. BV's genuine content is a **localization**: any non-factoring
+   break must be non-generic (bit-manipulating).
 3. **Analog / physical-precision factoring** — the one genuinely open *question*,
    but with the standard reason corrected (§4a): the obstruction is a
    **precision-vs-runtime noise-floor tradeoff** (a chaotic amplifier needs
@@ -418,7 +492,14 @@ time lattice claim, empirically falsified) · **Ducas, SchnorrGate** (0/1000) ·
 Ajtai STOC 2003 (worst-case of Schnorr's algorithm; not obtained) · Lenstra–
 Pomerance 1992 (*imaginary-quadratic class group*, `L[1/2,1]`) · Boneh–Durfee–
 Howgrave-Graham CRYPTO 1999 (`N = p^r q`, prime **power**) · Hinek–Low–Teske (multi-
-prime attacks weaken with more equal primes) · Boneh–Venkatesan (low-exponent RSA) ·
+prime attacks weaken with more equal primes) · **Boneh–Venkatesan** EUROCRYPT
+'98 (LNCS 1403, *no-reduction*, not an attack) · **Brown** ePrint 2005/380 ·
+**Leander–Rupp** ASIACRYPT 2006 · **Aggarwal–Maurer** ePrint 2008/260 (generic
+ring ⇒ factoring) · **Håstad** *SIAM J. Comput.* 17(2) 1988 ("Solving
+simultaneous modular equations of low degree" — the real broadcast/low-degree
+paper; *not* a "J. Cryptology 1994" paper) · **Boneh**, "Twenty years of attacks
+on the RSA cryptosystem," *Notices AMS* 46(2) 1999 · **Coron–May** *J. Cryptology*
+20(1) 2007 (ePrint 2004/208) ·
 Rippon–Taylor 2004 · Gower–Wagstaff 2008 · Bernstein–Lange 2014/921 ·
 Kleinjung–Bos–Lenstra 2014/653 · Cox, *Primes of the Form x²+ny²* ·
 **Moore 1990, PRL 64 2354** (Turing-universal 3-dof dynamics; undecidability) ·
