@@ -623,10 +623,18 @@ valid statements *about their model*; only the over-reading was wrong.
 
 ## 7. Machine-checked companions
 
-- **`NegativeResults.lean`** — a cited kill record (the table above) plus a
-  machine-checked support for the Gauss-sum kill: `mod4_not_injective` shows the
-  map `n ↦ n mod 4` fails to separate the distinct semiprimes `15 = 3·5` and
-  `39 = 3·13`, so a low-order residue observable cannot carry factoring information.
+- **`NegativeResults.lean`** — a cited kill record (the table above, now **seven**
+  directions) plus two machine-checked supports:
+  - `mod4_not_injective` shows the map `n ↦ n mod 4` fails to separate the
+    distinct semiprimes `15 = 3·5` and `39 = 3·13`, so a low-order residue
+    observable cannot carry factoring information.
+  - `known_leak_maximized_at_balanced` (with `known_leak_attained_at_balanced`)
+    machine-checks the load-bearing consequence of §4d-iii: the partial-key
+    leakage requirement `(β − β²)n` is **at most `n/4`**, with equality exactly at
+    `β = 1/2`. The proof is the completed square `4(β − β²) = 1 − (2β − 1)² ≤ 1`.
+    So the `n/4` barrier is a fact about the *balanced* case — every `β < 1/2`
+    needs strictly fewer bits, and **balance is what maximises the required
+    leakage**.
 - **`FreeSymbol.lean`** — the free-symbol lemma `(a/pq) = (a/p)(a/q)`: the product is
   computable from `a` and `pq` alone, while each Legendre factor needs a prime in
   isolation. Also `jacobi_neg_one_disagrees`, the symbolic form of **Shor's
