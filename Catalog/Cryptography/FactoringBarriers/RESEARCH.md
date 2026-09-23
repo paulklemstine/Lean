@@ -869,9 +869,12 @@ algorithm; each is a place where a genuine open problem still lives.
 > well-posed open problem (`poly(log N)`-computability of the count). The
 > Catalog's barrier documentation was corrected as a direct result.
 
-The next honest move is to sharpen the open threads in §8 — partial-key exposure,
-the low-exponent-RSA ceiling, analog precision, circuit lower bounds, and the
-modular-curve unification — not to relitigate the killed directions in §3–§5.
+The next honest move is to sharpen the open threads in §8 — partial-key exposure
+(including the **noisy/approximate-leak** sub-thread, the one part of it that no
+pass has yet explored), the low-exponent-RSA ceiling, circuit lower bounds, and
+the modular-curve unification — not to relitigate the killed directions in
+§3–§5. **Analog/physical factoring (thread 3) is no longer on this list:** it
+was re-scoped and is currently a **kill**, not an open question (§4a).
 
 ---
 
@@ -938,7 +941,10 @@ Kleinjung–Bos–Lenstra 2014/653 · Cox, *Primes of the Form x²+ny²* ·
 factorization; **killed by** Nguyen et al. arXiv:2506.14928, *Chaos* 2026) ·
 Ding et al. *Sci. Rep.* 14 (2024) (23-bit analog/annealing factoring record) ·
 Xu/Hegade et al. arXiv:1611.03293 (factored 35 on one spin) ·
-**Willsch et al. 2024, arXiv:2410.14397** (analog factoring "still exponential") ·
+**Willsch et al.** arXiv:2410.14397 ("The State of Factoring on **Quantum**
+Computers", `quant-ph`; the three "analog" methods are **D-Wave quantum
+annealers**, and its "still exponential" scaling is a *quantum-annealing*
+datapoint, **not** classical analog evidence) ·
 Tamma et al. 2015, arXiv:1506.02907 (optical interference) · Liu, Liang, Cai &
 Ponomarenko 2023,
 arXiv:2304.10713 (random-wave) · Handbook of Applied Cryptography 3.30.
