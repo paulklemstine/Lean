@@ -181,7 +181,7 @@ covers devices whose power comes from genuine many-body measurement less directl
 field's own measurement — **Willsch et al. 2024** (arXiv:2410.14397) find three
 analog factorization methods scale "better than random guessing **but still
 exponential**." Optical/mean-field analog computers are real (Tamma et al. 2015,
-arXiv:1506.02907; Liu–Ponomarenko 2023, arXiv:2304.10713) but operate at
+arXiv:1506.02907; Liu–Liang–Cai–Ponomarenko 2023, arXiv:2304.10713) but operate at
 ~seven-digit demonstration scale with no formal complexity or precision-scaling
 analysis. Analog factoring is not refuted as a small-scale physical curiosity —
 it demonstrably factors small integers — but there is no candidate on a credible
@@ -798,13 +798,17 @@ Wiener (small-`d` `N^{1/4}/3`) · **Boneh–Durfee–Frankel** ASIACRYPT 1998 ·
 the **May–Nowakowski–Sarkar** Thm 2 (`X ≤ N^{β²}`) · **Lu–Zhang–Peng–Lin**
 ePrint 2014/343 Thm 7 (`γ₁+…+γ_n < β²`) · **Hesse–Allender–Barrington**
 JCSS 2002 (`PRIMES ∈ TC⁰`; +2014 corrigendum) · **Allender–Barrington–Jeřábek**
-*Math. Comp.* 2002 (`PRIMES ∉ AC⁰[p]`; SMALL-E) · **Costa–Harvey** *Math. Comp.*
+*JCSS* 2002 (`PRIMES ∉ AC⁰[p]`; SMALL-E — venue corrected from *Math. Comp.* by
+a 2026 audit; the correction is **UNCONFIRMED** by direct fetch, so verify
+before citing) · **Costa–Harvey** *Math. Comp.*
 2013 (deterministic `N^{1/5}`) · **Bach–Miller–Shallit** SICOMP 1986
 (`σ(N) ≡` factoring) · **Razborov–Rudich** JCSS 1997 (natural proofs barrier) ·
 **Aaronson–Wigderson** STOC 2008 / ToCT 2009 (**algebrization** — the
 factoring-specific barrier) · Santhanam SICOMP 2009 · **Schnorr 2021 ePrint
-2021/933** (polynomial-
-time lattice claim, empirically falsified) · **Ducas, SchnorrGate** (0/1000) ·
+2021/933** ("Fast Factoring Integers by SVP Algorithms, corrected" — the
+polynomial-
+time lattice claim, empirically falsified; the title "This destroys the RSA
+cryptosystem" belongs to the earlier version) · **Ducas, SchnorrGate** (0/1000) ·
 Ajtai STOC 2003 (worst-case of Schnorr's algorithm; not obtained) · Lenstra–
 Pomerance 1992 (*imaginary-quadratic class group*, `L[1/2,1]`) · Boneh–Durfee–
 Howgrave-Graham CRYPTO 1999 (`N = p^r q`, prime **power**) · Hinek–Low–Teske (multi-
@@ -836,5 +840,6 @@ Rippon–Taylor 2004 · Gower–Wagstaff 2008 · Bernstein–Lange 2014/921 ·
 Kleinjung–Bos–Lenstra 2014/653 · Cox, *Primes of the Form x²+ny²* ·
 **Moore 1990, PRL 64 2354** (Turing-universal 3-dof dynamics; undecidability) ·
 **Willsch et al. 2024, arXiv:2410.14397** (analog factoring "still exponential") ·
-Tamma et al. 2015, arXiv:1506.02907 (optical interference) · Liu–Ponomarenko 2023,
+Tamma et al. 2015, arXiv:1506.02907 (optical interference) · Liu, Liang, Cai &
+Ponomarenko 2023,
 arXiv:2304.10713 (random-wave) · Handbook of Applied Cryptography 3.30.
