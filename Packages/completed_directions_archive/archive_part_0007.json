@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-23T06:38:26Z",
-  "count": 169,
+  "archived_at": "2026-09-23T17:20:37Z",
+  "count": 170,
   "directions": [
     {
       "id": "fd_3695",
@@ -6693,6 +6693,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 195
+    },
+    {
+      "id": "fd_3463",
+      "title": "FACT round-30 #2 — SD-WALL-TEST: the hinted view is factor-blind too (paper 102)",
+      "description": "## FACT round-30 #2 — SD-WALL-TEST (paper 102, /tmp/exp_sdwall.py, /tmp/r30n2.log)\n\n**Verdict name: THE-HINTED-VIEW-IS-BLIND.**\n\n### Result\nPaper 101's flagged (s,d)-view which-factor reading of **0.9663 bits** — tested against a 200-shuffle permutation null:\n\n| view | observed | null mean | null sd | z |\n|---|---|---|---|---|\n| product view (N mod 713) | 0.0153 | 0.0162 | 0.0008 | −1.04 |\n| **(s,d) view** | **0.9663** | **0.9648** | 0.0011 | **+1.36** |\n| joint labels | 0.0011 | 0.0008 | 0.0002 | +1.44 |\n\n**All three views sit inside their nulls.** The entire 0.97-bit (s,d)-view reading was sparse-plug-in inflation — the hint view's massive cell count against the sample size generates ~0.96 bits of pure estimator bias, which the null reproduces exactly.\n\n### What stands\nThe battery programme's factor-blindness now extends to its strongest view: the factor-residue hint view carrying 4.56 of the 4.60 label-entropy bits is factor-blind at permutation-null sensitivity (±0.001 bits on this statistic). The chain — capacity (92), ceiling saturation (94), hint compounding (101), verified blindness on every view including the hinted one — is closed with no loose ends.\n\nNow 437 experiments. Assessment v213. Paper 102.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "5a9c6b89",
+      "timestamp": "2026-08-21T19:38:40.903673+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-22T20:11:35.023413+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 194
     }
   ]
 }

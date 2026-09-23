@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8d588bfb",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — after the plane was measured and the ECM wall located\n\nThis cycle proved three exact cost laws (trial division `α = 1`, birthday `α = 1/2`\ntwo-sided, Fermat's exact `(p+q)/2` law",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 2138,
-      "timestamp": "2026-09-05T04:29:54",
-      "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
-    },
-    {
       "cycle_id": "41afeb86",
       "domain": "Novelty",
       "key_insight": "# Future directions — after PHASE-SUBTHRESHOLD-LIFT (paper 150, exp 482)\n\nThis thread replaced the empirical statements of exp 482 with theorems, in five cycles:\n\n* the phase block's tiny lift (`+0.00",
@@ -499,19 +489,19 @@
       "theorem_count": 77,
       "timestamp": "2026-09-23T06:38:41",
       "title": "FACT round-29 #1 — AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
+    },
+    {
+      "cycle_id": "5a9c6b89",
+      "domain": "Computation",
+      "key_insight": "# Future directions — from the SD-WALL-TEST cycle (paper 102 thread)\n\nThis cycle closed the gap between two halves of the factor-blindness programme: the exact\n`0`-bit wall for symmetric readouts, and",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-09-23T17:20:54",
+      "title": "FACT round-30 #2 — SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "40fe72ea",
-      "domain": "Probability",
-      "key_insight": "# Future directions — portfolio scheduling over an invisible channel\n\nDerived from the eight proof cycles in `Catalog/Probability/Portfolio*.lean`.\n\n## What survived, what failed, and why\n\n**Survived",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 171,
-      "timestamp": "2026-08-25T05:50:13",
-      "title": "FACT round-73 #1 — PORTFOLIO: no universal winner, no dial edge; regret tail is N-invisible (paper 2"
-    },
     {
       "cycle_id": "4aeadf94",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 77,
       "timestamp": "2026-09-23T06:38:41",
       "title": "FACT round-29 #1 — AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
+    },
+    {
+      "cycle_id": "5a9c6b89",
+      "domain": "Computation",
+      "key_insight": "# Future directions — from the SD-WALL-TEST cycle (paper 102 thread)\n\nThis cycle closed the gap between two halves of the factor-blindness programme: the exact\n`0`-bit wall for symmetric readouts, and",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-09-23T17:20:54",
+      "title": "FACT round-30 #2 — SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "078881d5",
-      "domain": "MachineLearning",
-      "name": "for",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "078881d5",
-      "domain": "MachineLearning",
-      "name": "fib_dvd_gcd",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "aa0d333b",
-      "domain": "MachineLearning",
-      "name": "We",
-      "quality": 0.83
-    },
     {
       "cycle_id": "aa0d333b",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "rot_states_card",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "5a9c6b89",
+      "domain": "Computation",
+      "name": "applies",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5a9c6b89",
+      "domain": "Computation",
+      "name": "below",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5a9c6b89",
+      "domain": "Computation",
+      "name": "is",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-23T06:38:41",
+  "last_updated": "2026-09-23T17:20:54",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "4578ca8c",
-        "quality": 0.86,
-        "theorems": 45,
-        "title": "Midpoint-corrected acceleration"
-      },
-      {
         "cycle_id": "05a687ab",
         "quality": 0.82,
         "theorems": 76,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 71,
         "title": "FACT round-28 #3 — REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit "
+      },
+      {
+        "cycle_id": "5a9c6b89",
+        "quality": 0.82,
+        "theorems": 60,
+        "title": "FACT round-30 #2 — SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
       }
     ],
     "Cryptography": [

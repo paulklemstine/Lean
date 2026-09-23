@@ -1058,6 +1058,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5a9c6b89 (Q=0.820), which proved 60 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-30 #2 \u2014 SD-WALL-TEST (paper 102, /tmp/exp_sdwall.py, /tmp/r30n2.log)\n\n**Verdict name: THE-HINTED-VIEW-IS-BLIND.**\n\n### Result\nPaper 101's flagged (s,d)-view which-factor reading of **0.9663 bits** \u2014 tested against a 200-shuffle permutation null:\n\n| view | observed | null mean | null sd",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_5a9c6b89_34e4e472",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "5a9c6b89",
+    "status": "available",
+    "timestamp": "2026-09-23T17:20:54.486510+00:00",
+    "title": "Deepening: FACT round-30 #2 \u2014 SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5e9b52ad (Q=0.820), which proved 48 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *Let `v_1, \u2026, v_k` be pairwise independent\n   directions in `F_p\u00b2` and `S_i \u2286 F_p` with `0 \u2208 S_i`.  If\n   `\u03a3_i (p - |S_i|) \u2264 (k-2)(p-1)`, then `\u03a3_i S_i v_i = F_p\u00b2`.*  The case\n   `k = 3` is proved here (`Heis.exists_triple_solution`, in the sharper form\n   `\u03a3_i (p-|S_i|) < p`); the general statement",
     "domains": [
       "Computation"
@@ -2111,21 +2125,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "5a9c6b89",
-    "description": "## FACT round-30 #2 \u2014 SD-WALL-TEST (paper 102, /tmp/exp_sdwall.py, /tmp/r30n2.log)\n\n**Verdict name: THE-HINTED-VIEW-IS-BLIND.**\n\n### Result\nPaper 101's flagged (s,d)-view which-factor reading of **0.9663 bits** \u2014 tested against a 200-shuffle permutation null:\n\n| view | observed | null mean | null sd | z |\n|---|---|---|---|---|\n| product view (N mod 713) | 0.0153 | 0.0162 | 0.0008 | \u22121.04 |\n| **(s,d) view** | **0.9663** | **0.9648** | 0.0011 | **+1.36** |\n| joint labels | 0.0011 | 0.0008 | 0.0002 | +1.44 |\n\n**All three views sit inside their nulls.** The entire 0.97-bit (s,d)-view reading was sparse-plug-in inflation \u2014 the hint view's massive cell count against the sample size generates ~0.96 bits of pure estimator bias, which the null reproduces exactly.\n\n### What stands\nThe battery programme's factor-blindness now extends to its strongest view: the factor-residue hint view carrying 4.56 of the 4.60 label-entropy bits is factor-blind at permutation-null sensitivity (\u00b10.001 bits on this statistic). The chain \u2014 capacity (92), ceiling saturation (94), hint compounding (101), verified blindness on every view including the hinted one \u2014 is closed with no loose ends.\n\nNow 437 experiments. Assessment v213. Paper 102.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3463",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T19:38:40.903673+00:00",
-    "title": "FACT round-30 #2 \u2014 SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
-  },
-  {
     "consumed_by_exp_id": "0ed62b99",
     "description": "## FACT round-30 #1 \u2014 HINT-VALUE-JOINT (paper 101, /tmp/exp_hintvaluejoint.py, /tmp/r30n1.log)\n\n**Verdict name: THE-HINTS-COMPOUND.**\n\n### Result\nWith the verified 36-label chaining (paper 100), the corrected 2-field joint hint value: **+2.4291 bits against the per-dial hint sum of +1.0288 \u2014 hint synergy +1.40 bits. Hints compound like capacities**, mirroring paper 92's capacity synergy (same mechanism: the CRT-joint modulus and the (s,d) pair each see all residues simultaneously).\n\n### The corrected joint hint table\n| view | bits |\n|---|---|\n| product view (hint-free) | 2.1314 (= paper 91 exact) |\n| sum view alone | 0.6432 |\n| gap view alone | 0.6496 |\n| (s,d) joint view | 4.5605 (99.1% of ceiling) |\n| **JOINT HINT VALUE** | **+2.4291** |\n\nBracketing confirmed: product < (s,d) \u2264 ceiling.\n\n### New flag (paper-93 discipline, not interpreted)\nThe (s,d)-view which-factor statistic reads **0.9663 bits** \u2014 the sparse-plug-in regime at its extreme (~508k residue-pair cells vs 30k samples). NOT interpreted this round; a permutation-null test is the immediate follow-up. Structural note: s,d are symmetric under p\u2194q, so any REAL leakage would be orientation-conditional and itself significant.\n\nNow 436 experiments. Assessment v212. Paper 101.\n",
     "domains": [
@@ -2141,16 +2140,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5322766",
     "description": "## FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY (paper 107)\n\n**Verdict name: ALL-CHECKS-PASS.**\n\n### Result\nEight cross-checked quantities across papers 80\u2013106, **zero inconsistencies**, max spread 0.0040 bits:\n\n| quantity | recordings | spread |\n|---|---|---|\n| S\u2083a@31 marginal | 1.0012, 1.0012 | 0.0000 |\n| S\u2083b@23 marginal | 1.0008, 1.0012 | 0.0004 |\n| A\u2084@9 marginal | 0.4733, 0.4733 | 0.0000 |\n| D\u2084@8 marginal | 1.4302, 1.4342 | 0.0040 |\n| S\u2083a\u00d7S\u2083b joint | 2.1314, 2.1314 | 0.0000 |\n| A\u2084\u00d7D\u2084 joint | 1.9125, 1.9125 | 0.0000 |\n| S\u2083a\u00d7S\u2083b overlap | 0.9919, 0.9919 | 0.0000 |\n| 4-field battery capacity | 8.2246, 8.2246 | 0.0000 |\n\n### Post-resume programme summary (27 papers, 80\u2013106)\n| topic | status |\n|---|---|\n| Type-channel law (degrees 2\u20136) | CONFIRMED |\n| Nonabelian type channels (10 groups) | LAW VERIFIED |\n| Battery space (k=2\u20136) | CHARACTERIZED |\n| Factor-blindness (all views) | VERIFIED |\n| Hint value (six dials) | MEASURED |\n| Quantum frontier | CLOSED |\n| Method stratum | MAPPED |\n| Three strata landscape | MEASURED |\n| Reproducibility (six keystones) | AUDITED |\n| Pythagorean trees | CLOSED |\n\nNow 443 experiments. Assessment v218. Paper 107.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3472",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T20:42:26.611134+00:00",
     "title": "FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
   },
@@ -53243,5 +53243,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-23T06:38:26.083021+00:00",
     "title": "Direction 5 \u2014 Collapse Level of the Batch-Invariance Hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The plug-in estimator's bias is classically `(cells \u2212 1)/(2n log 2)` to first order.  The key\ninsight is that the collision sandwich is a *non-asymptotic* version of the same statement, and\nthe two should be comparable: for a view whose fibers all have size `\u2264 2`, the sandwich gives a\ndeficit `\u2264 collisionCount/n` while Miller\u2013Madow predicts `\u2248 (n \u2212 d)/n`, and\n`collisionCount \u2264 2(n\u2212d)` says the sandwich is within a factor two of it.  Why now?  Because we\nnow have both quantities as exact finite objects in the same formalisation, so a theorem of the\nform `|deficit \u2212 MillerMadow| \u2264 g(fiber profile)` is stateable without probability theory.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_4936",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5a9c6b89",
+    "status": "available",
+    "timestamp": "2026-09-23T17:20:36.093815+00:00",
+    "title": "Miller\u2013Madow correction as an exact theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The wall is proved for the symmetric group on two factors.  The key insight is that a readout\nof a `k`-factor product routed through the elementary symmetric polynomials is invariant under\nall of `S_k`, so the leakage about *any* ordering statistic vanishes, while the capacity ceiling\n`log\u2082(\u220f m\u1d62^k)` grows: blindness should be uniform in `k` while capacity is not.  Why now?  The\nproof of `galoisBlind_zero_leakage` uses only that the group acts freely on the population and\npreserves the fibers, which is exactly what a fixed-point-free `S_k`-action gives; the halving\nlemma becomes a `1/k!` lemma.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_4937",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5a9c6b89",
+    "status": "available",
+    "timestamp": "2026-09-23T17:20:36.569221+00:00",
+    "title": "Galois-orbit capacity for k-factor readouts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Everything here says a permutation test cannot certify blindness on a fine view.  The key\ninsight is that the *fiber-conditional* statistic `\u2211_k (f_k/n)\u00b7(entropy inside fiber k)` is\nexactly the term the sandwich bounds, and testing *it* against its own null removes the label\nmargin from the statistic entirely \u2014 a test whose null is centred at the fiber-profile\nprediction rather than at `H(\u2113)`.  Why now?  `fiber_gap_eq` gives the decomposition in closed\nform, so the alternative statistic is already defined in the formalisation.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Hypergeometric Variance Law for Permutation Nulls\",\n    \"domain\": \"Probability\",\n    \"description\": \"The collision sandwich bounds the range of a permutation null but not its spread, which experimentally is three orders of magnitude smaller. Under a label shuffle the per-fiber label counts are multivariate hypergeometric, so the null variance should depend only on the fiber-size profile. Proving this turns the z-score denominator into a computable function of the view.\",\n    \"conjecture\": \"For a sample of size n with fiber sizes f_k, the variance of the plug-in reading over uniform label permutations is bounded by C\u00b7(\u2211_k f_k(f_k\u22121))/n\u00b2 for an absolute constant C, independent of the labels beyond their margin.\",\n    \"test\": \"Formalize the shuffle-induced distribution of per-fiber label counts as a multivariate hypergeometric law, then bound the variance of the weighted per-fiber entropy sum given by fiber_gap_eq; check numerically against the 200-shuffle runs in ComputationalEvidence.md.\",\n    \"if_true\": \"Permutation-null z-scores acquire a closed-form denominator, so blindness claims can be certified without shuffling.\",\n    \"if_false\": \"The null spread depends on label structure beyond the margin, and shuffle-based sensitivity claims cannot be replaced by a formula.\",\n    \"proof_strategy\": \"Decompose the statistic by fiber via fiber_gap_eq, bound each per-fiber entropy by a Lipschitz function of its label counts, and apply a variance bound for sampling without replacement.\",\n    \"catalog_references\": [\"Computation.FactorBlindnessHintedView\", \"Computation.FactorBlindnessFiberBand\"]\n  },\n  {\n    \"title\": \"Non-Asymptotic Miller\u2013Madow Comparison\",\n    \"domain\": \"Computation\",\n    \"description\": \"The classical first-order plug-in bias is (cells\u22121)/(2n log 2). The collision sandwich is a non-asymptotic bound on the same deficit. Comparing them turns a heuristic correction into a theorem with explicit error control.\",\n    \"conjecture\": \"For every labelled sample, |(H(\u2113) \u2212 \u00ce) \u2212 (d\u22121)/(2n log 2)| \u2264 g(f) where g depends only on the fiber-size profile f and vanishes when all fibers are singletons.\",\n    \"test\": \"State both quantities in the existing formalisation and attempt the bound fiberwise, using entropy_le_logb_support for the upper side and a concavity bound for the lower side.\",\n    \"if_true\": \"Bias corrections for sparse mutual-information readings become certified rather t",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4938",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5a9c6b89",
+    "status": "available",
+    "timestamp": "2026-09-23T17:20:37.214834+00:00",
+    "title": "Sparsity-free estimators for the battery"
   }
 ];
