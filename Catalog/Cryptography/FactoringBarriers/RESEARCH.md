@@ -254,6 +254,59 @@ reduction from RSA inversion to factoring for `e = 3` in the standard model?**
 Neither direction is known. As one agent put it: a separation in a model that
 provably contains no real attack is a fact about the model, not about RSA.
 
+### 4c. Modular curves: a rigorous cohomological lower bound (Gu–Martin)
+
+This is the one direction in the whole survey that yielded a **theorem** rather
+than a kill, and it corrects an earlier over-hedge in this document (an agent
+pass had concluded "no known reduction from a cohomological computation to
+factoring" — that was wrong).
+
+**Gu–Martin**, *Factorization tests and algorithms arising from counting modular
+forms and automorphic representations*, [arXiv:1709.02411](https://arxiv.org/abs/1709.02411)
+(2017, rev. 2018). Verified directly against the arXiv record.
+
+- Gekeler showed that the count of non-isomorphic automorphic representations
+  attached to weight-`k` cusp forms on `Γ₀(N)` equals a closed-form expression
+  in `k` and `N` when `N` is **squarefree**. Gu–Martin prove the **converse**
+  (up to one small exception), giving a **characterization of squarefree
+  integers** — and, via the number of Hecke **newforms** of weight `k` on
+  `Γ₀(N)`, a similar characterization of **primes**.
+- **Algorithmic consequence, and the load-bearing part:** a fast method for
+  computing the newform count at **even a single weight `k`** would give a quick
+  squarefreeness test; counts at **two** distinct weights let one recover
+  *probabilistically* the complete factorization of the **squarefull part** of
+  `N`; and with a single weight's count, one gets **probabilistic complete
+  factorization of `N`**.
+
+**The structural statement, stated carefully.** The newform count is
+`dim`-type data on `X_0(N)` (H⁰ with a power of the Hodge bundle; via
+Eichler–Shimura it is a Frobenius trace on the cohomology of the Jacobian
+`J_0(N)`). Gu–Martin therefore establish an **unconditional, oracle-style
+reduction: computing this count ⇒ factoring.** So the honest theorem is
+**"computing a piece of the cohomology of `X_0(N)` is at least as hard as
+factoring"** — a genuine computational *lower bound* on a cohomological quantity,
+not a philosophical analogy. This is essentially the only result of its kind
+that I am aware of.
+
+**Why it does not hand us a factoring algorithm (the self-critique).** For
+squarefree `N` the count is a *closed-form function of the factorization*, so
+evaluating it directly is **circular** — you need `p, q` to get the count,
+while Gu–Martin show you could invert the closed form to recover `p, q` *if you
+had the count cheaply*. The factorization from a single weight is
+**probabilistic**, and the authors themselves frame the procedures as "fast if
+the count is treated as given input." So the reduction is a **characterization /
+oracle result, not an algorithm** — the count is the hard side.
+
+**The live, well-posed open problem it creates:** is the newform count
+computable in `poly(log N)` time? Gu–Martin say yes would factor `N`. The naive
+way to compute the count is the *same* modular-form linear algebra the
+index-calculus sieve performs, so the cohomological route and the sieve route
+land in **the same difficulty class** and the `B²`-vs-`E²` smoothness balance
+(§6) reappears. That is the "unification" this direction actually delivers — not
+an escape from the sieve, but a theorem that the cohomological object is pinned
+to the sieve's own bottleneck. This *reinforces* rather than improves the
+corrected balance.
+
 ## 5. The meta-barrier: every method collapses to one of four primitives
 
 A second, dedicated invention pass (three new mechanisms, each adversarially
@@ -293,7 +346,7 @@ cannot write the polynomial); this one is **algebraic** (any observable that wou
 work is `≡` factoring). Together they prune the two largest families of plausible
 "new" methods.
 
-## 6. The load-bearing correction (the one durable positive result)
+## 6. The load-bearing correction (why the `1/3` is not an AM–GM artefact)
 
 The Catalog's `TradeoffBarrier.lean` proved, correctly, an AM–GM theorem:
 
@@ -442,10 +495,11 @@ algorithm; each is a place where a genuine open problem still lives.
      hardness), and a poor `P ≠ NP` proxy — `P ≠ NP` could hold for reasons
      unrelated to factoring. The honest ladder is `∉ AC⁰` → `∉ uniform TC⁰` →
      `∉ NC¹` → `∉ P/poly`; the `TC⁰` rung is where the traction is.
-5. **Modular-curve / étale-cohomology unification** — the classical link between
-   factoring and the étale cohomology of modular curves (monodromy, Quillen–
-   Lichtenbaum) is a real structural thread; it does not beat `L[1/3,·]` but it
-   explains *why* the sieve balance is the balance, tying back to §5.
+5. **Modular-curve / étale-cohomology unification** — **promoted from speculation
+   to a verified theorem.** See §4c: Gu–Martin give an *unconditional* reduction
+   showing that computing a piece of the cohomology of `X_0(N)` is **at least as
+   hard as factoring**. This is the strongest formal content in this direction,
+   and it turns a philosophical thread into a well-posed open problem.
 
 ---
 
@@ -458,8 +512,13 @@ algorithm; each is a place where a genuine open problem still lives.
 > (§5), under which every classical method must reduce to one of four primitives
 > and the "cheap factor-encoding observable" family is closed by an obstruction
 > theorem; and the **corrected sieve balance** (§6), which explains *why* `1/3`
-> is not an AM–GM artefact. The Catalog's barrier documentation was corrected as a
-> direct result.
+> is not an AM–GM artefact. The one **positive** structural result found is
+> **Gu–Martin** (§4c): an *unconditional* reduction showing that computing a
+> piece of the cohomology of `X_0(N)` — the weight-`k` newform count — is
+> **at least as hard as factoring**. That is a genuine lower bound rather than an
+> analogy, and it converts the modular-curve thread from philosophy into a
+> well-posed open problem (`poly(log N)`-computability of the count). The
+> Catalog's barrier documentation was corrected as a direct result.
 
 The next honest move is to sharpen the open threads in §8 — partial-key exposure,
 the low-exponent-RSA ceiling, analog precision, circuit lower bounds, and the
@@ -500,6 +559,12 @@ simultaneous modular equations of low degree" — the real broadcast/low-degree
 paper; *not* a "J. Cryptology 1994" paper) · **Boneh**, "Twenty years of attacks
 on the RSA cryptosystem," *Notices AMS* 46(2) 1999 · **Coron–May** *J. Cryptology*
 20(1) 2007 (ePrint 2004/208) ·
+**Gu–Martin** arXiv:1709.02411 (newform count ⇒ factoring; §4c) · Gekeler (the
+forward count identity Gu–Martin invert) · Hafner–McCurley *JAMS* 2(4):837–850
+1989 (class groups computable **from `d` alone** — the "class-group computation
+needs the factorization" claim is **false**) · Hallgren *J. ACM* 54(1):1–19 2007
+(the *verifiable* quantum reduction is **principal ideal problem (real
+quadratic) ⇒ factoring**) ·
 Rippon–Taylor 2004 · Gower–Wagstaff 2008 · Bernstein–Lange 2014/921 ·
 Kleinjung–Bos–Lenstra 2014/653 · Cox, *Primes of the Form x²+ny²* ·
 **Moore 1990, PRL 64 2354** (Turing-universal 3-dof dynamics; undecidability) ·
