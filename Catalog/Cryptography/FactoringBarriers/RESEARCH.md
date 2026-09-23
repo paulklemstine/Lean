@@ -67,7 +67,7 @@ Key references: Buhler–Lenstra–Pomerance 1993; Barbulescu–Guillevic–Lens
 | 4 | **Precomputation-amortized factoring** — universal factor base / batched sieve to break the exponent. | **Constant only** | Amortization moves only the constant `c` (GNFS `1.923` → Coppersmith's factory `1.639`), never the exponent `ρ = 1/3`. Practical realizable gains are `≈ 2×` (Mersenne factory). Ref: Bernstein–Lange 2014/921; Kleinjung–Bos–Lenstra 2014/653. |
 | 5 | **Genus-character single-bit reduction** — factor `N` from one nonprincipal quadratic character. | **Classical repackaging** | The content is Gauss's genus theory (1801). Its formalizable core is the one-line multiplicativity `(a/p)(a/q) = (a/pq)` — now proved in `FreeSymbol.lean`. One line is the evidence it is repackaging, not new mathematics. Ref: Gauss 1801; Cox, *Primes of the Form x²+ny²*. |
 | 6 | **Analog / physical-precision factoring** | **Open but capped — and the usual *reason* is wrong** | See §4a for the corrected analysis. The common claim "you'd need exponentially many physical bits" is a **mis-description**. The real barrier is a **precision-vs-runtime noise-floor tradeoff** plus the **simulation burden of proof** — not a bit-counting theorem. Decisive measured datapoint: analog/annealing factoring is "better than random guessing **but still exponential**" (Willsch et al. 2024). |
-| 7 | **Circuit-lower-bound argument** (`FACTOR ∉ TC⁰`, natural-proofs barrier) | **Open, but not a method** | A genuine complexity-theory program (template: `PRIMES ∉ AC⁰[p]`), but it yields a *separation*, not a factoring algorithm. |
+| 7 | **Circuit-lower-bound argument** | **Open, but not a method** | A genuine complexity-theory program, but it yields a *separation*, not a factoring algorithm. Sharply more obstructed than it looks — see **§8.4** (factoring isn't even known to have poly-size circuits; the NP-hardness route is provably closed; algebrization is the factoring-specific barrier; the real target is `Ω ∉ uniform TC⁰`). |
 
 ---
 
@@ -326,9 +326,48 @@ algorithm; each is a place where a genuine open problem still lives.
    positive result would hand *digital* factoring a polynomial algorithm too
    (physical curiosity, not a crypto break). Measured analog scaling remains
    exponential (Willsch et al. 2024).
-4. **Circuit lower bounds for factoring** — the `FACTOR ∉ TC⁰` program. Narrow
-   (yielding a separation, not an algorithm) but genuinely open and squarely in
-   the spirit of the Catalog.
+4. **Circuit lower bounds for factoring** — a genuine, wide-open program that
+   yields a *separation*, not an algorithm. It is more interesting — and more
+   obstructed — than the usual one-line "prove `FACTOR ∉ TC⁰`" framing suggests.
+   - **The counterintuitive structural fact: it is not even known that factoring
+     has polynomial-size circuits.** The only subexponential-in-`n = log N` upper
+     bounds are *randomized*; deterministic ones (Costa–Harvey `N^{1/5+o(1)}`) are
+     `2^{Θ(n)}` — exponential in input length, so unrolling gives exponential
+     circuits. The poly-size route would need `BPP ⊆ P/poly`, which is open. So
+     **`FACTOR ∈ FP/poly` is itself undecided** — unusual, since for most natural
+     problems at least the poly-size upper bound is known.
+   - **The PRIMES analogy breaks, and this is the crux.** Primality has a polytime
+     *deterministic* upper bound (`PRIMES ∈ TC⁰`, Hesse–Allender–Barrington), so
+     `PRIMES ∉ AC⁰[p]` is a **sibling separation** with both bounds inside `P`.
+     Factoring has no polytime upper bound to hang a sibling on, so every factoring
+     lower bound instead targets the `P/poly` frontier — a different kind of result.
+   - **The NP-hardness route is provably closed.** If a `TFNP` problem were
+     NP-hard, then `NP ⊆ TFNP ⊆ FΣ₂^P`, forcing a **PH collapse**. So *no* route
+     to a factoring lower bound can pass through NP-hardness — the natural instinct
+     ("show it's as hard as a known-hard problem") is not merely unknown but
+     **provably unavailable** barring a collapse.
+   - **Algebrization is the factoring-specific barrier.** The natural proofs barrier
+     blocks superpolynomial strategies *in general*; but the one structural handle
+     factoring has is arithmetic (multiplication/division gates), and
+     **algebrization** is designed to rule out lower bounds for exactly
+     arithmetic/algebraic problems. The one door factoring's structure opens is the
+     door algebrization closes.
+   - **The sharpest open target is `Ω(N) ∉ DLOGTIME-uniform TC⁰`** (where `Ω(N)` =
+     number of prime factors with multiplicity) — *not* `FACTOR ∉ TC⁰`. Since
+     primality, GCD, division and iterated multiplication all live in uniform
+     `TC⁰`, proving `Ω ∉ uniform TC⁰` separates factoring from its arithmetic
+     siblings *inside the class where the siblings provably live* — the true
+     structural analog of `PRIMES ∉ AC⁰[p]`. And `Ω ∈ TC⁰` has a plausible
+     PH-collapse consequence (Allender–Barrington–Jeřábek, SMALL-E), so
+     `Ω ∉ TC⁰` is a *believed conjecture*, not a restatement of ignorance.
+   - **Logical strength: a factoring circuit lower bound is strictly stronger than
+     `P ≠ NP`.** It implies `P ≠ NP` *and* `P ≠ BPP` *and* names an explicit
+     function outside `P/poly`; `P ≠ NP` implies none of these. It is **not
+     equivalent** in either direction. *Crypto caveat:* a worst-case circuit lower
+     bound is far stronger than what cryptography needs (average-case inverting
+     hardness), and a poor `P ≠ NP` proxy — `P ≠ NP` could hold for reasons
+     unrelated to factoring. The honest ladder is `∉ AC⁰` → `∉ uniform TC⁰` →
+     `∉ NC¹` → `∉ P/poly`; the `TC⁰` rung is where the traction is.
 5. **Modular-curve / étale-cohomology unification** — the classical link between
    factoring and the étale cohomology of modular curves (monodromy, Quillen–
    Lichtenbaum) is a real structural thread; it does not beat `L[1/3,·]` but it
@@ -367,7 +406,13 @@ Wiener (small-`d` `N^{1/4}/3`) · **Boneh–Durfee–Frankel** ASIACRYPT 1998 ·
 2022 (ePrint 2022/271, ⅓ CRT-exponents) · Zhou–van de Pol–Yu–Standaert 2022
 (ePrint 2022/1163, blinded CRT) · **Feng–Nitaj–Pan** 2024 (ePrint 2024/1329) ·
 **Aggarwal–Maurer** (*Breaking RSA Generically is Equivalent to Factoring*) ·
-the **AGM (algebraic–geometric–metric) conjecture** · **Schnorr 2021 ePrint
+the **AGM (algebraic–geometric–metric) conjecture** · **Hesse–Allender–Barrington**
+JCSS 2002 (`PRIMES ∈ TC⁰`; +2014 corrigendum) · **Allender–Barrington–Jeřábek**
+*Math. Comp.* 2002 (`PRIMES ∉ AC⁰[p]`; SMALL-E) · **Costa–Harvey** *Math. Comp.*
+2013 (deterministic `N^{1/5}`) · **Bach–Miller–Shallit** SICOMP 1986
+(`σ(N) ≡` factoring) · **Razborov–Rudich** JCSS 1997 (natural proofs barrier) ·
+**Aaronson–Wigderson** STOC 2008 / ToCT 2009 (**algebrization** — the
+factoring-specific barrier) · Santhanam SICOMP 2009 · **Schnorr 2021 ePrint
 2021/933** (polynomial-
 time lattice claim, empirically falsified) · **Ducas, SchnorrGate** (0/1000) ·
 Ajtai STOC 2003 (worst-case of Schnorr's algorithm; not obtained) · Lenstra–
