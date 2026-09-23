@@ -38,6 +38,12 @@ reading is now propagated into the formal documentation.
   rigorous but exponential, so **not** RSA-relevant.
 - **No polynomial-time classical general-purpose factoring algorithm is known**, and
   none is produced here.
+- **Structured moduli:** the one clean polynomial-time result is Boneh–Durfee–
+  Howgrave-Graham (CRYPTO 1999) for `N = p^r q` — a *prime **power*** structure
+  (`p` repeated `r` times). This is often conflated with "multi-prime RSA is
+  polytime-factorable": it is **not** (Hinek–Low–Teske — attacks get *strictly
+  worse* with more equal-size primes), and **Mersenne/equal-bit multi-prime RSA is
+  not known to be polytime-factorable.** Standard RSA is not threatened.
 
 Key references: Buhler–Lenstra–Pomerance 1993; Barbulescu–Guillevic–Lenstra–Razvan
 (ePrint 2020/829); Barbulescu–Gaudry–Kleinjung, *The Tower NFS* (ePrint 2015/505).
@@ -62,9 +68,14 @@ Key references: Buhler–Lenstra–Pomerance 1993; Barbulescu–Guillevic–Lens
 
 The steelman pass actively tried to *rescue* each area, then refuted the rescue.
 
-- **Group theory (class number, units, genus, BSGS):** **DEAD.** All
-  equivariant / baby-step-giant-step machinery is Lagarias–Odlyzko-class; the
-  regulator is the expensive object, and computing it is equivalent to factoring.
+- **Group theory (class number, units, genus, BSGS):** **DEAD (loses on the
+  exponent).** All equivariant / baby-step-giant-step machinery is
+  Lagarias–Odlyzko-class; the regulator is the expensive object, and computing it is
+  equivalent to factoring. *Precise nuance:* the **imaginary-quadratic class-group**
+  method (Lenstra–Pomerance) is the **one rigorous, unconditional,
+  non-index-calculus subexponential factoring method** — `L[1/2, 1]` — but GNFS's
+  `L[1/3,·]` strictly beats it. So it is a real method, just asymptotically
+  dominated.
 - **Transcendence / geometry of numbers:** **DEAD.** Siegel's effect kills the
   small-unit regime these methods need.
 - **Analytic number theory (L-functions, spectral, circle method):** **DEAD.**
@@ -74,11 +85,34 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   Stern "factoring via codes" paper; Williams's "singular modulus" is a p±1
   smoothness scheme, not a code scheme. The no-code-route conclusion survives; the
   mechanism was corrected. Ref: HAC 3.30.
-- **Lattices / Coppersmith partial key exposure:** **PROMISING only at the margins.**
-  The real, non-equivalent result is Coppersmith / hidden-number attacks on
-  *partially exposed* keys (the `1/4` and `1−ln²` walls, Wiener, Boneh–Durfee,
-  common-prime variants). This factors *broken* keys, not sound RSA. It is the one
-  place a genuine open problem lives, and it is orthogonal to the sound-key question.
+- **Lattices:** **DEAD for a random modulus; partial-information only.** No lattice
+  method factors a random modulus faster than GNFS. Every lattice theorem is a
+  *partial-information* theorem (Coppersmith's founding paper is literally
+  titled "…Factoring with High Bits Known"). The one real polynomial-time *lattice
+  factoring* claim is **Schnorr 2021** (ePrint 2021/933, "This destroys the RSA
+  cryptosystem") — it rests on named unproved heuristics (Geometrical Sphere
+  Assumption, shortest-vector shape) and was **empirically falsified**: Ducas
+  implemented it (SchnorrGate) and found **0 factoring relations in 1000 trials**
+  at the claimed target parameter. *Careful framing:* the correct claim is
+  "**unproven and empirically falsified (2021)**," **not** "formally refuted by a
+  theorem" (Ajtai STOC 2003, the one key paper, was not obtained). *(This also
+  corrects a common conflation: the Nguyen–Stern 2001 attack forges Schnorr
+  **signatures** in the identification setting — it does **not** touch the factoring
+  claim, which rests on a different lattice and problem.)* **Corrected barrier:** the
+  limit is **epistemic**, not probabilistic — the monic quadratic `F(x)=(x−p) mod N`
+  *would* be caught by the proven `N^{1/2}` bound at `δ=2`, but **you cannot write it
+  down because you don't know `p`.** With a hint you build a degree-1 `f(x)=x+p̃`
+  whose bound applies to the *error* `|p−p̃| ≤ N^{1/4}` — i.e. "you must already
+  know half the bits of `p`." The `N^{1/d}` formula is not a ceiling imposed on you;
+  it reflects that `p` is an unknown `N^{1/2}`-sized quantity with no polynomial to
+  construct. **Partial-key (Coppersmith/HNP) is the one genuinely open, non-equivalent
+  technique** — it factors *broken* keys, not sound RSA, and is orthogonal to the
+  sound-key question. *Honesty note on the bounds:* the Boneh–Durfee `0.292` is
+  **heuristic by the authors' own words** ("we cannot state our attack as a theorem");
+  `1/4` is **Wiener's**; Heninger–Shacham's `0.27` is **not a lattice result** and is
+  heuristic; the ⅓-of-CRT-exponents result (May–Nowakowski–Sarkar 2022) is rigorous
+  for the MSB case but heuristic for LSB and contested in the headline regime
+  (Takayasu–Kunihiro). None is a theorem for sound RSA.
 - **Complexity ceiling (evidence, not a method):** Boneh–Venkatesan gives
   model-restricted evidence that breaking **low-exponent** RSA may be **easier than
   factoring** — reinforcing that "recover the factor" is not the only attack
@@ -137,9 +171,16 @@ These are the *live* edges, in rough order of promise. None is a new factoring
 algorithm; each is a place where a genuine open problem still lives.
 
 1. **Coppersmith / HNP partial-key exposure** — the only place a non-equivalent,
-   truly open technique sits. Refine the exact walls (`1/4`, `1−ln²`) and their
-   modern refinements; characterize exactly which realistic side-channel leaks
-   cross them. (Partial-key, not sound-key.)
+   truly open technique sits. The barrier is **epistemic**: a hint about `p` turns
+   the problem into finding a *small root*, but the classical `N^{1/d}` bounds
+   apply to the *error* in your hint, so progress = "how many bits of `p` must you
+   already know." Current honest state: `1/4` is **Wiener's** (theorem);
+   Boneh–Durfee `0.292` and Heninger–Shacham `0.27` are **heuristic** by the
+   authors' own disclaimers (H-S is not even a lattice result); the ⅓-CRT result is
+   rigorous for MSB, heuristic/contested for LSB. The sharp open problem is to
+   find a *rigorous* bound that beats `1/4` for `d` (or to prove none exists), and
+   to characterize which realistic side-channel leaks cross the current wall.
+   (Partial-key only; not sound RSA.)
 2. **Is low-exponent RSA easier than factoring?** — the Boneh–Venkatesan ceiling
    question: does breaking `e`-small RSA reduce to factoring, or genuinely to
    something easier? A model-independent separation would be a real result.
@@ -174,6 +215,13 @@ Buhler–Lenstra–Pomerance 1993 · Harvey, *Math. Comp.* 2021 · Barbulescu–
 Guillevic–Lenstra–Razvan ePrint 2020/829 · Barbulescu–Gaudry–Kleinjung ePrint
 2015/505 · Schirokauer 2000 (Tower NFS) · Shanks 1969 (SQUFOF) · Lagrange/Legendre
 1760s–1785 · Gauss 1801 (*Disquisitiones Arithmeticae*) · Coppersmith (HNP) ·
-Wiener · Boneh–Durfee · Boneh–Venkatesan (low-exponent RSA) · Rippon–Taylor 2004 ·
-Gower–Wagstaff 2008 · Bernstein–Lange 2014/921 · Kleinjung–Bos–Lenstra 2014/653 ·
-Cox, *Primes of the Form x²+ny²* · Handbook of Applied Cryptography 3.30.
+Wiener · Boneh–Durfee 1998 · Heninger–Shacham 2008 · May–Nowakowski–Sarkar 2022 ·
+Takayasu–Kunihiro (CRT refutation) · **Schnorr 2021 ePrint 2021/933** (polynomial-
+time lattice claim, empirically falsified) · **Ducas, SchnorrGate** (0/1000) ·
+Ajtai STOC 2003 (worst-case of Schnorr's algorithm; not obtained) · Lenstra–
+Pomerance 1992 (*imaginary-quadratic class group*, `L[1/2,1]`) · Boneh–Durfee–
+Howgrave-Graham CRYPTO 1999 (`N = p^r q`, prime **power**) · Hinek–Low–Teske (multi-
+prime attacks weaken with more equal primes) · Boneh–Venkatesan (low-exponent RSA) ·
+Rippon–Taylor 2004 · Gower–Wagstaff 2008 · Bernstein–Lange 2014/921 ·
+Kleinjung–Bos–Lenstra 2014/653 · Cox, *Primes of the Form x²+ny²* ·
+Handbook of Applied Cryptography 3.30.
