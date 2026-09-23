@@ -298,14 +298,114 @@ the count is treated as given input." So the reduction is a **characterization /
 oracle result, not an algorithm** — the count is the hard side.
 
 **The live, well-posed open problem it creates:** is the newform count
-computable in `poly(log N)` time? Gu–Martin say yes would factor `N`. The naive
-way to compute the count is the *same* modular-form linear algebra the
-index-calculus sieve performs, so the cohomological route and the sieve route
-land in **the same difficulty class** and the `B²`-vs-`E²` smoothness balance
-(§6) reappears. That is the "unification" this direction actually delivers — not
-an escape from the sieve, but a theorem that the cohomological object is pinned
-to the sieve's own bottleneck. This *reinforces* rather than improves the
-corrected balance.
+computable in `poly(log N)` time? Gu–Martin say yes would factor `N`. Their own
+statement of the status is that "the standard way to compute `A(k,N)` is through
+factoring `N`" — i.e. the closed form is evaluated *from* the factorization, so
+the known route is **circular**, and any honest non-enumerative method is
+precisely what is missing. (An earlier draft of this section claimed the count is
+computed by "the same linear algebra the index-calculus sieve performs." That
+was an **analogy, not a theorem**, and it is retracted: the sieve balance (§6)
+and the count are separate difficulties that happen to share a `poly(N)`-shaped
+bottleneck. See §4c-i for what *is* provable, which is the dimension argument.)
+
+*Phantom-citation trap, recorded so it is not repeated:* the Couveignes–Lercier
+paper "Fast modular forms modulo ℓ^O(ℓ)" is real and widely cited but
+**journal-only and not on arXiv**. The commonly-floated arXiv IDs `0803.2581` and
+`0802.0447` are **quantum-physics papers** — do not cite them for this. Nothing
+below depends on that paper's exact bibliographic record.
+
+**What the cohomological route therefore does and does not deliver.** It does
+*not* escape the sieve or improve on §6. What it delivers is a rigorous
+*lower bound* — a piece of the cohomology of `X₀(N)` is provably at least as hard
+as factoring — which is a different and stronger kind of contribution than
+anything the analytic-NT or spectral dead-ends produced: those showed only that
+a method "recovers the same balance under another name," whereas this is a
+theorem.
+
+#### 4c-i. The crux, resolved: every fast modular-form algorithm is `poly(N)`, not `poly(log N)`
+
+The obvious way to *attack* Gu–Martin is to point at the fast modular-form
+algorithms (Couveignes–Lercier, Edixhoven, and what Sage/PARI actually call) and
+ask whether any of them computes the count in `poly(log N)`. **They do not, and
+the reason is structural rather than incidental.**
+
+- **The dimension argument (the crux).** The index is
+  `[SL₂(ℤ) : Γ₀(N)] = N · ∏_{p|N}(1 + 1/p)`, **linear in `N`**. Hence
+  `dim S_k(Γ₀(N)) ≈ ((k−1)/12)·index + O(1) ≈ kN`, and the genus
+  `g(X₀(N)) = dim S₂(Γ₀(N)) ≈ N`. The form space is **~`N`-dimensional**, so
+  *any* method that builds it — linear algebra, modular symbols, Frobenius on
+  `J₀(N)` — costs `~N = 2^(log N)`. For `X₁(N)` the genus is worse, **quadratic**
+  (Couveignes–Edixhoven: `g_ℓ = (ℓ−5)(ℓ−7)/24`).
+- **The survey states the parameter explicitly** (Couveignes–Edixhoven,
+  arXiv:1205.5896): approximations run "in polynomial time **in the dimension**";
+  the Jacobian "dimension grows **quadratically** with `ℓ`"; and their Theorem 5.3
+  computes the `ℓ`-torsion in time polynomial in **`ℓ`**. The family does contain
+  one `poly(log n)` result (Theorem 6.6, computing `τ(n)`) — but **only "given `n`
+  together with its prime factorization."** That is the whole catch: the single
+  genuinely `poly(log n)` theorem in the family *requires the factorization as
+  input*, so it is circular for our purpose.
+- **The headline "fast modular forms" result is at level one.** Edixhoven–Couveignes–de
+  Jong–Merkl–Bosman (arXiv:math/0605244) computes forms of **level one** in time
+  polynomial in the weight and field size. That is not a general-level-`N` algorithm.
+- **Gu–Martin say so themselves** (arXiv:1709.02411): "the standard way to compute
+  `A(k,N)` is through factoring `N`", and any method that "actually enumerated
+  Hecke eigenforms… would be slower than factoring `N` in practice," because the
+  newform count grows ~linearly in the level, "exponentially in the bit length."
+
+**So Gu–Martin's open problem survives intact** — no known `poly(log N)` count
+algorithm exists, and the near-linear-in-`N` results do not touch it.
+
+**The intellectual-honesty caveat that matters most.** The dimension argument
+proves only that the *enumeration / linear-algebra / modular-symbols* approaches
+are exponential in `log N`. It does **not** prove that no conceivable `poly(log N)`
+algorithm for the *count* exists — the count is a single `O(log N)`-bit integer,
+so output size is no obstruction. Proving the count hard would be a factoring
+lower bound (§8 thread 4), which is exactly why this remains **open** rather than
+settled. The honest status: **all known methods are `poly(N)`; whether some
+`poly(log N)` method exists is open, and it would put factoring in `P`.**
+
+#### 4c-ii. The reduction *is* usable in reverse — the bottleneck is only the count
+
+Worth stating precisely, because it locates the difficulty exactly:
+
+- The **count → factorization** direction is **efficient**: Gu–Martin's recovery
+  reduces to "factor `n` given a multiple of `φ(n)`" (their Lemma 26 recursion),
+  and for the squarefree part to recovering `E·s₀#(E) = φ(E)` and factoring `E`
+  from `(E, φ(E))` (Lemma 36) — both polynomial in `log N` (Miller's algorithm).
+- **Data required:** one weight `k` gives a squarefreeness test (Cor. 4) and
+  bounds on square divisors (Prop. 24–25), **not** full factorization; **two**
+  weights give the squarefull part (Thm. 5); **two `A`-values plus one `B`-value**
+  give complete factorization (Thm. 10). *Caveat, unresolved:* the paper's
+  **abstract** advertises full probabilistic factorization from a **single**
+  weight, while the **body** (Thm. 10) uses two `A`-values plus one `B`-value.
+  Both readings are recorded here rather than picking one; the distinction does
+  not affect the open problem, which is the same either way.
+- **An approximation suffices.** Gu–Martin note one could get the same outcome
+  with a fast algorithm yielding a **sufficiently good upper bound** on `A(k,N)`;
+  a positive linear combination of `A(k,N)` over several weights also works. This
+  is the one genuinely hopeful detail — but it does not help, because a tight
+  enough upper bound in `poly(log N)` is the *same* open problem, the standard
+  route being again `~N`.
+
+**And the automorphic/L-function route is separately dead as a factoring method.**
+No Eichler–Shimura, trace-formula, Gross–Zagier, Heegner-point, class-number, or
+L-function technique has ever produced a factoring algorithm competitive with
+NFS or ECM. The reason is a direction-of-information-flow mismatch: Gross–Zagier,
+BSD and Stark are *identity theorems equating two hard-to-compute quantities* —
+consistency checks — whereas factoring needs a monotone **complexity reduction** (a
+factor base, a lattice, a subgroup, an order mod `N`). An identity reduces
+nothing. The genuine overlaps are arithmetic theorems about a *different*
+factorization: Yang–Yin (arXiv:1711.02983) factor norms of Weber invariants to
+recover Gross–Zagier singular-moduli factorizations, and Goren–Lauter
+(arXiv:1112.2009) use Gross–Zagier to determine which primes divide differences
+of Siegel modular-function values — a tool for *building* genus-2 curves, not a
+factorizer. Tellingly, the two things representation theory *has* delivered are
+primality (ECPP) and **discrete-log** speedups (Couveignes–Lercier quasi-linear)
+— conspicuously not factoring. Recent work confirms the drift: de Boer–Pellet-
+Mary–Wesolowski (arXiv:2512.01588) gives the first provably-subexponential
+class-group/unit-group algorithm for arbitrary number fields, but is
+**ERH-conditional**, at **unchanged exponent**, and proceeds by ideal-sampling /
+index calculus — no L-function involved.
 
 ## 5. The meta-barrier: every method collapses to one of four primitives
 
@@ -560,9 +660,19 @@ paper; *not* a "J. Cryptology 1994" paper) · **Boneh**, "Twenty years of attack
 on the RSA cryptosystem," *Notices AMS* 46(2) 1999 · **Coron–May** *J. Cryptology*
 20(1) 2007 (ePrint 2004/208) ·
 **Gu–Martin** arXiv:1709.02411 (newform count ⇒ factoring; §4c) · Gekeler (the
-forward count identity Gu–Martin invert) · Hafner–McCurley *JAMS* 2(4):837–850
-1989 (class groups computable **from `d` alone** — the "class-group computation
-needs the factorization" claim is **false**) · Hallgren *J. ACM* 54(1):1–19 2007
+forward count identity Gu–Martin invert) · **Couveignes–Edixhoven survey
+arXiv:1205.5896** (modular-forms complexity is polynomial in the *level*, i.e.
+exponential in `log N`) · **Edixhoven–Couveignes–de Jong–Merkl–Bosman
+arXiv:math/0605244** (near-linear modular forms at **level one**) · Mosunov–
+Jacobson arXiv:1502.07953 (knowing `h(Δ)` factors `Δ`; the reverse direction
+gives only the **parity** and 2-rank — one-way, **not** equivalent) ·
+Hafner–McCurley *JAMS* 2(4):837–850 1989 (imaginary-quadratic class groups in
+`L[1/2,√2]` **from `d` alone** — the "class-group computation needs the
+factorization" claim is **false** — but the bound is **ERH-conditional**, and
+the AMS abstract's unqualified "rigorous" wording omits this; the body is
+authoritative) · **Lenstra–Pomerance** *JAMS* 5(3):483–516 1992 (factoring in
+`L[1/2,1]`, **unconditional**; `√2` belongs to the class-group *substep* and does
+not appear in the final bound) · Hallgren *J. ACM* 54(1):1–19 2007
 (the *verifiable* quantum reduction is **principal ideal problem (real
 quadratic) ⇒ factoring**) ·
 Rippon–Taylor 2004 · Gower–Wagstaff 2008 · Bernstein–Lange 2014/921 ·
