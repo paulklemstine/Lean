@@ -66,7 +66,7 @@ Key references: Buhler–Lenstra–Pomerance 1993; Barbulescu–Guillevic–Lens
 | 3 | **Real-quadratic infrastructure / CF-period parity** — one parity bit of the period of `√N` as a factor oracle. | **Classical, wrong tool** | The parity theorem is **Lagrange/Legendre (1760s–1785)**: a negative-Pell *solvability* criterion, not a factoring oracle. On RSA semiprimes the bit is free/uninformative, and one bit cannot factor an `n`-bit modulus. The `N^{1/4}` partial step is **SQUFOF** (Shanks 1969). The BSGS fast path needs the regulator, and computing the regulator reduces to factoring. Ref: Rippon–Taylor 2004; Gower–Wagstaff 2008. |
 | 4 | **Precomputation-amortized factoring** — universal factor base / batched sieve to break the exponent. | **Constant only** | Amortization moves only the constant `c` (GNFS `1.923` → Coppersmith's factory `1.639`), never the exponent `ρ = 1/3`. Practical realizable gains are `≈ 2×` (Mersenne factory). Ref: Bernstein–Lange 2014/921; Kleinjung–Bos–Lenstra 2014/653. |
 | 5 | **Genus-character single-bit reduction** — factor `N` from one nonprincipal quadratic character. | **Classical repackaging** | The content is Gauss's genus theory (1801). Its formalizable core is the one-line multiplicativity `(a/p)(a/q) = (a/pq)` — now proved in `FreeSymbol.lean`. One line is the evidence it is repackaging, not new mathematics. Ref: Gauss 1801; Cox, *Primes of the Form x²+ny²*. |
-| 6 | **Analog / physical-precision factoring** | **Open but capped** | The one genuinely open thread. Blocked by precision-vs-information limits and the Moore-simulation cap: an analog device faces an exponential wall long before it beats `L[1/3,·]`. No credible classical poly-time path. |
+| 6 | **Analog / physical-precision factoring** | **Open but capped — and the usual *reason* is wrong** | See §4a for the corrected analysis. The common claim "you'd need exponentially many physical bits" is a **mis-description**. The real barrier is a **precision-vs-runtime noise-floor tradeoff** plus the **simulation burden of proof** — not a bit-counting theorem. Decisive measured datapoint: analog/annealing factoring is "better than random guessing **but still exponential**" (Willsch et al. 2024). |
 | 7 | **Circuit-lower-bound argument** (`FACTOR ∉ TC⁰`, natural-proofs barrier) | **Open, but not a method** | A genuine complexity-theory program (template: `PRIMES ∉ AC⁰[p]`), but it yields a *separation*, not a factoring algorithm. |
 
 ---
@@ -126,6 +126,57 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   surface, but it is not itself a new factoring algorithm.
 
 ---
+
+### 4a. Analog / physical factoring: the corrected obstruction
+
+The analog thread is the one genuinely *open* question, and it deserves a precise
+account because **the standard reason offered for it ("you'd need exponentially
+many physical bits") is wrong.** Two distinct obstacles are usually conflated:
+
+- **The single-shot information bound is weak.** A measurement of resolution
+  `2^{-p}` carries ≈ `p` correct bits. To read one factor (`b = log₂N` bits) you
+  need `p ≳ b` — only *linear* in the input size, which a good device has. So a
+  *single* analog measurement is **not** information-theoretically blocked from
+  returning a factor.
+- **The real barrier is precision-vs-runtime (noise floor).** In a chaotic /
+  universal analog dynamical system an initial error `δ` grows like `δ·e^{λt}`
+  (λ = Lyapunov exponent). To keep the orbit correct through `t` steps you need
+  `p ≈ λt/ln2` bits. If the factoring time `t` is *polynomial* in `b`, then `p`
+  is **polynomial** in `b` — **not** exponential. The genuine obstruction (Moore
+  1990/91: a 3-dof classical system simulates a Turing machine, so its long-term
+  behavior is undecidable without exponentially fine initial conditions) is
+  physical: a real device has a **fixed noise floor** `p₀` (thermal/shot/quantum),
+  while a chaotic amplifier needs `p` to *grow* with runtime. So it can only run
+  until `t_max ≈ (ln2)p₀/λ` before noise corrupts the result. This is a
+  **noise-floor tradeoff**, not a bit-counting theorem.
+
+**The Moore-simulation argument (and its honest limits).** Any computable
+physical process is in principle classically simulable, so an analog device's real
+competition is **the cost of the best classical simulation of that device**, not
+the best hand-written algorithm. But this is a **computability result, not a
+complexity lower bound** — it does *not* by itself refute a physical speedup (real
+quantum computers are exactly the case: believed hard to simulate, yet they
+exist). It shifts the burden onto precision/efficiency, and no analog proponent
+has met it. *(Caveats: it cleanly covers smooth computable-ODE dynamics; it
+covers devices whose power comes from genuine many-body measurement less directly.)*
+
+**Verdict: no analog/physical route beats GNFS.** The strongest evidence is the
+field's own measurement — **Willsch et al. 2024** (arXiv:2410.14397) find three
+analog factorization methods scale "better than random guessing **but still
+exponential**." Optical/mean-field analog computers are real (Tamma et al. 2015,
+arXiv:1506.02907; Liu–Ponomarenko 2023, arXiv:2304.10713) but operate at
+~seven-digit demonstration scale with no formal complexity or precision-scaling
+analysis. Analog factoring is not refuted as a small-scale physical curiosity —
+it demonstrably factors small integers — but there is no candidate on a credible
+path to an asymptotic win. *Impossibility is not proven (that would need P≠NP for
+a physical machine class); the claim is that the **burden is entirely unmet** and
+the demonstrated scaling is exponential.*
+
+*Citation-honesty note:* the labels "Mean Field Sieve," "Vaidya's analog
+factoring," and a "CAP-style analog machine," which circulate in popular
+accounts, could **not** be pinned to primary sources; the closest real works are
+the optical-interference and random-wave papers above. Treat those popular labels
+as unverified.
 
 ## 5. The meta-barrier: every method collapses to one of four primitives
 
@@ -230,9 +281,18 @@ algorithm; each is a place where a genuine open problem still lives.
 2. **Is low-exponent RSA easier than factoring?** — the Boneh–Venkatesan ceiling
    question: does breaking `e`-small RSA reduce to factoring, or genuinely to
    something easier? A model-independent separation would be a real result.
-3. **Analog / physical-precision factoring** — the honest open thread. The
-   precision-vs-information and Moore-simulation caps are the crux; sharpen them
-   into a bound.
+3. **Analog / physical-precision factoring** — the one genuinely open *question*,
+   but with the standard reason corrected (§4a): the obstruction is a
+   **precision-vs-runtime noise-floor tradeoff** (a chaotic amplifier needs
+   precision that grows with runtime, but a real device has a fixed noise floor
+   `p₀`, so it corrupts after `t_max ≈ (ln2)p₀/λ`) plus the **simulation burden**
+   (a computability, not complexity, argument) — *not* an "exponentially many
+   bits" wall. The live sub-question: can the divisor structure be made a
+   **low-precision `O(log N)`-bit readout** rather than a high-precision
+   interference encoding? If so, only Moore-simulation stands in the way — and a
+   positive result would hand *digital* factoring a polynomial algorithm too
+   (physical curiosity, not a crypto break). Measured analog scaling remains
+   exponential (Willsch et al. 2024).
 4. **Circuit lower bounds for factoring** — the `FACTOR ∉ TC⁰` program. Narrow
    (yielding a separation, not an algorithm) but genuinely open and squarely in
    the spirit of the Catalog.
@@ -276,4 +336,7 @@ Howgrave-Graham CRYPTO 1999 (`N = p^r q`, prime **power**) · Hinek–Low–Tesk
 prime attacks weaken with more equal primes) · Boneh–Venkatesan (low-exponent RSA) ·
 Rippon–Taylor 2004 · Gower–Wagstaff 2008 · Bernstein–Lange 2014/921 ·
 Kleinjung–Bos–Lenstra 2014/653 · Cox, *Primes of the Form x²+ny²* ·
-Handbook of Applied Cryptography 3.30.
+**Moore 1990, PRL 64 2354** (Turing-universal 3-dof dynamics; undecidability) ·
+**Willsch et al. 2024, arXiv:2410.14397** (analog factoring "still exponential") ·
+Tamma et al. 2015, arXiv:1506.02907 (optical interference) · Liu–Ponomarenko 2023,
+arXiv:2304.10713 (random-wave) · Handbook of Applied Cryptography 3.30.
