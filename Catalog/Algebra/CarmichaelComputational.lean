@@ -1,6 +1,6 @@
 import Mathlib
-import Shared.NumberTheory.CarmichaelHelpers
-import Shared.NumberTheory.CarmichaelComposite
+import Shared.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelProof
 
 /-! # Computational verification of Carmichael's theorem
 
@@ -38,27 +38,39 @@ lemma entry_point_divides (p n : ℕ) (hp : Nat.Prime p) (hn : 0 < n) (hpn : p �
     exact hα_min (Nat.gcd n α) h_gcd_pos h_lt h_gcd_dvd
   exact h_gcd_eq ▸ Nat.gcd_dvd_left n α
 
-/-- For the composite case of Carmichael's theorem:
-    If n is composite with 13 ≤ n ≤ 10000 and has a prime factor p,
-    then F(n) has a primitive prime divisor.
+/-- For composite n, if ALL prime factors of F(n) have entry point < n,
+    then each divides F(d) for some proper divisor d of n. -/
+lemma all_factors_from_divisors (n : ℕ) (hn : 3 ≤ n) (hn_comp : ¬Nat.Prime n)
+    (h_no_prim : ∀ p, Nat.Prime p → p ∣ Nat.fib n →
+      ∃ k, 0 < k ∧ k < n ∧ p ∣ Nat.fib k) :
+    ∀ p, Nat.Prime p → p ∣ Nat.fib n →
+      ∃ d, d ∣ n ∧ 0 < d ∧ d < n ∧ p ∣ Nat.fib d := by
+  intro p hp hpn
+  obtain ⟨k, hk_pos, hk_lt, hpk⟩ := h_no_prim p hp hpn
+  exact ⟨Nat.gcd n k,
+    Nat.gcd_dvd_left n k,
+    Nat.gcd_pos_of_pos_left k (by linarith),
+    lt_of_le_of_lt (Nat.gcd_le_right n hk_pos) hk_lt,
+    fib_dvd_gcd p n k hpn hpk⟩
 
-    NOTE ON THE STATEMENT.  The original version of this declaration omitted the
-    upper bound `n ≤ 10000`.  That unbounded form is *not* available from the
-    results this file builds on: the composite case is certified only on the
-    range `13 ≤ n ≤ 10000` (see `fib_carmichael_composite`), the unbounded tail
-    being the open quantitative core of Carmichael's theorem.  The hypothesis
-    `hn2 : n ≤ 10000` has therefore been added; the original (unproved) form is
-    preserved verbatim in the comment below. -/
+/-- F(n) > 1 for n ≥ 3. -/
+lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
+  exact lt_of_lt_of_le (by decide) (Nat.fib_mono hn)
+
+/-- For the composite case of Carmichael's theorem:
+    If n is composite with n ≥ 13 and has a prime factor p,
+    then either p is primitive for F(n), or the entry point of p
+    strictly divides n (so p divides F(d) for proper d | n).
+
+    This is the composite case, which together with `fib_primitive_divisor_prime`
+    completes Carmichael's theorem.
+
+    Repaired statement: the available input `fib_carmichael_composite` is proved
+    on the verified range `13 ≤ n ≤ 10000` only (the unbounded tail remains the
+    open frontier of this development), so the bound `n ≤ 10000` is carried here
+    as an explicit hypothesis, exactly as in `Shared.CarmichaelComputational`. -/
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
     (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael n hn hn2
-
-/- Original statement (unprovable from the certified composite range, kept for the record):
-
-theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
-    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael n hn hn2
--/
+      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) :=
+  fib_carmichael_composite n hn hn2 hn_comp

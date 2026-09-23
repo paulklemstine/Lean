@@ -1,228 +1,203 @@
 import Mathlib
 
 /-!
-# Finite rate–distortion theory: channels, mutual information, and the Lagrangian dual
+# Finite rate–distortion theory: definitions and weak duality
 
-This module supplies the objects used by
-`Bridges/FiniteRateDistortion/TropicalEnvelope.lean`, which referred to a finite
-rate-distortion vocabulary that no module in the catalog provided.
+`Bridges/FiniteRateDistortion/TropicalEnvelope.lean` studies the piecewise-linear
+(tropical) envelope of the rate–distortion function, but the underlying information
+theory it is written against was absent from this repository, so the file did not
+compile.  This module supplies it:
 
-Everything is finite and elementary:
-
-* `FinProbDist α`, `Channel α β` — a source distribution and a test channel;
-* `mutualInfo`, `distortion` — the two functionals of a channel;
-* `rateDistortion μ d D` — the infimum of the mutual information over channels meeting
-  the distortion constraint;
-* `lagrangianDual μ d s` — the infimum of `I(W) + s · d(W)`;
-* `lagrangianDual_le_rateDistortion` — **weak duality**: `Φ(s) - s·D ≤ R(D)` for every
-  slope `s ≥ 0`, the affine lower bound whose tropical envelope is studied downstream.
-
-The only analytic input is the elementary estimate `w · log (w / q) ≥ -q/e`
-(`neg_div_exp_one_le_mul_log_div`), which makes the Lagrangian set bounded below, so the
-infima are genuine.
+* `FinProbDist`, `Channel`, `outMarginal` — the finite source and channel model;
+* `mutualInfo`, `expectedDistortion` — the two functionals;
+* `mutualInfo_nonneg` — the information inequality `I(X;Y) ≥ 0`, proved from
+  `log t ≤ t − 1` termwise;
+* `rateDistortion`, `lagrangianDual`, `FeasibleDistortion` — the primal and the
+  Lagrangian dual;
+* `lagrangianDual_le_rateDistortion` — **weak duality**: every dual parameter `s ≥ 0`
+  yields the affine lower bound `Φ(s) − s·D ≤ R(D)`.
 -/
 
 open Finset
 
 noncomputable section
 
-namespace FiniteRateDistortion
-
 variable {α β : Type*} [Fintype α] [Fintype β]
 
-/-! ## Sources and channels -/
-
-/-- A probability distribution on a finite alphabet. -/
+/-- A probability distribution on a finite type. -/
 structure FinProbDist (α : Type*) [Fintype α] where
-  /-- The probability mass. -/
-  mass : α → ℝ
+  /-- The probability mass function. -/
+  prob : α → ℝ
   /-- Masses are nonnegative. -/
-  mass_nonneg : ∀ a, 0 ≤ mass a
+  nonneg : ∀ a, 0 ≤ prob a
   /-- Masses sum to one. -/
-  mass_sum_one : ∑ a, mass a = 1
+  sum_one : ∑ a, prob a = 1
 
-/-- A test channel from `α` to `β`: a stochastic matrix. -/
+/-- A channel: a conditional distribution on `β` for each input in `α`. -/
 structure Channel (α β : Type*) [Fintype α] [Fintype β] where
-  /-- Transition probabilities. -/
-  prob : α → β → ℝ
-  /-- Transition probabilities are nonnegative. -/
-  prob_nonneg : ∀ a b, 0 ≤ prob a b
-  /-- Each row sums to one. -/
-  prob_sum_one : ∀ a, ∑ b, prob a b = 1
+  /-- The conditional probabilities. -/
+  cond : α → β → ℝ
+  /-- Conditional probabilities are nonnegative. -/
+  nonneg : ∀ a b, 0 ≤ cond a b
+  /-- Each row is a probability distribution. -/
+  row_sum : ∀ a, ∑ b, cond a b = 1
 
-/-- The output distribution induced by a source and a channel. -/
-def outMass (μ : FinProbDist α) (W : Channel α β) (b : β) : ℝ :=
-  ∑ a, μ.mass a * W.prob a b
+/-- The output marginal of a source through a channel. -/
+def outMarginal (μ : FinProbDist α) (W : Channel α β) (b : β) : ℝ :=
+  ∑ a, μ.prob a * W.cond a b
 
-theorem outMass_nonneg (μ : FinProbDist α) (W : Channel α β) (b : β) : 0 ≤ outMass μ W b :=
-  Finset.sum_nonneg fun a _ => mul_nonneg (μ.mass_nonneg a) (W.prob_nonneg a b)
-
-/-- The joint distribution is normalised. -/
-theorem joint_sum_eq_one (μ : FinProbDist α) (W : Channel α β) :
-    ∑ a, ∑ b, μ.mass a * W.prob a b = 1 := by
-  have h : ∀ a : α, ∑ b, μ.mass a * W.prob a b = μ.mass a := by
-    intro a; rw [← Finset.mul_sum, W.prob_sum_one a, mul_one]
-  simp_rw [h]
-  exact μ.mass_sum_one
-
-/-- The output distribution is normalised. -/
-theorem sum_outMass_eq_one (μ : FinProbDist α) (W : Channel α β) :
-    ∑ b, outMass μ W b = 1 := by
-  unfold outMass
-  rw [Finset.sum_comm]
-  exact joint_sum_eq_one μ W
-
-/-! ## The elementary entropy estimate -/
-
-/-- `log u ≤ u / e`, the tangent bound at `u = e`. -/
-theorem log_le_div_exp_one {u : ℝ} (hu : 0 < u) : Real.log u ≤ u / Real.exp 1 := by
-  have h := Real.log_le_sub_one_of_pos (x := u / Real.exp 1) (by positivity)
-  rw [Real.log_div hu.ne' (Real.exp_ne_zero 1), Real.log_exp] at h
-  linarith
-
-/-- `w · log (w / q) ≥ -q/e` for nonnegative `w, q` (with Lean's junk conventions at
-`0`).  This is what keeps the information functional bounded below. -/
-theorem neg_div_exp_one_le_mul_log_div {w q : ℝ} (hw : 0 ≤ w) (hq : 0 ≤ q) :
-    -(q / Real.exp 1) ≤ w * Real.log (w / q) := by
-  rcases eq_or_lt_of_le hw with hw0 | hw0
-  · simp [← hw0]
-    positivity
-  rcases eq_or_lt_of_le hq with hq0 | hq0
-  · simp [← hq0]
-  · have h1 : Real.log (q / w) ≤ (q / w) / Real.exp 1 := log_le_div_exp_one (by positivity)
-    have h2 : Real.log (q / w) = - Real.log (w / q) := by
-      rw [← Real.log_inv]; congr 1; field_simp
-    have h3 : -Real.log (w / q) ≤ (q / w) / Real.exp 1 := by rw [← h2]; exact h1
-    have h4 : w * (-Real.log (w / q)) ≤ w * ((q / w) / Real.exp 1) :=
-      mul_le_mul_of_nonneg_left h3 hw0.le
-    have h5 : w * ((q / w) / Real.exp 1) = q / Real.exp 1 := by field_simp
-    rw [h5] at h4
-    linarith
-
-/-! ## Mutual information and distortion -/
-
-/-- The mutual information of a source and a test channel. -/
+/-- The mutual information `I(X;Y)` of the joint law `μ ⊗ W`. -/
 def mutualInfo (μ : FinProbDist α) (W : Channel α β) : ℝ :=
-  ∑ a, ∑ b, μ.mass a * W.prob a b * Real.log (W.prob a b / outMass μ W b)
+  ∑ a, ∑ b, μ.prob a * W.cond a b * Real.log (W.cond a b / outMarginal μ W b)
 
-/-- Mutual information is bounded below by `-1/e`.  (The sharp bound is `0`; this crude
-version is all that is needed to make the infima below well posed.) -/
-theorem mutualInfo_lower_bound (μ : FinProbDist α) (W : Channel α β) :
-    -(1 / Real.exp 1) ≤ mutualInfo μ W := by
-  have hterm : ∀ a : α, ∀ b : β,
-      -(μ.mass a * (outMass μ W b / Real.exp 1))
-        ≤ μ.mass a * W.prob a b * Real.log (W.prob a b / outMass μ W b) := by
-    intro a b
-    have h := neg_div_exp_one_le_mul_log_div (w := W.prob a b) (q := outMass μ W b)
-      (W.prob_nonneg a b) (outMass_nonneg μ W b)
-    have h2 := mul_le_mul_of_nonneg_left h (μ.mass_nonneg a)
-    calc -(μ.mass a * (outMass μ W b / Real.exp 1))
-        = μ.mass a * -(outMass μ W b / Real.exp 1) := by ring
-      _ ≤ μ.mass a * (W.prob a b * Real.log (W.prob a b / outMass μ W b)) := h2
-      _ = μ.mass a * W.prob a b * Real.log (W.prob a b / outMass μ W b) := by ring
-  have key : ∀ a : α, ∑ b, -(μ.mass a * (outMass μ W b / Real.exp 1))
-      = -(μ.mass a * (1 / Real.exp 1)) := by
-    intro a
-    have h1 : ∑ b, -(μ.mass a * (outMass μ W b / Real.exp 1))
-        = -(μ.mass a / Real.exp 1) * ∑ b, outMass μ W b := by
-      rw [Finset.mul_sum]
-      exact Finset.sum_congr rfl (fun b _ => by ring)
-    rw [h1, sum_outMass_eq_one]
-    ring
-  have hsum : ∑ a : α, ∑ b : β, -(μ.mass a * (outMass μ W b / Real.exp 1))
-      = -(1 / Real.exp 1) := by
-    rw [Finset.sum_congr rfl (fun a _ => key a)]
-    have h2 : ∑ a : α, -(μ.mass a * (1 / Real.exp 1))
-        = -(1 / Real.exp 1) * ∑ a : α, μ.mass a := by
-      rw [Finset.mul_sum]
-      exact Finset.sum_congr rfl (fun a _ => by ring)
-    rw [h2, μ.mass_sum_one, mul_one]
-  calc -(1 / Real.exp 1)
-      = ∑ a : α, ∑ b : β, -(μ.mass a * (outMass μ W b / Real.exp 1)) := hsum.symm
-    _ ≤ mutualInfo μ W :=
-        Finset.sum_le_sum fun a _ => Finset.sum_le_sum fun b _ => hterm a b
+/-- The expected distortion of a channel with respect to a distortion measure `d`. -/
+def expectedDistortion (μ : FinProbDist α) (W : Channel α β) (d : α → β → ℝ) : ℝ :=
+  ∑ a, ∑ b, μ.prob a * W.cond a b * d a b
 
-/-- The expected distortion of a test channel. -/
-def distortion (μ : FinProbDist α) (d : α → β → ℝ) (W : Channel α β) : ℝ :=
-  ∑ a, ∑ b, μ.mass a * W.prob a b * d a b
+theorem outMarginal_nonneg (μ : FinProbDist α) (W : Channel α β) (b : β) :
+    0 ≤ outMarginal μ W b :=
+  Finset.sum_nonneg fun a _ => mul_nonneg (μ.nonneg a) (W.nonneg a b)
 
-/-- A crude a-priori bound on the size of the distortion measure. -/
-def distortionBudget (d : α → β → ℝ) : ℝ := ∑ a, ∑ b, |d a b|
+theorem outMarginal_sum_one (μ : FinProbDist α) (W : Channel α β) :
+    ∑ b, outMarginal μ W b = 1 := by
+  simp only [outMarginal]
+  rw [Finset.sum_comm]
+  simp_rw [← Finset.mul_sum, W.row_sum]
+  simpa using μ.sum_one
 
-/-- The distortion of any channel is bounded below by minus the budget. -/
-theorem distortion_lower_bound (μ : FinProbDist α) (d : α → β → ℝ) (W : Channel α β) :
-    -distortionBudget d ≤ distortion μ d W := by
-  have hle : ∀ a : α, ∀ b : β, -distortionBudget d ≤ d a b := by
-    intro a b
-    have h1 : |d a b| ≤ ∑ b', |d a b'| :=
-      Finset.single_le_sum (f := fun b' => |d a b'|) (fun b' _ => abs_nonneg _)
-        (Finset.mem_univ b)
-    have h2 : ∑ b', |d a b'| ≤ distortionBudget d :=
-      Finset.single_le_sum (f := fun a' => ∑ b', |d a' b'|)
-        (fun a' _ => Finset.sum_nonneg fun b' _ => abs_nonneg _) (Finset.mem_univ a)
-    have h3 : -(d a b) ≤ |d a b| := neg_le_abs _
+/-- Termwise form of the information inequality. -/
+theorem mutualInfo_term_bound (μ : FinProbDist α) (W : Channel α β) (a : α) (b : β) :
+    μ.prob a * W.cond a b - μ.prob a * outMarginal μ W b
+      ≤ μ.prob a * W.cond a b * Real.log (W.cond a b / outMarginal μ W b) := by
+  rcases eq_or_lt_of_le (μ.nonneg a) with hm | hm
+  · simp [← hm]
+  rcases eq_or_lt_of_le (W.nonneg a b) with hx | hx
+  · rw [← hx]
+    have h0 : (0 : ℝ) ≤ μ.prob a * outMarginal μ W b :=
+      mul_nonneg hm.le (outMarginal_nonneg μ W b)
+    simp only [mul_zero, zero_mul, zero_sub]
     linarith
-  have hterm : ∀ a : α, ∀ b : β,
-      μ.mass a * W.prob a b * (-distortionBudget d) ≤ μ.mass a * W.prob a b * d a b := by
-    intro a b
-    exact mul_le_mul_of_nonneg_left (hle a b)
-      (mul_nonneg (μ.mass_nonneg a) (W.prob_nonneg a b))
-  have hsum : ∑ a : α, ∑ b : β, μ.mass a * W.prob a b * (-distortionBudget d)
-      = -distortionBudget d := by
-    have h1 : ∀ a : α, ∑ b : β, μ.mass a * W.prob a b * (-distortionBudget d)
-        = (∑ b : β, μ.mass a * W.prob a b) * (-distortionBudget d) := by
-      intro a; rw [Finset.sum_mul]
-    rw [Finset.sum_congr rfl (fun a _ => h1 a), ← Finset.sum_mul, joint_sum_eq_one, one_mul]
-  calc -distortionBudget d
-      = ∑ a : α, ∑ b : β, μ.mass a * W.prob a b * (-distortionBudget d) := hsum.symm
-    _ ≤ distortion μ d W :=
-        Finset.sum_le_sum fun a _ => Finset.sum_le_sum fun b _ => hterm a b
+  · have hle : μ.prob a * W.cond a b ≤ outMarginal μ W b :=
+      Finset.single_le_sum (f := fun a' => μ.prob a' * W.cond a' b)
+        (fun a' _ => mul_nonneg (μ.nonneg a') (W.nonneg a' b)) (Finset.mem_univ a)
+    have hy : 0 < outMarginal μ W b := lt_of_lt_of_le (mul_pos hm hx) hle
+    have hlog : 1 - outMarginal μ W b / W.cond a b
+        ≤ Real.log (W.cond a b / outMarginal μ W b) := by
+      have h1 : Real.log (outMarginal μ W b / W.cond a b)
+          ≤ outMarginal μ W b / W.cond a b - 1 :=
+        Real.log_le_sub_one_of_pos (div_pos hy hx)
+      have h2 : Real.log (W.cond a b / outMarginal μ W b)
+          = - Real.log (outMarginal μ W b / W.cond a b) := by
+        rw [← Real.log_inv]
+        congr 1
+        field_simp
+      rw [h2]
+      linarith
+    have hxlog : W.cond a b - outMarginal μ W b
+        ≤ W.cond a b * Real.log (W.cond a b / outMarginal μ W b) := by
+      have hmul := mul_le_mul_of_nonneg_left hlog hx.le
+      have he : W.cond a b * (1 - outMarginal μ W b / W.cond a b)
+          = W.cond a b - outMarginal μ W b := by
+        field_simp
+      linarith [he ▸ hmul]
+    calc μ.prob a * W.cond a b - μ.prob a * outMarginal μ W b
+        = μ.prob a * (W.cond a b - outMarginal μ W b) := by ring
+      _ ≤ μ.prob a * (W.cond a b * Real.log (W.cond a b / outMarginal μ W b)) :=
+          mul_le_mul_of_nonneg_left hxlog hm.le
+      _ = μ.prob a * W.cond a b * Real.log (W.cond a b / outMarginal μ W b) := by ring
 
-/-! ## The rate–distortion function and its Lagrangian dual -/
+/-- **The information inequality**: mutual information is nonnegative. -/
+theorem mutualInfo_nonneg (μ : FinProbDist α) (W : Channel α β) : 0 ≤ mutualInfo μ W := by
+  have hzero : ∑ a, ∑ b, (μ.prob a * W.cond a b - μ.prob a * outMarginal μ W b) = 0 := by
+    have hrow : ∀ a : α, ∑ b, (μ.prob a * W.cond a b - μ.prob a * outMarginal μ W b)
+        = μ.prob a - μ.prob a * ∑ b, outMarginal μ W b := by
+      intro a
+      rw [Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum, W.row_sum a, mul_one]
+    simp only [hrow, outMarginal_sum_one, mul_one, sub_self, Finset.sum_const_zero]
+  calc (0 : ℝ) = ∑ a, ∑ b, (μ.prob a * W.cond a b - μ.prob a * outMarginal μ W b) := hzero.symm
+    _ ≤ ∑ a, ∑ b, μ.prob a * W.cond a b * Real.log (W.cond a b / outMarginal μ W b) :=
+        Finset.sum_le_sum fun a _ =>
+          Finset.sum_le_sum fun b _ => mutualInfo_term_bound μ W a b
+    _ = mutualInfo μ W := rfl
+
+/-- Expected distortion is bounded below by minus the total absolute distortion. -/
+theorem expectedDistortion_lower_bound (μ : FinProbDist α) (W : Channel α β)
+    (d : α → β → ℝ) : - ∑ a, ∑ b, |d a b| ≤ expectedDistortion μ W d := by
+  have hμ1 : ∀ a, μ.prob a ≤ 1 := by
+    intro a
+    have := Finset.single_le_sum (f := μ.prob) (fun a' _ => μ.nonneg a') (Finset.mem_univ a)
+    rw [μ.sum_one] at this
+    exact this
+  have hW1 : ∀ a b, W.cond a b ≤ 1 := by
+    intro a b
+    have := Finset.single_le_sum (f := fun b' => W.cond a b')
+      (fun b' _ => W.nonneg a b') (Finset.mem_univ b)
+    rw [W.row_sum a] at this
+    exact this
+  have hterm : ∀ a b, -|d a b| ≤ μ.prob a * W.cond a b * d a b := by
+    intro a b
+    have hp : 0 ≤ μ.prob a * W.cond a b := mul_nonneg (μ.nonneg a) (W.nonneg a b)
+    have hp1 : μ.prob a * W.cond a b ≤ 1 := by
+      calc μ.prob a * W.cond a b ≤ 1 * 1 :=
+            mul_le_mul (hμ1 a) (hW1 a b) (W.nonneg a b) zero_le_one
+        _ = 1 := by ring
+    have habs : -|d a b| ≤ d a b := neg_abs_le _
+    nlinarith [abs_nonneg (d a b), le_abs_self (d a b)]
+  calc - ∑ a, ∑ b, |d a b| = ∑ a, ∑ b, -|d a b| := by
+        simp [Finset.sum_neg_distrib]
+    _ ≤ ∑ a, ∑ b, μ.prob a * W.cond a b * d a b :=
+        Finset.sum_le_sum fun a _ => Finset.sum_le_sum fun b _ => hterm a b
+    _ = expectedDistortion μ W d := rfl
 
 /-- A distortion level is feasible when some channel achieves it. -/
 def FeasibleDistortion (μ : FinProbDist α) (d : α → β → ℝ) (D : ℝ) : Prop :=
-  ∃ W : Channel α β, distortion μ d W ≤ D
+  ∃ W : Channel α β, expectedDistortion μ W d ≤ D
 
 /-- The set of achievable rates at distortion level `D`. -/
 def rateDistortionSet (μ : FinProbDist α) (d : α → β → ℝ) (D : ℝ) : Set ℝ :=
-  {r | ∃ W : Channel α β, distortion μ d W ≤ D ∧ mutualInfo μ W = r}
+  {r | ∃ W : Channel α β, expectedDistortion μ W d ≤ D ∧ mutualInfo μ W = r}
 
-/-- The rate–distortion function. -/
+/-- The rate–distortion function `R(D)`. -/
 def rateDistortion (μ : FinProbDist α) (d : α → β → ℝ) (D : ℝ) : ℝ :=
   sInf (rateDistortionSet μ d D)
 
-/-- The set of Lagrangian values at slope `s`. -/
+/-- The set of Lagrangian values at dual parameter `s`. -/
 def lagrangianDualSet (μ : FinProbDist α) (d : α → β → ℝ) (s : ℝ) : Set ℝ :=
-  {r | ∃ W : Channel α β, mutualInfo μ W + s * distortion μ d W = r}
+  {r | ∃ W : Channel α β, mutualInfo μ W + s * expectedDistortion μ W d = r}
 
-/-- The Lagrangian dual value at slope `s`. -/
+/-- The Lagrangian dual function `Φ(s)`. -/
 def lagrangianDual (μ : FinProbDist α) (d : α → β → ℝ) (s : ℝ) : ℝ :=
   sInf (lagrangianDualSet μ d s)
 
-/-- For nonnegative slope the Lagrangian set is bounded below, so its infimum is
-meaningful. -/
-theorem bddBelow_lagrangianDualSet (μ : FinProbDist α) (d : α → β → ℝ) {s : ℝ} (hs : 0 ≤ s) :
-    BddBelow (lagrangianDualSet μ d s) := by
-  refine ⟨-(1 / Real.exp 1) + s * (-distortionBudget d), ?_⟩
+theorem lagrangianDualSet_bddBelow (μ : FinProbDist α) (d : α → β → ℝ) {s : ℝ}
+    (hs : 0 ≤ s) : BddBelow (lagrangianDualSet μ d s) := by
+  refine ⟨s * (- ∑ a, ∑ b, |d a b|), ?_⟩
   rintro r ⟨W, rfl⟩
-  have h1 := mutualInfo_lower_bound μ W
-  have h2 : s * (-distortionBudget d) ≤ s * distortion μ d W :=
-    mul_le_mul_of_nonneg_left (distortion_lower_bound μ d W) hs
+  have h1 : 0 ≤ mutualInfo μ W := mutualInfo_nonneg μ W
+  have h2 : s * (- ∑ a, ∑ b, |d a b|) ≤ s * expectedDistortion μ W d :=
+    mul_le_mul_of_nonneg_left (expectedDistortion_lower_bound μ W d) hs
   linarith
 
-/-- **Weak duality.**  Each slope `s ≥ 0` gives an affine lower bound on the
-rate–distortion function. -/
+theorem rateDistortionSet_bddBelow (μ : FinProbDist α) (d : α → β → ℝ) (D : ℝ) :
+    BddBelow (rateDistortionSet μ d D) := by
+  refine ⟨0, ?_⟩
+  rintro r ⟨W, -, rfl⟩
+  exact mutualInfo_nonneg μ W
+
+/-- **Weak duality for the finite rate–distortion problem.**  For every nonnegative dual
+parameter `s`, the affine function `Φ(s) − s·D` lies below `R(D)`. -/
 theorem lagrangianDual_le_rateDistortion (μ : FinProbDist α) (d : α → β → ℝ) (s : ℝ)
     (hs : 0 ≤ s) (D : ℝ) (hD : FeasibleDistortion μ d D) :
     lagrangianDual μ d s - s * D ≤ rateDistortion μ d D := by
   obtain ⟨W₀, hW₀⟩ := hD
-  have hne : (rateDistortionSet μ d D).Nonempty := ⟨mutualInfo μ W₀, W₀, hW₀, rfl⟩
+  have hne : (rateDistortionSet μ d D).Nonempty := ⟨mutualInfo μ W₀, ⟨W₀, hW₀, rfl⟩⟩
   refine le_csInf hne ?_
   rintro r ⟨W, hWD, rfl⟩
-  have h1 : lagrangianDual μ d s ≤ mutualInfo μ W + s * distortion μ d W :=
-    csInf_le (bddBelow_lagrangianDualSet μ d hs) ⟨W, rfl⟩
-  have h2 : s * distortion μ d W ≤ s * D := mul_le_mul_of_nonneg_left hWD hs
+  have hmem : mutualInfo μ W + s * expectedDistortion μ W d ∈ lagrangianDualSet μ d s :=
+    ⟨W, rfl⟩
+  have hinf : lagrangianDual μ d s ≤ mutualInfo μ W + s * expectedDistortion μ W d :=
+    csInf_le (lagrangianDualSet_bddBelow μ d hs) hmem
+  have hdist : s * expectedDistortion μ W d ≤ s * D := mul_le_mul_of_nonneg_left hWD hs
   linarith
 
-end FiniteRateDistortion
+end

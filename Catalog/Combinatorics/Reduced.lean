@@ -5,7 +5,7 @@ We prove existence and uniqueness of the `q`-reduced representative of a divisor
 finite connected graph.  These are the two structural facts that drive the whole
 Riemann–Roch machinery.
 -/
-import Combinatorics.TropicalRiemannRoch.Basic
+import Combinatorics.Basic
 
 namespace TropicalRR
 

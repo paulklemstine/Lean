@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Physics.EcmWallSharpThreshold
+import Physics.EcmWallSharpThreshold
 
 /-!
 # Exact two-prime outcome counts, and how a non-injective ledger manufactures a wall

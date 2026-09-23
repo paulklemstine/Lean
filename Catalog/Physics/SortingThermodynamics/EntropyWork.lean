@@ -20,15 +20,6 @@ open Function
 
 namespace SortingEntropyWork
 
-/-- The information erased by the sorting map, with no positivity hypothesis on `n`:
-the permutation group of `Fin n` is nonempty for every `n`, so the image of the
-constant sorting map is always a singleton. -/
-theorem sorting_info_erased_of_all (n : ℕ) :
-    infoErased (sortingFunction n) = Real.logb 2 n.factorial := by
-  unfold infoErased sortingFunction
-  norm_num [Fintype.card_perm]
-  rw [Finset.image_const] <;> aesop
-
 /-- The shape of a binary comparison tree. -/
 inductive ComparisonTree where
   | leaf : ComparisonTree
@@ -107,6 +98,17 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
     SortsOrderings (t.pad r) n ∧ (t.pad r).height = r + t.height := by
       exact ⟨ le_trans hs ( ComparisonTree.leaves_le_pad r t ), ComparisonTree.height_pad r t ⟩
 
+/-- The information erased by the sorting map, for **every** `n`: the map is constant,
+so the image is a single point and the erased information is `log₂ (n!)`.  (The imported
+`sorting_info_erased` carries a `1 ≤ n` hypothesis that this computation does not need.) -/
+theorem infoErased_sortingFunction (n : ℕ) :
+    infoErased (sortingFunction n) = Real.logb 2 n.factorial := by
+  classical
+  have hne : (Finset.univ : Finset (Equiv.Perm (Fin n))).Nonempty := Finset.univ_nonempty
+  unfold infoErased sortingFunction
+  rw [Finset.image_const hne]
+  simp [Fintype.card_perm]
+
 /-
 **Three-way factorial synthesis.** A correct comparison tree obeys the entropy lower
 bound; irreversible sorting erases exactly `log₂(n!)` bits; and every reversible
@@ -121,7 +123,7 @@ theorem factorial_controls_comparisons_entropy_and_history
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
       refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · exact sorting_info_erased_of_all n
+      · exact infoErased_sortingFunction n
       · convert sorting_history_lower_bound n Aux e hc using 1;
         simp +decide [ Fintype.card_perm ]
 
@@ -132,9 +134,9 @@ the change of base in `log₂(n!)`.
 -/
 theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
+      have h2 : Real.log 2 ≠ 0 := (Real.log_pos (by norm_num)).ne'
       unfold landauerGap landauerCost
-      rw [sorting_info_erased_of_all, Real.logb]
+      rw [infoErased_sortingFunction, Real.logb]
       field_simp
 
 /-

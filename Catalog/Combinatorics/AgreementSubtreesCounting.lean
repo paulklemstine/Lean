@@ -1,5 +1,5 @@
 import Mathlib
-import Applications.Core
+import Novelty.Core
 import Novelty.AgreementSubtreesMultiple
 
 /-!
