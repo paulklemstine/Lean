@@ -23,9 +23,16 @@ things:**
 
 The correct scientific outcome for "invent a never-before-seen factoring method" is
 therefore **a kill record and a corrected barrier model**, not an algorithm. This
-document is that record. The one durable positive result is the correction in §5:
-the Catalog's own AM–GM "trade-off barrier" had been over-read, and the corrected
-reading is now propagated into the formal documentation.
+document is that record. Two durable positive results emerged:
+
+1. **A corrected barrier** (§6): the Catalog's own AM–GM "trade-off barrier" had
+   been over-read; the corrected reading is now propagated into the formal
+   documentation.
+2. **A meta-barrier** (§5): a four-fold classification showing *every* classical
+   factoring method must reduce to one of four primitives, plus an obstruction
+   theorem that closes the whole "cheap factor-encoding observable" family
+   (spectral / periodicity / linear-algebra decoders) in one stroke. This is more
+   useful than any single killed mechanism — it tells you what *not* to build next.
 
 ---
 
@@ -120,7 +127,46 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
 
 ---
 
-## 5. The load-bearing correction (the one durable positive result)
+## 5. The meta-barrier: every method collapses to one of four primitives
+
+A second, dedicated invention pass (three new mechanisms, each adversarially
+attacked) surfaced a reusable **structural obstruction** that explains
+mechanically — not case-by-case — why "invent a cheap factor-encoding observable"
+keeps failing. Any classical method for `N = pq` must, at its core, do one of
+four things:
+
+1. **Isolate `p,q` up to a gcd** via relations over a factor base (index calculus /
+   QS / NFS). Bottleneck: *smoothness / relation collection* (not linear algebra —
+   Gaussian elimination on the relation matrix is already poly-time).
+2. **Approximate `p` to a known bit-length** (lattice / Coppersmith). Bottleneck:
+   you must already know ~half of `p`'s bits (the epistemic barrier, §4).
+3. **Exploit special structure** of `N` (special-form factorizations).
+4. **Obtain a nontrivial idempotent** `e² ≡ e (mod N)`, `e ≢ 0,1` — which is
+   *literally equivalent to factoring*, since `gcd(e, N)` is then a proper factor.
+
+Three freshly invented mechanisms each died by landing in one of these:
+
+| Mechanism | Idea | Dies because |
+|---|---|---|
+| **Ramanujan-sum spectral** (RSDT) | Read divisibility off the Ramanujan-sum profile `c_m(N) = m·1_{m∣N}`, sparse-recover the spike train to find the divisors. | Each sample is *exactly one trial-division test*; sparse recovery locates spikes on a grid you already paid `Θ(√N)` to sample. Strictly dominated by `N mod p`. **Classical repackaging of trial division.** |
+| **Least-period recovery of the Jacobi sequence** (LPR) | The Jacobi symbol sequence `t(n)=(n/N)` is computable in `poly(log N)` per term; recover its period by FFT/autocorrelation to read off the factors. | `t = (·/p)(·/q)` is a *primitive* Dirichlet character mod `pq`, so its **least period = conductor = `N`**. The recovery is perfectly efficient `O(L log L)` — but `L = N`. Dies by an **exact theorem**, not a heuristic. (The trap: "the period is `p`" — the Jacobi sequence is the *product* of the two primitive characters, and the product has the *large* period.) |
+| **Power-sum / Prony on the divisor lattice** | The moments `s_k = p^k+q^k` obey a 2nd-order recurrence (roots `p,q`); decode `{p,q}` by Prony. `s_1, s_2` already give `p+q`. | The decoder needs the *individual* powers `p^k, q^k` — i.e. touching the two CRT atoms `{1,p}`, `{1,q}` separately. Separating them **is** computing a nontrivial idempotent `e ≡ 1 mod p, 0 mod q`, and `gcd(e,N)` then factors — so this is **provably equivalent to factoring**. Prony cannot manufacture an unsymmetric observable from symmetric input. **Dead with an exact equivalence.** |
+
+**The reusable obstruction (the real artifact).** *There is no efficiently
+computable, small-period observable of `N` that encodes its prime divisors.* Any
+candidate either (a) collapses to trial division (RSDT), (b) has period equal to
+the conductor `N` (LPR), or (c) requires separating the two CRT atoms, which is a
+nontrivial idempotent `≡` factoring (Prony). This closes the entire "cheap
+factor-encoding observable / spectral / periodicity / linear-algebra decoder"
+family in one stroke, and is worth more than any single killed mechanism: it
+tells you what *not to build next*.
+
+Note the nice complementarity: the lattice obstruction (§4) is **epistemic** (you
+cannot write the polynomial); this one is **algebraic** (any observable that would
+work is `≡` factoring). Together they prune the two largest families of plausible
+"new" methods.
+
+## 6. The load-bearing correction (the one durable positive result)
 
 The Catalog's `TradeoffBarrier.lean` proved, correctly, an AM–GM theorem:
 
@@ -148,7 +194,7 @@ valid statements *about their model*; only the over-reading was wrong.
 
 ---
 
-## 6. Machine-checked companions
+## 7. Machine-checked companions
 
 - **`NegativeResults.lean`** — a cited kill record (the table above) plus a
   machine-checked support for the Gauss-sum kill: `mod4_not_injective` shows the
@@ -165,7 +211,7 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
 
 ---
 
-## 7. Open threads worth continuing (the "do not give up" list)
+## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
 algorithm; each is a place where a genuine open problem still lives.
@@ -197,15 +243,21 @@ algorithm; each is a place where a genuine open problem still lives.
 
 ---
 
-## 8. Verdict
+## 9. Verdict
 
 > No credible non-index-calculus route to polynomial-time classical RSA factoring
 > was found; the space is well-explored, and the most useful output of the search
-> is a precise map of *why* each escape route is closed. The Catalog's own
-> barrier documentation was corrected as a direct result (§5).
+> is a precise map of *why* each escape route is closed. Two structural results
+> make that map reusable rather than a bare list: the **four-fold meta-barrier**
+> (§5), under which every classical method must reduce to one of four primitives
+> and the "cheap factor-encoding observable" family is closed by an obstruction
+> theorem; and the **corrected sieve balance** (§6), which explains *why* `1/3`
+> is not an AM–GM artefact. The Catalog's barrier documentation was corrected as a
+> direct result.
 
-The next honest move is to sharpen the open threads in §7, not to relitigate the
-killed directions in §3–§4.
+The next honest move is to sharpen the open threads in §8 — partial-key exposure,
+the low-exponent-RSA ceiling, analog precision, circuit lower bounds, and the
+modular-curve unification — not to relitigate the killed directions in §3–§5.
 
 ---
 
