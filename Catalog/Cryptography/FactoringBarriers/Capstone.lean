@@ -16,9 +16,12 @@ levels apart.
 * `dft_sample_count_ge_period` (imported): the Fourier sample bound `K ≥ r` is
   information-theoretic and unconditional.
 * `tradeoff_lower_bound` and `arithmetic_trajectory_blind` (in
-  `TradeoffBarrier.lean` and `RandomnessBarrier.lean`): the sieve exponent `1/k`
-  is forced by AM–GM, and collision-based methods are provably blind for
-  `min p q` steps in the worst case.
+  `TradeoffBarrier.lean` and `RandomnessBarrier.lean`): in the multiplicative
+  trade-off model the sieve exponent `1/k` is forced by AM–GM, and collision-based
+  methods are provably blind for `min p q` steps in the worst case.  (The first is a
+  statement about that model, not an unconditional lower bound on factoring; the
+  model omits the Dickman smoothness factor.  See `TradeoffBarrier.lean` and
+  `NegativeResults.lean`.)
 
 **Level 2 (conditional impossibility — proved here).**
 `conditional_impossibility`: *if* a classical algorithm factors in

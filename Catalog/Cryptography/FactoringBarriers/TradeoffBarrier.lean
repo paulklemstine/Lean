@@ -16,6 +16,24 @@ stages of costs `exp (y 0), …, exp (y (k-1))`, where the "budget" parameters
 expensive.  Sieving is the canonical example: the smoothness bound and the
 relation-collection effort trade off multiplicatively in `log N`.
 
+**Scope (read before drawing conclusions).** The theorems below are correct
+statements *about this model*, but the model is an abstraction and must not be
+read as a lower bound on factoring.  Two limits are worth stating plainly.
+
+* It charges `exp (y i)` per stage and omits the **Dickman factor `1/ρ(u)`** —
+  the number of candidate tests actually needed to *produce* one smooth
+  relation.  Smoothness probability, not the number of stages, is what pins the
+  subexponential cost in practice.
+* The exponent `1/3` of the number field sieve is **not** an AM–GM balance over
+  three stages.  It is the optimum of a smoothness-probability vs.
+  linear-algebra balance (minimise `B² + E²` subject to
+  `E² · Prob ≥ B^{1+o(1)}`; Barbulescu–Gaudry–Kleinjung, *The Tower NFS*), and
+  that balance is **insensitive to arity**.
+
+So the mnemonic "`k = 3` gives NFS" records a shape, not a mechanism.  See
+`NegativeResults.lean` for the killed-direction record, including why
+"unbounded arity" does **not** escape this barrier.
+
 **Main results.**
 
 * `tradeoff_lower_bound` — every `k`-way trade-off costs at least
@@ -27,8 +45,11 @@ relation-collection effort trade off multiplicatively in `log N`.
 * `tradeoff_unbounded_arity_is_poly` — and here is the honest boundary: if the
   arity `k` may grow with the input, the same expression drops to
   `O(log N)`.  A `k`-way trade-off barrier is therefore a statement about
-  *bounded* arity; escaping it requires unboundedly many balanced stages,
-  which is precisely the structural novelty no classical method supplies.
+  *bounded* arity **within this model**.  This is a statement about the model,
+  not a recipe for faster factoring: the construction it gestures at
+  (unbounded extension degree plus recursive descent) is exactly Schirokauer's
+  Tower NFS with special-`q` descent, whose known complexity is still
+  `L[1/3, (64/9)^{1/3}]` — arity buys the constant `c`, not the exponent.
 -/
 
 namespace FactoringBarriers
@@ -136,9 +157,10 @@ theorem sieve_exponents_superpoly :
 the optimal trade-off cost collapses to `O(log N)`: choosing `k = ⌈log x⌉`
 stages gives cost at most `exp(e) · (log x + 1)`, which is polynomial in `x`.
 
-So the trade-off barrier is a theorem about *bounded* arity.  Escaping it would
-require a strategy that balances unboundedly many stages at once — exactly the
-kind of structurally novel resource the capstone leaves unclassified. -/
+So the trade-off barrier is a theorem about *bounded* arity **inside this
+model**.  It is not, on its own, a route to faster factoring: growing the arity
+is not known to help, because the real cost of a stage is dominated by the
+smoothness factor this model omits.  See the module docstring. -/
 theorem tradeoff_unbounded_arity_is_poly {x : ℝ} (hx : Real.exp 1 < x) :
     ∃ k : ℕ, 0 < k ∧
       (k : ℝ) * Real.exp (x ^ (1 / (k : ℝ))) ≤ Real.exp (Real.exp 1) * (Real.log x + 1) := by
