@@ -148,52 +148,119 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
 
 The analog thread is the one genuinely *open* question, and it deserves a precise
 account because **the standard reason offered for it ("you'd need exponentially
-many physical bits") is wrong.** Two distinct obstacles are usually conflated:
+many physical bits") is wrong.** Distinct obstacles are usually conflated, and so
+is one of them in the direction of *understating* the device's capability.
 
 - **The single-shot information bound is weak.** A measurement of resolution
   `2^{-p}` carries ≈ `p` correct bits. To read one factor (`b = log₂N` bits) you
   need `p ≳ b` — only *linear* in the input size, which a good device has. So a
   *single* analog measurement is **not** information-theoretically blocked from
   returning a factor.
-- **The real barrier is precision-vs-runtime (noise floor).** In a chaotic /
-  universal analog dynamical system an initial error `δ` grows like `δ·e^{λt}`
-  (λ = Lyapunov exponent). To keep the orbit correct through `t` steps you need
-  `p ≈ λt/ln2` bits. If the factoring time `t` is *polynomial* in `b`, then `p`
-  is **polynomial** in `b` — **not** exponential. The genuine obstruction (Moore
-  1990/91: a 3-dof classical system simulates a Turing machine, so its long-term
-  behavior is undecidable without exponentially fine initial conditions) is
-  physical: a real device has a **fixed noise floor** `p₀` (thermal/shot/quantum),
-  while a chaotic amplifier needs `p` to *grow* with runtime. So it can only run
-  until `t_max ≈ (ln2)p₀/λ` before noise corrupts the result. This is a
-  **noise-floor tradeoff**, not a bit-counting theorem.
+- **The precision-vs-runtime framing, corrected.** In a chaotic system an initial
+  error `δ` grows like `δ·e^{λt}`. The scaling `p ≈ λt/ln2` is **correct** (it is
+  `1.44` bits per e-folding), and is corroborated in simulation: Hu & Liao
+  (*J. Comput. Phys.* 418, 109629, 2020) measure a chaotic horizon of ~30
+  Lyapunov times in `fp64` against a predicted ~37 — agreement within ~23%.
+- **The Moore-simulation argument (and its honest limits).** Any computable
+  physical process is in principle classically simulable, so an analog device's
+  real competition is **the cost of the best classical simulation of that device**,
+  not the best hand-written algorithm. But this is a **computability result, not a
+  complexity lower bound** — it does *not* by itself refute a physical speedup
+  (real quantum computers are exactly that case: believed hard to simulate, yet
+  they exist). It shifts the burden onto precision/efficiency, and no analog
+  proponent has met it. *(Caveats: it cleanly covers smooth computable-ODE
+  dynamics; it covers devices whose power comes from genuine many-body
+  measurement less directly.)*
+- **Moore's result is stronger than "exponentially fine", and the previous draft
+  of this section understated it.** Moore, *"Unpredictability and undecidability
+  in dynamical systems,"* **PRL 64(20), 2354–2357 (1990)** — citation **verified
+  correct** (Crossref + APS; DOI `10.1103/PhysRevLett.64.2354`). His abstract:
+  "as few as **three degrees of freedom** … can be equivalent to a Turing
+  machine … **Even if the initial conditions are known exactly**, virtually any
+  question about their long-term dynamics is undecidable." So the undecidability
+  is *not* the chaos regime (that is Bennett 1990, which Moore explicitly
+  contrasts himself against): it holds **from exact initial conditions**, with
+  the ideal precision limit a function of the (uncomputable) halting time. The
+  right phrase is **uncomputably fine**, not exponentially fine.
 
-**The Moore-simulation argument (and its honest limits).** Any computable
-physical process is in principle classically simulable, so an analog device's real
-competition is **the cost of the best classical simulation of that device**, not
-the best hand-written algorithm. But this is a **computability result, not a
-complexity lower bound** — it does *not* by itself refute a physical speedup (real
-quantum computers are exactly the case: believed hard to simulate, yet they
-exist). It shifts the burden onto precision/efficiency, and no analog proponent
-has met it. *(Caveats: it cleanly covers smooth computable-ODE dynamics; it
-covers devices whose power comes from genuine many-body measurement less directly.)*
+**⚠️ Correction to the noise-floor obstruction as previously stated here.** An
+earlier draft of this section concluded that a fixed noise floor `p₀` caps the
+runtime at `t_max ≈ (ln2)p₀/λ`. **That is wrong, and wrong in the direction that
+flatters the analog device.** "Keep the orbit correct" need not mean infinite
+precision — only the *output* must be correct to `n/2` bits. The correct horizon
+is
 
-**Verdict: no analog/physical route beats GNFS.** The strongest evidence is the
-field's own measurement — **Willsch et al. 2024** (arXiv:2410.14397) find three
-analog factorization methods scale "better than random guessing **but still
-exponential**." Optical/mean-field analog computers are real (Tamma et al. 2015,
-arXiv:1506.02907; Liu–Liang–Cai–Ponomarenko 2023, arXiv:2304.10713) but operate at
-~seven-digit demonstration scale with no formal complexity or precision-scaling
-analysis. Analog factoring is not refuted as a small-scale physical curiosity —
-it demonstrably factors small integers — but there is no candidate on a credible
-path to an asymptotic win. *Impossibility is not proven (that would need P≠NP for
-a physical machine class); the claim is that the **burden is entirely unmet** and
-the demonstrated scaling is exponential.*
+    t_max ≈ (ln2/λ) · (p₀ + n/2),
 
-*Citation-honesty note:* the labels "Mean Field Sieve," "Vaidya's analog
+which for a **fixed** `p₀` is **`O(n)` — polynomial, not constant.** So the
+precision argument alone does **not** yield a constant runtime cap, and any claim
+of that form is overreaching. The chaos objection survives only if the correct
+trajectory is *additionally* exponentially fragile for reasons independent of
+`λt` (e.g. the answer sitting in a basin of width `2^{-n/2}`); that is a
+**separate, under-specified** hypothesis.
+
+**Three genuine escapes, all dynamical rather than arithmetic** — which is the
+real state of this thread:
+
+1. **Attractor / contracting dynamics (`λ ≤ 0`).** If the dynamics *converge* to
+   the factor, the chaos argument **does not bind at all**. The wall only applies
+   to open-trajectory chaos doing the computational work.
+2. **Periodic re-anchoring.** Resetting every `T` caps the per-epoch precision
+   requirement at a constant, independent of total runtime. Mechanically
+   immediate; costs (residual error, refresh overhead) are real but not obviously
+   prohibitive.
+3. **Bounded output statistic** — read a resonance or peak position rather than
+   track an orbit. Note the obstruction: a *continuous-sweep resonance* encoder
+   cannot work, because factoring is **discontinuous** (adjacent `N` have
+   wildly different factors), so no smooth flow can output `p(N)` continuously.
+   The peak-position idea is precisely the already-killed **RSDT** mechanism
+   (§5), which collapses to trial division.
+
+**Verdict: no analog/physical route beats GNFS, but the burden is now a
+*dynamical* one.** The best-motivated candidate is **memcomputing /
+self-organizing gates** (Sharp et al., arXiv:2309.08198) — an attractor-based,
+chaos-avoiding design, i.e. escape (1). It is **heuristic and heavily caveated**:
+simulation only, no silicon, largest *run* ~60 bits, and the headline
+"sub-second 2048-bit" is a **low-degree polynomial extrapolation**. It is then
+**killed by its own follow-up** (Nguyen et al., arXiv:2506.14928, *Chaos* 2026):
+the contraction it relies on is **destroyed by noise**, so "attracting ⇒ robust ⇒
+large `N`" fails in-model. No memristive, reservoir, optical-resonance, or
+bio-inspired factoring device was found at any size.
+
+**Correcting the evidence base — a category error in the previous draft.** This
+section previously used **Willsch et al.** arXiv:2410.14397 as the anchor for
+*classical* analog factoring. That is wrong: the paper is titled **"The State of
+Factoring on Quantum Computers"**, is filed under **`quant-ph`**, and its three
+"analog" methods run on **analog *quantum* computers (D-Wave annealers)** —
+verified on the arXiv record, which lists Willsch, Hanussek, Hoever, Willsch,
+Jin, De Raedt and Michielsen (NIC Symposium 2025, pp. 239–250). Its measurement
+— scaling "absolutely and asymptotically better than random guessing but still
+exponential" — is real, but it is a **quantum-annealing** datapoint, not a
+classical-analog one. *Impossibility is not proven (that would need P≠NP for a
+physical machine class); the claim is that the **burden is entirely unmet**.*
+
+**Honest limits of the whole thread.** `t_max` has **never been measured on
+analog factoring hardware** — the linear horizon law is established only
+*in silico*. Realistic noise floors are far below the folklore figure: analog
+CMOS / CIM **6–8 bits**; purely analog optics **4–7** (the "10–12 bit" claim is
+unsubstantiated); memristors ~**4** native; RC/resonance reservoirs **2–5**.
+Hardware records are tiny: **8,219,999 = 251 × 32,749 (23 bits)** (Ding et al.,
+*Sci. Rep.* 14, 2024) is the largest analog/annealing factoring result, and
+Xu/Hegade et al. (arXiv:1611.03293) factored **35** on a single spin.
+
+*Citation-honesty notes.* The labels "Mean Field Sieve," "Vaidya's analog
 factoring," and a "CAP-style analog machine," which circulate in popular
 accounts, could **not** be pinned to primary sources; the closest real works are
-the optical-interference and random-wave papers above. Treat those popular labels
-as unverified.
+Tamma et al. 2015 (arXiv:1506.02907, *"Factoring numbers with a single
+interferogram"* — optical, and **not** "mean-field" as sometimes labelled) and
+Liu–Liang–Cai–Ponomarenko 2023 (arXiv:2304.10713). **Do not introduce**: the
+"adiabatic factoring" arXiv ID `quant-ph/0409065` (that ID is Altenkirch–
+Grattage, a quantum programming-language paper), "Grover, factoring"
+(`quant-ph/0209087` is Filipp–Sjöqvist on geometric phase — Grover never wrote
+a factoring paper, that is Shor), and the "AQC factors in `exp(1.9√L)`" framing,
+where `1.9` is the **classical GNFS** constant. The QUBO-for-factoring instance
+is **classical optimization**; encoding it as Ising does not make factoring
+quantum, and its classical hardness is **conjectured, not proven**.
 
 ### 4b. Low-exponent RSA vs. factoring — the corrected story
 
@@ -623,7 +690,7 @@ valid statements *about their model*; only the over-reading was wrong.
 
 ## 7. Machine-checked companions
 
-- **`NegativeResults.lean`** — a cited kill record (the table above, now **seven**
+- **`NegativeResults.lean`** — a cited kill record (the table above, now **nine**
   directions) plus two machine-checked supports:
   - `mod4_not_injective` shows the map `n ↦ n mod 4` fails to separate the
     distinct semiprimes `15 = 3·5` and `39 = 3·13`, so a low-order residue
@@ -706,17 +773,35 @@ algorithm; each is a place where a genuine open problem still lives.
    be a genuine result. BV's genuine content is a **localization**: any non-factoring
    break must be non-generic (bit-manipulating).
 3. **Analog / physical-precision factoring** — the one genuinely open *question*,
-   but with the standard reason corrected (§4a): the obstruction is a
-   **precision-vs-runtime noise-floor tradeoff** (a chaotic amplifier needs
-   precision that grows with runtime, but a real device has a fixed noise floor
-   `p₀`, so it corrupts after `t_max ≈ (ln2)p₀/λ`) plus the **simulation burden**
-   (a computability, not complexity, argument) — *not* an "exponentially many
-   bits" wall. The live sub-question: can the divisor structure be made a
-   **low-precision `O(log N)`-bit readout** rather than a high-precision
-   interference encoding? If so, only Moore-simulation stands in the way — and a
-   positive result would hand *digital* factoring a polynomial algorithm too
-   (physical curiosity, not a crypto break). Measured analog scaling remains
-   exponential (Willsch et al. 2024).
+   and it has been **re-scoped** (§4a). Two corrections to what this thread
+   previously claimed:
+   - **The noise-floor obstruction was overstated.** The old form,
+     `t_max ≈ (ln2)p₀/λ`, is wrong because the orbit need only be correct in its
+     *output* to `n/2` bits. The correct horizon is
+     `t_max ≈ (ln2/λ)(p₀ + n/2)`, which for fixed `p₀` is **`O(n)` — polynomial,
+     not constant.** The precision argument alone does not cap runtime. The
+     remaining chaos objection needs a *separate* exponential-fragility
+     hypothesis, which the thread never established.
+   - **The empirical anchor was a category error.** Willsch et al.
+     (arXiv:2410.14397) had been cited here as evidence about *classical* analog
+     factoring; it is "The State of Factoring on **Quantum** Computers",
+     `quant-ph`, and its analog methods are **D-Wave quantum annealers**. Its
+     "still exponential" measurement is a *quantum-annealing* datapoint.
+
+   **Where the thread actually stands:** the burden is **dynamical, not
+   arithmetic**, and it lives in the three escapes — attractor/contracting
+   dynamics (`λ ≤ 0`), periodic re-anchoring, and bounded output statistics. The
+   best-motivated candidate, **memcomputing** (Sharp et al., arXiv:2309.08198),
+   pursues the first and is **killed by its own follow-up** (Nguyen et al.,
+   arXiv:2506.14928, *Chaos* 2026): the contraction it relies on is destroyed by
+   noise. Honest limits: `t_max` has **never been measured on analog hardware**
+   (the horizon law is *in-silico* only); real noise floors are 4–8 bits, not the
+   folklore 10–12; and the largest hardware result is **23 bits**
+   (8,219,999 = 251 × 32,749, Ding et al. *Sci. Rep.* 14, 2024). A resonance-peak
+   encoder cannot work — factoring is **discontinuous** in `N`, so no smooth flow
+   can output `p(N)` continuously — and that idea reduces to the already-dead
+   RSDT mechanism. *A rigorous kill is a valid outcome for this thread, and that
+   is currently the outcome.*
 4. **Circuit lower bounds for factoring** — a genuine, wide-open program that
    yields a *separation*, not an algorithm. It is more interesting — and more
    obstructed — than the usual one-line "prove `FACTOR ∉ TC⁰`" framing suggests.
@@ -846,7 +931,13 @@ not appear in the final bound) · Hallgren *J. ACM* 54(1):1–19 2007
 quadratic) ⇒ factoring**) ·
 Rippon–Taylor 2004 · Gower–Wagstaff 2008 · Bernstein–Lange 2014/921 ·
 Kleinjung–Bos–Lenstra 2014/653 · Cox, *Primes of the Form x²+ny²* ·
-**Moore 1990, PRL 64 2354** (Turing-universal 3-dof dynamics; undecidability) ·
+**Moore 1990, PRL 64(20) 2354–2357** (Turing-universal 3-dof dynamics; undecidable
+**from exact initial conditions** — "uncomputably fine," not exponentially; citation
+**verified**) · Hu & Liao *J. Comput. Phys.* 418, 109629 (2020) (chaotic horizon
+~30 Lyapunov times in `fp64`) · **Sharp et al. arXiv:2309.08198** (memcomputing
+factorization; **killed by** Nguyen et al. arXiv:2506.14928, *Chaos* 2026) ·
+Ding et al. *Sci. Rep.* 14 (2024) (23-bit analog/annealing factoring record) ·
+Xu/Hegade et al. arXiv:1611.03293 (factored 35 on one spin) ·
 **Willsch et al. 2024, arXiv:2410.14397** (analog factoring "still exponential") ·
 Tamma et al. 2015, arXiv:1506.02907 (optical interference) · Liu, Liang, Cai &
 Ponomarenko 2023,
