@@ -347,9 +347,11 @@ the reason is structural rather than incidental.**
   together with its prime factorization."** That is the whole catch: the single
   genuinely `poly(log n)` theorem in the family *requires the factorization as
   input*, so it is circular for our purpose.
-- **The headline "fast modular forms" result is at level one.** Edixhoven–Couveignes–de
-  Jong–Merkl–Bosman (arXiv:math/0605244) computes forms of **level one** in time
-  polynomial in the weight and field size. That is not a general-level-`N` algorithm.
+- **The headline "fast modular forms" result is at level one.** Edixhoven, Couveignes,
+  de Jong, Merkl & Bosman (arXiv:math/0605244 — a **book**, *Computational aspects
+  of modular forms and Galois representations*, intended for Annals of Mathematics
+  Studies) treats the level-one case, polynomial in the weight and field size. That
+  is not a general-level-`N` algorithm.
 - **Gu–Martin say so themselves** (arXiv:1709.02411): "the standard way to compute
   `A(k,N)` is through factoring `N`", and any method that "actually enumerated
   Hecke eigenforms… would be slower than factoring `N` in practice," because the
@@ -818,7 +820,7 @@ on the RSA cryptosystem," *Notices AMS* 46(2) 1999 · **Coron–May** *J. Crypto
 forward count identity Gu–Martin invert) · **Couveignes–Edixhoven survey
 arXiv:1205.5896** (modular-forms complexity is polynomial in the *level*, i.e.
 exponential in `log N`) · **Edixhoven–Couveignes–de Jong–Merkl–Bosman
-arXiv:math/0605244** (near-linear modular forms at **level one**) · Mosunov–
+arXiv:math/0605244** (a **book**; modular forms at **level one**) · Mosunov–
 Jacobson arXiv:1502.07953 (knowing `h(Δ)` factors `Δ`; the reverse direction
 gives only the **parity** and 2-rank — one-way, **not** equivalent) ·
 Hafner–McCurley *JAMS* 2(4):837–850 1989 (imaginary-quadratic class groups in
