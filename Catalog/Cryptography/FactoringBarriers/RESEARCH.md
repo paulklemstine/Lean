@@ -114,12 +114,19 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   it reflects that `p` is an unknown `N^{1/2}`-sized quantity with no polynomial to
   construct. **Partial-key (Coppersmith/HNP) is the one genuinely open, non-equivalent
   technique** — it factors *broken* keys, not sound RSA, and is orthogonal to the
-  sound-key question. *Honesty note on the bounds:* the Boneh–Durfee `0.292` is
-  **heuristic by the authors' own words** ("we cannot state our attack as a theorem");
-  `1/4` is **Wiener's**; Heninger–Shacham's `0.27` is **not a lattice result** and is
-  heuristic; the ⅓-of-CRT-exponents result (May–Nowakowski–Sarkar 2022) is rigorous
-  for the MSB case but heuristic for LSB and contested in the headline regime
-  (Takayasu–Kunihiro). None is a theorem for sound RSA.
+  sound-key question. The full, primary-source-verified frontier is in **§8.1**; in
+  brief: the **`1/4` wall (¼ of `N`'s bits = ½ of `p`'s) has not been crossed in
+  ~30 years**, the deep blocker is the **AGM conjecture** (a wall of *method, not
+  information*), and the zone between Coppersmith's ½-of-`p` and the information
+  floor is wide open. *On the rigor of the bounds:* Coppersmith, Howgrave–Graham,
+  Boneh–Durfee–Frankel, and Boneh–Durfee `0.292` are treated as rigorous (the
+  latter modulo the standard LLL/algebraic-independence assumption);
+  Heninger–Shacham's `0.27` is a *rigorous* but *lattice-free* branching bound
+  whose authors stress it is method-specific; the Ernst–Jochemsz–May–de Weger
+  family, the ⅓-CRT LSB case (May–Nowakowski–Sarkar 2022), and the noisy-leak
+  corrections carry **stated assumptions/heuristics**. *(Wiener is the separate
+  small-`d` bound `d < N^{1/4}/3`; the "`1/4` p-leak" is Coppersmith's — do not
+  conflate them.)* None breaks sound RSA.
 - **Complexity ceiling (evidence, not a method):** Boneh–Venkatesan gives
   model-restricted evidence that breaking **low-exponent** RSA may be **easier than
   factoring** — reinforcing that "recover the factor" is not the only attack
@@ -267,17 +274,43 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
 These are the *live* edges, in rough order of promise. None is a new factoring
 algorithm; each is a place where a genuine open problem still lives.
 
-1. **Coppersmith / HNP partial-key exposure** — the only place a non-equivalent,
-   truly open technique sits. The barrier is **epistemic**: a hint about `p` turns
-   the problem into finding a *small root*, but the classical `N^{1/d}` bounds
-   apply to the *error* in your hint, so progress = "how many bits of `p` must you
-   already know." Current honest state: `1/4` is **Wiener's** (theorem);
-   Boneh–Durfee `0.292` and Heninger–Shacham `0.27` are **heuristic** by the
-   authors' own disclaimers (H-S is not even a lattice result); the ⅓-CRT result is
-   rigorous for MSB, heuristic/contested for LSB. The sharp open problem is to
-   find a *rigorous* bound that beats `1/4` for `d` (or to prove none exists), and
-   to characterize which realistic side-channel leaks cross the current wall.
-   (Partial-key only; not sound RSA.)
+1. **Coppersmith / HNP partial-key exposure** — the one place a non-equivalent,
+   genuinely open technique sits, and the deepest open problem in classical
+   factoring. *Notation (the source of most confusion):* for `N = pq` of `n` bits,
+   the "`1/4` bound" means **`n/4` bits of `p` = ¼ of `N`'s bits but ½ of `p`'s
+   ~`n/2` bits.** A "quarter" is never a quarter of `p`.
+   - **The 1/4 wall has not been crossed in ~30 years.** Nothing is known that
+     needs fewer than ¼ of the relevant secret bits. From a `p`-leak the record is
+     still Coppersmith's `n/4` bits of `p` (Howgrave–Graham / Nguyen–Shparlinski /
+     Coron broadened *which* bits may leak — arbitrary positions, not just MSB —
+     but never the *count*). From a small-`d` leak the best is Boneh–Durfee
+     `d < N^{0.292}`. From random-`d` bits, Heninger–Shacham reconstructs with
+     `δ ≈ 0.27` — a *lattice-free* branching algorithm whose authors say the
+     threshold is "only our particular approach," so it is a soft frontier, not a
+     proven limit. The newest clean boundary is **⅓ of both CRT exponents**
+     `d_p, d_q` when `e ≈ N^{1/12}` (May–Nowakowski–Sarkar 2022) — but ⅓ > ¼, a
+     new boundary, not a crossing. Feng–Nitaj–Pan 2024 shaves `log₂(e) ≈ 17` bits
+     off the required leak for `e = 65537` — an engineering gain, not a regime
+     change.
+   - **The sharpest open problem.** The 1/4 wall is a wall of *method, not
+     information*: the AGM (algebraic–geometric–metric) conjecture says `n/4` is
+     near-optimal for polynomial-equation (lattice) methods, so beating it needs a
+     genuinely different idea. Yet *information-theoretically* you need almost all
+     of `p`'s bits to pin it down — so a vast zone between Coppersmith's **50% of
+     `p`** and the ~near-100% information floor is **wide open**. The precise
+     question: *does any method recover `p` from strictly fewer than `n/4` of its
+     bits?* The true threshold is **not** known to be ½ — that is just
+     Coppersmith's current mark. (Runner-up, more practical: a rigorous framework
+     for **noisy/approximate** leaks; Coppersmith is fragile to a few flipped
+     bits, and real cold-boot/side-channel leaks are noisy.)
+   - **These are complete factorizations, not "half a break."** By Aggarwal–Maurer
+     (*Breaking RSA Generically is Equivalent to Factoring*), in the generic ring
+     model breaking RSA already reduces to factoring; the partial-key lattice
+     attacks are genuine factorizations. *Practical verdict:* every attack needs
+     25–33% of a secret leaked (catastrophic cold-boot/memory/side-channel); a
+     sound implementation leaks ~0%. The known attacks are **tight with the
+     tolerance** — they sit on the margin, they do not eat into it. None threatens
+     correctly-implemented RSA.
 2. **Is low-exponent RSA easier than factoring?** — the Boneh–Venkatesan ceiling
    question: does breaking `e`-small RSA reduce to factoring, or genuinely to
    something easier? A model-independent separation would be a real result.
@@ -326,9 +359,16 @@ modular-curve unification — not to relitigate the killed directions in §3–�
 Buhler–Lenstra–Pomerance 1993 · Harvey, *Math. Comp.* 2021 · Barbulescu–
 Guillevic–Lenstra–Razvan ePrint 2020/829 · Barbulescu–Gaudry–Kleinjung ePrint
 2015/505 · Schirokauer 2000 (Tower NFS) · Shanks 1969 (SQUFOF) · Lagrange/Legendre
-1760s–1785 · Gauss 1801 (*Disquisitiones Arithmeticae*) · Coppersmith (HNP) ·
-Wiener · Boneh–Durfee 1998 · Heninger–Shacham 2008 · May–Nowakowski–Sarkar 2022 ·
-Takayasu–Kunihiro (CRT refutation) · **Schnorr 2021 ePrint 2021/933** (polynomial-
+1760s–1785 · Gauss 1801 (*Disquisitiones Arithmeticae*) · **Coppersmith** 1997
+(J. Cryptology; MSB/LSB of `p`; small-`d` `N^{1/4}`) · Howgrave–Graham 1997 ·
+Wiener (small-`d` `N^{1/4}/3`) · **Boneh–Durfee–Frankel** ASIACRYPT 1998 ·
+**Boneh–Durfee** 2000 (`d < N^{0.292}`) · **Heninger–Shacham** CRYPTO 2008
+(ePrint 2008/510, `δ ≈ 0.27`, lattice-free) · **May–Nowakowski–Sarkar** EUROCRYPT
+2022 (ePrint 2022/271, ⅓ CRT-exponents) · Zhou–van de Pol–Yu–Standaert 2022
+(ePrint 2022/1163, blinded CRT) · **Feng–Nitaj–Pan** 2024 (ePrint 2024/1329) ·
+**Aggarwal–Maurer** (*Breaking RSA Generically is Equivalent to Factoring*) ·
+the **AGM (algebraic–geometric–metric) conjecture** · **Schnorr 2021 ePrint
+2021/933** (polynomial-
 time lattice claim, empirically falsified) · **Ducas, SchnorrGate** (0/1000) ·
 Ajtai STOC 2003 (worst-case of Schnorr's algorithm; not obtained) · Lenstra–
 Pomerance 1992 (*imaginary-quadratic class group*, `L[1/2,1]`) · Boneh–Durfee–
