@@ -4,7 +4,7 @@
 The rank `r(D)` of a divisor, the Baker–Norine dichotomy, and the Riemann–Roch formula
 `r(D) - r(K - D) = deg D - g + 1`.
 -/
-import Combinatorics.Orientations
+import Combinatorics.TropicalRiemannRoch.Orientations
 
 namespace TropicalRR
 

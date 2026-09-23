@@ -18,8 +18,8 @@ Main results:
 * `TropicalRR.not_hyperelliptic_top` : the complete graph `K_n` is **not** hyperelliptic for
   `n ≥ 4`, since its gonality is `n - 1`.
 -/
-import Combinatorics.CompleteGraph
-import Combinatorics.Jacobian
+import Combinatorics.TropicalRiemannRoch.CompleteGraph
+import Combinatorics.TropicalRiemannRoch.Jacobian
 
 namespace TropicalRR
 

@@ -1,6 +1,5 @@
 import Mathlib
 import Logic.StrangeLoops.Core
-import Bridges.FiniteRateDistortion.Core
 
 /-!
 # Tropical Envelope Structure of Finite Rate-Distortion

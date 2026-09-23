@@ -19,7 +19,7 @@ Consequences proved here:
 * `empEntropy_le` — `Ĥ(x) ≤ n log 2`, via `binEnt_le_log_two`.
 -/
 
-import Tropical.Shtarkov.FiniteState
+import Catalog.Tropical.Shtarkov.FiniteState
 
 open Finset
 

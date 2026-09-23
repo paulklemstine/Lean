@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026. Released under Apache 2.0 license.
 -/
-import Physics.InfoFreeWerewolf.SecondOrder
+import Catalog.Physics.InfoFreeWerewolf.SecondOrder
 
 /-!
 # The sharp union-bound defect: `n · defect ≤ k(k-1)/2`

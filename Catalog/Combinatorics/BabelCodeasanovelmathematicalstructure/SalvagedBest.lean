@@ -1,18 +1,3 @@
-/-
-# Babel codes (Plotkin bound, Lawvere diagonal, sphere packing) — fragment superseded by the repaired module
-
-This file arrived as a *fragment*: its supporting definitions, imports and
-namespace header were missing, so it could not elaborate at all.  The complete,
-repaired development — same statements, definitions supplied, every proof
-carried out with no `sorry` — lives in `Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest`,
-which is imported here so that this module re-exports it.
-
-The original fragment is preserved verbatim in the block comment below.
--/
-import Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest
-
-/- ORIGINAL FRAGMENT (does not elaborate on its own; kept for the record)
-
 theorem plotkin_bound {A L d : ℕ} (hA : 1 ≤ A) (hd : 1 ≤ d)
     (hPlotkin : L * (A - 1) < d * A)
     (C : Finset (Volume A L)) (hC : IsBabelCode C d) :
@@ -151,5 +136,4 @@ end BabelCode
    forms a lattice. The meet is intersection (with adjusted distance), the join
    requires recomputing minimum distance. *Testable*: enumerate all BabelCodes
    over {0,1}^3 and verify the lattice axioms.
--/
 -/

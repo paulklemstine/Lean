@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026. Released under Apache 2.0 license.
 -/
-import Physics.InfoFreeWerewolf.FiniteParity
+import Catalog.Physics.InfoFreeWerewolf.FiniteParity
 
 /-!
 # The parity-corrected asymptotic expansion (capstone)

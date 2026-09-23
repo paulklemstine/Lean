@@ -24,7 +24,7 @@ Main results, all proved *without differentiating* the log-partition function:
   runs into the **tropical corner** `(L, max r)` with `L = -log π₀(argmax r)`: the Maslov
   dequantization limit of the whole alignment problem.
 -/
-import Tropical.ConstrainedEqualsPenalised
+import Catalog.Tropical.ConstrainedEqualsPenalised
 
 namespace Catalog.Tropical.ConstrainedPenalised
 

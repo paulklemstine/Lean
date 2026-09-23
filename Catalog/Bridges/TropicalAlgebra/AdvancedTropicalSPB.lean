@@ -2,8 +2,6 @@ import Mathlib
 import Logic.StrangeLoops.Core
 -- MISSING MODULE (not present in this repository): import Pythagorean.Pythagorean.TropicalAssociativity_1
 import Pythagorean.TropicalAlgebra.TropicalSPB
-import Bridges.SPBBridge.TropicalSPB
-import Bridges.SPBBridge.TropicalAssociativity
 
 /-! # CatalogBuild.Bridges.AdvancedTropicalSPB
 

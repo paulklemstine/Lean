@@ -3,7 +3,7 @@
 
 Consequences of the Baker–Norine Riemann–Roch theorem.
 -/
-import Combinatorics.RiemannRoch
+import Combinatorics.TropicalRiemannRoch.RiemannRoch
 
 namespace TropicalRR
 

@@ -16,7 +16,7 @@ Main results:
 * `TropicalRR.rank_eq_degD_of_isTree` and `TropicalRR.rank_eq_degD_sub_one_of_genus_one`:
   the rank function in genus `0` and genus `1`.
 -/
-import Combinatorics.Clifford
+import Combinatorics.TropicalRiemannRoch.Clifford
 
 namespace TropicalRR
 

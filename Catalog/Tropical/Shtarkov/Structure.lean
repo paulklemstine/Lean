@@ -20,7 +20,7 @@ structural laws that the invariant obeys.
   not memorisable by *any* parameterisation of the machine.
 -/
 
-import Tropical.Shtarkov.FiniteState
+import Catalog.Tropical.Shtarkov.FiniteState
 
 open Finset
 

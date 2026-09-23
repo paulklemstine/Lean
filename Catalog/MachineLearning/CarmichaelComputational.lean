@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.NumberTheory.CarmichaelHelper
+import Shared.CarmichaelHelper
 import Shared.NumberTheory.CarmichaelProof
 
 /-! # Computational verification of Carmichael's theorem
@@ -57,18 +57,24 @@ lemma all_factors_from_divisors (n : ℕ) (hn : 3 ≤ n) (hn_comp : ¬Nat.Prime 
 lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
   exact lt_of_lt_of_le (by decide) (Nat.fib_mono hn)
 
-/-- For the composite case of Carmichael's theorem:
-    If n is composite with n ≥ 13 and has a prime factor p,
-    then either p is primitive for F(n), or the entry point of p
-    strictly divides n (so p divides F(d) for proper d | n).
+/- The composite case of Carmichael's theorem was stated here without a range
+restriction, and "proved" by an application of `fib_carmichael_composite` that does not
+typecheck, since that theorem is only available on the verified range `13 ≤ n ≤ 10000`:
 
-    This is the composite case, which together with `fib_primitive_divisor_prime`
-    completes Carmichael's theorem.
+theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
+    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
+      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
+  exact fib_carmichael_composite n hn hn_comp
 
-    Repaired statement: the available input `fib_carmichael_composite` is proved
-    on the verified range `13 ≤ n ≤ 10000` only (the unbounded tail remains the
-    open frontier of this development), so the bound `n ≤ 10000` is carried here
-    as an explicit hypothesis. -/
+The unrestricted statement is Carmichael's primitive divisor theorem, which is true but
+whose proof needs Lucas-sequence machinery (a lower bound on the primitive part
+`Φ_n(α, β)`) that is not available here.  The guarded version below is what the catalog
+actually proves. -/
+
+/-- **Carmichael's theorem, composite-index case, on the verified range.**  For composite
+`n` with `13 ≤ n ≤ 10000` the Fibonacci number `F n` has a primitive prime divisor.  This
+is the guarded form of the statement: together with `fib_primitive_divisor_prime` (the
+prime-index case, valid for all `n ≥ 13`) it gives Carmichael's theorem on that range. -/
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
     (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧

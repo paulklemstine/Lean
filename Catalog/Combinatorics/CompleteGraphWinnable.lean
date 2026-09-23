@@ -21,7 +21,7 @@ Main results of this file.
 Everything is stated with Lean's integer division `/` on `ℤ`, which is floor
 division for a positive divisor.
 -/
-import Combinatorics.CompleteGraph
+import Combinatorics.TropicalRiemannRoch.CompleteGraph
 
 namespace TropicalRR
 

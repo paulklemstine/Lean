@@ -24,7 +24,7 @@ graph wins), while the "positive genus" direction produces an explicit nontrivia
 the difference of an acyclic-orientation divisor `ν_t` (rank `-1`) and the effective divisor
 of the same degree `g - 1` concentrated at a vertex.
 -/
-import Combinatorics.Gonality
+import Combinatorics.TropicalRiemannRoch.Gonality
 
 namespace TropicalRR
 

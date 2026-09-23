@@ -19,7 +19,7 @@ the time index; each state carries one free Bernoulli parameter, and setting
 those parameters to `0/1` memorises an arbitrary word.
 -/
 
-import Tropical.Shtarkov.FiniteState
+import Catalog.Tropical.Shtarkov.FiniteState
 
 open Finset Filter Topology
 

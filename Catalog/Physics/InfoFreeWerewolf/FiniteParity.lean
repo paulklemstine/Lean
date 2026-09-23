@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026. Released under Apache 2.0 license.
 -/
-import Physics.InfoFreeWerewolf.Asymptotics
+import Catalog.Physics.InfoFreeWerewolf.Asymptotics
 
 /-!
 # Non-asymptotic parity separation, and the exact ladder up to four wolves

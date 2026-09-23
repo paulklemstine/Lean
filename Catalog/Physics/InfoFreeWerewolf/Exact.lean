@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026. Released under Apache 2.0 license.
 -/
-import Physics.InfoFreeWerewolf.Defs
+import Catalog.Physics.InfoFreeWerewolf.Defs
 
 /-!
 # Exact closed forms for small wolf counts

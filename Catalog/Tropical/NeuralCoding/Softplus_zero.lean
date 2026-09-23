@@ -1,4 +1,6 @@
 import Mathlib
+import Shared.NeuralCoding.Softplus
+import Shared.One_plus_exp_pos
 import Shared.NeuralCoding.LogisticSigmoid
 
 /-! # CatalogBuild.Shared.Softplus_zero

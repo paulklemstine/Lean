@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.Core
+import Applications.Core
 
 /-!
 # Multiple agreement subtrees: gluing, counting, and threshold transfer

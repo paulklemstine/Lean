@@ -21,7 +21,7 @@ Main results:
 * `shtarkovSum_fsmClass_le_two_pow` — the universal cap `S_n ≤ 2^n`.
 -/
 
-import Tropical.Shtarkov.Basic
+import Catalog.Tropical.Shtarkov.Basic
 
 open Finset
 

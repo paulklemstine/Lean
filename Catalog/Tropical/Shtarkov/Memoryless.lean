@@ -15,7 +15,7 @@ this bound has the correct polynomial order and is off only by the classical
 factor `1/2` in the exponent.
 -/
 
-import Tropical.Shtarkov.EntropyBridge
+import Catalog.Tropical.Shtarkov.EntropyBridge
 
 open Finset
 
