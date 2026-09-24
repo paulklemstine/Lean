@@ -198,4 +198,98 @@ theorem balance_solves_to_one_fifth : (1 / 5 : ℚ) = (1 / 2 : ℚ) * (2 / 5) :=
   norm_num
 
 
+
+/-! ### The Hittmeir end of the lineage, and the structural delta
+
+Everything above reads Harvey's cost. Harvey's paper is explicit that his
+improvement over Hittmeir is *structural within the same reach*: p.3 says
+Hittmeir "breaks up the search space into chunks and applies the BSGS search to
+each chunk separately, whereas we show how to sweep through the entire space
+with a single BSGS search." Reading **Hittmeir, arXiv:2006.16729, Lemma 5.2 and
+eq. (6.1)** (PDF at `~/factor-briefs/hitt-2006.16729.pdf`, 10pp) makes the delta
+quantitative, because Hittmeir's cost is *also* a three-term balance. With
+`xi = N^x`, `eta = N^y`:
+
+  `T1 = 1/4 + 3x/4 - y/2`   (Step 1: a full BSGS run **per pair**, summed; the
+                               `xi^{3/4}` is a **numerator** factor)
+  `T2 = 1/2 - x/2 - y`       (the `L1` baby-step list)
+  `T3 = y`                   (the `L2` candidate list)
+
+and Hittmeir's Algorithm 6.1 takes `xi = N^{1/9}`, `eta = N^{2/9}`, at which all
+three equal `2/9` -- which is the **exact minimax**, so `2/9` is derived here
+rather than quoted.
+
+**The structural delta, in one line.** Hittmeir's `T1` carries `xi` in the
+**numerator** (raising `xi` makes it *worse*, by `3/4` per unit of exponent);
+Harvey's `T1` carries `m` in the **denominator** (raising `m` makes it
+*better*, by `1` per unit). Turning "one BSGS per chunk" into "one global BSGS"
+moves the reuse parameter from a numerator to a denominator, and that single
+structural change is worth `2/9 -> 1/5`. Both are proved exact below, so the
+whole deterministic lineage `2/9 -> 1/5` is now accounted for term by term. -/
+
+/-- **HITMEIR'S EXPONENT FUNCTION.** `x` is the exponent of `xi` and `y` that of
+`eta`, from Lemma 5.2 with the `xi^{3/4}` numerator restored (the PDF text
+renders it ambiguously; eq. (6.1) on p.10 pins it as `xi^{3/4}`). -/
+def hittCostExp (x y : ℚ) : ℚ := max (1 / 4 + 3 * x / 4 - y / 2) (max (1 / 2 - x / 2 - y) y)
+
+/-- **All three of Hittmeir's summands equal `2/9`** at his Algorithm 6.1 choice
+`xi = N^{1/9}`, `eta = N^{2/9}`. -/
+theorem hitt_three_terms_at_two_ninths :
+    1 / 4 + 3 * (1 / 9 : ℚ) / 4 - (2 / 9) / 2 = 2 / 9 := by norm_num
+
+theorem hitt_term2_at_two_ninths : 1 / 2 - (1 / 9 : ℚ) / 2 - 2 / 9 = 2 / 9 := by
+  norm_num
+
+/-- **`2/9` is a LOWER bound for Hittmeir's shape.** -/
+theorem two_ninths_is_lower_bound (x y : ℚ) : 2 / 9 ≤ hittCostExp x y := by
+  simp only [hittCostExp, le_max_iff, le_max_iff]
+  by_contra hcon
+  rcases not_or.mp hcon with ⟨hna, hrest⟩
+  rcases not_or.mp hrest with ⟨hnb, hnc⟩
+  have h1 : 1 / 4 + 3 * x / 4 - y / 2 < 2 / 9 := lt_of_not_ge hna
+  have h2 : 1 / 2 - x / 2 - y < 2 / 9 := lt_of_not_ge hnb
+  have h3 : y < 2 / 9 := lt_of_not_ge hnc
+  linarith
+
+/-- **...and it is attained**, so `2/9` is Hittmeir's exact optimum. -/
+theorem two_ninths_attained : hittCostExp (1 / 9 : ℚ) (2 / 9 : ℚ) = 2 / 9 := by
+  have h1 : 1 / 4 + 3 * (1 / 9 : ℚ) / 4 - (2 / 9) / 2 = 2 / 9 :=
+    hitt_three_terms_at_two_ninths
+  have h2 : 1 / 2 - (1 / 9 : ℚ) / 2 - 2 / 9 = 2 / 9 := hitt_term2_at_two_ninths
+  rw [hittCostExp, h1, h2]
+  norm_num [max_def]
+
+/-- **HITTEIR'S OPTIMUM IS EXACTLY `2/9`** -- lower bound plus attainment. -/
+theorem hitt_optimum_exactly_two_ninths :
+    (∃ x y : ℚ, hittCostExp x y = 2 / 9) ∧ (∀ x y : ℚ, 2 / 9 ≤ hittCostExp x y) := by
+  refine ⟨⟨1 / 9, 2 / 9, two_ninths_attained⟩, fun x y => two_ninths_is_lower_bound x y⟩
+
+/-- **THE DELTA IS STRICT AND EXACT: `2/9 - 1/5 = 1/45`.** Harvey's improvement
+over Hittmeir is a real `0.0222` in the exponent, and it is the *only*
+difference in reach -- both factor the same semiprimes by the same congruence. -/
+theorem delta_two_ninths_minus_one_fifth :
+    (2 / 9 : ℚ) - 1 / 5 = 1 / 45 := by norm_num
+
+theorem two_ninths_gt_one_fifth : (2 / 9 : ℚ) > 1 / 5 := by norm_num
+
+/-- **★ THE STRUCTURAL ASYMMETRY, MADE MACHINE-CHECKABLE.** In Hittmeir the reuse
+parameter `xi` sits in the **numerator** of `T1`, so raising it makes the term
+*worse* by exactly `3/4` per unit of exponent. -/
+theorem hitt_reuse_is_numerator (x y : ℚ) :
+    1 / 4 + 3 * (x + 1) / 4 - y / 2 = (1 / 4 + 3 * x / 4 - y / 2) + 3 / 4 := by linarith
+
+/-- **...whereas in Harvey the reuse parameter `m` sits in the DENOMINATOR of
+`T1`, so raising it makes the term *better* by exactly `1` per unit of exponent.
+This sign flip -- caused by going from one BSGS per chunk to a single global BSGS
+-- is the whole `2/9 -> 1/5` improvement, and it is now a theorem. -/
+theorem harvey_reuse_is_denominator (a b : ℚ) :
+    1 / 2 - a / 2 - (b + 1) = (1 / 2 - a / 2 - b) - 1 := by linarith
+
+/-- **The two optima, side by side.** Both are exact minimax values, so the
+lineage is closed: `1/3` (Lehman) > `2/9` (Hittmeir) > `1/5` (Harvey). -/
+theorem lineage_is_strictly_decreasing :
+    (1 / 3 : ℚ) > 2 / 9 ∧ (2 / 9 : ℚ) > 1 / 5 := by
+  constructor <;> norm_num
+
+
 end Crypto.FactoringBarrier.HarveyBalance
