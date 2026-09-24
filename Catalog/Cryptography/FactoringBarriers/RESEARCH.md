@@ -71,7 +71,7 @@ real error by direct fetch of the ePrint landing page**); Barbulescu–Gaudry–
 | 4 | **Precomputation-amortized factoring** — universal factor base / batched sieve to break the exponent. | **Constant only** | Amortization moves only the constant `c` (GNFS `1.923` → Coppersmith's factory `1.639`), never the exponent `ρ = 1/3`. Practical realizable gains are `≈ 2×` (Mersenne factory). Ref: Bernstein–Lange 2014/921; Kleinjung–Bos–Lenstra 2014/653. |
 | 5 | **Genus-character single-bit reduction** — factor `N` from one nonprincipal quadratic character. | **Classical repackaging** | The content is Gauss's genus theory (1801). Its formalizable core is the one-line multiplicativity `(a/p)(a/q) = (a/pq)` — now proved in `FreeSymbol.lean`. One line is the evidence it is repackaging, not new mathematics. Ref: Gauss 1801; Cox, *Primes of the Form x²+ny²*. |
 | 6 | **Analog / physical-precision factoring** | **Open but capped — and the usual *reason* is wrong** | See §4a for the corrected analysis. The common claim "you'd need exponentially many physical bits" is a **mis-description**. The real barrier is a **precision-vs-runtime noise-floor tradeoff** plus the **simulation burden of proof** — not a bit-counting theorem. Decisive measured datapoint: analog/annealing factoring is "better than random guessing **but still exponential**" (Willsch et al. 2024). |
-| 7 | **Circuit-lower-bound argument** | **Open, but not a method** | A genuine complexity-theory program, but it yields a *separation*, not a factoring algorithm. Sharply more obstructed than it looks — see **§8.4** (factoring isn't even known to have poly-size circuits; the NP-hardness route is provably closed; algebrization is the factoring-specific barrier; the real target is `spf ∉ uniform TC⁰`, and the previously recommended `Ω ∉ uniform TC⁰` was demoted because its link to factoring is *believed, not proven*). |
+| 7 | **Circuit-lower-bound argument** | **Open, but not a method** | A genuine complexity-theory program, but it yields a *separation*, not a factoring algorithm. Sharply more obstructed than it looks — see **§8.4** (factoring isn't even known to have poly-size circuits; the NP-hardness route is provably closed; algebrization is the barrier that covers factoring; the real target is `spf ∉ uniform TC⁰`, and the previously recommended `Ω ∉ uniform TC⁰` was demoted because its link to factoring is *believed, not proven*). |
 
 ---
 
@@ -389,6 +389,42 @@ symbol** — both generically as hard as factoring, both trivial in general. Thi
 *is* the Manger-bit content, already published. **Do not go looking for a
 "Frankel–Tessaro–Kiltz" small-exponent result to supply this; the triple could not
 be bound to any title, and Aggarwal–Maurer §1.3 subsumes the intent.**
+
+> **[ADJUDICATED 2026-09-24 — a subagent reported this attribution as a
+> MISATTRIBUTION. That report is REJECTED; the survey is correct. I verified it
+> against the full text of Aggarwal–Maurer (ePrint 2008/260, 18 pp., extracted
+> and searched directly).]**
+>
+> - The quoted passage is **verbatim in the paper**, and it sits in **§1.3
+>   "Discussion and Relevance of the Generic Model of Computation"** — so
+>   `§1.3` is the right section, exactly as this survey says.
+> - The paper **itself** attributes the corollary to Lemma 5 in that very
+>   sentence: *"Thus, for the ring `ℤ_N`, as we show in Lemma 5, if the input is
+>   chosen uniformly at random … then if we can obtain any non-trivial information
+>   from an equality query with non-negligible probability, then we can use this
+>   to factor N."* So `from their Lemma 5` is **the paper's own attribution**,
+>   not this survey's invention.
+> - The two stated instances are also verbatim: *"even problems as simple as
+>   computing the least significant bit of a random input in `ℤ_N` is hard with
+>   respect to generic ring algorithms. In particular, computing the Jacobi
+>   symbol is an example of a problem that is easy to solve in general, but is
+>   hard in the generic ring model."*
+> - The report's one **correct** observation: the *statement* of body Lemma 5 is
+>   the technical deterministic-GRA→SLP lemma (*"given `n, L` and an `L`-step
+>   deterministic GRA `G` … either outputs a factor of `n` or an `L`-step SLP `S`
+>   with `λ_n(S,g) ≥ λ_{n,ε}(G,g) − ε²`"*), and the decision-oracle content is
+>   its **§1.3 corollary**, not Lemma 5's statement. That is a fair precision
+>   note, but it does **not** make the survey's citation wrong.
+>
+> **The credit the report was right to insist on:** Aggarwal–Maurer cite
+> **Jager & Schwenk**, *"On the Analysis of Cryptographic Assumptions in the
+> Generic Ring Model"*, ASIACRYPT 2009, LNCS **5912**:399–416, DOI
+> `10.1007/978-3-642-10366-7_24` (their ref. [9]; journal version *J. Cryptology*
+> 2012, DOI `10.1007/s00145-012-9120-y`), for precisely the generic-ring
+> hardness of the Jacobi symbol. So: **credit Jager–Schwenk for the
+> generic-ring hardness of even simple decision problems, and Aggarwal–Maurer for
+> the equivalence framing** — the survey should name both rather than only the
+> latter.
 
 #### 4b-iii. The problem is three-level, not two-level
 
@@ -1676,11 +1712,35 @@ applies to fixed structures that may be perfectly well defined but uncomputable.
 large.
 
 **Proof (counting; no complexity theory, no conjectures).** Recovering `p` from
-`H(N)` forces `H` to be **injective** on `{p · q_p : p < 2^{n/2} prime}`, since two
-distinct `p` giving the same handle would be indistinguishable. That set has
-size `≈ 2^{n/2}/n` — the number of primes below `√N`. But `|Cl(K)| = h(K)` is a
-**constant**, so `H` has `O(1)` bits of range. `2^{n/2}/n` bits of range are
-needed; `O(1)` are available. **Contradiction.** ∎
+`H(N)` forces `H` to be **injective** on the set of *moduli*, since two distinct
+semiprimes `N₁ ≠ N₂` with the same handle would be indistinguishable, and `p`
+determines `N` (and `N` determines `p = spf(N)`). Take
+
+    S_n  =  { N : N = pq,  p, q prime,  p ≤ q,  2^{n−1} < N < 2^n } ,
+
+the semiprimes of bit-length `n`. By Landau's estimate `|S_n| ≈ x ln ln x / ln x`
+at `x = 2^n`, so `log₂|S_n| = n − log₂ n + O(1)`. Since `|Cl(K)| = h(K)` is a
+**constant**, `H` has `O(1)` bits of range. `n − Θ(log n)` bits are needed;
+`O(1)` are available. **Contradiction.** ∎
+
+> **[CORRECTED 2026-09-24 — the counting set as originally printed was
+> degenerate, which made the proof vacuous as written.]** The text read
+> *"injective on `{p · q_p : p < 2^{n/2} prime}`, a set of size `≈ 2^{n/2}/n`"*.
+> But `N` is **fixed** at the start of the paragraph, so the only sensible
+> reading of `q_p` is "the cofactor `N/p`" — and then `p · q_p = N` for *every*
+> `p`. The set is the **singleton `{N}`**, of size **1**, not `2^{n/2}/n`. Every
+> map out of a singleton is injective, so the injectivity requirement was
+> **vacuous** and the cardinality did not follow from the set as defined. This is
+> the same failure mode as the inverted pigeonhole in
+> `FactorEncodingAudit.lean` (§7): **an under-specified symbol silently
+> removes the contradiction** while leaving the prose looking rigorous. The
+> repair above fixes the *set* (not the count) and **strengthens** the
+> conclusion: the handle must carry `n − Θ(log n)` bits, not `n/2 − Θ(log n)`.
+> The gap against `O(1)` is now unarguable.
+>
+> *(`FactorEncodingAudit.lean`'s `fixed_range_cannot_be_injective` is stated
+> generically over the domain and is **unaffected** — the theorem is correct;
+> only the survey's prose instantiation was degenerate.)*
 
 This is **information-theoretic** and therefore independent of `P ≠ NP`,
 independent of subexponential factoring, independent of GRH. Numerically: at
@@ -1744,6 +1804,25 @@ There is **no citable `Ω(√N)` generic factoring theorem**, because the generi
 barrier" is therefore a *trivial upper bound* (trial division) plus a barrier
 that is real only for a restricted method class. **No unconditional
 superpolynomial lower bound for factoring in the standard model is known.**
+
+> **[ADDED 2026-09-24 — the one genuine generic-model superpolynomial lower
+> bound was missing from this survey, and it must be cited with its exact
+> scope.]** **Damgård & Koprowski**, *"Generic Lower Bounds for Root Extraction
+> and Signature Schemes in General Groups"*, EUROCRYPT 2002, LNCS, pp. 256–271,
+> DOI `10.1007/3-540-46035-7_17` (re-verified by exact-DOI fetch), is a real
+> **generic-model superpolynomial lower bound**. **But its subject is root
+> extraction and signature schemes, not factoring**, so it does not contradict
+> the "no generic factoring lower bound" line above — it is the right citation
+> for "superpolynomial generic lower bounds *do* exist in this literature", and
+> its absence was making the survey's silence look like a claim rather than an
+> absence of a relevant theorem.
+>
+> A second related reference belongs here for the same reason: **Altmann, Jager
+> & Rupp**, *"On Black-Box Ring Extraction and Integer Factorization"*, DOI
+> `10.1007/978-3-540-70583-3_36`, pp. 437–448 — black-box ring extraction, i.e.
+> the extraction barrier that Aggarwal–Maurer's equivalence is the sharp form
+> of. Both are **cited for scope**, neither yields a factoring lower bound, and
+> both must not be reported as if they did.
 
 What Aggarwal–Maurer do establish is an **equivalence**, not a bound: a
 factoring assumption gives generic-RSA hardness, and breaking generic RSA yields
@@ -1812,6 +1891,16 @@ is forced by AM–GM, and `k = 3` gives NFS" — is **wrong**, in a way that mad
    `B² + E²` subject to `E²·Prob ≥ B^{1+o(1)}`; Barbulescu–Gaudry–Kleinjung), and
    that balance is **insensitive to arity**. Arity buys the constant `c`, never
    the exponent.
+   > **The `L`-constant `(64/9)^{1/3} ≈ 1.923` is `HEURISTIC`, and the label
+   > must appear next to it.** It is the optimum of a **heuristic**
+   > smoothness-probability model (Dickman `ρ` plus a `poly` factor-base
+   > optimisation) — **not a lower bound of any kind**. There is **no proof** that
+   > no classical method beats `L[1/3, (64/9)^{1/3}]`, and **no proof** that this
+   > balance is optimal over all methods; it is only optimal *within the model*.
+   > Without this label a reader can reasonably infer the NFS exponent is
+   > *forced*, which is exactly the misreading §6 exists to prevent. The
+   > epistemic status of every "faster than NFS" claim in this survey is
+   > therefore: **unproved, and unrefuted.**
 
 So "`k = 3` gives NFS" records a *shape*, not a *mechanism*, and "unbounded arity
 escapes the barrier" is an artifact of an under-specified model, not a route to
@@ -1857,9 +1946,15 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
     odd `N ≥ 3` there is a Fermat node with `m − n = 1`, so "produce a Fermat
     node" is not a factoring task at all.
   - **The uniformity kill.** `fixed_range_cannot_be_injective` is the pigeonhole
-    at the heart of §5b: a handle must be injective on the candidate factors
-    (`≈ 2^{n/2}/n` of them), so a range of `h + 1` values cannot serve when the
-    candidate set is larger. No complexity theory is used.
+    at the heart of §5b, and the theorem is **stated generically over the
+    domain** — which is why it was unaffected by the degenerate set in §5b's
+    *prose*. Concretely, after the §5b repair: a handle must be injective on the
+    `n`-bit semiprimes (there are `|S_n|` of them, `log₂|S_n| = n − Θ(log n)`), so
+    a range of `h + 1` values cannot serve. No complexity theory is used. The
+    lesson worth keeping is the meta one: **the Lean statement was generic and
+    therefore correct; only the survey's specialisation was wrong** — the defect
+    lived entirely in the instantiation, where an under-specified symbol
+    (`q_p`) silently deleted the contradiction.
   - **The §4d-ii correction.** `fourdii_printed_step_false` records that the
     survey's step `2β − β² ≤ β²` fails at `β = 1/2` (`3/4` versus `1/4`);
     `strict_gap_below_half` and `beta_sq_le_gap` pin the two exponents exactly;
@@ -1901,7 +1996,47 @@ algorithm; each is a place where a genuine open problem still lives.
      shaves `log₂(e) ≈ 17` bits off the required leak for `e = 65537` — an
      engineering gain, not a regime change. **Full derivation, the three
      "looks like a crossing but isn't" traps, and the non-uniform-`k` regime
-     where `n/4` genuinely does not hold: §4d.**
+     where `n/4` genuinely does not hold: §4d.
+     > **[RECHECKED 2026-09-24 — the "no improvement in 24 years" claim
+     > SURVIVES on the size axis, and is now positively corroborated; but the
+     > sentence needed an axis label and a `HEURISTIC` tag.]** A subagent
+     > reported this as an error to be corrected; **I checked, and on the
+     > size-threshold axis the survey is right.** `0.292` bounds how *small* `d`
+     > may be with **no** side leak, and the strongest recent paper on that axis
+     > is titled to say exactly that: **Takayasu & Kunihiro**, *"Partial key
+     > exposure attacks on RSA: **Achieving the Boneh–Durfee bound**"*, *Theor.
+     > Comput. Sci.* **761**:51–77, 2019, DOI `10.1016/j.tcs.2018.08.021`
+     > (verified by exact-DOI fetch). A 2019 paper whose title is "achieving the
+     > Boneh–Durfee bound" is direct evidence the bound itself did not move.
+     >
+     > **What the recheck did fix — the claim was axis-silent.** Partial-key
+     > exposure has **two** axes and the survey conflated them into one
+     > sentence. (i) The **size** axis is frozen at `0.292`. (ii) The
+     > **leak-plus-size** axis has genuinely advanced — above all **Ernst et
+     > al.**, *"Partial Key Exposure Attacks on RSA **up to Full Size
+     > Exponents**"*, EUROCRYPT 2005, LNCS, pp. 371–386, DOI
+     > `10.1007/11426639_22` (verified by exact-DOI fetch), which recovers
+     > **full-size** exponents from a partial leak, plus Takayasu–Kunihiro's
+     > follow-up *"Extended partial key exposure attacks on RSA: Improvement up
+     > to full size decryption exponents"*, TCS **841**:62–83, 2020, DOI
+     > `10.1016/j.tcs.2020.07.004`. So the honest statement is **per-axis**:
+     > *`0.292` is unmoved as a pure size threshold; the leak axis has reached
+     > full-size exponents.*
+     >
+     > **The `0.292` threshold is `HEURISTIC` and must carry that label** — it
+     > rests on an assumption about the distribution of lattice points, not on a
+     > proof that the attack always succeeds. So "still the record after 24
+     > years" describes the best **heuristic** attack, not a theorem that
+     > resists improvement.
+     >
+     > **[DELIBERATELY NOT ENTERED — one reported figure failed verification.]**
+     > The same report also claimed a combined threshold **`N^{0.5625}`**. I
+     > could not bind that number to a primary source in four differently-phrased
+     > Crossref searches, so it is **not** in this survey and is **not** cited as
+     > fact anywhere. Two of that report's titles were also wrong as given (the
+     > TCS 761 paper is *"…Achieving the Boneh–Durfee bound"*, not a paper on
+     > "arbitrary key bits"), which is why nothing from that report was entered
+     > on trust.
    - **The sharpest open problem.** The 1/4 wall is a wall of *method, not
      information*: the governing **proved** statement is the univariate bound
      `X ≤ N^{β²}` (May–Nowakowski–Sarkar ePrint 2022/271, Thm 2, restating
@@ -1995,6 +2130,23 @@ algorithm; each is a place where a genuine open problem still lives.
      `BPP ⊆ P/poly`, which is open. So
      **`FACTOR ∈ FP/poly` is itself undecided** — unusual, since for most natural
      problems at least the poly-size upper bound is known.
+     > **[CORRECTED 2026-09-24 — the *reason* above was wrong; the conclusion
+     > survives.]** This bullet said the poly-size route "would need
+     > `BPP ⊆ P/poly`, which is open." **`BPP ⊆ P/poly` is not open — it is
+     > Adleman's 1978 theorem** (*Two theorems on random polynomial time*,
+     > FOCS 1978:75–83, DOI `10.1109/SFCS.1978.37`, re-verified by exact-DOI
+     > fetch). What is open is **`P = BPP`**, a *different and much stronger
+     > statement. So the sentence conflated the two: the correct form is that
+     > `BPP ⊆ P/poly` is **already known**, so the randomized poly-size bound
+     > on `FACTOR` is **available** and the obstruction is **not** there.
+     >
+     > **The stated conclusion `FACTOR ∈ FP/poly` is itself undecided — but for
+     > a different reason, and the honest one: the only poly-size circuits on
+     > offer are *randomized*, and no **deterministic** poly-size circuit family
+     > for `FACTOR` is known.** Unrolling the `2^{Θ(n)}` deterministic bound
+     > gives exponential circuits, and the deterministic line still tops out at
+     > `N^{1/5}`. The gap the bullet needed to name is **deterministic vs
+     > randomized**, not `BPP` vs `P/poly`.
    - **The PRIMES analogy breaks, and this is the crux.** Primality has a polytime
      *deterministic* upper bound (`PRIMES ∈ TC⁰`, Hesse–Allender–Barrington — the
      upper half is solid). The **lower** half is the problem: this survey previously
@@ -2015,17 +2167,58 @@ algorithm; each is a place where a genuine open problem still lives.
      to a factoring lower bound can pass through NP-hardness — the natural instinct
      ("show it's as hard as a known-hard problem") is not merely unknown but
      **provably unavailable** barring a collapse.
-   - **Algebrization is the factoring-specific barrier.** The natural proofs barrier
-     blocks superpolynomial strategies *in general*; but the one structural handle
-     factoring has is arithmetic (multiplication/division gates), and
-     **algebrization** is designed to rule out lower bounds for exactly
-     arithmetic/algebraic problems. The one door factoring's structure opens is the
-     door algebrization closes.
+   - **Algebrization is the barrier that covers factoring.** The natural proofs
+     barrier blocks superpolynomial *lower-bound proof techniques* *in general*;
+     but the one structural handle factoring has is arithmetic
+     (multiplication/division gates), and **algebrization** is designed to rule
+     out lower bounds for exactly arithmetic/algebraic problems. The one door
+     factoring's structure opens is the door algebrization closes.
+     > **[PRECISION FIX 2026-09-24 — three defects corrected in the sentence
+     > above, none of them changing its role.]** (i) *"blocks superpolynomial
+     > **strategies**"* was a **category error**: RR is a barrier to *proving*
+     > circuit lower bounds via natural combinatorial properties, **not** a
+     > barrier to designing or running algorithms. It forbids a *proof method*;
+     > it does not forbid *computing*. Hence **"proof techniques"**, not
+     > "strategies". (ii) **RR is conditional and was stated flatly**: it is a
+     > theorem **conditional on the existence of strong pseudorandom
+     > generators** (cryptographic hardness of explicit functions in `E`).
+     > Correct: *"…in general, **if strong pseudorandom generators exist**."*
+     > (iii) **A level mismatch, the sharpest of the three:** the survey's stated
+     > target is `spf ∉ DLOGTIME-uniform TC⁰`, but **RR is a `P/poly`-level
+     > barrier** — against *polynomial-size, unbounded-depth* circuits for
+     > *explicit* functions. Since `TC⁰ ⊆ NC⁰ ⊆ P/poly` is a strictly **easier**
+     > target, a `TC⁰` lower bound is a **weaker** theorem and is **strictly less
+     > exposed** to the natural-proofs barrier. So stating RR as the obstacle to
+     > the survey's actual target **overstates** the obstruction: **RR blocks the
+     > `P/poly`-level version of this program — the stronger, more natural goal —
+     > and the `TC⁰` target is not yet in its sights.**
+     >
+     > A fourth, internal inconsistency is also fixed: this bullet called
+     > algebrization *"the factoring-specific barrier"* while its own next clause
+     > said algebrization *"is designed to rule out lower bounds for exactly
+     > arithmetic/algebraic problems"*. Those are different claims and the second
+     > is the true one — Aaronson–Wigderson's algebrization is a **general**
+     > barrier whose factoring instance is **one application among several**
+     > (linear circuits, matrix algorithms, factoring). Hence **"the barrier that
+     > covers factoring"**, dropping the one word that caused the clash.
    - **The sharpest open target is `spf(N) ∉ DLOGTIME-uniform TC⁰`** (least prime
      factor), **not** `Ω(N) ∉ uniform TC⁰` and **not** the two-input
      `SMALLFACTOR(N,B)` — see the correction box immediately below. Since
      `spf ≡ₚ FACTOR` *by definition*, this is **provably** a factoring lower bound,
-     not a conjectural one. And the separation is as sharp as it gets in this
+     not a conjectural one.
+     > **The reduction, stated rather than gestured at.** "By definition" was
+     > under-argued, and the reduction is worth one line because it makes the
+     > barrier's *shape* explicit: **`FACTOR` and `spf` are mutually
+     > polynomial-time Turing-reducible on semiprimes.** `spf → FACTOR` is a
+     > single division, `q = N / spf(N)`. `FACTOR → spf` is a comparison. So a
+     > semiprime is **not** "half factored" by knowing `spf`: **one call
+     > completes the factorization.** The consequence is that the lower-bound
+     > difficulty is **pure pigeonhole, not information starvation** — no
+     > factoring handle is information-limited at one output; what is missing is
+     > any way to *produce* that output cheaply, and that is exactly what a
+     > circuit lower bound would have to obstruct.
+     >
+     > And the separation is as sharp as it gets in this
      family: **`PRIMES(N)` is literally the single bit `[spf(N) = N]`**, and that
      bit is (as far as verified) in uniform `TC⁰`. The conjecture is therefore
      *"the 'is it its own least factor' bit is in `TC⁰`; the function is not."*
@@ -2244,8 +2437,21 @@ refined analysis keeps the `L[1/3, (64/9)^{1/3}]` constant unchanged**) ·
 **MISSING until 2026-09-24**) · **Shoup** EUROCRYPT 1997, DOI
 `10.1007/3-540-69053-0_18` ("Lower Bounds for Discrete Logarithms and Related
 Problems" — the generic-**group** `Ω(√q)` bound; **MISSING until 2026-09-24**,
-and it is *not* a factoring bound: see §5c) · **Batte–Luca** 2024, "On the
-largest prime factor of the `k`-generalized Lucas numbers"
+and it is *not* a factoring bound: see §5c) · **Jager & Schwenk** ASIACRYPT
+2009, LNCS **5912**:399–416, DOI `10.1007/978-3-642-10366-7_24`, "On the
+Analysis of Cryptographic Assumptions in the Generic Ring Model" (their ref.
+[9] inside Aggarwal–Maurer; the **primary** source for generic-ring hardness of
+even the Jacobi symbol — **cite alongside** Aggarwal–Maurer, who supply the
+equivalence framing; journal version *J. Cryptology* 2012, DOI
+`10.1007/s00145-012-9120-y`) · **Damgård & Koprowski** EUROCRYPT 2002,
+LNCS, pp. 256–271, DOI `10.1007/3-540-46035-7_17`, "Generic Lower Bounds for
+Root Extraction and Signature Schemes in General Groups" (the one genuine
+generic-model superpolynomial lower bound; **its subject is root extraction and
+signatures, not factoring** — cite for scope, never as a factoring bound) ·
+**Altmann, Jager & Rupp**, DOI `10.1007/978-3-540-70583-3_36`, pp. 437–448, "On
+Black-Box Ring Extraction and Integer Factorization" (the extraction barrier
+Aggarwal–Maurer's equivalence is the sharp form of) · **Batte–Luca** 2024, "On
+the largest prime factor of the `k`-generalized Lucas numbers"
 (`P(L_n) > (1/86)·log log n`, the strongest unconditional bound on the
 largest-prime factor of a Lucas term; **verified by Crossref 2026-09-24**) ·
 **Stewart** 1985 · *(a "Murty–Wong 2023" consecutive-smooth reference was
@@ -2258,7 +2464,20 @@ non-uniform/advice model) · Barbulescu–Gaudry–Kleinjung ePrint
 1760s–1785 · Gauss 1801 (*Disquisitiones Arithmeticae*) · **Coppersmith** 1997
 (J. Cryptology; MSB/LSB of `p`; small-`d` `N^{1/4}`) · Howgrave–Graham 1997 ·
 Wiener (small-`d` `N^{1/4}/3`) · **Boneh–Durfee–Frankel** ASIACRYPT 1998 ·
-**Boneh–Durfee** 2000 (`d < N^{0.292}`) · **Heninger–Shacham** CRYPTO 2009
+**Boneh–Durfee** 2000 (`d < N^{0.292}` — **`HEURISTIC`**: rests on a lattice-point
+distribution assumption, not a proof of success; the size threshold is unmoved) ·
+**Ernst et al.** EUROCRYPT 2005, LNCS, pp. 371–386, DOI
+`10.1007/11426639_22`, "Partial Key Exposure Attacks on RSA up to Full Size
+Exponents" (the **leak** axis advancing to full-size exponents — a *different
+axis* from the frozen `0.292` size threshold) · **Takayasu & Kunihiro** *Theor.
+Comput. Sci.* **761**:51–77, 2019, DOI `10.1016/j.tcs.2018.08.021`, "Partial key
+exposure attacks on RSA: **Achieving the Boneh–Durfee bound**" (positive
+evidence the `0.292` size bound did not move) · and their follow-up *Theor.
+Comput. Sci.* **841**:62–83, 2020, DOI `10.1016/j.tcs.2020.07.004`, "Extended
+partial key exposure attacks on RSA: Improvement up to full size decryption
+exponents" · **Adleman** FOCS 1978, pp. 75–83, DOI `10.1109/SFCS.1978.37`, "Two
+theorems on random polynomial time" (**`BPP ⊆ P/poly` is THIS theorem, not an
+open problem**; what is open is `P = BPP`) · **Heninger–Shacham** CRYPTO 2009
 (ePrint 2008/510, `δ ≈ 0.27`, lattice-free — the **erasure** model, *not* a
 bit-flip-noise result; conference year corrected from the commonly-miscited
 "CRYPTO 2008" to CRYPTO 2009, verified on the ePrint landing page) ·
