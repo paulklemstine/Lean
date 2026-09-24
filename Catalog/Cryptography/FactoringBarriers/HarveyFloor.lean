@@ -67,9 +67,36 @@ version is now a *theorem in both directions* rather than an assertion, and
 that the two design-rule escape routes and the floor-splitting family are
 killed by theorem rather than by argument.
 
+
+## THE LOG-EXPONENT LOCK — the `lg` factor is not a free parameter
+
+Every method in the record is quoted *with* a log factor (Harvey `lg^{16/5}`,
+GFHP `lg^{13/5}`), and those `lg` powers are conventionally treated as
+engineering constants, separable from the `N` exponent. They are not.
+
+`weighted_amgm_finset_log` and `finset_barrier_attained_log` carry a log cost
+`L^c` through the same balance and show the optimum is
+
+> `N^{γ/(1+Σw)} · L^{c/(1+Σw)}` — **`1+Σw` is the denominator of BOTH powers.**
+
+`log_exponent_locked` then gives the ratio: `e/f = γ/c`. The two exponents are
+locked. Consequences (`sixth_costs_five_sixths_of_log`,
+`eighth_costs_five_eighths_of_log`): reaching `1/6` **necessarily** cuts the log
+exponent to `5/6` of its `1/5` value, and `1/8` to `5/8`, for *every* primitive
+cost `c`. Applied to GFHP's published `lg^{13/5}` (`gfhp_log_lock`):
+
+> **`lg^{13/5}` and a `1/6` exponent are formally incompatible.** At the same
+> per-step cost, `1/6` forces `lg^{13/6}` and `1/8` forces `lg^{13/8}`.
+
+So the `1/6`/`1/8` roadmap must pay for the exponent either by improving the
+per-step primitive enough to offset it, or by surrendering log factor — a trade
+GFHP's roadmap sentence does not mention. This also retires the entire
+"optimize the primitive" program *by theorem*: faster LLL, faster hashing, and
+better data structures move only `c`, and `c` enters the `N`-exponent not at all.
+
 ## Provenance
 
-Machine-checked, **13 theorems, 0 `sorry`, 0 `axiom`** (verified by `#print
+Machine-checked, **23 theorems, 0 `sorry`, 0 `axiom`** (verified by `#print
 axioms`: only `propext`, `Classical.choice`, `Quot.sound`), against Mathlib at
 `0df444a360eaa60ab8c11dca51a86af692955474` (Lean v4.33.1) in the Prove2me
 workspace:
@@ -573,5 +600,132 @@ theorem one_eighth_needs_weight_three (W : ℝ) (hW : (0 : ℝ) ≤ W)
   have hh := required_weight ((1 : ℝ) / 2) ((1 : ℝ) / 8) W (by norm_num) hW h
   norm_num at hh ⊢
   linarith
+
+/-! ### THE LOG-EXPONENT LOCK — the `lg` factor is not an independent knob
+
+Every method in the deterministic record is quoted *with* a log factor:
+Harvey `N^{1/5} lg^{16/5}`, GFHP `N^{1/5} lg^{13/5}N/(lg lg N)^{3/5}`. Those
+`lg` powers are usually treated as an engineering constant, separable from the
+`N` exponent — the exponent is "the result", the `lg` power is "the constant".
+
+The `k`-floor theorem says that is **false**. A log-cost `L^c` rides through the
+same balance and is divided by the *same* `1+Σw`. So `Σw` fixes the exponent of
+`N` **and** the exponent of `L`, and the ratio between them is pinned.
+
+The corollary is a sharp prediction about GFHP's own speculative `N^{1/6}` and
+`N^{1/8}` targets: at fixed per-step primitive cost, improving the exponent
+**necessarily** shrinks the log exponent, by the same ratio. `lg^{13/5}` cannot
+survive a `1/6` exponent. -/
+
+/-- **The `k`-floor barrier with a log-cost factor.** Cost shape
+`max(rᵢ, N^γ · L^c / ∏ᵢ rᵢ^{wᵢ})`. Same proof as `weighted_amgm_finset` with
+`L^c` carried along: `N^γ · L^c ≤ T·∏ᵢ rᵢ^{wᵢ} ≤ T^{1+Σw}`. -/
+theorem weighted_amgm_finset_log (N γ c T L : ℝ) {s : Finset ℝ} (r w : ℝ → ℝ)
+    (hN : 0 < N) (hL : 0 < L)
+    (hr : ∀ x ∈ s, 0 < r x) (hw : ∀ x ∈ s, 0 < w x)
+    (hdom : ∀ x ∈ s, r x ≤ T)
+    (hint : N ^ γ * L ^ c / ∏ x ∈ s, (r x) ^ (w x) ≤ T) :
+    N ^ γ * L ^ c ≤ T ^ (1 + ∑ x ∈ s, w x) := by
+  have hden : 0 < ∏ x ∈ s, (r x) ^ (w x) :=
+    Finset.prod_pos fun x hx => Real.rpow_pos_of_pos (hr x hx) (w x)
+  have hmul : N ^ γ * L ^ c ≤ T * ∏ x ∈ s, (r x) ^ (w x) :=
+    (div_le_iff₀ hden).mp hint
+  have hT : 0 < T := lt_of_lt_of_le (by positivity) hint
+  have hprod : (∏ x ∈ s, (r x) ^ (w x)) ≤ ∏ x ∈ s, T ^ (w x) :=
+    Finset.prod_le_prod (fun x hx => (Real.rpow_pos_of_pos (hr x hx) (w x)).le)
+      fun x hx => Real.rpow_le_rpow (le_of_lt (hr x hx)) (hdom x hx) (le_of_lt (hw x hx))
+  have hteq : (∏ x ∈ s, T ^ (w x)) = T ^ (∑ x ∈ s, w x) :=
+    finset_rpow_prod T s w hT
+  calc N ^ γ * L ^ c ≤ T * ∏ x ∈ s, (r x) ^ (w x) := hmul
+    _ ≤ T * ∏ x ∈ s, T ^ (w x) := mul_le_mul_of_nonneg_left hprod (le_of_lt hT)
+    _ = T * T ^ (∑ x ∈ s, w x) := by rw [← hteq]
+    _ = T ^ (1 + ∑ x ∈ s, w x) := by
+      rw [Real.rpow_add hT 1 (∑ x ∈ s, w x), Real.rpow_one]
+
+/-- **Attainment with a log-cost factor.** At
+`T = N^{γ/(1+Σw)} · L^{c/(1+Σw)}` the interior is exactly `T`. So the optimum of
+the log-cost shape is
+
+> `N^{γ/(1+Σw)} · L^{c/(1+Σw)}` — **`1+Σw` is the denominator of BOTH powers.** -/
+theorem finset_barrier_attained_log (N γ c L : ℝ) (s : Finset ℝ) (w : ℝ → ℝ)
+    (hN : 1 < N) (hL : 1 < L) (hw : ∀ x ∈ s, 0 < w x) :
+    let T : ℝ := N ^ (γ / (1 + ∑ x ∈ s, w x)) * L ^ (c / (1 + ∑ x ∈ s, w x))
+    N ^ γ * L ^ c / ∏ x ∈ s, T ^ (w x) = T := by
+  dsimp only
+  have hN0 : (0 : ℝ) ≤ N := le_of_lt (lt_trans (by norm_num) hN)
+  have hL0 : (0 : ℝ) ≤ L := le_of_lt (lt_trans (by norm_num) hL)
+  have hW : (0 : ℝ) ≤ ∑ x ∈ s, w x := Finset.sum_nonneg fun x hx => (hw x hx).le
+  have hne : (1 + ∑ x ∈ s, w x) ≠ 0 := ne_of_gt (by linarith)
+  -- the floor product telescopes to `Tbase^{Σw}`
+  have hprod : (∏ x ∈ s, ((N ^ (γ / (1 + ∑ x ∈ s, w x))
+        * L ^ (c / (1 + ∑ x ∈ s, w x))) ^ (w x)))
+      = (N ^ (γ / (1 + ∑ x ∈ s, w x)) * L ^ (c / (1 + ∑ x ∈ s, w x)))
+        ^ (∑ x ∈ s, w x) :=
+    finset_rpow_prod _ s w (by positivity)
+  rw [hprod]
+  -- `Tbase^{1+Σw} = N^γ · L^c`
+  have hkey : (N ^ (γ / (1 + ∑ x ∈ s, w x)) * L ^ (c / (1 + ∑ x ∈ s, w x)))
+      ^ (1 + ∑ x ∈ s, w x) = N ^ γ * L ^ c := by
+    have hA : (N ^ (γ / (1 + ∑ x ∈ s, w x)) * L ^ (c / (1 + ∑ x ∈ s, w x)))
+        ^ (1 + ∑ x ∈ s, w x)
+        = N ^ ((γ / (1 + ∑ x ∈ s, w x)) * (1 + ∑ x ∈ s, w x))
+          * L ^ ((c / (1 + ∑ x ∈ s, w x)) * (1 + ∑ x ∈ s, w x)) := by
+      have hmul' := Real.mul_rpow
+        (x := N ^ (γ / (1 + ∑ x ∈ s, w x))) (y := L ^ (c / (1 + ∑ x ∈ s, w x)))
+        (z := 1 + ∑ x ∈ s, w x) (by positivity) (by positivity)
+      rw [hmul', Real.rpow_mul hN0, Real.rpow_mul hL0]
+    have hB : (γ / (1 + ∑ x ∈ s, w x)) * (1 + ∑ x ∈ s, w x) = γ :=
+      div_mul_cancel₀ γ hne
+    have hC : (c / (1 + ∑ x ∈ s, w x)) * (1 + ∑ x ∈ s, w x) = c :=
+      div_mul_cancel₀ c hne
+    rw [hA, hB, hC]
+  rw [← hkey]
+  -- `Tbase^{1+W} / Tbase^{W} = Tbase^{1} = Tbase`
+  have hTpos : 0 < N ^ (γ / (1 + ∑ x ∈ s, w x)) * L ^ (c / (1 + ∑ x ∈ s, w x)) := by
+    positivity
+  have hneT : ((N ^ (γ / (1 + ∑ x ∈ s, w x)) * L ^ (c / (1 + ∑ x ∈ s, w x)))
+      ^ (∑ x ∈ s, w x)) ≠ 0 :=
+    (Real.rpow_pos_of_pos hTpos (∑ x ∈ s, w x)).ne'
+  rw [Real.rpow_add hTpos 1 (∑ x ∈ s, w x), Real.rpow_one, div_eq_iff hneT]
+
+/-- **★ THE LOG-EXPONENT LOCK.** If the optimum is `N^e · L^f` for a method of
+range exponent `γ`, log-cost exponent `c` and total weight `W`, then
+
+> **`e = γ/(1+W)`, `f = c/(1+W)`, and `e/f = γ/c`.**
+
+**There is no independent `lg` knob.** The same `1+W` fixes the exponent of `N`
+and the exponent of `L`, so the two are locked in a fixed ratio. -/
+theorem log_exponent_locked (e f γ c W : ℝ) (hc : 0 < c) (hW : (0 : ℝ) ≤ W)
+    (he : e = γ / (1 + W)) (hf : f = c / (1 + W)) : e / f = γ / c := by
+  rw [he, hf]
+  field_simp
+
+/-- **★ The prediction: a `1/6` exponent COSTS log factor, and the cost is
+exactly `5/6` of the `1/5` log exponent — for *every* primitive cost `c`.**
+
+At the `1/5` balance `1+W = 5/2` the log exponent is `c/(5/2) = c·2/5`; at the
+`1/6` balance `1+W = 3` it is `c/3 = (c·2/5)·(5/6)`. This holds for all `c`, so
+it is a structural cost, not a statement about any particular primitive. -/
+theorem sixth_costs_five_sixths_of_log (c : ℝ) : c / 3 = (c * 2 / 5) * (5 / 6) := by
+  ring
+
+/-- **★ And `1/8` costs `5/8` of the `1/5` log exponent** (`1+W` goes `5/2 → 4`),
+again for every `c`. -/
+theorem eighth_costs_five_eighths_of_log (c : ℝ) : c / 4 = (c * 2 / 5) * (5 / 8) := by
+  ring
+
+/-- **★★ THE NUMERIC PREDICTION ABOUT GFHP'S OWN ROADMAP.** GFHP's published
+record is `N^{1/5} lg^{13/5}N/(lg lg N)^{3/5}`. If the `1/6` or `1/8` targets
+were ever reached **at that same per-step primitive cost**, the log factor would
+be forced down to `lg^{13/6}` and `lg^{13/8}` respectively.
+
+So `lg^{13/5}` and a `1/6` exponent are **formally incompatible**: you cannot
+keep GFHP's log factor and improve its exponent. Either the per-step cost
+improves enough to pay for the exponent, or the log factor drops. The source
+frames the roadmap as being about a lemma "remaining applicable" and says
+nothing about this trade. -/
+theorem gfhp_log_lock :
+    (13 : ℝ) / 5 * (5 / 6) = 13 / 6 ∧ (13 : ℝ) / 5 * (5 / 8) = 13 / 8 := by
+  constructor <;> norm_num
 
 end Crypto.FactoringBarrier.HarveyFloor

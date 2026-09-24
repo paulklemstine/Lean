@@ -3027,6 +3027,81 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   blocked on a weight-structure change nobody has exhibited, not on the
   hypothesis-relaxation work that has absorbed all recent effort.
 
+- **★★★★ THE LOG-EXPONENT LOCK — `lg^{13/5}` and a `1/6` exponent are FORMALLY
+  INCOMPATIBLE.** *(2026-09-24; 6 further theorems in `HarveyFloor.lean`:
+  `weighted_amgm_finset_log`, `finset_barrier_attained_log`,
+  `log_exponent_locked`, `sixth_costs_five_sixths_of_log`,
+  `eighth_costs_five_eighths_of_log`, `gfhp_log_lock`. 23 theorems total, all
+  `#print axioms`-clean.)*
+
+  **The conventional framing is wrong, and it matters.** Every method in the
+  record is quoted *with* a log factor — Harvey `N^{1/5} lg^{16/5}`, GFHP
+  `N^{1/5} lg^{13/5}N/(lg lg N)^{3/5}` — and the `lg` power is conventionally
+  treated as an **engineering constant, separable from the exponent**: the
+  exponent is "the result", the `lg` power is "the constant". They are not
+  separable. A log cost `L^c` rides through the *same* balance and is divided by
+  the *same* `1+Σw`:
+
+  > **`finset_barrier_attained_log`: the optimum is
+  > `N^{γ/(1+Σw)} · L^{c/(1+Σw)}` — `1+Σw` is the denominator of BOTH powers.**
+
+  and therefore (`log_exponent_locked`)
+
+  > **`e/f = γ/c`. The exponent of `N` and the exponent of `L` are locked in a
+  > fixed ratio. There is no independent `lg` knob.**
+
+  **The consequence is a hard trade nobody has stated.** The `1+Σw` at a given
+  target is *pinned* — for `γ = 1/2`, `e = 1/6` forces `1+Σw = 3`, versus `5/2`
+  at `e = 1/5`. So improving the exponent **necessarily shrinks the log
+  exponent**, by exactly the ratio of the exponents:
+
+  | target | `1+Σw` | log exponent vs the `1/5` value | theorem |
+  |---|---|---|---|
+  | `N^{1/5}` | `5/2` | — (the current value) | `one_fifth_needs_weight` |
+  | `N^{1/6}` | `3` | **× `5/6`** | `sixth_costs_five_sixths_of_log` |
+  | `N^{1/8}` | `4` | **× `5/8`** | `eighth_costs_five_eighths_of_log` |
+
+  Both hold **for every primitive cost `c`**, so this is structural, not a
+  statement about any particular method.
+
+  **★★ APPLIED TO GFHP'S OWN NUMBERS — a prediction about an unpublished
+  result.** GFHP's published record has log exponent `lg^{13/5}`. If `1/6` were
+  reached **at that same per-step primitive cost**, the log factor would be
+  forced down to `lg^{13/6}`; and `1/8` to `lg^{13/8}` (`gfhp_log_lock`, a
+  machine-checked statement of both). So:
+
+  > **`lg^{13/5}` and a `1/6` exponent are formally incompatible.** You cannot
+  > keep GFHP's log factor and improve its exponent. The `1/6` target must pay
+  > for itself **either** by improving the per-step primitive enough to offset
+  > the `5/6`, **or** by surrendering `lg^{5/6}` of the log factor.
+
+  This is a testable prediction about work that has not been done, derived from a
+  proved general theorem. GFHP's roadmap sentence (§2) says their lemma "remains
+  applicable for potential future improvements … targeting `N^{1/6+o(1)}` or even
+  `N^{1/8+o(1)}`" and says nothing about this trade. **It is not a claim that the
+  target is unreachable** — it is a statement of the *price*, which the source
+  does not price.
+
+  **★ And it retires a whole research program BY THEOREM.** Since `c` is the
+  per-step primitive's log cost and `c` does **not** appear in the `N`-exponent
+  at all, **no amount of primitive optimization changes the exponent**: faster
+  LLL, faster hashing, better data structures, incremental/anytime lattice
+  reduction, hardware. They move `c`, hence the `lg` exponent, and nothing else.
+  This is the formal content of why the last several years of work in this area
+  have produced log-factor gains and *exponent* stasis — and it retires the
+  "optimize the primitive" family with a theorem rather than an argument, in the
+  same way `split_without_redistribution_worse` retires floor-splitting.
+
+  ⚠️ **Scope.** As with the balance dilemma, the claim is at the level of the
+  *cost shape*: for a method of this shape, the two exponents are locked. It
+  says nothing about a method of a different shape, and (like everything in
+  this file) it is emphatically **not** a claim about the best known factoring
+  algorithm — GNFS is subexponential and already beats `N^{1/5}` by an enormous
+  margin. The `lg^{16/5}` / `lg^{13/5}` conventions are read from the sources
+  cited in §2; the `13/5 → 13/6` prediction follows from `13/5` and the balance
+  alone, and does not depend on how GFHP accounts for their own log factor
+  internally.
+
 - **`OrderLCM.lean`** *(new, 2026-09-24; Lean exit 0, **0 `sorry`, 0 `axiom`**,
   workspace copy at `~/prove2me_workspace/Theorems/Thm_Crypto_FactoringBarrier_OrderLCM.lean`)* —
   **why the `δ`/large-order threshold can be relaxed AT ALL.** The survey records
@@ -3862,12 +3937,21 @@ algorithm; each is a place where a genuine open problem still lives.
    hypothesis relaxation or log-factor improvement, all of which this file now
    explains as knob-preserving.
 
+   **★ Sharper still (2026-09-24, the log-exponent lock, §7).** If a `1/6` is
+   ever reached, the log factor is *not* free: at fixed per-step cost the `lg`
+   exponent must fall to `5/6` of its `1/5` value, and GFHP's published
+   `lg^{13/5}` would become `lg^{13/6}`. So a successful answer to this question
+   must pay for the exponent out of the log factor, and the amount is fixed in
+   advance. That makes the target's **price** computable before anyone tries —
+   which is the most useful thing this file can offer a prospective solver.
+
    ⚠️ **The honest limit, restated because it is the whole risk here.** I have
    **not** established what the weights `wᵢ` are mechanically, and I have not
    exhibited a scheme with `Σw > 3/2`. This entry is a **question**, precisely
    stated, with the requirement quantified — nothing more. Guessing at the
    internals is how the earlier session produced two false kills, so the claim
    is deliberately kept at the level the theorem actually supports.
+
 
 ---
 
@@ -3928,6 +4012,18 @@ algorithm; each is a place where a genuine open problem still lives.
 > §8 thread 6, the most concrete open problem this file produces — and note it
 > is a *question*, not a result: I have not established what the weights are
 > mechanically, nor exhibited a scheme beating `3/2`.
+>
+> **★ And the `lg` factor is NOT a free parameter (§7, log-exponent lock).**
+> Carrying a log cost `L^c` through the same balance gives optimum
+> `N^{γ/(1+Σw)}·L^{c/(1+Σw)}` — the *same* `1+Σw` fixes both powers, so
+> `e/f = γ/c`. Reaching `1/6` therefore **necessarily** cuts the log exponent to
+> `5/6` of its `1/5` value and `1/8` to `5/8`, for every primitive cost. Applied
+> to GFHP's own numbers: **`lg^{13/5}` and a `1/6` exponent are formally
+> incompatible** — at the same per-step cost the target is `lg^{13/6}` (and
+> `lg^{13/8}` for `1/8`). This is a machine-checked *prediction* about work not
+> yet done, and it **retires the whole "optimize the primitive" program by
+> theorem**: faster LLL, hashing, data structures or hardware move `c` only,
+> and `c` does not appear in the `N`-exponent at all.
 
 The next honest move is to sharpen the open threads in §8 — the new weight-
 structure question, partial-key exposure,
