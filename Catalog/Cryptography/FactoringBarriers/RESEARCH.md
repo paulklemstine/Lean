@@ -2465,6 +2465,29 @@ is forced by AM–GM, and `k = 3` gives NFS" — is **wrong**, in a way that mad
    > epistemic status of every "faster than NFS" claim in this survey is
    > therefore: **unproved, and unrefuted.**
 
+> **⚠️ STRENGTHENED 2026-09-24 — the constants are asymptotic *limits*, and Le
+> Gluher–Spaenlehauer–Thomé (ePrint 2020/829; arXiv:2007.02730; *Mathematical
+> Cryptology*) prove they are not reached at any practical `N`.**  The heuristic
+> NFS cost is `L[1/3, c·(1+ξ(N))]` with a correction `ξ(N) → 0`, and they prove
+> `ξ(N) ~ 4·log log log N / (3·log log N)` — a *proved* asymptotic, not a guess.
+> Two consequences this survey must respect:
+> 1. **The convergence is pathologically slow.** Their asymptotic series for `ξ`
+>    begins to converge only for `N > exp(exp(25)) ≈ e^{7.2×10^{10}}`, which is
+>    astronomically beyond any `N` that exists or will exist. For every `N` that
+>    could actually be factored, the effective constant is strictly and
+>    appreciably **larger** than `1.9230` / `1.9018836`.
+> 2. **The authors explicitly doubt "set `ξ = 0`" estimates**, which is exactly
+>    what quoting a bare `L[1/3, 1.9018836]` does. So a bare `L`-constant in
+>    this survey is a **lower envelope on the true heuristic cost**, not an
+>    estimate of it — and the gap is not a bounded constant-factor affair.
+>
+> This does not weaken the HEURISTIC label; it sharpens *why* the label is
+> needed. Note the asymmetry that matters for the frontier: `ξ > 0` makes NFS
+> **harder** than the quoted constant, i.e. it moves the bar **up** in NFS's
+> disfavour, and it is a statement about NFS's own cost, not a lower bound on
+> competitors. It therefore remains **no help at all** to the "faster than NFS"
+> question — nothing here forbids a different method.
+
 **The two halves of this section now converge with §2 from opposite directions.**
 §6 point 1 says the naive AM–GM model *omits* the Dickman factor and that
 smoothness probability is what actually pins the subexponential cost. The §2
