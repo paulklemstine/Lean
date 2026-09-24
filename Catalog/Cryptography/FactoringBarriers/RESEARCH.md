@@ -181,6 +181,49 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
 - **Analytic number theory (L-functions, spectral, circle method):** **DEAD.**
   Recovers the same `B²`-vs-`E²` smoothness/linear-algebra balance under another
   name — same `L[1/3,·]`.
+  > **⚠️ ADDED 2026-09-24 — and the exponent gap is not merely a ranking, it is
+  > the *reason the whole cost axis cannot win*.** The bullet above records only that
+  > `L[1/2,1]` is dominated. The stronger statement is structural, and it is what
+  > makes §5a-bis's target (C) decidable rather than merely open.
+  >
+  > **Every method whose cost is governed by a quantity living in a space of size
+  > `≈p` pays the birthday bound `≈√p = 2^{n/4}` — *exponential*. NFS pays
+  > `L[1/3] = exp(O(n^{1/3}(logn)^{2/3}))` — *subexponential* — because
+  > its governing quantity is the **factor base**, of size `exp(O(u))`, which is
+  > **independent of `p`**. Measured (natural log of cost):
+  >
+  > | `n` | NFS | Pollard `ρ` (`2^{n/4}`) | ECM `L_p[1/2,√2]` | Pollard `p−1` (best case) |
+  > |---|---|---|---|---|
+  > | 512 | 43.8 | 88.7 | **42.9** | **30.3** |
+  > | 1024 | 59.5 | 177.4 | 64.6 | **45.6** |
+  > | 2048 | 80.1 | 354.9 | 96.5 | **68.3** |
+  > | 4096 | 107.3 | 709.8 | 143.6 | **101.5** |
+  > | 8192 | 142.9 | 1419.6 | 212.5 | 150.2 |
+  >
+  > Two things follow that the record did not previously state. **(i)** At every
+  > realistic RSA size, ECM and the best-case `p−1` are still **ahead of** NFS in
+  > raw `ln(cost)`; NFS only crosses ECM at `n ≈ 8192` and `p−1` not until
+  > `n ≈ 16384`. The crossover is **asymptotic and slow**, and the ratio
+  > `ln(ECM)/ln(NFS)` grows without bound (0.98 → 1.09 → 1.20 → 1.34 for
+  > `n` = 512…4096), so this is a genuine exponential gap, not a constant-factor
+  > one. **(ii)** Consequently **a cost channel cannot beat NFS by being a better
+  > `ρ`- or ECM-shaped method** — the whole `p`-coupled family is on the wrong
+  > side of an exponent boundary, and constant-factor engineering inside it is
+  > capped by exactly the walls already recorded in §4b.
+  >
+  > **The resulting dichotomy, which is the sharpest statement available here.** A
+  > factoring method's governing quantity is either **(i) coupled to `p`** — then its
+  > cost is `≥√p`, exponential, and it loses to NFS asymptotically; or
+  > **(ii) decoupled from `p`, i.e. computable from `N` alone** — then it is the
+  > **range** axis, and the uniformity kill says a cheaply computable function of
+  > `N` carries zero bits about the secret, so the method *is* NFS or a worse
+  > variant. **Pollard `ρ` sits on (i); NFS sits on (ii); there is no third
+  > option that is currently known.** Note the honesty boundary: the dichotomy is a
+  > statement about the *governing quantity*, and it does **not** prove that no such
+  > quantity exists — it says that if one did, it would have to be computable from
+  > `N`, of size strictly between the factor base and `p`, with collision structure
+  > better than birthday **and** smoothness better than Dickman. That is a real
+  > design question, and it is the honest successor to (C).
 - **Coding theory:** **DEAD**, but the *premise was partly confounded.* There is no
   Stern "factoring via codes" paper; Williams's "singular modulus" is a p±1
   smoothness scheme, not a code scheme. The no-code-route conclusion survives; the
@@ -2000,9 +2043,22 @@ must avoid it by construction.
 > **(C)** a primitive whose **cost** — not whose output — depends on `p`, and
 > whose worst-case cost over all `n`-bit semiprimes beats `L[1/3, 1.9018836]` with
 > **no input-dependent precondition**.
+> **⚠️ (C) IS NOW ALSO CLOSED as stated — see the dichotomy in §4.** (C) asked for a
+> cost channel *decoupled from preconditions*. But any cost coupled to `p` pays
+> `≈√p = 2^{n/4}`, which is **exponential**, while NFS is **subexponential** at
+> `L[1/3]`; the ratio `ln(ECM)/ln(NFS)` grows without bound (0.98 → 1.34 for `n` =
+> 512…4096), so no `ρ`-shaped or ECM-shaped method can win by constant factors. And a
+> cost *decoupled* from `p` is computable from `N`, which is the range axis, and
+> uniformity kills it. **(R) and (C) are the two horns of one dichotomy, and both
+> are closed as literally stated.** What survives is not a channel but a **third kind
+> of governing quantity** — computable from `N`, of size strictly between the factor
+> base and `p`, with collision structure better than birthday *and* smoothness better
+> than Dickman. That is the honest successor target, and it is a question about a
+> *quantity*, not about a primitive. The paragraph below is left in place as the
+> record of the reasoning that reached it.
 
 (R) is the axis this survey has killed four times over, and the uniformity kill says
-it is very hard. **(C) is the live one, and it has never been seriously attacked
+it is very hard. **(C) looked live, and has never been seriously attacked
 here** — every close-prime, smoothness, and order-based idea in the record is a
 cost-axis idea that *failed its precondition*, rather than one that failed on the
 axis. That is a meaningfully different failure, and it points at where to go next.
