@@ -205,10 +205,18 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   > | 4096 | 107.3 | 709.8 | 143.6 | **101.5** |
   > | 8192 | 142.9 | 1419.6 | 212.5 | 150.2 |
   >
-  > Two things follow that the record did not previously state. **(i)** At every
-  > realistic RSA size, ECM and the best-case `p−1` are still **ahead of** NFS in
-  > raw `ln(cost)`; NFS only crosses ECM at `n ≈ 8192` and `p−1` not until
-  > `n ≈ 16384`. The crossover is **asymptotic and slow**, and the ratio
+  > Two things follow that the record did not previously state. **(i)** The
+  > **best-case `p−1`** is ahead of NFS in raw `ln(cost)` up to `n ≈ 6800`
+  > (the table crosses it between 4096 and 8192), but **ECM is ahead only below
+  > `n ≈ 600`** — so at realistic RSA sizes (`n ≥ 1024`) **NFS is already ahead of
+  > ECM**. ⚠️ *Corrected 2026-09-24: this line previously claimed ECM and `p−1`
+  > led "at every realistic RSA size", with crossovers `8192` (ECM) and `16384`
+  > (`p−1`). Both were **errors inconsistent with the table immediately above** —
+  > the table already has NFS ahead of ECM at `n = 1024` (59.5 vs 64.6). An
+  > independent recomputation from the same `L`-formulas (`~/factor-briefs/cost-axis/
+  > crossover.py`, reproducing the table to ~1%) puts the ECM crossover at
+  > `n ≈ 640` and the `p−1` crossover at `n ≈ 6800`.* The crossover is
+  > **asymptotic and slow**, and the ratio
   > `ln(ECM)/ln(NFS)` grows without bound (0.98 → 1.09 → 1.20 → 1.34 for
   > `n` = 512…4096), so this is a genuine exponential gap, not a constant-factor
   > one. **(ii)** Consequently **a cost channel cannot beat NFS by being a better
