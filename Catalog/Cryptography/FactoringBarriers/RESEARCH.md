@@ -67,7 +67,7 @@ Key references: Buhler–Lenstra–Pomerance 1993; Barbulescu–Guillevic–Lens
 | 4 | **Precomputation-amortized factoring** — universal factor base / batched sieve to break the exponent. | **Constant only** | Amortization moves only the constant `c` (GNFS `1.923` → Coppersmith's factory `1.639`), never the exponent `ρ = 1/3`. Practical realizable gains are `≈ 2×` (Mersenne factory). Ref: Bernstein–Lange 2014/921; Kleinjung–Bos–Lenstra 2014/653. |
 | 5 | **Genus-character single-bit reduction** — factor `N` from one nonprincipal quadratic character. | **Classical repackaging** | The content is Gauss's genus theory (1801). Its formalizable core is the one-line multiplicativity `(a/p)(a/q) = (a/pq)` — now proved in `FreeSymbol.lean`. One line is the evidence it is repackaging, not new mathematics. Ref: Gauss 1801; Cox, *Primes of the Form x²+ny²*. |
 | 6 | **Analog / physical-precision factoring** | **Open but capped — and the usual *reason* is wrong** | See §4a for the corrected analysis. The common claim "you'd need exponentially many physical bits" is a **mis-description**. The real barrier is a **precision-vs-runtime noise-floor tradeoff** plus the **simulation burden of proof** — not a bit-counting theorem. Decisive measured datapoint: analog/annealing factoring is "better than random guessing **but still exponential**" (Willsch et al. 2024). |
-| 7 | **Circuit-lower-bound argument** | **Open, but not a method** | A genuine complexity-theory program, but it yields a *separation*, not a factoring algorithm. Sharply more obstructed than it looks — see **§8.4** (factoring isn't even known to have poly-size circuits; the NP-hardness route is provably closed; algebrization is the factoring-specific barrier; the real target is `Ω ∉ uniform TC⁰`). |
+| 7 | **Circuit-lower-bound argument** | **Open, but not a method** | A genuine complexity-theory program, but it yields a *separation*, not a factoring algorithm. Sharply more obstructed than it looks — see **§8.4** (factoring isn't even known to have poly-size circuits; the NP-hardness route is provably closed; algebrization is the factoring-specific barrier; the real target is `spf ∉ uniform TC⁰`, and the previously recommended `Ω ∉ uniform TC⁰` was demoted because its link to factoring is *believed, not proven*). |
 
 ---
 
@@ -477,11 +477,14 @@ forms and automorphic representations*, [arXiv:1709.02411](https://arxiv.org/abs
   integers** — and, via the number of Hecke **newforms** of weight `k` on
   `Γ₀(N)`, a similar characterization of **primes**.
 - **Algorithmic consequence, and the load-bearing part:** a fast method for
-  computing the newform count at **even a single weight `k`** would give a quick
-  squarefreeness test; counts at **two** distinct weights let one recover
-  *probabilistically* the complete factorization of the **squarefull part** of
-  `N`; and with a single weight's count, one gets **probabilistic complete
-  factorization of `N`**.
+  computing the automorphic-representation count `A(k,N)` at **even a single
+  weight `k`** would give a quick squarefreeness test (Cor. 4); counts at **two**
+  distinct weights let one recover *probabilistically* the complete
+  factorization of the **squarefull part** of `N` (Thm. 5); and **two `A`-values
+  plus one newform count `B`** give **probabilistic complete factorization of `N`**
+  (Thm. 10). ⚠️ **Corrected 2026-09-24:** an earlier version of this bullet — and
+  the abstract read literally — says a *single* weight's count gives complete
+  factorization. **It does not**; see §4c-ii for the resolution.
 
 **The structural statement, stated carefully.** The newform count is
 `dim`-type data on `X_0(N)` (H⁰ with a power of the Hodge bundle; via
@@ -497,10 +500,10 @@ that I am aware of.
 squarefree `N` the count is a *closed-form function of the factorization*, so
 evaluating it directly is **circular** — you need `p, q` to get the count,
 while Gu–Martin show you could invert the closed form to recover `p, q` *if you
-had the count cheaply*. The factorization from a single weight is
-**probabilistic**, and the authors themselves frame the procedures as "fast if
-the count is treated as given input." So the reduction is a **characterization /
-oracle result, not an algorithm** — the count is the hard side.
+had the count cheaply*. The recovery is **probabilistic**, and the authors
+themselves frame the procedures as "fast if the count is treated as given
+input." So the reduction is a **characterization / oracle result, not an
+algorithm** — the count is the hard side.
 
 **The live, well-posed open problem it creates:** is the newform count
 computable in `poly(log N)` time? Gu–Martin say yes would factor `N`. Their own
@@ -579,20 +582,39 @@ Worth stating precisely, because it locates the difficulty exactly:
   reduces to "factor `n` given a multiple of `φ(n)`" (their Lemma 26 recursion),
   and for the squarefree part to recovering `E·s₀#(E) = φ(E)` and factoring `E`
   from `(E, φ(E))` (Lemma 36) — both polynomial in `log N` (Miller's algorithm).
-- **Data required:** one weight `k` gives a squarefreeness test (Cor. 4) and
+- **Data required:** one `A`-value gives a squarefreeness test (Cor. 4) and
   bounds on square divisors (Prop. 24–25), **not** full factorization; **two**
-  weights give the squarefull part (Thm. 5); **two `A`-values plus one `B`-value**
-  give complete factorization (Thm. 10). *Caveat, unresolved:* the paper's
-  **abstract** advertises full probabilistic factorization from a **single**
-  weight, while the **body** (Thm. 10) uses two `A`-values plus one `B`-value.
-  Both readings are recorded here rather than picking one; the distinction does
-  not affect the open problem, which is the same either way.
-- **An approximation suffices.** Gu–Martin note one could get the same outcome
-  with a fast algorithm yielding a **sufficiently good upper bound** on `A(k,N)`;
-  a positive linear combination of `A(k,N)` over several weights also works. This
-  is the one genuinely hopeful detail — but it does not help, because a tight
-  enough upper bound in `poly(log N)` is the *same* open problem, the standard
-  route being again `~N`.
+  `A`-values give the squarefull part (Thm. 5); **two `A`-values plus one
+  `B`-value** give complete factorization (Thm. 10).
+
+> ✅ **Abstract-vs-Theorem-10 "tension" — resolved 2026-09-24. It was a reading
+> error, not an inconsistency.** The abstract reads, verbatim: *"we show how to
+> probabilistically obtain the complete factorization of the squarefull part of `N`
+> from the number of such automorphic representations for **two different weights**.
+> **If in addition** we have the number of such Hecke newforms for even a single
+> weight `k`, then we show how to probabilistically factor `N` entirely."* The two
+> clauses are **additive**: "the number of such automorphic representations" is
+> `A`; "the number of such Hecke newforms" is `B` (newforms *on* `Γ₀(N)`, Def. 6);
+> and "**if in addition**" introduces `B` as a **third** datum. The earlier
+> reading dropped "in addition" and treated "even a single weight" as a *reduction
+> of the requirement*, producing a contradiction with Thm. 10. **There is none.**
+> The precise recipe is **2 `A` + 1 `B`**. The correction is a real narrowing of
+> the claim: the survey had asserted that a single weight's count factors `N`.
+
+- **An approximation suffices — and this was quantified 2026-09-24.** Gu–Martin
+  note one could get the same outcome with a fast algorithm yielding a
+  **sufficiently good upper bound** on `A(k,N)`; a positive linear combination of
+  `A(k,N)` over several weights also works. Writing `Δ(k,N) = G(k,N) − A(k,N)`
+  for the gap to the factorization-free closed form `G`, and noting `A = Θ(kN)`,
+  the **easiest** cases give `Δ ≳ (k−1)N/48 − 7/12` (when `4 | N`, at `k = 2`),
+  `Δ ≳ (k−1)N/108 − 1/12` (`9 | N`), `Δ ≳ (p−1)/2 − 13/12` (a square factor
+  `p ≥ 5`), and a general floor from their eq. (7),
+  `Δ ≳ ∛((k−1)N) / (log log N)²` (*the PDF garbles this root; the proof's
+  `3∛(243(k−1)N/L²)` makes it a cube root*). So a **relative `o(1)`-accurate**
+  upper bound on `A` — even merely a lower bound on `Δ` — suffices to certify
+  non-squarefreeness. **Exactness is not needed; sub-linear additive accuracy is
+  enough.** This is a real sharpening of the open target, and it still yields no
+  route, for the reason in §4c-iii.
 
 **And the automorphic/L-function route is separately dead as a factoring method.**
 No Eichler–Shimura, trace-formula, Gross–Zagier, Heegner-point, class-number, or
@@ -613,6 +635,139 @@ Mary–Wesolowski (arXiv:2512.01588) gives the first provably-subexponential
 class-group/unit-group algorithm for arbitrary number fields, but is
 **ERH-conditional**, at **unchanged exponent**, and proceeds by ideal-sampling /
 index calculus — no L-function involved.
+
+#### 4c-iii. The obstruction is **one predicate** — and the `k`-question is dead
+
+A dedicated pass (2026-09-24) sharpened §4c substantially. Three of its results
+change how this section should be read, and one of them dissolves the framing.
+
+**1. The real bottleneck is not the trace formulas, not the weight, and not the
+index — it is the *squarefreeness predicate*.** Gu–Martin say so in their own
+words (Cor. 4 discussion, quoted verbatim): *"As of the writing of this paper,
+nobody has found an algorithm that determines whether a positive integer `N` is
+squarefree or not that is significantly faster than factoring `N`; in particular,
+we do not know any polynomial-time algorithm for testing squarefreeness."* And:
+*"The standard way to compute `A(k,N)` is through factoring `N`."*
+
+This is the sharpest available statement of the obstruction **and it is the
+authors' own**, which makes it citable rather than speculative. `G(k,N)` is
+computable in `poly(log N)` **without** factoring, and `A = G` **iff `N` is
+squarefree** (Thm. 3, Cor. 4, `N ≥ 10`). So **a `poly(log N)` `A` decides
+squarefreeness for free**, and **squarefreeness testing is not known in `P`.**
+Everything else — trace formulas, the index, the weight, the space construction
+— is *downstream* of this one predicate. Any proposal should be judged on whether
+it evades the squarefreeness predicate, **not** on whether it beats `τ(N)` in a
+trace formula.
+
+> ⚠️ **But the squarefreeness predicate is VACUOUS on the RSA modulus — so for
+> *our* case the obstruction is elsewhere.** If `N = pq` with `p ≠ q` prime, `N`
+> is **squarefree** by definition, so `A = G` holds *tautologically* and Cor. 4's
+> test returns "squarefree" for free and carries **zero** information. The
+> squarefreeness framing is the right statement of the *general* obstruction
+> (and is why Gu–Martin, who care about arbitrary `N`, lead with it), but it is
+> **not** the RSA-relevant one. For a semiprime the squarefull part is `D = 1`,
+> so `φ(D)` is trivial, and the entire distinguishing signal sits in the
+> multiplicative term `s*₀(N)` — the quantity that encodes the *number of prime
+> divisors*. Gu–Martin's recovery therefore runs **through the multi-weight
+> linear system** (two `A`-values separating `s*₀` from `ν*∞, ν*₂, ν*₃`) plus
+> the `B`-channel, and *not* through squarefreeness at all. Stated plainly: the
+> RSA version of the open problem is **"recover `ω(N)` (and then `p, q`) from
+> the multiplicative core `s*₀, ν*∞, ν*₂, ν*₃` without factoring"** — the
+> `s*₀`-term is where the factorization hides, and it is `k`-independent, so no
+> weight helps. Anyone who wants to attack this should say which of these they
+> are attacking; "beat the trace-formula cost" is the wrong target, and
+> "is it squarefree" is a tautology on semiprimes.
+
+**2. The reduction is `A`-specific, and a fast `B` buys nothing.** Gu–Martin's
+eq. (15) gives the "well-known convolution" `A(k,N) = Σ_{d|N} B(k,d)` with `B`
+the *dimension* of weight-`k` newforms on `Γ₀(d)` — which is exactly the
+classical old/new decomposition of a dimension. Hence
+
+> **`A(k,N) = dim S_k(Γ₀(N))`, for all `N` and all positive even `k`.**
+
+*Marked as a reading of eq. (15) + Def. 6, not as a literature-cited fact; no
+novelty is claimed.* Its value is diagnostic: the target is an **ordinary
+dimension formula**, not an exotic cohomological count, and the recipe is
+transparently *old/new decomposition plus a closed form*. (Def. 1's "number of
+non-isomorphic automorphic representations" is the loose phrasing — literally a
+Galois-*orbit* count, which differs from dimension when a newform's coefficient
+field is quadratic; the standard `dim`-weighted convention resolves it.)
+
+The **asymmetry is the sharp consequence.** `H(k,N) = G(k,N) − B(k,1)` is also
+factoring-free, and `H(k,N) = B(k,N)` **iff `N` is prime** (Cor. 9, `N ≥ 92`). So
+a fast **`B`** is a **primality test** — already in `P` via AKS/ECPP — and
+**contributes nothing to factoring.** The factoring reduction is a theorem for
+**`A` only**. Proposals aimed at the newform count, as opposed to the automorphic
+count, are aiming at the wrong quantity.
+
+**3. `k` is not the bottleneck, and no `k` helps — this question is closed.**
+Gu–Martin accept **any** positive even `k` (Cor. 4 for `N ≥ 10`; Thm. 8 / Cor. 9
+for `N ≥ 92`); the reduction is `k`-agnostic. The `k`-dependence lives entirely in
+the constants `c₂(k)` (period 4) and `c₃(k)` (period 3), while the multiplicative
+core `s*₀(N)`, `ν*∞(N)`, `ν*₂(N)`, `ν*₃(N)` — **which is exactly where the
+factorization lives** — is *completely* `k`-independent. Two weights are needed
+only to separate two of the four multiplicative functions: that is the
+information-theoretic minimum of their linear system, not a tunable. And `k = 2`
+is the **worst** case, not the best: the main term is `(k−1)N/12 · s*₀(N)`, so
+larger `k` is *more* dominated by the factorization-encoding index. The
+exception lists (`k=2` at `N = 4, 9`; the nine `(k,p)` pairs of Cor. 31;
+`B(2,6) = B(2,10) = B(2,22) = 0`) confirm small `k` is where the closed forms
+degenerate.
+
+**4. Output size is not the obstruction — which cuts both ways.** `A = Θ(kN)` is
+an `O(log N)`-bit integer, so a `poly(log N)` count is **not** ruled out on
+information grounds. It is ruled out only by the squarefreeness reduction.
+Conversely, **proving the count hard would be a factoring lower bound** — still
+wide open. (There is **no `#P`-hardness result** for `A` or `B`, and none is
+expected: the output is `O(log N)` bits, so standard `#P` machinery does not
+apply. Do not write "`A` is `#P`-complete.")
+
+**Bibliographic landmines — confirmed phantoms, do not cite.**
+
+- ⚠️ **"The Oesterlé bound" means the Ihara–Oesterlé (Weil–Oesterlé) *point-count*
+  bound**, an upper bound on `#C(ℱ_q)` in terms of genus. It is **not** an upper
+  bound on `g(X₀(N))`. Conflating the two is the single easiest way to write a
+  false claim here. The idea of a "cheap Oesterlé-type upper bound on `g(X₀(N))`"
+  feeding Cor. 4 **died on exactly this**: the soft target is real and correctly
+  quantified (§4c-ii), but **no factorization-free upper bound on `g(X₀(N))`
+  exists in the literature**, so it has no known source. Recorded as a
+  *quantified open target*, not a route.
+- **"Cremona–Odoni, *Some remarks on the Oesterlé bound*, IJM 5 (1994) 147–154"
+  DOES NOT EXIST** as cited — those pages belong to a Ye article
+  (DOI `10.1142/s0129167x94000073`). Only two real Cremona–Odoni papers exist
+  (Pell equations 1989; capitulation 1990), neither about genus. Likewise
+  **"Cremona–Odoni, *Computing the genus of `X₀(N)`*"** and **"Cremona,
+  *Algorithmic invariants for elliptic curves*"** do not exist (his book is
+  *Algorithms for modular elliptic curves*, CUP 1992).
+- **"Oesterlé, Invent. Math. 73 (1983) 273–302" is NOT corroborated** — the page
+  range appears wrong and it is absent from CrossRef's 1983 *Inventiones*
+  deposit. For a real dimension-formula citation use **Cohen–Oesterlé, *Dimensions
+  des espaces de formes modulaires*, LNM 627 (1977) 69–78** — which is what Sage
+  actually implements and cites.
+- **Clarification of Couveignes–Edixhoven (arXiv:1205.5896), which reads as
+  promising out of context.** The abstract promises "polynomial time in the
+  dimension and the required number of significant digits… in time bounded by a
+  fixed power of `log p`." Both clauses must be kept: the dimension is `≈ N/12`,
+  so **the polynomial is in `N`, not in `log N`**, and it computes the Fourier
+  coefficients of one *given* form, not the count. Dead — but it is the closest
+  thing in the literature to the thing we want, so it is worth stating precisely
+  why it is not it.
+- **Sage is the status quo, and its status quo needs the factorization.**
+  `sage.modular.dims` is the **Cohen–Oesterlé** formula (Stein & Quer, after a
+  ~1996 PARI program by Bruce Kaskel extended by Kevin Buzzard); the same code
+  lineage runs through PARI and Magma, and all of it is **multiplicative over the
+  primes of `N`** — hence factorization-dependent by construction.
+
+**Nearest real progress, and it does not help.** Hamakiotes & Lau, *Genus
+formulas for families of modular curves*, arXiv:2501.10883 (2025) — the on-topic
+recent hit; formulas, **no complexity claim**, presupposing the prime data of
+`N`. K. Martin, arXiv:1609.05386, *Refined dimensions of cusp forms, and
+equidistribution and bias of signs*, J. Number Theory 188 (2018) 1–17 — exact
+dimension formulas **for squarefree `N`**, refined by root number and
+Atkin–Lehner signs, with rigorous equidistribution; real progress, but
+**squarefree-only and distributional**, not a `poly(log N)` algorithm for a given
+`N`. **No 2020–2026 factoring-free `poly(log N)` method was found for either
+count.**
 
 ### 4d. Partial-key exposure: the `n/4` wall, derived exactly
 
@@ -1268,14 +1423,51 @@ algorithm; each is a place where a genuine open problem still lives.
      **algebrization** is designed to rule out lower bounds for exactly
      arithmetic/algebraic problems. The one door factoring's structure opens is the
      door algebrization closes.
-   - **The sharpest open target is `Ω(N) ∉ DLOGTIME-uniform TC⁰`** (where `Ω(N)` =
-     number of prime factors with multiplicity) — *not* `FACTOR ∉ TC⁰`. Since
-     primality, GCD, division and iterated multiplication all live in uniform
-     `TC⁰`, proving `Ω ∉ uniform TC⁰` separates factoring from its arithmetic
-     siblings *inside the class where the siblings provably live* — the true
-     structural analog of `PRIMES ∉ AC⁰[p]`. And `Ω ∈ TC⁰` has a plausible
-     PH-collapse consequence (Allender–Barrington–Jeřábek, SMALL-E), so
-     `Ω ∉ TC⁰` is a *believed conjecture*, not a restatement of ignorance.
+   - **The sharpest open target is `spf(N) ∉ DLOGTIME-uniform TC⁰`** (least prime
+     factor), **not** `Ω(N) ∉ uniform TC⁰` and **not** the two-input
+     `SMALLFACTOR(N,B)` — see the correction box immediately below. Since
+     `spf ≡ₚ FACTOR` *by definition*, this is **provably** a factoring lower bound,
+     not a conjectural one. And the separation is as sharp as it gets in this
+     family: **`PRIMES(N)` is literally the single bit `[spf(N) = N]`**, and that
+     bit is (as far as verified) in uniform `TC⁰`. The conjecture is therefore
+     *"the 'is it its own least factor' bit is in `TC⁰`; the function is not."*
+     **No candidate comes closer to its own `TC⁰` sibling.**
+   - ⚠️ **`Ω ∉ uniform TC⁰` was this survey's recommendation until 2026-09-24, and
+     it was the wrong target. It is demoted.** The defect was unstated: **the
+     link between `Ω` and factoring is *believed*, not proven.** Du & Volkovich,
+     *Approximating the Number of Prime Factors Given an Oracle to Euler's
+     Totient Function*, FSTTCS 2021, LIPIcs 213 art. 17,
+     DOI `10.4230/LIPIcs.FSTTCS.2021.17`, verbatim: *"computing the actual value
+     of `ω(N)` is **believed** to be as hard as factoring `N`"*, and of the `Ω`
+     family: *"there is no known polynomial-time algorithm for computing any of
+     the above functions. Indeed, they are **believed** to be as hard as
+     (complete) integer factorization."* **No poly-time reduction in either
+     direction between `FACTOR` and `Ω` is known.** So `Ω ∉ TC⁰` would be a
+     beautiful result and **would not be a factoring lower bound**. Sharply put:
+     `Ω` is the most *compressed* output of the factoring-adjacent family
+     (`O(log n)` bits) and is plausibly the *easiest* of them — the previous
+     recommendation had picked the target with the weakest proven link to its own
+     motivation. `Ω ∈ uniform TC⁰` does still have a plausible PH-collapse
+     consequence (Allender–Barrington–Jeřábek, SMALL-E), so `Ω ∉ TC⁰` remains a
+     reasonable *secondary* conjecture — **explicitly labelled conjectural as to
+     factoring-relevance.**
+   - **The `spf` target is not just a relabelling — the `SMALLFACTOR(N,B)`
+     binarization is provably the weaker framing.** For
+     `P(N,B) := "N has a prime divisor ≤ B"`, `P` is **monotone in `B`**, so
+     `O(n)` binary-search queries recover `B* = min{B : P(N,B)} = spf(N)`, and
+     `O(n)` divisions finish the factorization. Hence all of
+     `P ∉ TC⁰ ⟺ spf ∉ TC⁰ ⟺ FACTOR ∉ TC⁰ ⟺ FACTOR ∉ P ⟺ P ∉ P/poly`
+     are **one sentence**, not a chain of beliefs. The two-input version also
+     carries **provably easy nuisance regimes** that any lower bound must be
+     stated around: `B ≤ n^c` puts `P` in uniform `TC⁰` (enumerate `d ≤ B`, test
+     `d ∣ N` by division, test `isprime(d)`), and `B ≥ √N` makes
+     `P(N,B) ⟺ "N is composite"` for `N > 4`. Only `polylog N ≪ B ≲ √N` is hard.
+     `spf` has no such nuisance regimes — the hard band is the whole function,
+     and its output is `Θ(n)` bits, so the question "do DLOGTIME-uniform
+     constant-depth threshold circuits computing the least prime factor of an
+     `n`-bit integer have superpolynomial size?" is well-posed. (This is the
+     **one-bit-gap** framing; the earlier two-input framing hid it behind
+     input-length bookkeeping.)
    - **Logical strength: a factoring circuit lower bound is strictly stronger than
      `P ≠ NP`.** It implies `P ≠ NP` *and* `P ≠ BPP` *and* names an explicit
      function outside `P/poly`; `P ≠ NP` implies none of these. It is **not
@@ -1284,11 +1476,86 @@ algorithm; each is a place where a genuine open problem still lives.
      hardness), and a poor `P ≠ NP` proxy — `P ≠ NP` could hold for reasons
      unrelated to factoring. The honest ladder is `∉ AC⁰` → `∉ uniform TC⁰` →
      `∉ NC¹` → `∉ P/poly`; the `TC⁰` rung is where the traction is.
+   - **A sharp, provable NEGATIVE result about the only technique in this
+     neighborhood — it does not transfer from `ω` to `Ω`.** There *is* a real
+     lower bound here: **parity-of-`ω` is hard for `AC⁰[p]`**. Allender–Saks–
+     Shparlinski, *A Lower Bound for Primality*, CCC 1999, pp. 10–14,
+     DOI `10.1109/CCC.1999.766257`, verbatim: *"`TC⁰` is contained in each of the
+     classes `AC⁰[Primes]`, `AC⁰[GCD]` and `AC⁰[Square-Free]`"* and *"mult can be
+     `AC⁰`-reduced to other natural number-theoretic problems and thus these
+     problems are also hard for `TC⁰`. For example, consider the problem of
+     computing the parity of `ω(x)` … For any prime `p`:
+     `Mod_p(x) = 0 ⟺ ω(x)+1 ≡ ω(px) (mod 2)`. Thus mult (and Maj) is
+     `≤^AC⁰_T` reducible to the parity of `ω`."* (It does not separate from
+     `TC⁰`, because parity `∈ TC⁰`.) **And the reduction dies precisely on
+     `Ω`:**
+
+     | | `ω` | `Ω` |
+     |---|---|---|
+     | Increment rule | `ω(px) = ω(x)+1` if `p ∤ x`; `= ω(x)` if `p ∣ x` | `Ω(px) = Ω(x) + 1` **unconditionally** |
+     | Parity oracle on `{x, px}` | **flips iff `p ∣ x`** | **constant** |
+     | Recovers `Mod_p`? | **yes** | **no — nothing at all** |
+
+     Counting *with* multiplicity makes the `+1` unconditional, so the parity
+     oracle is blind. **The one published technique for prime-factor-counting
+     circuit lower bounds provably does not extend from `ω` to `Ω`.** That is a
+     fact, not a belief, and it closes a direction — recorded as killed
+     direction #18.
+   - **`Semiprimality = [Ω(N) = 2]` is a real landmark but is NOT a factoring
+     lower bound.** Factoring answers it, but on a semiprime input it returns
+     only "yes" and cannot distinguish `(p,q)` from `(p′,q′)`. No reduction from
+     `Semi` to `FACTOR` is known. It is a *cousin* of the `TC⁰` arithmetic
+     family, not a sibling, so the one-bit-gap argument does not apply to it.
+   - **Two citation traps in this area, both caught 2026-09-24.** (i) The
+     Hesse–Allender–Barrington **corrigendum retracts part of Corollary 6.6**:
+     *"we retract part of our Corollary 6.6 … In a later paper [7], Johannsen
+     augmented `C₀²` with a function symbol ÷ for integer division … Corollary
+     6.6: [Parts 1 and 3 are now retracted.]"* The main theorem stands.
+     **Do not cite Corollary 6.6.** (ii) **`GCD ∈ uniform TC⁰` is unverified and
+     probably open** — the standard result is `GCD ∈ NC²` (Reif). ASS treat
+     GCD as *hard for* `AC⁰`, not as a `TC⁰` member. **Drop GCD from any
+     "provably in the class" list**, and drop the earlier claim here that "primality,
+     GCD, division and iterated multiplication all live in uniform `TC⁰`."
+   - **Structural correction to why `Ω` escapes HAB.** An earlier claim that
+     `TC⁰` "can count prime factors up to `polylog N`" is **UNVERIFIED** — the
+     division paper states no such counting theorem (HAB only *uses* primality
+     testing of short, `O(log n)`-bit numbers as a subroutine). The correct and
+     stronger reason `Ω` was never threatened: **HAB is a paper about division.
+     Full stop.** It is not a prime-counting paper, so `Ω` was never in scope.
+   - **The strategic shape, stated honestly.** Nail the equivalences (`spf ≡ₚ
+     FACTOR` with full input-length accounting — the literature states this only
+     informally), publish the obtainable `AC⁰`-level facts, and state the `TC⁰`
+     conjecture precisely. **Do not write as though a `TC⁰` lower bound is a
+     matter of grinding: no natural arithmetic function has been separated from
+     uniform `TC⁰` by anyone.**
 5. **Modular-curve / étale-cohomology unification** — **promoted from speculation
    to a verified theorem.** See §4c: Gu–Martin give an *unconditional* reduction
    showing that computing a piece of the cohomology of `X_0(N)` is **at least as
    hard as factoring**. This is the strongest formal content in this direction,
    and it turns a philosophical thread into a well-posed open problem.
+   **Sharpened 2026-09-24 (§4c-ii, §4c-iii).** The problem is now stated as a
+   **single predicate**, and it is a *better* one than "compute the count":
+
+   > **OPEN (the real one).** Is **`dim S_k(Γ₀(N))`** computable in
+   > `poly(log N)` time from `N` alone? Equivalently (this equivalence is the
+   > point): **is there a `poly(log N)` squarefreeness test?** The two are tied
+   > together because `G(k,N)` is factorization-free in `poly(log N)` and
+   > `A = G` **iff `N` is squarefree** (Gu–Martin Thm. 3, Cor. 4). A second,
+   > strictly weaker target is also open and better quantified: a **relative
+   > `o(1)`-accurate upper bound** on `A(k,N)` suffices, with gap
+   > `Δ ≳ ∛((k−1)N)/(log log N)²`.
+
+   **Three sub-questions are now CLOSED, do not re-open them.** (i) *The weight `k`*
+   — **irrelevant**; the multiplicative core carrying the factorization is
+   `k`-independent, and `k = 2` is the *worst* case. (ii) *Aim at `B` instead of
+   `A`* — **useless**: fast `B` gives a primality test, already in `P`. (iii)
+   *"Does a single weight's count factor `N`?"* — **no**: the recipe is **2 `A` +
+   1 `B`**; the "even a single weight" phrasing is additive ("**if in
+   addition**"), not a reduction. The surviving target is `A` — and
+   `A(k,N) = dim S_k(Γ₀(N))` is an ordinary classical dimension formula.
+   **Negative result worth keeping:** a "cheap Oesterlé bound on `g(X₀(N))`" is
+   **not** a route — "Oesterlé bound" means Ihara–Oesterlé *point-count*, and no
+   factorization-free genus bound exists.
 
 ---
 
@@ -1303,11 +1570,16 @@ algorithm; each is a place where a genuine open problem still lives.
 > theorem; and the **corrected sieve balance** (§6), which explains *why* `1/3`
 > is not an AM–GM artefact. The one **positive** structural result found is
 > **Gu–Martin** (§4c): an *unconditional* reduction showing that computing a
-> piece of the cohomology of `X_0(N)` — the weight-`k` newform count — is
-> **at least as hard as factoring**. That is a genuine lower bound rather than an
-> analogy, and it converts the modular-curve thread from philosophy into a
-> well-posed open problem (`poly(log N)`-computability of the count). The
-> Catalog's barrier documentation was corrected as a direct result.
+> piece of the cohomology of `X_0(N)` — the automorphic count `A(k,N)`, i.e.
+> `dim S_k(Γ₀(N))` — is **at least as hard as factoring**. That is a genuine
+> lower bound rather than an analogy, and it converts the modular-curve thread
+> from philosophy into a well-posed open problem. As sharpened on 2026-09-24,
+> that problem is **one predicate**: since the closed form `G(k,N)` is
+> factorization-free in `poly(log N)` and `A = G` iff `N` is squarefree, a
+> `poly(log N)` count is *equivalent* to a `poly(log N)` **squarefreeness test** —
+> which is itself not known to be in `P`, and which Gu–Martin flag in their own
+> text as a standing open problem. The Catalog's barrier documentation was
+> corrected as a direct result.
 
 The next honest move is to sharpen the open threads in §8 — partial-key exposure,
 the low-exponent-RSA ceiling, circuit lower bounds, and the modular-curve
@@ -1349,7 +1621,15 @@ ePrint 2024/1125 (structured **fault** attack, not cold-boot noise) ·
 **Aggarwal–Maurer** (*Breaking RSA Generically is Equivalent to Factoring*) ·
 the **May–Nowakowski–Sarkar** Thm 2 (`X ≤ N^{β²}`) · **Lu–Zhang–Peng–Lin**
 ePrint 2014/343 Thm 7 (`γ₁+…+γ_n < β²`) · **Hesse–Allender–Barrington**
-JCSS 2002 (`PRIMES ∈ TC⁰`; +2014 corrigendum) · **Allender–Barrington–Jeřábek**
+JCSS 2002 (`PRIMES ∈ TC⁰`; +2014 corrigendum — **which retracts parts of its
+Corollary 6.6; do not cite that corollary**) · **Allender–Saks–Shparlinski**,
+*A Lower Bound for Primality*, CCC 1999, 10–14, DOI `10.1109/CCC.1999.766257`
+(parity-of-`ω` is hard for `AC⁰[p]`; the only published technique here, and it
+**provably does not extend to `Ω`**) · **Du & Volkovich**, *Approximating the
+Number of Prime Factors Given an Oracle to Euler's Totient Function*, FSTTCS
+2021, LIPIcs 213 art. 17, DOI `10.4230/LIPIcs.FSTTCS.2021.17` (the source for
+"computing `ω(N)`/`Ω(N)` is **believed** to be as hard as factoring" — *believed*,
+no reduction known) · **Allender–Barrington–Jeřábek**
 *JCSS* 2002 (`PRIMES ∉ AC⁰[p]`; SMALL-E — venue corrected from *Math. Comp.* by
 a 2026 audit; the correction is **UNCONFIRMED** by direct fetch, so verify
 before citing) · **Costa–Harvey** *Math. Comp.*
@@ -1373,7 +1653,14 @@ paper; *not* a "J. Cryptology 1994" paper) · **Boneh**, "Twenty years of attack
 on the RSA cryptosystem," *Notices AMS* 46(2) 1999 · **Coron–May** *J. Cryptology*
 20(1) 2007 (ePrint 2004/208) ·
 **Gu–Martin** arXiv:1709.02411 (newform count ⇒ factoring; §4c) · Gekeler (the
-forward count identity Gu–Martin invert) · **Couveignes–Edixhoven survey
+forward count identity Gu–Martin invert) · **Cohen–Oesterlé**, *Dimensions des
+espaces de formes modulaires*, LNM 627 (1977) 69–78 (**the real dimension-formula
+citation**; what Sage/PARI/Magma implement — **not** "Oesterlé, Invent. Math. 73
+(1983)", which is uncorroborated, §4c-iii) · **Hamakiotes–Lau** arXiv:2501.10883
+(2025, genus formulas for families of modular curves; presupposes the prime data,
+no complexity claim) · **K. Martin** arXiv:1609.05386, *J. Number Theory* 188
+(2018) 1–17 (refined cusp-form dimensions **for squarefree `N`**) ·
+**Couveignes–Edixhoven survey
 arXiv:1205.5896** (modular-forms complexity is polynomial in the *level*, i.e.
 exponential in `log N`) · **Edixhoven–Couveignes–de Jong–Merkl–Bosman
 arXiv:math/0605244** (a **book**; modular forms at **level one**) · Mosunov–
