@@ -2139,21 +2139,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "15a3f6e6",
-    "description": "## FACT round-30 #3 \u2014 CYCLIC-SEXTIC (paper 106, /tmp/exp_sextic.py, /tmp/r30n3c.log)\n\n**Verdict name: THE-LADDER-IS-COMPLETE.**\n\n### Result\nQ(\u03b6\u2081\u2083)\u207a (degree 6, Gal = C\u2086, conductor 13) confirms FULL PINNING: I(p mod 13; T) = H(T) = 1.9192 exactly. The degree ladder 2-3-4-5-6 is COMPLETE for abelian fields.\n\nTypes {1,2,3,6} at rates {1/6,1/6,1/3,1/3}. Semiprime I(N mod 13; pair) = 1.4704; wall z = +0.77.\n\nNow 442 experiments. Assessment v217. Paper 106.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3473",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T20:42:26.611881+00:00",
-    "title": "FACT round-30 #3 \u2014 CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
-  },
-  {
     "consumed_by_exp_id": "e43cce79",
     "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
     "domains": [
@@ -2169,16 +2154,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "293082f5",
     "description": "## FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) \u2212 I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C\u2085@11 | 1.2062 | **+1.5896** | +0.30 |\n| F\u2082\u2080@5 | 0.2920 | **+0.9538** | \u22121.10 |\n| S\u2083a@31 | 1.0011 | +0.5201 | +0.67 |\n| S\u2083b@23 | 1.0008 | +0.5121 | +0.92 |\n| D\u2084@8 | 1.9999 | +0.5032 | \u22120.70 |\n| A\u2084@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 \u2014 WEAK. Hint value and channel capacity are independent dial properties. C\u2085 has moderate capacity but the highest hint; D\u2084 has the highest capacity but moderate hint; A\u2084 is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3475",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T20:42:26.613303+00:00",
     "title": "FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
   },
@@ -33491,6 +33477,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-24T17:25:11.537282+00:00",
     "title": "Chebotarev Decoupling of Dial Redundancy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The abstract orthogonal split holds for coprime cyclic orders, and at conductor 13 it holds for the actual sextic field. The field-level statement should hold for every conductor and every coprime pair of subfields.\n\nFor every f with (Z/f)^x cyclic and coprime m, n with mn | phi(f), realDeg-type readouts in the degree-mn subfield factor as the product of the degree-m and degree-n readouts, and I(T_m ; T_n) = 0 over (Z/f)^x.\n\nProve for powDeg f (m*n) = powDeg f m * powDeg f n in a cyclic group, then apply orthogonal_split_of_coprime through a pushforward lemma.\n\nPinning, additivity and independence become one statement about abelian Galois groups.\n\nThe counting measure on (Z/f)^x would fail to push forward uniformly, which contradicts Lagrange's theorem.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4943",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "15a3f6e6",
+    "status": "available",
+    "timestamp": "2026-09-24T23:35:22.207129+00:00",
+    "title": "Field-Level Frobenius Independence in Composita"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The reported H(T) = 1.9192 differs from the certified exact value 1.91830 by about 9e-4. Pinning is exact, so the offset should be pure finite-sample bias.\n\nThe plug-in estimate of H(T_6) from primes p <= X has expectation H(T_6) + 3/(2 pi(X) ln 2) + o(1/pi(X)), up to Chebyshev-bias fluctuations.\n\nRecompute the experiment at several X and regress the offset against 1/pi(X).\n\nThe experimental pipeline's 'exact' values can be corrected analytically.\n\nA systematic prime race effect would dominate at the tested ranges.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4944",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "15a3f6e6",
+    "status": "available",
+    "timestamp": "2026-09-24T23:35:22.751343+00:00",
+    "title": "Plug-in Entropy Bias of Frobenius Samples"
   },
   {
     "consumed_by_exp_id": "",
