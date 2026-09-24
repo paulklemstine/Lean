@@ -3300,6 +3300,76 @@ known only to `O(N^{1/4}/g²)`, and the total candidate count
 Fermat rather than beating it. Recorded as a **well-posed open oracle, explicitly
 not as a method**; it is the honest successor to the question just closed.
 
+**★★★★★ THE SQUARE-DIFFERENCE REDUCTION — every method in the literature is
+one object, and the object is a rational approximation to an unknown number.**
+
+This is the first entry in this file that says what the *whole family* is, rather
+than what one member costs. New file **`SquareDiff.lean`, 10 theorems, 0 `sorry`,
+0 `axiom`** (verified: only `propext`, `Classical.choice`, `Quot.sound`).
+
+Fermat, Lehman, SQUFOF, Hart, the Coppersmith square congruence
+`a² ≡ b² (mod N)`, and therefore Harvey and GFHP, are **all one method**:
+produce `a, b` with `N ∣ a² − b²` and `a ≢ ±b (mod N)`, return `gcd(a−b, N)`.
+Nothing in this file had ever said what that condition *is*. It is:
+
+> **THE REDUCTION.** Write `a − b = k·p` and `a + b = l·q`. Then the method's
+> output is exactly `p·gcd(k, q)` — so it succeeds **iff `q ∤ k`** — and the box
+> condition `|a|, |b| ≤ X` is **exactly**
+> `|k·p + l·q| ≤ 2X` and `|l·q − k·p| ≤ 2X`.
+
+| theorem | content |
+|---|---|
+| `sq_diff_mul` | `a² − b² = k·l·p·q` — the algebra, `sq_diff_mul (k := l := 1)` *is* Fermat |
+| `two_a_two_b` | `2a = k·p + l·q`, `2b = l·q − k·p` — why `(k, l)` is the natural parameter |
+| **`box_iff`** | **the payload: `|a|,|b| ≤ X` `↔` the two inequalities above** |
+| `gcd_formula` | `gcd(k·p, p·q) = p·gcd(k, q)` — the **exact** output, not just `p` |
+| `trivial_iff` | the method returns `N` **iff `q ∣ k`** |
+| `proper_factor` | `¬ q ∣ k` gives a *proper* factor: `1 < gcd < N` |
+| `fermat_is_k_l_one` | `a² − b² = N` forces **`k = l = 1`** |
+| `diagonal_sq_mul` | `l = k` gives `a² − b² = k²·N` — **Lehman's line is the diagonal** |
+| `lehman_bound` | on that diagonal, `k ≤ 2X/(p − q)` |
+
+Three consequences, in increasing order of how much they should have been
+obvious:
+
+**(a) The succeed/fail condition is a *single* extra condition.** `trivial_iff`
+says the entire content of "`a² ≡ b² (mod N)` but `a ≢ ±b (mod N)`" is `q ∤ k`.
+Nothing else in the family's definition carries information. The mod-`q`
+condition is not a second filter — it is the whole filter.
+
+**(b) Fermat is a single point of the family, and it is the *tip*.**
+`fermat_is_k_l_one` forces `k = l = 1`. So Fermat's method contains **one**
+`(k, l)`, and the entire literature from Fermat to GFHP is the effort to reach
+*other* points without sweeping linearly. That is the sentence this file was
+missing.
+
+**(c) Lehman's sweep is useless for close primes — provably.** On the diagonal
+`l = k` the box condition is `k·(p − q) ≤ 2X`, so `lehman_bound` gives
+`k ≤ 2X/(p−q)`. For `p − q = O(1)` that is `O(X)`: **no better than Fermat.**
+So the general family is *not* an optimisation of Lehman's diagonal — it is a
+**strictly larger, two-parameter object**, and the enlargement is exactly what
+buys Harvey his `1/5`.
+
+**And the reformulation that makes it an open problem.** `|k·p − l·q| ≤ 2X` is
+the definition of `k/l` being a good rational approximation to `q/p`. So:
+
+> **The integers that work are the continued-fraction convergents of `p/q`, and
+> the method succeeds on the convergents with `q ∤ k`.**
+
+Every method in the family is a different way of *locating* one of those
+convergents **from `N` alone**, without knowing `p` or `q`. Lehman's `k`-sweep
+runs a CF on `√(kN)` and hopes the good `k` is among them; SQUFOF reads partial
+quotients; Harvey splits the search baby/giant. **This is the single axis on
+which all of them sit**, and none of this file's entries said so.
+
+**Scope limits, stated honestly.** (i) The convergent identification is
+classical continued-fraction theory and is *described* here, not proved in Lean;
+what is proved is the reduction to it. (ii) **This improves no method.** It
+reorganises and explains; it is not an algorithm. (iii) **I have not searched
+the literature for whether this reduction is stated elsewhere** — SQUFOF's
+partial-quotient formulation is close and I have not ruled out that someone has
+phrased it this way. I am not claiming priority.
+
 ---
 
 ## 8. Open threads worth continuing (the "do not give up" list)
@@ -3952,6 +4022,54 @@ algorithm; each is a place where a genuine open problem still lives.
    internals is how the earlier session produced two false kills, so the claim
    is deliberately kept at the level the theorem actually supports.
 
+7. **★★ LOCATE A CONTINUANT OF `p/q` FROM `N` ALONE — the question the
+   square-difference reduction forces into the open** *(new 2026-09-24; §7 "the
+   square-difference reduction", `SquareDiff.lean`)*
+
+   §7 reduces the entire deterministic family to a single object. Writing
+   `a − b = k·p`, `a + b = l·q`:
+
+   > **The method succeeds on exactly the pairs `(k, l)` with `|k·p − l·q| ≤ 2X`
+   > and `q ∤ k` — i.e. on the continued-fraction convergents of `p/q` whose
+   > coefficient `k` is not divisible by `q`, and `N` is all you are given.**
+
+   So the honest restatement of "beat `N^{1/5}` deterministically" is:
+
+   > **OPEN.** Given `N = pq` and no factors, locate a convergent of `p/q`
+   > satisfying `|k·p − l·q| ≤ 2X` and `q ∤ k`, in `O(N^{1/5−ε})`.
+
+   **Why this is a better question than "beat `1/5`".** `1/5` is a *cost*; this
+   is a *target*. Every method in the record becomes one line: Fermat tests the
+   single point `k = l = 1`; Lehman runs a CF on `√(kN)` over `k` and hopes the
+   good `k` appears; SQUFOF reads partial quotients; Harvey splits the sweep
+   baby/giant so the sweep is reused `r` times. **The one thing none of them do
+   is compute a convergent of `p/q` directly** — because that is precisely what
+   requires knowing `p`.
+
+   **It also explains item 6 from a second direction.** The weight question asks
+   how much of the sweep a floor can reuse. This asks what the sweep is *for*.
+   A scheme with `Σw > 3/2` would be a floor that reuses more than it costs;
+   a scheme that jumps straight to a convergent would not need the sweep at
+   all. These are the same research programme seen from the cost side and from
+   the target side, and the target side says the prize is a *specific integer
+   with a specific arithmetic property* (`q ∤ k`), not merely a faster search.
+
+   **What would count as progress.** (i) An unconditional way to get **any**
+   convergent of `p/q` from `N` in `o(N^{1/2})` — this alone would beat Fermat
+   and is not known. (ii) The asymmetry `q ∤ k`: this is a condition on the
+   coefficient only, so even a *heuristic* that finds a convergent reliably but
+   cannot check `q ∤ k` would need a verifier, and building that verifier is
+   itself a sub-problem. (iii) Any argument that the good convergents are
+   *unreachable* from `N` in this cost — the negative answer is as valuable as
+   a positive one, and would retire the deterministic direction outright.
+
+   ⚠️ **The honest limit.** This is a **reformulation plus a question**, not a
+   method. `SquareDiff.lean` proves the reduction; it does not make anything
+   faster. The convergent identification is classical and is described, not
+   proved. And **I have not checked whether this reduction is stated elsewhere**
+   — SQUFOF's partial-quotient view is close, and I have not ruled out prior
+   art. No priority is claimed.
+
 
 ---
 
@@ -4043,6 +4161,36 @@ down. What genuinely remains is two narrow items, **neither RSA-specific**: the
 tree's weak-randomness (decorrelation) assumption, and a random-coding bound for
 list decoding on the **asymmetric** channel — a coding-theory gap PPS flagged in
 2012 and which nobody has closed in 14 years.
+
+> **★★★★★ The square-difference reduction (§7, 2026-09-24) — the first result
+> here that identifies the *whole family* rather than costing one member.**
+> `SquareDiff.lean` (10 theorems, 0 `sorry`, 0 `axiom`) proves that Fermat,
+> Lehman, SQUFOF, Hart, Coppersmith's square congruence, Harvey and GFHP are
+> one method, and says what it is: writing `a − b = k·p`, `a + b = l·q`, the
+> output is exactly `p·gcd(k, q)`, so the method succeeds **iff `q ∤ k`**, and
+> the size bound is exactly `|k·p ± l·q| ≤ 2X`. Those are the **continued-fraction
+> convergents of `p/q`**. Three corollaries are worth more than the reduction:
+> `trivial_iff` shows the entire succeed/fail content of the family is the
+> single condition `q ∤ k`; `fermat_is_k_l_one` shows **Fermat is the single
+> point `k = l = 1`**, so everything since Fermat is the effort to reach *other*
+> points; and `lehman_bound` shows **Lehman's diagonal is provably useless for
+> close primes** (`k ≤ 2X/(p−q)`, i.e. `O(X)` when `p − q = O(1)`), so the
+> general two-parameter family is *not* an optimisation of Lehman's — it is a
+> strictly larger object, and that enlargement is what buys Harvey his `1/5`.
+>
+> **This changes the standing verdict in one specific way.** Until now the
+> deterministic side was a *cost* map with no target: "beat `1/5`" had no
+> statement of what one would have to compute. It now has one — **locate a
+> convergent of `p/q` from `N` alone, with `q ∤ k`** (§8 item 7). The weight
+> question (§8 item 6) asks how much of a sweep a floor may reuse; this asks
+> what the sweep is *for*, and answers that the prize is a specific integer with
+> a specific arithmetic property rather than merely a faster search. **Neither
+> is a method and I am not claiming one.** The reduction reorganises and
+> explains; it makes no computation faster, the convergent identification is
+> classical and described rather than proved, and **I have not searched the
+> literature for prior art** — SQUFOF's partial-quotient formulation is close
+> and I have not ruled it out. The claim is that this is the right axis, not
+> that it is new.
 
 ---
 
