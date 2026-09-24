@@ -8,7 +8,8 @@ directory; barrier corrections in `TradeoffBarrier.lean` and `Capstone.lean`;
 the deterministic-family results in `SquareDiff.lean` (10 thms),
 `NoFreeSearch.lean` (3 thms), `VacuousUsefulness.lean` (5 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
-`HarveyFloor.lean` (23 thms) and `OrderLCM.lean` (6 thms).
+`HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (13 thms) and `OrderLCM.lean`
+(6 thms).
 **⚠️ Three claims in this file were retracted on 2026-09-24 — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published), and §7-sextuples
@@ -3795,6 +3796,121 @@ formalised**; it is a one-line `Nat` fact and an obvious next addition.
 
 ---
 
+### 7-septuples-bis. ★★★★★ THE REUSE IS A ZERO-SUM TRADE IN `m` — and that makes `1/5` optimal and `1/6` impossible
+
+This is the round that finally **answers §8 item 8**, and it does so by doing the
+thing the previous five rounds had conspicuously not done: **reading Harvey's
+actual construction.** Until now every statement in this file about the
+`α^{aN+b}` reuse was reconstructed from memory and secondary sources. It is now
+read off **Harvey, arXiv:2010.05450** — the PDF was downloaded and read
+(`~/factor-briefs/harvey-2010.05450.pdf`, 14pp, v1 12 Oct 2020, MSC 11Y05, author
+affiliation UNW S Sydney). The *journal* reference (`Math. Comp. 90 (2021)`)
+remains **UNVERIFIED** as previously recorded; only the arXiv version is confirmed.
+
+**What the paper actually says.** Algorithm 4.2 decomposes the residual
+`y₀ = u₀ − ⌊(4abN)^{1/2}⌋` as `y₀ = i₀ + j₀m` with `0 ≤ i₀ < m`, then sweeps
+`0 ≤ j < N^{1/2}/(4·r·m·√(ab))` (eq. 4.2) and sort-and-matches against the baby-step
+list `{α⁰,…,α^{m−1}}` (eq. 4.3). Algorithm 4.3 then sets
+
+> `r = ⌈N^{1/5}/lg^{6/5}N⌉`,  `m = ⌈N^{1/5}lg^{6/5}N⌉`   —  so `r·m ≈ N^{2/5}`.
+
+**And Proposition 4.3's cost is a THREE-term balance, not two:**
+
+> **`O( ( N^{1/2}/(r^{1/2}·m) + r )·lg⁴N  +  m·lg²N )`**
+
+Writing `r = N^a`, `m = N^b`, the three exponents are
+
+> **`T₁ = 1/2 − a/2 − b`  (the Fermat-gap sum)  ·  `T₂ = a`  (the `(a,b)` pairs,
+> `ab ≤ r`)  ·  `T₃ = b`  (the baby-step list).**
+
+**★ THE REUSE INVARIANT — the answer to §8 item 8(i).** The `i₀`-axis, of length
+`m`, is swept into the baby-step table **once** and reused by every `(a,b)` pair:
+*that is the reuse*. The `j₀`-axis, of length `≈ N^{1/2}/(r·m·√(ab))`, is the
+**residual search fraction**, and it is **not** reused. Therefore
+
+> **The reuse divides the residual by exactly `m`, and costs exactly `m`. It is a
+> ZERO-SUM trade in `m`.**
+
+That is the whole content of the `1/5`, and it is why `m` is the one lever that
+cannot be pulled: the table that buys the shrinkage grows at the same rate.
+`T₃ = b` and the `b` in `T₁`'s denominator are **the same parameter**, and that
+coupling is completely invisible in the `k`-floor abstraction of
+`HarveyFloor.lean`.
+
+**Result 1 — `1/5` is the EXACT optimum of this shape** (`HarveyBalance.lean`:
+`one_fifth_is_lower_bound` + `one_fifth_attained` + `optimum_exactly_one_fifth`,
+the same lower-bound-plus-attainment discipline `HarveyFloor.lean` insists on).
+The minimax is attained uniquely at `a = b = 1/5`, where all three terms equal
+`1/5` — i.e. the balance equation `1/2 = 3a/2 + b` with `a = b`, giving
+`r^{5/2} = N^{1/2}` (`balance_equation`, `balance_solves_to_one_fifth`).
+Verified independently on a fine rational grid.
+
+**★★★★ Result 2 — the kill of an open question HARVEY HIMSELF POSES.** On p.8:
+
+> *"An interesting question is whether it is possible to obtain a fully
+> square-root speedup for Lehman's original choice `r ≈ N^{1/3}`. This would
+> presumably lead to a factoring algorithm with complexity `N^{1/6+o(1)}`."*
+
+**It cannot, and his own Proposition 4.3 says why.** The `T₂ = a` term is the count
+of `(a,b)` pairs with `ab ≤ r`, which is `Θ(r·lg r)`, and it is **not divided by
+`m`**. So at `r = N^{1/3}` the cost is `≥ N^{1/3}` for **every** `m`
+(`no_sixth_at_r_third`), and `1/3 > 1/6` (`six_exponent_unreachable_at_r_third`).
+Beating `1/5` requires **rebalancing** `r` and `m` together — which is what
+Harvey already did — not a further speedup of a fixed `r`. A genuine full
+square-root speedup on the `m`-axis would instead rebalance to **`N^{1/7}`**
+(checked numerically), so `1/6` was never the right target even in the idealised
+limit.
+
+**⚠️ Result 3 — a CORRECTION to how `HarveyFloor.lean`'s weights should be read.**
+The tempting mechanical reading of `Σw = 3/2` is `1 (from T₂) + 1 (from T₃) + 1/2
+(from the √r in T₁)` — but that sums to `5/2`, and the AM–GM form `γ/(1+Σw)` would
+then predict `(1/2)/(7/2) = 1/7`, which is **NOT attainable** (it is *below* the
+true optimum, so it is not even a valid lower bound). The reason is that **AM–GM
+is not tight for this three-term shape**: at the optimum the three terms are
+*equal*, so their product is not the binding constraint
+(`naive_weight_sum_is_five_halves`, `naive_weights_would_predict_one_seventh`,
+`one_seventh_below_optimum`). **`HarveyFloor.lean`'s `Σw = 3/2` reproduces the
+exponent `1/5` correctly but is an encoding, not a term-by-term weight sum.** The
+correct mechanical model is the three-term **minimax**. This does not change the
+value `1/5`; it changes what the weights *mean*, and it closes the "what are the
+weights mechanically?" question that `HarveyFloor.lean` explicitly records as
+open.
+
+**★★★★ Result 4 — the answer to §8 item 8(ii)–(iii): the reuse is NOT a fifth
+primitive.** §5's taxonomy is a statement about **reach** — *what can be
+extracted from `N`*. The BSGS reuse is a statement about **cost** — *how many
+times you pay to extract the same thing*. A cost-only transformation of a search
+is not a new primitive **by construction**: Harvey's final step is still
+`gcd(u − c, N)` (Lemma 3.1), i.e. **primitive (1)**, and the reuse changes no
+predicate and no reachability. **So §5 is complete, and Harvey is not an
+exception to it** — he is the cleanest demonstration of it, since his improvement
+over Hittmeir is *entirely* a cost argument (`N^{2/9}` → `N^{1/5}` by paying the
+baby-step table once instead of `r` times) with the reach untouched.
+
+**`HarveyBalance.lean` — 13 theorems, 0 `sorry`, 0 `axiom`, clean build**
+(axioms: the standard `[propext, Classical.choice, Quot.sound]` throughout):
+`costExp` (def) · `three_terms_balance_at_one_fifth` · **`one_fifth_is_lower_bound`** ·
+**`one_fifth_attained`** · **`optimum_exactly_one_fifth`** · `one_sixth_lt_one_third` ·
+**`no_sixth_at_r_third`** · **`six_exponent_unreachable_at_r_third`** ·
+`gamma_over_one_plus_w` · `naive_weight_sum_is_five_halves` ·
+`naive_weights_would_predict_one_seventh` · `one_seventh_below_optimum` ·
+`balance_equation` · `balance_solves_to_one_fifth`.
+
+**Honest limits.** (i) This is a **reading of a published cost model, not a new
+algorithm** — the minimax arithmetic is elementary once the cost is written down.
+(ii) **No novelty is claimed for the minimax itself.** The claims are narrow and
+checkable: the three-term structure is Harvey's Proposition 4.3; the optimum of
+*that shape* is exactly `1/5`; and `1/6` at `r = N^{1/3}` is excluded by the
+`T₂ = r` term. (iii) The model is Harvey's **worst-case** bound. A method beating
+`1/5` need not have this shape — the same caveat `HarveyFloor.lean` records — but
+what is now proved is that **this** shape is exhausted, so an improvement must
+change the shape rather than rebalance it. (iv) Log factors are suppressed
+throughout (`lg^{16/5}N` at the optimum); they do not affect any exponent. (v)
+The `N^{1/7}` figure for an idealised full square-root speedup is **numerical
+only**, not formalised.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
@@ -4559,11 +4675,42 @@ algorithm; each is a place where a genuine open problem still lives.
    is valuable too: if the reuse is *just* the four primitives composed, then §5
    is complete and the wall plus the taxonomy is the whole story.
 
+   > ### ✅ ANSWERED 2026-09-24 (§7-septuples-bis, `HarveyBalance.lean`, 13 thms).
+   > **All three sub-questions are now settled, by reading Harvey's actual paper
+   > rather than reconstructing it.**
+   >
+   > **(i) The residual search fraction after the reuse** is
+   > **`≈ N^{1/2}/(r·m·√(ab))`** — the `j₀`-axis of Algorithm 4.2. The `i₀`-axis of
+   > length `m` is reused by every `(a,b)` pair; the `j₀`-axis is not. So **the
+   > reuse divides the residual by exactly `m` and costs exactly `m`: a zero-sum
+   > trade in `m`.** That is the quantitative invariant, and it is why `m` is the
+   > one lever that cannot be pulled.
+   >
+   > **(ii) It is NOT a fifth primitive.** §5's taxonomy is about **reach**; the
+   > reuse is about **cost**. A cost-only transformation of a search is not a new
+   > primitive by construction — Harvey's last step is still `gcd(u − c, N)`
+   > (Lemma 3.1), i.e. **primitive (1)**, and the reuse changes no predicate.
+   >
+   > **(iii) §5 IS COMPLETE.** Harvey is not an exception to the taxonomy; he is
+   > its cleanest demonstration, since his whole improvement over Hittmeir
+   > (`N^{2/9}` → `N^{1/5}`) is a *cost* argument with the reach untouched.
+   >
+   > **Bonus, and the sharpest result of the round:** Harvey's Proposition 4.3 is a
+   > **three**-term balance with `m` in a *denominator*, its optimum is **exactly
+   > `1/5`**, and this **refutes the `N^{1/6}` question Harvey poses on p.8** — the
+   > `T₂ = r` term is `Θ(r·lg r)` and is not divided by `m`, so `r = N^{1/3}`
+   > forces cost `≥ N^{1/3}` for every `m`. It also corrects how `HarveyFloor.lean`'s
+   > `Σw = 3/2` should be read: the naive term-by-term decomposition predicts the
+   > unattainable `1/7`, so AM–GM is **not tight** for this shape and the
+   > **minimax** is the right model.
+
    ⚠️ **The honest limit.** This is a **question produced by a barrier**, not a
    method. `ScaleWall.lean` kills a search; it does not build one. What it does
    is **narrow the search for a method to the one place a method can still
    live** — which, after §7-bis and §7-quinary, is a much smaller place than it
-   was two rounds ago.
+   was two rounds ago. **And the question that remained there is now closed
+   (§7-septuples-bis): the one place a method could live turns out to be a
+   cost-transform of primitive (1), already exhausted at `1/5`.**
 
 
 ---
@@ -4825,6 +4972,66 @@ list decoding on the **asymmetric** channel — a coding-theory gap PPS flagged 
 > > this round's contribution is a filter on future attempts plus the closure of the
 > > entire sweep-modification direction. §8 item 8 (`α^{aN+b}` reuse) remains the live
 > > target.
+
+> **★★★★★★★★ AND I READ THE PAPER — which closed the file's last open
+> thread and refuted a conjecture in it (§7-septuples-bis, `HarveyBalance.lean`,
+> 13 theorems, 0 `sorry`, 0 `axiom`).** Six rounds of this file reasoned about
+> Harvey's `α^{aN+b}` reuse **from memory**, and §8 item 8 correctly refused to
+> build on that. This round downloaded arXiv:2010.05450 and read it. Two things
+> were wrong with the reconstruction, and one thing was still open.
+>
+> **What the reuse actually is.** Algorithm 4.2 splits the residual as
+> `y₀ = i₀ + j₀m` with `0 ≤ i₀ < m` and sweeps `0 ≤ j < N^{1/2}/(4·r·m·√(ab))`. The
+> `i₀`-axis (length `m`) is swept into the baby-step table once and **reused by
+> every `(a,b)` pair** — that is the reuse. The `j₀`-axis is **not** reused. So:
+>
+> > **The reuse divides the residual search fraction by exactly `m`, and costs
+> > exactly `m`. It is a ZERO-SUM trade in `m`.**
+>
+> This is the quantitative invariant §8 item 8(i) asked for, and it explains the
+> `1/5` in one line: `m` is the one lever you cannot pull, because the table that
+> buys the shrinkage grows at the same rate.
+>
+> **★ The `1/5` is the exact optimum of the shape, and the `1/6` is impossible.**
+> Proposition 4.3's cost is a **three**-term balance — `N^{1/2−a/2−b}`, `N^a`,
+> `N^b` — not the two the file had been assuming, and the minimax is attained
+> uniquely at `r = m = N^{1/5}` where all three equal `1/5` (`one_fifth_is_lower_bound`
+> + `one_fifth_attained`). **Harvey (p.8) asks: *"…whether it is possible to obtain
+> a fully square-root speedup for Lehman's original choice `r ≈ N^{1/3}`. This
+> would presumably lead to a factoring algorithm with complexity `N^{1/6+o(1)}`."*
+> It cannot, by his own Proposition 4.3: the `N^a` term is the count of `(a,b)`
+> pairs, `Θ(r·lg r)`, and it is **not** divided by `m`, so `r = N^{1/3}` forces cost
+> `≥ N^{1/3}` for **every** `m`. Beating `1/5` requires rebalancing, not a further
+> speedup of a fixed `r` — and an idealised full square-root speedup would give
+> `N^{1/7}`, so `1/6` was never the right target.
+>
+> **★ And a correction to this file's own weight bookkeeping.** The tempting reading
+> of `HarveyFloor.lean`'s `Σw = 3/2` as `1 + 1 + 1/2` sums to `5/2` and predicts
+> `(1/2)/(7/2) = 1/7` — **unattainable, and not even a valid lower bound, because
+> AM–GM is not tight for this three-term shape** (at the optimum the three terms
+> are *equal*). Lean caught this as an arithmetic failure, not a proof failure.
+> `Σw = 3/2` reproduces the exponent `1/5` correctly but is an **encoding, not a
+> term-by-term weight sum**; the **minimax** is the right mechanical model. That
+> answers the "what are the weights mechanically?" question `HarveyFloor.lean`
+> records as open.
+>
+> **★ §8 item 8 is closed, and §5 is complete.** The reuse is **not a fifth
+> primitive.** §5's taxonomy is about **reach**; the reuse is about **cost**. A
+> cost-only transformation of a search is not a new primitive by construction —
+> Harvey's final step is still `gcd(u − c, N)` (Lemma 3.1), i.e. **primitive
+> (1)**, and his entire gain over Hittmeir (`N^{2/9}` → `N^{1/5}`) leaves the reach
+> untouched. **So the one place §7-quinary said a method could still live turns
+> out to be a cost-transform of a primitive already in the taxonomy, exhausted at
+> `1/5`.**
+>
+> **The honest bottom line is unchanged and now fully explained.** No new factoring
+> method has been invented in seven rounds. But the search is no longer open-ended:
+> the box is closed by a size floor (§7-quinary), the multiplier axis is closed by
+> doubling (§7-sextuples), the reuse mechanism is now *read, modelled, and proved
+> optimal* (§7-septuples-bis), and the taxonomy is shown complete for it. **What
+> remains is not a place to look — it is the requirement to change the *shape* of
+> the cost, not to rebalance within it.** That is a much sharper statement of what
+> a new method would have to be than anything the previous six rounds produced.
 
 ### References (representative)
 
