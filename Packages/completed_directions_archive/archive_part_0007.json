@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-23T17:20:37Z",
-  "count": 170,
+  "archived_at": "2026-09-24T12:20:55Z",
+  "count": 171,
   "directions": [
     {
       "id": "fd_3695",
@@ -6733,6 +6733,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 194
+    },
+    {
+      "id": "fd_3464",
+      "title": "FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)",
+      "description": "## FACT round-30 #1 — HINT-VALUE-JOINT (paper 101, /tmp/exp_hintvaluejoint.py, /tmp/r30n1.log)\n\n**Verdict name: THE-HINTS-COMPOUND.**\n\n### Result\nWith the verified 36-label chaining (paper 100), the corrected 2-field joint hint value: **+2.4291 bits against the per-dial hint sum of +1.0288 — hint synergy +1.40 bits. Hints compound like capacities**, mirroring paper 92's capacity synergy (same mechanism: the CRT-joint modulus and the (s,d) pair each see all residues simultaneously).\n\n### The corrected joint hint table\n| view | bits |\n|---|---|\n| product view (hint-free) | 2.1314 (= paper 91 exact) |\n| sum view alone | 0.6432 |\n| gap view alone | 0.6496 |\n| (s,d) joint view | 4.5605 (99.1% of ceiling) |\n| **JOINT HINT VALUE** | **+2.4291** |\n\nBracketing confirmed: product < (s,d) ≤ ceiling.\n\n### New flag (paper-93 discipline, not interpreted)\nThe (s,d)-view which-factor statistic reads **0.9663 bits** — the sparse-plug-in regime at its extreme (~508k residue-pair cells vs 30k samples). NOT interpreted this round; a permutation-null test is the immediate follow-up. Structural note: s,d are symmetric under p↔q, so any REAL leakage would be orientation-conditional and itself significant.\n\nNow 436 experiments. Assessment v212. Paper 101.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "0ed62b99",
+      "timestamp": "2026-08-21T19:38:40.905132+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-23T06:39:26.452474+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 193
     }
   ]
 }

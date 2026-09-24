@@ -1030,6 +1030,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0ed62b99 (Q=0.820), which proved 109 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-30 #1 \u2014 HINT-VALUE-JOINT (paper 101, /tmp/exp_hintvaluejoint.py, /tmp/r30n1.log)\n\n**Verdict name: THE-HINTS-COMPOUND.**\n\n### Result\nWith the verified 36-label chaining (paper 100), the corrected 2-field joint hint value: **+2.4291 bits against the per-dial hint sum of +1.0288 \u2014 hint sy",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_0ed62b99_5d94ccb7",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "0ed62b99",
+    "status": "available",
+    "timestamp": "2026-09-24T12:21:12.979462+00:00",
+    "title": "Deepening: FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 1494cb60 (Q=0.820), which proved 431 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove\n   `\u27e6m+n, k\u27e7_q = \u2211_j q^{(m-j)(k-j)} \u27e6m,j\u27e7_q \u27e6n,k-j\u27e7_q`, the q-Vandermonde\n   convolution, and the q-binomial theorem\n   `\u220f_{i=0}^{n-1}(1 + q^i x) = \u2211_k q^{k(k-1)/2} \u27e6n,k\u27e7_q x^k`.",
     "domains": [
       "Applications"
@@ -2125,21 +2139,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "0ed62b99",
-    "description": "## FACT round-30 #1 \u2014 HINT-VALUE-JOINT (paper 101, /tmp/exp_hintvaluejoint.py, /tmp/r30n1.log)\n\n**Verdict name: THE-HINTS-COMPOUND.**\n\n### Result\nWith the verified 36-label chaining (paper 100), the corrected 2-field joint hint value: **+2.4291 bits against the per-dial hint sum of +1.0288 \u2014 hint synergy +1.40 bits. Hints compound like capacities**, mirroring paper 92's capacity synergy (same mechanism: the CRT-joint modulus and the (s,d) pair each see all residues simultaneously).\n\n### The corrected joint hint table\n| view | bits |\n|---|---|\n| product view (hint-free) | 2.1314 (= paper 91 exact) |\n| sum view alone | 0.6432 |\n| gap view alone | 0.6496 |\n| (s,d) joint view | 4.5605 (99.1% of ceiling) |\n| **JOINT HINT VALUE** | **+2.4291** |\n\nBracketing confirmed: product < (s,d) \u2264 ceiling.\n\n### New flag (paper-93 discipline, not interpreted)\nThe (s,d)-view which-factor statistic reads **0.9663 bits** \u2014 the sparse-plug-in regime at its extreme (~508k residue-pair cells vs 30k samples). NOT interpreted this round; a permutation-null test is the immediate follow-up. Structural note: s,d are symmetric under p\u2194q, so any REAL leakage would be orientation-conditional and itself significant.\n\nNow 436 experiments. Assessment v212. Paper 101.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3464",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T19:38:40.905132+00:00",
-    "title": "FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
-  },
-  {
     "consumed_by_exp_id": "e5322766",
     "description": "## FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY (paper 107)\n\n**Verdict name: ALL-CHECKS-PASS.**\n\n### Result\nEight cross-checked quantities across papers 80\u2013106, **zero inconsistencies**, max spread 0.0040 bits:\n\n| quantity | recordings | spread |\n|---|---|---|\n| S\u2083a@31 marginal | 1.0012, 1.0012 | 0.0000 |\n| S\u2083b@23 marginal | 1.0008, 1.0012 | 0.0004 |\n| A\u2084@9 marginal | 0.4733, 0.4733 | 0.0000 |\n| D\u2084@8 marginal | 1.4302, 1.4342 | 0.0040 |\n| S\u2083a\u00d7S\u2083b joint | 2.1314, 2.1314 | 0.0000 |\n| A\u2084\u00d7D\u2084 joint | 1.9125, 1.9125 | 0.0000 |\n| S\u2083a\u00d7S\u2083b overlap | 0.9919, 0.9919 | 0.0000 |\n| 4-field battery capacity | 8.2246, 8.2246 | 0.0000 |\n\n### Post-resume programme summary (27 papers, 80\u2013106)\n| topic | status |\n|---|---|\n| Type-channel law (degrees 2\u20136) | CONFIRMED |\n| Nonabelian type channels (10 groups) | LAW VERIFIED |\n| Battery space (k=2\u20136) | CHARACTERIZED |\n| Factor-blindness (all views) | VERIFIED |\n| Hint value (six dials) | MEASURED |\n| Quantum frontier | CLOSED |\n| Method stratum | MAPPED |\n| Three strata landscape | MEASURED |\n| Reproducibility (six keystones) | AUDITED |\n| Pythagorean trees | CLOSED |\n\nNow 443 experiments. Assessment v218. Paper 107.\n",
     "domains": [
@@ -2155,16 +2154,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "15a3f6e6",
     "description": "## FACT round-30 #3 \u2014 CYCLIC-SEXTIC (paper 106, /tmp/exp_sextic.py, /tmp/r30n3c.log)\n\n**Verdict name: THE-LADDER-IS-COMPLETE.**\n\n### Result\nQ(\u03b6\u2081\u2083)\u207a (degree 6, Gal = C\u2086, conductor 13) confirms FULL PINNING: I(p mod 13; T) = H(T) = 1.9192 exactly. The degree ladder 2-3-4-5-6 is COMPLETE for abelian fields.\n\nTypes {1,2,3,6} at rates {1/6,1/6,1/3,1/3}. Semiprime I(N mod 13; pair) = 1.4704; wall z = +0.77.\n\nNow 442 experiments. Assessment v217. Paper 106.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3473",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T20:42:26.611881+00:00",
     "title": "FACT round-30 #3 \u2014 CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
   },
@@ -33449,6 +33449,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-22T20:10:31.817056+00:00",
     "title": "Locality Class of Continued-Fraction Factoring"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Capacity synergy (paper 92) has no ceiling beyond the label entropy, while conditional hint synergy is capped by the sign group. The conjecture is that the two can be separated arbitrarily on the same algebraic substrate, so that the slogan hints compound like capacities is false in the strongest possible sense.\n\nFor every B there is a single-prime-field battery with unconditional residue synergy above B and conditional hint synergy at most 1.\n\nTake labels equal to a XOR-structured function of the residue pair with growing alphabet, compute both synergies exactly, and let the alphabet grow.\n\nCapacity and hint are provably different currencies, and paper 92's analogy fails.\n\nUnconditional synergy is also capped by the sign group, which would be a much stronger and unexpected law.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_4939",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0ed62b99",
+    "status": "available",
+    "timestamp": "2026-09-24T12:20:54.812437+00:00",
+    "title": "Capacity-Hint Separation"
   },
   {
     "consumed_by_exp_id": "",

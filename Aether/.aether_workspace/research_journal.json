@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "41afeb86",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — after PHASE-SUBTHRESHOLD-LIFT (paper 150, exp 482)\n\nThis thread replaced the empirical statements of exp 482 with theorems, in five cycles:\n\n* the phase block's tiny lift (`+0.00",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 120,
-      "timestamp": "2026-09-05T16:05:47",
-      "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
-    },
-    {
       "cycle_id": "b58657bf",
       "domain": "Shared",
       "key_insight": "# Future directions — tail-exponent measurement protocol for attention budgets\n\nThis cycle turned the catalog's qualitative knee theory (`Shared.AttentionBudgetKnee`,\n`Shared.AttentionBudgetScaling`,",
@@ -499,19 +489,19 @@
       "theorem_count": 60,
       "timestamp": "2026-09-23T17:20:54",
       "title": "FACT round-30 #2 — SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
+    },
+    {
+      "cycle_id": "0ed62b99",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — after THE-HINTS-COMPOUND-BY-ONE-BIT-PER-FIELD\n\nThree research cycles on paper 101 produced the following settled picture.\n\n* Conditional hint synergy (joint hint value minus the",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 109,
+      "timestamp": "2026-09-24T12:21:12",
+      "title": "FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4aeadf94",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after the U120 floor cycle (exp 554)\n\nSix cycles of the scientific loop were run in this session.\n\n* **Cycle 1** built the missing *pooling* layer of the `T`-dial thread: `pooled",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 77,
-      "timestamp": "2026-08-25T05:50:30",
-      "title": "FACT round-72 #4 — TDIAL-U120: rebound was noise, fade continues below the hypothesized floor (paper"
-    },
     {
       "cycle_id": "9061d61f",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 60,
       "timestamp": "2026-09-23T17:20:54",
       "title": "FACT round-30 #2 — SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
+    },
+    {
+      "cycle_id": "0ed62b99",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — after THE-HINTS-COMPOUND-BY-ONE-BIT-PER-FIELD\n\nThree research cycles on paper 101 produced the following settled picture.\n\n* Conditional hint synergy (joint hint value minus the",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 109,
+      "timestamp": "2026-09-24T12:21:12",
+      "title": "FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "aa0d333b",
-      "domain": "MachineLearning",
-      "name": "for",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "aa0d333b",
-      "domain": "MachineLearning",
-      "name": "fib_dvd_gcd",
-      "quality": 0.83
-    },
     {
       "cycle_id": "c73f4ca7",
       "domain": "Bridges",
@@ -2803,9 +2791,21 @@
       "domain": "Computation",
       "name": "is",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "0ed62b99",
+      "domain": "Bridges",
+      "name": "factor_root_iff_sqrt_discr",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0ed62b99",
+      "domain": "Bridges",
+      "name": "exists_distinct_roots_iff_exists_sqrt",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-23T17:20:54",
+  "last_updated": "2026-09-24T12:21:12",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "ed88da41",
-        "quality": 0.88,
-        "theorems": 749,
-        "title": "FACT round-48 #2 — T-DIAL-UNIF-HB: the dial holds at the regime × bitlen interse"
-      },
-      {
         "cycle_id": "0688a872",
         "quality": 0.84,
         "theorems": 566,
@@ -3203,6 +3197,12 @@
         "quality": 0.82,
         "theorems": 56,
         "title": "FACT round-27 #4 — BATTERY-SCALING: the capacity curve saturates at the label-en"
+      },
+      {
+        "cycle_id": "0ed62b99",
+        "quality": 0.82,
+        "theorems": 109,
+        "title": "FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
       }
     ],
     "Combinatorics": [

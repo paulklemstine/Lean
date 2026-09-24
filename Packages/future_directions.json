@@ -117519,11 +117519,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "15a3f6e6",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -117535,7 +117535,7 @@
       ],
       "github_issue": 198,
       "id": "fd_3473",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-09-24T12:21:50.907986+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -117550,7 +117550,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-21T20:42:26.611881+00:00",
       "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
@@ -161965,7 +161965,7 @@
       "depth_estimate": 3,
       "description": "The indices at which the mode of the binomial weights advances form a Beatty-type set; the gaps between consecutive advances should take at most three values, determined by the continued fraction of the slope. This transfers the Steinhaus three-distance theorem to the combinatorics of binomial peaks. It would give exact, non-asymptotic control of how often the peak moves.\n\nFor α = p/(p+q) irrational and every N, the set of gaps between consecutive n < N with incWord α n = 1 has at most three distinct values, and these are consecutive continued-fraction denominators of α.\n\nFormalize the return-time function of the rotation x ↦ x + α on the orbit {(m+1)α} and prove the three-gap statement, then transport it along pref_eq_floor_fract.\n\nExact gap statistics for the movement of binomial modes, and a bridge from Mathlib's continued fractions to the catalog's unimodality machinery.\n\nThe staircase would carry extra arithmetic beyond the rotation, contradicting the level description proved this cycle; a counterexample would locate the failure precisely.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -163853,7 +163853,7 @@
       "depth_estimate": 3,
       "description": "The sub-Gaussian tail 2 exp(-t^2) is now proved in Bridges.QRLottoDialHoeffding, but it is lossy far out: the coin amplitudes 2/p are tiny relative to the variance scale, and the dial is bounded above by sum 2/p deterministically. A Bennett/Bernstein analysis of the exactly computed moment generating function should replace the Gaussian tail by a Poissonian one and expose the hard support cap.\n\nWith V = sum 1/p^2 and a = max 2/p, the upper tail satisfies P(T - sum 1/p >= t) <= exp(-(V/a^2) h(a t / V)) where h(u) = (1+u) log(1+u) - u, and the tail is exactly zero for t > sum 1/p.\n\nFeed the Bennett bound for the exact single-coin MGF sum_exp_coin into the existing Chernoff step chernoff_card_le_param, and compare the resulting bound with dial_tail numerically for factor bases up to 400.\n\nThe dial's far tail is governed by the largest weight 2/3 rather than by the variance, so extreme yield outliers are exponentially rarer than the Gaussian model predicts.\n\nThe Gaussian rate is already optimal, meaning the small primes dominate the tail behaviour and the dial's outliers are driven by a bounded number of coordinates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "NumberTheory",
         "Bridges"
@@ -166272,7 +166272,7 @@
       "depth_estimate": 3,
       "description": "Approximate PVMs modulo infinitesimal equivalence should be equivalent, as a structured object, to real PVMs. The approach combines surjectivity of observation, identification of its fibres with halos, and the new rigidity theorem. It matters because it would turn the descent theorem into a classification.\n\nThe quotient of finite-entry approximate PVMs by entrywise infinitesimal equivalence is in bijection with real PVMs, compatibly with coarse-graining, ranks and Born weights.\n\nDefine the quotient type in Lean, build the bijection from stMat and hyperMat, and prove commutation with coarse and bornWeight.\n\nThe non-Archimedean theory carries no information beyond the real theory, but does so functorially — a clean classification result.\n\nSome structure (e.g. a merging or a state) fails to descend, isolating genuinely non-Archimedean data.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Bridges"
       ],
@@ -167002,7 +167002,7 @@
       "depth_estimate": 3,
       "description": "The two fork channels differ only in whether one and the same entropy deficit degrades them additively or multiplicatively. The number of arities at which they agree is therefore an invariant of the degradation pair rather than of the channels, and equals the number of solutions of a level-set equation for a unimodal functional. This bridges an information-theoretic comparison to a degree count in one dimension.\n\nFor any smooth strictly convex deficit d on (0, infinity) with d(0+) = infinity and d(infinity) = 0, the set {n > 0 : log2 n + d n = c} has cardinality 0, 1 or 2, with cardinality 2 exactly when c exceeds the unique critical value of log2 n + d n.\n\nFormalize the abstract statement with d as a hypothesis-carrying variable and rerun the two-branch monotonicity argument used for d n = 1/n^2.\n\nThe two-crossing theorem becomes a special case of a general degree principle applicable to every degradation model in the catalog.\n\nStrict convexity is not the right hypothesis, and the correct condition would identify exactly which deficits admit more than two crossings.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Bridges"
@@ -175771,6 +175771,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle 0ed62b99 (Q=0.820), which proved 109 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-30 #1 — HINT-VALUE-JOINT (paper 101, /tmp/exp_hintvaluejoint.py, /tmp/r30n1.log)\n\n**Verdict name: THE-HINTS-COMPOUND.**\n\n### Result\nWith the verified 36-label chaining (paper 100), the corrected 2-field joint hint value: **+2.4291 bits against the per-dial hint sum of +1.0288 — hint sy",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "push_0ed62b99_5d94ccb7",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "0ed62b99",
+      "source_path": "FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-09-24T12:21:12.979462+00:00",
+      "title": "Deepening: FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 0f63237d (Q=0.774), which proved 22 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approac",
       "domain_bridges": [],
       "domain_quality_penalty": 1.0,
@@ -181093,7 +181133,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 643f7ea2 (Q=0.820), which proved 56 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-27 #4 — BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F₂₀ x⁵−2 @5 and C₅ Q(ζ₁₁)⁺ @11; all conductors pairwise coprime, CRT modulus 31·23·9·8·5·11).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -183693,7 +183733,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 903508ab (Q=0.820), which proved 169 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-24 #3 — QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C₄-abelianization object**: the Frobenius group **F₂₀",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -185213,7 +185253,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ad3686b6 (Q=0.830), which proved 82 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Quantify how far a population is from comonotone by the least ℓ¹ perturbation of the rates that removes all discordant pairs, and relate it two-sidedly to the discordance mass that governs the triage rule.\n\nIf δ is the least ℓ¹ perturbation of y making (x, y + δ) comonotone, then δ² ≤ Δ ≤ 2·δ·range(",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges"
       ],
@@ -186373,7 +186413,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle c73f4ca7 (Q=0.850), which proved 57 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-25 #2 — QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
