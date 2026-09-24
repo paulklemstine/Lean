@@ -2465,6 +2465,17 @@ is forced by AM–GM, and `k = 3` gives NFS" — is **wrong**, in a way that mad
    > epistemic status of every "faster than NFS" claim in this survey is
    > therefore: **unproved, and unrefuted.**
 
+**The two halves of this section now converge with §2 from opposite directions.**
+§6 point 1 says the naive AM–GM model *omits* the Dickman factor and that
+smoothness probability is what actually pins the subexponential cost. The §2
+correction (2026-09-24) reaches the same conclusion from the other side: once the
+`ω ≥ 2` linear-algebra "hard fact" is retracted as a category error, the linear
+algebra is **co-equal but non-binding**, and the *real* binder of `1/3` is the
+**Dickman collection source** (`E²·ρ(u) ≳ B` forces `log B ~ (log N)^{1/3}`).
+Two independent arguments landing on the same term is the strongest form of this
+barrier the record contains — and it is still a *heuristic* barrier, per the
+`HEURISTIC` label above.
+
 So "`k = 3` gives NFS" records a *shape*, not a *mechanism*, and "unbounded arity
 escapes the barrier" is an artifact of an under-specified model, not a route to
 faster factoring. **This correction is now propagated into the `TradeoffBarrier.lean`
