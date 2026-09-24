@@ -982,27 +982,87 @@ maximum-likelihood (non-Hamming) list decoder is what fixes it. So "the attacks
 sit on the margin" is true of the *idealized symmetric* case and misses that the
 classic attacks are **simply inapplicable** to real cold boot.
 
-**The one genuine open question this leaves — and it is information-theoretic,
-not a Coppersmith-noise bound:**
+#### 4e-i. The surviving question is now **answered — and it is answered "yes"**
 
-> Does the map "valid RSA key tuple → bit vector" behave as a **random code**
-> under list decoding? Equivalently: can one *prove* — without the random-code
-> assumption — that recovery succeeds exactly when the key's code rate (1/5 for
-> `(p,q,d,d_p,d_q)`) stays below the capacity of the true asymmetric `(α,β)`
-> cold-boot channel?
+A dedicated pass (2026-09-24) closed the one question this section used to leave
+open, and it closed it in the direction the survey did **not** expect. Three
+premises of the old framing were wrong; the residue is much narrower than it
+looked.
 
-PPS name this themselves: a rigorous proof "would likely yield a Shannon-style
-random coding bound for list decoding on non-symmetric channels, and such bounds
-are **not known**, despite list decoding having been the subject of many decades
-of study." Every threshold in the literature (`0.243`, `0.20`, `β = 0.479` for
-`(p,q,d)`, `β = 0.666` idealized) is **computed on the assumption that the key
-tuple is random**. The Shannon converse then bounds what any algorithm can do —
-but only *conditional* on that randomness. So the "information-theoretic limit"
-is a rigorous **benchmark**, not a proved RSA-specific limit. There is no real,
-nameable RSA-specific noise limit to cite, and the phantom "AGM conjecture"
-(§4d-v) must not be resurrected as a replacement. The only legitimate
-nameable structure is the **Shannon capacity converse for list decoding**
-(Elias; Guruswami), whose applicability to RSA is exactly the open question.
+**First, the framing is not an open frontier — it is Paterson–Polychroniadou–
+Sibborn's 2012 content.** PPS is titled *A Coding-Theoretic Approach to Recovering
+Noisy RSA Keys* (ASIACRYPT 2012, ePrint 2012/724,
+DOI `10.1007/978-3-642-34961-4_24`): they prove a **list-decoding bound for the
+symmetric channel** (Thm. 1) under explicit weak-randomness assumptions,
+compute **capacity ceilings**, and design the **ML list-decoder** for the
+asymmetric cold-boot channel. The survey sentence "is the RSA key tuple a good
+code for list decoding?" was not an open question; it was a description of a
+2012 paper.
+
+**Second, "the code" is not the valid key set — that is a singleton.** For fixed
+`N` there is **one** valid key (unique factorization), so the set of valid keys is
+a rate-0 singleton and "list-decoding" it is just guessing the key, i.e. factoring.
+The real code is **the algorithm's candidate set**: at one search stage, `2^t`
+codewords of `5t` bits, a forest of `L` binary trees of depth `t` built by
+**Hensel / 2-adic lifting**. Its rate is `(t + log₂L)/(mt) → 1/m`; for the 5-tuple
+`(p,q,d,d_p,d_q)`, `m = 5`, so **rate `1/5`**. And the `N`-dependence is not a
+defect to be feared — **it is the source of the redundancy**: the five components
+are algebraically dependent (`pq = N`; `e·d_p ≡ 1 mod p−1`; `e·d_q ≡ 1 mod q−1`),
+so the tuple carries only ~1/5 independent information. That is the code's
+*power*.
+
+**Third, there is no Reed–Solomon anywhere in this literature.** The channel is
+**bit-level** (BSC / Z-channel) and the code is **binary**; grep-verified zero
+occurrences of "Reed–Solomon" in HS 2009, HMM 2010 or PPS 2012. Grouping bits
+into `m`-bit symbols does not create a q-ary symbol channel. (Relatedly,
+"Heninger–Shacham–Heninger" is a **phantom author triple** — the bit-flip CRYPTO
+2010 paper is **Henecka–May–Meurer**.)
+
+**The answer, and it is quantitative.** At rate `1/5`, PPS prove the **capacity
+ceilings** `δ ≤ 0.243` (symmetric/BSC), `β ≤ 0.666` (asymmetric Z-channel,
+`α = 0`), and a known-fraction floor of `0.20` (erasure). HMM's threshold
+`δ < 0.237` and PPS's experiments (`0.20–0.23` symmetric, `β = 0.60–0.63` Z) sit
+**just under the proved ceiling — the model is near-tight for the symmetric
+channel.** And here is the part that inverts the survey's worry:
+
+> **The random-code model `UNDER`-predicts, by a factor of 2.4.** For a *random*
+> code of rate `1/5` the list-decoding radius is the **Johnson radius**
+> `½ − √(R(1−R)) = 0.100`. The RSA candidate code achieves **`0.237`**. So
+> **yes — the RSA key tuple is a good code for list decoding, demonstrably, and
+> for a structural reason: it is a TREE code, and tree codes list-decode toward
+> capacity while random codes stall at the Johnson radius.**
+
+The survey had been treating the random-code assumption as an *optimistic* upper
+bound to be knocked down. **The error runs the opposite way.**
+
+**So what actually remains open is narrow and 14 years stale — two items, and
+neither is RSA-specific.** (i) **Justify the tree's weak-randomness
+("decorrelation") assumption** `k ≈ 5` — the one real open risk; if the Hensel tree
+were a *bad* list-decoding code with many irreducible near-candidates inside the
+radius, the whole thing collapses, and nobody has shown that either way.
+(ii) **A random-coding bound for list decoding on the *asymmetric* channel** —
+PPS flag this as a gap in *coding theory*, not in RSA, and a 2013–2026 sweep found
+no closure. (Adjacent structural facts, both handled and not fatal: the tree's
+minimum distance is `O(m)` because adjacent leaves share `m(t−ℓ)` leading bits,
+which is why the list size `L` exists; and the `p ↔ q` isometry is harmless,
+resolved by a trial decrypt.)
+
+**The field went quiet, which is itself the finding.** The coding-theoretic
+framing was a **one-paper excursion**. Post-2012 work is incremental and
+non-rigorous in this framing: Kunihiro–Shinohara–Izu (2013,
+`10.1007/978-3-642-36362-7_12`, erasure+error combined), Kunihiro (2015,
+`10.1007/978-3-319-26059-4_4`), Kunihiro–Takahashi (2017,
+`10.1007/978-3-319-52153-4_19`), Wang et al. (AsianHOST 2017, practical cold
+boot, `10.1109/asianhost.2017.8353995`), Oonishi–Kunihiro (2020, a
+*side-channel* variant — different channel, `10.1007/978-3-030-55304-3_34`).
+**No rigorous list-decoding follow-up exists.** Also recorded: the
+"algebraic/lattice" line is a genuinely different technique, not a list-decoding
+variant — Herrmann–May, *Solving Linear Equations Modulo Divisors: On Factoring
+Given Any Bits*, ASIACRYPT 2008, `10.1007/978-3-540-89255-7_25`.
+
+⚠️ **A number to stop using: `0.2786` is a PHANTOM.** It appears in no primary
+source (HS 2009, HMM 2010, PPS 2012) and survived no targeted search. The real
+rate-`1/5` figures are **`0.243` (BSC) and `0.666` (Z-channel)**.
 
 **Two secondary notes.**
 
@@ -1362,11 +1422,19 @@ algorithm; each is a place where a genuine open problem still lives.
 2. **Is low-exponent RSA easier than factoring?** — the Boneh–Venkatesan ceiling
    question, now sharply posed (§4b). BV proved **no attack** (it is a no-reduction
    result about proof techniques), and the **generic ring model flips the answer to
-   equivalence** (Aggarwal–Maurer). So the real open question is: *is there a
-   standard-model black-box reduction from RSA inversion to factoring for `e = 3`?*
-   Neither direction is known. A model-independent separation — or refutation — would
-   be a genuine result. BV's genuine content is a **localization**: any non-factoring
-   break must be non-generic (bit-manipulating).
+   equivalence** (Aggarwal–Maurer). So the real open question, stated in **oracle
+   form so the direction cannot be misread**: *can an oracle that inverts RSA for
+   `(N, e)` be used to produce a nontrivial factor of `N`, in the standard model?*
+   ⚠️ **This bullet previously read "…a reduction from RSA inversion to factoring…
+   Neither direction is known"** — which asked the *trivial* direction and was
+   doubly wrong. Under `A ≤c B` = "`A` is solved using `B`", "from inversion to
+   factoring" is *factoring ⇒ inversion*, which is **elementary** (factor, then
+   `d = e⁻¹ mod φ(N)`). Drop the `e = 3` tag too: nothing in the result is
+   `e`-specific — Aggarwal–Maurer hold for **all** `e`, and unpadded `e = 3` is
+   invertible by integer cube root. See §4b-i, §4b-iv. A model-independent
+   separation — or refutation — would be a genuine result. BV's genuine content is
+   a **localization**: any non-factoring break must be non-generic
+   (bit-manipulating).
 3. **Analog / physical-precision factoring** — the one genuinely open *question*,
    and it has been **re-scoped** (§4a). Two corrections to what this thread
    previously claimed:
@@ -1586,11 +1654,18 @@ the low-exponent-RSA ceiling, circuit lower bounds, and the modular-curve
 unification — not to relitigate the killed directions in §3–§5. **Analog/physical
 factoring (thread 3) is no longer on this list:** it was re-scoped and is currently
 a **kill**, not an open question (§4a). **The noisy/approximate-leak sub-thread
-of thread 1 has likewise been explored and resolved as a kill** (§4e): the
-framing was a category error, and what genuinely survives is a single
-information-theoretic question — whether the RSA key tuple is a good code for
-list decoding — which is the same random-code assumption that already makes every
-published cold-boot capacity figure a benchmark rather than a proved limit.
+of thread 1 is a kill** (§4e): the framing was a category error, because no
+attack ever feeds noisy bits to the lattice. **And its one surviving
+information-theoretic question is now ANSWERED** (§4e-i): *yes*, the RSA key
+tuple is a good code for list decoding — **it is a Hensel-lifting TREE code of
+rate `1/5`, and tree codes list-decode toward capacity while random codes stall
+at the Johnson radius `0.100`; the achieved `0.237` beats it by 2.4× and sits
+just under the proved `0.243` ceiling.** The premise was backwards: the
+random-code model *under*-predicts, it is not an optimistic bound to be knocked
+down. What genuinely remains is two narrow items, **neither RSA-specific**: the
+tree's weak-randomness (decorrelation) assumption, and a random-coding bound for
+list decoding on the **asymmetric** channel — a coding-theory gap PPS flagged in
+2012 and which nobody has closed in 14 years.
 
 ---
 
@@ -1607,9 +1682,22 @@ Wiener (small-`d` `N^{1/4}/3`) · **Boneh–Durfee–Frankel** ASIACRYPT 1998 ·
 bit-flip-noise result; conference year corrected from the commonly-miscited
 "CRYPTO 2008" to CRYPTO 2009, verified on the ePrint landing page) ·
 **Henecka–May–Meurer** CRYPTO 2010, LNCS 6223:351–369 (the actual **BSC**
-bit-flip model) · **Paterson–Polychroniadou–Sibborn** ASIACRYPT 2012
-(ePrint 2012/724; asymmetric `(α,β)` cold-boot channel, maximum-likelihood
-list decoder) · **Cohn–Heninger** ISAAC 2011 (ePrint 2011/437; multivariate
+bit-flip model) · **Paterson–Polychroniadou–Sibborn**, *A Coding-Theoretic Approach to Recovering
+Noisy RSA Keys*, ASIACRYPT 2012 (ePrint 2012/724, DOI `10.1007/978-3-642-34961-4_24`;
+asymmetric `(α,β)` cold-boot channel, maximum-likelihood list decoder, and
+**the list-decoding framing itself** — proved capacity ceilings `δ ≤ 0.243` (BSC)
+and `β ≤ 0.666` (Z-channel) at rate `1/5`) · **Herrmann–May**, *Solving Linear
+Equations Modulo Divisors: On Factoring Given Any Bits*, ASIACRYPT 2008, DOI
+`10.1007/978-3-540-89255-7_25` (the *algebraic/lattice* line — a genuinely
+different technique, **not** a list-decoding variant) · **Elias**, *Error-correcting
+codes for list decoding*, IEEE Trans. Inf. Theory, DOI `10.1109/18.61123` ·
+**Guruswami**, *Algorithmic Results in List Decoding*, DOI
+`10.1561/9781601980052` (Johnson radius; the `0.100` that the RSA *tree* code
+beats by 2.4×) · **Kunihiro** SAC 2015, DOI `10.1007/978-3-319-26059-4_4` ·
+**Kunihiro–Takahashi** 2017, DOI `10.1007/978-3-319-52153-4_19` · **Wang et al.**
+AsianHOST 2017, DOI `10.1109/asianhost.2017.8353995` (practical cold boot) ·
+**Oonishi–Kunihiro** 2020, DOI `10.1007/978-3-030-55304-3_34` (a *side-channel*
+variant — different channel) · **Cohn–Heninger** ISAAC 2011 (ePrint 2011/437; multivariate
 ACD-with-error, explicitly **heuristic**) · **Halderman et al.** CCS 2008
 ("Lest We Remember", USENIX Sec 2008:45–60 / CACM 52(5):91–98) ·
 **Kunihiro–Shinohara–Izu** PKC 2013 (ePrint 2012/701) · **Albrecht–Cid** ACNS
