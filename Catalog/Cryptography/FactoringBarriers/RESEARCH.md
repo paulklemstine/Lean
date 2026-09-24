@@ -234,6 +234,38 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   > `1/2` is genuinely **worse** than NFS's `1/3`; ECM wins below `n ≈ 593`
   > only because `ln p` is halved (a small factor of a large `N`) plus constants.
   >
+  > **The mechanism, derived: `1/3` is structurally incompatible with `p`-coupling.**
+  > (Derived 2026-09-24; reproduces this survey's `ln(cost)` table to 3 digits.)
+  > The ECM balance is `ln(cost) = b + (P ln P)/b` (`P = ln p`, `b = ln B`),
+  > minimised at `b = √(P ln P)`; the constant is `min_c (c + 1/(2c)) = √2` at
+  > `c = 1/√2` — so **both the `1/2` and the `√2` are the optimum of the balance
+  > itself** (`√2` is the AM–GM of the two terms). Every refinement — forced
+  > `ℓ`-torsion, CM, specified `M₀ | #E`, stage 2, twisted curves — is a
+  > **constant-factor** change leaving `α = 1/2` invariant. *The deeper obstruction
+  > is not the `1/2`:* **`1/3` is built from a balance that needs polynomial
+  > per-relation collection cost** (sieving amortisation over a `p`-independent pool
+  > of size `≈B`), and **a `p`-coupled channel forces exponential per-relation
+  > cost** (`Θ(B)=exp(b)` to build/use each group order or `a^{lcm}`, with no
+  > amortisation). Bolting an NFS-style quadratic system onto a `p`-coupled source
+  > provably **stays at `1/2`** and *worsens* the constant (to `2√2`). The obstruction
+  > is therefore **mechanical, not merely circular**: `p`-coupling destroys the
+  > per-relation cost structure the `1/3` balance is made of. The one **rigorous**
+  > unconditional subexponential method (imaginary-quadratic class group, `L[1/2,1]`)
+  > is likewise `1/2`.
+  >
+  > ⚠️ **"Never" is too strong for CONDITIONAL channels — a scope correction.**
+  > Pollard `p−1`/`p+1` cost `Θ(P⁺(p∓1))`, *linear* in the smoothness bound, so
+  > their conditional exponent is a **free parameter**, not floored at `1/2`: under
+  > `P⁺(p−1) ≤ L_p[1/3,c]` (`c<1.9`) they beat GNFS, and under
+  > `P⁺(p−1) ≤ (log p)^k` they are **polynomial in `n`** (the textbook "weak key").
+  > This is **conditional and standard**, not a new method, and for a random `p` the
+  > median `P⁺(p−1) ≈ p^0.84` is **exponential** — so the unconditional/expected
+  > confinement at `≥ 1/2` stands. Precise scope: **unconditional `p`-coupled channels
+  > are confined to exponent `≥ 1/2`; the conditional exponent is unconfined.**
+  > (Pollard 1974, `10.1017/S0305004100049252`; Lenstra 1987 ECM,
+  > `10.2307/1971363`; Lenstra–Pomerance 1992 `10.1090/S0894-0347-1992-1137100-0`;
+  > all re-verified by exact-DOI Crossref fetch 2026-09-24.)
+  >
   > **The `L[1/3]` balance is therefore at its floor in its linear-algebra term,
   > and this is a hard fact, not a conjecture.** The relation matrix is solved by
   > Gaussian elimination; Strassen, *"Gaussian elimination is not optimal"*,
