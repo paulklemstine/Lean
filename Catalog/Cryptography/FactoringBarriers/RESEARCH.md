@@ -283,7 +283,9 @@ self-defeating. The model is **algebraic reductions** (straight-line programs ov
 (*Breaking RSA Generically is Equivalent to Factoring*, ePrint 2008/260, EUROCRYPT
 2009, IEEE ToIT 2016) prove a **generic ring** algorithm that breaks RSA can be
 converted into one that factors — for **arbitrary `e`** (preceded by Brown 2005,
-Leander–Rupp 2006; extended to preprocessing by Dachman-Soled–Loss–O'Neill 2022).
+Leander–Rupp 2006; the "extended to preprocessing" attribution previously given
+here to Dachman-Soled–Loss–O'Neill 2022 is a **phantom** and has been removed —
+see §4b-iv).
 
 **The precise direction, and the real content of BV.**
 - *Factoring ⇒ inverting RSA:* trivial, unconditional.
@@ -319,10 +321,143 @@ removes the structured-plaintext precondition. The only general route remains
 factoring (GNFS).
 
 **The sharpest open question** is *not* "is BV's separation genuine" (that is
-settled — against BV, in the generic model) but: **is there a black-box
-reduction from RSA inversion to factoring for `e = 3` in the standard model?**
-Neither direction is known. As one agent put it: a separation in a model that
-provably contains no real attack is a fact about the model, not about RSA.
+settled — against BV, in the generic model) but, stated in **oracle form so the
+direction cannot be misread**: **can an oracle that inverts RSA for `(N, e)` be
+used to produce a nontrivial factor of `N`?**
+
+> ⚠️ **Directional bug, corrected 2026-09.** This sentence previously read
+> *"is there a black-box reduction **from RSA inversion to factoring** for `e = 3`
+> in the standard model? Neither direction is known."* **That asked the trivial
+> direction.** Under the standard convention `A ≤c B` means `A` is solved *using*
+> `B`, so "reduction from inversion to factoring" is *factoring ⇒ inversion* —
+> which is **trivially yes** (factor `N`, compute `d = e⁻¹ mod φ(N)`, decrypt).
+> The genuinely open direction is the converse, *inversion ⇒ factoring*, which is
+> what the bullet immediately above this one already said correctly, and what
+> Aggarwal–Maurer say correctly: "It is easy to see that if the RSA assumption
+> holds then the factoring assumption holds. However it is a long-standing open
+> problem whether the converse is true." "Neither direction is known" was
+> **doubly wrong** — one direction is elementary. The oracle phrasing above is
+> used instead because "reduction from X to Y" is exactly where the error crept
+> in. *Lesson: in a project with a documented phantom-citation history, prose
+> about reduction *directions* deserves the same distrust as a citation.*
+
+**Drop `e = 3`: nothing in the result is `e`-specific.** Aggarwal–Maurer's
+equivalence holds for **all** `e`; Brown's "low exponent" is about a *leak
+budget*, not the inversion question; and unpadded `e = 3` is invertible by
+integer cube root, so the only non-degenerate `e=3` setting is *padded* `e=3` —
+a special case of padded RSA with no known distinguishing feature. The `e=3`
+tag is inherited from BV's 1998 framing, not from any theorem.
+
+#### 4b-i. The algebraic models form a ladder — and the separation is not about `e`
+
+| Model | Result | Source |
+|---|---|---|
+| **SLP** (`+ − ×`; no division, no equality test, no bit access), `e = 3` | no small-query *algebraic* reduction can prove the equivalence — the technique is self-defeating | Boneh–Venkatesan 1998 |
+| **SLP**, low `e` | factoring hard ⇒ **no SLP break** of low-`e` RSA | Brown, ePrint 2005/380; J. Cryptology 29(1):220–241 (2014) |
+| **SLP + equality queries** | equivalence | Leander–Rupp, ASIACRYPT 2006 |
+| **SLP + equality + division** = **generic ring** | equivalence, **all `e`** | Aggarwal–Maurer |
+
+**Brown closed the SLP gap in 2005.** The thing BV gestured at *self-destructively*
+in 1998 was subsequently made rigorous, in exactly the model BV was complaining
+about, framed explicitly as *low public exponent RSA*. **So BV is not a dangling
+objection — it is the intuition behind a theorem that now exists.** The earlier
+framing of BV as "the last word" was wrong.
+
+**The separation is between `SLP` and `SLP + equality`, not between small `e`
+and large `e`.** Aggarwal–Maurer note that Leander–Rupp "exclude the inverse
+operations, but since these operations are easy in `ℤ_N`, they should be
+included as otherwise the results are of relatively limited interest" — so
+LR → AM is a *completeness fix*, not a deep gap. **`e = 3` is invisible to both
+algebraic models**, and the sharp reason is stronger than "no result exists": in
+the generic ring model a non-factoring break is impossible *by construction*, since
+equality tests are the only channel and an informative one already yields a factor.
+
+#### 4b-ii. Aggarwal–Maurer already contain the decision-oracle theorem
+
+Searches for a separate "decision oracle" statement in this area turn up nothing
+beyond what is **already published, in a stronger form, inside Aggarwal–Maurer
+§1.3** (from their Lemma 5): *"if we can obtain any non-trivial information from
+an equality query with non-negligible probability, then we can use this to factor
+N. Therefore… there does not exist any GRA for solving any decision problem on
+the ring `ℤ_N` for an input chosen uniformly at random."* Their stated instances
+are computing **the least significant bit of a random input** and **the Jacobi
+symbol** — both generically as hard as factoring, both trivial in general. This
+*is* the Manger-bit content, already published. **Do not go looking for a
+"Frankel–Tessaro–Kiltz" small-exponent result to supply this; the triple could not
+be bound to any title, and Aggarwal–Maurer §1.3 subsumes the intent.**
+
+#### 4b-iii. The problem is three-level, not two-level
+
+The binary "recover `m` vs. factor" framing hides the level where all the real
+post-2015 work actually lands:
+
+    factoring  ⇒  d  ⇒  m                        (both arrows trivial)
+         ▲         ▲
+         │         └── UNKNOWN: does an m-inversion oracle yield d?
+         └── UNKNOWN: does d yield p, q?          ← all the partial-key-exposure
+                                                    work lives HERE, and it is NOT factoring
+
+**There is no known reduction from the private key `d` to the modulus factors.**
+Coppersmith small-`d` attacks say *if `d` is small then factor* — a **size
+threshold**, not a reduction *from* `d`. That distinction is the entire remaining
+gap, and the survey previously did not state it.
+
+**The one result that actually closes something on the `d` side** (and which this
+survey cited only as a *trap correction*, never recording the result):
+**Coron–May**, *Deterministic Polynomial-Time Equivalence of Computing the RSA
+Secret Key and Factoring*, J. Cryptology 20(1):39–50 (2007), ePrint 2004/208
+(precursor: May, ASIACRYPT 2004, LNCS 3320) — given `(N, e, d)` with `e, d < N`
+there is a **deterministic polynomial-time** algorithm that **factors `N`**, in
+the **standard model**, no random oracle. The size condition `d < N` is the whole
+content; it is a threshold, not an unconditional `d ⇒ factoring` reduction.
+
+#### 4b-iv. ⚠️ Citation audit of this section (2026-09)
+
+**A phantom title with a traceable origin — the most important finding here.**
+The true title of Boneh–Venkatesan is **"Breaking RSA may *not* be equivalent to
+factoring"**, LNCS 1403:59–71, DOI `10.1007/bfb0054117`, verified at Crossref.
+**Aggarwal–Maurer's own reference list misprints it as "Breaking RSA may be
+*easier* than factoring."** The wrong title is therefore not an internet rumour
+with no origin: it enters the literature *through a bibliography transcription
+error in a top-tier paper*, and is self-reinforcing — search the wrong title,
+find Aggarwal–Maurer's list, which re-confirms the wrong title. That is the exact
+mechanism behind the misreading this survey previously carried and corrected
+substantively. **Record it so the error is never re-derived.** (Note the
+distinction: the *substance* — BV is a no-reduction result about proof techniques,
+not evidence that low-`e` RSA is easier — is **correct** and confirmed. Only the
+title was wrong.)
+
+**Phantoms — deleted or do not cite:**
+
+- **"Dachman-Soled–Loss–O'Neill 2022"** ("extended to preprocessing"). **PHANTOM.**
+  A full-record search on that author triple returns 37 works, **none** on RSA,
+  factoring, generic rings, or preprocessing; no 2022 item at all. Removed from
+  the Aggarwal–Maurer sentence above.
+- **"Copperlands."** **PHANTOM** — 0 arXiv full-text results. A corruption of
+  *Coppersmith*. Never cite.
+- **"Manger–Kohn adversary-transform family."** No such author combination or
+  paper. (Manger's attack itself is real: David Manger, IEEE Trans. Inf. Theory
+  48(2):599–618, 2002.)
+- **"Frankel–Tessaro–Kiltz"** as a small-exponent / decision-oracle citation —
+  authors real, idea real, but **no specific paper by that triple could be
+  resolved**. Do not cite without a resolved title; use Aggarwal–Maurer §1.3.
+
+**A trap by title, worth recording so it is not re-litigated:**
+Joux–Naccache–Thom, *When e-th Roots Become Easier Than Factoring* (ASIACRYPT
+2007, LNCS 4833:13–28, ePrint 2007/424) is **not** a factoring-beating break. It
+needs **subexponential access to an oracle** returning `e`-th roots of `x_i + c`,
+and its cost `L_n(⅓, ∛(32/9))` **matches SNFS** — i.e. matching a factoring
+algorithm. The honest reading: *with an extra restricted oracle, root extraction
+is no harder than factoring* — a **malleability / affine-forgery** result about
+RSA, not an advance on factoring.
+
+**A methodological note for the next pass:** **this subfield does not publish on
+arXiv** — it publishes on IACR ePrint and LNCS. Four arXiv sweeps returned only
+noise (including an unrelated fluid dynamicist named Manger and a basketball
+free-throw statistics paper). Sweep **ePrint and Springer first**. (Those hosts
+were bot-walled in one pass; what worked was Crossref, OpenAlex, the arXiv API,
+and direct ePrint landing pages by URL, since ePrint's *search* endpoint is
+IP-rate-limited.)
 
 ### 4c. Modular curves: a rigorous cohomological lower bound (Gu–Martin)
 
@@ -827,17 +962,29 @@ route above `p±1`.
 A second, dedicated invention pass (three new mechanisms, each adversarially
 attacked) surfaced a reusable **structural obstruction** that explains
 mechanically — not case-by-case — why "invent a cheap factor-encoding observable"
-keeps failing. Any classical method for `N = pq` must, at its core, do one of
-four things:
+keeps failing. A classical algorithm that, given `N = pq` *(possibly together with
+partial or special information about `p, q`)*, outputs a nontrivial factor, must
+at its core do one of four things. **This statement was adversarially audited and
+repaired in 2026-09; see §5a — the original wording was literally false.**
 
-1. **Isolate `p,q` up to a gcd** via relations over a factor base (index calculus /
-   QS / NFS). Bottleneck: *smoothness / relation collection* (not linear algebra —
-   Gaussian elimination on the relation matrix is already poly-time).
-2. **Approximate `p` to a known bit-length** (lattice / Coppersmith). Bottleneck:
+1. **Isolate `p` or `q` up to a nontrivial gcd** — by *any* mechanism that arranges
+   a value divisible by one prime and not the other. This covers **both** the
+   factor-base family (QS, Dixon, GNFS, SNFS, Tower NFS) **and** the
+   group-order / cycle family (**Pollard `p−1`, `p+1`, `ρ`; Williams `p+1`; Lenstra
+   ECM**; a bare `gcd` of two moduli sharing a prime). The bottleneck is always
+   the *arrangement* step — smoothness of a relation, of a group order, or of a
+   cycle — never the linear algebra, which is already poly-time.
+2. **Approximate `p` to within a known bound, given partial information**
+   (lattice / Coppersmith / Howgrave–Graham). Bottleneck:
    you must already know ~half of `p`'s bits (the epistemic barrier, §4).
-3. **Exploit special structure** of `N` (special-form factorizations).
-4. **Obtain a nontrivial idempotent** `e² ≡ e (mod N)`, `e ≢ 0,1` — which is
-   *literally equivalent to factoring*, since `gcd(e, N)` is then a proper factor.
+3. **Exploit a special algebraic form of `N` itself** — Fermat (close factors),
+   Cunningham / Mersenne / Proth, Aurifeuilian, … This primitive **presupposes
+   `N` lies in a parameterised special family**; it is deliberately *not* a
+   general catch-all.
+4. **Obtain a nontrivial idempotent** `e² ≡ e (mod N)`, `e ≢ 0,1` — provably
+   equivalent to factoring, since `gcd(e, N)` is then a proper factor. (This is
+   formally a *special case* of (1), listed separately because the equivalence is
+   exact and the mechanism — e.g. a square root mod `N` — is characteristic.)
 
 Three freshly invented mechanisms each died by landing in one of these:
 
@@ -860,6 +1007,89 @@ Note the nice complementarity: the lattice obstruction (§4) is **epistemic** (y
 cannot write the polynomial); this one is **algebraic** (any observable that would
 work is `≡` factoring). Together they prune the two largest families of plausible
 "new" methods.
+
+### 5a. ⚠️ Adversarial audit of the taxonomy — the original wording was false
+
+The taxonomy above was the first structural claim in this survey to be attacked
+head-on rather than extended. It **did not survive in its original wording**, and
+the failure was real: primitive 1 read *"isolate `p,q` up to a gcd **via relations
+over a factor base** (index calculus / QS / NFS)."* That mechanism clause is an
+**under-specification that excludes a whole family of state-of-the-art classical
+methods**, and the document was **self-contradictory**: it cited ECM at
+`L_p[1/2, √2]` as state of the art while the taxonomy did not accommodate it.
+
+**Counterexamples to the literal claim — none of which uses a factor base, a
+lattice, a special algebraic form, or an idempotent:**
+
+| Method | Mechanism | Not a factor base because |
+|---|---|---|
+| **Pollard `p−1`** (1974) | `gcd(a^M − 1, N)`, splits when `p−1` is `B`-smooth | the setup condition is **smoothness of a group order** in `ℱ_p^×` |
+| **Lenstra ECM** (1987) | collision mod `p` of `[k]P` on a random curve | the mechanism is a **random elliptic-curve group order** |
+| **Pollard ρ** | cycle length mod `p` vs mod `q` | a plain cycle collision, no relation collection |
+| common-modulus gcd | `gcd(N₁, N₂)` for shared `p` | a bare gcd, no algebraic structure at all |
+
+The **intended** principle ("isolate by a gcd") is untouched — the defect was the
+parenthetical. That is now repaired in (1) above.
+
+**Four further boundary problems, also fixed in the statement above.**
+
+- **Primitive 3 was an unfalsifiable catch-all.** "Special structure" can be
+  stretched to absorb the entire group-order family, making the taxonomy vacuous
+  exactly where the real methods live. Narrowed to *special algebraic form of `N`*.
+- **(1) and (4) overlap.** Once (1) is "isolate by a gcd", the idempotent is a
+  special case rather than a sibling. Now stated explicitly.
+- **The input model was unstated and inconsistent.** (2) *presupposes a leak*;
+  (1) and (4) operate on `N` alone. The scope sentence now says "possibly
+  together with partial or special information."
+- **The completeness quantifier was universal where it can only be epistemic.**
+  "Every classical method reduces to…" is a completeness claim over the unbounded
+  space of algorithms — **unprovable and unfalsifiable**. The honest form is the
+  epistemic one: *no classical factoring method is known that falls outside these
+  families.* This is what "a taxonomy, not a hardness theorem" was always meant
+  to say; the prose did not match.
+
+**Scope: "classical" is load-bearing.** Shor is a genuine **fifth primitive** —
+and the machine-checked companion already isolates why. `FreeSymbol.lean`'s
+`jacobi_neg_one_disagrees` proves the *character condition* `(a/N) = −1` is
+classical and free (it happens ~½ the time); only the **extraction** of `ord(a)`
+is quantum. Order-finding is neither a gcd, a lattice, a special form, nor an
+idempotent. Drop the word "classical" and the taxonomy needs a fifth slot.
+
+**The public key `e` does not escape — it relocates.** Verified: for standard RSA
+`e` is chosen **independently of `p` and `q`**, so any function of `(N, e)` with
+`e` fixed is still **symmetric** in `(p, q)`, and Barrier II
+(`SymmetryBarrier.lean`, `computableFromProduct_iff_symmetric`) still forces
+symmetry. Knowing `e` helps only through primitive (2) — small-`e` Coppersmith
+(§4b) — or by leaking a function of the secrets. So using the key pair does not
+open a fifth door; it moves you into the leak regime.
+
+**Attacks that failed, and are worth recording as such.** (i) *An efficiently
+computable observable of `N` with period `p` or `q`:* none exists. Any `p`-periodic
+computable function requires projecting `ℤ/Nℤ → ℤ/pℤ`, which **is** the CRT
+idempotent, hence factoring. The Jacobi character is primitive mod `pq` with least
+period `= N` (conductor `= lcm(p,q) = N`), confirmed both in theory and
+numerically on 12 semiprimes. The trio (a)/(b)/(c) above is a *heuristic summary
+of two specific kills plus one real mechanism*, not a proved exhaustive partition;
+the rigorous core is the `p`-periodic ⇒ idempotent ⇒ factoring chain.
+(ii) *Making the Pythagorean barriers subsume this taxonomy:* they cannot. Barrier
+II is a **complete characterisation of which quantities are computable from `N`**,
+and it says so itself — the symmetric half, *including the factor itself*, passes
+it in the abstract. So Barrier II classifies **quantities**, the taxonomy
+classifies **method families**; they are on different axes and complementary, not
+competing. (iii) *Completeness itself:* neither provable nor disprovable, because
+it is not a well-posed mathematical claim.
+
+**One caution on the machine-checked companions.** `known_leak_maximized_at_balanced`
+checks only the completed square `β − β² ≤ ¼`; it does **not** machine-check
+Coppersmith's `X ≤ N^{β²}` itself, which remains a literature input (ePrint
+2022/271 Thm 2). The taxonomy is documentary throughout — no part of the
+four-way partition is machine-checked, and it is not machine-checkable as a
+completeness claim. The **closest machine-checked relative** is
+`FreeSymbol.lean`'s `jacobi_neg_one_disagrees`, which proves the genuine
+separation fact that a Jacobi symbol of `−1` forces the two local Legendre
+symbols to *disagree* — the CRT-atom separation that primitive (4) exploits.
+(An attempted formalisation of primitive (4)'s mechanism itself was **discarded
+rather than shipped unverified**; it is left documentary.)
 
 ## 6. The load-bearing correction (why the `1/3` is not an AM–GM artefact)
 
