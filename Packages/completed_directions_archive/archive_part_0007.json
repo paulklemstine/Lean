@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-24T17:25:11Z",
-  "count": 172,
+  "archived_at": "2026-09-24T23:35:23Z",
+  "count": 173,
   "directions": [
     {
       "id": "fd_3695",
@@ -6813,6 +6813,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 199
+    },
+    {
+      "id": "fd_3473",
+      "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)",
+      "description": "## FACT round-30 #3 — CYCLIC-SEXTIC (paper 106, /tmp/exp_sextic.py, /tmp/r30n3c.log)\n\n**Verdict name: THE-LADDER-IS-COMPLETE.**\n\n### Result\nQ(ζ₁₃)⁺ (degree 6, Gal = C₆, conductor 13) confirms FULL PINNING: I(p mod 13; T) = H(T) = 1.9192 exactly. The degree ladder 2-3-4-5-6 is COMPLETE for abelian fields.\n\nTypes {1,2,3,6} at rates {1/6,1/6,1/3,1/3}. Semiprime I(N mod 13; pair) = 1.4704; wall z = +0.77.\n\nNow 442 experiments. Assessment v217. Paper 106.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "15a3f6e6",
+      "timestamp": "2026-08-21T20:42:26.611881+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-24T12:21:50.907986+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 198
     }
   ]
 }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b58657bf",
-      "domain": "Shared",
-      "key_insight": "# Future directions — tail-exponent measurement protocol for attention budgets\n\nThis cycle turned the catalog's qualitative knee theory (`Shared.AttentionBudgetKnee`,\n`Shared.AttentionBudgetScaling`,",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-09-05T21:15:44",
-      "title": "A tail-exponent measurement protocol"
-    },
-    {
       "cycle_id": "de8ca052",
       "domain": "Geometry",
       "key_insight": "# Future directions — metaplectic extension of the Gabor window action\n\nThe cycle just completed established, with fully checked Lean proofs:\n\n* the chirp operator `C_c f (t) = e^{2πi c t²} f(t)` norm",
@@ -499,19 +489,19 @@
       "theorem_count": 109,
       "timestamp": "2026-09-24T12:21:12",
       "title": "FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
+    },
+    {
+      "cycle_id": "15a3f6e6",
+      "domain": "Physics",
+      "key_insight": "# Future directions after the degree-6 rung (`Q(ζ₁₃)⁺`)\n\n## What this cycle established (all in Lean, no `sorry`)\n\n* The degree-6 splitting law of `Q(ζ₁₃)⁺`, its rates `{1/6, 1/6, 1/3, 1/3}`, and full",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-09-24T23:35:36",
+      "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9fb758b1",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — sharp geometry of RLHF alignment drift\n\n## Where this cycle left the thread\n\nConjecture **C1** (\"the drift constant is the standard deviation\") was carried as *proved\nup to an ab",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 54,
-      "timestamp": "2026-08-25T08:00:15",
-      "title": "C1 (drift constant is the standard deviation) — PROVED.*"
-    },
     {
       "cycle_id": "16c9261f",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 31,
       "timestamp": "2026-09-24T17:25:24",
       "title": "FACT round-31 #1 — CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
+    },
+    {
+      "cycle_id": "15a3f6e6",
+      "domain": "Physics",
+      "key_insight": "# Future directions after the degree-6 rung (`Q(ζ₁₃)⁺`)\n\n## What this cycle established (all in Lean, no `sorry`)\n\n* The degree-6 splitting law of `Q(ζ₁₃)⁺`, its rates `{1/6, 1/6, 1/3, 1/3}`, and full",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-09-24T23:35:36",
+      "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c73f4ca7",
-      "domain": "Bridges",
-      "name": "int_dvd_pow_sub_one_iff",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "c73f4ca7",
-      "domain": "Bridges",
-      "name": "int_dvd_pow_add_one_iff",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "c73f4ca7",
-      "domain": "Bridges",
-      "name": "pow_eq_one_iff_ordMod_dvd",
-      "quality": 0.85
-    },
     {
       "cycle_id": "6bf15a63",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "exists_distinct_roots_iff_exists_sqrt",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "15a3f6e6",
+      "domain": "Physics",
+      "name": "realDeg_dvd_iff",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "15a3f6e6",
+      "domain": "Physics",
+      "name": "sextic_table",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "15a3f6e6",
+      "domain": "Physics",
+      "name": "realDeg_13_eq",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-24T17:25:24",
+  "last_updated": "2026-09-24T23:35:36",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "898d17cb",
-        "quality": 0.82,
-        "theorems": 84,
-        "title": "The floor is sharp"
-      },
-      {
         "cycle_id": "ed4056bf",
         "quality": 0.82,
         "theorems": 51,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 348,
         "title": "FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulu"
+      },
+      {
+        "cycle_id": "15a3f6e6",
+        "quality": 0.72,
+        "theorems": 61,
+        "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (pa"
       }
     ],
     "Probability": [

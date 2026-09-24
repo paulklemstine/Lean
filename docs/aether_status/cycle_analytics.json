@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-24T17:25:25.570844+00:00",
+  "last_updated": "2026-09-24T23:35:37.240841+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -76091,6 +76091,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-24T17:25:25.345100+00:00",
       "title": "FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Physics",
+      "duration_seconds": 10165.716185331345,
+      "end_time": 1790292910.694818,
+      "files_integrated": 4,
+      "job_id": "15a3f6e6",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1790282744.9786327,
+      "strategy_count": 0,
+      "theorem_count": 61,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 59,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-24T23:35:36.879318+00:00",
+      "title": "FACT round-30 #3 \u2014 CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
     }
   ]
 }
