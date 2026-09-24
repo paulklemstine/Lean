@@ -10,11 +10,17 @@ the deterministic-family results in `SquareDiff.lean` (10 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
 `HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (13 thms) and `OrderLCM.lean`
 (6 thms).
-**⚠️ Three claims in this file were retracted on 2026-09-24 — see §7-ter (the
+**⚠️ Four claims in this file were retracted on 2026-09-24 — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
-own formulation; the Fermat+Lehman unification is published), and §7-sextuples
-(the "sweep all multipliers" method was **not** a strictly dominating method — it
-is subsumed by Lehman's `4k` ray via the doubling lemma).**
+own formulation; the Fermat+Lehman unification is published), §7-sextuples (the
+"sweep all multipliers" method was **not** strictly dominating — it is subsumed by
+Lehman's `4k` ray via the doubling lemma), and ⚠️ **§7-septuples-ter (the
+"`N^{1/6}` is impossible" claim is WITHDRAWN — it cited the wrong wall; the real
+one, the order-finding hypothesis, fell in January 2026, arXiv:2601.11131, leaving
+`1/6` unblocked but unachieved).**
+**★ As of this retraction the file's live method question is no longer a barrier
+but an OPENING: with hypothesis-free order-finding, is Harvey's cost *shape* still
+right? See §7-septuples-ter and §8 item 10.**
 
 ---
 
@@ -3803,9 +3809,11 @@ thing the previous five rounds had conspicuously not done: **reading Harvey's
 actual construction.** Until now every statement in this file about the
 `α^{aN+b}` reuse was reconstructed from memory and secondary sources. It is now
 read off **Harvey, arXiv:2010.05450** — the PDF was downloaded and read
-(`~/factor-briefs/harvey-2010.05450.pdf`, 14pp, v1 12 Oct 2020, MSC 11Y05, author
-affiliation UNW S Sydney). The *journal* reference (`Math. Comp. 90 (2021)`)
-remains **UNVERIFIED** as previously recorded; only the arXiv version is confirmed.
+(`~/factor-briefs/harvey-2010.05450.pdf`, 14pp, **v1 only**, 12 Oct 2020, MSC 11Y05,
+author affiliation UNSW Sydney). ✅ **The journal reference is now VERIFIED**, by
+exact-DOI Crossref: **Harvey, *Math. Comp.* 90 (2021) 2937–2950, DOI
+`10.1090/mcom/3658`**. arXiv has only `v1` — no v2, no erratum, no withdrawal —
+and the page-8 `1/6` question was never revisited in Harvey's later papers.
 
 **What the paper actually says.** Algorithm 4.2 decomposes the residual
 `y₀ = u₀ − ⌊(4abN)^{1/2}⌋` as `y₀ = i₀ + j₀m` with `0 ≤ i₀ < m`, then sweeps
@@ -3814,9 +3822,16 @@ list `{α⁰,…,α^{m−1}}` (eq. 4.3). Algorithm 4.3 then sets
 
 > `r = ⌈N^{1/5}/lg^{6/5}N⌉`,  `m = ⌈N^{1/5}lg^{6/5}N⌉`   —  so `r·m ≈ N^{2/5}`.
 
-**And Proposition 4.3's cost is a THREE-term balance, not two:**
+**And Proposition 4.2's cost is a THREE-term balance, not two:**
 
-> **`O( ( N^{1/2}/(r^{1/2}·m) + r )·lg⁴N  +  m·lg²N )`**
+> **`O( N^{1/2}/(r^{1/2}·m)  +  r·lg⁴N  +  m·lg²N )`**
+
+> ⚠️ **CORRECTED 2026-09-24 (§7-septuples-ter).** An earlier version of this
+> paragraph cited **Proposition 4.3** and put `lg⁴N` on the whole bracket. Both are
+> wrong: **Prop 4.3 is the single fixed-parameter bound** `O(N^{1/5}lg^{16/5}N)`,
+> while the parameterised three-term cost is **Prop 4.2**; and the `lg⁴N` factor
+> attaches to the **`r` term only**, not to `N^{1/2}/(r^{1/2}m)`. The corrected
+> reading is *stronger*, not weaker.
 
 Writing `r = N^a`, `m = N^b`, the three exponents are
 
@@ -3844,6 +3859,40 @@ The minimax is attained uniquely at `a = b = 1/5`, where all three terms equal
 `1/5` — i.e. the balance equation `1/2 = 3a/2 + b` with `a = b`, giving
 `r^{5/2} = N^{1/2}` (`balance_equation`, `balance_solves_to_one_fifth`).
 Verified independently on a fine rational grid.
+
+**★★★★ Result 2 — ⚠️ WITHDRAWN AND CORRECTED. The `1/6` question is `UNBLOCKED`, not ruled out.**
+
+> **⚠️ RETRACTED 2026-09-24 (§7-septuples-ter), after an adversarial prior-art
+> check.** The original claim here was *"the kill of an open question HARVEY
+> HIMSELF POSES… `1/6` is IMPOSSIBLE because the `T₂ = r` term is not divided by
+> `m`."* **The arithmetic is right and the conclusion is wrong in two ways.**
+>
+> **(a) `impossible` was the wrong word.** Within Prop 4.2's frozen shape, holding
+> `r = N^{1/3}` does indeed force cost `≥ N^{1/3}`. But that is a tautology about
+> *rebalancing a fixed function*, not a result about factoring.
+>
+> **(b) ★ THE CAUSAL STORY WAS INVERTED — I cited the wrong wall.** Harvey's
+> **Prop 4.3 proof and Remark 2.8 identify the real binding constraint**, and it is
+> **not** the pair count. Prop 4.3's proof reads (p.12): *"`N^{2/5} ≥ N^{1/5}lg^{6/5}N`
+> and therefore `ord_N(α) > D ≥ m`"*, and Remark 2.8 says the `D ≥ N^{2/5}`
+> hypothesis is *"good enough for our application (but only just)"*. **The wall was
+> the ORDER-FINDING PRECONDITION `ord_N(α) > m`, not `Θ(r·lg r)`.**
+>
+> **★★★ AND THAT WALL HAS SINCE FALLEN — Harvey and Hittmeir removed it themselves.**
+> **Harvey & Hittmeir, arXiv:2601.11131** (v1 16 Jan 2026, v2 5 Jun 2026),
+> *"Deterministic methods for finding elements of large multiplicative order"*, states
+> that the hypothesis chain `D ≥ N^{2/5}` (Hittmeir 2018) → `N^{1/4+o(1)}` (GFHP
+> 2025) → `N^{1/6}` (Oznovich–Volk, SODA 2026) → **"the hypothesis may be dropped
+> altogether"**, and draws the consequence that in any deterministic factoring
+> algorithm *"finding elements of large order should no longer be considered a
+> bottleneck, regardless of the exponent."*
+>
+> **The correct verdict is therefore: `1/5` still stands, nobody has beaten it, and
+> every precondition Harvey flagged as blocking `1/6` has been removed one by one —
+> so `1/6` is `UNBLOCKED BUT UNACHIEVED`, not `RULED OUT`.** The original
+> "★★★★ kill" heading was self-congratulatory and wrong, and is withdrawn.
+
+<details><summary>The original (retracted) claim, kept for the record</summary>
 
 **★★★★ Result 2 — the kill of an open question HARVEY HIMSELF POSES.** On p.8:
 
@@ -3908,6 +3957,93 @@ change the shape rather than rebalance it. (iv) Log factors are suppressed
 throughout (`lg^{16/5}N` at the optimum); they do not affect any exponent. (v)
 The `N^{1/7}` figure for an idealised full square-root speedup is **numerical
 only**, not formalised.
+
+---
+
+### 7-septuples-ter. ★★★★★★ RETRACTION, AND A REAL METHOD OPENING: the order wall has fallen
+
+This section exists because §7-septuples-bis **overclaimed**, an adversarial
+prior-art check caught it, and the correction is *more* important than the claim
+was. It is the fourth retraction in this file, and the first one where **the
+correction reopens a direction rather than closing one.**
+
+**The three errors in §7-sextuples-bis.**
+
+1. **Misattribution.** The parameterised three-term cost is **Proposition 4.2**,
+   not Proposition 4.3. Prop 4.3 is the *single fixed-parameter* bound
+   `O(N^{1/5}lg^{16/5}N)`. The `lg⁴N` factor also attaches to the **`r` term only**,
+   not to the whole bracket.
+2. **★ INVERTED CAUSAL STORY — the wrong wall.** I claimed `1/6` was blocked by the
+   `Θ(r·lg r)` pair count. **Harvey's own Prop 4.3 proof and Remark 2.8 say
+   otherwise.** The binding constraint is the **order-finding precondition
+   `ord_N(α) > m`**, which forced `D ≥ N^{2/5}`; Harvey flags that this is *"good
+   enough for our application (but only just)"*. The pair count is not what
+   stopped anyone.
+3. **The "kill" was a tautology dressed as a theorem.** Minimising a fixed
+   three-term function cannot go below its minimax. That is arithmetic, not a
+   result about factoring, and **Harvey never claims `1/5` is optimal or sharp** —
+   his Remark 3.4 runs the *other* way, counting candidates with no obstruction
+   claimed. The `1/5`-is-the-minimax statement is elementary and was already
+   implicit in this file's own `HarveyFloor.lean` (`no_rebalance_beats`).
+
+**★★★ WHAT ACTUALLY HAPPENED — AND IT OPENS THE DIRECTION.** The order wall I
+identified as the wrong one **fell, in January 2026, to Harvey and Hittmeir
+themselves**:
+
+> **Harvey & Hittmeir, arXiv:2601.11131**, *"Deterministic methods for finding
+> elements of large multiplicative order"* (v1 16 Jan 2026, v2 5 Jun 2026).
+> Abstract: the hypothesis chain `D ≥ N^{2/5}` (Hittmeir 2018) → `N^{1/4+o(1)}`
+> (GFHP 2025) → `N^{1/6}` (Oznovich–Volk, SODA 2026) → **"the hypothesis may be
+> dropped altogether"**, and §1: *"in the context of any deterministic factoring
+> algorithm that runs in exponential time, finding elements of large order should
+> no longer be considered a bottleneck, regardless of the exponent."*
+
+**So the corrected verdict is the opposite of §7-sextuples-bis:**
+
+> **`1/5` still stands — nobody has beaten it — but `1/6` is `UNBLOCKED BUT
+> UNACHIEVED`, not `RULED OUT`.** Every precondition Harvey listed as blocking it
+> has been removed, one by one, by the people best placed to remove them.
+
+**The live method question this creates — and it is a real one.** Harvey's balance
+is `max(N^{1/2}/(r^{1/2}·m), r, m)` with minimax `1/5` at `r = m = N^{1/5}`. But
+that minimax was computed **subject to `m` being affordable only because
+`ord_N(α) > m` was obtainable, and only just** (Remark 2.8). Now that
+large-order elements are free:
+
+> **OPEN. With hypothesis-free order-finding, is Prop 4.2's *shape* still the
+> right one? Specifically: the `m` term was capped by the order hypothesis rather
+> than by the balance, and the balance only *appeared* to bind. Is there a cost
+> shape in which removing that cap converts directly into a smaller exponent —
+> and if so, what is it?**
+
+This is the first genuinely open method question this file has produced in seven
+rounds, and it is **not** answered by anything above. The `1/5` minimax remains a
+correct fact about Harvey's function; what is now open is whether Harvey's
+*function* is still the right one once its precondition is gone.
+
+**Citation corrections found by the same check** (all now fixed above):
+`arXiv:2006.16729` is Hittmeir's *time-space tradeoff* paper, **not** the `N^{2/9}`
+babystep-giantstep paper, which is **`arXiv:1608.08766`** · Harvey's *"A log-log
+speedup"* is **`arXiv:2105.11105`**, not `2005.06702` (that id is an unrelated
+physics paper) · Costa–Harvey `Math. Comp. 83 (2014)` is **`arXiv:1201.2116`** ·
+Harvey's journal ref is now **VERIFIED** (DOI `10.1090/mcom/3658`).
+
+**GFHP, correctly stated (it does *not* claim `1/6` or `1/8`).** Gao, Feng, Hu,
+Pan, arXiv:**2512.19076**, *Math. Comp.* DOI `10.1090/mcom/4188` (2026-03-18).
+Its factoring result is a **log** improvement at the **same** `N^{1/5}`:
+`lg^{16/5} → lg^{13/5}`, **balanced case only**. The `1/6`/`1/8` language appears
+exactly once, in **Remark 3.6**, as a *conditional, forward-looking* remark about
+a precondition (*"remains applicable for potential future improvements …
+targeting"*) — **not** a claim. This file already read it correctly as "a
+speculative roadmap, not a theorem"; that reading is confirmed and kept.
+
+**Honest limits.** (i) The `1/5`-is-the-minimax statement survives, but it is
+elementary and was already latent in `HarveyFloor.lean`; it is **not** a new
+finding about factoring. (ii) The `1/6` impossibility claim is **withdrawn**. (iii)
+The new OPEN question above is a question, not progress — but it is the first one
+in this file that is **unblocked by a dated, citable result** rather than blocked
+by one. (iv) AMS is paywalled from this host, so the **journal** PDF was not
+diffed against arXiv `v1`; proposition numbering is verified against `v1`.
 
 ---
 
@@ -4750,6 +4886,50 @@ algorithm; each is a place where a genuine open problem still lives.
    set, so the argument does not obviously transfer — but the discipline of asking is
    the point, and §8 item 8 remains the live target.
 
+10. **★★★★★★★★ THE LIVE METHOD QUESTION — with hypothesis-free order-finding,
+    is Harvey's cost *shape* still the right one?** *(new 2026-09-24;
+    §7-septuples-ter; this is the first genuinely OPEN method item in the file)*
+
+   Every other item on this list is blocked, dead, or answered. This one is
+   **unblocked by a dated citable result** and is the direct consequence of the
+   round-6 retraction.
+
+   **The setup.** Harvey's balance is `max(N^{1/2}/(r^{1/2}·m), r, m)`, minimax
+   `1/5` at `r = m = N^{1/5}`. But that minimax was only ever computed under a
+   **precondition**: `ord_N(α) > m`, obtainable in the required range only because
+   `D ≥ N^{2/5}`. Harvey's Remark 2.8 calls it *"good enough … but only just"*.
+   **Harvey & Hittmeir (arXiv:2601.11131, Jan–Jun 2026) have now dropped that
+   hypothesis entirely.**
+
+   > **The `m` term was capped by the order hypothesis, not by the balance. The
+   > balance only *appeared* to bind. Now that the cap is gone, does it convert
+   > into a smaller exponent — and if so, in which shape?**
+
+   **Sub-questions, none answered.** (i) Write the cost of Harvey's Algorithm 4.2
+   **without** the `ord_N(α) > m` precondition and re-optimise honestly; is it
+   still `1/5`? (ii) The `1/5` minimax is a fact about *that function* — is there
+   a shape in which the newly-free `m` appears with a *negative* weight, i.e. where
+   a bigger table strictly helps? (Harvey's `m` is a zero-sum trade: it divides
+   the residual `N^{1/2}/(r·m·√{ab})` **and** costs `m`.) (iii) Oznovich–Volk's
+   `D ≥ N^{1/6}` and GFHP's `N^{1/4+o(1)}` are *intermediate* relaxations — does
+   any of them, used directly rather than via Harvey, reach below `1/5`? (iv) Is
+   the now-hypothesis-free order-finding result itself exploitable in a cost shape
+   that is not Harvey's?
+
+   **Why this is the right thing to work on.** Seven rounds produced barriers and
+   one method that died under test. This item is different in kind: it is a
+   **question with a known-removed obstruction**, sitting exactly where §5's
+   primitive (1) + reuse leaves off, and it is the only place where a *dated
+   primary source* has made progress in the last six months. **A negative answer
+   here — that `1/5` survives even with free order-finding — would itself be the
+   strongest barrier in the file**, because it would close the last precondition
+   Harvey identified.
+
+   ⚠️ **Honest limit.** This is a **question produced by a retraction**, not a
+   method. The round that produced it also produced a wrong claim, which is the
+   point: the file's discipline is that barriers get retracted too, and the
+   retraction is where the new direction came from.
+
 ## 9. Verdict
 
 > No credible non-index-calculus route to polynomial-time classical RSA factoring
@@ -4992,18 +5172,18 @@ list decoding on the **asymmetric** channel — a coding-theory gap PPS flagged 
 > `1/5` in one line: `m` is the one lever you cannot pull, because the table that
 > buys the shrinkage grows at the same rate.
 >
-> **★ The `1/5` is the exact optimum of the shape, and the `1/6` is impossible.**
-> Proposition 4.3's cost is a **three**-term balance — `N^{1/2−a/2−b}`, `N^a`,
-> `N^b` — not the two the file had been assuming, and the minimax is attained
-> uniquely at `r = m = N^{1/5}` where all three equal `1/5` (`one_fifth_is_lower_bound`
-> + `one_fifth_attained`). **Harvey (p.8) asks: *"…whether it is possible to obtain
-> a fully square-root speedup for Lehman's original choice `r ≈ N^{1/3}`. This
-> would presumably lead to a factoring algorithm with complexity `N^{1/6+o(1)}`."*
-> It cannot, by his own Proposition 4.3: the `N^a` term is the count of `(a,b)`
-> pairs, `Θ(r·lg r)`, and it is **not** divided by `m`, so `r = N^{1/3}` forces cost
-> `≥ N^{1/3}` for **every** `m`. Beating `1/5` requires rebalancing, not a further
-> speedup of a fixed `r` — and an idealised full square-root speedup would give
-> `N^{1/7}`, so `1/6` was never the right target.
+> **★ The `1/5` is the exact optimum of Harvey's shape — and ⚠️ the `1/6`
+> impossibility is WITHDRAWN (§7-septuples-ter).** **Proposition 4.2**'s cost is a
+> **three**-term balance — `N^{1/2−a/2−b}`, `N^a`, `N^b` — and its minimax is
+> attained uniquely at `r = m = N^{1/5}` (`one_fifth_is_lower_bound` +
+> `one_fifth_attained`). That stands, though it is elementary and was already
+> latent in `HarveyFloor.lean`. **What does not stand is the claim that this
+> refutes Harvey's p.8 `N^{1/6}` question.** I cited the wrong wall: the binding
+> constraint was the **order-finding hypothesis** `ord_N(α) > m` requiring
+> `D ≥ N^{2/5}` (Harvey's Prop 4.3 proof, Remark 2.8 *"good enough … but only
+> just"*), not the pair count — and **Harvey & Hittmeir removed that hypothesis
+> entirely in January 2026 (arXiv:2601.11131)**. So `1/5` still stands, nobody
+> has beaten it, and `1/6` is **unblocked but unachieved**.
 >
 > **★ And a correction to this file's own weight bookkeeping.** The tempting reading
 > of `HarveyFloor.lean`'s `Σw = 3/2` as `1 + 1 + 1/2` sums to `5/2` and predicts
