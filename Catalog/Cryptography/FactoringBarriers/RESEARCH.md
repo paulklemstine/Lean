@@ -1949,6 +1949,101 @@ parenthetical. That is now repaired in (1) above.
   families.* This is what "a taxonomy, not a hardness theorem" was always meant
   to say; the prose did not match.
 
+### 5a-bis. ⚠️ A design target this survey used that was FALSE — range vs. cost
+
+A candidate-generation round (2026-09-24, recorded in
+`~/factor-briefs/new-method-candidates.md`) closed with an explicit instruction for
+the next attempt:
+
+> *"a new factoring method must break one of (1) uniformity, (2) the taxonomy's
+> completeness, or (3) the `O(1)`-bit range obstruction. The only untouched lever is
+> a **NEW PRIMITIVE** … and the uniformity kill says such a primitive must carry a
+> **range** of `Θ(n/2)` bits that depends on the **SECRET `p`, not on `N`**. That is
+> the single open design target."*
+
+**That target is false as stated, and false in a way that would have wasted the next
+several rounds.** The error is the assumption that a factoring primitive is a
+*range* — a value computable from `N` whose output depends on `p`. **The most
+classical method in existence refutes it.** Pollard `ρ` computes **no such
+quantity at all**: it iterates a fixed deterministic map on `Z/NZ` and reads off a
+**collision time**. Its output is a function of `N` and of nothing else; there is no
+"range" that "depends on the secret `p`." What depends on `p` is the **cost** —
+the expected `O(√p)` iterations. The same holds for ECM (`L_p[1/2, √2]`, a
+running time set by the order of a point on a random curve) and for every
+smoothness-conditioned method in primitive (1).
+
+So the primitive axis is **range vs. cost**, and this survey had only ever written
+down the `range` half. The distinction is not cosmetic — it is the difference
+between two genuinely different attack surfaces:
+
+| Axis | What depends on the secret | Example | How to break it |
+|---|---|---|---|
+| **range** | the *value* the algorithm outputs | a residue, a flag, a symbol, an approximate `p` | make the range `Θ(n/2)` bits and secret-dependent — the uniformity kill |
+| **cost** | the *work* spent before it succeeds | Pollard `ρ` (`≈√p`), ECM (`L_p[1/2,√2]`), Pollard `p−1` (smoothness of `p−1`) | make the worst-case cost beat `L[1/3,1.9019]` on *every* semiprime |
+
+**Every kill family in this survey is a `range` kill**, which is why they all reduced
+to the same uniformity argument. The **`cost` axis is untouched**, and it is where
+surviving classical headroom actually is — the only place a method can be
+asymptotically better than NFS while every one of its *outputs* stays a boring
+function of `N`. One caveat keeps this from being an opening: a cost advantage must
+hold on **every** input, because an `O(√p)`-style method that is fast only when
+`p` happens to be small has already lost to NFS where it is not. That is exactly the
+defect which sank the ℓ-adic detector (kill #26: a large level certifies a
+**large** gap, so the cost points the wrong way), and any future cost-axis proposal
+must avoid it by construction.
+
+**Corrected design target.** Not *"a primitive whose range depends on the secret
+`p`"* but the disjunction:
+
+> **(R)** a primitive whose **range** is `Θ(n/2)` bits wide and depends on `p`
+> rather than being recomputable from `N`; **or**
+> **(C)** a primitive whose **cost** — not whose output — depends on `p`, and
+> whose worst-case cost over all `n`-bit semiprimes beats `L[1/3, 1.9018836]` with
+> **no input-dependent precondition**.
+
+(R) is the axis this survey has killed four times over, and the uniformity kill says
+it is very hard. **(C) is the live one, and it has never been seriously attacked
+here** — every close-prime, smoothness, and order-based idea in the record is a
+cost-axis idea that *failed its precondition*, rather than one that failed on the
+axis. That is a meaningfully different failure, and it points at where to go next.
+
+**First attack on (C): candidate C1, "adaptive smoothness budgets" — KILLED, and
+the kill is a general form, not a one-off.** The obvious cost-axis rescue is to stop
+requiring the secret order to be *exceptionally* smooth and instead pick the group
+order `M` **adaptively from `N` alone**, so smoothness at the secret `p` becomes
+*typical* rather than rare. Measured (harness pinned to known answers first —
+`10^6` is 1000-smooth, `1000003` is not; `p ≈ 2^22`, 400 trials):
+
+| `u = log p / log B` | `B` | measured `frac(p−1 is B-smooth)` |
+|---|---|---|
+| 0.7 | 43,237 | 0.632 |
+| 0.8 | 198,668 | 0.800 |
+| 0.9 | 912,838 | 0.895 |
+| 1.0 | 4,194,304 | 1.000 (degenerate, `B > p`) |
+
+The curve rises to 1 as `B → p` **with no plateau**, so there is no
+"generic smoothness" regime to occupy. Making `p−1` typically smooth forces
+`B = Ρ(p)`, at which point `M` is divisible by essentially all of `p−1`,
+Pollard `p−1` degenerates to trial division of `p`, and the cost is
+`Θ(p) = Θ(√N)` — **exponentially worse than NFS**. In the
+asymptotically useful regime `B = exp(√(ln p · ln ln p))` the Dickman
+density `ρ(u)` → 0, so useful and typical pull in opposite directions.
+
+**The general form, which is the real content of this section.** A cost channel
+needs a precondition holding for a **positive-density** set of secrets. But the
+attacker does not choose the secret — **the adversary does**, and knows the
+precondition. So any property that is *typical of a random* `p` is *atypical of a
+chosen* `p`. This is structurally the **same defect as kill #26** (#26: a high `ℓ`-adic
+level certifies a **large** gap, so the cost points the wrong way; C1: a
+"typical" smoothness budget is typical only until someone picks a `p` whose order
+isn't smooth). **A cost channel without a worst-case guarantee is not a channel; it
+is an average-case heuristic that NFS already dominates.** This is the single
+constraint any future (C)-axis proposal must satisfy *by construction*, and it is
+why (C) is a real target rather than an open door. Verdict recorded in
+`~/factor-briefs/cost-axis/c1-verdict.md`; **do not re-propose as "adaptive
+smoothness bounds".**
+
+
 **Scope: "classical" is load-bearing.** Shor is a genuine **fifth primitive** —
 and the machine-checked companion already isolates why. `FreeSymbol.lean`'s
 `jacobi_neg_one_disagrees` proves the *character condition* `(a/N) = −1` is
