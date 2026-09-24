@@ -2845,6 +2845,204 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   domain; it is emphatically *not* a statement about the best known factoring
   algorithm, and quoting it as such would be a straightforward error.
 
+- **`OrderLCM.lean`** *(new, 2026-09-24; Lean exit 0, **0 `sorry`, 0 `axiom`**,
+  workspace copy at `~/prove2me_workspace/Theorems/Thm_Crypto_FactoringBarrier_OrderLCM.lean`)* —
+  **why the `δ`/large-order threshold can be relaxed AT ALL.** The survey records
+  that every `N^{1/5}`-family advance is a *hypothesis relaxation* and that the
+  thresholds have been walked down (`> N^{2/5}` → `> N^{1/4+o(1)}`). It never
+  supplied the reason a relaxation is possible. This file does:
+
+  > **The global order is the LCM of the two local orders:**
+  > `ord_N(α) = lcm(ord_p(α), ord_q(α))`. (`orderOf_eq_lcm`)
+
+  Because an LCM can far exceed either factor — two **coprime** factors
+  *multiply* — a threshold on `ord_N(α)` constrains a **product of two secret
+  quantities**, not either one. So `ord_N(α) > N^{2/5}` does **not** require
+  either local order to exceed `N^{2/5}`; it suffices that two coprime divisors
+  each exceed `N^{1/5}`. `two_coprime_divisors_mul` makes the quantitative form
+  exact: two coprime divisors of size `D` force `ord_N(α) ≥ D²`.
+
+  **Formalised: SIX theorems, 0 `sorry`, 0 `axiom`.** The *lower* side —
+  `orderOf_eq_lcm` (the general monoid theorem — local orders divide the global
+  one, and the global one divides their LCM, the second half using joint
+  injectivity), plus `lcm_mul_of_coprime` and `two_coprime_divisors_mul`. The
+  *upper* side, added after the 2026-09-24 measurement described in §8 —
+  `lcm_le_mul` (`lcm d₁ d₂ ≤ d₁ * d₂`, **genuinely absent from Mathlib**),
+  `lcm_mul_le_mul_of_both_even` and `order_ceiling`, which together give
+  `ord_N(α) ≤ (p−1)(q−1)/2 < N/2` for any `α` generating both local unit groups
+  with `p, q` odd. The lower/upper pair is what turns "the subgroup slack is
+  already exhausted" from an experiment into a theorem. **Not formalised, and
+  flagged in the file:** the
+  instantiation to `ZMod (p·q)`, which needs the CRT injectivity of
+  `ZMod (p·q) → ZMod p × ZMod q`. That is standard and elementary, but this
+  Mathlib has no units-CRT hom, and the statement carries `hinj` as an explicit
+  hypothesis precisely so the unformalised step is *visible* rather than hidden.
+
+  ⚠️ **Lean caught a real bug in my own statement here.** `two_coprime_divisors_mul`
+  as first written was **false**: with `L = 0`, divisibility is vacuous
+  (`d₁ = 2, d₂ = 3, L = 0` satisfies every hypothesis and refutes the
+  conclusion `4 ≤ 0`). The missing hypothesis `0 < L` is *automatic* in the
+  application (orders of units are positive) but is genuinely needed. Recording
+  this because it is the third time this session a formal check killed a
+  statement I was confident was right — the AM–GM scope limits, the `V_k`
+  anchor error, and now this.
+
+  **What it changes for method design.** It says the `δ`-threshold is the
+  *product* of two secret orders, and there is a great deal of slack: a random
+  `α` typically has `ord_p ≈ p` and `ord_q ≈ q` with `lcm ≈ N`, far above the
+  `N^{2/5}` the older methods assume. That slack is the entire reason the
+  relaxation was possible. §8 records what it does **not** buy.
+
+**❌ KILLED 2026-09-24 — "coprime-order construction" (COC), the method my own
+`OrderLCM.lean` most obviously suggests.** This is the *first* kill derived from
+new mathematics rather than from a brainstormed idea, so it is recorded in
+detail. The `orderOf_eq_lcm` theorem says the `δ`-threshold is a constraint on
+`lcm(ord_p, ord_q)` and that two coprime local orders **multiply**. The obvious
+method: *deliberately construct* `α` whose local orders are large and coprime —
+say force `ord_p(α)` to be a power of `2` and `ord_q(α)` odd — and thereby
+manufacture a large global order by construction rather than by luck, dropping
+the order hypothesis further than any published method.
+
+**KILL — it presupposes a factor.** For any generator `g` and `α = g^t`,
+`ord_p(α) = ord_p(g) / gcd(ord_p(g), t)`. So *any* control over the local order
+requires knowing `ord_p(g)`, which requires the factorisation of `p − 1` — and
+hence a nontrivial factor of `N`. The construction cannot be executed before the
+factoring it is meant to perform. The same obstruction kills the weaker goal of
+merely *certifying* coprimality: computing `ord_N(α)` is factoring-equivalent
+(the standard `gcd(α^{d/ℓ} − 1, N)` step for a prime `ℓ | d` recovers `p` or
+`q` whenever the order is non-degenerate).
+
+**★ WHY THIS IS THE INTERESTING PART.** The LCM structure therefore explains
+the *relaxation* without supplying a *method*: GFHP did not build coprime local
+orders either. Their improvement is that the order hypothesis becomes **cheap to
+satisfy probabilistically** (a random `α` has `lcm ≈ N` naturally) rather than
+cheap to satisfy by construction. The `δ` knob was loosened by *removing the
+need to certify*, not by adding a new order primitive. **Do not re-propose
+"construct α with controlled/coprime local orders" — it is factoring-equivalent
+by the `g^t` formula.**
+
+**⚠️ CORRECTED 2026-09-24 — and the correction cuts *against* this kill, so it
+is recorded explicitly.** The kill above rests on **control** and
+**certification**, both of which the `g^t` formula genuinely blocks. It does
+*not* rest on the *existence* of coprime local orders being unattainable — and
+the measurement below shows that existence is in fact **free**. Across ~3,000
+samples a uniformly random unit has `gcd(ord_p(α), ord_q(α)) = 1` about **40 %**
+of the time, matching the `P(odd order) = 2^{-v₂(p−1)}` prediction (mean `1/3`).
+So a *random* `α` already delivers coprime local orders nearly half the time,
+with no certification and no construction. **The precise surviving claim is
+therefore narrower and should be stated as: coprimality of local orders is
+obtainable but not certifiable, and not steerable.** Anyone re-reading the COC
+entry should not take it as "coprime local orders are hard to come by".
+
+**★★ THE OPEN QUESTION THIS LEAVES — sharper than anything §8 previously
+listed, and it is testable.** The slack is real and large: a random `α` has
+`ord_N(α) ≈ N`, while the deterministic methods only *assume* `> N^{2/5}`. So:
+
+> **If `⟨α⟩ ⊆ Z_N^*` is much larger than the `N^{2/5}` the older methods require,
+> does that let the Lehman+BSGS search cover a shorter range — i.e. can a
+> *random* `α` with a far larger-than-needed subgroup replace the *deterministic*
+> large-order hypothesis, and shrink `r` below the `N^{1/5}` floor that
+> `HarveyFloor.lean` proved optimal for the `N^{1/2}`-range family?**
+
+Three things make this a real target rather than a slogan. (i) It is
+*quantitative and bounded*: the `r`-floor is now a theorem, so any gain must
+come from a range shorter than `N^{1/2}`, i.e. from `γ < 1/2` in the design rule
+above — and the LCM slack is precisely a mechanism for `γ < 1/2`. (ii) It is
+falsifiable by a concrete experiment: take balanced semiprimes, sample random
+`α`, measure `ord_N(α)`, and check empirically whether the BSGS cover-length
+actually depends on the subgroup size or only on the range length. **(iii) The
+honest prior is that it FAILS**, and the reason is already visible in
+`HarveyFloor.lean`: the `r`-floor came from needing to cover `N^{1/2}` *candidates
+for `p`*, and a bigger subgroup does not shrink the candidate range — it only
+changes which algebraic relations are available inside it. If the experiment
+shows cover-length is independent of subgroup size, the question is closed
+negatively and cheaply. **That cheap negative is worth running before any
+theory is written**, which is the next concrete action this survey prescribes.
+
+---
+
+**✅ RESOLVED 2026-09-24 — the order hypothesis is VACUOUS, not binding. The §8
+open question above is closed, negatively, and more strongly than the stated
+prior predicted.** The experiment was run rather than asserted
+(`~/factor-briefs/order_slack.py`, `~/factor-briefs/order_regime.py`).
+
+**Measurement.** Balanced semiprimes, 60-bit (`20` moduli × `20` random `α`) and
+80-bit, plus three *unbalanced* regimes (`p` of 20, 26, 32 bits against an 80-bit
+`N`), plus **adversarial** `α = 2` rather than random:
+
+| quantity | result |
+|---|---|
+| `ord_N(α) > N^{2/5}` (older methods' hypothesis) | **1.00** in every regime |
+| `ord_N(α) > N^{1/4}` (GFHP's relaxed hypothesis) | **1.00** in every regime |
+| `ord_N(α) > N^{1/3}` | **1.00** in every regime |
+| **`ord_N(α) > N^{0.49}`** | **1.00** in every regime — incl. `α = 2` |
+| median `ord_N(α)/N` | `0.007`–`0.5`; mean `0.18` |
+| `gcd(ord_p(α), ord_q(α)) = 1` | `≈ 0.40` (matches `2^{-v₂}` prediction) |
+| `gcd(p−1,q−1)` over balanced 80-bit | mean `10.1`, max `26` |
+
+**Three consequences, in increasing order of usefulness.**
+
+**(1) The order knob is a dead lever.** Prior work assumed `> N^{2/5}`; GFHP
+relaxed to `> N^{1/4}` and named `N^{1/6}`, `N^{1/8}` as further targets. The
+measurement says the hypothesis is satisfied at **`> N^{0.49}`** — within a hair
+of `N^{1/2}` — by *every* `α` tried, including the adversarial `α = 2`, in both
+balanced and unbalanced regimes. There is nothing left to relax: any threshold
+below `1/2` is free. **"Improve this line of work by lowering the order
+threshold" cannot produce a gain, because the threshold was never costing
+anything.** (Recorded honestly: the thresholds are *hypotheses in a proof*, not
+runtime costs, so this is a statement about where the difficulty is **not**.)
+
+**(2) The subgroup slack is already exhausted — this is why the §8 question
+fails, and it is sharper than the "cover-length is independent of subgroup
+size" prior.** The question hoped a *larger* subgroup would shorten the cover
+length. But random `α` is *already at the maximum*: `ord_N(α) ≤ λ(N) =
+lcm(p−1,q−1) = (p−1)(q−1)/gcd(p−1,q−1)`, the `gcd` is small (mean `10`), and the
+observed median is a constant fraction of that ceiling. The only way to raise the
+order further is to shrink `gcd(p−1,q−1)` — and it is `≥ 2` always, because `p`
+and `q` are both odd. So `ord_N(α) ≤ (p−1)(q−1)/2` is a **hard ceiling**, and the
+random `α` sits within a small factor of it. **The gain the question asked for is
+not "large but unexploited" — it is already collected.** The `r`-floor in
+`HarveyFloor.lean` came from needing to cover `N^{1/2}` *candidates for `p`*, and
+a maximal-order `α` does not shrink that candidate set. **The prior in §8 is
+confirmed; the question is closed.**
+
+**(3) The ceiling is now a THEOREM, not a measurement** —
+`OrderLCM.lean` gains the *upper* side to match its existing *lower* side.
+`lcm_le_mul` (`lcm d₁ d₂ ≤ d₁ * d₂`, genuinely **absent from Mathlib**, which has
+`Nat.Coprime.lcm_eq_mul` and `dvd_of_lcm_*_dvd` but no such bound),
+`lcm_mul_le_mul_of_both_even` and `order_ceiling` give
+`2 * lcm d₁ d₂ ≤ d₁ * d₂` whenever `2 ∣ d₁` and `2 ∣ d₂` — the case for every
+generator of `(ℤ/pℤ)* × (ℤ/qℤ)*` with `p, q` odd. The file now carries **six
+theorems, 0 `sorry`, 0 `axiom`**. These two bounds are elementary and are
+recorded as a **formalisation, not as new research**; their role is to make
+"the slack is exhausted" a theorem rather than an experiment. *Two Lean bugs
+were caught while writing them:* `hgpos` was unprovable as first drafted, because
+`2 ∣ 0` holds so `2 ∣ gcd 0 0` does **not** make the gcd positive — the
+`d₁ = 0` / `d₂ = 0` cases must be split off first; and the natural `obtain` on
+`h2 : 2 ∣ d₂` yields `d₂ = 2v`, not `lcm = 2v`, so the needed fact is
+`2 ∣ lcm d₁ d₂` via `2 ∣ d₁ ∣ lcm`. That is the **fourth** time this project a
+formal check has killed a statement I was confident was right.
+
+**★ THE NEW ORACLE THIS OPENS — `g = gcd(p−1, q−1)`, a small integer that
+nobody in the factoring literature appears to treat as a target.** The ceiling
+above is `λ(N) = (p−1)(q−1)/g`, so `g` is the *single* quantity controlling the
+achievable order, and the measurement shows it is small and therefore in
+principle *enumerable* (mean `10`, max `26` at 80 bits). What is missing is a way
+to **verify** a candidate without already knowing the factors. The elementary
+relations are: `g ∣ N−1`, `g ∣ p−q`, and `g ∣ p+q−2`. Stated in the required form:
+
+> **ORACLE:** given `N = pq` with `p, q` prime, compute `g = gcd(p−1, q−1)`.
+
+**This is plausibly *harder* than factoring, and the direction of the argument is
+the useful part.** Writing `p = 1+gA`, `q = 1+gB` gives
+`N−1 = g(A+B) + g²AB`, i.e. **one equation in two unknowns** — knowing `g` yields
+`A+B ≡ (N−1)/g (mod g)` but not `A, B` separately. Fermat's method supplies
+`p+q` only to a window of width `O(N^{1/4})`, so `AB = (N − (p+q) + 1)/g²` is
+known only to `O(N^{1/4}/g²)`, and the total candidate count
+`N^{1/4}/g² · g · (N^{1/4}/g)` **loses to plain Fermat** — so this collapses into
+Fermat rather than beating it. Recorded as a **well-posed open oracle, explicitly
+not as a method**; it is the honest successor to the question just closed.
+
 ---
 
 ## 8. Open threads worth continuing (the "do not give up" list)
