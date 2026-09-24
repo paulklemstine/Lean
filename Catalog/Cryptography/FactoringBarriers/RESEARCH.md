@@ -211,19 +211,33 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   > side of an exponent boundary, and constant-factor engineering inside it is
   > capped by exactly the walls already recorded in §4b.
   >
-  > **The resulting dichotomy, which is the sharpest statement available here.** A
-  > factoring method's governing quantity is either **(i) coupled to `p`** — then its
-  > cost is `≥√p`, exponential, and it loses to NFS asymptotically; or
-  > **(ii) decoupled from `p`, i.e. computable from `N` alone** — then it is the
-  > **range** axis, and the uniformity kill says a cheaply computable function of
-  > `N` carries zero bits about the secret, so the method *is* NFS or a worse
-  > variant. **Pollard `ρ` sits on (i); NFS sits on (ii); there is no third
-  > option that is currently known.** Note the honesty boundary: the dichotomy is a
-  > statement about the *governing quantity*, and it does **not** prove that no such
-  > quantity exists — it says that if one did, it would have to be computable from
-  > `N`, of size strictly between the factor base and `p`, with collision structure
-  > better than birthday **and** smoothness better than Dickman. That is a real
-  > design question, and it is the honest successor to (C).
+  > ⚠️ ❌ **WITHDRAWN — THE BISECTION BELOW IS FALSE. ECM IS A COUNTEREXAMPLE.**
+  > This block originally concluded that a factoring method's governing quantity is
+  > either (i) coupled to `p` (cost `≥√p`, exponential, loses to NFS) or (ii)
+  > decoupled from `p` (the range axis, uniformity-killed), with **no third option**.
+  > **That is wrong.** The premise "coupled to `p` ⇒ pay the birthday bound
+  > `√p`" is false: ECM is coupled to `p` and costs `L_p[1/2, √2]`, which is
+  > **subexponential** and **below `√p` at every size tested** (measured, `ln` cost:
+  > at `n` = 256, ECM 28.2 vs `√p` 44.4; at `n` = 65536, ECM 675.0 vs `√p`
+  > 11356.5). The birthday bound governs **collision** searches, not **smoothness**
+  > searches. The corrected statement is a **three**-way split on the *kind* of
+  > `p`-coupling:
+  >
+  > | Horn | Coupling | Cost | Status |
+  > |---|---|---|---|
+  > | 1 | **collision**-coupled (`ρ`, `λ`, BSGS) | `√p = 2^(n/4)`, exponential | **DEAD** — loses to NFS asymptotically |
+  > | 2 | **decoupled** from `p`, computable from `N` | range axis | **DEAD** — uniformity kill |
+  > | 3 | **smoothness**-coupled (ECM, `p−1`, `p+1`) | `L_p[1/2, √2]`, subexponential | **LIVE** — not exponent-limited by the coupling |
+  >
+  > Horn 3 is not hypothetical: **ECM is already in it**, and ECM beats NFS below
+  > `n ≈ 593` bits. The standard "ECM for small factors, NFS for balanced" practice
+  > is precisely the horn-3-vs-`L[1/3]` crossover, not a heuristic preference. To make
+  > horn 3 a general factoring method it must drive the smoothness-coupled exponent
+  > below `1/3`, i.e. find smooth orders from a source that is **not** a random curve
+  > in `F_p` — the same "third kind of governing quantity," now sharpened to: a
+  > quantity whose smoothness beats Dickman **and** whose size keeps the exponent
+  > under `1/3`. **The retraction is of the *bisection*, not of the underlying
+  > observation that horns 1 and 2 are dead — that part stands.**
 - **Coding theory:** **DEAD**, but the *premise was partly confounded.* There is no
   Stern "factoring via codes" paper; Williams's "singular modulus" is a p±1
   smoothness scheme, not a code scheme. The no-code-route conclusion survives; the
@@ -2043,20 +2057,19 @@ must avoid it by construction.
 > **(C)** a primitive whose **cost** — not whose output — depends on `p`, and
 > whose worst-case cost over all `n`-bit semiprimes beats `L[1/3, 1.9018836]` with
 > **no input-dependent precondition**.
-> **⚠️ (C) IS NOW ALSO CLOSED as stated — see the dichotomy in §4.** (C) asked for a
-> cost channel *decoupled from preconditions*. But any cost coupled to `p` pays
-> `≈√p = 2^{n/4}`, which is **exponential**, while NFS is **subexponential** at
-> `L[1/3]`; the ratio `ln(ECM)/ln(NFS)` grows without bound (0.98 → 1.34 for `n` =
-> 512…4096), so no `ρ`-shaped or ECM-shaped method can win by constant factors. And a
-> cost *decoupled* from `p` is computable from `N`, which is the range axis, and
-> uniformity kills it. **(R) and (C) are the two horns of one dichotomy, and both
-> are closed as literally stated.** What survives is not a channel but a **third kind
-> of governing quantity** — computable from `N`, of size strictly between the factor
-> base and `p`, with collision structure better than birthday *and* smoothness better
-> than Dickman. That is the honest successor target, and it is a question about a
-> *quantity*, not about a primitive. The paragraph below is left in place as the
-> record of the reasoning that reached it.
-
+> ⚠️ ❌ **THIS CLOSURE IS ALSO WITHDRAWN. (C) IS NOT CLOSED — see §4.**
+> The reasoning below closed (C) on the strength of a **bisection that is itself
+> false** — namely that a cost channel `p`-coupled to the secret must pay the
+> birthday bound `√p`. **ECM refutes that**: it is `p`-coupled and costs
+> `L_p[1/2, √2]`, subexponential and below `√p` at every size measured.
+> The birthday bound governs **collision** searches, not **smoothness** searches.
+> So the corrected split is by *kind* of coupling — collision (dead), decoupled
+> (range axis, dead), **smoothness (LIVE, and ECM is in it)**. The bisection is
+> retracted in §4 with the numbers; **the conclusion that (C) is closed is
+> withdrawn with it.** What remains open is narrower and sharper: can a
+> **smoothness-coupled** channel drive its exponent below `1/3`? That is horn 3,
+> and ECM already sits in it, beating NFS below `n ≈ 593` bits. The text below
+> is kept as the record of the reasoning that reached a wrong conclusion.
 (R) is the axis this survey has killed four times over, and the uniformity kill says
 it is very hard. **(C) looked live, and has never been seriously attacked
 here** — every close-prime, smoothness, and order-based idea in the record is a
