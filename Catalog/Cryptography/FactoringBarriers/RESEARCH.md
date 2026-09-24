@@ -135,8 +135,30 @@ document is that record. Two durable positive results emerged:
   > is distinct from `c_s = (32/9)^{1/3} ≈ 1.5263` (**SNFS**, special-form `N`).
 - **Special number field sieve (SNFS):** `L[1/3, (32/9)^{1/3} ≈ 1.526]` — for special-form `N`.
 - **ECM:** `L_p[1/2, √2]`.
-- **Deterministic general factoring:** Harvey, *Math. Comp.* 2021, `O(N^{1/5} log^{16/5} N)` —
-  rigorous but exponential, so **not** RSA-relevant.
+- **Deterministic general factoring:** Harvey, *Math. Comp.* **90**(332):2937–2950 2021, DOI
+  `10.1090/mcom/3658` (arXiv:2010.05450), `O(N^{1/5} log^{16/5} N)`; improved by Harvey–Hittmeir,
+  *Math. Comp.* **91**(335):1367–1379, DOI `10.1090/mcom/3708` (a `(log log N)^{3/5}` gain); and
+  the **current record for balanced semiprimes** is Gao–Feng–Hu–Pan, *Math. Comp.* 2026-03-18,
+  DOI `10.1090/mcom/4188`, `O(N^{1/5} log^{13/5} N / (log log N)^{3/5})` — a **rank-3 lattice using
+  the *second* reduced basis vector** (to dodge trivial BSGS collisions). All rigorous but
+  exponential, so **not** RSA-relevant.
+  > **⚠️ 2026-09-24 — `N^{1/5}` IS A RECORD *UPPER* BOUND, NOT A PROVEN FLOOR. Do not ever
+  > write "deterministic factoring is stuck at `1/5`" as if it were a lower bound.** An
+  > exhaustive adversarial sweep (Crossref + arXiv, plus full-text checks of Harvey, Harvey–Hittmeir,
+  > Hittmeir ×3, Costa–Harvey) found **no lower bound of any kind** — none for general
+  > deterministic factoring, none for the Fermat/close-prime family, none for Lehman/BSGS, none
+  > for the Coppersmith/lattice route. The correct category is **"no confirmed lower bound
+  > found"**, which is also the global state of the art: **no unconditional superpolynomial
+  > lower bound is known for factoring in *any* model.** The last two advances above improve
+  > only **logarithmic** factors; the exponent is still `1/5`, and a *log-factor* gain is not
+  > a frontier advance. The meaningful target is `N^{1/5−ε}` for fixed `ε>0` — see §8 item 2
+  > for Harvey's own published `N^{1/6}` target, which is a **conjecture, not a lower bound**.
+  > **Also correct a common premise error:** Harvey's `1/5` is **Lehman + baby-step/giant-step**
+  > over the candidates `aq+bp`, accelerated by Fermat-little-theorem congruences — it is
+  > **not** "lattice compression of the close-prime range." The lattice/Coppersmith route is
+  > the **`N^{1/4}`** one, and Harvey notes there is not even a precise published complexity
+  > statement for it. Any argument that leans on the wrong one is leaning on the wrong search
+  > object.
 - **No polynomial-time classical general-purpose factoring algorithm is known**, and
   none is produced here.
 - **Structured moduli:** the one clean polynomial-time result is Boneh–Durfee–
@@ -2770,6 +2792,47 @@ algorithm; each is a place where a genuine open problem still lives.
      Sibborn's maximum-likelihood decoder was required to reach the real channel,
      and every capacity figure remains conditional on an unproved "RSA key tuples
      form a random code" assumption.
+
+★ **NEW THREAD (added 2026-09-24) — Harvey's own `N^{1/6}` target: a named, published,
+  genuinely unexploited deterministic exponent.** This is the highest-promise item on this list,
+  and it is the one place where this survey found a *specific, citable, named* algorithmic
+  target rather than a hoped-for breakthrough. In *An exponent one-fifth algorithm for
+  deterministic integer factorisation* (arXiv:2010.05450; *Math. Comp.* **90**(332):2937–2950,
+  DOI `10.1090/mcom/3658`) Harvey derives `N^{1/5}` from **Lehman + baby-step/giant-step**, and
+  then writes that it is *"an interesting question"* whether one can obtain a **full
+  square-root speedup** for Lehman's original parameter `r ≍ N^{1/3}`, which *"would presumably
+  lead to a factoring algorithm with complexity `N^{1/6+o(1)}`."*
+  > **This is a CONJECTURE, not a lower bound and not a result.** But it is the sharpest
+  > formulation available of what a new deterministic method would have to do, and — unlike
+  > every other candidate this survey has generated — it was **published by the record-holder
+  > for the current best exponent**, which is the strongest available evidence that the
+  > direction is live rather than wished-for. Reported novelty status: **NOT FOUND** in any
+  > source reachable from this host (see the coverage gaps above); I cannot certify
+  > "never before seen," only that it is unclaimed in the literature I could access.
+  >
+  > **The obstruction that makes it hard — and the trap to avoid.** `1/5` is the *optimum of
+  > the current "shrunken-`r` + BSGS-speedup" trade-off curve*: you shrink Lehman's parameter
+  > `r` to buy a bigger BSGS speedup, and the exponent is the balance point. A **partial**
+  > speedup therefore buys **nothing**, and this is not a conjecture — it is demonstrated in
+  > the literature: Hittmeir's `N^{2/9}` used a **smaller** `r` and still only reached
+  > `N^{2/9}`. So "squeeze a bit more out of the same curve" is a dead end, and the only
+  > route to `1/6` is a **qualitatively different search**, not a better constant. Any future
+  > work here must confront the full-speedup requirement head-on.
+  >
+  > **Two live speculative routes, both recorded as preprints with no Crossref DOI, both
+  > clearly marked unverified.** (i) Umans & Wang, arXiv:2511.10851 (2025-11-13) propose a
+  > *Strong `(α,β)`-Divisor Conjecture*; they argue `α=β=1/3` is **best possible for their
+  > construction** (giving `4/3` at `α=β=1/2`), and that the conjecture would take deterministic
+  > factoring `1/5 → 1/6`. This is a **conjectural barrier on one construction** — it is *not*
+  > a lower bound on factoring, and it is a *weakening* of the record, not a closure.
+  > (ii) Hittmeir, *Integer factorization as subset-sum problem*, *J. Number Theory*
+  > **249**:93–118 2023, DOI `10.1016/j.jnt.2023.02.010`, Thm 4.6 gives a genuine
+  > **subexponential-in-`Δ`** Fermat-family bound `Õ(Δ·exp(−C log Δ / log log Δ))` with
+  > `C = (1+o(1))·log 2` ("the best known integer factorization bound in terms of the divisor
+  > difference `Δ`"). But it is parameterised on **`Δ`, not `N`**: for a balanced semiprime
+  > with no closeness guarantee `Δ` can be `~N^{1/2}`, so it does **not** beat `N^{1/5}` in the
+  > worst case. It *does* prove the Fermat family is **not closed**.
+
 2. **Is low-exponent RSA easier than factoring?** — the Boneh–Venkatesan ceiling
    question, now sharply posed (§4b). BV proved **no attack** (it is a no-reduction
    result about proof techniques), and the **generic ring model flips the answer to
