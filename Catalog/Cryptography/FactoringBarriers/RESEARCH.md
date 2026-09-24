@@ -99,7 +99,12 @@ document is that record. Two durable positive results emerged:
   > (`m = 4, 5, 6+1`) admits a better constant is **UNVERIFIED in both directions** —
   > no source states per-`m` constants and none states that higher `m` is worse. This
   > is an **open conjecture, not an established negative**, and is recorded as such so
-  > a later reader does not mistake silence for a theorem. Note also that the
+  > a later reader does not mistake silence for a theorem. (See §6a: the one *adjacent*
+  > fully-analysed multi-field setting — DLP, not factoring — pins the field-count at
+  > an **interior optimum** with an unbounded penalty beyond it, which is evidence
+  > *against* a monotone "more arity ⇒ better constant" reading, but gives **no
+  > per-`m` factoring constant** and does not change the UNVERIFIED status here.)
+  > Note also that the
   > "m = 3+1" gloss is a later addition: *"m = 3"* occurs **zero** times in the paper.
   > **(d)** Aono's two optimality papers (`2012/108`, `2012/134`) are about the
   > **Coppersmith *technique*** (RSA small-root lattice construction) and contain no
@@ -2406,12 +2411,83 @@ faster factoring. **This correction is now propagated into the `TradeoffBarrier.
 and `Capstone.lean` docstrings.** The theorems themselves are untouched and remain
 valid statements *about their model*; only the over-reading was wrong.
 
+### 6a. Arity as an explicit parameter: the one full multi-field analysis has an interior optimum
+
+§6 above says arity "buys the constant `c`, never the exponent." That is right about
+the exponent and, at the time, silent about the *shape* of the constant. A later
+analysis settles the shape for the field-count parameter, and it is **not** the
+monotone improvement one might assume.
+
+**Source and scope.** Pierrot, *The Multiple Number Field Sieve with Conjugation and
+Generalized Joux-Lercier Methods* (ANTS XI, LNCS 8776, pp. 156–170, 2015,
+[doi:10.1007/978-3-662-46800-5_7](https://doi.org/10.1007/978-3-662-46800-5_7)),
+treats the **number of number fields `V`** as a first-class optimisation variable
+alongside the sieving bound `S`, the polynomial degree `t−1`, and two smoothness
+bounds `B` (first field) and `B'` (the other fields). **It is a discrete-log paper**
+(target `F_{p^n}` in medium characteristic, not the factorisation of `N`), so its
+constant `L_Q(1/3, 2.156)` **does not transfer to factoring** and is quoted here only
+for the *structure* of the field-count optimisation. The transferable claim is
+qualitative and mechanistic, not a number.
+
+**The mechanism.** With `V` fields the linear-algebra cost is `(B + V·B')²`
+(their Eqs. 1–2), and the relation-collection balance `St·P = B` forces `B = 1/P`
+where `P` is the probability a polynomial yields a good relation. Raising `V` raises
+`P` (more chances for a partner-field smoothness) but also raises the aggregate
+smoothness the linear algebra must absorb. The two effects balance, and the optimum
+is interior. With `S^t = L_Q(1/3, c_s c_t)`, `B = L_Q(1/3, c_b)`, `V = L_Q(1/3, c_v)`,
+the two constraints reduce (their Eq. (3)) to
+
+  6·c_t·c_b² − 12·c_b − 6·c_t·c_v² + 8·c_v − c_t² = 0,
+
+and minimising `c_b` by Lagrange multipliers gives `c_t = 2/(3c_v)`,
+`c_b = √(c_v² + 2/(9c_v))`, and a single equation for `c_v`:
+
+  405·c_v⁶ + 126·c_v³ − 1 = 0.  ⇒  c_v³ = (3√6 − 7)/45,  c_v ≈ 0.19784.
+
+This has **exactly one positive root** (as a quadratic in `c_v³`, discriminant
+`54²·6`), and `c_b = ((9+4√6)/15)^{1/3} = 1.078135`, giving final constant
+`2c_b = 2.156270` (their reported `≈2.156`). **The paper never sweeps `V`** — it
+reports this single interior stationary point.
+
+**The scan the paper does not run (this survey's computation).** Solving Eq. (3) for
+`c_b` and minimising over `c_t` at each fixed `c_v` reproduces the paper at its
+optimum and shows the stationary point is the **global** minimum, with a clean
+unimodal shape:
+
+  | c_v (V = L_Q(1/3,c_v)) | 0.05 | 0.15 | **0.198 = c_v\*** | 0.30 | 0.50 | 1.0 | 2.0 | 5.0 |
+  |best 2·c_b              |2.182 |2.159 | **2.156**         |2.169 |2.265 |2.827|4.522|10.31|
+
+Past the peak the constant **degrades without bound** (`c_b ~ c_v` for large `c_v`).
+So "add more number fields to buy a better constant" is **false beyond an interior
+optimum** — in the one setting where field-count has been fully analysed. This is a
+stronger statement than "arity buys the constant": arity is a *balanced* parameter
+with a turning point, not a monotone dial.
+
+**Refutation of this survey's own 1/k conjecture.** A two-point fit
+(`1.9230` single-poly → `1.901884` at `k=2`) had been extrapolated to a saturating
+`1/k` law predicting monotone improvement toward a floor `≈1.8808`
+(`k=4→1.8913, k=8→1.8860, k=16→1.8834`). The scan above **refutes that shape**: the
+real multi-field balance is unimodal, not monotone-saturating. The `1/k` law is
+**withdrawn as a working model**; nothing else in this survey rests on it, and it is
+recorded here so the attractive-looking saturation curve is not resurrected.
+
+**Effect on the open arity question (§2 item (c)).** The GNFS-factoring question —
+whether `m = 4, 5, 6+1` (more polynomials sharing one Stage-1 smoothness set) admits
+a better constant than `m = 3` — remains **UNVERIFIED in both directions**: no per-`m`
+factoring constant exists in any source, and none states that higher `m` is worse.
+What the DLP analysis adds is *adjacent-setting evidence against the
+monotone-improvement reading* (an interior optimum with unbounded penalty beyond it)
+plus a caution: the field-count parameter, treated honestly, is pinned by a balance
+rather than swept. It is **not** a per-`m` table for factoring and does not claim to
+be. The honest status of the factoring arity question is unchanged from §2(c): **an
+open conjecture, not an established negative.**
+
 ---
 
 ## 7. Machine-checked companions
 
 - **`NegativeResults.lean`** — a cited kill record (the table above, now
-  **twenty-six** directions) plus three machine-checked supports:
+  **twenty-seven** directions) plus three machine-checked supports:
   - `mod4_not_injective` shows the map `n ↦ n mod 4` fails to separate the
     distinct semiprimes `15 = 3·5` and `39 = 3·13`, so a low-order residue
     observable cannot carry factoring information.
@@ -2990,7 +3066,15 @@ attempts; it is therefore **not** entered as a reference, and §5d's
 consecutive-smooth discussion rests on Batte–Luca and Stewart instead)* ·
 **Dachman-Soled–Loss–O'Neill** ePrint 2022/1261 (the equivalence in the
 non-uniform/advice model) · Barbulescu–Gaudry–Kleinjung ePrint
-2015/505 · Schirokauer 2000 (Tower NFS) · Shanks 1969 (SQUFOF) · Lagrange/Legendre
+2015/505 · **Pierrot**, *The Multiple Number Field Sieve with Conjugation and
+Generalized Joux-Lercier Methods*, ANTS XI, LNCS 8776, pp. 156–170, DOI
+`10.1007/978-3-662-46800-5_7` (**MISSING until 2026-09-24**; the §6a field-count-`V`
+source — a **discrete-log** paper whose `L_Q(1/3, 2.156)` does **not** transfer to
+factoring) · **Barbulescu–Gaudry–Guillevic–Morain**, *Improving NFS for the Discrete
+Logarithm Problem in Non-prime Finite Fields*, ANTS XI, LNCS 8776, pp. 129–155, DOI
+`10.1007/978-3-662-46800-5_6` (the `[BGGM14]` single-field MNFS-CM constant
+`(96/9)^{1/3} ≈ 2.201` that Pierrot improves to `2.156`; **both DOIs re-verified by
+exact-DOI Crossref fetch 2026-09-24**) · Schirokauer 2000 (Tower NFS) · Shanks 1969 (SQUFOF) · Lagrange/Legendre
 1760s–1785 · Gauss 1801 (*Disquisitiones Arithmeticae*) · **Coppersmith** 1997
 (J. Cryptology; MSB/LSB of `p`; small-`d` `N^{1/4}`) · Howgrave–Graham 1997 ·
 Wiener (small-`d` `N^{1/4}/3`) · **Boneh–Durfee–Frankel** ASIACRYPT 1998 ·
