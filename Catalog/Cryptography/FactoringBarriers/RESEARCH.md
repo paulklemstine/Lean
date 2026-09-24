@@ -38,7 +38,34 @@ document is that record. Two durable positive results emerged:
 
 ## 2. State of the art (context for every claim below)
 
-- **General number field sieve (GNFS):** `L[1/3, (64/9)^{1/3} ≈ 1.923]` — unchanged.
+- **General number field sieve:** the best known *conjectural* classical
+  general-purpose constant is
+  **`L[1/3, ((92+26√13)/27)^{1/3}] = L[1/3, 1.9018836118…]`**, using **several number
+  fields** — Coppersmith, *Modifications to the Number Field Sieve*, J. Cryptology
+  6(3):169–180 (1993), `10.1007/BF00198464`. The **single-polynomial** GNFS baseline
+  is `L[1/3, (64/9)^{1/3} = 1.9230]`.
+  > ⚠️ **[FRONTIER CORRECTED 2026-09-24 — this survey had the wrong constant AND a
+  > phantom citation, both for 33 years' worth of published work.]** The number
+  > `1.9230` was recorded as the frontier, and the `1.9019` refinement was filed
+  > under *Coppersmith 1997, "New results on modular and integer polynomial
+  > equations", ANTS I* — a **paper that does not exist**. ANTS-I is Ithaca
+  > May 6–9 **1994**, LNCS 877, `10.1007/3-540-58691-1` (ed. Adleman & Huang);
+  > there is **no Coppersmith chapter in either ANTS volume**, no chapter at
+  > pp. 25–36 in either, and no Crossref/Springer/zbMATH record of that title
+  > anywhere. It was a four-way conflation: wrong title, wrong author-venue,
+  > wrong conference number, wrong year. The **real** source is the JoC paper
+  > above, and the value is stated verbatim in *The Development of the Number Field
+  > Sieve*, LNM 1554 (1993): `1.9230` and `1.9019` appear **on the same printed page
+  > (p. 40 of `10.1007/BFb0091537`)** — the source establishing the former immediately
+  > knocks it down. p. 52 (`10.1007/BFb0091539`) gives `1.901884` and adds that the
+  > method "is unlikely to be practical for numbers of reasonable size (of fewer
+  > than 1000 digits, say)". Likely origin of the error: Wikipedia's *General number
+  > field sieve* article quotes only `(64/9)^{1/3}` and never mentions `1.9019`.
+  > Both numbers are **HEURISTIC** (§5c), the `1.9019` one more so — it is a
+  > several-number-fields construction with no demonstrated practical value.
+  > **Neither is a lower bound, and no proof separates them from any other
+  > method.** The operative statement of the art is therefore *two* constants, and
+  > this survey previously carried only the weaker one.
 - **Special number field sieve (SNFS):** `L[1/3, (32/9)^{1/3} ≈ 1.526]` — for special-form `N`.
 - **ECM:** `L_p[1/2, √2]`.
 - **Deterministic general factoring:** Harvey, *Math. Comp.* 2021, `O(N^{1/5} log^{16/5} N)` —
@@ -1131,6 +1158,43 @@ boot, `10.1109/asianhost.2017.8353995`), Oonishi–Kunihiro (2020, a
 variant — Herrmann–May, *Solving Linear Equations Modulo Divisors: On Factoring
 Given Any Bits*, ASIACRYPT 2008, `10.1007/978-3-540-89255-7_25`.
 
+> ⚠️ **[CITATION AUDIT 2026-09-24 — a citation *I* introduced in this survey's own
+> follow-up was garbled, and correcting it is a real win: the "Implicit Factoring
+> Problem" is NOT Heninger–Shacham, and it is NOT about many messages under one
+> modulus.]** I had written the implicit-factorization line as "Heninger–Shacham,
+> EUROCRYPT 2014". Both halves are wrong, and conflating them would have
+> manufactured a threat that does not exist:
+> - *Reconstructing RSA Private Keys from Random Key Bits* is Heninger–Shacham,
+>   **CRYPTO 2009** (ePrint 2008/510), `10.1007/978-3-642-03356-8_1` — **not
+>   EUROCRYPT 2014**. It is the **erasure model**: a `0.27` fraction of the bits of
+>   `p,q,d,d_p,d_q` at **random** positions, whole-key recovery by bit-branching,
+>   explicitly *not* using the lattice techniques. It contains **no** top-bits-of-`p`
+>   and **no** implicit factoring. §4e already files it correctly as a `d`-leak.
+> - The real **Implicit Factoring Problem** is **May–Ritzenhofen, PKC 2009**: factor
+>   `N₁=p₁q₁`, `N₂=p₂q₂` where `p₁,p₂` **share a run of bits** — a **two-moduli**
+>   problem, not a many-messages one. The shared-MSB-and-middle-bits variant is
+>   Faugère–Marinier–Renault, PKC 2010, LNCS 6056:70–87,
+>   `10.1007/978-3-642-13013-7_5`; the generalization is Feng–Nitaj–Pan
+>   arXiv:`2304.08718`.
+>
+> **The `n/4` wall survives and needs no edit — for four independent reasons.**
+> (i) **Different threat model**: IFP leaks *shared bits across two moduli*, not
+> fewer than `n/4` bits of a single `p`, so §4d-i is untouched. (ii) **The survey
+> already governs it**: §4d-i trap #3 ("splitting the leak does not help — the
+> exponents still total `< β²`", after Lu–Zhang–Peng–Lin) *is* the multivariate
+> regime IFP lives in, and splitting needs **more** total information, exactly
+> like Maitra–Sarkar–Sen Gupta's "≈`n/4` of each". (iii) **The survey already
+> calls `n/4` a method wall, not an information wall** (§4d-ii: "optimality only
+> within the family of shift-polynomial lattices"). (iv) The mechanism I
+> described — top bits of `p` spread over many messages plus linear algebra and
+> Hensel lifting — is the **same `p`-high-bits regime as Coppersmith/HNP**, still
+> totalling ≥`n/4`. **If any method factored one balanced `N` from strictly fewer
+> than `n/4` bits of `p`, it would refute Coppersmith's near-optimality — a major
+> OPEN problem, not a known result.** The "no published method" line stands.
+> **Lesson: an audit that fails to find the paper is not an audit that finds the
+> attack is new. My own premise was the weak link, and it was caught only because
+> the agent was told to refute rather than to support.**
+
 ⚠️ **A number to stop using: `0.2786` is a PHANTOM.** It appears in no primary
 source (HS 2009, HMM 2010, PPS 2012) and survived no targeted search. The real
 rate-`1/5` figures are **`0.243` (BSC) and `0.666` (Z-channel)**.
@@ -1276,7 +1340,7 @@ gcd is exactly §5 **primitive 1** ("isolate `p` up to a nontrivial gcd, by *any
 mechanism"); the search over `[N/2, N−1]` is unstructured, `Θ(N) = 2^λ`; and the
 authors' own abstracts concede the search "becomes computationally intractable in
 the practical world" and that "computational viability" is future research. This
-is emphatically **NFS-dominated**: the NFS runs in `L[1/3, 1.923] ≈
+is emphatically **NFS-dominated**: the NFS runs in `L[1/3, 1.9018836] ≈
 2^{O(λ^{1/3}(log λ)^{2/3})}`, which at `λ = 768` is `≈10^23` operations against
 `2^768 ≈ 10^231` for the search — an asymptotic gap of `≈10^208`.
 
@@ -1386,7 +1450,7 @@ so `ord_p(M₂) ∣ p ∓ 1`. Running the standard sweep `gcd(M₂^k − 1, N)` 
 **this is literally Pollard `p±1`** (the Chevalley–Wielandt matrix form of
 `p+1`) with base `M₂`. The `p mod 8` dependence merely tells you which sign to
 target, and `p+1` already covers both. Cost is `L[1/2]`-class, **strictly
-dominated by the NFS at `L[1/3, 1.923]`**, so it can never be the new method.
+dominated by the NFS at `L[1/3, 1.9018836]`**, so it can never be the new method.
 The two checked instances (`berg_factor_fifteen` = 15, `berg_factor_3233` =
 53·61) are toys that a hand computation of `p mod 8` already exposes. *(The
 supporting theorem is already machine-checked in the Berggren catalog; it is
@@ -1696,6 +1760,34 @@ repaired in 2026-09; see §5a — the original wording was literally false.**
    formally a *special case* of (1), listed separately because the equivalence is
    exact and the mechanism — e.g. a square root mod `N` — is characteristic.)
 
+> **ADDED 2026-09-24 — primitive (4) has a real, named, non-conditional producer
+> that this survey never mentioned: the Frey–Rück / Tate-pairing route.** The
+> Weil/Tate pairing is a nondegenerate bilinear map
+> `{ , } : Pic⁰(X)[m] × Pic⁰(X)/m → μ_m`, so the discrete log in an `m`-torsion
+> of a curve's Jacobian **reduces to a finite-field DLP**. If a scheme embeds
+> `ℤ_N*` (via a homomorphism) into a group whose order is divisible by `p` and
+> the protocol **computes the pairing on observable data**, the attacker solves
+> that DLP and recovers a nonzero multiple of `p` that is `1 mod q` — a
+> **nontrivial idempotent**, primitive (4), and hence `gcd(·, N)` factors `N`.
+> Frey & Rück, *A remark concerning m-divisibility and the discrete logarithm in
+> the divisor class group of curves*, Math. Comp. 62(206):865–874 (1994),
+> `10.1090/S0025-5718-1994-1218343-6`. The improved variant is Hess–Smart–
+> Vercauteren, *The Eta Pairing Revisited*, IEEE Trans. Inf. Theory 52(10):4595–
+> 4602 (2006), `10.1109/TIT.2006.881709`.
+> **This is a coverage addition, NOT a fifth primitive, and the taxonomy is
+> unchanged.** The pairing is a *manufacturing* step for an idempotent — exactly
+> what (1)'s "isolate up to a gcd by any mechanism" already admits, and the
+> delivered object is the idempotent (4) that §5a already declares equivalent to
+> factoring. The inputs are a functional leak ((2)-flavoured: the protocol
+> exposes a homomorphism image of a function of the secret) plus a curve with
+> `p ∣ #Jac` ((3)-flavoured), so it composes primitives rather than adding one.
+> ⚠️ **The canonical broken scheme is NOT source-verified here.** That the
+> Eta-pairing attack targeted Verheul's RSA-based signature scheme is standard
+> literature that I could not open in the primary text; treat the scheme name as
+> **UNVERIFIED** and the mechanism (as above) as the verified part. A related
+> later DOI, `10.1090/S0025-5718-99-01043-1`, resolves to **Rück alone**,
+> 68(226):805–807 — *not* a Gaudry–Hess–Smart full paper as sometimes cited.
+
 Three freshly invented mechanisms each died by landing in one of these:
 
 | Mechanism | Idea | Dies because |
@@ -1864,7 +1956,7 @@ frieze/Markoff↔class-group channel (§4f) without a single experiment.
   such `N`**. All `N`-content sits in the odd part and `v₂(h)` (measured
   `h(−4pq) ∈ 24…132`, `v₂(h) ∈ 2…6`), and extracting it needs a **subexponential**
   class-group computation (Hafner–McCurley, `L[1/2,·]`) — not poly, and it does
-  not beat `L[1/3,1.923]`. (The ERH-conditionality of the `JAMS` version, flagged
+  not beat `L[1/3,1.9018836]`. (The ERH-conditionality of the `JAMS` version, flagged
   in the References, only weakens this further.) Dead.
 - **Real** `h(ℚ(√(pq)))`. The analytic class number formula only gives the product
   `h · R = √D · L(1,χ_D)`. Isolating `h` requires the **regulator** `R`, i.e. the
@@ -1993,11 +2085,12 @@ is forced by AM–GM, and `k = 3` gives NFS" — is **wrong**, in a way that mad
    `B² + E²` subject to `E²·Prob ≥ B^{1+o(1)}`; Barbulescu–Gaudry–Kleinjung), and
    that balance is **insensitive to arity**. Arity buys the constant `c`, never
    the exponent.
-   > **The `L`-constant `(64/9)^{1/3} ≈ 1.923` is `HEURISTIC`, and the label
-   > must appear next to it.** It is the optimum of a **heuristic**
+   > **The `L`-constants `(64/9)^{1/3} ≈ 1.9230` (single-polynomial) and
+   > `((92+26√13)/27)^{1/3} ≈ 1.9018836` (several number fields) are both
+   > `HEURISTIC`, and the label must appear next to both.** It is the optimum of a **heuristic**
    > smoothness-probability model (Dickman `ρ` plus a `poly` factor-base
    > optimisation) — **not a lower bound of any kind**. There is **no proof** that
-   > no classical method beats `L[1/3, (64/9)^{1/3}]`, and **no proof** that this
+   > no classical method beats `L[1/3, 1.9018836…]`, and **no proof** that this
    > balance is optimal over all methods; it is only optimal *within the model*.
    > Without this label a reader can reasonably infer the NFS exponent is
    > *forced*, which is exactly the misreading §6 exists to prevent. The
@@ -2268,7 +2361,7 @@ algorithm; each is a place where a genuine open problem still lives.
      > survives.]** This bullet said the poly-size route "would need
      > `BPP ⊆ P/poly`, which is open." **`BPP ⊆ P/poly` is not open — it is
      > Adleman's 1978 theorem** (*Two theorems on random polynomial time*,
-     > FOCS 1978:75–83, DOI `10.1109/SFCS.1978.37`, re-verified by exact-DOI
+     > FOCS 1978:75–83, DOI `10.1109/SFCS.1978.37`, re-verified by ex; Coppersmith, *Modifications to the Number Field Sieve*, J. Cryptology 6(3):169–180 1993, `10.1007/BF00198464` (source of the `1.9018836` constant); *The Development of the Number Field Sieve*, LNM 1554 1993, `10.1007/BFb0091534` (states `1.9230` and `1.9019` on the same page); Elkenbracht-Huizing, *A multiple polynomial general number field sieve*, ANTS-II pp. 99–114, `10.1007/3-540-61581-4_45` (nearest real ANTS-era paper); Frey & Rück `10.1090/S0025-5718-1994-1218343-6`; Hess–Smart–Vercauteren `10.1109/TIT.2006.881709`; Heninger–Shacham CRYPTO 2009 `10.1007/978-3-642-03356-8_1`; Faugère–Marinier–Renault PKC 2010 `10.1007/978-3-642-13013-7_5`act-DOI
      > fetch). What is open is **`P = BPP`**, a *different and much stronger
      > statement. So the sentence conflated the two: the correct form is that
      > `BPP ⊆ P/poly` is **already known**, so the randomized poly-size bound
