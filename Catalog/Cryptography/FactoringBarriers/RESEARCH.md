@@ -2825,25 +2825,97 @@ algorithm; each is a place where a genuine open problem still lives.
   > **The obstruction that makes it hard — and the trap to avoid.** `1/5` is the *optimum of
   > the current "shrunken-`r` + BSGS-speedup" trade-off curve*: you shrink Lehman's parameter
   > `r` to buy a bigger BSGS speedup, and the exponent is the balance point. A **partial**
-  > speedup therefore buys **nothing**, and this is not a conjecture — it is demonstrated in
-  > the literature: Hittmeir's `N^{2/9}` used a **smaller** `r` and still only reached
-  > `N^{2/9}`. So "squeeze a bit more out of the same curve" is a dead end, and the only
-  > route to `1/6` is a **qualitatively different search**, not a better constant. Any future
-  > work here must confront the full-speedup requirement head-on.
+  > speedup therefore buys **nothing**. Any future work here must confront the full-speedup
+  > requirement head-on.
+  >
+  > **⚠️⚠️ CORRECTED 2026-09-24 — this paragraph above previously carried a claim that was
+  > BACKWARDS, and pointed the obstruction at the WRONG TERM. Both are fixed below; the
+  > trade-off curve itself is confirmed exactly.** An adversarial reconstruction of
+  > Harvey's Prop. 4.2 cost model gives, suppressing logarithms,
+  > `T(r,m) ≈ N^{1/2}/(m·r^{1/2}) + r + m + (N/r)^{1/4}` — four terms: BSGS **interior**,
+  > per-pair **anchor floor**, **baby steps**, and the **Strassen** small-factor test.
+  > Minimising the `m`-part (`m* = N^{1/4}r^{−1/4}`) leaves `T(r) ≈ 3N^{1/4}r^{−1/4} + r`,
+  > minimised at **`r = N^{1/5}`, `T = N^{1/5}`, `m* = N^{1/5}`** — reproducing Harvey
+  > exactly, and **independently re-derived here** over the exponent curve. The optimum is
+  > **over-determined**: at `r = N^{1/5}` *all four* terms are simultaneously `Θ(N^{1/5})`.
+  > That rigidity — not merely the balance point — is why no single component tweak moves
+  > the exponent.
+  >
+  > **(i) The `2/9` comparison was backwards.** This document said "Hittmeir's `N^{2/9}` used
+  > a *smaller* `r`." It is the other way round: Hittmeir's parameter is
+  > `η = ⌈N^{2/9}/…⌉ > N^{1/5}`, a **larger** parameter than Harvey's `r`, and it is Harvey
+  > who shrank `r` to reach the better exponent. So `2/9` is **not** evidence that partial
+  > speedups buy nothing; it is evidence that **the floor binds** at large `r` — at
+  > `η = N^{2/9}` the floor term `η` dominates the `N^{0.194}` interior/baby terms. Harvey's
+  > contribution was making the interior small enough that the floor could be *lowered*.
+  > (Harvey, arXiv:2010.05450, Prop. 4.2; Hittmeir, arXiv:2006.16729 / DOI
+  > `10.1090/mcom/3623`.)
+  >
+  > **(ii) The obstruction is the FLOOR, not the interior — this changes what the conjecture
+  > actually requires.** The natural reading of "a *full square-root* BSGS speedup at
+  > `r ≍ N^{1/3}`" is that the interior still needs compressing. **It does not — the interior
+  > is already maximally compressed.** Evaluate at `r = N^{1/3}`:
+  > `interior = N^{1/6}`, `baby = N^{1/6}`, `strassen = N^{1/6}`, but **`floor = N^{1/3}`**,
+  > so `T ≈ N^{1/3}` — **not** `N^{1/6}`, and re-optimising `m` does not help (the floor is
+  > independent of `m`). Verified numerically as part of this correction.
+  > **Why the floor is irreducible, not an artifact:** Harvey's Alg. 4.2 must form
+  > `t_{a,b} = α^{aN+b−⌈(4abN)^{1/2}⌉}` for each pair `(a,b)`. This exponent depends on
+  > **`a` and `b` separately**, not just on `k = ab`, so two pairs with the same product `k`
+  > but different splits need *different group elements* — they cannot share one baby-step
+  > table. Each of the `Θ(r·log r)` pairs therefore needs its own modular exponentiation,
+> which is exactly Harvey's additive `+r` term. This is **forced by the structure of the
+  > search object, not assumed**: it is what "enumerate all pairs with `ab ≤ r`" means.
+  > **So reaching `N^{1/6}` requires a square-root speedup on the FLOOR, not a fuller sweep
+  > of the interior.** Harvey's own target exponent is correct — his candidate count at
+  > `r = N^{1/3}` is `≈ N^{1/3}`, so `sqrt(C) ≈ N^{1/6}` — and his wording is properly
+  > hedged ("an interesting question", "would presumably"). The refinement is that
+  > "fully square-root" must be read as **including the floor**; it works at `r = N^{1/5}`
+  > only because there the floor is *subdominant*.
+  >
+  > **What this rules in, and what it rules out.** It is a genuine **restricted-model**
+  > barrier — the first rigorous one in this survey's deterministic section — and it does
+  > **not** transfer to a lower bound on factoring at large, since nothing forces a new
+  > method to enumerate `aq+bp` pair-by-pair. It is the same shape as the NFS situation in
+  > §6: a real structural obstruction that is **not** a hardness theorem. A successful
+  > attack must break the floor with a search object that is **not** "one Fermat-little-
+  > theorem congruence per pair" — a higher-dimensional/multi-target collision structure
+  > processing many splits per group element, or a different framework entirely.
+  > **The interior BSGS is exhausted; it is not the lever.**
   >
   > **Two live speculative routes, both recorded as preprints with no Crossref DOI, both
-  > clearly marked unverified.** (i) Umans & Wang, arXiv:2511.10851 (2025-11-13) propose a
-  > *Strong `(α,β)`-Divisor Conjecture*; they argue `α=β=1/3` is **best possible for their
-  > construction** (giving `4/3` at `α=β=1/2`), and that the conjecture would take deterministic
-  > factoring `1/5 → 1/6`. This is a **conjectural barrier on one construction** — it is *not*
-  > a lower bound on factoring, and it is a *weakening* of the record, not a closure.
+  > clearly marked unverified.** (i) Umans & Wang, arXiv:2511.10851 (13 Nov 2025, verified
+  > by direct arXiv fetch) propose a *Strong Prefactored `(α,β)`-Divisor Conjecture* (their
+  > Conj. 5.1); assuming it, their Thm 5.5 gives integer factorization in
+  > `~O(N^{max(α,β)/2+o(1)})`, hence `N^{1/6}` at `α=β=1/3`. Their counting bound
+  > `α ≥ 1−2β` makes `α=β=1/3` optimal **for their construction**, and they note it is
+  > unknown whether `α = 1−2β` is achievable at all. Two things this is **not**: not an
+  > unconditional `1/6`, and **not a resolution of Harvey's conjecture** — the route is
+  > recursive splitting / interval products from polynomial factorization, it does not use
+  > `aq+bp` or the Fermat BSGS at all, and **the paper cites Harvey once and Lehman zero
+  > times.** It is a genuinely parallel route.
   > (ii) Hittmeir, *Integer factorization as subset-sum problem*, *J. Number Theory*
-  > **249**:93–118 2023, DOI `10.1016/j.jnt.2023.02.010`, Thm 4.6 gives a genuine
-  > **subexponential-in-`Δ`** Fermat-family bound `Õ(Δ·exp(−C log Δ / log log Δ))` with
-  > `C = (1+o(1))·log 2` ("the best known integer factorization bound in terms of the divisor
-  > difference `Δ`"). But it is parameterised on **`Δ`, not `N`**: for a balanced semiprime
-  > with no closeness guarantee `Δ` can be `~N^{1/2}`, so it does **not** beat `N^{1/5}` in the
-  > worst case. It *does* prove the Fermat family is **not closed**.
+  > **249**:93–118 2023, DOI `10.1016/j.jnt.2023.02.010` (arXiv:2205.10074), Thm 4.6 gives a
+  > genuine **subexponential-in-`Δ`** Fermat-family bound `Õ(Δ·exp(−C log Δ / log log Δ))`
+  > with `C = (1+o(1))·log 2` ("the best known integer factorization bound in terms of the
+  > divisor difference `Δ`"). But it is parameterised on **`Δ`, not `N`**: for a balanced
+  > semiprime with no closeness guarantee `Δ` can be `~N^{1/2}`, so it does **not** beat
+  > `N^{1/5}` in the worst case. It *does* prove the Fermat family is **not closed**.
+  >
+  > **A 2026 result that removes one of the four co-binding terms — and still does not move
+  > the exponent. Recorded because the negative is the valuable part.** Harvey's Alg. 4.3
+  > step 3 needs an element of large order `D`, under a hypothesis he himself flags as loose
+  > ("the `N^{2/5}` bound as stated is good enough for our application (but only just)").
+  > **Two independent 2026 preprints drop that hypothesis altogether**: Harvey & Hittmeir,
+  > *Deterministic methods for finding elements of large multiplicative order*,
+  > **arXiv:2601.11131** (16 Jan 2026, rev. 5 Jun 2026), at cost `O(D^{1/2}/√(log log D)·log² N)`;
+  > and Nir, *Deterministically finding an element of large order in `Z_N*`*,
+  > **arXiv:2605.09592** (10 May 2026), `O(D^{1/2+o(1)})` for
+  > `D > exp(√(2 log N log log N))`. With `D = N^{1/3}`, step 3 now costs **`N^{1/6}` — below
+  > `N^{1/5}`**. (Prior art: Oznovich & Volk, arXiv:2506.07668, had already lowered it to
+  > `D > N^{1/6}`.) **Yet the factoring record is unchanged, because the other three terms
+  > still balance at `N^{1/5}` in the `r`-trade-off above.** This is the cleanest possible
+  > demonstration of the over-determined structure: **no single component fix moves the
+  > exponent.** A subroutine can improve by a full exponent and the record not budge.
 
 2. **Is low-exponent RSA easier than factoring?** — the Boneh–Venkatesan ceiling
    question, now sharply posed (§4b). BV proved **no attack** (it is a no-reduction
