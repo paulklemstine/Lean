@@ -1,6 +1,9 @@
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
 
 /-!
 # Negative results: factoring directions that are already closed
@@ -29,6 +32,25 @@ Buhler–Lenstra–Pomerance 1993; Harvey 2020; Barbulescu–Guillevic–Lenstra
 | 3 | **Real-quadratic infrastructure / CF-period parity** — one parity bit of the period of `√N` as a factor oracle. | The parity theorem is **Lagrange/Legendre** (1760s–1785), a *negative-Pell solvability* criterion, not a factoring oracle. On RSA semiprimes the bit is free or uninformative, and one bit cannot factor an `n`-bit modulus. The `N^{1/4}` partial step is **SQUFOF** (Shanks 1969). The BSGS fast path needs the regulator, and factoring reduces to computing the regulator. | Rippon–Taylor 2004; Gower–Wagstaff 2008; Bernstein (parallel SQUFOF); Murru–Salvatori 2024 |
 | 4 | **Precomputation-amortized factoring** — a universal factor base / batched sieve to break the exponent. | Amortization moves only the **constant `c`** (GNFS `1.923` → Coppersmith factory `1.639`), never the exponent `ρ = 1/3`. Practical realizable gains are `≈ 2×` (Mersenne factory). | Bernstein–Lange, *Batch NFS* (2014/921); Kleinjung–Bos–Lenstra, *Mersenne Factorization Factory* (2014/653) |
 | 5 | **Genus-character single-bit reduction** — factor `N` from one nonprincipal quadratic character. | The content is Gauss's genus theory (1801); the one-character formulation is folklore-grade repackaging, and its formalizable core `(a/p)(a/q) = (a/pq)` is a one-line Mathlib lemma. | Gauss, *Disquisitiones Arithmeticae* 1801; Cox, *Primes of the Form x²+ny²* |
+| 6 | **"AGM conjecture" as a witness that `n/4` is optimal** — cite a named conjecture to certify the partial-key barrier. | **A phantom citation.** Attributed variously to Alvarez–Gruber–Maier and to a Coppersmith–Howgrave–Graham–Unger CRYPTO 2004 paper, it has zero trace on Google Scholar, Crossref, the arXiv API, or a full IACR cryptodb sweep (≈1800 records, 1996–2007); the "AGM conjecture" hits that exist are the *symmetrized arithmetic–geometric mean inequality* in operator theory. Use the **proved** bounds instead: `X ≤ N^{β²}` (ePrint 2022/271, Thm 2) and `γ₁+…+γ_n < β²` (ePrint 2014/343, Thm 7). | see `RESEARCH.md` §4d-v |
+| 7 | **"`1/3` of the bits of `p` factors RSA"** — a sub-`n/4` partial-key crossing. | The claim comes from Takayasu–Kunihiro's asymptotic PKE curve and was **refuted by the very paper that introduced the `1/3`**: May–Nowakowski–Sarkar show the claim would be "a major improvement over Coppersmith's famous factoring with hint", then give "strong experimental evidence that TK fails". Separately, the MNS "1/3" itself is a leak of the **CRT exponents `d_p,d_q`**, not of `p` — absolute known-bit budget is still `N^{1/4}`. | Takayasu–Kunihiro ePrint 2016/1056, 2018/516; May–Nowakowski–Sarkar ePrint 2022/271 §1, §5 |
+| 8 | **Memcomputing / self-organizing-gate factoring** — an *attractor-based, chaos-avoiding* analog device, so noise cannot corrupt a contracting orbit. | **Killed by its own follow-up.** The headline "sub-second 2048-bit" is a **low-degree polynomial extrapolation** from a tuned ≤300-bit range; the largest actual *run* is ~60 bits and there is no silicon. Nguyen et al. show the contraction the design relies on is **destroyed by noise**, so "attracting ⇒ robust ⇒ large `N`" fails in-model. | Sharp et al. arXiv:2309.08198; Nguyen et al. arXiv:2506.14928 (*Chaos* 2026) |
+| 9 | **Resonance / peak-position factor encoding** — read `p` off a resonance whose position encodes the divisor. | **Two independent kills.** (i) *Continuity:* factoring is **discontinuous** — adjacent `N` have wildly different factors — so **no smooth flow can output `p(N)` continuously**; there is no continuous resonance to position-encode. (ii) *Reduction:* the discrete-instantiation is the already-dead **RSDT** mechanism, which collapses to trial division. | see `RESEARCH.md` §4a |
+| 10 | **"Noisy Coppersmith"** — a rigorous noise-tolerant form of `X ≤ N^{β²}`, e.g. `X ≤ f(N,e)` for `e` errors in the known bits of `p`. | **A category error: no attack ever feeds noisy bits to the lattice.** Halderman et al. (CCS 2008 §5.4) and Paterson–Polychroniadou–Sibborn (ASIACRYPT 2012 §2) *both* branch bit-by-bit first and invoke Coppersmith only on **clean, already-recovered** bits — it is a final step, never the noise-robust one. The multivariate ACD-with-error extension is **heuristic on its face** (Cohn–Heninger, ePrint 2011/437: "we cannot rigorously prove that it always works"). | see `RESEARCH.md` §4e |
+| 11 | **"Noise *rate* is what makes cold-boot RSA hard"** — the premise of the old noisy-leak framing. | **Backwards: the noise rate is in *surplus*.** Real remanence decay leaves **≥90% of bits correct** (Halderman measured `δ` = 4–10%), far cleaner than the ~20–24% error the whole-key methods can barely handle — see `coldboot_noise_below_capacity` below. The genuine difficulty is the **channel asymmetry** (unidirectional 1→0 decay), on which HS/HMM **fail outright**; only PPS's maximum-likelihood decoder works. | see `RESEARCH.md` §4e |
+
+## The `n/4` partial-key barrier, and where the square comes from
+
+For a factor `p ≈ N^β` the **proved** univariate bound is `X ≤ N^{β²}`: `n/4`
+bits of a balanced modulus is *half* of `p`'s bits, not a quarter.  The exponent
+is not monomial-counting and not root-counting over `F_p` — the polynomial is
+univariate, so lattice rank is independent of degree.  It is the
+**determinant-vs-modulus enabling condition** on the shift-polynomial lattice:
+the `N^{max(0,t−i)}` factors buy vanishing modulus `N^{βm²}` but cost
+`N^{β²m²/2}` in the determinant, and the ratio `t²/(m(m+1)) → β²` is the whole
+exponent.  The theorem `known_leak_maximized_at_balanced` below machine-checks the
+consequence: the required leakage `(β − β²)n` is **maximized at `β = 1/2`**,
+where it equals `n/4`.  Balance is exactly what makes the barrier worst.
 
 ## Why the "arity" escape is an artifact — the load-bearing correction
 
@@ -77,5 +99,44 @@ theorem mod4_not_injective : ¬ Function.Injective (fun n : ℕ => n % 4) := by
   have heq : (15 : ℕ) % 4 = 39 % 4 := by norm_num
   have h1521 : (15 : ℕ) = 39 := h heq
   norm_num at h1521
+
+/-- **The partial-key leakage requirement is maximised at the balanced modulus.**
+For a factor `p ≈ N^β` the proved univariate bound `X ≤ N^{β²}` requires
+`(β − β²)n` *known* bits, and this is at most `n/4`, with equality exactly at
+`β = 1/2`.
+
+The content is the completed square `4(β − β²) = 1 − (2β − 1)² ≤ 1`, i.e.
+`β − β² ≤ 1/4` because `(2β − 1)² ≥ 0`.  So the `n/4` barrier is a statement
+about the **balanced** case specifically: every `β < 1/2` (an unbalanced `N`)
+needs *strictly* fewer than `n/4` bits.  This is the machine-checked core of
+`RESEARCH.md` §4d-iii — balance is what maximises the required leakage, which is
+why the balanced RSA modulus is the worst case. -/
+theorem known_leak_maximized_at_balanced (β : ℝ) (n : ℝ) (hn : 0 ≤ n) :
+    (β - β * β) * n ≤ n / 4 := by
+  have hsq : 0 ≤ (2 * β - 1) ^ 2 := sq_nonneg (2 * β - 1)
+  nlinarith
+
+/-- The bound is **attained** at the balanced modulus `β = 1/2`: there the
+required leakage is exactly `n/4`. -/
+theorem known_leak_attained_at_balanced (n : ℝ) : ((1 / 2 : ℝ) - (1 / 2 : ℝ) ^ 2) * n = n / 4 := by
+  ring
+
+/-- **Real cold-boot noise is in surplus, not scarce** — the arithmetic that
+kills killed direction #11.
+
+Halderman et al. measured remanence decay on real hardware at `δ ≤ 1/10` for
+RSA (2048-bit keys: `δ = 4%` and `6%`; 512-bit primes: `δ = 10%`), leaving at
+least `9/10` of the key bits correct.  The whole-key erasure recovery of
+Heninger–Shacham needs only `1/5` of the bits known — the capacity figure is
+`0.20` (their heuristic analysis claims `0.27`, the formal threshold
+`2 − 2^{4/5} ≈ 0.2589`; take the most conservative, `1/5`).
+
+So the observed clean fraction *strictly exceeds* the fraction the best
+whole-key method needs to have known.  The noise rate is therefore **not** the
+binding constraint on cold-boot RSA recovery: the binding constraints are the
+leak *amount* and the channel *asymmetry*.  This is the numeric core of
+`RESEARCH.md` §4e's second kill. -/
+theorem coldboot_noise_below_capacity : (1 : ℝ) - 1 / 10 > 1 / 5 := by
+  norm_num
 
 end FactoringBarriers.NegativeResults
