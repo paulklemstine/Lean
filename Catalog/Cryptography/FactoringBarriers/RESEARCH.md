@@ -1565,6 +1565,94 @@ unchanged.** The gain is a *correct* statement where the survey previously had
 nothing, and a recorded instance of the quantifier error that "is there a
 reduction from X to Y" invites.
 
+#### 4f-iii. The ℓ-adic skeleton of the Fermat node, and the 2-adic close-prime detector (Q4) — refuted
+
+**The idea.** The Fermat node `(m,n) = ((q+p)/2, (q−p)/2)` has a natural family of
+congruence invariants: for each prime `ℓ`, the **skeleton**
+
+> `S_ℓ = ( v_ℓ(m), v_ℓ(n) )`
+
+— which coordinate is more `ℓ`-divisible, and to what depth. The hope is that
+"high `ℓ`-adic level" is a proxy for "`m` and `n` are close", i.e. for `p, q` being
+close, giving a cheap proximity detector. The cheapest shadow of this is the
+**level-1 flag** `(ℓ ∣ m, ℓ ∣ n)`.
+
+**What is actually sealed, and it is only two primes.** Asking whether the
+level-1 flag is a *function of the public residue* `N mod ℓ^k` (i.e. whether an
+attacker who knows only `N mod ℓ^k` already knows the flag):
+
+| `ℓ` | sealed from depth | decided by | status |
+|---|---|---|---|
+| `2` | `k = 2` | `N mod 4` | **PROVED** — `LadicFlag.lean` |
+| `3` | `k = 1` | `N mod 3` | **PROVED** — `Skeleton.lean` |
+| `ℓ ≥ 5` | never, at any depth with test power | — | **empirical, not proved** |
+
+The two proved cases have the same elementary cause. For `ℓ = 3` the only nonzero
+square in `F_3` is `1`, so if `3 ∤ m` and `3 ∤ n` then `m² − n² ≡ 1 − 1 ≡ 0`,
+forcing `3 ∣ N`; conversely `3 ∣ N` forces one coordinate to be divisible by `3`.
+For `ℓ = 2` it is parity: `N` is odd, and `N mod 4` distinguishes `q ≡ p` from
+`q ≡ −p (mod 4)`, which is exactly which coordinate is even. For every `ℓ ≥ 5` a
+difference of two nonzero squares is unconstrained mod `ℓ`, and the flag is not
+recoverable.
+
+Machine-checked in `Catalog/Cryptography/Berggren3Adic/LadicFlag.lean` (no `sorry`):
+`four_dvd_pq_sub_one_iff_four_dvd_q_sub_p` is the `ℓ = 2` theorem, the exact
+`ℓ = 2` analogue of `Skeleton.skeleton`.
+
+> ⚠️ **[CORRECTED 2026-09-24 — an earlier draft of this subsection overclaimed the
+> `ℓ ≥ 5` row as "unsealed at all depths tested", and that is not what the
+> computation supports.]** The sealing test buckets Fermat nodes by `N mod ℓ^k`
+> and looks for a bucket containing two different flags. When `ℓ^k` approaches
+> the sample bound every bucket is a **singleton**, the test finds no
+> conflict, and reports "sealed" — an artefact of a powerless test, not a
+> sealing result. Rerun with the power reported explicitly, over all `35 553`
+> odd semiprime Fermat nodes with `N ≤ 2·10⁵`: the flag is **unsealed at every
+> depth `k = 1, 2, 3` for every prime `ℓ` from `5` to `37` tested**, and at
+> `k = 4` for every `ℓ ≤ 17`; but at `k = 4` for `ℓ ≥ 19` (`19⁴ = 130321` against
+> a bound of `2·10⁵`) **every bucket is a singleton and the test has no power at
+> all**, so those cells are vacuous, not sealed. The honest claim is *"unsealed
+> wherever the test has power"*, and unsealed-ness for `ℓ ≥ 5` is an **empirical
+> finding, not a theorem**: proving it needs an explicit family of
+> counterexamples for each `ℓ` and depth, which is not formalised here and
+> should not be inferred from the table.
+
+**The kill of Q4 is not the residue count — it is the direction.** The 2-adic
+close-prime detector fails for two independent reasons, and it is the second
+that is decisive.
+
+*First*, the only sealed 2-adic fact is a **parity bit already visible in
+`N mod 4`**, carrying no size information whatsoever. Even if the detector's
+input were free, its output is a constant given `N mod 4`.
+
+*Second*, and fatally, the level is **monotonically anti-correlated with
+closeness**:
+
+> `v₂(gap) = j  ⟹  2ʲ ∣ gap  ⟹  gap ≥ 2ʲ`.
+
+A *high* 2-adic level certifies a *large* gap. The detector does not merely
+fail to point at close primes — it points at **wide** ones, with a lower bound
+that grows with the very statistic being used. Machine-checked as
+`two_pow_dvd_gap_implies_gap_ge` in `LadicFlag.lean`. This is residue-free and
+level-free, so it is not repairable by sealing more congruences.
+
+**The deeper, and sufficient, reason: the skeleton is a function of `N`.** Every
+sealed row above says precisely that the flag is determined by `N mod ℓ^k`, and
+`N mod ℓ^k` is computable from `N` in `O(1)` arithmetic. So the skeleton is a
+**recomputable function of public input**, not a secret channel — it cannot
+carry information about `p` that is not already in `N`. This is §5b's uniformity
+kill in a concrete instance, and it subsumes the Q4 argument: one does not need
+to settle whether `ℓ ≥ 5` is sealed, because even a fully sealed skeleton map
+would be reading `N` back to itself. The apparent `O(log log N)` budget of
+`ℓ`-adic data is therefore doubly moot — and in the sealed cases the recovered
+bit is a *constant*, far below even that.
+
+**Net effect: the descent maps stay in the metric layer and open no new
+channel.** The Berggren `B`/`C`/`D` steps descend the Farey tree by
+`(p,q) ↦ (p, q−k p)`; applying them to a node you already hold moves you along
+a surface you could compute anyway. Combined with §4f-i (the control word needs
+`p` to read, and computing it from `N` is factoring in disguise), the ℓ-adic
+skeleton is the third independent route into the same wall.
+
 ## 5. The meta-barrier: every method collapses to one of four primitives
 
 A second, dedicated invention pass (three new mechanisms, each adversarially
@@ -1913,7 +2001,7 @@ valid statements *about their model*; only the over-reading was wrong.
 ## 7. Machine-checked companions
 
 - **`NegativeResults.lean`** — a cited kill record (the table above, now
-  **twenty-five** directions) plus three machine-checked supports:
+  **twenty-six** directions) plus three machine-checked supports:
   - `mod4_not_injective` shows the map `n ↦ n mod 4` fails to separate the
     distinct semiprimes `15 = 3·5` and `39 = 3·13`, so a low-order residue
     observable cannot carry factoring information.
@@ -1932,6 +2020,25 @@ valid statements *about their model*; only the over-reading was wrong.
   disagree.
 
 Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_workspace`).
+
+- **`LadicFlag.lean`** *(new, 2026-09-24, `Catalog/Cryptography/Berggren3Adic/`;
+  Lean exit 0, no errors, no `sorry`)* — the machine-checked content of §4f-iii,
+  sitting alongside the existing `Skeleton.lean`, whose `ℓ = 3` theorem it mirrors:
+  - `four_dvd_pq_sub_one_iff_four_dvd_q_sub_p` is the **`ℓ = 2` flag**: for odd
+    `p`, `4 ∣ (pq − 1) ↔ 4 ∣ (q − p)` — i.e. the `2`-adic skeleton flag is
+    *exactly* the residue `N mod 4`, carrying **zero size information**. This is
+    the `ℓ = 2` analogue of `Skeleton.skeleton` (`N mod 3`).
+  - `two_pow_dvd_gap_implies_gap_ge` is the **direction kill of Q4**:
+    `0 < gap` and `2ʲ ∣ gap` force `2ʲ ≤ gap`, so a higher `2`-adic level
+    certifies a *larger* gap. The detector is anti-correlated with closeness,
+    and this is residue-free, so it cannot be repaired by sealing more
+    congruences. (Stated over `ℕ` because both the gap and the level are natural
+    numbers; over `ℤ` the exponent would need a `zpow` instance that is not built
+    in this environment.)
+
+  The `ℓ ≥ 5` half of §4f-iii is **not** in this file and must not be read into
+  it: it is an empirical sealing test whose honest scope is "unsealed wherever
+  the test has power", recorded in the survey as such.
 
 - **`FactorEncodingAudit.lean`** *(new, 2026-09-24; Lean exit 0, no errors or
   warnings, compiled with the Catalog toolchain Lean v4.28.0 — not the v4.33.1
