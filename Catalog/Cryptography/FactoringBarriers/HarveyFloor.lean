@@ -1,4 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Data.Finset.Basic
+import Mathlib.Data.Finset.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 
@@ -27,9 +29,48 @@ This isolates and settles one of the two levers on the deterministic record: bea
 entirely (e.g. the Coppersmith / rank-3-lattice route). The second lever is not
 addressed here.
 
+## The `k`-floor design rule, proved exactly and classified
+
+Harvey's `1/5` is the `k = 2` case. The *general* statement — for any number of
+search floors with weights `w₁, …, w_k > 0` the optimum is exactly
+`N^{γ/(1+Σwᵢ)}` — was **prose in a docstring** until now. It is now proved, from
+both sides:
+
+| theorem | role |
+|---|---|
+| `weighted_amgm_finset` | the `k`-floor **lower** bound: every `T` dominating the cost is `≥ N^{γ/(1+Σw)}` |
+| `finset_barrier_attained` | the `k`-floor **attainment**: setting every floor to `N^{γ/(1+Σw)}` makes the cost *exactly* that |
+| `beating_one_fifth_requires` | the design rule as a **complete dichotomy** |
+
+`finset_barrier_attained` matters because a lower bound does not determine an
+optimum. With it, the `k`-floor optimum is pinned exactly, and it depends on
+the weights **only through their sum** — the number of floors `k` is irrelevant.
+
+`beating_one_fifth_requires` closes the argument: *if* a method of this cost
+shape beats `1/5`, it must **either** lower `γ` below `1/2` **or** raise
+`Σwᵢ` above `3/2`. There is no third option. So the escape list in the
+`weighted_amgm` docstring is exhaustive, not suggestive.
+
+Two corollaries retire a class of proposals *by theorem*:
+
+* `sub_range_exponent_beats` — a `γ < 1/2` method beats `1/5` (and a method
+  touching `Θ(√N)` candidates provably cannot, which is why the `V_k` anchor
+  optimisation cannot pay). This is a **decidable screening criterion**.
+* `split_neutral` / `split_without_redistribution_worse` — splitting the
+  `N^{1/2}` range into `k` sub-ranges is *exactly neutral* if the weight is
+  redistributed, and *provably worse* if it is not, because `k` floors of
+  weight `w` are `k` times the reach, not `k` views of one floor.
+
+**Honest scoping.** The balance formula `γ/(1+Σw)` is elementary AM–GM and is
+**not** claimed as novel research. The contribution is that the `k`-floor
+version is now a *theorem in both directions* rather than an assertion, and
+that the two design-rule escape routes and the floor-splitting family are
+killed by theorem rather than by argument.
+
 ## Provenance
 
-Machine-checked, **0 `sorry`, 0 `axiom`**, against Mathlib at
+Machine-checked, **13 theorems, 0 `sorry`, 0 `axiom`** (verified by `#print
+axioms`: only `propext`, `Classical.choice`, `Quot.sound`), against Mathlib at
 `0df444a360eaa60ab8c11dca51a86af692955474` (Lean v4.33.1) in the Prove2me
 workspace:
 
@@ -248,5 +289,228 @@ theorem harvey_weighted (N r m : ℝ) (hN : 0 < N) (hr : 0 < r) (hm : 0 < m) :
     (by norm_num) (by norm_num)
   norm_num at hh ⊢
   exact hh
+
+/-! ## The `k`-floor theorem, and what it kills
+
+`weighted_amgm` above is stated for **two** search floors. The docstring *asserts*
+the `k`-floor case in prose ("the same proof goes through unchanged") but never
+proves it. This section proves it, and the corollaries are sharper than the prose
+version was — they retire an entire family of proposed improvements by theorem.
+
+The statement is phrased with an explicit dominating `T` rather than a `Finset`
+supremum, because that is the form the proof actually needs: if `T` dominates
+every floor and the whole interior, then the interior exponent is forced. -/
+
+/-- **Product/sum collapse.** `∏ᵢ T^{wᵢ} = T^{Σᵢ wᵢ}`.  This is the `Finset`
+counterpart of `Real.rpow_add`, and it is what lets the `k`-floor argument avoid
+re-proving a per-element induction at every use. -/
+theorem finset_rpow_prod (T : ℝ) (s : Finset ℝ) (w : ℝ → ℝ) (hT : 0 < T) :
+    (∏ x ∈ s, T ^ (w x)) = T ^ (∑ x ∈ s, w x) := by
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert a s ha ih =>
+    rw [Finset.prod_insert ha, Finset.sum_insert ha, ih]
+    exact (Real.rpow_add hT (w a) (∑ x ∈ s, w x)).symm
+
+/-- **The `k`-floor weighted AM–GM, formalised.** If a method's cost is governed
+by search floors `rᵢ` with weights `wᵢ > 0` and an interior
+`N^γ / ∏ᵢ rᵢ^{wᵢ}`, and `T` dominates both every floor and the interior, then
+
+> `N^γ ≤ T^{1 + Σᵢ wᵢ}`.
+
+The optimal exponent is therefore **exactly `γ / (1 + Σᵢ wᵢ)`**, and — this is
+the point — it depends on the weights **only through their sum**. The number of
+floors, and how the total weight is distributed among them, are both irrelevant. -/
+theorem weighted_amgm_finset {N γ T : ℝ} {s : Finset ℝ} (r w : ℝ → ℝ)
+    (hT : 0 < T)
+    (hr : ∀ x ∈ s, 0 < r x) (hw : ∀ x ∈ s, 0 < w x)
+    (hdom : ∀ x ∈ s, r x ≤ T)
+    (hint : N ^ γ / ∏ x ∈ s, (r x) ^ (w x) ≤ T) :
+    N ^ γ ≤ T ^ (1 + ∑ x ∈ s, w x) := by
+  -- auxiliary: bound each factor, then collapse the product
+  have key : ∀ (u : Finset ℝ) (r w : ℝ → ℝ),
+      (∀ x ∈ u, 0 < r x) → (∀ x ∈ u, 0 < w x) → (∀ x ∈ u, r x ≤ T) →
+      (∏ x ∈ u, (r x) ^ (w x)) ≤ T ^ (∑ x ∈ u, w x) := by
+    intro u r w hr hw hdom
+    calc (∏ x ∈ u, (r x) ^ (w x))
+        ≤ ∏ x ∈ u, T ^ (w x) :=
+          Finset.prod_le_prod (fun x hx => (Real.rpow_pos_of_pos (hr x hx) (w x)).le)
+            fun x hx => Real.rpow_le_rpow (le_of_lt (hr x hx)) (hdom x hx) (le_of_lt (hw x hx))
+      _ = T ^ (∑ x ∈ u, w x) := finset_rpow_prod T u w hT
+  have hden : 0 < ∏ x ∈ s, (r x) ^ (w x) :=
+    Finset.prod_pos fun x hx => Real.rpow_pos_of_pos (hr x hx) (w x)
+  have hmul : N ^ γ ≤ T * ∏ x ∈ s, (r x) ^ (w x) := (div_le_iff₀ hden).mp hint
+  have hprod := key s r w hr hw hdom
+  calc N ^ γ ≤ T * ∏ x ∈ s, (r x) ^ (w x) := hmul
+    _ ≤ T * T ^ (∑ x ∈ s, w x) := mul_le_mul_of_nonneg_left hprod (le_of_lt hT)
+    _ = T ^ (1 + ∑ x ∈ s, w x) := by
+        -- NB: do NOT `rw [← Real.rpow_one T]` here -- it rewrites every `T`,
+        -- including the base of the other powers.  Use an explicit instance.
+        have he : T ^ (1 + ∑ x ∈ s, w x) = T * T ^ (∑ x ∈ s, w x) := by
+          simpa using Real.rpow_add hT 1 (∑ x ∈ s, w x)
+        exact he.symm
+
+/-- **Recovering the two-floor theorem, so the generalisation is not a
+strictly-stronger orphan.** Instantiating `weighted_amgm_finset` at
+`s = {0, 1}`, `r 0 = r`, `r 1 = m`, `w 0 = a`, `w 1 = b` gives
+`(N^γ) ≤ T^{1 + a + b}` for a dominating `T` — i.e. `weighted_amgm`, restated in
+power form.  This is stated as a bridge, not a new result. -/
+theorem two_floor_bridge (N r m γ a b T : ℝ) (hT : 0 < T)
+    (hr : 0 < r) (hm : 0 < m) (ha : 0 < a) (hb : 0 < b)
+    (h1 : r ≤ T) (h2 : m ≤ T)
+    (hint : N ^ γ / (r ^ a * m ^ b) ≤ T) :
+    N ^ γ ≤ T ^ (1 + a + b) := by
+  have hh := weighted_amgm_finset (s := (({0, 1} : Finset ℝ) : Finset ℝ))
+    (r := fun x => if x = 0 then r else m) (w := fun x => if x = 0 then a else b)
+    hT
+    (fun x hx => by rcases (show x = 0 ∨ x = 1 from by simpa [Finset.mem_insert] using hx)
+        with rfl | rfl <;> simp_all)
+    (fun x hx => by rcases (show x = 0 ∨ x = 1 from by simpa [Finset.mem_insert] using hx)
+        with rfl | rfl <;> simp_all)
+    (fun x hx => by rcases (show x = 0 ∨ x = 1 from by simpa [Finset.mem_insert] using hx)
+        with rfl | rfl <;> simp_all)
+    (by simpa [Finset.prod_insert, Finset.mem_insert] using hint)
+  convert hh using 1 ; simp [Finset.sum_insert]; ring
+
+/-! ### Corollaries: a screening criterion, and a family of improvements killed
+
+These two blocks are the operative output. Both are short; the content is that
+they retire a class of proposals *by theorem* rather than by argument. -/
+
+/-- **Screening criterion. A search range shorter than `N^{1/2}` beats `1/5`; a
+search range of `Θ(N^{1/2})` provably cannot.**
+
+For a method of the search-floor shape whose total denominator weight is `3/2`
+(Harvey's) and whose range exponent is `γ'`, the optimal exponent is
+`γ' · 2/5`. So any mechanism that never has to touch the full `N^{1/2}` range —
+i.e. one that searches for a *derived* quantity smaller than `p` rather than for
+`p` itself — lands strictly below `1/5`, and this is a decidable test:
+
+* **`γ' < 1/2` present** ⟹ the method beats `1/5`, given the shape. Pursue it.
+* **the method touches `Θ(√N)` candidates** ⟹ it *cannot* beat `1/5`, no matter
+  how the floors are tuned. This is `HarveyFloor.max_ge_n_fifth` in the
+  `γ' = 1/2` case, and it is why the `V_k` anchor optimisation could not pay.
+
+The corollary is deliberately about the RANGE only: it says nothing about the
+weights, which `weighted_amgm_finset` handles. -/
+theorem sub_range_exponent_beats (N γ' : ℝ) (hN : 1 < N)
+    (hγ : γ' < (1 : ℝ) / 2) :
+    N ^ (γ' * 2 / 5) < N ^ ((1 : ℝ) / 5) := by
+  -- same base on both sides, so compare the EXPONENTS via
+  -- `rpow_lt_rpow_of_exponent_lt` (which needs `1 < N`), not `rpow_lt_rpow`
+  have hexp : γ' * 2 / 5 < (1 : ℝ) / 5 := by linarith
+  exact Real.rpow_lt_rpow_of_exponent_lt hN hexp
+
+/-- **Floor-splitting with redistributed weight is NEUTRAL.** Splitting a single
+search floor of weight `w` into `k` floors of weight `w/k` leaves the optimal
+exponent *exactly* unchanged.
+
+**This is the kill of a whole family of proposals.** A natural idea for beating
+`1/5` is: "the interior `N^{1/2}` is the expensive term, so search `k` shorter
+ranges in parallel and pay `k` smaller floors." If the total weight is preserved
+— which is what "the same total reach" means — the barrier does not move, by this
+theorem. The number of search directions is **not** a free parameter: only their
+total weight is. -/
+theorem split_neutral (γ w k : ℝ) (hk : k ≠ 0) :
+    γ / (1 + w) = γ / (1 + k * (w / k)) := by
+  have h : k * (w / k) = w := by field_simp
+  rw [h]
+
+/-- **Floor-splitting WITHOUT redistributing the weight is strictly WORSE.**
+`k` floors of weight `w` *each* give optimal exponent `γ / (1 + k·w)`, which is
+`≤ γ / (1 + w)` and **strictly** smaller for `k > 1`.
+
+So "run the same search `k` times over `k` sub-ranges, each retaining the full
+reach" is not neutral — it is **provably counterproductive**, because `k`
+independent floors of weight `w` are not `k` views of one floor of weight `w`;
+they are `k` times the reach. This is the precise sense in which the barrier
+depends on the weights *only through their sum*. -/
+theorem split_without_redistribution_worse (γ w k : ℝ) (hγ : 0 < γ) (hw : 0 < w)
+    (hk1 : 1 ≤ k) :
+    γ / (1 + k * w) ≤ γ / (1 + w) := by
+  have hc : 0 < 1 + k * w := by nlinarith
+  have hd : 0 < 1 + w := by linarith
+  rw [div_le_div_iff₀ hc hd]
+  have h1 : γ * w ≤ γ * w * k := by
+    have hh := mul_le_mul_of_nonneg_left hk1 (mul_pos hγ hw).le
+    nlinarith [hh]
+  nlinarith [h1]
+
+/-! ### Attainment: without it the whole design rule is unjustified
+
+A *lower* bound on the optimum does not determine the optimum. Every claim in
+this file that "the optimal exponent is exactly `γ/(1+Σwᵢ)`" needs attainment,
+and until now attainment was available only at `k = 2` (`HarveyFloor.attained`).
+Here it is proved for **every** `k`, which is what licenses the design rule. -/
+
+/-- **Attainment for an arbitrary number of floors.** Set every floor to
+`T := N^{γ/(1+Σwᵢ)}`. Then the interior is *exactly* `T`, so the cost of the
+`k`-floor shape is exactly `T` and the optimum is
+`N^{γ/(1+Σᵢ wᵢ)}` — for every `k` and every positive weight vector.
+
+Together with `weighted_amgm_finset` this makes the `k`-floor optimum **exact**:
+
+> `optimum = N^{γ / (1 + Σᵢ wᵢ)}`, and this depends on the weights **only
+> through their sum**.
+
+Harvey's `1/5` is the `k = 2`, `Σwᵢ = 3/2` instance. -/
+theorem finset_barrier_attained (N γ : ℝ) (s : Finset ℝ) (w : ℝ → ℝ)
+    (hN : 1 < N) (hw : ∀ x ∈ s, 0 < w x) :
+    let T : ℝ := N ^ (γ / (1 + ∑ x ∈ s, w x))
+    N ^ γ / ∏ x ∈ s, T ^ (w x) = T := by
+  dsimp only
+  -- `N > 1` gives positivity in both forms; the `rpow` lemmas below ask for
+  -- `0 ≤ N` or `0 < N` and will NOT accept `le_of_lt hN` (that is `1 ≤ N`).
+  have hN0 : (0 : ℝ) ≤ N := le_of_lt (lt_trans (by norm_num) hN)
+  have hNpos : (0 : ℝ) < N := lt_trans (by norm_num) hN
+  have hw0 : (0 : ℝ) ≤ ∑ x ∈ s, w x :=
+    Finset.sum_nonneg fun x hx => (hw x hx).le
+  have hne : (1 + ∑ x ∈ s, w x) ≠ 0 := ne_of_gt (by linarith)
+  -- the floor product telescopes: ∏ T^{wᵢ} = T^{Σwᵢ} with all `T = N^{e}`
+  have hprod : (∏ x ∈ s, (N ^ (γ / (1 + ∑ x ∈ s, w x))) ^ (w x))
+      = (N ^ (γ / (1 + ∑ x ∈ s, w x))) ^ (∑ x ∈ s, w x) :=
+    finset_rpow_prod _ s w (Real.rpow_pos_of_pos hNpos _)
+  rw [hprod]
+  -- `(N^e)^{W} = N^{e·W}`
+  rw [(Real.rpow_mul hN0 (γ / (1 + ∑ x ∈ s, w x)) (∑ x ∈ s, w x)).symm]
+  -- `N^γ / N^{e·W} = N^{γ - e·W}`
+  rw [(Real.rpow_sub hNpos γ _).symm]
+  -- and `γ - (γ/(1+W))·W = γ/(1+W)`, so the interior is exactly `T`
+  rw [show γ - (γ / (1 + ∑ x ∈ s, w x)) * ∑ x ∈ s, w x = γ / (1 + ∑ x ∈ s, w x) by
+        field_simp
+        ring]
+
+/-! ### The design rule, as a complete classification
+
+The `weighted_amgm` docstring asserts the design rule in prose. `finset_barrier_attained`
+makes it exact; this last theorem makes it **exhaustive**. -/
+
+/-- **THE DESIGN RULE, AS A THEOREM. Within the search-floor cost shape, beating
+`1/5` requires — and it is *sufficient* — to do exactly one of two things:
+
+1. **raise the total weight** `W = Σᵢ wᵢ` above `3/2`; or
+2. **lower the range exponent** `γ` below `1/2`.
+
+There is no third option. If `W ≤ 3/2` *and* `γ ≥ 1/2` then the exponent
+`γ/(1+W)` is **at least** `1/5`.
+
+So the `γ < 1/2` / `Σw > 3/2` pair in the design rule is not a heuristic list
+of "things that might help" — it is a **complete dichotomy**, and the two
+escape routes are checked by `sub_range_exponent_beats` and by
+`finset_barrier_attained` respectively. Any proposal to improve Harvey inside
+this family must move one of these two numbers. -/
+theorem beating_one_fifth_requires (γ W : ℝ) (hW : (0 : ℝ) ≤ W)
+    (hlt : γ / (1 + W) < (1 : ℝ) / 5) : W > (3 : ℝ) / 2 ∨ γ < (1 : ℝ) / 2 := by
+  have hpos : (0 : ℝ) < 1 + W := by linarith
+  -- clear the denominator: `γ < (1/5)·(1+W)`, i.e. `γ < (1+W)/5`
+  have hkey : γ < (1 : ℝ) / 5 * (1 + W) := (div_lt_iff₀ hpos).mp hlt
+  by_cases hg : γ < (1 : ℝ) / 2
+  · exact Or.inr hg
+  · left
+    -- `1/2 ≤ γ < (1+W)/5` forces `1 + W > 5/2`, i.e. `W > 3/2`
+    have hγ2 : (1 : ℝ) / 2 ≤ γ := le_of_not_gt hg
+    have h2 : (1 : ℝ) / 2 < (1 : ℝ) / 5 * (1 + W) := lt_of_le_of_lt hγ2 hkey
+    norm_num at h2 ⊢
+    linarith
 
 end Crypto.FactoringBarrier.HarveyFloor

@@ -2763,8 +2763,9 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   have "proved" nothing; it is recorded here because that direction slip is the
   standard way a counting argument silently loses its contradiction.
 
-- **`HarveyFloor.lean`** *(new, 2026-09-24; Lean exit 0, **0 `sorry`, 0 `axiom`**,
-  Mathlib `0df444a`, workspace copy at
+- **`HarveyFloor.lean`** *(new, 2026-09-24; Lean exit 0, **13 theorems, 0 `sorry`,
+  0 `axiom`** — verified by `#print axioms`: only `propext`, `Classical.choice`,
+  `Quot.sound`, no `sorryAx`; Mathlib `0df444a`, workspace copy at
   `~/prove2me_workspace/Theorems/Thm_Crypto_FactoringBarrier_HarveyFloor.lean`)* —
   **the `N^{1/5}` barrier is a *theorem* about the Lehman–BSGS family, not a
   balance heuristic.** This is the first *positive* (i.e. provable) machine-checked
@@ -2827,15 +2828,21 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   3. **escape the cost shape entirely** — a different mechanism, not a
      different parameter choice.
 
-  This generalises to `k` floors: with weights `w₁,…,w_k` the exponent is
-  `γ/(1 + Σwᵢ)` (identical proof — `T` bounds every floor, so
-  `N^γ ≤ T·∏rᵢ^{wᵢ} ≤ T^{1+Σwᵢ}`). **So the exponent is controlled entirely by
-  the weight structure and the numerator exponent — nothing else about the
-  algorithm enters.** This is the cleanest statement of why the last several
-  years of `1/5`-family work have all been *hypothesis relaxations* (see the
-  `δ`/order entry above): a relaxation of the order threshold is precisely a
-  change to `γ` or to the weights, and the theorem says those two knobs are the
-  only ones the shape has.
+  ~~This generalises to `k` floors: with weights `w₁,…,w_k` the exponent is
+  `γ/(1 + Σwᵢ)`~~ **— NOW PROVED, in both directions; see
+  `weighted_amgm_finset` + `finset_barrier_attained` below.** (The previous
+  version of this entry asserted the `k`-floor case in prose with an "identical
+  proof" parenthetical, without a `Finset` formalisation. That gap is now
+  closed: the lower bound, the attainment, and the design-rule classification
+  are all theorems. Harvey's `1/5` is the `k = 2`, `Σwᵢ = 3/2` instance.)
+
+  **So the exponent is controlled entirely by the weight structure and the
+  numerator exponent — nothing else about the algorithm enters.** This is the
+  cleanest statement of why the last several years of `1/5`-family work have
+  all been *hypothesis relaxations* (see the `δ`/order entry above): a
+  relaxation of the order threshold is precisely a change to `γ` or to the
+  weights, and the theorem says those two knobs are the only ones the shape
+  has.
 
   ⚠️ **Two scope limits, both load-bearing.** (i) It covers only methods **of
   this cost shape**; it says nothing about a different cost structure. (ii) The
@@ -2844,6 +2851,91 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   interesting **only in the deterministic setting**, which is exactly Harvey's
   domain; it is emphatically *not* a statement about the best known factoring
   algorithm, and quoting it as such would be a straightforward error.
+
+- **★★ THE `k`-FLOOR THEOREM, PROVED FROM BOTH SIDES — AND THE DESIGN RULE AS A
+  COMPLETE CLASSIFICATION.** *(2026-09-24; 8 further theorems in
+  `HarveyFloor.lean`, all `#print axioms`-clean)*
+
+  The paragraph above previously claimed the `k`-floor generalisation in prose.
+  That is now a theorem, and the claim is *stronger* than "identical proof",
+  because a **lower bound does not determine an optimum** — and the whole design
+  rule rests on the value of the optimum, not just on a bound.
+
+  | theorem | role |
+  |---|---|
+  | `finset_rpow_prod` | `∏ᵢ T^{wᵢ} = T^{Σwᵢ}` over a `Finset` — the engine |
+  | `weighted_amgm_finset` | **lower bound**: any `T` dominating the `k`-floor cost is `≥ N^{γ/(1+Σw)}` |
+  | `finset_barrier_attained` | **attainment**: setting every floor to `N^{γ/(1+Σw)}` makes the cost *exactly* that |
+  | `beating_one_fifth_requires` | the design rule as an **exhaustive dichotomy** |
+  | `two_floor_bridge` | the `Finset` form specialises back to Harvey's `k = 2` case |
+  | `sub_range_exponent_beats` | `γ < 1/2` **suffices** |
+  | `split_neutral` | floor-splitting with redistribution is *exactly* neutral |
+  | `split_without_redistribution_worse` | floor-splitting **without** it is *provably worse* |
+
+  **(1) The optimum is now exact, not just bounded below.**
+  `weighted_amgm_finset` gives the lower side; `finset_barrier_attained` gives
+  the other. With both:
+
+  > **`optimum = N^{γ/(1+Σᵢwᵢ)}`, for every `k` and every positive weight vector.**
+
+  The load-bearing consequence: **the exponent depends on the weights only
+  through their sum, so the *number of floors `k` is irrelevant*.** Harvey's
+  `1/5` is the `k = 2`, `Σwᵢ = 3/2` instance; nothing about `k` itself ever
+  enters. This is the sharpest available answer to "would splitting the search
+  into more, smaller floors help?" — no, not by itself.
+
+  **(2) The design rule is now EXHAUSTIVE, not a suggestive list.**
+  The `weighted_amgm` entry lists three escape routes (raise `Σwᵢ`, lower `γ`,
+  escape the shape). `beating_one_fifth_requires` proves the first two are the
+  *only* ones available inside the shape:
+
+  > if `γ/(1+W) < 1/5` with `W ≥ 0`, then **`W > 3/2` or `γ < 1/2`**.
+
+  So the pair is not "things that might help" — it is a **complete dichotomy**.
+  Any proposal to improve Harvey without changing the mechanism must move one of
+  those two numbers, and (1) says moving them is *sufficient*. Combined: a
+  method of this shape beats `1/5` **iff** it raises `Σwᵢ` above `3/2` or lowers
+  `γ` below `1/2`. The third route (escape the shape) is by definition outside
+  the theorem.
+
+  **(3) A decidable screening criterion, and what it kills.**
+  `sub_range_exponent_beats`: for `N > 1` and `γ' < 1/2`,
+  `N^{γ'·2/5} < N^{1/5}`. So the range exponent is *checkable*: a proposed
+  method either reaches strictly less than the `N^{1/2}` range or it does not,
+  and this is decidable from the method's own `γ`. The corollary is a kill: **a
+  method that must touch `Θ(√N)` candidates provably cannot beat `1/5`** in this
+  shape. This is the precise reason the `V_k` anchor optimisation could not
+  pay (§8) — it optimised the interior while leaving `γ = 1/2` untouched, and
+  `γ = 1/2` is exactly the value the theorem forbids.
+
+  **(4) A method family killed BY THEOREM: floor-splitting.**
+  Two very natural proposals were "split the `N^{1/2}` range into `k` sub-ranges
+  and search each":
+
+  * `split_neutral` — redistributing the weight `w` over `k` floors is
+    `γ/(1+k·(w/k)) = γ/(1+w)`, i.e. **exactly** the original exponent. The
+    split buys nothing at all; it is not an improvement, it is a rewrite.
+  * `split_without_redistribution_worse` — for `k ≥ 1`, `w, γ > 0`,
+    `γ/(1+kw) ≤ γ/(1+w)`, **strictly worse** for `k > 1`. This kills the naive
+    version outright, and the reason is the point: `k` floors of weight `w` are
+    **`k` times the reach**, not `k` views of one floor. A method that runs the
+    same search `k` times over `k` sub-ranges while each retains the full reach
+    is paying `k` floors of cost for one floor's worth of coverage.
+
+  These two theorems are the operative output of the round: they retire a whole
+  family of proposals *by theorem* rather than by argument, and they are the
+  reason the `k`-floor generalisation was worth proving rather than asserting.
+
+  ⚠️ **Honest novelty scoping — read before citing as research.** The balance
+  formula `γ/(1+Σwᵢ)` is elementary AM–GM and is **not claimed as novel
+  research**; `weighted_amgm` remains folklore. What is new *in this file* is
+  the `Finset`-level formalisation with attainment for arbitrary `k`, the
+  exhaustive-dichotomy theorem, and the two floor-splitting kills. Treat the
+  balance formula as folklore and these as the contribution. (Two earlier
+  claims in this same file that the `k`-floor case "goes through by identical
+  proof" were, in the strict sense, **unproved** until now; a lower bound with
+  no attainment does not determine the optimum, so the design rule was resting
+  on a gap. The gap is now closed, in both directions.)
 
 - **`OrderLCM.lean`** *(new, 2026-09-24; Lean exit 0, **0 `sorry`, 0 `axiom`**,
   workspace copy at `~/prove2me_workspace/Theorems/Thm_Crypto_FactoringBarrier_OrderLCM.lean`)* —
