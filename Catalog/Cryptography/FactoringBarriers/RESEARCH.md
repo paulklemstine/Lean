@@ -2763,7 +2763,7 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   have "proved" nothing; it is recorded here because that direction slip is the
   standard way a counting argument silently loses its contradiction.
 
-- **`HarveyFloor.lean`** *(new, 2026-09-24; Lean exit 0, **13 theorems, 0 `sorry`,
+- **`HarveyFloor.lean`** *(new, 2026-09-24; Lean exit 0, **24 theorems, 0 `sorry`,
   0 `axiom`** — verified by `#print axioms`: only `propext`, `Classical.choice`,
   `Quot.sound`, no `sorryAx`; Mathlib `0df444a`, workspace copy at
   `~/prove2me_workspace/Theorems/Thm_Crypto_FactoringBarrier_HarveyFloor.lean`)* —
@@ -2940,7 +2940,7 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
 - **★★★ THE BALANCE DILEMMA — what GFHP's `1/6`/`1/8` roadmap actually
   requires, quantified.** *(2026-09-24; 4 further theorems in
   `HarveyFloor.lean`: `required_weight`, `one_fifth_needs_weight`,
-  `one_sixth_needs_weight_two`, `one_eighth_needs_weight_three`. 17 theorems
+  `one_sixth_needs_weight_two`, `one_eighth_needs_weight_three`. (File total: 24 theorems.)
   total, all `#print axioms`-clean.)*
 
   This is the first result here that is a **derivation about the state of the
@@ -3369,6 +3369,85 @@ reorganises and explains; it is not an algorithm. (iii) **I have not searched
 the literature for whether this reduction is stated elsewhere** — SQUFOF's
 partial-quotient formulation is close and I have not ruled out that someone has
 phrased it this way. I am not claiming priority.
+
+---
+
+### 7-bis. ★★★★★ There is NO free search in the reduction — and this is now a theorem
+
+The reduction above is a statement. The obvious next move is to *use* it: if the
+family is really "find a convergent of `p/q`", maybe working in `(k, l)`
+coordinates is a cheaper search than working in `(a, b)` coordinates. This entry
+is the attempt to do exactly that, and it **fails**, and the failure is sharp
+enough to be worth a theorem rather than a remark.
+
+**The attempt.** Restate the factoring problem as
+
+> find `(k, l)` with `|k·p − l·q| ≤ 2X` and `q ∤ k`, from `N` alone.
+
+The hope was that `(k, l)` is a *smaller* space than `(a, b)`: two small
+integers, no squaring, no modular root. If so, enumerate `(k, l)` cheaply and
+recover the factor as `p·gcd(k, q)`.
+
+**Why it cannot be an algorithm — checked predicate by predicate.** Every
+predicate the reduced problem needs is one the original problem could not
+evaluate either:
+
+| predicate in the reduced problem | what evaluating it requires |
+|---|---|
+| `\|k·p − l·q\| ≤ 2X` (the box) | `p` **and** `q` |
+| `q ∤ k` (usefulness) | `p`, via `gcd(k·p, N)` |
+| form `a = (k·p + l·q)/2` | `p` **and** `q` |
+| test `gcd(a − b, N) ≠ 1` | `p` **and** `q` |
+
+So the reduced problem is **not cheaper to evaluate**; it is the *same*
+problem with the unknowns moved into the predicates. `q ∤ k` is not a cheap
+filter — testing it is testing whether `gcd(k·p, N)` is trivial, which is
+precisely the factoring question.
+
+**The theorem (`NoFreeSearch.lean`, 3 theorems, 0 `sorry`, 0 `axiom`).** The
+obstruction has an exact formal content, not just a rhetorical one. The map
+from the reduced coordinates back to the original ones,
+
+> `(k, l) ↦ (a, b)` with `2a = k·p + l·q` and `2b = l·q − k·p`,
+
+is **injective on the good set**:
+
+| theorem | statement |
+|---|---|
+| `kl_determines_ab` | same `(k, l)` ⟹ same `(a, b)` |
+| `inj_on_k` | with `l` fixed, distinct `k` give distinct `a` |
+| `ab_survives` | a consistent `(a, b)` is a legitimate output (existence) |
+
+`kl_determines_ab` + `ab_survives` make the correspondence a **bijection**
+between the two good sets, and `inj_on_k` says the `a`-coordinate alone is
+already injective in `k`. Therefore:
+
+> **The reduced search space is in bijection with the original one, inside the
+> same box. Working in `(k, l)` coordinates cannot shrink the search — it only
+> renames it.**
+
+Combined with `box_iff` from `SquareDiff.lean` (the reduced box and the
+original box are *literally the same region*, `|k·p ± l·q| ≤ 2X`), the
+counting is identical: the number of candidates is the same `Θ(X²)`-ish count
+either way. **So the reduction is provably not a speedup, and the only way it
+pays is if a method can *locate* a good `(k, l)` without sweeping — which is
+exactly §8 item 7, i.e. exactly the thing not known.**
+
+**What this changes about the standing verdict.** It removes the *most
+promising-looking* route from the reduction to a method. Before this entry one
+could hope: "the reduction is new, so maybe the reduced coordinates are
+searchable." Now that hope is closed by a machine-checked injectivity argument.
+The reduction survives as a **target** (§8 item 7) and dies as a **search
+space** — and that is a strictly better outcome than leaving the ambiguity
+open, because it says precisely what a new method would have to do (locate
+without sweeping) rather than merely suggesting it.
+
+**Honest limits.** (i) The cardinality comparison is prose (an injection
+`S' → S` gives `|S'| ≤ |S|`, plus the elementary box count); only the
+injectivity — the part that carries the content — is in Lean. (ii) This kills
+*this* re-encoding, **not** the family: nothing here bears on Harvey, GFHP, or
+any future method that does not go through `(k, l)` coordinates. (iii) Still
+**no method**; still **no literature search**, so no priority claimed.
 
 ---
 
@@ -4070,6 +4149,14 @@ algorithm; each is a place where a genuine open problem still lives.
    — SQUFOF's partial-quotient view is close, and I have not ruled out prior
    art. No priority is claimed.
 
+   **Update (this round).** I tried to turn this into a search and it is now
+   **provably impossible** — see §7-bis. The `(k, l)` space is a *bijection* of
+   the `(a, b)` space inside the same box, so enumerating it saves nothing.
+   This **sharpens item 7 rather than answering it**: the only surviving route
+   is *locate without sweeping*, which is the (i) clause above. A method that
+   "enumerates convergents more cleverly" is a mirage, and that is now a
+   theorem rather than a suspicion.
+
 
 ---
 
@@ -4097,7 +4184,7 @@ algorithm; each is a place where a genuine open problem still lives.
 
 > **★ The weight-structure theorem (§7, 2026-09-24) — the newest structural
 > result, and the first that is a derivation about the state of the art rather
-> than a barrier internal to one file.** `HarveyFloor.lean` (17 theorems,
+> than a barrier internal to one file.** `HarveyFloor.lean` (24 theorems,
 > 0 `sorry`, 0 `axiom`) proves the `k`-floor optimum **exactly**, in both
 > directions: `weighted_amgm_finset` is the lower bound and
 > `finset_barrier_attained` the attainment, so `optimum = N^{γ/(1+Σwᵢ)}` for
@@ -4191,6 +4278,27 @@ list decoding on the **asymmetric** channel — a coding-theory gap PPS flagged 
 > literature for prior art** — SQUFOF's partial-quotient formulation is close
 > and I have not ruled it out. The claim is that this is the right axis, not
 > that it is new.
+
+> **★★★★★ And then I tried to use it, and it is now provably useless as a
+> search space (§7-bis, 2026-09-24).** The obvious move after a reduction is to
+> search the *reduced* coordinates, on the theory that two small integers beat
+> two squarings. It does not. `NoFreeSearch.lean` (3 theorems, 0 `sorry`,
+> 0 `axiom`) proves the map `(k, l) ↦ (a, b)` is a **bijection** on the good set
+> (`kl_determines_ab` for injectivity, `ab_survives` for existence, `inj_on_k`
+> for the `a`-coordinate alone), and `box_iff` already showed the two search
+> regions are *literally the same box*. So the reduced space has the same
+> cardinality as the original: **the reduction renames the search, it does not
+> shrink it.** Every predicate of the reduced problem — the box, the
+> usefulness test `q ∤ k`, forming `a`, testing `gcd` — requires `p` or `q`,
+> which is the object the factoring problem withholds. This is the sharpest
+> negative result in the file, and it is negative **about my own reduction**:
+> the most promising-looking route from that reduction to a method is closed
+> by an injectivity theorem, not by an argument. What survives is the *target*
+> (§8 item 7), now with a proved negative attached: a new method must **locate
+> a good `(k, l)` without sweeping**, because sweeping is provably no cheaper
+> here than in `(a, b)`. This does not touch Harvey, GFHP, or any method that
+> does not pass through `(k, l)` coordinates. **Still no method; still no
+> literature search, so still no priority claimed.**
 
 ---
 
