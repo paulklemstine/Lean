@@ -170,16 +170,28 @@ document is that record. Two durable positive results emerged:
   > collision index `< k`. So it is **one rank-3 Coppersmith LLL per giant step** — the log
   > factor is the per-step LLL cost. The `N^{1/5}` is the same `m`/`k`/per-step balance as
   > Harvey; only the giant-step primitive is upgraded.
-  > **(c) The authors themselves name the route to sub-`1/5`.** In discussing the divisor
-  > bound `δ` their power-divisor theorem supplies, they write that it "remains applicable
+  > **(c) The authors name a sub-`1/5` route — but the surrounding `δ` text is
+  > OVERLOADED and GARBLED, so do NOT read a convergence story into it (I did; see the
+  > correction below).** Quoted verbatim, they write that their lemma "remains applicable
   > for potential future improvements in deterministic integer factorisation algorithms
-  > targeting complexities of **`N^{1/6+o(1)}` or even `N^{1/8+o(1)}`**." This is a
-  > **published, author-identified** target, and it is the *same* large-order / `δ` route as
-  > Harvey's own `N^{1/6}` conjecture (§8) and the 2026 large-order papers — so the
-  > Coppersmith–lattice family and the Lehman+BSGS family **converge on the same
-  > bottleneck**: proving a divisor of `N` of size `≳ N^{1/3+o(1)}` deterministically. The
-  > `δ`-passage's exact exponents are garbled in the preprint; only the `N^{1/6+o(1)}`
-  > roadmap sentence is quoted verbatim above and is the load-bearing claim.
+  > targeting complexities of **`N^{1/6+o(1)}` or even `N^{1/8+o(1)}`**." That sentence
+  > is real and is the quotable claim. **Everything I first built on top of it is not.**
+  > Their Lemma 2.8 (May's theorem) uses **`δ` = polynomial degree** and **`β` = divisor
+  > exponent** ("a divisor `b ⩾ N^β` … monic polynomial of degree `δ` … roots
+  > `|x₀| ⩽ c N^{β²/δ}`"). The later passage instead treats `δ` as a **divisor-size**
+  > exponent ("`δ ⩾ N^{1/3+o(1)}` … complexity `δ^{1/2+o(1)}`"). These are **different
+  > objects under the same symbol**, and the direction of "relaxed / improve" is
+  > self-contradictory on the printed page. **⚠️ My first version of this entry claimed the
+  > Coppersmith–lattice and Lehman+BSGS families "converge on the same `N^{1/3+o(1)}`
+  > bottleneck" and tied it to Harvey's large-order `α`. That is NOT supported:**
+  > (i) GFHP's `δ`-object is a **divisor / order-finding object**, which is **not** Harvey's
+  > **large-order element** `α` (the target of the 2026 large-order papers) — two different
+  > objects; (ii) for a *balanced* semiprime a divisor of size `N^{1/3}` **does not exist**
+  > (divisors are `1, p, q, N`), so the `δ ≥ N^{1/3}` phrasing cannot be about plain
+  > semiprime divisors and must concern the *power-divisor* setting (`p^r ∣ N`), which is a
+  > **different problem** from balanced-semiprime factoring. The only safe reading is: GFHP
+  > *hopes* its `δ`-lemma can be pushed to enable `N^{1/6+o(1)}`; the mechanism and the
+  > object are not pinned down in the preprint.
   > **⚠️ 2026-09-24 — `N^{1/5}` IS A RECORD *UPPER* BOUND, NOT A PROVEN FLOOR. Do not ever
   > write "deterministic factoring is stuck at `1/5`" as if it were a lower bound.** An
   > exhaustive adversarial sweep (Crossref + arXiv, plus full-text checks of Harvey, Harvey–Hittmeir,
