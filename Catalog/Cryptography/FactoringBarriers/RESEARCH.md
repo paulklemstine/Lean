@@ -274,20 +274,40 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   > `10.2307/1971363`; Lenstra–Pomerance 1992 `10.1090/S0894-0347-1992-1137100-0`;
   > all re-verified by exact-DOI Crossref fetch 2026-09-24.)
   >
-  > **The `L[1/3]` balance is therefore at its floor in its linear-algebra term,
-  > and this is a hard fact, not a conjecture.** The relation matrix is solved by
-  > Gaussian elimination; Strassen, *"Gaussian elimination is not optimal"*,
-  > Numerische Mathematik **13**:354–356 (1969), `10.1007/bf02165411`
-  > (verified by exact-DOI Crossref fetch), shows elimination can be done in
-  > `O(n^(log_2 7)) ≈ O(n^2.807)`, and the best known matrix-mult
-  > exponent is `ω ≈ 2.3716` — **worse** than quadratic.
-  > Since **ω ≥ 2 is a hard lower bound** on matrix multiplication (the
-  > trivial output-size argument: writing an `n x n` product costs `n^2`), **there
-  > is no subquadratic linear algebra, and the `1/3` balance cannot be lowered by
-  > a faster solver.** Faster matrix multiplication is the *worst* case, not an
-  > escape. This closes the last lever inside the standard balance: not the
-  > smoothness density, not the relation structure, and now demonstrably not the
-  > linear algebra.
+  > ⚠️ ❌ **CORRECTED 2026-09-24 — the `ω ≥ 2` "hard fact" below was a CATEGORY
+  > ERROR; the conclusion survives only because the LA is *not* the binding term.**
+  > The prior reasoning — "the `L[1/3]` balance is at its floor in its
+  > linear-algebra term … since `ω ≥ 2` is a hard lower bound on matrix
+  > multiplication … there is no subquadratic linear algebra" — is **refuted on
+  > two counts by the survey's own primary sources.** **(i) The NFS step is not
+  > matrix multiplication.** It is finding **one nontrivial linear dependence
+  > among sparse rows over `GF(2)`** (a single `B`-vector null-space output,
+  > size `O(B)`), *not* a `B×B` product (output `B²`). Strassen's `ω ≥ 2` bounds
+  > **multiplication** by output size and does **not** transfer to null-space
+  > finding; a subquadratic null-space algorithm would *not* contradict
+  > Strassen. NFS never forms a matrix product. **(ii) The NFS LA is not even
+  > `B²`.** Coppersmith 1993 (p. 172: the relation matrix `M` is sparse, `O(log N)`
+  > nonzeros/row, and the sparse solve *"can be done in time about `B̃`"*) and
+  > Buhler–Lenstra–Pomerance, *The Development of the Number Field Sieve*, LNM
+  > 1554 §11 (Step 4 runs in `y^{2+o(1)}` by **sparse Wiedemann**, *"the same as
+  > our bound for the running time of Step 3"*) both solve it by **Wiedemann /
+  > block-Wiedemann**, `≈B̃^{1+o(1)}` — the exponent `2` is an **algorithmic
+  > artifact of the iteration count, not a proven lower bound.**
+  > **The correct immovability statement is different:** the `1/3` is pinned by the
+  > **Dickman smoothness / collection source** — the `B²`-order LA is *co-equal
+  > but non-binding*, balanced against an equal-order collection term, and
+  > `E²·ρ(u) ≳ B` forces `log B ~ (log N)^{1/3}`. So **even a subquadratic
+  > null-space oracle leaves `T = L[1/3,c]`** — it would buy the **constant**,
+  > never the exponent. Neither faster matrix multiplication (the *worst* case)
+  > nor a faster sparse solver is an escape: the binding constraint is the
+  > survey's **other** horn (the smoothness source). Coppersmith's several-number-
+  > fields is likewise **constant, not exponent** (`1.9230 → 1.9019` optimizes
+  > `2ε` with the exponent `1/3` held fixed). (Coppersmith 1993
+  > `10.1007/BF00198464`; BLP93 §11 `10.1007/BFb0091537`; Coppersmith block-
+  > Wiedemann 1994 `10.1090/S0025-5718-1994-1192970-7`; Wiedemann 1986
+  > `10.1109/TIT.1986.1057137`; LaMacchia–Odlyzko 1990
+  > `10.1007/3-540-38424-3_8`; all re-verified by exact-DOI Crossref fetch
+  > 2026-09-24.)
   >
   > ⚠️ **A formula I derived and then discarded, recorded so it is not reused:** I
   > posited `alpha = beta/(2 beta + 1)` relating the relation exponent to a linear-
