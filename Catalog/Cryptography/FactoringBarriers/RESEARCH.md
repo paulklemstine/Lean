@@ -152,6 +152,34 @@ document is that record. Two durable positive results emerged:
   > as one algorithm whose bound was walked down** — I made exactly that conflation and it
   > produced a false kill (see the `V_k` block in §8, where I wrongly compared a
   > Lehman+BSGS optimization against GFHP's lattice log-factor).
+
+  > **★ GFHP's construction, read from the arXiv preprint (arXiv:2512.19076, 22 Dec 2025) —
+  > three facts that the abstract alone does not give, and that matter.**
+  > **(a) The `lg^{13/5}` result is BALANCED-ONLY.** Theorem 1.1 reads "Let `N = pq` be a
+  > semiprime with **`p, q = Θ(N^{1/2})`**". So the current record bound
+  > `N^{1/5} lg^{13/5}N/(lg lg N)^{3/5}` is **conditional on balance**; for a general
+  > (unbalanced) semiprime the best bound remains Harvey's `N^{1/5} lg^{16/5}N`. This
+  > balance condition is **not stated in the abstract** and is easy to miss when citing it
+  > as "the record".
+  > **(b) The mechanism is Harvey's own baby/giant framework, with the giant step computed
+  > by Coppersmith.** Write `p = m·p_msb + p_lsb`, `0 ≤ p_lsb < m`, `X ⌈N^{1/2}/m⌉`; baby
+  > steps `B_i = α^{i m²}`, giant index `j = p_lsb`, `f(x) = x + j m⁻¹` has small root
+  > `x₀ = p_msb` mod `p`; a **rank-3 lattice spanned by `{N, f(xX), f(xX)²}`** is reduced and
+  > the **second** LLL vector `(c_j, b_j X, a_j X²)` (with `a_j ≠ 0`; the shortest is the
+  > trivial `(j, mX, 0)`) gives `g_j(x) = c_j + b_j x + a_j x²` with `p | g_j(x₀)` and the
+  > collision index `< k`. So it is **one rank-3 Coppersmith LLL per giant step** — the log
+  > factor is the per-step LLL cost. The `N^{1/5}` is the same `m`/`k`/per-step balance as
+  > Harvey; only the giant-step primitive is upgraded.
+  > **(c) The authors themselves name the route to sub-`1/5`.** In discussing the divisor
+  > bound `δ` their power-divisor theorem supplies, they write that it "remains applicable
+  > for potential future improvements in deterministic integer factorisation algorithms
+  > targeting complexities of **`N^{1/6+o(1)}` or even `N^{1/8+o(1)}`**." This is a
+  > **published, author-identified** target, and it is the *same* large-order / `δ` route as
+  > Harvey's own `N^{1/6}` conjecture (§8) and the 2026 large-order papers — so the
+  > Coppersmith–lattice family and the Lehman+BSGS family **converge on the same
+  > bottleneck**: proving a divisor of `N` of size `≳ N^{1/3+o(1)}` deterministically. The
+  > `δ`-passage's exact exponents are garbled in the preprint; only the `N^{1/6+o(1)}`
+  > roadmap sentence is quoted verbatim above and is the load-bearing claim.
   > **⚠️ 2026-09-24 — `N^{1/5}` IS A RECORD *UPPER* BOUND, NOT A PROVEN FLOOR. Do not ever
   > write "deterministic factoring is stuck at `1/5`" as if it were a lower bound.** An
   > exhaustive adversarial sweep (Crossref + arXiv, plus full-text checks of Harvey, Harvey–Hittmeir,
