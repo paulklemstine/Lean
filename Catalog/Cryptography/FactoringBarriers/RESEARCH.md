@@ -52,8 +52,12 @@ document is that record. Two durable positive results emerged:
   worse* with more equal-size primes), and **Mersenne/equal-bit multi-prime RSA is
   not known to be polytime-factorable.** Standard RSA is not threatened.
 
-Key references: Buhler–Lenstra–Pomerance 1993; Barbulescu–Guillevic–Lenstra–Razvan
-(ePrint 2020/829); Barbulescu–Gaudry–Kleinjung, *The Tower NFS* (ePrint 2015/505).
+Key references: Buhler–Lenstra–Pomerance 1993; Le Gluher–Spaenlehauer–Thomé,
+*Refined Analysis of the Asymptotic Complexity of the Number Field Sieve*
+(ePrint 2020/829; *Mathematical Cryptology* — **2026-09-24: this entry was
+previously misattributed to "Barbulescu–Guillevic–Lenstra–Razvan", CONFIRMED a
+real error by direct fetch of the ePrint landing page**); Barbulescu–Gaudry–Kleinjung,
+*The Tower NFS* (ePrint 2015/505).
 
 ---
 
@@ -1476,10 +1480,20 @@ algorithm; each is a place where a genuine open problem still lives.
      **`FACTOR ∈ FP/poly` is itself undecided** — unusual, since for most natural
      problems at least the poly-size upper bound is known.
    - **The PRIMES analogy breaks, and this is the crux.** Primality has a polytime
-     *deterministic* upper bound (`PRIMES ∈ TC⁰`, Hesse–Allender–Barrington), so
-     `PRIMES ∉ AC⁰[p]` is a **sibling separation** with both bounds inside `P`.
-     Factoring has no polytime upper bound to hang a sibling on, so every factoring
-     lower bound instead targets the `P/poly` frontier — a different kind of result.
+     *deterministic* upper bound (`PRIMES ∈ TC⁰`, Hesse–Allender–Barrington — the
+     upper half is solid). The **lower** half is the problem: this survey previously
+     wrote `PRIMES ∉ AC⁰[p]` as a **sibling separation with both bounds inside `P`**,
+     sourced to an "Allender–Barrington–Jeřábek, JCSS 2002" entry. **A 2026-09-24
+     audit could not confirm that paper exists** (see References), and a lower bound
+     for `PRIMES` in `AC⁰[p]` is very likely a long-standing **OPEN** problem, not a
+     theorem. **The lower half is therefore UNVERIFIED and must not be relied on
+     until a source is produced.** What survives without it: primality has a
+     *deterministic polytime upper bound* while factoring has none, so **any**
+     factoring lower bound targets the `P/poly` frontier rather than a sibling
+     separation — that asymmetry rests on `PRIMES ∈ TC⁰` alone, which is proved.
+     (The weakness of the analogy is in fact *sharper* than previously stated: the
+     `spf` target is not a near-sibling of a separated PRIMES problem but sits
+     against a `PRIMES` whose own lower bound is unknown.)
    - **The NP-hardness route is provably closed.** If a `TFNP` problem were
      NP-hard, then `NP ⊆ TFNP ⊆ FΣ₂^P`, forcing a **PH collapse**. So *no* route
      to a factoring lower bound can pass through NP-hardness — the natural instinct
@@ -1515,10 +1529,13 @@ algorithm; each is a place where a genuine open problem still lives.
      `Ω` is the most *compressed* output of the factoring-adjacent family
      (`O(log n)` bits) and is plausibly the *easiest* of them — the previous
      recommendation had picked the target with the weakest proven link to its own
-     motivation. `Ω ∈ uniform TC⁰` does still have a plausible PH-collapse
-     consequence (Allender–Barrington–Jeřábek, SMALL-E), so `Ω ∉ TC⁰` remains a
-     reasonable *secondary* conjecture — **explicitly labelled conjectural as to
-     factoring-relevance.**
+     motivation. `Ω ∈ uniform TC⁰` **was** said to carry a PH-collapse consequence
+     here, cited to "Allender–Barrington–Jeřábek, SMALL-E" — **that citation is now
+     struck as a probable phantom (see References), so this PH-collapse claim is
+     UNSOURCED and should be treated as folklore until a source is produced.**
+     `Ω ∉ TC⁰` therefore remains a merely *secondary* conjecture with **no
+     established link to factoring and no established citation** — explicitly
+     labelled conjectural on both counts.
    - **The `spf` target is not just a relabelling — the `SMALLFACTOR(N,B)`
      binarization is provably the weaker framing.** For
      `P(N,B) := "N has a prime divisor ≤ B"`, `P` is **monotone in `B`**, so
@@ -1671,8 +1688,15 @@ list decoding on the **asymmetric** channel — a coding-theory gap PPS flagged 
 
 ### References (representative)
 
-Buhler–Lenstra–Pomerance 1993 · Harvey, *Math. Comp.* 2021 · Barbulescu–
-Guillevic–Lenstra–Razvan ePrint 2020/829 · Barbulescu–Gaudry–Kleinjung ePrint
+Buhler–Lenstra–Pomerance 1993 · Harvey, *Math. Comp.* 2021 · **Le Gluher–
+Spaenlehauer–Thomé** ePrint 2020/829 (*Refined Analysis of the Asymptotic
+Complexity of the Number Field Sieve*; *Mathematical Cryptology* — **corrected
+2026-09-24, was misattributed to Barbulescu–Guillevic–Lenstra–Razvan; the
+refined analysis keeps the `L[1/3, (64/9)^{1/3}]` constant unchanged**) ·
+**Aggarwal–Maurer** *IEEE Trans. Inf. Theory* 62(11):6251–6259 2016 (journal
+version of the generic-ring equivalence — **MISSING until 2026-09-24**) ·
+**Dachman-Soled–Loss–O'Neill** ePrint 2022/1261 (the equivalence in the
+non-uniform/advice model) · Barbulescu–Gaudry–Kleinjung ePrint
 2015/505 · Schirokauer 2000 (Tower NFS) · Shanks 1969 (SQUFOF) · Lagrange/Legendre
 1760s–1785 · Gauss 1801 (*Disquisitiones Arithmeticae*) · **Coppersmith** 1997
 (J. Cryptology; MSB/LSB of `p`; small-`d` `N^{1/4}`) · Howgrave–Graham 1997 ·
@@ -1717,10 +1741,23 @@ Corollary 6.6; do not cite that corollary**) · **Allender–Saks–Shparlinski*
 Number of Prime Factors Given an Oracle to Euler's Totient Function*, FSTTCS
 2021, LIPIcs 213 art. 17, DOI `10.4230/LIPIcs.FSTTCS.2021.17` (the source for
 "computing `ω(N)`/`Ω(N)` is **believed** to be as hard as factoring" — *believed*,
-no reduction known) · **Allender–Barrington–Jeřábek**
-*JCSS* 2002 (`PRIMES ∉ AC⁰[p]`; SMALL-E — venue corrected from *Math. Comp.* by
-a 2026 audit; the correction is **UNCONFIRMED** by direct fetch, so verify
-before citing) · **Costa–Harvey** *Math. Comp.*
+no reduction known) · ~~**Allender–Barrington–Jeřábek** *JCSS* 2002
+(`PRIMES ∉ AC⁰[p]`; SMALL-E)~~ — **PROBABLE PHANTOM, struck 2026-09-24. Do not
+cite.** Two independent checks failed to find this paper: (a) Crossref
+`query.author=Jerabek Allender` returns **no** item co-authored by Allender and
+Jeřábek (the Allender hits are all a *different* Eric — Dale Allender, cultural
+deprivation, 2024 — and the Jeřábek hits are all single-author logic/sociology
+papers); (b) a Crossref bibliographic search on the 10 real Allender
+threshold-circuit papers (incl. Hesse–Allender–Barrington JCSS 2002 + its 2014
+corrigendum) yields **no** paper with a third author Jeřábek and **none** on
+PRIMES. An arXiv search for `AC^0[p]` + PRIMES returns only graph-matching,
+proof-complexity and quantum-separation papers, none on primality. The claim
+`PRIMES ∉ AC⁰[p]` is very likely **OPEN**, not a theorem — so this entry was
+very likely upgrading an open problem into a cited result. Note the earlier
+2026 audit had "corrected" this entry's venue from *Math. Comp.* to *JCSS*; that
+correction was itself never verified and the whole entry is now withdrawn.
+**Consequence: the SMALL-E claim in §5 (`Ω ∈ uniform TC⁰` ⇒ PH collapse) loses
+its only citation and is now UNSOURCED** · **Costa–Harvey** *Math. Comp.*
 2013 (deterministic `N^{1/5}`) · **Bach–Miller–Shallit** SICOMP 1986
 (`σ(N) ≡` factoring) · **Razborov–Rudich** JCSS 1997 (natural proofs barrier) ·
 **Aaronson–Wigderson** STOC 2008 / ToCT 2009 (**algebrization** — the
