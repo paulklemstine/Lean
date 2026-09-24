@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-24T12:21:14.225700+00:00",
+  "last_updated": "2026-09-24T17:25:25.570844+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -76048,6 +76048,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-24T12:21:13.863255+00:00",
       "title": "FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 18255.908687591553,
+      "end_time": 1790270701.6125772,
+      "files_integrated": 4,
+      "job_id": "e5322766",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.55,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.4225,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.55,
+        "novelty": 0.55,
+        "proof_depth": 0.55,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1790252445.7038896,
+      "strategy_count": 0,
+      "theorem_count": 31,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 29,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-24T17:25:25.345100+00:00",
+      "title": "FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
     }
   ]
 }

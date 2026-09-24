@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-24T12:20:55Z",
-  "count": 171,
+  "archived_at": "2026-09-24T17:25:11Z",
+  "count": 172,
   "directions": [
     {
       "id": "fd_3695",
@@ -6773,6 +6773,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 193
+    },
+    {
+      "id": "fd_3472",
+      "title": "FACT round-31 #1 — CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)",
+      "description": "## FACT round-31 #1 — CROSS-PROGRAMME-CONSISTENCY (paper 107)\n\n**Verdict name: ALL-CHECKS-PASS.**\n\n### Result\nEight cross-checked quantities across papers 80–106, **zero inconsistencies**, max spread 0.0040 bits:\n\n| quantity | recordings | spread |\n|---|---|---|\n| S₃a@31 marginal | 1.0012, 1.0012 | 0.0000 |\n| S₃b@23 marginal | 1.0008, 1.0012 | 0.0004 |\n| A₄@9 marginal | 0.4733, 0.4733 | 0.0000 |\n| D₄@8 marginal | 1.4302, 1.4342 | 0.0040 |\n| S₃a×S₃b joint | 2.1314, 2.1314 | 0.0000 |\n| A₄×D₄ joint | 1.9125, 1.9125 | 0.0000 |\n| S₃a×S₃b overlap | 0.9919, 0.9919 | 0.0000 |\n| 4-field battery capacity | 8.2246, 8.2246 | 0.0000 |\n\n### Post-resume programme summary (27 papers, 80–106)\n| topic | status |\n|---|---|\n| Type-channel law (degrees 2–6) | CONFIRMED |\n| Nonabelian type channels (10 groups) | LAW VERIFIED |\n| Battery space (k=2–6) | CHARACTERIZED |\n| Factor-blindness (all views) | VERIFIED |\n| Hint value (six dials) | MEASURED |\n| Quantum frontier | CLOSED |\n| Method stratum | MAPPED |\n| Three strata landscape | MEASURED |\n| Reproducibility (six keystones) | AUDITED |\n| Pythagorean trees | CLOSED |\n\nNow 443 experiments. Assessment v218. Paper 107.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "e5322766",
+      "timestamp": "2026-08-21T20:42:26.611134+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.55,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-23T17:21:36.219131+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 199
     }
   ]
 }

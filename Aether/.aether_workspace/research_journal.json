@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9061d61f",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — ECM stage-1 firing trace (paper 218 / exp 570 thread)\n\n## What this cycle established (all formal, 0 sorries)\n\nThree new Lean files in `Catalog/Novelty/`:\n\n* **`EcmStageOneTraceL",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-25T05:50:48",
-      "title": "FACT round-75 #2 — COLLISION-VS-ORDER-TRACE: H1 and H2 both REFUTED with inverted geometry — low-B1 "
-    },
-    {
       "cycle_id": "9fb758b1",
       "domain": "Algebra",
       "key_insight": "# Future directions — sharp geometry of RLHF alignment drift\n\n## Where this cycle left the thread\n\nConjecture **C1** (\"the drift constant is the standard deviation\") was carried as *proved\nup to an ab",
@@ -2501,6 +2491,16 @@
       "theorem_count": 109,
       "timestamp": "2026-09-24T12:21:12",
       "title": "FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
+    },
+    {
+      "cycle_id": "e5322766",
+      "domain": "Probability",
+      "key_insight": "# Future directions after paper 107 (CROSS-PROGRAMME-CONSISTENCY)\n\nGrounded in `Catalog/Probability/CrossProgrammeConsistency.lean` (capacity lattice,\nsynergy sandwich, battery synergy budget, entropy",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-09-24T17:25:24",
+      "title": "FACT round-31 #1 — CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-09-24T12:21:12",
+  "last_updated": "2026-09-24T17:25:24",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "1a774383",
-        "quality": 0.78,
-        "theorems": 103,
-        "title": "FACT round-85 #1 — SPIKE-ORIGIN-RESOLVED (exp 589 FINAL): H1a-INCLUSION-ARTIFACT"
-      },
-      {
         "cycle_id": "10b0e429",
         "quality": 0.87,
         "theorems": 136,
@@ -3823,6 +3817,12 @@
         "quality": 0.81,
         "theorems": 108,
         "title": "The Collatz-Berggren Bridge — Transferring the Lorentz Invariant to the Inverse "
+      },
+      {
+        "cycle_id": "e5322766",
+        "quality": 0.55,
+        "theorems": 31,
+        "title": "FACT round-31 #1 — CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified"
       }
     ],
     "Pythagorean": [

@@ -2139,21 +2139,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "e5322766",
-    "description": "## FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY (paper 107)\n\n**Verdict name: ALL-CHECKS-PASS.**\n\n### Result\nEight cross-checked quantities across papers 80\u2013106, **zero inconsistencies**, max spread 0.0040 bits:\n\n| quantity | recordings | spread |\n|---|---|---|\n| S\u2083a@31 marginal | 1.0012, 1.0012 | 0.0000 |\n| S\u2083b@23 marginal | 1.0008, 1.0012 | 0.0004 |\n| A\u2084@9 marginal | 0.4733, 0.4733 | 0.0000 |\n| D\u2084@8 marginal | 1.4302, 1.4342 | 0.0040 |\n| S\u2083a\u00d7S\u2083b joint | 2.1314, 2.1314 | 0.0000 |\n| A\u2084\u00d7D\u2084 joint | 1.9125, 1.9125 | 0.0000 |\n| S\u2083a\u00d7S\u2083b overlap | 0.9919, 0.9919 | 0.0000 |\n| 4-field battery capacity | 8.2246, 8.2246 | 0.0000 |\n\n### Post-resume programme summary (27 papers, 80\u2013106)\n| topic | status |\n|---|---|\n| Type-channel law (degrees 2\u20136) | CONFIRMED |\n| Nonabelian type channels (10 groups) | LAW VERIFIED |\n| Battery space (k=2\u20136) | CHARACTERIZED |\n| Factor-blindness (all views) | VERIFIED |\n| Hint value (six dials) | MEASURED |\n| Quantum frontier | CLOSED |\n| Method stratum | MAPPED |\n| Three strata landscape | MEASURED |\n| Reproducibility (six keystones) | AUDITED |\n| Pythagorean trees | CLOSED |\n\nNow 443 experiments. Assessment v218. Paper 107.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3472",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T20:42:26.611134+00:00",
-    "title": "FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
-  },
-  {
     "consumed_by_exp_id": "15a3f6e6",
     "description": "## FACT round-30 #3 \u2014 CYCLIC-SEXTIC (paper 106, /tmp/exp_sextic.py, /tmp/r30n3c.log)\n\n**Verdict name: THE-LADDER-IS-COMPLETE.**\n\n### Result\nQ(\u03b6\u2081\u2083)\u207a (degree 6, Gal = C\u2086, conductor 13) confirms FULL PINNING: I(p mod 13; T) = H(T) = 1.9192 exactly. The degree ladder 2-3-4-5-6 is COMPLETE for abelian fields.\n\nTypes {1,2,3,6} at rates {1/6,1/6,1/3,1/3}. Semiprime I(N mod 13; pair) = 1.4704; wall z = +0.77.\n\nNow 442 experiments. Assessment v217. Paper 106.\n",
     "domains": [
@@ -2169,16 +2154,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-30 #3 \u2014 CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e43cce79",
     "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3474",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T20:42:26.612613+00:00",
     "title": "FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
   },
@@ -15753,6 +15739,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T03:16:35.160749+00:00",
     "title": "Augmentation Saturation Plateau"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Empirical mutual information should be Lipschitz in Hamming distance on samples, with constant O(log N / N). This would make spread audits quantitative.\n\nIf populations of size N differ at one point then |I(L;f) - I(L;f')| \u2264 3 log N / N (nats).\n\nProve a bound on phi N (c+1) - phi N c and sum over the affected cells.\n\nRecorded spreads bound the sample discrepancy between papers.\n\nCapacity recordings are fragile and spreads carry no sample-level meaning.",
+    "domains": [],
+    "id": "fd_4941",
+    "priority_score": 0.5903125000000001,
+    "research_mode": "team",
+    "source_exp_id": "e5322766",
+    "status": "available",
+    "timestamp": "2026-09-24T17:25:11.138431+00:00",
+    "title": "One-Point Stability of Empirical Capacity"
   },
   {
     "consumed_by_exp_id": "",
@@ -33464,6 +33462,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-24T12:20:54.812437+00:00",
     "title": "Capacity-Hint Separation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The battery synergy budget forces the residual dial entropies to total at least 4.3147 bits. The conjecture is that the bound is nearly tight for the recorded battery.\n\nFor the paper-92 battery, 4.3147 \u2264 \u03a3_i H(F_i | L) \u2264 4.8147 bits.\n\nRecord H(F_i | L) for each dial; the lower bound is residual_entropy_forced.\n\nThe synergy almost exhausts the unused dial entropy.\n\nMuch residual entropy is left unused, so richer labels could be read off.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4940",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e5322766",
+    "status": "available",
+    "timestamp": "2026-09-24T17:25:10.778220+00:00",
+    "title": "Residual-Entropy Budget of the Four-Field Battery"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For linearly disjoint fields, the Frobenius dials become asymptotically independent, so the redundancy term of the interaction identity vanishes. Synergy is then purely conditional.\n\nFor linearly disjoint K1, K2, the empirical dial mutual information over primes \u2264 X tends to 0 as X \u2192 \u221e.\n\nCombine synergy_eq_interaction with the catalog's Chebotarev density files and compute I(f;g) for S3 \u00d7 S3 fields.\n\nSynergy equals I(f;g | L) in the limit and is determined by the label structure alone.\n\nHidden arithmetic correlation between disjoint fields would be detected.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4942",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e5322766",
+    "status": "available",
+    "timestamp": "2026-09-24T17:25:11.537282+00:00",
+    "title": "Chebotarev Decoupling of Dial Redundancy"
   },
   {
     "consumed_by_exp_id": "",
