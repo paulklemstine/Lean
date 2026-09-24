@@ -828,20 +828,51 @@ because the basis is triangular in `1, x, …, x^m`:
     det B = (kX)^{m(m+1)/2} · N^{t(t+1)/2}.
 
 **Enabling condition.** Howgrave–Graham's lemma yields a polynomial vanishing
-over **`Z`** at `x₀` provided (using the weakest row `i=0`):
+over **`Z`** at `x₀` provided the *common* vanishing modulus dominates the
+determinant (using the weakest row `i=0`):
 
-    |det B| ≤ (k^m p^t N^t)^{m+1}.
+    |det B| ≤ (k^m p^t)^{m+1}.
+
+> **[CORRECTED 2026-09-24 — the `N^t` here was spurious.]** This line read
+> `(k^m p^t N^t)^{m+1}`. The `m²`-th root of *that* is `k · p^β · N^β`, whereas
+> the next line assumes `k · p^β` — so an `N^β` was being dropped silently, and
+> the printed chain was internally inconsistent. Howgrave–Graham needs the
+> modulus **every** row satisfies, and that minimum is `k^m p^t`: the `i=0` row
+> carries *more* (`k^m N^t`), which does not raise a minimum. Removing the
+> spurious term makes the chain consistent, and leaves the rest as written.
 
 **Substitute `t = βm` and take the `m²`-th root.** As `m → ∞`,
 `t(t+1)/(m(m+1)) → β²`, giving `(kX)^{1/2} · N^{β²/2} ≤ p^β · k`, hence
 
-    X ≤ p^{2β} · k · N^{−β²} ≤ N^{β²} · k    (using p ≤ N).
+    X ≤ p^{2β} · k · N^{−β²} ≤ k · N^{β−β²}    (using p ≤ √N).
 
-**This is the whole origin of the square.** The basis carries `N^{max(0,t−i)}`
-factors *purely to lift the vanishing modulus*; they contribute
-`N^{t(t+1)/2} ≈ N^{β²m²/2}` to `det L`, while the modulus they buy is only
-`N^{t(m+1)} ≈ N^{βm²}`. The ratio `t²/(m(m+1)) → β²` is everything. It is a
-*linear* parameter `t`, squared by the determinant's quadratic accumulation.
+> **[CORRECTED 2026-09-24 — the derivation did not establish the square.]** The
+> final substitution read `p ≤ N`, which is false for the step it was doing: the
+> bound actually needed is `p ≤ √N`, true because `p < q`. As printed, the step
+> `p^{2β} N^{−β²} ≤ N^{β²}` asserts `2β − β² ≤ β²`, i.e. `β ≤ β²`, which is
+> **false for every `0 < β < 1`** — at `β = ½` it asserts `N^{3/4} ≤ N^{1/4}`.
+> So the square was asserted, not derived. With `p ≤ √N` the argument yields
+> `X ≤ k · N^{β−β²}`, and *that* is the true content of this shift-lattice
+> analysis. (Coppersmith's classical theorem reaches the tighter `N^{β²}` for a
+> monic linear `f`, but by a sharper analysis than the one printed here; the two
+> agree at `β = ½`, which is the only regime the wall below is about.)
+
+**So what *is* the origin of the `β²`.** The mechanism claim below stands: the
+basis carries `N^{max(0,t−i)}` factors *purely to lift the vanishing modulus*;
+they contribute `N^{t(t+1)/2} ≈ N^{β²m²/2}` to `det L`, while the modulus they
+buy is only `N^{t(m+1)} ≈ N^{βm²}`. The ratio `t²/(m(m+1)) → β²` is where a
+`β²` comes from — it is a *linear* parameter `t`, squared by the determinant's
+quadratic accumulation. What the corrected derivation bounds is `β − β²`, not
+`β²`: the two coincide **iff `β = 1/2`** (`β² = ¼` and `β − β² = ¼`) and nowhere
+else. The `β²` label is thus correct *at the balanced case* and misleading away
+from it.
+
+**The wall is unaffected — and §4d-iii is the correct statement of it.** `β − β²`
+is maximized at `β = ½`, where it equals `1/4`, and is strictly smaller
+elsewhere. So this derivation gives `X ≤ N^{1/4}` and nothing worse, and the
+quantity it maximizes is *exactly* the `(β − β²)n` known-bit budget that §4d-iii
+tabulates. The two subsections are therefore consistent rather than in tension —
+the earlier text merely had one of them deriving a bound the other contradicts.
 
 **The balanced case.** `β = 1/2 ⟹ X ≤ N^{1/4}`; `p` has `≈n/2` bits so the known
 part must be `≥ n/2 − n/4 = n/4` bits — half of `p`.
@@ -1273,6 +1304,159 @@ information, the unipotent branch carries none. That is real, and it is a clean
 instance of the meta-barrier's structural discipline, but it does not lift the
 route above `p±1`.
 
+#### 4f-ii. The 2026-09 computational audit — what closed, and the one retraction
+
+A dedicated wave of adversarial agents attacked §4f computationally. Four
+results, three of which are kills and one of which is a **self-caught retraction
+worth more than the kills** because it prevents a *new* false claim.
+
+**The retraction, recorded in the survey deliberately.** An agent derived
+
+    depth = N/(2p²) + O(1)      and      p = sqrt(N/(2·depth)),
+
+then **refuted both on 800 random pairs at `2^24` scale**: the map is not
+monotone, the tail is not `O(1)` (max observed 3875), and the inversion errs by
+74–99% on balanced semiprimes. What survives is the weaker
+
+    depth = Θ(S(p, q)),  S = subtractive-Euclidean step count,
+
+with measured `depth/S ∈ [0.493, 0.998]`, mean `0.636`. **Why the failed claim is
+written down rather than deleted:** someone "repairing" §4f by writing *"the depth
+leaks `p`, so we lose"* would be reintroducing a false claim of exactly the
+species the section was just corrected for. `S(p,q)` is a function *of the
+factorization* — there is no route from `N` to it. The same law is the quantitative
+form of the sparsity claim: for `p = 65537` the Fermat node sits at depth 32768
+in a tree of `3^32768` nodes, and trial division to `√p ≈ 2^16` costs **a quarter
+as much** as searching the tree. **The tree is exponentially sparse exactly where
+one must look.**
+
+**Fermat nodes are in bijection with divisor pairs — and the "compute the node"
+objection is ill-posed.** Machine-checked (14 theorems, Lean exit 0, no errors):
+`0 < n < m`, `m² − n² = N ⟹ (m−n)(m+n) = N`, round-tripping with
+`semiprime_to_fermat`. Two consequences, both sharp:
+
+- A semiprime has **exactly two** tree nodes — one *trivial* and one informative,
+  and they are distinct. A trivial node `m = (N+1)/2, n = (N−1)/2` exists for
+  **every odd `N ≥ 3`**. So a cheap node *always* exists, and any algorithm
+  promising to produce "a Fermat node" has not factored anything. The only
+  meaningful target is the **smallest** node — and its first leg is `spf(N)`.
+- The node is factoring in a changed basis. (Recall the §4f counterexample
+  `p² = N·(r−1)/(r+1)`, which is the same statement read in hyperbolic
+  coordinates.)
+
+**The tree is Farey-limited, not `3^t`-limited — the branching is spent on
+redundancy, not coverage.** This is the measurement that resolves the
+`3^t`-versus-`2^t` paradox. Only the `B`-steps (`λ = 1±√2`) narrow a
+prefix-cylinder, and even `B` shrinks a prefix by only `≈0.91–0.99` per letter,
+against `0.414` for a true binary split; `A`-cylinders are the *fixed* interval
+`(1,2)` and never narrow at all; `C`-cylinders are half-lines. Measured
+consequence: the `3^t` depth-`t` cylinders **overlap in a bounded interval**
+(total width *grows* `≈2.4^t`; median cylinder width stays `≈0.67` at `t = 7`
+instead of decaying `3^{−t}`). Prefixes scatter across scales rather than
+narrowing one window.
+
+So the effective sample size is **Farey-limited** — the primitive-hypotenuse
+count `≈ 0.524·X` — *not* `3^t`-limited, and one ternary level buys `1.20` bits
+of distinct index rather than `log₂3 ≈ 1.585`. The fitted tree-order search cost
+is
+
+    3^{d(p)} ≈ p^{1.00},
+
+i.e. **no better than trial division, and a factor `p^{0.5}` worse than Pollard
+`ρ`.** This also rules out by direct measurement the "too-good-to-be-true"
+log-class hitting time. A tree walk decorrelates in a few steps (so: `ρ`-class,
+consistent with `RhoSeparation.lean`, never sharper), and as a positive control
+the mod-`p` residues are uniform (`χ²/df ≈ 1.0`), so **no horocycle statistic
+separates `p` from `q`**. Dead, and dead on a measurement rather than a guess.
+
+**The moment / Hecke correlate is exponential — a clean kill.** The finite
+quotient for the moment sequence of the orbit of `(3,4,5)` is the period of
+`ℓ(M₂^k v)`, and moments *do* collapse `ord(M₂ mod N)` (measured at 236 billion
+for `N = 697`) down to the `lcm` of the **eigenvalue** orders
+`ord(3+2√2 mod p)`. That collapse is the right thing to measure, and it lands
+badly: the eigenvalue order grows **linearly in `p`** (medians 8 768 / 23 164 /
+49 692 over `p`-bands of median 40k / 100k / 220k, i.e. `≈ p/4`), and the
+absolute minimum over `p ≤ 300 000` never collapses to a constant (smallest
+orders 42, 54, 38). So the moment period is `Θ(N)` — **exponential in the input
+size**. The hoped-for quotients of `3` or `9` are decisively falsified. Confirmed
+exactly: period `40 = lcm(8,20)` at `N = 697`, `528 = lcm(44,48)` at `N = 8633`.
+*(`PROVED` for the period formula, which is an `lcm` of eigenvalue orders;
+`EMPIRICAL` for the generic `Θ(p)` growth.)* No moment-correlation attack.
+
+**The free-monoid-mod-`N` collision route is worse than trial division — not
+`α = 1`, not `ρ`.** The three generators are free in `GL₃(ℤ)` (no short integer
+relation in 20 000 words), so all relations mod `N` are accidental mod `p` or
+`q`. Words spread over a subgroup of `GL₃(F_p)` of size `≈ p⁹`, with random
+products of order `≈ Θ(p)`. A separating collision therefore costs `≈ √|H| ≈
+p^{4.5}` by BSGS — **strictly worse than both trial division and `ρ`**, and worse
+still in practice because you do not know `p`, so you face `N`. Closed.
+
+**The spectral route: two agents disagreed, and the disagreement was adjudicated
+— against the optimistic reading.** This is recorded because *how* the error was
+made is more instructive than the result.
+
+Setup. `M₂ = [[1,2,2],[2,1,2],[2,2,3]]`, eigenvalues `-1` and `λ± = 3±2√2`. The
+eigenvectors do not live in `ℤ/Nℤ`; they live in the quadratic étale algebra
+
+    R_N = (ℤ/N)[t]/(t² − 2),   √2 ↦ t.
+
+In the split–split case `R_N` has **16** roots of 2 (verified by enumeration:
+`16 / 8 / 4` for split–split / mixed / inert–inert, against `4 / 0 / 0` in plain
+`ℤ/N`). Writing a root as `t₀ = a + bt`, the conditions are `2ab ≡ 0` and
+`a² + 2b² ≡ 2 (mod N)`.
+
+- One agent argued **`DIAG ⇔ FACTOR`**: the eight roots with `a,b` both nonzero
+  force `gcd(a,N) ∈ {p,q}`, so a single `gcd` of the constant coordinate factors
+  `N` "with probability `1/2` per call".
+- The other argued the opposite: a **single** root of a known residue never
+  factors, and twelve natural `gcd` recipes on a genuine `s` with
+  `s² ≡ 2 (mod N)` split `N` in **0 of 65** trials.
+
+**The optimistic reading loses, on a quantifier error.** The canonical root — the
+*generator* `t` itself, `a = 0` — is a **valid** root of 2 in `R_N`, and it yields
+a valid diagonalization: eigenvectors `(1,1,t)`, `(1,1,−t)`, `(1,−1,0)`, with
+`M₂` diagonalised and the change of basis a unit (`det = −4t`, coprime to odd
+`N`). This is machine-verified across all three Legendre classes. So there is a
+**deterministic, `O(1)`, total solver** for the diagonalization problem that
+always returns `gcd(0,N) = N` and no factor.
+
+The optimistic argument proved `E[factor | uniformly random root] = 1/2` and
+wrote it up as a search reduction. **That is the error.** A reduction must
+succeed on *every* valid output, and the canonical `t` is a valid output on
+which it provably fails. Averaging over a random answer is not a reduction.
+
+**So the correct verdict is a third thing, not either agent's dichotomy:**
+
+> `DIAG` over `R_N` is **trivially in `P`**, so `DIAG ⇏ FACTOR`. The
+> diagonalization carries no factor beyond `N mod 8` (one bit: is 2 a residue?).
+> The genuine factoring content is the *second-root* / square-root-**oracle**
+> reduction — a square-root **oracle** over arbitrary residues factors in expected
+> polynomial time (Bühler–Crandall: 50/50 per try, `2^{−k}` after `k`), whereas
+> one **instance** of one **specific** known residue does not. Producing a second
+> root is precisely the step that is factoring-equivalent.
+
+And reaching a non-canonical (leaking) root is not a shortcut around that: no
+cheap route was found. Enumerating all 16 roots is `O(N²)`; Gaussian elimination
+with unit-only pivoting returns the *canonical* `t`; random sampling of `(a,b)`
+hit a leaking root **0 times in 2 million samples** at `N = 8633`. (A second,
+minor correction: the optimistic agent undercounted its own leaks at `8/16` — the
+two `a=0` roots with nontrivial `b` also factor, via `gcd(b∓1, N)`, so the
+optimal recipe leaks `10/16`. This does not change the verdict.)
+
+Direction of hardness is also settled, and it is the *opposite* of a handle:
+order-finding and discrete logarithms mod a composite are **randomly equivalent
+to factoring** (Long; Bach–Miller–Shallit, *SIAM J. Comput.* 15(4):1143–1154,
+1986, DOI `10.1137/0215083` — "a method for composite-modulus discrete logarithm
+problems implies a method for factoring"). Computing `λ(N)` is randomized
+factoring-equivalent (Miller, JCSS 1976). The Berggren matrices are fixed
+integer matrices and leak no `λ(N)`.
+
+**Net effect on the survey: none of this is an attack, and the existing
+`p±1`/`L[1/2]`-dominated characterisation of the spectral route stands
+unchanged.** The gain is a *correct* statement where the survey previously had
+nothing, and a recorded instance of the quantifier error that "is there a
+reduction from X to Y" invites.
+
 ## 5. The meta-barrier: every method collapses to one of four primitives
 
 A second, dedicated invention pass (three new mechanisms, each adversarially
@@ -1407,6 +1591,136 @@ symbols to *disagree* — the CRT-atom separation that primitive (4) exploits.
 (An attempted formalisation of primitive (4)'s mechanism itself was **discarded
 rather than shipped unverified**; it is left documentary.)
 
+### 5b. The uniformity kill: a fixed arithmetic structure carries *zero* bits
+
+§5's obstruction above is about **computable** observables — it says any
+efficiently computable handle must be computationally equivalent to factoring.
+The argument below is strictly stronger in one direction and independent in the
+other: it does not mention computability at all, only **range size**, and so it
+applies to fixed structures that may be perfectly well defined but uncomputable.
+
+**The claim.** Let `K` be *any* fixed number field. Then no map
+`H : N = pq ↦ Cl(K)` from which `p` is recoverable can exist, for any `n = log N`
+large.
+
+**Proof (counting; no complexity theory, no conjectures).** Recovering `p` from
+`H(N)` forces `H` to be **injective** on `{p · q_p : p < 2^{n/2} prime}`, since two
+distinct `p` giving the same handle would be indistinguishable. That set has
+size `≈ 2^{n/2}/n` — the number of primes below `√N`. But `|Cl(K)| = h(K)` is a
+**constant**, so `H` has `O(1)` bits of range. `2^{n/2}/n` bits of range are
+needed; `O(1)` are available. **Contradiction.** ∎
+
+This is **information-theoretic** and therefore independent of `P ≠ NP`,
+independent of subexponential factoring, independent of GRH. Numerically: at
+`n = 64` there are `≈ 2^26` candidate `p`s; at `n = 1024`, `≈ 2^502`; at
+`n = 16384`, `≈ 2^8178` — while `|Cl(K)|` sits at `1` throughout.
+
+**And the same sentence kills every fixed-description-length object at once** — a
+fixed class group, a single reduced binary quadratic form of fixed discriminant,
+the Berggren/Markoff tree, the tree's fixed Hecke algebra. **A fixed arithmetic
+structure is poly-time and uniform, so it carries no bits about `N`.** This is
+the cleanest available form of the meta-barrier, and it is what killed the
+frieze/Markoff↔class-group channel (§4f) without a single experiment.
+
+**The `N`-dependent escapes, and why both die.** The only structures that
+*could* carry bits depend on `N`, and the two natural families are both closed:
+
+- **Imaginary** `Cl(ℚ(√(−pq)))`. Genus theory forces the 2-rank to `t − 1 = 1`,
+  so the 2-torsion is **exactly `C₂` — order 2, zero bits about `p, q`, for every
+  such `N`**. All `N`-content sits in the odd part and `v₂(h)` (measured
+  `h(−4pq) ∈ 24…132`, `v₂(h) ∈ 2…6`), and extracting it needs a **subexponential**
+  class-group computation (Hafner–McCurley, `L[1/2,·]`) — not poly, and it does
+  not beat `L[1/3,1.923]`. (The ERH-conditionality of the `JAMS` version, flagged
+  in the References, only weakens this further.) Dead.
+- **Real** `h(ℚ(√(pq)))`. The analytic class number formula only gives the product
+  `h · R = √D · L(1,χ_D)`. Isolating `h` requires the **regulator** `R`, i.e. the
+  **fundamental unit** — a Pell solution with `x ~ √N`, equivalently the **full
+  CF period of `√N`**, which is `Θ(√N)` in the worst case. So this handle is
+  **vacuous**: obtaining it is conjectured as hard as factoring. Dead.
+
+**Honesty note.** What is established is *one-directional* hardness — the handle
+is either subexponential-and-useless or as-hard-as-the-problem. The reverse
+implication (computing `h` yields a factorization) is **not** claimed here.
+
+**A folklore claim falsified en route.** The standard-sounding assertion that a
+complete-quotient value `Q` of `√D` satisfies `Q ∣ 4D` is **false**: it fails for
+282 of 398 values of `D < 400`, smallest counterexample `D = 7` (`√7` has
+`Q`-values `{3,2,3,1}`, and `3 ∤ 28`). The correct invariant is `Q ∣ (D − m²)`
+together with `Q ≤ 2√D` — the `Q`-values live in the **norm equation**, not in
+the radicand, which is exactly why "read a factor off a `Q`-value" fails.
+Confirmed empirically: over 253 semiprimes, the proper `Q`-values of `√(pq)`
+were **not** in `{p, q}` in 244 cases, and the first `Q` dividing `N` appears at a
+median step index of 8 and up to 58 — you must run an unbounded prefix of a
+`Θ(√N)`-length period. The CF sub-channel is closed on cost, now without the
+false justification.
+
+### 5c. Three models, not one: group, ring, random oracle
+
+A recurring source of bad claims in this literature is treating "lower bound" as a
+single object. It is not, and the three standard models give **different and
+sometimes opposite** answers about factoring.
+
+| Model | Operations | Result for factoring |
+|---|---|---|
+| **Generic group** (Shoup 1997) | group operations + equality | `Ω(√q)` lower bound for **DLP**. Factoring is *not* a group problem, so this bound **does not transfer**. |
+| **Generic ring / number** (Aggarwal–Maurer 2016) | `+ − ·` (÷ where defined) + equality | **No factoring lower bound at all** — in this model factoring is a *trivial loop*: test `d ∣ N` for `d = 2,3,…`. |
+| **Random oracle** | free advice | the meaningful `√p` barrier, but only for Pollard-`ρ`-class methods, and it is a **random-function** argument (`HEURISTIC`, not a theorem about integers). |
+
+**The upshot, stated carefully because the survey was previously silent on it.**
+There is **no citable `Ω(√N)` generic factoring theorem**, because the generic
+*ring* model admits a trivial factoring algorithm. The familiar "`N^{1/2}` is the
+barrier" is therefore a *trivial upper bound* (trial division) plus a barrier
+that is real only for a restricted method class. **No unconditional
+superpolynomial lower bound for factoring in the standard model is known.**
+
+What Aggarwal–Maurer do establish is an **equivalence**, not a bound: a
+factoring assumption gives generic-RSA hardness, and breaking generic RSA yields
+a factorization. That is §4b's content and it is correct as written. Even
+"generic hardness of the LSB/Jacobi predicate" is **conditional on factoring**,
+not an independent barrier.
+
+*(B2 flags that the brief's suggested titles "The ring of generic algorithms" and
+"Generically Secure Algorithms and the Generic Ring Model" do not correspond to
+any real paper — recorded so they are not reintroduced. Maurer 2005,
+Maurer–Wolf 1999 and Coron–Naccache–Tibouchi are the real generic-ring
+lineage.)*
+
+### 5d. Pell / Størmer / consecutive-smooth: dead, and dead in the input
+
+**The prime set is the secret.** Størmer–Lehmer takes the set `B` of primes
+below a smoothness bound as *input*, and applies the Pell equation to the
+squarefree parts `a, b` of the two unknown factors — so its field
+`ℚ(√{ab})` is computable **iff `N` is already factored**. The rescue that worked
+for Fermat nodes does **not** work here: a Fermat node is a specific point fixed
+by `N` alone, whereas the only Pell node computable from `N` alone is the trivial
+`(x,y) = (1,0)`, which has discriminant `1` and yields nothing. **So there is no
+reduction from "factor `N`" to "solve a Pell equation modelled on `N` alone" —
+the input to Størmer's algorithm is the secret it is supposed to reveal.**
+
+**Even granted `a, b` for free, the cost is wrong.** Størmer's algorithm costs
+`Θ(2^{π(B)} · N^{1/2})` — worse than Pollard `ρ` (`N^{1/4}`), worse than Lehman
+(`N^{1/3}`), and worse than Harvey's deterministic `N^{1/5}`, **for every `B`**.
+And the regime is wrong outright: a random 1024-bit prime has smallest prime
+factor `≈ 2^{512}`, so RSA factors are not `B`-smooth for any usable `B`.
+
+**The `D=2` / Berggren variant rests on a false premise.** Asking which Pell
+`y`-values are `B`-smooth is a largest-prime-factor question about a linear
+recurrence. Unconditionally the best known is only
+`P(L_n) > (1/86)·log log n` (Batte–Luca 2024); under `abc` the terms are
+`|y|^{1−o(1)}`-large-prime, i.e. **not** smooth. BHV/Zsigmondy primitive-divisor
+bounds give only the *converse* of the `p±1` route, never a factoring handle.
+
+*A miscitation worth recording:* the "Sanna smooth-values" work that a prior
+sweep of this project attributed to smooth-terms factoring **does not exist in
+that form** — an enumeration of the author's full publication list shows no such
+paper. His actual relevant work (arXiv:2212.06127 on the index of appearance;
+arXiv:2108.03628 on the `lcm` of shifted Lucas numbers) characterises primes
+`p ≡ ±1 mod ρ`, which is the **`p±1` route in disguise**. The confirmed reference
+for this area is **Batte–Luca 2024** (Crossref-verified 2026-09-24), with
+**Stewart 1985** in the background; a "Murty–Wong 2023" citation that was
+reported to this survey **could not be confirmed** and is deliberately not
+recorded.
+
 ## 6. The load-bearing correction (why the `1/3` is not an AM–GM artefact)
 
 The Catalog's `TradeoffBarrier.lean` proved, correctly, an AM–GM theorem:
@@ -1437,8 +1751,8 @@ valid statements *about their model*; only the over-reading was wrong.
 
 ## 7. Machine-checked companions
 
-- **`NegativeResults.lean`** — a cited kill record (the table above, now **nine**
-  directions) plus two machine-checked supports:
+- **`NegativeResults.lean`** — a cited kill record (the table above, now
+  **twenty-five** directions) plus three machine-checked supports:
   - `mod4_not_injective` shows the map `n ↦ n mod 4` fails to separate the
     distinct semiprimes `15 = 3·5` and `39 = 3·13`, so a low-order residue
     observable cannot carry factoring information.
@@ -1457,6 +1771,35 @@ valid statements *about their model*; only the over-reading was wrong.
   disagree.
 
 Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_workspace`).
+
+- **`FactorEncodingAudit.lean`** *(new, 2026-09-24; Lean exit 0, no errors or
+  warnings, compiled with the Catalog toolchain Lean v4.28.0 — not the v4.33.1
+  workspace, so it is verified against the narrower of the two)* — the
+  machine-checked core of this wave, in three groups:
+  - **The §4f refutation.** `fermat_factorisation` and
+    `recovered_is_proper_factor` prove `N = m² − n² = (m−n)(m+n)` with
+    `m − n` a *proper* factor when `0 < n < m`; `ratio_is_sufficient_statistic`
+    packages it. So the node's ratio `r = m/n` is a sufficient statistic for `p`
+    — in the rationals, `p² (r+1) = N(r−1)` — and §4f's "zero bits about `p`"
+    is false. `trivial_fermat_node_exists` proves the sharpening: for **every**
+    odd `N ≥ 3` there is a Fermat node with `m − n = 1`, so "produce a Fermat
+    node" is not a factoring task at all.
+  - **The uniformity kill.** `fixed_range_cannot_be_injective` is the pigeonhole
+    at the heart of §5b: a handle must be injective on the candidate factors
+    (`≈ 2^{n/2}/n` of them), so a range of `h + 1` values cannot serve when the
+    candidate set is larger. No complexity theory is used.
+  - **The §4d-ii correction.** `fourdii_printed_step_false` records that the
+    survey's step `2β − β² ≤ β²` fails at `β = 1/2` (`3/4` versus `1/4`);
+    `strict_gap_below_half` and `beta_sq_le_gap` pin the two exponents exactly;
+    `corrected_exponent_maximized_at_balanced` re-establishes the `n/4` wall from
+    the *corrected* exponent. This is the same completed square as
+    `NegativeResults.lean`'s `known_leak_maximized_at_balanced`, now doing double
+    duty — the wall did not move, only the derivation that claimed it.
+
+  A first attempt at `fixed_range_cannot_be_injective` had the pigeonhole
+  **backwards** (injectivity forces `card α ≤ card β`, not the reverse) and would
+  have "proved" nothing; it is recorded here because that direction slip is the
+  standard way a counting argument silently loses its contradiction.
 
 ---
 
@@ -1571,9 +1914,13 @@ algorithm; each is a place where a genuine open problem still lives.
    obstructed — than the usual one-line "prove `FACTOR ∉ TC⁰`" framing suggests.
    - **The counterintuitive structural fact: it is not even known that factoring
      has polynomial-size circuits.** The only subexponential-in-`n = log N` upper
-     bounds are *randomized*; deterministic ones (Costa–Harvey `N^{1/5+o(1)}`) are
-     `2^{Θ(n)}` — exponential in input length, so unrolling gives exponential
-     circuits. The poly-size route would need `BPP ⊆ P/poly`, which is open. So
+     bounds are *randomized*; deterministic ones are `2^{Θ(n)}` — exponential in
+     input length, so unrolling gives exponential circuits. The deterministic
+     line runs Bostan–Gaudry–Schost `N^{1/4}`, Costa–Harvey's `√(log log N)`
+     speedup of it, then Harvey's `N^{1/5}` (*Math. Comp.* 90(332), 2021) with
+     Harvey–Hittmeir's log-log improvement (91(335), 2022) — best current
+     deterministic is `N^{1/5}`, still `2^{Θ(n)}`. The poly-size route would need
+     `BPP ⊆ P/poly`, which is open. So
      **`FACTOR ∈ FP/poly` is itself undecided** — unusual, since for most natural
      problems at least the poly-size upper bound is known.
    - **The PRIMES analogy breaks, and this is the crux.** Primality has a polytime
@@ -1637,9 +1984,27 @@ algorithm; each is a place where a genuine open problem still lives.
      binarization is provably the weaker framing.** For
      `P(N,B) := "N has a prime divisor ≤ B"`, `P` is **monotone in `B`**, so
      `O(n)` binary-search queries recover `B* = min{B : P(N,B)} = spf(N)`, and
-     `O(n)` divisions finish the factorization. Hence all of
-     `P ∉ TC⁰ ⟺ spf ∉ TC⁰ ⟺ FACTOR ∉ TC⁰ ⟺ FACTOR ∉ P ⟺ P ∉ P/poly`
-     are **one sentence**, not a chain of beliefs. The two-input version also
+     `O(n)` divisions finish the factorization. Hence `P ∉ TC⁰`, `spf ∉ TC⁰` and
+     `FACTOR ∉ TC⁰` are **one sentence** — these three really are equivalent, the
+     last by the binarization just given.
+
+     > ⚠️ **[CORRECTED 2026-09-24 — this chain previously ran one step too far,
+     > and the extra step reversed the strength of the whole target.]** The text
+     > read `… ≡ FACTOR ∉ TC⁰ ≡ FACTOR ∉ P ≡ P ∉ P/poly`, treating the tail as
+     > biconditionals. It is not: `TC⁰ ⊆ P/poly ⊆ P`, so `FACTOR ∉ TC⁰` is the
+     > **weakest** of these statements, and `FACTOR ∉ P/poly` the strongest. Every
+     > step past `FACTOR ∉ TC⁰` is a **one-way implication**, and none reverses —
+     > `FACTOR` could sit in `P ∖ TC⁰` with no contradiction, and `P ∉ P/poly`
+     > says nothing about any particular function. The correct ladder is
+     >
+     >     FACTOR ∉ P/poly  ⟹  FACTOR ∉ P  ⟹  FACTOR ∉ NC¹  ⟹  FACTOR ∉ uniform TC⁰  ⟹  FACTOR ∉ AC⁰
+     >
+     > with the two-input binarization being what makes the *first three rungs*
+     > coincide. This matters because the overclaimed version made the `TC⁰`
+     > target look like a route to `P ≠ NP`; it is not, and the paragraph below
+     > now says so.
+
+     The two-input version also
      carries **provably easy nuisance regimes** that any lower bound must be
      stated around: `B ≤ n^c` puts `P` in uniform `TC⁰` (enumerate `d ≤ B`, test
      `d ∣ N` by division, test `isprime(d)`), and `B ≥ √N` makes
@@ -1650,14 +2015,26 @@ algorithm; each is a place where a genuine open problem still lives.
      `n`-bit integer have superpolynomial size?" is well-posed. (This is the
      **one-bit-gap** framing; the earlier two-input framing hid it behind
      input-length bookkeeping.)
-   - **Logical strength: a factoring circuit lower bound is strictly stronger than
-     `P ≠ NP`.** It implies `P ≠ NP` *and* `P ≠ BPP` *and* names an explicit
-     function outside `P/poly`; `P ≠ NP` implies none of these. It is **not
-     equivalent** in either direction. *Crypto caveat:* a worst-case circuit lower
-     bound is far stronger than what cryptography needs (average-case inverting
-     hardness), and a poor `P ≠ NP` proxy — `P ≠ NP` could hold for reasons
-     unrelated to factoring. The honest ladder is `∉ AC⁰` → `∉ uniform TC⁰` →
-     `∉ NC¹` → `∉ P/poly`; the `TC⁰` rung is where the traction is.
+   - **Logical strength: it depends on the rung, and the `TC⁰` rung is the weak
+     one.** ⚠️ **[CORRECTED 2026-09-24.]** This paragraph previously claimed that
+     "a factoring circuit lower bound is strictly stronger than `P ≠ NP`" and
+     "implies `P ≠ NP` *and* `P ≠ BPP` *and* names an explicit function outside
+     `P/poly`". That is true of **`FACTOR ∉ P/poly`**, and **false of the `TC⁰`
+     target this survey actually recommends**: since `TC⁰ ⊆ P/poly ⊆ P`,
+     `FACTOR ∉ TC⁰` is consistent with `FACTOR ∈ P ∖ TC⁰`, so it implies
+     **neither `P ≠ NP` nor `P ≠ BPP`**, and names no function outside `P/poly`.
+     Stated honestly by rung:
+     - `FACTOR ∉ P/poly` ⟹ `P ≠ NP` **and** `P ≠ BPP` **and** an explicit
+       function outside `P/poly`. Strong; **not** known to be equivalent to any
+       named problem.
+     - `FACTOR ∉ uniform TC⁰` ⟹ only that no constant-depth threshold circuit
+       computes `spf`. It implies **no** complexity separation at all. It is a
+       genuine open target, but a *tractable* one, not a `P ≠ NP` proxy.
+     `P ≠ NP` implies neither. *Crypto caveat, unchanged and still true:* a
+     worst-case circuit lower bound is far stronger than what cryptography needs
+     (average-case inverting hardness), and even the strong rung is a poor
+     `P ≠ NP` proxy — `P ≠ NP` could hold for reasons unrelated to factoring. The
+     ladder is strictly ordered `∉ P/poly` ⟹ `∉ NC¹` ⟹ `∉ uniform TC⁰` ⟹ `∉ AC⁰`.
    - **A sharp, provable NEGATIVE result about the only technique in this
      neighborhood — it does not transfer from `ω` to `Ω`.** There *is* a real
      lower bound here: **parity-of-`ω` is hard for `AC⁰[p]`**. Allender–Saks–
@@ -1790,8 +2167,19 @@ Spaenlehauer–Thomé** ePrint 2020/829 (*Refined Analysis of the Asymptotic
 Complexity of the Number Field Sieve*; *Mathematical Cryptology* — **corrected
 2026-09-24, was misattributed to Barbulescu–Guillevic–Lenstra–Razvan; the
 refined analysis keeps the `L[1/3, (64/9)^{1/3}]` constant unchanged**) ·
-**Aggarwal–Maurer** *IEEE Trans. Inf. Theory* 62(11):6251–6259 2016 (journal
-version of the generic-ring equivalence — **MISSING until 2026-09-24**) ·
+**Aggarwal–Maurer** *IEEE Trans. Inf. Theory* 62(11):6251–6259 2016, DOI
+`10.1109/TIT.2016.2594197` (journal version of the generic-ring equivalence —
+**MISSING until 2026-09-24**) · **Shoup** EUROCRYPT 1997, DOI
+`10.1007/3-540-69053-0_18` ("Lower Bounds for Discrete Logarithms and Related
+Problems" — the generic-**group** `Ω(√q)` bound; **MISSING until 2026-09-24**,
+and it is *not* a factoring bound: see §5c) · **Batte–Luca** 2024, "On the
+largest prime factor of the `k`-generalized Lucas numbers"
+(`P(L_n) > (1/86)·log log n`, the strongest unconditional bound on the
+largest-prime factor of a Lucas term; **verified by Crossref 2026-09-24**) ·
+**Stewart** 1985 · *(a "Murty–Wong 2023" consecutive-smooth reference was
+reported to this survey and **could not be confirmed** by Crossref on two
+attempts; it is therefore **not** entered as a reference, and §5d's
+consecutive-smooth discussion rests on Batte–Luca and Stewart instead)* ·
 **Dachman-Soled–Loss–O'Neill** ePrint 2022/1261 (the equivalence in the
 non-uniform/advice model) · Barbulescu–Gaudry–Kleinjung ePrint
 2015/505 · Schirokauer 2000 (Tower NFS) · Shanks 1969 (SQUFOF) · Lagrange/Legendre
@@ -1855,7 +2243,11 @@ very likely upgrading an open problem into a cited result. Note the earlier
 correction was itself never verified and the whole entry is now withdrawn.
 **Consequence: the SMALL-E claim in §5 (`Ω ∈ uniform TC⁰` ⇒ PH collapse) loses
 its only citation and is now UNSOURCED** · **Costa–Harvey** *Math. Comp.*
-2013 (deterministic `N^{1/5}`) · **Bach–Miller–Shallit** SICOMP 1986
+83(285):339–345 2013 (deterministic `N^{1/4}` Bostan–Gaudry–Schost, plus a
+`√(log log N)` speedup — **NOT** the `N^{1/5}`; that is **Harvey 2021**
+`10.1090/mcom/3658`, and the current best deterministic, improved by
+**Harvey–Hittmeir** *Math. Comp.* 91(335):1367–1379 2022 `10.1090/mcom/3708`,
+was **missing from this survey entirely**) · **Bach–Miller–Shallit** SICOMP 1986
 (`σ(N) ≡` factoring) · **Razborov–Rudich** JCSS 1997 (natural proofs barrier) ·
 **Aaronson–Wigderson** STOC 2008 / ToCT 2009 (**algebrization** — the
 factoring-specific barrier) · Santhanam SICOMP 2009 · **Schnorr 2021 ePrint
