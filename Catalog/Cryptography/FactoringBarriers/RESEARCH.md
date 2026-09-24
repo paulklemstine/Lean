@@ -4,7 +4,13 @@
 **Scope:** classical (non-quantum) general-purpose large-integer factoring, plus the
 adjacent partial-key and complexity-theory literature.
 **Machine-checked companions:** `NegativeResults.lean`, `FreeSymbol.lean` in this
-directory; barrier corrections in `TradeoffBarrier.lean` and `Capstone.lean`.
+directory; barrier corrections in `TradeoffBarrier.lean` and `Capstone.lean`;
+the deterministic-family results in `SquareDiff.lean` (10 thms),
+`NoFreeSearch.lean` (3 thms), `VacuousUsefulness.lean` (5 thms),
+`HarveyFloor.lean` (23 thms) and `OrderLCM.lean` (6 thms).
+**⚠️ Two claims in this file were retracted on 2026-09-24 — see §7-ter (the
+`q ∤ k` success condition is vacuous) and §7-quater (the `(k,l)` core is Harvey's
+own formulation; the Fermat+Lehman unification is published).**
 
 ---
 
@@ -2763,7 +2769,7 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   have "proved" nothing; it is recorded here because that direction slip is the
   standard way a counting argument silently loses its contradiction.
 
-- **`HarveyFloor.lean`** *(new, 2026-09-24; Lean exit 0, **24 theorems, 0 `sorry`,
+- **`HarveyFloor.lean`** *(new, 2026-09-24; Lean exit 0, **23 theorems, 0 `sorry`,
   0 `axiom`** — verified by `#print axioms`: only `propext`, `Classical.choice`,
   `Quot.sound`, no `sorryAx`; Mathlib `0df444a`, workspace copy at
   `~/prove2me_workspace/Theorems/Thm_Crypto_FactoringBarrier_HarveyFloor.lean`)* —
@@ -2940,7 +2946,7 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
 - **★★★ THE BALANCE DILEMMA — what GFHP's `1/6`/`1/8` roadmap actually
   requires, quantified.** *(2026-09-24; 4 further theorems in
   `HarveyFloor.lean`: `required_weight`, `one_fifth_needs_weight`,
-  `one_sixth_needs_weight_two`, `one_eighth_needs_weight_three`. (File total: 24 theorems.)
+  `one_sixth_needs_weight_two`, `one_eighth_needs_weight_three`. (File total: 23 theorems.)
   total, all `#print axioms`-clean.)*
 
   This is the first result here that is a **derivation about the state of the
@@ -3332,10 +3338,19 @@ Nothing in this file had ever said what that condition *is*. It is:
 Three consequences, in increasing order of how much they should have been
 obvious:
 
-**(a) The succeed/fail condition is a *single* extra condition.** `trivial_iff`
-says the entire content of "`a² ≡ b² (mod N)` but `a ≢ ±b (mod N)`" is `q ∤ k`.
-Nothing else in the family's definition carries information. The mod-`q`
-condition is not a second filter — it is the whole filter.
+**(a) The succeed/fail condition is a *single* extra condition — and it is
+VACUOUS. ⚠️ CORRECTED 2026-09-24, see §7-ter.** This paragraph originally read:
+"`trivial_iff` says the entire content of "`a² ≡ b² (mod N)` but `a ≢ ±b (mod N)`"
+is `q ∤ k`. Nothing else in the family's definition carries information. The
+mod-`q` condition is not a second filter — it is the whole filter." **That is
+wrong**, and §7-ter proves it: inside any box narrower than `N` the condition
+`q ∤ k` holds for *every* `k` that can appear, so it filters nothing. The
+original statement is also self-defeating on its own terms — it calls `q ∤ k`
+"the whole filter" while the family as defined never even *evaluates* it. The
+correct reading: `q ∤ k` is the *definition* of non-triviality, and inside the
+operative box it is automatically satisfied, so **the method never wastes a test
+and never fails for this reason**; the real content is the degeneracy `k = 0`
+(i.e. `a = b`), treated in §7-ter.
 
 **(b) Fermat is a single point of the family, and it is the *tip*.**
 `fermat_is_k_l_one` forces `k = l = 1`. So Fermat's method contains **one**
@@ -3365,10 +3380,11 @@ which all of them sit**, and none of this file's entries said so.
 **Scope limits, stated honestly.** (i) The convergent identification is
 classical continued-fraction theory and is *described* here, not proved in Lean;
 what is proved is the reduction to it. (ii) **This improves no method.** It
-reorganises and explains; it is not an algorithm. (iii) **I have not searched
-the literature for whether this reduction is stated elsewhere** — SQUFOF's
-partial-quotient formulation is close and I have not ruled out that someone has
-phrased it this way. I am not claiming priority.
+reorganises and explains; it is not an algorithm. (iii) ~~**I have not searched
+the literature for whether this reduction is stated elsewhere**~~ — **NO LONGER
+TRUE. The literature has now been searched, and the answer is partly yes. See
+§7-quater below; it changes the novelty picture materially and retracts part of
+what this section implied.** I am not claiming priority for what remains.
 
 ---
 
@@ -3448,6 +3464,114 @@ injectivity — the part that carries the content — is in Lean. (ii) This kill
 *this* re-encoding, **not** the family: nothing here bears on Harvey, GFHP, or
 any future method that does not go through `(k, l)` coordinates. (iii) Still
 **no method**; still **no literature search**, so no priority claimed.
+
+---
+
+### 7-ter. ★★★★★ The `q ∤ k` condition is VACUOUS inside the box — a self-correction
+
+The previous two entries are results. This entry is a **correction of this
+file's own §7 claim**, and it is the most useful thing found this round,
+because it deletes a false obstruction from the open-threads list.
+
+**What §7 claimed.** Consequence (a) above advertised `q ∤ k` as *"the entire
+succeed/fail content of the family"*, and §8 item 7 was built on top of it with
+a **verifier sub-question**: can one decide, from `N` alone, whether a candidate
+convergent has `q ∤ k`?
+
+**Why that is vacuous.** The box condition is
+`|k·p − l·q| ≤ 2X` ∧ `|k·p + l·q| ≤ 2X`. For real numbers
+`max(|u+v|, |u−v|) = |u| + |v|`, so the two collapse to
+
+> **`|k·p| + |l·q| ≤ 2X`, i.e. `k·p + l·q ≤ 2X` in absolute value.**
+
+Hence `k·p ≤ 2X`. If `q ∣ k` and `k > 0` then `k = q·c` with `c ≥ 1`, so
+`k·p = c·(p·q) ≥ p·q`. Therefore
+
+> **if `2X < p·q`, then `q ∣ k` is impossible for any `k` in the box.**
+> The gcd is *always* exactly `p`, and the method *never* fails for this reason.
+
+Every method in the literature operates at `X ≪ N = p·q`, so the hypothesis
+`2X < p·q` holds with enormous margin. **The condition is not a filter; it is
+an identity.** No primality assumption is used — this is pure size.
+
+**The corrected succeed/fail content.** Since the gcd is `p` unless it is `N`,
+and `N` arises exactly when `k = 0` (i.e. `a = b`, the trivial solution), the
+real content is the **degeneracy `k = 0`** — symmetrically `l = 0`. The family
+does not have a mod-`q` obstruction. It has an *at-the-boundary* one.
+
+**Machine-checked** — `VacuousUsefulness.lean`, 5 theorems, 0 `sorry`,
+0 `axiom`, clean build. Axioms: `[propext]` for the two size lemmas;
+`[propext, Classical.choice, Quot.sound]` for the three involving `Nat.gcd`.
+
+| theorem | content |
+|---|---|
+| `useful_needs_N` | `0 < k` ∧ `q ∣ k` ⟹ `p·q ≤ k·p` — a divisible `k` is already too big |
+| `useful_needs_N_symm` | the mirror for `l` |
+| **`box_nmid`** | **`2X < p·q` ∧ `k·p + l·q ≤ 2X` ⟹ `¬ q ∣ k`** |
+| `box_nmid_symm` | `2X < p·q` ∧ box ⟹ `¬ p ∣ l` |
+| `failure_iff_k_zero` | inside the box, `gcd(k·p, N) = N ↔ k = 0` — the corrected content |
+
+**Numerical check** (40-bit semiprime, `X = N^{2/3}`): `Kmax = X/min(p,q)`
+≈ 260–291 while `q` ≈ 8.7M–11.3M, so `q ∤ k` for all 960 box points tested and
+`gcd(k·p, N) == p` exactly in every case. 960/960 useful.
+
+**Consequences.** (1) §8 item 7's verifier sub-question is **dead** and is
+removed below. (2) The family is *more* robust than §7 advertised: there is no
+per-candidate test to get wrong. (3) The interesting obstruction moves from
+"can you filter convergents?" to "**can you find one at all**" — which is the
+rest of §8 item 7 and remains open.
+
+**A methodology note, recorded because it nearly caused a false result.** My
+first Python check tested `q % k != 0`, i.e. `k ∤ q`, when the mathematical
+condition is `q ∤ k`. That inversion produced a spurious `False` and I nearly
+recorded the opposite conclusion. A second bug (`ZeroDivisionError` from `q % k`
+at `k = 0`) masked it until both were fixed. The Lean version cannot have this
+bug, which is a point in favour of formalising the check rather than trusting
+the script.
+
+---
+
+### 7-quater. ★★★★ The literature search finally happened — and it RETRACTS part of this file
+
+Scope limit (iii) in §7 said *"I have not searched the literature for whether
+this reduction is stated elsewhere."* It has now been searched. **The answer is
+partly yes, and it is partly my own formulation.** Recording this precisely,
+because overclaiming novelty in either direction is a failure.
+
+| claim | verdict |
+|---|---|
+| the two-parameter `(k,l)` family | **⚠️ NOT NOVEL — it is Harvey's own formulation.** Harvey searches `u = a·q + b·p` and tests whether `u² − 4abN` is a square (his Lemma 3.1: `y² − uy + abN` has roots `a·q, b·p`; existence of `a,b` in his Lemma 3.3). So **this file's "(k, l) is the natural parameter" is a reparametrisation of Harvey, not a discovery.** |
+| the core step is *not* CF convergents | **⚠️ CORRECTION.** Harvey's existence proof is a **Dirichlet-type rational approximation** of `p/q` (Hardy–Wright Thm 36), **not** continued-fraction convergents. My "the good `(k,l)` are the convergents of `p/q`" describes the same object, but I had implied convergents were *my* framing and Harvey's was different. |
+| Fermat + Lehman unification | **⚠️ PUBLISHED — Hales–Hiary, arXiv:2209.15586, "A Generalization of Lehman's Method"**, via **Farey fractions** and `4abN = (2a·q)(2b·p)`. Coppersmith is credited with the `1/4` hurdle. Notably Coppersmith **explicitly declined** the merge: *"we do not pursue this approach here."* |
+| rational approximation of `p/q` as the engine | published (Lehman 1974; Hittmeir; Harvey) |
+| GFHP (arXiv:2512.19076) uses this framing | **no** — it uses neither the square congruence nor convergents of `p/q` |
+| SQUFOF folds into the convergent-of-`p/q` frame | **⚠️ PRIOR ART DOES NOT SUPPORT THIS.** SQUFOF lives in a **different continued fraction** — convergents of `√N`, the Pell equation, the regulator, quadratic forms (Murru–Salvatori arXiv:2409.03486; McMath–Crabbe–Joyner arXiv:math/0601263). So the claim that SQUFOF reads partial quotients *of the same CF* is the **unproven** part, and I must not assert it. |
+| Hart's one-line sieve is prior art | **no** — essentially absent from arXiv; cannot be claimed as prior art |
+| Harvey's journal reference | **⚠️ UNVERIFIED — do not cite.** Math. Comp. **90** (2021) 2937–2950 is *believed* correct but **could not be confirmed**; the DOI `10.1090/mcom/3743` was checked and is an **unrelated numerical-analysis paper**. Recorded as unverified, not asserted. |
+| the FULL claim: all seven methods as one convergent-of-`p/q` + `gcd(k,q)` reduction | **no prior art found** — this is the residue that may still be new, and even this is only "not found", not "new" |
+
+**What survives.** The unification is *partly mine and partly not*: the
+`(k,l)` core is Harvey's, the Fermat+Lehman merge is Hales–Hiary's. What is
+left that I have not found published is (a) the *common continued-fraction axis*
+across all seven methods, (b) the `gcd(k,q)` output formula, (c) the SQUFOF
+bridge — which is precisely the part the literature does **not** support, and
+(c) is therefore a live *target*, not a theorem.
+
+**What this costs me.** The file spent a round presenting a reparametrisation
+of Harvey's search as if it were a structural observation. It is still a useful
+observation — §7-bis (no free search) and §7-ter (the condition is vacuous) are
+sharpenings of the *shared* object, and neither depends on my framing being
+new. But the framing itself is Harvey's, and the file now says so.
+
+**Citation discipline.** Every arXiv ID above is from a per-paper page fetch, not
+a search result: IACR ePrint *search* is IP-rate-limited (429) though per-paper
+pages work; the arXiv API (`export.arxiv.org/api/query`) returns 406 and is
+dead — use the arXiv main-site HTML search at `https://arxiv.org/search/`;
+Springer is paywalled; dblp, zbMATH, OpenAlex and Semantic Scholar are blocked
+from this host; and **WebSearch actively fabricates citations here**, so no
+identifier in this file may come from it.
+
+---
 
 ---
 
@@ -4111,11 +4235,16 @@ algorithm; each is a place where a genuine open problem still lives.
    > **The method succeeds on exactly the pairs `(k, l)` with `|k·p − l·q| ≤ 2X`
    > and `q ∤ k` — i.e. on the continued-fraction convergents of `p/q` whose
    > coefficient `k` is not divisible by `q`, and `N` is all you are given.**
+   >
+   > ⚠️ **UPDATED 2026-09-24 (§7-ter): the `q ∤ k` clause is redundant.** It is
+   > *automatic* for every `(k, l)` in the box, so the target is simply
+   > **`|k·p − l·q| ≤ 2X`.** The clause is retained above only to show what the
+   > item originally said; the sub-question it generated is dead.
 
    So the honest restatement of "beat `N^{1/5}` deterministically" is:
 
    > **OPEN.** Given `N = pq` and no factors, locate a convergent of `p/q`
-   > satisfying `|k·p − l·q| ≤ 2X` and `q ∤ k`, in `O(N^{1/5−ε})`.
+   > satisfying `|k·p − l·q| ≤ 2X`, in `O(N^{1/5−ε})`.
 
    **Why this is a better question than "beat `1/5`".** `1/5` is a *cost*; this
    is a *target*. Every method in the record becomes one line: Fermat tests the
@@ -4130,24 +4259,35 @@ algorithm; each is a place where a genuine open problem still lives.
    A scheme with `Σw > 3/2` would be a floor that reuses more than it costs;
    a scheme that jumps straight to a convergent would not need the sweep at
    all. These are the same research programme seen from the cost side and from
-   the target side, and the target side says the prize is a *specific integer
-   with a specific arithmetic property* (`q ∤ k`), not merely a faster search.
+   the target side, and the target side says the prize is a *specific integer*,
+   not merely a faster search. (This paragraph also **overstated the target's
+   structure**: the arithmetic property `q ∤ k` it advertised is not part of the
+   prize at all — see the next paragraph.)
 
    **What would count as progress.** (i) An unconditional way to get **any**
    convergent of `p/q` from `N` in `o(N^{1/2})` — this alone would beat Fermat
-   and is not known. (ii) The asymmetry `q ∤ k`: this is a condition on the
+   and is not known. (ii) ~~The asymmetry `q ∤ k`: this is a condition on the
    coefficient only, so even a *heuristic* that finds a convergent reliably but
    cannot check `q ∤ k` would need a verifier, and building that verifier is
-   itself a sub-problem. (iii) Any argument that the good convergents are
+   itself a sub-problem.~~ **⚠️ STRUCK 2026-09-24 (§7-ter): this sub-question is
+   provably vacuous.** `q ∤ k` holds for *every* candidate in the box whenever
+   `2X < p·q` (`box_nmid` in `VacuousUsefulness.lean`), so there is nothing to
+   verify and no verifier is needed — the gcd is `p` unless `k = 0`. Sub-question
+   (ii) is **deleted, not deferred**. (iii) Any argument that the good convergents are
    *unreachable* from `N` in this cost — the negative answer is as valuable as
    a positive one, and would retire the deterministic direction outright.
 
    ⚠️ **The honest limit.** This is a **reformulation plus a question**, not a
    method. `SquareDiff.lean` proves the reduction; it does not make anything
    faster. The convergent identification is classical and is described, not
-   proved. And **I have not checked whether this reduction is stated elsewhere**
-   — SQUFOF's partial-quotient view is close, and I have not ruled out prior
-   art. No priority is claimed.
+   proved. ~~And **I have not checked whether this reduction is stated
+   elsewhere** — SQUFOF's partial-quotient view is close, and I have not ruled
+   out prior art.~~ **⚠️ RETRACTED 2026-09-24 (§7-quater): the literature has now
+   been searched and the answer is partly yes.** The `(k, l)` family is
+   **Harvey's own formulation**; the Fermat+Lehman unification is **published**
+   (Hales–Hiary, arXiv:2209.15586); and the SQUFOF bridge is **not supported by
+   prior art** — SQUFOF lives in a *different* continued fraction. No priority is
+   claimed, and part of what this item implied about novelty is withdrawn.
 
    **Update (this round).** I tried to turn this into a search and it is now
    **provably impossible** — see §7-bis. The `(k, l)` space is a *bijection* of
@@ -4184,7 +4324,7 @@ algorithm; each is a place where a genuine open problem still lives.
 
 > **★ The weight-structure theorem (§7, 2026-09-24) — the newest structural
 > result, and the first that is a derivation about the state of the art rather
-> than a barrier internal to one file.** `HarveyFloor.lean` (24 theorems,
+> than a barrier internal to one file.** `HarveyFloor.lean` (23 theorems,
 > 0 `sorry`, 0 `axiom`) proves the `k`-floor optimum **exactly**, in both
 > directions: `weighted_amgm_finset` is the lower bound and
 > `finset_barrier_attained` the attainment, so `optimum = N^{γ/(1+Σwᵢ)}` for
@@ -4254,24 +4394,40 @@ list decoding on the **asymmetric** channel — a coding-theory gap PPS flagged 
 > `SquareDiff.lean` (10 theorems, 0 `sorry`, 0 `axiom`) proves that Fermat,
 > Lehman, SQUFOF, Hart, Coppersmith's square congruence, Harvey and GFHP are
 > one method, and says what it is: writing `a − b = k·p`, `a + b = l·q`, the
-> output is exactly `p·gcd(k, q)`, so the method succeeds **iff `q ∤ k`**, and
+> output is exactly `p·gcd(k, q)`, so the method fails only **iff `q ∣ k`**, and
 > the size bound is exactly `|k·p ± l·q| ≤ 2X`. Those are the **continued-fraction
-> convergents of `p/q`**. Three corollaries are worth more than the reduction:
-> `trivial_iff` shows the entire succeed/fail content of the family is the
-> single condition `q ∤ k`; `fermat_is_k_l_one` shows **Fermat is the single
-> point `k = l = 1`**, so everything since Fermat is the effort to reach *other*
-> points; and `lehman_bound` shows **Lehman's diagonal is provably useless for
-> close primes** (`k ≤ 2X/(p−q)`, i.e. `O(X)` when `p − q = O(1)`), so the
-> general two-parameter family is *not* an optimisation of Lehman's — it is a
-> strictly larger object, and that enlargement is what buys Harvey his `1/5`.
+> convergents of `p/q`**. Two corollaries survive scrutiny:
+> `fermat_is_k_l_one` shows **Fermat is the single point `k = l = 1`**, so
+> everything since Fermat is the effort to reach *other* points; and
+> `lehman_bound` shows **Lehman's diagonal is provably useless for close primes**
+> (`k ≤ 2X/(p−q)`, i.e. `O(X)` when `p − q = O(1)`), so the general
+> two-parameter family is *not* an optimisation of Lehman's — it is a strictly
+> larger object, and that enlargement is what buys Harvey his `1/5`.
+>
+> **⚠️ 2026-09-24 — TWO RETRACTIONS against this verdict.**
+> **(1) The third claimed corollary is false.** `trivial_iff` does *not* make
+> `q ∤ k` "the entire succeed/fail content": `VacuousUsefulness.lean`
+> (5 theorems, 0 `sorry`, 0 `axiom`) proves the condition is **vacuous inside
+> the box**. `box_nmid`: `2X < p·q` ∧ `k·p + l·q ≤ 2X` forces `¬ q ∣ k`, so
+> the gcd is always exactly `p` and the real degeneracy is `k = 0`
+> (`failure_iff_k_zero`). No primality hypothesis is used. This **deletes** the
+> verifier sub-question from §8 item 7 (§7-ter).
+> **(2) The reduction is partly PRIOR ART.** The `(k, l)` family is **Harvey's
+> own formulation** (`u = a·q + b·p`, test `u² − 4abN` for squareness), and the
+> Fermat+Lehman unification is **published** — Hales–Hiary, arXiv:2209.15586,
+> via Farey fractions. What is left unclaimed is the common convergent axis
+> across all seven methods, the `gcd(k,q)` unifying formula, and the **SQUFOF
+> bridge** — the last being precisely the link the literature does *not*
+> support, since SQUFOF lives in a *different* continued fraction (§7-quater).
 >
 > **This changes the standing verdict in one specific way.** Until now the
 > deterministic side was a *cost* map with no target: "beat `1/5`" had no
 > statement of what one would have to compute. It now has one — **locate a
-> convergent of `p/q` from `N` alone, with `q ∤ k`** (§8 item 7). The weight
+> convergent of `p/q` from `N` alone** (§8 item 7; the `q ∤ k` qualifier is
+> vacuous per §7-ter). The weight
 > question (§8 item 6) asks how much of a sweep a floor may reuse; this asks
-> what the sweep is *for*, and answers that the prize is a specific integer with
-> a specific arithmetic property rather than merely a faster search. **Neither
+> what the sweep is *for*, and answers that the prize is a specific integer
+> rather than merely a faster search. **Neither
 > is a method and I am not claiming one.** The reduction reorganises and
 > explains; it makes no computation faster, the convergent identification is
 > classical and described rather than proved, and **I have not searched the
