@@ -2763,6 +2763,48 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   have "proved" nothing; it is recorded here because that direction slip is the
   standard way a counting argument silently loses its contradiction.
 
+- **`HarveyFloor.lean`** *(new, 2026-09-24; Lean exit 0, **0 `sorry`, 0 `axiom`**,
+  Mathlib `0df444a`, workspace copy at
+  `~/prove2me_workspace/Theorems/Thm_Crypto_FactoringBarrier_HarveyFloor.lean`)* —
+  **the `N^{1/5}` barrier is a *theorem* about the Lehman–BSGS family, not a
+  balance heuristic.** This is the first *positive* (i.e. provable) machine-checked
+  result in this file, as against the kill record above.
+
+  Harvey's deterministic `N^{1/5}` algorithm carries three co-binding cost terms —
+  the per-pair search floor `r`, the baby-step budget `m`, and the BSGS interior
+  `N^{1/2}/(r^{1/2}·m)` — and the cost is their `max`. The exponent `1/5` is
+  *always* presented as the result of **balancing** them at `r = m = N^{1/5}`,
+  which makes it look like a heuristic that a cleverer parameter choice might
+  undercut. The file proves the stronger exact statement:
+
+  > **`max_ge_n_fifth`** — for all `N, r, m > 0`,
+  > `max(r, m, N^{1/2}/(r^{1/2}·m)) ≥ N^{1/5}`.
+
+  The proof is weighted AM–GM in `rpow` form: with `T` the max, `N^{1/2} ≤ T·r^{1/2}·m
+  ≤ T^{1/2}·T·T = T^{5/2}`, so raising to the `2/5` power gives `N^{1/5} ≤ T`.
+  **`attained`** then closes the other direction — at `r = m = N^{1/5}` all three
+  terms coincide at `N^{1/5}` (the interior is `N^{1/2-1/10-1/5} = N^{1/5}`) — so
+  the family optimum is *exactly* `N^{1/5}`, not merely bounded below by it.
+  `no_rebalance_beats` is the operative corollary.
+
+  **Why this matters for the open threads.** It retires one of the two levers in
+  §8's "beat `1/5`" question *by proof*: **no rebalancing, however asymmetric,
+  can produce an exponent below `1/5` inside this family.** The earlier session
+  material (`V_k` anchor batching, §8) was killed for a *different* reason — the
+  anchor term was non-binding — and the two kills are consistent: the anchor was
+  never binding because `r` itself cannot go below `N^{1/5}` either. What remains
+  is the **second** lever: change the *mechanism* (the Coppersmith / rank-3-lattice
+  route of GFHP), not the parameters. That is a genuinely different problem and
+  is untouched by this file.
+
+  **Honest scope limit.** This is a statement about a *cost formula*, i.e. it
+  proves the AM–GM balance is forced **given that the algorithm's cost is
+  `max(r, m, N^{1/2}/(r^{1/2}·m))`**. It does **not** prove that no algorithm
+  outside the Lehman–BSGS family is bounded below by `N^{1/5}`; §2 records that
+  GFHP reaches the same exponent by a different mechanism, and a genuinely new
+  method could in principle be sub-`N^{1/5}`. The theorem is a *lower bound for
+  one family*, and should not be read as a complexity lower bound for factoring.
+
 ---
 
 ## 8. Open threads worth continuing (the "do not give up" list)
