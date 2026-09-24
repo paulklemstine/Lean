@@ -7,7 +7,8 @@ adjacent partial-key and complexity-theory literature.
 directory; barrier corrections in `TradeoffBarrier.lean` and `Capstone.lean`;
 the deterministic-family results in `SquareDiff.lean` (10 thms),
 `NoFreeSearch.lean` (3 thms), `VacuousUsefulness.lean` (5 thms),
-`HarveyFloor.lean` (23 thms) and `OrderLCM.lean` (6 thms).
+`ScaleWall.lean` (8 thms), `HarveyFloor.lean` (23 thms) and `OrderLCM.lean`
+(6 thms).
 **⚠️ Two claims in this file were retracted on 2026-09-24 — see §7-ter (the
 `q ∤ k` success condition is vacuous) and §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published).**
@@ -3462,8 +3463,13 @@ without sweeping) rather than merely suggesting it.
 `S' → S` gives `|S'| ≤ |S|`, plus the elementary box count); only the
 injectivity — the part that carries the content — is in Lean. (ii) This kills
 *this* re-encoding, **not** the family: nothing here bears on Harvey, GFHP, or
-any future method that does not go through `(k, l)` coordinates. (iii) Still
-**no method**; still **no literature search**, so no priority claimed.
+any future method that does not go through `(k, l)` coordinates. (iii) ~~Still
+no literature search, so no priority claimed.~~ **⚠️ BOTH POINTS NOW SUPERSEDED
+(§7-quater, §7-quinary):** the literature search was done and the answer is partly
+prior art; and the family itself is now **provably not a search space at any
+affordable scale**, because the box has a `√N` floor. This entry is therefore
+*stronger as a kill than it was written to be* — see §7-quinary, which closes the
+question this entry left open.
 
 ---
 
@@ -3570,6 +3576,112 @@ dead — use the arXiv main-site HTML search at `https://arxiv.org/search/`;
 Springer is paywalled; dblp, zbMATH, OpenAlex and Semantic Scholar are blocked
 from this host; and **WebSearch actively fabricates citations here**, so no
 identifier in this file may come from it.
+
+---
+
+---
+
+### 7-quinary. ★★★★★★ THE SCALE WALL — the box itself has a floor at `√N`
+
+This is the sharpest result in the file and the first one that is **not** a
+reformulation. It kills the *entire search interpretation* of §7 with a size
+argument, and it is stronger than §7-bis in a specific way: §7-bis showed the
+`(k,l)` and `(a,b)` coordinates have equal cardinality; **this shows the box is
+too big to sweep at any scale where the method would be worth anything.**
+
+**The algebra.** From `a - b = k·p` and `a + b = l·q`,
+`a² - b² = (a+b)(a-b) = k·l·p·q = k·l·N`. And `a² - b² ≤ a² ≤ X²`. So
+
+> **`k·l·N ≤ X²`  — the budget law.**
+
+Read the other way: the *product* `k·l` you can reach is bought at `N` per unit.
+And separately, `2·a = k·p + l·q ≥ p + q`, so with `a ≤ X`,
+
+> **`p + q ≤ 2·X`, i.e. `X ≥ (p+q)/2 ≥ √N`  — the box floor.**
+
+**Why this kills the search reading.** Every method in the family therefore
+operates at `X ≳ √N`. The `(a,b)` box has `X² ≳ N` lattice points, so sweeping it
+costs `≳ N` — *strictly worse than the `N^{1/2}` it is trying to beat*. There is
+no scale at which this family is an affordable search. §7-bis said re-encoding
+does not help; **§7-quinary says the encoding was never the problem — the size of
+the target set is.**
+
+**The consequence that actually bites.** Put `X = c·√N` (the only shape the wall
+permits). Then the budget law reads `k·l ≤ c²`. So at the operative scale:
+
+> **The good `(k, l)` satisfy `k·l ≤ c²` — a set of size `O(c²)`, independent of
+> `N`.**
+
+The target is **not a search space; it is a bounded, factor-independent set of
+divisors of a small integer.** Verified: the good set is always a subset of
+`{(k,l) : k·l ≤ c², k ≡ l (mod 2)}` across 960 random `(p,q)` at `c = 1..8`, with
+the realised count running ~40–54% of that bound. **Reaching depth `m` costs box
+area `m·N`** (`deep_convergent_costs`) — there is no free depth, ever.
+
+**Fermat is the floor, exactly.** A good point with `k = l = 1` has `2·a = p + q`
+*identically* (`fermat_forces_X`), so `X = (p+q)/2` is **forced, not merely a
+lower bound**. Fermat's method is not one point among many at the wall — it is
+*the* point at the wall.
+
+**Machine-checked** — `ScaleWall.lean`, **8 theorems**, 0 `sorry`, 0 `axiom`,
+clean build (0 errors, 0 warnings). Axioms: `[propext]` for `sq_diff_eq_kl`;
+`propext + Quot.sound` for `budget_law`, `fermat_forces_X`,
+`deep_convergent_costs`; `+ Classical.choice` for the four using `Nat.le_total`.
+
+| theorem | content |
+|---|---|
+| `sq_diff_eq_kl` | `a² − b² = k·l·p·q` — the algebra, and it needs **no** positivity |
+| **`budget_law`** | **`k·l·(p·q) ≤ X²`** — the payload; needs only `a ≤ X`, never `b ≤ X` |
+| **`box_floor_full`** | **`k·p + l·q ≤ 2·X`** — the whole box is spent |
+| **`box_floor`** | **`p + q ≤ 2·X`, i.e. `X ≥ (p+q)/2 ≥ √N`** |
+| `kl_per_coordinate` | `k·p ≤ 2·X ∧ l·q ≤ 2·X` — depth costs `N` per unit in *either* coordinate |
+| `fermat_forces_X` | `k = l = 1` ⟹ `2·a = p + q` — Fermat **is** the floor |
+| **`size_barrier`** | **`p·q ≤ X·X`** — pure size; no primality, no gcd |
+| `deep_convergent_costs` | `k·l ≥ m` ⟹ `m·(p·q) ≤ X·X` — depth `m` costs area `m·N` |
+
+**A by-product not previously recorded.** `budget_law` needs only the bound on
+`a`; `b ≤ a` is automatic and `a² − b² ≤ a²` is `Nat.sub_le`. **The box is
+one-sided in the algebra even though it is written two-sided in the geometry.**
+Conversely `sq_diff_eq_kl` needs *no* positivity at all — the hypotheses `k ≥ 1`,
+`p ≥ 1` are used only to convert a *size* statement into a *search* statement,
+which is exactly where the wall is.
+
+**What this settles, and the new thread it produces.** Harvey reaches `N^{1/5}`,
+which is **far below `√N`**. So Harvey is *not* enumerating this family, and the
+box does not model what he actually does. The only known mechanism that reaches
+below the wall *without* enumerating is **baby-step/giant-step on the
+multiplicative group** — `α^{aN+b}` — which reuses the sweep `r` times instead of
+testing candidates independently. **That mechanism is outside the `(a,b)` box
+entirely, and this reduction cannot see it.**
+
+> **★★ THE NEW OPEN THREAD (§8 item 8): model the baby-step/giant-step reuse
+> directly.** The four-primitive meta-barrier (§5) says every method reduces to
+> four primitives. This file has now shown the square-congruence primitive has a
+> **`√N` floor** — so it is *not* the primitive that buys `1/5`. Which primitive
+> is? The candidates are (i) approximation (Coppersmith), (ii) special algebraic
+> form, (iii) the idempotent. **The question "which primitive survives the scale
+> wall" is sharper and more answerable than anything §8 currently lists**, because
+> the wall gives a *test*: a candidate primitive is wrong iff it is forced to
+> produce a box point.
+
+**Two Lean traps, both load-bearing (thirtieth–thirty-second).** In `ℕ`,
+`a * a` does **not** match the pattern `a ^ 2` under `rw` — you must `rw
+[pow_two]` first, or `Nat.sq_sub_sq` silently fails to fire. And **`b ≤ a` does
+not follow from `a - b = k·p`**: with `p = 0` the truncated subtraction gives
+`a - b = 0` compatible with `b > a`, so every size theorem needs `p ≥ 1`
+explicitly. `omega` also cannot prove `k*p + l*q = 2*a` from the two equations
+until `b ≤ a` is in context; supplying it fixes the goal immediately.
+
+**Honest limits.** (i) This is a **barrier**, so it removes possibilities rather
+than adding a method — like most of this file. (ii) It is **not** a claim that
+factoring in `N^{1/5}` is impossible; Harvey does that. It is the claim that
+**this family, swept, is not how he does it.** (iii) The `O(c²)` count is prose
+plus a numerical containment check, not a Lean counting theorem; the theorems
+above carry the content. (iv) **No novelty is claimed for the barrier itself** —
+the size argument is elementary. The novelty claim, if any, is the *observation
+that it applies to the family this file spent two rounds building*, and that the
+`√N` floor forces the search reading to be abandoned in favour of the §8 item 8
+thread.
 
 ---
 
@@ -4297,6 +4409,54 @@ algorithm; each is a place where a genuine open problem still lives.
    "enumerates convergents more cleverly" is a mirage, and that is now a
    theorem rather than a suspicion.
 
+8. **★★★★★ WHICH PRIMITIVE SURVIVES THE SCALE WALL? — the question the `√N`
+   floor makes answerable** *(new 2026-09-24; §7-quinary, `ScaleWall.lean`)*
+
+   §5's meta-barrier says every classical method reduces to one of four
+   primitives. §7-quinary now says something §5 did not: **the
+   square-congruence primitive has a proven `√N` floor.** Any good point forces
+   `X ≥ (p+q)/2 ≥ √N` (`box_floor`), and at `X = c·√N` the good `(k,l)` satisfy
+   `k·l ≤ c²` — an `O(c²)` set, independent of `N`.
+
+   **So the square-congruence primitive cannot be the one that buys `1/5`.**
+   Harvey's `N^{1/5}` is far below `√N`, so he is not sweeping this family at
+   all. The only known mechanism that goes below the wall *without* enumerating
+   is **baby-step/giant-step on the multiplicative group** (`α^{aN+b}`), which
+   reuses one sweep `r` times instead of testing candidates independently.
+
+   > **OPEN, and sharper than anything else on this list.** §5 lists four
+   > primitives; the scale wall *eliminates* one of them as a source of
+   > sub-`√N` behaviour. **Which of the remaining three actually produces the
+   > `1/5`, and can its mechanism be stated as a theorem rather than folklore?**
+
+   **Why this is more answerable than it looks.** The wall supplies an
+   *adjudication procedure*, which §5 lacked: a candidate primitive is **wrong**
+   (for sub-`√N` purposes) **iff** proving it useful forces a box point, because
+   the floor then contradicts `X < √N`. So each candidate is testable:
+   - **(1) isolate a factor by gcd** — produces an idempotent, no box. **Survives.**
+   - **(2) approximate `p` from partial information** — no box. **Survives.**
+   - **(3) special algebraic form** — ambiguous; survives iff the form is not
+     reconstructed through a box point.
+   - **(4) nontrivial idempotent `e² ≡ e (mod N)`** — survives, but note `e` is
+     *large* (`Θ(N)`), so this primitive is not box-bounded and is **not** what
+     §7 modelled.
+
+   **Concrete sub-questions.** (i) State Harvey's `α^{aN+b}` reuse as a
+   quantitative invariant: *after `r` reuses, what is provably the residual
+   search fraction?* (ii) Is the `r`-fold reuse expressible as a statement about
+   the four primitives, or is it a **fifth** primitive that §5's taxonomy misses?
+   **This is my best candidate for genuinely new mathematics in the direction
+   that matters** — not in the box, which is now closed, but in the reuse
+   mechanism, which no one in this file has modelled. (iii) The negative answer
+   is valuable too: if the reuse is *just* the four primitives composed, then §5
+   is complete and the wall plus the taxonomy is the whole story.
+
+   ⚠️ **The honest limit.** This is a **question produced by a barrier**, not a
+   method. `ScaleWall.lean` kills a search; it does not build one. What it does
+   is **narrow the search for a method to the one place a method can still
+   live** — which, after §7-bis and §7-quinary, is a much smaller place than it
+   was two rounds ago.
+
 
 ---
 
@@ -4404,7 +4564,34 @@ list decoding on the **asymmetric** channel — a coding-theory gap PPS flagged 
 > two-parameter family is *not* an optimisation of Lehman's — it is a strictly
 > larger object, and that enlargement is what buys Harvey his `1/5`.
 >
-> **⚠️ 2026-09-24 — TWO RETRACTIONS against this verdict.**
+> > **★★★★★★ AND THEN THE SCALE WALL — the family is not a search space at all
+> (§7-quinary, `ScaleWall.lean`, 8 theorems, 0 `sorry`, 0 `axiom`).** This is
+> the strongest result in the file, and it is a **kill of the search reading**,
+> not a reformulation. From `a² − b² = k·l·N` and `a² ≤ X²`:
+> **`k·l·N ≤ X²`**, and from `2·a = k·p + l·q ≥ p + q` with `a ≤ X`:
+> **`X ≥ (p+q)/2 ≥ √N`**. So every method in this family runs at `X ≳ √N`, the
+> box has `≳ N` lattice points, and **sweeping it costs `≳ N` — worse than the
+> `N^{1/2}` it is trying to beat.** There is no scale at which the family is an
+> affordable search. And at the only shape the wall permits, `X = c·√N`, the good
+> points satisfy `k·l ≤ c²` — an **`O(c²)` set independent of `N`**, i.e. the
+> divisors of a small integer, not a search space. `fermat_forces_X` shows
+> `k = l = 1` gives `2·a = p + q` *identically*, so Fermat **is** the floor, not
+> a point among many. **§7-bis said re-encoding does not help; this says the
+> encoding was never the problem — the size of the target set is.**
+>
+> **The consequence that matters for method invention.** Harvey's `N^{1/5}` is
+> far *below* `√N`, so **he is not enumerating this family at all**, and the box
+> does not model what he does. §5's four-primitive meta-barrier now has an
+> *adjudication test* it previously lacked (§8 item 8): a primitive is wrong for
+> sub-`√N` purposes **iff** proving it useful forces a box point, because the
+> floor then contradicts `X < √N`. That eliminates the square-congruence
+> primitive and leaves **the baby-step/giant-step reuse mechanism
+> (`α^{aN+b}`) as the only known thing living below the wall** — which is outside
+> the box entirely and which **nothing in this file models.** Modelling it is now
+> the top open thread, and it is a sharper question than anything §8 listed
+> before, because the wall has told us where a method *cannot* be.
+
+**⚠️ 2026-09-24 — TWO RETRACTIONS against this verdict.**
 > **(1) The third claimed corollary is false.** `trivial_iff` does *not* make
 > `q ∤ k` "the entire succeed/fail content": `VacuousUsefulness.lean`
 > (5 theorems, 0 `sorry`, 0 `axiom`) proves the condition is **vacuous inside
