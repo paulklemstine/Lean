@@ -66,6 +66,68 @@ document is that record. Two durable positive results emerged:
   > **Neither is a lower bound, and no proof separates them from any other
   > method.** The operative statement of the art is therefore *two* constants, and
   > this survey previously carried only the weaker one.
+
+  > **⚠️ PRIMARY-SOURCE WORD-COUNT AUDIT (2026-09-24, second pass).** The refutation
+  > agent tasked with breaking the "1.9019 is optimal" reading was asked to find the
+  > counterexample, and the counterexample turned out to be in the *framing*, not the
+  > number. The full text of Coppersmith, *Modifications to the Number Field Sieve*
+  > (staged at `~/factor-briefs/coppersmith/c1993.txt`) was read directly, and the
+  > words **"optimal", "lower bound", "linear form", "conic", "theorem" each occur
+  > ZERO times** in it. The whole method is one sentence:
+  > *"We find that the choice of ε = ε₁ ≈ 0.95094 … **minimizes the total
+  > asymptotic running time subject to the condition (∗)**, giving a total running
+  > time of L[1/3, 2ε] ≈ L[1/3, 1.902]."*
+  > That is an **optimum of one conjectured cost model under one constraint** — not a
+  > bound over methods, and not framed in "linear forms" at all. Coppersmith's own
+  > disclaimer is the only occurrence of "heuristic" in the paper: *"we generate
+  > integers z in the range 1 < z < x by another process, not uniformly, but we use
+  > the same probability estimate, so that all of the running time estimates we obtain
+  > are **only heuristics**."* The 1993 book says the same of the whole analysis
+  > (*"we are not able to prove this run time rigorously, and even our heuristic
+  > argument has a weak spot"*), and of `1.9019` specifically: *"the smallest value
+  > for c that can currently **conjecturally** be achieved"*, plus §9.7's *"There is
+  > no indication that the modification proposed by Coppersmith has any practical
+  > value."*
+  > **Consequences, all of which weaken the barrier rather than strengthen it:**
+  > **(a)** "optimal within the linear-forms framework" is **not a claim Coppersmith
+  > makes** — the framework is his own conjectural model (one shared `m`, one Stage-1
+  > smoothness set reused across several degree-`d` polynomials, one linear-algebra
+  > bottleneck), and the constraint `(∗)` is a Stage-2 triple-count floor, not an
+  > optimality test. **(b)** The specific conic reduces the optimality conditions to
+  > is **NOT FOUND — UNVERIFIED**; it appears in neither Coppersmith 1993 nor the
+  > Aono papers, and it will not be guessed here. **(c)** Whether higher arity
+  > (`m = 4, 5, 6+1`) admits a better constant is **UNVERIFIED in both directions** —
+  > no source states per-`m` constants and none states that higher `m` is worse. This
+  > is an **open conjecture, not an established negative**, and is recorded as such so
+  > a later reader does not mistake silence for a theorem. Note also that the
+  > "m = 3+1" gloss is a later addition: *"m = 3"* occurs **zero** times in the paper.
+  > **(d)** Aono's two optimality papers (`2012/108`, `2012/134`) are about the
+  > **Coppersmith *technique*** (RSA small-root lattice construction) and contain no
+  > NFS constant, no "linear forms", and no conic — a distinct framework, not a
+  > counterexample to this one.
+  >
+  > **A FOURTH PHANTOM CITATION, in this claim's orbit.** "Bleichenbacher, *New RSA
+  > vulnerabilities using lattice reduction methods* (EUROCRYPT 2000)" **does not
+  > exist**; the only Bleichenbacher entry at EUROCRYPT 2000 is Bleichenbacher–Nguyen,
+  > *Noisy Polynomial Interpolation and Noisy Chinese Remaindering*, pp. 53–69
+  > (unrelated to NFS constants). So three citations habitually attached to this
+  > claim — the ANTS-I 1997 paper, Bleichenbacher–Kaspar–Kurth, and this one — are
+  > unreliable, and **none** establishes a counterexample or a lower bound. Verified
+  > absence is phrased as *nothing in the accessible record*, never absolutely.
+  >
+  > **AND A FIGURE IN THE AGENT'S OWN ADDENDUM THAT WAS WRONG, caught on re-run.**
+  > It reported, as a "new verified primary source", that Bernstein & Lenstra,
+  > *A general number field sieve implementation* (LNM 1554, p. 103) gives
+  > `c_g = (64/9)^{1/3} ≈ 1.9 (GNFS)`. The **expression** is right; the **decimal is
+  > not**. `(64/9)^{1/3} = 1.9230…`, which is precisely the single-polynomial
+  > baseline this survey already records — and the value I corrected *away* as the
+  > frontier last commit. The `≈ 1.9` is B&L's own one-decimal **display rounding in
+  > their prose intro**; the same book prints `1.922999` and `1.9230` elsewhere. Had
+  > the addendum been absorbed at face value it would have **re-created the exact
+  > conflation this survey spent last commit dismantling**, by making `1.9230` and
+  > `1.9019` look like the same number. Rejected. The addendum's *scope* point does
+  > survive and is useful: `1.9019` is the several-number-field **GNFS** constant and
+  > is distinct from `c_s = (32/9)^{1/3} ≈ 1.5263` (**SNFS**, special-form `N`).
 - **Special number field sieve (SNFS):** `L[1/3, (32/9)^{1/3} ≈ 1.526]` — for special-form `N`.
 - **ECM:** `L_p[1/2, √2]`.
 - **Deterministic general factoring:** Harvey, *Math. Comp.* 2021, `O(N^{1/5} log^{16/5} N)` —
@@ -2398,7 +2460,7 @@ algorithm; each is a place where a genuine open problem still lives.
      > survives.]** This bullet said the poly-size route "would need
      > `BPP ⊆ P/poly`, which is open." **`BPP ⊆ P/poly` is not open — it is
      > Adleman's 1978 theorem** (*Two theorems on random polynomial time*,
-     > FOCS 1978:75–83, DOI `10.1109/SFCS.1978.37`, re-verified by ex; Coppersmith, *Modifications to the Number Field Sieve*, J. Cryptology 6(3):169–180 1993, `10.1007/BF00198464` (source of the `1.9018836` constant); *The Development of the Number Field Sieve*, LNM 1554 1993, `10.1007/BFb0091534` (states `1.9230` and `1.9019` on the same page); Elkenbracht-Huizing, *A multiple polynomial general number field sieve*, ANTS-II pp. 99–114, `10.1007/3-540-61581-4_45` (nearest real ANTS-era paper); Frey & Rück `10.1090/S0025-5718-1994-1218343-6`; Hess–Smart–Vercauteren `10.1109/TIT.2006.881709`; Heninger–Shacham CRYPTO 2009 `10.1007/978-3-642-03356-8_1`; Faugère–Marinier–Renault PKC 2010 `10.1007/978-3-642-13013-7_5`act-DOI
+     > FOCS 1978:75–83, DOI `10.1109/SFCS.1978.37`, re-verified by ex; Coppersmith, *Modifications to the Number Field Sieve*, J. Cryptology 6(3):169–180 1993, `10.1007/BF00198464` (source of the `1.9018836` constant); *The Development of the Number Field Sieve*, LNM 1554 1993, `10.1007/BFb0091534` (states `1.9230` and `1.9019` on the same page); Elkenbracht-Huizing, *A multiple polynomial general number field sieve*, ANTS-II pp. 99–114, `10.1007/3-540-61581-4_45` (nearest real ANTS-era paper); Frey & Rück `10.1090/S0025-5718-1994-1218343-6`; Hess–Smart–Vercauteren `10.1109/TIT.2006.881709`; Heninger–Shacham CRYPTO 2009 `10.1007/978-3-642-03356-8_1`; Faugère–Marinier–Renault PKC 2010 `10.1007/978-3-642-13013-7_5`; Aono, ePrint 2012/108 and 2012/134 (Coppersmith-*technique* optimality; **no NFS constant, no conic** — distinct framework); Bernstein & Lenstra, *A general number field sieve implementation*, LNM 1554 pp. 103–126, source of the explicit `c_g`/`c_s` split (⚠️ their intro's `≈ 1.9` is **one-decimal display rounding of 1.9230**, not a different value). All three NFS DOIs re-verified by exact-DOI Crossref fetch 2026-09-24: `BF00198464` = *Modifications to the Number Field Sieve*, J. Cryptology 6(3):169–180 1993; `BFb0091534` = *The development of the number field sieve* (book); `BFb0091537` = *The number field sieve* (chapter, pp. 11–42).
      > fetch). What is open is **`P = BPP`**, a *different and much stronger
      > statement. So the sentence conflated the two: the correct form is that
      > `BPP ⊆ P/poly` is **already known**, so the randomized poly-size bound
