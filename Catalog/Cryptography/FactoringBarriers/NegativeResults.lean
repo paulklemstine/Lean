@@ -11,9 +11,12 @@ import Mathlib.Tactic.Ring
 This file is a **kill record**.  A research catalog is most useful when it
 remembers not only what was proved but also which plausible-looking directions
 are *known dead*, so they are not re-proposed.  Each entry below was proposed,
-then checked against the primary literature, and **killed**.  The machine-checked
-theorem at the end (`mod4_not_injective`) supports the first entry; the rest are
-documentary.
+then checked against the primary literature, and **killed**.  Most are
+documentary; the machine-checked theorems at the end support entries 1, 7 and
+11 (`mod4_not_injective`, `known_leak_maximized_at_balanced`,
+`coldboot_noise_below_capacity`).  Entries 12–13 (the Berggren tree) rest on
+theorems already proved in the `BerggrenModular` / `BerggrenSpectral` modules,
+which are deliberately not re-imported here to keep this file self-contained.
 
 State of the art (as of late 2026): the general number field sieve at
 `L[1/3, (64/9)^{1/3} ≈ 1.923]` is unchanged, ECM at `L_p[1/2, √2]`, and there is
@@ -38,6 +41,8 @@ Buhler–Lenstra–Pomerance 1993; Harvey 2020; Barbulescu–Guillevic–Lenstra
 | 9 | **Resonance / peak-position factor encoding** — read `p` off a resonance whose position encodes the divisor. | **Two independent kills.** (i) *Continuity:* factoring is **discontinuous** — adjacent `N` have wildly different factors — so **no smooth flow can output `p(N)` continuously**; there is no continuous resonance to position-encode. (ii) *Reduction:* the discrete-instantiation is the already-dead **RSDT** mechanism, which collapses to trial division. | see `RESEARCH.md` §4a |
 | 10 | **"Noisy Coppersmith"** — a rigorous noise-tolerant form of `X ≤ N^{β²}`, e.g. `X ≤ f(N,e)` for `e` errors in the known bits of `p`. | **A category error: no attack ever feeds noisy bits to the lattice.** Halderman et al. (CCS 2008 §5.4) and Paterson–Polychroniadou–Sibborn (ASIACRYPT 2012 §2) *both* branch bit-by-bit first and invoke Coppersmith only on **clean, already-recovered** bits — it is a final step, never the noise-robust one. The multivariate ACD-with-error extension is **heuristic on its face** (Cohn–Heninger, ePrint 2011/437: "we cannot rigorously prove that it always works"). | see `RESEARCH.md` §4e |
 | 11 | **"Noise *rate* is what makes cold-boot RSA hard"** — the premise of the old noisy-leak framing. | **Backwards: the noise rate is in *surplus*.** Real remanence decay leaves **≥90% of bits correct** (Halderman measured `δ` = 4–10%), far cleaner than the ~20–24% error the whole-key methods can barely handle — see `coldboot_noise_below_capacity` below. The genuine difficulty is the **channel asymmetry** (unidirectional 1→0 decay), on which HS/HMM **fail outright**; only PPS's maximum-likelihood decoder works. | see `RESEARCH.md` §4e |
+| 12 | **The Berggren / Pythagorean triplet tree as a factoring device** — the tree is exponentially large (`3^k` states) and variable-depth, which looked like an escape from the fixed-construction barriers. | **The tree is `N`-independent** (root `(3,4,5)`, fixed integer `bergMatrix`; no integer-development quantity references the modulus), so its control word, nodes and continuous invariants carry **zero bits about `p`**. And `SmoothnessEscape.lean` shows the only real escape from the polynomial barrier is a *growing parameter tuned to a group-theoretic quantity of `p`* — **depth `k` is not such a parameter**, so the `3^k` size is cosmetic. `N` enters by only three channels, all dead: gcd (trial division, `α=1`, plus the guidance null), multiplicative order (row 13), or not at all. | `RESEARCH.md` §4f; `BerggrenModular/Core.lean`, `TrialDivisionEquivalence.lean` |
+| 13 | **Berggren spectral resonance as a new factoring method** (`berg_resonance_factorization`, `M₂` powers mod `p`). | **It is Pollard `p±1`.** `berg_two_resonance_mod_eight` proves `ord_p(M₂) ∣ p ∓ 1` (sign by `p mod 8`), so the sweep `gcd(M₂^k − 1, N)` splits `N` exactly when `p ∓ 1` is `B`-smooth — the Chevalley–Wielandt matrix form of `p+1`, with base `M₂`. `L[1/2]`-class, **dominated by the NFS**. Upgrades the catalog's older "circular" verdict to "circular *and* classically dominated." | `BerggrenSpectral/HyperbolicResonance.lean`, theorem `berg_two_resonance_mod_eight` |
 
 ## The `n/4` partial-key barrier, and where the square comes from
 

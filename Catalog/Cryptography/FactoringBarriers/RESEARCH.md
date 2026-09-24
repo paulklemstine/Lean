@@ -734,6 +734,94 @@ HS/HMM **whole-key** line; Barbu–Grémy–Lescuyer ePrint 2024/1125 is a
 **structured single-fault** attack recasting PACD as HNP (7 faulted bits on
 1024-bit RSA), which is a fault model, not random cold-boot noise.
 
+### 4f. The Pythagorean triplet (Berggren) tree as a factoring device — killed
+
+The Berggren / Barning–Hall tree of primitive Pythagorean triples is a
+natural thing to try: it is exponentially large (`3^k` distinct states, proved
+free), it is *variable-depth*, and the project's own `Pythagorean/FactoringBarriers/`
+shows that **fixed** constructions are exactly what the algebraic, symmetry and
+analytic barriers kill. So on the surface it looks like a candidate escape
+hatch. It is not, and the reason is sharper than any single prior result.
+
+**The load-bearing correction — the tree is `N`-independent.** The root is the
+fixed triple `(3,4,5)` and the three moves are the fixed integer matrices
+`bergMatrix` (`Cryptography/BerggrenModular/Core.lean`); *no quantity in the
+integer development references the modulus*. Hence the control word is an
+abstract element carrying **zero bits about `p`**, a node is a fixed integer
+triple, and any continuous invariant (Lorentz length, the `3±2√2` eigenvalues,
+hyperbolic position) is a **fixed real number**. The tree's genuine properties
+are real but factoring-irrelevant.
+
+**Why this closes the escape hatch.** `SmoothnessEscape.lean` locates the one
+door out of the polynomial barrier: Pollard's `p−1` splits many semiprimes via
+`gcd(a^m − 1, N)`, because `m` is a *growing parameter tuned to a group-theoretic
+quantity of `p`*. **Tree depth `k` is not such a parameter.** Growing the depth
+grows an `N`-independent integer; it never grows it toward `p`'s group structure.
+So the variable-depth exponentiality is **cosmetic** with respect to Barriers
+I–III, and the tree's `3^k` size buys nothing over trial division.
+
+**And `N` has exactly three ways into the tree**, each already killed:
+
+| Channel | `N`-dependence | Fate |
+|---|---|---|
+| control word / node / continuous invariant | **none** | 0 bits about `p`, by definition |
+| gcd of a coordinate (or function) with `N` | via gcd | **trial division**, `α = 1` — `TrialDivisionEquivalence.lean` |
+| multiplicative order of `M₂` mod `p` | via order | **Pollard `p±1`** — below |
+
+**Sharpening the spectral obituary: it is not merely circular, it is `p±1`.**
+The catalog recorded `berg_resonance_factorization` as circular because its
+resonant exponent is `k = p² − 1` (sharp: `p ∓ 1`), i.e. it needs `p`. But
+`berg_two_resonance_mod_eight` (`BerggrenSpectral/HyperbolicResonance.lean`,
+machine-checked) proves
+
+    p ≡ 1, 7 (mod 8)  ⟹  M₂^(p−1) ≡ 1 (mod p)
+    p ≡ 3, 5 (mod 8)  ⟹  M₂^(p+1) ≡ 1 (mod p)
+
+so `ord_p(M₂) ∣ p ∓ 1`. Running the standard sweep `gcd(M₂^k − 1, N)` for
+`k = ∏_{ℓ ≤ B} ℓ^e` therefore splits `N` exactly when `p ∓ 1` is `B`-smooth —
+**this is literally Pollard `p±1`** (the Chevalley–Wielandt matrix form of
+`p+1`) with base `M₂`. The `p mod 8` dependence merely tells you which sign to
+target, and `p+1` already covers both. Cost is `L[1/2]`-class, **strictly
+dominated by the NFS at `L[1/3, 1.923]`**, so it can never be the new method.
+The two checked instances (`berg_factor_fifteen` = 15, `berg_factor_3233` =
+53·61) are toys that a hand computation of `p mod 8` already exposes. *(The
+supporting theorem is already machine-checked in the Berggren catalog; it is
+deliberately not duplicated here, since `NegativeResults.lean` is written to be
+self-contained and not to depend on the Pythagorean modules.)*
+
+**Three further routes, killed on inspection.**
+
+- **"Turn the cones into a lattice."** `whichMove` is an *inequality*
+  (`5a < 3c`, then `5a < 4c`) — a partition of `ℤ³` into three cones by two
+  hyperplanes. A lattice is an additive subgroup, i.e. translation-invariant;
+  cone membership is **not**, so it is not a congruence and not a lattice. Mod
+  `m`, "which side of `5a = 3c`" is not well-defined on a residue — it depends on
+  the lift, which is exactly `mod_ambiguity_lower_bound` in `Hardness.lean`. The
+  idea is a category error: converting an order-theoretic object into an
+  arithmetic one.
+- **Index calculus from the tree's relations (meta-barrier primitive 1).** Every
+  Berggren relation is an *exact integer identity* over `ℤ` (`a² + b² = c²`, the
+  Lorentz isometry, `applyWord_valid`), so the row of the relation matrix is
+  **exactly zero mod `p`**. Index calculus needs nontrivial multiplicative
+  relations, which come only from smoothness accidents, not from the tree's
+  algebraic structure. The tree additionally offers no smoothness guarantee —
+  and `BlumImmunity.lean` shows the hypotenuse stream is `1 mod 4`-smooth, i.e.
+  *structurally biased against* factoring on Blum moduli.
+- **Schur idempotents vs. ring idempotents `e² ≡ e (mod N)`.** **Formal
+  resemblance only.** The `SchurIdempotent*.lean` files concern *idempotent Schur
+  multipliers* — boolean matrices `A` with `A ⊙ A = A` under entrywise Hadamard
+  product, the `γ₂` norm, blow-ups of identity. That is operator theory on
+  matrices; a ring idempotent is an element of `ℤ/N`. Different categories, no
+  connecting functor — just an overloaded word. And it would be circular anyway:
+  meta-barrier **primitive 4** is *literally equivalent to factoring*, since
+  `gcd(e, N)` is then a proper factor.
+
+**What genuinely survives** is one structural fact worth keeping: `berg_one_gcd_barrier`
+— only the **hyperbolic** branch of the tree carries prime-separating spectral
+information, the unipotent branch carries none. That is real, and it is a clean
+instance of the meta-barrier's structural discipline, but it does not lift the
+route above `p±1`.
+
 ## 5. The meta-barrier: every method collapses to one of four primitives
 
 A second, dedicated invention pass (three new mechanisms, each adversarially
