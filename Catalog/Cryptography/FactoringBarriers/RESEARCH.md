@@ -211,6 +211,46 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   > side of an exponent boundary, and constant-factor engineering inside it is
   > capped by exactly the walls already recorded in §4b.
   >
+  > **— and horn 3, while LIVE, is closed as an *independent* axis too, for a
+  > reason worth recording.** The one escape from horn 3 would be a smoothness
+  > source that is **not** `√p`-coupled. But **that source is the number field
+  > sieve**: NFS's factor base is precisely a set of smooth values (`a-mb`)
+  > whose collection cost is `L[1/3]` and which is **independent of `p`**. So
+  > "find a better smoothness source" is not a new idea — it is
+  > *beat NFS at its own game*, which is circular as a proposal. Attempts to force
+  > a curve order to be *known*-small (CM, torsion) do **not** help: `#E(F_p) | M`
+  > with `M` smooth forces `M ≥ #E(F_p) ≈ p`, so `M` is itself a `√p`-sized
+  > number needing Dickman smoothness — the coupling is *re-imposed*,
+  > not removed. The `L_p[1/2, √2]` exponent of ECM is then forced by the
+  > **Hasse window** (`#E(F_p) = p+1−t`, `|t| ≤ 2√p`): the
+  > order sits in a `√p`-wide window near `p`, so obtaining a `B`-smooth order
+  > means sampling for a rare event at `u = ln p / ln B`, and that search —
+  > not the Hasse bound — is what sets the `1/2`. Note ECM's `L`-index
+  > `1/2` is genuinely **worse** than NFS's `1/3`; ECM wins below `n ≈ 593`
+  > only because `ln p` is halved (a small factor of a large `N`) plus constants.
+  >
+  > **The `L[1/3]` balance is therefore at its floor in its linear-algebra term,
+  > and this is a hard fact, not a conjecture.** The relation matrix is solved by
+  > Gaussian elimination; Strassen, *"Gaussian elimination is not optimal"*,
+  > Numerische Mathematik **13**:354–356 (1969), `10.1007/bf02165411`
+  > (verified by exact-DOI Crossref fetch), shows elimination can be done in
+  > `O(n^(log_2 7)) ≈ O(n^2.807)`, and the best known matrix-mult
+  > exponent is `ω ≈ 2.3716` — **worse** than quadratic.
+  > Since **ω ≥ 2 is a hard lower bound** on matrix multiplication (the
+  > trivial output-size argument: writing an `n x n` product costs `n^2`), **there
+  > is no subquadratic linear algebra, and the `1/3` balance cannot be lowered by
+  > a faster solver.** Faster matrix multiplication is the *worst* case, not an
+  > escape. This closes the last lever inside the standard balance: not the
+  > smoothness density, not the relation structure, and now demonstrably not the
+  > linear algebra.
+  >
+  > ⚠️ **A formula I derived and then discarded, recorded so it is not reused:** I
+  > posited `alpha = beta/(2 beta + 1)` relating the relation exponent to a linear-
+  > algebra exponent, and it failed to reproduce standard NFS (`beta = 1/2` gave
+  > `alpha = 1/4`, not `1/3`). It was an unverified one-parameter guess standing in
+  > for a specific three-way balance, **no claim here rests on it**, and it is
+  > noted only because a formula that "explains" `1/3` while getting `1/4` is
+  > exactly the kind of attractive-looking artefact that otherwise gets promoted.
   > ⚠️ ❌ **WITHDRAWN — THE BISECTION BELOW IS FALSE. ECM IS A COUNTEREXAMPLE.**
   > This block originally concluded that a factoring method's governing quantity is
   > either (i) coupled to `p` (cost `≥√p`, exponential, loses to NFS) or (ii)
