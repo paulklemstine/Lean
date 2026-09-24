@@ -1153,7 +1153,17 @@ varying over three orders of magnitude. The ratio `r` ranges over `(1,∞)` and 
 a bijection from semiprimes (mod the `p↔q` order) onto that range; being a real
 number is exactly what makes it a compact **sufficient statistic** here, not a
 disqualification. *(Verified by exact rational arithmetic on 20 000 random
-`(m,n)`, both directions, zero failures; not yet formalised in Lean.)*
+`(m,n)`, both directions, zero failures; now also machine-checked in
+`FactorEncodingAudit.lean` as `ratio_is_sufficient_statistic`.)*
+
+> **[FRAMING 2026-09-24 — this is a self-correction, not a new identity.]** A
+> literature sweep found no published result naming this identity, but that is
+> not evidence of novelty and must not be cited as such: `p² = N(r−1)/(r+1)` is
+> **elementary Fermat-parametrization algebra**, a two-line rearrangement of
+> `N = m²−n²` with `m = (q+p)/2`, `n = (q−p)/2`. It is too elementary to have
+> been published and too elementary to be scoopable. Its role here is strictly
+> **diagnostic**: it is the *refutation* of §4f's deleted "zero bits" sentence,
+> and it is that — not any claim of discovery — that does the work.
 
 The correct statement is the **circularity dichotomy**, and both halves must be
 said:
@@ -1220,6 +1230,41 @@ is emphatically **NFS-dominated**: the NFS runs in `L[1/3, 1.923] ≈
 2^{O(λ^{1/3}(log λ)^{2/3})}`, which at `λ = 768` is `≈10^23` operations against
 `2^768 ≈ 10^231` for the search — an asymptotic gap of `≈10^208`.
 
+> **[CORRECTED 2026-09-24 — the line was undercounted, and it did not end in
+> 2021.]** A dedicated literature sweep found the Overmars–Venkatraman
+> Pythagorean-factoring line is **at least five papers spanning 2019→2024**, of
+> which this survey cited only **two**. All five DOIs were re-verified by me by
+> exact-DOI Crossref fetch; none is a phantom, and the defect is an *omission of
+> real work*, the opposite of the usual failure mode:
+>
+> | # | Title | Venue | Year | DOI | in survey? |
+> |---|---|---|---|---|---|
+> | 1 | A Fast Factorisation of Semi-Primes Using Sum of Squares | *Math. Comput. Appl.* **24**(2):62 | 2019 | `10.3390/mca24020062` | **no — the line's true origin** |
+> | 2 | New Method of Prime Factorisation-Based Attacks on RSA Authentication in IoT | *Cryptography* **3**, 20 | 2019 | `10.3390/cryptography3030020` | **no** |
+> | 3 | Mathematical Attack of RSA by Extending the Sum of Squares… | *Math. Comput. Appl.* **25**(4):63 | 2020 | `10.3390/mca25040063` | yes |
+> | 4 | New Semi-Prime Factorization and Application in Large RSA Key Attacks | *J. Cybersec. Priv.* **1**(4):660–674 | 2021 | `10.3390/jcp1040033` | yes |
+> | 5 | Continued Fractions Applied to the One Line Factoring Algorithm for Breaking RSA | *J. Cybersec. Priv.* **4**(1):41–54 | **2024** | `10.3390/jcp4010003` | **no** |
+>
+> Two consequences. (i) The **2019 MCA 24(2):62** paper is the premise in its
+> earliest published form: semiprimes `N = p₁p₂` with both `p` *Pythagorean
+> primes* `p = x²+y²` have `N` a **sum of four squares**, and knowing that
+> representation lets **Euler's factorization** split it. The survey led with
+> the 2020 paper and so cited the channel without its origin. (ii) The **2024
+> JCP 4(1)** paper is precisely the "later paper / speedup / break" one should
+> look for before declaring a line dead — and it is a **negative result about
+> the line's future**: it exists, and it reports **no break and no speedup**. It
+> has drifted off the Pythagorean channel entirely onto continued fractions
+> (the CFRAC / Wiener / **Hart one-line** / **Lehman** lineage), prescribing
+> lower-order convergences to Hart's algorithm, and its largest worked example
+> is a **95-bit** number — which GNFS factors in seconds. So the line is alive
+> through 2024, but its live continuation is in a classically NFS-dominated
+> channel and demonstrates nothing at RSA scale. **None of the five is a
+> Berggren-tree attack, and none is a break**, so the §4f kill is untouched.
+>
+> *(Adjacent but NOT factoring — do not conflate: Overmars & Ntogramatzidis,
+> "A new approach to generate all Pythagorean triples", **AIMS Mathematics**
+> **4**, 2019, `10.3934/math.2019.2.242` is Pythagorean **generation**.)*
+
 The 2021 paper's "factorization of the 768-bit number RSA-768" is **not a new
 result and must not be cited as a live break**: RSA-768 was factored by
 **Kleinjung et al.**, ePrint **2010/006**, by GNFS (confirmed by fetching the
@@ -1237,10 +1282,37 @@ tree**; the kill above stands on its own circularity argument and is independent
 of this literature. Also **UNVERIFIED / not an attack**: `Yonatan Zilpa`, ePrint
 **2023/1116**, *"Applying system of equations to factor semiprime numbers"*,
 2023, is a polynomial-system restatement of Fermat with no Pythagorean content,
-no runtime and no complexity analysis (confirmed against the ePrint record). A
-*negative* on a published Berggren-tree-traversal attack is **weak**: Crossref
-and ePrint searches return none, but arXiv was unreachable and dblp/Scholar/Springer
-LNCS/ANTS-V were not swept in this pass.
+no runtime and no complexity analysis (confirmed against the ePrint record).
+
+> **[UPGRADED 2026-09-24 — the "no published Berggren-tree attack" negative is
+> now STRONG, not WEAK.]** The earlier `WEAK` verdict was an artifact of a dead
+> search backend, not of the literature: the `export.arxiv.org` API was returning
+> 406/empty. The **main-site arXiv HTML search is a complete substitute** and
+> works, as does Google Scholar (live, not captcha-blocked) and **global
+> Crossref bibliographic search — a strict superset of Springer LNCS and every
+> ANTS/ANTS-V chapter**, since every LNCS/ANTS chapter carries a Crossref DOI.
+> Three *independent, broad* indexes — arXiv, Google Scholar, Crossref-global —
+> each return **zero** published work that *searches* a Berggren/Barning–Hall
+> tree to factor `N`. The complete on-topic set is now enumerated and positively
+> classified rather than merely absent: enumerative number theory
+> (Aoki et al. 2007); **Emelyanov 2014, "Path Reconstruction in the Barning–Hall
+> Tree"**, `10.1007/s10958-014-2034-5` — the single closest published thing to
+> "searching the tree", and it runs the **inverse** direction (given a node,
+> recover its word), is pure number theory in *J. Math. Sci.*, and is **not an
+> attack**; key *generation* (Srinivas); and one Stern–Brocot preprint that
+> reduces to **modular inversion** (a non-attack, and the wrong tree).
+>
+> **Residual gaps, named so the negative is not overread.** Unswept: **dblp**
+> (bot challenge; mitigated because its corpus is covered by the Scholar and
+> Crossref sweeps); **Emelyanov's full text** (closed access — classified from
+> title/venue/DOI across three indexes, never read, though its title and venue
+> and its inverse direction make a factoring application very unlikely);
+> **non-indexed venues** (obscure conferences, non-English proceedings,
+> theses, paywalled venues with no DOI) which I cannot rule out but which are
+> precisely where such an attack would be a non-peer-reviewed curiosity;
+> **Semantic Scholar / OpenAlex** (rate- and budget-exhausted mid-run; both are
+> secondary indexes largely subsumed by the two above). So: **strong evidence,
+> not a proof of absolute absence**, and it should never be phrased as one.
 
 **And `N` has exactly three ways into the tree**, each already killed:
 
@@ -2268,14 +2340,30 @@ on the RSA cryptosystem," *Notices AMS* 46(2) 1999 · **Coron–May** *J. Crypto
 20(1) 2007 (ePrint 2004/208) ·
 **Gu–Martin** arXiv:1709.02411 (newform count ⇒ factoring; §4c) · Gekeler (the
 forward count identity Gu–Martin invert) ·
-**Overmars–Venkatraman**, *Mathematical and Computational Applications*
-**25**(4):63, 2020, DOI `10.3390/mca25040063`, and *Journal of Cybersecurity and
-Privacy* **1**(4):660–674, 2021, DOI `10.3390/jcp1040033` (**Pythagorean
-quadruples and sums of two/three squares applied to RSA — the only published
-Pythagorean-factoring line found in this survey; §4f. **Not** the Berggren tree.
-The 2021 "RSA-768 factorization" is a pre-solved public instance, **not** a
-break; the authors concede the search is practically intractable and that
-computational viability is future work**) ·
+**Overmars–Venkatraman** Pythagorean-factoring line, **five papers 2019→2024**
+(the survey originally cited only the middle two; all five DOIs re-verified by
+exact-DOI Crossref fetch): *Math. Comput. Appl.* **24**(2):62, 2019, DOI
+`10.3390/mca24020062` (**the line's origin** — Pythagorean primes `p = x²+y²`
+make `N` a sum of four squares, then Euler's factorization) · *Cryptography*
+**3**, 20, 2019, DOI `10.3390/cryptography3030020` · *Math. Comput. Appl.*
+**25**(4):63, 2020, DOI `10.3390/mca25040063` · *J. Cybersec. Priv.*
+**1**(4):660–674, 2021, DOI `10.3390/jcp1040033` (**Pythagorean
+quadruples and sums of two/three squares applied to RSA; §4f. **Not** the
+Berggren tree. The 2021 "RSA-768 factorization" is a pre-solved public instance,
+**not** a break; the authors concede the search is practically intractable and
+that computational viability is future work**) · *J. Cybersec. Priv.*
+**4**(1):41–54, 2024, DOI `10.3390/jcp4010003`, *Continued Fractions Applied to
+the One Line Factoring Algorithm for Breaking RSA* (**a later paper that exists
+and reports NO break and NO speedup** — it drifts onto the CFRAC/Wiener/Hart/
+Lehman continued-fraction channel, largest demo 95 bits) ·
+**Emelyanov** 2014, *Path Reconstruction in the Barning–Hall Tree*, *J. Math.
+Sci.*, DOI `10.1007/s10958-014-2034-5` (the closest published thing to
+"searching the tree", and it is the **inverse** direction — given a node,
+recover its word — pure number theory, **not** a factoring attack; full text
+closed-access, classified from title/venue/DOI across three indexes) ·
+**Overmars–Ntogramatzidis**, *AIMS Mathematics* **4**, 2019, DOI
+`10.3934/math.2019.2.242` (Pythagorean **generation**, **not** factoring —
+**do not** conflate with the line above) ·
 **Kleinjung et al.** ePrint **2010/006**, *Factorization of a 768-bit RSA modulus*
 (GNFS; added so the 2021 claim above is not mistaken for a new result) ·
 **Zilpa** ePrint **2023/1116**, *Applying system of equations to factor semiprime
