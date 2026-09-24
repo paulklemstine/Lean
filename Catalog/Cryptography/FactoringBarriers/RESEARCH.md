@@ -2805,6 +2805,46 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   method could in principle be sub-`N^{1/5}`. The theorem is a *lower bound for
   one family*, and should not be read as a complexity lower bound for factoring.
 
+  **★ THE GENERALIZATION (`weighted_amgm`) — AND THE DESIGN RULE IT IMPOSES.**
+  `max_ge_n_fifth` is the `γ = ½`, `a = ½`, `b = 1` instance of a general
+  statement now in the same file:
+
+  > for any search-floor-shaped method with cost `max(r, m, N^γ/(r^a · m^b))`,
+  > `a, b > 0`, the AM–GM balance is forced and the **optimal exponent is
+  > exactly `γ/(1 + a + b)`**.
+
+  The proof is the same two lines with `γ, a, b` symbolic: `N^γ ≤ T·r^a·m^b ≤
+  T^{1+a+b}`. `harvey_weighted` instantiates it at Harvey's parameters.
+
+  **The operative content is the design rule.** To beat `1/5` with a method of
+  this shape, you must do at least one of:
+
+  1. **raise the total denominator weight `a + b` above `3/2`** — each unit of
+     search floor must buy strictly more than `3/2` units of `N^{1/2}`
+     reduction; **or**
+  2. **lower `γ` below `1/2`** — succeed without ever needing the full `N^{1/2}`
+     range; **or**
+  3. **escape the cost shape entirely** — a different mechanism, not a
+     different parameter choice.
+
+  This generalises to `k` floors: with weights `w₁,…,w_k` the exponent is
+  `γ/(1 + Σwᵢ)` (identical proof — `T` bounds every floor, so
+  `N^γ ≤ T·∏rᵢ^{wᵢ} ≤ T^{1+Σwᵢ}`). **So the exponent is controlled entirely by
+  the weight structure and the numerator exponent — nothing else about the
+  algorithm enters.** This is the cleanest statement of why the last several
+  years of `1/5`-family work have all been *hypothesis relaxations* (see the
+  `δ`/order entry above): a relaxation of the order threshold is precisely a
+  change to `γ` or to the weights, and the theorem says those two knobs are the
+  only ones the shape has.
+
+  ⚠️ **Two scope limits, both load-bearing.** (i) It covers only methods **of
+  this cost shape**; it says nothing about a different cost structure. (ii) The
+  **GNFS is subexponential** — `exp(c (ln N)^{1/3}(ln ln N)^{2/3})` — and so
+  already beats `N^{1/5}` by an enormous margin. This barrier is therefore
+  interesting **only in the deterministic setting**, which is exactly Harvey's
+  domain; it is emphatically *not* a statement about the best known factoring
+  algorithm, and quoting it as such would be a straightforward error.
+
 ---
 
 ## 8. Open threads worth continuing (the "do not give up" list)
