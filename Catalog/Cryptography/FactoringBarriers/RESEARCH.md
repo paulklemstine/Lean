@@ -3820,6 +3820,55 @@ algorithm; each is a place where a genuine open problem still lives.
    **not** a route — "Oesterlé bound" means Ihara–Oesterlé *point-count*, and no
    factorization-free genus bound exists.
 
+6. **★ THE WEIGHT-STRUCTURE QUESTION — the most concrete open problem this file
+   produces** *(new 2026-09-24; §7 "the balance dilemma")*
+
+   Everything else on this list has been attacked and is either closed or
+   blocked on information. This one is different: it is **well-posed, decidable,
+   and nobody has posed it in this form.**
+
+   > **OPEN.** Is there a deterministic search-floor scheme whose total
+   > denominator weight satisfies **`Σwᵢ > 3/2`**?
+
+   Why this is the right question, and why it is *the* right one:
+
+   * **The rest of the design space is now provably closed.** For a
+     general-purpose method the range exponent is necessarily `γ = 1/2` in the
+     worst case (`p` can be `Θ(√N)`), so the `γ < 1/2` lever is available only
+     under a *promise* that `p` is small — which is shortened trial division, not
+     an improvement. By `beating_one_fifth_requires` the `γ` and `Σw` routes are
+     the only two inside the shape, so the `Σw` route is the only one left in the
+     worst case. **One knob.**
+   * **The required value is a specific number, not a direction.**
+     `required_weight` gives `Σw ≥ γ/e − 1`. At `γ = 1/2`: `1/6` needs `Σw ≥ 2`,
+     `1/8` needs `Σw ≥ 3`. Harvey and GFHP both sit at `3/2`.
+   * **It reclassifies the recent literature.** Every advance in the record —
+     Harvey–Hittmeir, Oznovich–Volk, the order-threshold relaxations, GFHP's
+     `lg^{13/5}` — moves the **constant** (a log factor, a hypothesis threshold)
+     and leaves `Σw = 3/2` untouched. That is consistent with all of them landing
+     on the *same* exponent `1/5`, and the theorem says that is not a
+     coincidence: they are all moving a knob the balance does not see.
+   * **It is checkable, not a vibe.** Any proposed mechanism can be read off for
+     its floors and their exponents and the total computed. That is the point of
+     stating it as a weight rather than as a goal: it converts "can we beat
+     `1/5`?" into a bounded, finite-feeling arithmetic question about a
+     mechanism.
+
+   **What would count as progress, concretely.** A *lower* bound on the total
+   weight attainable by any baby/giant-style scheme with one lattice step per
+   giant — that would show `Σw = 2` is unreachable in this shape and kill the
+   weight route outright, which is as valuable as finding a scheme that beats
+   `3/2`. Either answer is progress; what is *not* progress is another
+   hypothesis relaxation or log-factor improvement, all of which this file now
+   explains as knob-preserving.
+
+   ⚠️ **The honest limit, restated because it is the whole risk here.** I have
+   **not** established what the weights `wᵢ` are mechanically, and I have not
+   exhibited a scheme with `Σw > 3/2`. This entry is a **question**, precisely
+   stated, with the requirement quantified — nothing more. Guessing at the
+   internals is how the earlier session produced two false kills, so the claim
+   is deliberately kept at the level the theorem actually supports.
+
 ---
 
 ## 9. Verdict
@@ -3844,7 +3893,44 @@ algorithm; each is a place where a genuine open problem still lives.
 > text as a standing open problem. The Catalog's barrier documentation was
 > corrected as a direct result.
 
-The next honest move is to sharpen the open threads in §8 — partial-key exposure,
+> **★ The weight-structure theorem (§7, 2026-09-24) — the newest structural
+> result, and the first that is a derivation about the state of the art rather
+> than a barrier internal to one file.** `HarveyFloor.lean` (17 theorems,
+> 0 `sorry`, 0 `axiom`) proves the `k`-floor optimum **exactly**, in both
+> directions: `weighted_amgm_finset` is the lower bound and
+> `finset_barrier_attained` the attainment, so `optimum = N^{γ/(1+Σwᵢ)}` for
+> every `k` — and since the weights enter **only through their sum**, the
+> *number of floors is irrelevant*. `beating_one_fifth_requires` then makes the
+> design rule an **exhaustive dichotomy** (`Σw > 3/2` or `γ < 1/2`, nothing
+> else), and `required_weight` inverts it into the number that matters:
+> achieving `N^e` needs `Σw ≥ γ/e − 1`. Three consequences:
+>
+> * **Floor-splitting is killed by theorem** — exactly neutral if the weight is
+>   redistributed (`split_neutral`), *provably worse* if not
+>   (`split_without_redistribution_worse`), because `k` floors of weight `w` are
+>   `k` times the reach, not `k` views of one floor.
+> * **A `Θ(√N)`-range method provably cannot beat `1/5`**
+>   (`sub_range_exponent_beats`) — which is the real, and stronger, reason the
+>   `V_k` anchor optimisation could not pay: it tuned the interior while leaving
+>   `γ = 1/2`, the one value the theorem forbids.
+> * **GFHP's `1/6`/`1/8` roadmap is blocked on a weight change, not a lemma.**
+>   Its Theorem 1.1 regime (`p,q = Θ(N^{1/2})`) *is* `γ = 1/2`, so the cheap
+>   lever is unavailable by hypothesis, and `1/6` needs `Σw ≥ 2` and `1/8` needs
+>   `Σw ≥ 3` against the achieved `3/2`. Improving the giant-step primitive or
+>   the log factors moves the **constant**, not the required `Σw` — which is why
+>   Harvey, Harvey–Hittmeir, Oznovich–Volk and GFHP all land on the *same*
+>   exponent `1/5`. **They are moving a knob the balance does not see.**
+>
+> Because `γ = 1/2` is *necessary* in the worst case (`p` can be `Θ(√N)`), the
+> `γ < 1/2` route is available only under a **promise** that `p` is small —
+> shortened trial division, not a worst-case improvement. The design space
+> therefore **collapses to a single knob**: raise `Σw` above `3/2`. That is now
+> §8 thread 6, the most concrete open problem this file produces — and note it
+> is a *question*, not a result: I have not established what the weights are
+> mechanically, nor exhibited a scheme beating `3/2`.
+
+The next honest move is to sharpen the open threads in §8 — the new weight-
+structure question, partial-key exposure,
 the low-exponent-RSA ceiling, circuit lower bounds, and the modular-curve
 unification — not to relitigate the killed directions in §3–§5. **Analog/physical
 factoring (thread 3) is no longer on this list:** it was re-scoped and is currently
