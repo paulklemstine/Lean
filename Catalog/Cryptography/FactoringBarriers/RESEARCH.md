@@ -1279,6 +1279,43 @@ This is what makes the retraction **harmless rather than fatal**: the ratio is a
 faithful re-encoding of the secret, and the tree supplies a *representation* of
 `p`, never a shortcut to it.
 
+> **[SHARPENED 2026-09-24 — a strictly stronger kill: the bits-gained EQUALS the
+> bits-spent, letter by letter, so the tree is information-neutral even on
+> *prefixes*.]** Interconvertibility above only says `r` and `p` are equivalent as
+> whole objects. It leaves one door ajar: maybe a *prefix* of the Stern–Brocot
+> path is cheap to reach and informative. It is not, and the reason is an exact
+> identity. The path to the Fermat node is the **continued fraction of `r`**; write
+> `q_j` for the `j`-th convergent denominator. Two facts meet:
+> - the `j`-th letter pins `r` to within `~1/q_j²`, and `q_j ≥ Fib(j)`, so the `j`-th
+>   letter is worth `≥ 2·log₂φ ≈ 1.388` **bits about `p`**;
+> - but to *decide which letter sits at position `j`* you must already know `r` to
+>   the same `1/q_j²` precision — the Farey gap at level `j`.
+>
+> So **gain = spend, ratio exactly 1.00, at every position.** The path is an
+> information-preserving *recoding whose address costs exactly what it carries*;
+> there is no index where information is cheaper than its address. This closes the
+> "use the tree without locating the node" move that interconvertibility alone
+> does not, and it is why the sharpest statement of the kill is **not** "`r` and
+> `p` are interconvertible" but **"`r` is no easier to address than it is to
+> hold."** (Coefficient `2·log₂φ = 1.3884838…` verified numerically, as are the
+> Fibonacci denominators `1,1,2,3,5,8,13,…` in the worst case of all-ones partial
+> quotients.)
+>
+> ⚠️ **AND A NUMBER IN THE REPORT THAT WAS WRONG, caught on re-run.** It was
+> claimed that for generic 256-bit RSA the first letter `a₀ = ⌊r⌋ = 2`, giving a
+> 0.50-bit window on `p`. **`a₀` is not 2.** Over 200 random 256-bit semiprimes
+> `a₀` ranges over **3 … 1368** and is a *spread random integer*, because
+> `r = (q+p)/(q−p)` is itself large. The true leak is larger than reported but
+> still far short of the wall: knowing `a₀` pins `r` to an interval of width `1`,
+> hence `p` to a window of width `≈ √N/a₀²`, i.e. **median ≈ 6.8 bits, worst
+> ≈ 20.8 bits of 256** — against a **Coppersmith threshold of `n/4 = 64` bits**, a
+> ~3–10× margin. The conclusion "worthless" survives; the stated figure and the
+> stated reason did not. The only case where `a₀` is genuinely informative is
+> `q−p = 2`, where `r = m` and `a₀−1 = p` outright — and that is precisely the
+> trivial-Fermat instance `isqrt` already factors in polynomial time, so the
+> dichotomy is exact: **`a₀` is either the trivial-Fermat case or it leaks under
+> ~7 bits.**
+
 The correct statement is the **circularity dichotomy**, and both halves must be
 said:
 
