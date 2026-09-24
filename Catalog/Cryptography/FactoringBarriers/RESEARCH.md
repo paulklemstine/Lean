@@ -7,11 +7,13 @@ adjacent partial-key and complexity-theory literature.
 directory; barrier corrections in `TradeoffBarrier.lean` and `Capstone.lean`;
 the deterministic-family results in `SquareDiff.lean` (10 thms),
 `NoFreeSearch.lean` (3 thms), `VacuousUsefulness.lean` (5 thms),
-`ScaleWall.lean` (8 thms), `HarveyFloor.lean` (23 thms) and `OrderLCM.lean`
-(6 thms).
-**⚠️ Two claims in this file were retracted on 2026-09-24 — see §7-ter (the
-`q ∤ k` success condition is vacuous) and §7-quater (the `(k,l)` core is Harvey's
-own formulation; the Fermat+Lehman unification is published).**
+`ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
+`HarveyFloor.lean` (23 thms) and `OrderLCM.lean` (6 thms).
+**⚠️ Three claims in this file were retracted on 2026-09-24 — see §7-ter (the
+`q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
+own formulation; the Fermat+Lehman unification is published), and §7-sextuples
+(the "sweep all multipliers" method was **not** a strictly dominating method — it
+is subsumed by Lehman's `4k` ray via the doubling lemma).**
 
 ---
 
@@ -3687,6 +3689,112 @@ thread.
 
 ---
 
+### 7-sextuples. ★★★★ THE DOUBLING LEMMA — an attempted METHOD, killed by its own arithmetic
+
+Every other section of §7 is a barrier. **This one is different: it is a method that
+was built, tested, and killed** — and the reason it died is the most reusable result in
+the file, because it constrains a *whole class* of future proposals rather than one
+family.
+
+**The candidate method.** §7-quinary closed the box, so the method had to live outside
+it. The one place the file's own algebra still had unexplored structure is the
+**multiplier**: run the difference-of-squares search on `c·N` rather than on `N`. Lehman's
+method uses `4k·N`; the obvious "improvement" is to sweep `c` over **all** integers
+`1 ≤ c ≤ C`, on the theory that odd multipliers must be unreachable by a method that
+only ever looks at `4k`.
+
+**Why it looked promising.** The `l = 1` row of the `(k,l)` family has a *closed form*:
+for `q = m·p + 2·b`,
+
+> `(m·p + b)² = m·(p·q) + b²`  — the search on `m·N` succeeds **exactly** at `a = m·p + b`.
+
+This is `l1_point`. Unlike `l ≥ 2`, the point is located by **arithmetic on `p,q`, not by
+search**, and it is only `b` steps above the natural baseline `m·p` (`l1_step_count`,
+`l1_start`). So the `l = 1` axis looks like free points that a ray-restricted sweep
+cannot see.
+
+**And the first numbers agreed.** For `p = 1000003`, `q = 3000011` (`q = 3p + 2`, `m = 3`):
+
+| multiplier `c` | iterations to a factor |
+|---|---|
+| `c = 3` (the `l=1` point, **odd**) | **0** |
+| `c = 12` (= `4m`, even) | **0** |
+| `c = 8` (best even `c < 4m`) | 101 021 |
+| `c = 1` (plain Fermat) | 267 950 |
+
+Read naively that is a 100 000× speedup on an odd multiplier Lehman's ray cannot touch.
+**The naive reading is wrong, and the `c = 12` row already says so.**
+
+**THE KILL — doubling.**
+
+> **`a² - c·N = b²`  ⟹  `(2a)² - 4c·N = (2b)²`.**   (`doubling`, `doubling_multiplier`)
+
+Lehman's multipliers are `4·ℕ`, **not** the even integers. And `4m ∈ 4·ℕ` for **every**
+`m`. So the free point at multiplier `m` is *also* free at multiplier `4m` — on the ray,
+**at ray index `m`**, in the same sweep, at the same cost. The `c = 12` row above is not a
+coincidence; it is `2·(a,b)` for the `c = 3` point, and it is what the ray visits at
+index `3`. Verified: `4m` is free in **275/275** near-multiple instances.
+
+Therefore the all-`c` sweep is a strict **superset** of Lehman's ray: **never worse, and
+never better.** The "odd multipliers are invisible" inference is false, and with it the
+method.
+
+**Second, independent kill — the family is not hard.** The `l = 1` point is free when
+`q = m·p + r` with `r` small. But for `m ≥ 2` that means `q/p ≈ m`, i.e. `p` and `q` are
+**unbalanced** — and unbalanced semiprimes are the *easy* case for plain Fermat, which
+walks the hyperbola in `O((√p-√q)²/2) ≈ 0.09·p` steps when `q/p ≈ 3`. **The family that
+motivates the `l = 1` axis is not a hard family**, so the "exponential speedup" evaporates
+against the trivial baseline, let alone against Lehman.
+
+**Third kill, from an adversarial prior-art agent (it reproduced the doubling argument
+independently, then went further).** `c ≡ 2 (mod 4)` can **never** be a difference of
+squares, since `a² - b² ≢ 2 (mod 4)`. So the all-`c` sweep **provably spends 25% of its
+budget on structurally impossible multipliers** — it is not merely equal to Lehman's ray,
+it is *strictly worse* per unit of budget. The agent also confirmed from the primary
+sources that the even-multiplier formulation is the textbook one: **Hittmeir,
+arXiv:2006.16729, Thm 2.1 [Lehman 1974]** states `x² - y² = 4kN` with `1 ≤ k ≤ η` and
+`k = ab`, and **Harvey, arXiv:2010.05450, §3 Lemma 3.3** searches near `(4abN)^{1/2}`.
+
+**Novelty verdict: NOT NOVEL, and parts (2)–(3) were incorrect.** The identity is
+elementary (`(a-b)(a+b)` with `a-b = kp`, `a+b = lq`); the "modification" is subsumed by
+Lehman's existing `4k` sweep via the doubling. **No priority is claimed**, and the
+`r/2`-iteration figure in the commit message should be read as an **upper bound** — the
+true cost is `≈ r²/(8mp)`, roughly `r/2` only when `r` is comparable to `p` (measured
+mean **15.5** against a predicted bound of **31.0** over 182 prime instances).
+
+> **⚠️ THE STANDING CONSTRAINT — this is what the round actually produced.**
+> **The multiplier set is doubling-closed.** Therefore a normalisation that includes
+> `4c` for all `c` **can never have a blind spot**, and no rescaling of a good point can
+> hide it. **Any future proposal of the form "sweep a different set of multipliers" must
+> first answer: *is my new multiplier reachable as `4c` for some `c` that Lehman's sweep
+> already visits?*** If yes, the proposal adds nothing. This kills a *class* of attacks,
+> not one instance family, and it is cheap to check before any of the work is done.
+
+**`MultiplierDoubling.lean` — 5 theorems, 0 `sorry`, 0 `axiom`, clean build**
+(axioms: `[propext]` for `l1_point`, `l1_step_count`, `l1_start`; `+ Classical.choice +
+Quot.sound` via `nlinarith` for the two doubling lemmas):
+`l1_point` (the `l=1` identity) · `l1_step_count` (search baseline) · `l1_start` (loop
+starts at or after `m·p`, hence cost `≤ b`) · **`doubling`** · **`doubling_multiplier`**.
+
+**A tooling note, recorded because it will recur.** The prior-art agent reported that
+**WebSearch fabricated a Wikipedia article titled "Lehman's factorization algorithm" and a
+Handbook of Applied Cryptography §3.2.3 "The Lehman Method" — neither exists** (the real
+Wikipedia integer-factorization article has zero occurrences of "Lehman"; HAC §3.2 is
+Trial division / Pollard ρ / Pollard `p-1` / ECC). This re-confirms, at the level of a
+specific invented citation, the standing rule in this file: **never trust a search-result
+title, author or venue without fetching a real page and reading it.**
+
+**Honest limits.** (i) **No method is delivered.** This is a kill, like most of this
+file, but it is the first entry that *started* as a method and died under test — a
+materially different kind of evidence than a barrier. (ii) The identities are elementary
+and **no novelty is claimed for them**; only the negative result about the
+sweep-modification direction is new to this record. (iii) The `≤ b` iteration bound is
+verified numerically, not as an algorithm in Lean — it needs `⌈√(cN)⌉`, hence reals.
+(iv) The `c ≡ 2 (mod 4)` observation comes from the agent's report and is **not yet
+formalised**; it is a one-line `Nat` fact and an obvious next addition.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
@@ -4460,6 +4568,41 @@ algorithm; each is a place where a genuine open problem still lives.
 
 ---
 
+9. **★★★★★ THE DOUBLING CONSTRAINT — a pre-flight test every future method
+   proposal must pass** *(new 2026-09-24; §7-sextuples, `MultiplierDoubling.lean`)*
+
+   §8 items 1–8 are *targets*: places where a genuine open problem lives. This one is a
+   **filter** — a cheap test that kills a class of proposals before any work is done,
+   which is worth more than another target because it is O(1) to apply.
+
+   > **The multiplier set is doubling-closed:** `a² - c·N = b²` ⟹
+   > `(2a)² - 4c·N = (2b)²`. So any normalisation containing `4c` for all `c` — which
+   > includes Lehman's — **has no blind spot**, and no good point can be hidden from it
+   > by rescaling.
+
+   **The test.** Any proposal of the form *"sweep a different set of multipliers /
+   coefficients / normalisations"* must first answer: **is my new object reachable as
+   `4c` for some `c` the existing sweep already visits?** If yes, the proposal is a
+   superset and therefore **never better** — it is dead on arrival.
+
+   **Why this matters beyond its own round.** §7-sextuples is the first entry in this
+   file that *started as a method* rather than a barrier, and it died to exactly this
+   test — after the method's own numerics appeared to confirm it. A 100 000×
+   "speedup" evaporated because a **single row of the same output table** (`c = 4m`,
+   0 iterations) already contained the refutation. **The lesson generalises: when a
+   numeric experiment favours a new method, always print the incumbent's result on the
+   same instance before believing it.**
+
+   **Concrete sub-questions.** (i) Formalise the agent's `c ≡ 2 (mod 4)` observation
+   (`a² - b² ≢ 2 mod 4`, so the all-`c` sweep burns 25% of its budget on impossible
+   multipliers) — a one-line `Nat` fact, currently the only claim in
+   `MultiplierDoubling.lean` that is **not** machine-checked. (ii) Generalise: which
+   *other* normalisations are `4`-closed, and does the doubling argument extend to a
+   `2`-closed or `3`-closed statement that is *stronger*? (iii) **Does Harvey's
+   baby-step/giant-step reuse survive the same test?** He is not sweeping a multiplier
+   set, so the argument does not obviously transfer — but the discipline of asking is
+   the point, and §8 item 8 remains the live target.
+
 ## 9. Verdict
 
 > No credible non-index-calculus route to polynomial-time classical RSA factoring
@@ -4644,6 +4787,44 @@ list decoding on the **asymmetric** channel — a coding-theory gap PPS flagged 
 > literature search, so still no priority claimed.**
 
 ---
+
+> **★★★★★ Then I built an actual METHOD, and it died under test (§7-sextuples,
+> `MultiplierDoubling.lean`, 5 theorems, 0 `sorry`, 0 `axiom`).** This is the first
+> entry in the file that *started as an algorithm* rather than as a barrier, and its
+> death is the most transferable thing here. The candidate: §7-quinary closed the box,
+> so sweep the **multiplier** instead — run the difference-of-squares search on `c·N`
+> for **all** `c ≤ C`, on the theory that Lehman's `4k·N` form must be blind to odd
+> `c`. The `l = 1` row makes this look real: for `q = m·p + 2b` the search on `m·N`
+> succeeds **exactly** at `a = m·p + b` (`l1_point`), located by arithmetic rather than
+> search. And the first numbers *agreed* — `p = 1000003, q = 3000011` gives `c = 3` in
+> **0** iterations against 267 950 for plain Fermat, on an **odd** multiplier.
+>
+> **It was wrong, and one row of the same table said so:** `c = 12 = 4m` also cost
+> **0**. Because `a² − c·N = b²` implies `(2a)² − 4c·N = (2b)²` (`doubling`), the free
+> point at multiplier `m` is *also* free at `4m` — on Lehman's ray, **at ray index
+> `m`**, in the same sweep. The ray is `4·ℕ`, not the evens, and `4m ∈ 4·ℕ` for every
+> `m`. So the all-`c` sweep is a strict **superset**: never worse, **never better**
+> (verified `4m` free in 275/275 near-multiple instances). Two further kills: the
+> family `q = m·p + r`, `m ≥ 2` is *unbalanced*, which plain Fermat already handles;
+> and `c ≡ 2 (mod 4)` can never be a difference of squares, so the all-`c` sweep
+> **provably burns 25% of its budget on impossible multipliers** — strictly worse, not
+> merely equal. A prior-art agent independently reproduced the doubling argument and
+> confirmed from Hittmeir arXiv:2006.16729 Thm 2.1 and Harvey arXiv:2010.05450 §3
+> Lemma 3.3 that the even-multiplier form is textbook. **No novelty claimed; parts of
+> the claim were simply incorrect.**
+>
+> > **★ The reusable output is not the identities — it is the pre-flight test they
+> > imply (§8 item 9).** *The multiplier set is doubling-closed, so any normalisation
+> > containing `4c` has no blind spot.* **Any "sweep a different set of multipliers"
+> > proposal must first ask: is my object reachable as `4c` for a `c` the incumbent
+> > already visits?** If yes it is dead on arrival. That kills a *class* of attacks in
+> > O(1), and the general lesson is behavioural: **a numeric experiment that favours a
+> > new method must print the incumbent's result on the same instance before it is
+> > believed** — here a 100 000× apparent speedup was refuted by one line of its own
+> > output. The honest status is unchanged: **still no factoring method invented**, and
+> > this round's contribution is a filter on future attempts plus the closure of the
+> > entire sweep-modification direction. §8 item 8 (`α^{aN+b}` reuse) remains the live
+> > target.
 
 ### References (representative)
 
