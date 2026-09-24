@@ -36,6 +36,8 @@ Buhler–Lenstra–Pomerance 1993; Harvey 2020; Barbulescu–Guillevic–Lenstra
 | 7 | **"`1/3` of the bits of `p` factors RSA"** — a sub-`n/4` partial-key crossing. | The claim comes from Takayasu–Kunihiro's asymptotic PKE curve and was **refuted by the very paper that introduced the `1/3`**: May–Nowakowski–Sarkar show the claim would be "a major improvement over Coppersmith's famous factoring with hint", then give "strong experimental evidence that TK fails". Separately, the MNS "1/3" itself is a leak of the **CRT exponents `d_p,d_q`**, not of `p` — absolute known-bit budget is still `N^{1/4}`. | Takayasu–Kunihiro ePrint 2016/1056, 2018/516; May–Nowakowski–Sarkar ePrint 2022/271 §1, §5 |
 | 8 | **Memcomputing / self-organizing-gate factoring** — an *attractor-based, chaos-avoiding* analog device, so noise cannot corrupt a contracting orbit. | **Killed by its own follow-up.** The headline "sub-second 2048-bit" is a **low-degree polynomial extrapolation** from a tuned ≤300-bit range; the largest actual *run* is ~60 bits and there is no silicon. Nguyen et al. show the contraction the design relies on is **destroyed by noise**, so "attracting ⇒ robust ⇒ large `N`" fails in-model. | Sharp et al. arXiv:2309.08198; Nguyen et al. arXiv:2506.14928 (*Chaos* 2026) |
 | 9 | **Resonance / peak-position factor encoding** — read `p` off a resonance whose position encodes the divisor. | **Two independent kills.** (i) *Continuity:* factoring is **discontinuous** — adjacent `N` have wildly different factors — so **no smooth flow can output `p(N)` continuously**; there is no continuous resonance to position-encode. (ii) *Reduction:* the discrete-instantiation is the already-dead **RSDT** mechanism, which collapses to trial division. | see `RESEARCH.md` §4a |
+| 10 | **"Noisy Coppersmith"** — a rigorous noise-tolerant form of `X ≤ N^{β²}`, e.g. `X ≤ f(N,e)` for `e` errors in the known bits of `p`. | **A category error: no attack ever feeds noisy bits to the lattice.** Halderman et al. (CCS 2008 §5.4) and Paterson–Polychroniadou–Sibborn (ASIACRYPT 2012 §2) *both* branch bit-by-bit first and invoke Coppersmith only on **clean, already-recovered** bits — it is a final step, never the noise-robust one. The multivariate ACD-with-error extension is **heuristic on its face** (Cohn–Heninger, ePrint 2011/437: "we cannot rigorously prove that it always works"). | see `RESEARCH.md` §4e |
+| 11 | **"Noise *rate* is what makes cold-boot RSA hard"** — the premise of the old noisy-leak framing. | **Backwards: the noise rate is in *surplus*.** Real remanence decay leaves **≥90% of bits correct** (Halderman measured `δ` = 4–10%), far cleaner than the ~20–24% error the whole-key methods can barely handle — see `coldboot_noise_below_capacity` below. The genuine difficulty is the **channel asymmetry** (unidirectional 1→0 decay), on which HS/HMM **fail outright**; only PPS's maximum-likelihood decoder works. | see `RESEARCH.md` §4e |
 
 ## The `n/4` partial-key barrier, and where the square comes from
 
@@ -118,5 +120,23 @@ theorem known_leak_maximized_at_balanced (β : ℝ) (n : ℝ) (hn : 0 ≤ n) :
 required leakage is exactly `n/4`. -/
 theorem known_leak_attained_at_balanced (n : ℝ) : ((1 / 2 : ℝ) - (1 / 2 : ℝ) ^ 2) * n = n / 4 := by
   ring
+
+/-- **Real cold-boot noise is in surplus, not scarce** — the arithmetic that
+kills killed direction #11.
+
+Halderman et al. measured remanence decay on real hardware at `δ ≤ 1/10` for
+RSA (2048-bit keys: `δ = 4%` and `6%`; 512-bit primes: `δ = 10%`), leaving at
+least `9/10` of the key bits correct.  The whole-key erasure recovery of
+Heninger–Shacham needs only `1/5` of the bits known — the capacity figure is
+`0.20` (their heuristic analysis claims `0.27`, the formal threshold
+`2 − 2^{4/5} ≈ 0.2589`; take the most conservative, `1/5`).
+
+So the observed clean fraction *strictly exceeds* the fraction the best
+whole-key method needs to have known.  The noise rate is therefore **not** the
+binding constraint on cold-boot RSA recovery: the binding constraints are the
+leak *amount* and the channel *asymmetry*.  This is the numeric core of
+`RESEARCH.md` §4e's second kill. -/
+theorem coldboot_noise_below_capacity : (1 : ℝ) - 1 / 10 > 1 / 5 := by
+  norm_num
 
 end FactoringBarriers.NegativeResults

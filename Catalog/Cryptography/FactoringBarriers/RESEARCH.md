@@ -621,6 +621,119 @@ not contain the purported title. **Do not cite it.**
 published below `β²` for a `p`-leak. That is citable and sufficient; the
 "conjecture" was never needed and should not be reinstated.
 
+### 4e. Noisy partial-key exposure: the runner-up sub-thread, resolved as a kill
+
+The one part of thread 1 that no earlier pass had explored was the **noisy /
+approximate leak**: Coppersmith is fragile to a few flipped bits, and real
+cold-boot and side-channel leaks are noisy. The framing was "build a rigorous
+framework for noisy leaks." That framing is a **category error**, and the
+sub-thread resolves to a kill plus one genuine open problem.
+
+**Correction to the record first: `HS` ≠ noise.** The Heninger–Shacham paper
+(ePrint 2008/510, CRYPTO 2009) is the **erasure** model only — a random `0.27`
+fraction known *exactly*, everything else unknown. It does **not** treat
+bit-flip noise. The symmetric bit-flip (BSC) model is **Henecka–May–Meurer**,
+*Correcting Errors in RSA Private Keys*, CRYPTO 2010, LNCS 6223:351–369. The
+clean three-paper line is:
+
+| Paper | Model | Recovers | Status |
+|---|---|---|---|
+| Heninger–Shacham, CRYPTO 2009 (ePrint 2008/510) | **erasure** | whole key | **heuristic** (their Conjecture 4.3) |
+| Henecka–May–Meurer, CRYPTO 2010 | **BSC**, i.i.d. flips, every bit may be wrong | whole key | **heuristic** (random-slice assumption) |
+| Paterson–Polychroniadou–Sibborn, ASIACRYPT 2012 (ePrint 2012/724) | any memoryless channel; introduces the **asymmetric `(α,β)`** cold-boot channel | whole key | symmetric case as above; **asymmetric case explicitly non-rigorous** |
+
+(All three verified at source, 2026-09-23: title and full author list confirmed
+on the ePrint landing pages.) Note that all of these recover the **whole key
+tuple** `(p,q,d,d_p,d_q)` via bit-by-bit branching on the *algebraic redundancy*
+of a valid key — they are **not** partial-exposure (lattice) methods.
+
+**Kill #1 — "noisy Coppersmith" is a problem no real attack needs solved.**
+No attack ever feeds noisy bits to the lattice. Both families route around it,
+independently and by explicit design:
+
+- Halderman et al. (*Lest We Remember*, CCS 2008 §5.4): "These previous results
+  are all based on Coppersmith's method… the errors may be distributed across all
+  bits of the key data, so we are searching for solutions with low Hamming
+  weight, and these previous approaches do not seem to be directly applicable."
+  They branch bit-by-bit from the LSB using `pq ≡ N (mod 2^i)`, and only at
+  *higher* error rates fall back: recover the first `n/4` bits by branching, "and
+  **use the lattice techniques** to reconstruct the rest" — the lattice sees
+  **clean, already-recovered bits only**.
+- PPS §2: the key is recovered by branching, "only half this number of stages is
+  required since once we have the least significant half of the bits of the
+  private key, the entire private key can be recovered using a result of
+  Coppersmith." Again a **final clean step**, never the noise-robust one.
+
+**The robust step is the branching / list-decoding, not the lattice.** So the
+channel-capacity numbers (BSC `δ ≤ 0.243`; erasure `≥ 0.20`) bound the
+*branching*, and there is no rigorous "degrade `X ≤ N^{β²}` to `X ≤ f(N,e)`"
+statement because **nobody has needed to write one**. The multivariate
+ACD-with-error extension is heuristic on its face: Cohn–Heninger
+(*Approximate common divisors via lattices*, ISAAC 2011, ePrint 2011/437)
+extend the tolerance from `N^{β²}` to `N^{β^{(m+1)/m}}`, but rest on "a commonly
+used **heuristic assumption**" and state "**we cannot rigorously prove that it
+always works**"; even the random-error case is a *stipulated* model
+(Coppersmith–Sudan's reconstruction "assum[es] random (rather than adversarially
+chosen) errors"). Verified at source.
+
+**Kill #2 — noise *rate* is not the binding constraint; the leak *amount* is.**
+Real cold-boot RSA is far cleaner than the algorithms' worst case. Halderman's
+measured decay rates: `δ = 4%` → median 4.5 s on 2048-bit keys; `δ = 6%` → median
+2.5 min; 512-bit primes at `δ = 10%` → median 1 min. That is **90–96% of bits
+correct**, against a whole-key method that barely tolerates ~20–24% error. **The
+noise is not scarce — you have surplus.**
+
+What actually bites is the **channel asymmetry**. Real remanence decay is
+*unidirectional* (1→0 common, 0→1 rare), which breaks the Hamming-metric
+framing: PPS prove the HS/HMM algorithms fail outright on the asymmetric channel,
+because a single reverse flip "will result in the correct solution being
+eliminated from the search tree" — expected 2.5–5 times per 1024-bit key. Their
+maximum-likelihood (non-Hamming) list decoder is what fixes it. So "the attacks
+sit on the margin" is true of the *idealized symmetric* case and misses that the
+classic attacks are **simply inapplicable** to real cold boot.
+
+**The one genuine open question this leaves — and it is information-theoretic,
+not a Coppersmith-noise bound:**
+
+> Does the map "valid RSA key tuple → bit vector" behave as a **random code**
+> under list decoding? Equivalently: can one *prove* — without the random-code
+> assumption — that recovery succeeds exactly when the key's code rate (1/5 for
+> `(p,q,d,d_p,d_q)`) stays below the capacity of the true asymmetric `(α,β)`
+> cold-boot channel?
+
+PPS name this themselves: a rigorous proof "would likely yield a Shannon-style
+random coding bound for list decoding on non-symmetric channels, and such bounds
+are **not known**, despite list decoding having been the subject of many decades
+of study." Every threshold in the literature (`0.243`, `0.20`, `β = 0.479` for
+`(p,q,d)`, `β = 0.666` idealized) is **computed on the assumption that the key
+tuple is random**. The Shannon converse then bounds what any algorithm can do —
+but only *conditional* on that randomness. So the "information-theoretic limit"
+is a rigorous **benchmark**, not a proved RSA-specific limit. There is no real,
+nameable RSA-specific noise limit to cite, and the phantom "AGM conjecture"
+(§4d-v) must not be resurrected as a replacement. The only legitimate
+nameable structure is the **Shannon capacity converse for list decoding**
+(Elias; Guruswami), whose applicability to RSA is exactly the open question.
+
+**Two secondary notes.**
+
+- *"Do error-correcting codes beat lattices?"* is **ill-posed and should be
+  dropped.** The two families attack different problems: coding-theoretic
+  whole-key recovery (list-decoding a redundant key tuple) has no lattice
+  competitor at its threshold, and the `p`-leak lattice regime has no
+  coding-theoretic competitor at all. There is no common operating point.
+- ⚠️ **"Alpha decryption" / "Dealing with the lion's mane of RSA" is UNVERIFIED**
+  and is **not** cited here. It is absent from the IACR ePrint archive and
+  Crossref. Do not rely on it. (The adjacent *approximate-common-divisor*
+  problem it gestures at is real, but its multivariate form is the heuristic
+  Cohn–Heninger result above.)
+
+Adjacent work that is often mis-filed under "noisy Coppersmith" and is not:
+Albrecht–Cid ACNS 2011 (ePrint 2011/038) is about **block ciphers**, not RSA;
+Kunihiro–Shinohara–Izu PKC 2013 (ePrint 2012/701) is a refinement of the
+HS/HMM **whole-key** line; Barbu–Grémy–Lescuyer ePrint 2024/1125 is a
+**structured single-fault** attack recasting PACD as HNP (7 faulted bits on
+1024-bit RSA), which is a fault model, not random cold-boot noise.
+
 ## 5. The meta-barrier: every method collapses to one of four primitives
 
 A second, dedicated invention pass (three new mechanisms, each adversarially
@@ -753,9 +866,11 @@ algorithm; each is a place where a genuine open problem still lives.
      `p`** and the ~near-100% information floor is **wide open**. The precise
      question: *does any method recover `p` from strictly fewer than `n/4` of its
      bits?* The true threshold is **not** known to be ½ — that is just
-     Coppersmith's current mark. (Runner-up, more practical: a rigorous framework
-     for **noisy/approximate** leaks; Coppersmith is fragile to a few flipped
-     bits, and real cold-boot/side-channel leaks are noisy.)
+     Coppersmith's current mark. (The runner-up sub-thread — noisy/approximate
+     leaks — is now **explored and killed as framed**: no attack ever feeds noisy
+     bits to the lattice, and real cold-boot leaks are 90–96% correct, so noise
+     *rate* is not the binding constraint. What remains is one genuine
+     information-theoretic question, not a Coppersmith noise bound. See **§4e**.)
    - **These are complete factorizations, not "half a break."** By Aggarwal–Maurer
      (*Breaking RSA Generically is Equivalent to Factoring*), in the generic ring
      model breaking RSA already reduces to factoring; the partial-key lattice
@@ -763,7 +878,14 @@ algorithm; each is a place where a genuine open problem still lives.
      25–33% of a secret leaked (catastrophic cold-boot/memory/side-channel); a
      sound implementation leaks ~0%. The known attacks are **tight with the
      tolerance** — they sit on the margin, they do not eat into it. None threatens
-     correctly-implemented RSA.
+     correctly-implemented RSA. **Refinement (§4e):** "tight with the tolerance"
+     describes the *idealized symmetric* channel. On the real **asymmetric**
+     cold-boot channel the classic Heninger–Shacham / Henecka–May–Meurer
+     algorithms do not merely sit on the margin — they **fail outright**, since a
+     single reverse bit flip eliminates the correct branch. Paterson–Polychroniadou–
+     Sibborn's maximum-likelihood decoder was required to reach the real channel,
+     and every capacity figure remains conditional on an unproved "RSA key tuples
+     form a random code" assumption.
 2. **Is low-exponent RSA easier than factoring?** — the Boneh–Venkatesan ceiling
    question, now sharply posed (§4b). BV proved **no attack** (it is a no-reduction
    result about proof techniques), and the **generic ring model flips the answer to
@@ -869,12 +991,16 @@ algorithm; each is a place where a genuine open problem still lives.
 > well-posed open problem (`poly(log N)`-computability of the count). The
 > Catalog's barrier documentation was corrected as a direct result.
 
-The next honest move is to sharpen the open threads in §8 — partial-key exposure
-(including the **noisy/approximate-leak** sub-thread, the one part of it that no
-pass has yet explored), the low-exponent-RSA ceiling, circuit lower bounds, and
-the modular-curve unification — not to relitigate the killed directions in
-§3–§5. **Analog/physical factoring (thread 3) is no longer on this list:** it
-was re-scoped and is currently a **kill**, not an open question (§4a).
+The next honest move is to sharpen the open threads in §8 — partial-key exposure,
+the low-exponent-RSA ceiling, circuit lower bounds, and the modular-curve
+unification — not to relitigate the killed directions in §3–§5. **Analog/physical
+factoring (thread 3) is no longer on this list:** it was re-scoped and is currently
+a **kill**, not an open question (§4a). **The noisy/approximate-leak sub-thread
+of thread 1 has likewise been explored and resolved as a kill** (§4e): the
+framing was a category error, and what genuinely survives is a single
+information-theoretic question — whether the RSA key tuple is a good code for
+list decoding — which is the same random-code assumption that already makes every
+published cold-boot capacity figure a benchmark rather than a proved limit.
 
 ---
 
@@ -886,8 +1012,20 @@ Guillevic–Lenstra–Razvan ePrint 2020/829 · Barbulescu–Gaudry–Kleinjung 
 1760s–1785 · Gauss 1801 (*Disquisitiones Arithmeticae*) · **Coppersmith** 1997
 (J. Cryptology; MSB/LSB of `p`; small-`d` `N^{1/4}`) · Howgrave–Graham 1997 ·
 Wiener (small-`d` `N^{1/4}/3`) · **Boneh–Durfee–Frankel** ASIACRYPT 1998 ·
-**Boneh–Durfee** 2000 (`d < N^{0.292}`) · **Heninger–Shacham** CRYPTO 2008
-(ePrint 2008/510, `δ ≈ 0.27`, lattice-free) · **May–Nowakowski–Sarkar** EUROCRYPT
+**Boneh–Durfee** 2000 (`d < N^{0.292}`) · **Heninger–Shacham** CRYPTO 2009
+(ePrint 2008/510, `δ ≈ 0.27`, lattice-free — the **erasure** model, *not* a
+bit-flip-noise result; conference year corrected from the commonly-miscited
+"CRYPTO 2008" to CRYPTO 2009, verified on the ePrint landing page) ·
+**Henecka–May–Meurer** CRYPTO 2010, LNCS 6223:351–369 (the actual **BSC**
+bit-flip model) · **Paterson–Polychroniadou–Sibborn** ASIACRYPT 2012
+(ePrint 2012/724; asymmetric `(α,β)` cold-boot channel, maximum-likelihood
+list decoder) · **Cohn–Heninger** ISAAC 2011 (ePrint 2011/437; multivariate
+ACD-with-error, explicitly **heuristic**) · **Halderman et al.** CCS 2008
+("Lest We Remember", USENIX Sec 2008:45–60 / CACM 52(5):91–98) ·
+**Kunihiro–Shinohara–Izu** PKC 2013 (ePrint 2012/701) · **Albrecht–Cid** ACNS
+2011 (ePrint 2011/038; **block ciphers, not RSA**) · **Barbu–Grémy–Lescuyer**
+ePrint 2024/1125 (structured **fault** attack, not cold-boot noise) ·
+**May–Nowakowski–Sarkar** EUROCRYPT
 2022 (ePrint 2022/271, ⅓ CRT-exponents) · Zhou–van de Pol–Yu–Standaert 2022
 (ePrint 2022/1163, blinded CRT) · **Feng–Nitaj–Pan** 2024 (ePrint 2024/1329) ·
 **Aggarwal–Maurer** (*Breaking RSA Generically is Equivalent to Factoring*) ·
