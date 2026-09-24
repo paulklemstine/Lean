@@ -2112,6 +2112,18 @@ lattice, a special algebraic form, or an idempotent:**
 | **Lenstra ECM** (1987) | collision mod `p` of `[k]P` on a random curve | the mechanism is a **random elliptic-curve group order** |
 | **Pollard ρ** | cycle length mod `p` vs mod `q` | a plain cycle collision, no relation collection |
 | common-modulus gcd | `gcd(N₁, N₂)` for shared `p` | a bare gcd, no algebraic structure at all |
+| **Harvey / Lehman + BSGS** (`N^{1/5}`, the **current deterministic record**) | search the candidates `a·q + b·p` for `a,b ≤ r`, accelerate by a baby-step/giant-step sweep on `α^{aq+bp} ≡ α^{aN+b} (mod p)`, then `gcd(aq+bp − c, N)` | a **structured search with a divisibility oracle**, not relation collection over a factor base; no smoothness of any group order, no cycle collision, no lattice, no special form of `N`. **Added 2026-09-24** — the audit above predates the current record-holder and should not be read as if the strongest modern method were absent. |
+
+> **Why the added row matters methodologically.** The Lehman/BSGS family is the
+> cleanest existing instance of primitive (1) whose bottleneck is *neither*
+> smoothness *nor* a partial-key lattice: it is the **cost of enumerating a
+> structured candidate set to the point where the collision oracle fires**. That
+> is a third bottleneck shape, distinct from both the index-calculus "arrangement"
+> cost and the ECM/group-order smoothness cost, and it is why the `1/5` exponent
+> is governed by a candidate-count-vs-speedup balance (§8 ★ thread) rather than by
+> a Dickman factor. A taxonomy that only exhibits *group-order* counterexamples
+> would leave a reader expecting the NFS `1/3` trade-off to be the universal shape
+> of the barrier — it is not.
 
 The **intended** principle ("isolate by a gcd") is untouched — the defect was the
 parenthetical. That is now repaired in (1) above.
