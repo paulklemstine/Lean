@@ -513,4 +513,65 @@ theorem beating_one_fifth_requires (γ W : ℝ) (hW : (0 : ℝ) ≤ W)
     norm_num at h2 ⊢
     linarith
 
+/-! ### What GFHP's speculative `N^{1/6}` / `N^{1/8}` roadmap actually requires
+
+`finset_barrier_attained` says the `k`-floor cost is `≥ N^{γ/(1+Σw)}`, and
+`N > 1` makes `rpow` strictly monotone, so achieving cost `≤ N^e` forces
+
+> **`Σw ≥ γ/e − 1`.**
+
+At Harvey's/GFHP's balanced-semiprime range exponent `γ = 1/2` that pins the
+weight each target needs. This converts a vague roadmap sentence into a
+checkable requirement — and the requirement is much harsher than the sentence
+suggests. -/
+
+/-- **The weight a target exponent demands.** If a `k`-floor method of range
+exponent `γ` and total weight `W` achieves cost at most `N^e`, then
+`W ≥ γ/e − 1`.
+
+This is the inversion of the design rule, and it is what turns a *target
+exponent* into a *structural requirement on the algorithm*. -/
+theorem required_weight (γ e W : ℝ) (he : 0 < e) (hW : (0 : ℝ) ≤ W)
+    (h : γ / (1 + W) ≤ e) : γ / e - 1 ≤ W := by
+  have hpos : (0 : ℝ) < 1 + W := by linarith
+  have hkey : γ ≤ e * (1 + W) := (div_le_iff₀ hpos).mp h
+  have hkey' : γ ≤ (1 + W) * e := by linarith
+  have hdiv : γ / e ≤ 1 + W := (div_le_iff₀ he).2 hkey'
+  linarith
+
+/-- **Harvey's `1/5` needs `Σw ≥ 3/2`** at the balanced range exponent `γ = 1/2`
+— the instance the family actually achieves, recovered as a theorem rather than
+read off the balance calculation. -/
+theorem one_fifth_needs_weight (W : ℝ) (hW : (0 : ℝ) ≤ W)
+    (h : ((1 : ℝ) / 2) / (1 + W) ≤ (1 : ℝ) / 5) : (3 : ℝ) / 2 ≤ W := by
+  have hh := required_weight ((1 : ℝ) / 2) ((1 : ℝ) / 5) W (by norm_num) hW h
+  norm_num at hh ⊢
+  linarith
+
+/-- **★ Reaching `N^{1/6}` on BALANCED semiprimes requires total weight `Σw ≥ 2`.**
+
+GFHP's Theorem 1.1 treats `p, q = Θ(N^{1/2})`, so `γ = 1/2` — the *balanced*
+range exponent, and therefore the value for which the cheap `γ < 1/2` lever is
+**unavailable by hypothesis**. The theorem says the only route left inside the
+shape is the weight, and that the weight needed is `2`, not `3/2`: every unit
+of search floor must buy a **full two** units of `N^{1/2}` reduction.
+
+Harvey's framework buys `3/2`. This is a `4/3`-fold structural change to the
+weight, not a change of logarithm factors. -/
+theorem one_sixth_needs_weight_two (W : ℝ) (hW : (0 : ℝ) ≤ W)
+    (h : ((1 : ℝ) / 2) / (1 + W) ≤ (1 : ℝ) / 6) : (2 : ℝ) ≤ W := by
+  have hh := required_weight ((1 : ℝ) / 2) ((1 : ℝ) / 6) W (by norm_num) hW h
+  norm_num at hh ⊢
+  linarith
+
+/-- **★ Reaching `N^{1/8}` on balanced semiprimes requires `Σw ≥ 3`** — twice
+Harvey's weight, i.e. each unit of search floor must buy three units of
+reduction. The roadmap's most aggressive target is a **doubling** of the
+weight structure. -/
+theorem one_eighth_needs_weight_three (W : ℝ) (hW : (0 : ℝ) ≤ W)
+    (h : ((1 : ℝ) / 2) / (1 + W) ≤ (1 : ℝ) / 8) : (3 : ℝ) ≤ W := by
+  have hh := required_weight ((1 : ℝ) / 2) ((1 : ℝ) / 8) W (by norm_num) hW h
+  norm_num at hh ⊢
+  linarith
+
 end Crypto.FactoringBarrier.HarveyFloor

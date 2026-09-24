@@ -2937,6 +2937,96 @@ Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_worksp
   no attainment does not determine the optimum, so the design rule was resting
   on a gap. The gap is now closed, in both directions.)
 
+- **★★★ THE BALANCE DILEMMA — what GFHP's `1/6`/`1/8` roadmap actually
+  requires, quantified.** *(2026-09-24; 4 further theorems in
+  `HarveyFloor.lean`: `required_weight`, `one_fifth_needs_weight`,
+  `one_sixth_needs_weight_two`, `one_eighth_needs_weight_three`. 17 theorems
+  total, all `#print axioms`-clean.)*
+
+  This is the first result here that is a **derivation about the state of the
+  art** rather than a barrier internal to one file. It combines two facts
+  already recorded in this document and draws a consequence neither states.
+
+  **Step 1 — the design rule inverted.** `finset_barrier_attained` says the
+  `k`-floor cost is `≥ N^{γ/(1+Σw)}`, and `rpow` is strictly increasing for
+  `N > 1`. So achieving cost `≤ N^e` forces
+
+  > **`required_weight`: `Σw ≥ γ/e − 1`.**
+
+  This turns a *target exponent* into a *structural requirement on the
+  algorithm* — which is the useful direction. Every prior statement of the
+  design rule was phrased as "what must change"; this is "what value is
+  required", and it is checkable against any proposed mechanism.
+
+  **Step 2 — GFHP's regime removes the `γ` lever by hypothesis.** GFHP's
+  Theorem 1.1 treats `p, q = Θ(N^{1/2})` (recorded in §2 from the preprint; note
+  the condition is *not* in the abstract). That is exactly `γ = 1/2` — the value
+  for which `beating_one_fifth_requires` forbids the cheap route. And this is
+  not specific to GFHP:
+
+  > **★ `γ = 1/2` in the worst case, necessarily.** A general-purpose method
+  > must work on *every* semiprime, and `p` can be `Θ(√N)`, so any method must
+  > be prepared to cover a range of that order. Hence its range exponent is
+  > `≥ 1/2` in the worst case.
+
+  Therefore `γ < 1/2` is available **only in a promised regime** — the regime
+  where you are *told* `p` is small (an a priori bound on the smaller factor).
+  That is a *promise problem*, not an improvement to the worst case: it is
+  ordinary trial division over a shortened range, and it says nothing about a
+  method that must handle balanced semiprimes.
+
+  **Step 3 — so for a general-purpose method the dichotomy collapses to ONE
+  knob.** Combining Steps 1–2 with `beating_one_fifth_requires`: the `γ` route
+  is unavailable in the worst case, so the *only* way to beat `1/5` inside the
+  search-floor shape is
+
+  > **raise the total denominator weight `Σw` above `3/2`.**
+
+  **Step 4 — and the required values are large.** At `γ = 1/2`,
+  `required_weight` pins the weight each target demands:
+
+  | target | required `Σw` | vs Harvey's `3/2` | source |
+  |---|---|---|---|
+  | `N^{1/5}` | `≥ 3/2` | — (the achieved value) | `one_fifth_needs_weight` |
+  | `N^{1/6}` | **`≥ 2`** | `4/3`× the weight | `one_sixth_needs_weight_two` |
+  | `N^{1/8}` | **`≥ 3`** | **`2`× the weight** | `one_eighth_needs_weight_three` |
+
+  **The consequence for the roadmap sentence.** GFHP (§2, quoted verbatim in
+  this file) writes that their lemma "remains applicable for potential future
+  improvements … targeting complexities of `N^{1/6+o(1)}` or even
+  `N^{1/8+o(1)}`." That sentence is about the *lemma remaining applicable*. The
+  theorem says the issue is not the lemma — it is that the **weight structure
+  must grow by a factor of `4/3`, and then by a factor of `2`**, before those
+  targets are reachable at all. Improving the giant-step primitive, or the
+  per-step LLL cost, or the log factors, moves the *constant*, not the required
+  `Σw`. So:
+
+  * the `1/6`/`1/8` roadmap is **not** reachable by upgrading the per-step
+    primitive in the existing framework, and the source does not say it is —
+    the sentence is weaker than the requirement;
+  * it is reachable only by a mechanism that changes the **weight structure**,
+    i.e. buys strictly more range-reduction per unit of search cost than the
+    current baby/giant scheme does;
+  * or in a **promised** unbalanced regime, which is not a general factoring
+    improvement.
+
+  **This also explains, structurally, why the roadmap has sat unrealised.** It
+  is not that nobody has found the right lemma. It is that `Σw = 2` is a
+  different *kind* of object from `Σw = 3/2`.
+
+  ⚠️ **⚠️ SCOPE — the one thing I am NOT claiming.** I am **not** claiming to
+  know what the weights `wᵢ` *are* mechanically, or what a scheme realising
+  `Σw = 2` would look like. §7's standing lesson applies: an earlier session
+  guessed at Harvey's internals and produced two false kills, including
+  misidentifying a "record" that was a *different algorithm family*. The claim
+  made here is deliberately the weaker and defensible one: **whatever the floors
+  are, the total of their exponents must reach these values.** That is a
+  theorem, it is checkable against any proposed mechanism, and it is *not*
+  stated in GFHP or in any source read for this file. It is a requirement, not a
+  construction — and the honest summary is that the `1/6`/`1/8` targets are
+  blocked on a weight-structure change nobody has exhibited, not on the
+  hypothesis-relaxation work that has absorbed all recent effort.
+
 - **`OrderLCM.lean`** *(new, 2026-09-24; Lean exit 0, **0 `sorry`, 0 `axiom`**,
   workspace copy at `~/prove2me_workspace/Theorems/Thm_Crypto_FactoringBarrier_OrderLCM.lean`)* —
   **why the `δ`/large-order threshold can be relaxed AT ALL.** The survey records
