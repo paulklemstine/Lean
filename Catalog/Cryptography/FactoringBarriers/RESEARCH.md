@@ -1201,6 +1201,20 @@ disqualification. *(Verified by exact rational arithmetic on 20 000 random
 > **diagnostic**: it is the *refutation* of §4f's deleted "zero bits" sentence,
 > and it is that — not any claim of discovery — that does the work.
 
+**The biconditional, now machine-checked.** The refutation above says the ratio
+*encodes* `p`; the direction that keeps the tree dead is the converse — that
+`p` *determines* the ratio, so the two are polynomial-time interconvertible and
+neither is a cheaper handle. The single identity that does it is
+
+> `m (N − p²) = n (N + p²)`,  i.e.  `m/n = (N + p²)/(N − p²)`,
+
+proved in the new `Catalog/Cryptography/Berggren3Adic/RatioInterconvert.lean`
+(`node_ratio_identity`, Lean exit 0, no `sorry`), and checked by exact integer
+arithmetic on prime pairs. Both directions are rational, hence polynomial-time.
+This is what makes the retraction **harmless rather than fatal**: the ratio is a
+faithful re-encoding of the secret, and the tree supplies a *representation* of
+`p`, never a shortcut to it.
+
 The correct statement is the **circularity dichotomy**, and both halves must be
 said:
 
@@ -2020,6 +2034,19 @@ valid statements *about their model*; only the over-reading was wrong.
   disagree.
 
 Both files compile clean against built Mathlib (Lean v4.33.1, `~/prove2me_workspace`).
+
+- **`RatioInterconvert.lean`** *(new, 2026-09-24,
+  `Catalog/Cryptography/Berggren3Adic/`; Lean exit 0, no `sorry`)* — the
+  machine-checked **biconditional** that closes the Berggren tree's one live
+  thread. §4f's retracted "zero bits" claim is false because the node's ratio
+  `r = m/n` *encodes* `p`; the converse is what keeps the tree dead, and
+  `node_ratio_identity` proves it as one equation:
+  `m(N − p²) = n(N + p²)`, i.e. `m/n = (N + p²)/(N − p²)`. So `p` determines the
+  ratio and the ratio determines `p`; both directions are rational, hence
+  polynomial-time. **Neither is a cheaper handle** — the tree is a faithful
+  re-encoding (a *representation*) of the secret and never a route to it, which
+  is exactly the circularity kill. Verified by exact integer arithmetic on prime
+  pairs alongside the Lean proof.
 
 - **`LadicFlag.lean`** *(new, 2026-09-24, `Catalog/Cryptography/Berggren3Adic/`;
   Lean exit 0, no errors, no `sorry`)* — the machine-checked content of §4f-iii,
