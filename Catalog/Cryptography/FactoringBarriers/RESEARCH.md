@@ -1097,14 +1097,71 @@ shows that **fixed** constructions are exactly what the algebraic, symmetry and
 analytic barriers kill. So on the surface it looks like a candidate escape
 hatch. It is not, and the reason is sharper than any single prior result.
 
-**The load-bearing correction — the tree is `N`-independent.** The root is the
+**The load-bearing correction — REPAIRED 2026-09-24. The tree is `N`-independent;
+the Fermat node is not, and the distinction is the whole point.** The root is the
 fixed triple `(3,4,5)` and the three moves are the fixed integer matrices
 `bergMatrix` (`Cryptography/BerggrenModular/Core.lean`); *no quantity in the
-integer development references the modulus*. Hence the control word is an
-abstract element carrying **zero bits about `p`**, a node is a fixed integer
-triple, and any continuous invariant (Lorentz length, the `3±2√2` eigenvalues,
-hyperbolic position) is a **fixed real number**. The tree's genuine properties
-are real but factoring-irrelevant.
+integer development references the modulus*. This survey then generalised that
+into the claim that the control word carries **zero bits about `p`**, that a node
+is a fixed integer triple, and that any continuous invariant is a **fixed real
+number`. **All three of those are FALSE, and the error is instructive.**
+
+The counterexample is one real number. For the Fermat pair
+`m = (q+p)/2`, `n = (q−p)/2` of `N = pq`, the ratio `r = m/n` — the node's
+hyperbolic coordinate, exactly the kind of "continuous invariant" the deleted
+sentence called information-free — satisfies
+
+    p²  =  N · (r−1)/(r+1)          hence        p = sqrt( N (r−1)/(r+1) )
+
+(using `N = n²(r²−1)` and `p = n(r−1)`). **One real number determines `p`
+completely.** The deleted sentence generalised from the one invariant that
+*is* constant — the eigenvalue `3+2√2`, which carries no information precisely
+*because* it is constant — to all of them, which does not follow. The
+*eigendecomposition coefficient* of a node is likewise a function of `p`,
+varying over three orders of magnitude. The ratio `r` ranges over `(1,∞)` and is
+a bijection from semiprimes (mod the `p↔q` order) onto that range; being a real
+number is exactly what makes it a compact **sufficient statistic** here, not a
+disqualification. *(Verified by exact rational arithmetic on 20 000 random
+`(m,n)`, both directions, zero failures; not yet formalised in Lean.)*
+
+The correct statement is the **circularity dichotomy**, and both halves must be
+said:
+
+- **Reading the word is circular, not information-free.** The catalog's own
+  `Berggren3Adic/ParentLaw.lean` proves `word_recovers_factorization` — the
+  Fermat pair is a node with a **unique** word, and the word evaluation is a
+  bijection. So the word carries **every bit of `p`**; the bits are simply not
+  *accessible* without the thing being sought. An algorithm handed the word must
+  already know the node, i.e. already have `p`.
+- **Computing the word from `N` is a factoring algorithm, and it is Fermat in
+  disguise.** In band `A` the descent is exactly `(p,q) ↦ (p, q−2p)` — one
+  subtractive-Euclidean step per node — so a tree search is Fermat's `⌈√N⌉`
+  search wearing a ternary costume, cost `Θ(√N)`, never better than trial
+  division. **The `3^k` size buys nothing because the tree is exponentially
+  _sparse_ exactly where one must look**: for `p = 65537` the Fermat node of
+  `(65537, 65539)` sits at depth `32768` inside a tree of `3^32768` nodes, while
+  trial division to `√p ≈ 2^16` costs a quarter as much. The exponentiality is
+  cosmetic in the strongest available sense.
+
+Two precise sub-claims, both checkable:
+
+- **The enumeration order leaks, but only the word's leak.** `reach_iff_isPPT`
+  makes the tree a computable enumeration, so the shortlex **rank** of the
+  Fermat node is an exact function of `p` — there is no separate "no extra
+  channel" argument to make. But the rank is a bijective relabelling `w ↦ R(w)`
+  of the word, so it carries **no information beyond the word's** and cannot be a
+  back door. It is also *exponentially over-long*: depth is `Θ(S(p,q))` for `S`
+  the subtractive-Euclidean step count of `(p,q)` (measured `depth/S ∈
+  [0.493, 0.998]`, mean `0.636`, over 800 random pairs at the `2^24` scale), so
+  for `p = 65537` the "position" is a `51937`-bit number encoding a `17`-bit
+  prime — a `3000×` over-long encoding of the very datum sought.
+- **The depth law, stated correctly.** An earlier draft of this audit claimed
+  `depth = N/(2p²) + O(1)`, hence `p = sqrt(N/(2·depth))`. **That is false and
+  was withdrawn**: the `O(1)` tail is not `O(1)` (max 3875 observed), the map is
+  not monotone, and the inversion errs by 74–99 % on *balanced* semiprimes. The
+  surviving law is `depth = Θ(S(p,q))`. Recorded deliberately: "the depth leaks
+  `p`, so we lose" would be a **new** false claim of exactly the species being
+  repaired. **The circularity, not the bit-count, is what kills this route.**
 
 **Why this closes the escape hatch.** `SmoothnessEscape.lean` locates the one
 door out of the polynomial barrier: Pollard's `p−1` splits many semiprimes via
@@ -1114,11 +1171,51 @@ grows an `N`-independent integer; it never grows it toward `p`'s group structure
 So the variable-depth exponentiality is **cosmetic** with respect to Barriers
 I–III, and the tree's `3^k` size buys nothing over trial division.
 
+**The literature: Pythagorean-based factoring HAS been published, and it is
+already inside the kill.** This survey previously gave no citation here, which
+could be read as a novelty claim. It must not be. **Overmars & Venkatraman**,
+*Mathematical and Computational Applications* **25**(4):63, 2020, DOI
+`10.3390/mca25040063`; and *Journal of Cybersecurity and Privacy*
+**1**(4):660–674, 2021, DOI `10.3390/jcp1040033` (both resolved by exact-DOI
+Crossref fetch) attack RSA via **sums of two/three squares and Pythagorean
+quadruples**: the 2021 paper modifies the Lebesgue four-square identity, applies
+the **Brahmagupta–Fibonacci identity** to collapse four quadruples to two
+triples, and takes **gcds of the sides** to recover the factors. That terminal
+gcd is exactly §5 **primitive 1** ("isolate `p` up to a nontrivial gcd, by *any*
+mechanism"); the search over `[N/2, N−1]` is unstructured, `Θ(N) = 2^λ`; and the
+authors' own abstracts concede the search "becomes computationally intractable in
+the practical world" and that "computational viability" is future research. This
+is emphatically **NFS-dominated**: the NFS runs in `L[1/3, 1.923] ≈
+2^{O(λ^{1/3}(log λ)^{2/3})}`, which at `λ = 768` is `≈10^23` operations against
+`2^768 ≈ 10^231` for the search — an asymptotic gap of `≈10^208`.
+
+The 2021 paper's "factorization of the 768-bit number RSA-768" is **not a new
+result and must not be cited as a live break**: RSA-768 was factored by
+**Kleinjung et al.**, ePrint **2010/006**, by GNFS (confirmed by fetching the
+ePrint record — *"Factorization of a 768-bit RSA modulus"*, 13 authors, GNFS, as
+the abstract states). At best it is a correctness check on a pre-solved public
+instance. *(The frequently-cited `>10^20` operations / "almost 2000 years on a
+single core" figures for that run circulate in secondary sources; they appear in
+the full ePrint PDF, not the abstract page, and were **not** independently
+re-verified here — treat as UNVERIFIED until the PDF is read.)*
+
+Two cautions on provenance, both found the hard way. (i) The Pythagorean
+literature is **not** empty, so any claim that nobody has tried this is false.
+(ii) These are sums-of-squares and Pythagorean *quadruples*, **not the Berggren
+tree**; the kill above stands on its own circularity argument and is independent
+of this literature. Also **UNVERIFIED / not an attack**: `Yonatan Zilpa`, ePrint
+**2023/1116**, *"Applying system of equations to factor semiprime numbers"*,
+2023, is a polynomial-system restatement of Fermat with no Pythagorean content,
+no runtime and no complexity analysis (confirmed against the ePrint record). A
+*negative* on a published Berggren-tree-traversal attack is **weak**: Crossref
+and ePrint searches return none, but arXiv was unreachable and dblp/Scholar/Springer
+LNCS/ANTS-V were not swept in this pass.
+
 **And `N` has exactly three ways into the tree**, each already killed:
 
 | Channel | `N`-dependence | Fate |
 |---|---|---|
-| control word / node / continuous invariant | **none** | 0 bits about `p`, by definition |
+| control word / node / continuous invariant | **every bit — via `r = m/n`** | **circular to read, Fermat's `Θ(√N)` to compute** |
 | gcd of a coordinate (or function) with `N` | via gcd | **trial division**, `α = 1` — `TrialDivisionEquivalence.lean` |
 | multiplicative order of `M₂` mod `p` | via order | **Pollard `p±1`** — below |
 
@@ -1778,7 +1875,21 @@ paper; *not* a "J. Cryptology 1994" paper) · **Boneh**, "Twenty years of attack
 on the RSA cryptosystem," *Notices AMS* 46(2) 1999 · **Coron–May** *J. Cryptology*
 20(1) 2007 (ePrint 2004/208) ·
 **Gu–Martin** arXiv:1709.02411 (newform count ⇒ factoring; §4c) · Gekeler (the
-forward count identity Gu–Martin invert) · **Cohen–Oesterlé**, *Dimensions des
+forward count identity Gu–Martin invert) ·
+**Overmars–Venkatraman**, *Mathematical and Computational Applications*
+**25**(4):63, 2020, DOI `10.3390/mca25040063`, and *Journal of Cybersecurity and
+Privacy* **1**(4):660–674, 2021, DOI `10.3390/jcp1040033` (**Pythagorean
+quadruples and sums of two/three squares applied to RSA — the only published
+Pythagorean-factoring line found in this survey; §4f. **Not** the Berggren tree.
+The 2021 "RSA-768 factorization" is a pre-solved public instance, **not** a
+break; the authors concede the search is practically intractable and that
+computational viability is future work**) ·
+**Kleinjung et al.** ePrint **2010/006**, *Factorization of a 768-bit RSA modulus*
+(GNFS; added so the 2021 claim above is not mistaken for a new result) ·
+**Zilpa** ePrint **2023/1116**, *Applying system of equations to factor semiprime
+numbers* (polynomial-system restatement of Fermat; **not** Pythagorean, no runtime,
+no complexity analysis — **do not** cite as a tree attack) ·
+**Cohen–Oesterlé**, *Dimensions des
 espaces de formes modulaires*, LNM 627 (1977) 69–78 (**the real dimension-formula
 citation**; what Sage/PARI/Magma implement — **not** "Oesterlé, Invent. Math. 73
 (1983)", which is uncorroborated, §4c-iii) · **Hamakiotes–Lau** arXiv:2501.10883
