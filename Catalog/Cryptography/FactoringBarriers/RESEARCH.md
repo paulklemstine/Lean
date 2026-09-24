@@ -2917,6 +2917,65 @@ algorithm; each is a place where a genuine open problem still lives.
   > demonstration of the over-determined structure: **no single component fix moves the
   > exponent.** A subroutine can improve by a full exponent and the record not budge.
 
+  > ### ❌ KILLED 2026-09-24 — "`V_k` anchor batching": an identity I verified, an
+  > optimization absent from Harvey, and a kill by comparison to the record
+  >
+  > **Candidate (mine, this session).** In Harvey Alg. 4.2 eq. (4.1),
+  > `t_{a,b} = α^(aN + b − ⌈(4abN)^{1/2}⌉)`. Two structural facts:
+  > **(i)** the term `⌈(4abN)^{1/2}⌉ = ⌈2√(kN)⌉` depends **only on the product
+  > `k = ab`**, not on the split; and **(ii)** `aN + b` separates as
+  > `α^(aN)·α^b = (α^N)^a · α^b`, with `α^N` one fixed element. So
+  > `t_{a,b} = A_a · B_b · C_{ab}` where `A_a=(α^N)^a`, `B_b=α^b`, and
+  > `C_k = α^{−⌈2√(kN)⌉}` ranges over only **`r` distinct values**. The
+  > `Θ(r lg r)` independent per-pair exponentiations therefore collapse to
+  > `O(r)` precomputed elements plus one multiplication per pair.
+  >
+  > **Status of the identity: VERIFIED.** Implemented both ways on a live
+  > 360-bit semiprime (`~/factor-briefs/`, `r=4000`): `t_{a,b} = A_a·B_b·C_{ab}`
+  > holds for **all 33 805 pairs** with `ab ≤ r` (exact-integer `⌈(4abN)^{1/2}⌉`
+  > via `math.isqrt`, no float), reducing `33 805` per-pair exponentiations to
+  > `3r = 12 000` table entries (2.82×). The `A`/`B` tables are one
+  > multiplication each; the `C` table is `r` arbitrary powers, computable in
+  > `O(r)` multiplications by windowed **batch** exponentiation.
+  >
+  > **Status of the novelty: NOT FOUND but immaterial.** Harvey's cost proof
+  > explicitly computes each `t_{a,b}` by an independent full exponentiation —
+  > *"the number of pairs … is `O(r lg r)` … so `t_{a,b}` may be computed in time
+  > `O(M(lg N) lg N)` … total `O(r lg³N lg lg N)`"* — and only precomputes `α^{−m}`
+  > for step 2b. So the amortization is genuinely **absent from the paper**. It is
+  > also absent from the mechanism that produced the current record. **But it does
+  > not matter, and the reason is the useful part.**
+  >
+  > **⚠️ THE KILL — the anchor term is not the binding constraint.** Re-running
+  > Harvey's own term-by-term accounting at the balanced point `r = m = N^{1/5}`
+  > (where `s = O(N^{1/2}/(r^{1/2}m)·lg r + r lg r) = N^{1/5} lg N`):
+  >
+  > | term | cost at `r=m=N^{1/5}` | touched by `V_k`? |
+  > |---|---|---|
+  > | interior sort-and-match | `N^{1/5} lg⁴N` | **no — dominant** |
+  > | Algorithm 4.1 (Bluestein/product-tree) | `s·lg³N = N^{1/5} lg⁴N` | **no** |
+  > | **anchor term** | `r·lg³N lg lg N` | **yes: `→ r·lg²N`** |
+  > | baby steps | `m·lg²N` | no |
+  >
+  > Dropping the anchor from `lg³` to `lg²` leaves the total **exactly where it
+  > was**: the `lg⁴` interior and Algorithm 4.1 terms dominate. The optimization is
+  > real, correct, and *invisible in the total*. Executed to its best case it
+  > yields `N^{1/5} lg³N`, which is **worse than the standing record**
+  > Gao–Feng–Hu–Pan `N^{1/5} lg^{13/5}N/(lg lg N)^{3/5}` (`lg^{2.6}`).
+  >
+  > **Root cause, worth keeping.** Harvey's `lg^{16/5}` is a *balance* of several
+  > co-binding log-terms. The "floor" `r` is the binding constraint **on the
+  > `N`-exponent**, but the binding constraints **on the log factor** are
+  > elsewhere — the interior sort-and-match and the Bluestein step over the `s`
+  > leftovers. **Beating the `N^{1/5}` exponent needs a different `r`-trade-off;
+  > beating the `lg^{13/5}` log factor needs to attack the interior/Algorithm 4.1,
+  > not the anchors.** The two barriers have *different* binding terms, which is
+  > why three separate component improvements have each failed to move the record.
+  >
+  > **Do not re-propose** "batch the per-pair anchors" / "`C_k` table" / "precompute
+  > `⌈2√(kN)⌉` once" in Harvey Alg. 4.2. The identity is true and verified; the
+  > payoff is provably absorbed by a co-dominant term.
+
 2. **Is low-exponent RSA easier than factoring?** — the Boneh–Venkatesan ceiling
    question, now sharply posed (§4b). BV proved **no attack** (it is a no-reduction
    result about proof techniques), and the **generic ring model flips the answer to
