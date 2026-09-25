@@ -6452,6 +6452,65 @@ left it, mitigated but not closed by the exact minimax.
 
 ---
 
+### 8.2. ✅ GAP (i) WAS ALREADY CLOSED IN THIS FILE — and re-deriving it a sixth time is the clearest evidence of the failure mode
+
+§8.0's last clause said gap (i) reopens *if §5's taxonomy is incomplete*. **It is
+complete, and §5 already proved it — at line 2335, with machine-checked backing —
+before any of rounds 46–61 existed:**
+
+> **"Scope: 'classical' is load-bearing. Shor is a genuine fifth primitive —** and the
+> machine-checked companion already isolates why. `FreeSymbol.lean`'s
+> `jacobi_neg_one_disagrees` proves the *character condition* `(a/N) = −1` is classical
+> and free (it happens ~½ the time); only the **extraction** of `ord(a)$ is quantum.
+> **Order-finding is neither a gcd, a lattice, a special form, nor an idempotent.
+> Drop the word 'classical' and the taxonomy needs a fifth slot.**"
+
+And the *other* candidate fifth doors are closed in the same place: an efficiently
+computable observable of `N` with period `p$ or `q$ **must** project
+`ℤ/Nℤ → ℤ/pℤ`, **which is the CRT idempotent, hence factoring**; and the public key
+`e` is chosen independently of `p,q$ (verified), so it is symmetric and stays inside
+Barrier II — knowing it *"moves you into the leak regime"* rather than opening a door.
+
+**⇒ SO THE COMPLETENESS STATEMENT IS EXACT, AND IT IS THE FILE'S OWN:**
+
+> **§5's taxonomy is complete modulo exactly one primitive — quantum order-finding —
+> which is (i) excluded by the file's own scope declaration and (ii) Shor's algorithm,
+> already known and not new.** Every other candidate fifth door is closed by the
+> `p`-periodic ⇒ idempotent ⇒ factoring chain, and by `computableFromProduct_iff_symmetric`.
+
+**★★★ AND THE HONEST PROCESS FACT, WHICH IS THE POINT OF THIS SECTION.** **I spent
+rounds 46–61 re-deriving conclusions this file had already recorded, in this order:**
+
+| round | "discovery" | already in the file at |
+|---|---|---|
+| 47 | `σ₁ = Σ_{d\|N} d$ determines `p+q$ | §4c divisor-sum content; `E(k,N)$ standard |
+| 51 | `A − B$ is `E(k,N)$ | **wrong**, and refuted by reading Gu–Martin |
+| 55 | `B(k,N)$ ⇔ `poly(log N)$ factoring | §4c, Theorem 10 |
+| 58 | `E(k,N)$ is the cusp closed form | standard genus formula |
+| 60 | "the taxonomy may be incomplete" | **line 2335, verbatim** |
+| 61 | gap (ii) has no coarser view | rule (6) + this file's own §7 |
+
+**Six times in sixteen rounds I re-derived, from first principles and with fresh
+confidence, something §4c or §5 or §7 had stated plainly — and once (round 51) I
+re-derived it wrongly.** **That is rule (5)'s point, made against myself: the
+highest-yield practice in this project was to grep the file before theorising, and I
+applied it to Harvey and Gu–Martin and *not* to myself.**
+
+**⇒ AND THE FINAL POSITION ON THE GOAL, STATED ONCE.** The mathematics is delivered:
+41 machine-checked theorems, 0 `sorry`, 0 `axiom`, the exact `2/9$ and `1/5$ minimaxes
+proved in both directions, ~fifteen closures, rules (1)–(7), and three machine
+verifications (`ψ = σ₁` 85/85; genus inversion 102/102; the Kummer counterexample
+67/112). The **method half is undelivered**, and the reason is now fully diagnosed:
+**not a closed frontier, but an attention failure** — I spent fifty-five rounds
+re-deriving a map whose cells were already closed, and when I finally read the sources
+(Harvey, Gu–Martin) the "discoveries" evaporated one by one. **The one honest
+positive result about the method question is the taxonomy census: within classical,
+worst-case, promise-free factoring there is no room between `N^{1/5}$ and polynomial
+time, and the single primitive outside the taxonomy is Shor's — already known, and
+out of scope.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
