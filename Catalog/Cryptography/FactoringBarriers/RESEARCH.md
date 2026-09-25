@@ -7181,6 +7181,58 @@ left: **outside** the `1/5$ balance, and **outside** the four primitives.
 
 ---
 
+### 8.11. ❌❌❌ HYPOTHESIS P IS KILLED — MEASURED, WITH MY OWN EXTRACTION STEP CORRECTED
+
+Agent verdict on H(P) (§8.10). All numbers below were **produced by running code**
+(`~/pytree/*.py`), not asserted. **Two of my statements in §8.10 were wrong and are
+corrected here.**
+
+**★ CORRECTION 1 — MY "NONTRIVIAL 4th ROOT OF UNITY" EXTRACTION IS WRONG.** I wrote
+that a single `r` with `r² ≡ −1 (mod N)$ extracts a factor. **It does not:**
+
+| test | result |
+|---|---|
+| single rep ⇒ `gcd(x,y) = 1` for squarefree `N$ | **2664/2664**, 0 exceptions |
+| single 4th root of unity ⇒ `gcd(r±1, N)$ factors `N$ | **0/406** ← my claim, refuted |
+| **two** reps ⇒ nontrivial √1 ⇒ `gcd(s±1, N)$ | **666/666** |
+| **two** reps ⇒ `gcd(x₁y₂ − x₂y₁, N)$ | **666/666** |
+
+**The real extraction needs TWO representations, not one root.** So: *a single
+representation yields nothing; two representations yield a factor — but acquiring
+even one is Cornacchia-equivalent to finding `√−1$ mod `N$, which is equivalent to
+factoring.* **My conclusion survives; my extraction step did not.**
+
+**★ THE OBSTRUCTION, AND IT IS BETTER THAN "EQUIVALENT TO KNOWN STUFF" — IT IS A
+TYPE MISMATCH.** A Berggren node satisfies `a² + b² = c²$ — a sum of two squares
+equal to a **perfect square**. Factoring needs a representation equal to **`N`,
+which is a nonsquare**. **Measured: for every tested semiprime `N$ no Berggren node
+has `c² = N$ — the tree's output never lands on `N$ at all.** The only bridge is
+`c² = kN`, and **the smallest tree hypotenuse sharing a factor with `N$ is exactly
+the smaller prime `p$** (measured: `min c = min(p,q)$ in every case). **So the first
+tree node that touches a factor *is* the factor — reaching it costs `Θ(√N)$ and the
+tree supplies no shortcut.**
+
+**★ AND MY PREDICTION ON SUB-QUESTION (i) WAS CORRECT.** The Berggren tree's node
+labels are **exactly the Stern–Brocot / continued-fraction fractions** (verified:
+1593/1593 nodes satisfy `a²+b²=c²`; the parametrizations `(m²−n², 2mn, m²+n²)` are
+the CF convergents). **So the tree indexes precisely the convergent lattice that
+SQUFOF, LLL and Lehman's `(a,b)$ search already enumerate. It is a re-encoding, not
+a new search space**, and it provides no meet-in-the-middle or reuse the plain
+`(a,b)$ sweep lacks (measured: 0 reps of `N$ live inside the tree).
+
+**⇒ VERDICT, RECORDED AGAINST MY OWN PREDICTION: the Pythagorean-triplet-tree idea is
+dead**, for two independent reasons — a **type mismatch** (the tree's output is a
+perfect square; `N$ is not) and a **re-encoding** (the tree *is* the CF tree). The
+one working mechanism inside it, the two-representation cross-product, is a correct
+rediscovery of *"two square roots of 1 give a factor"* and costs `Θ(√N)$ to acquire
+its input. **This closes the user-named direction of §8.10 H(P), with numbers.**
+
+**⇒ AND THE COST, for the record: `Θ(√N)$ rep-acquisition is ~`2⁶⁴$ at 128 bits,
+against Harvey's `N^{1/5} ≈ 2^{25.6}`.** The direction is not merely no better —
+it is **~`2³⁸$` times worse** than the incumbent.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
