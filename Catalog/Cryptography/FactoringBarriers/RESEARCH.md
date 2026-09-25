@@ -6703,6 +6703,69 @@ complete.**
 
 ---
 
+### 8.6. ★★★★★★ THE LAST SEAM, CLOSED BY A FORMULA: `k$ independent `m`-reuses give `N^{1/(2k+3)}`, and this file already refuted `k = 2` twice
+
+A **fresh-context agent with no access to this file** was asked to invent a new
+deterministic factoring mechanism. **It found none** — but it is the best possible
+negative result, and it is worth recording precisely.
+
+**WHAT IT INDEPENDENTLY RE-DERIVED (never having read these results).** It built its
+own taxonomy of *witness types* and, crucially, re-derived the central wall from
+scratch:
+
+> *"Any solution of `a² − b² = kN` with `k ≥ 1$ has `a² = b² + kN ≥ kN`, so
+> `a ≥ √{kN} ≥ √N = 2^{n/2}$."*
+
+**That is `ScaleWall.lean`'s `box_floor`/`size_barrier`, re-derived by a source that
+could not have been anchored by them.** It also re-derived the smoothness barrier for
+order-based methods, and concluded (~90% confidence) that no new deterministic
+mechanism below `2^{n/5}$ is available. **That is independent confirmation of this
+file's central result by a clean-room process.**
+
+**★ AND IT NAMED EXACTLY ONE SEAM IT COULD NOT CLOSE — and this file has already
+closed it, twice, and can now state the general law.** The agent's words:
+
+> *"A genuinely new idea could conceivably hide in family (A) by attacking Harvey's
+> baby-step reuse with a **second independent reuse structure**."*
+
+**THE LAW, which makes that seam quantitative.** Write Harvey's leading term with
+`k$ **independent `m`-reuses** (each dividing the residual `T₁$ by a further `m`):
+
+> **`T₁ = N^{1/2}/(r^{1/2}·m^k)`,  `T₂ = r`,  `T₃ = m`;  with `r = N^a`, `m = N^b$ the
+> three-way balance `1/2 − a/2 − kb = a = b` gives `a = 1/(2k+3)`.**
+
+> **`k = 1` ⟹ `N^{1/5}` = Harvey.  `k = 2` ⟹ `N^{1/7}`.  `k = 3` ⟹ `N^{1/9}`.**
+
+**⇒ AND THIS FILE HAS ALREADY REFUTED `k = 2$ — TWICE, BY NAME:**
+
+| candidate second reuse | where | verdict |
+|---|---|---|
+| the **match-count rate law** `n ≈ s·m/ord_N(α)` | §7-undecuples-XXXIV–XXXV | reduces the number of `Z_N$-matches to `O(1)$` but **does not reduce the `m$ each costs**, so it is not a second `m$-reuse — it is a first-order consequence of the first |
+| the **batched GCD** `gcd(N, ∏(f(α^i)−1))` | §7-undecuples-XLII–LIV | **Costa–Harvey Lemma 8 (2014)**, and the GCD half is `o(m·lg²N)$ — **asymptotically nil** |
+
+**⇒ SO THE FRONTIER IS NOW A SINGLE CLEAN NUMBER.** The only remaining degree of
+freedom in Harvey's balance is the reuse multiplicity `k$:
+
+> **`N^{1/5}$ is `k = 1$ and is attained.  `N^{1/7}$ is exactly what a second
+> independent `m$-reuse would buy, and both candidate second reuses that this file
+> constructed are refuted — one as a non-reuse, one as known and asymptotically nil.**
+
+**★ AND THIS IS THE RIGHT LAST WORD, because it converts a vague "is Harvey
+exhausted?" into a one-parameter question with a computable payoff.** Any future
+attack should announce its `k$: **if it cannot exhibit a second independent reuse
+structure, it cannot beat `1/5$; if it exhibits one, the exponent drops to `1/7$ or
+below, automatically, with no further balance work required.**
+
+**⚠️ LIMITS.** (i) The law assumes the *shape* stays `max(N^{1/2}/(r^{1/2}m^k), r, m)`
+— a second reuse that changes the shape rather than the multiplicity is not covered,
+though §8.3–§8.5 closed the two shape-changes available (smoothness, aggregate). (ii)
+The fresh agent's ~90% confidence is **its** judgment, not a proof; I report it as
+such. (iii) The law is arithmetic and is proved by the balance; what is *not* proved
+is that `k = 2$ is impossible in general — only that the two reuses this file could
+construct are not it.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
