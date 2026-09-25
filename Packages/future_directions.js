@@ -2139,21 +2139,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "e43cce79",
-    "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3474",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T20:42:26.612613+00:00",
-    "title": "FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
-  },
-  {
     "consumed_by_exp_id": "293082f5",
     "description": "## FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) \u2212 I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C\u2085@11 | 1.2062 | **+1.5896** | +0.30 |\n| F\u2082\u2080@5 | 0.2920 | **+0.9538** | \u22121.10 |\n| S\u2083a@31 | 1.0011 | +0.5201 | +0.67 |\n| S\u2083b@23 | 1.0008 | +0.5121 | +0.92 |\n| D\u2084@8 | 1.9999 | +0.5032 | \u22120.70 |\n| A\u2084@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 \u2014 WEAK. Hint value and channel capacity are independent dial properties. C\u2085 has moderate capacity but the highest hint; D\u2084 has the highest capacity but moderate hint; A\u2084 is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
     "domains": [
@@ -2169,16 +2154,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ccd8891f",
     "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3487",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T21:40:03.958101+00:00",
     "title": "FACT round-32 #2 \u2014 ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
   },
@@ -14948,6 +14934,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Since d^2 = s^2 - 4N, the difference channel is a 2-adic square root of the sum channel. Jointly, s and d mod 2^k should determine the ordered factor mod 2^(k-1).\n\nFor odd p, q: (s mod 2^k, d mod 2^k, N mod 2^k) determines p mod 2^(k-1), and this is sharp.\n\nEnumerate over Z/2^k for k <= 8, then formalize with the valuation pigeonhole lemma.\n\nPaper 99's s-d synergy has an exact closed form as a 2-adic precision gain.\n\nThe d-channel carries information not captured by squares.",
+    "domains": [],
+    "id": "fd_4948",
+    "priority_score": 0.5926190476190477,
+    "research_mode": "team",
+    "source_exp_id": "e43cce79",
+    "status": "available",
+    "timestamp": "2026-09-25T07:42:58.815180+00:00",
+    "title": "Difference-Channel Square-Root Law"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Quantify when the calibrated pair-statistic test can see the proved -4/q^2 deficit. Combining the exact covariance at every lag with the exact finite-sample validity of the permutation p-value should give an explicit sample-size threshold above which the test has power above any prescribed level, while every marginal test remains exactly at its nominal level. Flatness of the lag spectrum means averaging over lags accumulates signal at a known rate.\n\nThere is an absolute constant c such that for n >= c q^4 / rate^2 the max-calibrated lag-averaged pair test detects the deficit at level 0.01 with power at least 0.8, whereas every marginal test has power exactly equal to its level.\n\nDerive a Chebyshev or Bernstein bound for the pair-count statistic using cov_lag_eq, and combine with perm_pval_valid; validate by simulation at q = 5, 7, 11.\n\nThe pre-registered consecutive-v study gets a concrete sample-size design rather than an exploratory scan.\n\nThe deficit is undetectable at feasible sample sizes, which would retire the consecutive-v route as decisively as the j-marginal route.",
     "domains": [],
     "id": "fd_4323",
@@ -15461,6 +15459,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T23:36:35.459804+00:00",
     "title": "Capacity of Gate-Uncertain Sweeps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Truncate the sum hint to s mod 2^k in the D4@8 experiment. The proved law predicts the type pair is determined exactly from k = 5, and not for k <= 4. This reconciles the measured 100% s-carried figure with the refuted mod-8 explanation.\n\ns-carried(D4@8, s mod 2^k) < 100% for k <= 4 and = 100% for k >= 5.\n\nRerun /tmp/exp_hintsd.py with s reduced mod 2^k, k = 3..7; the Lean side is d4_pair_determined_mod32 and d4_pair_not_determined_mod16.\n\nD4 sum-sufficiency is a 5-bit 2-adic phenomenon, fully explained by vieta_precision.\n\nThe D4 type map depends on information beyond p mod 8, or the experiment leaks exact factor data.",
+    "domains": [],
+    "id": "fd_4945",
+    "priority_score": 0.5917741935483872,
+    "research_mode": "team",
+    "source_exp_id": "e43cce79",
+    "status": "available",
+    "timestamp": "2026-09-25T07:42:57.171387+00:00",
+    "title": "Precision-Halving Law for the D4 Sum Channel"
   },
   {
     "consumed_by_exp_id": "",
@@ -33506,6 +33516,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-24T23:35:22.751343+00:00",
     "title": "Plug-in Entropy Bias of Frobenius Samples"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "At odd prime moduli, separated factor pairs are determined by sum and N at full precision. Any s-d synergy must therefore come from the diagonal p = q mod l.\n\nFor S3@23, S3@31, C5@11, F20@5, the s-d synergy restricted to pairs with l not dividing p - q is 0.\n\nSplit the experiment logs by whether p = q mod l and recompute synergy on each part.\n\nThe synergy in paper 99 is a ramification effect with density about 1/l.\n\nDial-type maps use higher-level information than p mod l (e.g. mod l^2 or characters of larger conductor).",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4946",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e43cce79",
+    "status": "available",
+    "timestamp": "2026-09-25T07:42:57.728164+00:00",
+    "title": "Hensel Dichotomy for Odd-Modulus Dial Synergy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The routing class of a dial (sum-sufficient vs combination-required) is predicted by the 2-adic valuation of its modulus and its ramified proportion, not by the Galois group.\n\nA D4 dial at odd conductor is combination-required and an S3 dial read at a 2-power modulus shows precision halving.\n\nConstruct D4 fields with odd conductor and repeat the s-d decomposition.\n\nThe verdict THE-ROUTING-IS-DIAL-DEPENDENT becomes THE-ROUTING-IS-MODULUS-DEPENDENT.\n\nGenuine Galois structure beyond local precision governs routing.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4947",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "e43cce79",
+    "status": "available",
+    "timestamp": "2026-09-25T07:42:58.268109+00:00",
+    "title": "Modulus-Not-Galois Routing Criterion"
   },
   {
     "consumed_by_exp_id": "",

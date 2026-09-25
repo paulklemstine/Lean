@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "de8ca052",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — metaplectic extension of the Gabor window action\n\nThe cycle just completed established, with fully checked Lean proofs:\n\n* the chirp operator `C_c f (t) = e^{2πi c t²} f(t)` norm",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-09-06T05:58:40",
-      "title": "Metaplectic Extension of the Gabor Window Action"
-    },
-    {
       "cycle_id": "0c24f2ff",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Moment Fingerprint Classification\n\nDerived from the five research cycles formalized in\n`Catalog/Algebra/MomentFingerprintClassification.lean`,\n`…Duality.lean`, `…Positivity.lean`",
@@ -499,19 +489,19 @@
       "theorem_count": 61,
       "timestamp": "2026-09-24T23:35:36",
       "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: after paper 105 (HINT-S-D-DECOMPOSITION)\n\n## What this cycle established (all proved in Lean, no `sorry`)\nPaper 105's explanation, \"`(p+q) mod 8` determines `p mod 8` and `q mod 8",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-09-25T07:43:12",
+      "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "16c9261f",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — NET-96 thread (cost law for speculative decoding)\n\n## What this cycle established\n\nThree Lean files, all `sorry`-free:\n\n* `Catalog/Computation/SpeculativeSurvivalCostLaw.lean` —",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-25T08:00:33",
-      "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measu"
-    },
     {
       "cycle_id": "4578ca8c",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 61,
       "timestamp": "2026-09-24T23:35:36",
       "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: after paper 105 (HINT-S-D-DECOMPOSITION)\n\n## What this cycle established (all proved in Lean, no `sorry`)\nPaper 105's explanation, \"`(p+q) mod 8` determines `p mod 8` and `q mod 8",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-09-25T07:43:12",
+      "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6bf15a63",
-      "domain": "Shared",
-      "name": "cube_lt_two_pow",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "6bf15a63",
-      "domain": "Shared",
-      "name": "corner_cost_lt_sqrt_search",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "6bf15a63",
-      "domain": "Shared",
-      "name": "surface_cost_exponential_in_shave",
-      "quality": 0.72
-    },
     {
       "cycle_id": "b5786d61",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "realDeg_13_eq",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "name": "units8_inv_eq_self",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "name": "four_mul_one_add_unit",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "name": "pairSum_eq_mul",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-24T23:35:36",
+  "last_updated": "2026-09-25T07:43:12",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "d59c6a1a",
-        "quality": 0.85,
-        "theorems": 37,
-        "title": "Thin-Shell Counting under a Thickness Budget"
-      },
-      {
         "cycle_id": "55b01213",
         "quality": 0.82,
         "theorems": 47,
@@ -3389,6 +3383,12 @@
         "quality": 0.78,
         "theorems": 78,
         "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on on"
+      },
+      {
+        "cycle_id": "e43cce79",
+        "quality": 0.72,
+        "theorems": 25,
+        "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-depende"
       }
     ],
     "Geometry": [

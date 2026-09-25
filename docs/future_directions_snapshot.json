@@ -2901,25 +2901,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "e43cce79",
-    "description": "## FACT round-30 #2 — HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S₃a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S₃b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A₄@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D₄@8** | **100.0%** | 75.2% | **−1.00** | **SUM-SUFFICIENT** |\n| F₂₀@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C₅@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD₄ is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N·p⁻¹ mod 8), hence determines the type pair. S₃ fields require both residues because the Legendre symbol (Δ|p) is not determined by (Δ|p)+(Δ|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3474",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T20:42:26.612613+00:00",
-    "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "293082f5",
     "description": "## FACT round-30 #1 — HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) − I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C₅@11 | 1.2062 | **+1.5896** | +0.30 |\n| F₂₀@5 | 0.2920 | **+0.9538** | −1.10 |\n| S₃a@31 | 1.0011 | +0.5201 | +0.67 |\n| S₃b@23 | 1.0008 | +0.5121 | +0.92 |\n| D₄@8 | 1.9999 | +0.5032 | −0.70 |\n| A₄@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 — WEAK. Hint value and channel capacity are independent dial properties. C₅ has moderate capacity but the highest hint; D₄ has the highest capacity but moderate hint; A₄ is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
     "domain_bridges": [],
@@ -2939,7 +2920,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ccd8891f",
     "description": "## FACT round-30 #2 — HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S₃a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S₃b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A₄@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D₄@8** | **100.0%** | 75.2% | **−1.00** | **SUM-SUFFICIENT** |\n| F₂₀@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C₅@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD₄ is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N·p⁻¹ mod 8), hence determines the type pair. S₃ fields require both residues because the Legendre symbol (Δ|p) is not determined by (Δ|p)+(Δ|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
     "domain_bridges": [],
     "domains": [
@@ -2951,7 +2932,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T21:40:03.958101+00:00",
     "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
   },
@@ -21372,6 +21353,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Cryptography.HintSumDifference.PrecisionLaw"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Since d^2 = s^2 - 4N, the difference channel is a 2-adic square root of the sum channel. Jointly, s and d mod 2^k should determine the ordered factor mod 2^(k-1).\n\nFor odd p, q: (s mod 2^k, d mod 2^k, N mod 2^k) determines p mod 2^(k-1), and this is sharp.\n\nEnumerate over Z/2^k for k <= 8, then formalize with the valuation pigeonhole lemma.\n\nPaper 99's s-d synergy has an exact closed form as a 2-adic precision gain.\n\nThe d-channel carries information not captured by squares.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4948",
+    "lineage_refs": [],
+    "priority_score": 0.5926190476190477,
+    "proof_strategy": "p = (s - d)/2 loses exactly one bit of precision; use pow_dvd_or_pow_dvd_of_pow_dvd_mul on (d - d')(d + d').",
+    "research_mode": "team",
+    "source_exp_id": "e43cce79",
+    "status": "available",
+    "timestamp": "2026-09-25T07:42:58.815180+00:00",
+    "title": "Difference-Channel Square-Root Law"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Logic.JFeatureLagSpectrum",
       "Logic.JFeatureMaxStatistic",
       "Logic.JFeatureMarginalBlindness"
@@ -22230,6 +22230,26 @@
     "status": "available",
     "timestamp": "2026-08-23T23:36:35.459804+00:00",
     "title": "Capacity of Gate-Uncertain Sweeps"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.HintSumDifference.PrecisionLaw",
+      "Cryptography.HintSumDifference.Mod8Refutation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Truncate the sum hint to s mod 2^k in the D4@8 experiment. The proved law predicts the type pair is determined exactly from k = 5, and not for k <= 4. This reconciles the measured 100% s-carried figure with the refuted mod-8 explanation.\n\ns-carried(D4@8, s mod 2^k) < 100% for k <= 4 and = 100% for k >= 5.\n\nRerun /tmp/exp_hintsd.py with s reduced mod 2^k, k = 3..7; the Lean side is d4_pair_determined_mod32 and d4_pair_not_determined_mod16.\n\nD4 sum-sufficiency is a 5-bit 2-adic phenomenon, fully explained by vieta_precision.\n\nThe D4 type map depends on information beyond p mod 8, or the experiment leaks exact factor data.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_4945",
+    "lineage_refs": [],
+    "priority_score": 0.5917741935483872,
+    "proof_strategy": "Combine vieta_precision (k = 5) with the D4 type map factoring through p mod 8; sharpness comes from vieta_precision_sharp with c = 2.",
+    "research_mode": "team",
+    "source_exp_id": "e43cce79",
+    "status": "available",
+    "timestamp": "2026-09-25T07:42:57.171387+00:00",
+    "title": "Precision-Halving Law for the D4 Sum Channel"
   },
   {
     "ambition_level": "extension",
@@ -48351,6 +48371,50 @@
     "status": "available",
     "timestamp": "2026-09-24T23:35:22.751343+00:00",
     "title": "Plug-in Entropy Bias of Frobenius Samples"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.HintSumDifference.PrecisionLaw",
+      "Cryptography.NonabelianTypeChannel.Entropy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "At odd prime moduli, separated factor pairs are determined by sum and N at full precision. Any s-d synergy must therefore come from the diagonal p = q mod l.\n\nFor S3@23, S3@31, C5@11, F20@5, the s-d synergy restricted to pairs with l not dividing p - q is 0.\n\nSplit the experiment logs by whether p = q mod l and recompute synergy on each part.\n\nThe synergy in paper 99 is a ramification effect with density about 1/l.\n\nDial-type maps use higher-level information than p mod l (e.g. mod l^2 or characters of larger conductor).",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_4946",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "vieta_full_precision_of_separated plus mutual-information monotonicity (TypeChannel.mutualInfo_eq_left_of_factors).",
+    "research_mode": "team",
+    "source_exp_id": "e43cce79",
+    "status": "available",
+    "timestamp": "2026-09-25T07:42:57.728164+00:00",
+    "title": "Hensel Dichotomy for Odd-Modulus Dial Synergy"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.ResidueDial.Converse",
+      "Cryptography.HintSumDifference.Mod8Refutation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The routing class of a dial (sum-sufficient vs combination-required) is predicted by the 2-adic valuation of its modulus and its ramified proportion, not by the Galois group.\n\nA D4 dial at odd conductor is combination-required and an S3 dial read at a 2-power modulus shows precision halving.\n\nConstruct D4 fields with odd conductor and repeat the s-d decomposition.\n\nThe verdict THE-ROUTING-IS-DIAL-DEPENDENT becomes THE-ROUTING-IS-MODULUS-DEPENDENT.\n\nGenuine Galois structure beyond local precision governs routing.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4947",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Classify unordered-pair determination for (Z/M)^x via CRT and the local laws at each prime power.",
+    "research_mode": "team",
+    "source_exp_id": "e43cce79",
+    "status": "available",
+    "timestamp": "2026-09-25T07:42:58.268109+00:00",
+    "title": "Modulus-Not-Galois Routing Criterion"
   },
   {
     "ambition_level": "extension",
