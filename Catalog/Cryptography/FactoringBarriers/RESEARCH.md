@@ -6033,6 +6033,65 @@ are not summaries.**
 
 ---
 
+### 7-undecuples-LV. ★★★ RULE (7) GENERALISED: `φ(N)` is the *universal* determining aggregate, and primitive (3) is the search for a poly-computable surrogate
+
+§7-undecuples-LIV closed the **symmetric** divisor-aggregates. The general statement
+is stronger and it is the sharpest form this file has of "what would count as a
+method."
+
+**★ RULE (7'), THE UNIVERSAL FORM.** For `N = pq$:
+
+> `φ(N) = (p−1)(q−1) = N − (p+q) + 1`, so **`p+q = N + 1 − φ(N)`**, and `p+q$
+> factors `N$ in closed form.
+
+**So `φ(N)$ is a determining aggregate of size `Θ(lg N)$ — and so is every symmetric
+aggregate (rule 7), and so is `p+q$, and so is `λ(N)$.** *Every* classical summary of
+`N$'s arithmetic that carries factor information is of this kind. **There is no
+"coarse" view to find among them; the coarse views are exactly the trivial ones like
+`∏_{d|N} d = N^{τ(N)/2}$.**
+
+**⇒ WHICH LEAVES EXACTLY ONE QUESTION FOR PRIMITIVE (3), AND IT IS NOW PRECISE.**
+Primitive (3) is not "find a special form of `N$." It is:
+
+> **★ Is there a function `A(k, N)` of `N$'s arithmetic structure, computable in
+> `poly(lg N)`, that DETERMINES `φ(N)$ (equivalently `p+q$) — without already
+> knowing the divisors?**
+
+**Such an `A$` would be a `poly`-time factoring algorithm.** Conversely, any
+`poly(log N)$ method that computes *any* determining aggregate factors `N$. So
+primitive (3) reduces to a single, well-posed search, and rule (7)/(7′) explains why
+it is hard: **every known aggregate either leaks `p+q$ only by being `p+q$-equivalent,
+or (like `∏ d$) leaks nothing at all. There is no third kind among the classical
+ones.**
+
+**⚠️ THE OBJECT I HAVE IN MIND, AND THE HONEST WARNING.** The candidate is
+`A(k,N) = dim S_k(Γ₀(N))`, the modular-form dimension of **Gu–Martin**
+(§4c, which records it as *provably at least as hard as factoring*). A Jordan–Totaro
+asymptotic has leading term `∝ ∏_{p|N}(1 − 1/p) = φ(N)/N`, so in principle the leading
+coefficient of `A(k,N)$ in `k$ **determines `φ(N)$** — and hence factors `N$.
+**Whether that coefficient can be extracted without a `poly(log N)` evaluation of
+`A(k,N)$ is the open question.**
+
+**⚠️⚠️ AND HERE IS WHAT I MUST NOT DO.** **I have not read Gu–Martin in this session,
+and I have not verified the Jordan–Totaro leading-term extraction.** The previous
+prior-art agent found that GFHP already names an idea I had proposed, and the one
+before that found my "Lemma 3.3" reading was Harvey's own — so **by rule (5) I am
+not asserting this framing is new, and by rule (6) I am not inferring anything from
+my not having read the paper.** **This is a pointer to where the answer lives, not a
+result about it.** The correct next action is to read Gu–Martin and check whether
+§4c's "one predicate" reduction is already this statement.
+
+**⇒ SO THE FILE ENDS WHERE IT SHOULD.** Rules 6 and 7 together give the sharpest
+possible account of why forty-nine rounds produced no method:
+
+> **Partitions cannot be beaten because the probes *are* the set. Summaries cannot be
+> beaten because the summary *is* `p+q`.** Everything else in this file is the working
+> out of those two sentences, and the only remaining direction is a `poly(log N)`
+> surrogate for `φ(N)$ — a single, precise, and (as far as I know) open question that
+> lives in someone else's paper.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
