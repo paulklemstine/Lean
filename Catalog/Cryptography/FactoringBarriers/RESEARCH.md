@@ -4285,6 +4285,32 @@ degenerates gracefully to the original method. **The saving is real precisely
 because the off-diagonal is where the multiplicity lives** — which is also why
 §7-bis showed the two-parameter family is strictly larger than Lehman's line.
 
+**★★★ THE COST MODEL IS TIGHT, AND STEP 3 DOES NOT EAT THE SAVING.** Three
+checks, because the obvious objections are the ones that usually kill a claimed
+log improvement:
+
+* **Step 3 is not driven by the pair count.** Harvey's sort-and-match costs
+  `O((s+m)·lg²N)` where `s` is the number of *triples* `(a,b,j)` — that is `T₁`,
+  the `j`-work — not the `Θ(r·lg r)` pairs. So the sort does not scale with what
+  PIB removes, and **the saving survives Step 3.**
+* **Per-pair cost drops from `Θ(lg N)` to `Θ(1)` amortised.** Naive: each pair
+  needs one exponentiation of an `O(N²)`-sized exponent, i.e. `Θ(lg N)`
+  multiplications, so `Θ(r·lg r)·lg N = Θ(r·lg²N)`. PIB: `Θ(r)` exponentiations for
+  `W` (`r·lg N`), `Θ(r)` for the `B` walk, `Θ(√r)` for the `A` walk, and two
+  multiplications per pair (`Θ(r·lg r)`) — total **`Θ(r·lg N)`**. So the pair term
+  falls `lg²N → lg N` and **Prop 4.2's `r`-term goes `O(r·lg⁴N) → O(r·lg³N)`**,
+  a factor `Θ(lg N/2)`. Measured op counts at `lg N = 64`: `4.79×` at `r = 256`
+  rising to `8.23×` at `r = 65 536`.
+* **★ The `W`-table is IRREDUCIBLE, so PIB is tight.** `W[k] = α^{−⌊2√(kN)⌋}`; the
+  exponents are `≈ 2√(kN)`, so consecutive `k` differ by `≈ 2√(N/k) ≥ 2√(N/r) =
+  2N^{3/10} ≫ 1`. The `w_k` are strictly increasing with **large gaps**: no
+  short-step walk, and no two `k` share a `w`. On the square-`k` sublattice
+  `w_{s²} = 2s√N` *is* an arithmetic progression and so is walkable in `O(√r)` —
+  but that covers only `√r` of the `r` products. **So `W` costs `Θ(r)`
+  exponentiations and cannot be compressed; PIB's `Θ(r·lg N)` is therefore
+  TIGHT.** This is round 10's multiplicative-coupling obstruction surviving in its
+  cleanest form, and it says where any further improvement must go.
+
 **HONEST LIMITS.** (i) **A log improvement, not a method that beats `1/5`.** It
 does not satisfy "beat the deterministic record". (ii) Novelty relative to
 Harvey's implementation is **unverified**. (iii) The `W`-table costs `Θ(r)`
