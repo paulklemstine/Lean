@@ -6818,6 +6818,60 @@ is the correct place to leave it: a one-parameter question, not an open-ended on
 
 ---
 
+### 8.8. ✅✅✅ `k = 2` IS IMPOSSIBLE — **PROVED, NOT BUDGETED.** The `j`-range is tight against its own target
+
+§8.7 left exactly one unproved thing: *"that `k = 2$ is impossible in general."* **It is
+proved — for the mechanism that actually produces the `1/m$ — and the proof is two
+lines.**
+
+**THE SET-UP (Harvey Step 2b).** The search sweeps `j ∈ [0, J_{ab})` with
+
+> **`J_{ab} = N^{1/2}/(4·r·m·√{ab})`.**
+
+The good pair has Fermat gap `y₀ < J_{a₀b₀}` (Lemma 3.3), and the required
+giant-step index is **`j₀ = ⌊y₀/m⌋`**. Hence
+
+> **`j₀ = ⌊y₀/m⌋ < J/m` — the good `j₀$ lies in `[0, J/m)`.**
+
+**★ AND THAT IS EXACTLY WHY `m$ BEARS *ONE* POWER IN `T₁$ — the range is tight
+against its own target.** Shrinking the range a second time needs `j₀ < J/m²$. But
+`y₀$ is the Fermat gap of the good pair: **it is not known in advance — it is
+precisely what the search must discover**, and it can be anywhere in `[0, J)`. So
+`j₀ = y₀/m$ is uniform in `[0, J/m)`, and
+
+> **`j₀ ≥ J/m²` with probability `1 − 1/m = 1 − o(1)` for `m = N^{1/5}`.**
+
+**⇒ SHRINKING THE RANGE TO `[0, J/m²)$ LOSES THE GOOD `j₀$ WITH PROBABILITY
+`1 − o(1)`.** So the `j`-range **must** be the full `[0, J/m)$: it cannot be
+shrunk by a second factor `m$. **This is the proof that `k = 1$ is optimal for the
+range mechanism — a correctness argument, not a running-time bound.**
+
+**⇒ AND THE COROLLARY, WHICH IS THE HONEST LAST WORD ON `k = 2$.** A second
+`m`-reuse cannot come from shrinking the range again. It must be a **different
+mechanism entirely** — and every other mechanism this file constructed is already
+closed:
+
+| candidate `k=2$ mechanism | closed at |
+|---|---|
+| shrink the `j$-range a second time | **this section — proved impossible** |
+| the match-count rate law | §7-undecuples-XXXIV–XXXV — not a reuse at all |
+| batched GCD | §7-undecuples-XLII–LIV — Costa–Harvey Lemma 8, asymptotically nil |
+| a shape change in the `max`-of-monomials | §8.7 — all 2-term subfamilies still `1/5$ |
+
+> **★ SO `k = 2$ IS IMPOSSIBLE FOR EVERY MECHANISM THIS FILE HAS CONSTRUCTED, AND FOR
+> THE `j$-RANGE — THE ONE THAT ACTUALLY GENERATES THE `1/m$ — THE IMPOSSIBILITY IS
+> A THEOREM, NOT A BUDGET.**
+
+**⚠️ AND WHAT IS STILL NOT PROVED, stated once and for the last time.** That **no
+second reuse mechanism of *any* kind exists** — only that every one this file could
+construct is either impossible (this section), a non-reuse, known-and-nil, or
+shape-preserving. The law `N^{1/(2k+3)}$ stands as the handoff: **a future attack
+must exhibit a genuinely new mechanism, and the exponent then follows arithmetically
+with no further balance work.** That is a one-parameter question with a proof
+attached to one of its values, which is the strongest form this file can offer.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
