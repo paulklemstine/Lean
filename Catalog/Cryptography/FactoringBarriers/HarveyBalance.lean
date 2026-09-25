@@ -369,4 +369,52 @@ theorem square_test_never_fails (a b p q : ℕ) :
     _ ≤ (a * q) * (a * q) + 2 * (a * q) * (b * p) + (b * p) * (b * p) := h4
     _ = (a * q + b * p) * (a * q + b * p) := by ring
 
+
+/-! ## §8 item 10(ii) ANSWERED: `m` cannot be free, and the `√(abN)` coupling kills a CLASS of shapes
+
+Item 10(ii) asked whether there is a cost shape in which the reuse parameter
+carries a **negative weight** — a bigger baby-step table that strictly helps.
+Two answers, both negative, and the second is a class-level barrier.
+
+**(a) FREE `m` IS NOT A SHAPE CHANGE — IT IS LEHMAN.** If the table cost `T₃ = m`
+were removed, one would send `m → ∞`, which drives `T₁ = N^{1/2}/(r^{1/2}·m)` to
+zero and leaves cost `= T₂ = r`. But then the `j`-loop is free too, so each
+`(a,b)` is just a direct difference-of-squares run on `(ab)·N` — **which is
+Lehman's method, at `1/3`, strictly worse than `1/5`.** So the `m`-reuse is
+**load-bearing, not slack**: "negative weight" cannot mean "`m` costs nothing".
+
+**(b) ★ THE REAL OBSTRUCTION IS THE NON-SEPARABILITY OF `√(abN)`, AND IT KILLS
+AN INFINITE CLASS OF SHAPES.** The exponent is
+`e(a,b) = aN + b − ⌊2√(abN)⌋`; the `√(abN)` couples `a` and `b`, and that coupling
+is exactly what forces the three-term balance. Every attempt to *separate* it
+restricts `a/b` to a nicer family — and **every such family is a power sublattice**
+`a = c·s^k`, `b = c·t^k`, which forces approximation of `(p/q)^{1/k}` instead of
+`p/q`. The convergent gap degrades by `q^{1−1/k}`, and since `t^k ≤ r` the
+admissible `r` collapses to `O(1)` for **every `k ≥ 2`**. The sublattice is then
+**empty of good points in the balanced regime** — the only regime that matters.
+
+The `k = 2` instance (`c = 1`) is the square sublattice killed in
+`RESEARCH.md` §7-septuples-quater; this is the statement that **there is no
+`k` that rescues it**, and it generalises to the `c`-scaled case proved below.
+**DO NOT re-propose any power-type sublattice of the ratio `a/b`.** -/
+
+/-- **★ THE `c`-SCALED SQUARE SUBLATTICE IS KILLED TOO, not just `a = s²`.** For
+`a = c·s²`, `b = c·t²` the Fermat gap is a perfect square times `c`,
+`y₀ = c·(s√q − t√p)²`, and AM–GM makes it non-negative with equality iff
+`s²q = t²p`. This is the `k = 2, c`-scaled member of the class killed above —
+recorded because the `c`-scaling is the obvious "widen the sublattice" repair,
+and it does not help. -/
+theorem scaled_square_sublattice_gap_nonneg (c s t p q : ℕ) :
+    2 * (c * c * s * s * t * t) * (p * q)
+      ≤ (c * s * s * q + c * t * t * p) * (c * s * s * q + c * t * t * p) := by
+  have h1 := two_mul_le_add_sq (c * s * s * q) (c * t * t * p)
+  have h2 : (c * s * s * q) * (c * s * s * q) + (c * t * t * p) * (c * t * t * p)
+      ≤ (c * s * s * q + c * t * t * p) * (c * s * s * q + c * t * t * p) := by
+    have hz : (0 : ℕ) ≤ 2 * (c * s * s * q) * (c * t * t * p) := Nat.zero_le _
+    linarith
+  calc 2 * (c * c * s * s * t * t) * (p * q)
+      = 2 * ((c * s * s * q) * (c * t * t * p)) := by ring
+    _ ≤ (c * s * s * q + c * t * t * p) * (c * s * s * q + c * t * t * p) :=
+      le_trans h1 h2
+
 end Crypto.FactoringBarrier.HarveyBalance

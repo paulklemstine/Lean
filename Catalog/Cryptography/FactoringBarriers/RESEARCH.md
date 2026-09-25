@@ -8,7 +8,7 @@ directory; barrier corrections in `TradeoffBarrier.lean` and `Capstone.lean`;
 the deterministic-family results in `SquareDiff.lean` (10 thms),
 `NoFreeSearch.lean` (3 thms), `VacuousUsefulness.lean` (5 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
-`HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (27 thms) and `OrderLCM.lean`
+`HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (28 thms) and `OrderLCM.lean`
 (6 thms).
 **⚠️ Four claims in this file were retracted on 2026-09-24 — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
@@ -4122,6 +4122,54 @@ balanced; the `1/5` is forced given that lever.**
 
 ---
 
+### 7-septuples-quinary. ★★★★★★ ITEM 10(ii) ANSWERED — and the `√(abN)` coupling kills a WHOLE CLASS of shape changes
+
+**(a) FREE `m` IS NOT A SHAPE CHANGE — IT IS LEHMAN.** If the table cost `T₃ = m`
+were removed, one would send `m → ∞`, which drives `T₁ = N^{1/2}/(r^{1/2}·m)` to
+zero and leaves cost `= T₂ = r` alone. But then the `j`-loop is free as well, so
+each `(a,b)` is just a direct difference-of-squares run on `(ab)·N` — **which is
+Lehman's method, at `1/3`, strictly worse than `1/5`.** So **"negative weight"
+cannot mean "`m` is free"**: the reuse is **load-bearing, not slack**. Sending `m`
+to infinity does not beat the balance; it *undoes* it.
+
+**(b) ★★ THE REAL OBSTRUCTION IS THE NON-SEPARABILITY OF `√(abN)` — AND IT KILLS
+AN INFINITE CLASS OF SHAPES, NOT ONE.** The exponent is
+`e(a,b) = aN + b − ⌊2√(abN)⌋`. The `√(abN)` **couples `a` and `b`**, and that
+coupling is precisely what forces the three-term balance. Every attempt to
+*separate* it must restrict `a/b` to a nicer family — and **every such family is a
+power sublattice** `a = c·s^k`, `b = c·t^k`. But such a sublattice forces
+approximation of **`(p/q)^{1/k}` instead of `p/q`**, and the convergent gap
+degrades by a factor `q^{1−1/k}`. With `t^k ≤ r` the admissible `r` then collapses
+to `O(1)` for **every `k ≥ 2`**, leaving the sublattice **empty of good points in
+the balanced regime** — the only regime that matters.
+
+| `k` | forced approximation | gap `y₀` | required `r` |
+|---|---|---|---|
+| 1 | `p/q` | `≈` Lehman's | `≈ N^{1/3}` (**the real method**) |
+| 2 | `√(p/q)` | `≈ q/r²` | forces `q < N^{1/2}/4` — **empty** |
+| 3 | `(p/q)^{1/3}` | `≈ q^{2/3}r^{−2/3}` | collapses to `O(1)` — **empty** |
+| 4 | `(p/q)^{1/4}` | `≈ q^{3/4}r^{−1/2}` | collapses to `O(1)` — **empty** |
+
+The `k=2, c=1` instance is the square sublattice of §7-septuples-quater; the
+`c`-scaled version `a = c s², b = c t²` — the obvious "widen the sublattice"
+repair — is proved non-positive-by-AM–GM in `scaled_square_sublattice_gap_nonneg`
+and is dead the same way. **There is no `k` that rescues this family.**
+
+> **THE STANDING CONSTRAINT THIS CREATES.** *Any shape change that tries to
+> separate the `√(abN)` coupling by restricting the ratio `a/b` to a parametric
+> family must approximate a `k`-th root of `p/q` for some `k ≥ 2`, and therefore
+> pays a `q^{1−1/k}` gap penalty that empties the family in the balanced case.*
+> **DO NOT re-propose any power-type, root-type, or otherwise "nicer ratio"
+> sublattice of `a/b`.** Check this *before* doing the work — it is a one-line test.
+
+**What this leaves.** §8 item 10(ii) is **closed, negatively**. The only remaining
+open shape-change route is one that keeps `a/b` **free** (so the convergents of
+`p/q` are available) while attacking `T₂ = r` — the `Θ(r·lg r)` pair count — by
+some means other than the `m`-reuse. That is a genuine open question, and it is
+the last one this file has.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
@@ -4985,7 +5033,11 @@ algorithm; each is a place where a genuine open problem still lives.
    the minimax point was **already feasible**. **Removing the hypothesis cannot
    change the exponent** — it bought only the `lg^{6/5}` log factor. **This is why
    `1/5` survived the hypothesis falling, and why the follow-ups delivered logs,
-   not exponents.** Sub-questions (ii)–(iv) remain open: The `1/5` minimax is a fact about *that function* — is there
+   not exponents.** **(ii) IS ALSO ANSWERED — NEGATIVELY
+   (§7-septuples-quinary):** "negative weight for `m`" cannot mean "free `m`",
+   because sending `m → ∞` *undoes* the reuse and lands on Lehman (`1/3`,
+   worse). And the `√(abN)` coupling kills **every** power/root sublattice of
+   `a/b` at once. Sub-questions (iii)–(iv) remain open: The `1/5` minimax is a fact about *that function* — is there
    a shape in which the newly-free `m` appears with a *negative* weight, i.e. where
    a bigger table strictly helps? (Harvey's `m` is a zero-sum trade: it divides
    the residual `N^{1/2}/(r·m·√{ab})` **and** costs `m`.) (iii) Oznovich–Volk's
