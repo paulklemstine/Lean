@@ -7823,6 +7823,71 @@ giant-step range — not because the position is unpredictable (§XXXIII) but be
 
 ---
 
+### 7-undecuples-XXXV. ✅❌❌ H(R) CLOSED **STRUCTURALLY**: every quadratic ring is circular, and homogeneous `f` is trapped by its own RESULTANT
+
+The `scratch/quadratic` agent ran the full suite (`exp1`–`exp9`, `RESULTS.md`). **The
+answer is NO, and it is negative for an algebraic reason, not an empirical gap.**
+
+**★★★★★ RESULT 1 — CIRCULARITY IS UNIVERSAL, NOT SPECIFIC TO `ℤ[i]`.** I had shown
+the `D = −1$ case is circular (§7-undecuples-XLIII). The agent shows it for **every
+small discriminant**:
+
+> **If `N = x² + Dy²` then `r = x·y⁻¹ mod N` satisfies `r² ≡ −D (mod N)` — measured
+> 100% for `D = 1,2,3,5,7,11`** (Eisenstein: `r²+r+1 ≡ 0`; real `x²−ky²`: `r² ≡ +k`).
+
+**So ONE representation IS a square root of `−D` mod `N` — Cornacchia's input, as hard
+as factoring — for every `D$.** No discriminant escapes. (Representability classes are
+also now measured: `D=1 ⟺ p≡1 (mod 4)`; `D=2 ⟺ p≡1,3 (mod 8)`; Eisenstein
+`⟺ p≡1 (mod 3)`; real `x²−ky² ⟺ (k/p)=1`.)
+
+**★★★★★ RESULT 2 — THE NEW ALGEBRAIC OBSTRUCTION: HOMOGENEOUS `f` IS TRAPPED BY ITS
+OWN RESULTANT.** This is the file's first *provable* barrier for this family, and it has
+**0 violations** in every run:
+
+> For a homogeneous `f = y^e·F(x/y)`, if `p ∣ f(x,y)$ (with `x/y` reducing to a root
+> `r$ of `t²+D$ mod `p$) **then `p ∣ F(r)F(−r) = C_f = b² + D·a²`**, where
+> `F mod (t²+D) = a·t + b`. `C_f` is a **FIXED integer** determined only by the
+> coefficients of `f$ — **not** by `p` or `N$.
+
+> **⇒ SO THE ONLY PRIMES ANY HOMOGENEOUS `f$ CAN REVEAL ARE THE FINITE DIVISORS OF ONE
+> SMALL CONSTANT `|C_f|$.` A LARGE FACTOR IS ARITHMETICALLY UNREACHABLE. Measured:
+> homogeneous `f`, exhaustive over `|coef| ≤ 4$ with `p > 60000`: **0 hits for every
+> `D$`.** And whenever a hit *did* occur (small primes), `gcd == C_f$` **exactly** —
+> confirming the mechanism rather than merely fitting it.
+
+**★★★ RESULT 3 — THE INHOMOGENEOUS CASE IS PURE NOISE, MEASURED AGAINST ITS OWN
+BACKGROUND.** Over `≤ 500k` polynomials of degree `≤ 3$, `|coef| ≤ 5`, 400 cases: the
+best single fixed `f` cracks **3–4 / 400 (~1%)**, and the mean hits per polynomial is
+**0.136 measured against 0.134 predicted by the trivial `1/p + 1/q` background.**
+**There is no signal above the null.** (In the `ℤ[i]$ case the two-representation
+cross-product gave 666/666 — this agent reproduces **200/200 for every form tested**,
+imaginary `D=1,2,3,5,7$, Eisenstein, and real `k=2,3,5$, confirming it is a
+**`D`-independent distinct-root mechanism** — **but two reps = two Cornacchia roots =
+factoring**.) And the one non-circular route, multiplying by a unit in `Z[√2]$ to
+manufacture a second rep, **fails exactly**: the cross product is precisely `2N$, so
+`gcd = N` — **0/985 proper factors.**
+
+**⇒ THE MOST CONVINCING OBSTRUCTION, and it is structural, not a failed search:**
+> **The information in ONE representation is exactly a square root of `−D` mod `N`** (so
+> every extraction is circular); **and every homogeneous `f` is trapped by its fixed
+> resultant `C_f = b² + D·a²`** (so it can only ever surface tiny fixed primes —
+> **0 measured against large primes**). The mechanism that *does* work (two
+> representations) needs two roots and is equally circular.
+
+**⇒ H(R) IS CLOSED, AND THE RESULTANT ARGUMENT IS NEW TO THIS FILE:** it is a
+**provable**, not empirical, statement that **no homogeneous polynomial in the
+coordinates of a quadratic representation can ever extract a factor of `N$** — a
+whole family killed by one identity, with the computational check confirming it.
+
+**⚠️ LIMITS (the agent's):** the polynomials searched are `deg ≤ 3`, `|coef| ≤ 5`
+(inhomogeneous) and `|coef| ≤ 4$ (homogeneous, exhaustive over a symmetric
+normalisation); the `0`-hit result for homogeneous `f$ is therefore proved *for
+homogeneous forms in general* by the resultant argument but *measured* only in that
+range; and `D$ was limited to small discriminants `≤ 11$ (plus Eisenstein and real
+`k ≤ 5`).**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
