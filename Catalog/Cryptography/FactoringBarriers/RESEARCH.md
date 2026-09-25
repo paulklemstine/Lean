@@ -4339,6 +4339,69 @@ one.
 
 ---
 
+### 7-undecuples-ter. ⚠️ THE NEXT ATTACKER MUST PIN THE COST ATTRIBUTION FIRST — here is what is verified and what is not
+
+The one sound, unattacked target left is **`T₂ = r`**. Before attacking it, the
+previous round established exactly what may and may not be relied on. This section
+is the pre-flight brief, written because **two attempts to reason about this
+target produced false claims** (§7-undecuples, §7-undecuples-bis).
+
+**✅ WHAT IS VERIFIED, from the paper itself (p.12, Prop. 4.3, read directly).**
+The running time of Algorithm 4.3 is
+
+> `F(N) = O(N^{1/5}·lg^{16/5} N)`,
+
+obtained from Prop. 4.2's parameterised bound
+
+> `O( ( N^{1/2}/(r^{1/2}·m) + r )·lg⁴N  +  m·lg²N )`
+
+at `r = ⌈N^{1/5}/lg^{4/5}N⌉`, `m = ⌈N^{1/5}lg^{6/5}N⌉`. **The two components of
+the leading bracket are BALANCED:**
+
+> `N^{1/2}/(r^{1/2}·m) = N^{1/2}/(N^{1/10}·N^{1/5}) = N^{1/5}`,  and
+> `r = N^{1/5}/lg^{4/5}N`,
+
+both `Θ(N^{1/5})`. **So the leading term really is a two-way balance, and reducing
+*either* component helps.** This is the fact that makes `T₂ = r` a legitimate
+target, and it is why §7-undecuples-bis's withdrawn "it is not the bottleneck"
+reading was wrong.
+
+**❌ WHAT IS NOT RELIABLY RECOVERABLE, and what tripped two attempts.** The
+**internal attribution** of that `O(r·lg⁴N)` among Steps 2a, 3 and 4 does **not**
+follow from the paper's stated bounds, and two competent attempts to infer it
+disagreed:
+
+* The paper states Step 2a (all `t_{a,b}`) costs
+  `O((r·lg r)·M(lg N)·lg N) = O(r·lg³N·lg lg N)` — i.e. `r·lg³N` up to a
+  `lg lg N`.
+* Step 3 (sort-and-match) and Step 4 (Algorithm 4.1) are each stated with `s`,
+  the number of *triples* `(a,b,j)`, and `n ≤ s`.
+* The stated **total** is nevertheless `O(r·lg⁴N)`, which does **not** decompose
+  as the sum of those pieces for any consistent reading of `s`.
+
+**Concretely: an adversarial agent's table put Step 4 at `s·lg³N = N^{1/5}lg⁵N`
+(dominating everything), while Prop. 4.3 itself charges Step 4 only
+`(N^{1/2}/(r^{1/2}m) + r)·lg⁴N` — using `r`, not `s`. Both cannot be right, and
+Prop. 4.3 is the primary text.** The discrepancy is exactly the "read the FINAL
+proposition, not an intermediate bound" trap from §7-undecuples-bis.
+
+**★ THE PRE-FLIGHT REQUIREMENT for the next attempt.** Before claiming any
+improvement to the leading term, one must establish, **from Prop. 4.3's own
+statement and not by inference**, which step carries which share — and then state
+the new cost **as a complete bound over the whole algorithm**, re-costing every
+item including any table-filling, exactly as the two rules in
+§7-undecuples-bis require. **A claim of the form "step X is the bottleneck"
+derived from the intermediate `s`-based bound is inadmissible in this file.**
+
+**What is already excluded, so it need not be re-derived:** the multiplier axis
+(§7-sextuples, doubling), the `l=1` axis, the whole power/root sublattice class
+(§7-sextuples-quinary), the square-residue and `w`-indexed-table ideas
+(§7-undecuples), the Lemma 3.1 test (§7-septuples-quary, an identity), and free
+`m` (§7-undecuples-quinary, which is Lehman). **What is NOT excluded: any attack
+on the pair loop or on Algorithm 4.1 that does not fall in the above classes.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
