@@ -8122,6 +8122,67 @@ rather than another closure.
 
 ---
 
+### 7-undecuples-XLI. ❌❌❌ RETRACTED: §7-undecuples-XL's "method-level improvement" IS A **CATEGORY ERROR** — I plugged Hittmeir's sieve into Harvey's balance without checking they act on the same quantity
+
+**I read Hittmeir's actual paper (arXiv:1608.08766, 20pp) instead of trusting the
+sweep's summary, and my result does not survive. The hook was right on every count.**
+
+**★ WHAT HITTMEIR'S SIEVE ACTUALLY FILTERS (p.2, verbatim definitions).** Hittmeir
+defines `𝓗_{N,m}$` as *"the set of solutions `(x,y)$ to the congruence
+`N ≡ xy (mod m)`"*, and `L_{N,m}$` as *"the corresponding set consisting of the
+elements `x + y (mod m)`"*. His worked example: for `N = 7909787 = 3823·2069$ and
+`m ∈ {2,3,4,5}$`, the sets have `1,1,2,3,4$ elements, and **"we observe that `S$ mod
+`m$` is restricted to `40/2310 = 1.7%` of the residue classes modulo `m$"** — where
+**`S` is the upper bound for `p` from Strassen's approach** (a *value range* of a
+candidate), explicitly used *"to refine our babystep-giantstep method for determining
+`S$ itself."**
+
+**⇒ `S$ IS A RANGE OF CANDIDATE *VALUES*. IT IS NOT HARVEY'S `(a,b)$ PAIR INDEX.**
+
+**★★★ AND THE DECISIVE FACT: HITTMEIR'S ALGORITHM IS NOT AT `1/5$ IN THE FIRST
+PLACE.** His **Theorem 1.2** is
+
+> **`O( N^{1/4} exp( −C₁ log N / (log C₂ · log N) ) · √(e_int(N) log²N) )`**
+
+— a **`N^{1/4}`**-based bound (improved by a subexponential factor), built on
+**Sutherland's CDLP** (Alg. 6.2: *"find a nontrivial factor of `N`, or find an element
+in its imprimitive group whose order is larger than `δ$"*), not on Harvey's
+`aq+bp$ pair enumeration. **Harvey is at `1/5$ and Hittmeir at `1/4$+subexp; they are
+different algorithms with different search spaces, and Hittmeir's sieve does not
+reduce the pair count that `r$ counts in Harvey's balance.**
+
+**⇒ SO §7-undecuples-XXXIX's derivation `cost = N^{1/5}s^{-3/5}$ is VALID AS
+ALGEBRA — and its premise is false.** The algebra says: *if a filter removed a constant
+fraction of the `(a,b)$ pairs, `1/5$ would improve by `s^{-3/5}$.* **Hittmeir's sieve
+does not filter `(a,b)$ pairs.** The `1.7%` compression is on **modular classes of a
+value-range `S$** in a **different algorithm**. Plugging one into the other is a
+**category error**, and the resulting `0.8415·N^{1/5}$ is **not a bound on anything.**
+
+**★★★ AND THE PART THAT SURVIVES IS STILL WORTH HAVING.** The *algebra* is correct and
+still the file's most useful quantitative object: **a filter that removed a constant
+fraction of Harvey's `(a,b)$ family would improve the deterministic record by that
+fraction to the `-3/5$ power, and `1/6$ would require a factor `N^{1/18}$.** That is
+now correctly stated as a **requirement on a filter that does not exist**, rather than
+a claim that one has been found. The 2026 hyperbolic-sieve thread
+(§7-undecuples-XXXVI) remains the place to look, **but its compatibility with
+Harvey's pair set is itself unverified** — which is exactly the mistake I just made
+once already.
+
+**⇒ THE PROCESS POINT, which is the real content of this retraction.** This is the
+**second** time in this project that I took a mechanism from an agent's or a paper's
+*summary* and built a quantitative claim on it **without reading the source** — the
+first was the `lg^{9/5}$ cost model (§7-undecuples-XLII), the second was the AP span
+(§7-undecuples-XLIV), the third the equidistribution (§7-undecuples-XXXIII), and now
+this. **Every one was flagged in-round as "I have not verified this," and every one
+was wrong.** Rule (6) was not strong enough. It should read:
+
+> **★ RULE (7). Before building a quantitative claim on a mechanism you did not
+> invent, read the source and answer ONE question: *what quantity does this
+> mechanism act on, and is it the same quantity the target's parameter counts?*
+> A mismatch is not a caveat; it invalidates the derivation.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
