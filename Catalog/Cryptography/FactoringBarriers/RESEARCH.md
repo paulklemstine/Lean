@@ -4851,6 +4851,74 @@ multiplication problem.
 
 ---
 
+### 7-undecuples-XXXIV. ★★★★★★ THE LIVE THREAD, AND IT CONNECTS THE JANUARY 2026 ORDER-FINDING RESULT TO THE LEADING TERM
+
+§7-undecuples-XXXIII named the one opening that would break the packed-width
+floor: a representation that does not carry `n` coefficients of `Θ(lg N)$ bits.
+Chasing it produced a different and better idea, which is the first genuinely new
+lever in several rounds.
+
+**THE OBSERVATION.** Step 4's cost is `O(n·lg³N)` in the number `n` of **distinct
+matched values** `v_{a,b,j} = α^i$ in `Z_N`, `i < m`. Harvey bounds only `n ≤ s`
+(`s` = number of triples). **But `n` is not `s`, and the gap is controlled.**
+
+**★ THE COUNT.** A triple `(a,b,j)` matches when
+
+> `v_{a,b,j} = α^{aN + b − ⌈2√(abN)⌉ − jm} = α^{i}`  in `Z_N`, `i < m`,
+
+i.e. when the exponent `E = aN + b − ⌈2√(abN)⌉ − jm` satisfies **`E ≡ i (mod D)`**
+with `i ∈ [0,m)`, where `D = ord_N(α)`. Equivalently:
+
+> **`E mod D` must land in `[0, m)`.  For an equidistributed `E` this has
+> probability `m/D`, so `n ≈ s·(m/D) = s·m/ord_N(α)`.**
+
+**⇒ THE PRODUCT TREE SHRINKS INVERSELY IN THE ORDER OF `α`.** Concretely, if
+`ord_N(α) = Θ(N^{1/2})` — which the hypothesis-free order-finding of
+**Harvey & Hittmeir, arXiv:2601.11131 (Jan–Jun 2026)** now makes available — then
+`m/D = N^{1/5}/N^{1/2} = N^{−3/10}`, and with `s = N^{1/5}lg^{1/5}N`:
+
+> **`n ≈ s·N^{−3/10} = N^{−1/10}·lg^{1/5}N = O(1)`.**
+
+**★ SO WITH A LARGE-ORDER `α`, THE NUMBER OF SPURIOUS MATCHES IS `O(1)`, AND
+Algorithm 4.1's PRODUCT TREE IS A NON-TERM.** The `lg³N` that §7-undecuples-novem
+identified as 100% of the leading term would then be carried by the `j`-work
+(`s` terms in Steps 2b–3) instead, and **the leading term becomes a function of
+`D = ord_N(α)$ that the 2026 result lets us move.**
+
+**This is the first time in this file that a 2026 primary result connects to the
+leading term of the `1/5$ algorithm.** Every previous use of arXiv:2601.11131 was
+about *removing an obstruction* (rounds 7, 8); this is about *creating leverage*.
+
+**⚠️ AND THE HONEST UNCERTAINTY, which is substantial and must not be buried.**
+This rests on my reading of the **match condition**, and two things about it are
+**not** verified from the paper:
+
+1. **Equidistribution of `E mod D`.** The estimate `n ≈ s·m/D` assumes the `s`
+   exponents `E` are roughly equidistributed mod `D`. **They need not be** — they
+   are *structured* (`aN + b − ⌈2√(abN)⌉ − jm`), and structure is exactly what
+   this file has been destroyed by twice (§7-undecuples-quary killed every
+   separability assumption; §7-undecuples-undecim killed the density assumption).
+   **A proved statement that the `E$ avoid `[0,m)$ mod `D` would be worth more than
+   everything else here**, and I have not proved it — the good pairs *must* land in
+   `[0,m)`, so the set is not equidistributed by construction, and separating the
+   `O(1)$ forced hits from the rest is the whole problem.
+2. **Whether `n ≤ s$ being loose is consistent with Prop. 4.3's own bound.** I
+   concluded in §7-undecuples-novem that Step 4 is "100% of the leading term."
+   **If `n = O(1)$ under a legitimate `α$, that conclusion is wrong**, and I cannot
+   currently reconcile it with Prop. 4.3 without re-reading the accounting — which is
+   precisely the trap of rounds 14–16. **So this section is a LEAD, not a result,
+   and the two bullets above are where it could fail.**
+
+**⇒ WHAT IS ACTUALLY ESTABLISHED, and what is not.** *Established:* the match
+condition makes `n` a function of `D = ord_N(α)` via `n ≈ s·m/D`, and the
+January 2026 order-finding result is exactly the tool that lets `D` be made large.
+*Not established:* that the estimate holds for these structured exponents, or that
+it survives the accounting. **This is the first live thread in six rounds that
+points at leverage rather than at a wall, and it should be attacked by proving the
+equidistribution claim — or by exhibiting its failure.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
