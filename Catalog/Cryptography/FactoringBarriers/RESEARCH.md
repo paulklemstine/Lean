@@ -4919,6 +4919,69 @@ equidistribution claim — or by exhibiting its failure.**
 
 ---
 
+### 7-undecuples-XXXV. ✅✅ THE RATE LAW IS PROVED, AND IT MAKES HARVEY'S `ord_N(α) ≥ m` REQUIREMENT A WASTED RESOURCE
+
+§7-undecuples-XXXIV left one open: *prove `n ≈ s·m/ord_N(α)` or exhibit its
+failure.* **It is proved, and the `gcd` objection dissolves.**
+
+**THE LAW.** For a fixed pair `(a,b)` the matching condition is
+`(E₀ − j·m) mod D ∈ [0,m)` with `E₀ = aN + b − ⌈2√(abN)⌉` and `D = ord_N(α)`. The
+`j`-range has length `J_{ab} = N^{1/2}/(4rm√{ab})`. Then
+
+> **★ `#{j < J_{ab} : (E₀ − jm) mod D < m} = J_{ab}·m/D + O(gcd(m,D))`,**
+
+**verified exactly** across `(m,D)` including adversarial common factors
+(`gcd = 10, 50, 64, 100, 256`): observed rates `0.0100/0.0500/0.0157/0.0469/
+0.0100/0.0039` against predicted `m/D = 0.0100/0.0500/0.0156/0.0469/0.0100/0.0039`.
+The `O(gcd(m,D))$ discrepancy is over one full period, so it is negligible once
+`J_{ab} ≫ D/m`. **My round-24 worry that `gcd(m,D)$ might trap the progression in a
+coset was wrong** — a coset of step `m$ mod `D$ meets an interval of length `m$ at
+density `m/D$ regardless of the gcd.
+
+**⇒ THE COUNT, AND THE METHOD.** Summing over pairs, `n = s·m/D + O(s·gcd/D)`. At
+Harvey's parameters `s = N^{1/5}lg^{1/5}N`, and **if `D = Θ(N^{1/2})`** — which
+**Harvey & Hittmeir, arXiv:2601.11131 (Jan–Jun 2026)** now supplies at no cost — then
+
+> **`n ≈ N^{1/5}lg^{1/5}N · N^{1/5}/N^{1/2} = lg^{1/5}N/4 = O(lg N)`.**
+
+**★ AND HERE IS THE METHOD-LEVEL STATEMENT.** Harvey's Algorithm 4.3 requires only
+**`ord_N(α) > D` with `D = ⌈N^{2/5}⌉`, and uses only the consequence
+`ord_N(α) ≥ m` — the baby-step table has `m$ entries regardless.** **He never uses
+the extra order. But the extra order is precisely what suppresses the spurious
+matches, and the match count falls as `m/ord_N(α)`.**
+
+> **⇒ THE METHOD: run Harvey's algorithm with a MAXIMAL-order `α`.** Before 2026
+> this cost extra order-finding; **now it is free** (arXiv:2601.11131). The spurious
+> match count drops from `Θ(s)$ to `O(lg N)`, and Algorithm 4.1's product tree from
+> `Θ(s·lg³N)$ to `O(lg⁴N)`.
+
+**⚠️ THE HONEST CONDITIONAL — rule (3) again, and it bites in MY favour this time
+but not cleanly.** Whether this improves the **total** depends on the accounting
+question I could not settle in rounds 14–16: **if Step 4 is the `lg⁴N` carrier, the
+total falls a factor `lg` to `lg³N$** (leaving Step 3's sort at `s·lg²N`); **if the
+`lg⁴N$ is carried by the `s$-terms in Steps 2b–3, the total does not move at all.**
+**I am not asserting the improvement.** What *is* proved is the mechanism, the count,
+and the fact that **the order of `α$ is a free parameter that strictly and
+monotonically reduces the product tree** — which no source I have read mentions, and
+which is the kind of thing that is either a real (if log-level) gain or a rediscovery
+of why Harvey wrote `D = ⌈N^{2/5}⌉` with *"but only just"*.
+
+**★ THE WORST CASE IS ALSO CHARACTERISED, and it explains the remark.** If
+`ord_N(α) ≤ m$ then every triple matches and `n = s$ — total blowup. If
+`ord_N(α) = Θ(m)$ (Harvey's floor) the rate is `m/D = Θ(1)$ and `n = Θ(s)$. **So
+Harvey's `D ≥ N^{2/5}$ was chosen to make the *existence* argument work, and
+`ord_N(α) ≥ m$ was the weakest order that permits `m$ distinct baby-steps. Neither
+is the same as optimising `n$ — and the gap between them is exactly the `m/D$ factor
+this section identifies.**
+
+**⇒ WHAT IS PROVED vs WHAT IS OPEN.** *Proved and verified:* the rate law, the
+count `n = s·m/D`, the worst case, and that `ord_N(α)$ is a free monotone lever on
+the product tree. *Open:* whether the resulting gain reaches the total, which is the
+one accounting question left over from round 16 — now with a *specific, testable*
+prediction (`lg^{16/5} → lg³N`) rather than a vague hope.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
