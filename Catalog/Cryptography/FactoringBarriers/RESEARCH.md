@@ -168,6 +168,24 @@ the record's own claims were materially corrected. The load-bearing changes:
    1.43 bits > S₄ 1 bit; extended by AGL(1,8), whose larger abelianization `C₇` leaks the
    *least* — 0.114 bits, 4.1% of cap.)
 
+7. **★ Transcendence theory is CLOSED for factoring, by OBJECT MISMATCH** (round 39). Baker /
+   Matveev / Evertse / the Subspace theorem bound solutions to a **fixed** exponential equation
+   in a **fixed** finitely generated group; factoring pays `Ψ_F(x, x^{1/u})` — a count over the
+   values of a **moving** polynomial with `N, x, B` all varying. **Matveev never sees `N`**;
+   no constant-sharpening bridges that (a category error, not a distance). **The deep reason:
+   divisors of `N` form a MONOID in the free abelian group `⟨p₁,…,p_ω⟩` — maximally
+   multiplicatively DEPENDENT — while Baker controls FREE SUBGROUPS**; every transcendence
+   theorem excludes, by hypothesis, exactly what factoring hands it. The `S`-unit normalisation
+   is circular (`1/N ∈ Γ_S ⟺ primes(N) ⊆ S ⟺ N already factored`), and the smoothness form
+   vanishes by construction. Størmer/Pell, Baker–Heegner–Stark, Stewart/Batte–Luca and the
+   `S`-unit family are **four dead branches of one obstruction**. The smoothness-escape horn's
+   real object is **rank acquisition**, which is linear algebra, not transcendence. A reusable
+   **vacuity filter**: any bound exponential in `|S|`/rank must be checked against the trivial
+   bound — base-45 per rank exceeds `2^{1024}` once `π(B) ≥ 187`, so at the ECM point the
+   published `10^{733,097}` is `7.3×10⁵` orders worse than doing nothing. (Corrected: the
+   Dickman parameter for smooth values of `t²−N` is `u = (½ log N + 2 log x)/log B`, not
+   `log x/log B`.)
+
 **Discipline, all earned by retraction** (each paper carries its errata): never cite a source
 unopened; name the quantity (a mechanism and its target must act on the SAME quantity — the
 most-violated rule); a *proved* bound can be real yet **price the wrong direction** (a lower
