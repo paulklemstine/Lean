@@ -7031,6 +7031,70 @@ flag as missing**, because four times I did not.
 
 ---
 
+### 4e-v. ■ HANDOFF: the ONE remaining question in §4e, with the exact missing calculation named
+
+§4e's two open items survived §4e-iii/§4e-iv (both candidate openings refuted). Here
+is the residue, stated so a fresh session can act without re-deriving anything.
+
+**ITEM (i) IS NOW CLOSED, and the closure is §4e-iv's.** The `k ≈ 5$ decorrelation
+assumption is justified to first order by the **equispaced-full-span** argument: the
+near-candidates at depth `t$ with `ℓ$ wrong bits are `{d + j·2^{t−ℓ}}`, spacing
+`2^{t−ℓ}$ but **span `2^t$** — the whole range — so they are equidistributed exactly
+as the random-code model assumes. **The tree model is not missing exploitable
+structure, and no AP-based method beats the rate.**
+
+**⇒ ITEM (ii) IS THE ONLY THING LEFT IN §4e, AND IT IS A CODING-THEORY QUESTION,
+NOT A FACTORING ONE:**
+
+> **Is there a list-decoding bound — or a better *tree* decoder — for the
+> asymmetric `Z`-channel that closes the gap between PPS's achieved `β = 0.60–0.63$`
+> and the proved ceiling `β ≤ 0.666$?**
+
+**THE EXACT CALCULATION THAT WOULD SETTLE IT** (this is what I never did, and what
+§4e's *"a 2013–2026 sweep found no closure"* does not replace):
+
+1. **Write the specific code.** The Hensel tree on `d ∈ [0,2^t)$ is a deterministic
+   binary tree; its "message set" is `{N, e, d, p, q}`-derived. **State it as a
+   concrete `Z`-channel code, with its tree-index map, rate, and minimum distance
+   *within* the list-decoding radius** — §4e already notes the minimum distance is
+   `O(m)$ (adjacent leaves share `m(t−ℓ)$ leading bits), which is what forces the
+   list size `L$ and which is *not* accounted for in the `0.243$/`0.666$ ceilings
+   (those are single-codeword-radius numbers).
+2. **Ask whether the `O(m)$ tree minimum distance degrades the `Z`-channel rate below
+   `0.666$ for free, or whether the `0.60–0.63$ experiments are already paying it.**
+   The file's §4e remark says the correlation is *"not fatal"* — **that is asserted,
+   not computed**, and it is the hinge of the whole item.
+3. **If (2) is the binding constraint**, the question becomes: can the tree be
+   *re-shaped* (a different lift, e.g. 2-adic with a different branching schedule, or
+   a coarser tree with a randomised root) **without changing the candidate set**? That
+   would be a genuine, novel coding-theory contribution — and it is *not* a factoring
+   method, though it would improve the partial-key attack's tolerable noise.
+
+**⇒ AND THE HONEST LABEL.** Item (ii) is a **coding-theory open problem that §4e
+already recorded as unclosed**, with no known closure as of this file's last sweep.
+**It is not a factoring method, and I am not claiming it as one.** I am recording it
+because §4e's entry says *"a 2013–2026 sweep found no closure"* without saying
+*what computation would close it*, and a handoff without the missing computation is
+exactly the failure mode of §4e-iii.
+
+**⇒ AND, FINALLY, THE COMPLETE ACCOUNTING OF THIS PROJECT'S OPEN QUESTIONS, so
+nothing is left implicit:**
+
+| # | question | status |
+|---|---|---|
+| A | beat `N^{1/5}$ deterministically, unconditionally | **closed** — census complete (§8.0–§8.9); remaining requirement is `poly(log N)$ factoring, i.e. a complexity-theory breakthrough |
+| B | a second independent reuse (`k=2 ⟹ 1/7$) | **closed** for every mechanism constructed here (§8.6, §8.7, §8.8) |
+| C | the tree decorrelation assumption `k≈5$ | **closed** (§4e-iv) |
+| D | `Z`-channel tree list-decoding bound | **OPEN — §4e-v, with the missing computation named** |
+| E | a `poly(log N)$ smooth-value collector | **closed** — density barrier, Vinogradov (§8.4) |
+| F | `poly(log N)$ modular-curve count | **closed** — `≡` poly-time factoring (§8.3, §LIX) |
+
+**A and B and C and E and F are closed. D is the only open question, and it is a
+coding-theory problem, not a factoring method.** That is the complete state, and it
+is what a fresh session should read first.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
