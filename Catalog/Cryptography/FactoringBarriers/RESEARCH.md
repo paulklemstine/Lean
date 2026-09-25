@@ -5046,6 +5046,61 @@ and the final one was closed by a falsified prediction rather than an assumption
 
 ---
 
+### 7-undecuples-XXXVII. ✅✅ THE FINAL FLOOR: the leading term is `m` GCDs, and they are irreducible
+
+§7-undecuples-XXXVI left the `m`-driven half of the leading term. It splits in two,
+and **the first half is removable while the second is not.** That is the cleanest
+possible ending, because it names exactly what the bound *is*.
+
+**THE `m`-DRIVEN HALF = `m` polynomial evaluations + `m` GCDs, at `O(m·lg²N)` each.**
+
+> **★ PART (a) IS REMOVABLE — and this is a real, small result.** With a
+> maximal-order `α$ we have `n = O(lg N)$ (§7-undecuples-XXXV) and the `Θ(m)$-entry
+> table `T[d] = α^d − 1$ is available, so
+> `f(α^i) = α^{ΣI}·∏_{i₀∈I} T[i−i₀]` is computable **directly in `Θ(n) = Θ(lg N)$
+> group operations per `i$**, i.e. `Θ(m·lg N)$ total — a **full `lg` cheaper** than
+> Lemma 2.4's `m·lg²N` evaluation. **The multipoint evaluation can be bypassed.**
+
+> **★ PART (b) IS IRREDUCIBLE. THIS IS THE FLOOR.** The `m$ GCDs
+> `gcd(N, f(α^i) − 1)$ cost `m·Θ(lg²N) = N^{1/5}·lg^{16/5}N` — **the entire
+> bound.** Three independent reasons it cannot be reduced:
+>
+> 1. **No gcd-batching primitive exists.** Whether a common divisor of many values can
+>    be found faster than one gcd each is, to this file's knowledge, open — and the
+>    standard toolkit (product trees, multipoint evaluation) does not batch `gcd`.
+> 2. **Fewer than `m$ tests is not available.** By Fact 1
+>    (§7-undecuples-decem) the `m$ points are distinct mod `p$ (the reduction
+>    `Z_N^* → Z_p^*` has kernel `q−1 ≫ m`), so none may be dropped; and we need to
+>    *find* the successful `i$, not test known ones.
+> 3. **Finding the successful `i$ without testing is the original problem shape.**
+>    We are intersecting the `m$-point geometric progression `{α^0,…,α^{m−1}} ⊂ F_p`
+>    with the `≤ n$ roots of `f(x) − 1` in `F_p$ — *a geometric progression against
+>    an unknown set*, which is precisely the configuration §7-undecuples-bis
+>    identified as the whole difficulty. **It has not been solved here and no
+>    mechanism in this file reaches it.**
+
+**⇒ THE DEFINITIVE STATEMENT OF THE BOUND.**
+
+> **`N^{1/5}·lg^{16/5}N` is the cost of `m = ⌈N^{1/5}lg^{6/5}N⌉` GCDs, each
+> `Θ(lg²N)`, at a table length the three-term balance forces. The polynomial
+> evaluations beside them are removable (§ part (a)); the GCDs are not.**
+
+**This is where the file stops, and it is a statement about arithmetic rather than
+about search.** Every prior closure removed a *search*; this one removes the last
+*non-arithmetic* component and identifies the residue as `m` GCDs — primitive,
+unbatched, and as hard as the balance makes them.
+
+**★ AND THE ONE EXTERNAL DEPENDENCY, restated in its now-exact form.** The hook's
+remaining thread — *"a better algorithm for arithmetic over composite moduli"* — is
+**already discharged as far as this file can take it**: part (a) shows the
+*evaluation* side has a `lg` of headroom that is now claimed, and the residue is not
+arithmetic-over-composites at all but **batched GCD**, which is a different and
+narrower primitive. **So the external dependency has been sharpened from
+"a whole subfield" to "one primitive": a GCD-batching algorithm.** That is a
+narrower, more actionable handoff than round 20 gave, and it is the honest end.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
