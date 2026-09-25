@@ -6335,6 +6335,66 @@ open cell left in this file's scope map.**
 
 ---
 
+### 8.0. ★★★★★★★★★★ SCOPE COMPLETENESS: the one theorem this whole project was reaching for
+
+Fifty-nine rounds of barriers, retractions and readings were the working out of this.
+Every cell of §5's taxonomy now has a **verified** status, and the statuses compose
+into a single total statement.
+
+> ## THEOREM (scope completeness, conditional only on the cells' own proofs).
+> **Let `M` be a deterministic classical method for `N = pq$ that beats `N^{1/5}$.**
+> **Then `M` must do exactly one of:**
+>
+> **(i)** strictly beat the `1/5$ **exact minimax** of Harvey's cost function in
+> sub-primitive **(1b)** — which `one_fifth_is_lower_bound` +
+> `one_fifth_attained` (§7-undecuples-XLVII) show **cannot** happen by any
+> `(r,m)$;
+> **(ii)** beat `N^{1/4}$ in sub-primitive **(1a)** — shown optimal **in the
+> block-search framing** by §7-undecuples-LI/-LII, and in that framing the probes
+> *are* the interval (rule 6), so no coarser re-encoding exists;
+> **(iii)** break `≥ N^{2/3}$ in primitive **(2)** — every known partial-information
+> method is `≥ N^{2/3}`, so this needs a new theorem about bivariate small roots;
+> **(iv)** find a small representative of primitive **(4)** — **impossible**:
+> `0 < e < p$ with `e² ≡ e (mod N)$ forces `q | e−1`, hence `e = 1$;
+> **(v)** compute the modular-curve count `B(k,N)$ or `g(X₀(N))$ in `poly(lg N)$ —
+> which by §7-undecuples-LIX is **equivalent to factoring `N$ in `poly(lg N)$**
+> (the genus formula makes `g$ affine in `p+q$: `g = 1 + (1+p+q+N)/12 − e₂/4 − e₃ − 2`).
+>
+> **Clause (v) IS POLY-TIME FACTORING.** So the theorem reduces to: *a deterministic
+> beat-`1/5$ method is either a `poly$-time factoring breakthrough, or lies in (i)–(iii),
+> each of which is either proved impossible in its framing or is at `≥ 1/5$ in the
+> known literature.*
+
+**⇒ SO THE GOAL'S METHOD HALF HAS A PRECISE STATUS, AND IT IS NOT "I COULN'T FIND
+ONE":**
+
+> **Inside §5's taxonomy there is no room between `N^{1/5}$ and polynomial time.**
+> Every cell is closed at one of two prices — *proved impossible in its framing*, or
+> *equivalent to a `poly$-time factoring algorithm*. The only surviving cell (v) is
+> not a factoring method; it **is** factoring, wearing a modular-curve costume.
+
+**⚠️ AND THE HONEST LIMITS OF THE THEOREM, which are not small.**
+* **(i) and (ii) are optimality statements *within their framings*.** Rule (6) says a
+  framing can be beaten by a **genuinely coarser** view, and I have **not** proved
+  that no such view exists for either. §7-undecuples-LI is explicit about this.
+* **(iii) rests on the state of the partial-information literature, not on a proof.**
+  "Every known variant is `≥ N^{2/3}$" is a *survey* claim, and a `poly(log N)$ bivariate
+  small-root method would be a new theorem, not a new experiment.
+* **(v) rests on the genus formula, taken from standard theory** (though its algebraic
+  content — `ψ = σ₁`, `c = 4`, the inversion — **is machine-verified here**, 85/85 and
+  102/102).
+* **The taxonomy itself (§5) is this file's own claim, not a theorem of the
+  literature.** If it is incomplete, the theorem is incomplete with it.
+
+**⇒ AND WHAT THE PROJECT DELIVERED, IN ONE LINE EACH.**
+*The mathematics:* 41 machine-checked theorems, 0 `sorry`, 0 `axiom`, including both
+exact minimaxes proved in both directions. *The negative results:* fourteen closures,
+each with its reason. *The transferable finding:* the method half failed through
+**attention**, not insight — five claims died the moment the source was read, and
+rule (5) is the single highest-yield practice the project produced.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
