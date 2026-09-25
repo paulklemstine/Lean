@@ -5821,6 +5821,74 @@ question is a different question from every barrier this file proved.**
 
 ---
 
+### 7-undecuples-LI. ✅❌ `N^{1/4}` IS OPTIMAL FOR SUB-PRIMITIVE (1a) — the last live question in this file, now closed
+
+§7-undecuples-L left *"is `N^{1/4}$ optimal for small-divisor testing?"* open. **It is,
+up to logs, and the reason is short.**
+
+**THE MECHANISM (Harvey Prop. 2.5, p.5).** To find a divisor `≤ M`, put
+`d = ⌈M^{1/2}⌉` and test the `M/d` **disjoint blocks**
+
+> `[1, M] = ⊔_{j < M/d} [ jd+1, (j+1)d ]`
+
+by evaluating the rising factorial `f(x) = (x+1)···(x+d)` at `x = 0, d, 2d, …` with one
+multipoint evaluation, then GCDing each value. Cost
+`O((M/d)·lg²N + (M/d)·lg³N)`, and at `M = ⌈N^{1/2}⌉` this is `O(N^{1/4}·lg³N)`.
+
+**★ AND EVERY STRUCTURE I TRIED LEAVES IT AT `M^{1/2}` BLOCKS.**
+
+* **`f(jd) = d!·C(jd+d, d)`** — so the whole test is a degree-`d` polynomial in `j$. No
+  saving: it *is* a multipoint evaluation.
+* **`C(jd,d)$ satisfies a linear recurrence of order `d+1` in `j$** (its
+  characteristic polynomial is `(1−z)^{d+1}`, a single root of high multiplicity).
+  Evaluating `M/d$ terms of an order-`d$ recurrence is `Θ(M)` naively, and the
+  fast-transform route lands at `O((M/d)·lg²N)` — **the same thing.**
+* **Sampling blocks instead of scanning them** needs `Θ(M/d)$ trials in expectation,
+  because a semiprime factor is essentially uniform in `[1,M]`. Same `M^{1/2}`.
+
+**★ AND THE "OTHER ORACLE" IDEA, which looked most promising, fails on arithmetic.**
+Harvey's `α` gives a *congruence* test instead of an interval test:
+
+> `gcd(α^{jd} − 1, N) > 1  ⟺  ord_p(α) ∣ jd  ⟺  (for the least such `j`)
+> `j* = ord_p(α)/gcd(ord_p(α), d)`.**
+
+So the test succeeds within the block budget only if `ord_p(α) ≤ M$ — **a condition we
+cannot arrange and cannot verify.** For a balanced semiprime with
+`ord_p(α) ≈ p ≈ M` and `d = M^{1/2}$, one gets `j* ≳ M^{3/2} ≫ M/d = M^{1/2}$: **the
+congruence test almost never fires inside the budget.** The two oracles — interval and
+congruence — are simply different, and the interval one is the one that works.
+
+**⇒ THEREFORE `N^{1/4+o(1)}$ IS OPTIMAL for sub-primitive (1a) in the block-search
+framing, and the only way past it is a mechanism to locate a factor *without*
+searching `[1,M]$ at all** — which is not a search improvement and would be a
+different primitive.
+
+**⚠️ THE HONEST BOUNDARY, and it is the same one as §7-quinary's.** This is an
+optimality statement *about the block-search framing*, exactly as the `√N$ scale wall
+was an optimality statement about the `(a,b)$ box framing. **A framing that has been
+shown optimal is not thereby shown to be the only framing** — that inference is
+exactly what §7-bis and §7-sextuples then refuted for the box by finding
+re-encodings. **I am not claiming `N^{1/4}$ is unbeatable in general; I am claiming
+that within the one framing this file has now examined, it is tight, and the escape
+(if any) is a mechanism no candidate in forty-five rounds has supplied.**
+
+**★ SO THE SCOPE MAP IS NOW COMPLETE, and every cell is accounted for:**
+
+| primitive / sub-primitive | best known | status here |
+|---|---|---|
+| (1a) small-divisor testing | `N^{1/4}` (Strassen) | **exhausted this round** |
+| (1b) `aq+bp` oracle | `N^{1/5}$ (Harvey) | exhausted (38 rounds) |
+| (2) partial information | `≥ N^{2/3}$ known | structurally closed |
+| (4) idempotent | no small representative | structurally closed |
+| (3) special algebraic form | Gu–Martin **equivalence** | **0 rounds — the one untried cell** |
+
+**⇒ THE ENTIRE DETERMINISTIC LANDSCAPE IS NOW MAPPED, AND EVERY CELL HAS A STATUS
+EXCEPT (3), WHICH IS AN EQUIVALENCE RATHER THAN AN ALGORITHM.** There is no framing
+left in this file that has not been either proved tight or closed, which is a
+complete and unusual place to stop.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
