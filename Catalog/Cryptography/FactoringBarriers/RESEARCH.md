@@ -10,7 +10,7 @@ the deterministic-family results in `SquareDiff.lean` (10 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
 `HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (28 thms) and `OrderLCM.lean`
 (6 thms).
-**⚠️ SIX claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter). §7-undecuples-XXXI closes the last route by CIRCULARITY** — see §7-ter (the
+**⚠️ EIGHT claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter). §7-undecuples-XXXI closes the last route by CIRCULARITY** — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published), §7-sextuples (the
 "sweep all multipliers" method was **not** strictly dominating — it is subsumed by
@@ -5478,6 +5478,43 @@ and said 1.03×**, and I recorded the weakening before the novelty check landed.
 **⇒ STANDING: thirty-four rounds, ZERO new factoring methods.** The frontier is the
 `m$ multipoint evaluations, and every attack on it is now closed — by Harvey &
 Hittmeir, by circularity, or by non-cyclicity.
+
+---
+
+### 7-undecuples-XLV. ⚠️ CORRECTING MY OWN CORRECTION: the unmatched values *are* powers of `α` — the `T`-table dies on *width*, not on kind
+
+§7-undecuples-XL (round 30) killed the `T`-table route with the reason "*`f$ is the
+product over **unmatched** giantsteps, which are not all powers of `α$`*." **That
+reason is false, and it is worth fixing because the false version would mislead the
+next person.**
+
+**★ THE FACT.** *Every* giantstep is a power of `α$`:
+`v_{a,b,j} = α^{aN + b − ⌈2√(abN)⌉ − jm} = α^{d_{a,b,j}}` with `d = E_{a,b} − jm`. The
+**matched** ones are exactly those with `d mod ord_N(α) ∈ [0,m)`. So the **unmatched**
+values are also powers of `α$` — just with exponents lying **outside** `[0,m)`, and
+very likely **negative** (`j·m` can exceed `E$`).
+
+**⇒ SO THE `T$-TABLE STRUCTURE *DOES* SURVIVE — and dies on width instead.** The
+table one wants is `T[d] = α^d − 1$ indexed by the exponents actually used, giving
+`f(α^i) = α^{Σ d_j}·∏_j T[i − d_j]$` at `Θ(n)$ per `i$`. But the unmatched exponents
+span
+
+> **`d ∈ [ aN + b − ⌈2√(abN)⌉ − J_{ab}·m ,  aN + b − ⌈2√(abN)⌉ ]`,**
+
+whose width is `Θ(aN) = Θ(√r·N) = Θ(N^{11/10})` at `r = N^{1/5}` — against a
+table that could afford `Θ(m) = Θ(N^{1/5})$ entries. **The table would be a factor
+`N^{9/10}` larger than the baby-step table itself.** So the route is dead, but for a
+quantitative reason, not the qualitative one I gave.
+
+**★ AND THIS IS THE THIRD TIME THE SAME OBJECT HAS BEEN MIS-CHARACTERISED IN THIS
+FILE**: the *gap* exponents (§7-undecuples-quary: "the gap is a perfect square" — true
+of the gap, irrelevant to the search), the *search* exponents (§7-undecuples: "the
+exponent is a perfect square" — true, but of the `j`-decomposition, not the pair
+index), and now the *polynomial* exponents. **The recurring lesson is that in this
+algorithm there are several different things called "the exponent", each with its own
+structure, and each of my last three structural claims was about a different one.**
+Rule (4), added now: **when a structural claim is rejected, record which of the
+several exponent-like objects it was about.**
 
 ---
 
