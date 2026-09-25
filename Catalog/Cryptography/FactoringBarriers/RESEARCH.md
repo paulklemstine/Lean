@@ -4591,6 +4591,62 @@ not already killed, and it is the live thread.
 
 ---
 
+### 7-undecuples-undecim. ❌ ROUTE (b) KILLED — but it yields the sharpest structural fact in the whole §7-undecuples sequence
+
+**THE NEW FACT: THE MATCHED INDICES *ARE* THE FERMAT GAPS.** Harvey decomposes
+`y₀ = u₀ − ⌈(4a₀b₀N)^{1/2}⌉ = i₀ + j₀m` with `0 ≤ i₀ < m`, and the match is
+`v_{a₀,b₀,j₀} = α^{y₀ − j₀m} = α^{i₀}`. So the root of `f` associated to a good
+pair is
+
+> **`i₀ = y₀ = a₀q + b₀p − ⌈2√(a₀b₀N)⌉`  —  the Fermat gap itself, with NO
+> modular reduction,**
+
+and Lemma 3.3 bounds it by `y₀ < N^{1/2}/(4r√{ab})`. **At the extreme `ab = r` this
+is `y₀ < N^{1/2}/(4r^{3/2}) = N^{1/5}/4 = m/4`.** Hence:
+
+> **★ Every root of `f` is `α^{i₀}` with `i₀ ∈ [0, m/4)`. The matched indices all
+> live in the first quarter of the baby-step table, and `f` divides the
+> fixed partial-`q`-Pochhammer `h_{m/4}(x) = ∏_{i<m/4}(x − α^i)`.**
+
+This is more than a curiosity: it says the `m`-entry baby-step table is only ever
+*used* through its first `m/4$ entries, and it puts `f` inside a **fixed**
+polynomial independent of the match set — the structure §7-undecuples-decem
+identified but could not exploit.
+
+**❌ AND IT STILL DOES NOT PAY. Three attempts, all closed:**
+
+1. **Sliding window.** If the index set `I` were a contiguous interval, then
+   `f_I(α^k) = α^{ΣI}∏_{i∈I}(α^{k−i} − 1)$ is a window product and *one division per
+   step* gives every `k` in `O(m)$ — a `lg³` saving over the product tree. **But
+   `I$ is not an interval.** Decomposing an arbitrary `I ⊆ [0,m/4)$ into
+   intervals costs one window per interval, i.e. `O(n·m)$ — far worse.
+2. **Divide out the cofactor.** `f_I = h_{m/4} / ∏_{i∈[0,m/4)\I}(x−α^i)`, with
+   `h_{m/4}$ built once. The cofactor has `m/4 − n$ roots, and since
+   `n ≤ s = N^{1/5}lg^{1/5}N` while `m/4 = N^{1/5}lg^{6/5}N/4`, we get
+   `n/(m/4) = Θ(1/lg N)`. **So the cofactor is *larger* than `f_I$ by a factor
+   `Θ(lg N)`, and building it costs more than building `f_I$ directly.** The
+   fixed-polynomial structure is precisely the structure that loses.
+3. **Direct substitution.** `f_I(α^k) = ∏_{i∈I}α^{i}(α^{k−i}−1)`, and the
+   `α^{k−i}−1$ come from a fixed table of `Θ(m)$ entries — but assembling the
+   product still costs `Θ(n)$ per `k$`, i.e. `Θ(nm)$ total. The product tree plus
+   multipoint evaluation already does this in `O(m·lg²N)$ via FFT, **so the naive
+   form is `Θ(lg N)` times worse than what Harvey already has.**
+
+**⇒ ROUTE (b) IS CLOSED.** The obstruction is uniform and worth stating as a
+rule: **a fixed enclosing polynomial helps only if the index set is DENSE inside
+it, and here it is sparse by exactly a factor `lg N`.** The `q`-Pochhammer
+structure is real, and unusable.
+
+**⚠️ AND THE HONEST DISCOUNT ON ALL OF IT.** Fact (b) above is a genuine,
+non-obvious structural observation about Harvey's construction, and it is worth
+having. But it is **an observation, not a method.** It yields no improvement, and
+**route (b) was the last of the three** — with (a) "beat fast polynomial
+multiplication" and (c) "reduce `n` below `s`" already closed in
+§7-undecuples-decem. **So the leading term `s·lg³N` now has no known attack, and
+this file has no route to one.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
