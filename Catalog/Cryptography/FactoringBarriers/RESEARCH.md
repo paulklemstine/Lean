@@ -4531,6 +4531,66 @@ the term is now known to be the entire answer and there is nowhere else to look.
 
 ---
 
+### 7-undecuples-decem. ⚠️ THE ATTACK ON `s·lg³N`, BEGUN — three verified structural facts, and the step that remains
+
+Rule (3) is satisfied by construction here: Step 4 **is** the leading term. This
+decomposes Algorithm 4.1 and records what is now known. **The attack is not
+finished and no improvement is claimed.**
+
+**WHERE THE `lg³N` ACTUALLY IS (p.4, Lemmas 2.1/2.3/2.4).** Step 4's
+`O(n lg³N + m lg²N)` splits as:
+
+* **Lemma 2.3 — the product tree** building `f(x) = ∏_{j≤n}(x − v_j)`: `O(n lg³N)`.
+  **★ This is the ONLY place a `lg³N` occurs.** The multipoint evaluation
+  (Lemma 2.4) is `O((n+m) lg²N)`, and Step 3's `m` GCDs are `O(m lg²N)`. **So the
+  target narrows from "Step 4" to "the product tree of Lemma 2.3"** — which is
+  standard `O(M(n)·lg n)` and hence already at the fast-multplication bound.
+
+**★ FACT 1 — THE `m$ TEST POINTS ARE ALL DISTINCT MOD `p$, SO NO EVALUATION IS
+WASTED.** The reduction `Z_N^* → Z_p^*` is a surjective homomorphism with kernel
+of size `φ(N)/φ(p) = q−1`. Since `q−1 ≫ m`, the map is **injective on the
+baby-step set**, so `{α^0,…,α^{m−1}}` has `m` distinct images mod `p`. **No
+"most tests are wasted" shortcut exists** — this closes the most obvious attack
+before it is attempted.
+
+**★ FACT 2 — `f` DIVIDES THE BABY-STEP POLYNOMIAL.** A match `v_j` is *by
+definition* `v_j = α^{i₀ⱼ}` in `Z_N` with `i₀ⱼ < m` known, and the `i₀ⱼ` are
+distinct (the `α^i$ are distinct, `ord_N(α) ≥ m`). Hence with
+`h(x) = ∏_{i<m}(x − α^i)` and `I = {i₀ⱼ}`,
+> **`f(x) = ∏_{i∈I}(x − α^i)`  and  `f ∣ h`.**
+
+**Consequence, and why it does not pay:** `h$ is *fixed* — independent of the match
+set — so one might hope to build it once and recover `f_I = h / f_{I^c}$ by
+division. But building the cofactor `f_{I^c}$ costs `O((m−n)·lg³N)$ and
+`n ≤ s = N^{1/5}lg^{1/5}N` is typically far below `m/2$, so this is **strictly
+worse** than building `f_I$ directly at `O(n·lg³N)`. **Fact 2 is real structure,
+and it is exactly the structure that does not help.**
+
+**★ FACT 3 — THE USEFUL INDEX IS NOT A MATCHED INDEX (a trap worth recording).**
+One might hope that a matched `i₀ⱼ` makes `f(α^{i₀ⱼ}) = 0$ and so short-circuits the
+GCD. It does — and that is **useless**: `gcd(N, 0 − 1) = gcd(N,1) = 1`. The
+index we need is the one with `v_j ≡ α^i (mod p)` **but not mod `N`**, so it is
+precisely one of the *unmatched* `i$ for which `f(α^i) ≡ 1 (mod p)$`. **Fact 3 kills
+the "short-circuit the matched indices" idea immediately.**
+
+**⇒ THE STEP THAT REMAINS, stated exactly.** Everything above says the target is
+the product tree of Lemma 2.3 — `O(n·lg³N) = O(M(n)·lg n)`, already at the
+fast-multiplication bound. To beat `s·lg³N` one must therefore either **(a)** beat
+fast polynomial multiplication itself, **(b)** find a representation of
+`f_I = ∏_{i∈I}(x − α^i)` exploiting that `I$ indexes a *geometric* progression of
+exponents (`α^{i₀ⱼ}$), rather than treating the `v_j$ as arbitrary points — note
+`f_I$ is a sub-product of a `q`-Pochhammer symbol, and **whether that admits a
+faster-than-product-tree evaluation is the concrete open question this leaves** —
+or **(c)** reduce `n` below `s`, which Fact 1 shows cannot be done by discarding
+test points.
+
+**HONEST STATUS.** Three facts established, all verified from the primary text; the
+attack is **not finished**; **no improvement to `s·lg³N` is claimed.** Option (b)
+— the sub-product-of-a-Pochhammer question — is the only one of the three I have
+not already killed, and it is the live thread.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
