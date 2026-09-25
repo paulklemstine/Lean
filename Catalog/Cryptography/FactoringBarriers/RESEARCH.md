@@ -10,7 +10,7 @@ the deterministic-family results in `SquareDiff.lean` (10 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
 `HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (28 thms) and `OrderLCM.lean`
 (6 thms).
-**⚠️ EIGHT claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter). §7-undecuples-XXXI closes the last route by CIRCULARITY** — see §7-ter (the
+**⚠️ NINE claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter). §7-undecuples-XXXI closes the last route by CIRCULARITY** — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published), §7-sextuples (the
 "sweep all multipliers" method was **not** strictly dominating — it is subsumed by
@@ -5642,6 +5642,67 @@ Round 36 called this "the first candidate that clears all four rules on paper"; 
 clears rule (1) *empirically* as well — the subroutine is correct and its cost is
 arithmetic. **What remains is two ordinary steps: benchmark it against a real Bhuesten
 implementation, and check the literature.** Neither requires new mathematics.
+
+---
+
+### 7-undecuples-XLVIII. ❌❌❌ RETRACTED: the chirp-z candidate **IS** Harvey's Lemma 2.4 — and I had read the page
+
+Re-read p.5 of arXiv:2010.05450 to check §7-undecuples-XLVII's one remaining doubt.
+**It is not a doubt. It is the answer, and it is a retraction.**
+
+**HARVEY'S LEMMA 2.4, VERBATIM (p.5):**
+
+> "Proof. **We use a variant of Bluesten's trick** [Blu70] (following [HydH18,
+> Lem. 3]). Let `f(x) = Σ_{j=0}^{n} x^j`. Then the identity
+> **`ij = (i + j²/2) − (i − j)²/2`** implies
+> `f(α^i) = Σ_{j=0}^{n} f_j α^{ij} = h_i · Σ_{j=0}^{n} f_{j,j−i}`,
+> where `h_i = α^{i²/2}`, `f'_j = α^{j²/2} f_j`, `g_k = α^{−k²/2}`. … **the sum
+> `Σ_{j=0}^n f'_{j,j−i}` is equal to the coefficient of `x^i` in the product of the
+> Laurent polynomials** `f' = Σ f'_j x^j` and `g = Σ_{k=−n}^{m−1} g_k x^k`."
+
+**⇒ THAT IS THE CHIRP-Z / BLUESTEIN IDENTITY, VERBATIM — SAME FORMULA, SAME
+`α^{i²/2}`, `α^{j²/2}`, `α^{−k²/2}`, SAME "take a coefficient of a polynomial product",
+SAME 1970 REFERENCE `[Blu70]`.** My candidate was not a *swap* of Lemma 2.4. **It was
+Lemma 2.4.** Harvey is already doing precisely what §7-undecuples-XLVI proposed, and
+was doing it in the paper I downloaded in round 6.
+
+**⇒ AND THE COST DELTA IS ALSO PUBLISHED.** Lemma 2.4 concludes `O((n+m)·lg²N)` via
+Lemma 2.1 (`M_N(d) = O(d·lg²N)`). My sole "improvement" was to substitute a
+quasi-linear `M(·)`, giving `Õ((n+m)·lg N)`. **That substitution *is* Harvey–Hittmeir's
+log-log speedup (arXiv:2105.11105)** — which §7-undecuples-viginti had already
+recorded, twenty-eight rounds earlier, as **the published state of the art for exactly
+this leading term.**
+
+**⇒ SO THE CANDIDATE WAS NEVER A CANDIDATE. It is `Harvey Lemma 2.4` +
+`Harvey–Hittmeir's arithmetic`, both published, in the lineage this file has been
+reading since round 6.**
+
+**★★★ AND THE PROCESS FAILURE IS THE PART THAT MATTERS.** **I had read page 5
+earlier in this session — it is in my own context from round 6's PDF read.** Twenty
+rounds later I re-derived the identity from scratch, implemented it, fixed two bugs,
+verified it 9/9, wrote it up as *"the first candidate that clears all four rules,"* and
+called it the most promising thing in the file. **The evidence that would have killed
+it was already on the page I had read.** This is the same shape as round 3's `q % k`,
+round 4's missing box constraint, and round 34's 2× — **but the worst instance, because
+here the disconfirming source was not missing, it was in context.**
+
+> **★ THE STANDING RULE THIS FORCES (rule 5). *A "discovery" about a paper you have
+> already read is not a discovery until you have re-read the relevant page and shown
+> the claim is absent from it.*** Every one of this file's re-derivations — the gap
+> square, the exponent square, the `T`-table, the batched GCD, and now chirp-z — was a
+> re-derivation of something already on paper. **The method half of this project has
+> failed primarily because I kept re-deriving Harvey from memory instead of grepping
+> the PDF I was sitting on.**
+
+**⚠️ AND THE HONEST CLOSURE.** Rounds 6–21 established that the leading term is the
+`m$ multipoint evaluations, that Harvey–Hittmeir is the published attack on them, and
+that beating them requires composite-modulus arithmetic that is circular. **Every
+subsequent "candidate" has been a re-derivation of one of those already-recorded
+results.** There is no live thread left in this file that is not already closed by
+Harvey, Harvey–Hittmeir, or Costa–Harvey.
+
+**⇒ NINTH RETRACTION. Thirty-eight rounds, ZERO new factoring methods, and the
+method-side failure mode is now diagnosed as *attention*, not *insight*.**
 
 ---
 
