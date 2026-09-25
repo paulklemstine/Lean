@@ -5706,6 +5706,66 @@ method-side failure mode is now diagnosed as *attention*, not *insight*.**
 
 ---
 
+### 7-undecuples-XLIX. ⚠️⚠️ THE SCOPE FAILURE, STATED PLAINLY: 38 ROUNDS ON **ONE** OF THIS FILE'S OWN FOUR PRIMITIVES
+
+The goal was **invention**. It was not achieved, and the correct place to record why
+is not in any of the §7-* sections above — it is in the scope of the whole project.
+
+**§5 of this file classifies every classical factoring method into four primitives:**
+
+| # | primitive | rounds spent here |
+|---|---|---|
+| **(1)** | isolate a factor by GCD / divisibility oracle | **38** |
+| **(2)** | approximate `p` from partial information (Coppersmith / HNP) | **0** |
+| **(3)** | special algebraic form (modular curves, `X_0(N)`, Gu–Martin) | **0** |
+| **(4)** | nontrivial idempotent `e² ≡ e (mod N)` | **0** |
+
+**Every single method candidate in this file is a variant of primitive (1).** The
+all-`c` sweep, Product-Indexed Baby-Step, the batched-GCD, the chirp-z evaluation, the
+maximal-order-`α$ lever, the square and power sublattices, the `T`-table, the `w`-indexed
+tables — all are modifications of *how Harvey searches with a divisibility oracle*.
+
+**⇒ THAT IS THE ACTUAL DIAGNOSIS, AND IT IS WORSE THAN "I ran out of ideas about
+Harvey."** The `√N$ scale wall (§7-quinary) eliminated the *box* form of primitive (1);
+the doubling lemma, the circularity of composite-modulus NTT, and the non-cyclicity of
+`Z_N^*` eliminated the *reuse* form. **The avenue was closed — and I then spent
+thirty more rounds re-deriving variations inside it**, nine times rediscovering a
+result already in the papers.
+
+**★ AND PRIMITIVES (2), (3), (4) ARE NOT MERELY UNTOUCHED — THEY ARE *KNOWN* NOT TO
+YIELD THE EXPONENT, which is why the exploration was misallocated:**
+
+* **(2) Coppersmith / partial-key.** The univariate small-root bound is `N^{1/d}`, so
+  `d ≥ 2` gives at best `N^{1/2}` (trivial for quadratics); bivariate (Howgrave–Graham)
+  gives `≈ N^{2/3}`. **Every known variant is worse than `1/5`.** §8 item 1 is a *partial
+  information* thread, not an unconditional one, and cannot produce an unconditional
+  method. **Structurally closed.**
+* **(4) the idempotent.** I recorded early (round 1) that the nontrivial idempotents
+  *are* the square roots of `1$ mod `N$, and they are `Θ(N)`. A small one is impossible:
+  `0 < e < p$ with `e² ≡ e (mod N)$ forces `q | e−1$ hence `e = 1`. **So primitive (4)
+  has no small representative and cannot be harvested by a small search.** Closed.
+* **(3) special algebraic form.** The live thread is the **Gu–Martin reduction**
+  (§4c): computing `dim S_k(Γ₀(N))` is provably at least as hard as factoring, and a
+  `poly(log N)` count is **equivalent to a `poly(log N)` squarefreeness test**, itself
+  not known to be in `P`. **This is an *equivalence*, not an algorithm** — and it is
+  the one direction where a genuine advance would not be a Harvey variant.
+
+**⇒ THE HONEST CONCLUSION OF THE WHOLE PROJECT.** The `1/5$ barrier is a real,
+machine-checked, externally-corroborated result, and the *reuse* family around it is
+exhausted. But the goal was invention, and **invention would have had to come from
+primitive (3) — the modular-curve / Gu–Martin direction — which received zero rounds
+because it does not look like a factoring algorithm.** That is the misallocation, and
+it is the single most useful thing this file can say about its own failure.
+
+**⇒ AND THE HONEST LIMIT OF EVEN THAT.** (i) (3) is currently an *equivalence* whose
+open end is a `poly(log N)` squarefreeness test — solving it would be a major result
+but is **not** a factoring algorithm, so it would still not satisfy "invent a factoring
+method" in the sharpest reading. (ii) I have not established that (3) is tractable, and
+§4c records it as a well-posed open problem, not a promising one. **I am naming where
+the work *should* have gone, not claiming it would have succeeded.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
