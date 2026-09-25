@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0c24f2ff",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Moment Fingerprint Classification\n\nDerived from the five research cycles formalized in\n`Catalog/Algebra/MomentFingerprintClassification.lean`,\n`…Duality.lean`, `…Positivity.lean`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 102,
-      "timestamp": "2026-09-06T15:54:14",
-      "title": "Moment Fingerprint Classification"
-    },
-    {
       "cycle_id": "794ffb3f",
       "domain": "Shared",
       "key_insight": "# Future Directions — Quotient Steps, Evolutionary Paths, Decomposition\n\nDerived from the three research cycles recorded in `Catalog/Shared/`:\n\n* `EvolutionaryPathCore.lean` — the two requested defini",
@@ -499,19 +489,19 @@
       "theorem_count": 25,
       "timestamp": "2026-09-25T07:43:12",
       "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
+    },
+    {
+      "cycle_id": "293082f5",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — HINT-TABLE-COMPLETION (paper 104)\n\nThis cycle established, in Lean with no `sorry`:\n\n* **THE-HINT-IS-UNIVERSAL exactly at odd moduli** (`HintTable.hint_universal_iff_odd`): over",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-09-25T17:56:56",
+      "title": "FACT round-30 #1 — HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4578ca8c",
-      "domain": "Computation",
-      "key_insight": "# Future directions — Euler–Mascheroni acceleration by telescoping envelopes\n\n## What this cycle established\n\nThree Lean files in `Catalog/Computation/` develop a complete, sorry-free theory of\nmidpoi",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 45,
-      "timestamp": "2026-08-25T08:00:48",
-      "title": "Midpoint-corrected acceleration"
-    },
     {
       "cycle_id": "7957a9f1",
       "domain": "Physics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 25,
       "timestamp": "2026-09-25T07:43:12",
       "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
+    },
+    {
+      "cycle_id": "293082f5",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — HINT-TABLE-COMPLETION (paper 104)\n\nThis cycle established, in Lean with no `sorry`:\n\n* **THE-HINT-IS-UNIVERSAL exactly at odd moduli** (`HintTable.hint_universal_iff_odd`): over",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-09-25T17:56:56",
+      "title": "FACT round-30 #1 — HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b5786d61",
-      "domain": "MachineLearning",
-      "name": "info_nonneg",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "b5786d61",
-      "domain": "MachineLearning",
-      "name": "MI_eq_zero_of_const",
-      "quality": 0.84
-    },
     {
       "cycle_id": "b5786d61",
       "domain": "MachineLearning",
@@ -2803,9 +2791,21 @@
       "domain": "Cryptography",
       "name": "pairSum_eq_mul",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "293082f5",
+      "domain": "Geometry",
+      "name": "product_le_residue_add_logb",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "293082f5",
+      "domain": "Geometry",
+      "name": "neg_logb_le_hintValue",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-25T07:43:12",
+  "last_updated": "2026-09-25T17:56:56",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "5b26e37d",
-        "quality": 0.8,
-        "theorems": 66,
-        "title": "**Conjecture.** In a sparse random corpus with bounded expected document size an"
-      },
-      {
         "cycle_id": "ce273a18",
         "quality": 0.78,
         "theorems": 83,
@@ -3451,6 +3445,12 @@
         "quality": 0.82,
         "theorems": 79,
         "title": "Metaplectic Extension of the Gabor Window Action"
+      },
+      {
+        "cycle_id": "293082f5",
+        "quality": 0.72,
+        "theorems": 57,
+        "title": "FACT round-30 #1 — HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 1"
       }
     ],
     "Logic": [
