@@ -5378,6 +5378,50 @@ improvement.**
 
 ---
 
+
+### 7-undecuples-XLIII. ⚠️ MEASURED: the "constant factor of 2" is an ASYMPTOTIC claim the harness cannot see, and the realised benefit ranges 0×–2×
+
+§7-undecuples-XLII claimed a constant factor of 2. **Measuring it on the very
+instance that succeeded corrected that claim, in two ways.**
+
+**THE MEASUREMENT** (`N = 1068040301`, `r = 250`, `m = 2000`, `deg f = 1411`):
+
+| | work done | wall clock |
+|---|---|---|
+| standard, early-stopping | **1195 GCDs** (found `g = 35257` at `i = 1194`) | 218.1 ms |
+| batched | **1 GCD + 2000 multiplications** | 360.5 ms |
+| **speedup** | — | **0.60× — the batched path was SLOWER** |
+| standard, forced full scan | 2000 GCDs | 358.5 ms |
+| batched, full | 1 GCD + 2000 mults | 348.4 ms |
+| **speedup** | — | **1.03×** |
+
+**⚠️ CORRECTION 1 — THE BENEFIT IS NOT A CLEAN 2×; IT DEPENDS ON WHERE THE HIT
+LANDS.** Harvey's Algorithm 4.1 Step 3 computes `γ_i = gcd(N, f(α^i) − 1)` and
+**returns at the first `1 < γ_i < N`.** So the standard path **early-stops**. If the
+useful index is early, it does few GCDs and **batching is a loss** — as measured,
+0.60×. The full 2× only appears in the worst case, where the useful index is near
+`m$ and all `m$ GCDs are paid. **So the honest range is `0× – 2×`, determined by
+the position of the hit, not a flat factor of 2.**
+
+**⚠️ CORRECTION 2 — THE 2× IS ASYMPTOTIC AND THIS HARNESS CANNOT SEE IT.** At
+`N ≈ 10⁹`, `lg N ≈ 30`, and the per-index cost is dominated by evaluating
+`f(α^i)$ — **which is identical in both paths** — so replacing a GCD with a
+multiplication is invisible next to Python's interpreter overhead. The asymptotic
+argument is sound and separate: `m$ GCDs cost `Θ(m·lg²N)`, the `m$ multiplications
+that replace them cost `Θ(m·lg N)`, so the GCD half — one of the two equal halves of
+the leading term — is genuinely removed. **But that is a cost-model claim, and the
+only measurement available here shows 1.03×.** Recording both.
+
+**★ THE STANDING CLAIM, RESTATED HONESTLY.** The batched-GCD step is **verified
+correct** (same factor found, 7/7 agreement, §7-undecuples-XLII), and it **removes
+the GCD half of the leading term in the asymptotic cost model**. It is **not** a
+flat 2×, it is **not** an exponent improvement, and on a favourable-position hit it
+is a **small loss**. **It should be adopted only where the good index is expected
+late, and the trade is not free.** That is a materially weaker claim than the one I
+made an hour ago, and the measurement is why.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
