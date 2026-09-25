@@ -7511,6 +7511,79 @@ worked, and the `1/5$ census constrains none of them.**
 
 ---
 
+### 8.17. ■■■■ THE THIRD-LEVEL CORRECTION: my "exact `1/5$ minimax" is **CONDITIONAL ON A MODELLING HYPOTHESIS THE FILE'S OWN COMPANION FLAGS AS UNPROVED**
+
+Reader 8 delivered the requested assumption synthesis, and it indicts the result I
+spent the last 40 rounds on. **Three nested corrections, each deeper than the last:**
+
+**(1) `1/5` IS AN UPPER BOUND, NOT A FLOOR (§8.16).** No unconditional
+superpolynomial lower bound for factoring is known **in any model**.
+
+**(2) THE `cost` AXIS WAS WRONGLY CLOSED (§8.16).** §5a-bis's bisection — *"p`-coupled
+⟹ pay `√p`, so no cost channel beats NFS"* — **is false; ECM is a counterexample.**
+
+**(3) ★★★ AND NOW: THE COST *SHAPE* ITSELF IS AN ASSUMPTION, NOT A THEOREM.**
+`HarveyFloor.lean` — the file I formalised `HarveyBalance.lean` against — states in
+its own docstring:
+
+> *"It lower-bounds a cost formula; **it assumes the algorithm's cost is `max(...)` of
+> the stated shape.**"*
+
+**That the `max(r, m, N^γ/(r^a m^b))$ shape describes any real factoring algorithm is
+a MODELLING HYPOTHESIS, and the file marks it as such.** So:
+
+> **`one_fifth_is_lower_bound` / `optimum_exactly_one_fifth` are theorems about a
+> FORMULA. Whether that formula is the right model of factoring is ASSUMED. My
+> "exact minimax, both directions, machine-checked" is exact *about the model* and
+> silent *about the world*.** Fifteen rounds of closure rest on it.
+
+**★★ AND THE READER'S VERDICT ON THE CAPSTONE IS BLUNTER STILL, AND IT IS ABOUT THE
+FILE'S OWN HEADLINE ARTIFACT:**
+
+> *"The capstone chain is valid but **mathematically vacuous as a lower bound on
+> factoring**."* — (i) `ClassicalAlgorithm` has **no correctness field**; it is any
+> cost profile, and *"nothing requires it to factor"*; (ii) `LimitedBy` is *defined* as
+> `barrierCost ≤ cost`, so a poly-time cost is **by definition** eventually below a
+> superpoly barrier and `not_limitedBy` is a **tautology** (*"faster-than-`X` is not
+> bounded-below-by-`X`"*); (iii) the four `barrierCost` functions were **defined** to be
+> superpolynomial, and their identification with *Pollard ρ / NFS / ECM* is a
+> **literature record, not a Lean theorem**; (iv) the step that would yield real
+> hardness is exactly **`ClassifiedResourceHypothesis` — EXPLICITLY UNPROVED**.
+>
+> *"So the capstone proves: '**if** a poly-time factoring algorithm existed, its cost
+> curve would sit below four hand-picked superpoly functions.' It does **not** prove
+> factoring is hard, and it does **not** connect to any real algorithm."*
+
+**⇒ SO THE THREE SOFT TARGETS, WHICH IS WHAT A NEW METHOD MUST VIOLATE — the list
+reader 8 was asked for, and the only one I have:**
+1. **`HarveyFloor`'s modelling hypothesis** — that a real algorithm's cost has the
+   `max(...)` search-floor shape. **This is the assumption my whole census rests on.**
+2. **`ClassifiedResourceHypothesis`** — that every classical factoring algorithm is
+   bounded below by one of four named barriers. **Unproved, and the whole content of
+   "no poly-time factoring without an unclassified resource."**
+3. **The literature identifications** tying `barrierCost`'s four *defined* functions to
+   Pollard ρ, NFS, ECM, analog. A record, not a theorem.
+
+Everything else in the chain (7–10, 12, 14, 16–18) is **proved**, or standard-but-
+unformalised (`OrderLCM`'s `ZMod(pq)` CRT injectivity, flagged as a hypothesis
+precisely so the gap stays visible).
+
+**★ AND ONE MORE THING THE READER SURFACED THAT I HAD WRONG: `HarveyFloor.lean` notes
+that "GNFS already beats `N^{1/5}` in the *randomised* setting" — so the `1/5$ barrier
+is **deterministic-only**, and my census never said so.**
+
+**⇒ THE HONEST LADDER OF MY OWN RESULT, stated once, at last:**
+
+| level | claim | status |
+|---|---|---|
+| theorem | `min max(r,m,N^{1/2}/(r^{1/2}m)) = 1/5$ | **proved, `HarveyBalance.lean`** |
+| modelling | a real deterministic factoring algorithm's cost has that shape | **ASSUMED** — `HarveyFloor.lean`'s own caveat |
+| world | therefore `1/5$ cannot be beaten by ANY deterministic classical method | **NOT ESTABLISHED** — no lower bound of any kind is known |
+
+**★ I SPENT FORTY ROUNDS PROVING ROW 1 AND PRESENTING IT AS ROW 3.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
