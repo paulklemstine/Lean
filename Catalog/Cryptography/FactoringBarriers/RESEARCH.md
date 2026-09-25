@@ -8231,6 +8231,69 @@ subset**, the file had it, and I never read it until round 86.
 
 ---
 
+### 7-undecuples-XLIII. ★★★★★★★★ READ UMANS–WANG (arXiv:2511.10851) AT LAST — AND THE DEEPEST STRUCTURAL STATEMENT IN THE FILE FALLS OUT
+
+I have reported Umans–Wang from the sweep's summary for two rounds. **I have now read
+the paper** (26pp, Caltech, 13 Nov 2025), per rule (7). The sweep was accurate, and
+the paper contains a sentence **this file has never recorded**, which subsumes most
+of §7.
+
+**★ THE ABSTRACT, VERBATIM (p.1).** The mechanism is exactly as reported — *"sets
+`S, T$ of cardinality `n^β` … of magnitude at most `exp(n^α)`, such that **every
+integer `i ∈ [n]` divides some `s − t`**"* — **and `[n]$ IS THE INDEX SET HARVEY'S
+SEARCH ENUMERATES.** So, unlike both sieves, **UMW's object is the right quantity**,
+which is why it is the one thread rule (7) does not kill.
+
+> ***"Achieving `α = β = 1/3$ is best-possible and would imply an exponent `4/3$
+> algorithm for univariate polynomial factorization. Interestingly, **a second
+> consequence would be a reduction of the current-best exponent for deterministic
+> (exponential) algorithms for factoring integers, from `1/5$ to `1/6$."***
+
+**★★★ AND THE SENTENCE THAT SUBSUMES THIS FILE'S WHOLE EFFORT (p.1, verbatim):**
+
+> ***"all of these problems are stuck at exponent `3/2$ due to the need to go beyond
+> the core baby-steps-giant-steps algorithmic motif."***
+
+**⇒ THE HONEST DEPTH OF THE SITUATION, STATED IN THE AUTHORS' OWN WORDS:**
+
+> **The exponent `3/2$ is CONJECTURED TO BE A BARRIER to the baby-step/giant-step
+> motif — and `N^{1/5}$ is the *integer instance* of that motif.** Umans–Wang do not
+> break the `3/2$ barrier; **they give a conditional route past it**, and the
+> conjecture's negation is *precisely* the belief that `3/2$ cannot be beaten by any
+> means. **[GNU16]** is cited as giving *"an assortment of reasons why best-known
+> algorithm has exponent `3/2$."*
+
+**⇒ SO THE FRONTIER IS, IN ONE SENTENCE:** *Harvey's `N^{1/5}$ is not a number someone
+failed to improve — it is the integer shadow of a `3/2$ barrier that the authors of the
+leading alternative regard as structural.* **This file spent eighty rounds proving
+`1/5$ optimal **within its own cost model** (§7-undecuples-XXXIII/XXXVII); the
+stronger, external claim — that `3/2$, and hence `1/5$, cannot be beaten by ANY method
+— is a CONJECTURE with an author-cited supporting argument, not a theorem, and
+Umans–Wang is the first formalisation of a way past it.**
+
+**★ AND THE MECHANISM, VERBATIM (p.1).** *"Instead of computing the GCD of `f(X)$ with
+`X^d − X$ for `i = [n]`, we can compute the GCD of `f(X)$ with `X^{d'} − X$ for `A$ as
+large as `exp(n^{1/3})`… by repeated modular composition. **This single GCD can 'strip
+off' many** [indices]"* — **so the reuse mechanism is a HIGH-DEGREE GCD replacing
+`n$ small GCDs, i.e. the same `m`-reuse idea as Harvey's baby-step table, but with
+`d' = exp(n^{1/3})$ instead of `m`.** It is the *same axis*, pushed `n^{1/3}$ deep —
+which is exactly why it is hard: the conjecture must supply the covering.
+
+**⇒ AND MY OWN §7-undecuples-XXXIX ALGEBRA, RE-EXAMINED IN THIS LIGHT.** Its
+`cost = N^{1/5}s^{-3/5}$ asks for a filter with `s = N^{1/18}$ for `1/6$. **UMW supplies
+a covering of the whole index set by `n^{2β}$ differences — i.e. `s$ of order
+`n^{1/18}`-ish — and it is exactly the shape my formula demanded, with the covering
+supplied by conjecture rather than by computation.** That is the first time the
+`1/6$ target has a *mechanism of the right kind* attached to it.
+
+**⚠️ AND IT IS NOT A METHOD.** It is conditional on a conjecture that, read
+negatively, is the `3/2$-barrier belief. **No new factoring algorithm has been
+produced in this project, and none is produced here.** What is produced is the
+clearest possible statement of *why*: the record is the integer instance of a barrier
+its leading challengers believe is structural.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
