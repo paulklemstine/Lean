@@ -10,7 +10,7 @@ the deterministic-family results in `SquareDiff.lean` (10 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
 `HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (28 thms) and `OrderLCM.lean`
 (6 thms).
-**⚠️ FIVE claims in this file were retracted on 2026-09-24 — see §7-ter (the
+**⚠️ SIX claims in this file were retracted on 2026-09-24 — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published), §7-sextuples (the
 "sweep all multipliers" method was **not** strictly dominating — it is subsumed by
@@ -4024,12 +4024,23 @@ rounds, and it is **not** answered by anything above. The `1/5` minimax remains 
 correct fact about Harvey's function; what is now open is whether Harvey's
 *function* is still the right one once its precondition is gone.
 
-**Citation corrections found by the same check** (all now fixed above):
-`arXiv:2006.16729` is Hittmeir's *time-space tradeoff* paper, **not** the `N^{2/9}`
-babystep-giantstep paper, which is **`arXiv:1608.08766`** · Harvey's *"A log-log
-speedup"* is **`arXiv:2105.11105`**, not `2005.06702` (that id is an unrelated
-physics paper) · Costa–Harvey `Math. Comp. 83 (2014)` is **`arXiv:1201.2116`** ·
-Harvey's journal ref is now **VERIFIED** (DOI `10.1090/mcom/3658`).
+**Citation corrections found by the same check — ⚠️ ONE OF WHICH WAS ITSELF
+WRONG**, settled against Harvey's own reference list (p.13, `[Hit20]`):
+
+> **[Hit20] M. Hittmeir. *A time-space tradeoff for Lehman's deterministic integer
+> factorization method*, arXiv:2006.16729v1, 2020.**
+
+**`arXiv:2006.16729` IS the paper Harvey cites for the `N^{2/9}` result, AND it IS
+a time-space tradeoff paper — both are true of the same document.** The PDF I
+downloaded and read contains exactly the `2/9` derivation formalised in
+`HarveyBalance.lean` (Algorithm 6.1, `ξ = N^{1/9}`, `η = N^{2/9}`, all three
+summands `N^{2/9}`). **⇒ My "correction" demoting `2006.16729` and promoting
+`arXiv:1608.08766` is RETRACTED; the original citation was right.** Still standing
+from that check: Harvey's *"A log-log speedup"* is **`arXiv:2105.11105`**, not
+`2005.06702` (that id is an unrelated physics paper) · Costa–Harvey `Math. Comp. 83
+(2014)` is **`arXiv:1201.2116`** · Harvey's journal ref is **VERIFIED** (DOI
+`10.1090/mcom/3658`). **This is the SIXTH retraction in the file: a retraction of
+a retraction.**
 
 **GFHP, correctly stated (it does *not* claim `1/6` or `1/8`).** Gao, Feng, Hu,
 Pan, arXiv:**2512.19076**, *Math. Comp.* DOI `10.1090/mcom/4188` (2026-03-18).
@@ -4270,147 +4281,61 @@ route left that this record can construct.**
 > round 4's missing box constraint: **a verification that shares the claim's
 > premise cannot catch the premise.**
 
-### 7-undecuples-bis. The correction, recorded as a barrier: `s` dominates `r`, and the `r`-term is not worth optimising
+### 7-undecuples-bis. ⚠️ PIB RETRACTED — and a retraction OF a retraction
 
-**This is the first entry in §7 that is an ALGORITHM rather than a barrier, and it
-is not killed.** It comes from attacking the round-10 heuristic barrier *on its
-own terms* — not by making `√(abN)` separable, but by **exploiting the
-multiplicative structure directly**, which is what that barrier said was the only
-way through.
+**§7-undecuples above is struck in full.** An adversarial novelty check read
+Harvey's Step 2a directly. Two of its reasons stand; one of mine did not.
 
-**THE OBSERVATION.** Harvey's Step 2a computes, for each pair `(a,b)`,
+**WHAT STANDS (reasons 1 and 2).**
 
-> `t_{a,b} = α^{aN + b − ⌊(4abN)^{1/2}⌋} = α^{aN} · α^{b} · α^{−⌊2√(abN)⌋}`.
+1. **PIB IS NOT NOVEL — it is Harvey's own Eq. (4.1), re-read.** Harvey's Prop. 4.2
+   proof factors the exponent as "`aN + b`" minus the "`⌈(4abN)^{1/2}⌉`" term, and
+   that second term **is visibly a function of `ab` alone**. The `A·B·W` split I
+   presented as a discovery is Harvey stating it in his own complexity argument.
+   Harvey computes `t_{a,b}` per pair by repeated squaring and **uses no table
+   at all**, so there was nothing to add.
+2. **★ THE SAVING WAS ARITHMETICALLY FALSE, AND THE ERROR IS MINE.** I treated a
+   modular exponentiation as `O(1)`; it is `O(lg N)` multiplications. Harvey pays
+   `r·lg r` pairs × `O(lg N)` = `Θ(r·lg²N)`; my `W`-table pays `r` exponentiations
+   × `O(lg N)` = `Θ(r·lg N)`. I compared the cheap table against the expensive pair
+   work, but **the `O(lg N)`-per-entry cost of `W` is not optional** — each exponent
+   `⌈2√(kN)⌉` has `Θ(lg N)` bits. The only way to make `W` cheap is batch
+   exponentiation, which costs `Θ(√{rN}·lg N + r)` and `Θ(√{rN})` storage — at
+   `r ≈ N^{1/5}` that is `N^{3/10} > r`. **Worse, and the same multiplicative-coupling
+   wall as §7-undecuples.**
 
-**The hard factor `α^{−⌊2√(abN)⌋}` depends only on the PRODUCT `k = ab`** — not on
-the pair. The coupling that defeats every additive lattice is *multiplicative*, and
-multiplicative structure is exactly what a **product-indexed table** exploits.
+**⚠️ WHAT I OVER-CORRECTED (reason 3, now withdrawn).** The adversarial agent
+reported that the `r`-term "is not even the bottleneck", because Steps 3–4 scale
+with `s`. **I checked the PDF and that is wrong.** Prop. 4.3's proof (p.12) states
+verbatim:
 
-**THE METHOD — PRODUCT-INDEXED BABY-STEP (PIB).** Replace the per-pair evaluation
-of the gap factor by a table indexed by the product:
+> "According to Proposition 4.2, the cost of this step is
+> `O( (N^{1/2}/(r^{1/2}m) + r)·lg⁴N + m·lg²N ) = O(N^{1/5}lg^{16/5}N)`."
 
-> **Precompute** `W[k] = α^{−⌊2√(kN)⌋}` for `k = 1..r`, and `A[a] = α^{aN}`,
-> `B[b] = α^{b}`. Then **every** `t_{a,b}` is `A[a]·B[b]·W[a·b]` — two table
-> multiplications, **no square root and no exponentiation per pair**.
+**It uses `r`, not `s`.** So at `r = m = N^{1/5}`, **Step 2a (the pair loop) and
+Step 4 (the product tree) are BOTH `O(r·lg⁴N)` and are BALANCED.** The
+`s`-dominance claim is an artefact of reading Prop. 4.2's intermediate bound
+instead of Prop. 4.3's final one. **⇒ The `r`-term is a real and legitimate
+target, and the first version of this section — which declared it not worth
+optimising and published a cost table ranking `s`-terms above it — is WITHDRAWN.**
 
-**THE COUNT, WHICH IS THE WHOLE POINT.**
+> **★ THE DISTINCTION THIS FORCES, and it is the sharpest thing in the file:**
+> **a good TARGET with a bad METHOD is still a failure, and the two must be
+> tracked separately.** `T₂ = r` is sound, correctly identified from Prop. 4.3,
+> and **unattacked by any valid method in thirteen rounds.** PIB aimed at it and
+> failed for two reasons that both survive — one of them my own arithmetic.
 
-| | `r = 10³` | `r = 10⁴` | `r = 10⁵` | `r = 10⁶` |
-|---|---|---|---|---|
-| pairs `{(a,b) : ab ≤ r}` | 7 069 | 93 668 | 1 166 750 | 13 970 034 |
-| products `k ≤ r` | 1 000 | 10 000 | 100 000 | 1 000 000 |
-| ratio | 7.07× | 9.37× | 11.67× | 13.97× |
-
-`#pairs = Θ(r·lg r)` but `#products = Θ(r)`, so the dominant term — the evaluation
-of the gap factor — drops by a factor **`Θ(lg r) = Θ(lg N / 5)`**. Measured
-end-to-end on real group elements, the saving grows `2.91× → 3.71×` for
-`r = 12 → 64`, tracking `Θ(lg r)`. The identity `t_{a,b} = α^{aN}·α^{b}·W[ab]`
-was verified **exactly on 20 000 random pairs** with zero mismatches.
-
-**WHAT IT DOES AND DOES NOT BUY — stated precisely.** This is a **LOG-factor**
-improvement, not an exponent improvement: in Harvey's Prop 4.2 the `r`-term goes
-from **`O(r·lg⁴N)` to `O(r·lg³N)`**. **It does NOT move `1/5`.** And that is
-*exactly* what this file's own log-exponent lock (§7, `HarveyFloor.lean`) predicts
-is the only kind of improvement available without changing the cost **shape**:
-raising `Σw` moves the exponent, but reducing per-step cost `c` moves only the
-log. **PIB is the first concrete instance in ten rounds of the "improve `c`, not
-`Σw`" strategy, and it is a real one.**
-
-**⚠️ NOVELTY — CHECKED PARTIALLY, AND THE HONEST POSITION.** Harvey's Prop 4.2
-charges `O(r·lg⁴N)` for Step 2a, which is **less** than the naive
-`Θ(r·lg r)·M(lg N)` — so **Harvey is already exploiting *some* sharing** and may
-already be product-indexing. I have not established that PIB is new relative to
-his *implementation*, and **given that this file has already retracted one
-over-claim in exactly this area (§7-sextuples-ter), the claim is recorded as
-"derivable from the stated cost model, novelty relative to the paper's
-implementation UNVERIFIED".** The check is cheap and should be done before any
-publication: read Harvey's Step 2a and see whether he tabulates by `ab` or by
-pair. **What is certainly true and does not depend on that check:** the
-per-pair exponentiation of `α^{−⌊2√(abN)⌋}` is **redundant work**, and removing it
-costs `Θ(lg r)`.
-
-**LEMAN'S DIAGONAL IS THE SHARP CASE.** On `l = k` (`b = a`), each product `k = a²`
-has only `O(1)` factorisations, so the table is pure overhead there and PIB
-degenerates gracefully to the original method. **The saving is real precisely
-because the off-diagonal is where the multiplicity lives** — which is also why
-§7-bis showed the two-parameter family is strictly larger than Lehman's line.
-
-**★★★ THE COST MODEL IS TIGHT, AND STEP 3 DOES NOT EAT THE SAVING.** Three
-checks, because the obvious objections are the ones that usually kill a claimed
-log improvement:
-
-* **Step 3 is not driven by the pair count.** Harvey's sort-and-match costs
-  `O((s+m)·lg²N)` where `s` is the number of *triples* `(a,b,j)` — that is `T₁`,
-  the `j`-work — not the `Θ(r·lg r)` pairs. So the sort does not scale with what
-  PIB removes, and **the saving survives Step 3.**
-* **Per-pair cost drops from `Θ(lg N)` to `Θ(1)` amortised.** Naive: each pair
-  needs one exponentiation of an `O(N²)`-sized exponent, i.e. `Θ(lg N)`
-  multiplications, so `Θ(r·lg r)·lg N = Θ(r·lg²N)`. PIB: `Θ(r)` exponentiations for
-  `W` (`r·lg N`), `Θ(r)` for the `B` walk, `Θ(√r)` for the `A` walk, and two
-  multiplications per pair (`Θ(r·lg r)`) — total **`Θ(r·lg N)`**. So the pair term
-  falls `lg²N → lg N` and **Prop 4.2's `r`-term goes `O(r·lg⁴N) → O(r·lg³N)`**,
-  a factor `Θ(lg N/2)`. Measured op counts at `lg N = 64`: `4.79×` at `r = 256`
-  rising to `8.23×` at `r = 65 536`.
-* **★ The `W`-table is IRREDUCIBLE, so PIB is tight.** `W[k] = α^{−⌊2√(kN)⌋}`; the
-  exponents are `≈ 2√(kN)`, so consecutive `k` differ by `≈ 2√(N/k) ≥ 2√(N/r) =
-  2N^{3/10} ≫ 1`. The `w_k` are strictly increasing with **large gaps**: no
-  short-step walk, and no two `k` share a `w`. On the square-`k` sublattice
-  `w_{s²} = 2s√N` *is* an arithmetic progression and so is walkable in `O(√r)` —
-  but that covers only `√r` of the `r` products. **So `W` costs `Θ(r)`
-  exponentiations and cannot be compressed; PIB's `Θ(r·lg N)` is therefore
-  TIGHT.** This is round 10's multiplicative-coupling obstruction surviving in its
-  cleanest form, and it says where any further improvement must go.
-
-**HONEST LIMITS.** (i) **A log improvement, not a method that beats `1/5`.** It
-does not satisfy "beat the deterministic record". (ii) Novelty relative to
-Harvey's implementation is **unverified**. (iii) The `W`-table costs `Θ(r)`
-exponentiations, which is the same order as the `r`-term itself; the saving is in
-replacing `Θ(r·lg r)` *per-pair* evaluations with `Θ(r)` *per-product* ones, not in
-removing exponentiation. (iv) **Not yet formalised in Lean** — the numerical
-identity is verified in Python, and the counting statement (`#pairs = Θ(r·lg r)`
-vs `#products = Θ(r)`) is prose plus a measured table, not a `Finset` cardinality
-theorem. This is the first §7 entry left unformalised, deliberately, because the
-content is a counting argument rather than an algebraic one.
-
----
-
-
-The corrected, durable statement: **with Harvey's parameters, the binding term is
-`s`, the number of triples `(a,b,j)`, not `r`, the pair count.** Since
-`s = Θ(N^{1/2}/(r^{1/2}m) + r·lg²N)` and `r = m = N^{1/5}`, we get
-`s = Θ(N^{1/5}lg²N) = Θ(r·lg²N)`, and:
-
-| term | cost | at `r = m = N^{1/5}` |
-|---|---|---|
-| Step 2a: all `t_{a,b}` | `r·lg³N·lg lg N` | `N^{1/5}lg³N·lg lg N` |
-| Step 2b: the `j`-giant steps | `s·M(lg N)` | `N^{1/5}lg³N` |
-| **Step 3: sort-and-match** | **`s·lg²N`** | **`N^{1/5}lg⁴N`** |
-| **Step 4: Algorithm 4.1 product tree** | **`s·lg³N`** | **`N^{1/5}lg⁵N`** |
-| Step 1: baby steps | `m·lg N·lg² lg N` | `N^{1/5}lg³N` |
-
-**So the product tree in Step 4 is the single largest term, and it is
-`Θ(lg N)` times larger than the `r`-term I optimised.** Any future log-level
-improvement must target **`s`** — the number of `(a,b,j)` triples — or the
-**product tree**, not the pair enumeration. This is a *different* and better
-directed design rule than the one PIB was built on, and it is what survives the
-refutation.
-
-**Status of the earlier rounds in this file that cite the `r`-term as the
-bottleneck: superseded by this table.** §7-undecuples-bis is the authoritative
-account of where the log factors actually sit.
-
-**A secondary, unresolved citation dispute, recorded rather than flipped again.**
-Two prior-art agents have given **contradictory** accounts of which Hittmeir paper
-carries the `N^{2/9}` result. The first said `arXiv:2006.16729` is the *time-space
-tradeoff* paper and `arXiv:1608.08766` is the `2/9` babystep-giantstep paper; the
-second said the reverse (`2006.16729` is the actual `2/9` paper; `1608.08766` is
-an earlier `p+q`-family paper). **My own tiebreaker: I downloaded and read
-`2006.16729` directly, and it contains Algorithm 6.1 with `ξ = N^{1/9}`,
-`η = N^{2/9}` and the three summands equal to `N^{2/9}` — i.e. the `2/9`
-derivation.** So the `2/9` cost model I formalised in `HarveyBalance.lean` is
-attested by the primary document I read, and the disagreement is about *labelling*,
-not about the mathematics. **Recorded as disputed; §7-sextuples-ter's citation
-"correction" should be treated as unconfirmed.**
+**★ THE STANDING METHODOLOGICAL TRAP, now struck three times in this file.** I
+verified PIB in round 12 **inside the error** — the "Step 3 does not eat the
+saving" check assumed what it should have tested, so it "confirmed" the claim.
+This is the same shape as round 3's `q % k` and round 4's missing box constraint.
+**A verification that shares the claim's premise cannot catch the premise.** Two
+rules, both learned the hard way here: **(a)** a counting argument that changes the
+*number* of items must **re-cost every item**, including those that moved into a
+table — table lookups are `O(1)`, the exponentiations that filled the table are
+not; **(b)** a claimed improvement must be checked against the **largest** term in
+the bound, read from the paper's *final* proposition rather than an intermediate
+one.
 
 ---
 
