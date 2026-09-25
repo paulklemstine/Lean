@@ -7888,6 +7888,124 @@ range; and `D$ was limited to small discriminants `≤ 11$ (plus Eisenstein and 
 
 ---
 
+### 7-undecuples-XXXVI. ★★★★★★ H(A) — THE LITERATURE HAS **TWO LIVE THREADS I HAD NEVER SEEN**, AND ONE INDEPENDENTLY CONFIRMS MY OWN k=2 ANALYSIS
+
+The arXiv sweep (77 fetches) is the most valuable output of the reader batch.
+**`1/5$ stands unconditionally — but the sweep found two live mechanisms that sit
+*below* my census, and verified my balance against the source.**
+
+**★★★★★ THREAD 1 — UMW (arXiv:2511.10851, 13 Nov 2025, v1 preprint, unrefereed).**
+*"A number-theoretic conjecture implying faster algorithms for polynomial factorization
+and integer factorization."* **Theorem 5.5:** under the **Strong Prefactored
+`(α,β)`-Divisor Conjecture**, deterministic factoring runs in
+**`O(N^{max(α,β)/2 + o(1)})`**; at their optimum `α = β = 1/3$ that is **`N^{1/6}`**.
+
+**AND — THIS IS THE PART THAT MATTERS FOR MY WORK — ITS BARRIER IS *NOT* A MIN–MAX:**
+
+> *"Umans–Wang has a different barrier, not a min–max. Its constraint `α ≥ 1−2β`
+> comes from a **divisibility-counting** argument (the product of all primes `≤ n$ must
+> divide the product of the `n^{2β}$ differences), not from a box-coordinate floor.
+> … **`ScaleWall.lean` does not transfer: in the covering family a single difference
+> serves *many* indices, so there is no per-index box to pay for.**"*
+
+**⇒ SO UMW IS THE ONLY FORMALISATION IN THE LITERATURE OF A BELOW-THE-WALL REUSE
+MECHANISM, AND IT EXPOSES MY `1/5$ MIN–MAX AS FAMILY-SPECIFIC, NOT FUNDAMENTAL.** Caveats
+verified from the PDF: it bundles **two** hard assumptions (Conjecture 3.3's
+GAP-structured sets, **plus** Conjecture 5.1 requiring factoring every `s−t` of size
+`exp(n^α)` in `Õ(n^α)` — which trial division cannot do); and `α = β = 1/3$ sits
+**exactly on** the counting boundary `α = 1−2β`.
+
+**★★★★★ THREAD 2 — THE HYPERBOLIC SIEVE (an active, unfinished thread).**
+Origin Hittmeir `Math. Comp.` 87 (2018); newest: **Stănică, Mulder, Hittmeir,
+arXiv:2606.13018 (11 Jun 2026)** — *local* side now solved (Hasse–Weil `O(√ℓ)` from
+main term `3ℓ/4`; multi-target `|(k−1+2^{−k})√ℓ + k|`; the pointwise bound
+`|U_{γ,γ²}| ≤ 3ℓ/4 + 1` is **FALSE**, counterexamples `(ℓ,γ) = (5,2),(13,7)`).
+
+> ***"A CRT prefilter on the `(a,b)$ family would shrink the effective
+> giant-step/baby-step cost **without changing `r`**. The local half is now exactly
+> understood; the global compatibility analysis is missing."***
+
+**⇒ AND THAT IS EXACTLY THE LEVER MY OWN §7-undecuples-XXXIV IDENTIFIED** — *"a `k=2`
+must attack `r$ or `m$ DIRECTLY, not the giant-step range"* — **arrived at
+independently by a different route, in the current literature.**
+
+**★★★ AND AN INDEPENDENT CONFIRMATION OF MY OWN ANALYSIS, from the source.** The
+sweep verified Harvey `Prop. 4.2` as `O(N^{1/2}/(r^{1/2}m) + r·lg N + m·lg N)` and
+then computed: **dropping the order threshold to `m = N^{1/6}$ (Oznovich–Volk's reach)
+forces the optimal `r = N^{2/9}$ and a max-term of `N^{2/9}$ — STRICTLY WORSE than
+`N^{1/5}$.** **Lowering `m$ HURTS.** Oznovich–Volk, Nir, and Harvey–Hittmeir
+2601.11131 all improve the order-finding *subroutine* — and **cannot be cashed in.** That
+is my §7-undecuples-ter conclusion, independently derived.
+
+**★ AND ONE MORE REAL RESULT, IN SCOPE: squarefreeness testing at `N^{1/8+ε}$.**
+**Harvey & Hittmeir, arXiv:2202.12401** (r-power divisors, *Res. Number Theory* 8
+(2022)): `O(N^{1/4r+ε})$ for `p^r ∣ N$ and **squarefreeness testing in
+`N^{1/8+ε}$**, improving Pollard–Strassen's `N^{1/6+ε}$**. **This feeds Gu–Martin
+Cor. 4 — §4c-iii's open target — and it is a rigorous deterministic improvement.**
+
+**⇒ AND THE CANDIDATES CONSIDERED AND SET ASIDE, with numbers.** Fermat in positive
+characteristic (Donadze–Vasiu 2606.07318, 35pp: novel mechanism, **not competitive** —
+`φ(m)$ with `m$ polynomially bounded in `lg N$, and they *prove* failure for many
+semiprimes); deterministic root finding (Nir 2608.00668, first subquadratic-in-`n` over
+Harvey–Hittmeir, but a Coppersmith *subroutine*); subset-sum/SVP∞ reframings (Hittmeir
+*JNT* 249 (2023); GFHP 2604.04656, `Õ((6√(2πe))^n)`).
+
+**⚠️ THE SWEEP'S OWN GAPS, stated by it and not hidden:** **IACR ePrint 2025 offsets
+200–2337 and 2026 offsets 0–~2100 were NEVER SCANNED** (sustained HTTP 429 after
+sweeping all of 2020–2024 and the first 100 of 2025/2026). MDPI blocked. Springer,
+Elsevier, AMS paywalled (arXiv preprints or Scholar metadata used instead). No
+non-English venues. UMW is v1-only with no errata check.
+
+---
+
+### 7-undecuples-XXXVII. ✅ H(G) CLOSED: the group is LOAD-BEARING — "detectable without it, extractable only with it"
+
+**H(G) ANSWERED — and the obstruction is a clean dichotomy on both branches.**
+
+> **"The group is *load-bearing*, not convenient. The unique non-trivial group-free
+> leak that could escape the `√N$ wall — the QR-count / 'count = 4' bit — is
+> *detectable* without the group but *not* *extractable* without it (Cipolla's
+> exponent is `(p+1)/2`, pinned to the prime; **measured 0/30 group-free**, vs 30/30
+> with `p$ known). And the one group-free function that *is* cheaply computable *and*
+> does leak (`σ₁ = (1+p)(1+q) = 1+p+q+N$ ⟹ `p+q$, measured 200/200) inverts at
+> exactly the `√N$ cost it would save — `k = 2⁴` gives `2×10⁸` tests, `k = 2³²` gives
+> 1 test but `k ≈ √N` is exponential.**"
+
+> **⇒ "group-free ⇒ avoid the `√N$ wall" FAILS ON BOTH BRANCHES: it either needs the
+> group to extract, or it rebuilds the wall.**
+
+**★ THE SINGLE EXTRA BIT, identified precisely.** For `N = pq$ squarefree,
+`#roots of `x² ≡ a (mod N)$ is **0 or 4, never 2**, and is 4 iff `a$ is a QR mod *both*
+`p$ and `q$.** That is **exactly one bit** beyond the Jacobi symbol, and it is the only
+such bit. Two distinct roots of a 4-root congruence factor `N$ by one gcd
+(**200/200**). So this *is* the escape hatch — and Cipolla mod `Z/NZ$` with the
+derivable exponent `(N+1)/2$ gives **0/30**, because *"the exponent is tied to the
+norm-one period `p+1$, not `N$"* and `Z/NZ[w]/(w²−c)$ is **not a field**, so the
+non-residue precondition is untestable without `p,q`.
+
+**★ AND EVERY OTHER CANDIDATE, MEASURED TO ZERO:** Ramanujan sum `c_N(a)$ = **exactly**
+a function of `gcd(a,N)$** (0 conflicts, adds nothing); `#subgroups of (Z/N)*` needs
+factoring `p−1, q−1$ (circular); CF of `√N$ — `p$ divides a convergent in only
+**1/12** within 5 periods, and the period is set by the **class number**, not
+`p,q`; real index calculus with `B = poly(log N)$ yields **0–4% at 40-bit, 0–1% at
+64-bit** (need `B ~ 2²⁰`) — an empty matrix. **Squarefreeness is tautological on a
+semiprime** (200/200 squarefree ⟹ **zero** bits about `p$ — confirming §4c-iii's own
+note). Compositeness is in `P` but gives 1 bit. `φ(N)$ and `order$ are **literally
+factoring** (200/200).
+
+**⚠️ THE AGENT'S OWN LIMITS, and its discipline:** *no literature search* (per
+instruction); the general theorem "√-extraction mod `N$ is as hard as factoring" is
+**standard and NOT independently proved here** — only the specific Cipolla-`(N+1)/2`
+failure (0/30) was measured; **the test does not rule out some *other* group-free ring
+construction** (none is known to the agent); CF period scaling measured only to 40 bits
+from 4 points. **And the agent found and fixed five bugs in its own test code during
+the run** (a `p==q` generator collision, a `p>q$ ordering assumption, a wrong Cipolla
+shortcut causing an infinite loop, a wrong `2^{φ/2}` test, and a wrong first-cut
+index-calculus test) — **the numbers above are the corrected, re-run versions**, which is
+the correct practice and worth recording as the standard.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
