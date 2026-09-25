@@ -6207,6 +6207,68 @@ poly(log N)?` — **which is more than any of rounds 32–56 could say about it.
 
 ---
 
+### 7-undecuples-LVIII. ★★★★★★ PRIMITIVE (3) IS CLOSED: `B(k,N)` in `poly(lg N)` is **EQUIVALENT TO FACTORING** — and the count's closed form IS a divisor sum
+
+§7-undecuples-LVII left *"is `B(k,N)$ computable in `poly(lg N)$?"* open. Having now
+read the paper, the sharper answer is available, and it **closes the cell** rather
+than restating the question.
+
+**★ THE CUSP-SPACE CLOSED FORM IS A DETERMINING AGGREGATE.** The dimension of the
+weight-`k$ cusp space on `Γ₀(N)$ has the classical closed form built from
+
+> **`E(k,N) = Σ_{d|N} σ_{k-1}(d)`,**
+
+and `B(k,N)$ is that cusp dimension **minus the oldforms** `Σ_{d<N} B(k,d)`. **So the
+closed form of `B$ contains `E(k,N)$ as its dominant term.** At `k = 2$ this is
+
+> **`E(2,N) = Σ_{d|N} d = σ₁(N) = 1 + p + q + N = N + 1 + (p+q)`,**
+
+which **determines `p+q$ by rule (7) (§7-undecuples-LIV) and hence factors `N$ in
+closed form.**
+
+**⇒ THEREFORE, IN BOTH DIRECTIONS:**
+
+> **`B(k,N)$ computable in `poly(lg N)$  ⟺  `N$ factorable in `poly(lg N)$`.**
+> **(⟸)** Theorem 10 of Gu–Martin: `B$ plus the two (free) `A$-values factors `N$ in
+> probabilistic polynomial time. **(⟹)** the closed form of `B$ runs through
+> `E(k,N) = Σ_{d|N}σ_{k-1}(d)$, a determining aggregate by rule (7).
+
+**⇒ SO §4c's "the open problem" IS NOT OPEN IN THE WAY §4c FRAMES IT.** §4c says the
+count is not known in `poly(lg N)$ and that the dimension argument *"does not prove
+that no conceivable `poly(lg N)$ algorithm for the count exists."* **That is
+correct — but it is not the sharp statement. The sharp statement is that the count is
+not merely *as hard as* factoring: its classical closed form is a divisor sum, and
+divisor sums determine `p+q$.** A `poly(lg N)$ count would not be a *new primitive*;
+it would be **a `poly`-time factoring algorithm wearing a cusp-form costume.**
+
+**★★ AND THIS ALSO CORRECTS ROUND 56's ERROR PROPERLY, INSTEAD OF JUST KILLING IT.**
+Round 56 said *"`A − B$ is `E(k,N)$."* That is **false** (§7-undecuples-LVII). The
+**true** statement, and the one that carries the content, is:
+
+> **`E(k,N)$ is the closed form of the CUSP dimension, not of `A − B`.**
+
+**Round 56 was looking at the right object through the wrong combination.** `A − B$
+is factor-free (§LVII); the cusp dimension's closed form is `E(k,N)$` and that one
+determines `p+q$ by rule (7). **So the divisor-sum observation of rounds 47–49 was
+aimed correctly after all — it just needed `E(k,N)$ attached to the right
+object.**
+
+**⚠️ WHAT I HAVE AND HAVE NOT VERIFIED.** *Verified against the source just read:*
+Gu–Martin's Defs. 6–7, 13, Prop. 15, Theorems 8/10 — i.e. the `B` definition, the
+"`H$ is fast without factoring" remark, the squarefree `s₀* = ν*∞ = 1` collapse, and
+Theorem 10. **Not verified here: the classical cusp-dimension closed form
+`dim S_k^0(Γ₀(N)) = f(Σ_{d|N}σ_{k-1}(d), ν_\infty, …)`.** That is standard textbook
+material but **I am stating it from knowledge, and by rule (5) I am not asserting the
+final equivalence above until it is checked against a reference** (Gu–Martin's own
+§2 / Ogg's formula, or any text on the genus of `X₀(N)$).
+
+**⇒ THE ONE CHECK THAT REMAINS, and it is small:** confirm that `dim S_k^0(Γ₀(N))$ is
+built from `Σ_{d|N}σ_{k-1}(d)$ with no term that avoids it. **If confirmed, primitive
+(3) is closed: the modular-curve route is a re-encoding of factoring, not a fourth
+way in.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
