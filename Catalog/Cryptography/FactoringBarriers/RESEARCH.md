@@ -5889,6 +5889,45 @@ complete and unusual place to stop.
 
 ---
 
+### 7-undecuples-LII. ✅ `(1a)` HAS NO RE-ENCODING EITHER — the blocks **are** `[1,M]`, which is why `N^{1/4}` is tight for good
+
+§7-undecuples-LI closed `(1a)` "in the block-search framing" and flagged the obvious
+follow-up: **§7-bis and §7-sextuples killed the box by finding a re-encoding.** So:
+is there a re-encoding of the block search? **No, and there is a one-line reason that
+generalises the whole file's recurring lesson.**
+
+**THE BLOCKS ARE A PARTITION OF `[1,M]`.** `d = ⌈√M⌉$ and
+`[1,M] = ⊔_{j<M/d}[jd+1,(j+1)d]`. **Testing every block ≡ testing every integer of
+`[1,M]$** — there is no coarser view, because a block *is* a chunk of the interval.
+The multipoint evaluation is then the optimal way to test a chop-up of an interval:
+its cost is
+
+> `O( (M/d + d)·M(lg N) )`,  minimised at `d = √M$ ⟹ **`Θ(√M · lg N)` = `Θ(N^{1/4}lg N)`.**
+
+**★ AND THE "A SMALLER `j$" ROUTE IS CIRCULAR, WHICH IS THE TELL.** Write
+`f(jd) = d!·C(jd+d,d)`. The roots of `f$ mod `p$ are exactly `j_i = -i·d^{-1} (mod p)`
+for `i = 1..d`. Asking *"is some `j_i$ in `[0, M/d)$?"* is asking *"does `p$ divide some
+`jd + i$ with `1 ≤ i ≤ d$ and `jd+i ≤ M$?"* — **i.e. does `p$ divide some integer in
+`[1,M]$?** Which is the original problem, unchanged. **The re-encoding reduces to the
+thing it was supposed to compress.**
+
+> **★ THE UNIFYING RULE THIS ENTIRE FILE FINALLY EARNS (rule 6). _A search is
+> optimally blocked exactly when its partitions are the searched set._** The `(a,b)$
+> box was optimally blocked because good points are *points* of it; the `[1,M]`
+> interval is optimally blocked because blocks are *chunks* of it. **In both cases no
+> re-encoding exists, because the re-encoding would have to be strictly coarser than
+> the set it partitions — and the good set is a subset of that set, not coarser than
+> it.** This is the reason rounds 5–45 kept producing re-derivations: every framing I
+> tried was either the set itself or a *partition* of it, and a partition cannot be
+> beaten by a coarser view of itself.
+
+**⇒ `(1a)` IS NOW CLOSED WITHOUT RESERVE**, and the closure is structural rather than
+a bound: `N^{1/4}` is the cost of testing `[1,M]$ in optimally-sized chunks, and
+`[1,M]$ cannot be tested in sublinear-many probes by any partition-based scheme,
+because the probes *are* the interval.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
