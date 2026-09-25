@@ -5589,6 +5589,62 @@ literature for "Bluestein at a geometric progression" applied to factoring.
 
 ---
 
+### 7-undecuples-XLVII. ✅ THE CHIRP-Z EVALUATION IS VERIFIED — identity and implementation, 9/9 trials
+
+§7-undecuples-XLVI left the chirp-z candidate untested, with two failed
+implementations and a known one-line fix. **The fix is applied and the candidate is
+verified.**
+
+**THE FIX.** The identity `2jk = (j+k)² − j² − k²` gives
+
+> `f(X^{2k}) = X^{−k²} · Σ_j (a_j·X^{−j²})·X^{(j+k)²}`,
+
+which is a **correlation** `Σ_j A[j]·C[k+j]`, not a convolution `Σ_j A[j]·C[k−j]`.
+It is obtained from a convolution by **reversing `A`** and reading index `k+n−1`:
+
+> `(A^rev * C)[k+n−1] = Σ_j A[j]·C[k+j]`.
+
+**THE SECOND FIX (found while testing the first).** For the *odd* powers,
+`f(X^{2k+1}) = g(X^{2k})$ requires `g(x) = f(Xx)`, whose coefficients are **`a_j·X^j`** —
+*not* `x·f(x)` (coefficients `[0, a_0, a_1, …]`), which is what attempt 2 used and which
+is wrong. With that corrected, **one chirp-z call covers the even powers and a second
+covers the odd**, giving all `m$ points at two convolutions.
+
+**★ VERIFICATION (9/9).**
+* single call, ratio `X²`: **5/5** random `(n, m, X, N)` agree with naive evaluation;
+* **full geometric-progression evaluation via two calls: 4/4** agree with naive.
+
+**⇒ WHAT IS NOW ESTABLISHED.**
+* **Correct:** the chirp-z identity and the implementation are verified. The
+  subroutine computes `f(α^0),…,f(α^{m−1})` correctly, over `Z_N$, **with no square
+  root of `α$ and no factorisation.**
+* **Cost:** two convolutions of length `Θ(n+m)` ⟹ by Kronecker one integer
+  multiplication of `Θ((n+m)·lg N)$ bits ⟹ `M((n+m)lg N) = Õ((n+m)·lg N)` with
+  quasi-linear `M(·)`, **against Harvey's `O((m+n)·lg²N)` — a factor `lg N` on the term
+  the external source confirmed is the whole bound** (§7-undecuples-XLIV).
+
+**⚠️ WHAT IS *STILL* NOT ESTABLISHED, and I am not blurring it.**
+1. **No comparison against Bhuesten.** The 3.2× measured is against **naive** `O(nm)`,
+   which is *not* Harvey's baseline — Harvey already uses Bhuesten's multipoint
+   evaluation. **A speedup over naive is not a speedup over Harvey.** The `lg N$ claim
+   is a cost-model argument; the decisive measurement has not been made.
+2. **Novelty unverified.** Bluestein is 1970 technology. The open question is whether
+   anyone has applied it to Harvey's Lemma 2.4, which explicitly credits *Bhuesten's
+   algorithm* — i.e. whether anyone noticed Bhuestein is **unnecessary at a geometric
+   progression**. **The prior here is poor**, and §7-undecuples-XLIV is a standing
+   example of what happens when I assume otherwise.
+3. **Not yet an end-to-end method.** This is a verified *subroutine swap* for Lemma
+   2.4 inside Algorithm 4.1 Step 3. The factoring-level claim needs the swap made,
+   then measured against Harvey's full bound.
+
+**⇒ STATUS, precisely.** **A verified algorithmic component**, not a verified method.
+Round 36 called this "the first candidate that clears all four rules on paper"; it now
+clears rule (1) *empirically* as well — the subroutine is correct and its cost is
+arithmetic. **What remains is two ordinary steps: benchmark it against a real Bhuesten
+implementation, and check the literature.** Neither requires new mathematics.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
