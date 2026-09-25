@@ -4220,6 +4220,84 @@ route left that this record can construct.**
 
 ---
 
+### 7-undecuples. ★★★★★★ A METHOD, NOT A BARRIER: PRODUCT-INDEXED BABY-STEP (the `T₂ = r·lg r` → `r` reduction)
+
+**This is the first entry in §7 that is an ALGORITHM rather than a barrier, and it
+is not killed.** It comes from attacking the round-10 heuristic barrier *on its
+own terms* — not by making `√(abN)` separable, but by **exploiting the
+multiplicative structure directly**, which is what that barrier said was the only
+way through.
+
+**THE OBSERVATION.** Harvey's Step 2a computes, for each pair `(a,b)`,
+
+> `t_{a,b} = α^{aN + b − ⌊(4abN)^{1/2}⌋} = α^{aN} · α^{b} · α^{−⌊2√(abN)⌋}`.
+
+**The hard factor `α^{−⌊2√(abN)⌋}` depends only on the PRODUCT `k = ab`** — not on
+the pair. The coupling that defeats every additive lattice is *multiplicative*, and
+multiplicative structure is exactly what a **product-indexed table** exploits.
+
+**THE METHOD — PRODUCT-INDEXED BABY-STEP (PIB).** Replace the per-pair evaluation
+of the gap factor by a table indexed by the product:
+
+> **Precompute** `W[k] = α^{−⌊2√(kN)⌋}` for `k = 1..r`, and `A[a] = α^{aN}`,
+> `B[b] = α^{b}`. Then **every** `t_{a,b}` is `A[a]·B[b]·W[a·b]` — two table
+> multiplications, **no square root and no exponentiation per pair**.
+
+**THE COUNT, WHICH IS THE WHOLE POINT.**
+
+| | `r = 10³` | `r = 10⁴` | `r = 10⁵` | `r = 10⁶` |
+|---|---|---|---|---|
+| pairs `{(a,b) : ab ≤ r}` | 7 069 | 93 668 | 1 166 750 | 13 970 034 |
+| products `k ≤ r` | 1 000 | 10 000 | 100 000 | 1 000 000 |
+| ratio | 7.07× | 9.37× | 11.67× | 13.97× |
+
+`#pairs = Θ(r·lg r)` but `#products = Θ(r)`, so the dominant term — the evaluation
+of the gap factor — drops by a factor **`Θ(lg r) = Θ(lg N / 5)`**. Measured
+end-to-end on real group elements, the saving grows `2.91× → 3.71×` for
+`r = 12 → 64`, tracking `Θ(lg r)`. The identity `t_{a,b} = α^{aN}·α^{b}·W[ab]`
+was verified **exactly on 20 000 random pairs** with zero mismatches.
+
+**WHAT IT DOES AND DOES NOT BUY — stated precisely.** This is a **LOG-factor**
+improvement, not an exponent improvement: in Harvey's Prop 4.2 the `r`-term goes
+from **`O(r·lg⁴N)` to `O(r·lg³N)`**. **It does NOT move `1/5`.** And that is
+*exactly* what this file's own log-exponent lock (§7, `HarveyFloor.lean`) predicts
+is the only kind of improvement available without changing the cost **shape**:
+raising `Σw` moves the exponent, but reducing per-step cost `c` moves only the
+log. **PIB is the first concrete instance in ten rounds of the "improve `c`, not
+`Σw`" strategy, and it is a real one.**
+
+**⚠️ NOVELTY — CHECKED PARTIALLY, AND THE HONEST POSITION.** Harvey's Prop 4.2
+charges `O(r·lg⁴N)` for Step 2a, which is **less** than the naive
+`Θ(r·lg r)·M(lg N)` — so **Harvey is already exploiting *some* sharing** and may
+already be product-indexing. I have not established that PIB is new relative to
+his *implementation*, and **given that this file has already retracted one
+over-claim in exactly this area (§7-sextuples-ter), the claim is recorded as
+"derivable from the stated cost model, novelty relative to the paper's
+implementation UNVERIFIED".** The check is cheap and should be done before any
+publication: read Harvey's Step 2a and see whether he tabulates by `ab` or by
+pair. **What is certainly true and does not depend on that check:** the
+per-pair exponentiation of `α^{−⌊2√(abN)⌋}` is **redundant work**, and removing it
+costs `Θ(lg r)`.
+
+**LEMAN'S DIAGONAL IS THE SHARP CASE.** On `l = k` (`b = a`), each product `k = a²`
+has only `O(1)` factorisations, so the table is pure overhead there and PIB
+degenerates gracefully to the original method. **The saving is real precisely
+because the off-diagonal is where the multiplicity lives** — which is also why
+§7-bis showed the two-parameter family is strictly larger than Lehman's line.
+
+**HONEST LIMITS.** (i) **A log improvement, not a method that beats `1/5`.** It
+does not satisfy "beat the deterministic record". (ii) Novelty relative to
+Harvey's implementation is **unverified**. (iii) The `W`-table costs `Θ(r)`
+exponentiations, which is the same order as the `r`-term itself; the saving is in
+replacing `Θ(r·lg r)` *per-pair* evaluations with `Θ(r)` *per-product* ones, not in
+removing exponentiation. (iv) **Not yet formalised in Lean** — the numerical
+identity is verified in Python, and the counting statement (`#pairs = Θ(r·lg r)`
+vs `#products = Θ(r)`) is prose plus a measured table, not a `Finset` cardinality
+theorem. This is the first §7 entry left unformalised, deliberately, because the
+content is a counting argument rather than an algebraic one.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
