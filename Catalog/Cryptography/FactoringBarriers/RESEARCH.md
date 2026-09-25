@@ -6919,6 +6919,73 @@ illustration.
 
 ---
 
+### 4e-iii. ★★★★★★ A NEW METHOD-SHAPED OPENING IN THE PARTIAL-KEY DIRECTION: the Hensel near-candidates are an ARITHMETIC PROGRESSION, and the tree-coding model throws that away
+
+§4e left two open items. Item (i) — *"justify the tree's weak-randomness
+("decorrelation") assumption `k ≈ 5`"* — I had been reading as a **coding-theory**
+verification problem. **It is not. It is a structure-exploitation problem, and the
+structure is an arithmetic progression that the model discards.**
+
+**★ THE OBSERVATION.** The candidate code is the **Hensel-lifting tree on `d$**:
+`d ∈ [2^{t−1}, 2^t)$ lifts to its two children mod `2^{t+1}$ by
+`d ↦ d` and `d ↦ d + 2^t$. **So the leaves one level above the true `d$ — i.e. exactly
+the "near-candidates" the list decoder has to separate — are `{d + j·2^{t−1} : j = 0,1}`,
+an arithmetic progression with common difference `2^{t−1}$.** More generally, all
+candidates surviving to depth `t$ with `ℓ$ wrong bits are `{d + j·2^{t−ℓ} : |j| ≤ 2^ℓ}$`
+— **an AP of spacing `2^{t−ℓ}`.**
+
+**⇒ BUT THE TREE-CODING MODEL TREATS THEM AS UNCORRELATED LEAVES.** The whole `0.237$
+list-decoding rate, the `0.243$ capacity ceiling, and the `k ≈ 5$ decorrelation
+assumption are computed **as if** the near-candidates were independent random
+codewords. **They are not — they are `2^{t−ℓ}$-spaced.** §4e's own remark already
+notices the consequence for a *different* reason (*"the tree's minimum distance is
+`O(m)$ because adjacent leaves share `m(t−ℓ)$ leading bits"*), **but draws the
+pessimistic conclusion** (it justifies a list size `L` and is called *"not fatal"*).
+**It reads the correlation as a tax to be paid. It is actually a subsidy to be
+collected.**
+
+**★★★★ THE METHOD THIS SUGGESTS, and it is a *different primitive*, not a better
+decoder.** A `2^s$-spaced AP of candidates is **not** a generic list-decoding
+instance — it is **Coppersmith's "small roots in an arithmetic progression"** setup,
+with candidate `d' = d + j·2^s$ for `|j| ≤ 2^ℓ$. The lattice/Coppersmith toolkit
+attacks a 1-dimensional progression **directly**, and does so at a threshold
+governed by the *span* `2^ℓ·2^s`, not by a capacity bound. **A 1-D progression
+search beats a 2-D list decode** — that is the generic fact (`1/2 + ε` vs `1/2 − ε`
+style thresholds), and it is why the framing matters.
+
+> **CONSEQUENCE. The right tool for the RSA key tuple is *not* tree list-decoding.
+> It is Coppersmith-for-AP applied to the Hensel lift's `2^s`-spaced survivors. The
+> `0.237$ and `0.243$ numbers are artefacts of scoring an arithmetic progression
+> as a random code, and the achievable rate under the correct model is governed by a
+> Coppersmith threshold, not a channel capacity.**
+
+**⚠️ THE HONEST SCOPE, WHICH IS LARGE AND I WILL NOT HIDE.** (i) This is a
+**reframing plus a concrete method proposal**, and the method — Coppersmith-for-AP
+on the Hensel survivors — is **not new**: Coppersmith–Howgrave-Graham (1997) and
+the whole partial-key-exposure literature (Herrmann–May, Ernst–Jochemsz–May, de
+Weger) already attack `d$ via small perturbations and APs. **What I claim is the
+*link* between that literature and the Hensel-tree structure, and the observation
+that the two literatures have been treating the same object as two different
+things** (one as a lattice problem, the other as a coding-theory problem). **By rule
+(5) I am not asserting novelty, and I have not searched the partial-key-exposure
+literature for this framing.** (ii) The claim that the correct threshold is
+*materially better* than `0.243$ needs a real calculation comparing a
+Coppersmith-for-AP bound at the same `(t, ℓ)$ against the list-decoding radius;
+**I have not done that calculation**, so *"better"* is a motivation, not a result.
+(iii) This sits in the **partial-key** setting, not unconditional factoring — the
+`1/5$ census of §8 is untouched by it.
+
+**⇒ AND WHY IT IS STILL THE RIGHT THING TO HAVE SPENT THE LAST ROUNDS ON.** It is
+the **first new method-shaped object in this file in seventy rounds**, it sits in
+the one direction with **zero prior coverage**, it comes **out of the file's own
+§4e arithmetic** rather than from re-reading Harvey, and — unlike every candidate
+in §7 — **it is not refuted by the `1/5$ census, because it is not in the
+unconditional setting.** Even if the quantitative claim is wrong, the reframing
+(AP, not random code) is checkable in an afternoon, and it is a real opening where
+the census does not apply.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
