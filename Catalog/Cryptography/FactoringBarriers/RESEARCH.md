@@ -7233,6 +7233,38 @@ it is **~`2³⁸$` times worse** than the incumbent.
 
 ---
 
+### 8.12. ■ ROUND 80 — FIVE HYPOTHESES ON PAPER, FIVE AGENTS IN FLIGHT
+
+A direct instruction to fan out subagents and iterate. **The hypotheses below are
+written BEFORE the results, so each is falsifiable** — the discipline §8.10–§8.11
+established and this file repeatedly failed to apply in-round. **Recorded now,
+answered later.**
+
+| # | hypothesis | my prediction | agent |
+|---|---|---|---|
+| **H(K)** | A **second independent reuse** exists for Harvey's residual, i.e. the good giant-step index is determined by data *already computed*, so the `j`-loop can be skipped (`T₁ → 0$ ⇒ a **different** exponent, not `1/7$) | **no** — the claim of §8.8 that the index is "exactly what the search must discover" is load-bearing and I expect it to hold | k=2 attack |
+| **H(R)** | Some small quadratic ring `Z[√D]`, `D ≠ −1$, gives a **non-circular** single-representation extraction `gcd(f(x,y), N)$ | **no** — the `-1$ case failed for a structural reason I expect to generalise | other rings |
+| **H(C)** | The repository's own `Catalog/` contains material bearing on beating `1/5$ that this record has not used | **mostly no**, but at least one relevant theorem will turn up | catalog survey |
+| **H(G)** | A **group-free** method exists: some `poly(log N)$ function `F(N)$ determines `p,q` without the multiplicative group | **no** — if it did, it would contradict the `p`-periodic ⇒ idempotent ⇒ factoring chain, so it would be a new complexity result | group-free |
+| **H(A)** | Nothing in 2020–2026 beats the deterministic `1/5$ or supplies a sixth mechanism | **yes, nothing** — but possibly 1–3 methodologically new papers I have not read | arXiv sweep |
+
+**★ THE DISCIPLINE, STATED AS THE POINT OF THIS ENTRY.** H(K)–H(H) are recorded
+with my prediction attached, **including the two I expect to be wrong about**
+(H(K): I want the k=2 agent to find the index predictable if it can; H(R): I want the
+rings agent to find a `(D, f)` with a high hit rate if one exists). **A round in
+which every hypothesis survives is a round in which I under-specified them.** §4e-iii
+and §4e-iv are what happens when they are specified and the answer is *no*.
+
+**⇒ AND THE HONEST POSITION IS UNCHANGED WHILE THESE RUN.** No factoring method has
+been delivered. The deterministic `1/5$ census stands. H(P) — the Pythagorean tree
+the previous round's user asked for — is **closed with numbers** (§8.11): a type
+mismatch (the tree's output is a perfect square; `N$ is not) and a re-encoding (the
+Berggren tree *is* the continued-fraction tree, indexing exactly the lattice
+SQUFOF/LLL/Lehman already sweep), and its only working mechanism costs `Θ(√N)$ to
+acquire its input — **~`2³⁸$ times worse than Harvey at 128 bits.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
