@@ -7358,6 +7358,80 @@ me re-deriving.
 
 ---
 
+### 8.15. ■■ READER 5 (H(C) — the 33 KB ledger) — 27 rows, 7 self-corrections, and **ONE GENUINELY OPEN LEAD I NEVER TOUCHED**
+
+The ledger I never opened is now read end to end (183 lines, all of it). **It contains
+seven self-corrections, and it contains a live target I have never worked on.**
+
+**★ AND FIRST, THE PROCESS INDICTMENT GETS WORSE AGAIN.** The ledger's **row 12 is
+the Berggren/Pythagorean tree** — the thing I spent **all of round 79** killing. **The
+ledger already had it, already with a 2026-09-24 self-correction.** So I re-derived
+the Berggren kill for the **third** time, in a different language, after the
+authoritative kill was sitting unread in the same directory. **The ledger's three
+independent kills of row 12 are: (i) circularity, (ii) Farey-limited not `3^t`-limited
+(fitted cost `3^{d(p)} ≈ p^{1.00}`, no better than trial division), (iii) a trivial
+Fermat node exists for every odd `N` (`m−n=1`), so "produce a node" factors nothing.**
+My round-79 "type mismatch + re-encoding" framing was a **fourth** independent kill —
+correct, and redundant with a ledger row I had not read.
+
+**★★★★★ AND THE ONE GENUINELY OPEN LEAD IN THE ENTIRE FILE — LEDGER ROW 16:**
+
+> **"A cheap Oesterlé upper bound on `g(X₀(N))` would feed Cor. 4. DEAD ON CITATION,
+> BUT THE SOFT TARGET IS REAL."** The only thing called the Oesterlé bound in
+> circulation is the **Ihara–Oesterlé (Weil–Oesterlé) *point-count* bound** on
+> `#C(ℱ_q)` in terms of genus — **a different object**. **No factorization-free upper
+> bound on `g(X₀(N))` exists.** Three named citations are phantoms. **The entry kills
+> the CITATION and explicitly preserves the SUBSTANCE.**
+
+**⇒ SO THE HIGHEST-VALUE UNATTACKED TARGET IN THIS REPOSITORY IS: _construct a
+factorization-free upper bound on `g(X₀(N))$_ that feeds Gu–Martin Cor. 4.** It is
+in scope (it is a `poly(log N)$-computable quantity — exactly the "one surviving cell"
+§4e-v identified), it is **not** on any of the thirteen closed routes, and the file
+itself flags it as open *on substance rather than on citation*. **I have given it zero
+rounds.**
+
+**★ AND THE SECOND OPEN ITEM, LEDGER ROW 20 (which §4e-v/-vi also reached from the
+other side):** the two `Z`-channel residues — (i) the tree's decorrelation assumption
+`k ≈ 5$ is **empirical only** — **§4e-iv's equispaced-full-span argument is NOT
+recorded in the ledger and is my own**; and (ii) a random-coding bound for list
+decoding on the asymmetric channel, **a coding-theory gap PPS flagged in 2012 and a
+2013–2026 sweep found unclosed**.
+
+**★★ THE LEDGER'S OTHER LOAD-BEARING KILLS, WHICH SUBSUME ROUNDS I SPENT SEPARATELY:**
+* **Row 21 — the information-theoretic meta-barrier, "the cleanest form":** a handle
+  recovering `p` must be **injective on `S_n = {N=pq : 2^{n−1} < N < 2^n}`**, needing
+  `n − Θ(log n)$ bits of range; a fixed structure has `O(1)`. Pigeonhole ⟹
+  contradiction, **with no `P ≠ NP`, no GRH, no subexponential assumption** — *the
+  obstruction is range size, not computability.* **Self-correction: the earlier
+  `2^{n/2}/n$ range was never sound ("treat any surviving use of it as an error").**
+* **Row 25 — the `M₂$ diagonalisation, killed by a quantifier error:** the canonical
+  root is a valid root and always gives `gcd(0,N)=N`; `E[factor | random root] = 1/2`
+  does **not** give a reduction, because a reduction must succeed on *every* valid
+  output. Verdict: `DIAG ∈ P ⟹ DIAG ⇏ FACTOR`. Also: **DLP/order-finding mod a
+  composite is randomly equivalent to factoring** (Bach–Miller–Shallit 1986) —
+  **harder, not a handle.**
+* **Row 18 — this survey's own recommended complexity target was wrong:** `Ω ∉ TC⁰`
+  does not transfer (for `Ω` the increment is unconditionally `+1$, so the parity
+  oracle is **constant** on `{x,px}`), and `Ω ↔ FACTOR` is **believed, not proven**.
+  **Corrected target: `spf(N) ∉ DLOGTIME-uniform TC⁰`** (`≡ₚ FACTOR` by definition).
+* **Row 13 — the Berggren spectral resonance `IS Pollard `p±1$** (`ord_p(M₂) ∣ p ∓ 1`,
+  sign by `p$ mod 8$), so the `M₂$ route is `L[1/2]`-class and **dominated by NFS** —
+  upgrading the catalog's older "circular" verdict to "circular **and** classically
+  dominated".
+* **Row 2 / "the arity escape is an artifact":** the NFS `1/3$ exponent is **not** an
+  AM–GM balance over stages; it is a smoothness-probability vs. linear-algebra balance,
+  **insensitive to arity**. `TradeoffBarrier.lean`'s `tradeoff_lower_bound` is a correct
+  theorem *about its model*, and **the model omits the Dickman factor** — it must not
+  be read as a factoring lower bound.
+
+**⇒ AND THE NET, HONESTLY.** The ledger is a **kill record with no ALIVE entry** except
+the two soft targets above. **It confirms the census and adds one target I had never
+touched.** The most useful thing in it is not a method — it is **row 16**, and the
+admission that **row 12 was re-derived by me three times over, from a ledger that was
+sitting unread in the same directory.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
