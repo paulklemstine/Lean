@@ -5101,6 +5101,59 @@ narrower, more actionable handoff than round 20 gave, and it is the honest end.
 
 ---
 
+### 7-undecuples-XXXVIII. ⚠️⚠️ A LOGICALLY SOUND BATCHED-GCD IDEA THAT I COULD **NOT** VALIDATE — recorded as a lead, explicitly not a method
+
+§7-undecuples-XXXVII named GCD-batching as the residual primitive. I attempted it.
+**The idea is sound; my test of it was not, and the result is an unvalidated lead.**
+
+**★ THE LOGICAL STEP, WHICH IS CORRECT.** The `m$ individual GCDs
+`gcd(N, f(α^i) − 1)$ can be replaced by accumulation and **one** GCD:
+
+> **`p ∣ ∏_{i<m}( f(α^i) − 1 )`  ⟺  `∃ i < m` with `p ∣ f(α^i) − 1`,**
+
+because `p$ is prime. Forming the product costs `m` multiplications mod `N$ — **`O(m)`
+group operations, not `O(m)` GCDs.** If the GCD comes out as `N$ (both primes hit
+somewhere), a binary search over the index range separates them, at `O(m)` extra
+multiplications and `O(lg m)` GCDs. **No successful index ever has to be isolated.**
+
+**Combined with §7-undecuples-XXXVII part (a)** — direct evaluation of `f(α^i)$ at
+`Θ(lg N)$ each via the `T`-table, skipping the product tree — the projected cost is
+
+> **`O(m·lg N) = O(N^{1/5}·lg^{7/5}N)`  versus  Harvey's `O(N^{1/5}lg^{16/5}N)`,**
+
+a factor `lg^{9/5}`, which would also beat Harvey–Hittmeir's `lg^{13/5}`. **The
+product tree (Lemma 2.3) would be eliminated entirely.**
+
+**❌ AND IT DID NOT VALIDATE. My test returned 0/12 — and the reason is instructive
+rather than fatal.** My harness forced `v_0 ≡ α^{i_0} (mod p)`, so
+`f(α^{i_0}) ≡ 0 (mod p)`, giving `f(α^{i_0}) − 1 ≡ −1 (mod p)` and `gcd = 1`. **That
+is the wrong success condition: Harvey needs `f(α^i) ≡ 1 (mod p)$ — a product
+*equalling* 1, not a vanishing factor.**
+
+> **★ And that is EXACTLY Fact 3 of §7-undecuples-decem — which I had already
+> recorded, and then failed to respect in my own test.** The *matched* index gives
+> GCD 1; the *useful* index is a different, unmatched one. **I repeated, in a test
+> harness, the very error that section warns about.** That is the fourth instance in
+> this file of a verification that did not carry its own recorded warning, and it is
+> the strongest evidence yet for rule (1): *re-derive the precondition from the
+> paper before building the test, do not reconstruct it from memory.*
+
+**⚠️ STATUS, stated flatly. *Logically sound: yes. Cost figure: derived, not
+measured. End-to-end validated: NO.*** A correct test needs a genuine good pair from
+the `aq+bp` search, which is more implementation than I had budget for, and
+**§7-undecuples-XXXVII part (a) is itself derived rather than measured.** So the
+`lg^{16/5} → lg^{7/5}` figure is **not** a claim of this file. It is a **prediction**.
+
+**⇒ THE HONEST HANDOFF.** Two specific, checkable steps, in order:
+**(i)** build a harness that produces a *real* Harvey hit — i.e. run the `aq+bp`
+search of Lemma 3.3 to get a genuine good pair, rather than forcing a root — and
+confirm `f(α^i) ≡ 1 (mod p)$ occurs for some `i < m$ as the correctness proof says
+it must; **(ii)** only then measure whether the batched-GCD route actually delivers
+`O(m·lg N)$ end to end. **Step (i) is the one I failed to do, and it is cheap for
+anyone with the implementation to hand.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
