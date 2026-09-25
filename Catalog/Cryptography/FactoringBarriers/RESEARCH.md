@@ -8183,6 +8183,54 @@ was wrong.** Rule (6) was not strong enough. It should read:
 
 ---
 
+### 7-undecuples-XLII. ❌ THE RETRACTION **GENERALISES**: the same category error kills the 2026 hyperbolic-sieve thread too
+
+§7-undecuples-XLI retracted the `0.8415·N^{1/5}$ claim because Hittmeir's sieve acts on a
+**value-range `S`**, not on Harvey's `(a,b)$ pair index. **The 2026 hyperbolic sieve
+inherits that setup, so it is closed by the same argument — and this time the argument
+rests on the *source*, not on a summary.**
+
+**★ THE CHAIN, FROM THE SOURCE.** Hittmeir arXiv:1608.08766 p.2 defines
+`𝓗_{N,m} = { (x,y) : N ≡ xy (mod m) }` and `L_{N,m} = { x + y (mod m) : (x,y) ∈ 𝓗_{N,m} }`,
+and compresses **`S$ mod `m$** — *"the upper bound for `p$ from Strassen's approach"* —
+to `40/2310 = 1.7%$ of residue classes. **Stănică–Mulder–Hittmeir (arXiv:2606.13018)
+develop these same `H_a$** — they sharpen the *count* `|H_γ ∪ H_{γ²}| = 3ℓ/4 + O(√ℓ)$,
+**the same set.** So their local result is a sharper bound on **a value-range filter in
+a `1/4`-based Sutherland-CDLP algorithm.**
+
+**⇒ NEITHER SIEVE FILTERS HARVEY'S `(a,b)$ FAMILY, AND NEITHER CAN REDUCE THE `r$ IN
+`max(N^{1/2}/(r^{1/2}m), r, m)`.** **So §7-undecuples-XXXVI's framing of the
+hyperbolic sieve as "a live way to push below the current balance that does not
+rebalance `r$ and `m$" is ALSO WRONG** — it cannot touch `r$ or `m$ at all, because it
+is not acting on either. That sentence in §XXXVI should have read: *"a live
+`1/4`-based thread whose object is a different quantity entirely."*
+
+**★ SO THE SIEVE LINE IS CLOSED IN BOTH INSTANCES, and what §XXXIX's algebra reduces to
+is a clean, correctly-scoped requirement:**
+
+> **A filter on the `(a,b)$ *pair family* — not on any value-range, not on a modulus —
+> removing a constant fraction `s$ would improve the deterministic record by `s^{-3/5}$,
+> and `1/6$ would need `s = N^{1/18}$. NO SUCH FILTER IS KNOWN, AND NEITHER OF THE TWO
+> HYPERBOLIC-SIEVE PAPERS IS ONE.**
+
+**⇒ AND THE ONE THREAD THAT SURVIVES RULE (7) IS UMW (arXiv:2511.10851) — precisely
+because its object is a *reformulation of the search itself*, not a filter on
+somebody else's parameter.** Its mechanism is *"batch divisibility covering /
+difference-set covering": replace enumeration entirely, with `n^{2β}$ differences each
+divisible by many `i ∈ [n]`* — i.e. it re-encodes **the very index set Harvey
+enumerates**. **That is the right kind of mechanism, and it is the only one in the
+literature, as far as this file's sweep determined, that is not a filter on a foreign
+quantity.** It is conditional (two bundled assumptions) and sits exactly on the counting
+boundary, so it is a live lead, not a method.
+
+**⇒ AND THE TIGHTEST *VERIFIED* POSITIVE RESULT IN THE FILE remains Cell 1 of
+§7-undecuples-XXXVIII: `gcd(a^{N−1} − 1, N)$ reveals a factor in `O(1)$ bases for
+semiprimes with a large Euler gap `gcd(p−1,q−1) ≈ p/2$** (exact count
+`g(q−1) + g(p−1) − 2g²`, measured). It is a **`p−1`-style method on a structured
+subset**, the file had it, and I never read it until round 86.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
