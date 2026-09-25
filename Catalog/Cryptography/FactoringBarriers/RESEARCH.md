@@ -5201,6 +5201,69 @@ two produces a false negative that looks exactly like a refutation.
 
 ---
 
+### 7-undecuples-XL. ⚠️⚠️ THE VALIDATION, PROPERLY ATTEMPTED: TWO REAL BUGS FOUND, AND THE SECOND ONE IS THE DECISIVE ONE
+
+Round 29 reported a harness that produced zero instances. **It did not — I
+miscounted the loop variable and the failure was silent.** Re-run with diagnostics,
+the pipeline runs fine and the *test* was wrong. Two distinct bugs, found in order.
+
+**BUG 1 (harness plumbing).** A `done` counter guarded by `if done>=4: break` was
+incremented at the *end* of the body, while most trials were skipped by `continue` —
+so the diagnostic I saw ("0 instances") was partly an artefact of how I reported it.
+**No scientific content; recording it because it is exactly the kind of silent
+plumbing error that manufactures a false negative.**
+
+**★★ BUG 2 (THE DECISIVE ONE, AND IT INVALIDATES MY OWN ROUND-27 ANALYSIS).**
+I built `f(x) = x − v` from the *matched* value. **Harvey's Algorithm 4.1 takes the
+values `v_1,…,v_n` that were `DELETED`, not the ones that matched.** Its stated
+precondition is
+
+> "*Elements `v_1,…,v_n` … such that `v_i ≠ α^j` for all `i ∈ {0,…,m−1}` and
+> `j ∈ {0,…,n−1}`.*"
+
+The matched giantsteps are *precisely* those equal to some `α^i` in `Z_N$ — so they
+**violate** that precondition and cannot be the input. Harvey's Step 4 and Prop. 4.2
+both say the matched elements are **deleted** and the *remaining* giantsteps are what
+Algorithm 4.1 consumes.
+
+**⇒ This kills my round-27 part (a) and the round-28 batched idea as stated.** Both
+were built on "`f$ is the product over the matched values" and "evaluate `f(α^i)$ via
+the `T`-table of `α^d − 1`." With the correct `f$ — a product over **unmatched**
+giantsteps, which are *not* all powers of `α$ — **there is no `T`-table structure
+and the `Θ(lg N)$-per-evaluation route does not apply.** The `lg^{16/5} → lg^{7/5}`
+prediction is therefore **withdrawn, not merely unvalidated.**
+
+**★ WHAT THE TEST DID ESTABLISH, which is real and worth keeping.** On a genuine
+instance (`N = 99991·99989`, Harvey's own `r = ⌈N^{1/5}/lg^{4/5}N⌉ = 6`,
+`m = ⌈N^{1/5}lg^{6/5}N⌉ = 6693`), the standard path and the batched path
+**agreed** — both reported no factor, `gcd = 1`. That is the logical implication
+being tested, and it held:
+
+> `p ∣ ∏_{i<m}( f(α^i) − 1 )  ⟺  ∃ i<m : p ∣ f(α^i) − 1`
+
+**is a correct statement about any `f$**, and the batched product is a faithful
+surrogate for the `m$ individual GCDs *whenever the individual GCDs find a factor*.**
+What the test did **not** do is exhibit an instance where the standard path succeeds,
+so the *usefulness* of batching is untested — only its *soundness as a surrogate*.
+
+**⚠️ ALSO OBSERVED, AND IT IS A FACT ABOUT HARVEY'S OWN PARAMETERS.** At
+`r = 6`, `m = 6693`, the gap window is
+`J_{ab} = ⌈N^{1/2}/(4rm√{ab})⌉ = ⌈0.62/√{ab}⌉ = 1` for **every** pair — so
+`s = Θ(r lg r) = Θ(1)`, not `Θ(r·lg r)`. **At Harvey's chosen parameters the
+entire `j`-sweep is trivial and `s·lg³N$ is a non-term**, leaving the `m`-driven
+`m` evaluations and `m` GCDs as the whole bound. **This independently corroborates
+§7-undecuples-XXXVI's diagnosis and contradicts §7-undecuples-XXXVIII's premise
+that a large `s` must be swept.**
+
+**⇒ HONEST STATUS.** The batched-GCD **identity is sound** (§7-undecuples-XXXVIII) and
+its **surrogate property is now tested and held** on one instance. Its **cost
+benefit is dead**: the `lg^{16/5} → lg^{7/5}` figure rested on a wrong reading of
+Algorithm 4.1's input and is **withdrawn**. **No new factoring method stands**, and
+the most promising lead of the last four rounds is now closed for a concrete,
+identified reason.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
