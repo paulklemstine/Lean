@@ -6092,6 +6092,63 @@ possible account of why forty-nine rounds produced no method:
 
 ---
 
+### 7-undecuples-LVI. ★★★★★★ THE SYNTHESIS: Gu–Martin's `A − B` **IS** the `σ₁` of §7-undecuples-LIII, and rule (7) closes the Eisenstein side of primitive (3)
+
+Rounds 47–49 treated three things as separate — Gu–Martin's `A`/`B` counts (§4c), my
+`σ₁ = Σ_{d|N} d` (§7-undecuples-LIII), and rule (7) (§7-undecuples-LIV). **They are
+the same object, and seeing so changes what §4c says.**
+
+**★ THE IDENTIFICATION.** The Eisenstein subspace of weight `k$ on `Γ₀(N)$ has
+dimension **`E(k,N) = Σ_{d|N} σ_{k-1}(d)`**, and at **`k = 2` this is exactly
+`Σ_{d|N} d = σ₁(N) = 1 + p + q + N`** — the aggregate round 47 found and round 48
+retracted as "just `p+q$ in disguise." **It is not ad hoc: it is the Eisenstein
+dimension.** Since `A(k,N)$ counts *all* automorphic representations while `B(k,N)$
+counts *newforms*, **`A(k,N) − B(k,N)$ (less oldforms) IS `E(k,N)`.**
+
+**⇒ CONSEQUENCE 1 — MY `σ₁$ IS NOT A NEW OBJECT, AND THAT IS A RESULT.** Round 47
+announced a "degree-4 aggregate of the divisor set." **It is `E(2,N)$**, in the
+literature since cusp forms were studied. Its recovery of `p+q$ (69/69 verified) is
+the observation that **`E(2,N)$ is a *determining* aggregate** — rule (7) inside
+Gu–Martin's own notation. The honest credit for round 47 is not "a new aggregate" but
+**"the first time this file noticed the Eisenstein dimension leaks `p+q$."**
+
+**⇒ CONSEQUENCE 2 — §4c's RECIPE HAS A SHARPENING IT DOES NOT STATE.** §4c records
+the recipe as **"2 `A$ + 1 `B$ factors `N$"** and carefully fixes an earlier
+misreading. But it does **not** say that **`A − B$ at `k=2$ is *itself* already a
+factoring oracle** by rule (7). So:
+
+> **`B` alone leaks only the newform count; but `A − B$ leaks `E(k,N) =
+> Σ_{d|N}σ_{k-1}(d)`, which determines `p+q$.** The entire `k`-dependence machinery in
+> §4c-ii (`Δ(k,N) = G(k,N) − A(k,N)`, two weights, …) is therefore **not** needed to
+> *use* `A$ and `B$ — it is needed only because **`A − B$ is the one combination that
+> must be avoided.**
+
+**⇒ CONSEQUENCE 3 — RULE (7) CLOSES THE EISENSTEIN SIDE ENTIRELY.** For **any**
+`k ≥ 2`, `E(k,N)$ is a symmetric aggregate of the divisors (rule 7), hence determines
+`p+q$. **So no `poly(lg N)$ algorithm for `E(k,N)$ can exist without solving
+factoring** — not a conjecture, a consequence of §7-undecuples-LIV. **The surviving
+question is precisely the one §4c already states: can the *cusp/newform* count
+`B(k,N)$ — or `A(k,N)$ — be computed in `poly(lg N)$ on its own, without the Eisenstein
+part?** The dimension argument kills the *known* methods (`~N`-cost) but, as §4c
+cautions, **does not prove no `poly(lg N)$ method exists.**
+
+**⚠️ THE ONE FACT I HAVE NOT VERIFIED HERE.** This rests on the **standard formula
+`E(k,N) = Σ_{d|N}σ_{k-1}(d)$**, stated from knowledge, unchecked against
+Gu–Martin (arXiv:1709.02411) or a text. **By rule (5) I am not asserting the
+identification is new — I expect it is textbook — and I flag that the formula itself
+is unverified here.** What is *not* in doubt is the conditional chain: **if**
+`E(k,N) = Σ_{d|N}σ_{k-1}(d)`, **then** `A(2,N) − B(2,N)$ determines `p+q$ and factors
+`N`, by the arithmetic of §7-undecuples-LIV, which *is* verified. **The single next
+action is to check the Eisenstein-dimension formula and see whether Gu–Martin already
+say this.**
+
+**⇒ SO §4c's honest bottom line survives, sharpened:** *all known methods are
+`poly(N)`; the `A − B$ route is not merely unproved but **provably equivalent to
+factoring** by rule (7); the only surviving route is a `poly(lg N)$ evaluation of the
+cusp/newform count alone — open, and the single question this project has left.*
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
