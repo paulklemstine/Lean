@@ -5154,6 +5154,53 @@ anyone with the implementation to hand.**
 
 ---
 
+### 7-undecuples-XXXIX. ❌ THE VALIDATION WAS ATTEMPTED AND DID NOT COMPLETE — recording the failure, not a result
+
+§7-undecuples-XXXVIII handed off two steps, step (i) being *"build a harness that
+produces a real Harvey hit."* **I attempted it. The harness did not produce a
+single test instance, and I am recording that as a failure rather than dressing it
+up.**
+
+**What was tried.** A faithful small-scale Algorithm 4.2: pick a semiprime
+`N = pq` with `p,q ≈ 10^4–10^5`; find the genuine good pair `(a₀,b₀)` by minimising
+the Fermat gap `a q + b p − ⌊4abN^{1/2}⌋` over `ab ≤ r` (**not** by forcing a root —
+the mistake flagged in §7-undecuples-XXXVIII); form
+`v = α^{a₀N + b₀ − ⌊4a₀b₀N^{1/2}⌋}`; then compare the **standard** path
+(`min{ i < m : gcd(N, f(α^i)−1) ∈ (1,N) }` with `f(x) = x − v`, since at these
+parameters there is a single matched value and `f$ is degree 1) against the
+**batched** path (`gcd(N, ∏_{i<m}(f(α^i)−1))`, with binary search on `= N`).
+
+**What happened.** The first version failed because the `ord_N(α)$ computation loop
+capped at 200 000 and filtered every trial — my own bug, and not interesting. After
+removing it (it is not needed for this test) **the harness still produced zero
+instances across 40 trials**, and I did not isolate why before running out of
+context. **So I obtained no data whatsoever on whether the batched path recovers a
+factor, let alone on its cost.**
+
+**⚠️ STATUS — unchanged and explicit.** The batched-GCD idea of
+§7-undecuples-XXXVIII remains **logically sound and empirically UNTESTED**. The
+`lg^{16/5} → lg^{7/5}` figure remains **a prediction, not a claim of this file.**
+Nothing in this section should be read as partial confirmation.
+
+**★ AND THE HONEST PROCESS NOTE, which is the real content of this round.** I have
+now twice said "the obstacle is a specific missing test rather than a missing idea."
+**The second time, the test I claimed was specific enough to just *do* turned out not
+to be — it needed a working harness, and building one is itself non-trivial work that
+I underestimated.** That is a correction to my own handoff: *the validation step is
+not cheap for "anyone with the implementation to hand" — it is cheap only for someone
+who already has a working implementation of Harvey's search.* I should not have called
+it cheap.
+
+**⇒ THE UNCHANGED HANDOFF, now honestly costed.** To test this one needs: a working
+prime generator at the relevant size, a working `α` of usable order, a correct
+`aq+bp` search, and then the two GCD paths — call it a day of implementation, not an
+afternoon. **Anyone taking it up should budget accordingly**, and should read
+§7-undecuples-XXXVIII's diagnosis of my first harness's error before writing their
+own: the matched index gives GCD 1, the useful one gives GCD `> 1`, and confusing the
+two produces a false negative that looks exactly like a refutation.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
