@@ -6766,6 +6766,58 @@ construct are not it.
 
 ---
 
+### 8.7. ✅✅ THE LAST SEAM: a SHAPE change cannot help either — every 2-term subfamily still gives `1/5$`
+
+§8.6 left one seam: *"a second reuse that **changes the shape** rather than the
+multiplicity isn't covered."* **It is covered, and by one line each.**
+
+**THE CLAIM.** In `min max( N^{1/2}/(r^{1/2}m^k), r, m )` over `r = N^a`, `m = N^b`,
+**deleting any one term leaves the minimax at `1/5$ for `k=1$.** By direct reasoning,
+writing `t` for the running exponent:
+
+* **Drop `T₃ = m$** → `min max(1/2 − a/2 − b, a)`. Setting `1/2 − a/2 − b = a` gives
+  `b = 1/2 − 3a/2 ≥ 0`, so `a ≤ 1/3`, and the max `= max(a, 1/2 − 3a/2)` is
+  minimised where `a = 1/2 − 3a/2`, i.e. **`a = 1/5$**.
+* **Drop `T₂ = r$** → `min max(1/2 − a/2 − b, b)`. Setting `1/2 − a/2 − b = b`
+  gives `a = 1 − 4b`, so `b ≤ 1/4`; the max is minimised at `a = b`, i.e.
+  `1 − 4b = b`, i.e. **`b = 1/5$**.
+* **Drop `T₁$** → `min max(a, b)$ has infimum `0$ — but then `T₁ = 1/2 − a/2 − b$
+  **diverges**. So `T₁$ is not droppable; it is the binding constraint, not an
+  optional term.
+
+> **⇒ SO WITHIN `max`-OF-MONOMIALS, THE SHAPE IS IRRELEVANT: THE MINIMAX IS
+> `1/5$ WHETHER YOU HAVE ONE, TWO, OR THREE TERMS.** The three-term balance is not
+> a design choice that a cleverer shape could beat; **it is already the optimum of
+> its whole family.**
+
+**★ AND THE SHAPE-CHANGES *OUTSIDE* THAT FAMILY WERE CLOSED IN ROUNDS 46–65:**
+smoothness collection (§8.3–§8.4: occupied, conjecturally optimal, behind
+Vinogradov), the batched-GCD / aggregate (§7-undecuples-XLII–LIV: Costa–Harvey
+Lemma 8, asymptotically nil), and the idempotent (impossible, §8.2).
+
+**⇒ THE SCOPE MAP IS NOW CLOSED IN EVERY DIRECTION, AND THE CLOSURE IS
+STRUCTURAL RATHER THAN A BUDGET:**
+
+| direction | closed by |
+|---|---|
+| rebalancing `1/5$ | `one_fifth_is_lower_bound` + attainment (exact minimax) |
+| a second independent reuse (`k = 2$ ⟹ `1/7$) | rate law (not a reuse) and batched GCD (nil) — §8.6 |
+| **changing the `max`-of-monomials shape** | **all 2-term subfamilies still `1/5$` — this section** |
+| smoothness collection | occupied / conjectural / Vinogradov — §8.4 |
+| modular curves | `≡` poly-time factoring — §8.3/§LIX |
+| quantum order-finding | Shor's — not new, out of scope |
+| the sub-`√N$ box framing | `ScaleWall` (independently re-derived clean-room) |
+
+**★ AND THE ONE THING THAT IS *STILL* NOT PROVED, stated once and finally:**
+**that `k = 2$ is impossible in general.** §8.6 refutes the two second-reuses this
+file could construct; §8.7 refutes shape changes within the monomial family.
+**Neither is a proof that no second reuse exists.** The law `N^{1/(2k+3)}$ makes
+that remaining question *sharp and cheap to state* — a future attack needs only to
+exhibit a second independent reuse, and the exponent follows arithmetically. **That
+is the correct place to leave it: a one-parameter question, not an open-ended one.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
