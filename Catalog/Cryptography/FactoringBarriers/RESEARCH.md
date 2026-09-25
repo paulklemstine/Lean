@@ -7432,6 +7432,85 @@ sitting unread in the same directory.**
 
 ---
 
+### 8.16. ■■■ THE DEEPEST CORRECTION: **§2 SAYS `N^{1/5}` IS AN *UPPER BOUND*, NOT A FLOOR** — and my entire 40-round §7–§8 census treated it as a floor
+
+Reader 6 (§§1–6, lines 1–2694, read in full) delivers the correction that reframes
+everything since round 40. **I had been attacking the wrong thing, and the file said so
+in §2, in a section I did not read.**
+
+**★ §2, VERBATIM:**
+
+> **⚠️ "`N^{1/5}` IS A RECORD *UPPER* BOUND, NOT A PROVEN FLOOR. Do not ever write
+> "deterministic factoring is stuck at `1/5`" as if it were a lower bound.**"
+> A Crossref + arXiv + full-text sweep *"found **no lower bound of any kind**."* The
+> correct category is *"no confirmed lower bound found"* — **and that is the global
+> state of the art: "no unconditional superpolynomial lower bound is known for
+> factoring in *any* model."**
+
+**⇒ THEREFORE MY CENSUS (§8.0–§8.15) DOES NOT SAY WHAT I SAID IT SAID.** I built an
+elaborate proof that *"inside §5's taxonomy there is no room between `N^{1/5}$ and
+polynomial time."* **But the correct statement is narrower and weaker: there is no
+room *within the Lehman+BSGS family*.** `1/5$ is a **record**, not a barrier. The
+absence of a route inside one family is **not** evidence about the exponent.
+
+**★★ AND §5c IS BLUNTER: "There is no citable `Ω(√N)` generic factoring theorem"**
+(Shoup's `Ω(√q)$ is for DLP, and *"factoring is not a group problem, so this bound does
+not transfer"*); Aggarwal–Maurer prove **no factoring lower bound at all** in the
+generic ring model — factoring is a **trivial loop** there. The missing genuine
+superpolynomial generic-model lower bound is Damgård–Koprowski (EUROCRYPT 2002) and
+Altmann–Jager–Rupp — *"both are cited for scope, neither yields a factoring lower
+bound."*
+
+**★★★ AND §2/§4c NAME THE LIVE THREAD THAT IS **NOT** A FLOOR PROBLEM — and that I
+have also never worked on:**
+
+> **"The meaningful target is `N^{1/5−ε}` for fixed `ε > 0$."** Gu–Martin verbatim:
+> *"nobody has found an algorithm that determines whether a positive integer `N` is
+> squarefree or not that is **significantly faster than factoring `N`**."* And the
+> quantified soft target that survives: **"a *relative `o(1)`-accurate upper bound*
+> on `A` — even merely a lower bound on `Δ = G − A` — suffices… exactness is not
+> needed; sub-linear additive accuracy is enough."**
+
+**⇒ AND THE §5a-bis CORRECTION, WHICH IS THE SHARPEST LIVE METHOD THREAD IN THE
+FILE, AND WHICH I ALSO NEVER TOUCHED:**
+
+> **"Every kill family in this survey is a `range` kill… The `cost` axis is
+> untouched, and it is where surviving classical headroom actually is."** The design
+> target `(C)$: **a primitive whose *cost* — not whose output — depends on `p`, and
+> whose worst-case cost over all `n`-bit semiprimes beats `L[1/3, 1.9018836]` with no
+> input-dependent precondition.** And the correction that **reopened it**: the
+> bisection that closed `(C)$ *"is itself false"* — **ECM is `p`-coupled and
+> subexponential** — so **"the conclusion that `(C)$ is closed is withdrawn with it."**
+> **"What remains open is narrower and sharper: can a *smoothness-coupled* channel
+> drive its exponent below `1/3`? That is horn 3."** And horn 3 is **inhabited**:
+> **ECM beats NFS below `n ≈ 593$ bits.**
+
+**★ AND THE SEVEN LIVE, METHOD-SHAPED THREADS §§1–6 NAME, NONE OF WHICH I WORKED:**
+
+| # | live thread | why it is a method, not a barrier |
+|---|---|---|
+| 1 | **`N^{1/6+o(1)}$** (Harvey's own target) | needs an element of order `≳ N^{1/3}` **and** to break the `r`-floor |
+| 2 | **horn 3** | can a smoothness-coupled channel beat `1/3$`? ECM already does below 593 bits |
+| 3 | **the `cost` axis `(C)$** | make *cost* depend on `p$ with a worst-case guarantee; "the only place a method can be asymptotically better than NFS while every output stays a boring function of `N$" |
+| 4 | **`o(1)`-accurate upper bound on `A(k,N)$`** | feeds Gu–Martin Cor. 4; exactness not needed |
+| 5 | **partial-key: the `n/4$ wall** | "not crossed in ~30 years"; the zone between Coppersmith's ½-of-`p$ and the information floor *"is wide open"*; "a wall of *method, not information*" |
+| 6 | **the MNS second-secret problem** | *"It is open how to recover `k` efficiently given only bits of `d_p`"* |
+| 7 | **GNFS arity** | "an open conjecture, **not an established negative**"; **Pierrot ANTS XI 2015 measured the constant as UNIMODAL with an interior optimum at `c_v ≈ 0.198$, final constant `2.156`** — *"arity is a balanced parameter with a turning point, not a monotone dial."* |
+
+**⇒ AND THE HONEST VERDICT ON MY OWN LAST 45 ROUNDS.** I spent them building a census
+of the `1/5$ pipeline — **which §2 says is a record, not a barrier**, and which
+§5c says has **no known lower bound of any kind**. The census is a correct result
+about **one family**. **It is not a result about factoring**, and I presented it as
+one for forty rounds. **That is the deepest instance of the attention failure in this
+file, and it is worse than the eight re-derivations: those repeated existing results,
+this one misread an explicit warning about its own scope.**
+
+**⇒ SO THE HONEST CORRECTION TO MY CLOSURE IS: there is no closed frontier. There are
+seven live, method-shaped threads in §§1–6, all of them recorded, none of them
+worked, and the `1/5$ census constrains none of them.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
