@@ -10,7 +10,7 @@ the deterministic-family results in `SquareDiff.lean` (10 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
 `HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (28 thms) and `OrderLCM.lean`
 (6 thms).
-**⚠️ TEN claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter). §7-undecuples-XXXI closes the last route by CIRCULARITY** — see §7-ter (the
+**⚠️ ELEVEN claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter). §7-undecuples-XXXI closes the last route by CIRCULARITY** — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published), §7-sextuples (the
 "sweep all multipliers" method was **not** strictly dominating — it is subsumed by
@@ -6146,6 +6146,64 @@ say this.**
 `poly(N)`; the `A − B$ route is not merely unproved but **provably equivalent to
 factoring** by rule (7); the only surviving route is a `poly(lg N)$ evaluation of the
 cusp/newform count alone — open, and the single question this project has left.*
+
+---
+
+### 7-undecuples-LVII. ⚠️⚠️⚠️ ROUND 56's SYNTHESIS IS **WRONG** — read Gu–Martin, corrected by rule (5)
+
+I downloaded **arXiv:1709.02411** (15pp) and read pp. 3–6. **§7-undecuples-LVI is
+retracted.** Its central claim — *"`A(k,N) − B(k,N)$ is the Eisenstein dimension
+`E(k,N) = Σ_{d|N}σ_{k-1}(d)$"* — is **not what the paper says**, and the error
+reverses the conclusion.
+
+**WHAT GU–MARTIN ACTUALLY DEFINE (verbatim).**
+
+> **Def. 6:** `B(k,N)$` = *"the dimension of the space of weight-`k` **newforms** on
+> `Γ₀(N)`."*
+> **Def. 7 (eq. 1):** `H(k,N) = G(k,N) − B(k,1) = G(k,N) − ( (k−7)/12 + c₂(k) + c₃(k) + δ₂(k) )`,
+> *"where `G(k,N)$ is as in Definition 2, **note that `H(k,N)$ can be computed
+> extremely rapidly, even without knowing the factorization of `N`.**"*
+> **Def. 13:** *"In particular, `s₀*(N) = ν*∞(N) = 1` **when `N` is squarefree**."*
+> **Prop. 15:** `A(k,N) = (k−1)/12 · N·s₀*(N) − ½·ν*∞(N) + c₂(k)ν′₂(N) + c₃(k)ν′₃(N)`.
+
+**⇒ THE CORRECTION, AND IT IS THE OPPOSITE OF WHAT I SAID.** For **squarefree** `N`
+(which is the whole case of interest), `s₀*(N) = ν*∞(N) = 1$, so
+
+> **`A(k,N) = (k−1)N/12 − ½ + c₂(k)ν′₂(N) + c₃(k)ν′₃(N)`.**
+
+**The leading term is `N` itself — a quantity we already know. `A(k,N)$ carries
+essentially NO `p+q$ information, and `A − B$ carries none either.** So:
+
+* **"`A − B$ is `E(2,N) = σ₁$ and determines `p+q$" — FALSE.** `A − B$ is a function
+  of `N$ alone.
+* **Rule (7) does NOT apply to `A` or to `A − B`.** They are the *trivial* kind of
+  aggregate — the kind §7-undecuples-LV said there is only one of, and it is these.
+* **The determining aggregate in Gu–Martin is `B(k,N)$ ALONE** — the newform
+  dimension — which is precisely the quantity that is hard.
+
+**⇒ AND THIS SHARPENS §4c CORRECTLY, INSTEAD OF REVERSING IT.** §4c says the
+recipe is **"2 `A$ + 1 `B$"** and that "`A$ gives a squarefreeness test, not
+factorization." **The paper confirms both**: `A` is essentially `G` (no factor
+information), so the two `A$-values in Theorem 10 are free, and **Theorem 10 reduces
+to "`B(k,N)$ alone factors `N$."**
+
+> **★ THEREFORE THE ONE PRECISE OPEN QUESTION, NOW VERIFIED AGAINST THE SOURCE:
+> _Is `B(k,N)$ computable in `poly(lg N)$ without factoring?_**
+> **Yes ⟹ `N$ factors in probabilistic polynomial time** (Theorem 10). No known
+> method is `poly(log N)$: §4c's dimension argument gives `~N$ for every classical
+> route, and — as §4c already cautions — **that is not a lower bound.**
+
+**⚠️ THE HONEST RECORD.** Round 56 announced a "synthesis" connecting Gu–Martin, my
+`σ₁$, and rule (7), and **built it on a formula I had not checked.** Reading the
+paper took one tool call and killed it. **That is the fifth time in this file that a
+claim I was about to build on failed the moment I actually read the source** (the
+others: PIB, batched-GCD, chirp-z, and the `σ₁`-is-`p+q$ retraction). **Rule (5) is
+not advice — it is the single highest-yield practice in this entire project, and I
+should have applied it to Gu–Martin before writing round 56 rather than after.**
+
+**⇒ AND THE GOOD NEWS IS PRECISE: primitive (3) has now actually been read, its
+machinery recorded, and its open question identified correctly** — `B(k,N)$ in
+poly(log N)?` — **which is more than any of rounds 32–56 could say about it.**
 
 ---
 
