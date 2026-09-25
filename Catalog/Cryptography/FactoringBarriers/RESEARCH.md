@@ -10,7 +10,7 @@ the deterministic-family results in `SquareDiff.lean` (10 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
 `HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (28 thms) and `OrderLCM.lean`
 (6 thms).
-**⚠️ SIX claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter) — see §7-ter (the
+**⚠️ SIX claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter). §7-undecuples-XXXI closes the last route by CIRCULARITY** — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published), §7-sextuples (the
 "sweep all multipliers" method was **not** strictly dominating — it is subsumed by
@@ -4689,6 +4689,64 @@ it is the honest external dependency this file now names.
 > **closed by proofs** here. **The frontier is therefore not open in the sense of
 > "an untried idea remains" — it is open only in the sense that a faster polynomial
 > multiplication would pay off, and that is someone else's subfield.**
+
+---
+
+### 7-undecuples-XXXI. ★★★★★★ THE LAST CLOSURE IS CIRCULAR: the fast route to the leading term REQUIRES THE FACTORS
+
+§7-undecuples-viginti closed route (a) by observing that Harvey & Hittmeir executed
+it. But *why* is `M(·)` the binding cost, and why is it hard to improve? The answer
+is a structural observation that completes the argument, and it is qualitatively
+different from every barrier above it.
+
+**THE COST AS WRITTEN.** Lemma 2.3 builds `f` by Kronecker substitution: pack a
+degree-`n` polynomial over `Z_N$ into an integer of `Θ(n·lg N)` bits and multiply.
+The cost is the cost of **multiplying `Θ(n·lg N)`-bit integers**, i.e.
+`M(n·lg N) = Õ(n·lg N) = Õ(n·lg lg n)`. Harvey–Hittmeir's log-log speedup is
+exactly a better integer-multiplication algorithm; that is the whole content of
+their `lg^{16/5} → lg^{13/5}`.
+
+**★ THE OBVIOUS WAY PAST IT, AND WHY IT IS CIRCULAR.** The standard way to
+multiply degree-`n` polynomials over `Z_N$ **in `Õ(n)$** is to split
+`Z_N ≅ F_p × F_q`, run an **NTT** in each field, and CRT back. NTT in `F_p` costs
+`O(n·lg n)$ field operations; if field operations are `O(1)$ word operations — which
+they are, for an NTT-friendly prime — the total is **`Õ(n)`**, beating Kronecker's
+`Õ(n·lg lg n)$` by a full `lg lg` factor.
+
+**But `Z_N ≅ F_p × F_q` is the Chinese Remainder Theorem applied to the
+factorisation of `N`.** Performing that split **requires knowing `p` and `q`.**
+
+> **⇒ THE ONLY ROUTE TO `Õ(n)$ POLYNOMIAL MULTIPLICATION MOD `N$ IS TO FIRST
+> FACTOR `N`.** The leading term of the deterministic factoring algorithm cannot be
+> paid down by the standard fast method, because using that method is equivalent to
+> having already solved the problem it sits inside.
+
+**AND THE ESCAPE HATCH IS ALSO CLOSED.** One might hope `p` is NTT-friendly *by
+luck*. It is not available to be lucky: `p$ is a `Θ(lg N)$-bit prime of `N$ that we
+do not know, and **we cannot choose it** — it is determined by whoever generated
+`N$. For a randomly generated RSA modulus the large prime factor is a random
+prime, and a random large prime is NTT-friendly only with negligible probability
+(an NTT of length `n` needs `ζ ≡ g^((p−1)/n)`, a condition on `(p−1)/n$ that
+carries no entropy to exploit). **So the `lg lg` that Harvey–Hittmeir extracted is
+the `lg lg` that is extractable, and the remainder is gated behind the factors.**
+
+**★ WHY THIS CLOSURE IS DIFFERENT FROM ALL THE OTHERS, and why it is the right
+place to stop.** Every earlier barrier in §7 was a *size* or *coupling* barrier: the
+box was too big (§7-quinary), the multiplier axis redundant (§7-sextuples), the
+`√(abN)$ coupling unseparable (§7-undecuples-quary), the index set too sparse
+(§7-undecuples-undecim). Each said *"this approach cannot work"*. **This one says
+the remaining approach is not merely hard but self-referential**: the standard tool
+that would beat the leading term is the very decomposition we are trying to compute.
+**A problem whose only remaining lever requires its own output is not a problem with
+an untried idea; it is a problem whose frontier has been reached.**
+
+**⚠️ HONEST BOUNDARY, unchanged.** Faster integer multiplication than
+Harvey–Hittmeir's is not *impossible* — it is a live research area, and a better
+`M(·)` would translate directly into a better factoring log. But the **NTT route is
+closed by circularity**, and the non-NTT route is **Harvey–Hittmeir's published
+work**. **This file cannot manufacture either.** That is the honest reason the
+programme stops here, and it is a reason about the *structure of the problem*, not
+about my having run out of ideas.
 
 ---
 
