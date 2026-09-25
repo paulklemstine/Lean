@@ -103,6 +103,77 @@ the deterministic-family results in `SquareDiff.lean` (10 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
 `HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (28 thms) and `OrderLCM.lean`
 (6 thms).
+
+---
+
+## ■ ROUND 33–38 ADDENDUM (2026-09-25) — WHAT CHANGED, AND THE CORRECTED FRONTIER
+
+Rounds 33–38 ran a gated pipeline (hunt → refute on two lenses → sympy experiment →
+adversarial audit) and posted 18 papers to `paulklemstine/lean` (`approved-direction`, #417–#434).
+**Still zero new factoring methods; the deterministic `N^{1/5}` frontier is UNCHANGED.** But
+the record's own claims were materially corrected. The load-bearing changes:
+
+1. **★ The UMW (2511.10851) arithmetic-progression door is REFUTED.** **arXiv:2608.06681**
+   (He & Sahai) proves unconditionally that an n-divisor AP of height `log H = o(√n)` needs
+   length `≥ (√(8/27)−o(1))·n^{3/4}/√(log n)`, so the AP version is **false whenever
+   `α<1/2, β<3/8` — in particular at `(1/3,1/3)`** (absent from this record before). **Scope:
+   1-D only** — Remark 4.2 notes AP⇒Strong has *no converse* and the at-most-one-intersection
+   step fails for rank-2 GAPs, so the **live open content is RANK-2 additive separability**
+   (realize `n^{2/3}` of prime mass as `s_a−t_b` from two `n^{1/3}`-sets, overdetermined by
+   `n^{1/3}`). The counting constraint is `α ≥ 1−2β` (**not** `α+β ≤ 1`; at `(1/3,1/3)` it is
+   exactly zero slack). **Correction: the campaign has NOT shown `1/6` unreachable** — an
+   earlier round-36 claim to that effect was a re-filed retraction.
+
+2. **★ The deterministic `N^{1/5}` barrier is MOTIF-INTRINSIC**, re-derived three independent
+   ways: a **slack-constraint lemma** (a falling hypothesis moves an exponent only if its
+   constraint is *active* at the optimum — the order-finding collapse is slack by an unbounded
+   `lg^0.8 N`, so arXiv:2601.11131 cannot move `1/5`); a **delete-a-term/closed-variable
+   screen** (`{interior, r, m}` all co-binding, M-leg exponent-redundant, m-leg closed by
+   output-counting + injectivity); and an **add-a-floor/motif-exhaustion** argument. In the
+   faithful model (Harvey Alg 4.3 forces `M=⌈(N/r)^{1/2}⌉`) the **interior and m-leg are
+   SLACK** — `min max{(N/r)^{1/4}, r} = N^{1/5}` with both deleted.
+
+3. **★ The record-holder carries NO smoothness term.** Harvey/Lehman+BSGS `N^{1/5}` has "no
+   smoothness of any group order, no cycle collision, no lattice" (line 2288). **Therefore
+   smoothness pricing — however rigorous — prices terms the OTHER (ECM/NFS) algorithms pay,
+   not the deterministic barrier.** This is why rounds 37–38 could produce proved pricing
+   results without touching `1/5`.
+
+4. **★ The smoothness gap is probed and CONFIRMED DEEP, and the record's rhetoric DOWNGRADED.**
+   The `N^{1/5}` record admits "no lower bound of any kind" (321/7538/7674). Round 38 produced
+   a **real but LOCALIZING** result (#432): the ECM stage-1 identity
+   `Σ_{m≤X} gcd(m,k)/m = Σ_{d|k}(φ(d)/d)·H_{⌊X/d⌋}` is **exact and axiom-free** (verified
+   independently), **but** the price `curves ≳ X/(1.0828·ln B)` is **CONDITIONAL on group
+   orders being uniform in the Hasse window — the ECM random assumption, not a theorem** (rule
+   6). It **localizes** the ECM heuristic to one unproved input rather than removing it.
+   **The record's line-6685 claim that the density barrier is "absolute … for any method, in
+   any sampling or inspection model" must be read as CONJECTURED-absolute** — its necessary
+   ingredient (an unconditional *upper* bound `Ψ_F(x,x^{1/u}) ≤ C·x·∏ρ(d_i u)` for the
+   structured forms `F=t²−N` (QS, u≈4–6) and the NFS linear form (u=7.8…25.6)) **does not
+   exist**; everything is bounded *below* only. (The record's own body at ~6693 already calls
+   the structured case CONJECTURAL — Greg Martin's conjecture — so the 6685 headline is the
+   over-claim to read with care.) A **proved** bound on Dickman's function (arXiv:2606.07785,
+   Weingartner; relerr `<0.005/u²`, u≥5) pins the *constant* but not the ρ→Ψ_F passage.
+
+5. **Pythagorean/Berggren trees: dead by THEOREM, model-free** (#429). New sound facts:
+   `det(word)=±1` for every word (0 bits) and `max|W|=(3+2√2)^L/2` EXACTLY (certifying
+   `jointSpectralRadius(Berggren)=ρ(M₂)`; the first bound free of distributional assumptions).
+   The word-search cost floor `Y^{0.6232}` assumed brute-force-optimal search (meet-in-the-middle
+   gives `Y^{0.3116}`), and the CF-period branch re-runs `NegativeResults.lean` rows 3/21.
+
+6. **The Galois/Frobenius non-abelian side-channel family is CLOSED three ways** (abelianization
+   cap `I(coset;T)≤log₂[G:G']`; exact-zero which-factor wall; Artin/torsor no-pruning) and is
+   the fifth primitive's **GHOST** — its mechanisms land on existing primitives (1)/(4), so the
+   census is **coverage-closed**, not amended. (A new reversal: `semiprime_reversal`, D₄
+   1.43 bits > S₄ 1 bit; extended by AGL(1,8), whose larger abelianization `C₇` leaks the
+   *least* — 0.114 bits, 4.1% of cap.)
+
+**Discipline, all earned by retraction** (each paper carries its errata): never cite a source
+unopened; name the quantity (a mechanism and its target must act on the SAME quantity — the
+most-violated rule); a *proved* bound can be real yet **price the wrong direction** (a lower
+bound on smooth *supply* makes factoring easier); re-cost against the largest term; **no
+Dickman number enters without certified cross-validation** (hand-rolled solvers destabilise
+past u≈3). A kill is a success.
 **⚠️ ELEVEN claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter). §7-undecuples-XXXI closes the last route by CIRCULARITY** — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published), §7-sextuples (the
@@ -6682,10 +6753,26 @@ defect of §8.3 stands while its consequence does not.
 **VERDICT: THE FIFTH SLOT IS OCCUPIED, NOT OPEN.** No method collects `B$-smooth
 values in `poly(lg N)$ time, rigorously or heuristically.
 
-> **The density barrier is absolute.** Collecting `B$-smooth values needs
+> **The density barrier is (conjectured-)absolute.** Collecting `B$-smooth values needs
 > `≍ 1/ρ(u) = exp((1+o(1))·√(lg N·lg lg N))` candidates — **subexponential in
 > `lg N$ but SUPERPOLYNOMIAL, for any method, in any sampling or inspection model.**
 > The record is not a gap in the technique; **it is the `L[1/2]$ barrier itself.**
+>
+> **⚠️ CORRECTION (round 38, 2026-09-25).** The words "**for any method, in any sampling or
+> inspection model**" are a **theorem-shaped claim whose necessary ingredient does not exist**.
+> The `1/ρ(u)` density is proved for **all** integers `≤x` (Dickman/de Bruijn; a proved relative
+> bound `<0.005/u²`, u≥5, is arXiv:2606.07785), but the algorithms that pay this term sample a
+> **STRUCTURED** sequence — smooth values of `F=t²−N` (QS) and the NFS linear form — and
+> **there is no unconditional upper bound** on their smooth-value count at the operating
+> points (QS `u≈4–6`; NFS `u=7.8/10.4/14.0/18.9/25.6` at 512–8192 bits); that is Greg
+> Martin's conjecture, and passing ambient density to a structured image needs an unmeasured
+> equidistribution step. Everything is bounded **below** (u<1.2 unconditionally, <2 under
+> Bateman–Horn-uniformity); **nothing is bounded above at those u.** So read "absolute" as
+> **CONJECTURED-absolute**. The record's own structured case (below) already says CONJECTURAL;
+> this headline must be read with the same care. **The exact open lemma:** prove an
+> unconditional `Ψ_F(x,x^{1/u}) ≤ C·x·∏ρ(d_i u)` (or `≤ x^{1−δ}`) for `F=t²−N` and the NFS
+> linear form. Note also (round 38) the `N^{1/5}$ deterministic record carries **no smoothness
+> term at all**, so this barrier prices the *ECM/NFS* methods, not Harvey/Lehman+BSGS.
 
 **AND THE TWO CASES SPLIT, which §8.3 conflated:**
 
