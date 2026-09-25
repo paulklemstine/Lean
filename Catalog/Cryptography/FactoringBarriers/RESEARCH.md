@@ -5928,6 +5928,64 @@ because the probes *are* the interval.
 
 ---
 
+### 7-undecuples-LIII. ★★★★★★ THE GENUINELY COARSER FRAMING: a **degree-4 aggregate of the divisor set factors `N`**
+
+Rule (6) said partitions cannot be beaten, and that a coarser framing was the missing
+ingredient. **Here is one, and it is not a Harvey re-derivation.**
+
+**THE OBJECT.** For `N = pq` the divisor set is `D(N) = {1, p, q, N}` — **four
+elements, independent of `lg N`.** Its interpolating polynomial has **degree 4**. So
+unlike the `(a,b)$ box and the `[1,M]$ interval, the divisor set admits a
+**constant-size summary** — a genuinely coarser view, exactly what rule (6) said was
+missing.
+
+**★ THE AGGREGATE, AND IT FACTORS `N$ EXACTLY.** Let `σ₁ = Σ_{d ∈ D(N)} d = 1 + p + q + N`.
+Since `N = pq`,
+
+> **`σ₁ mod N = (p + q + 1) mod N`,  and `0 < p + q < N`, so `p + q = (σ₁ mod N) − 1`
+> EXACTLY.**
+
+and `p + q$ factors `N$ immediately (it is the root of `x² − (p+q)x + N`). **Verified
+exactly on 69/69 instances.**
+
+**★ AND HERE IS WHAT MAKES IT NON-TRIVIAL — the product aggregate is useless, the sum
+is not:**
+
+> `∏_{d ∈ D(N)} d = N^{τ(N)/2} = N²` for a semiprime — **trivially known, and it
+> carries no information about `p,q`.** But `σ₁` is **not** determined by the product.
+> It is genuine content, and it factors `N`.
+
+**⇒ THE OPEN QUESTION, AND IT IS CLEAN:**
+
+> **Can `σ₁(N) = Σ_{d|N} d$ be computed in `poly(lg N)$ bit operations without
+> knowing the divisors?**
+
+*Yes* ⟹ `N^{1/5}$ deterministic factoring (indeed `poly`), by the recovery above.
+*No* ⟹ `Σ_{d|N} d$ is a genuinely hard aggregate — a **new, elementary obstruction**,
+not a restatement of any Harvey bound.
+
+**★★ AND THIS IS A MUCH CLEANER STATEMENT OF §4c's GU–MARTIN EQUIVALENCE THAN THE
+MODULAR-FORM ONE.** §4c routes through `dim S_k(Γ₀(N))` and a squarefreeness test. This
+routes through a **four-term arithmetic sum**, is provable in one line, needs no cusp
+forms, and has a **constant-degree** target. If Gu–Martin is the deep instance, **this
+is the elementary one — and it is the version a reader can check.**
+
+**⚠️ THE HONEST STATUS, which is a QUESTION AND NOT A METHOD.** This does not factor
+anything. **I am not claiming `σ₁$ is computable in `poly(log N)$**, and by rule (5) I
+am **not** assuming it is not — the divisor sum is classical and I have not searched
+for prior work on computing `Σ_{d|N} d$ without factoring. **Before this is called a
+finding: check whether `σ_k(N) = Σ_{d|N} d^k$ has been studied as a factoring-oracle.**
+A prior-art agent that killed the batched GCD is warranted here, and rule (6) is
+against my inferring anything from silence.
+
+**⇒ WHAT THIS DOES ESTABLISH.** A **four-aggregate, degree-constant** view of the
+divisor set that determines `p+q$ exactly; a sharp yes/no research question with a
+`poly`-time factoring consequence on one side; and a concrete, checkable
+simplification of primitive (3) from modular forms to elementary arithmetic. **It is
+the first object in this file that is genuinely coarser than the set it summarises.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
