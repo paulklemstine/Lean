@@ -10,7 +10,7 @@ the deterministic-family results in `SquareDiff.lean` (10 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
 `HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (28 thms) and `OrderLCM.lean`
 (6 thms).
-**⚠️ SIX claims in this file were retracted on 2026-09-24 — see §7-ter (the
+**⚠️ SIX claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter) — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published), §7-sextuples (the
 "sweep all multipliers" method was **not** strictly dominating — it is subsumed by
@@ -4644,6 +4644,51 @@ having. But it is **an observation, not a method.** It yields no improvement, an
 multiplication" and (c) "reduce `n` below `s`" already closed in
 §7-undecuples-decem. **So the leading term `s·lg³N` now has no known attack, and
 this file has no route to one.**
+
+---
+
+### 7-undecuples-viginti. ❌❌ ROUTE (a) IS ALSO CLOSED — BY THE AUTHORS THEMSELVES. The exhaustion is complete.
+
+§7-undecuples-decem listed three routes on the leading term `s·lg³N`:
+
+| route | status |
+|---|---|
+| **(a)** beat fast polynomial multiplication | **❌ CLOSED — Harvey & Hittmeir did it** |
+| **(b)** exploit the sub-`q`-Pochhammer structure | ❌ closed, §7-undecuples-undecim (index set sparse by `lg N`) |
+| **(c)** reduce `n` below `s` | ❌ closed, Fact 1 of §7-undecuples-decem (the `m` test points are distinct mod `p`) |
+
+**★ ROUTE (a) IS NOT OPEN. IT IS HARVEY & HITTMEIR'S OWN PAPER.**
+**arXiv:2105.11105, *"A log-log speedup for exponent one-fifth deterministic integer
+factorisation"*, Math. Comp. 91 (2022) 1367–1379.** The `lg³N` sitting in Lemma 2.3's
+product tree is *precisely* the per-multiplication cost that the log-log speedup
+attacks — which is why the improvement shows up as
+**`lg^{16/5}N → lg^{13/5}N`** at fixed `N^{1/5}`. **The two best people on this
+problem took route (a), executed it, and published the result in 2022.** (GFHP,
+arXiv:2512.19076, then took the *balanced case* of the same lever to `lg^{13/5}`.)
+
+**⇒ THE EXHAUSTION ARGUMENT IS NOW COMPLETE AND HAS NO GAP.** The leading term of
+the deterministic `N^{1/5}` algorithm is the product tree of Lemma 2.3; it is
+already at the fast-multiplication bound; the only known way past that bound is
+Harvey–Hittmeir's log-log speedup, already published; and the two structural
+exploitations of the match set (§7-undecuples-undecim) are closed by proofs. **There
+is no third route visible from the mathematics of the algorithm itself.**
+
+**⚠️ WHAT THIS DOES AND DOES NOT ESTABLISH — the precise boundary.** It does **not**
+show that the term cannot be improved. It shows that **three named attacks fail**, and
+that the most promising one was already executed by the authors. Improving fast
+polynomial multiplication *beyond* the log-log bound remains open in general — but
+that is a **polynomial-multiplication research problem, not a factoring problem**, and
+it is the honest external dependency this file now names.
+
+> **★ THE FINAL, HONEST SUMMARY OF THE DETERMINISTIC `1/5` PROGRAMME.** The
+> exponent `1/5` is the **exact minimax** of Harvey's cost function
+> (`HarveyBalance.lean`, proved both directions). Its leading term is **100%**
+> Algorithm 4.1's product tree (§7-undecuples-novem). That product tree is at the
+> fast-multiplication bound; the only improvement past it is **Harvey & Hittmeir's
+> published log-log speedup**; and the two structural attacks on the match set are
+> **closed by proofs** here. **The frontier is therefore not open in the sense of
+> "an untried idea remains" — it is open only in the sense that a faster polynomial
+> multiplication would pay off, and that is someone else's subfield.**
 
 ---
 
