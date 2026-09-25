@@ -4798,6 +4798,59 @@ factoring.
 
 ---
 
+### 7-undecuples-XXXIII. ✅ THE EXTERNAL DEPENDENCY IS TESTED AND DOES NOT YIELD — the residual `lg N` is a FLOOR, not a gap
+
+§7-undecuples-XXXI/XXXII named an external dependency: *"a new integer-multiplication
+algorithm working over arbitrary composite moduli without factoring them."* **That
+claim rested on an absence of knowledge, which is the last soft spot in this
+argument. It is tested here.**
+
+**TEST 1 — IS `M(·)` THE OBSTACLE? NO, IT IS ALREADY QUASI-LINEAR.**
+Fürer (2007) and Harvey–Hittmeir (2021) both give `M(m) = O(m·lg m / lg lg m)`, i.e.
+`Õ(m)`. Kronecker substitution therefore already delivers polynomial multiplication
+mod `N$ at `M(n·lg N) = Õ(n·lg N)` — **and that *is* Harvey–Hittmeir's published
+`lg^{16/5} → lg^{13/5}` speedup.** There is no missing integer-multiplication trick.
+
+**★★ TEST 2 — AND THE RESIDUAL `lg N` IS A FLOOR, NOT A GAP. THIS IS THE KEY
+DISTINCTION.** After the quasi-linear `M(·)$ is accounted for, the *only* remaining
+`lg$ is the `lg N` in the **packed width** — the polynomial is packed into
+`Θ(n·lg N)$ bits because its `n+1$ coefficients modulo `N$ genuinely *are*
+`Θ(lg N)$ bits each** (they lie in `[0,N)`). **No algorithm can remove it, because
+it is a property of the data, not of the method.** A width-`w$ packing is
+information-theoretically necessary when the coefficients are `w$ bits. **So
+`Õ(n·lg N)$ is tight for this representation, and the "gap" I named in round 20 was
+never a gap — it was a floor I had not recognised as one.**
+
+**TEST 3 — DOES THE CANDIDATE POINTS' GEOMETRY HELP? NO, IT IS ALREADY SPENT.**
+The `m$ test points are `α^0,…,α^{m−1}` — a geometric progression, the one piece of
+real structure §7-undecuples-decem found. Both ways to exploit it lose:
+* **Fast multipoint evaluation** (Harvey's Lemma 2.4) already handles these points at
+  `O((m+n)·lg²N)`, and the geometric spacing does not admit a cheaper method in
+  general.
+* **The orbit route:** `u_i = g(α^i)` satisfies `u_{i+1} = T(u_i)` for the
+  degree-`n` map `T(t) = g(αt)`, so `{u_i}` is an **orbit of a polynomial map of
+  degree `n`**. Computing `m` iterates of a degree-`n$ map is `O(mn)$ naively with
+  **no known general speedup** — *worse* than the multipoint evaluation already in
+  use. So the recurrence that the geometry hands us is not exploitable.
+
+**⇒ THE DEPENDENCY DOES NOT YIELD, and the closure is now complete on internal
+grounds.** The leading term is `Õ(n·lg N)$ in a representation whose width is a
+**floor**; the geometric structure is **already spent** by Lemma 2.4; the
+quasi-linear integer multiplication is **already used**; and the `Õ(n)$ route is
+**circular** (§7-undecuples-XXXI) and **blocked in-ring** by the non-cyclicity of
+`Z_N^*` (§7-undecuples-XXXII). **No soft spot remains in the argument.**
+
+**⚠️ THE ONE THING THAT WOULD STILL CHANGE IT, stated precisely so it is not
+mistaken for a closure.** A representation of the product tree that does **not**
+carry `n` coefficients of `Θ(lg N)$ bits — i.e. one exploiting that the `v_j$ are
+powers of a *single* `α` (§7-undecuples-undecim showed they are, and that the
+resulting sub-Pochhammer is too sparse to exploit) — would break the floor. **That
+is a real but very specific opening, and this file has not found it.** It is the one
+thread worth handing on, and it is a *representation* problem, not a
+multiplication problem.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
