@@ -4402,6 +4402,73 @@ on the pair loop or on Algorithm 4.1 that does not fall in the above classes.**
 
 ---
 
+### 7-undecuples-quater. ✅ THE COST ATTRIBUTION, RESOLVED FROM THE PRIMARY TEXT — and it convicts PIB of aiming at a NON-TERM
+
+The blocker in §7-undecuples-ter is now **resolved**, by reading p.11 of
+arXiv:2010.05450 directly. Three exact statements, verbatim:
+
+> **The triple bound (p.11):** `s = O( ( N^{1/2}/(r^{1/2}m) + r ) · lg N )`,
+> where `s` is the number of triples `(a,b,j)`.
+
+> **Step 2a (p.11):** "The number of pairs `(a,b)` examined in Step (2) is
+> `O(r lg r)`. For each pair, in Step (2a) the exponent `aN + b − ⌈(4abN)^{1/2}⌉`
+> lies in `O(N²)` … so `t_{a,b}` may be computed in time `O(M(lg N) lg N)`.
+> Therefore the total cost of computing all of the `t_{a,b}` is
+> **`O((r lg r) M(lg N) lg N) = O(r lg²N·lg lg N)`**."
+
+> **Step 4 (p.11):** "in Step (4) we certainly have `n ≤ s`, as according to
+> Proposition 4.1 the cost of Step (4) is `O(s lg³ N + m lg² N)`."
+
+**★ THE CONSEQUENCE, AND IT IS DECISIVE.** At Harvey's parameters
+`r = ⌈N^{1/5}/lg^{4/5}N⌉`, Step 2a is
+
+> **`N^{1/5}·lg^{6/5}N·lg lg N`  —  which is `Θ(lg N)` BELOW the total
+> `N^{1/5}·lg^{16/5}N`.**
+
+**So the pair loop — the entire target of PIB — is a NON-TERM.** No improvement to
+Step 2a, however perfect, could move the total by more than a `Θ(lg N)` factor in a
+term that is already `lg N` smaller than the answer. **PIB was not merely
+imperfect; it was aimed at the wrong step.**
+
+**★ THIS CORRECTS BOTH PRIOR ACCOUNTS, INCLUDING MINE.** The adversarial agent
+said the `r$-term is not the bottleneck because Steps 3–4 scale with `s` — **the
+right conclusion, the wrong reason** (it put Step 4 at `s·lg³N = N^{1/5}lg⁵N`, which
+contradicts Prop. 4.3). I said in §7-undecuples-bis that the `r$-term *is* a
+balanced bottleneck and withdrew the agent's point — **also the right conclusion
+about the balance, but I located the `r$ in the wrong step.** The truth is
+sharper than either: **the `r$ in Prop. 4.3's leading bracket is the `j$-work
+`N^{1/2}/(r^{1/2}m)` together with `s` (via Step 4), not Step 2a's pair loop.**
+Step 2a is `r·lg²N·lg lg N$ and is swamped.
+
+**⇒ THE REAL TARGET, finally stated correctly.** The leading term is
+`s·lg³N` (Step 4's product tree, with `n ≤ s`) together with the `j`-giant-step
+work `O(s·M(lg N))` (Step 2b) — **both driven by `s`, the number of triples**,
+not by the pair count. So the correct design rule is the one the agent reached by
+accident: **attack `s`, i.e. the `(a,b,j)` triple count, and Algorithm 4.1's
+product tree over the matched values** — *not* the enumeration of pairs.
+
+**AND THE ONE BOUND THAT WOULD CHANGE THE BALANCE.** Step 4 costs `O(n·lg³N)` in
+the number of *matched* values `n`, and Harvey only knows `n ≤ s`. But the matched
+`v_{a,b,j}` are **distinct** elements of `Z_N^*`, each equal to some `α^i` with
+`i < m`, and the `α^i` are distinct because `ord_N(α) ≥ m`. **Hence `n ≤ m`.**
+Since `m = N^{1/5}lg^{6/5}N` and `s = (N^{1/5}+N^{1/5}/lg^{4/5}N)lg N
+= N^{1/5}lg N`, we have **`m < s`** (since `6/5 > 1`) — so **`n ≤ m` is strictly
+tighter than the `n ≤ s` Harvey uses.** **Whether that tightening is exploitable is
+the open question, and it is now a well-posed one:** the `s`-term is balanced
+against `r$ at `(…)lg⁴N`, so replacing `s$ by `m$ in Step 4's cost alone does not
+move the `N$-exponent, but it does identify **Algorithm 4.1's product tree as the
+single step that the leading term is made of.**
+
+**★ AND THE TRAP, ONE LAST TIME, NOW WITH THE EXACT NUMBER.** PIB's own numerical
+"verification" measured savings of `2.91× → 3.71×` on the pair loop — and that loop
+is `Θ(lg N)` below the total. **A real, exactly-verified, monotone improvement to
+a non-term is worth nothing**, and no amount of measuring the improved step would
+have revealed that. **The missing check was not a cost check but a MAGNITUDE
+check: what fraction of the TOTAL does the step I am optimising actually carry?**
+That is now the third rule, and it is the one both prior attempts omitted.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
