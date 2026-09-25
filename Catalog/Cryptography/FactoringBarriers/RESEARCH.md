@@ -4982,6 +4982,70 @@ prediction (`lg^{16/5} → lg³N`) rather than a vague hope.
 
 ---
 
+### 7-undecuples-XXXVI. ❌ THE PREDICTION IS FALSIFIED — and the reason corrects §7-undecuples-XXXV's own target
+
+§7-undecuples-XXXV left one open and testable: *does the large-order `α$ gain reach
+the total (`lg^{16/5} → lg³N`)?* **Answered: no. The prediction is false, and the
+reason is a structural identity that also corrects what round 25 was aiming at.**
+
+**★ THE IDENTITY THAT SETTLES IT.** Substituting Harvey's parameters into
+`s = (N^{1/2}/(r^{1/2}·m) + r)·lg N`:
+
+> **`s = N^{1/5}·lg^{1/5}N`  and  `m = N^{1/5}·lg^{6/5}N`,  hence `s = m / lg N`
+> exactly.**
+
+Therefore
+
+> **`s·lg³N  =  m·lg²N`** — **the two are the SAME TERM, not two competing ones.**
+
+**And `m·lg²N = N^{1/5}·lg^{16/5}N` is exactly the total.** So the leading term of
+`O(N^{1/5}lg^{16/5}N)` is **the `m`-driven cost** — the `m$ polynomial evaluations
+(Lemma 2.4's `m`-part) and the `m$ GCDs (Step 3 of Algorithm 4.1) — **not** the
+`n`-driven product tree.
+
+**⇒ WHY ROUND 25'S LEVER CANNOT WORK.** Step 4 is
+`O(n·lg³N + m·lg²N)`. With a maximal-order `α$ we get `n = O(lg N)`, so the first
+term collapses to `O(lg⁴N)$ — a non-term, exactly as designed. **But the second term
+`m·lg²N = N^{1/5}lg^{16/5}N$ remains, and it is irreducible: it is one polynomial
+evaluation and one GCD per baby-step entry, and there are `m = N^{1/5}lg^{6/5}N`
+entries because the table must be that long to disambiguate.** (And by Fact 1 of
+§7-undecuples-decem the `m$ points are distinct mod `p`, so none can be dropped.)
+
+> **`lg^{16/5} → lg³N` IS FALSIFIED. The mechanism of §7-undecuples-XXXV is real and
+> proved; its consequence is nil, because it optimises the `n`-part of a term whose
+> `m`-part is the whole bound.**
+
+**★ AND THE BALANCE RE-OPTIMISED AGAINST THE *TRUE* TERM SET — which confirms
+`1/5` and corrects §7-undecuples-novem's diagnosis.** With
+`cost = max( (N^{1/2}/(r^{1/2}m) + r)·lg⁴N,  m·lg²N,  r·lg³N·lg lg N )`, balancing
+`m·lg²N = r·lg⁴N` gives `m = r·lg²N`; combining with the `N^{1/2}/(r^{1/2}m)` term
+gives
+
+> `r = N^{1/3}/(lg N)²`,  `m = N^{1/3}`,  **`cost = N^{1/3}`** —
+
+**strictly worse than `N^{1/5}`.** So **`1/5` is optimal against the corrected term
+set**, and §7-undecuples-novem's claim that "Step 4's product tree is 100% of the
+leading term" was **right about the step and wrong about the part**: the product tree
+is the `n`-half of a term whose `m`-half dominates it by a factor `lg N`.
+
+**⇒ WHAT THIS CLOSES, precisely.** The last live thread is answered negatively. The
+frontier is now: **`1/5` is the exact minimax, the leading term is `m$ evaluations
+plus `m$ GCDs at a table of provably-required length, and the table length is set by
+the balance.** Every avenue in this file is closed:
+the box (§7-quinary) · the multiplier axis (§7-sextuples) · the reuse balance
+(§7-undecuples-bis) · the order precondition (§7-septuples-ter/-quary) · the
+Lemma 3.1 test (§7-septuples-quary) · free `m$ = Lehman (§7-sextuples-quinary) ·
+the power/root sublattice class (§7-sextuples-quinary) · square-residue and
+`w`-indexed tables (§7-undecuples) · the pair loop = non-term (§7-undecuples-novem) ·
+the match-set attacks (§7-undecuples-decem/-undecim) · log-log speedup =
+Harvey–Hittmeir (§7-undecuples-viginti) · the `Õ(n)$ NTT route = circular and
+non-cyclic (§7-undecuples-XXXI/-XXXII) · the packed width = a floor
+(§7-undecuples-XXXIII) · and **the maximal-order `α$ lever = real but nil**
+(§7-undecuples-XXXV/-XXXVI). **Thirteen closures. No route remains in this file,
+and the final one was closed by a falsified prediction rather than an assumption.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
