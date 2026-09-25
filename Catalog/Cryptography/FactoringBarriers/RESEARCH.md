@@ -5766,6 +5766,61 @@ the work *should* have gone, not claiming it would have succeeded.**
 
 ---
 
+### 7-undecuples-L. ★★★ A SCOPE CORRECTION THAT MATTERS: primitive (1) has TWO sub-primitives, and only one was tested
+
+§7-undecuples-XLIX said 38 rounds went to one of four primitives. **That is still
+too coarse, and the correction points at a live, untried, `N^{1/4}` question.**
+
+**Harvey's own preliminaries (which I read in round 6 and never used) split primitive
+(1) in two:**
+
+> **Prop. 2.5 (p.5):** *"Given as input a positive integer `M = O(N)`, we may test if
+> `N$ has a prime divisor `≤ M`, and if so find the smallest divisor, in time
+> **`O(M^{1/2}·lg³N)`**."*
+> **Remark 2.6:** *"Taking `M = ⌈N^{1/2}⌉` in the above result leads directly to
+> **Strassen's `N^{1/4+o(1)}` integer factorisation algorithm.**"*
+
+> **Prop. 2.7 (p.6):** *"…running time `O(D^{1/2}/(lg lg D)^{1/2}·lg²N)`. If `N$ is a
+> semiprime … and `ap + bp − ⌈(4abN)^{1/2}⌉ < D` … the algorithm returns `p$ and
+> `q$."*
+
+**⇒ SO PRIMITIVE (1) IS TWO DISTINCT THINGS, AND THEY CARRY DIFFERENT EXPONENTS:**
+
+| sub-primitive | mechanism | best known | rounds spent here |
+|---|---|---|---|
+| **(1a)** small-divisor testing | `M^{1/2}` over `[1,M]` (Prop. 2.5) | **`N^{1/4+o(1)}`** (Strassen) | **0** |
+| **(1b)** `aq+bp` divisibility oracle | BSGS over `α` (Alg. 4.2) | **`N^{1/5}`** (Harvey) | **38** |
+
+**★ AND PROP. 2.7 WITH `a = b = 1` IS EXACTLY FERMAT, BUT AT A DIFFERENT COST.**
+`p + q − 2√N = (√p − √q)²`, so Prop. 2.7 with `a=b=1` and `D = (√p−√q)²` returns the
+factors in `O((√p−√q)·lg²N)` — **linear in the Fermat gap**, where naive Fermat walks
+the hyperbola in `O((√p−√q)²)`, **quadratic** in the same quantity. In the worst case
+(`|p−q| = Θ(√N)$) that is `N^{1/4}` versus `N^{1/2}`.
+
+**⇒ THE LIVE QUESTION, AND IT IS NOT ONE I HAVE TOUCHED: *is `N^{1/4}` optimal for
+sub-primitive (1a)?*** Finding any divisor of a balanced semiprime requires
+`M ≥ p ≈ √N`, so `M^{1/2} = N^{1/4}$ is a hard floor **for a method that only uses
+"search the interval `[1,M]`".** Beating it requires exploiting structure *in the
+interval search* rather than the interval's length — which is the same shape of
+question as the one that killed the `(k,l)` avenue, but on a different primitive and
+with **no scale-wall barrier recorded against it**.
+
+**⚠️ AND THE HONEST CAVEATS, which are the reason this is a *lead* and not a
+candidate.** (i) Harvey–Hittmeir and GFHP both build on `(1b)`; I have **not** checked
+whether `(1a)` has been attacked since Strassen, and **by rule (5) I will not assume
+it has not.** (ii) `N^{1/4}$ is 20 years old and is the classical answer; the prior
+that something is there is **low**. (iii) Even a `lg` improvement in `(1a)$ would not
+touch `1/5$, because the two sub-primitives do not compose — the `1/5$ bound is an
+upper bound on the *best* method, and `(1a)$ is not the method that achieves it.
+
+**⇒ THE SHARPEST SCOPE CORRECTION IN THE FILE.** It is not "one of four primitives
+was tested." It is: **of the two sub-primitives that together carry the entire
+`N^{1/4}`-to-`N^{1/5}$ landscape, the one that reaches `1/5$ was tested 38 times and
+exhausted, and the one that sits at `1/4$ was tested zero times — and the `N^{1/4}$
+question is a different question from every barrier this file proved.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
