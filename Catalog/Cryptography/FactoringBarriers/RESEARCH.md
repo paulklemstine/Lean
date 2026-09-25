@@ -6511,6 +6511,75 @@ out of scope.**
 
 ---
 
+### 8.3. ⚠️ ★ A REAL CORRECTION TO §5 ITSELF: the four-primitive taxonomy is INCOMPLETE for subexponential methods
+
+§8.2 closed gap (i) by citing §5's own line 2335. **But testing the taxonomy —
+rather than re-deriving its consequences — finds a genuine defect, and this is the
+first new object in thirty rounds that is not a re-derivation.**
+
+**THE DEFECT.** §5's four primitives are (1) a GCD / divisibility oracle, (2)
+approximating `p$ from partial information, (3) a special algebraic form of `N$`, (4)
+a nontrivial idempotent. **Now place the subexponential methods:**
+
+| method | mechanism | fits §5? |
+|---|---|---|
+| trial division, Fermat, Lehman, SQUFOF, CFRAC, Hart, Pollard ρ/λ/p±1, ECM, Coppersmith-Fermat | GCD / congruence | **(1)** |
+| Coppersmith (small-root, lattice), Wiener, Manger, Franklin–Reiter, Boneh–Durfee | partial information | **(2)** |
+| Lenstra–Pomerance (class groups), Gu–Martin (modular curves) | special algebraic form | **(3)** |
+| CRT projectors | idempotent | **(4)** |
+| **NFS, GNFS, SNFS, Dixon, quadratic sieve, ECM-with-large-`B`** | **collect values with a multiplicative property, then solve a linear system over a factor base** | **★ NONE OF THE FOUR** |
+
+**★ "Collect smooth values in an arithmetic progression and do linear algebra" is
+not a GCD, not partial information, not a special form of `N$ (NFS works on *every*
+`N$), and not an idempotent.** §2 notices the mechanism — *"NFS's factor base is
+precisely a set of smooth values (`a − mb`)"* — and dismisses it as *"not a new
+idea"*, but **§5 never assigns it a primitive slot.** The taxonomy therefore has a
+**fifth slot for every subexponential method**, and §5 claims to be exhaustive.
+
+**⇒ AND THE CENSUS CONSEQUENCE IS FORTUNATELY SMALL, BUT IT MUST BE STATED.** This
+does **not** reopen the beating-`1/5$ question, because the fifth slot is occupied
+by methods that are **already slower**: `L[1/2, 1/2−ε]$ (Lenstra–Pomerance) and
+`exp(Õ(N^{1/3}))$ (NFS/Dixon) both **diverge** from `N^{1/5}$ as `N → ∞`. So the
+scope-completeness conclusion survives intact. **But the correct statement is
+narrower than the one §8.0 gave:**
+
+> **CORRECTED. Within *polynomial-time* classical factoring, §5's four primitives are
+> complete (its only outside primitive is quantum order-finding, §8.2), and there is
+> no room between `N^{1/5}$ and `N^ε$ for any `ε > 0`. §5 is *not* a taxonomy of all
+> classical factoring: it omits the subexponential class, whose shared mechanism
+> (smoothness collection + factor-base linear algebra) sits in none of its four slots
+> and is occupied — but by methods strictly slower than the record.**
+
+**★ AND THE SHARP NEW CONSEQUENCE — the one place the fifth slot could ever matter.**
+The file's own §2 records that NFS's escape from its smoothness bottleneck would be
+*"finding a better smoothness source"* and calls it *"not a new idea."* **It is
+precisely the fifth primitive, and it is the only slot in the whole taxonomy whose
+occupant is *sub*-exponential rather than *super*-exponential-in-`lg N$.** So:
+
+> **The only route in classical factoring that is not already ruled out by `1/5$ is
+> to make smoothness collection *cheap enough* to enter the polynomial-time regime —
+> i.e. to collect `B`-smooth values in an arithmetic progression in time better than
+> the `≈ exp(Θ(u))` that the Dickman/sieve barrier imposes.** That is a **smoothness**
+> problem, not a factoring-primitive problem, and this file has **zero** results in
+> it — every one of its 60+ rounds is about primitives (1)–(4).
+
+**⇒ SO THE HONESTLY OPEN THREAD, AND IT IS FINALLY A *MECHANISM* RATHER THAN A
+RE-BALANCING:** ***is there a method to collect `B`-smooth values in an arithmetic
+progression `a − mb$ faster than the classical sieve?*** This is the one place where a
+genuinely new classical mechanism could enter, and it is **not** one of §5's four, so
+**none of this file's barriers constrain it.** That is a real, specific, unexplored
+opening — and it is a *fifth-slot* opening, not a `1/5$ rebalancing.
+
+**⚠️ LIMITS.** (i) The smoothness barrier is a **survey-level** statement
+(`exp(Θ(u))`, Dickman), not a proof I have made here. (ii) "Faster than the sieve" is
+vague until quantified — the honest form is *"does smoothness collection admit a
+`poly(lg N)$-time method for some `B$ with `log B = Θ(u)` and `u = O(lg N/log lg N)`,
+i.e. the sub-`L[1/2]` regime?"* (iii) **I have not searched the smoothness-sieving
+literature**, and rule (5) applies with full force: §2's *"not a new idea"* is a
+judgement, not a survey, and I must not infer a blank from it.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
