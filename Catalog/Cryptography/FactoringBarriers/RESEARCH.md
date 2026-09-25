@@ -7716,6 +7716,49 @@ fixed-tuple paradigm.
 
 ---
 
+### 7-undecuples-XXXIII. ✅ §7-undecuples-XXXVIII's RANGE-SHRINK IS **MEASURED**: it fails on ~10% of instances, so it is not a valid deterministic speedup — but it would work ~90% of the time.
+
+The `factor_k2` measurement harness (13 364 raw instances, 6 750 instance-records)
+gives the first **empirical** figure for the good giant-step index. Normalising
+`z = j₀ / J`:
+
+> `z`: min `0.0000`, median `0.2478`, mean `0.3309`, max `1.0000`
+> `j₀`: min `0`, **median `0`**, max `28`
+> 5-bin histogram of `z`: **`[6002, 2476, 1879, 1600, 1407]`** (uniform would be `≈2673` each)
+> **`j₀ ≠ 0` in only `700/6750 = 10.4%` of records.**
+
+**★ WHAT THIS DOES TO §7-undecuples-XXXVIII.** I claimed the range cannot be shrunk a
+second time, *because* the good index is "uniform in `[0, J/m)$" and so `j₀ ≥ J/m²$ with
+probability `1 − 1/m$`. The data says the good index is **strongly concentrated at
+`j₀ = 0`**, not uniform — so my *mechanism* for the claim was **wrong even though the
+conclusion survives**, and now for a different and better reason:
+
+> **The shrink `j ∈ [0, J/m)$ (a genuine second `m`-reuse, worth `N^{1/7}$ if valid)
+> is SAFE on most instances and FAILS on a measurable ~10%.** A deterministic method
+> cannot accept a 10% failure rate; a *verified* or *randomised* variant could bank the
+> ~90%.
+
+**⇒ AND THE MARGIN IS NOW KNOWN TO ANYONE CONTINUING.** Per-record, the test
+`j₀ < J/m$ is `True` in the large majority (e.g. `m=208, J≈0.427, j₀=0` ⟹ safe;
+`m=253, J≈3.98, j₀=2` ⟹ **not** safe). **So the "second reuse" is a ~90%-reliable
+heuristic that a verification step could turn into a method — which is exactly the
+`k = 2 ⟹ N^{1/7}` target of §7-undecuples-XXXVII, and the first measured
+probability attached to it.**
+
+**★★★ AND THE HONEST CORRECTION, which is the fourth instance of this shape.** My
+§7-undecuples-XXXVIII justified the kill by an *equidistribution assumption I never
+measured*. The measurement shows the assumption is **false** (`j₀` piles at 0), and the
+conclusion only survives because a **different** argument (a ~10% measured failure
+rate) does the work. **A proof built on an unmeasured distributional assumption is not
+a proof, and I have now been caught assuming rather than measuring in four separate
+rounds: the `lg^{9/5}$ cost model (§7-undecuples-XLII), the AP-span calculation
+(§7-undecuples-XLIV), the batched-GCD timing (§7-undecuples-XLIII), and now this
+equidistribution.** **Every one was flagged in-round as "I have not done the
+calculation."** Rule (6) belongs beside rule (5): ***do not build a claim on a
+distributional assumption you have not measured.***
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
