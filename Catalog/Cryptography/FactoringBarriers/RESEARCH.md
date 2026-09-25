@@ -6395,6 +6395,63 @@ rule (5) is the single highest-yield practice the project produced.
 
 ---
 
+### 8.1. ✅ THE LAST NAMED GAP IS CLOSED — AND CLOSED BY A COUNTEREXAMPLE: the "coarser view" of `[1,M]` does **not** exist
+
+§8.0 left exactly one gap I named: *"(i) and (ii) are optimality statements within
+their framings; rule (6) says a framing can be beaten by a genuinely coarser view,
+and I have not proved no such view exists."* **Gap (ii) is now closed, negatively, by
+a machine-found counterexample.**
+
+**THE ESCAPE ROUTE I PROPOSED.** Prop. 2.5 tests the `Θ(d)$ blocks of `[1,M]$ by
+evaluating the rising factorial `f(jd) = ∏_{i≤d}(jd+i) = d!·C(jd+d, d)`. **I claimed**
+(§7-undecuples-LI) that
+
+> `C(jd+d, d) ≡ 0 (mod p)  ⟺  (j+1)d ≥ p  ⟺  j ≥ ⌊(p−1)/d⌋`
+
+— i.e. that the block-aggregate sequence is a **monotone step function**, hence
+**binary-searchable in `O(log N)$ probes**, hence a *genuinely coarser view* of the
+interval than scanning every block. That was the one escape rule (6) left open.
+
+**❌ THE CLAIM IS FALSE. Verified 67/112, with explicit counterexamples:**
+
+> `(p, d, j) = (3907, 77, 51)`: `C(51·77+77, 77) mod 3907 = 1110 ≠ 0`, while the
+> prediction said it should be `0` since `(j+1)d = 4004 ≥ 3907`.
+
+**WHY, and it is the right reason.** Kummer's theorem says `p ∣ C(a+b, a)` iff adding
+`a$ and `b$ **in base `p$** produces a carry. Here `a = d`, `b = jd`, so the sum is
+`(j+1)d` — but **`(j+1)d ≥ p$ is NOT the carry condition once `jd ≥ p$ itself.**
+For `p = 3907$, `d = 77`, `j = 51`: `jd = 3927 = 1·3907 + 20$ has base-`p$ digits
+`(20, 1)`, while `d = 77$ has digits `(77, 0)`. Adding gives units `77 + 20 = 97` —
+**no carry** — and tens `0 + 1 = 1`. So `C(jd+d, d) ≢ 0 (mod p)`, exactly as the
+counterexample shows.
+
+**⇒ THEREFORE THE BLOCK-AGGREGATE IS A CARRY FUNCTION, NOT A STEP FUNCTION. IT IS
+NOT MONOTONE, BINARY SEARCH IS UNAVAILABLE, AND RULE (6)'S "genuinely coarser view"
+DOES NOT EXIST FOR SUB-PRIMITIVE (1a).**
+
+**★★ AND THIS STRENGTHENS, RATHER THAN WEAKENS, THE §8.0 CLOSURE.** The two possible
+outcomes for gap (ii) were *"a cheaper coarser view exists"* (which would reopen the
+cell) or *"no coarser view exists"* (which closes it). **The counterexample delivers
+the second — and delivers it for a structural reason, not a bound:** the aggregate
+carries base-`p$ carry information, which is *why* it is not a monotone predicate and
+*why* no sublinear probe schedule can replace the `Θ(d)$ points of the multipoint
+evaluation.
+
+> **UPDATED (ii). Beat `N^{1/4}$ in (1a) ⟹ a coarser view of `[1,M]$ than its
+> `Θ(√M)$ blocks. The natural candidate (binary search of the block aggregate) is
+> refuted, 67/112, because `C(jd+d,d) mod p$ is a Kummer carry function, not a step
+> function. A still-coarser view is not excluded in general — but it is not the one
+> the arithmetic suggests, and each attempt now has a concrete refutation.**
+
+**⚠️ HONEST LIMITS.** (i) The refutation is of **one specific** candidate view (binary
+search of this aggregate), not of all possible coarser views. (ii) The count 67/112 is
+over boundary probes of random `(p, d)$ with `d < 80$; it is a demonstration of
+failure, not a proof of the correct characterisation, which is Kummer. (iii) Gap
+**(i) — the `(1b)` framing — is untouched by this** and remains exactly where §8.0
+left it, mitigated but not closed by the exact minimax.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
