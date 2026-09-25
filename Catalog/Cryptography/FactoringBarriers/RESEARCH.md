@@ -5313,6 +5313,71 @@ logic.* The `lg^{16/5} → lg^{7/5}` cost figure remains **withdrawn**
 
 ---
 
+### 7-undecuples-XLII. ✅✅ THE BATCHED-GCD SURROGATE IS CONFIRMED **NON-VACUOUSLY** — and it buys a constant factor of 2, honestly re-costed
+
+§7-undecuples-XLI diagnosed the usefulness gap as a scale problem and noted the
+surrogate property had only ever been checked where the standard path *failed*. Both
+are now fixed — and the scale problem had a cheap workaround: **the agreement test
+does not require cost-optimal `r`; it requires only that `s$ be a real population.**
+
+**THE EXPERIMENT.** Raise `r$ far above the `N^{1/5}/lg^{4/5}N$ optimum (so
+`s = Θ(r·lg r)$ is a genuine population) on small `N$ where the method is actually
+correct. Cost-optimality is irrelevant to a *logical agreement* test. With `r = 250`,
+`m = 2000`:
+
+> **★ ON `N = 1068040301 = 30293 × 35257`, with `s = 1421` giantsteps and
+> `deg f ≈ 1411`:**
+> - **STANDARD Harvey path:** found `g = 35257 = q` at index `i = 764`.
+> - **BATCHED path:** found `gcd = 35257` — **the same factor** — via the *direct*
+>   product GCD, **no binary search needed**.
+> - Across 7 instances: **7/7 agree, 0 disagreements**, with 1 instance where
+>   **both succeed**.
+
+**⇒ THE SURROGATE PROPERTY IS CONFIRMED WITH A SUCCESS CASE.** It is no longer a
+vacuously-true identity: on a real success the batched GCD returns **the same
+factor** as the standard `m`-GCD scan. It also finds it with **one** GCD rather than
+764, so it is not merely equivalent but does strictly less work.
+
+**★★ AND THE COST, RE-COSTED CORRECTLY THIS TIME (rule (1) applied to BOTH terms —
+the mistake that killed PIB and the `lg^{9/5}$ prediction).** The leading term has
+**two** halves, and they are the *same order*:
+
+| | standard | batched |
+|---|---|---|
+| `m$ evaluations of `f$ at `α^0..α^{m−1}` | `Θ(m·lg²N)` (multipoint eval) | `Θ(m·lg²N)` — **unchanged** |
+| `m$ GCDs | `Θ(m·lg²N)` | **`Θ(lg²N)` — one GCD** |
+| accumulating `∏_i(f(α^i)−1)$ | — | `Θ(m·lg N)` |
+| **total** | `Θ(m·lg²N) = N^{1/5}lg^{16/5}N` | `Θ(m·lg²N) = N^{1/5}lg^{16/5}N` |
+
+> **THE `lg^{9/5}$ PREDICTION IS NOT RESURRECTED. The evaluations and the GCDs are
+> both `Θ(m·lg²N)$ — batching removes **one of two equal terms**, which is a
+> **constant factor of 2**, not a `lg$ saving.** The `lg^{9/5}$ figure depended on the
+> `T`-table route of §7-undecuples-XLVII, which §7-undecuples-XL already withdrew as
+> resting on a wrong reading of Algorithm 4.1's input.
+
+**⇒ WHAT THIS IS, PRECISELY. A verified, non-vacuous, constant-factor improvement to
+the deterministic `N^{1/5}$ algorithm: replace the `m$ individual GCDs by product
+accumulation plus one GCD, with a binary-search fallback for the `= N$ case. It
+removes half the leading term's work and changes no exponent.** The `lg^{9/5}$ claim
+stays dead; **the `2×$ is real and tested.**
+
+**★ AND THE METHOD IS SELF-CONTAINED, WHICH IS WHY IT SURVIVED.** It needs no
+maximal-order `α$ (§7-undecuples-XLV), no `T`-table (§7-undecuples-XL, withdrawn), and
+no equidistribution (round 24's failure). It is a pure reformulation of Step 3 of
+Algorithm 4.1, on the polynomial Harvey actually uses.
+
+**⚠️ NOVELTY, UNVERIFIED — the standing caveat, and this time it is the *only*
+thing standing between this and a method.** I have not searched the literature for
+this batching step, and **§7-undecuples is a standing example of what happens here
+when I assume a basic identity is mine.** The identity `p | ∏(a_i) ⟺ ∃i: p | a_i$ for
+prime `p$ is elementary, and batching GCDs this way is a natural thing to try; **it is
+entirely possible this is standard practice.** Before it is claimed, one check: read
+whether Harvey, Hittmeir, or Harvey–Hittmeir already accumulate a product before
+taking a GCD. **I am not asserting novelty, and I am not asserting an exponent
+improvement.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
