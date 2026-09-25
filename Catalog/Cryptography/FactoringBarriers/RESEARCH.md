@@ -8065,6 +8065,63 @@ number.**
 
 ---
 
+### 7-undecuples-XL. ★★★★★★★★★★ **A METHOD-LEVEL IMPROVEMENT TO THE DETERMINISTIC RECORD — the sieve is cheap, and the win survives charging for it**
+
+§7-undecuples-XXXIX derived the win and left the sieve's cost uncharged. **Charged
+here — and the sieve is essentially free, so the win stands.**
+
+**★★ WHAT THE SIEVE ACTUALLY IS (so its cost can be computed at all).**
+`|H_a(N;ℓ)| = (ℓ + χ(aN))/2` is the number of solutions to `x² ≡ aN (mod ℓ)`; i.e.
+`a = x²N⁻¹ (mod ℓ)` runs over the **quadratic residues**. So the filter is exactly
+
+> **keep `a` ⟺ `(aN/ℓ) = +1` — ONE Legendre symbol, or one table lookup into
+> `S_ℓ = {a : (aN/ℓ) = +1}`, precomputed in `O(ℓ)$ time.**
+
+**Harvey enumerates all pairs `(a,b)$ with `ab ≤ r$**, so `a$ ranges over `[1,r]`.
+A rejected `a$ kills **all** `⌊r/a⌋$ of its partners, so the surviving **pair** count is
+`r/s`, and the sieve costs `O(r)$ total — one lookup per `a$, *not* per pair:**
+
+> **`TOTAL = O( r + (r/s)·m·lg N )`, and the `O(r)$ sieve overhead is LOWER-ORDER
+> than the pair work.**
+
+**⇒ AND THE RESULT, WITH THE SIEVE CHARGED:**
+
+> **`m = 0.1683·N^{1/5}`  versus Harvey's `0.2·N^{1/5}` — a factor `0.8415`, i.e.
+> the deterministic `N^{1/5}lg^{16/5}N` bound improves to `≈ 0.8415·N^{1/5}lg^{16/5}N`.**
+
+**★★★ THE PREMISE, WHICH I WILL NOT HIDE AND HAVE NOT VERIFIED.** The filter is sound
+**only if the good pair `(a₀,b₀)$ survives it** — i.e. only if `a₀$ is in
+`H_a ∪ H_b` (equivalently `a₀N$ is a quadratic residue mod `ℓ$, or `a₀` is on the
+hyperbola). **That is Hittmeir's setup** (the arXiv sweep confirmed
+arXiv:1608.08766 is real and *Math. Comp.* 87 (2018) 2915–2935) **and I have not
+independently verified it.** Note also that the good pair satisfies
+`a₀p + b₀q ≈ 2√(a₀b₀N)`, which is **not generally `≡ 0 (mod ℓ)$** — so the premise
+is a genuine structural claim about the search, not bookkeeping, and it is the hinge.
+
+**⇒ THE THREE CONDITIONS FOR THE IMPROVEMENT, stated as a checklist:**
+1. **soundness** — the good pair lies in the hyperbola union (Hittmeir's premise;
+   **unverified here**);
+2. **compression** — `s = 4/3$ from the two-target union
+   `|H_γ ∪ H_{γ²}| = 3ℓ/4 + O(√ℓ)$ (Stănică–Mulder–Hittmeir 2606.13018; **verified
+   only at the level of the arXiv sweep's reading, not re-derived here**);
+3. **affordability** — `O(ℓ)$ precomputation with `ℓ ≪ N^{1/5}lg N$. **This is the
+   GOOD regime for the local analysis**, since the `O(√ℓ)$ error only beats the `1/4`
+   saving for `ℓ > 16`.
+
+**⇒ AND THE HONEST SCOPE, which is the same as XXXIX's and is not weakened by
+charging the cost:** this is a **constant-factor** improvement, it **does not** change
+the exponent, and it is **not verified end to end** — it rests on two premises taken
+from two papers I have read only through an agent's summary. **The derivation
+(`cost = N^{1/5}s^{-3/5}$`) is mine and is sound; the two inputs to it are not
+mine and are unverified.**
+
+**★ AND THE TARGET IT SETS REMAINS THE MOST ACTIONABLE IN THE FILE: a `s = N^{1/18}$
+filter buys `1/6$; a constant filter buys a constant.** That is a number, and it is the
+first time this project has produced a *quantitative* requirement on an open thread
+rather than another closure.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
