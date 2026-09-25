@@ -7321,6 +7321,43 @@ thing I will do differently.**
 
 ---
 
+### 8.14. ■ NINE AGENTS IN FLIGHT (round 82) — five of them doing the science I should have done first: READING
+
+**★ THE RE-PRIORITISATION, and why it is the right one.** §8.13 established that
+`NegativeResults.lean` is a **33 KB dead-technique ledger I never opened** and that
+`RESEARCH.md` is **~8,400 lines, 79+ rounds, of which I read ~40.** **Inventing a
+fifteenth mechanism while a ledger of every mechanism already killed sits unread in
+the same directory is not science — it is the failure mode, repeated.** So the
+largest share of the agent budget is now **reading**, and only four agents are
+searching outward.
+
+| # | agent | kind | hypothesis under test |
+|---|---|---|---|
+| 1 | arXiv sweep | search outward | H(A): nothing 2020–2026 beats `1/5$ or supplies a sixth mechanism |
+| 2 | `k = 2` attack | search outward | H(K): the good giant-step index is determined by data already computed |
+| 3 | other quadratic rings | search outward | H(R): some `Z[√D]`, `D ≠ −1`, gives a **non-circular** single-representation extraction |
+| 4 | group-free | search outward | H(G): some `poly(log N)$ `F(N)$ determines `p,q$ without the group |
+| 5 | **`NegativeResults.lean`** | **READ** | — the 25-row dead-technique ledger, end to end |
+| 6 | **`RESEARCH.md` §§1–6** | **READ** | — bottom line, state of the art, both brainstorm rounds, the four-primitive meta-barrier, the balance correction |
+| 7 | **CRTSplitNoGo / ECM / DFT barriers** | **READ** | — birthday & collision barriers, ECM stage-1, DFT sample lower bounds; **produce the exact list of assumptions a new method must violate** |
+| 8 | **HarveyFloor / Capstone / ResourceClassification / AsymptoticLadder** | **READ** | — the capstone chain, marking **every hypothesis PROVED vs HYPOTHESIS** |
+| 9 | **SingularModuli / AsymmetricExponent / MordellDenominators** | **READ** | — the class-number/CM and idempotent routes: **is there any regime where their barriers do not apply?** |
+
+**⇒ AND THE SYNTHESIS I ASKED FOR FROM READERS 7 AND 8 IS THE POINT OF THE
+EXERCISE, and it is a list, not a method:** *the exact set of assumptions a new
+factoring method would have to violate*, each marked proved-or-conjectural. **A
+conjectural assumption is the softest target in the whole repository, and I have
+never seen that list assembled.** Agents 7 and 8 are building it now.
+
+**⇒ AND THE STANDING HONESTY.** No factoring method has been delivered. The method
+half of this goal remains **undelivered across 82 rounds**, and the most valuable
+thing these nine agents can produce is a **smaller, correctly-scoped search space**,
+not a miracle. If reader 7 or 8 returns a conjectural assumption, that is the first
+genuinely new lead in the file — and it will have been found by *reading*, not by
+me re-deriving.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
