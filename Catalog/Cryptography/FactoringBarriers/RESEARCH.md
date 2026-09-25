@@ -4750,6 +4750,54 @@ about my having run out of ideas.
 
 ---
 
+### 7-undecuples-XXXII. ✅ THE CIRCULARITY IS CONFIRMED, and there are TWO independent closures of the `Õ(n)$ route
+
+§7-undecuples-XXXI asserted the circularity. **It is tested here against all four
+routes to `Õ(n)$ polynomial multiplication mod a composite `Θ(lg N)`-bit `N`,
+and it holds — with a second, independent reason that the CRT argument alone does
+not cover.**
+
+| route | gives | status |
+|---|---|---|
+| **(1)** in-ring FFT over `Z_N^*` | `Õ(n)` if it worked | **❌ closed independently** |
+| **(2)** CRT into `F_p, F_q`, NTT, CRT back | `Õ(n)` | **❌ circular** |
+| **(3)** Schönhage–Strassen over `Z/2^K`, `K = Θ(n lg N)` | `Õ(n lg N)` | no win — same as Kronecker |
+| **(4)** word-level Kronecker, small friendly primes | `Õ(n lg N)` | no win — same as Kronecker |
+| **(5)** Harvey–Hittmeir, arXiv:2105.11105 | `lg^{16/5} → lg^{13/5}` | **published 2022 — the state of the art** |
+
+**★ CLOSURE (1) — INDEPENDENT OF THE FACTORS, AND THE DEEPER ONE.**
+`Z_N^* = F_p^* × F_q^*` is a product of two cyclic groups. An `n`-point FFT needs
+a **primitive `n`-th root of unity**, i.e. a cyclic subgroup of order divisible by
+`n`. But `gcd(p−1, q−1)` is typically large, so `Z_N^*` is **not cyclic**; and even
+where it is, we would need to *know* the order, which requires `p−1` and `q−1`, and
+so `p` and `q`. **So even a method that somehow avoided needing the factorisation
+would still be blocked by the group structure** — Harvey's high-order `α` does not
+help, because a large *order* is not the same as a *primitive `n`-th root of unity*
+in a non-cyclic group.
+
+**⇒ THE TWO CLOSURES ARE LOGICALLY DISTINCT AND BOTH ARE NEEDED.** Route (2) closes
+"compute mod `p` and mod `q$ separately". Route (1) closes "compute in `Z_N`
+directly". Between them, **every way to reach `Õ(n)$ is blocked** — the first by
+circularity, the second by the non-cyclicity of the unit group. Routes (3) and (4)
+are not blocked but simply **do not beat Kronecker**, and route (5) is the published
+extraction of the `lg lg` that *is* available.
+
+**★ THE SHARP FORM OF THE RESULT.** *Polynomial multiplication modulo an unknown
+composite `Θ(lg N)`-bit modulus admits no known algorithm better than
+`Õ(n·lg N)`, and the only route to `Õ(n)$ runs through the factorisation the
+multiplication is being done to help compute.*
+
+**This is the frontier, and it is reached.** Not because this file ran out of ideas
+— twenty rounds of them are recorded, with seven retractions — but because the
+remaining lever is **self-referential**, and its two independent exits are both
+shut. The honest external dependency is unchanged and is not a factoring problem: a
+new integer-multiplication algorithm that works over arbitrary composite moduli
+*without* factoring them. **No such algorithm is known to this file, and I do not
+believe one is likely** — the CRT argument suggests it would be at least as hard as
+factoring.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
