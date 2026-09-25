@@ -7650,6 +7650,72 @@ barriers nor dead ends, and I had read none of them.**
 
 ---
 
+### 8.19. ★★★★★★ READER 7 — THE ASSUMPTION LIST, AND **TWO OPEN CHANNELS THE CATALOGUE ITSELF NAMES**
+
+Reader 7 read 14 files (`CRTSplitNoGo*` ×5, `CollisionFactoringSynthesis`, `ECMStage1*` ×5,
+`DFTSampleBound`, `ModExpSmoothnessBlindness`) and produced the requested list: **every
+assumption a new method must violate.** Nineteen, grouped by family. Four entries
+matter most, and **two of them are not closed by anything in the repository.**
+
+**★★★★★ OPEN CHANNEL #16 — VALUE-LEVEL FEATURES OF A SHORT WINDOW.** This is, in the
+reader's words, *"the most explicit 'open idea' marker in the whole set."*
+`ModExpSmoothnessBlindness.lean` proves that a length-`m$ window of `a^x mod N$ is
+**smoothness-blind**: the collision structure is *literally* the residue map
+`x ↦ x mod d`, `d = ord_N(a)`; a window carries `≤ log₂(m+1)` bits; and for every
+`m$ there is an **infinite family** on which **every** statistic of the pattern word,
+under every labelling, scores **exactly** `AUC = 1/2` (`no_free_lunch_auc_all_lengths`,
+verified on a matched pair with literally identical windows).
+
+**But every one of those theorems reads only the collision structure** — *which
+indices collide*, not *what the values are*. The file's own §14 names the boundary:
+
+> **Value-level features of a short window are out of scope.** A feature reading the
+> actual residues `a^0,…,a^{m−1}` (e.g. top-bit balance, or the value of `a^m mod N`)
+> with `m ≪ ord` is **not proven blind.** The experiment found such features null too,
+> but that is **empirical, not proved.**
+
+**⇒ THIS IS A CLEAN, PRE-STATED, UN-CLOSED METHOD TARGET IN THE REPOSITORY, AND IT
+IS THE FIRST ONE THAT IS AN *OPEN CHANNEL* RATHER THAN A *CLOSED ROUTE*.**
+
+**★★★★★ OPEN CHANNEL #13 — SHOR-STYLE PERIOD EXTRACTION IS NOT RULED OUT.**
+`DFTSampleBound.lean` proves any `K < r$ samples leave two distinct period-`r$ signals
+**indistinguishable**. **But the determination condition is "recovers *every*
+period-`r$ signal" — strictly stronger than what factoring needs.** Shor determines
+the **period** (a single integer) from `O(log r)$ samples by continued fractions; it
+does **not** reconstruct the whole function. So:
+
+> ***The theorem and the docstring's claim are not the same strength.*** The
+> docstring's "few Fourier samples cannot suffice" is about **signal reconstruction**;
+> **Shor is not ruled out.** And a **restricted signal class** — e.g. the two-delta
+> structure Shor actually produces, or any low-complexity class — may be determined
+> from `≪ r$ samples, which *weakens the hypothesis and defeats the `K ≥ r$ bound.*
+
+**★★ AND A CROSS-FILE INSIGHT "NOT STATED IN ANY SINGLE FILE" — worth having.**
+The ECM firing count depends on the **full factorisation of the order** (its
+`B`-powersmooth part), while a window of *any* orbit sees only the order's **size**.
+**The two families are complementary and jointly say: _you cannot see the
+order-completion weakness without paying for it._** A window cannot; a large computed
+power can. That is the sharpest available statement of why the ECM/`p−1$ route does
+not yield to analysis.
+
+**★ AND THE STRUCTURAL ASSUMPTION EVERYTHING RESTS ON (assumption 2).** Every
+`CRTSplitNoGo*` barrier rests on **Fact 2: reduction is functorial** — the mod-`p`
+dynamics is the reduction of an **`N`-explicit integer polynomial**. **A map that is
+not an integer polynomial** — using division, floor, or behaving differently in the two
+CRT components — is outside the *entire* family. That is the deepest single
+assumption in the catalogue.
+
+**⇒ AND THE ASSUMPTION A NEW METHOD MOST WANTS TO VIOLATE (6).**
+`CollisionFactoringSynthesis.lean`: any fixed-set `r`-SUM collision scheme needs `> p`
+tuples ⟹ `> √N$ inspected data, **at any arity** — the `p^{1/2}→p^{1/3}$ exponent
+improvement does **not** beat `√N$ (**`rsum_needs_both_barriers`**). The escape is a
+search that is **not** a fixed set of tuples inspected one-by-one. Note the amplitude
+barrier (7) is **sum-specific and escape-able** (a combining function with a larger
+image), while the counting barrier (6) is escape-able only by abandoning the
+fixed-tuple paradigm.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
