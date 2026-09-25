@@ -7584,6 +7584,72 @@ is **deterministic-only**, and my census never said so.**
 
 ---
 
+### 8.18. ★★★★★★ READER 9 — TWO GENUINE, TIGHT, UN-ATTACKED CELLS. The first is a **real** method-shaped target, scoped exactly.
+
+Reader 9 (22 files: `SingularModuli/` 8, `AsymmetricExponent/` 7, `MordellDenominators/` 7,
+`Factoring/` 2 — all read in full) delivers the first **positive, tight** cells in this
+whole project. **Both are narrow, and I am recording the narrowness as part of the
+result, not as a caveat.**
+
+**★★★★★ CELL 1 — THE LARGE-EULER-GAP CELL (`AsymmetricExponent/RevealDensity.lean`,
+exact, proved).** The reveal count is governed **only** by `g = gcd(p−1, q−1)`:
+
+> `card_revealing` = **`g(q−1) + g(p−1) − 2g²`** — an *exact* count, and the fraction
+> is `≈ g/p + g/q`.
+
+**So for semiprimes with LARGE EULER GAP (`p ≡ q ≡ 1 (mod m)` for large `m`), the single
+gcd `gcd(a^{N−1} − 1, N)$ reveals a factor in `O(1)` bases instead of `O(√N)$.** At
+`g ≈ p/2` (i.e. `q ≈ 1.5p`) the density approaches **`1/2`**. **This is a real, tight,
+proved cell where factoring is fast** — and the barrier file had it and I never read it.
+
+**⇒ THE PRECISE, HONEST SCOPE: this is a `p−1`-style method on a structured subset
+(semiprimes with a large `gcd(p−1,q−1)`), NOT a general factoring algorithm, and the
+interesting case is a *deliberately constructed* `N`, not a random one.** That is
+exactly the right kind of target: a promise problem, sharply stated, with the
+`O(√N)` barrier proved elsewhere in the same directory.
+
+**★★★★★ CELL 2 — THE CM ROUTE'S ONE UN-CLOSED ESCAPE, STATED BY THE READER.**
+`SingularModuli` is **airtight and tight** for its own family: `total_work_ge` gives
+
+> `√N/4 ≤ (deg H) · (N / successCount H N)`  — for **ARBITRARY monic `H` of ARBITRARY
+> degree `h`** — *"with no `h` on the right."* **Raising the class number buys nothing**
+> (the `1/h` on evaluations is exactly cancelled by the cost of one evaluation), and
+> `sqrt_scaling_two_sided` shows the method is `Θ(√N)` where it works — **the barrier is
+> attained, not slack.** Finite precomputation is also closed
+> (`precomputed_table_fails`, `finite_family_table_fails`).
+
+**But the reader identifies precisely what is NOT closed, and it is a real method
+question:**
+
+> ***"A non-search locator of a useful `j₀`. … The theorems bound its SIZE and price
+> UNIFORM ENUMERATION; they do not prove that no clever/adaptive/structural strategy
+> finds a good `j₀` in sub-`√N$."*** Plus: a **non-monic or `N`-dependent** construction,
+> and an **unbounded/adaptive/`N`-dependent** precomputation table.
+> `Capstone.lean` explicitly declines to rule these out: *"Nothing here says that no
+> method based on complex multiplication can factor quickly."*
+
+**⇒ SO THE TWO LIVE, TIGHTLY-SCOPED TARGETS ARE: (1) exploit a large Euler gap
+`gcd(p−1,q−1)` — a `p−1`-method against structured `N$; (2) a NON-SEARCH locator of
+a CM-structured `j₀`, i.e. a way to find `H_D(j) ≡ 0 (mod p)$ without searching and
+without a fixed table. Both are `poly`-or-`O(1)` on a promise class, and both sit
+OUTSIDE every route this file closed.**
+
+**★ AND ONE COMPLETE DISPROOF, recorded so it is not re-proposed.** `MordellDenominators`
+kills the Mordell/ECM-denominator idea **completely and rigorously**, with an infinite
+family: the denominators *"broadcast a prime — just never one of the primes one is
+looking for"* (`denominator_hides_factorisation`: for `N=55`, `gcd(den, 55) = 1` despite
+`7` appearing twice; for `N = ℓ²−1`, the only prime the gcd ever returns is `2`).
+`Factoring/PadicFactoring.lean` is a standalone self-correction whose original theorem
+was **false** (primes) and whose correction is vacuous (composites factor).
+
+**⇒ AND THE CONTRAST THAT SETS THE PRIORITY: cell 1 is *proved and tight* — a
+primitive already exists that factors in `O(1)$ bases on its promise class. Cell 2 is
+*not proved impossible* — an escape the repository explicitly leaves open. Neither is
+general factoring. But both are the first two targets in this file that are neither
+barriers nor dead ends, and I had read none of them.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
