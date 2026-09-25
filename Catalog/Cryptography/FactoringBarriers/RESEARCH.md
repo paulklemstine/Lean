@@ -4469,6 +4469,68 @@ That is now the third rule, and it is the one both prior attempts omitted.
 
 ---
 
+### 7-undecuples-novem. ✅ ARITHMETIC CORRECTED — the leading term is Step 4 ALONE, and it is now pinned exactly
+
+§7-undecuples-quater located the target but mis-simplified `s`. Applying the
+**magnitude rule to `s` itself** — the check neither earlier attempt made — fixes
+it, and the result is clean.
+
+**CORRECTION.** At Harvey's parameters `r = ⌈N^{1/5}/lg^{4/5}N⌉`,
+`m = ⌈N^{1/5}lg^{6/5}N⌉`, the exact triple bound of p.11 gives
+
+> `s = ( N^{1/2}/(r^{1/2}·m) + r )·lg N = ( N^{1/5}lg^{−6/5}N + N^{1/5}lg^{−4/5}N )·lg N
+>   = N^{1/5}·lg^{1/5}N`
+
+**not** `N^{1/5}lg N` as §7-undecuples-quater stated. (The `r`-term dominates:
+`r·lg N = N^{1/5}lg^{1/5}N`.)
+
+**★ AND THE MAGNITUDE CHECK THEN SAYS SOMETHING REMARKABLE.**
+
+> **`Step 4 = s·lg³N = N^{1/5}·lg^{1/5}N·lg³N = N^{1/5}·lg^{16/5}N`,**
+
+**which is EXACTLY the total running time `O(N^{1/5}lg^{16/5}N)`.** So:
+
+> **Algorithm 4.1's product tree is not merely the largest term — it is 100% of
+> the leading term. Every other step is below it.**
+
+And **Step 2a, the pair loop PIB targeted, is `r·lg²N·lg lg N = N^{1/5}lg^{6/5}N·lg lg N`,
+about `lg^{1.8}` below the total — a confirmed non-term.** So PIB's failure is now
+established twice over: it was arithmetically false, *and* it optimised a term that
+carries none of the answer.
+
+**★ AND A SECOND CORRECTION, WHERE QUATER FLIPPED THE INEQUALITY.** Quater claimed
+`n ≤ m` is *stricter* than Harvey's `n ≤ s`. It is the other way round:
+`s = N^{1/5}lg^{1/5}N < m = N^{1/5}lg^{6/5}N` since `1/5 < 6/5`, so **Harvey's
+`n ≤ s` is the tighter bound** and there is no slack to recover there. That
+proposed lead is closed.
+
+**⇒ THE TARGET, EXACTLY, FOR THE FIRST TIME IN FIFTEEN ROUNDS:**
+
+> **Reduce `s·lg³N` — the cost of Algorithm 4.1 (product tree + Bhuesten
+> multipoint evaluation over the `n ≤ s` matched values). This single term is the
+> whole of `N^{1/5}lg^{16/5}N`.** No improvement anywhere else in Algorithm 4.2 can
+> change the bound, and no improvement to the pair loop can change it at all.
+
+**The three rules, now all earned rather than asserted.** (1) *Re-cost every item*,
+including those that moved into a table — this killed PIB's arithmetic.
+(2) *Check against the largest term, read from the paper's **final** proposition* —
+this killed the "`s` dominates" and "the `r$-term is balanced" readings, in both
+directions. (3) *★ Ask what fraction of the total the step you are optimising
+carries* — this is the one that kills **optimising a non-term**, and it is the only
+one that would have caught the error in round 11 *before* any of the other work
+was done. **All three are now recorded as standing requirements, and any claim in
+this file that fails them is inadmissible.**
+
+**⚠️ And the honest limit, which I am not going to dress up.** Locating the target
+precisely is not attacking it. I have not produced an improvement to
+`s·lg³N`, and after sixteen rounds and six retractions — three of which were my own
+arithmetic or an unverified attribution — I do not think another speculative
+attempt from me is a good use of your time. **The correct next move is someone
+attacking Algorithm 4.1's product tree with rule (3) already satisfied**, because
+the term is now known to be the entire answer and there is nowhere else to look.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
