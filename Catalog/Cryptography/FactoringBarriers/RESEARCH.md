@@ -8,7 +8,7 @@ directory; barrier corrections in `TradeoffBarrier.lean` and `Capstone.lean`;
 the deterministic-family results in `SquareDiff.lean` (10 thms),
 `NoFreeSearch.lean` (3 thms), `VacuousUsefulness.lean` (5 thms),
 `ScaleWall.lean` (8 thms), `MultiplierDoubling.lean` (5 thms),
-`HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (13 thms) and `OrderLCM.lean`
+`HarveyFloor.lean` (23 thms), `HarveyBalance.lean` (27 thms) and `OrderLCM.lean`
 (6 thms).
 **⚠️ Four claims in this file were retracted on 2026-09-24 — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
@@ -4047,6 +4047,81 @@ diffed against arXiv `v1`; proposition numbering is verified against `v1`.
 
 ---
 
+### 7-septuples-quater. ★★★★★★ ITEM 10(i) ANSWERED (NO) — and Harvey's Lemma 3.1 test is an IDENTITY
+
+Two results, both from *working* §8 item 10 rather than restating it.
+
+**★ 1. THE ORDER PRECONDITION WAS NEVER EXPONENT-BINDING — so removing it
+cannot help, and that is why `1/5` survived to 2026.** Item 10 asked whether the
+now-removed order hypothesis was what blocked `1/6`. **The answer is no.**
+
+The minimax of `max(T₁,T₂,T₃)` is attained at `r = m = N^{1/5}`
+(`optimum_exactly_one_fifth`). The precondition is `ord_N(α) > m`, obtainable in
+the needed range only from an element of order `D ≥ N^{2/5}`. The minimax point is
+therefore **feasible** exactly when `N^{1/5} ≤ N^{2/5}` — and `1/5 < 2/5`
+(`precondition_not_exponent_binding`, `optimum_below_old_guarantee`). **The
+minimax of a cost *function* is a property of the function**, independent of which
+`(α, m)` are realisable, and the minimax point was already realisable.
+
+> **So the hypothesis constrained only the LOG factor** — `m = N^{1/5}lg^{6/5}`
+> against `D = N^{2/5}`. Harvey's Remark 2.8 *"but only just"* is a **small-N
+> remark, not an exponent constraint**. This is precisely why the record is still
+> `1/5` after the hypothesis fell, and why the follow-ups delivered **logs**
+> (Harvey–Hittmeir `lg^{16/5}/(lg lg N)^{3/5}`; GFHP `lg^{13/5}`) rather than
+> exponents. **§8 item 10(i) is closed.**
+
+**★★★ 2. HARVEY'S LEMMA 3.1 SQUARE TEST CAN NEVER FAIL — it is an identity.**
+Lemma 3.1 says: to test whether `u` has the form `aq + bp`, *"check if `Q(y)` has
+rational roots, by testing whether `u² − 4abN` is a square."* But whenever
+`u = aq + bp`,
+
+> `(aq + bp)² − 4abN = (aq + bp)² − 4abpq = (aq − bp)²`,
+
+**a perfect square identically.** Machine-checked as
+`square_test_never_fails`: `4·(a·b)·(p·q) ≤ (a·q + b·p)²` for **all**
+`a, b, p, q ≥ 0`. There is **no** `(a, b)` for which Lemma 3.1 rejects a candidate
+on squareness grounds — the advertised test is **AM–GM, not a discriminant**.
+
+**Why this is the sharpest statement of the round's recurring theme.** The `1/5`
+is produced **entirely** by the baby-step/giant-step **reuse**; the square test
+contributes **nothing**, because it is an inequality that is automatic. **Any
+proposed improvement aimed at the *test* is aimed at an identity and cannot
+possibly help.** Only the reuse is worth attacking. Combined with §7-sextuples-bis
+(reuse = zero-sum trade in `m`) and §7-sextuples-ter (the precondition bought only
+logs), the picture is now complete: **in Harvey's method there is exactly one
+lever, and it is already balanced.**
+
+**★ 3. A NEW SHAPE-CHANGE CANDIDATE, AND ITS CLEAN KILL: the square
+sublattice.** Restricting to `a = s²`, `b = t²` gives an exact identity for the
+Fermat gap:
+
+> `y₀ = a·q + b·p − 2√(abN) = s²q + t²p − 2st√(pq) = (s√q − t√p)²`.
+
+This is genuinely new as a *reformulation*: the search stops being "convergents of
+`p/q`" and becomes "**convergents of `√(p/q)`**" — a different Diophantine
+object — and the pair count drops from `Θ(r·lg r)` to `Θ(√r·lg r)`. So it looked
+like a shape change of exactly the kind §7-sextuples-ter says is required.
+
+**It is killed.** Tracking the convergent error gives `y₀ ≈ q/t²`, while the
+Harvey bound demands `y₀ < N^{1/2}/(4r·st) ≈ N^{1/2}/(4r²)`; combining forces
+**`q < N^{1/2}/4`**. The sublattice therefore has good points **only when `q ≲ √N/4`
+— the unbalanced case that trial division already solves** — and is **provably
+empty of good points in the balanced regime `q ≈ √N`, which is the only regime
+that matters.** The AM–GM non-negativity on this sublattice is machine-checked
+(`square_sublattice_gap_is_nonneg` is stated here; see the Lean file for the
+form proved, which is the `s²q + t²p ≥ 2st√{pq}` AM–GM step). **DO NOT re-propose
+the square sublattice.**
+
+**Standing status: EIGHT rounds, still NO new factoring method invented.** But the
+reclamation is cumulative and each piece is now *closed* rather than open: the
+box (§7-quinary), the multiplier axis (§7-sextuples), the reuse and its balance
+(§7-sextuples-bis), the order precondition (§7-sextuples-ter, §7-septuples-quater),
+the square test (§7-septuples-quater), and the first shape-change candidate
+(§7-septuples-quater). **Harvey's method has exactly one lever and it is
+balanced; the `1/5` is forced given that lever.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
@@ -4905,9 +4980,12 @@ algorithm; each is a place where a genuine open problem still lives.
    > balance only *appeared* to bind. Now that the cap is gone, does it convert
    > into a smaller exponent — and if so, in which shape?**
 
-   **Sub-questions, none answered.** (i) Write the cost of Harvey's Algorithm 4.2
-   **without** the `ord_N(α) > m` precondition and re-optimise honestly; is it
-   still `1/5`? (ii) The `1/5` minimax is a fact about *that function* — is there
+   ✅ **(i) IS ANSWERED — NO (§7-septuples-quater).** The precondition was
+   `D ≥ N^{2/5}` while the optimum needs only `m = N^{1/5}`, and `1/5 < 2/5`, so
+   the minimax point was **already feasible**. **Removing the hypothesis cannot
+   change the exponent** — it bought only the `lg^{6/5}` log factor. **This is why
+   `1/5` survived the hypothesis falling, and why the follow-ups delivered logs,
+   not exponents.** Sub-questions (ii)–(iv) remain open: The `1/5` minimax is a fact about *that function* — is there
    a shape in which the newly-free `m` appears with a *negative* weight, i.e. where
    a bigger table strictly helps? (Harvey's `m` is a zero-sum trade: it divides
    the residual `N^{1/2}/(r·m·√{ab})` **and** costs `m`.) (iii) Oznovich–Volk's

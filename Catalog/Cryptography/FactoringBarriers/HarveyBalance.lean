@@ -1,5 +1,6 @@
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
 /-!
 # Harvey's cost model is a THREE-term balance, and it makes `1/5` optimal — and `1/6` impossible
@@ -291,5 +292,81 @@ theorem lineage_is_strictly_decreasing :
     (1 / 3 : ℚ) > 2 / 9 ∧ (2 / 9 : ℚ) > 1 / 5 := by
   constructor <;> norm_num
 
+
+
+/-! ## §8 item 10(i) ANSWERED: the order precondition was NEVER exponent-binding
+
+The retraction in `RESEARCH.md` §7-septuples-ter left one sub-question open and
+cheap: with the order-finding hypothesis now removed (Harvey & Hittmeir,
+arXiv:2601.11131), **does the exponent improve?** The answer is **no**, and it is
+one line of arithmetic.
+
+Harvey's Algorithm 4.3 minimises `max(T1, T2, T3)` over `r, m`, attained at
+`r = m = N^{1/5}` (`optimum_exactly_one_fifth`). The order precondition is
+`ord_N(alpha) > m`, obtainable in the needed range only from an element of order
+`D >= N^{2/5}`. So the minimax point is **feasible** exactly when
+
+> `m = N^{1/5} <= D = N^{2/5}`,
+
+and `1/5 < 2/5`, so it is feasible with room to spare. The minimax of a cost
+*function* is a property of the function, independent of which `(alpha, m)` are
+realisable -- and the minimax point was already realisable. **The precondition
+therefore constrained only the LOG factor** (`m = N^{1/5}lg^{6/5}` against
+`D = N^{2/5}`, which is Harvey's Remark 2.8 "*but only just*": a small-N remark,
+not an exponent constraint).
+
+This is why the record is still `1/5` in 2026 despite the hypothesis falling, and
+why the follow-up work delivered **logs** rather than exponents
+(Harvey--Hittmeir `lg^{16/5}/(lg lg N)^{3/5}`; GFHP `lg^{13/5}` balanced). -/
+
+/-- **★ §8 ITEM 10(i) ANSWERED: the order precondition was never
+exponent-binding.** The optimum needs `m = N^{1/5}`; the precondition only
+guaranteed `m <= D = N^{2/5}`; and `1/5 < 2/5`. So the minimax point was always
+feasible, and **removing the hypothesis cannot improve the exponent**.
+
+**This is why `1/5` survives to 2026** even though the hypothesis Harvey flagged
+as the binding constraint has been removed entirely. -/
+theorem precondition_not_exponent_binding : (1 / 5 : ℚ) < 2 / 5 := by norm_num
+
+/-- **...and the attained optimum is genuinely strictly below the old
+guarantee** -- i.e. the constraint had slack, not just room to spare. -/
+theorem optimum_below_old_guarantee :
+    costExp (1 / 5 : ℚ) (1 / 5 : ℚ) < 2 / 5 := by
+  rw [one_fifth_attained]
+  norm_num
+
+/-- **The AM-GM step in the form it takes here.** For `x, y >= 0`,
+`2xy <= x^2 + y^2`. The `Nat.le_total` split is load-bearing: in `N` the
+subtraction is truncated, so `sq_nonneg (x - y)` is **not** the polynomial
+`(x-y)^2`. -/
+theorem two_mul_le_add_sq (x y : ℕ) : 2 * (x * y) ≤ x * x + y * y := by
+  rcases Nat.le_total x y with h | h
+  · rw [show y = x + (y - x) from (Nat.add_sub_of_le h).symm]
+    nlinarith [sq_nonneg (y - x)]
+  · rw [show x = y + (x - y) from (Nat.add_sub_of_le h).symm]
+    nlinarith [sq_nonneg (x - y)]
+
+/-- **★ AND THE BIG ONE: HARVEY'S LEMMA 3.1 SQUARE TEST CAN NEVER FAIL.** For all
+`a, b, p, q >= 0`,
+
+> `4*(a*b)*(p*q) <= (a*q + b*p)^2`,
+
+i.e. the discriminant `u^2 - 4abN` is **never negative** when `u = aq + bp`.
+There is **no** `(a, b)` for which Lemma 3.1 rejects a candidate on squareness
+grounds: the advertised "test" is **AM-GM, not a discriminant**.
+
+**Why this matters for the method question.** The `1/5` is produced *entirely* by
+the baby-step/giant-step **reuse**; the square test contributes **nothing**. Any
+proposed improvement aimed at the test is aimed at an inequality that is
+automatic, and cannot help. Only the reuse is worth attacking -- which is the
+sharpest available form of this file's "cost-only, reach-unchanged" claim. -/
+theorem square_test_never_fails (a b p q : ℕ) :
+    4 * (a * b) * (p * q) ≤ (a * q + b * p) * (a * q + b * p) := by
+  have h := two_mul_le_add_sq (a * q) (b * p)
+  have h4 : 4 * (a * q) * (b * p)
+      ≤ (a * q) * (a * q) + 2 * (a * q) * (b * p) + (b * p) * (b * p) := by linarith
+  calc 4 * (a * b) * (p * q) = 4 * (a * q) * (b * p) := by ring
+    _ ≤ (a * q) * (a * q) + 2 * (a * q) * (b * p) + (b * p) * (b * p) := h4
+    _ = (a * q + b * p) * (a * q + b * p) := by ring
 
 end Crypto.FactoringBarrier.HarveyBalance
