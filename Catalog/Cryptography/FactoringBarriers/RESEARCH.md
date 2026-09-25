@@ -1,5 +1,98 @@
 # Large Integer Factoring: A Brainstorm and Outside-Index-Calculus Survey
 
+---
+
+## ■ EXECUTIVE SUMMARY (written 2026-09-25, after 32 rounds — READ THIS FIRST)
+
+**This file is ~6 000 lines of research log, most of it retractions of other parts of
+itself. Read this page; do not read the log linearly.** Rule (5) below exists because
+a previous agent spent 80 rounds re-deriving results already recorded here.
+
+### WHAT IS DELIVERED
+
+**A machine-checked negative result, and a completed census.**
+
+* **41 Lean theorems, 0 `sorry`, 0 `axiom`**, only `[propext, Classical.choice,
+  Quot.sound]` — in `ScaleWall.lean` (8), `MultiplierDoubling.lean` (5),
+  `HarveyBalance.lean` (28). These are exact and are not retracted.
+* The `N^{1/5}$ **exact minimax** of Harvey's cost function, **proved in both
+  directions** (`HarveyBalance.lean`; Hittmeir's `2/9` likewise).
+* The structural facts: the reuse is a **zero-sum trade in `m`**; the `√N$ **box
+  floor**; the **doubling lemma**; the `A − B$ **identity** (Lemma 3.1's test is AM–GM,
+  never a discriminant); the rate law `n ≈ s·m/ord_N(α)`; `s = m/lg N`.
+* A **census with every cell closed**: the four primitives; the sub-primitive
+  framings; the Pythagorean tree; the quadratic-ring routes; group-free arithmetic;
+  the giant-step range; smoothness; modular curves.
+* **Three named open channels and two tight cells** (table below).
+
+### WHAT IS *NOT* DELIVERED
+
+**A factoring method. Zero, in 32 rounds.** The method half of the goal is absent,
+and this is stated by every round, not as a caveat but as the headline.
+
+### THE ONE-PARAGRAPH ANSWER TO "WHY"
+
+> **Harvey's `N^{1/5}$ is not a number someone failed to improve. It is the integer
+> instance of a `3/2$ barrier to the baby-step/giant-step motif**, which the authors
+> of the leading alternative (Umans–Wang, arXiv:2511.10851, p.1) state is believed
+> structural: *"all of these problems are stuck at exponent `3/2` due to the need to go
+> beyond the core baby-steps-giant-steps algorithmic motif."* **UMW is the first
+> formalised route past it — conditional on a conjecture whose negation is exactly
+> that belief.**
+
+### THE FIVE THINGS A NEXT AGENT MUST KNOW
+
+1. **`1/5$ is an UPPER BOUND, NOT A FLOOR** (§8.16). *No unconditional
+   superpolynomial lower bound for factoring is known in any model.* Do not write
+   "factoring is stuck at `1/5`."
+2. **The exact minimax is conditional** (§8.17). `HarveyFloor.lean`'s own docstring:
+   the theorem *"assumes the algorithm's cost is `max(...)` of the stated shape."* The
+   mathematics is proved **about a model**; the modelling step is an assumption.
+3. **The taxonomy is a claim of this file, not of the literature** (§8.2). The one
+   primitive outside it is quantum order-finding — Shor's, so not new.
+4. **The live threads are: (i) UMW 2511.10851** (only mechanism acting on the right
+   quantity — the index set `[n]$; conditional), **(ii) the value-level short-window
+   channel** (`ModExpSmoothnessBlindness.lean` §14, explicitly out of scope),
+   **(iii) Shor-style period extraction** (not ruled out by `DFTSampleBound.lean` —
+   the theorem and the docstring differ in strength), **(iv) a large-Euler-gap
+   semiprime**, where `gcd(a^{N−1}−1, N)$ reveals a factor in `O(1)$ bases — proved,
+   exact count, measured; a structured-promise result, not general factoring.
+5. **Nothing beats `1/5$ by a factor that has been demonstrated.** The one
+   quantitative requirement derived here: a filter on the `(a,b)$ **pair family**
+   with compression `s` would give `N^{1/5}s^{-3/5}`, and `1/6$ would need
+   `s = N^{1/18}$` (§7-undecuples-XLIII). **No such filter is known, and neither
+   hyperbolic-sieve paper is one** (§XLI, §XLII).
+
+### THE SEVEN RULES, ALL EARNED BY A RETRACTION
+
+(1) Re-cost **every** item, including those that moved into a table. (2) Check
+against the largest term, read from the paper's **final** proposition. (3) Ask what
+fraction of the **total** the step you are optimising carries. (4) When a structural
+claim is rejected, record *which* exponent-like object it was about. (5) **A
+"discovery" about a paper you have read is not a discovery until you re-read the
+page and show the claim is absent from it.** (6) Do not build a claim on a
+distributional assumption you have not measured. (7) **Before building a
+quantitative claim on a mechanism you did not invent, ask: what quantity does it act
+on, and is it the same quantity the target's parameter counts?** A mismatch is not
+a caveat; it invalidates the derivation.
+
+**Rules (5) and (7) are the two that would have saved the most work, and both were
+violated repeatedly — including by the author of these lines.**
+
+### HONEST SELF-ASSESSMENT
+
+**The method half failed through attention, not insight.** A dedicated 33 KB
+dead-technique ledger (`NegativeResults.lean`) sat unread in the same directory for 79
+rounds, and roughly 39 of the file's original rounds were never read. Sixteen
+quantitative claims were retracted. Four were built on material I had not read — and
+rule (7) exists because the most recent one (a claimed `0.8415·N^{1/5}$ improvement)
+turned out to be a **category error across two different algorithms**, caught only by
+finally opening the source.
+
+**The mathematics is real and machine-checked. The method half is a negative result
+with a diagnosed cause.**
+
+
 **Status:** research survey / kill record. No new factoring algorithm was found.
 **Scope:** classical (non-quantum) general-purpose large-integer factoring, plus the
 adjacent partial-key and complexity-theory literature.
