@@ -4170,6 +4170,56 @@ the last one this file has.
 
 ---
 
+### 7-septuples-sex. ★★★★★★ THE LAST OPEN ROUTE ANALYSED: the exponent is a square, but the square buys nothing — and the residue is a HEURISTIC barrier
+
+This works the one route §8 item 10 left open: **beat `T₂ = r` without the `m`-reuse.**
+
+**★ NEW ALGEBRAIC FACT (not previously recorded): THE EXPONENT IS A PERFECT
+SQUARE.** The file records that the Fermat *gap* `y₀ = (√{aq} − √{bp})²` is a
+square (§7-bis). It did **not** record that Harvey's **group exponent** has the
+same property in different variables. With `u = √b`:
+
+> `e(a,b) = aN + b − 2√(abN) = aN + u² − 2√(aN)·u = ( u − √(aN) )²`.
+
+So `t_{a,b} = α^{(√b − √(aN))²}` — the group element Harvey computes is an `α`
+raised to a **perfect square**. This looks like exactly the kind of structure that
+would admit a second factorisation. **It does not**, and cleanly:
+
+* **A 2-D baby-step on `w = √b − √(aN)` fails.** It would need residues `w²` mod
+  `v²`, but `w = qv + s` gives `w² = q²v² + 2qvs + s²`, so the cross term
+  `2qvs` survives: **`w² mod v² ≠ (w mod v)²` in general.** The square structure
+  does not diagonalise.
+* **A baby-step table indexed by `w = ⌊2√(abN)⌋` is too big.** `w` ranges over
+  `Θ(√{rN}) = N^{3/10}` values against `Θ(r·lg r) = N^{1/5}` pairs. The table is
+  **larger** than the set it is meant to compress.
+
+**★ WHY, AND WHY IT IS ONLY A HEURISTIC.** Any grouping that reduces the pair
+count must make `e(a,b)` **separable in `(a,b)`** — i.e. must make `√(abN)` a
+function of `a` and `b` separately. But `√(abN) = √N·√a·√b` is **multiplicative,
+not additive**, so **no additive lattice — BSGS, Gauss sums, Fourier — diagonalises
+it.** This is the *same* coupling that killed the whole sublattice class in
+§7-septuples-quinary, now seen as the obstruction to the last route as well.
+
+> **⚠️ THIS IS A HEURISTIC BARRIER, NOT A THEOREM, AND IT IS STATED AS ONE.** No
+> lower bound of the form "computing `{α^{e(a,b)}}` needs `Ω(r)` multiplications"
+> is known; proving one would be a lower bound on computing a *structured set of
+> group elements*, and nothing like it exists in the literature. **The design rule
+> it does license:** *a beat-`1/5` method must beat `T₂` **without** making
+> `√(abN)` separable, and must therefore exploit structure that is **not** of the
+> additive-lattice or sublattice kind.* That is a genuine constraint on what to
+> try next — and an honest statement of why nine rounds produced no method.
+
+**★ WHAT IT WOULD TAKE.** An `o(r·lg r)`-multiplication algorithm for
+`{ α^{aN+b−⌊2√(abN)⌋} : ab ≤ r }`; equivalently, an `o(r·lg r)`-time collision
+finder between `{α^{aN+b−w} : ab ≤ r, w = ⌊2√(abN)⌋}` and `{α^i : i < m}`.
+**Every mechanism available to this file — BSGS, the `m`-reuse, power/root
+sublattices, `w`-indexed tables, square-residue factorisation — is now ruled out
+by §7-sextuples-bis, -quary, -quinquary, and this section.** That is the honest
+state of the deterministic `1/5` programme: **not proved impossible, and with no
+route left that this record can construct.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
