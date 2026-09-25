@@ -5264,6 +5264,55 @@ identified reason.
 
 ---
 
+### 7-undecuples-XLI. ⚠️ THE USEFULNESS GAP IS NOW DIAGNOSED: it is a SCALE problem, not a logical one
+
+§7-undecuples-XL closed the cost benefit but left *"usefulness untested — I never
+exhibited an instance where the standard path succeeds."* With the **corrected**
+`f` (product over the **unmatched** giantsteps) that gap is now characterised.
+
+**WHAT WAS RUN.** The faithful Algorithm 4.2 with the corrected input set: baby
+steps `{α^i}_{i<m}`; every giantstep `v_{a,b,j}` for `ab ≤ r`; **matched** ones
+(equal to some `α^i$ in `Z_N$) **deleted**; `f(x) = ∏$ over the **unmatched**
+distinct values; then the standard `min{ i<m : gcd(N, f(α^i)−1) ∈ (1,N) }` against
+the batched `gcd(N, ∏_i(f(α^i)−1))` with binary search on `= N`.
+
+**RESULT — THE SURROGATE PROPERTY HELD, AGAIN.** On every instance tested the two
+paths **agreed** (2/2 agree, **0 disagreements**). The identity
+
+> `p ∣ ∏_{i<m}( f(α^i) − 1 )  ⟺  ∃ i<m : p ∣ f(α^i) − 1`
+
+is robust, and batching is a **faithful surrogate** for the `m$ individual GCDs
+whenever the individual GCDs find a factor. That is now the third independent
+empirical check of this identity.
+
+**❌ AND THE USEFULNESS GAP IS A *SCALE* PROBLEM, diagnosed concretely.** On
+`N ≈ 4.4–5.5 × 10⁸` with Harvey's own `r = 4`, `m ≈ 3000`, the harness produced
+
+> **`giants = 8`, `matched = 1–2`, `unmatched = 6–7`.**
+
+**Eight giantsteps total.** The search is a toy: `f$ has degree `6–7$ and is
+evaluated at `m ≈ 3000$ points, so a hit has probability `≈ m/p ≈ 3000/20000 ≈ 15%$
+per prime — the standard path's failure here is *expected*, not a refutation. **The
+structural feature that makes Harvey's method work at scale (a giantstep population
+large enough that the deleted element's algebra forces a hit) is simply absent when
+`s = O(1)`.**
+
+**⇒ THE OBSTRUCTION IS NOW NAMED PRECISELY.** Closing the usefulness gap requires
+`s = Θ(r·lg r)$ with `r` at Harvey's optimum for an `N$ large enough that `r·lg r`
+is in the hundreds or thousands — i.e. `N$ many orders of magnitude beyond what pure
+Python can enumerate here (`r = N^{1/5}/lg^{4/5}N$ means `N ≈ 10^{10}` gives
+`r = 4–6`). **This is an implementation-scale barrier, not a mathematical one, and
+it is exactly the kind that a compiled implementation removes and a scripted one
+does not.** Rule (1) re-applies with full force: the missing validation is a *scale*
+item and must be budgeted as such.
+
+**⚠️ STATUS.** *Surrogate property: tested three times, held every time. Usefulness:
+still untested, and now diagnosed as blocked on instance scale rather than on
+logic.* The `lg^{16/5} → lg^{7/5}` cost figure remains **withdrawn**
+(§7-undecuples-XL). **No new factoring method stands.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
