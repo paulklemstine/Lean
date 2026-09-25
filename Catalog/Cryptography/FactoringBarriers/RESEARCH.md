@@ -7137,6 +7137,50 @@ project.** Not the census — the census was already in the file. The two number
 
 ---
 
+### 8.10. ■ STATUS AT ROUND 78 — two explorations launched on the user-named directions
+
+Rounds 78+ respond to a direct instruction to *"fan out subagents, search for new
+novel factoring methods… explore pythagorean triplet trees… use the scientific method
+to propose hypothesis, run experiments, validate data… iterate."* Two agents are
+running; this entry records the **starting hypotheses** so the results are
+falsifiable against something written down first — the discipline this file has
+repeatedly failed to apply in-round.
+
+**HYPOTHESIS P (Pythagorean / sum-of-two-squares), stated so it can be killed:**
+
+> **H(P).** Pythagorean-triplet-tree structure is **equivalent to factoring**, not a
+> sixth primitive. *Derivation (mine, to be checked):* `p ≡ 1 (mod 4)$ splits in
+> `Z[i]$ as `(a+bi)(a−bi)$ with `p = a²+b²$; a representation `N = x²+y² = pq$ is by
+> Brahmagupta–Fibonacci a choice `(±a±bi)(±c±di)$. **For squarefree `N$ every such
+> representation has `gcd(x,y) = 1$**, so the representation alone yields no factor.
+> The only extraction is a **nontrivial 4th root of unity mod `N$**, and finding one
+> is Cornacchia-equivalent to factoring. **Prediction:** the agent should return a
+> clean negative, **unless** a triple tree gives reuse the plain `(a,b)$ sweep lacks.
+
+* **The sub-question that actually matters, and which the agent is asked to test
+  numerically:* do Pythagorean triples parameterise the **convergents of `q/p$** — in
+  which case a triple tree indexes **the same points Harvey already sweeps** and is
+  strictly worse — **or do they resolve finer?** I predict the former.
+
+**HYPOTHESIS A (arXiv sweep), stated so it can be killed:**
+
+> **H(A).** Nothing in 2020–2026 improves the deterministic exponent `1/5$ or
+> supplies a sixth mechanism, **and** I have not missed a methodologically new paper
+> I have not read. **Prediction:** the agent returns a clean negative with a list of
+  what it searched, plus possibly 1–3 papers I have not seen that do not change the
+  exponent.
+
+**⇒ AND THE STANDING METHOD STATE IS UNCHANGED, honestly stated.** The deterministic
+`1/5$ census (§8.0–§8.9) still holds: rebalancing closed, a second reuse closed
+(§8.6–§8.8), shape changes closed (§8.7), smoothness closed (§8.4), modular curves
+`≡` poly-time factoring (§LIX), the tree decorrelation assumption closed (§4e-iv),
+and the `Z$-channel item is the only open question (§4e-v), with its code already
+specified at §4e line ~1427 (§4e-vi). **No factoring method has been delivered.**
+What rounds 78+ are doing is the two searches the census says are the only ones
+left: **outside** the `1/5$ balance, and **outside** the four primitives.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
