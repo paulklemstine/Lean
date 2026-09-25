@@ -7759,6 +7759,70 @@ distributional assumption you have not measured.***
 
 ---
 
+### 7-undecuples-XXXIV. ✅❌ `k=2` ON THE GIANT-STEP RANGE: **AND THE RANGE WAS NEVER THE BINDING CONSTRAINT.** Two new corrections, one of them the sharpest obstruction in the file.
+
+The `factor_k2` agent implemented a **faithful Algorithm 4.2** (real `α`, real BSGS,
+real factor recovery) and factors `N` in every trial — **12/12 at 36 bits, 15/15 at 44,
+6/6 at 60.** It also re-derived the exact match condition, which is the load-bearing
+structure and which I had not stated: **the good pair matches mod `N` iff
+`ord_N(α) | (p−1)(a₀q−b₀)`.**
+
+**★★★ CORRECTION 1 — MY §7-undecuples-XXXIII MISREAD ITS OWN DATA.** I reported
+"`j₀` is concentrated at 0, so the range-shrink is safe ~90% of the time." **The tail
+grows.** Over `N ~ 2³⁰–2⁷⁰`, **`max j₀` is exactly `N^{1/10}/4` for every sample**:
+
+| bits | `N^{1/10}/4` | max `j₀` | caught `C=1` | `C=4` | `C=16` |
+|---|---|---|---|---|---|
+| 30 | 1.89 | 1 | 0.931 | 1.000 | 1.000 |
+| 50 | 7.55 | 7 | 0.891 | 0.970 | 1.000 |
+| 70 | 30.22 | **28** | 0.927 | 0.973 | **0.980** |
+
+**`C=16` is already DECLINING at 70 bits: no constant truncation works
+asymptotically, because the required `C` grows to the full range.** So the
+concentration at `j₀ = 0` is a *finite-size* effect, not a structural one. (§XXXIII's
+"`~90%` reliable" is a correct measurement at 30–70 bits and **must not be read as
+asymptotic** — that is exactly the mistake I made.)
+
+**★★★★★ CORRECTION 2 — AND THE DECISIVE OBSTRUCTION, WHICH INVALIDATES THE WHOLE
+AXIS.** **Truncating the giant-step range to `j = 0` — the strongest possible version of
+the shrink — leaves cost `= ` pair enumeration `r` `+` baby table `m`
+`= max(r, m) = N^{1/5}`, the SAME exponent.** And removing the `j`-loop while staying
+*correct* (i.e. `j = 0$ must cover `y₀`) forces `m ≥ Y_tot ≈ √N/(4r)$ in the worst
+case, giving `max(r, √N/(4r))$ minimised at **`N^{1/4}` — strictly WORSE than `N^{1/5}$**.
+
+> **⇒ THE GIANT-STEP RANGE IS NOT THE BINDING CONSTRAINT, AND NOTHING DONE TO IT CAN
+> CHANGE THE EXPONENT. `T₁` is only ONE of THREE equal terms at the optimum; a second
+> reuse that only divides `T₁` leaves `max(r, m) = N^{1/5}$ untouched.**
+
+**⇒ SO THE SHARPENED TARGET, which is new and is the file's most actionable line:**
+**a `k = 2` must attack `r` (the pair enumeration) or `m` (the baby-step table)
+DIRECTLY — not the giant-step range.** Those are the two terms the agent did *not* touch,
+and they are the only ones a second reuse can move.
+
+**⇒ AND TWO MORE MEASURED FACTS, both new:**
+* **The `j`-loop is not even where the work is.** The actual giant-step count **equals
+  the pair count** (31 210 at 60 bits vs ~31 500 pairs `≈ r·ln r`). The deep-`j` range
+  is *"a negligible minority of real work."*
+* **"Predict `j₀`" is circular, and the agent proved it with the `α`-order.** Arbitrary
+  `α` (`2, 3, 5$, random) factors only **8/25** — and **exactly** when `a₀ = b₀` — while
+  Harvey's specially-ordered `α` factors **25/25**. **The order of `α` decides *which*
+  pairs match, not *where* in the `j`-range.** So predicting `j₀` would require
+  `a₀q + b₀p` — the Fermat value whose smallness **is** the factoring task.
+
+**⚠️ LIMITS, from the agent, verbatim: it did not implement Harvey's Prop. 2.7
+(the Cornacchia large-order `α`); its stand-in `α` is faithful *for the good pair* but is
+not Harvey's construction. It did not reconstruct Lemma 3.3's *specific* guaranteed
+pair (it enumerated **all** valid pairs — the correct object for a truncation attack).
+The `N^{1/10}$ tail law is measured over 5 points, `2³⁰–2⁷⁰`, and is **not proven
+asymptotically.** And it found **no new candidate** for a genuine second baby-step
+reuse.**
+
+**⇒ AND THE STANDING VERDICT, H(K) CLOSED: no genuine `k = 2` mechanism exists on the
+giant-step range — not because the position is unpredictable (§XXXIII) but because
+**that axis is not load-bearing (§XXXIV).** Both reasons are now measured.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
