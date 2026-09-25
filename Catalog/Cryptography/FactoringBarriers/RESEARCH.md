@@ -5518,6 +5518,77 @@ several exponent-like objects it was about.**
 
 ---
 
+### 7-undecuples-XLVI. ⚠️⚠️ THE FIRST CANDIDATE THAT PASSES ALL FOUR RULES — **and I could not get it to run**
+
+§7-undecuples-XL named the one live thread: *"a representation of the product tree
+not carrying `n` coefficients of `Θ(lg N)` bits."* **There is a way to dodge the
+representation entirely, and it is classical.**
+
+**★ THE OBSERVATION.** Harvey's Lemma 2.4 evaluates `f$ (degree `n`) at the `m$
+points `α^0,…,α^{m−1}` — **a geometric progression, not arbitrary points.** The
+cost-model check in §7-undecuples-XLIV (confirmed externally) established that these
+`m` multipoint evaluations are **the entire leading term**, `Θ(m·lg²N)`.
+
+**Evaluating a polynomial along a geometric progression is the chirp-z transform**,
+which **Bluestein (1970)** reduced to **a single convolution**, using
+`2jk = (j+k)² − j² − k²`:
+
+> `f(X^{2k}) = X^{−k²} · Σ_j (a_j·X^{−j²})·X^{(j+k)²}` — one correlation, and
+> **no square root of `X$ is required** (which matters over `Z_N$).
+
+Covering the odd powers by a second call on `x ↦ x·f(Xx)$ gives **all** `m$ points
+at **two convolutions of length `Θ(n+m)`**.
+
+**⇒ THE COST, re-counted (rule (1), every item).** A convolution of length `Θ(n+m)`
+with `Θ(lg N)$-bit coefficients is, by Kronecker, **one integer multiplication of
+`Θ((n+m)·lg N)$ bits**, costing `M((n+m)lg N) = Õ((n+m)·lg N)` with Fürer /
+Harvey–Hittmeir's quasi-linear `M(·)`. So
+
+> **`Õ((n+m)·lg N)`  versus  Harvey's `O((m+n)·lg²N)` — a factor `lg N`.**
+
+**⇒ AND IT PASSES THE OTHER THREE RULES.**
+* **Rule (3), magnitude:** this improves the term the external source confirmed is
+  **the whole bound** — not a non-term. ✓
+* **Rule (4), no circularity:** **no NTT over `F_p$ and no factorisation.** A
+  convolution is *exactly* the operation Harvey's own product tree already performs
+  via Kronecker. This is the distinction from the closed `Õ(n)$ route
+  (§7-undecuples-XXXI/XXXII), which required knowing `p,q`. ✓
+* **Rule (2):** it is a different algorithm, not a re-reading of Harvey's bound. ✓
+
+**❌ AND I COULD NOT GET IT TO RUN. Two implementations, two failures, both caught
+by testing (which is the only reason this reads as a bug and not a claim).**
+* **Attempt 1** used `X^{j²}$ with the identity `2jk = j²+k²−(k−j)²`, mismatching the
+  exponent by a factor of two. **Attempt 2** used the correct `2jk = (j+k)²−j²−k²`
+  but computed `conv[k] = Σ_j A[j]·C[k−j]` — a **convolution** — where the formula
+  needs `Σ_j A[j]·C[k+j]`, a **correlation**. Verified failure at `k = 0`, where the
+  code returns `a_0` and the true answer is `Σ_j a_j`. The fix is to reverse `A`
+  before convolving, and read index `k+n−1`; **I ran out of context before the third
+  attempt.**
+
+**⚠️ STATUS — and this is the most promising thing in the file, and it is UNVERIFIED.**
+*Sound in principle:* chirp-z/Bluestein is 1970 technology and the identity is
+checked by hand. *Sound on cost:* `Õ((n+m)lg N)$ vs `O((n+m)lg²N)$ is arithmetic, not
+speculation. *Unsound on nothing — but UNTESTED in this file*, twice, for want of one
+more debugging round.*
+
+**⚠️ NOVELTY, UNVERIFIED — and per §7-undecuples-XLIV I will not assume.** Bluestein
+is standard; the question is whether **anyone has applied it to Harvey's Lemma 2.4.**
+The agent that killed the batched-GCD found that GFHP already names that idea, so the
+prior here is genuinely poor. **One check settles it: read whether Harvey,
+Harvey–Hittmeir, or GFHP evaluate at the geometric progression by convolution or by
+Bhuesten's algorithm.** Note Harvey's Lemma 2.4 explicitly credits *Bhuesten's
+algorithm* for the same task — **so the relevant question is whether anyone has
+observed that Bhuesten's algorithm is unnecessary at a geometric progression**, which
+is precisely what the chirp-z identity says.
+
+**⇒ THE HANDOFF IS NOW TWO ORDINATE IMPLEMENTATION STEPS AND ONE LITERATURE CHECK**,
+all of them small and none requiring new mathematics:
+**(i)** fix the correlation indexing (reverse `A`, read `k+n−1`); **(ii)** measure the
+wall-clock against Lemma 2.4's evaluation at matched `n, m$; **(iii)** check the
+literature for "Bluestein at a geometric progression" applied to factoring.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
