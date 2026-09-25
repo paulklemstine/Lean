@@ -6655,6 +6655,54 @@ file can reach:**
 
 ---
 
+### 8.5. ✅ THE LAST THING I NAMED AS OPEN — "constructive smooth values" — IS TRIVIALLY SOLVED, AND THAT IS THE POINT
+
+§8.5-of-record named one survivor: *the density argument rules out `search`, not
+`construction`, so a `poly(log N)$-time **constructive** method for a `B$-smooth
+value of a quadratic is not ruled out.*` **It is trivially solvable, in one line,
+and the triviality is the closure.**
+
+**THE QS POLYNOMIAL IS `f(t) = t² + 2bt + c` WITH `c < 2b`.** Then
+
+> **`f(0) = c < 2b ≈ 2√N`, so `c` is `N^{1/2}`-SMOOTH — obtained in `O(1)$ time,
+> deterministically, with no sampling and no density argument whatsoever.**
+
+**⇒ SO "FIND A SMOOTH VALUE OF A QS POLYNOMIAL IN `poly(log N)$ TIME" IS SOLVED BY
+`T := 0`.** The density barrier of §8.4 was never about *existence* or
+*construction* of a smooth value.
+
+**★ AND THE REFRAMING, WHICH IS THE ACTUAL CONTENT: THE OBSTACLE IS *RANK*, NOT
+SMOOTHNESS.** The sieve does not need one smooth value; it needs **`≈ π(B)$ INDEPENDENT
+relations** to fill the factor-base matrix. So it must sweep a window of `≈ B²$
+integers to harvest `≈ π(B)$ smooth ones, and *that* is the `1/ρ(u)$ traversal.
+**The `L[1/2]$ barrier is the price of LINEAR-ALGEBRA RANK, not of arithmetic
+existence.**
+
+**★ AND THE TRIVIAL VALUE IS EXACTLY THE DEGENERATE ONE — which is why the sweep is
+unavoidable.** `t = 0$ yields the pair `(c, c)`: both sides are the *same* square, so
+the relation is the identity `c ≡ c (mod N)$ and is **discarded**. The cheap smooth
+value carries **no information**. **So the construction is easy precisely because the
+constructed value is useless, and the sieve's cost is entirely the cost of moving
+from a useless smooth value to a *full-rank family* of them.**
+
+**⇒ THIS IS THE HONEST END OF THE SMOOTHNESS THREAD, AND IT IS A CLOSURE RATHER
+THAN AN OPENING.** There is no `poly(log N)$-time smooth-value collector to find,
+because there is no need for one: a single smooth value is already constructive.
+**The real object is *rank acquisition*, and its `L[1/2]$ barrier is a linear-algebra
+statement about how many independent relations a window of size `B²$ supports** — which
+is the Martin-conjecture density question already covered in §8.4, and not a
+factoring primitive at all.
+
+**⇒ AND THE SCOPE MAP IS NOW CLOSED WITH NO RESIDUAL.** Every named thread is
+accounted for: the four primitives (§8.2, complete for polynomial-time methods);
+every sub-primitive framing (§8.1, §LII, optimal with no coarser view); the missing
+taxonomy slot (§8.3–§8.4, occupied, conjecturally optimal, behind Vinogradov); and
+the constructive-smoothness escape (§8.5, trivially satisfied and therefore not an
+escape). **What remains is not a gap in the map; it is the fact that the map is
+complete.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
