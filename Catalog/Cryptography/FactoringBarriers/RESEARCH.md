@@ -6986,6 +6986,51 @@ the census does not apply.
 
 ---
 
+### 4e-iv. ❌ §4e-iii (round 74) IS REFUTED BY ITS OWN OMITTED CALCULATION — the AP span is `2^t$`, the full range
+
+§4e-iii claimed the Hensel near-candidates are an *exploitable* arithmetic
+progression and that Coppersmith-for-AP would beat the list-decoding rate. **I
+flagged the missing calculation there, so here it is. It refutes the claim.**
+
+**THE CALCULATION.** The near-candidates are `{d + j·2^{t−ℓ} : |j| ≤ 2^ℓ}$`, so
+
+> number `= 2^{ℓ+1}`,  spacing `= 2^{t−ℓ}`,  **span `= 2^{ℓ}·2^{t−ℓ} = 2^t`.**
+
+**The span is `2^t$ — the entire range, independent of `ℓ$.** The "progression" is
+the whole space relabelled, not a small structured object. Coppersmith-on-AP over a
+progression of span `S` gives a small-root threshold of `S^{1/2}$ for the
+`d = 1$ case, i.e.
+
+> **`2^{t/2} = N^{1/2}$ of the range must be searched** — versus the tree-code route's
+> `0.243$ **fraction**.
+
+**⇒ SO COPPERTSMITH-FOR-AP IS *WORSE*, NOT BETTER, AND §4e-iii's "subsidy" IS A
+CHARGE.** The reason is worth keeping: equispaced points with **full span** are exactly
+the *uniform* distribution the random-code model already assumes. **So the
+decorrelation assumption `k ≈ 5$ is, to first order, correct — there is no hidden
+structure the tree model is failing to exploit.**
+
+**⇒ AND THE CONSEQUENCE FOR §4e's TWO OPEN ITEMS.** Item (i) is therefore **not an
+opening of the kind §4e-iii claimed.** The `0.237$ (achieved) vs `0.243$ (proved
+ceiling) gap is a genuine **list-decoding capacity** gap, not an encoding artefact,
+and no AP-based method closes it. **What is genuinely left in §4e is exactly what
+§4e already said it was:** (i) a *justification* of the `k ≈ 5$ assumption — and
+that justification, on this calculation, is **already given by the equispaced-full-span
+argument** — and (ii) the **asymmetric-channel** random-coding bound, which is a
+coding-theory gap, not an RSA one. **Neither is a factoring method, and §4e-iii's
+finer point stands: the *correlation* is a tax (it forces the list size `L$ and the
+`O(m)$ minimum distance), not a subsidy.**
+
+**⇒ AND THE COUNT. This is the FIFTEENT retraction in this file, and the fourth
+consecutive one in which a claim of mine died on a calculation I had myself flagged
+as necessary and not performed** (the `A − B$ = `E(k,N)$ identity; the round-56
+synthesis; the "binary-searchable step function" of §8.1; this one). **That is the
+whole finding, stated as a mechanism: naming the missing check does not perform
+it.** Rule (5) says read the source; this says **also do the arithmetic you yourself
+flag as missing**, because four times I did not.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
