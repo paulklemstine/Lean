@@ -5422,6 +5422,65 @@ made an hour ago, and the measurement is why.
 
 ---
 
+### 7-undecuples-XLIV. ❌❌❌ BATCHED-GCD RETRACTED: it is COSTA & HARVEY'S LEMMA 8 (2014), and its benefit is asymptotically NIL
+
+An adversarial novelty check read the primary sources. **The result is decisive and it
+kills the idea twice.**
+
+**★ KILL 1 — IT IS NOT NOVEL, AND IT IS HARVEY'S OWN COAUTHOR'S PUBLISHED LEMMA.**
+**Costa & Harvey, arXiv:1201.2116, *Math. Comp.* 83 (2014) 285–335, Lemma 8:**
+
+> "**Lemma 8.** Let `f_0,…,f_{k−1} ∈ Z/NZ`. Then we can decide if all `f_i` are
+> invertible modulo `N` and, if not, find a noninvertible `f_i` in
+> `O(k·M_int(log N) + log k·M_int(log N)·log log N)` bit operations.
+> **Proof.** See [BGS07, Lemma 12]. **The idea is to apply the GCD to the subproduct
+> tree formed by the `f_i`.**"
+
+**That is the proposed step, the exact cost accounting, and the descent — published in
+2014, in the same lineage, by Harvey's own coauthor.** It traces to **Bostan–Gaudry–
+Schost, SIAM J. Comput. 36(6) (2007), Lemma 12.** And **GFHP (arXiv:2512.19076)
+already names it in prose**: *"If the collision holds only modulo `p`, **batched gcd
+of evaluations** recovers `p` deterministically."* The general technique is Bernstein's
+canonical **batch GCD** (2004). **The binary-search fallback is likewise the named
+standard "subproduct tree" / "binary tree batch GCD" descent** — and Harvey's own
+Step 3c is already a "product divisible by `N$ ⟹ split" descent.
+
+**★ KILL 2 — AND THE "≈2×" BENEFIT IS ASYMPTOTICALLY NIL, PER HARVEY'S OWN
+ACCOUNTING.** This is the more important kill, and it **independently confirms what
+this file's own measurement already showed** (1.03×, §7-undecuples-XLIII):
+
+- Harvey charges the `m$ GCDs at **`O(m·lg N·(lg lg N)²)`** (half-GCD), which is
+  **`o(m·lg²N)` — asymptotically NEGLIGIBLE** next to the `m·lg²N` multipoint term.
+  **They are not "two equal halves."** My cost model in §7-undecuples-XLII was wrong,
+  and the round-33 measurement had already refuted it.
+- Forming the product `P = ∏ f(α^i)` costs **`m` modular multiplications** — the *same*
+  order as one GCD's inner steps. So the combine step is `Θ(m·lg N·lg lg N)` **either
+  way**; the net asymptotic saving **tends to a vanishing fraction of the total.**
+- **Costa–Harvey's own Lemma 8 agrees**: its cost is dominated by the `k`
+  **multiplications**, with the `O(log k)` GCDs lower-order — *the opposite of the
+  premise.*
+
+**⇒ THE FRONTIER, NOW CONFIRMED FROM AN EXTERNAL PRIMARY SOURCE.** The leading term
+of the deterministic `N^{1/5}$ algorithm is the **`m$ polynomial evaluations
+(multipoint evaluation, Lemma 2.4)**, and the GCDs are asymptotically negligible.
+**Beating it means beating polynomial arithmetic mod a composite `N$** — which is
+Harvey–Hittmeir's published log-log speedup (§7-undecuples-viginti) and, beyond that,
+**circular and in-ring-blocked** (§7-undecuples-XXXI/-XXXII). **This file's closure
+from rounds 20–21 is now confirmed independently, from the authors' own cost model.**
+
+**⚠️ EIGHTH RETRACTION, and the pattern is the finding.** The idea was (a) Harvey's own
+coauthor's 2014 lemma, (b) named "batched gcd" by GFHP, and (c) based on a cost model
+that its own primary source contradicts. **I found it, tested it, measured it, and
+still shipped a claim two of those three ways.** The saving grace — and it is the only
+thing that kept this from being a false method claim — is that **the measurement ran
+and said 1.03×**, and I recorded the weakening before the novelty check landed.
+
+**⇒ STANDING: thirty-four rounds, ZERO new factoring methods.** The frontier is the
+`m$ multipoint evaluations, and every attack on it is now closed — by Harvey &
+Hittmeir, by circularity, or by non-cyclicity.
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
