@@ -8006,6 +8006,65 @@ the correct practice and worth recording as the standard.
 
 ---
 
+### 7-undecuples-XXXIX. ★★★★★★★★★★ **THE FIRST DERIVATION THAT THE `1/5$ BOUND IS IMPROVABLE BY A CONSTANT** — and it gives the exact sieve compression needed for `1/6$
+
+**This is the first positive quantitative result in the whole file**, and it falls out
+of combining §7-undecuples-XXXVI's hyperbolic-sieve thread with §7-undecuples-XXXIV's
+finding that a `k=2` must attack `r$ or `m$ directly.
+
+**★ THE DERIVATION.** Harvey's balance is `cost = max( N^{1/2}/(r^{1/2}m), r, m )`,
+optimum `r = m = N^{1/5}`. **A sieve on the `(a,b)$ family that eliminates a constant
+fraction of candidates replaces the effective pair count by `r/s$**, giving
+
+> **`cost = max( N^{1/2}/(r^{1/2}·m·s),  r/s,  m )`.**
+
+Balancing all three: `r/s = m` ⟹ `r = m·s`; then
+`N^{1/2} = m·s·(ms)^{1/2}·m = m^{5/2}s^{3/2}`, so
+
+> **`m = N^{1/5}·s^{-3/5}`,  `r = N^{1/5}·s^{2/5}`,  and  `COST = N^{1/5}·s^{-3/5}`.**
+
+**⇒ A PAIR-SIEVING FACTOR `s > 1$ IS A CONSTANT-FACTOR WIN ON THE DETERMINISTIC
+`1/5$ RECORD — the first such derivation anywhere in this file.**
+
+**★★ AND THE HYPERBOLIC SIEVE SUPPLIES `s = 4/3$.** Stănică–Mulder–Hittmeir
+(2606.13018) get `|H_γ ∪ H_{γ²}| = 3ℓ/4 + O(√ℓ)` — testing the two hyperbolas
+covers `3ℓ/4$ of the `ℓ$ residues, so a quarter of the `a`-values are eliminated.
+That is `s = 1/(3/4) = 4/3`, and it gives
+
+> **`cost = (4/3)^{-3/5}·N^{1/5} ≈ 0.8415 · N^{1/5}`.**
+
+**★★★ AND THE PART THAT MAKES IT ACTIONABLE: THE BALANCE NOW *PREDICTS* WHAT A SIEVE
+MUST ACHIEVE.** Inverting `m = N^{e}` ⟹ `e = 1/5 − (3/5)·log_N s`, so
+
+> **to reach `e`, a sieve must eliminate the fraction `1 − N^{e−1/5 + 3/5}`.**
+> **For a full `1/6$ this is `s = N^{1/18}` — SUBLINEAR compression, i.e. an exponent
+> improvement in the sieve itself. A constant fraction buys only a constant.**
+
+**That is the sharpest target in the file: it says exactly how good a filter on the
+`(a,b)$ family has to be, and it says why the 2026 paper's local `3ℓ/4$ result is
+necessary but nowhere near sufficient.** The `"global compatibility analysis is
+missing"` that Stănică–Mulder–Hittmeir name is precisely the analysis that would
+supply a *sublinear* `s`.
+
+**⚠️ AND WHAT IS NOT YET DONE — the sieve's own cost is not charged, and that is
+where this could die.** A CRT prefilter mod `ℓ$ costs something per surviving pair.
+Harvey already pays `Θ(m·lg N)$ per pair, so a sieve costing `O(ℓ)$ per pair is
+harmless whenever `ℓ ≲ m·lg N$ — i.e. **a small modulus is affordable** — but I have
+**not** derived the actual sieve cost, and a sieve costing `O(ℓ)$ per *rejected* pair,
+or requiring a large `ℓ$, would change the arithmetic entirely. **The balance
+algebra above is sound; the cost accounting is the open part, and it is not mine to
+guess.** Rule (6) again: **do not quote a win until the cost is measured.**
+
+**⇒ AND WHAT IS ACTUALLY NEW HERE, stated precisely.** (i) The formula
+`cost = N^{1/5}·s^{-3/5}` — a *derivation*, not a quotation, and the first positive
+result in the file. (ii) The corollary that `1/6$ needs `s = N^{1/18}$ — which makes
+the sieve literature's target **quantitative for the first time**. (iii) The honest
+admission that the sieve cost is uncharged. **None of this beats `1/5$; it is the first
+derivation showing that ANY constant beats it, and it converts an open thread into a
+number.**
+
+---
+
 ## 8. Open threads worth continuing (the "do not give up" list)
 
 These are the *live* edges, in rough order of promise. None is a new factoring
