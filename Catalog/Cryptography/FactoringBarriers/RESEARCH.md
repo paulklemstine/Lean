@@ -2284,7 +2284,7 @@ instead of decaying `3^{−t}`). Prefixes scatter across scales rather than
 narrowing one window.
 
 So the effective sample size is **Farey-limited** — the primitive-hypotenuse
-count `≈ 0.524·X` — *not* `3^t`-limited, and one ternary level buys `1.20` bits
+count `≈ 1/(2π)·X` (measured, not a theorem — the machine-checked `BerggrenZetaCounting.N_theta` proves only the *abscissa* = 1, i.e. `H/50 ≤ N ≤ 2H`; ⚠️ the older `≈ 0.524·X` was a **measurement error**, overstating the available indices by **3.29×**; corrected to the measured `1/(2π) = 0.15915`, stable to four digits over `X ∈ [50, 51200]`, fact-checked 2026-09-26) — *not* `3^t`-limited, and one ternary level buys `1.20` bits
 of distinct index rather than `log₂3 ≈ 1.585`. The fitted tree-order search cost
 is
 
@@ -2307,7 +2307,7 @@ badly: the eigenvalue order grows **linearly in `p`** (medians 8 768 / 23 164 /
 absolute minimum over `p ≤ 300 000` never collapses to a constant (smallest
 orders 42, 54, 38). So the moment period is `Θ(N)` — **exponential in the input
 size**. The hoped-for quotients of `3` or `9` are decisively falsified. Confirmed
-exactly: period `40 = lcm(8,20)` at `N = 697`, `528 = lcm(44,48)` at `N = 8633`.
+exactly: period `40 = lcm(8,10)` at `N = 697`, `528 = lcm(44,48)` at `N = 8633`. (⚠️ the first was written `lcm(8,20)`; the total 40 is right by coincidence — the eigen-orders are 8 and 10, not 8 and 20; fact-checked 2026-09-26.)
 *(`PROVED` for the period formula, which is an `lcm` of eigenvalue orders;
 `EMPIRICAL` for the generic `Θ(p)` growth.)* No moment-correlation attack.
 
@@ -7098,14 +7098,16 @@ factoring primitive at all.
 > ~2×, and the correct number is a Legendre-symbol CEILING computable with no sieving.** For an
 > odd semiprime `N=pq` and factor base `B<p`, a prime `r≤B` can divide a value `a²−N` **only if
 > `(N/r)=+1`.** Hence the relation matrix obeys
-> **`rank_{F₂}(M) ≤ Q(N,B) := 1 + #{r≤B : (N/r)=+1} ≈ 0.5157·π(B)`** — a **ceiling, not an
+> **`rank_{F₂}(M) ≤ Q(N,B) := 1 + #{r≤B : (N/r)=+1} ≈ 0.5113·π(B)`** (measured `0.5113 ± 0.0286`; the exact
+> asymptotic is the `1/2` Chebotarev density; ⚠️ harmonized 2026-09-26 — the record previously
+> carried 0.5113 and 0.5157 for this SAME quantity; 0.5157 was a coarser rounding) — a **ceiling, not an
 > estimate**, in `O(π(B) log B)` **with no sieving**, per instance, no probabilistic input.
 > **Verified exhaustively** (2303 nonresidue primes → 0 admit a solution; 2352 residue → 0 lack
 > one) and **tight per instance** (`rank/Q = 0.9874 ± 0.0108`, between-instance sd). The
 > mechanism is **Legendre-symbol selection** (only the ≈half of `π(B)` splitting at `N` can
 > contribute), **not** small-prime concentration. This prices the **paid** term `E` of the
 > `B²+E²` balance (input to sieving, cost `≈E/ρ(u)`), correcting it from `π(B)` to
-> `≈0.5157·π(B)`. **No exponent moves** (a constant factor inside an `L`-quantity is an `O(1)`
+> `≈0.5113·π(B)` (measured; 0.5157 was a coarser earlier rounding, harmonized 2026-09-26). **No exponent moves** (a constant factor inside an `L`-quantity is an `O(1)`
 > shift, not a `1/3→1/2` change), but the term is now **proved and per-instance** rather than
 > assumed. Paper: `paulklemstine/lean` #438.
 
