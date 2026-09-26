@@ -156,10 +156,24 @@ the record's own claims were materially corrected. The load-bearing changes:
    Weingartner; relerr `<0.005/u²`, u≥5) pins the *constant* but not the ρ→Ψ_F passage.
 
 5. **Pythagorean/Berggren trees: dead by THEOREM, model-free** (#429). New sound facts:
-   `det(word)=±1` for every word (0 bits) and `max|W|=(3+2√2)^L/2` EXACTLY (certifying
-   `jointSpectralRadius(Berggren)=ρ(M₂)`; the first bound free of distributional assumptions).
-   The word-search cost floor `Y^{0.6232}` assumed brute-force-optimal search (meet-in-the-middle
-   gives `Y^{0.3116}`), and the CF-period branch re-runs `NegativeResults.lean` rows 3/21.
+   `det(word)=±1` for every word (0 bits) and `max|W|=(3+2√2)^L/2` EXACTLY (the first bound
+   free of distributional assumptions).
+   **⚠️ CORRECTION (2026-09-26, Pythagorean fact-check slice).** Two sourcing defects are
+   struck from this paragraph. (i) The claim **`jointSpectralRadius(Berggren)=ρ(M₂)`** is
+   **UNSUPPORTED**: a repo-wide grep for `jointSpectralRadius` returns exactly ONE hit — this
+   sentence itself. There is **no Lean declaration** of a joint spectral radius for the
+   three-generator semigroup; the Catalog computes det and charpoly *per generator*
+   (`BerggrenModular/Core.lean:277`, `BerggrenSpectral/Generators.lean:48-73`). The word
+   "certifying" is **withdrawn**; the numerical growth is right (measured `max|M₂^L| / (λ^L/2)`
+   = 1.0000 for L≥3) but the semigroup bound is **unproved here and unproved in the repo**.
+   (ii) `max|W|=(3+2√2)^L/2 EXACTLY` is **numerically correct for the max entry of the Perron
+   word `M₂^L`** but **no Catalog file states it**; the nearest machine-checked artifact
+   (`layer_max_bounds`/`layer_max_log_growth`, uncited) is a **Θ/asymptotic statement about
+   HYPOTENUSES** with measured constant `4.9749·λ^L`, **not** `λ^L/2`. So "EXACTLY" is a
+   constant-level normalization no artifact carries, and it was welded to the uncertified
+   (i) — it stands as a **numerical** fact, not a machine-checked one. The word-search cost
+   floor `Y^{0.6232}` assumed brute-force-optimal search (meet-in-the-middle gives
+   `Y^{0.3116}`), and the CF-period branch re-runs `NegativeResults.lean` rows 3/21.
 
 6. **The Galois/Frobenius non-abelian side-channel family is CLOSED three ways** (abelianization
    cap `I(coset;T)≤log₂[G:G']`; exact-zero which-factor wall; Artin/torsor no-pruning) and is
