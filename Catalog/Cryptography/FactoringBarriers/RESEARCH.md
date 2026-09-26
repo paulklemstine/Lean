@@ -186,12 +186,37 @@ the record's own claims were materially corrected. The load-bearing changes:
    Dickman parameter for smooth values of `t²−N` is `u = (½ log N + 2 log x)/log B`, not
    `log x/log B`.)
 
+8. **★ The class-group route is PRICED BY ERH-CONDITIONALITY, not by Cohen–Lenstra** (round 40).
+   `grep -i "cohen.lenstra\|cohen.martinet"` over this directory returns **ZERO hits** (the
+   record's "Lenstra" hits are Lenstra–Pomerance / Bühler–Lenstra–Pomerance / ECM /
+   Kleinjung–Bos–Lenstra / Bernstein–Lenstra; its "Cohen" hits are Cohen–Oesterlé); the pricing
+   is RESEARCH.md:9852–9857 (ERH). Any round targeting "Cohen–Lenstra pricing" is chasing a
+   citation that does not exist here. Also: **Cohen–Lenstra's odd part is a CONJECTURE**
+   (Smith arXiv:2606.06024: "still almost entirely unproven"; 2-primary = Gerth /
+   Fouvry–Klüners; higher `2^j` = Smith). **And `h(−pq)` is the OUTPUT of Hafner–McCurley**
+   ("also includes the computation of the class number"), not a cost term — so no class-number
+   measurement converts the pricing to measured. **The decisive measured fact: the
+   family→subfamily bridge is FALSE** — CL/Cohen–Martinet equidistribution does **not** transfer
+   to the factoring discriminants `D=−4pq` (**z = −41.4**, ratio −12%, gap **widening** with
+   `|D|`, −2.0 → −32.9 over 7 slices). So the pricing the route needs is not merely unproved,
+   it is measurably false. (The record's other fixes: the `2-torsion = C₂` universal is false for
+   `N≡1 (mod 4)` — 2-rank 2, `|Cl[2]|=4`; the CF period of `√(pq)` has median exponent **0.4329**,
+   not `0.5`; the finite-`X` Dickman inflation factor is **2.176×** at `X=2e7, B=66`.)
+
 **Discipline, all earned by retraction** (each paper carries its errata): never cite a source
 unopened; name the quantity (a mechanism and its target must act on the SAME quantity — the
 most-violated rule); a *proved* bound can be real yet **price the wrong direction** (a lower
 bound on smooth *supply* makes factoring easier); re-cost against the largest term; **no
 Dickman number enters without certified cross-validation** (hand-rolled solvers destabilise
-past u≈3). A kill is a success.
+past u≈3). A kill is a success. **★ Two further standing screens (rounds 39–40): (a) VACUITY
+FILTER — for any bound exponential in `|S|`/rank, check the output against the trivial bound
+(base-45 exceeds `2^1024` once `π(B) ≥ 187`, so the ECM-point published bound is `7.3×10⁵`
+orders worse than doing nothing); a real, explicit, published theorem can be VACUOUS at the
+operating point. (b) GENERATOR-POPULATION ERROR — never measure a per-instance quantity by
+pooling over instances and report a within-pool SE as a z-score; the z=22–182 significances of
+round 40 were against a null that ignored the dominant between-instance variance
+(sd(log F) ≈ 0.71). Every future measurement: ONE INSTANCE PER ROW, between-instance sd as the
+error bar.**
 **⚠️ ELEVEN claims in this file were retracted on 2026-09-24 (plus a correction of my own correction — §7-sextuples-ter). §7-undecuples-XXXI closes the last route by CIRCULARITY** — see §7-ter (the
 `q ∤ k` success condition is vacuous), §7-quater (the `(k,l)` core is Harvey's
 own formulation; the Fermat+Lehman unification is published), §7-sextuples (the
@@ -2615,9 +2640,15 @@ frieze/Markoff↔class-group channel (§4f) without a single experiment.
 **The `N`-dependent escapes, and why both die.** The only structures that
 *could* carry bits depend on `N`, and the two natural families are both closed:
 
-- **Imaginary** `Cl(ℚ(√(−pq)))`. Genus theory forces the 2-rank to `t − 1 = 1`,
-  so the 2-torsion is **exactly `C₂` — order 2, zero bits about `p, q`, for every
-  such `N`**. All `N`-content sits in the odd part and `v₂(h)` (measured
+- **Imaginary** `Cl(ℚ(√(−pq)))`. Genus theory forces the 2-rank to `t − 1 = 1`
+  **when `pq ≡ 3 (mod 4)`**, so the 2-torsion is `C₂` — order 2, zero bits about
+  `p, q`. ⚠️ **CORRECTION (round 40, 2026-09-25; genus theory re-verified, 0 violations
+  in 20,000 measured cases):** the **universal "for every such `N`" is FALSE.** For
+  `N = pq ≡ 1 (mod 4)` the fundamental discriminant is `D = −4pq`, which has **three**
+  prime discriminants, so the 2-rank is **2** and `|Cl[2]| = 4` (measured: **50.2%** of the
+  family). The record's *conclusion* (the 2-torsion carries zero which-factor bits) survives
+  in both cases; its *"exactly `C₂` for every `N`"* does not. All `N`-content sits in the odd
+  part and `v₂(h)` (measured
   `h(−4pq) ∈ 24…132`, `v₂(h) ∈ 2…6`), and extracting it needs a **subexponential**
   class-group computation (Hafner–McCurley, `L[1/2,·]`) — not poly, and it does
   not beat `L[1/3,1.9018836]`. (The ERH-conditionality of the `JAMS` version, flagged
