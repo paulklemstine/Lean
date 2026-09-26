@@ -203,6 +203,26 @@ the record's own claims were materially corrected. The load-bearing changes:
    `N≡1 (mod 4)` — 2-rank 2, `|Cl[2]|=4`; the CF period of `√(pq)` has median exponent **0.4329**,
    not `0.5`; the finite-`X` Dickman inflation factor is **2.176×** at `X=2e7, B=66`.)
 
+9. **★ RANK SATURATION — a PROVED, per-instance correction to a PAID term; and the DICKMAN
+   DENSITY ASSUMPTION SURVIVES MEASUREMENT** (round 41). The relation matrix obeys
+   **`rank_{F₂}(M) ≤ Q(N,B) := 1 + #{r ≤ B : (N/r) = +1} ≈ 0.5113·π(B)`** — elementary,
+   per-instance, `O(π(B)log B)`, **no sieving** — so the record's "≈`π(B)` independent relations"
+   is refuted by a **proved 1.96×**. **Report `1.96×`, not a `2.7×` total:** the larger figure
+   mixes a *measured but not bounded* `k_success ≈ 0.72·Q`, whereas `rank ≤ Q` only forces
+   `k_success ≥ rank+1` (the wrong direction for an upper bound). Over a real **35-instance
+   quadratic-sieve campaign**, `k_success` **never reached `m` in 35/35 runs** — the balance's
+   `E = √B = π(B)` is a **~3× over-count** of the paid term, and the surplus over the trivial
+   minimum is `~1.22 ± 1.25`, so there is **no exploitable surplus** (kills "rank saturation =
+   a computable win"). **★ POSITIVE:** the **Dickman density assumption survives direct
+   measurement** — `ρ(u)` predicts the real QS polynomial's `B`-smooth yield within a factor
+   `0.8–1.3` (between-instance spread ~25%); the density is now *measured*, not merely assumed.
+   (The harvest surface was killed on a **mis-scaled null** — `ρ(2u)` evaluated at `~N` while the
+   sieved values reach only `~0.08N` — not on the phenomenon; a magnitude-matched **proven**
+   control gives excess `0.990–1.022`.) **New lever P4:** `corr(Q/π(B), k_success/m) = +0.77` at
+   fixed `B` — the first per-instance, upper-bound-flavoured statement; executing it (fix `B`,
+   CRT-choose `N` to drive `Q/π(B)` low) is the missing controlled per-instance bound. **Do not
+   extrapolate to NFS** — none of the `1.96×` transfers to the `L[1/3]` balance.
+
 **Discipline, all earned by retraction** (each paper carries its errata): never cite a source
 unopened; name the quantity (a mechanism and its target must act on the SAME quantity — the
 most-violated rule); a *proved* bound can be real yet **price the wrong direction** (a lower
