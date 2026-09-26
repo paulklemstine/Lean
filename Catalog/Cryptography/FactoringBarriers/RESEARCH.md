@@ -146,7 +146,9 @@ the record's own claims were materially corrected. The load-bearing changes:
    independently), **but** the price `curves ≳ X/(1.0828·ln B)` is **WRONG — the inequality is
    REVERSED and the constant is too small** (independently fact-checked 2026-09-26, 18 cases,
    ratio 0.135→0.0007, reproduced by the main loop). The correct price is `curves = X/S(k)`,
-   `S(k)=Σ_{d|k}(φ(d)/d)·(harmonic factor) = Π_{p^a‖k}(1+a(1−1/p))`, which is 5–50× LARGER
+   `S(k)=Σ_{d|k,\,d≤X}(φ(d)/d)·(harmonic factor)` (⚠️ the **truncated** sum over `d ≤ X` is
+   the quantity that tracks measurement; the untruncated product `Π_{p^a‖k}(1+a(1−1/p))` is
+   valid only for `k(B) ≤ X`), which is 5–50× LARGER
    than `1.0828·ln B`, so `X/S(k) ≪ X/(1.0828·ln B)` — the claimed *lower* bound is violated
    (it is in fact an upper-ish scale, not a lower bound). **The #432 ECM price is therefore
    RETRACTED as numerically wrong, not merely conditional** (on group orders being uniform in
@@ -244,7 +246,12 @@ the record's own claims were materially corrected. The load-bearing changes:
    CRT-choose `N` to drive `Q/π(B)` low) is the missing controlled per-instance bound. **Do not
    extrapolate to NFS** — none of the `1.96×` transfers to the `L[1/3]` balance.
 
-10. **★ P4 IS CLOSED — a sign flip, and the density is governed by `Q`, NOT by Dickman** (round
+10. ~~**★ P4 IS CLOSED — a sign flip, and the density is governed by `Q`, NOT by Dickman** (round
+   42)~~ **[⚠️ this item's CONCLUSION ("optimum is Q as HIGH as the method allows") is
+   SUPERSEDED by item 12 below, which showed the PAID work is increasing in the COMPLETE cost
+   (sieve + GF(2)); the two items state OPPOSITE signs. Item 12 is authoritative. The design
+   rule and the "decreasing in Q" phrasing here describe the SIEVE term ONLY; read them with
+   item 12's complete-cost rule. Do not take the headline from this item alone.]** (round
    42, three validated executions). **The PAID sieving work is a DECREASING function of `Q`**
    (2.4×–13.1×, monotone): driving `Q` down to buy fewer relations makes factoring **strictly
    more expensive**; the optimum is `Q` as **high** as the method allows. **Design rule: any
@@ -254,8 +261,14 @@ the record's own claims were materially corrected. The load-bearing changes:
    yield is set by the **split-prime structure**, not by `ρ(u)` alone. **`Q` is NOT a free
    parameter**: in single-polynomial QS `r | f(c)` forces `(N/r) = +1`, so the factor base **is**
    the split set (2,215/2,215 verified), and the CRT premise is closed twice. And
-   `rank+1 ≤ k_success` (the inequality runs **backwards**), so the proved `rank ≤ Q` gives a
-   **lower** bound, not an upper bound on the work. **THE OPEN PROBLEM: given fixed `B`, can the
+   **⚠️ CORRECTION (fact-check 2026-09-26): the inequality direction is the OTHER way round.**
+   The first-dependence identity gives **`k_success ≤ rank_full + 1`** (the first dependence
+   appears at or before `rank_full+1` collected relations), re-derived from 68 verified rows
+   (`k_success ≤ rank_full` holds 59/68). So the proved `rank ≤ Q+1` actually yields an
+   **UPPER** bound on the relations needed — not a lower bound. The earlier statement here
+   ("`rank+1 ≤ k_success`… a lower bound, not an upper bound") was **backwards** and is struck;
+   item 10's "lower bound" phrasing is the same slip. The P4 verdict (no decoupling) is
+   unaffected. **THE OPEN PROBLEM: given fixed `B`, can the
    yield collapse be evaded WITHOUT shrinking the column space?** (large-prime/partial-relation
    variants, multi-polynomial QS, per-instance adaptive `B` — all outside single-polynomial QS.)
 
