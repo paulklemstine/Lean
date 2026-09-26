@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-26T09:58:47Z",
-  "count": 176,
+  "archived_at": "2026-09-26T14:26:19Z",
+  "count": 177,
   "directions": [
     {
       "id": "fd_3695",
@@ -6973,6 +6973,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 204
+    },
+    {
+      "id": "fd_3488",
+      "title": "FACT round-32 #3 — UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fields (paper 112)",
+      "description": "## FACT round-32 #3 — UNIVERSAL-S3-CORRECTED (paper 112)\n\n**Verdict name: THE-LAW-IS-UNIVERSAL.**\n\n### Result\nA DIFFERENT S3 field (x3-2, disc -108) gives exactly the same 1-bit channel as paper 80's x3+x+1 (disc -31). The type-channel law depends only on GROUP STRUCTURE, not on which polynomial realizes the group.\n\n- I(p mod 3; T) = 1.0000 EXACTLY (sign character at conductor 3)\n- Semiprime pair channel = 1.0000\n- Coprime moduli flat\n\nNow 447 experiments. Assessment v223. Paper 112.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "85c32d45",
+      "timestamp": "2026-08-21T21:40:03.959366+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-25T17:57:43.826072+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 203
     }
   ]
 }

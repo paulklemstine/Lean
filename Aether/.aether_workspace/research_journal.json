@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cc3115b2",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Standard-part projection-valued measures\n\n## Status of the programme\n\nThe mission conjecture is proved, sorry-free, in the form\n\n> for a family of hyperreal matrices with **finit",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 103,
-      "timestamp": "2026-09-07T10:00:17",
-      "title": "Standard-part projection-valued measures"
-    },
-    {
       "cycle_id": "fd463ee8",
       "domain": "Physics",
       "key_insight": "# Future directions — beating three middle layers for weakly `D₆`-free families\n\n## What this cycle established (all formalised, 0 sorries)\n\nWorking in `2^[n]` with the *weak* containment order (`Weak",
@@ -499,19 +489,19 @@
       "theorem_count": 78,
       "timestamp": "2026-09-26T09:59:02",
       "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after UNIVERSAL-S3-CORRECTED (paper 112)\n\n## What this cycle established (all in `Catalog/Novelty/`, 0 sorries)\n\n* `S3SignChannelUniversal.lean` — for **every** finite group `G`,",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-09-26T14:26:33",
+      "title": "FACT round-32 #3 — UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fields (paper 112)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5223d87b",
-      "domain": "Logic",
-      "key_insight": "# Future directions — dial capture ceilings and the `u ≈ 10` overdispersion carrier\n\nThe formalization in `Catalog/Logic/QRDialDispersionLaws.lean`,\n`Catalog/Logic/QRDialOrthogonality.lean`, `Catalog/",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-25T09:52:56",
-      "title": "FACT round-78 #2 — QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY — small-prime QR dial doe"
-    },
     {
       "cycle_id": "d3d53c1e",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 78,
       "timestamp": "2026-09-26T09:59:02",
       "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after UNIVERSAL-S3-CORRECTED (paper 112)\n\n## What this cycle established (all in `Catalog/Novelty/`, 0 sorries)\n\n* `S3SignChannelUniversal.lean` — for **every** finite group `G`,",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-09-26T14:26:33",
+      "title": "FACT round-32 #3 — UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fields (paper 112)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "24d71196",
-      "domain": "Shared",
-      "name": "succProb_lt_half",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a55a0103",
-      "domain": "MachineLearning",
-      "name": "tri_eq_pr",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a55a0103",
-      "domain": "MachineLearning",
-      "name": "pr_eq_pair",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a55a0103",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "units_zmod_eight",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "name": "cubic_factor",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "name": "disc_factor",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-26T09:59:02",
+  "last_updated": "2026-09-26T14:26:33",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c90a227e",
-        "quality": 0.82,
-        "theorems": 13,
-        "title": "Generalize from permutations of distinct elements to multisets with repeated key"
-      },
-      {
         "cycle_id": "24e44638",
         "quality": 0.86,
         "theorems": 95,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 95,
         "title": "Seven-state strong-connectivity conjecture"
+      },
+      {
+        "cycle_id": "85c32d45",
+        "quality": 0.72,
+        "theorems": 64,
+        "title": "FACT round-32 #3 — UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fi"
       }
     ],
     "NumberTheory": [

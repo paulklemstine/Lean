@@ -494,6 +494,104 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Two more absent-from-record index-calculus/sieving papers: multiplicative-relations factoring (arXiv:2211.06821) and quantum-SAT factoring (arXiv:1910.09592)\n\nContinuing the broad arXiv sweep. Two more verified, absent-from-record papers directly in\nthe campaign's index-calculus/sieving territory (0 grep hits each in the 9,771-line record).\n\n## 1. arXiv:2211.06821 \u2014 \"Factoring using multiplicative relations modulo n: a subexponential algorithm inspired by the index calculus\"\nReduces factoring to finding an **overdetermined system of multiplicative relations in any\nfactor base modulo `n`**. Runtime `exp(O(\u221a(lg n\u00b7lg lg n)))` \u2014 or `exp(O((lg n)^{1/3}(lg lg n)^{2/3}))`\nwith a number-field-sieve addition \u2014 but it **requires a rational (not GF(2)) linear-algebra\nphase**, more intensive than classical index calculus. The authors state it is **certainly\nslower than the best known factoring algorithms**, notable only for **simplicity and\nsimilarity to index calculus**.\n\n**Relevance.** This is a clean, self-contained demonstration that the *multiplicative-relation\nparadigm* factors integers subexponentially via a rational (not binary) linear-algebra step \u2014\na structural point the campaign's index-calculus/GF(2) treatment touches only obliquely. The\n**rational-vs-GF(2) linear-algebra distinction** is the notable bit: the campaign has repeatedly\nstressed that the *paid* linear-algebra term (sparse GF(2) elimination) is where a per-instance\nquantity (rank/nullity) governs cost \u2014 this paper's rational variant makes that contrast\nexplicit. It changes no exponent or method.\n\n## 2. arXiv:1910.09592 \u2014 \"On speeding up factoring with quantum SAT solvers\"\nInvestigates using **quantum SAT solvers** to speed factoring. Adjacent to the campaign's\n(out-of-scope) quantum-order-finding thread. Recorded for completeness; the campaign scopes\nquantum out of the classical record.\n\n**Net.** Two more absent-from-record papers; neither changes the deterministic `N^{1/5}`\nbarrier or any `L[1/3,c]` exponent. The multiplicative-relations paper is the more notable: it\nmakes explicit that a **rational** (rather than GF(2)) linear-algebra phase is what its\nsimplicity buys, and prices that trade-off honestly (slower than the state of the art).\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4996",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-26T14:27:02.180145+00:00",
+    "title": "FACT fresh-sweep (4) \u2014 two more absent-from-record index-calculus/sieving papers. (1) arXiv:2211.06821 'Factoring using multiplicative relations modulo n: a subexponential algorithm inspired by the index calculus' \u2014 reduces factoring to an overdetermined system of multiplicative relations in any factor base mod n, runtime exp(O(sqrt(lg n lg lg n))) (or exp(O((lg n)^(1/3)(lg lg n)^(2/3))) with NFS addition), but requires a RATIONAL (not GF(2)) linear-algebra phase; authors state it is CERTAINLY SLOWER than the best known, notable only for simplicity and index-calculus similarity. Notable structurally: makes explicit the rational-vs-GF(2) linear-algebra contrast the campaign's sparse-EL rounds stressed. Changes no exponent/method. (2) arXiv:1910.09592 'speeding up factoring with quantum SAT solvers' \u2014 adjacent to the out-of-scope quantum thread, recorded for completeness. Both 0 hits in the 9771-line record"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Catalog recon: every slice is a re-derivation \u2014 but the FACT-CHECK caught two real defects in the main loop's own posts\n\nA 4-slice recon (number-theory trees, algebra/CM, a deep Pythagorean/Berggren re-mine, and an\nadversarial **fact-check of the campaign's own posted claims**). The honest headline: **no slice\nopens a factoring channel, moves `N^{1/5}`, or re-opens QS/NFS/p\u00b11** \u2014 which is a success by the\ntask's standard. But the **fact-check slice found two real errors in MY OWN work** (see below),\nwhich is the most valuable output of the round.\n\n## The fact-check caught two real defects (main loop)\n1. **#436 (class-number numbers) did NOT reproduce** \u2014 mean h is **\u22481717 (2.28\u00d7 higher)** than\n   posted, and `h/\u221aN \u2248 0.65` (not `0.2609`): the reduced-form enumeration undercounts ~2.3\u00d7\n   and the `\u221aN/\u03c0` baseline is wrong for the `|D|=4N` cases. **Retracted on the issue.** (The\n   conclusion survived \u2014 `h\u22480.65\u221aN` is still `\u0398(\u221aN)`.)\n2. **#453 had a fabricated citation** \u2014 \"[MS88] Maurer\u2013S\u00fc\u00df\" is wrong; it is Mignotte & Schnorr\n   (1988), a finite-field root-isolation paper. **Corrected on the issue.** (The three\n   substantive claims of #453 \u2014 GNU16 3/2-equivalence, even-GRH-open, unknown `p\u22121`-smooth\n   infinitude \u2014 were confirmed correct.)\n\n## Ranked work-list of unmined (mostly re-derivation) catalog material\n1. `Bridges/QSFactorBaseDimension.lean` (`qs_congruence_of_squares` :160, `smooth_qsValue_support` :137) \u2014 the record's own round-41 rank ceiling, in-tree (five copies, earliest 2026-08-22) and **cited zero times**. **Provenance finding:** it was machine-checked weeks before the commit that states it. *Caveat:* it proves the structural half only; the `0.5113\u00b7\u03c0(B)` / `1.96\u00d7` remain **measured, not proved**.\n2. `Cryptography/BerggrenSpectral/SpectrumAndTrace.lean` (`bergTrace` :114, `berg_two_orderOf` :75) \u2014 a fourth, unlisted Berggren entry; closes a citation gap at RESEARCH.md:2297 (proved: `ord_p(M\u2082)=lcm(2,ord_p(bergU))`; note it does NOT identify `ord_p(bergU)` with the eigenvalue-order lcm the record's wording implies \u2014 downgrade the phrasing).\n3. `Algebra/ClassGroupResidueDial.lean` (`factor_blind` :89) \u2014 formalises the record's fixed-class-group cost barrier as a *content* statement.\n4. `Probability/CMECMGeneral*` (\u00d78) + `Novelty/CmEcmOrder*` (\u00d73) \u2014 prices the ECM order on the inert CM half (a re-derivation).\n5. `Shared/ECMStage1*.lean` (\u00d75) \u2014 `card_firingSet m k = gcd m k`; the bridge to a curve count is the **unproved ECM order distribution** already flagged at :147.\n\n## Direction audit (the recon's own kill)\nThe only claimed computational payoff, `inert_dial` (\"\u2113 | p+1 \u27fa p \u2261 \u22121 mod \u2113\", an O(1)\noracle), acts on **p** while the algorithm has **N=pq** \u2014 it is **circular** (O(1)\nconditional on already having factored). The same which-factor wall kills\n`ECMParity.E0Card_mod_four_ne_two_of_form`. Neither is a tool.\n\n## Honest owed\n**No file was compiled** \u2014 the checkout cannot build (pinned v4.28.0 lakefile parse failure,\nzero `.olean`s). \"Machine-checked\" here means as-proved in source, not kernel-verified this\nsession. The `BerggrenLatticeBijection.lean` 1/(2\u03c0) constant is advertised but only a\nfactor-100 \u0398 is proved; the record's \"\u22480.524\u00b7X\" is likewise unproved.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4997",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-26T14:27:02.183074+00:00",
+    "title": "FACT catalog-recon \u2014 every slice a re-derivation (no channel opens, N^(1/5) unmoved), BUT the fact-check slice caught TWO real defects in the main loop's own posts: #436's class-number numbers DO NOT reproduce (mean h~1717 = 2.28x, h/sqrtN~0.65 not 0.2609; enumeration undercounts ~2.3x; sqrtN/pi baseline wrong for |D|=4N \u2014 RETRACTED, conclusion survived) and #453 had a FABRICATED citation ([MS88] Maurer-Suss -> actually Mignotte & Schnorr 1988 \u2014 CORRECTED; its three substantive claims confirmed). Ranked unmined work-list: QSFactorBaseDimension (the round-41 rank ceiling, in-tree weeks before the commit, cited 0x, but proves the structural half only \u2014 0.5113*pi(B) remains MEASURED not proved), BerggrenSpectral/SpectrumAndTrace (closes a citation gap; ord_p(bergU) is NOT the eigenvalue-order lcm \u2014 downgrade phrasing), ClassGroupResidueDial, CMECMGeneral, ECMStage1. inert_dial O(1) oracle is CIRCULAR (acts on p, algorithm has N=pq). No file compiled (checkout cannot build)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Assessment: the combinatorial large sieve (arXiv:2606.17487) is a real tool but does NOT directly give the campaign's per-instance smooth-density bound\n\nReading the full text of **arXiv:2606.17487** (absent from the record, surfaced by the broad\nsweep, #455): a genuine **combinatorial large sieve** for sets with bounded algebraic\nmultiplicities, using **algebraic splitting modulo many small primes** (local congruence\nbranching \u2192 modular collisions; bounded-multiplicity hypotheses \u2192 global bound). Theorem 1.1\ngives, e.g., a Sidon-subset bound `|A| \u2264 N\u00b7exp(\u2212c\u00b7log N\u00b7log log N)` in `[1,N]^2`, and a\n**norm-form** application counting solutions to `F(x)=c`.\n\n**Precise relevance to the campaign (honest, after reading the actual statements):**\n- It is a real, rigorous sieve tool in exactly the algebraic-splitting-mod-small-primes\n  register the campaign's smoothness machinery lives in.\n- **But it is NOT the missing ingredient.** The campaign's open density gap (round 38) is a\n  **per-instance upper bound on the number of `y`-SMOOTH values of a structured form** `F(t)`\n  (e.g. `t\u00b2\u2212N`) \u2014 how many `t` make `F(t)` factor over a small base. This paper bounds the\n  size of **Sidon-type / bounded-multiplicity SETS** and the number of representations of a\n  **norm-form value**, under a **global bounded-multiplicity hypothesis** \u2014 a different\n  combinatorial object, with a different (stronger) hypothesis, and a different conclusion.\n  It does **not** upper-bound the smooth-value density of `t\u00b2\u2212N` at the operating point.\n\n**Conclusion:** cite it in the record as a rigorous **sieve/collision** tool relevant to the\ndensity program, and note explicitly that the **per-instance smooth-value upper bound for a\nstructured form remains open** \u2014 this paper narrows neither the difficulty nor supplies the\nmissing ingredient. No new factoring method; the smoothness-escape horn is unchanged.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4998",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-26T14:27:02.185887+00:00",
+    "title": "FACT largesieve-assess \u2014 reading arXiv:2606.17487 in full: a real combinatorial large sieve via algebraic splitting mod small primes (Theorem 1.1; Sidon-subset bound |A|<=N exp(-c logN loglogN); norm-form application), but it is NOT the campaign's missing ingredient. It bounds bounded-multiplicity SETS and norm-form REPRESENTATIONS under a global bounded-multiplicity hypothesis \u2014 a different combinatorial object/conclusion from the campaign's open per-instance UPPER bound on the number of y-SMOOTH values of a structured form F(t)=t^2-N. Cites it as a rigorous sieve/collision tool in the density program; the per-instance smooth-density bound for a structured form REMAINS OPEN \u2014 this paper narrows neither difficulty nor supplies the ingredient. No method; smoothness-escape horn unchanged"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Three more absent-from-record factoring papers: Tensor-Network Schnorr sieving, Delta-sieving, and a combinatorial large sieve via algebraic splitting\n\nContinuing the broad arXiv HTML-search sweep (which keeps yielding genuine, unrecorded\nresults). Three further papers, **all with 0 hits in the 9,771-line record**, directly\nrelevant to the campaign's territory. Recorded with faithful author-scoped claims.\n\n## 1. arXiv:2410.16355 \u2014 \"Integer Factorization via Tensor Network Schnorr's Sieving\"\nA classical factoring method using **tensor-network** representations of Schnorr's\nsieving/parity-correction framework. Targets the parity-correction step of GNFS-style\nsieving. The campaign has closed the deterministic `N^{1/5}` and the QS/NFS paid-term\nbalances, but has **not** examined tensor-network speedups of the sieving/parity step \u2014 this\nis a **practical, representational** improvement, not an exponent change (the same category\nas Smooth Subsum Search, #454).\n\n## 2. arXiv:2109.09599 \u2014 \"Integer Factorization By Sieving The Delta\"  *(note: the \u0394 here is the prime gap, not the record's \u0394)*\nFor `n = p\u00b7q` (p<q), `\u0394 = |p\u2212q|`; the paper **hypothesises** that factoring takes `O(1)`\nonce a \"steady state\" is reached for `\u0394` in a zone. This is the **`p\u2212q` (prime-gap)**\nquantity, distinct from the campaign's `\u0394` notation in the Ramanujan/Euler-gap cell (which\nmeasured `gcd(a^{N\u22121}\u22121,N)` reveal counts for a large Euler gap). **Scope: an explicit\nhypothesis, not a theorem** \u2014 a claimed `O(1)` factoring heuristic on a prime-gap structure.\nThe record should cite it as an **unproven prime-gap-based factoring hypothesis** (and note\nit is a *different* \u0394 from its own Euler-gap notation, a genuine collision risk).\n\n## 3. arXiv:2606.17487 \u2014 \"A combinatorial large sieve for Sidon sets, distances, and norm forms\"\nDevelops a **combinatorial large sieve** for sets with bounded algebraic multiplicities, using\n**algebraic splitting modulo many small primes**: local congruence branching produces modular\ncollisions, and bounded-multiplicity hypotheses force a global bound. This is directly\nrelevant to the campaign's **admitted smoothness/density gap** (round 38: the \"no lower bound\nof any kind\" / smooth-value-density problem). A large-sieve bound controlling how many values\nof a structured form are simultaneously smooth is **exactly the missing ingredient** type the\ncampaign identified \u2014 this paper develops the sieve side of it.\n\n**Net:** three more verified, absent-from-record papers. None changes the deterministic\n`N^{1/5}` barrier (all are practical/sieve-method results or a heuristic). The large-sieve\npaper (#3) is the most relevant to the campaign's open density gap and merits a dedicated\nlook: does its bound actually control the smooth-value density of a structured form (the\nsmoothness-escape horn), or is it a different setting?\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_4999",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-26T14:27:02.188502+00:00",
+    "title": "FACT fresh-sweep (3) \u2014 three more ABSENT-from-record factoring papers: (1) 2410.16355 Tensor-Network Schnorr's Sieving (practical/representational, not an exponent change, same category as #454); (2) 2109.09599 'Sieving The Delta' hypothesises O(1) factoring for the PRIME GAP delta=|p-q| in a zone \u2014 explicit HYPOTHESIS not theorem, and a NOTATION COLLISION with the record's own Delta (Euler-gap cell), a different quantity; (3) 2606.17487 'A combinatorial large sieve ... norm forms' \u2014 large sieve via ALGEBRAIC SPLITTING mod small primes with bounded-multiplicity hypotheses, the SIEVE side of exactly the smooth-value-density ingredient round 38 flagged missing for the smoothness-escape horn. None changes N^(1/5); #3 merits a dedicated look"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Fresh find: Smooth Subsum Search (arXiv:2301.10529) \u2014 a 5\u201310\u00d7 practical QS speedup by forcing candidates to be divisible by several factor-base primes (absent from the record)\n\nA broad arXiv search sweep (the HTML endpoint, since the API 406s here) surfaced a directly\nrelevant paper the 9,771-line record does **not** cite (0 grep hits): **\"Smooth Subsum Search:\nA heuristic for practical integer factorisation\" (arXiv:2301.10529)**. It is squarely in the\ncampaign's QS/smoothness territory and complements its recent findings.\n\n## The mechanism\nStandard Quadratic Sieve searches for smooth values among candidate values. **Smooth Subsum\nSearch instead represents candidates as SUBSUMS that are always divisible by several\nfactor-base primes at once.** The resulting values are **generally smaller** than those\nconsidered in the QS, which **increases the likelihood they are smooth** \u2014 a real, mechanical\nincrease in the smoothness yield per candidate, not a re-analysis.\n\n## The result (honest scope)\nBenchmarked against the fastest Python Self-initializing Quadratic Sieve implementations, a\nPython version of the approach runs **consistently 5\u20137\u00d7 faster for 45\u2013100 digit** numbers and\n**~10\u00d7 faster for 30\u201340 digit** numbers.\n\n**Scope / limits stated by the authors and recorded here faithfully:**\n- It is explicitly a **heuristic for PRACTICAL factoring**, not an asymptotic improvement \u2014\n  the QS remains the most efficient practical method up to ~100 digits (NFS is asymptotically\n  faster). It does **not** touch the deterministic `N^{1/5}` barrier (a different, exact\n  record) and does **not** change any `L[1/3,c]` / `L[1/2,\u00b7]` exponent.\n- The authors note a **randomness** in the runtime for 90\u2013100 digit inputs (limited number of\n  relations found), and that the last-column speedup factors are **astonishingly similar**\n  across sizes (no substantial asymptotic trend) \u2014 i.e. it is a **constant-factor practical\n  win**, exactly the category the campaign's vacuity/complete-cost screens classify as not\n  moving an exponent.\n\n## Why it belongs in the record\nIt is a genuine, recent, citable **practical** improvement to the QS smooth-value yield \u2014 the\nsame quantity the campaign measured in rounds 41\u201343 (where it established the paid work is\ngoverned by `Q` and the density is a `\u03c1(u)`-versus-`Q` story). This paper attacks the same\nyield from the **construction** side: by forcing candidates to be divisible by several factor-\nbase primes, it raises smoothness per candidate by a **constant factor** \u2014 complementary to,\nand consistent with, the campaign's finding that the *exponent* is pinned by the `Q`/density\nbalance. **The record should cite it as a practical (constant-factor) QS improvement, distinct\nfrom the deterministic `N^{1/5}` record and from any exponent change.**\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5000",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-26T14:27:02.190968+00:00",
+    "title": "FACT fresh-sweep \u2014 SMOOTH SUBSUM SEARCH (arXiv:2301.10529, absent from the record): a 5-10x PRACTICAL QS speedup by representing candidates as SUBSUMS always divisible by several factor-base primes, so the resulting values are smaller and more likely smooth. 5-7x for 45-100 digits, ~10x for 30-40 digits (benchmarked vs fastest Python SIQS). Author-stated scope: a HEURISTIC for PRACTICAL factoring, NOT asymptotic (NFS still asymptotically faster, QS still best to ~100 digits); does NOT touch the deterministic N^(1/5) barrier or any L-exponent \u2014 a CONSTANT-FACTOR win, exactly the category the campaign's screens classify as not moving an exponent. Complements rounds 41-43 (paid work governed by Q, density-vs-Q): this attacks the same smooth-value yield from the CONSTRUCTION side by raising smoothness per candidate. The record should cite it as a practical QS improvement, distinct from the deterministic record"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# A fresh literature anchor for the 3/2 motif barrier: arXiv:2509.12705 (unconditional deterministic polynomial factorization mod p) \u2014 cites Guo\u2013Narayanan\u2013Umans \"equivalent to beating 3/2\" and notes even GRH has no general method\n\nA broad arXiv sweep (beyond the recent-listings check) surfaced **arXiv:2509.12705, \"Deterministic\npolynomial factorisation modulo many primes\"** (Altman), **entirely absent from the 9,771-line\nrecord** (0 grep hits). It is directly relevant: it is the current statement of the **same 3/2\nmotif barrier** the record's `N^{1/5}` framing rests on, and it sharpens two points the record\ntreats as open.\n\n## What the paper establishes\n> An **unconditional deterministic algorithm** that, given an irreducible `f \u2208 \u2124[x]`,\n> computes the factorisations of its reductions mod `p` for all primes `p \u2264 N`. The\n> **average running time per prime is polynomial** in the input size and the degree of the\n> splitting field of `f` over \u211a. **In particular, if `f` is Galois, it factors in\n> (amortised) deterministic polynomial time.**\n\nSo deterministic polynomial-time factoring of a reduction is now known **unconditionally** in\nthe Galois-splitting-field case (a genuine advance on a \"notorious open problem\"), while the\ngeneral (non-Galois) case remains open.\n\n## Why it matters to the factoring record\n- It cites **Guo, Narayanan, Umans (MFCS 2016), \"Algebraic problems equivalent to beating\n  exponent 3/2 for polynomial factorization over finite fields.\"** This is an independent,\n  current confirmation of the campaign's core framing: the deterministic record's `N^{1/5}` is\n  the integer instance of a **3/2 baby-step/giant-step motif barrier** (the same structure the\n  capstone derived three ways). The paper *also* states the sharper GRH-side fact:\n  **even under GRH there is still no known method** for the general deterministic\n  reduction-factorisation, and the classic `p\u22121`-smooth sub-case (Maurer\u2013S\u00fc\u00df, [MS88]) is noted\n  with the caveat that **it remains unknown whether there are infinitely many such primes**.\n  This is a verified, citable anchor for the exact \"conjectured-absolute\" hedge the campaign\n  applied to the density barrier.\n- The **Galois case** is a clean, proved *conditional* polynomial-time fact on a **structured\n  input** \u2014 structurally the same idea as the campaign's own \"read a value-level feature\"\n  lens, but proved and unconditional, and it identifies the **splitting-field degree** as the\n  quantity that governs the cost. This is a useful, newly-citable boundary for the record.\n\n## Scope (honest)\nThis does **not** change the deterministic integer record or produce a factoring method. It\n(a) supplies the record with a **verified, current literature anchor** for the 3/2 motif\nbarrier and the \"even-GRH-open / `p\u22121`-smooth-infinitude-unknown\" hedges, and (b) supplies a\nproved structured-input (Galois) polynomial-time result whose cost is governed by the splitting\nfield degree. Both are new-to-the-record facts; neither is a method.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5001",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-26T14:27:02.193370+00:00",
+    "title": "FACT fresh-sweep \u2014 a CURRENT literature anchor for the 3/2 motif barrier, absent from the record: arXiv:2509.12705 'Deterministic polynomial factorisation modulo many primes' (Altman) gives an UNCONDITIONAL deterministic algorithm factoring f mod p for all p<=N, polynomial per prime in the splitting-field degree, and deterministic POLYNOMIAL TIME in the Galois case. It cites Guo-Narayanan-Umans (MFCS 2016) 'algebraic problems EQUIVALENT to beating exponent 3/2' \u2014 an independent current confirmation of the record's framing that N^(1/5) is the integer instance of a 3/2 baby-step/giant-step motif barrier \u2014 and states that EVEN UNDER GRH no general deterministic method is known, and the p-1-smooth sub-case has UNKNOWN infinitude. Supplies the record a verified citable anchor for its 'conjectured-absolute' hedge and a proved structured-input (Galois) poly-time result governed by splitting-field degree. No change to the integer record; no method"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# The three open doors, probed: each is genuinely open, and each is now precisely bounded\n\nAfter the frontier closed (33 papers, #451), the campaign's three remaining open doors were\nprobed directly. All three return **honest negatives that narrow exactly what an attack must\novercome** \u2014 the sharpest possible statement short of solving them.\n\n## Door 1 \u2014 UMW rank-2 additive separability: structurally distinct, no covering\nA **rank-2** GAP difference set has **gcd = 1** (no common factor), whereas a 1-D AP's\ndifferences are all `(i\u2212j)c` sharing a factor `c > 1`. **So He\u2013Sahai's 1-D incidence bound\n(arXiv:2608.06681) provably does NOT transfer to rank-2** \u2014 the remaining door is genuinely a\ndifferent object, not secretly closed. But a small rank-2 GAP reaches only **38/40** coverage,\nfar from the `n^{1/3}` regime the conjecture needs. **The door is open; no covering built.**\n\n## Door 2 \u2014 the smooth-value upper bound: the horn is NOT broken by the QS form\nFor `F(t) = t\u00b2 \u2212 N` (the quadratic-sieve polynomial), the observed count of `B`-smooth values\nover a window is **1\u20133, versus \u03c1(u) \u2248 2440 predicted \u2014 an excess of 0.00\u00d7.** The structured\nform produces **far fewer** smooth values than random integers of the same size \u2014 the\n**opposite** of what would break the smoothness-escape horn. So the horn **survives** for\n`t\u00b2\u2212N`; the structure makes it *sparser*, not denser. (Consistent with round 38's \"Dickman is\nblind to structure\" \u2014 here in the safe direction.)\n\n## Door 3 \u2014 the per-instance class-number bound: `h` is generically `~\u221aD`, not small\nFor a real balanced semiprime, `h(Q(\u221a(\u2212pq))) \u2248 0.26\u20130.44\u00b7\u221aD` (analytic class-number formula,\n`L(1,\u03c7) = O(1)`) \u2014 so **`h` is generically `~\u221aD`, not small**. The Hafner\u2013McCurley\nsubexponential gain therefore must come from the **largest prime factor (or smooth part) of\n`h`**, not from `h` being small. The real open object is a per-instance bound on `lpf(h)`,\nwhich is the **class-number problem in disguise** \u2014 consistent with round 40's\nfamily\u2192subfamily equidistribution failure (`z = \u221241.4`) and #436's `h` measurement.\n\n## Net\nAll three doors are **genuinely open and hard**, and each is now bounded by a clean negative\nthat says what an attack must beat. None is closed; none is a method. This is the campaign's\nfinal, precise statement of the frontier after closing every factoring family.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5002",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-26T14:27:02.195755+00:00",
+    "title": "FACT doors-probe \u2014 the 3 open doors, each probed and each an honest negative that bounds what an attack must beat. Door 1 (UMW rank-2): a rank-2 GAP difference set has gcd=1 (no common factor) vs the 1-D AP's shared factor c>1, so He-Sahai's 1-D incidence bound provably does NOT transfer \u2014 the door is a genuinely different object \u2014 but a small rank-2 GAP reaches only 38/40 coverage, no covering built. Door 2 (smooth-value upper bound): for F(t)=t^2-N the observed B-smooth count is 1-3 vs rho(u)~2440 predicted (excess 0.00x) \u2014 the structured form is much SPARSER than ambient, so the smoothness-escape horn is NOT broken by the QS polynomial. Door 3 (per-instance class-number): h(Q(sqrt(-pq))) ~ 0.26-0.44 sqrt(D) (analytic class number formula, L(1,chi)=O(1)), so h is GENERICALLY ~sqrt(D) not small \u2014 the subexp gain must come from lpf(h)/smooth part, and a per-instance bound on lpf(h) is the class-number problem in disguise. All three doors genuinely open; each now cleanly bounded"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -2629,21 +2727,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "85c32d45",
-    "description": "## FACT round-32 #3 \u2014 UNIVERSAL-S3-CORRECTED (paper 112)\n\n**Verdict name: THE-LAW-IS-UNIVERSAL.**\n\n### Result\nA DIFFERENT S3 field (x3-2, disc -108) gives exactly the same 1-bit channel as paper 80's x3+x+1 (disc -31). The type-channel law depends only on GROUP STRUCTURE, not on which polynomial realizes the group.\n\n- I(p mod 3; T) = 1.0000 EXACTLY (sign character at conductor 3)\n- Semiprime pair channel = 1.0000\n- Coprime moduli flat\n\nNow 447 experiments. Assessment v223. Paper 112.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3488",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T21:40:03.959366+00:00",
-    "title": "FACT round-32 #3 \u2014 UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fields (paper 112)"
-  },
-  {
     "consumed_by_exp_id": "dea80b65",
     "description": "## FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) \u2212 I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C\u2085@11 | 1.2062 | **+1.5896** | +0.30 |\n| F\u2082\u2080@5 | 0.2920 | **+0.9538** | \u22121.10 |\n| S\u2083a@31 | 1.0011 | +0.5201 | +0.67 |\n| S\u2083b@23 | 1.0008 | +0.5121 | +0.92 |\n| D\u2084@8 | 1.9999 | +0.5032 | \u22120.70 |\n| A\u2084@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 \u2014 WEAK. Hint value and channel capacity are independent dial properties. C\u2085 has moderate capacity but the highest hint; D\u2084 has the highest capacity but moderate hint; A\u2084 is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
     "domains": [
@@ -2659,16 +2742,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-32 #2 \u2014 UNIVERSAL-S3-TEST: wrong polynomial, accidental x5-2 measurement (paper 111)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b6553c28",
     "description": "## FACT round-31 #2 \u2014 SEXTIC-HINT-VALUE (paper 121)\n\n**Verdict name: THE-HINT-EXTENDS-BEYOND-DEGREE-5.**\n\nQ(zeta_13)+ (degree 6, C6, conductor 13): hint value +1.6407 bits.\nProduct view 1.4704; (s,d) jointly 3.1110; walls clean.\nHint map extends beyond degree 5.\n\nNow 449 experiments. Assessment v228. Paper 121.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3499",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.223273+00:00",
     "title": "FACT round-31 #2 \u2014 SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (paper 121)"
   },
@@ -34134,6 +34218,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-26T09:58:47.573071+00:00",
     "title": "Density of Hensel-Degenerate Semiprimes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sign bit (exactly one root mod p) of any S3 cubic depends only on p modulo the fundamental discriminant of its quadratic resolvent. Proved here for x^3-2 (conductor 3) and x^3+x+1 (conductor 31); the general statement needs Tschirnhaus reduction plus Kronecker-symbol reciprocity.\n\nFor irreducible f in Z[x] of degree 3 with Galois group S3 and fundamental discriminant D0 of Q(sqrt(disc f)), for all primes p not dividing disc f: #roots(f mod p) = 1 iff kronecker(D0, p) = -1, and |D0| is the minimal modulus with this property.\n\nGeneralize CubicStickelbergerFrobenius.sign_law_Fp to arbitrary monic cubics via x -> x - a/3 (p != 3), then combine with legendreSym.quadratic_reciprocity; test minimality by exhibiting witnesses for every proper divisor.\n\nThe channel shape is a group invariant and the conductor is an arithmetic invariant: the two cleanly separate.\n\nSome S3 cubic would have a sign bit invisible to its discriminant character, contradicting Stickelberger.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4992",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "85c32d45",
+    "status": "available",
+    "timestamp": "2026-09-26T14:26:16.901526+00:00",
+    "title": "Discriminant-Conductor Sign Law for S3 Cubics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the degree-3 Frobenius argument to separable polynomials of any degree over F_p: the discriminant is a square iff deg f minus the number of irreducible factors is even.\n\nFor separable f in F_p[x] of degree n with r irreducible factors, IsSquare (disc f) iff (n - r) is even.\n\nFormalize in Lean over SplittingField f using exists_algebraMap_of_pow_eq_self and the sign of the Frobenius permutation of the roots.\n\nGives the sign law for every Galois group containing odd permutations, e.g. S4 and S5 quartics and quintics.\n\nWould contradict the classical Stickelberger theorem; a failure would indicate a formalization gap.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_4993",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "85c32d45",
+    "status": "available",
+    "timestamp": "2026-09-26T14:26:17.490310+00:00",
+    "title": "Full Stickelberger Parity via Frobenius-Fixed Vandermonde"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every channel through a homomorphism has entropy log2 of its image. Conjecture: the vector of channels I(G/N ; T) over normal subgroups N is determined by the class-function table of T, and for S3 equals (0, 1, log2 6 - H(T|full)).\n\nFor a finite group G and the cycle-type/conjugacy-class map T, I(G -> G/N ; T) = log2 [G:N] whenever N contains the commutator subgroup, and is strictly smaller otherwise for S_n, n >= 3.\n\nUse S3SignChannelUniversal.uEnt_hom and mutInfo_eq_uEnt_of_factor, then compute the non-abelian case for S3 explicitly via Finset counting.\n\nType channels detect exactly the abelianization, which is the group-theoretic reason for 'one bit' in every S_n.\n\nA non-abelian quotient would be visible to conjugacy types, which would give new information-theoretic invariants of groups.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_4994",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "85c32d45",
+    "status": "available",
+    "timestamp": "2026-09-26T14:26:18.083072+00:00",
+    "title": "Normal-Subgroup Lattice Profile of Type Channels"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The empirical channel over primes up to X converges to the group-level channel proved in the catalog. The coprime-flatness law S3_coprime_flat becomes an arithmetic statement once linear disjointness and Chebotarev are provided as hypotheses.\n\nFor an S3 field L and m coprime to its discriminant conductor, the empirical mutual information between p mod m and the splitting type over primes p <= X tends to 0, at rate O(1/log X) under GRH.\n\nState Chebotarev equidistribution as an explicit hypothesis in Lean, then derive convergence of uEnt/condEnt as continuous functions of empirical frequencies.\n\nAll finite-group channel identities in the catalog become theorems about primes.\n\nA non-trivial correlation would imply L and Q(zeta_m) are not linearly disjoint.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_4995",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "85c32d45",
+    "status": "available",
+    "timestamp": "2026-09-26T14:26:18.670471+00:00",
+    "title": "Chebotarev Transfer of Group-Level Channels"
   },
   {
     "consumed_by_exp_id": "",
