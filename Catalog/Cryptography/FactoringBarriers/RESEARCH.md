@@ -127,7 +127,11 @@ the record's own claims were materially corrected. The load-bearing changes:
 2. **★ The deterministic `N^{1/5}` barrier is MOTIF-INTRINSIC**, re-derived three independent
    ways: a **slack-constraint lemma** (a falling hypothesis moves an exponent only if its
    constraint is *active* at the optimum — the order-finding collapse is slack by an unbounded
-   `lg^0.8 N`, so arXiv:2601.11131 cannot move `1/5`); a **delete-a-term/closed-variable
+   `N^{1/5}` = `lg^{0.2} N` (⚠️ the earlier `lg^{0.8} N` was the wrong constant; the ceiling
+   `N^{2/5}` exceeds the needed `m ≈ N^{1/5}` by exactly `N^{1/5}`; the qualitative claim —
+   unbounded slack, so arXiv:2601.11131 cannot move `1/5` — is UNAFFECTED, only the exponent
+   was wrong, fact-checked 2026-09-26), so arXiv:2601.11131 cannot move `1/5`); a
+   **delete-a-term/closed-variable
    screen** (`{interior, r, m}` all co-binding, M-leg exponent-redundant, m-leg closed by
    output-counting + injectivity); and an **add-a-floor/motif-exhaustion** argument. In the
    faithful model (Harvey Alg 4.3 forces `M=⌈(N/r)^{1/2}⌉`) the **interior and m-leg are
