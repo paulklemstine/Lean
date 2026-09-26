@@ -254,6 +254,113 @@ the record's own claims were materially corrected. The load-bearing changes:
    `Q` is not a free parameter. **The QS paid-work balance is now fully characterised with a
    mechanism: the paid work is governed by `Q`, and no single-poly channel decouples it.**
 
+12. **⚠️ CORRECTION TO ITEM 11(b) — the multi-poly column set is NOT an "intersection of
+   two split sets"; its density is `≈1/2`, NOT `≈1/4`, so `Q` is NOT smaller** (round 43,
+   surface b, `Round43_MPQS_Results.md`). Item 11(b) is **right on the bottom line and wrong
+   on the mechanism**, and the mechanism is the part that was load-bearing.
+
+   **The error:** item 11(b) reasoned that the two forms impose the split constraint
+   "simultaneously", so the column set is `split(f₁) ∩ split(f₂)` and has density `≈1/4`. That
+   presumes `f₁` and `f₂` have **different discriminants**. They cannot. Silverman 1987 p.332
+   eq (14), verbatim: *"the roots of `Q(x)` mod `p`, `p ∈ FB`, are `(−B ± √(kN))(2A)^{−1}`
+   mod `p`, **since `B² − 4AC` is invariant**"* — the construction **requires**
+   `B² − 4AC = kN` for **every** polynomial. So the two forms are constrained by the **same**
+   character `(kN/·)`; their split sets are the **same set**, and a set intersected with itself
+   is the set. A conjunction of two *identical* constraints is one constraint.
+
+   **MEASURED** (`B = 717`, 20 fresh 41-bit semiprimes, one instance per row, no sieve):
+
+   | column set | mean size | fraction of `π(B)=126` |
+   |---|---|---|
+   | split set of `N` (single-poly `Q`) | 62.35 | **0.495** |
+   | column set of a **multi**-poly form | 61.35 | **0.487** |
+   | genuine `∩` of two **unrelated** discriminants | 40.00 | 0.317 |
+
+   **0.487, not 0.25.** (The 1-prime gap is the polynomial *index* `D`: `p = D ≤ B` has a
+   single root, not two — Silverman p.332 and YAFU's `DO_NOT_SIEVE_TINY` both handle it.)
+   Independently, over 96 `(instance, T, M)` cells with `T ∈ {1,2,4,16}`: **`|FB|` =
+   62.250 ± 5.033 at every `T`, bit-identical**, and **0/96** cells in which a non-split odd
+   prime was ever a divisor, or a per-polynomial root set differed, or the union over
+   polynomials differed from one polynomial's set. Corroborated in **production code**
+   (YAFU `yafu_cofactorize_siqs.c`): the FB is built from `params->n = kN` via
+   `legendre_16(nmodp, prime) != -1` with **no reference to any polynomial**, and each
+   polynomial then only *rescales* the stored roots, `g = modinv_16(a) * gmodsqrt[i]`.
+
+   **⇒ `Q` is NOT a free parameter for multi-polynomial QS, but not because it is pinned
+   DOWN — because it is pinned to the SAME value as single-poly.** Item 10's law therefore
+   does **not** transfer: there is no `Q`-reduction to charge against it.
+
+   **THE PAID-WORK PICTURE IS ALSO DIFFERENT from item 11(b)'s.** At fixed `B`, model-free
+   equal-budget (`P₀ = 200,000` positions in every arm, 14 instances, between-instance sd):
+   multi-poly buys **1.6–1.8× more factorizations**, not fewer — but **paired `t = +1.59 …
+   +1.94`, 8/14 wins: NOT ESTABLISHED**, and I do not claim it. The cause is measured, not
+   asserted: Silverman's eq (6) forces **`A = D²`** with `D` prime `≡ 3 mod 4` and
+   `(D/kN) = +1`, so `A` is **quantised**, and `A_actual/A_ideal` (the paper's own eq (5)
+   optimum `A = W₁√(kN)/M`) runs **13.8× at `T=1` to 1477× at `T=32`** at 41 bits. **The
+   paper's construction needs `B²·M ≲ W₁√(kN) ≈ 0.707√N`** for the index `D` to leave the
+   factor base, plus `idealD ≳ 10·T·ln(idealD)` for a large `T` — at `B=717`, 41 bits this
+   fails by ~3 orders of magnitude (admissible-`D` pool near the ideal: **3** at 42 bits, 6 at
+   54, 11 at 60, 34 at 70). This reproduces the paper's own **"crossover point with CFRAC
+   appears around 40 digits"** (p.338): I am measuring at/below the crossover the source
+   states, where the advantage has died. **This regime condition is NOT stated in the source.**
+
+   **⚠️ AND THE MULTIPLIER IS **NOT** THE PRIZE EITHER — I OVERTURNED MY OWN EXPECTATION.**
+   The FB is the split set of **`kN`**, not of `N`, and `k` is the only lever that moves `Q`
+   at fixed `B`, for free in the search (`O(π(B)·#k)`, **no sieving**):
+   **`Q(best k)/Q(k=1)` = 1.2034 mean, 1.4706 max** over ~50 admissible multipliers
+   (20 instances, `B=717`, `k ≡ 1 mod 4`). Item 10's law (paid work decreasing in `Q`) says
+   that should be a **free win. IT IS NOT.** Holding the paid budget at 200,000 positions and
+   the polynomial count at 1, the `k*`-maximising arm collects **`2.286 ± 4.232`** against
+   **`8.571 ± 4.536`** for `k=1`: **paired diff `−6.286 ± 6.568`, `t = −3.58`, 2/14 wins.**
+   (Confound discharged: the arms also differ in polynomial family, but at `T=1` the two
+   families are indistinguishable, `t = +0.37`, so the deficit is the multiplier's.)
+   **MECHANISM:** `C = (B²−kN)/(4A)` and the residual scales as `M√(kN)/2.83`, so **the
+   residual inflates like `√k`** while `Q` grows only by a constant — the residual penalty
+   beats the column gain. **BOTH SOURCES CHARGE FOR IT EXPLICITLY**: YAFU
+   `scores[i] = 0.5 * logmult;` and Silverman's eq (18) `2/log k` term. **⇒ `k` is a
+   TRADE-OFF, not a free lever, and item 10's law does NOT transfer to `k` because `k` moves
+   the residual at the same time** — the cleanest case yet of this file's standing rule that
+   a mechanism and its target must act on the SAME quantity. **`k` is priced nowhere in this
+   file** (every other "multiplier" here is Lehman's ray).
+
+   **⇒ THE ROUND'S VERDICT ON (b) IS A VALIDATED NEGATIVE WITH A SHARP REASON.** The second
+   form does not decouple the column count from the split set (item 11(b)'s reason was wrong;
+   `Q` is the *same*, not a quarter); it does not reliably lower the paid work at 41 bits
+   (1.6–1.8×, `t = +1.59…+1.94`, 8/14 — **not established**); and the one lever that grows
+   `Q` is paid for in residual size. **Instrument: 16/16 including 4 mutation kills**, a
+   negative control, a vacuity guard, and **10/16 verified real factors** (S 8/8, MP 2/8)
+   checked against ground truth `p, q` with round 42's validated GF(2) engine.
+
+   **★ AND THE SPLIT-SET CLAIM EXTENDS TO LARGE PRIMES**, corroborating item 11(a) from a
+   second direction: `L | f_i(x)` for a prime `L > B` requires `f_i` to have a root mod `L`,
+   hence `(kN/L) = +1`. Over **2,400 (polynomial, large prime `L > B`) pairs, 0 violations.**
+   So **(a) and (b) share ONE split set and neither relaxes it**; the large-prime variant
+   decouples the column *indexing* (`(L, root of f_i mod L)` depends on `i`) but never adds a
+   **non-split** prime. Instrument: 16/16 validation tests including **4 mutation kills**, a
+   negative control, and a **vacuity guard** — and one mutation reproduces *this round's own*
+   algebra error (`H = (2Ax+B)(2A)^{−1}` gives `H² ≡ f/A`, not `f`), which is why **`A = D²` is
+   structurally required, not cosmetic**.
+
+12. **★ ROUND 43 — NO-DECOUPLING IS A THEOREM for quadratic-form sieving, and the COMPLETE
+   cost inverts the sieve-only sign** (#447; corrects #445 and #446). Any form whose
+   discriminant is tied to `N` forces the split set, so **the column space and the split set are
+   the same object**: LP columns are a **subset** of the split set (`ncols_lppair == m`, 68/68 —
+   LP is a *monotonicity identity*, not a discovery, the reason every production QS ships it);
+   multi-poly (Silverman) **shares the discriminant `kN`**, column set `0.487–0.505` of `π(B)`
+   — the **same as single-poly** (correcting this file's earlier `~1/4`, which is the
+   two-*unrelated*-discriminants figure); adaptive `B` is a **reparametrisation**
+   (`d log Q / d log m ≈ 1`, so `B` slides *along* `Q ~ m/2`). **★ THE RULE THIS EARNS: price
+   the COMPLETE cost — sieve touches PLUS the GF(2) elimination, which grows with `Q`.** Pricing
+   the sieve alone **inverts the sign**: `d log SIEVE/d log Q = −0.1490` but
+   `d log TOTAL/d log Q = +0.0787` (positive 60/80, `t ≈ +4.8`), because the LA/GF(2) term
+   grows `146×→3981×` while the sieve is flat above `B=2400`. **Any "paid work decreases in Q"
+   claim (incl. round 42's `paid_touch`) was sieve-only and must be re-priced against the
+   complete cost.** One row-side lever survives: `#polynomials ⊥ #columns` (extra forms buy
+   rows at zero marginal rank cost, gated by `B²·M ≲ 0.707√N`, which fails by ~3 orders at
+   41 bits). **Boundary:** take `f(x)` whose value is **not** a difference of squares tied to
+   `N`, and non-split large-prime columns **will** appear — the only route, and it is the
+   **algebraic/NFS** direction, not QS.
+
 **Discipline, all earned by retraction** (each paper carries its errata): never cite a source
 unopened; name the quantity (a mechanism and its target must act on the SAME quantity — the
 most-violated rule); a *proved* bound can be real yet **price the wrong direction** (a lower
