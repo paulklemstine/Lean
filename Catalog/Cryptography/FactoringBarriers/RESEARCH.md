@@ -143,9 +143,16 @@ the record's own claims were materially corrected. The load-bearing changes:
    The `N^{1/5}` record admits "no lower bound of any kind" (321/7538/7674). Round 38 produced
    a **real but LOCALIZING** result (#432): the ECM stage-1 identity
    `Σ_{m≤X} gcd(m,k)/m = Σ_{d|k}(φ(d)/d)·H_{⌊X/d⌋}` is **exact and axiom-free** (verified
-   independently), **but** the price `curves ≳ X/(1.0828·ln B)` is **CONDITIONAL on group
-   orders being uniform in the Hasse window — the ECM random assumption, not a theorem** (rule
-   6). It **localizes** the ECM heuristic to one unproved input rather than removing it.
+   independently), **but** the price `curves ≳ X/(1.0828·ln B)` is **WRONG — the inequality is
+   REVERSED and the constant is too small** (independently fact-checked 2026-09-26, 18 cases,
+   ratio 0.135→0.0007, reproduced by the main loop). The correct price is `curves = X/S(k)`,
+   `S(k)=Σ_{d|k}(φ(d)/d)·(harmonic factor) = Π_{p^a‖k}(1+a(1−1/p))`, which is 5–50× LARGER
+   than `1.0828·ln B`, so `X/S(k) ≪ X/(1.0828·ln B)` — the claimed *lower* bound is violated
+   (it is in fact an upper-ish scale, not a lower bound). **The #432 ECM price is therefore
+   RETRACTED as numerically wrong, not merely conditional** (on group orders being uniform in
+   the Hasse window — the ECM random assumption, rule 6). The *exact identity* stands; the
+   *price* does not. It **localizes** the ECM heuristic to one unproved input rather than
+   removing it.
    **The record's line-6685 claim that the density barrier is "absolute … for any method, in
    any sampling or inspection model" must be read as CONJECTURED-absolute** — its necessary
    ingredient (an unconditional *upper* bound `Ψ_F(x,x^{1/u}) ≤ C·x·∏ρ(d_i u)` for the
@@ -221,7 +228,7 @@ the record's own claims were materially corrected. The load-bearing changes:
    DENSITY ASSUMPTION SURVIVES MEASUREMENT** (round 41). The relation matrix obeys
    **`rank_{F₂}(M) ≤ Q(N,B) := 1 + #{r ≤ B : (N/r) = +1} ≈ 0.5113·π(B)`** — elementary,
    per-instance, `O(π(B)log B)`, **no sieving** — so the record's "≈`π(B)` independent relations"
-   is refuted by a **proved 1.96×**. **Report `1.96×`, not a `2.7×` total:** the larger figure
+   is refuted by a **proved 2.0× (Chebotarev density 1/2); the finite-B measured value is 1.96×** (fact-checked 2026-09-26: `π/Q → 1.9939–1.9960` as `B→5000–10000`; the *proved* statement is only the ceiling STRUCTURE `rank_{F₂}(M) ≤ Q(N,B)`, exact and per-instance — the 1/2 constant is Chebotarev, not proved in the campaign, so calling 1.96× "proved" is a category slip; report "proved 2.0×, measured 1.96× at finite B"). **Report `1.96×` (measured), not a `2.7×` total:** the larger figure
    mixes a *measured but not bounded* `k_success ≈ 0.72·Q`, whereas `rank ≤ Q` only forces
    `k_success ≥ rank+1` (the wrong direction for an upper bound). Over a real **35-instance
    quadratic-sieve campaign**, `k_success` **never reached `m` in 35/35 runs** — the balance's
