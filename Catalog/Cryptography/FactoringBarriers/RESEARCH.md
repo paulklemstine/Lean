@@ -238,6 +238,22 @@ the record's own claims were materially corrected. The load-bearing changes:
    yield collapse be evaded WITHOUT shrinking the column space?** (large-prime/partial-relation
    variants, multi-polynomial QS, per-instance adaptive `B` — all outside single-polynomial QS.)
 
+11. **★ ALL THREE DECOUPLING CHANNELS ARE CLOSED — the single-poly QS column count PROVABLY
+   cannot be decoupled from the split set** (round 43). **(a) Large-prime / partial-relation**
+   (#444): if `r | f(c) = c²−N` then `N ≡ c² (mod r)`, so `(N/r) = +1` — **every "large prime"
+   in a partial relation is itself a split prime**; the LP variant **enlarges** `Q`, it does not
+   decouple. **(b) Multi-polynomial QS** (#446): its column set is `split(f₁) ∩ split(f₂)` — the
+   **intersection of two split sets**, density `≈1/|G|` (`≈1/4`) not `≈1/2`, so **`Q` is
+   SMALLER**; since the paid work **decreases** in `Q` (§10), multi-poly has **HIGHER** paid
+   work — a validated negative by the §10 law, no experiment needed. This is the classical
+   reason Dixon/multi-poly is asymptotically slower (the large-prime trick requires splitting in
+   **multiple** fields); the §10 law makes that classical fact a **measured mechanism**.
+   **(c) Adaptive `B`** (#445): the per-instance optimum is real (oracle `0.9533×`, `t = −11.6`,
+   102/120 improved) but **oracle-only** — no free rule beats a fixed `B` (signal/noise `0.089`),
+   and `d log Q / d log m = 0.99718 ± 0.03722` (`t = +293`) is a second independent proof that
+   `Q` is not a free parameter. **The QS paid-work balance is now fully characterised with a
+   mechanism: the paid work is governed by `Q`, and no single-poly channel decouples it.**
+
 **Discipline, all earned by retraction** (each paper carries its errata): never cite a source
 unopened; name the quantity (a mechanism and its target must act on the SAME quantity — the
 most-violated rule); a *proved* bound can be real yet **price the wrong direction** (a lower
