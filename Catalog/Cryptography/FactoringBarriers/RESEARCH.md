@@ -686,8 +686,18 @@ The steelman pass actively tried to *rescue* each area, then refuted the rescue.
   non-index-calculus subexponential factoring method** — `L[1/2, 1]` — but GNFS's
   `L[1/3,·]` strictly beats it. So it is a real method, just asymptotically
   dominated.
-- **Transcendence / geometry of numbers:** **DEAD.** Siegel's effect kills the
-  small-unit regime these methods need.
+- **Transcendence / geometry of numbers:** **DEAD** — ⚠️ **but these are TWO distinct
+  fields and the original one-line kill conflated them and cited no theorem (recon 2026-09-26).**
+  The **transcendence** half is genuinely dead: Baker/S-unit machinery bounds *fixed*
+  exponential forms in *fixed* finitely generated groups, and factoring hands it a *moving* object,
+  so no transcendence result prices a factoring term ("Matveev never sees `N`"; the
+  complete-splitting test in a degree-`h` field is conjecturally factoring-hard — #435/#467).
+  The **geometry-of-numbers** half is dead for a *different*, now-sourced reason (recon
+  2026-09-26): the relevant cell is the **modular hyperbola** `L_0(pq)` with
+  `|L_0(pq)| = 4N − 2(p+q) + 1`, and `p+q` determines the factorization in `O(1)` — but
+  `L_0` is **not additively closed** (`(1,0),(0,1) ∈ L_0(15)` yet `(1,1) ∉ L_0(15)`), so
+  **no Minkowski/LLL argument applies**. (Siegel's effect, the original cited reason, is about
+  the transcendence/small-unit half and is not the geometry-of-numbers mechanism.) See #466/#469.
 - **Analytic number theory (L-functions, spectral, circle method):** **DEAD.**
   Recovers the same `B²`-vs-`E²` smoothness/linear-algebra balance under another
   name — same `L[1/3,·]`.
