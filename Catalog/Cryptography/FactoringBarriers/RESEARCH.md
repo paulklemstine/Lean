@@ -2847,17 +2847,24 @@ frieze/Markoff↔class-group channel (§4f) without a single experiment.
   part and `v₂(h)` (measured
   `h(−4pq) ∈ 24…132`, `v₂(h) ∈ 2…6`), and extracting it needs a **subexponential**
   class-group computation (Hafner–McCurley, `L[1/2,·]`) — not poly, and it does
-  not beat `L[1/3,1.9018836]`. (⚠️ **PRICING CORRECTION, new-territory recon 2026-09-26:**
-  for an **imaginary** field the analytic class-number formula has **no regulator** —
-  `h(−4N) = (2√N/π)·L(1,χ_{−4N})` — so it is priced by `L(1,χ_D)` (**NFS-parity**), not
-  `L[1/2]`. The real-field `L[1/2]`/regulator line is vacuous (as the record's own next line
-  notes). Moreover `v₂(h(−4N))` **is** computable from `N` alone (measured over 1,944 semiprimes:
-  8 values, entropy **1.87 bits**, largest cell 52.7%) — but a fixed-arity-8 statistic cuts any
-  search by at most a **constant 8**; isolating one factor needs ~6.6 bits, a **4.7-bit shortfall**.
-  The verdict (dead) is RIGHT for the wrong reason: it is a low-arity constant, not an `L[1/2]`
-  barrier. Separately, the **Rédei/4-rank/spin** 2-primary apparatus is a statistic **of the
-  factorization** (Stevenhagen §5; Koymans–Milovic): the 4-rank's `(p/q)` takes both signs in
-  every `N mod 8` class (1,944, 0 exceptions) — provably not a function of `N`, circular.) (The ERH-conditionality of the `JAMS` version, flagged
+  not beat `L[1/3,1.9018836]`. (⚠️ **PRICING CORRECTION, new-territory recon 2026-09-26 —
+  ⚠️ THIS CORRECTION IS ITSELF NOW REVERTED; see the note below.**
+  [First pass claimed: for an imaginary field `h(−4N)=(2√N/π)·L(1,χ)` has no regulator, so it
+  is priced by `L(1,χ_D)` (NFS-parity) not `L[1/2]`. **That is WRONG and is withdrawn:**
+  recovering the *integer* `h` requires `L(1,χ)` to ~`D^{−1/2}` precision, so the route is still
+  priced at `L[1/2]` — exactly as originally recorded, confirmed against Harvey (arXiv:2010.05490).
+  The original `L[1/2]` price stands. **Lesson: the class-number formula's "no regulator" clause
+  does NOT by itself re-price the route; the *integer-output* requirement preserves the `L[1/2]`
+  barrier. Do not re-derive this without accounting for output precision.**]
+  [What survives of the recon: `v₂(h(−4N))` **is** computable from `N` alone — but measured on
+  a larger sample it is **9 cells** (`v₂ ∈ 2…10`, entropy **1.82 bits**, largest cell 56%, n=20,723),
+  and a fixed-arity-9 statistic cuts any search by at most a **constant 9**; isolating one factor
+  needs ~6.6 bits — a **~4.8-bit shortfall**. The verdict (dead) stands, and is `FactorEncodingAudit`'s
+  range barrier in **arity** form. Separately, the **Rédei/4-rank/spin** 2-primary apparatus is a
+  statistic **of the factorization** (Stevenhagen Thm 3.1: the `R₄` entries are Legendre symbols
+  *between* the factors), hence circular. (The recon's line "the 4-rank is not a function of `N`"
+  is itself **FALSE** — it is a function of `N`, and therefore circular; the sample size and
+  `v₂` range in the first pass were also off: `n = 20,723`, `v₂ ∈ 2…10`, not `n=1,944`, `2…9`.)] (The ERH-conditionality of the `JAMS` version, flagged
   in the References, only weakens this further.) Dead.
 - **Real** `h(ℚ(√(pq)))`. The analytic class number formula only gives the product
   `h · R = √D · L(1,χ_D)`. Isolating `h` requires the **regulator** `R`, i.e. the
