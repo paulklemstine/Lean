@@ -223,6 +223,21 @@ the record's own claims were materially corrected. The load-bearing changes:
    CRT-choose `N` to drive `Q/π(B)` low) is the missing controlled per-instance bound. **Do not
    extrapolate to NFS** — none of the `1.96×` transfers to the `L[1/3]` balance.
 
+10. **★ P4 IS CLOSED — a sign flip, and the density is governed by `Q`, NOT by Dickman** (round
+   42, three validated executions). **The PAID sieving work is a DECREASING function of `Q`**
+   (2.4×–13.1×, monotone): driving `Q` down to buy fewer relations makes factoring **strictly
+   more expensive**; the optimum is `Q` as **high** as the method allows. **Design rule: any
+   proposal that shrinks the factor base to shrink the linear algebra moves the WRONG term by
+   construction.** **"Dickman survives measurement" is BLIND to `Q`** — at matched `u`,
+   `corr(log ρ, density) = +0.029` while `corr(Q/π(B), density) = +0.882`; the across-instance
+   yield is set by the **split-prime structure**, not by `ρ(u)` alone. **`Q` is NOT a free
+   parameter**: in single-polynomial QS `r | f(c)` forces `(N/r) = +1`, so the factor base **is**
+   the split set (2,215/2,215 verified), and the CRT premise is closed twice. And
+   `rank+1 ≤ k_success` (the inequality runs **backwards**), so the proved `rank ≤ Q` gives a
+   **lower** bound, not an upper bound on the work. **THE OPEN PROBLEM: given fixed `B`, can the
+   yield collapse be evaded WITHOUT shrinking the column space?** (large-prime/partial-relation
+   variants, multi-polynomial QS, per-instance adaptive `B` — all outside single-polynomial QS.)
+
 **Discipline, all earned by retraction** (each paper carries its errata): never cite a source
 unopened; name the quantity (a mechanism and its target must act on the SAME quantity — the
 most-violated rule); a *proved* bound can be real yet **price the wrong direction** (a lower
