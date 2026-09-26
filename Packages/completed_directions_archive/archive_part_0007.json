@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-25T17:56:38Z",
-  "count": 175,
+  "archived_at": "2026-09-26T09:58:47Z",
+  "count": 176,
   "directions": [
     {
       "id": "fd_3695",
@@ -6933,6 +6933,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 196
+    },
+    {
+      "id": "fd_3487",
+      "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper 113)",
+      "description": "## FACT round-30 #2 — HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S₃a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S₃b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A₄@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D₄@8** | **100.0%** | 75.2% | **−1.00** | **SUM-SUFFICIENT** |\n| F₂₀@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C₅@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD₄ is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N·p⁻¹ mod 8), hence determines the type pair. S₃ fields require both residues because the Legendre symbol (Δ|p) is not determined by (Δ|p)+(Δ|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "ccd8891f",
+      "timestamp": "2026-08-21T21:40:03.958101+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.75,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-25T07:43:52.985657+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 204
     }
   ]
 }

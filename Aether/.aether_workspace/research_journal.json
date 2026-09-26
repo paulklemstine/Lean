@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "794ffb3f",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Quotient Steps, Evolutionary Paths, Decomposition\n\nDerived from the three research cycles recorded in `Catalog/Shared/`:\n\n* `EvolutionaryPathCore.lean` — the two requested defini",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 582,
-      "timestamp": "2026-09-07T02:23:11",
-      "title": "define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture"
-    },
-    {
       "cycle_id": "cc3115b2",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Standard-part projection-valued measures\n\n## Status of the programme\n\nThe mission conjecture is proved, sorry-free, in the form\n\n> for a family of hyperreal matrices with **finit",
@@ -499,19 +489,19 @@
       "theorem_count": 57,
       "timestamp": "2026-09-25T17:56:56",
       "title": "FACT round-30 #1 — HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after ETALE-DIAL (paper 113)\n\n## What this cycle established (all proved in Lean with 0 sorries)\n\n- **Conductor classification** (`Catalog/Bridges/EtaleDialVietaChannel.lean`). The",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-09-26T09:59:02",
+      "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7957a9f1",
-      "domain": "Physics",
-      "key_insight": "# Future directions — after the exp569b pooling audit (paper 220, round-75 #3)\n\nThe four files added this cycle turn the round's *procedural* finding (\"both poolings fail\nindependence\") into *theorems",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-25T09:02:00",
-      "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pairs; both poolings fa"
-    },
     {
       "cycle_id": "5223d87b",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 57,
       "timestamp": "2026-09-25T17:56:56",
       "title": "FACT round-30 #1 — HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after ETALE-DIAL (paper 113)\n\n## What this cycle established (all proved in Lean with 0 sorries)\n\n- **Conductor classification** (`Catalog/Bridges/EtaleDialVietaChannel.lean`). The",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-09-26T09:59:02",
+      "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b5786d61",
-      "domain": "MachineLearning",
-      "name": "info_empty",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "24d71196",
-      "domain": "Shared",
-      "name": "one_sub_pow_mul_le_one",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "24d71196",
-      "domain": "Shared",
-      "name": "succProb_half_of_one_le",
-      "quality": 0.82
-    },
     {
       "cycle_id": "24d71196",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "neg_logb_le_hintValue",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "name": "claim_refuted_by_primes",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "name": "not_vietaInjective_zmod_eight",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "name": "units_zmod_eight",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-09-25T17:56:56",
+  "last_updated": "2026-09-26T09:59:02",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "0688a872",
-        "quality": 0.84,
-        "theorems": 566,
-        "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant fi"
-      },
-      {
         "cycle_id": "135e0dcb",
         "quality": 0.86,
         "theorems": 118,
@@ -3203,6 +3197,12 @@
         "quality": 0.82,
         "theorems": 109,
         "title": "FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
+      },
+      {
+        "cycle_id": "ccd8891f",
+        "quality": 0.75,
+        "theorems": 78,
+        "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper"
       }
     ],
     "Combinatorics": [
