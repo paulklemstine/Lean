@@ -6922,6 +6922,21 @@ statement about how many independent relations a window of size `B²$ supports**
 is the Martin-conjecture density question already covered in §8.4, and not a
 factoring primitive at all.
 
+> **⚠️ ROUND 41 (2026-09-25) — the "≈`π(B)$ independent relations" is PROVABLY wrong by
+> ~2×, and the correct number is a Legendre-symbol CEILING computable with no sieving.** For an
+> odd semiprime `N=pq` and factor base `B<p`, a prime `r≤B` can divide a value `a²−N` **only if
+> `(N/r)=+1`.** Hence the relation matrix obeys
+> **`rank_{F₂}(M) ≤ Q(N,B) := 1 + #{r≤B : (N/r)=+1} ≈ 0.5157·π(B)`** — a **ceiling, not an
+> estimate**, in `O(π(B) log B)` **with no sieving**, per instance, no probabilistic input.
+> **Verified exhaustively** (2303 nonresidue primes → 0 admit a solution; 2352 residue → 0 lack
+> one) and **tight per instance** (`rank/Q = 0.9874 ± 0.0108`, between-instance sd). The
+> mechanism is **Legendre-symbol selection** (only the ≈half of `π(B)` splitting at `N` can
+> contribute), **not** small-prime concentration. This prices the **paid** term `E` of the
+> `B²+E²` balance (input to sieving, cost `≈E/ρ(u)`), correcting it from `π(B)` to
+> `≈0.5157·π(B)`. **No exponent moves** (a constant factor inside an `L`-quantity is an `O(1)`
+> shift, not a `1/3→1/2` change), but the term is now **proved and per-instance** rather than
+> assumed. Paper: `paulklemstine/lean` #438.
+
 **⇒ AND THE SCOPE MAP IS NOW CLOSED WITH NO RESIDUAL.** Every named thread is
 accounted for: the four primitives (§8.2, complete for polynomial-time methods);
 every sub-primitive framing (§8.1, §LII, optimal with no coarser view); the missing
