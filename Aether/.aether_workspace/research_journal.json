@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "69567235",
-      "domain": "Bridges",
-      "key_insight": "# Future directions after D3 (nonlinear probe ceiling on the pooled window population)\n\n## What this cycle settled\n\nWorking from `Novelty.NET58RelationalImportance` (`Rsq_le_intrinsic_ceiling`,\n`intri",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 92,
-      "timestamp": "2026-09-08T00:32:32",
-      "title": "D3. Nonlinear probe ceiling on the pooled window population"
-    },
-    {
       "cycle_id": "e050cc19",
       "domain": "Algebra",
       "key_insight": "# Future directions — depth-`L` lower bounds from oscillations\n\n## What this project established (all `sorry`-free, five Lean files)\n\n**`Catalog/Algebra/DepthLOscillationLowerBound.lean` — knot calcul",
@@ -499,19 +489,19 @@
       "theorem_count": 85,
       "timestamp": "2026-09-27T07:13:07",
       "title": "FACT round-31 #2 — SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (paper 121)"
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS: D₆ type channel for x⁶ − 2 (paper 122, FACT round-34 #4)\n\n## What this cycle established (all in `Catalog/Algebra/D6TypeChannel/`, 0 sorries)\n\n| Stage-1 conjecture | Outcome |\n|--",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-27T17:50:42",
+      "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a22e921b",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — from the k-taxonomy cycles\n\nThree sorry-free Lean files came out of this run:\n\n* `Catalog/Cryptography/KTaxonomyCensusEcon.lean` — the three budgets `k_pin`,\n  `k_opt^cost`, `k_o",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-08-25T10:51:17",
-      "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and "
-    },
     {
       "cycle_id": "539def03",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 85,
       "timestamp": "2026-09-27T07:13:07",
       "title": "FACT round-31 #2 — SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (paper 121)"
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS: D₆ type channel for x⁶ − 2 (paper 122, FACT round-34 #4)\n\n## What this cycle established (all in `Catalog/Algebra/D6TypeChannel/`, 0 sorries)\n\n| Stage-1 conjecture | Outcome |\n|--",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-27T17:50:42",
+      "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "020da4dc",
-      "domain": "Algebra",
-      "name": "tri_left",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "020da4dc",
-      "domain": "Algebra",
-      "name": "tri_right",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "d309ec20",
-      "domain": "Combinatorics",
-      "name": "restrict_mono",
-      "quality": 0.83
-    },
     {
       "cycle_id": "d309ec20",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "uEnt_unordered",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "name": "two_dvd_six",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "name": "lb_one",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "name": "lb_two",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-27T07:13:07",
+  "last_updated": "2026-09-27T17:50:42",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "181f9c07",
-        "quality": 0.72,
-        "theorems": 90,
-        "title": "F4. Sharpening the chain upper bound from $2^d - 1$ to $O(d)$"
-      },
-      {
         "cycle_id": "2f2e652e",
         "quality": 0.78,
         "theorems": 50,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 117,
         "title": "FACT round-29 #1 — THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (pape"
+      },
+      {
+        "cycle_id": "4b5f9882",
+        "quality": 0.72,
+        "theorems": 84,
+        "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
       }
     ],
     "Applications": [

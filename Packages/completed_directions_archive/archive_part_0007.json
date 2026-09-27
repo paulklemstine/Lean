@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-27T07:12:53Z",
-  "count": 179,
+  "archived_at": "2026-09-27T17:50:30Z",
+  "count": 180,
   "directions": [
     {
       "id": "fd_3695",
@@ -7093,6 +7093,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 214
+    },
+    {
+      "id": "fd_3500",
+      "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)",
+      "description": "## FACT round-34 #4 — DEGREE-6-NONABELIAN (paper 122)\n\n**Verdict name: THE-FRAMEWORK-HOLDS-FOR-D₆.**\n\nD₆ type channel for x⁶−2: three types {0:66%, 2:25%, 6:8%}, H(T)=1.1835 bits.\nI(p mod 3; T) = 0.3630, z=+1921 — massive signal at conductor.\nSemiprime pair channel 0.1321 bits — genuine structure.\nFramework extends to nonabelian groups at degree 6.\n\nNow 453 experiments. Assessment v232. Paper 122.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "4b5f9882",
+      "timestamp": "2026-08-21T22:42:58.224723+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-27T01:48:14.237846+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 213
     }
   ]
 }
