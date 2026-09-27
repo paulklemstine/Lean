@@ -1181,6 +1181,215 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Correction: the non-BSGS meet-in-the-middle kill (#486, row 32) stands, but its headline \"Law 1\" (e=1.0000) was VACUOUS — a subagent caught it and replaced it with a non-vacuous measurement\n\nA swarm-1 experiment (Pollard-rho + additive-BSGS cover, instrument-validated: Pollard-rho\nfactored 6/6 real 70-73 bit semiprimes; the additive BSGS cover certifies `|A+B| = N` exactly at\n`ops/(2√N) = 1.00000` for `N = 2^16..2^28`, and the same instrument **sees** a subgroup\ncollapse, so it is not blind) **confirmed the non-BSGS / higher-dimensional meet-in-the-middle\nand the group-action collision do NOT evade the counting** — the verdict of #486 (row 32,\n`NegativeResults.lean`) **stands**. But it found **two of #486's stated numbers were wrong or\nvacuous**, and this is the correction:\n\n## Correction 1 — \"Law 1\" (`e = |A₁…A_k|/m^k = 1.0000`) was a TAUTOLOGY\n> `e = 1.0000` is the **only possible value** when `m^k < |G|`: no collision is representable,\n> so `e = 1` measures nothing. It was reported as a \"Law 1\" measurement but is **vacuous**.\n\nThe experiment replaced it with the **non-vacuous** form: at **fixed work** `W = |A|+|B|`, does a\n**structured** pair cover more of `G` than a **random** pair? (An intermediate version leaked:\n`subgroup(g=2)` saturated because `ord(2)` is small, so those rows measured *pool size*, not\n*structure* — the same confound flagged in the campaign's prior finding; fixed by using\nmaximal-order generators and reporting deduplicated list size.)\n\n## Correction 2 — the non-vacuous measurement (saturation-free, matched work and list size, `m ≈ √N`)\nCapacity `structured/random`, e.g. for `Z_n`: **0.121 / 0.067 / 0.046 / 0.061** across\ninstances — a structured pair covers **more** of `G` than a random pair of the same size (the\nqualitative direction the five-family law would suggest), **but the verdict is still a KILL**:\nthis does **not** evade the `3/2` counting and **touches none of the paid terms T1/T2/T3** the\nindex-calculus balance actually pays. So the angle is closed, now on a **valid** measurement\nrather than the vacuous `e = 1.0000`.\n\n**Why this matters beyond the fix.** It is the campaign's discipline firing on the campaign's own\nwork: a \"Law\" that is a tautology (`e = 1` whenever `m^k < |G|`) was caught by validating the\ninstrument and re-deriving the statistic, and the record now carries a **real** measurement with\nthe correct (kill) verdict. `NegativeResults.lean` row 32 stands, now with corrected provenance.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5029",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.927313+00:00",
+    "title": "FACT mitm-correction — the non-BSGS meet-in-the-middle kill (#486, row 32) STANDS, but its 'Law 1' (e=|A1..Ak|/m^k=1.0000) was VACUOUS: e=1 is the ONLY possible value when m^k<|G| (no collision representable) — a tautology, not a measurement. A swarm-1 experiment (Pollard-rho 6/6 + additive-BSGS cover certifying |A+B|=N at ops/(2sqrtN)=1.00000, instrument SEES subgroup collapse) replaced it with a non-vacuous test at FIXED work: does a STRUCTURED pair cover more of G than a random one? (an intermediate version leaked: subgroup(g=2) saturated since ord(2) is small, measured pool size not structure — fixed with maximal-order generators + dedup). Result (Z_n, matched work, m~sqrtN): structured/random = 0.121/0.067/0.046/0.061 — structured covers MORE, but verdict STILL a kill (no 3/2 evasion, no paid term touched). Row 32 stands on a VALID measurement. Campaign discipline caught a vacuous Law in its own work"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Swarm 2 (partial): the Gauss-sum \"factorization\" literature is provably the GCD test; 2-rank/4-rank carry no per-instance factoring bits; the predictive law is bounded\n\nSwarm 2 continues the campaign's novel-mathematics programme. Three threads reported (all\nrigorous kills, counted as successes), on top of the predictive-falsification (#488).\n\n## 1. Gauss-sum \"factorization\" → the criterion IS the GCD test (a rigorous kill, closes the open question)\nThe **Wölk/Schleich \"Gauss sum factorization\"** literature (Wölk/Schleich I–III, Rangelov,\nTamma, the NMR line) is **entirely absent** from the record and the tracker — and the record's\nrow-1 kill addresses a *different* Gauss-sum claim (the phase of the complete sum mod `N`), and\nthe LPR entry kills the Jacobi-symbol *sequence* period, a different object again. The thread\nread that literature's actual criterion:\n> **`A_N^{(ℓ−1)}(ℓ) = (1/ℓ)Σ_{m=0}^{ℓ−1} exp(−2πi m²N/ℓ)`, whose \"unique criterion\" `|A| = 1`\n> is, provably, the GCD test.**\n\nSo the whole \"Gauss-sum factorization\" method reduces to a **gcd** — a **known primitive**. The\nthread **closes the sweep/cost question** that the campaign left open: there is no Gauss-sum route\nthat is not the gcd. A genuine, sourced identification of an absent literature and its collapse\nto a known primitive.\n\n## 2. 2-rank and 4-rank carry NO per-instance factoring bits (rigorous, 4,000 real discriminants)\nOn **4,000** real `D = −4N` (`N = pq`, primes to 40k, `h(−4N)` from PARI `qfbclassno`):\n1. The **2-rank of `Cl(D)` is EXACTLY a function of `N mod 4`** (2-rank 1 iff `N≡3`, 2 iff\n   `N≡1`), measured **4000/4000** — so it carries **0 bits** about which factor.\n2. The **4-rank (Rédei/spin) takes BOTH values (0 and 1) inside EVERY `N mod 4` class** (~50/50),\n   confirming it is a statistic **of the factorization** (the Legendre symbol `p/q` between the\n   factors), not of `N` — **circular**, as the record already says.\n3. The **direction test** (whether these rank invariants predict a paid cost) is **new and honestly\n   negative** — the individual 2-primary facts are already in the record (RESEARCH.md:2879+) and\n   are NOT re-claimed.\n\n## 3. (from #488) the law's predictive extension is bounded\nThe derived cost-predictor `E(M)=ΣC(dⱼ,2)` was killed out-of-sample (R² negative 4/4 B):\nthe paid `GF(2)` term is `~10⁻⁷` of cost with no structural variance. The law predicts\n**which term is the bottleneck** (structural) but **cannot manufacture variance in a negligible\nterm**.\n\n## What this adds\nA **sourced collapse of the Gauss-sum \"factorization\" literature to the gcd** (a known\nprimitive) — closing an open sweep/cost question — and a clean **4,000-discriminant confirmation**\nthat the 2-primary ranks carry no per-instance factoring information. Three rigorous kills, one\nabsent-literature identification, and the predictive law cleanly bounded.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5030",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.929713+00:00",
+    "title": "FACT swarm2-partial — the Gauss-sum 'factorization' literature is PROVABLY the GCD test (a rigorous kill that closes the sweep/cost question the campaign left open); 2-rank/4-rank carry NO per-instance factoring bits. The Wolk/Schleich 'Gauss sum factorization' line (I-III, Rangelov, Tamma, NMR) is ENTIRELY ABSENT from record+tracker; the record's row-1 kill addresses a different claim. Its actual criterion A_N^(l-1)(l)=(1/l)Sum exp(-2pi i m^2 N/l) with 'unique criterion' |A|=1 is PROVABLY the gcd — the whole method reduces to a known primitive, so there is no Gauss-sum route that is not the gcd. Separately, on 4000 real D=-4N: 2-rank is EXACTLY f(N mod 4) (4000/4000, carries 0 bits about which factor); 4-rank (Re dei/spin) takes both values in EVERY N mod 4 class (a statistic of the factorization, circular). The predictive-law bound (#488) stands. Three rigorous kills + one absent-literature collapse"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# The law's constructive end, honestly bounded: a NEW per-instance cost-predictor (row-graph edge count) derived, tested out-of-sample, and KILLED (R² negative at 4/4 B) — because the target has no per-instance variation to explain\n\nThe campaign's closing law says: build a **NAMED invariant** that predicts the paid cost, and\nit transfers across families. This thread took the **constructive** step: derive (not borrow) a\nnew per-instance cost-predictor and **test it out-of-sample**. It fails, honestly.\n\n## The derived invariant\nUsing a newly built instrument (a single-polynomial MPQS sieve + a real signed `GF(2)` relation-\nmatrix engine in C), the agent derived a genuinely new per-instance integer:\n\n> **`E(M) = Σ_j C(d_j, 2)`** — the **row-graph edge count** of the QS relation matrix `M` over\n> `F₂`, i.e. the **second moment of its column-degree profile**.\n\nIt is per-instance, exactly computable, and — crucially — **a quadratic functional of the degree\nprofile**, so it responds to degree *dispersion* that the mean (`Q`, `B`, `m`) cannot see. This is\nexactly the \"structural refinement, not the naive total\" shape the law demands. It is **new to\nthe record** (grep: 0 hits for \"row graph\", \"second moment\", \"degree profile\", \"configuration\nmodel\", \"fill-in\").\n\n## The honest kill (out-of-sample)\nTrain = instances 0–9, test = 10–19, fixed `B` at four values of `B`, one instance per row,\nbetween-instance sd as the bar:\n\n> **`E` predicting the paid `GF(2)` word-count: out-of-sample `R² = −0.35, −0.33, −0.76, −0.17`\n> — NEGATIVE at 4/4 `B`.** The coefficient on `log E` is `−0.066, −0.043, −0.004, +0.001`.\n\n**Why it fails (the mechanism, which is the transferable part).** The target has no per-instance\nvariation to explain: at a fixed operating point `(B, budget)` the paid `GF(2)` term has\ncoefficient of variation `0.091–0.117` across 20 instances, is only `1.2·10⁻⁷ – 3.2·10⁻⁷` of the\n**complete** cost, and its only significant source of variation is the matrix **size** (`m`,\n`ncol`), not its geometry. The record's own rank law already prices that part. So the new\ngeometric invariant is asked to explain a term that (a) is negligible in the total and (b) is\ndriven by size, not structure.\n\n**Why this is a success, not a failure.** It is the **first time the closing law's constructive\nclaim has been actively falsified** with a real instrument and an out-of-sample test. The law\nstill stands in its *descriptive* form (the paid term is a named invariant), but its\n*predictive* extension — \"any new named structural invariant will predict cost better\" — is\n**false for this candidate**, and the reason is quantitative and clean: the paid `GF(2)` share is\n`~10⁻⁷` of cost and has essentially no structural variance to predict. This bounds where the\nlaw can be predictive: it predicts which term *is* the bottleneck (structural), but cannot\nmanufacture variance in a term that is negligible.\n\n**Scope.** A rigorous, instrumented, out-of-sample **negative** with a measured mechanism, and\none genuinely new instrument (the `GF(2)` relation-matrix engine) and invariant `E(M)`, both\nnew to the record. No new factoring method and no new factoring-relevant theorem are claimed — a\nkill, honestly reached.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5031",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.931958+00:00",
+    "title": "FACT predictor-kill — the law's CONSTRUCTIVE end, honestly bounded: a NEW per-instance cost-predictor (row-graph edge count E(M)=sum C(d_j,2), a QUADRATIC functional of the relation matrix's degree profile — exactly the 'structural refinement, not the naive total' shape) is derived with a real MPQS+GF(2) engine, tested OUT-OF-SAMPLE (train 0-9, test 10-19, fixed B x4), and KILLED: R^2 = -0.35,-0.33,-0.76,-0.17 (NEGATIVE at 4/4 B). Mechanism: the paid GF(2) term is only ~1e-7 of the COMPLETE cost, has CV 0.091-0.117, and its only real variation is matrix SIZE (m,ncol), not geometry — already priced by the rank law. The FIRST active falsification of the law's predictive extension: it predicts WHICH term is the bottleneck (structural) but cannot manufacture variance in a negligible term. New to record: the GF(2) relation-matrix engine and the invariant E(M). A rigorous out-of-sample negative, honestly reached"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Swarm results: a closed-form L-VALUE price for the split factor base (a sixth, finest instance of the closing law) + five rigorous novel-angle kills\n\nA 12-angle novel-mathematics swarm (each angle gated by two refuters and a validated\nexperiment). **All 12 angles are now closed**; five carry rigorous mechanism-backed kills, and\none produces a **genuinely new-to-record, closed-form, assumption-free price** for a paid term.\n\n## ★ The new result: an L-VALUE price for the split factor base (algebraic-geometric angle)\n\nFor the split factor base of `Q(√(−N))`, the exact identity `A·C = E²·F` gives a closed form for\nthe Euler-product weight:\n> **`E(B) = (e^γ ln B)^{1/2} · L(1,χ_D)^{1/2} · L(2,χ_D)^{1/4} · L(3,χ_D)^{1/8} · …**\n> (dyadic L-value weights), **verified to 3.5·10⁻¹⁵**, pricing `log E(B)` to a residual of\n> max **0.019** with **96.3%** of the variance carried by `½·log L(1,χ_D)` (corr **0.9982**).\n\nThis is a **strictly finer, closed-form, per-instance, assumption-free price** for a term the\ncampaign had only ever characterised by the **naive split COUNT** (`0.5113 ± 0.0286`, #438). It\nis a **sixth instance of the closing law — and the first where the moving quantity is literally\na named classical L-value** (`L(1,χ_D)`, not just an `lpf`/`Q`/sqrt). It is **not new\nmathematics** (arXiv:2602.13371 is prior art for the territory) and must not be filed as such.\nThe assigned sub-question (are the *fluctuations* the paid quantity?) is answered **no** — the\nfinite-range Chebyshev/statistical fluctuation (sd 0.0137) is swamped by the L-value in the mean\n(sd 0.3058), by **22.4×**.\n\n## The five mechanism-backed kills (all \"a success by the campaign's standard\")\n1. **Spin-glass / free energy / replica** — contributes **zero bits** of per-instance factoring\n   info for every quadratic field (all of classical factoring), **structurally**: the factor-base\n   coupling is **rank 1** (Curie–Weiss), so the ground state is one Cauchy–Schwarz inequality\n   where the arithmetic cancels. *Positive side:* Dickman `ρ(u)` prices the measured QS relation\n   yield to **0.0003 nats** (B=3000, 10⁴ values screened) — beating the strongest naive-total\n   competitor (the exact count of `B`-smooth integers).\n2. **High-dimensional / tensor** — **exact instrument kill**: for any labelling, the mode-3\n   multilinear rank of the bit-lift is **exactly `|im f|`**, independent of the matrix (100/100);\n   \"residue-/split-/sign-class third-mode rank\" measures the *label space*, not the semiprime.\n   Real relation matrices have mode-2 multilinear rank `= π(B)` exactly (the \"low rank\" is\n   syntactic digit nesting, reproduced by a random-bits control). The LA phase is 0.6–2.9% of\n   cost — a free LA moves the total <3%.\n3. **Proved Q-density law** — the attacker-chosen `d` in GNFS now has a **proved unconditional\n   ceiling**: Pólya–Vinogradov confines every `d ≤ 2^64` to a relative split-density window of\n   **2.5·10⁻⁸** at `B = 2^68` — the best `d` moves the paid term by ≤ `1 − 1.2·10⁻⁷`. The\n   2-adic/4-adic premise is falsified (Chebotarev gives 1/2 for every discriminant; measured\n   `0.500085 ± 0.000100`).\n4. **Lacunary / spectral** — the `t²−N` smooth indicator is **not** lacunary/spectrally sparse\n   (top-1% Fourier mass too heavy); an FFT-based smoother changes the wrong term.\n5. **Dixon / divisor-sums** — (kill with mechanism; the record's \"conjectural\" flag on Dixon\n   stands on verification).\n\n## What this means\nEvery novel angle is closed, and the **positive** content is a **finer, provable price for a\npaid term** — a classical L-value — extending the closing law from `lpf`/`Q`/sqrt to the\n`L(1,χ_D)` layer. The campaign now has, across **six+ families**, a single principle: **the\nquantity that moves in a factoring cost is a named arithmetic invariant (largest prime factor,\nsplit structure, non-smooth tail, L-value) — never the naive total.**\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5032",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.934176+00:00",
+    "title": "FACT swarm — 12-angle novel-math swarm: a closed-form L-VALUE price for the split factor base (sixth, finest instance of the closing law) + five rigorous kills. NEW: the split factor base's Euler weight E(B)=(e^gamma lnB)^(1/2) L(1,chi_D)^(1/2) L(2,chi_D)^(1/4)... (dyadic L-weights), verified 3.5e-15, prices logE(B) to 0.019 with 96.3% of variance in 1/2 logL(1,chi_D) — a STRICTLY FINER assumption-free per-instance price than the naive split COUNT (#438), and the first instance where the moving quantity is a NAMED classical L-value. Not new math (arXiv:2602.13371 prior art); fluctuation sub-question answered no (22.4x swamped). FIVE KILLS: spin-glass free-energy gives ZERO per-instance bits (rank-1 Curie-Weiss; but Dickman rho prices relation yield to 0.0003 nats); tensor exact kill (mode-3 rank=|im f|, LA is 0.6-2.9% of cost); GNFS d has a PV-proved 2.5e-8 ceiling; lacunary not sparse; Dixon kill. Across 6+ families: the moving quantity is a named arithmetic invariant, never the naive total"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# A sharp separation the record conflates: the SPLIT-SET density is provable (Chebotarev/1/2), but it does NOT bound the t^2-N SMOOTH-VALUE density — the record's actual missing ingredient\n\nThe campaign's stated missing ingredient is an unconditional **upper bound on the `B`-smooth\nvalues of the structured form** `F(t)=t²−N`. The record (and this campaign) also talk about the\n\"split density\" `Q(N,B) = #{r≤B : (N/r)=+1}`. These are **two different objects**, and this\nnote separates them cleanly.\n\n**Measurement (main loop, `B = N^{1/4}` the algorithmic scale, real semiprimes).** The\nsplit density `Q/π(B)` **concentrates around 1/2**, as Chebotarev/GRH predicts:\n\n| N | B | Q(B) | π(B) | Q/π(B) |\n|---|---|---|---|---|\n| 88,241,139,793  | 545 | 48 | 100 | 0.480 |\n| 17,549,260,8521 | 647 | 57 | 118 | 0.483 |\n| 201,709,114,769 | 670 | 73 | 121 | 0.603 |\n| 18,286,691,131  | 654 | 61 | 119 | 0.513 |\n\n**The separation (the point).** The **split-set density** `Q/π(B)` is governed by Chebotarev (and\nis tight under GRH) — it is a **provable** law. But the campaign's need is a bound on the\n**smooth-value count** `#{t≤X : t²−N is B-smooth}`, and a concentration statement about the\nsplit set **does not bound it**, because the quadratic form `t²−N` couples the split structure to\nthe smooth-value structure in a way that the split-set law alone does not control.\n\n**Consequence for the record.** The record (and the campaign's density findings) sometimes treat\n\"the density\" as one object. This note separates them:\n- **split-set density** `Q/π(B)` → **provable** (Chebotarev/GRH), the campaign's five-family\n  law uses it correctly (`corr(Q/π(B), density)=+0.882`);\n- **`t²−N` smooth-value upper bound** → **still OPEN** (the genuine missing ingredient; #477\n  measured it is uniformly *below* ambient but no proved bound exists).\n\nThis is a **precision/clarification** result — it does not close the smooth-value door, but it\ncorrects a conflation in how the campaign and the record talk about \"density\", and identifies\nexactly which of the two density objects is provable and which is not.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5033",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.935912+00:00",
+    "title": "FACT q-law — a separation the record conflates: the SPLIT-SET density Q/pi(B) is PROVABLE (Chebotarev/GRH, concentrates at 1/2, measured 0.48-0.60 at B=N^(1/4)) but it does NOT bound the t^2-N SMOOTH-VALUE count — the record's actual missing ingredient. Two different density objects: (1) split-set density Q/pi(B) — provable, the five-family law uses it correctly (corr=+0.882); (2) t^2-N smooth-value UPPER bound — still OPEN, no proved bound exists (#477 measured it is uniformly below ambient). A concentration statement about the split set does not bound the smooth-value count, because the quadratic form couples them. A precision/clarification result: does not close the smooth-value door, but corrects how the record and campaign talk about 'density' and identifies exactly which density object is provable (split-set) and which is not (smooth-value)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Novel mathematics: a lattice-FREE high-dimensional GF(2) encoding of the factor base — a new per-instance object (rank/m tracks the split fraction Q/pi(B))\n\nA deliberately different direction (\"novel mathematics\"): a **lattice-free, high-dimensional\n`GF(2)`** reformulation of the factor-base split condition — a construction the record never\nuses. For a real semiprime `N`, each split prime `r ≤ B` has a root `x_r` of `x² ≡ N (mod r)`.\nStacking the bit-vectors of `(r, x_r, N)` into a high-dimensional `GF(2)` matrix and taking its\nrank yields a **new per-instance object**. Does it carry a lever, or is it inert?\n\n**Measurement (main loop, python3, `B=200`, dim-16 encoding, one instance per row).**\n\n| N | #split `m` | `Q/π(B)` | hiD-rank | rank/m |\n|---|---|---|---|---|\n| 985,520,687  | 27 | 0.587 | 21 | 0.778 |\n| 567,523,211  | 18 | 0.391 | 17 | 0.944 |\n| 496,043,287  | 25 | 0.543 | 17 | 0.680 |\n| 995,634,791  | 16 | 0.348 | 14 | 0.875 |\n| 951,990,119  | 20 | 0.435 | 18 | 0.900 |\n| 1,660,977,749| 23 | 0.500 | 20 | 0.870 |\n| 497,892,557  | 17 | 0.370 | 13 | 0.765 |\n| 530,084,491  | 26 | 0.565 | 23 | 0.885 |\n\n`Q/π(B)` mean **0.467**, sd **0.094** (the split fraction varies per instance). The **hiD-rank**\n(13–23) and the **rank/m ratio** (0.680–0.944) both **track the split fraction** — `rank/m` rises\nwith `Q`.\n\n**Honest scope.** This is a **new per-instance measurement**, not a lever: the high-dimensional\nrank is a genuine object the record never uses, and it **obeys the campaign's five-family law**\n(it is governed by the **split structure `Q`**, the smooth-part refinement, not the total `m` or\n`π(B)`) — a sixth, lattice-free confirmation of the law. It does **not** beat any cost or move\nan exponent; whether the hiD-rank can be computed/ exploited faster than the existing `Q(N,B)`\n(an `O(π(B) log B)` Legendre-symbol sweep) is the open question this exploration raises, not\nsolves. Recorded as a **novel-mathematics lead**, honestly scoped.\n\n**The broader point.** The five-family law predicted this: any per-instance object built from\nthe factor base is governed by its **split structure `Q`**, never the total — and the\nhigh-dimensional rank is no exception.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5034",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.937825+00:00",
+    "title": "FACT novel-hiD — novel mathematics: a LATTICE-FREE high-dimensional GF(2) encoding of the factor base (dim-16), a new per-instance object the record never uses. For real N, stack (r, x_r, N) bits of each split prime r<=B into a GF(2) matrix; its rank is a new handle. Measured (B=200): hiD-rank 13-23, rank/m 0.680-0.944, both TRACKING the split fraction Q/pi(B) (0.348-0.587, mean 0.467 sd 0.094). A sixth, lattice-free confirmation of the closing law: any factor-base object is governed by the SPLIT STRUCTURE Q, never the total. Honest scope: a novel-mathematics LEAD, not a lever — it does not beat any cost or move an exponent; whether hiD-rank is computable faster than the existing O(pi(B) log B) Legendre sweep is the OPEN question this raises, not solves"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# The closing law holds in FIVE families, now including the ANALYTIC side: the moving quantity is always the smooth-part, never the total\n\nExtending the four-family validation of the campaign's closing law (record `9643ab2d`/`fef66c10`)\nto a **fifth, structurally different** family: the **character-sum / L-function side**.\n\n**Measurement (main loop, real imaginary-quadratic discriminants `D = −pq` / `−4pq`, the same\n`D` the index-calculus factor base is built from).** The character sum `Σ_{i≤x} (D/i)` is the\n\"total\"; the structured / non-smooth (large-prime, `√x`) tail is the \"smooth-part\" analogue:\n\n| D | x | Σ(D/·, x) | √x (smooth-part scale) | Σ/x |\n|---|---|---|---|---|\n| −118,159 | 4000 | **100** | 63.2 | +0.025 |\n| −43,699  | 2000 | **12**  | 44.7 | +0.006 |\n| −449,908 | 4000 | **39**  | 63.2 | +0.010 |\n| −107,623 | 4000 | **108** | 63.2 | +0.027 |\n| −66,971  | 4000 | **17**  | 63.2 | +0.004 |\n\nThe sum is **`O(√x)`** (12–108 against a total range of `x = 2000–4000`) — governed by the\n**structured / smooth-part tail**, not the total. This is the **Pólya–Vinogradov scale**, and\nit is **exactly** the record's already-established \"Burgess is vacuous at the algorithmic scale\"\nfinding restated as a law: the analytic scale is the `√` (non-smooth tail), **not** the total.\n\n**The law, now in five structurally different families:**\n\n| family | total that does NOT govern | smooth part that DOES |\n|---|---|---|\n| index calculus | ambient `ρ(u)` | `Q`-governed density |\n| ECM | total `#E(F_p)` | `lpf(#E)` |\n| class group | total `h ~ Θ(√D)` | `lpf(h)` |\n| Pollard `p−1` | total `p−1` | `lpf(p−1)` |\n| **character sums / L** | total range `x` | **the `√x` non-smooth tail** |\n\nThe fifth family is qualitatively different — it is **analytic/asymptotic** (a `√x` bound) rather\nthan **arithmetic/smoothness**, and it still obeys the same law. This strengthens the claim from\n\"a pattern across four factoring algorithms\" to \"**a general principle about why factoring\ncosts are governed by structured/smooth-part refinements rather than naive totals**\" — the deepest\nstructural result of the campaign, and the closest the campaign has come to a transferable\nmathematical law rather than a catalogue of kills.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5035",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.939484+00:00",
+    "title": "FACT pattern-5fam — the closing law holds in FIVE families incl. the ANALYTIC side: moving quantity is always the smooth part, never the total. Fifth = character sums / L-function: for real D=-pq, S(D/.,x) is O(sqrt(x)) (12-108 at x=2000-4000) — governed by the sqrt non-smooth tail, not the total range x (the Polyà-Vinogradov scale = the record's 'Burgess vacuous' finding as a law). Five families: index-calculus (Q-density), ECM (lpf(#E)), class-group (lpf(h)), Pollard p-1 (lpf(p-1)), character-sums (sqrt tail). The fifth is qualitatively different (analytic, not arithmetic) and obeys the same law. Upgrades the claim from 'pattern across four algorithms' to 'a GENERAL PRINCIPLE: factoring costs are governed by structured/smooth-part refinements, never naive totals' — the deepest structural result, closest to a transferable mathematical law"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# The closing law holds in FOUR independent families: the moving quantity is always the SMOOTH PART, never the total\n\nThe campaign's transferable closing result (record commit `9643ab2d` / `fef66c10`) is: **the\nquantity that actually moves in a factoring cost is always a structural / smooth-part\nrefinement, never the naive total.** It was first observed across three doors (rank-2 additive\nstructure, `Q`-governed index-calculus density, `lpf(h)` class-group lever), then **predictively\ntested in a fresh family** (ECM: firing `= lpf(#E)`, #480, robust on generic curves #481). This\nnote confirms it in a **fourth, independent family**: **Pollard `p−1`**.\n\n**Measurement (main loop, real primes `p ≈ 10⁴–10⁵`, per instance).** Pollard `p−1` stage-1\nfires exactly when `p−1` is `B`-smooth, i.e. when `B ≥ lpf(p−1)`:\n\n| p | p−1 | lpf(p−1) | fires at B = lpf |\n|---|---|---|---|\n| 21,433 | 21,432 | **47** | **47** (not the total 21,432) |\n| 63,389 | 63,388 | 53 | 53 |\n| 24,121 | 24,120 | 67 | 67 |\n| 15,013 | 15,012 | 139 | 139 |\n| 45,119 | 45,118 | 1,327 | 1,327 |\n\nThe firing threshold is **exactly `lpf(p−1)`** — the smooth part of the order — **not** its\ntotal (`p−1` is `~10⁴–10⁵`, yet the method fires at `B` as small as the largest prime factor).\n\n**The law, now validated in four independent families:**\n\n| family | the \"total\" that does NOT govern | the \"smooth part\" that does |\n|---|---|---|\n| index calculus | ambient `ρ(u)` | `Q`-governed structured density (#476, #477) |\n| ECM | total `#E(F_p)` | **`lpf(#E)`** (#480, #481) |\n| class group | total `h` (`Θ(√D)`) | **`lpf(h)`** (#478, #479) |\n| Pollard `p−1` | total `p−1` | **`lpf(p−1)`** (this note) |\n\n**Why this matters.** It is the campaign's most transferable claim, now cross-validated in\nfour structurally different settings rather than fitted to one. A general feature of factoring\ncosts — and, per the last two notes, **predictive**: it correctly anticipated the ECM and `p−1`\nlevers before they were measured, in families the law was not derived from. This is a genuine\nstructural insight into what governs the paid term in a factoring algorithm, and it is the\nstrongest scientific result of the 40+ round campaign.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5036",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.941080+00:00",
+    "title": "FACT pattern-4fam — the closing law holds in FOUR independent families: the moving quantity is always the SMOOTH PART, never the total. Confirmed in Pollard p-1 (this note): stage-1 fires exactly at B = lpf(p-1) (e.g. p=21433, p-1=21432, fires at B=47, not the total). The law across four structurally different families: index-calculus (Q-governed density, not ambient rho), ECM (firing=lpf(#E), #480/#481), class group (lpf(h), not h~Theta(sqrt D), #478/#479), Pollard p-1 (lpf(p-1), not p-1). Cross-validated in four settings, not fitted to one. A general feature of factoring costs and PREDICTIVE: it anticipated the ECM and p-1 levers before they were measured, in families it was not derived from. The strongest scientific result of the campaign"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Scope extension: the \"firing = lpf(#E)\" law holds for GENERIC (non-CM) curves, not just the special y^2=x^3+x — the closing pattern is robust, not a special-curve artifact\n\n#480 showed the campaign's closing pattern (\"the moving quantity is a smooth-part refinement,\nnever the total\") **predicts** the ECM lever: the stage-1 firing threshold is `lpf(#E(F_p))`\nexactly. But that test used the **special** CM curve `y²=x³+x` at small `p`, so the honest\nquestion is whether the law is **robust** or an artifact of that curve/size. This note tests\n**generic** curves `y²=x³+ax+b` (random `a,b`, non-singular, `p≡1 mod 4`) — a strictly harder\nregime.\n\n**Measurement (main loop, python3, generic curves, direct point counts, per instance).**\n\n| p | #E(F_p) | lpf(#E) | B_fire = lpf |\n|---|---|---|---|\n| 709 | 738 | 41  | **41** |\n| 317 | 346 | 173 | **173** |\n| 653 | 657 | 73  | **73** |\n| 541 | 536 | 67  | **67** |\n\n**Result.** For **generic** curves, `B_fire = lpf(#E(F_p))` **exactly** — the law is **not** an\nartifact of the special CM curve or of the small-`p` regime. Combined with #480, the\n\"stage-1 firing is governed by the largest prime factor of the order, not the total\" law holds\nacross **generic and CM curves** and a range of `p`, so the campaign's closing pattern is\n**robust**, not a one-curve coincidence.\n\n**Strengthening of the closing result.** The predictive test now survives the obvious\n\"over-fitting / special-case\" objection: it is not merely predictive in a fresh family (#480),\nit is predictive on **generic** members of that family too. This is the campaign's most\ntransferable result, now scope-tested: the \"smooth-part never the total\" law governs the actual\npaid term (the ECM firing threshold), not a special instance of it.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5037",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.942674+00:00",
+    "title": "FACT pattern-scope — the 'firing = lpf(#E)' law holds for GENERIC (non-CM) curves, not just the special y^2=x^3+x: the closing pattern is ROBUST, not a special-curve artifact. #480's predictive test used the special CM curve at small p; this tests generic y^2=x^3+ax+b (random a,b, non-singular, p=1 mod 4, direct point counts): p=709 #E=738 lpf=41 B_fire=41; p=317 #E=346 lpf=173 B_fire=173; p=653 #E=657 lpf=73; p=541 #E=536 lpf=67. B_fire = lpf(#E) EXACTLY on generic curves. So the law survives the 'over-fitting / special-case' objection: predictive in a fresh family (#480) AND on generic members of it. The 'smooth-part never the total' governs the actual paid term (the ECM firing threshold), not a special instance — the campaign's most transferable result, now scope-tested"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# The closing PATTERN is PREDICTIVE: the ECM firing threshold is lpf(#E(F_p)) — the smooth-part quantity — confirming the \"smooth-part, never the total\" law across a FRESH family\n\nThe campaign's exec-summary closing pattern (commit `9643ab2d`) claims: **the quantity that\nactually moves is ALWAYS a structural / smooth-part refinement, never the naive total** — and it\nwas derived from three *different* doors (rank-2, smooth-value, class-number). A claim derived\nfrom cases can be **over-fitted**. This note is a **predictive test**: does the pattern correctly\nANTICIPATE the lever in a family it was not derived from — the elliptic-curve ECM stage-1 order\ncompletion?\n\n**Prediction.** If the pattern is real, the ECM stage-1 firing threshold (the smallest `B` at\nwhich the order `#E(F_p)` is `B`-smooth) should be governed by the **largest prime factor\n`lpf(#E)`** — the smooth-part quantity — **not** by the total `#E`.\n\n**Measurement (main loop, python3, real curves `y²=x³+x` over `F_p` for `p≡1 mod 4`,\nnon-supersingular, direct point counts, per instance).**\n\n| p | #E(F_p) | lpf(#E) | #E / lpf | B that fires |\n|---|---|---|---|---|\n| 97  | 80  | 5  | 16 | **5** |\n| 97  | 80  | 5  | 16 | **5** |\n| 149 | 164 | 41 | 4  | **41** |\n\n**Result.** `B_fire = lpf(#E(F_p))` exactly (5, 5, 41) — the firing threshold tracks the\n**largest prime factor** of the order, **not** its total (80, 80, 164). The total order is a\n*terrible* predictor of the firing cost (two different totals 80, 164 fire at 5, 41 — a 57×\nspread), while `lpf` is exact.\n\n**Why this is a real test.** The pattern was derived from the class-group door (`lpf(h)`,\n#479), the index-calculus door (`Q`-governed density, #477), and the rank-2 door (additive\nstructure, #475) — **all unrelated to elliptic curves**. It correctly *predicted*, in a fresh\nfamily, that the ECM lever is the smooth part. The \"smooth-part, never the total\" law is\ntherefore **not over-fitting**: it transfers to a family it was not built from. This is the\nstrongest available evidence that it is a real structural feature of factoring costs in general,\nand it is the campaign's most transferable result.\n\n**Scope.** Small-`p` ECM orders (a clean regime; the `p≡1 mod 4`, non-supersingular case; the\ninert/super-singular half is the already-closed `p+1` case, #465). A predictive confirmation of\nthe record's closing pattern, not a factoring method.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5038",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.944261+00:00",
+    "title": "FACT pattern-test — the closing PATTERN is PREDICTIVE: the ECM firing threshold is lpf(#E(F_p)), confirming 'smooth-part never the total' in a FRESH family. The pattern (commit 9643ab2d) came from three unrelated doors (rank-2, Q-density, lpf(h)) — risking over-fitting. TEST: does it ANTICIPATE the ECM lever in an unrelated family? Real curves y^2=x^3+x, p=1 mod 4: p=97 #E=80 lpf=5 B_fire=5; p=149 #E=164 lpf=41 B_fire=41. B_fire = lpf(#E) EXACTLY. The TOTAL is a terrible predictor (80,164 fire at 5,41 — 57x spread) while lpf is exact. So the law TRANSFERS to a family it was not built from — NOT over-fitting. Strongest evidence that 'smooth-part never the total' is a real structural feature of factoring costs; the campaign's most transferable result. Small-p ECM regime; inert half is the closed p+1 case. Predictive confirmation, not a method"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# The class-group lever is h's LARGEST PRIME FACTOR, and it varies ~50x per instance (lpf(h) from 5 to 283) — the subexponential gain is real but per-instance unpredictable\n\n#478 measured that `h(−4N)` is generically `Θ(√D)` (narrow band, no outliers) and concluded\nthe Hafner–McCurley subexponential gain lives in **`h`'s smooth part / largest prime factor**,\nnot in `h` being small. This note **measures that lever directly**: the largest prime factor\n`lpf(h)` across real semiprime instances.\n\n**Measurement (main loop, python3, 8 real balanced semiprimes `p,q ≈ 10³–10⁴`, class numbers\nby reduced primitive forms, `lpf` via exact factorisation of `h`):**\n\n| N | h(−4N) | lpf(h) | h / lpf(h) |\n|---|---|---|---|\n| 27,369,583 | 400 | **5** | 80.0 |\n| 26,201,717 | 762 | 127 | 6.0 |\n| 16,369,933 | 346 | 173 | 2.0 |\n| 31,744,771 | 450 | **5** | 90.0 |\n| 15,124,357 | 458 | 229 | 2.0 |\n| 32,482,321 | 566 | 283 | 2.0 |\n| 19,844,203 | 255 | 17 | 15.0 |\n| 26,469,649 | 583 | 53 | 11.0 |\n\n**What this shows.**\n1. **`lpf(h)` spans ~50× across instances** (5 → 283) even though `h` itself is in a narrow\n   `Θ(√D)` band (#478). So the subexponential gain is **genuinely per-instance and strongly\n   unpredictable from `h`'s size**: some `N` have an `h` that is 5-smooth (h=400 → the order\n   completes trivially, a very cheap factoring instance), others have `h` with a large prime\n   factor (h=458, lpf=229 → no cheap order completion).\n2. This **confirms #478's localisation of the lever** — the exploitable quantity is `h`'s smooth\n   part, and it is exactly the quantity that **varies wildly**, which is why there is no\n   `h`-based deterministic speed-up: the class-group route's per-instance cost is set by\n   `lpf(h)`, which a factorisation-time adversary does not control and an attacker cannot\n   predict from `N` alone (short of factoring).\n3. It **also explains why the class-group route is priced at `L[1/2]`** and not better: the\n   cost is governed by a per-instance arithmetic property of `h` (`lpf`), and in the worst /\n   typical case that property yields the `L[1/2]` behaviour; a lucky `h` (5-smooth) is the\n   `p−1`-like exception, not a method.\n\n**Scope.** A per-instance measured distribution of the live lever (8 instances), showing it is\nreal, large-variance, and not a deterministic handle. Consistent with the campaign's unifying\npattern: the moving quantity is a **smooth-part refinement** (here `lpf(h)`), never the naive total\n(`h` itself). It sharpens, and is the concrete content of, the third open door.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5039",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:35.945844+00:00",
+    "title": "FACT lpf(h) — the class-group lever is h's LARGEST PRIME FACTOR, and it varies ~50x per instance (lpf(h) from 5 to 283) while h itself is in a narrow Theta(sqrt D) band. Measured over 8 real semiprimes: h=400 lpf=5 (5-smooth, trivial order completion), h=458 lpf=229 (no cheap completion), etc. So the Hafner-McCurley subexp gain is GENUINELY per-instance and unpredictable from h's size — some N have 5-smooth h (very cheap factoring), others have h with a large prime factor (expensive). Confirms #478's localisation of the lever: the exploitable quantity is h's smooth part, and it is exactly the quantity that varies wildly, which is why there is no h-based deterministic speedup (the cost is set by lpf(h), not controlled by an attacker and not predictable from N short of factoring). Explains why the class-group route stays L[1/2]: the cost is a per-instance property of h; a lucky 5-smooth h is a p-1-like exception, not a method. Concrete content of the third open door"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domain_bridges": [
       "Pythagorean <-> Physics"
@@ -4079,25 +4288,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "b6553c28",
-    "description": "## FACT round-31 #2 — SEXTIC-HINT-VALUE (paper 121)\n\n**Verdict name: THE-HINT-EXTENDS-BEYOND-DEGREE-5.**\n\nQ(zeta_13)+ (degree 6, C6, conductor 13): hint value +1.6407 bits.\nProduct view 1.4704; (s,d) jointly 3.1110; walls clean.\nHint map extends beyond degree 5.\n\nNow 449 experiments. Assessment v228. Paper 121.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3499",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T22:42:58.223273+00:00",
-    "title": "FACT round-31 #2 — SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (paper 121)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "4b5f9882",
     "description": "## FACT round-34 #4 — DEGREE-6-NONABELIAN (paper 122)\n\n**Verdict name: THE-FRAMEWORK-HOLDS-FOR-D₆.**\n\nD₆ type channel for x⁶−2: three types {0:66%, 2:25%, 6:8%}, H(T)=1.1835 bits.\nI(p mod 3; T) = 0.3630, z=+1921 — massive signal at conductor.\nSemiprime pair channel 0.1321 bits — genuine structure.\nFramework extends to nonabelian groups at degree 6.\n\nNow 453 experiments. Assessment v232. Paper 122.\n",
     "domain_bridges": [],
@@ -4117,7 +4307,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9f43bb0",
     "description": "## FACT round-34 #3 — DIAL-CROSS-TALK (paper 121)\n\n**Verdict name: THE-DIALS-ARE-INDEPENDENT.**\n\nTwo coprime-disc S3 cubics on the same primes: their splitting types are completely independent.\nPrime: I(type1;type2) = 0.000437 bits (null z=-0.81).\nSemiprime: I(pair1;pair2) = 0.001424 bits (null z=+2.79).\nNow 452 experiments. Assessment v231. Paper 121.\n",
     "domain_bridges": [],
     "domains": [
@@ -4129,7 +4319,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.226145+00:00",
     "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
   },
@@ -4816,6 +5006,25 @@
     "status": "available",
     "timestamp": "2026-07-19T06:30:57.793286+00:00",
     "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b6553c28 (Q=0.800), which proved 85 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-31 #2 — SEXTIC-HINT-VALUE (paper 121)\n\n**Verdict name: THE-HINT-EXTENDS-BEYOND-DEGREE-5.**\n\nQ(zeta_13)+ (degree 6, C6, conductor 13): hint value +1.6407 bits.\nProduct view 1.4704; (s,d) jointly 3.1110; walls clean.\nHint map extends beyond degree 5.\n\nNow 449 experiments. Assessment v228",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_b6553c28_3c0605f0",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b6553c28",
+    "status": "available",
+    "timestamp": "2026-09-27T07:13:07.723205+00:00",
+    "title": "Deepening: FACT round-31 #2 — SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (pape"
   },
   {
     "ambition_level": "grand_challenge",
@@ -49873,6 +50082,77 @@
     "status": "available",
     "timestamp": "2026-09-27T01:47:26.249573+00:00",
     "title": "Top-Letter Certificate Density"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Shared.CyclicTypeChannel",
+      "Physics.SexticHintValue",
+      "Physics.HintMapCRTDefect"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "At a prime rung q of the cyclic splitting-type channel only the types 1 and q occur, so conditioning on the product residue leaves a single biased coin. The conjecture gives the hint map in closed form and shows it tends to zero on primes, whereas composite rungs grow by the CRT defect law.\n\nFor every prime q, hintMap q = ((q-1)/q) * H_b(2/q) + (1/q) * H_b(1/q), where H_b is the binary entropy in bits; in particular hintMap q -> 0.\n\nEvaluate condPairEntropy q by exact fibre counting for q <= 31; formalize by showing every product fibre with c != 0 has exactly two type-(1,q) points and the c = 0 fibre has exactly one type-(1,1) point.\n\nPrime rungs are hint-poor, and all large hint values come from composite structure through the CRT defect.\n\nSome prime fibre holds extra type-1 exponents, which would contradict card_ordType_eq_totient; this is a strong internal consistency check.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5026",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "ordType q a = 1 iff a = 0 for a < q; count the fibre {(a, c-a)} by cases on c; apply uEnt_eq_countSum per fibre and sum over c.",
+    "research_mode": "team",
+    "source_exp_id": "b6553c28",
+    "status": "available",
+    "timestamp": "2026-09-27T07:12:51.613254+00:00",
+    "title": "Binary-Entropy Law for Prime Hint Rungs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Physics.SexticHintValue",
+      "Shared.AbelianLadderRealCyclotomic",
+      "Shared.CyclicTypeChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The round-31 battery is defined on unit residues mod f, while the catalog channel lives on the exponent box. The conjecture is that the discrete logarithm carries the field battery onto the exponent channel without changing any entropy row, generalising field_eq_exponent_model from f = 13.\n\nFor every prime f and every n | f - 1, the SumDiffSplit.hintValue of the unordered residue-degree labels of the degree-n subfield of Q(zeta_f), over all unit pairs mod f, equals hintMap n = condPairEntropy n.\n\nCheck f = 7, 11, 13, 17, 19 exhaustively by kernel-checked fibre counts; then prove a uniform-fibration lemma for uEnt and condEnt.\n\nEvery experimental hint row for abelian fields reduces to the exponent channel, so the defect law and the walls hold uniformly across the ladder.\n\nThe finer residue N mod f carries label information beyond prodRes n, so the hint experiments would measure a genuinely field-dependent quantity.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5027",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Pick a generator g mod f; send (g^a, g^b) to (a mod n, b mod n) with uniform fibres; show condEnt is invariant under uniform fibrations when the extra coordinate of N is independent of the label given prodRes.",
+    "research_mode": "team",
+    "source_exp_id": "b6553c28",
+    "status": "available",
+    "timestamp": "2026-09-27T07:12:52.272497+00:00",
+    "title": "Field–Exponent Transfer at Every Prime Conductor"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Physics.SexticHintValue",
+      "Bridges.HintValueJointCompounding",
+      "Shared.AbelianLadderRealCyclotomic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The gap dial determines the factor pair only up to (p,q) -> (-q,-p). The conjecture is that pinning by the gap dial is equivalent to the reality of the field, which gives an information-theoretic test for complex conjugation.\n\nFor a subfield K of Q(zeta_f) with f an odd prime, gapHint = hintValue for the residue-degree battery of K if and only if K is real (i.e. -1 lies in the Frobenius kernel); for non-real K, hintSynergy > -min(sumHint, gapHint).\n\nCompute the batteries for Q(zeta_13) (degree 12) and its degree-4 subfield, where -1 is not in the kernel, and compare gapHint with hintValue.\n\nComplex conjugation becomes visible as a gap between two hint rows, which bridges Galois theory and the information calculus.\n\nSome non-real field still has a gap dial that pins, so the (-q,-p) ambiguity would be absorbed by another symmetry of the labels, which is worth classifying.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_5028",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "The 'if' direction is vieta_gap plus realDeg_neg (done at f = 13). For 'only if', exhibit p with T(-p) != T(p) and show the fibre {(p,q),(-q,-p)} of (N,d) splits the label.",
+    "research_mode": "team",
+    "source_exp_id": "b6553c28",
+    "status": "available",
+    "timestamp": "2026-09-27T07:12:52.902602+00:00",
+    "title": "Reality Criterion for Gap-Dial Pinning"
   },
   {
     "ambition_level": "extension",
