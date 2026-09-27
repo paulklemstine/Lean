@@ -399,6 +399,27 @@ the record's own claims were materially corrected. The load-bearing changes:
    `N`, and non-split large-prime columns **will** appear — the only route, and it is the
    **algebraic/NFS** direction, not QS.
 
+13. **★ THE THREE OPEN DOORS, ALL NOW MEASURED — and a unifying pattern** (rounds 37-41
+   constructive, issues #470-#478). Each capstone open door was attacked constructively:
+   - **Rank-2 UMW divisor cover** (the last named live cell): bounded from **six** directions,
+     all on the same **`n^{1/3}` deficit**. Naive sheets, composite differences, fixed and
+     co-adapted generators all **diverge** (87%→36%); the per-prime **incidence capacity**
+     (`AB·ln ln` vs `n` conditions) and the **single-difference correlation capacity** (best `d` =
+     `lcm(1..m)`, `m≈n^{1/3}`) are each **short by `n^{1/3}`** — the same exponent that sinks
+     rank 1. **The obstruction is a capacity deficit, not a construction gap:** `n^{1/3}`/side
+     gives `n^{2/3}` dof but a cover needs `n` independent conditions (#470-#475).
+   - **Smooth-value upper bound** (the smoothness-escape horn): the **structured** `B`-smooth
+     yield of `t²−N` is **uniformly below** ambient `ρ(u)` (**mean 0.0030, sd 0.0017, max
+     0.0057** over 20 real instances) — the horn **does not break**; `ρ` prices only the
+     *ambient* density, the `Q`-structure uniformly **suppresses** the yield (#476, #477).
+   - **Per-instance class number**: `h(−4N)/√(4N)` sits in a **narrow band** (mean 0.0526, sd
+     0.0198, no outliers) — **`h` is generically `Θ(√D)`**, so there is **no per-instance
+     exception in `h` itself**; the subexp gain lives in **`h`'s smooth part**, not `h` (#478).
+   **★ THE UNIFYING PATTERN: the quantity that actually moves is ALWAYS a structural /
+   smooth-part refinement, never the naive total** — rank-2 needs *additive* structure,
+   smooth-value is `Q`-governed (not `ρ`), the class-number lever is `h`'s *smooth part* (not `h`).
+   This is the campaign's most transferable closing result.
+
 **Discipline, all earned by retraction** (each paper carries its errata): never cite a source
 unopened; name the quantity (a mechanism and its target must act on the SAME quantity — the
 most-violated rule); a *proved* bound can be real yet **price the wrong direction** (a lower
