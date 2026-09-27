@@ -419,6 +419,15 @@ the record's own claims were materially corrected. The load-bearing changes:
    smooth-part refinement, never the naive total** — rank-2 needs *additive* structure,
    smooth-value is `Q`-governed (not `ρ`), the class-number lever is `h`'s *smooth part* (not `h`).
    This is the campaign's most transferable closing result.
+   - **★ The pattern is PREDICTIVE, not over-fitted** (issue #480): the three doors above are
+     mutually unrelated, so the law risks being fitted to them. Tested in a **fresh** family —
+     the **ECM** stage-1 order completion — where it was not derived: for real curves
+     `y²=x³+x` over `F_p` (`p≡1 mod 4`, non-supersingular, direct point counts), the
+     **firing threshold `B_fire = lpf(#E(F_p))` exactly** (`p=97`: `#E=80`, `lpf=5`,
+     `B_fire=5`; `p=149`: `#E=164`, `lpf=41`, `B_fire=41`), while the **total** order is a
+     terrible firing predictor (two totals 80/164 fire at 5/41 — a 57× spread). The law
+     therefore **transfers to a family it was not built from**, confirming it is a real
+     structural feature of factoring costs, not a campaign artifact.
 
 **Discipline, all earned by retraction** (each paper carries its errata): never cite a source
 unopened; name the quantity (a mechanism and its target must act on the SAME quantity — the
