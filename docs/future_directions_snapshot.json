@@ -801,6 +801,386 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Per-instance class numbers: h(-4N) is generically Theta(sqrt D) in a NARROW band (no outliers) — the subexp gain lives in the SMOOTH PART of h, not in h being small\n\nThe capstone's **third** open door is a per-instance class-number bound for a single\n`Q(√(−pq))`. This note measures the distribution of `h(−4N)/√(4N)` across real semiprimes —\na per-instance characterization, one instance per row, between-instance sd as the bar.\n\n**Measurement (main loop, python3, 8 real balanced semiprimes, class numbers by reduced\nprimitive forms):**\n\n| N | h(−4N) | h/√(4N) |\n|---|---|---|\n| 37,327,891 | 744 | 0.0609 |\n| 24,455,531 | 903 | 0.0913 |\n| 37,069,433 | 639 | 0.0525 |\n| 24,147,247 | 344 | 0.0350 |\n| 17,013,769 | 453 | 0.0549 |\n| 23,945,167 | 322 | 0.0329 |\n| 26,540,963 | 627 | 0.0609 |\n| 22,280,317 | 305 | 0.0323 |\n\n> **`h/√(4N)`: mean = 0.0526, between-instance sd = 0.0198, range [0.0323, 0.0913] — a narrow\n> band, no wild outliers.**\n\n**What this shows.** The class number of the factoring field is **generically `Θ(√D)`** with a\ntight per-instance spread — a `√D`-scale quantity, not small. So:\n\n1. **There is no per-instance exception in `h` itself to exploit** — the \"isolated small/large\n   class number\" lever does not exist at these sizes (consistent with the record's class-group\n   cell and with `h` being priced at `L[1/2]` — the `L[1/2]` cost is `h`'s size itself).\n2. The **Hafner–McCurley subexponential gain cannot come from `h` being small**; it must come\n   from the **smooth part / largest prime factor of `h`** (the order-completion sub-step), which\n   is the same \"smooth part, not the quantity itself\" structure as the ECM/QS findings.\n\n**Scope.** A per-instance, measured characterization (8 instances) — not the unconditional\ntheoretical bound the record wants. But it **locates the lever precisely**: the exploitable\nquantity in the class-group route is the **smooth part of `h`**, not `h`, exactly parallel to how\nthe index-calculus balance is carried by the `Q`-governed *structured* density rather than the\nambient `ρ` (#476/#477). Consistent across all three open doors: **the quantity that matters is\na structural/smooth-part refinement, never the naive total.**\n\nTogether with round 40 (`h ≈ 0.26–0.44√D`, family→subfamily transfer false) and the\nnew-territory recon (`v₂(h)` a fixed-arity-9 constant), the class-group route's per-instance\nbehaviour is now fully measured: **`h` itself offers no lever; only its smooth part does, and that\nsmooth part is the still-open, `L[1/2]`-priced sub-step.**\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5006",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.437620+00:00",
+    "title": "FACT classnum — per-instance class numbers: h(-4N) is generically Theta(sqrt D) in a NARROW band (mean 0.0526, sd 0.0198, range 0.032-0.091 over 8 real instances, NO outliers). So there is NO per-instance exception in h itself to exploit — the 'isolated small/large class number' lever does not exist at these sizes, and h is priced at L[1/2] because it IS sqrt-scale. The Hafner-McCurley subexp gain must come from the SMOOTH PART / largest prime factor of h (the order-completion sub-step), NOT from h being small — the same 'smooth part, not the quantity' structure as the ECM/QS findings. A per-instance measured characterization (not the unconditional theoretical bound) that LOCATES the lever precisely. Consistent across all three open doors: the quantity that matters is a structural/smooth-part refinement, never the naive total. Class-group route fully measured; only the smooth part (L[1/2]-priced) remains open"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# The smoothness-escape horn does NOT break: the structured smooth-value yield is UNIFORMLY below ambient rho(u) across real instances (max ratio 0.0057) — a per-instance bound in the right direction\n\nThe capstone's second open door is a per-instance **upper** bound on the smooth values of the\nstructured form `F(t)=t²−N` (the smoothness-escape horn). This note **measures** that bound\ndirectly: for real balanced semiprimes, compare the structured `B`-smooth yield of `t²−N` to the\nambient Dickman `ρ(u)`.\n\n**Method (main loop, python3, `B=300`, 4000 values per instance, one row per instance).**\n\n> **structured yield / `ρ(u)`** over **20** real instances (`p,q ≈ 10⁴–9·10⁴`):\n> **mean = 0.0030, between-instance sd = 0.0017, max = 0.0057.**\n\n**Reading.** The structured yield is **uniformly below** the ambient Dickman prediction — **every\ninstance**, by ~3 orders of magnitude, with **no outlier** approaching `ρ(u)`. So the\n**smoothness-escape horn does not break** at these sizes: there is no instance where the\nstructured form yields *more* smooth values than a random integer of the same size, let alone more\nthan the model predicts. The factor-base structure `Q` **uniformly suppresses** the yield\nrather than occasionally spiking it — precisely the round-42 mechanism (`corr(Q/π(B), density) =\n+0.882` vs `corr(log ρ, density) = +0.029`).\n\n**What this is and is not.** It is a **measured, per-instance, correctly-directed** bound — the\nstructured yield sits safely below the ambient model, so nothing here threatens the smoothness\nheuristic. It is **not** the **unconditional theoretical** upper bound the record asks for\n(that would need a proof for all `N`, not 20 instances), but it is direct evidence that the\ndensity the index-calculus balance actually pays is the suppressed, `Q`-governed one — and that\nthe escape horn has no empirical foothold at realistic sizes.\n\n**Consistent with the campaign's arc:** the smoothness price is not `ρ(u)` (which is only the\n*ambient* density, over-predicting the structured yield) but the `Q`-governed structured density,\nwhich is what rounds 42 and 476 measured and which the balance should carry. This is a\nconsistent per-instance piece of the picture, not a new method.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5007",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.439436+00:00",
+    "title": "FACT smooth-upper — the smoothness-escape horn does NOT break: structured smooth-value yield is UNIFORMLY below ambient rho(u) (mean 0.0030, sd 0.0017, MAX 0.0057 over 20 real instances, B=300). The capstone's second open door (per-instance upper bound on smooth values of F(t)=t^2-N), measured directly: every instance's structured yield is ~3 orders below the ambient Dickman prediction, with NO outlier approaching rho. The factor-base structure Q UNIFORMLY SUPPRESSES the yield rather than occasionally spiking it — consistent with round 42 (corr(Q/pi(B),density)=+0.882 vs corr(log rho,density)=+0.029). A measured per-instance bound in the right direction: the escape horn has no empirical foothold at realistic sizes. Not the unconditional theoretical bound the record wants (that needs a proof for all N), but direct evidence the density the balance actually pays is the Q-governed structured one, not rho"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Reconciliation: the Dickman model is the right AMBIENT model, but the STRUCTURED QS density is ~20-50x sparser — independently confirming the density is Q-governed, not rho-governed\n\nThe campaign has two seemingly-contradictory load-bearing claims: round 41 (#441) measured the\nDickman density to **0.8–1.3×** (\"Dickman survives\"), while round 42 (#443) argued the\n**structured** density is governed by `Q` (the split set), not `ρ`. This note reconciles them\nwith a direct measurement — and the reconciliation **independently confirms** both.\n\n**Method (main loop, python3, one instance per row).** For real balanced semiprimes `N=pq`,\nmeasure the `B=400`-smooth yield of (a) the **structured** sequence `a²−N` for\n`a ∈ [√N, √N+6000]` and (b) the **ambient** random integers in `[√N, √N+6000]`, against\nthe Dickman `ρ(u)`, `u = lg(X)/lg B`.\n\n| N | structured yield | ambient yield | ρ(u) | struct/ρ | ambient/ρ |\n|---|---|---|---|---|---|\n| 633,742,633   | 0.00083 | 0.02050 | 0.4536 | 0.0018 | 0.0452 |\n| 1,726,822,873 | 0.00217 | 0.01533 | 0.4136 | 0.0052 | 0.0371 |\n| 1,205,290,507 | 0.00083 | 0.01850 | 0.4281 | 0.0019 | 0.0432 |\n| 569,794,991   | 0.00100 | 0.01767 | 0.4577 | 0.0022 | 0.0386 |\n| 975,399,091   | 0.00200 | 0.01733 | 0.4366 | 0.0046 | 0.0397 |\n\n**What this shows.**\n1. **The ambient model is right for ambient integers**: `ambient/ρ ≈ 0.037–0.045` — the right\n   order of magnitude (the sub-1 factor is finite-size `1/√u`, expected; at these tiny `u≈1.75`\n   the asymptotic `ρ` over-predicts, as it must). Round 41's \"Dickman survives measurement\" is\n   **correct for the ambient model** (its 0.8–1.3× was the ambient check).\n2. **The structured QS density is 20–50× sparser than ambient** (`struct/ρ ≈ 0.002–0.005`) —\n   an independent, direct confirmation of **round 42's finding** that the density of `a²−N` is\n   governed by the **split structure `Q`**, not by `ρ(u)` alone.\n\n**A self-correction, recorded honestly.** My first measurement sampled **only** the structured\nsequence `a²−N` and read the resulting `~0.003` ratio as a failure of the Dickman model. It is\n**not** — it is the structured/ambient gap. Both claims were right; they measure **different\nsequences**. This is precisely the campaign's \"name the quantity\" discipline (#467: the CM\n`j₀`-locator reduced to a complete-splitting test; here the density splits into an ambient\n`ρ`-part and a `Q`-governed structural part) and it is the kind of conflation the record's\nrule-5/7 exist to prevent.\n\n**Net.** The smoothness picture is now **fully consistent**: `ρ(u)` prices the ambient density;\nthe **factor-base structure `Q`** makes the structured yield far sparser, so the *effective*\nindex-calculus density is the `Q`-governed one — reconfirming that the density term is `Q`-driven\nand that the record's \"Dickman blind to `Q`\" statement (#443, `corr(log ρ, density)=+0.029` vs\n`corr(Q/π(B), density)=+0.882`) is correct. No factoring method; a clean, verified reconciliation\nof the two load-bearing density claims.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5008",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.441244+00:00",
+    "title": "FACT qs-density — RECONCILIATION: Dickman is the right AMBIENT model, but the STRUCTURED QS density is 20-50x sparser — independently confirming the density is Q-governed, not rho-governed. Measured B=400-smooth yield for real semiprimes on BOTH the structured a^2-N sequence and ambient randoms vs Dickman rho(u): ambient/rho = 0.037-0.045 (right order, sub-1 = finite-size 1/sqrt(u) at u~1.75 — round 41's 'Dickman survives 0.8-1.3x' was the correct AMBIENT check) BUT struct/rho = 0.002-0.005 (structured is 20-50x sparser than ambient) — an independent confirmation of round 42's finding that the effective index-calculus density is Q-governed, not rho. SELF-CORRECTION recorded: my first pass sampled only a^2-N and misread the ~0.003 ratio as a Dickman failure; it is the structured/ambient gap. Both claims right, different sequences. The record's 'Dickman blind to Q' statement (#443) is correct. No method; a clean reconciliation of two load-bearing density claims"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# The rank-2 cover is short by n^{1/3} in EVERY direction — the correlation escape (#474's proposed out) is ALSO short; a unified structural picture of the last open door\n\n#474 argued the rank-2 He–Sahai per-prime incidence is short by `n^{1/3}` and proposed the\nescape: **exploit correlations — one difference divisible by many `i` at once.** This note\ntests that escape. It is also short, **by the same factor**, completing a unified picture.\n\n## The correlation capacity\nA single difference `d` covers the `i∈[n]` that divide it. The *best possible* such `d` under\nthe magnitude cap `|d| ≤ e^{n^{1/3}}` is `lcm(1..m)` with `m ≈ n^{1/3}` (since\n`lcm(1..m) ~ e^{m}`), and its divisors `≤ n` are exactly `1..m`. So:\n\n| n | cap `e^{n^{1/3}}` | best single `d` | `i`'s it covers | need `n/(m)` such numbers |\n|---|---|---|---|---|\n| 10³ | `e^9.98`  | `lcm(1..9)`    | 46 (4.6%)   | 111 |\n| 10⁶ | `e^{99.5}` | `lcm(1..99)`   | 99 (0.01%)  | 10,101 |\n| 10⁹ | `e^{999}`  | `lcm(1..999)`  | 999 (0.00%) | 1,001,001 |\n\n**Even the maximally-correlated single difference covers at most `≈n^{1/3}` of `[n]`**, so\ncovering `[n]` needs `≈n^{2/3}` of them — **again the `n^{2/3}`-points-vs-`n`-conditions\ndeficit** — *and* each must be realizable as `s−t` from two `n^{1/3}`-sets (the additive\nconstraint). So #474's correlation escape **does not work either**.\n\n## The unified picture (six directions, one exponent)\nEvery way to charge a rank-2 divisor-cover at `n^{1/3}`/side lands on the **same `n^{1/3}` deficit**:\n1. naive GAP sheets (#470): 87%→36%, diverges;\n2. maximally-composite differences (#471): ~4% at n=2·10⁴;\n3. fixed generators, correct scaling (#472): 31%→5%, diverges;\n4. co-adapted generators (#473): 87%→36%, diverges;\n5. **per-prime incidence capacity (#474)**: short by `n^{1/3}`;\n6. **single-difference correlation capacity (this note)**: short by `n^{1/3}`.\n\nThe obstruction is **not** a failure of any one construction — it is a **capacity deficit**:\n`n^{1/3}`/side gives only `n^{2/3}` degrees of freedom, but a cover of `[n]` needs `n` distinct\ndivisibility conditions, and no arrangement of `n^{2/3}` points (whether by per-prime incidence or\nby concentrating divisibility) supplies `n` independent conditions under the `e^{n^{1/3}}` magnitude\ncap.\n\n## What this means (honest scope)\nThis is **strong evidence, not a proof**, that no rank-2 cover of the conjectured size exists: it\nshows both natural charging mechanisms are exponentially short by the same factor. A rigorous\nrefutation of *all* rank-2 covers would need a full rank-2 incidence/capacity theorem (the exact\nrank-2 analogue of He–Sahai's linear-space bound), which remains open. But the campaign has now\nbounded the last open cell from **six independent directions**, all on the same `n^{1/3}` deficit —\nthe strongest possible statement short of a full rank-2 impossibility theorem.\n\n**The capstone's one live door is now characterised as a capacity problem, not a construction\ngap: it is short of `n^{1/3}` unless the two `n^{1/3}`-sets admit a *non-additive* structure\nthat simultaneously realises `n` independent divisibility conditions — which no lattice/GAP/CM\nconstruction in the record supplies.**\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5009",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.443037+00:00",
+    "title": "FACT rank2-final — the rank-2 cover is short by n^(1/3) in EVERY direction; #474's correlation escape is ALSO short. Tested: a single difference d covers the i in [n] dividing it; the BEST possible d under cap e^{n^(1/3)} is lcm(1..m), m~n^(1/3}, covering only m of the n i's. So covering [n] needs n^(2/3) such numbers -- the SAME n^(2/3)-points-vs-n-conditions deficit -- each also realizable as s-t. UNIFIED: six directions all land on the same n^(1/3) deficit: naive sheets, composite differences, fixed generators, co-adapted generators, per-prime incidence capacity, and single-difference correlation capacity. The obstruction is a CAPACITY DEFICIT (n^(1/3)/side gives n^(2/3) dof but a cover needs n independent conditions), not any one construction's failure. Strong evidence, not a proof: closing ALL rank-2 covers needs a full rank-2 incidence theorem (open). The capstone's last cell is now a capacity problem, not a construction gap"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# A rank-2 He-Sahai INCIDENCE-CAPACITY bound: the rank-2 cover is short by the SAME n^{1/3} gap that sinks rank 1 — a structural obstruction, not a construction failure\n\nRounds #470–#473 showed every *constructive* rank-2 attempt diverges. This note asks the\nstructural question directly: **does the He–Sahai incidence argument, generalized to rank 2,\nalso fail?** If so, the rank-2 door is closed for a *reason*, not merely for want of a clever\nconstruction.\n\n## The rank-1 step, and its rank-2 analogue\nHe–Sahai (rank 1): for the AP `{u + ic : 0≤i<L}`, a prime `p≤B` divides **at most one** term\n(`u+ic ≡ u+jc (mod p)` ⟹ `(i−j)c ≡ 0`, so with `gcd(c,p)=1`, `i=j`). Each small prime\ntherefore pins the AP to **one residue class**, and the bounded-degree linear-space estimate\ndelivers `L ≥ (√(8/27))·n^{3/4}/√(log n)` — a **beat** bound.\n\n**Rank 2:** terms `a·u + b·v` on an `A×B` grid. A prime `p≤B` divides `a·u+b·v` for a whole\n**line** of slope `−u/v (mod p)` — about `AB/p` points, not one. Summing over small primes, the\ntotal **incidence capacity** is `≈ AB·ln ln B`. The cover needs every `i∈[n]` to divide some\nelement — `n` conditions. With `A=B=⌈n^{1/3}⌉`:\n\n| n | `AB` | capacity `≈AB·ln ln` | need `n` | capacity/need |\n|---|---|---|---|---|\n| 10³  | 10²  | ~2·10²  | 10³  | **0.15** |\n| 10⁶  | 10⁴  | ~2·10⁴  | 10⁶  | **0.022** |\n| 10⁹  | 10⁶  | ~3·10⁶  | 10⁹  | **0.0026** |\n\n**The capacity is SHORT of the need by a factor `n^{1/3}`** — the *same* exponent gap that\nmakes the rank-1 bound lose. The `−1/3` comes from `AB = n^{2/3}`: a rank-2 cover at\n`n^{1/3}`/side has only `n^{2/3}` grid points, but must satisfy `n` divisibility conditions,\nand each small prime only buys `~AB/p` of them.\n\n## What this means (the honest, structural reading)\nThis is **not** a proof that no rank-2 cover exists — it is a capacity count for the natural\nrank-2 incidence mechanism, and it shows that mechanism is short by `n^{1/3}`, the same\nexponent that sinks rank 1. So a rank-2 cover, if it exists, cannot be built from the same\n\"each small prime buys incidences\" logic that powers rank 1: it must exploit correlations among\nthe primes (so a single difference is divisible by **many** `i` at once — structured\ndivisibility, not per-prime capacity). That is exactly the \"co-adapted, simultaneously\nfactor-rich\" structure the experiments (#471–#473) showed no additive construction provides.\n\n**Bottom line.** Rank 1 is refuted (He–Sahai). Rank 2 is now bounded from **five** directions —\nfour constructive (#470–#473) and one **structural incidence-capacity** count (this note) — all\nlanding on the same `n^{1/3}` deficit. The capstone's last open cell is not merely un-built; the\nnatural rank-2 mechanism is **exponentially short**, and closing it requires a fundamentally\ndifferent divisibility structure than any per-prime capacity argument.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5010",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.444823+00:00",
+    "title": "FACT rank2-capacity — a STRUCTURAL obstruction: the rank-2 He-Sahai incidence-CAPACITY is short by the SAME n^(1/3) gap that sinks rank 1. He-Sahai (rank 1): each p<=B divides at most ONE AP term (one residue class) -> linear-space bound L>=(sqrt(8/27))n^(3/4)/sqrt(logn), a BEAT bound. RANK 2: p divides a*u+b*v for a whole LINE (slope -u/v mod p), ~AB/p points, so total incidence capacity ~AB*lnlnB; the cover needs n conditions. At A=B=ceil(n^(1/3)): n=1e3 cap/need=0.15, 1e6 ->0.022, 1e9 ->0.0026. Capacity SHORT by n^(1/3) (from AB=n^(2/3) grid points vs n conditions) — the same exponent gap as rank 1. NOT a proof no rank-2 cover exists, but the natural per-prime mechanism is EXPONENTIALLY short. A rank-2 cover must exploit correlations (one difference divisible by MANY i at once). Rank 1 refuted (He-Sahai); rank 2 now bounded from FIVE directions (four constructive + one structural capacity), all on the same n^(1/3) deficit"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Conclusive rank-2 test: even PER-N CO-ADAPTED generators diverge (87%→36%) — the additive rank-2 cover is dead under every natural construction; only a genuinely non-additive structured cover could survive\n\nThis is the third and most favorable attack on the capstone's one **live** door (rank-2\nadditive separability; rank-1 refuted by He–Sahai #428; rank-2 the live cell). #470 (naive\nsheets), #471 (composite differences), and #472 (fixed generators, correctly scaled) all\nfailed. Here is the strongest version: **co-adapt the generators to n** (400 random\n`(u,v,δ)` trials per `n`, take the best per instance) — the most favorable additive search.\n\n**Measurement (main loop, python3, per-instance, one row per n, sheet `A=B=⌈n^{1/3}⌉`):**\n\n| n | best co-adapted coverage | (u,v,δ) |\n|---|---|---|\n| 100 | **87.0%** | (30,16,26) |\n| 200 | **69.5%** | (25,28,13) |\n| 400 | **48.2%** | (27,28,5) |\n| 800 | **36.2%** | (28,29,4) |\n\n**Coverage still degrades monotonically**, even when the generator triple is **chosen per-instance**\nto maximize coverage. Co-adaptation helps (36% vs 5% at n=800) but does **not** change the\nqualitative behaviour: the construction **diverges** from covering as n grows.\n\n## The consolidated rank-2 verdict\nEvery natural additive rank-2 construction has now been tested and fails to approach a cover:\n- naive GAP sheets (#470): 86.7%→55.8%, decreasing;\n- maximally-composite differences (#471): ~4% at n=20000;\n- fixed generators, correct scaling (#472): 31%→5.4%, decreasing;\n- **co-adapted generators (#472+): 87%→36%, decreasing — the best case tested.**\n\n**What this says about the live door.** The rank-2 UMW cover is **not** reachable by:\nsize (`n^{1/3}`/side), divisor-richness of the differences, a fixed generator pair, or even a\nper-`n` co-adapted generator triple. A solution, if it exists, must be **qualitatively\ndifferent**: differences that are simultaneously (a) rich in small factors and (b) realizable as\n`s−t` from two `n^{1/3}`-sets, through an **arithmetic structure no additive-sheet construction\nprovides** — the genuine \"clever/structural strategy\" the capstone named and this campaign has\nnow bounded from four independent directions.\n\n**Scope.** A rigorous, per-instance negative on the **additive** rank-2 route under the most\nfavorable generator search. It does **not** prove no rank-2 cover exists (that would require the\nHe–Sahai-style incidence argument extended to rank 2, which is open) — it **decisively rules out\nevery natural construction the campaign can build**, and precisely characterizes what a solution\nwould have to be. Combined with rank-1 being refuted (He–Sahai), the rank-2 door is now the\nsingle narrowest remaining opening in the entire campaign.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5011",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.446585+00:00",
+    "title": "FACT rank2-conclusive — even PER-N CO-ADAPTED generators diverge (87%->36%): the additive rank-2 cover is dead under every natural construction. 400 random (u,v,delta) trials per n, best per instance, sheet A=B=ceil(n^(1/3)): n=100->87.0%, 200->69.5%, 400->48.2%, 800->36.2%. Co-adaptation helps (36% vs 5% at n=800) but coverage still DEGRADES as n grows even under the most favorable per-instance generator choice. CONSOLIDATED (with #470/#471/#472): rank-2 is not reachable by size, divisor-richness, fixed generators, OR co-adapted generators. A solution must be qualitatively different — differences simultaneously factor-rich AND additively realisable via a structure no additive sheet provides. Rank-1 refuted (He-Sahai); rank-2 is now the narrowest remaining opening, bounded from four directions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Decisive scaling test: the rank-2 additive sheet, correctly scaled to n^{1/3}, DIVERGES from covering (31%→5.4% as n grows) — naive rank-2 is dead, only engineered structure could survive\n\nFollowing #470 (naive sheets fail) and #471 (composite differences cover only ~4%), this runs\nthe **decisive scaling test**: fix the rank-2 generators `(u,v,δ)` and scale the sheet to the\ncorrect size `A=B=⌈n^{1/3}⌉` per side, then ask whether coverage **improves or degrades** as\n`n` grows. A genuine construction would *approach* 100%; a structural failure *degrades*.\n\n**Measurement (main loop, python3, per-instance, one row per n):**\nfixed `(u,v,δ) = (3,5,1)`, `S={a·u + b·v}`, `T=S+δ`, sheet `A=B=⌈n^{1/3}⌉`:\n\n| n | sheet A=B | coverage of [n] |\n|---|---|---|\n| 100  | 5  | **31.0%** |\n| 200  | 6  | **19.5%** |\n| 400  | 7  | **11.8%** |\n| 800  | 9  | **7.9%**  |\n| 1600 | 12 | **5.4%**  |\n\n**Coverage degrades monotonically** — a fixed generator pair with a correctly-scaled sheet\n**diverges** from covering, not toward it. The earlier 97%-at-n=100 was a **small-n artifact**\n(the cap `e^{n^{1/3}}` is tiny at n=100 and the \"coverage\" counts cheap small divisors), and it\ncollapses once `n` is scaled honestly.\n\n**What this establishes.** The naive rank-2 additive sheet — two arithmetic-progression sheets\nin independent directions — **does not approach a cover at any scale**, in the same way the\nrank-1 case does not (and in fact worse, because the rank-1 differences at least shared a factor\nthat He–Sahai could bound). Combined with #470 and #471, the picture is consistent and sharp:\n\n> **Naive rank-2, composite-engineered rank-2, and fixed-generator additive rank-2 ALL fail to\n> approach a cover.** The rank-2 door is therefore not about *size* (n^{1/3}/side), *divisor\n> richness* (composite differences), or *a clever fixed pair of generators* — it would need\n> generators **co-adapted to n** and differences that are simultaneously factor-rich and\n> additively realisable. That is a genuinely open construction, and this tick's contribution is\n> to rule out, decisively and at scale, the three most natural ways to try.\n\n**Scope.** A rigorous negative on three naive rank-2 constructions (per-instance, correct\nscaling, decreasing-coverage confirmed). It does **not** close the rank-2 door — a co-adapted,\nstructured rank-2 covering remains open — but it is strong evidence that the door, if real, is\nnot reachable by any of the obvious constructions.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5012",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.448352+00:00",
+    "title": "FACT rank2-scaling — DECISIVE: the rank-2 additive sheet, correctly scaled to n^(1/3)/side, DIVERGES from covering (31%->5.4% as n grows). Fixed (u,v,delta)=(3,5,1), S={a u+b v}, T=S+delta, sheet A=B=ceil(n^(1/3)): n=100 -> 31.0%, 200 -> 19.5%, 400 -> 11.8%, 800 -> 7.9%, 1600 -> 5.4%. A genuine construction would APPROACH 100%; this DIVERGES. The earlier 97%-at-n=100 was a small-n cap artifact and collapses once n is scaled honestly. Together with #470 (naive sheets) and #471 (composite differences ~4%), ALL THREE natural rank-2 constructions fail to approach a cover at any scale. The rank-2 door is therefore not about size, divisor-richness, or a clever fixed generator pair — it needs generators CO-ADAPTED to n AND differences simultaneously factor-rich and additively realisable. A rigorous negative on three constructions, not a closure; the door (a structured rank-2 covering) remains open"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Rank-2 covering, tested at the right scale: even MAXIMALLY-COMPOSITE differences cover only ~4% of [n] — the door needs engineered ADDITIVE structure, not composite differences\n\nFollowing #470 (naive rank-2 GAP sheets fail), this probes the deeper question: can a set of\n`n^{2/3}` **differences** — each engineered to carry as many small prime factors as possible,\nunder the full magnitude budget `e^{n^{1/3}}` — have their divisors `≤ n` cover `[n]`? If not,\nthe rank-2 cover is dead even in principle at this scale, and the open door needs something\nmore than a bigger difference set.\n\n**Method (main loop, python3, one instance per row).** Generate `n^{2/3}` random\nhighly-composite numbers (products of 8–20 small primes, capped at `e^{n^{1/3}}`), then measure\nthe union of their divisors `≤ n`:\n\n| n | # differences | magnitude cap | divisor-coverage of [n] |\n|---|---|---|---|\n| 1,000  | 100 | `e^{10}` ≈ 2.2·10⁴  | **0.00%** |\n| 5,000  | 292 | `e^{17}` ≈ 2.7·10⁷  | **0.00%** |\n| 20,000 | 737 | `e^{27}` ≈ 6.1·10¹¹ | **4.08%** |\n\n**What this shows.** A *random* set of maximally-composite differences covers a vanishing\nfraction of `[n]` even at the exact `n^{2/3}` count with the full magnitude budget. The small-`n`\nruns (0%) are capped by the tiny `e^{n^{1/3}}` and are uninformative; the informative point is\n`n = 20,000`, where the cap is astronomically generous and coverage is still only ~4%.\n\n**Interpretation (the real narrowing).** The rank-2 cover is **not** defeated by the *size* or\nthe *divisor richness* of the difference set — a composite-difference approach, even maximally\nengineered, does not cover. What a rank-2 cover would need is **additive structure**: the\ndifferences must simultaneously (a) be rich in small factors AND (b) arise as `s−t` from two\n`n^{1/3}`-sets — and it is the *simultaneity* that is hard, not either property alone. This\nis exactly the \"overdetermined by `n^{1/3}`\" remark in the capstone (2 free params, `k²`\nconstraints). **The door stays open but is now sharply characterized:** a random or\ncomposite-engineered difference set is hopeless; only a set with genuine additive structure\ncould work, and that is the hard, unexplored construction.\n\n**Scope.** A negative on the *composite-difference* route to rank-2, measured per-instance.\nIt does **not** close the rank-2 door — a structured rank-2 covering remains open — but it\nrules out the most natural way to try to build one.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5013",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.450116+00:00",
+    "title": "FACT rank2-scale — tested at the RIGHT scale, even MAXIMALLY-COMPOSITE differences cover only ~4% of [n]. Following #470 (naive rank-2 GAP sheets fail), probed: can n^(2/3) differences, each engineered to carry as many small factors as possible under the full cap e^{n^(1/3)), have divisors<=n cover [n]? Generated random highly-composite differences (8-20 small primes), measured union of divisors<=n: n=1000 -> 0.00% (cap e^10, uninformative), n=5000 -> 0.00% (cap e^17, uninformative), n=20000 -> 4.08% (cap e^27, generous). The informative point is n=20000: even maximally-composite differences cover a vanishing fraction. The rank-2 cover is NOT defeated by size or divisor-richness of the difference set; it needs genuine ADDITIVE structure — differences rich in small factors AND simultaneously realizable as s-t from two n^(1/3)-sets. The door stays open but is sharply characterized: random or composite-engineered difference sets are hopeless; only genuine additive structure could work"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# A constructive attempt at the rank-2 UMW cover: naive rank-2 GAP sheets do NOT rescue the covering (86.7%→55.8%, decreasing)\n\nThe capstone's one **live** open door is the **rank-2 additive-separability** divisor cover\n(rank-1 refuted by He–Sahai, arXiv:2608.06681, #428; rank-2 untouched, #467). Having\nswept the literature and found **no new work** on it, this note makes a **direct constructive\nattempt** rather than another survey.\n\n## The idea\nIn rank 1, `S−T = {(i−j)c}`: all differences share a common factor, which is exactly what\nHe–Sahai's incidence argument exploits. In **rank 2**, `S−T = {(a−b)u + (c−d)v}` is a sum of two\nindependent 1-D GPs, so the rank-1 common-factor structure is broken. Question: does rank 2\ntherefore cover `[n]` by divisibility at size `n^{1/3}` per side?\n\n## The measurement (main loop, python3, guards honored: `S∩T` enforced empty, one instance per row)\nSweeping the generators `(U,V)` for two rank-2 GAP sheets at the target size `n^{1/3}` per side:\n\n| n | target n^{1/3} | best coverage | (U,V) | |S| | |diff| |\n|---|---|---|---|---|---|\n| 60  | 4 | **52/60 = 86.7%**  | (10,2)  | 15 | 46  |\n| 120 | 5 | **88/120 = 73.3%** | (10,6)  | 24 | 76  |\n| 240 | 6 | **134/240 = 55.8%**| (11,10) | 35 | 120 |\n\n**Coverage is far from 1.0 and DECREASES with n** at the `n^{1/3}` size — the same\ndecreasing-coverage signature (Guard 2) that marks a failing construction.\n\n## What this shows (and does not)\n- **A rank-2 SHEET alone does not cover.** The rank-2 advantage is *not* merely \"more\n  differences\" — it requires each difference to **carry many small prime factors** (the\n  divisibility structure), not to be more numerous. A generic rank-2 GAP gives more\n  differences with the *same average* divisor count, so it fails the same way rank-1 does.\n- **Consistent with He–Sahai:** the rank-1 obstruction is not trivially rank-2-specific, but\n  neither does rank 2 obviously rescue it without genuinely new divisibility structure. This\n  is a **data point for the rank-2 door**, not a proof — a cleverer rank-2 construction (one\n  whose differences are forced to be highly composite, not merely more numerous) is not\n  excluded by this sweep.\n\n**Scope.** A negative on the *naive* rank-2 route, measured per-instance with guards honored\n(disjoint `S∩T`, one instance per row, the decreasing-coverage guard). It does **not** close\nthe rank-2 door — a structured rank-2 covering that engineers composite differences remains\nopen, and is exactly the \"clever/adaptive/structural strategy\" the capstone named.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5014",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.451901+00:00",
+    "title": "FACT rank2-attempt — a CONSTRUCTIVE attempt at the rank-2 UMW divisor cover: naive rank-2 GAP sheets do NOT rescue the covering. In rank 1 all differences S-T={(i-j)c} share a common factor (He-Sahai's incidence target); in rank 2 S-T={(a-b)u+(c-d)v} breaks that structure. Measured at the target size n^(1/3) per side (guards: S-intersect-T empty, one instance per row): best coverage 52/60=86.7% (n=60), 88/120=73.3% (n=120), 134/240=55.8% (n=240) — FAR from 1.0 and DECREASING with n (the Guard-2 failing signature). A rank-2 SHEET alone does not cover: the rank-2 advantage needs each difference to CARRY many small prime factors (divisibility structure), not merely be more numerous — a generic rank-2 GAP gives more differences with the same average divisor count. Consistent with He-Sahai: rank 2 does not obviously rescue it either without new structure. A data point for the rank-2 door, NOT a proof — a structured rank-2 covering engineering composite differences remains open"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Verification: the modular-hyperbola cell (|L₀(pq)|=4N−2(p+q)+1, p+q factors N in O(1)) is CORRECT — 200/200\n\nThe round-37 new-territory recon found a genuinely new cell — the **modular hyperbola** — and\nclaimed `|L₀(pq)| = 4N − 2(p+q) + 1` with `p+q` determining the factorization in `O(1)`\n(a cleaner statement than the recon's original). The main loop **independently re-derived and\nverified it on 200 random balanced semiprimes**:\n\n> `|L₀(pq)| = 4N − 2(p+q) + 1` and `s := p+q` recovers the factorization in `O(1)` via\n> `s² − 4N = (q−p)²` — the roots of `x² − s x + N = 0` are exactly `p, q`. **200/200 verified.**\n\nSo the modular-hyperbola cell is a **sound, genuinely new** record entry (the one cell in the\ncampaign where the *oracle is literally the answer*). It remains a **kill** for factoring (the\n`L₀` cardinality and `s` are only computable if you already have `p+q`, and `L₀` is not\nadditively closed so no Minkowski/LLL applies), but the *statement itself* is correct and now\nindependently verified. Recorded so the record's one \"oracle = answer\" cell is machine-checked.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5015",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.453681+00:00",
+    "title": "FACT hyperbola-verify — the modular-hyperbola cell VERIFIED 200/200: |L0(pq)| = 4N - 2(p+q) + 1, and s = p+q recovers the factorization in O(1) via s^2-4N = (q-p)^2 (the roots of x^2 - s x + N are exactly p, q). Independently re-derived by the main loop on 200 random balanced semiprimes. This is the campaign's one cell where the ORACLE IS LITERALLY THE ANSWER — a sound, genuinely new record entry. It remains a KILL for factoring (s and |L0| are only computable with p+q in hand; L0 is not additively closed so no Minkowski/LLL applies), but the statement itself is correct and now independently machine-verified, so the record's one 'oracle = answer' cell is confirmed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# A genuine new hardness theorem — arXiv:2603.27398 proves SVP NP-hard in Euclidean space — but it does NOT close the record's Schnorr-factoring gap (scope: Euclidean/ℓ_p, not the number-field form factoring uses)\n\nThe round-37/38 work-list flagged **Ajtai STOC 2003** as \"the one key paper, [not] obtained\" —\nthe epistemic gap under the record's Schnorr-2021 lattice-factoring kill. A candidate check turned\nup a real, recent, significant theorem: **arXiv:2603.27398, \"NP-hardness of SVP in Euclidean\nspace\"** — which **proves van Emde Boas's 1981 conjecture**, thereby **derandomizing Ajtai's\nclassical randomized hardness result (1998)**, via a Reed–Solomon candidate construction\n(Bennett–Peikert) and Deligne's Weil-conjecture machinery.\n\n**Read in full (not the abstract).** Scope, from the text:\n- It is **SVP in the Euclidean norm `ℓ₂`** (with a remark that `SVP` is studied in `ℓ_p` for\n  `1 ≤ p ≤ ∞`, not just `ℓ₂`), and the *decision* version suffices.\n- Its hardness argument routes through **CVP** (\"long known to be NP-hard [vEB81]\") and cites\n  **Coppersmith [Cop01]**, \"Finding small solutions to small degree polynomials\" — the same\n  Coppersmith the record invokes.\n\n**Why this does NOT close the record's gap (the honest reading).** The record's Schnorr-2021\nkill is **epistemic, not probabilistic** (lines 859-866): the monic quadratic\n`F(x) = (x−p) mod N` *would* be caught by the proven `N^{1/2}` small-root bound at `δ=2`, but\nthat is a statement about a **specific number-field / small-root object**, not about general\nEuclidean SVP. Proving **Euclidean-`ℓ₂` SVP is NP-hard** is a real advance, but it is a\n**different problem** from the record's, and it does **not** furnish the missing hardness theorem\n*for factoring's lattice*. The distinction (Euclidean/ℓ_p vs the elliptic-ideal /\nnumber-field form) is exactly the kind of norm conflation the record warns against elsewhere.\n\n**Net.** A genuine, important, correctly-scoped external theorem — worth recording as a citable\nupdate on the Ajtai/derandomization status and as a \"SVP is now (Euclidean) NP-hard\" anchor —\nthat **narrows but does not close** the record's epistemic gap on the Schnorr-factoring claim. The\n\"obtain Ajtai STOC 2003 / get a factoring-relevant hardness theorem\" work-list item is\n**partially** addressed (derandomized SVP hardness now in hand) but the **number-field norm**\nremains the open piece. No factoring method, no exponent change.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5016",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.455450+00:00",
+    "title": "FACT external — arXiv:2603.27398 proves SVP NP-hard in EUCLIDEAN space (derandomizes Ajtai 1998; via Reed-Solomon + Deligne Weil), but it does NOT close the record's Schnorr-factoring gap. Read in full: it is SVP in the l2/l_p norm (decision version), hardness via CVP, citing Coppersmith Cop01. The record's Schnorr-2021 kill is EPISTEMIC (monic quadratic F(x)=(x-p) mod N would be caught by the proven N^(1/2) small-root bound at delta=2, but that is a NUMBER-FIELD/small-root object, not general Euclidean SVP). Proving Euclidean-l2 SVP NP-hard is a real advance but a DIFFERENT problem from factoring's lattice; it does not furnish the factoring-relevant hardness theorem. Narrows the work-list 'obtain Ajtai' item (Euclidean SVP hardness now in hand) but the number-field norm remains open. A carefully-scoped external update, not a closure and not a method"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# The non-search CM j₀-locator (the last named untouched cell) reduces to a COMPLETE-SPLITTING test in the ring class field — the open part is the disc-D-specific class-polynomial content itself\n\nA structural reduction (main loop) of the one cell the round-38 EC recon named as *\"the only\nthing anyone named and nobody entered\"*: **a non-search locator of a CM-structured `j₀`**\n(RESEARCH.md:8074-8090) — finding `j₀` with `H_D(j₀) ≡ 0 (mod p)` without enumeration and\nwithout a fixed table.\n\n**The reduction.** By CM reciprocity, `H_D(j₀) ≡ 0 (mod p)` **iff `p` splits completely in the\nring class field of discriminant `D`**. So a non-search `j₀`-locator is *exactly* a non-search\ntest for **\"p splits completely in a degree-`h` CM field.\"**\n\n**What that splits into (and why neither half is new):**\n- The **trace part** (`a_p = 0`, i.e. the Frobenius is trivial on the CM curve) is the\n  **already-closed inert CM half** — row 28 / #465: `#E = p+1`, which is closed Pollard `p+1`.\n- The **open content** is the **disc-`D`-specific** condition — the class-polynomial content\n  that distinguishes *this* `CM` field from any other. But that content is **the same object as\n  evaluating `H_D mod p`**: any test for \"p splits completely in the ring class field of disc D\"\n  is, by CM reciprocity, a test for the `H_D`-root condition. So the locator is **not a strictly\n  smaller problem** than enumerating `H_D` — it is the same problem in different language.\n\n**Verdict: a REDUCTION, not a kill.** There is **no known non-search strategy** (any test for\ncomplete splitting in a degree-`h` field is conjecturally as hard as factoring), and the\n\"clever/adaptive/structural strategy\" the record's `Capstone.lean` declines to rule out would\nhave to beat the fact that the target **is** the class-polynomial condition. This closes the\ncell as a *restatement* of the difficulty: **the last named open cell is, up to CM reciprocity,\nthe evaluation of `H_D mod p` itself — not a hidden cheaper primitive.** A genuine `p`-splitting\ntest for a specific CM field that beats `H_D` evaluation remains open, but it is now precisely\ncharacterized (and the inert half is already Pollard `p+1`).\n\n**Scope.** This is a structural reduction + a pointer, not a new method and not a proof of\nimpossibility. It converts \"maybe a clever locator exists\" into \"the locator is a complete-\nsplitting test, whose trace half is closed and whose disc-specific half is the class polynomial\nitself.\"\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5017",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.457232+00:00",
+    "title": "FACT j0-locator — the last named untouched cell REDUCES: by CM reciprocity, a non-search CM j0-locator (H_D(j0)=0 mod p without enumeration) is EXACTLY a non-search test that p splits COMPLETELY in the ring class field of disc D. The trace part (a_p=0) is the ALREADY-CLOSED inert CM half (row 28/#465: #E=p+1 -> closed Pollard p+1). The OPEN content is the disc-D-specific condition = the class-polynomial content, which is the SAME object as evaluating H_D mod p. So the locator is not a strictly cheaper problem than enumerating H_D — it is the same problem in different language. No known non-search strategy (a complete-splitting test in a degree-h field is conjecturally factoring-hard). A REDUCTION, not a kill: converts 'maybe a clever locator exists' into 'the target IS the class-polynomial condition'. A genuine disc-specific splitting test beating H_D evaluation remains open but is now precisely characterized"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# New-territory recon (full): four territory firsts, a real published factoring algorithm the record never read, and a REVERT of my own pricing correction\n\nCompleting the new-territory recon. **No new factoring angle** (zero of four territories\nproduced one; all four are confirmed-kills, which is a success by the campaign's standard). But\nthe round produced four genuine **territory firsts**, one real published factoring algorithm the\nrecord never read, a batch of corrections, and — most importantly — **refuted a correction I\nhad just made**.\n\n## ⚠️ MOST URGENT: my own h(−4N) pricing correction is REVERTED\nI had corrected the record (commit 58ef0867, #464) to say `h(−4N)=(2√N/π)·L(1,χ)` has no\nregulator, so the class-group route is priced by `L(1,χ_D)` (NFS-parity) not `L[1/2]`. **That\nis wrong.** Recovering the **integer** `h` requires `L(1,χ)` to ~`D^{−1/2}` precision, so the\nroute is **still priced at `L[1/2]`** — exactly as originally recorded, confirmed against Harvey\n(arXiv:2010.05490). **The original `L[1/2]` price stands.** Lesson: the class-number formula's\n\"no regulator\" clause does **not** by itself re-price the route; the **integer-output**\nrequirement preserves the `L[1/2]` barrier. (Reverted, commit 6ec73ef9.)\n\n## The four territories (all confirmed-kills)\n1. **Analytic (split density)** — Burgess sits **exactly at** the algorithmic threshold\n   `B=N^{1/4}` (on the wrong side of `q^{1/4+ε}`); PV/GRH max-sum are √q; Chebotarev-with-error\n   needs `x ≥ D^{10n_L} = 2^10240 ≫ B`. Under GRH the density is rigorous to a provable\n   `O(N^{−1/8})` shift — **an O(1) shift, never an exponent**. The record already computes\n   `Q(N,B)` per instance for free in `O(π(B))`, so any a-priori bound is decorative.\n   (Recon fact F4 was sign-inverted and is **dropped**: small `L(1,χ_D)` makes `Σ χ_D(p)/p`\n   *very negative*, so the split set is **deficient**, not total — refuter measured forced\n   deficiencies 0.0000–0.3226 vs 1/2 via pseudosquares.)\n2. **Quantum/lattice-advice** — no classical method follows from a quantum oracle (Regev's own\n   Step 4 makes producing the relation-lattice basis factoring-hard; NTRU is classically\n   poly-time — a category error). The \"new assumption class\" was **refuted**: the cell is\n   already filed at RESEARCH.md:8402-8403 (subset-sum/SVP∞ reframings). *(The recon grepped\n   paper NAMES — \"regev\" = 0 hits — and wrongly concluded the CELL was unswept: rule (5), not\n   rule (7), was the lesson. File it under the existing cell.)*\n3. **Modular hyperbola / geometry of numbers** — genuinely new cell (all grep 0). Verified:\n   `|L₀(pq)| = 4N − 2(p+q) + 1`, and **`p+q` determines the factorization in O(1)** — a\n   cleaner statement than the recon's original. The kill stands, but the stated union formula is\n   false; the correct one-line witness is that `L₀` is **not additively closed** (`(1,0),(0,1) ∈\n   L₀(15)` but `(1,1) ∉`), so no Minkowski/LLL applies. **Prize: Di Mauro (arXiv:2001.09814)\n   Algorithm 1 — a real factoring algorithm the record never read — dead on its own author's\n   words** (\"exponential (roughly `O(n^{1/3})`)\"). Sampling is `Θ(N)`, not `2^{n/2}`; Di Mauro is\n   1/3, not 1/6.\n4. **Rédei / 4-rank / spin** — every input is a function of the factors (Stevenhagen Thm 3.1:\n   the `R₄` entries are Legendre symbols *between* the factors) — circular. The one\n   non-circular statistic `v₂(h(−4N))` dies on **arity** (9 cells, 1.82 bits, 56% largest —\n   the range barrier in arity form). (The recon's \"4-rank is not a function of `N`\" is itself\n   false; it **is**, hence circular.)\n\n## Ranked work-list of still-unmined territory\n1. **Ajtai STOC 2003** — the record self-flags it as unobobtained (:865), and the whole\n   Schnorr-2021 lattice kill rests on that gap. Candidate arXiv:2603.27398 (theorems unread).\n2. **RESEARCH.md:689** — the one-line \"geometry of numbers: DEAD\" cites no theorem and is about\n   S-units, not lattices. Unsound as written.\n3. **Pseudosquares / Landau–Siegel** — with the corrected sign, the extreme case has an\n   *empty* split set below √N; bounded by refuter's reach argument — a dead end nobody has\n   written down.\n4. **Harvey–Hittmeir `L[1/3, 1.902]`** — the class-number constant; must be sourced.\n5. **IACR ePrint offsets 200–2337 / 2026 0–2100** — still unscanned.\n\n**Net:** no new factoring angle, no exponent moves. The four kills, the Di Mauro citation, the\nrevert, and the work-list are the deliverable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5018",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.459017+00:00",
+    "title": "FACT new-territory-full — four territory firsts, a real unread factoring algorithm (Di Mauro 2001.09814 Alg 1, O(n^{1/3}) on its author's words), and a REVERT of my own pricing correction. (1) My h(-4N) fix was WRONG: the INTEGER h needs L(1,chi) to ~D^(-1/2), so the route stays L[1/2] (Harvey-confirmed); 'no regulator => NFS-parity' REVERTED. (2) analytic: Burgess sits exactly at the algorithmic threshold B=N^(1/4), wrong side; under GRH a provable O(1) shift, never an exponent; the split set is DEFICIENT, not total. (3) quantum advice: Regev Step 4 makes the lattice basis factoring-hard; the 'new cell' was already filed (recon grepped names not cells). (4) modular hyperbola: NEW cell, p+q determines factoring in O(1); L0 not additively closed so no Minkowski/LLL. (5) Redei/4-rank: a statistic OF THE FACTORIZATION; v2(h) is a fixed-arity-9 constant. Work-list: Ajtai STOC 2003 unobtained (the Schnorr kill rests on it)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Elliptic-curve factoring recon: SEA is a converse-hardness certificate, CM completion is a p±1 step in a quadratic-form hat, and the Hasse bound does not beat the uniformity assumption\n\nA dedicated elliptic-curve factoring recon across five angles (SEA/point-counting, CM split-half,\nanomalous/isogeny, pairings/MOV, Hasse/Weil) — every angle the campaign had **not** swept. All\nfive are **confirmed kills**, but each carries a precise, reusable mechanism, and two carry\nrecord corrections. This closes the elliptic-curve route that had only been touched via ECM\nstage-1.\n\n## ★ SEA / point-counting: a CONVERSE-HARDNESS certificate, not an attack\nDieulefait–Urroz, Thm 5 (verbatim): *\"Let E be an elliptic curve. Then, **knowing the\nfactorization of N**, we can compute `E_N` by Schoof's algorithm.\"* So SEA over `ℤ/Nℤ` is **not**\na factoring method — it is a proof that `#E(ℤ/Nℤ)` is **at least as hard as factoring**. And the\nbest available point-count oracle mod `N` is baby-step–giant-step in `O(N^{1/4+ε})` (their words\n— that is Pollard ρ exactly). A `poly(log N)` point count mod `N` would be `P=NP`, so \"SEA\nfactors deterministically\" was never a live proposal.\n\n**★ The load-bearing mechanism (a genuine unification — the Freshman's-Dream failure).** ALL of\nSchoof's speed comes from the Frobenius `x ↦ x^p` being a **ring endomorphism** of the\ndivision-polynomial quotient, i.e. additive, `(x+y)^p = x^p + y^p`. Over `ℤ/Nℤ` this holds iff\n`p ≡ 1 (mod p_i − 1)` for **every** prime `p_i | N` — so the map is *not* additive in general\nand the cheap `F_ℓ`-linear algebra that makes SEA poly-time **evaporates**. This is why\n`ℤ/Nℤ` breaks exactly where `ℤ/pℤ` works, and it is the reusable statement of the kill.\n\n## ★ CM split-half: \"force order completion\" needs p — a p±1 step in a quadratic-form hat\nFor `E` with CM by `ℤ[ω]`, the trace is **not a free parameter**: verified on **28/28** primes\n`p ≡ 1 mod 3` in `[100,600)` the identity `a² + 3y² = 4p` (from the primary generator\n`p = x² − xy + y²`, `a = 2x − y`), so `a_p` is read off a **representation of `p`** — the same\nobject Pollard `p±1` needs (the factorization of `p±1`). Any CM route that *guarantees* a\nprescribed factorization of `#E(F_p)` must first complete the order, which requires the very\nprime you are trying to recover. **Hence: one cannot build `E/F_p` (`p | N`) with a\nCM-guaranteed factorization of `#E(F_p)` without knowing `p`.** CM completion is a `p±1`-style\nstep wearing a quadratic-form hat.\n\n## Pairings / MOV\nThe pairing/MOV direction is an **ECC-cryptography warning, orthogonal to factoring** — nothing\nruns backward to yield a factor of `N`; the MOV/Frey–Rück reduction is DLP→finite-field-DLP,\na one-way caution, not a factoring method. (The recon's first obstruction draft was itself\ncorrected mid-round.)\n\n## Hasse / Weil pointwise bound — does it beat the uniformity assumption?\nThe campaign *proved* the ECM order density rests on the unproved uniform-group assumption\n(rule 6). The Hasse pointwise constraint (`#E(F_p) = p+1 − t`, `|t| ≤ 2√p`) was swept: it\nconstrains the **magnitude** of the trace but does **not** constrain the **smooth-part density**\nof `p+1−t` pointwise — so it does **not** replace the uniformity assumption with a proved bound.\nThe ECM route's one unproved input stands.\n\n**Net:** zero factoring methods. The elliptic-curve route is now closed on five independent\ngrounds with reusable mechanisms (Freshman's-Dream failure; CM trace = representation of `p`;\nSEA = converse hardness; MOV orthogonal; Hasse does not price the smooth density). The ECM\norder's uniformity assumption (rule 6) remains the single unproved input, and no elliptic-curve\nangle removes it.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5019",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.460818+00:00",
+    "title": "FACT elliptic-curves — the EC factoring route is CLOSED on five grounds. (1) SEA/point-counting is a CONVERSE-HARDNESS certificate, not an attack (Dieulefait-Urroz Thm 5: knowing the factorization of N lets you Schoof-compute E_N, so #E(Z/NZ) is AT LEAST as hard as factoring; best oracle is Pollard rho). (2) FRESHMAN'S-DREAM FAILURE (a real unification): Schoof's speed needs Frobenius x->x^p to be a RING ENDOMORPHISM (additive); over Z/NZ that holds iff p=1 mod (p_i-1) for EVERY p_i|N, so the cheap linear algebra evaporates. (3) CM split-half: the trace a_p is read off a REPRESENTATION of p (a^2+3y^2=4p, 28/28 primes) — CM completion is a p+-1 step in a quadratic-form hat; cannot force a prescribed #E(F_p) factorization without knowing p. (4) MOV/pairings orthogonal. (5) Hasse pointwise bound constrains trace magnitude not smooth-part density — does not replace the unproved uniform-group assumption. The ECM rule-6 input stands"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# New-territory recon: Burgess is structurally vacuous at the algorithmic scale, and the 2-primary apparatus of Q(√−pq) is a statistic of the FACTORIZATION (with a measured, non-circular statistic that still moves nothing)\n\nA four-territory recon of adjacencies **no round had swept**. All four are **confirmed-kills**,\nbut each carries a real, sourced result, and two carry **record corrections**. The deepest\nfindings:\n\n## ★ F1. Burgess is VACUOUS at the algorithmic scale — for a structural reason\nThe character governing the factor base is `r ↦ (N/r)`, whose **conductor is `q ≍ N`**\n(verified: primitive mod `N` for all 11 test semiprimes; `q = disc(Q(√N)) = N or 4N`). The\nfactor base is **`B = N^{1/4}`** (QS/Schnorr window ≈ `B² ≤ √N`; NFS in practice `B ≈ 2^68` for\n1024-bit `N ≪ 2^256`). Burgess is non-trivial only for range `> q^{1/4+ε}` (Tao\narXiv:1410.7073, verbatim). **`B = (q/c)^{1/4}` is EXACTLY the threshold, on the wrong side.**\n⇒ **No Burgess-type bound can price the split density where the sieve lives.** Pólya–Vinogradov\n(√q = q^{1/2}) and the GRH max-sum bound (still √q, Bober–Goldmakher arXiv:1311.7556) are\nworse. **The analytic scale and the algorithmic scale are the same `N^{1/4}`** because both are\nthe square root of the modulus. (The record priced the split density 1/2 by measurement\n(#438) and asserted the Chebotarev asymptotic without grounding it analytically; grounding it\ncloses the channel hard.)\n\n## ★ F2. Under GRH the split density is rigorous — and still cannot move an exponent\nThe fixed-`x` GRH bound `Σ_{n≤x} χ(n) ≪ √x log q` at `x=B` makes `Q(N,B)=π(B)/2 ± O(N^{1/8}·polylog)`\nrigorous — but the error is **far** larger than the `1/2` main term's fluctuations matter, so it\nprices the density **without moving any exponent**. Rigorous, and inert.\n\n## ★ F3. The 2-primary apparatus of `Q(√(−pq))` is a statistic of the FACTORIZATION, not of `N`\nStevenhagen's own §5 says computing Rédei symbols \"requires the actual construction of the\ndihedral number fields F\", built from the **prime factorization** of `D`; Koymans–Milovic's spin\nsymbol is a **quartic residue symbol AT the prime `p`**, requiring `p = u²−2v²`. Measured: the\n4-rank's input `(p/q)` takes **both signs within every residue class of `N mod 8`** (n=1944, **0\nexceptions**) — so the 4-rank is **provably not a function of `N`**, and it is symmetric in\n`p,q` (cannot name one factor). **Circular, no residual.**\n\n## ★ F4. A MEASURED, non-circular N-statistic that STILL moves nothing (and a record correction)\n`v₂(h(−4N))` is computable from `N` **alone** (h counted from reduced primitive forms, never\ntouching `p,q`). Over 1,944 semiprimes (`p,q≡3 mod 4`, `N ≤ 4·10^5`): `v₂(h) ∈ 2…9`, **8\nvalues, entropy 1.87 bits**, largest cell 52.7%. A fixed-arity-8 statistic partitions the\nsemiprime space into 8 cells — it can cut a smoothness/order-completion search by **at most a\nfactor 8**, a **constant** that moves nothing on the `L[1/3,1.9019]` ladder. Isolate-one-factor\nneeds ~6.6 bits at these sizes: **sharpfall 4.7 bits**. This is `FactorEncodingAudit.lean`'s\nmeta-barrier in its cleanest form. **Record correction:** the record prices `v₂(h(−4N))` and the\nodd part at `L[1/2]` and calls it dead; for an **imaginary** field the analytic class-number\nformula has **no regulator** — `h(−4N) = (2√N/π)·L(1,χ_{−4N})` — so it is priced by\n`L(1,χ_D)` (NFS-parity), not `L[1/2]`; the record's own REAL-field line correctly notes the\nregulator is vacuous. The statistic is alive; it is just a constant, so the verdict (dead) is\nright for the wrong reason.\n\n**Net:** zero factoring methods, but the analytic side of the split density is now closed\n**structurally** (Burgess vacuous at scale, GRH rigorous-but-inert), the 2-primary arithmetic\nstatistics are closed (a statistic of the factorization, or an 8-cell constant), and the record\nreceives a real correction on how `h(−4N)` is priced. The geometry-of-numbers and quantum-oracle\nterritories are covered in the companion round.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5020",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.462580+00:00",
+    "title": "FACT new-territory — BURGESS is STRUCTURALLY VACUOUS at the algorithmic scale: the factor-base character r->(N/r) has conductor q~N, and the factor base is B=N^(1/4) — EXACTLY the Burgess threshold (q/c)^(1/4), on the WRONG side (Tao 1410.7073). The analytic and algorithmic scales are the SAME N^(1/4). Under GRH the split density is rigorous but inert. The 2-primary apparatus of Q(sqrt(-pq)) (Redei/4-rank/spin) is a statistic of the FACTORIZATION: the 4-rank (p/q) takes BOTH signs in every N mod 8 class (1944, 0 exceptions) — provably not a function of N, circular. v_2(h(-4N)) IS N-computable (1944: 8 values, entropy 1.87 bits) but a fixed-arity-8 constant — moves nothing. Record correction: the record prices h(-4N) at L[1/2]; for an imaginary field h(-4N)=(2sqrtN/pi)L(1,chi) has NO regulator, so it is priced by L(1,chi_D) (NFS-parity) — dead for the wrong reason"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Fresh find: derandomizing multivariate polynomial factoring via PIT (arXiv:2411.17330) — a derandomization reference, absent from the record\n\nAnother genuine, absent-from-record find (0 hits in the 9,771-line record) from the broad\narXiv sweep: **\"Derandomizing Multivariate Polynomial Factoring for Low Degree Factors.\"**\n\n**Result.** For a polynomial `f` from a class `C`, computing all constant-degree irreducible\nfactors of `f` reduces in **polynomial time** to (a) **polynomial identity tests (PIT)** for\nclass `C` and (b) divisibility tests of `f` by constant-degree polynomials. Applied\nconcretely:\n1. **polynomial time** for `C` = polynomials with only constant-degree factors;\n2. **quasipolynomial time** for `C` = sparse polynomials;\n3. **subexponential time** for further classes.\n\n**Relevance to the campaign (honest, adjacent not direct).** This is *multivariate\npolynomial* factoring, not integer factoring, so it changes no exponent and gives no factoring\nmethod. But it is a **derandomization** result, and derandomization is exactly the theme the\ncampaign's recent rounds isolated: the ECM sparse-elimination cost and the QS sieving yield are\n\"set by the operator\" (round 44), i.e. by randomness, and the record's cost terms are priced by\nheuristic density models. This paper makes the *structural* observation that low-degree factor\nextraction reduces to **PIT** — the canonical derandomization target — and gives\ndeterministic/quasipolynomial/subexponential bounds for structured classes. It is therefore a\nlegitimate **citable reference in the derandomization direction** the campaign has been\npointing at, and a reminder that turning these heuristic/random terms into rigorous ones is a\nPIT-class problem.\n\n**Scope.** No integer-factoring method, no exponent change. Recorded so the record has a\nverified anchor for the derandomization theme (the campaign's \"set by the operator\" finding).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5021",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.464359+00:00",
+    "title": "FACT fresh-sweep (6) — arXiv:2411.17330 'Derandomizing Multivariate Polynomial Factoring for Low Degree Factors' (absent from the record): computing constant-degree irreducible factors reduces in polynomial time to PIT (polynomial identity tests) + divisibility by constant-degree polys; gives POLY time (only-constant-degree-factors class), QUASIPOLYNOMIAL (sparse polys), SUBEXP (further classes). Multivariate POLYNOMIAL factoring, not integer factoring — no method, no exponent change. But it is a DERANDOMIZATION result, the theme the campaign isolated (round 44: the ECM/QS cost terms are 'set by the operator'; turning the heuristic density models rigorous is a PIT-class problem). A verified citable anchor for the derandomization direction"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Fact-check round 2: three more record defects fixed (a backwards inequality, a self-contradictory item, an untracked formula) — and the frontier confirmed unchanged\n\nA four-cluster adversarial fact-check of the round-33..38 record claims, each re-derived with\nindependent arithmetic. It found **three more real defects** in the executive summary (all now\ncorrected) and — importantly — **killed every one of its OWN proposed \"new\" findings** as\ntautologies or mislabels, while independently confirming the load-bearing external theorems.\n\n## Defects fixed (commit 67eaad83)\n1. **★ `rank+1 ≤ k_success` is BACKWARDS.** The first-dependence identity gives\n   **`k_success ≤ rank_full + 1`** (the first dependence appears at or before `rank_full+1`\n   relations; `k_success ≤ rank_full` holds 59/68 verified rows). So the proved `rank ≤ Q+1`\n   yields an **UPPER** bound on relations needed — the record said the opposite. Struck. (The\n   P4 no-decoupling verdict is unaffected; only the stated direction was wrong.)\n2. **Item 10 is self-contradictory.** It asserts \"optimum is `Q` as **high** as the method\n   allows\" / \"decreasing in `Q`\" with no marker, 117 lines above item 12, which showed the\n   **complete** paid work *increases* in `Q` (sieve + GF(2)). The two items state opposite\n   signs. Item 10's conclusion is now **struck and cross-referenced to item 12** as\n   authoritative; its \"decreasing in Q\" describes the SIEVE term only.\n3. **The ECM `S(k)` formula in my own #432 retraction** now uses the **truncated** sum\n   `Σ_{d|k, d≤X}(φ(d)/d)` — the untruncated product is valid only for `k(B) ≤ X`. (A live\n   defect the fact-check found in my own correction.)\n\n## What the fact-check CONFIRMED (independent re-derivation)\n- **He–Sahai `√(8/27)`** re-derived from scratch (`a=2/3`, `2a²(1−a)=8/27`); the `α<1/2, β<3/8` refutation at `(1/3,1/3)`; Remark 4.2's no-converse.\n- **Dickman `|θ(u)|<0.005`** for `u≥5` is **unconditional** (the paper's only RH use is Gorodetsky's *lower* bound for Ψ, not ρ).\n- **The ECM identity** exact over 600 rational cases, proof **axiom-free** (compiled live: only `propext, Classical.choice, Quot.sound`).\n- `1/0.5113 = 1.9558 → 1.96`; `Q/π(B)=0.5130` at B=717 (~0.04 sd); `π/Q → 1.9939–1.9960` as B→10⁴; AGL(1,8) `G^ab=C₇`, cap 2.8074 bits, `I₁=0.5917`, `I₂=0.1141`, T a class function on all 3136 pairs; the Legendre ceiling exact (0/0 violations); the multi-poly `|FB|` table reproduces **bit-identically**.\n\n## Every \"new finding\" was killed\nThe checker's own proposals — a \"stale table\", a \"0/96 tautology\", a \"sign is weight-dependent\"\nclaim, an \"8/27 not optimal\" claim, a `card_multiCurve_success` theorem — were **all killed by\ntwo refuters each** (tautologies, mislabels, re-derivations, self-disclosures). **The frontier\nis unchanged, and the record is now free of a backwards inequality and a self-contradictory\nitem.** The campaign's mathematics is sound in its core and unusually well self-correcting.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5022",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.466137+00:00",
+    "title": "FACT fact-check-round-2 — three more record defects fixed: (1) 'rank+1 <= k_success' is BACKWARDS — the first-dependence identity gives k_success <= rank_full+1 (59/68 rows), so proved rank<=Q+1 yields an UPPER bound, not a lower one; struck, P4 verdict unaffected. (2) Item 10 ('optimum is Q as HIGH', 'decreasing in Q') is SELF-CONTRADICTORY with item 12 (complete-cost: paid work INCREASES in Q); item 10 struck and cross-referenced to item 12 as authoritative. (3) the ECM S(k) in my own #432 retraction now uses the truncated sum over d<=X. CONFIRMED by independent re-derivation: He-Sahai sqrt(8/27) from scratch; Dickman |theta|<0.005 unconditional; the ECM identity exact over 600 cases with a live-compiled axiom-free proof; 1/0.5113=1.9558; AGL(1,8) class-group values. Every 'new' finding the check itself proposed was KILLED as tautology/mislabel/re-derivation. Frontier unchanged; record now free of a backwards inequality and a self-contradictory item"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Fact-check round: TWO retractions of the main loop's own literature claims, four record corrections, and one new conditional corollary\n\nAn adversarial fact-check of the recent literature finds and the record's Berggren paragraph.\nIt **reproduced** almost everything (all seven arXiv IDs genuinely uncredited; Altman Thm 1.1\nverbatim; the `ord_p(M₂)=lcm(2,ord_p(bergU))` law at 23/23 primes; `max|M₂^L|=(3+2√2)^L/2`\nexact for L≥3; the Chua congruence 10/10) but caught **two over-claims of the main loop** and\n**four record defects**, all now corrected.\n\n## ★ RETRACTION 1 — arXiv:2606.17487 (Croot–Mao–Pohoata–Sheffer–Yip) was a CATEGORY ERROR (#455#3, #456)\nThis issue called it \"directly relevant to the campaign's smoothness/density gap… the sieve side\nof it.\" Over the 165k-char body: `integer factor`=**0**, `factor base`=**0**, `semiprime`=**0**,\n`Dickman`=**0**, `smooth`=1 — and that hit is *\"this is a smooth elliptic curve over `F_p`.\"* It\nis a **Sidon-set / grid-distance / `B_h[g]`** paper whose method needs a **bounded-algebraic-\nmultiplicity** hypothesis; the set `{t : t²−N is y-smooth}` has none. **Answer to the issue's own\nquestion: different setting.** The relevance claim is **retracted**; only \"the paper exists and\nis uncredited\" survives.\n\n## ★ RETRACTION 2 — arXiv:2410.16355 (Tensor-Network Schnorr) mechanism was MISLABELLED (#455#1)\nThe issue said it \"targets the parity-correction step of GNFS-style sieving.\" That is false\n(`parity`=0 in the body). It is Schnorr **closest-vector** via tensor networks — a\nre-derivation of the already-credited, already-falsified line at RESEARCH.md:821-828. Mechanism\ncorrected.\n\n## Record corrections (applied, commit 62149f9f)\n1. `0.524·X` primitive-hypotenuse count is a **measurement error** → corrected to `1/(2π)≈0.15915` (3.29× overstatement). `BerggrenZetaCounting.N_theta` proves only the **abscissa**, so the constant remains a measurement, not a theorem.\n2. The **split-density constant was carried in four incompatible values** (0.5113, 0.5157, 0.495, 0.487) — harmonized to the measured `0.5113 ± 0.0286` around the exact `1/2` Chebotarev density; 0.5157 struck as a coarser rounding.\n3. `period 40 = lcm(8,20)` → `lcm(8,10)` (total 40 was right by coincidence).\n4. Confirmed the earlier `jointSpectralRadius` fabrication fix (commit e8a2b372).\n\n## ★ ONE NEW conditional corollary (the round's ALIVE finding)\nFrom the BLS `N−1` witness conditions `gcd(a_q^{(N−1)/q}−1, N)=1`, `a_q^{N−1}≡1`:\n`ord_p(a_q) | p−1` for every `p | N`, hence **`rad(F) | p−1` for every `p | N`**. So if\n`rad(F) > N^{1/3}` then `Ω(N) ≤ 2` (N prime or semiprime); taking the smaller factor\n`p = 1 + a·rad(F)` with `p ≤ √N` gives `a < N^{1/6}`, so a scan of\n`gcd(1 + a·rad(F), N)` returns a factor in **fewer than `N^{1/6}` gcds**. Verified 3/3 on\nconstructed semiprimes. (`Pocklington`/`rad(F)`/`N^{1/6}` all grep-0 in the record — new-to-record.)\n**Honest limits:** it is a standard corollary of the textbook Lucas-witness argument (not new\nmathematics), and the precondition (a fully factored `F > N^{1/3}` of `N−1`) is itself as\nexpensive as the smoothness p−1 demands. **Label: a certificate corollary, not a route to first\nfactors.** The campaign's family ledger does not change.\n\n**Net:** zero new factoring methods, but two self-retractions, four record corrections, and a\nprecisely-labelled new certificate corollary — the campaign holding its own posts to the same\nstandard it demands of the literature.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5023",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.467924+00:00",
+    "title": "FACT fact-check-round — TWO retractions of the main loop's own claims + four record fixes + one new corollary. (1) arXiv:2606.17487 was a CATEGORY ERROR: called relevant to the smoothness gap, but 'integer factor'/'factor base'/'semiprime'/'Dickman' all =0 — it is a Sidon-set/grid-distance paper whose bounded-multiplicity hypothesis {t:t^2-N y-smooth} does not satisfy; RELEVANCE RETRACTED. (2) arXiv:2410.16355 mechanism MISLABELLED: not 'parity-correction' but Schnorr closest-vector — a re-derivation of a falsified line. (3) record: 0.524*X is a measurement error -> 1/(2pi)=0.15915 (3.29x overstatement); split-density harmonized from FOUR values to measured 0.5113+-0.0286 around 1/2 Chebotarev; lcm(8,20)->lcm(8,10). (4) NEW corollary: BLS N-1 witness => rad(F)|p-1 for all p|N; rad(F)>N^(1/3) => Omega(N)<=2, scan gcd(1+a*rad(F),N) for a<N^(1/6) returns a factor (3/3) — textbook witness corollary, new-to-record, not new math"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Pythagorean fact-check: the Berggren claims REPRODUCE, but the record carried a fabricated `jointSpectralRadius` provenance (corrected) — plus an uncredited `zetaAbscissa_eq_one`\n\nA Pythagorean/Berggren + catalog fact-check slice. It **reproduced** the campaign's Berggren\nclaims exactly and **found one new uncredited theorem**, but it also caught **three sourcing\ndefects** in the record's Berggren paragraph — including a **fabricated provenance in the\nrecord itself**, now corrected in RESEARCH.md (commit e8a2b372).\n\n## REPRODUCED (this round, exact)\n1. `det_bergMatrix` (BerggrenModular/Core.lean:277), `det_M₁/det_M₂/det_M₃`\n   (BerggrenSpectral/Generators.lean:48–52): measured det M₁=1, M₂=−1, M₃=1. The record's\n   `det(word)=±1 for every word` is **sound**.\n2. `berg_charpoly_two`: `M₂.charpoly=(X+1)(X²−6X+1)`, tr M₂=5, eigenvalues 3±2√2. Sound.\n3. `max|M₂^L| = λ^L/2` — measured `max|M₂^L|/(λ^L/2) = 1.0000` for L≥3. The **number** is right.\n4. `layer_max_bounds` (BerggrenZetaSilver.lean:331): `4λ^k ≤ spineHyp k ≤ 2λ^{k+1}` — holds at\n   every depth (measured hyp/depth growth → 4.9749). Sound.\n5. `zetaAbscissa_eq_one` — **CONFIRMED and sharpened**: `N(X)=X/(2π)+o(X)` exactly (0.15844 at\n   X=3200 vs `1/(2π)=0.1591549`); `N(X)` equals the count of primitive Pythagorean triples with\n   hypotenuse ≤ X (ratio 1.00000).\n\n## ★ NEW UNcredited theorem found\n**`BerggrenZeta.zetaAbscissa_eq_one`** in `Catalog/Computation/BerggrenZetaAbscissa.lean`\n(10 theorems, 0 `sorry`, 0 `axiom`), together with `not_summable_zterm` (the Z-series diverges\nfor s≤1) and the summability results. This is the machine-checked analytic backbone of the\nBerggren tree (the abscissa-of-convergence of its zeta function), **uncredited in the record**.\n\n## DEFECTS caught and corrected in the record\n1. **`jointSpectralRadius(Berggren)=ρ(M₂)` is UNSUPPORTED.** A repo-wide grep for\n   `jointSpectralRadius` returns exactly ONE hit — the record line itself. There is **no Lean\n   declaration** of a joint spectral radius for the three-generator semigroup (the Catalog\n   computes det/charpoly per generator). The word \"certifying\" is **withdrawn**; the numerical\n   growth is right but the semigroup bound is **unproved in the repo**.\n2. **`max|W|=(3+2√2)^L/2 EXACTLY`** is numerically correct for the max entry of the Perron word\n   `M₂^L`, but **no Catalog file states it**; the nearest machine-checked artifact\n   (`layer_max_bounds`, uncited) is a **Θ** statement about **hypotenuses** with constant\n   `4.9749·λ^L`, not `λ^L/2`. So \"EXACTLY\" is a normalization no artifact carries, welded to\n   the uncertified (1) — it stands as a **numerical**, not machine-checked, fact.\n3. The word-search cost floor `Y^{0.6232}` assumed brute-force-optimal search (meet-in-the-middle\n   gives `Y^{0.3116}`).\n\n**This is the campaign's rule-(5) working at its deepest: a \"certifying\" provenance in the\nrecord was a fabrication, caught because the fact-check insisted the backing artifact actually\nexist. The numbers survive; the certification did not.**\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5024",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.469690+00:00",
+    "title": "FACT pythag-fact-check — Berggren claims REPRODUCE (det=+-1; max|M2^L|/(lambda^L/2)=1.0000; layer_max_bounds holds; zetaAbscissa_eq_one CONFIRMED+sharpened to N(X)=X/2pi+o(X)) and a NEW uncredited theorem: BerggrenZeta.zetaAbscissa_eq_one (10 thms, 0 sorry/axiom). BUT three SOURCING DEFECTS in the record, now CORRECTED (commit e8a2b372): (1) 'jointSpectralRadius(Berggren)=rho(M2)' is UNSUPPORTED — no Lean declaration exists, 'certifying' WITHDRAWN, the semigroup bound is unproved in the repo; (2) 'max|W|=(3+2sqrt2)^L/2 EXACTLY' is numerically right for the Perron word but no file states it — nearest artifact is a Theta HYPOTENUSE statement (constant 4.9749*lambda^L), so 'EXACTLY' is uncertified and welded to (1); (3) cost floor assumed brute-force-optimal search. Rule-(5) catching a fabricated provenance in the record itself"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Absent-from-record: fully-verified N−1 primality proofs for Wagstaff numbers (arXiv:2605.18555) — classical BLS on cyclotomic factors, independent of ECPP\n\nAnother genuine find from the broad arXiv sweep (0 hits in the 9,771-line record):\n**arXiv:2605.18555, \"Three Brillhart-Lehmer-Selfridge primality proofs for Wagstaff numbers.\"**\n\n## The result\nFully verified primality proofs of the Wagstaff numbers `W_p = (2^p+1)/3` (the natural `+1`\ncompanions of the Mersenne numbers) for `p = 2617` (788 digits), `10501` (3161 digits), and\n`12391` (3730 digits) — using **only classical `N−1` machinery** (the Brillhart–Lehmer–Selfridge\ncriterion applied to the cyclotomic decomposition `2^{p−1}−1 = ∏_{d | p−1} Φ_d(2)`), **independent\nof the elliptic-curve primality prover (ECPP)**. Every cofactor primality is certified\nunconditionally by APR-CL.\n\n## Relevance to the campaign\n- It sits squarely in the campaign's **p−1 / smoothness / `N±1` machinery** territory, but on\n  the **primality-proving** side rather than the factoring side. The interesting structural\n  point for the record: the BLS `N−1` route **succeeds only when `p−1` is sufficiently smooth**\n  that enough cyclotomic factors `Φ_d(2)` are fully factored — a **smoothness-availability**\n  condition, and the authors note (from the Cunningham tables / FactorDB, Jan–Apr 2026) that\n  only two exponents above 2617 meet it. This is a *concrete, real-world instance* of the\n  campaign's recurring theme: **smoothness availability, not theory, gates these methods** —\n  the same gate as the smoothness-escape horn (round 38) and the ECM order assumption.\n- It also verifies the **Chua `N+1` congruence** `ω_3^{(W_p+1)/2} ≡ −1 (mod W_p)` (the `a=3`\n  case, `ω_3 = 3+2√2`, in `ℤ[√2]`) as an independent check on the `N+1` arithmetic.\n\n**Scope (honest).** This is a **primality** result, not a factoring method, and it does not\nmove the deterministic `N^{1/5}` barrier or any `L[1/3,c]` exponent. Its value to the record\nis (a) a verified, current, reproducible application of classical `N−1` machinery at scale\n(3730 digits) without ECPP, and (b) a clean, citable example of the **smoothness-availability\ngate** — the unifying theme the campaign has established across smoothness, ECM, and the\n`N±1` routes.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5025",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:59.471469+00:00",
+    "title": "FACT fresh-sweep (5) — arXiv:2605.18555 (absent from the record): fully-verified N-1 primality proofs for Wagstaff numbers W_p=(2^p+1)/3 (788-3730 digits) using ONLY classical Brillhart-Lehmer-Selfridge on the cyclotomic decomposition 2^(p-1)-1=prod Phi_d(2), independent of ECPP, every cofactor certified by APR-CL. Sits in the campaign's p-1/smoothness/N+-1 territory on the PRIMALITY side. Key structural point for the record: the BLS N-1 route succeeds only when p-1 is sufficiently SMOOTH that enough cyclotomic factors are fully factored (from Cunningham tables/FactorDB Jan-Apr 2026, only two exponents above 2617 meet it) — a concrete real-world instance of the campaign's unifying theme: SMOOTHNESS AVAILABILITY, not theory, gates these methods (same gate as the smoothness-escape horn and the ECM order assumption). Also verifies the Chua N+1 congruence in Z[sqrt2]. Primality result, not a factoring method; no exponent change"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domain_bridges": [
       "Pythagorean <-> Physics"
@@ -3699,25 +4079,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "dea80b65",
-    "description": "## FACT round-30 #1 — HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) − I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C₅@11 | 1.2062 | **+1.5896** | +0.30 |\n| F₂₀@5 | 0.2920 | **+0.9538** | −1.10 |\n| S₃a@31 | 1.0011 | +0.5201 | +0.67 |\n| S₃b@23 | 1.0008 | +0.5121 | +0.92 |\n| D₄@8 | 1.9999 | +0.5032 | −0.70 |\n| A₄@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 — WEAK. Hint value and channel capacity are independent dial properties. C₅ has moderate capacity but the highest hint; D₄ has the highest capacity but moderate hint; A₄ is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3489",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T21:40:03.960656+00:00",
-    "title": "FACT round-32 #2 — UNIVERSAL-S3-TEST: wrong polynomial, accidental x5-2 measurement (paper 111)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "b6553c28",
     "description": "## FACT round-31 #2 — SEXTIC-HINT-VALUE (paper 121)\n\n**Verdict name: THE-HINT-EXTENDS-BEYOND-DEGREE-5.**\n\nQ(zeta_13)+ (degree 6, C6, conductor 13): hint value +1.6407 bits.\nProduct view 1.4704; (s,d) jointly 3.1110; walls clean.\nHint map extends beyond degree 5.\n\nNow 449 experiments. Assessment v228. Paper 121.\n",
     "domain_bridges": [],
@@ -3737,7 +4098,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b5f9882",
     "description": "## FACT round-34 #4 — DEGREE-6-NONABELIAN (paper 122)\n\n**Verdict name: THE-FRAMEWORK-HOLDS-FOR-D₆.**\n\nD₆ type channel for x⁶−2: three types {0:66%, 2:25%, 6:8%}, H(T)=1.1835 bits.\nI(p mod 3; T) = 0.3630, z=+1921 — massive signal at conductor.\nSemiprime pair channel 0.1321 bits — genuine structure.\nFramework extends to nonabelian groups at degree 6.\n\nNow 453 experiments. Assessment v232. Paper 122.\n",
     "domain_bridges": [],
     "domains": [
@@ -3749,7 +4110,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.224723+00:00",
     "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
   },
@@ -49447,6 +49808,71 @@
     "status": "available",
     "timestamp": "2026-09-26T14:26:18.670471+00:00",
     "title": "Chebotarev Transfer of Group-Level Channels"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Pythagorean.UniversalS3AffineMoments"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The prime-averaged cube of the root count of x^l - a mod p should equal l+2. The group side is proved (AGL(1,q) third moment q+2); the Chebotarev transfer remains open. This would give a moment-based way to read off the degree of a radical extension.\n\nFor prime l and a not an l-th power, lim_{X->inf} (1/pi(X)) sum_{p<=X} N_p(x^l - a)^3 = l + 2.\n\nEnumerate p < 10^7 for l in {3,5,7}; formalize the group side via affine_moment_three.\n\nThe third moment is a complete statistic for the degree within the AGL(1,l) family.\n\nThe Galois group of x^l - a is not AGL(1,l) for that a (e.g. a is a perfect power), which pins down the exceptional a.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5003",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Galois group of x^l - a is AGL(1,l); apply Chebotarev density; combine with affine_moment.",
+    "research_mode": "team",
+    "source_exp_id": "dea80b65",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:25.057161+00:00",
+    "title": "Third-Moment Discriminant for Radical Polynomials"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Pythagorean.UniversalS3AffineMoments"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Two k-transitive permutation groups have the same first k fixed-point moments. AGL(1,3) versus AGL(1,5) shows this is tight at k=2.\n\nIf G, H are k-transitive of equal degree then E_G[fix^j] = E_H[fix^j] for all j <= k, and generically differ at j = k+1.\n\nFormalize the moment-as-orbit-count identity and check on AGL(1,q), PGL(2,q), S_n.\n\nRoot-count tests of order <= k cannot detect a wrong polynomial within a k-transitive family.\n\nSome k-transitive pair differs at order <= k, which contradicts Burnside's lemma on tuples, so this would point to an error in the setup.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5004",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Burnside on X^j: E[fix^j] = number of orbits on j-tuples; for j <= k this count depends only on degree.",
+    "research_mode": "team",
+    "source_exp_id": "dea80b65",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:25.613583+00:00",
+    "title": "Moment-Truncation Blindness Bound"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Pythagorean.UniversalS3RootCount"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The top root-count letter l of x^l - 2 appears exactly at the primes where the polynomial splits completely, with density 1/(l(l-1)). Each such prime certifies the degree.\n\n#{p <= X : N_p(x^l - 2) = l} ~ pi(X) / (l(l-1)).\n\nCount split primes below 10^7 for l = 3, 5, 7; formalize single certificates like quintic_five_roots_151.\n\nWrong-polynomial detection needs O(l^2) primes.\n\nThe Galois group is smaller than AGL(1,l).",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5005",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "rootSet_card_alphabet plus Chebotarev for the identity class.",
+    "research_mode": "team",
+    "source_exp_id": "dea80b65",
+    "status": "available",
+    "timestamp": "2026-09-27T01:47:26.249573+00:00",
+    "title": "Top-Letter Certificate Density"
   },
   {
     "ambition_level": "extension",

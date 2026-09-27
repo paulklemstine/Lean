@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-26T14:26:19Z",
-  "count": 177,
+  "archived_at": "2026-09-27T01:47:26Z",
+  "count": 178,
   "directions": [
     {
       "id": "fd_3695",
@@ -7013,6 +7013,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 203
+    },
+    {
+      "id": "fd_3489",
+      "title": "FACT round-32 #2 — UNIVERSAL-S3-TEST: wrong polynomial, accidental x5-2 measurement (paper 111)",
+      "description": "## FACT round-30 #1 — HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) − I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C₅@11 | 1.2062 | **+1.5896** | +0.30 |\n| F₂₀@5 | 0.2920 | **+0.9538** | −1.10 |\n| S₃a@31 | 1.0011 | +0.5201 | +0.67 |\n| S₃b@23 | 1.0008 | +0.5121 | +0.92 |\n| D₄@8 | 1.9999 | +0.5032 | −0.70 |\n| A₄@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 — WEAK. Hint value and channel capacity are independent dial properties. C₅ has moderate capacity but the highest hint; D₄ has the highest capacity but moderate hint; A₄ is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "dea80b65",
+      "timestamp": "2026-08-21T21:40:03.960656+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.62,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-26T09:59:39.832236+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 202
     }
   ]
 }
