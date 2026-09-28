@@ -4725,25 +4725,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "ea6702d1",
-    "description": "## FACT round-34 #2 — SEPTIC-FRONTIER (paper 120)\n\n**Verdict name: THE-FRAMEWORK-EXTENDS.**\n\nThe type-channel framework extends beyond degree 6 to degree 7 using x7-3.\nMassive signal at conductor moduli (z=+1728), flat at coprime.\nNow 451 experiments. Assessment v230. Paper 120.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3502",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T22:42:58.227580+00:00",
-    "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "827b1ae9",
     "description": "## FACT round-34 #1 — MASTER-TABLE (paper 119)\n\n**Verdict name: THE-FRAMEWORK-IS-COMPLETE.**\n\nComprehensive summary of every measured type-channel value across all post-resume papers (80-118), organized by degree (3-6) with all capacities, hint values, and verification statuses.\n\nNow 450 experiments. Assessment v229. Paper 119.\n",
     "domain_bridges": [],
@@ -4763,7 +4744,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba34db80",
     "description": "## FACT round-33 #3 — D5-TYPE-CHANNEL (paper 118)\n\n**Verdict name: THE-D5-DIAL-IS-MEASURED.**\n\nCompleting the D5 measurement at its verified conductor m*=320:\nPrime: I(p mod 320; T) = 1.0054, z=+338.\nSemiprime: I(N mod 320; pair) = 1.0054.\nH(T) = 1.3517; within-class entropy 0.3463.\n\nNow 448 experiments. Assessment v228. Paper 118.\n",
     "domain_bridges": [],
     "domains": [
@@ -4775,7 +4756,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.230402+00:00",
     "title": "FACT round-33 #3 — D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (paper 118)"
   },
@@ -50666,6 +50647,121 @@
     "status": "available",
     "timestamp": "2026-09-28T08:38:43.185094+00:00",
     "title": "k-Prime Additivity of Dial Cross-Talk"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.SepticFrontier",
+      "Novelty.S3SignChannelUniversal",
+      "Shared.CyclicTypeChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every cyclotomic residue channel of a Galois type map factors through the abelianization of the Galois group. The maximal conductor signal is therefore the information between cycle type and the abelianization, and it vanishes identically for perfect Galois groups. This turns the empirical 'signal at conductor, flat elsewhere' pattern into a group-theoretic law.\n\nFor G ≤ S_n with cycle-type map T and abelianization ab, sup_m I(T ; p mod m) = I(T ; ab) in the Chebotarev product model; in particular it is 0 when G is perfect, e.g. PSL(2,7) for x^7 - 7x + 3.\n\nFormalize with the catalog's uEnt/mutInfo on a finite group G × (Z/m)ˣ with a hom to G^ab; numerically compute I(T ; p mod m) for x^7 - 7x + 3 over primes below 10^6.\n\nThe framework's conductor signal is exactly the abelian quotient; non-solvable polynomials are flat at every modulus.\n\nSome non-abelian arithmetic leaks into residue classes, contradicting linear disjointness, most likely because the Chebotarev model is incorrect.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5068",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Generalize abelian_character_kills_translations to 'any hom to an abelian group factors through G^ab'. Combine with mutInfo_comm, the chain rule condEnt_eq_uEnt_pair_sub and mutInfo_prod_indep on the fibre product G ×_{A} (Z/m)ˣ.",
+    "research_mode": "team",
+    "source_exp_id": "ea6702d1",
+    "status": "available",
+    "timestamp": "2026-09-28T17:04:47.945963+00:00",
+    "title": "Abelianization Law for Type Channels"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.SepticFrontier",
+      "Shared.CyclicTypeChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the affine subgroups of AGL(1,q) whose linear parts are the d-th roots of unity, the conductor information should equal the cyclic type entropy typeEntropy d, with an explicit residual. This extends the proved d = q-1 case to a whole family of Galois groups.\n\nFor prime q and d | q-1, with G_d = {x ↦ a x + b : a^d = 1}, I(T ; a) = typeEntropy d and H(T | a) = (q log₂ q - (q-1) log₂(q-1)) / (q d).\n\nReplace Sq q by the subgroup set and rerun the proofs of agl_conductor_info and agl_residual; check q = 7, d = 2, 3 by decide on fibre counts.\n\nThe framework predicts the conductor signal for every solvable prime-degree Galois group.\n\nThe split-invariance mechanism is special to the full affine group.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5069",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Reuse uEnt_sub_eq_of_split with P = {a = 1}, then transfer the order entropy through a generator of μ_d using uEnt_image_injOn and orderOf_pow_eq_ordType.",
+    "research_mode": "team",
+    "source_exp_id": "ea6702d1",
+    "status": "available",
+    "timestamp": "2026-09-28T17:04:48.572176+00:00",
+    "title": "Sub-Frobenius Conductor Law for C_q ⋊ C_d"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.SepticFrontier",
+      "Shared.CyclicTypeChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The one-bit lower bound and the ratio bound I/H ≥ 1 - log₂q/(q-1) are now proved. What remains is the exact rate at which the conductor channel exhausts the type entropy, which is governed by the size of typeEntropy(q-1) averaged over shifted primes.\n\n1 - I(T ; p mod q)/H(T) ~ log₂ q / (q · typeEntropy(q-1)), and the average over primes q ≤ X of typeEntropy(q-1)/log₂(q-1) converges to an explicit constant κ in (0,1).\n\nUse agl_type_entropy and typeEntropy_formula to compute both sides for all primes below 10^6; formalize the asymptotic equivalence given the closed-form residual.\n\nThe framework's degree-q channel has a universal completeness constant tied to the multiplicative structure of q-1.\n\ntypeEntropy(q-1) oscillates too much along the primes for a mean law, which would show the arithmetic of q-1 dominating the channel.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5070",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "The residual is exact (agl_residual). Expand typeEntropy via typeEntropy_formula and apply Titchmarsh-divisor-type averages of φ(d)/d over d | q-1.",
+    "research_mode": "team",
+    "source_exp_id": "ea6702d1",
+    "status": "available",
+    "timestamp": "2026-09-28T17:04:49.207427+00:00",
+    "title": "Sharp Completeness Rate and Mean Cyclic Entropy"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.SepticFrontier",
+      "Shared.CyclicTypeChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "On the conductor class p ≡ 1 mod q the type distinguishes only 'splits completely' from 'inert'. This is the q-th power residue symbol of c, carrying h(1/q) bits. The proved residual law has exactly the form h(1/q)/(q-1).\n\nConditioned on p ≡ 1 (mod q), T is a function of the power-residue symbol (c/p)_q being trivial, has entropy h(1/q), and H(T | p mod q) = h(1/q)/(q-1).\n\nAlgebraic identity: check (q log₂ q - (q-1) log₂(q-1))/(q(q-1)) = h(1/q)/(q-1) in Lean; numerically compare with prime data for x^7 - 3 on p ≡ 1 mod 7.\n\nThe residual information of the framework is exactly Kummer theory, linking type channels to power-residue reciprocity.\n\nThe residual has extra non-Kummer structure, which would point to hidden correlations in the b-coordinate.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5071",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Restrict agl_residual to the fibre a = 1 (translations), use minimalPeriod_translation and card_fixed_translation, and express b = 0 as a q-th power condition via Kummer theory.",
+    "research_mode": "team",
+    "source_exp_id": "ea6702d1",
+    "status": "available",
+    "timestamp": "2026-09-28T17:04:49.829239+00:00",
+    "title": "Kummer Power-Residue Bit at Split Conductor Classes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.SepticFrontier",
+      "Shared.CyclicTypeChannelValues"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The pair channel of two primes' septic types against the product residue should equal the catalog's cyclic C6 pair information plus an explicit boundary term from the identity/7-cycle split. This gives a finite, fully checkable degree-7 analogue of Ipair 6.\n\nI((T(p1), T(p2)) ; p1 p2 mod 7) over F42 × F42 equals Ipair 6 + ε with ε ≥ 0 an explicit Q-linear combination of 1, log₂ 3, log₂ 7.\n\nCompute the fibre-count multisets on the 1764-element set by decide and evaluate with uEnt_eq_countSum and mutInfo_eq_add_sub_pair.\n\nThe semiprime framework extends to degree 7 with a quantified non-abelian correction.\n\nThe product residue interacts with the translation part, which would show that the pair channel is not reducible to the cyclic one.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5072",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Chain rule plus split invariance on the fibres a_i = 1, reducing to CyclicTypeChannelValues.Ipair_val_6.",
+    "research_mode": "team",
+    "source_exp_id": "ea6702d1",
+    "status": "available",
+    "timestamp": "2026-09-28T17:04:50.448525+00:00",
+    "title": "Semiprime Pair Channel for the Frobenius Group F42"
   },
   {
     "ambition_level": "extension",

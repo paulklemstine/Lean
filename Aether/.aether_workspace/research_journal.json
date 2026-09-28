@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e6e33149",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nDerived from the six research cycles in `Catalog/Novelty/ConditionalLabelDPI.lean`,\n`ConditionalArtifactAccounting.lean`, `ConditionalArtifactErrorBar.lean`,\n`ConditionalChainRule",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-09-08T21:07:13",
-      "title": "One-Sidedness of Conditional-Independence Artifacts"
-    },
-    {
       "cycle_id": "4b011f56",
       "domain": "Novelty",
       "key_insight": "# Future Directions — fork-channel resonance\n\nDerived from the analysis and adversarial review of\n`Catalog/Novelty/ForkChannelCrossingUniqueness.lean` and\n`Catalog/Novelty/ForkChannelSecondCrossing.le",
@@ -499,19 +489,19 @@
       "theorem_count": 34,
       "timestamp": "2026-09-28T08:38:57",
       "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — after SEPTIC-FRONTIER (paper 120)\n\nWhat this cycle established (all in `Catalog/Novelty/SepticFrontier.lean`, 0 sorries):\n\n* For the Frobenius group `F42 = AGL(1,7)` (Galois grou",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-09-28T17:05:06",
+      "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2111d025",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after Paper 227 (exp 577 / verifyL7b formalisation)\n\nThe cycle just closed established four formal pillars:\n\n1. **Reciprocity-flip dichotomy** (`Catalog/Algebra/ReciprocityFlipDi",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-25T11:45:32",
-      "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED — H1 s"
-    },
     {
       "cycle_id": "d59c6a1a",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 34,
       "timestamp": "2026-09-28T08:38:57",
       "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — after SEPTIC-FRONTIER (paper 120)\n\nWhat this cycle established (all in `Catalog/Novelty/SepticFrontier.lean`, 0 sorries):\n\n* For the Frobenius group `F42 = AGL(1,7)` (Galois grou",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-09-28T17:05:06",
+      "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d309ec20",
-      "domain": "Combinatorics",
-      "name": "restrict_mem_double_powerset",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "d309ec20",
-      "domain": "Combinatorics",
-      "name": "card_image_restrict_le",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "cfb5ebd4",
-      "domain": "Cryptography",
-      "name": "quantifies",
-      "quality": 0.78
-    },
     {
       "cycle_id": "cfb5ebd4",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "lb_two",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "name": "condEnt_eq_uEnt_pair_sub",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "name": "mutInfo_eq_add_sub_pair",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "name": "uEnt_pair_swap",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-28T08:38:57",
+  "last_updated": "2026-09-28T17:05:06",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "24e44638",
-        "quality": 0.86,
-        "theorems": 95,
-        "title": "Uniqueness of the Two-Point Transreal Compactification"
-      },
-      {
         "cycle_id": "63061d5b",
         "quality": 0.84,
         "theorems": 88,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 64,
         "title": "FACT round-32 #3 — UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fi"
+      },
+      {
+        "cycle_id": "ea6702d1",
+        "quality": 0.72,
+        "theorems": 70,
+        "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper"
       }
     ],
     "NumberTheory": [
