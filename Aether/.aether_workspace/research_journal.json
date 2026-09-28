@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e050cc19",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — depth-`L` lower bounds from oscillations\n\n## What this project established (all `sorry`-free, five Lean files)\n\n**`Catalog/Algebra/DepthLOscillationLowerBound.lean` — knot calcul",
-      "quality_score": 0.88,
-      "sorry_count": 1,
-      "theorem_count": 93,
-      "timestamp": "2026-09-08T09:52:11",
-      "title": "Depth-`L` lower bound from oscillations"
-    },
-    {
       "cycle_id": "e6e33149",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nDerived from the six research cycles in `Catalog/Novelty/ConditionalLabelDPI.lean`,\n`ConditionalArtifactAccounting.lean`, `ConditionalArtifactErrorBar.lean`,\n`ConditionalChainRule",
@@ -499,19 +489,19 @@
       "theorem_count": 84,
       "timestamp": "2026-09-27T17:50:42",
       "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
+    },
+    {
+      "cycle_id": "f9f43bb0",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — DIAL-CROSS-TALK (paper 121)\n\n## What survived (Stage 3 summary)\n\n* **True and proved exactly**: coprime-resolvent dials share `0` bits (primes and semiprimes);\n  shared-resolvent",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-09-28T08:38:57",
+      "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "539def03",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: converses to the union bound for universal hashing\n\nThis thread closed the open item of the assignment — a lower bound valid over\n*all* 2-universal families — and in fact determin",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-25T11:45:16",
-      "title": "Both endpoints are formalised and the numerics of Section 4 of"
-    },
     {
       "cycle_id": "2111d025",
       "domain": "Algebra",
@@ -2501,6 +2491,16 @@
       "theorem_count": 84,
       "timestamp": "2026-09-27T17:50:42",
       "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
+    },
+    {
+      "cycle_id": "f9f43bb0",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — DIAL-CROSS-TALK (paper 121)\n\n## What survived (Stage 3 summary)\n\n* **True and proved exactly**: coprime-resolvent dials share `0` bits (primes and semiprimes);\n  shared-resolvent",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-09-28T08:38:57",
+      "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-27T17:50:42",
+  "last_updated": "2026-09-28T08:38:57",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "135e0dcb",
-        "quality": 0.86,
-        "theorems": 118,
-        "title": "FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
-      },
-      {
         "cycle_id": "8d588bfb",
         "quality": 0.85,
         "theorems": 2138,
@@ -3203,6 +3197,12 @@
         "quality": 0.75,
         "theorems": 78,
         "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper"
+      },
+      {
+        "cycle_id": "f9f43bb0",
+        "quality": 0.72,
+        "theorems": 34,
+        "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (pap"
       }
     ],
     "Combinatorics": [
