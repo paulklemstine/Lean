@@ -261,19 +261,27 @@ distribution** — a character-decorrelation statement. The open problem is
 cover the factoring regime `y = L_n[1/2,c}`, but those are average-over-moduli, which is exactly
 why randomising `f` is the technical core.
 
-**RH does not close it.** ⚠️ **CORRECTION — an earlier version of this file carried a FABRICATED
-QUOTE here.** It attributed to the abstract of Soundararajan, arXiv:1009.1591, the sentence *"We
-improve upon Xuan's work by establishing the following theorem, which unfortunately is still not
-strong enough to be applicable to the analysis of Lenstra's algorithm."* **That sentence is not in
-the abstract.** The published abstract in full is: *"Assuming the Riemann hypothesis we demonstrate
-the existence of smooth numbers in certain short intervals."* Verified 2026-09-29 against
-`arxiv.org/abs/1009.1591`; it contains neither "unfortunately", nor "Lenstra", nor "not strong
-enough". A subagent supplied the quote as verbatim and I forwarded it without opening the page.
+**RH does not close it, and the authors say so.** Soundararajan, "Smooth numbers in short
+intervals", arXiv:1009.1591, **body text, p.1** (not the abstract — see the correction below):
 
-**The substantive point may still hold** — RH improves short-interval smoothness and is still
-believed insufficient for the factoring analysis — but **it is currently unverified**, and the
-quotation is withdrawn. Do not cite it. Lee–Venkatesan 2018 is the source that actually settles
-what is proved (see §7a).
+> *"We improve upon Xuan's work by establishing the following theorem, which unfortunately is still
+> not strong enough to be applicable to the analysis of Lenstra's algorithm."*
+
+⚠️ **CORRECTION — I retracted this quote once, wrongly, and the retraction was also pushed.**
+The first version of this file attributed the sentence to the **abstract**. It is **not in the
+abstract**, which reads only: *"Assuming the Riemann hypothesis we demonstrate the existence of
+smooth numbers in certain short intervals."* I checked only the abstract, concluded the sentence
+was fabricated, and pushed a withdrawal (commit `c39a6b900`) accusing a subagent of inventing a
+verbatim quotation. **That accusation was false.** The sentence IS in the paper body, verified
+against the full PDF: it occurs once, at p.1, in the passage introducing the main theorem
+(lines 64-66 of the extracted text). A second agent, independently, made the same abstract-only
+check, reached the same wrong conclusion, and caught it on re-reading the body.
+
+**The real error is mine and it is worse than the one it corrects.** "Verify against the primary
+source" was applied to the *attribution* while the *quotation* went unchecked, and the partial
+check was then used to accuse a source of fabrication. A retraction is as much a factual claim as
+the statement it withdraws, and it needed the same standard.
+
 abc / Bateman–Horn: nothing, confirmed by exhaustive search.
 
 ## 7a. What is actually proved: Lee–Venkatesan 2018
