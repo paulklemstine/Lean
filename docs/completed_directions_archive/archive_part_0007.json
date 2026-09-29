@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-29T08:44:20Z",
-  "count": 183,
+  "archived_at": "2026-09-29T15:09:50Z",
+  "count": 184,
   "directions": [
     {
       "id": "fd_3695",
@@ -7253,6 +7253,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 209
+    },
+    {
+      "id": "fd_3503",
+      "title": "FACT round-34 #1 — MASTER-TABLE: every type-channel value in one document (paper 119)",
+      "description": "## FACT round-34 #1 — MASTER-TABLE (paper 119)\n\n**Verdict name: THE-FRAMEWORK-IS-COMPLETE.**\n\nComprehensive summary of every measured type-channel value across all post-resume papers (80-118), organized by degree (3-6) with all capacities, hint values, and verification statuses.\n\nNow 450 experiments. Assessment v229. Paper 119.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "827b1ae9",
+      "timestamp": "2026-08-21T22:42:58.228991+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-28T08:39:33.638869+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 210
     }
   ]
 }

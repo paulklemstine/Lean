@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4b011f56",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — fork-channel resonance\n\nDerived from the analysis and adversarial review of\n`Catalog/Novelty/ForkChannelCrossingUniqueness.lean` and\n`Catalog/Novelty/ForkChannelSecondCrossing.le",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-09-08T23:23:41",
-      "title": "Uniqueness of the A/X Crossing"
-    },
-    {
       "cycle_id": "4c85503d",
       "domain": "Tropical",
       "key_insight": "# Future directions — Tropical / \"Constrained = penalised\" (Phase A, v19c)\n\nThis cycle formalised the duality core of Conjecture 2 over a finite outcome set:\n\n* the **duality identity** `t·(𝔼_{p_t}[r]",
@@ -499,19 +489,19 @@
       "theorem_count": 70,
       "timestamp": "2026-09-28T17:05:06",
       "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
+    },
+    {
+      "cycle_id": "827b1ae9",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — after MASTER-TABLE (paper 119)\n\n## Research-loop record\n\n**Stage 1: conjectures.** Ranked by impact:\n1. (bold) Every cyclic and dihedral column of the degree-3…6 table is an inst",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-29T15:10:09",
+      "title": "FACT round-34 #1 — MASTER-TABLE: every type-channel value in one document (paper 119)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "05a687ab",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results now formalized in\n`Catalog/Computation/SpectralUnfoldingGapStatistics.lean`,\n`Catalog/Computation/SpectralPoissonVs",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-08-25T14:05:36",
-      "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
-    },
     {
       "cycle_id": "ea4eae2e",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 73,
       "timestamp": "2026-09-29T08:44:35",
       "title": "FACT round-33 #3 — D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (paper 118)"
+    },
+    {
+      "cycle_id": "827b1ae9",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — after MASTER-TABLE (paper 119)\n\n## Research-loop record\n\n**Stage 1: conjectures.** Ranked by impact:\n1. (bold) Every cyclic and dihedral column of the degree-3…6 table is an inst",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-29T15:10:09",
+      "title": "FACT round-34 #1 — MASTER-TABLE: every type-channel value in one document (paper 119)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cfb5ebd4",
-      "domain": "Cryptography",
-      "name": "HasExponent",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "cfb5ebd4",
-      "domain": "Cryptography",
-      "name": "hasExponent_of_log_sub_bounded",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "fbb83685",
-      "domain": "Physics",
-      "name": "firingSet_subset_range",
-      "quality": 0.82
-    },
     {
       "cycle_id": "fbb83685",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "uEnt_pair_swap",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "827b1ae9",
+      "domain": "Algebra",
+      "name": "pinEnt_three",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "827b1ae9",
+      "domain": "Algebra",
+      "name": "pinEnt_four",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "827b1ae9",
+      "domain": "Algebra",
+      "name": "pinEnt_five",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-29T08:44:35",
+  "last_updated": "2026-09-29T15:10:09",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "2f2e652e",
-        "quality": 0.78,
-        "theorems": 50,
-        "title": "NET-88: THE-TOKENIZER-TAX-EXPLODES — German prose at 4096 needs >56 keys (all po"
-      },
-      {
         "cycle_id": "efbccac8",
         "quality": 0.82,
         "theorems": 103,
@@ -3079,6 +3073,12 @@
         "quality": 0.72,
         "theorems": 84,
         "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
+      },
+      {
+        "cycle_id": "827b1ae9",
+        "quality": 0.72,
+        "theorems": 84,
+        "title": "FACT round-34 #1 — MASTER-TABLE: every type-channel value in one document (paper"
       }
     ],
     "Applications": [

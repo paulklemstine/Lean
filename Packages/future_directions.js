@@ -3483,21 +3483,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "827b1ae9",
-    "description": "## FACT round-34 #1 \u2014 MASTER-TABLE (paper 119)\n\n**Verdict name: THE-FRAMEWORK-IS-COMPLETE.**\n\nComprehensive summary of every measured type-channel value across all post-resume papers (80-118), organized by degree (3-6) with all capacities, hint values, and verification statuses.\n\nNow 450 experiments. Assessment v229. Paper 119.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3503",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T22:42:58.228991+00:00",
-    "title": "FACT round-34 #1 \u2014 MASTER-TABLE: every type-channel value in one document (paper 119)"
-  },
-  {
     "consumed_by_exp_id": "23a377e0",
     "description": "## FACT round-33 #2 \u2014 D5-CONDUCTOR (paper 117)\n\n**Verdict name: THE-CONDUCTOR-IS-320.**\n\nConductor scan identified m* = 320 for the D5 quintic x5+20x+32: I(N mod 320; fork) = 0.9999 = 1 bit. The quadratic subfield has |d(K)| = 320.\n\nNow 450 experiments. Assessment v227. Paper 117.\n",
     "domains": [
@@ -3513,16 +3498,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-33 #2 \u2014 D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "772fbcdb",
     "description": "# Paper 116 \u2014 PROGRAMME-MILESTONE: The Post-Resume Programme in One Document\n\n**Verdict name: CONSOLIDATION-POINT-REACHED.**\nRound-33 #1 \u00b7 exp 450 (verified) \u00b7 assessment v226 \u00b7 milestone summary.\n\n## The unified framework\n\nEvery post-resume result fits into one framework:\n\n> **The type-channel law.** For any polynomial f of degree n with Galois group G and abelianization G^ab, the complete splitting-type channel I(p mod |disc(f)|; T) equals H(T) \u2212 H(T|G^ab) \u2014 the label entropy minus the entropy of the cosets that the type cannot distinguish. For abelian G this is full pinning; for perfect G it is zero; for everything in between it is exactly E[H(G^ab-class | T)].\n\nThis law subsumes:\n- **Type channels** (papers 78\u201384): degrees 2\u20136, all tested Galois groups\n- **Universality** (papers 99, 112, 114): independent fields with same G give identical channels\n- **Character-theoretic proof** (paper 109): I = H(T|sign-complement) derived from representation theory\n- **Battery capacity** (papers 91\u201392, 94): super-additive joint channels saturating at ceiling\n- **Factor-blindness** (papers 93, 102): permutation-null verified at \u00b10.003-bit sensitivity\n\n## Post-resume papers\n\n| round | paper | finding |\n|---|---|---|\n| 24 #1 | 80 | Type-channel law for nonabelian groups (S\u2083\u00d72/S\u2084/A\u2084/D\u2084/V\u2084/C\u2084) |\n| 24 #2 | 81 | Pythagorean trees closed at three strengths |\n| 24 #3 | 82 | F\u2082\u2080 x\u2075\u22122 first C\u2084 dial; pair law at degree 5 |\n| 24 #4 | 83 | S\u2085/A\u2085 endpoints: largest entropy collapses; perfect seals |\n| 25 #1 | 84 | D\u2085 quintics verified; degree ladder 5/5 groups |\n| 25 #2 | 85 | Qubit/sample fungibility ramp |\n| 25 #3 | 86 | Ramp on real semiprimes |\n| 25 #4 | 87 | Three-axis surface; standard corner optimal |\n| 26 #1 | 88 | Empirical barrier-4 converse across witness family |\n| 26 #2 | 89 | Three-strata landscape |\n| 26 #3 | 90 | Subexp stratum unmeasured at toy scale |\n| 27 #1 | 91 | Battery synergy-and-overlap |\n| 27 #2 | 92 | Battery synergy compounds (+4.31 bits at k=4) |\n| 27 #3 | 93 | Joint wall verified as bias |\n| 28 #1 | 95 | ECM factor-locality |\n| 28 #2 | 96 | Fermat gap-local |\n| 28 #3 | 97 | Reproducibility audit (six keystones) |\n| 29 #1 | 99 | Factor-residue hint value |\n| 29 #2 | 100 | Joint anomaly reconciled |\n| 30 #1 | 101 | Hint synergy compounds |\n| 30 #2 | 102 | (s,d)-view wall verified as bias |\n| 30 #3 | 106 | C\u2086 degree-6 cyclic field |\n| 30 #4 | 108 | Trace-battery joint capacity scaling |\n| 31 #1 | 107 | Cross-programme consistency |\n| 31 #2 | 109 | Character-theoretic proof |\n| 32 #1 | 110 | D\u2085 rigorous verification |\n| 32 #2 | 111 | Universal-S\u2083 (wrong poly \u2014 still informative) |\n| 32 #3 | 112 | Universal-S\u2083 corrected |\n| 32 #4 | 115 | Universal-S\u2083 fourth field |\n\n## Open problems\n\n| target | status | difficulty |\n|---|---|---|\n| Formal barrier-4 converse | OPEN | theory (hard) |\n| Production-scale subexp | OPEN | scale (needs N \u2265 2^64) |\n| D\u2085 conductor identification | OPEN | algebraic NT |\n| Degree-6 nonabelian type channel | OPEN | computation |\n\nNow 450 experiments (verified). Assessment v226. Paper 116, issue #207.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3506",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.233241+00:00",
     "title": "FACT round-33 #1 \u2014 PROGRAMME-MILESTONE: the post-resume programme in one document (paper 116)"
   },
@@ -8409,7 +8395,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "NumberTheory"
     ],
-    "id": "fd_5079",
+    "id": "fd_5080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2609.35626v1",
@@ -35316,6 +35302,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-29T08:44:19.946546+00:00",
     "title": "Plug-in Dial Bias Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For even n the dihedral abelian dial I(rotSign;T) appears to decrease towards h(1/4)-1/2. With the closed forms typeEntropyDn_even and condEnt_rotSign_even, this becomes a real-analysis limit question. It would finish the large-degree picture begun by abelian_saturation_odd.\n\nFor n = 2m, m >= 2, mutInfo univ fixCount rotSign on D_n is strictly decreasing in m and tends to h(1/4) - 1/2, where h(p) = -p log2 p - (1-p) log2 (1-p).\n\nFormalize using typeEntropyDn_even and condEnt_rotSign_even; prove the limit with Real.tendsto_pow_log_div_mul_add_atTop, and monotonicity via derivative bounds.\n\nDihedral dials split by parity: odd degrees saturate to 1 bit, even degrees tend to a universal constant of about 0.311 bits.\n\nThe even-degree dial has a different limit, so the reflection fibre's share does not stabilise as expected.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5081",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "827b1ae9",
+    "status": "available",
+    "timestamp": "2026-09-29T15:09:48.845101+00:00",
+    "title": "Even-Degree Dial Limit for Dihedral Radical Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The map abMap : D_{2m} -> C2 x C2 refines the rotation character. Conjecturally it removes everything except the pinning of the identity among the even rotations, which would give a closed form for every m.\n\nFor n = 2m, m >= 2: condEnt univ fixCount (abMap) = pinEnt m / 4 and mutInfo univ fixCount (abMap) = typeEntropyDn n - pinEnt m / 4.\n\nSplit condEnt over the four abMap fibres; use uEnt_pinned on {r 2j} and uEnt_const_on on the other three fibres; check against the catalog's D6 value L/2 + 1/6.\n\nThe abelian ceiling of every even dihedral radical field is explicit, extending paper 122's D6 ceiling to all even degrees.\n\nSome abMap fibre is not pinned or constant, which reveals hidden structure in the reflection classes.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5082",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "827b1ae9",
+    "status": "available",
+    "timestamp": "2026-09-29T15:09:49.417346+00:00",
+    "title": "Full-Abelianisation Dial of Even Dihedral Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Frobenius groups C_p x| C_d acting on p points generalise odd dihedral groups (d = 2). The chain rule suggests that the abelian dial carries exactly pinEnt(d) = h(1/d) bits and the residue is pinEnt(p)/d.\n\nFor a prime p and d | p-1 with d >= 2, let G = ZMod p x| (the subgroup of order d of (ZMod p)^x) act affinely on ZMod p, and let T be the number of fixed points. Then H(T) = pinEnt d + pinEnt p / d, condEnt univ T (G -> C_d) = pinEnt p / d, and mutInfo univ T (G -> C_d) = pinEnt d.\n\nFormalize the affine group as pairs (b, u) acting by x -> u x + b; count fixed points (u != 1 gives exactly one); apply mutInfo_eq_uEnt_of_factor and uEnt_uniform_fibres.\n\nThe degree-5 F20 column and every Frobenius column follow from a single law, with D_n (odd n) as the case d = 2.\n\nSome non-kernel element fixes more than one point or the kernel fibre is not pinned, which would contradict the Frobenius property and point to an error in the model.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5083",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "827b1ae9",
+    "status": "available",
+    "timestamp": "2026-09-29T15:09:49.998934+00:00",
+    "title": "Frobenius-Group Pinning Law"
   },
   {
     "consumed_by_exp_id": "",
