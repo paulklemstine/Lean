@@ -3498,31 +3498,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-34 #1 \u2014 MASTER-TABLE: every type-channel value in one document (paper 119)"
   },
   {
-    "consumed_by_exp_id": "ba34db80",
-    "description": "## FACT round-33 #3 \u2014 D5-TYPE-CHANNEL (paper 118)\n\n**Verdict name: THE-D5-DIAL-IS-MEASURED.**\n\nCompleting the D5 measurement at its verified conductor m*=320:\nPrime: I(p mod 320; T) = 1.0054, z=+338.\nSemiprime: I(N mod 320; pair) = 1.0054.\nH(T) = 1.3517; within-class entropy 0.3463.\n\nNow 448 experiments. Assessment v228. Paper 118.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3504",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T22:42:58.230402+00:00",
-    "title": "FACT round-33 #3 \u2014 D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (paper 118)"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23a377e0",
     "description": "## FACT round-33 #2 \u2014 D5-CONDUCTOR (paper 117)\n\n**Verdict name: THE-CONDUCTOR-IS-320.**\n\nConductor scan identified m* = 320 for the D5 quintic x5+20x+32: I(N mod 320; fork) = 0.9999 = 1 bit. The quadratic subfield has |d(K)| = 320.\n\nNow 450 experiments. Assessment v227. Paper 117.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3505",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.231835+00:00",
     "title": "FACT round-33 #2 \u2014 D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
   },
@@ -8393,13 +8379,43 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_5073",
+    "id": "fd_5074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2609.31582v1",
     "status": "available",
     "timestamp": "2026-09-28T22:32:13.750266+00:00",
     "title": "ArXiv paper: Free semigroups of power series"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A uniform lower bound for the Zhang-Kawazumi invariant and applications to the Bogomolov conjecture' and formalize its key results. Abstract: We prove that the Zhang-Kawazumi invariant $\\varphi(X)$ of a compact and connected Riemann surface $X$ of genus $g\\ge 2$ is strictly larger than \\[\\frac{g(g+2)-(2g+1)H_g}{g-1},\\] where $H_g=\\sum_{k=1}^g \\frac{1}{k}$ denotes the $g$-th harmonic number. If $X$ is hyperelliptic, we give the stronger bound $\\varphi(X)>\\frac{g}{2}(H_g-1)$. The proof relies on a new expression of $\\varphi(X)$ in terms of a quadratic form on the space of smooth Hermitian matrix-valued functions on $X$, evaluated at certain projector matrices. As an arithmetic application, we deduce new lower bounds for the self-intersection number $\u03c9_a^2$ of the admissible adelic metrized canonical bundle $\u03c9_a$ of a smooth projective curve of genus $g\\ge 2$ over a number field and hence new uniform height bounds in the Bogomolov conjecture.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_5079",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.35736v1",
+    "status": "available",
+    "timestamp": "2026-09-29T08:44:48.283349+00:00",
+    "title": "ArXiv paper: A uniform lower bound for the Zhang-Kawazumi invariant and applications to the Bogomolov conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A difference formula of $p$-adic height pairings via the Bloch-Kato logarithm map' and formalize its key results. Abstract: The construction of a $p$-adic height pairing for a geometric $p$-adic representation of the absolute Galois group of a number field depends on a global $p$-adic logarithm and on local splittings of the Hodge filtrations at the primes above $p$. We study the dependence on these splittings for suitable two-dimensional symplectic self-dual representations, including self-dual twists of representations attached to even-weight newforms at non-ordinary primes not dividing the level. We express the difference between the height pairings associated with the two splittings determined by Frobenius explicitly in terms of local Bloch--Kato logarithms. As an application over $\\mathbb{Q}$, we prove that at least one of the two cyclotomic $p$-adic height pairings is non-trivial under the additional assumptions that the Frobenius eigenvalues at $p$ are distinct and the localization map at $p$ from the Bloch--Kato Selmer group is non-zero.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5079",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.35626v1",
+    "status": "available",
+    "timestamp": "2026-09-29T08:44:51.581646+00:00",
+    "title": "ArXiv paper: A difference formula of $p$-adic height pairings via the Bloch-Kato logarithm map"
   },
   {
     "consumed_by_exp_id": "",
@@ -35242,6 +35258,64 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-28T17:04:50.448525+00:00",
     "title": "Semiprime Pair Channel for the Frobenius Group F42"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The residue channel of a Galois splitting type is bounded by, and achieves, the information carried by the abelianised Frobenius. The fibre-product engine already reduces any conductor to a single quotient; the missing piece is monotonicity of mutual information under refinement of the conditioning variable. This would turn every FACT dial into a finite group computation.\n\nFor finite G, class function T, sup over m of I(p mod m ; T) = I(pi_ab(Frob) ; T) under the uniform law on G.\n\nFormalize condEnt monotonicity under coarsening of the conditioning variable, then combine with fibreProd_mutInfo; check on S3, D4, A4, S4 numerically.\n\nAll conductor-scan experiments reduce to computing I(pi_ab ; T) on the group; for perfect groups the dial is identically zero.\n\nSome conductor sees beyond the abelian quotient, contradicting class field theory; the model would need correction.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5075",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ba34db80",
+    "status": "available",
+    "timestamp": "2026-09-29T08:44:18.086479+00:00",
+    "title": "Abelianisation Dial Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For even n the half-turn shares a cycle type with edge reflections, so the sign is no longer a function of the type. Conjecture an explicit closed form for the deficit 1 - I and its limit 0 as n grows.\n\nFor even n >= 2 with T = vertex cycle type, I(sign ; T) < 1 and I(sign ; T) -> 1 as n -> infinity.\n\nCompute exactly for n = 2, 4, 6, 8 in Lean via uEnt_eq_countSum; prove the general formula via the fibre counts of cycle types.\n\nParity of the dihedral order is visible in the dial; even-n fields have a measurable information deficit.\n\nSome even n still reaches one bit, meaning the half-turn ambiguity is compensated elsewhere.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5076",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ba34db80",
+    "status": "available",
+    "timestamp": "2026-09-29T08:44:18.717372+00:00",
+    "title": "Dihedral Dial Deficit for Even n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The semiprime channel equals the entropy of the product character whenever the quotient character is a function of the type. This explains the observed equality of prime and semiprime dials.\n\nIf sigma = phi o T with values in (Z/2)^k, then I(N mod m ; (T(p),T(q))) = H(sigma(p)+sigma(q)), which equals I(p mod m ; T) when sigma is balanced.\n\nGeneralize d5_pair_mutInfo using mutInfo_of_function and a convolution lemma for uEnt over (Z/2)^k.\n\nPrime and semiprime dials coincide for all dihedral and generalized dihedral groups.\n\nA counterexample group would separate the two channels, giving a new experimental discriminator.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5077",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ba34db80",
+    "status": "available",
+    "timestamp": "2026-09-29T08:44:19.327905+00:00",
+    "title": "Semiprime Pair Collapse for Exponent-Two Quotients"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "With the exact dial value known, the excess of the measured dial is a pure finite-sample bias. Conjecture the Miller-Madow form for the residue-type channel and use it to back out effective sample sizes from recorded dials.\n\nE[I_hat_M] - I = (phi(m)-1)(|T|-1)/(2 M ln 2) + O(M^-2) for the Chebotarev fibre-product law.\n\nSimulate over many D5 fields and M values; formalize the second-order expansion of the plug-in entropy for multinomial samples.\n\nRecorded excesses such as 0.0054 determine the sample size; z-scores can be recalibrated against the exact null.\n\nResidual excess signals genuine non-Chebotarev structure at small primes.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5078",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ba34db80",
+    "status": "available",
+    "timestamp": "2026-09-29T08:44:19.946546+00:00",
+    "title": "Plug-in Dial Bias Law"
   },
   {
     "consumed_by_exp_id": "",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d59c6a1a",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — equal-volume peelings under a thickness budget\n\n## What this cycle established\n\nLet `shellRadius R d N k = R (1 - k/N)^{1/d}` be the equal-volume peeling of `B(0,R) ⊆ ℝ^d`\ninto `",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-08-25T13:13:10",
-      "title": "Thin-Shell Counting under a Thickness Budget"
-    },
-    {
       "cycle_id": "05a687ab",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results now formalized in\n`Catalog/Computation/SpectralUnfoldingGapStatistics.lean`,\n`Catalog/Computation/SpectralPoissonVs",
@@ -2501,6 +2491,16 @@
       "theorem_count": 70,
       "timestamp": "2026-09-28T17:05:06",
       "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
+    },
+    {
+      "cycle_id": "ba34db80",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after THE-D5-DIAL-IS-MEASURED (paper 118)\n\n## What this cycle established (Lean, 0 sorries)\n\n* `Catalog/Probability/D5TypeChannelCore.lean`: in the Chebotarev fibre-product model",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-09-29T08:44:35",
+      "title": "FACT round-33 #3 — D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (paper 118)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-28T17:05:06",
+  "last_updated": "2026-09-29T08:44:35",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "10b0e429",
-        "quality": 0.87,
-        "theorems": 136,
-        "title": "FACT round-92 #1 — F1-TIGHTNESS-CONNECTION (THEORY, no new physics): BOUND-SLACK"
-      },
-      {
         "cycle_id": "523b9317",
         "quality": 0.76,
         "theorems": 153,
@@ -3823,6 +3817,12 @@
         "quality": 0.55,
         "theorems": 31,
         "title": "FACT round-31 #1 — CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified"
+      },
+      {
+        "cycle_id": "ba34db80",
+        "quality": 0.62,
+        "theorems": 73,
+        "title": "FACT round-33 #3 — D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (pap"
       }
     ],
     "Pythagorean": [
