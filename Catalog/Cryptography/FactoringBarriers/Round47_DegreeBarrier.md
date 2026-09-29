@@ -95,3 +95,42 @@ magnitude. The structure explains the absence: **the elliptic geometry is a feat
 
 That is a better answer than "no method was found". It says where the method would have to
 live, and why it is not there.
+
+---
+
+## Addendum, 2026-09-29 — why the group law cannot supply NFS relations
+
+The closure above is structural (the genus grows). One further measurement says what goes
+wrong *mechanically* even at `d = 3`, where the curve is genus 1 and the mechanism works.
+
+A relation's smoothness burden is entirely on `B(t) = c^2 − 20ct^3 − 8t^6` (since
+`Norm(g) = v^6·B(t)` and `v^6` is a perfect cube). Generate relations by the **group law
+alone** — no descent, no factorisation — and measure:
+
+| `n` (multiple) | height of `t` | bits of `B(t)` | 2·10^5-smooth? |
+|---|---|---|---|
+| 1 | 1 | 11 | **yes** |
+| 2 | 5.99·10¹² | 261 | no |
+| 3 | 1.50·10³⁰ | 605 | no |
+| 4 | 2.58·10⁵¹ | 1065 | no |
+| 5 | 5.44·10⁷² | 1677 | no |
+
+> **1 / 12 of the generated relations are smooth — and that one is the base point, i.e. the
+> point you started from.**
+
+The pattern is the mechanism: `B(t)` grows **quadratically in the multiple index `n`**
+(11, 261, 605, 1065, 1677 bits — differences ≈ `n²`), which is exactly the canonical-height
+law on a genus-1 curve. **The group law hands you points almost for free, and their norms
+explode at the same time.** The smoothness bar `L_n[1/3]` is *fixed* — at `N = 1333` it is
+literally **21** — so past the first point nothing can be smooth, because the number is
+already hundreds of digits.
+
+**This is the sharpest statement of why round 47's approach cannot be an NFS.** NFS does not
+need the relations to be structured; it needs *many small smooth values of a linear form*,
+and it gets them by **sieving** — a random walk onto small primes. An elliptic curve gives a
+group, and the group law converts a small norm into an exponentially larger one. **The
+structure that made the obstruction computable is the same structure that prevents the
+relations from being usable.**
+
+That closes the last open measurement on this direction, and it closes it for a reason that is
+not "we looked and did not find it".
