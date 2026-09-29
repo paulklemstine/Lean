@@ -1,5 +1,25 @@
 # Round 47 part 2 — a Mordell–Weil procedure for the Lee–Venkatesan obstruction
 
+> ## ⚠️ THE HEADLINE IS VOID. Read `Round47_Audit.md` before anything else.
+>
+> An adversarial control re-derived every claim here without touching a round-47 script.
+> **`"12/12 factors recovered"` is VOID as a factoring result.** Step 2 of Algorithm 47 calls
+> `ellrank`, and PARI's 2-descent needs the cubic discriminant's prime factorisation — which
+> for these curves *is* the factorisation of `N`, because
+> `disc = -27c^2(m^3-c)^2` and `N | (m^3-c)`. Proved by a matched-twin control (identical
+> coefficient sizes, smooth vs hard discriminant: `ellrank` 0.02 s vs timeout >300 s).
+>
+> Also refuted here: §5's "checkable from a basis" — `chi_P` is **not** a homomorphism on
+> `E(Q)` (the Jacobian transports the curve law, not multiplication of relations; 39/1243
+> violations, 3 of 15 instances not homomorphisms) — and §2's rank distribution
+> (`{0:2, 1:119, 2:247, 3:110, 4:30, 5:3}`, so rank 1 is 23% and rank 0 occurs twice).
+>
+> **What survives:** the twelve relations are genuine and independently verified in `Z[alpha]`
+> with no leakage; the Jacobian and its cross-check hold; `chi(l1 l2) = chi(l1)chi(l2)` holds
+> on 69/69; and the 60.5% figure is real, with zero `ellrank` errors and saturation at
+> depth 2. **The characterisation and the algebra are sound. The method is not.**
+
+
 **RESULT, 2026-09-29. This supersedes the conjecture-shaped claim in
 `Round47_EllipticReduction.md` §5, which is REFUTED below and must not be quoted.**
 
