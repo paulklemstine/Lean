@@ -127,3 +127,30 @@ efficient way found to *locate* those relations factors `N` to do it.
 
 The one thing that would change this is a way to generate the relations without a descent —
 and the audit's `N=4189` row, needing a 2.5×10¹²-pair box, is the size of that problem.
+
+### 7a. A rebuttal to D3, and a note on the failure mode
+
+D3's missing point `(m/4, 3m²/8)` is **right at `P = 0` and wrong for `P ≠ 0`.** Checked on
+the quartic directly:
+
+| `m` | `P` | `Q` | `A_P(m/4) == (3m²/8)²` | difference |
+|---|---|---|---|---|
+| 20 | 0 | −2 | **True** | 0 |
+| 14 | 0 | −207 | **True** | 0 |
+| 20 | 2 | −2 | False | −301 |
+| 14 | 11 | −207 | False | −3355/4 |
+| 19 | 4 | 256 | False | −1091/2 |
+
+And the underlying singularity is a **`P = 0` artefact**: the inverse is `t = (Y − V)/U` with
+`U = 2X − 2m² − P`, and at `X = m²` we have `U = 0` only when `P = 0`; for `P = 2, 4, 11` one
+gets `U = −2, −4, −11` and `t` is perfectly well defined.
+
+**So D3 is real for `Round47_MordellWeil.md` (which is the `P = 0` specialisation) and does
+not survive `Round47_GeneralCubic.md` (which is not).** The one-line fix is still worth
+applying to the `P = 0` code.
+
+**The failure mode is worth recording, because it is the one this audit exists to catch:** D3
+was generalised from a specialisation without re-checking outside it — which is precisely how
+`Klein–Kurban–Lenstra` and the other phantom citations entered this record, and precisely
+what I did in this same round with the `−2Pt²` term. A control that only runs at the
+parameter you derived it at is not a control.
