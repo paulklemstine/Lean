@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-28T17:04:50Z",
-  "count": 182,
+  "archived_at": "2026-09-29T08:44:20Z",
+  "count": 183,
   "directions": [
     {
       "id": "fd_3695",
@@ -7213,6 +7213,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 211
+    },
+    {
+      "id": "fd_3504",
+      "title": "FACT round-33 #3 — D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (paper 118)",
+      "description": "## FACT round-33 #3 — D5-TYPE-CHANNEL (paper 118)\n\n**Verdict name: THE-D5-DIAL-IS-MEASURED.**\n\nCompleting the D5 measurement at its verified conductor m*=320:\nPrime: I(p mod 320; T) = 1.0054, z=+338.\nSemiprime: I(N mod 320; pair) = 1.0054.\nH(T) = 1.3517; within-class entropy 0.3463.\n\nNow 448 experiments. Assessment v228. Paper 118.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "ba34db80",
+      "timestamp": "2026-08-21T22:42:58.230402+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.62,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-28T17:05:52.758145+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 209
     }
   ]
 }
