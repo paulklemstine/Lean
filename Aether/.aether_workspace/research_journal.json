@@ -1,86 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "de8ca052",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — metaplectic extension of the Gabor window action\n\nThe cycle just completed established, with fully checked Lean proofs:\n\n* the chirp operator `C_c f (t) = e^{2πi c t²} f(t)` norm",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-09-06T05:58:40",
-      "title": "Metaplectic Extension of the Gabor Window Action"
-    },
-    {
-      "cycle_id": "0c24f2ff",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Moment Fingerprint Classification\n\nDerived from the five research cycles formalized in\n`Catalog/Algebra/MomentFingerprintClassification.lean`,\n`…Duality.lean`, `…Positivity.lean`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 102,
-      "timestamp": "2026-09-06T15:54:14",
-      "title": "Moment Fingerprint Classification"
-    },
-    {
-      "cycle_id": "794ffb3f",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Quotient Steps, Evolutionary Paths, Decomposition\n\nDerived from the three research cycles recorded in `Catalog/Shared/`:\n\n* `EvolutionaryPathCore.lean` — the two requested defini",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 582,
-      "timestamp": "2026-09-07T02:23:11",
-      "title": "define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture"
-    },
-    {
-      "cycle_id": "cc3115b2",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Standard-part projection-valued measures\n\n## Status of the programme\n\nThe mission conjecture is proved, sorry-free, in the form\n\n> for a family of hyperreal matrices with **finit",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 103,
-      "timestamp": "2026-09-07T10:00:17",
-      "title": "Standard-part projection-valued measures"
-    },
-    {
-      "cycle_id": "fd463ee8",
-      "domain": "Physics",
-      "key_insight": "# Future directions — beating three middle layers for weakly `D₆`-free families\n\n## What this cycle established (all formalised, 0 sorries)\n\nWorking in `2^[n]` with the *weak* containment order (`Weak",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-09-07T22:16:37",
-      "title": "A finite, explicit improvement over three middle layers"
-    },
-    {
-      "cycle_id": "69567235",
-      "domain": "Bridges",
-      "key_insight": "# Future directions after D3 (nonlinear probe ceiling on the pooled window population)\n\n## What this cycle settled\n\nWorking from `Novelty.NET58RelationalImportance` (`Rsq_le_intrinsic_ceiling`,\n`intri",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 92,
-      "timestamp": "2026-09-08T00:32:32",
-      "title": "D3. Nonlinear probe ceiling on the pooled window population"
-    },
-    {
-      "cycle_id": "e050cc19",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — depth-`L` lower bounds from oscillations\n\n## What this project established (all `sorry`-free, five Lean files)\n\n**`Catalog/Algebra/DepthLOscillationLowerBound.lean` — knot calcul",
-      "quality_score": 0.88,
-      "sorry_count": 1,
-      "theorem_count": 93,
-      "timestamp": "2026-09-08T09:52:11",
-      "title": "Depth-`L` lower bound from oscillations"
-    },
-    {
-      "cycle_id": "e6e33149",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nDerived from the six research cycles in `Catalog/Novelty/ConditionalLabelDPI.lean`,\n`ConditionalArtifactAccounting.lean`, `ConditionalArtifactErrorBar.lean`,\n`ConditionalChainRule",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-09-08T21:07:13",
-      "title": "One-Sidedness of Conditional-Independence Artifacts"
-    },
-    {
       "cycle_id": "4b011f56",
       "domain": "Novelty",
       "key_insight": "# Future Directions — fork-channel resonance\n\nDerived from the analysis and adversarial review of\n`Catalog/Novelty/ForkChannelCrossingUniqueness.lean` and\n`Catalog/Novelty/ForkChannelSecondCrossing.le",
@@ -499,99 +419,89 @@
       "theorem_count": 61,
       "timestamp": "2026-09-24T23:35:36",
       "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: after paper 105 (HINT-S-D-DECOMPOSITION)\n\n## What this cycle established (all proved in Lean, no `sorry`)\nPaper 105's explanation, \"`(p+q) mod 8` determines `p mod 8` and `q mod 8",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-09-25T07:43:12",
+      "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
+    },
+    {
+      "cycle_id": "293082f5",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — HINT-TABLE-COMPLETION (paper 104)\n\nThis cycle established, in Lean with no `sorry`:\n\n* **THE-HINT-IS-UNIVERSAL exactly at odd moduli** (`HintTable.hint_universal_iff_odd`): over",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-09-25T17:56:56",
+      "title": "FACT round-30 #1 — HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after ETALE-DIAL (paper 113)\n\n## What this cycle established (all proved in Lean with 0 sorries)\n\n- **Conductor classification** (`Catalog/Bridges/EtaleDialVietaChannel.lean`). The",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-09-26T09:59:02",
+      "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after UNIVERSAL-S3-CORRECTED (paper 112)\n\n## What this cycle established (all in `Catalog/Novelty/`, 0 sorries)\n\n* `S3SignChannelUniversal.lean` — for **every** finite group `G`,",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-09-26T14:26:33",
+      "title": "FACT round-32 #3 — UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fields (paper 112)"
+    },
+    {
+      "cycle_id": "b6553c28",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — after SEXTIC-HINT-VALUE (paper 121)\n\n## What this cycle settled\n\n* **Round-31 closed form**: the `Q(ζ₁₃)⁺` hint value is exactly `log₂3 + 1/18 ≈ 1.64052` bits\n  (the reported val",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-09-27T07:13:07",
+      "title": "FACT round-31 #2 — SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (paper 121)"
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS: D₆ type channel for x⁶ − 2 (paper 122, FACT round-34 #4)\n\n## What this cycle established (all in `Catalog/Algebra/D6TypeChannel/`, 0 sorries)\n\n| Stage-1 conjecture | Outcome |\n|--",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-27T17:50:42",
+      "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
+    },
+    {
+      "cycle_id": "f9f43bb0",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — DIAL-CROSS-TALK (paper 121)\n\n## What survived (Stage 3 summary)\n\n* **True and proved exactly**: coprime-resolvent dials share `0` bits (primes and semiprimes);\n  shared-resolvent",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-09-28T08:38:57",
+      "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — after SEPTIC-FRONTIER (paper 120)\n\nWhat this cycle established (all in `Catalog/Novelty/SepticFrontier.lean`, 0 sorries):\n\n* For the Frobenius group `F42 = AGL(1,7)` (Galois grou",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-09-28T17:05:06",
+      "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "16c9261f",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — NET-96 thread (cost law for speculative decoding)\n\n## What this cycle established\n\nThree Lean files, all `sorry`-free:\n\n* `Catalog/Computation/SpeculativeSurvivalCostLaw.lean` —",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-25T08:00:33",
-      "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measu"
-    },
-    {
-      "cycle_id": "4578ca8c",
-      "domain": "Computation",
-      "key_insight": "# Future directions — Euler–Mascheroni acceleration by telescoping envelopes\n\n## What this cycle established\n\nThree Lean files in `Catalog/Computation/` develop a complete, sorry-free theory of\nmidpoi",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 45,
-      "timestamp": "2026-08-25T08:00:48",
-      "title": "Midpoint-corrected acceleration"
-    },
-    {
-      "cycle_id": "7957a9f1",
-      "domain": "Physics",
-      "key_insight": "# Future directions — after the exp569b pooling audit (paper 220, round-75 #3)\n\nThe four files added this cycle turn the round's *procedural* finding (\"both poolings fail\nindependence\") into *theorems",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-25T09:02:00",
-      "title": "FACT round-75 #3 — U9-DRIFT-POWER-B (exp 569b): letter-of-rule null at 76.8M pairs; both poolings fa"
-    },
-    {
-      "cycle_id": "5223d87b",
-      "domain": "Logic",
-      "key_insight": "# Future directions — dial capture ceilings and the `u ≈ 10` overdispersion carrier\n\nThe formalization in `Catalog/Logic/QRDialDispersionLaws.lean`,\n`Catalog/Logic/QRDialOrthogonality.lean`, `Catalog/",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-25T09:52:56",
-      "title": "FACT round-78 #2 — QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY — small-prime QR dial doe"
-    },
-    {
-      "cycle_id": "d3d53c1e",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — the residual certificate calculus\n\nThe cycle just completed established, with complete proofs:\n\n* the conjectured upper bound $\\max(1+K_1, 1+K_2)$ for parallel residual blocks in",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-08-25T09:53:08",
-      "title": "Parallel residual blocks obey a tensor-product certificate"
-    },
-    {
-      "cycle_id": "9b3c75c4",
-      "domain": "Applications",
-      "key_insight": "# Future directions — positional-stratum measure framework (GAP-L4)\n\nWhat this cycle established, in one paragraph: the *universal object* of the\npositional-stratum framework is the exact r̄-identity",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-25T09:53:25",
-      "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3"
-    },
-    {
-      "cycle_id": "a22e921b",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — from the k-taxonomy cycles\n\nThree sorry-free Lean files came out of this run:\n\n* `Catalog/Cryptography/KTaxonomyCensusEcon.lean` — the three budgets `k_pin`,\n  `k_opt^cost`, `k_o",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-08-25T10:51:17",
-      "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and "
-    },
-    {
-      "cycle_id": "539def03",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: converses to the union bound for universal hashing\n\nThis thread closed the open item of the assignment — a lower bound valid over\n*all* 2-universal families — and in fact determin",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-25T11:45:16",
-      "title": "Both endpoints are formalised and the numerics of Section 4 of"
-    },
-    {
-      "cycle_id": "2111d025",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after Paper 227 (exp 577 / verifyL7b formalisation)\n\nThe cycle just closed established four formal pillars:\n\n1. **Reciprocity-flip dichotomy** (`Catalog/Algebra/ReciprocityFlipDi",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-25T11:45:32",
-      "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED — H1 s"
-    },
     {
       "cycle_id": "d59c6a1a",
       "domain": "Cryptography",
@@ -2501,123 +2411,99 @@
       "theorem_count": 61,
       "timestamp": "2026-09-24T23:35:36",
       "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: after paper 105 (HINT-S-D-DECOMPOSITION)\n\n## What this cycle established (all proved in Lean, no `sorry`)\nPaper 105's explanation, \"`(p+q) mod 8` determines `p mod 8` and `q mod 8",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-09-25T07:43:12",
+      "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
+    },
+    {
+      "cycle_id": "293082f5",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — HINT-TABLE-COMPLETION (paper 104)\n\nThis cycle established, in Lean with no `sorry`:\n\n* **THE-HINT-IS-UNIVERSAL exactly at odd moduli** (`HintTable.hint_universal_iff_odd`): over",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-09-25T17:56:56",
+      "title": "FACT round-30 #1 — HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after ETALE-DIAL (paper 113)\n\n## What this cycle established (all proved in Lean with 0 sorries)\n\n- **Conductor classification** (`Catalog/Bridges/EtaleDialVietaChannel.lean`). The",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-09-26T09:59:02",
+      "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper 113)"
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after UNIVERSAL-S3-CORRECTED (paper 112)\n\n## What this cycle established (all in `Catalog/Novelty/`, 0 sorries)\n\n* `S3SignChannelUniversal.lean` — for **every** finite group `G`,",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-09-26T14:26:33",
+      "title": "FACT round-32 #3 — UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fields (paper 112)"
+    },
+    {
+      "cycle_id": "dea80b65",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — UNIVERSAL-S3-TEST (paper 111)\n\n## What this cycle established (all proved in Lean, 0 sorries)\n\n* **Affine moment law** (`UniversalS3AffineMoments.lean`): for every finite field 𝔽",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 42,
+      "timestamp": "2026-09-27T01:47:39",
+      "title": "FACT round-32 #2 — UNIVERSAL-S3-TEST: wrong polynomial, accidental x5-2 measurement (paper 111)"
+    },
+    {
+      "cycle_id": "b6553c28",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — after SEXTIC-HINT-VALUE (paper 121)\n\n## What this cycle settled\n\n* **Round-31 closed form**: the `Q(ζ₁₃)⁺` hint value is exactly `log₂3 + 1/18 ≈ 1.64052` bits\n  (the reported val",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-09-27T07:13:07",
+      "title": "FACT round-31 #2 — SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (paper 121)"
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS: D₆ type channel for x⁶ − 2 (paper 122, FACT round-34 #4)\n\n## What this cycle established (all in `Catalog/Algebra/D6TypeChannel/`, 0 sorries)\n\n| Stage-1 conjecture | Outcome |\n|--",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-09-27T17:50:42",
+      "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
+    },
+    {
+      "cycle_id": "f9f43bb0",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — DIAL-CROSS-TALK (paper 121)\n\n## What survived (Stage 3 summary)\n\n* **True and proved exactly**: coprime-resolvent dials share `0` bits (primes and semiprimes);\n  shared-resolvent",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-09-28T08:38:57",
+      "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — after SEPTIC-FRONTIER (paper 120)\n\nWhat this cycle established (all in `Catalog/Novelty/SepticFrontier.lean`, 0 sorries):\n\n* For the Frobenius group `F42 = AGL(1,7)` (Galois grou",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-09-28T17:05:06",
+      "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6bf15a63",
-      "domain": "Shared",
-      "name": "cube_lt_two_pow",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "6bf15a63",
-      "domain": "Shared",
-      "name": "corner_cost_lt_sqrt_search",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "6bf15a63",
-      "domain": "Shared",
-      "name": "surface_cost_exponential_in_shave",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "b5786d61",
-      "domain": "MachineLearning",
-      "name": "info_nonneg",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "b5786d61",
-      "domain": "MachineLearning",
-      "name": "MI_eq_zero_of_const",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "b5786d61",
-      "domain": "MachineLearning",
-      "name": "info_empty",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "24d71196",
-      "domain": "Shared",
-      "name": "one_sub_pow_mul_le_one",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "24d71196",
-      "domain": "Shared",
-      "name": "succProb_half_of_one_le",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "24d71196",
-      "domain": "Shared",
-      "name": "succProb_lt_half",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a55a0103",
-      "domain": "MachineLearning",
-      "name": "tri_eq_pr",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a55a0103",
-      "domain": "MachineLearning",
-      "name": "pr_eq_pair",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a55a0103",
-      "domain": "MachineLearning",
-      "name": "readMI_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "020da4dc",
-      "domain": "Algebra",
-      "name": "relu_nonneg",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "020da4dc",
-      "domain": "Algebra",
-      "name": "tri_left",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "020da4dc",
-      "domain": "Algebra",
-      "name": "tri_right",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "d309ec20",
-      "domain": "Combinatorics",
-      "name": "restrict_mono",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "d309ec20",
-      "domain": "Combinatorics",
-      "name": "restrict_mem_double_powerset",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "d309ec20",
-      "domain": "Combinatorics",
-      "name": "card_image_restrict_le",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "cfb5ebd4",
-      "domain": "Cryptography",
-      "name": "quantifies",
-      "quality": 0.78
-    },
     {
       "cycle_id": "cfb5ebd4",
       "domain": "Cryptography",
@@ -2803,9 +2689,123 @@
       "domain": "Physics",
       "name": "realDeg_13_eq",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "name": "units8_inv_eq_self",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "name": "four_mul_one_add_unit",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "e43cce79",
+      "domain": "Cryptography",
+      "name": "pairSum_eq_mul",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "293082f5",
+      "domain": "Geometry",
+      "name": "product_le_residue_add_logb",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "293082f5",
+      "domain": "Geometry",
+      "name": "neg_logb_le_hintValue",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "name": "claim_refuted_by_primes",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "name": "not_vietaInjective_zmod_eight",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "ccd8891f",
+      "domain": "Bridges",
+      "name": "units_zmod_eight",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "name": "cubic_factor",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "85c32d45",
+      "domain": "Novelty",
+      "name": "disc_factor",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "b6553c28",
+      "domain": "Physics",
+      "name": "minmax_eq_iff",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "b6553c28",
+      "domain": "Physics",
+      "name": "uEnt_unordered",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "name": "two_dvd_six",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "name": "lb_one",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "4b5f9882",
+      "domain": "Algebra",
+      "name": "lb_two",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "name": "condEnt_eq_uEnt_pair_sub",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "name": "mutInfo_eq_add_sub_pair",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ea6702d1",
+      "domain": "Novelty",
+      "name": "uEnt_pair_swap",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-24T23:35:36",
+  "last_updated": "2026-09-28T17:05:06",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "181f9c07",
-        "quality": 0.72,
-        "theorems": 90,
-        "title": "F4. Sharpening the chain upper bound from $2^d - 1$ to $O(d)$"
-      },
-      {
         "cycle_id": "2f2e652e",
         "quality": 0.78,
         "theorems": 50,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 117,
         "title": "FACT round-29 #1 — THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (pape"
+      },
+      {
+        "cycle_id": "4b5f9882",
+        "quality": 0.72,
+        "theorems": 84,
+        "title": "FACT round-34 #4 — DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
       }
     ],
     "Applications": [
@@ -3145,18 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "0688a872",
-        "quality": 0.84,
-        "theorems": 566,
-        "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant fi"
-      },
-      {
-        "cycle_id": "135e0dcb",
-        "quality": 0.86,
-        "theorems": 118,
-        "title": "FACT round-43 #4 — QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
-      },
-      {
         "cycle_id": "8d588bfb",
         "quality": 0.85,
         "theorems": 2138,
@@ -3203,6 +3191,18 @@
         "quality": 0.82,
         "theorems": 109,
         "title": "FACT round-30 #1 — HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
+      },
+      {
+        "cycle_id": "ccd8891f",
+        "quality": 0.75,
+        "theorems": 78,
+        "title": "FACT round-32 #2 — ETALE-DIAL: the type channel for reducible polynomials (paper"
+      },
+      {
+        "cycle_id": "f9f43bb0",
+        "quality": 0.72,
+        "theorems": 34,
+        "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (pap"
       }
     ],
     "Combinatorics": [
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "d59c6a1a",
-        "quality": 0.85,
-        "theorems": 37,
-        "title": "Thin-Shell Counting under a Thickness Budget"
-      },
-      {
         "cycle_id": "55b01213",
         "quality": 0.82,
         "theorems": 47,
@@ -3389,15 +3383,15 @@
         "quality": 0.78,
         "theorems": 78,
         "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on on"
+      },
+      {
+        "cycle_id": "e43cce79",
+        "quality": 0.72,
+        "theorems": 25,
+        "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-depende"
       }
     ],
     "Geometry": [
-      {
-        "cycle_id": "5b26e37d",
-        "quality": 0.8,
-        "theorems": 66,
-        "title": "**Conjecture.** In a sparse random corpus with bounded expected document size an"
-      },
       {
         "cycle_id": "ce273a18",
         "quality": 0.78,
@@ -3451,6 +3445,12 @@
         "quality": 0.82,
         "theorems": 79,
         "title": "Metaplectic Extension of the Gabor Window Action"
+      },
+      {
+        "cycle_id": "293082f5",
+        "quality": 0.72,
+        "theorems": 57,
+        "title": "FACT round-30 #1 — HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 1"
       }
     ],
     "Logic": [
@@ -3579,18 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c90a227e",
-        "quality": 0.82,
-        "theorems": 13,
-        "title": "Generalize from permutations of distinct elements to multisets with repeated key"
-      },
-      {
-        "cycle_id": "24e44638",
-        "quality": 0.86,
-        "theorems": 95,
-        "title": "Uniqueness of the Two-Point Transreal Compactification"
-      },
-      {
         "cycle_id": "63061d5b",
         "quality": 0.84,
         "theorems": 88,
@@ -3637,6 +3625,18 @@
         "quality": 0.82,
         "theorems": 95,
         "title": "Seven-state strong-connectivity conjecture"
+      },
+      {
+        "cycle_id": "85c32d45",
+        "quality": 0.72,
+        "theorems": 64,
+        "title": "FACT round-32 #3 — UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fi"
+      },
+      {
+        "cycle_id": "ea6702d1",
+        "quality": 0.72,
+        "theorems": 70,
+        "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper"
       }
     ],
     "NumberTheory": [
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "ed4056bf",
-        "quality": 0.82,
-        "theorems": 51,
-        "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (pape"
-      },
-      {
         "cycle_id": "b4f872e1",
         "quality": 0.78,
         "theorems": 72,
@@ -3761,6 +3755,12 @@
         "quality": 0.72,
         "theorems": 61,
         "title": "FACT round-30 #3 — CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (pa"
+      },
+      {
+        "cycle_id": "b6553c28",
+        "quality": 0.8,
+        "theorems": 85,
+        "title": "FACT round-31 #2 — SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (pape"
       }
     ],
     "Probability": [
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "acd2f64e",
-        "quality": 0.78,
-        "theorems": 39,
-        "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's "
-      },
-      {
         "cycle_id": "20511e4a",
         "quality": 0.78,
         "theorems": 31,
@@ -3885,6 +3879,12 @@
         "quality": 0.8,
         "theorems": 56,
         "title": "FACT round-28 #4 — BATTERY-UTILITY: the labels are not filters (paper 98)"
+      },
+      {
+        "cycle_id": "dea80b65",
+        "quality": 0.62,
+        "theorems": 42,
+        "title": "FACT round-32 #2 — UNIVERSAL-S3-TEST: wrong polynomial, accidental x5-2 measurem"
       }
     ],
     "Shared": [
