@@ -349,6 +349,54 @@ modulo p and q."* Both routes converge on it.
 the STOC citation was simply wrong. A 2019+ sweep surfaced only implementation and encyclopedia
 entries, no successor rigorous analysis.
 
+## 7c. The divisibility reformulation is refuted; what survives
+
+A promising reformulation was proposed and then **killed with an explicit counterexample**. Recorded
+because the counterexample is sharper than the claim.
+
+**Proposition F (proposed).** Since `h - g_h^2 = f*w_h` and `f(m) = n`, then under a size hypothesis
+`chi_P(h) = +1  <=>  (X - m) divides (h - g_h^2)`, turning Conjecture 7.1 into a polynomial-**divisibility**
+statement rather than a sign-equidistribution one.
+
+**The size hypothesis F5 is refuted universally, not merely generically.** Take any smooth linear form `l`
+(a generator of `P_S`), `J := floor(d)+2`, `h := l^(2J)`. Then `h` is in `P_S` clause-by-clause
+against p.38 and `|v_h| = |l(m)|^J > n` because `m^d <= n < m^{d+1}` (p.10) — **no asymptotics
+needed**. The paper's own Theorem 5.4 supplies such an `l` at measure `1-o(1)`.
+**The cutoff is exact:** `|v_h| = m^(k/2)(1+o(1)) = n^(k/(2d))(1+o(1))` for any `h` of degree `k`, so
+the `v_h` half of F5 holds **iff `k < 2d`**, independent of which factors were chosen.
+The `g_h` half is worse than unverified: `|g_h(m)| < n` reduces to `||g_h||_1 < m`, against a
+universal bound `<= 2^d (d+1) L_n(3k/4)` that exceeds `m` by `m^(0.082k)` for **every** `k >= 1`.
+
+**So Prop. F is dead, and its sufficiency statement must not be quoted.** Its 217k-case numerical
+check only ever exercised the `k < 2d` regime and could not have seen the failure.
+
+**Correction to a prior claim: the paper's degree is
+`d = delta (log n)^{1/3} (log log n)^{-1/3}`** (p.17 Remark 5.5, 600 dpi) — **not** `(log log n)^{-1}`.
+With the correct value `m^d = n` exactly, consistent with p.10. An earlier note here reporting the
+wrong exponent propagated into another agent's code; the "inconsistent statements about `m`" flagged
+in that work is an artifact of this one error, not a flaw in the paper.
+
+**What survives — Prop. F-prime:**
+- **F1, unconditional:** `chi_P(h) = -1  ==>  (X-m)` does **not** divide `(h - g_h^2)`. A genuine
+  necessary condition, valid everywhere.
+- **F2, unconditional:** the `n | g_h(m) -+ v_h` dichotomy; the failure branch forces
+  `|g_h(m) + eps v_h| <= |w_h(m)|`.
+- **F3, per-`h` and decidable:** exact equivalence whenever `|g_h(m)| + |v_h| < n`, which holds
+  automatically for **all** `h` with `deg h < 2d`.
+
+**The one real asymmetry.** The divisibility form is **not** a complexity reduction — same three
+square conditions, same thin set. But `w_h` is **non-multiplicative**:
+`w_{h1 h2}(m) = v_{h2}^2 w_{h1}(m) + g_{h1}(m)^2 w_{h2}(m)`, so `{h : w_h(m) = 0}` is **not a
+subgroup**, and the probe is therefore **immune to Remark 7.3's "no single character" wall** — which
+is precisely the wall the sign and genericity routes both hit.
+
+**Computation so far: 22 verified instances, no counterexample** (`n` = 129 to 6049, `f = X^3-2` and
+`X^3-3`, all `p = q = 3 (mod 4)`); headline `n = 649 = 11*59`, `m = 392`, `h = 1800X`,
+`g = -30*alpha^2`, `u = 840`, recovering the factorisation. **A methodological warning worth keeping:**
+a single-form sweep is *structurally* blind, not merely small — `chi_P` is a character, so
+`chi_P(h1 h2) = chi_P(h1)chi_P(h2)`; a search that finds only `+1` values has proved nothing.
+The test that is actually decisive is to evaluate `chi_P` on the **atoms** of `P_S`.
+
 ## 8. Deterministic 1/6: a theorem, not a search failure
 
 Harvey (arXiv:2010.05450) Alg. 4.3 has free parameters `r, m`; cost
