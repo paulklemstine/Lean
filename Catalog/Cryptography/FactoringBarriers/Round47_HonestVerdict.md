@@ -1,5 +1,16 @@
 # Round 47 part 7 — the repaired measurement, and the honest verdict
 
+> ## ⚠️ CORRECTED IN PART — see `Round47_PricingCorrection.md`
+>
+> Two figures below are WRONG and are retracted there: "`~L_n[1/3] ≈ 2.5e35`" and the
+> implied "worse than GNFS by a constant". My helper returned the **exponent** of the `L`,
+> not the `L`. The correct demand at `N = 10^20` is `L[1/3,1] = 6464` — which matches the
+> record's own `B = L_n(1/3) = 6463.8` — and the naive pricing then points the *other* way,
+> toward a ~100x constant-factor win. Everything else in this file (the 73%, the median 2,
+> `N^2 | disc(E)`, the six retractions, and the verdict that this is not a factoring method
+> today) stands unchanged.
+
+
 **2026-09-29. `Round47_Circularity.md` showed the 62% figure was measured through a rank
 computation on a curve with `N² | disc`. This re-measures it with no factorisation
 anywhere. The number goes UP, not down — but the context changes what it means.**
