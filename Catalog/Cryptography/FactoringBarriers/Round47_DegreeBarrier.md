@@ -1,5 +1,26 @@
 # Round 47 part 12 — the direction is closed: the relation curve's genus explodes at `d ≥ 4`
 
+> ## ⚠️ QUALIFIED — the genus is the GENERIC value, with an exception locus
+>
+> `Round47_FunctionField.md` §8.2 establishes that transversality of `φ|_C_d` is
+> **generic but not universal**: over `d=3..6 × 7 (c,m) × 7` fields, 136 rows certify
+> `reduced=True` and 34 certify `reduced=False`, of which **18 sit at primes not dividing
+> `c`**. On that locus a zero of `φ|_C_d` is multiple, the branch divisor drops, and `Ŷ_d`
+> is reducible.
+>
+> **So the formula `g(Ŷ_d) = 1 + (d−3)·2^{d−2}` is the GENERIC VALUE, not an identity for
+> all `(c,m)`.** It does not change the closure — an exception locus makes the supply
+> *worse*, not better — but it is a real qualification. It is also consistent with, and
+> sharper than, the integer picture: round 47 found `d=3` relations for only 22/38
+> instances and `d=4` for 1/38.
+>
+> ⚠️ The criterion is not shown exact at `d ≥ 4` and fails as *"no `D ≤ 30` found"*, so a
+> resource limit is not excluded. **Treat the 18 exceptions as a signal to be confirmed.**
+> Also: this file's `g(C_3)` table entry is **wrong** (see `Round47_FunctionField.md` §2 — a
+> conic has genus 0), and **A7's `r = 2^{d−1}` point-count control is invalid** (a 0-dim
+> scheme need not be `F_p`-split; the degree is right by Bézout instead).
+
+
 **2026-09-29. This is the close. A rigorous structural statement about the direction round
 47 opened, and it explains *why* rather than merely recording a failure.**
 

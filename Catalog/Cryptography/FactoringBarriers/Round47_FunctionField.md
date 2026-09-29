@@ -115,3 +115,58 @@ proves the opposite) — **do not use it.** **Part 4 (`q = p^k`) is BLOCKED — 
 Jacobian on **106/106** good-reduction curves, after fixing a model that was singular because
 it set `c = m³` (making `4a₄³ + 27a₆² ≡ 0` identically — **the same `c = m³` trap I hit in
 `scaling2.py` earlier today**).
+
+---
+
+## Addendum — the genus formula is GENERIC, not universal
+
+**A8 corrected itself, and the correction weakens a claim I have made repeatedly. Both go on
+the record.**
+
+### 8.1 A8's §7.7 was wrong; its `reduced` certificate is fine
+
+A8 previously reported that `A8_zero_dim.py`'s `reduced` flag "is wrong (it says not reduced at
+`d=3` where the eliminant discriminant proves the opposite)". **That was a symptom of its own
+bug #3, the inverted grevlex key.** With the key fixed, the certificate returns
+`reduced=True` at `d=3, c=2, m=5` over all seven fields, **agreeing with the independent
+eliminant discriminant `−6692585472 ≠ 0`**, and its Z-controls pass 4/4 including the two they
+must detect as non-reduced (`V(x², y²−3)` and `V(x², y²)` over `F_5`).
+
+The two remaining Z-control "FAIL"s are again **the control specifications, not the code**.
+
+### 8.2 ⚠️ THE GENUS FORMULA IS THE GENERIC VALUE — this qualifies `Round47_DegreeBarrier.md`
+
+With the certificate now running over `d = 3..6 × 7 (c,m) × 7` fields: **136 rows
+`reduced=True`, 34 `reduced=False`.** Of the 34, **16 have `p | c`** (bad reduction — `f = X^d − c`
+is not squarefree) and **18 sit at primes NOT dividing `c`**, e.g.
+`(d,c,m,p) = (3,1,3,13), (4,2,5,7), (4,1,3,5), (4,5,2,11), (5,3,5,7), (5,7,11,13)`.
+
+> **Transversality of `φ|_C_d` is generic but not universal. The branch degree is `2^{d−1}` and
+> `g(Ŷ_d) = 1 + (d−3)2^{d−2}` for MOST `(c,m)`, but there is a locus where a zero of `φ|_C_d`
+> is multiple, the branch divisor drops, and `Ŷ_d` is reducible.**
+
+**So `Round47_DegreeBarrier.md` must record the genus as the GENERIC VALUE WITH AN EXCEPTION
+LOCUS, not as an identity for all `(c,m)`.** It does not change the closure — an exception locus
+makes the supply *worse*, not better — but it is a real qualification and I stated it as an
+identity.
+
+**This is consistent with, and sharper than, the integer picture:** round 47 found `d=3`
+relations for only **22/38** instances and `d=4` for **1/38**. The exception locus is visible
+there as a deficit.
+
+⚠️ **Strength caveat:** the certificate fails as *"no `D ≤ 30` found"*, so a resource limit is not
+excluded, and the criterion has **not** been shown exact at `d ≥ 4` — only that it agrees with
+the discriminant at `d=3` and passes its own controls. **Treat the 18 good-prime exceptions as
+a strong signal to be confirmed, not as established.**
+
+### 8.3 Two more artifacts that must not be quoted
+
+- **The `degree` column of `zerodim_out.txt` is not the degree.** It is `Σ_n h(n)` of the
+  *affine cone*, which for a 0-dim projective scheme is non-reduced at the vertex, so it reads
+  **104 / 204 / 1781** instead of **4 / 8 / 16**. The degree is `2^{d−1}` by Bézout via
+  `φ ∉ I_{C_d}`, which is unaffected.
+- **`A8_measure.py` PART 1 crashes before its smoothness step.** A `p − ⌊e/p⌋` coefficient
+  cleanup in `groebner_smooth_p` mangles the polynomial, so the **Jacobian-criterion
+  smoothness certificate for `C_d` over the algebraic closure never ran.** No number in A8's
+  report changes, but the gap belongs on the record: the "arithmetic genus `= p_a`" step rests
+  on the measured **Weil bounds**, not on a verified smoothness certificate.
