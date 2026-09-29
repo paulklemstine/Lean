@@ -4763,7 +4763,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61abe78f",
     "description": "## FACT round-32 #4 — UNIVERSAL-S3-FOURTH (paper 115)\n\nA fourth independent S3 cubic — x3-7 (disc = -1323) — confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY.\n\nFOUR-FIELDS-ONE-ANSWER: four independent S3 fields, four distinct discriminants, one universal result.\nNow 450 experiments. Assessment v226. Paper 115.\n",
     "domain_bridges": [],
     "domains": [
@@ -4775,7 +4775,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.234681+00:00",
     "title": "FACT round-32 #4 — UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
   },
