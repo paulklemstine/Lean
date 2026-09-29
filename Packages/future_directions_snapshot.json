@@ -4763,7 +4763,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23a377e0",
     "description": "## FACT round-33 #2 — D5-CONDUCTOR (paper 117)\n\n**Verdict name: THE-CONDUCTOR-IS-320.**\n\nConductor scan identified m* = 320 for the D5 quintic x5+20x+32: I(N mod 320; fork) = 0.9999 = 1 bit. The quadratic subfield has |d(K)| = 320.\n\nNow 450 experiments. Assessment v227. Paper 117.\n",
     "domain_bridges": [],
     "domains": [
@@ -4775,7 +4775,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.231835+00:00",
     "title": "FACT round-33 #2 — D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
   },
@@ -11390,7 +11390,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_5073",
+    "id": "fd_5074",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",

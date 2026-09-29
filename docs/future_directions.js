@@ -3513,16 +3513,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-33 #3 \u2014 D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (paper 118)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23a377e0",
     "description": "## FACT round-33 #2 \u2014 D5-CONDUCTOR (paper 117)\n\n**Verdict name: THE-CONDUCTOR-IS-320.**\n\nConductor scan identified m* = 320 for the D5 quintic x5+20x+32: I(N mod 320; fork) = 0.9999 = 1 bit. The quadratic subfield has |d(K)| = 320.\n\nNow 450 experiments. Assessment v227. Paper 117.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3505",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.231835+00:00",
     "title": "FACT round-33 #2 \u2014 D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
   },
@@ -8393,7 +8394,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_5073",
+    "id": "fd_5074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2609.31582v1",
