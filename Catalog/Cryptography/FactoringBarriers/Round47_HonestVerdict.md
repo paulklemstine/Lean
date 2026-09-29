@@ -9,6 +9,10 @@
 > toward a ~100x constant-factor win. Everything else in this file (the 73%, the median 2,
 > `N^2 | disc(E)`, the six retractions, and the verdict that this is not a factoring method
 > today) stands unchanged.
+>
+> **Further voided by `Round47_Audit.md`:** "12/12 factors recovered" as a *method*
+> (the point-finding step used `ellrank`, which factors `N` to do it), and the
+> "decidable failures" claim (`chi_P` is not a homomorphism on `E(Q)`).
 
 
 **2026-09-29. `Round47_Circularity.md` showed the 62% figure was measured through a rank

@@ -1,5 +1,29 @@
 # Round 47 part 8 — correction: the pricing was an exponent printed as a value
 
+> ## ⚠️ PREDATES THE CONTROL REPORT — read `Round47_Audit.md`
+>
+> Two claims below were **voided by the adversarial audit** and are retained only for the
+> record of what was believed at the time:
+>
+> 1. **"12/12 factors recovered"** is **VOID as a factoring result.** Step 2 of Algorithm 47
+>    calls `ellrank`, and PARI's 2-descent needs the cubic discriminant's prime
+>    factorisation — which for these curves **is** the factorisation of `N`, because
+>    `disc = -27c^2(m^3-c)^2` and `N | (m^3-c)`. Proven by a matched-twin control: identical
+>    coefficient sizes, smooth vs hard discriminant, `ellrank` 0.02 s vs timeout >300 s.
+> 2. **"Decidable failures, `chi_P` decided by a basis"** is **FALSE.** `chi_P` is **not** a
+>    homomorphism on `E(Q)` — the Jacobian transports the *curve* law, not multiplication of
+>    relations (39/1243 violations; 3 of 15 instances are not homomorphisms). The identity
+>    `chi(l1 l2) = chi(l1)chi(l2)` **does** hold (69/69); the two are not the same statement.
+> 3. **The 62%/60.5% figure** is a real measurement with zero `ellrank` errors, but it is a
+>    rate *in `f`*, not a completeness certificate, and the instrument used to get it is the
+>    one shown to be circular.
+>
+> **What survives**: the algebra (1155/1155, 22/22, 6/6), the twelve relations as genuine
+> NFS relations verified in `Z[alpha]` with no leakage, the Jacobian and its independent
+> cross-check, the genus-1 structure at `d=3`, and the genus-5 collapse at `d=4`
+> (`Round47_DegreeBarrier.md`), which is the round's actual result.
+
+
 **2026-09-29. This corrects `Round47_HonestVerdict.md`, which was committed ~30 minutes ago
 with two figures that are wrong. Found by me, on checking my own arithmetic.**
 
