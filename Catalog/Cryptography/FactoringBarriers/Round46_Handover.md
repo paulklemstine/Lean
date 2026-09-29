@@ -397,6 +397,56 @@ a single-form sweep is *structurally* blind, not merely small — `chi_P` is a c
 `chi_P(h1 h2) = chi_P(h1)chi_P(h2)`; a search that finds only `+1` values has proved nothing.
 The test that is actually decisive is to evaluate `chi_P` on the **atoms** of `P_S`.
 
+## 7d. What was actually established: minimal witnesses, and a measured regime
+
+**A single smooth linear form is a sufficient witness for (C7.1').** This is the smallest possible
+`h`, and it is verified by hand, not only by code.
+
+`n = 1333 = 31 * 43` (both prime, both `= 3 (mod 4)`), `f = X^3 - 2`, `alpha` a root. Take
+`l(X) = 640X - 256`, `m = 20`, `g = -16 - 16*alpha + 8*alpha^2`.
+
+- `l(m) = 12544 = 112^2`, so `u = sqrt(l(m)) = 112`, and `gcd(u,n) = 1` (the `(h(m),n)=1` condition).
+- In `Z[alpha]`, with `alpha^3 = 2` and `alpha^4 = 2*alpha`:
+  `g^2 = 256 + 256a^2 + 64a^4 + 512a - 256a^2 - 256a^3 = 256 + 128a + 512a - 512 = 640a - 256 = l(alpha)`,
+  **over the integers**, not merely mod `p`.
+- `phi(g) = g_0 + g_1 m + g_2 m^2 = -16 - 320 + 3200 = 2864`.
+- `2864 - 112 = 2752 = 2^6 * 43` and `2864 + 112 = 2976` is divisible by 31.
+  **The branches are opposed**: `phi(g) = +u (mod 43)`, `phi(g) = -u (mod 31)`.
+- Hence `gcd(u - phi(g), n) = 43` and `gcd(u + phi(g), n) = 31` — **both factors from ONE relation.**
+- `P_S` membership, all clauses: `N(g) = Res_X(g, X^3-2) = -22528 = -2^11 * 11`, so `l(alpha)` is
+  **11-smooth**; `l(m)` is 7-smooth; `l` is linear so the height splitting is automatic.
+
+**Independently confirmed at larger `n`** by a separate agent over 985 parameter sets (64 witnesses,
+all re-verified by an independent sympy/PARI script, 0 failures), the largest being
+**`n = 82933 = 239 * 347` with `h = 17 + 4X` a single linear form.**
+
+**Two caveats that change how these must be read, both established by the agent:**
+- **Searching only degree-<=2 atoms is unsound as a test.** 921 of the 985 instances have all
+  degree-<=2 atoms `+1` — these are **unresolved, not counterexamples**. `n = 33` proves it: all 177
+  of its degree-<=2 atoms are `+1`, yet a **degree-3** atom has `chi_P = -1`. Any "all +1" statement
+  is meaningless unless the atom pool is searched deep enough.
+- **`P_S` is not free.** 344 of 193190 elements of degree <=2 admit two distinct factorisations into
+  atoms, so "a character is determined by its values on the atoms" needs that qualification.
+- A character is multiplicative, so a **single-form sweep is structurally blind** rather than merely
+  small: `chi_P(h1 h2) = chi_P(h1) chi_P(h2)`. The decisive test is atoms, not samples.
+
+**MEASURED REGIME (mine, and the first data of its kind).** Under uniform sampling over forms with
+`l(alpha) = g^2` over the integers, the branch is opposed only **0.18%** of the time. But bucketing
+by `log2(l(m))` shows the rate is **sharply bimodal**, and that the *magnitude* of `l(m)` — not its
+smoothness — is what drives it:
+
+| `log2 l(m)` | rate |
+|---|---|
+| 4 - 11 | 0.00 - 0.29% |
+| 12 - 21 | 58 - 71% |
+
+**Within matched-magnitude buckets, smooth and non-smooth rates are identical** (58% vs 68%, 60% vs
+58%, 58% vs 58%, 60% vs 48%) — so smoothness is irrelevant and my first, "alarming" reading of an
+anti-correlation was **a size confound I named and then tested**. The replacement question is
+sharper: the paper's `B = L_n(1/3) = 6463.8` puts the search **far above** the transition, i.e. in
+the favourable regime — but the sample is small and far from the paper's parameters, so this is a
+lead, not a conclusion.
+
 ## 8. Deterministic 1/6: a theorem, not a search failure
 
 Harvey (arXiv:2010.05450) Alg. 4.3 has free parameters `r, m`; cost
