@@ -447,6 +447,45 @@ sharper: the paper's `B = L_n(1/3) = 6463.8` puts the search **far above** the t
 the favourable regime — but the sample is small and far from the paper's parameters, so this is a
 lead, not a conclusion.
 
+## 7e. Measured: the obstruction Conj 7.1 guards against is not generic
+
+Round 46 produced the first measurements of the Lee-Venkatesan obstruction, at two scales, by two
+independent parameterisations. All figures computed and checked; see `Round46_Handover.md` §7d-7e.
+
+| measurement | design | result |
+|---|---|---|
+| branch rate, varying **`f`** | `n = 1333 = 31*43`, `m = 4`, `l = 640X-256`; 300 `f` with `f(m)=0 (mod n)`; **brute-forced all `p^3` roots** (the quotient is not a field, so the Euler criterion is invalid there) | **86 opposed / 86 agree = 50.0%** |
+| branch rate, varying **`l`** | same instance, `B = L_n(1/3,1) = 21`, smooth relations only | **83 / 166 = 50.0%** |
+| ring-level rate, scale | `n = 603901889 = 12119*49831`, `m = 568611`, 1968 `f` with `f mod p,q = (X-m)*Q`, `Q` irreducible | **500 / 1968 = 25.4%** vs the theoretical **1/4** (0.42 sigma) |
+
+**⟹ Two independent parameterisations agree at 50.0%, and at 5-digit primes the ring obstruction
+matches independent-squareness theory to a third of a standard deviation. The measure-zero failure
+Remark 7.3 warns about - which would mean the NFS "can never find a non-trivial congruence" for
+those parameters - is NOT OBSERVED at either scale.**
+
+**Why this matters for the open problem.** The paper itself says (p.1):
+
+> "in implementations the NFS cannot assure the reduction from smooth relations to a congruence of
+> squares, because ideal factorisation is avoided in favour of **Adleman's approach based on
+> characters**."
+
+So the practical difficulty is a **bookkeeping choice, not a mathematical necessity** - the paper's
+explicit randomisation is exactly what routes around it, and it does so *conditional on Conj 7.1*.
+Combined with the measurements: **the obstacle is a character-conductor bookkeeping problem that
+appears to be generically absent**, which is consistent with the eight-year-old problem being framed
+around a failure mode that does not bite in the way the framing suggests.
+
+**What is NOT established.** All three are at small scale, and none touches the full non-triviality
+of the congruence of squares, which additionally needs a single integer `x` consistent with both
+branches. The paper's parameters remain out of reach by brute force by ~`1e7` in the height
+parameter (§7f). So this is a measurement that the obstruction is not generic, **not** a proof
+that Conj 7.1 holds.
+
+**Process note, because it is the most transferable thing here.** Every one of the ~10 void results
+in this area came from a hand-written filter, a hand-drawn parameter, or a criterion used outside
+its domain of validity. Writing the **self-test first, before any measurement**, is what turned four
+void runs into results that match theory. That is the operational form of Rule (5).
+
 ## 8. Deterministic 1/6: a theorem, not a search failure
 
 Harvey (arXiv:2010.05450) Alg. 4.3 has free parameters `r, m`; cost
