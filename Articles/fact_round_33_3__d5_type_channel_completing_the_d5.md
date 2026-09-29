@@ -1,0 +1,169 @@
+# One Bit, Exactly: What a Prime's Remainder Can Tell You About Its Hidden Shape
+
+*A measurement that came out as $1.0054$ bits turns out to be the number $1$ in disguise — and the reason is one of the most beautiful facts in number theory.*
+
+---
+
+## A dial on the side of the primes
+
+Imagine a machine with a single dial. You feed it a prime number $p$, and before telling you anything else, it shows you the remainder of $p$ when divided by $320$. That is all you get to see — one of the $128$ residues between $1$ and $319$ that are coprime to $320$.
+
+Hidden behind the machine is a second, much subtler property of $p$: the way a certain fifth-degree polynomial breaks apart when you reduce it modulo $p$. Take the classical polynomial
+
+$$f(x) = x^5 - 5x + 12 .$$
+
+Over the ordinary rational numbers, $f$ cannot be factored. But if you work "modulo $p$" — doing all arithmetic on remainders — it often can. Modulo some primes it splits into five linear pieces; modulo others it stays in one irreducible block of degree five; and modulo still others it breaks into one linear factor times two quadratics. We call this the **splitting type** of $p$, written $T(p)$, and there are exactly three possibilities:
+
+- type $1^5$: five linear factors (five roots modulo $p$);
+- type $5$: one irreducible quintic (no roots);
+- type $1\cdot 2^2$: one linear factor and two quadratics (exactly one root).
+
+The question the machine poses is disarmingly simple: **how much does the dial tell you about the hidden type?** In the language of information theory: what is the mutual information $I(p \bmod 320;\, T)$, measured in bits?
+
+A large experiment answered this empirically. Across tens of thousands of primes, the measured value was
+
+$$I(p \bmod 320;\, T) = 1.0054 \text{ bits},$$
+
+with a statistical significance of $z = +338$ against a shuffled baseline — far beyond any doubt that the dial really does speak. The entropy of the type itself came out as $H(T) = 1.3517$ bits, and the uncertainty left over once you know the residue was $0.3463$ bits.
+
+And then something curious: when the experiment was repeated with *semiprimes* $N = pq$, asking how much $N \bmod 320$ tells you about the *pair* of types $(T(p), T(q))$, the answer was again $1.0054$ bits. Exactly the same number, to four decimals, for a question with more than twice as much hidden information.
+
+Coincidences like this are rarely coincidences. The story of this article is the discovery that the true value, in both cases, is **exactly one bit** — no more, no less — and that the excess $0.0054$ is nothing but the fingerprint of a finite sample.
+
+---
+
+## The shape of a prime is a symmetry
+
+To see why, we have to meet the hidden actor behind splitting types: the **Galois group**.
+
+The five roots of $f(x) = x^5 - 5x + 12$ live in some larger number field. The symmetries of those roots — the permutations that respect every algebraic relation among them — form a group. For most quintics this group is the full symmetric group on five letters, with $120$ elements. But $f$ is special: its discriminant is $2^{12}\cdot 5^6$, a perfect square, and its Galois group is the **dihedral group $D_5$**, the ten symmetries of a regular pentagon.
+
+Picture a pentagon with the five roots at its corners. The ten symmetries are:
+
+- the identity (do nothing);
+- four rotations (by $72°$, $144°$, $216°$, $288°$);
+- five reflections, each through an axis passing through one vertex and the midpoint of the opposite side.
+
+Now comes a small miracle of nineteenth-century mathematics. For each prime $p$, there is a distinguished symmetry called the **Frobenius element** of $p$, and the splitting type of $f$ modulo $p$ is simply the *cycle shape* of that symmetry acting on the corners:
+
+- the identity fixes all five corners: type $1^5$;
+- a rotation moves all five corners around in a single cycle: type $5$;
+- a reflection fixes one corner and swaps two pairs: type $1\cdot 2^2$.
+
+And the **Chebotarev density theorem** — a profound generalization of Dirichlet's theorem on primes in arithmetic progressions — says that the Frobenius element behaves like a uniformly random element of the group. So the three types occur with frequencies $1/10$, $4/10$ and $5/10$. You can check this yourself: among the $33{,}857$ primes between $7$ and $400{,}000$, the polynomial has five roots about $10\%$ of the time, none about $40\%$ of the time, and exactly one root about $50\%$ of the time.
+
+From these frequencies, the entropy of the type is exactly
+
+$$H(T) = \tfrac{1}{10}\log_2 10 + \tfrac{4}{10}\log_2\tfrac{10}{4} + \tfrac{5}{10}\log_2 2 = \frac15 + \frac12\log_2 5 \approx 1.36096 \text{ bits}.$$
+
+---
+
+## What a remainder can see
+
+So what does knowing $p \bmod 320$ tell you about a uniformly random symmetry of the pentagon?
+
+Here the deepest idea of the story enters. The residue $p \bmod m$ is itself a Frobenius element — the Frobenius of $p$ in the *cyclotomic* field generated by $m$-th roots of unity. That field's symmetry group is **abelian**: its symmetries all commute. And a fundamental principle, rooted in class field theory, says that the residue of $p$ can only "see" the Frobenius in our pentagon field through the part of the pentagon field that is also abelian.
+
+What is the largest abelian shadow of $D_5$? Rotations and reflections do not commute, and every rotation of a pentagon can be written as a commutator — a product of the form $xyx^{-1}y^{-1}$ — so any map from $D_5$ into a commutative world must crush all rotations to a single point. What survives is just **one binary distinction: rotation versus reflection**. Mathematicians call this map the *sign character*; it corresponds to a quadratic field sitting inside the splitting field of $f$. For our polynomial that quadratic field is $\mathbb{Q}(\sqrt{-10})$, and the sign of the Frobenius of $p$ is determined by a simple rule on $p \bmod 40$:
+
+- if $p \bmod 40$ is one of $1, 7, 9, 11, 13, 19, 23, 37$, the Frobenius is a rotation (or the identity);
+- otherwise it is a reflection.
+
+This rule is visibly checkable: across all $33{,}857$ primes tested, the polynomial has exactly one root modulo $p$ precisely when $p \bmod 40$ lies *outside* that list. No exceptions.
+
+So the dial on our machine, for all its $128$ possible readings, is really a single coin flip in disguise. It tells you whether the hidden symmetry is a rotation or a reflection — and nothing more.
+
+---
+
+## The one-bit theorem
+
+Now the arithmetic almost does itself. The sign is a fair coin: five rotations (including the identity), five reflections. So it carries exactly $1$ bit of entropy. And crucially, **the sign is completely determined by the type**: types $1^5$ and $5$ are rotations, type $1\cdot 2^2$ is a reflection. Whenever one quantity is a deterministic function of another, all of its uncertainty is information about the other. Hence:
+
+> **The D5 Dial Theorem.** For a quintic with Galois group $D_5$, in the Chebotarev model the residue $p \bmod 320$ carries exactly one bit of information about the splitting type:
+> $$I(p \bmod 320;\, T) = 1.$$
+> The uncertainty remaining after reading the residue is exactly
+> $$H(T \mid p \bmod 320) = \tfrac12 \log_2 5 - \tfrac45 \approx 0.36096 \text{ bits}.$$
+
+That leftover uncertainty has a vivid meaning. If the dial says "reflection," you know everything: the type is $1\cdot 2^2$. If it says "rotation," you are left guessing between the identity (probability $1/5$) and a genuine rotation (probability $4/5$) — an uncertainty of $\log_2 5 - 8/5 \approx 0.72$ bits, which averaged over the two readings gives $0.36$ bits.
+
+The measured numbers $1.3517$ and $0.3463$ sit a hair below the exact values $1.36096$ and $0.36096$ — exactly the direction in which finite-sample entropy estimates are known to err — and their difference, $1.3517 - 0.3463 = 1.0054$, overshoots $1$ by just over half a percent.
+
+---
+
+## Why the conductor doesn't matter
+
+The number $320 = 2^6\cdot 5$ was the "verified conductor" of the experiment — a modulus large enough to contain the relevant quadratic field. But the analysis reveals something stronger: **the answer does not depend on the conductor at all**.
+
+This comes from a general principle that we can call the *fibre-product law*. Think of the joint behaviour of the pair $(p \bmod m, \text{Frobenius of } p)$. Chebotarev's theorem, applied to the combined field, says this pair is uniformly distributed over all combinations $(a, g)$ where the residue $a$ and the symmetry $g$ *agree on their common abelian shadow*. In symbols, the pair is uniform on
+
+$$\{(a, g) : \chi(a) = \sigma(g)\},$$
+
+where $\sigma$ sends a symmetry to its shadow and $\chi$ sends a residue to its shadow.
+
+The fibre-product law then says:
+
+> **The residue only speaks through the common quotient.** As long as each shadow value is hit by the same number of residues (which Dirichlet's theorem guarantees), the information the residue carries about any type function equals the information carried by the shadow $\sigma(g)$ alone, computed on the Galois group with its uniform law. It does not depend on the modulus $m$, on the set of residues, or on how many residues share each shadow.
+
+The proof has three clean steps. First, once you know the residue $a$, the Frobenius is uniform on the set of symmetries with shadow $\chi(a)$ — exactly as it would be if you had only been told the shadow. So the fine residue is no more informative than its coarse shadow. Second, on the support of the distribution, the residue's shadow *equals* the symmetry's shadow. Third, forgetting the residue is a perfectly balanced many-to-one projection, and such projections are invisible to every entropy.
+
+At $m = 320$ with the $\mathbb{Q}(\sqrt{-10})$ character, exactly $64$ of the $128$ residues have each shadow value — perfectly balanced. But you could equally use the character of $\mathbb{Q}(\sqrt5)$, which also has $64$ residues on each side at $m=320$, and the dial would still read exactly one bit. The value is a property of the *group*, not of the modulus.
+
+---
+
+## Quantization: the dial has only two positions
+
+A further surprise: the one-bit answer is not a coincidence of choosing the sign character. **Every** abelian read-out of a $D_5$ Frobenius carries either $0$ bits or exactly $1$ bit — never anything in between.
+
+The reason is the same crushing of rotations. Any homomorphism from $D_5$ to a commutative group is determined by where it sends a single reflection, and that image squares to the identity. Either it is trivial — the read-out is constant and says nothing — or it faithfully relabels the rotation/reflection coin, and says exactly one bit. Like the energy levels of an atom, the abelian information about a $D_5$ prime is **quantized**.
+
+(By contrast, a non-abelian question such as "is the Frobenius the identity?" carries about $0.469$ bits. But no remainder, modulo any number, can ever answer such a question.)
+
+---
+
+## The semiprime mystery, solved
+
+Now back to the uncanny coincidence: why does $N = pq \bmod 320$ also carry $1.0054$ bits about the pair $(T(p), T(q))$?
+
+The pair of types has twice the entropy, $2H(T) = \tfrac25 + \log_2 5 \approx 2.72$ bits. But the residue of $N$ is a *multiplicative* shadow: the character of $N$ is the product of the characters of $p$ and $q$. In additive language, the shadow of $N$ is $\sigma(p) + \sigma(q) \pmod 2$ — the parity of the number of reflections among the two Frobenius elements. That parity is a function of the pair of types, and it is a fair coin (the sum of two independent fair coins mod $2$ is fair). The same fibre-product law then gives:
+
+> **The Semiprime Pair Theorem.** In the Chebotarev model, $I(N \bmod 320;\, (T(p), T(q))) = 1$ bit exactly, and the remaining uncertainty is $H(\text{pair} \mid N \bmod 320) = \log_2 5 - \tfrac35 \approx 1.72$ bits.
+
+So the equality of the prime and semiprime measurements, $1.0054 = 1.0054$, is not a numerical fluke. Both are estimates of the same exact number: one.
+
+For anyone interested in the security of cryptography built on semiprimes, this is a reassuring kind of result. The residue of $N$ reveals exactly one bit about the Galois behaviour of its hidden factors — the parity of reflections — and that bit is already publicly computable as a quadratic residue symbol of $N$. It does not leak the individual types, and it certainly does not leak the factors.
+
+---
+
+## Odd polygons, even polygons
+
+Is the magic number "one bit" special to the pentagon? Not at all. For the symmetry group $D_n$ of **any** regular polygon with an **odd** number of sides, the same argument works: every rotation of an odd polygon has odd order, every reflection has order $2$, so the order of Frobenius determines whether it is a rotation or a reflection, and the sign coin is fair. Result: exactly one bit, for $D_3$, $D_5$, $D_7$, $D_9$, and so on forever.
+
+For **even** polygons the story breaks. The half-turn of a square has order $2$, just like the reflections, so the type no longer determines the sign. In the smallest case — the four-element Klein group $D_2$, with types given by the order of the element — the dial reads
+
+$$I = \tfrac32 - \tfrac34\log_2 3 \approx 0.311 \text{ bits},$$
+
+strictly less than one. Numerical exploration shows the deficit shrinking as $n$ grows ($0.55$ bits for $D_4$, $0.65$ for $D_6$, $0.79$ for $D_{12}$ using orders), which suggests a clean conjecture: for even $n$ the dial always reads less than one bit, but creeps toward one as the polygon becomes rounder.
+
+---
+
+## Measuring the noise, not the signal
+
+With the exact value now known, the $0.0054$-bit excess in the original measurement changes meaning. It is no longer a small uncertainty about the answer; it is a measurement of **the sample itself**. Entropy estimated by counting frequencies is biased: with $M$ samples spread over many cells, the estimated mutual information tends to exceed the true value by roughly (number of free cells)/$(2M\ln 2)$. For a generic table with $\varphi(320) = 128$ residues and $3$ types, that bias is
+
+$$\frac{(128-1)(3-1)}{2M\ln 2},$$
+
+which equals $0.0054$ at $M \approx 33{,}900$ — almost exactly the number of primes below $400{,}000$. A fresh count over those primes gives a plug-in value of $1.0010$ bits, and the semiprime channel on $300{,}000$ random products gives $1.0011$: both converge on the exact answer of one, and a careful count of which cells can actually be occupied explains why the real excess is even smaller than the generic formula predicts.
+
+---
+
+## The bigger picture
+
+What began as an experimental number with four decimals has become a theorem with none. Along the way, three general lessons emerged:
+
+1. **A residue sees only the abelian shadow.** The information any modulus carries about Galois behaviour is computed on a quotient of the Galois group, not on the modulus.
+2. **Balanced covers are invisible.** Adding more residues that all say the same thing adds nothing — the conductor drops out entirely.
+3. **Abelian information is quantized for $D_5$.** Zero or one bit; nothing between.
+
+These ideas point further. The natural conjecture is that for *any* Galois group $G$, the best any conductor can do is the information carried by the abelianization $G^{\text{ab}}$ — the largest commutative shadow of $G$. For $D_5$ that shadow is a single coin, and the dial reads exactly one bit. For other groups the dial will read other numbers — but always numbers that can be computed from the group alone, with no primes, no moduli, and no measurement noise.
+
+The dial has been measured. It reads one.
