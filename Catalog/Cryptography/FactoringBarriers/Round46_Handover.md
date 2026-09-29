@@ -261,10 +261,38 @@ distribution** — a character-decorrelation statement. The open problem is
 cover the factoring regime `y = L_n[1/2,c}`, but those are average-over-moduli, which is exactly
 why randomising `f` is the technical core.
 
-**RH does not close it, and the authors say so.** Soundararajan, arXiv:1009.1591, abstract:
-*"We improve upon Xuan's work by establishing the following theorem, **which unfortunately is still
-not strong enough to be applicable to the analysis of Lenstra's algorithm.**"*
+**RH does not close it.** ⚠️ **CORRECTION — an earlier version of this file carried a FABRICATED
+QUOTE here.** It attributed to the abstract of Soundararajan, arXiv:1009.1591, the sentence *"We
+improve upon Xuan's work by establishing the following theorem, which unfortunately is still not
+strong enough to be applicable to the analysis of Lenstra's algorithm."* **That sentence is not in
+the abstract.** The published abstract in full is: *"Assuming the Riemann hypothesis we demonstrate
+the existence of smooth numbers in certain short intervals."* Verified 2026-09-29 against
+`arxiv.org/abs/1009.1591`; it contains neither "unfortunately", nor "Lenstra", nor "not strong
+enough". A subagent supplied the quote as verbatim and I forwarded it without opening the page.
+
+**The substantive point may still hold** — RH improves short-interval smoothness and is still
+believed insufficient for the factoring analysis — but **it is currently unverified**, and the
+quotation is withdrawn. Do not cite it. Lee–Venkatesan 2018 is the source that actually settles
+what is proved (see §7a).
 abc / Bateman–Horn: nothing, confirmed by exhaustive search.
+
+## 7a. What is actually proved: Lee–Venkatesan 2018
+
+**Lee & Venkatesan, "Rigorous analysis of a randomised number field sieve", J. Number Theory 187
+(2018) 92–159, DOI `10.1016/j.jnt.2017.10.019`; preprint arXiv:1805.08873.** A rigorous NFS
+analysis is NOT an open task — it exists.
+
+- **Theorem 2.1**: the randomised NFS runs in expected time `L_n[1/3, (64/9)^{1/3} + o(1)]` —
+  L-shaped, exponent **1/3**, matching the GNFS heuristic constant.
+- **Theorem 2.3** (the non-trivial factor) is the **only** result conditional on their
+  **Conjecture 7.1**.
+- **Theorems 2.5, 2.6** (smooth relations; relations ⟹ congruence of squares) are **unconditional**;
+  the smoothness side is proved via Bombieri–Vinogradov-type results for smooth numbers in
+  progressions.
+
+**⟹ the single remaining obstruction to a fully rigorous 1/3-exponent GNFS is Conjecture 7.1, a
+character-decorrelation statement — and nothing else.** That is the sharpest statement of the
+open problem this campaign produced, and it replaces the earlier, vaguer "uniformity" framing.
 
 ## 8. Deterministic 1/6: a theorem, not a search failure
 
