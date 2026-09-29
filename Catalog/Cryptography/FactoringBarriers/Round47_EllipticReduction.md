@@ -1,5 +1,18 @@
 # Round 47 — the elliptic-curve reduction of Conjecture 7.1 (MINE, 2026-09-29)
 
+> ## ⚠️ RETRACTED IN PART — read `Round47_MordellWeil.md` §5.1 first
+>
+> **§5 below is REFUTED and must not be quoted.** The claim *"`chi_P` can be constant only
+> if `C(t)A(t)` is a square in `Q(t)`, and it is not, so `chi_P` is never constant"* fails:
+> `C(t)A(t)` is indeed not a square in `Q(t)` in every instance tested, yet `chi_P` is `+1`
+> on all of `E(Q)` in 11 of 24 instances. Non-trivial on the *function field* does not
+> imply non-trivial on the thin subset `E(Q)`. The correct invariant is group-theoretic
+> (`Round47_MordellWeil.md` §5), and `E`'s Jacobian is the explicit cubic in that file's §1.
+>
+> **§§1–4 below STAND**: the parametrisation, the closed forms, and the genus-1 reduction
+> are all re-verified there and reproduce the record's hand-checked witness exactly.
+
+
 **Status: the algebra is VERIFIED numerically (313/313 branch signs, 26 instances of
 `(N,c,m)`, zero mismatches). The analytic step — equidistribution of the character along
 the curve — is OPEN and is what the attached agents must attack.**
