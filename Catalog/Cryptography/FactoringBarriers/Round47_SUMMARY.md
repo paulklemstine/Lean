@@ -56,12 +56,22 @@ the integer curve gave **1 relation in 38 instances** — a factor of ~2000. The
 what hurts; **needing ℚ-points when the curve has almost none is.** A future attack could
 target exactly that. → `Round47_FunctionField.md`.
 
-### 1.4 The synthesised statement about the project
+### 1.4 ~~The price of rigour~~ — **RETRACTED, do not cite**
 
-Conjecture 7.1 is **the price of rigour, paid twice**: once in the relation space (`d → 1`,
-a curve of growing genus) and once in running time (the rigorous `L[1/3]` is **224.4 dex
-behind** the heuristic at 2048 bits, and a true `1/6` *widens* the gap). **The standard GNFS
-has no Conjecture 7.1 precisely because it is not rigorous.** → `Round47_PriceOfRigour.md`.
+This used to read: *"Conjecture 7.1 is the price of rigour, paid twice — once in the relation
+space and once in running time; the rigorous `L[1/3]` is 224.4 dex behind the heuristic; the
+standard GNFS has no Conjecture 7.1 because it is not rigorous."* **All three halves are
+refuted** in `Round47_Retractions4.md`:
+
+- **The `L[1/3]` is already proven, unconditionally** — LV **Theorem 2.1**, p. 5, at the
+  GNFS constant. Conj 7.1 is needed for `x ≢ ±y`, i.e. the *factoring*, not the running time.
+- **The 224.4 dex figure is wrong** and is a different axis: the true gap at 2048 bits is
+  **88.12 dex**; 224.4 is reached at ≈4544 bits and compares `N^{1/5}` to **GNFS**.
+- **The ordinary NFS does pay a comparable cost** — BLP p. 15, four obstructions.
+
+**Relations are abundant, not the constraint** (LV p. 39: running `L_n(1/3, 2σ+o(1))`
+"guarantees to find **every possible factor**"). **The constraint is that the `1/2` can be
+`0`** — and for `n = pq` the non-trivial fraction is **exactly 1/2 or 0**, never `3/4`.
 
 ---
 
@@ -110,9 +120,13 @@ own toolchain.** One `lake build` away on a machine with the cache.
   known even for the seemingly easier problem of factoring sparse polynomials"*. Best bound:
   `poly(n, s^{d² log n})`, **quasi-polynomial**. **A phantom for 46 rounds.**
 - **§7b misquotes Remark 7.3** — conditioned on `p,q` **not** both `≡3 mod 4`, the excluded case.
-- **The real missing lemma, LV p. 26 verbatim**: *"much stronger versions of the Chebotarev
-  Density Theorem might be required"* — **Chebotarev-strength *joint* character decorrelation**,
-  about the *character* approach (Adleman, Bühler–Lenstra–Pomerance), not GF(2) linear algebra.
+- **⚠️ The Chebotarev reading is RETRACTED.** LV p. 26's *"much stronger versions of the
+  Chebotarev Density Theorem might be required"* refers to **Bühler–Lenstra–Pomerance's own
+  conjecture (p. 27)** about `χ_Q` **spanning** `Hom(V/K*²,{±1})` — **square detection, not the
+  sign** — and it is **CLOSED**: **LV Lemma 6.6 (p. 30) is unconditional**, with Remark 6.7:
+  *"We will in fact achieve this unconditionally … formal guarantees of this form are not
+  present in the literature."* **It was done in 2018, in the same paper, and the authors say
+  so.** Conj 7.1 is a *different, single* character.
 - **GNFS constant.** `1.923` is correct, **derived**, and does not move: Montgomery EUROCRYPT'95
   p.118 gives `O(dn²/N) + O(n²)` and the `O(n²)` **independent of `N`** *is* the constant; and
   a polylog win is swallowed by the `(1+o(1))` (arXiv:2006.06197 p.4). The `ω=2` floor is
@@ -144,14 +158,15 @@ papers in it. Now:
 | | item | status |
 |---|---|---|
 | 1 | beat the GNFS **heuristic** | **closed** for the linear-algebra route, two independent ways |
-| 2 | a **rigorous `L[1/3]`** | **open**; `1.92299`; worth **224 dex less** than the heuristic |
+| 2 | a **rigorous `L[1/3]`** | **ALREADY PROVEN** (LV Thm 2.1, unconditional, at the GNFS constant). Conj 7.1 is needed for `x ≢ ±y`, i.e. the **factoring** |
 | 3 | **auxiliary-information factoring** | open; the barrier is the lattice, not the threshold |
 | 4 | the **FFS** | not the DLP one; no congruence-of-squares step, and its relations are *not* points of `Ŷ_d` |
 
-⚠️ **One open question could undo §1.4.** In the **standard** GNFS the sign problem is
-resolved by GF(2) linear algebra with a `3/4`-non-triviality count on a **thick** space. **If
-that is rigorous**, LV's Conj 7.1 is an artefact of their framework and 46 rounds chased the
-wrong obstruction.
+⚠️ **This was also checked, and the answer is no.** The standard NFS resolves non-triviality
+by an explicit **retry loop** whose termination BLP p. 44 call *"reasonable to conjecture"* and
+whose retry count is *"heuristically bounded"*. **There is no rigorous standard route either**,
+so 46 rounds did **not** chase the wrong obstruction — the sign problem is genuinely open in
+both formulations.
 
 ## 7. The rules earned
 

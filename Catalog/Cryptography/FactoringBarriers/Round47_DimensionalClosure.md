@@ -1,5 +1,31 @@
 # Round 47 part 14 — the dimensional closure: the relation space is a curve for EVERY `d`
 
+> ## ⚠️ RETRACTED IN PART — read `Round47_Retractions4.md` first
+>
+> **The central thesis of this file is REFUTED.** "Conjecture 7.1 is the price of rigour,
+> paid twice" fails on **both** payments:
+>
+> 1. **It is not paid in the L constant.** Lee–Venkatesan's *rigorous* constant
+>    `(64/9)^{1/3} = 1.92299` is **identical** to the heuristic one. Their **Theorem 2.1
+>    (p. 5) is unconditional**: the Randomised NFS runs in expected time
+>    `L_n(1/3, ∛(64/9)+o(1))` and produces `x, y` with `x² = y² (mod n)`. **The `L[1/3]`
+>    running time is already proven.** What needs Conjecture 7.1 is `x ≢ ±y` — the
+>    *factoring*, not the running time.
+> 2. **The 224.4 dex figure is arithmetically wrong** and is a *different axis*. The gap
+>    `N^{1/5}` vs `L[1/3,1.92299]` is 11.58 / 35.53 / 61.36 / **88.12** / 143.19 / 199.49
+>    dex at 512 / 1024 / 1536 / **2048** / 3072 / 4096 bits; 224.4 is reached at ≈4544 bits.
+>    The 224 figure compares `N^{1/5}` to **GNFS**, saying nothing about Conjecture 7.1.
+>
+> **Fact A is also refuted in its corollary:** the ordinary NFS **does** pay a comparable
+> cost — Bühler–Lenstra–Pomerance p. 15 list four obstructions between a linear dependency
+> and a congruence of squares (class group 6.3, units 6.4, `Z[α] ≠ O` 6.5, irreducibles ≠
+> primes 6.2) and write *"in general we cannot make any of these assumptions."*
+>
+> **What survives:** the dimensional count itself (requiring `h(α) = g²` costs `d−2`
+> dimensions) as a description of **Lee–Venkatesan's formulation**. Its corollary about the
+> ordinary NFS does not survive.
+
+
 **2026-09-29. This subsumes `Round47_DegreeBarrier.md` and states the obstruction in a form
 that needs no case analysis.**
 
