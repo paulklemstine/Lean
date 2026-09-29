@@ -222,3 +222,102 @@ Berthomieu's complete 35-record HAL listing; likely conflated with Berthomieu–
 4. **The Divisor Conjecture construction problem is still open** — the `c+c' ≥ ⌈1/β⌉` threshold is
    a count, not a construction, and the counting theory says solutions exist in abundance. That is
    a well-posed search problem with a clear target.
+
+---
+
+# Addendum, 2026-09-29 — everything after the first handover
+
+Sections 1–5 above stand as written on the morning of 2026-09-28. This addendum records the
+rest of the round. Working files: `~/factor-scratch/r45/axis6/hyp/` and `~/factor-scratch/r45/axis7/`.
+
+## 6. Corrections to section 1 (I had these wrong)
+
+**The deterministic 1/5 line is not where the frontier is.** I had treated
+"no route past 1/5" as the load-bearing negative. Two corrections:
+
+- **A proven subexponential factoring algorithm has existed since Dixon (1981)**, and the fastest
+  known proven form is **Lenstra–Pomerance 1992**, `L_N[1/2,1] = exp((1+o(1))√(lg N · lg lg N))`,
+  unconditional. I asserted the opposite of this without opening anything.
+- The citation closure of Harvey 2021 was **re-checked independently of the citation graph**
+  (Crossref topic search, 2015+). The active line is Hiary / Harvey / Hittmeir and the rest is
+  `1/5` with log-factor, time-space, or BSGS improvements. **The claim survives** — but the
+  original evidence was structurally weaker than the conclusion, since a closure of *citters* cannot
+  find a paper that does not cite Harvey.
+
+**The real four-way picture** (all verified, primary sources read as page images):
+
+| Class | Bound | Status |
+|---|---|---|
+| Deterministic, worst case | `N^{1/5+o(1)}` | **proven, unconditional** (Harvey 2021) |
+| Randomised, expected | `L_N[1/2,1]` | **proven, unconditional** (Lenstra–Pomerance 1992) |
+| Randomised, expected | `L_N[1/3,(64/9)^{1/3}]` | **heuristic** (GNFS) |
+| Quantum | `(lg N)^{2+o(1)}` | **proven** (Shor 1994) |
+
+## 7. The GNFS obstruction, named
+
+It is **not** the global smoothness count `Ψ(x,y)`. It is the **uniformity of the value
+distribution** — a character-decorrelation statement. The open problem is
+**Lee–Venkatesan Conjecture 7.1**. Harper (arXiv:1208.5992)'s Bombieri–Vinogradov range does
+cover the factoring regime `y = L_n[1/2,c}`, but those are average-over-moduli, which is exactly
+why randomising `f` is the technical core.
+
+**RH does not close it, and the authors say so.** Soundararajan, arXiv:1009.1591, abstract:
+*"We improve upon Xuan's work by establishing the following theorem, **which unfortunately is still
+not strong enough to be applicable to the analysis of Lenstra's algorithm.**"*
+abc / Bateman–Horn: nothing, confirmed by exhaustive search.
+
+## 8. Deterministic 1/6: a theorem, not a search failure
+
+Harvey (arXiv:2010.05450) Alg. 4.3 has free parameters `r, m`; cost
+`(N/r)^{1/4} lg^3 N` and `√(N/r) + r lg N + m lg N`. For a `1/6` total one needs
+`r ≥ N^{1/3}` **and** `r ≤ N^{1/6}/lg N` — incompatible. **1/6 is impossible inside Harvey's
+framework**, for any r.
+
+Separately, `1/5` is the exact minimax of Harvey's own cost function:
+`τ(ρ) = max(1/4 − ρ/4, ρ)`, minimised at `ρ = μ = 1/5` (confirmed independently by Hales–Hiary,
+arXiv:2209.15586). **So 1/5 is optimal for that function, and beating it needs a different
+function.**
+
+**The positive target.** The winning pairs are `G = {(a,b) : ab ≤ r, |aq − bp| < √(N/r)}`. Since
+`|aq − bp|` is linear, `G` is a short union of **rays** — convergents of `p/q` — lying in a
+1-dimensional subset of a 2-dimensional search space, **whose direction is the unknown**. Measured
+over 45 samples, `|G|` does not grow with `r` (0.1% of it is *not* proved; `O(log r)` is). So the
+1/6 door is: **square-root the enumeration of `ab ≤ r`.** Harvey names it himself and has not
+attempted it; no paper since 2021 improves the *exponent* (only constants).
+
+## 9. Bivariate recombination (Lecerf CCIRM 2013, Problème ouvert 5.1)
+
+The `1.5` is `D·min(d_x,d_y)` from forming `s` full-size quotients `F̂_i = F/F_i` (Alg. 5.1 step 1),
+is ω-independent, and `γ = 2/3` is the balance point. **Condition (C) is `|K| ≥ d_x(2d_y−1)+1 ≈ 2D`.**
+
+Four claims I made were wrong and are retracted: the `Õ(D)` resolution (certification by
+specialization fails on `A = x^a − y^b`, irreducible yet reducible under *every* `y = c`);
+agreement-based repair (stable wrong coarsening); intersection repair (`Õ(D^1.5)`, no gain); and
+"the second bottleneck is untouched" (Lecerf says the opposite in the next sentence — Prop 2.26's
+`Õ(d_t d_x²)` is already superseded by his own 2008 paper, arXiv refs [87]).
+
+**What survives, verified and new:** the per-pair resultant degree bound
+`deg_y Res_x(B_i,B_j) ≤ a_j b_i + a_i b_j`, correct and **exactly attained** (ratio 1.000 over
+29,836 pairs, 0 violations); the fusion-incidence sum `≤ D`; and the fact that the `x = c`
+direction is the correct one (`y = c` is *undefined* on a positive-measure set of `c`). These
+sharpen the problem but do not improve the exponent.
+
+## 10. Fourteen further phantom sources
+
+Beyond the thirteen in section 3: **"Harvey & Hittmeir, *A deterministic algorithm for
+factorisation with better than quadratic complexity*" does not exist**; `arXiv:2010.01250` is
+"Implicit Adversarial Nets", not Hittmeir's BSGS paper (that is arXiv:1608.08766, *Math. Comp.*
+**87** (2018)); "Bürgisser–Clausen–Shoup" is **Bürgisser–Clausen–Shokrollahi**, *Algebraic
+Complexity Theory* (1997) — and in that whole bibliography Clausen–Shoup does not exist; "CNVF
+proceedings" is not a venue (OpenAlex `count 0`). **Four of these were in briefs I wrote myself**,
+including the Lenstra/Pomerance/Adleman group now in the subexponential report.
+
+## 11. The transferable lesson (section 3, extended)
+
+Five false results came from reasoning about a method **I had not read**: UMW §5.10, Doliskani
+Lemma 5, Boneh eq. (4), Lecerf Prop 2.26, and **Lehman's method** — which does *not* use
+`a² ≡ N (mod k²)`, but `x² − y² = 4kN` with `x` in a real interval. In the last two I had
+*explicitly named the error I was about to make* and made it anyway. **Naming the pattern is not a
+mitigation.** Every claim about a published mechanism, cost, or hypothesis now carries a page cite
+and a verbatim quote — including numbers from my own subagents, who are right far more often than
+I am and who still need the check applied.
