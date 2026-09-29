@@ -460,6 +460,228 @@ right? See §7-septuples-ter and §8 item 10.**
 
 ---
 
+## ■ ROUND 45 ADDENDUM (2026-09-27) — THE AXIS CHANGED; LEDGER WITHHELD
+
+**This round deliberately ABANDONED the classical-deterministic scope** this file covers,
+at the user's explicit instruction ("let's try something different"). Two structural
+decisions, both of which changed what was findable:
+
+1. **Axis:** leave classical deterministic general-purpose factoring entirely. Eight
+   ledger-blind scouts, one per non-classical surface.
+2. **★ `RESEARCH.md` and `NegativeResults.lean` were WITHHELD from every scout.** The
+   reason is stated at line 84 of this file: the method half failed through *anchoring*,
+   not lack of ideas. Withholding the record is the only way to test that. **The cost is
+   real and accepted** — scouts rediscovered dead ends that these 10 000 lines already
+   record. The ledger is now used only as a *later refutation pass*, not as a crib.
+
+**Nine results, ZERO methods.** Issues #491–#499. **The method half is still absent**, and
+that remains the headline, exactly as it did after 32 rounds. Six of the nine are
+*corrections* — a widely-repeated claim pinned to its true regime, a phantom citation
+killed, a bound proved optimal, a physical constraint shown vacuous. **Nine for nine, the
+outcome has been corrective rather than constructive, and the count should not be mistaken
+for progress toward a factoring method.**
+
+### What is NEW to this file (none of it appears anywhere above)
+
+- **⛔⛔ #491 — PRIOR ART: the closed form is Leander, arXiv:quant-ph/0208183 (2002), Lemma 1,
+  and the prior art is STRICTLY BETTER.** Verified by me from the primary source before
+  retracting. Leander's abstract verbatim: *"a randomly chosen y is usable for factoring with
+  probably {1/2}. In this paper we will show an efficient possibility to improve the lower
+  bound of this probability by selecting only special y to {3/4}… reduce the fault probability
+  in the worst case from {1/2} to {1/4}."* **My headline was a 24-year-old rediscovery, and a
+  weaker one: my limit over unrestricted `y` is `2/3`; Leander reaches `3/4`.**
+  For the record the mathematics is: extraction succeeds **iff `v₂(ord_p(a)) ≠ v₂(ord_q(a))`**,
+  `P = 1 − [2^{−(s_p+s_q)} + Σ_{k=1..min(s_p,s_q)} 2^{2k−2−s_p−s_q}]`, `s_p = v₂(p−1)`,
+  support `s ≥ 1` (since `v₂(p−1)=0` would mean `p = 2`), `E[1/P] = 1.429255`. **VERIFIED
+  EXACTLY** by independent whole-group CRT enumeration — **19 configurations, worst
+  |Δ| = 0.000e+00**, mutation kill and negative control firing correctly. So: arithmetically
+  exact, and 24 years late.
+  **☠️ THE HEADLINE SAVING is KILLED (vacuity).** Gidney–Ekerå 2021 (*Quantum* 5, 433),
+  verbatim: *"A single correct run of this quantum algorithm suffices for the RSA integer to
+  be factored with at least 99 % success probability."* Expected runs is already **1.00** and
+  one is a **hard floor** — postprocessing saves repetitions by *combining* shots inside a
+  single run, the opposite of the mechanism I priced. **⇒ "28.6% reduction" and the
+  `p ≡ q ≡ 3 (mod 4)` "defence" are both worth ZERO against anything currently estimated.**
+  **☠️ AND the referee's "5.7% odd-`r` salvage" was a BUG, not a subtlety** — it fires only
+  when `a ≡ ±1` mod a prime, bounding it by `≈4/N`, three orders of magnitude below what I
+  reported (measured +0.00229, not +0.0143). **I propagated a referee's number without
+  reproducing it.** The correct salvage (divisor search) is **prior art too** — Lawson
+  arXiv:1408.2738 §IV, which states it recovers a factor *"iff … the normal SFA procedure"*
+  and is *"smaller than that proposed by Leander."*
+  **★ The one genuinely new finding on this thread is small, clean, and about the SOURCE:
+  every `n` in Ekerå's Table 1 is computed at an unreachable `κ = v₂(d) = 0`** — but `p,q`
+  odd ⇒ `d = p+q−2` even ⇒ `κ ≥ 1` always (measured on 240 real OpenSSL moduli, `P[κ=0] =
+  0.0000`; control `v₂(p)` 240/240). **Harmless, because `κ` rescales the `α` alphabet and
+  the useful window by the same `2^κ` and cancels** — `n_min` identical for `κ = 0,1,2,4,8`.
+  **Ekerå's `q = 0.99` is NOT loose**: the apparent `4.5×` shot saving is a category error,
+  because `m` is the REGISTER WIDTH (`= n/2`) and `d ≈ 2^m` sits at its top, so
+  `d = 2^m − 1` is the true operating point, not a stand-in.
+  **★ THE TRANSFER: a bound can be exactly true, correctly verified, and still be worth
+  nothing — both because the operating point forbids it (vacuity) and because it was already
+  known (attribution).**
+- **⛔ #496 — RETRACTED. The paper was reached and the reduction is a CATEGORY ERROR (mine).**
+  I claimed the incumbent's `/0.99` postprocessing-failure constant is a function of
+  `v₂(ord_N(g)) = max(v₂(ord_p), v₂(ord_q))` — "the same quantity as #491." **It is not.**
+  Ekerå, *Des. Codes Cryptogr.* **88**(11):2313–2335 (**2020**, DOI `10.1007/s10623-020-00783-2`
+  — my "2018" was wrong), §6.3, verbatim: *"we… **fix q = 0.99**… We **conservatively fixed** a
+  high minimum success probability q = 0.99."* It is a **fixed a-priori design target**, not a
+  computed quantity. The only 2-adic parameter anywhere in the analysis is **`κ = v₂(d)`** — the
+  valuation of the **secret logarithm**, not of any group order — it is **0 throughout Table 1**
+  (every row uses `d = 2^m − 1`, odd), and the paper **discards it**: *"This effect is only
+  visible for artificially large κ. It does not arise in cryptographic applications."*
+  **§§4–6 never mention `p`, `q`, `N` or `r`.** **D2 diagnosis:** the mechanism acts on
+  `v = V_D(R)/det L`, a function of the **logarithm**; I claimed it acts on a property of the
+  **group**; the incumbent fixes a design target on `P[v > 2]`. `v₂(ord_N(g))` **cannot reach
+  `v`** — `d` is a uniformly random short logarithm (valuation 0 with probability 1/2) and is
+  **uncorrelated with `ord(g)` by construction**. The 400-moduli measurement in the original
+  post (mean 2.083, ratio 1.91) was a correct measurement of **the wrong quantity**. Cross-check
+  (D8): Gidney prints `E(shots) = 9/0.9875/0.99 ≈ 9.2` at `s=8`; Ekerå's Table 1 at `s=8,
+  m ≥ 1024` gives **exactly n = 9 = s+1** — line-for-line, and both fixed.
+  **★ REUSABLE UNLOCK: `link.springer.com` is an F5 JS trap that returns HTTP 200 and 3 KB;
+  `rd.springer.com` serves the full HTML, and table bodies live at `/article/…/tables/<n>`.**
+  Getting the DOI out of Gidney's *bibliography on disk* — not from memory — was what unlocked it.
+- **#497 — Coppersmith's `N^{β²/d}` exponent is PROVEN OPTIMAL** (Chinburg–Heninger–
+  Hennenway–Scherr, ASIACRYPT 2016): capacity theory rules out even *superpolynomial*
+  improvement, quantum included. ⇒ **the `n/4` partial-key wall is not a gap in the
+  technique; it is the technique's ceiling.** Corollary: Grover cannot help it (LLL is
+  already deterministic poly-time; the quantum-sieve regime assumes exponential QRAM and
+  targets dimension ~400 while Coppersmith lattices run at `d ≈ 10–20` — the regimes do not
+  overlap), and in Shor the `O(n³)` modular exponentiation dominates the `O(n²)` search a
+  Grover speedup would attack.
+- **★ #499 — LEAK POSITION, NOT LEAK COUNT.** At a fixed leak of `k` bits, the univariate
+  Coppersmith attack factored **16/16** with those bits at the **top** of `p` and **0/16**
+  with the same bits anywhere else; scattered bits are worth `1.0 ± 0.3` in complete cost.
+  **Any threat model quoting a leaked-bit COUNT without a POSITION is under-specified from
+  "broken" to "not broken."** Also: purely-remote auxiliary information sufficient to break
+  RSA **IS** known (batch-GCD: 0.50% of TLS / 1.06% of SSH hosts; 81/184 smart-card keys),
+  and the **sub-`N^{1/4}` remote-leak question REMAINS OPEN** — Aono et al.'s optimality is
+  scoped to the standard lattice family and cannot close it.
+- **★ #497's practical test, reusable beyond this round: any claimed factoring advance with
+  `log₂(q−p) < 3n/8` is a structured-promise ARTEFACT.** It kills the D-Wave "RSA-2048"
+  claim (primes 2 bits apart) and the advertised "quantum record" 8 689 739 = 2713·3203,
+  which Fermat does in **12 operations**.
+- **#492 — the Jacobian / function-field route to integer factoring is CLOSED TWICE,
+  independently.** Every natural reduction is circular at a named step (they all require
+  the group order, which for `(ℤ/Nℤ)*` is `φ(N)`, and knowing `φ(N)` already factors `N`);
+  **and** the asymptotics have the wrong shape — any reduction needs `|J| ≥ √N`, so
+  `L_M(1/2)` loses to `L_N(1/3)` by exponent-ratio 2.47 → 9.89. Corrected mid-round: the
+  smoothness-distribution assumption is **genus-dependent and degrades along exactly the
+  axis Thm 35 trades along** (0.847 g=2 → 0.482 g=5), which is *worse* than the flat
+  constant first reported.
+- **#493 — a genuinely non-order-finding quantum factoring algorithm EXISTS** (Regev, JACM
+  2025; unconditionally correct via Pilatte ePrint 2024/629) **but its total cost is
+  `Θ(n²)` — the SAME order as Shor**, because a `√n` per-shot win is exactly cancelled by
+  `√n+4` repetitions. The `ε`-tradeoff is invariant. The depth advantage **dies on
+  run-aggregation** (Eurocrypt 2026: "spooky pebbling is about an order of magnitude worse").
+- **#494 — there is NO quantum/classical wall-clock crossover for RSA-2048.** Quantum beats
+  GNFS by ~10¹⁶ at **every** physical error rate 10⁻²…10⁻⁶, and a 1000× better `p` buys only
+  a 12× smaller machine (the code distance is logarithmic). The binding constraints are the
+  **code-threshold cliff** (the assumed 10⁻³ sits one decade below it) and a yoke constant
+  with **19% margin** carrying 61% of the qubits. ⇒ better hardware is NOT a better attack.
+- **#498 — the Margolus–Levitin speed limit provably has nothing to say about factoring:**
+  10⁴² times weaker than the algorithmic bound for any device heavier than 10⁻⁴² kg
+  (7×10¹⁶× lighter than a proton), and it constrains energy × time, never gates alone.
+
+### Two meta-findings that bear on how THIS FILE is read
+
+- **★ Memory-sourced arXiv IDs are unreliable at a high rate.** Three cited from memory on
+  day one were all wrong papers: `2012.04874` (an information-release-mechanism paper),
+  `2012.04830` (a cataract-classification ML survey), `quant-ph/0303052` (Gisin, not
+  Cheung–Mosca). **Every one looked perfectly plausible.** Search, never recall.
+- **★ The search tooling degrades SILENTLY within a single session** — Mojeek 200→403,
+  Crossref fine→429, Bing went from generic pages to returning YouTube for a crypto query.
+  A degraded tool returns *plausible wrong content*, not an error. Only `arxiv.org/search/`
+  and direct `/abs/` fetches held throughout. **Do not trust a tool that worked earlier in
+  the session.**
+- **#495 — the Catalog does not build at all** (environment, not code): the pinned
+  `v4.28.0` elan toolchain is hollow and cannot parse Mathlib's own lakefile. This is why
+  the #491 counting identity is **not yet machine-checked**; the draft sits unbuilt in
+  `~/factor-scratch/r45/lean/`.
+
+- **★ #504 — THE ROUND'S FIRST GENUINELY NEW MEASURED FINDING ABOUT A PUBLISHED THEOREM:
+  EKERÅ'S OWN `v < 2` CERTIFICATE IS NECESSARY BUT NOT SUFFICIENT.** Near the threshold it
+  **over-predicts success by 27–35 percentage points** (`Pr(v<2) = 0.433` against a *measured*
+  `0.085`). Anyone applying `v<2` as sufficient at the operating point is wrong by a third of
+  the probability. Source reached: **Ekerå 2020, DCC 88(11):2313–2335** (via the DOI in
+  Gidney's bibliography — *not* from memory). Failure is exactly two disjoint events:
+  **F1** representative (`ord_N(g) ≤ d`) and **F2** lattice (`v ≥ 2`). **Derived scaling law,
+  confirmed to <1% in the exponent:** `+1` shot multiplies `v` by `2^{−ℓ}`, `+1` unit of `ℓ` by
+  `2^{−n}` (measured 38.2 decades/shot vs 38.5 predicted; 2.6 vs 2.71). **Gidney is
+  conservative, not wrong:** **0 failures in 8700 trials** at his operating point, a **≥29×
+  margin** over the `/0.99` he imports (95% upper bound 0.035%, volume quotient **33 decades**
+  inside the certificate) — but the *complete-cost* impact of fixing it is **0.3%** of
+  `E(shots)`, so **there is no prize here.** **The 2-adic channel is now dead three independent
+  ways**: by reading the source (*"conservatively fixed"*), and by exhaustive sweep —
+  `κ = v₂(d) = 0…1020` at the threshold gives success 0.385–0.449, between-row sd **0.018**
+  vs within-row **0.017**. **The real driver is `d/2^m`, not `v₂(d)`.** ⚠️ **CITATION DEFECT
+  OBSERVED (not a consequence claim):** Gidney's `C(t,s+1)` sentence describes the **2017**
+  scheme while his `/0.99` cites the **2020** one — two different post-processing algorithms in
+  one paragraph. Instrument: analytic `ρ(t)` vs brute-force DFT over all admissible `α` to
+  **≤4.2×10⁻⁴**, and **4 mutation kills all detected**.
+- **☠️ #502 — the small-`d_p`/`d_q` door is CLOSED, and the premise was backwards.** `d_p ≥ p/e`
+  is an **exact identity**, so the mechanism acts on `bitsize(d_p)` while the paid term is
+  `bitsize(e)` — **the same parameter, in OPPOSITION.** FIPS 186-5 §A.1.1(1)(b) caps
+  `e < 2^256` ⇒ `bitsize(d_p) ≥ n/2 − 256` = **768 bits at n=2048 vs 150.3 needed (618 of
+  slack)**; real keygen sits **868 bits** above threshold, **0/600** keys in the Jochemsz–May
+  regime. **★ The reframing that closes it: "no standard forbids small `d_p`" was the wrong
+  question — the binding constraint is the OPPOSITE one.** You need no prohibition; you need a
+  limit on the other variable. **And the CRT premise inverts:** CRT's measured **4.06×** speedup
+  at `m = n/2` **REQUIRES `d_p ≈ p` (large)**; driving `m` down converts CRT into small-`d` RSA,
+  Wiener's regime, and makes a leaked `d_p` *more* expensive (cost `O(e)`), not less.
+  **Citation error in this round's own brief, stated because it UNDERSTATED the threat:** the
+  paper is **Bleichenbacher–May PKC 2006**, not Boneh–Durfee (whose 0.292 paper has **7
+  sections and no §9**; `d_p`/`d_q`/"CRT" appear **zero** times). Real source is Boneh,
+  *Notices AMS* 1999 §3: **`Õ(min{√d_p,√d_q})`** — **stronger** than the `min(p^{d_p},p^{d_q})`
+  this campaign first wrote down.
+- **★ #503 — THE ROUND'S UNIFYING LAW, and its first out-of-sample test.**
+  > **A local win is cancelled when the quantity it improves is not the quantity the binding
+  > term counts, or when it is bought with a resource the same cost already charges for.**
+
+  Five in-round instances (#493 Regev's `√n` × `√n+4` reps; #491 the 28.6% vs a floor of 1;
+  #501 a working algorithm vs 100% extrapolation; #498 a bound `10⁴²×` too weak to bind; #494
+  `1000×` better `p` → only `12×` smaller machine). **Tested out-of-sample on the Dihedral
+  HSP / Hidden Shift Algorithm: LAW HOLDS, HSA is `2.8×10⁹×` WORSE than Shor** (`2⁶⁴ ≈ 1.85×10¹⁹`
+  vs `6.5×10⁹` Toffolis, `2^Θ(√log N)` calls). **★ THE CONTROL IS THE RESULT: the coset
+  subroutine has DEPTH 1 — the metric at its extreme optimum — and STILL loses.**
+  **But the test's own premise was a category error (a sixth instance):** Shor's order-finding
+  depth is **`polylog N`, not `O(N)`** (GE21: `500n²+n² lg n`; **the advertised advantage was off
+  by ~`2²⁰³⁷`**); the `O(N)` is a **classical** sieve cost (Ettinger–Høyer); and **factoring is
+  the *abelian* HSP, which the dihedral machinery does not touch at all.**
+  **The screen it implies — usable on any factoring claim: state the local win, every
+  bookkeeping term that moves with it, AND the floor. A claim that cannot state the last two
+  has not been priced.** This would have caught two of this campaign's own headlines.
+
+### What did NOT happen
+
+No new factoring method. No machine-checked theorem this round (the build is broken).
+**TWO of the round's own results were retracted by their author** — #496 once the paywalled
+primary source was finally reached, and #491's *headline* once an adversarial referee opened
+Gidney–Ekerå 2021 and found the incumbent already at a hard floor of one quantum run. Both
+are recorded above rather than deleted, because *how* they failed is the transferable part.
+**#500 closes the non-factoring surface**: no attack on a correct, standards-compliant,
+remotely attacked RSA is neither factoring nor a padding bug, and the one likely exception
+(Boneh–Durfee `d < N^0.292`) is **forbidden by FIPS 186-5 §A.1.1(3)(a)**, which requires
+`d > 2^{nlen/2} = N^0.5` and mandates regeneration. **The one live seam is that RFC 8017 §3.2
+imposes NO lower bound on `d`.** The one live *door* is Boneh–Durfee §9's open small-`d_p`/
+`d_q` attack — which real CRT implementations actively *want*, so **the standard's preference
+and the attacker's coincide** there.
+
+**Net: 14 issues (#491–#504), 5 washes, 3 self-retractions, 1 correction to a two-year-old
+belief, 1 new finding about a published certificate, 1 law with one weak passing test,
+0 factoring methods.**
+
+**★ THE ROUND'S MOST REPRODUCIBLE RESULT IS NOT A FACTORING METHOD — IT IS A FAILURE MODE:
+five times, a claim was correct in its mathematics and wrong about its standing.** #491's
+closed form was exact and independently verified by whole-group enumeration, and was
+**Leander 2002 (arXiv:quant-ph/0208183) verbatim, and weaker** (`2/3` vs Leander's `3/4`).
+#491's headline saving was killed by **vacuity** (the incumbent runs once; the floor is 1).
+#496 was killed by **attribution of a 2-adic channel that the source never had**. And **I
+propagated a referee's 5.7% figure without reproducing it** — it was a bug, bounded by `≈4/N`.
+**Confidence was tracking how much verification I had done, not whether anyone had done it
+before. That is the transferable lesson, and it is worth more than the results.**
+
+---
+
 ## 1. Bottom line
 
 Across two rounds of brainstorming and an adversarial steelman/refutation sweep
@@ -10165,7 +10387,16 @@ Kleinjung–Bos–Lenstra 2014/653 · Cox, *Primes of the Form x²+ny²* ·
 **from exact initial conditions** — "uncomputably fine," not exponentially; citation
 **verified**) · Hu & Liao *J. Comput. Phys.* 418, 109629 (2020) (chaotic horizon
 ~30 Lyapunov times in `fp64`) · **Sharp et al. arXiv:2309.08198** (memcomputing
-factorization; **killed by** Nguyen et al. arXiv:2506.14928, *Chaos* 2026) ·
+factorization) — ⚠️ **[CORRECTED 2026-09-27, round 45: this line previously read
+"killed by Nguyen et al. arXiv:2506.14928, *Chaos* 2026". THAT IS WRONG.
+arXiv:2506.14928 is by Nguyen, Pershin and Di Ventra THEMSELVES — a NOISE STUDY, not
+an independent refutation. NO independent refutation of the memcomputing factoring
+claim exists in the reachable literature: the claim has simply been EXTRAPOLATED.
+Extrapolation is not refutation — a refuted claim is closed, an extrapolated one is
+merely untested. Round 45 measured the extrapolation: 100%, being a 47.3x polynomial
+factor times a ~1.43e7 emulator-to-ASIC factor, with refits of the authors' OWN data
+spanning 45 orders of magnitude across degree 1/2/3. The ALGORITHM does reproduce
+(7/7 factors, negative control 0/40) — issue #501]** ·
 Ding et al. *Sci. Rep.* 14 (2024) (23-bit analog/annealing factoring record) ·
 Xu/Hegade et al. arXiv:1611.03293 (factored 35 on one spin) ·
 **Willsch et al.** arXiv:2410.14397 ("The State of Factoring on **Quantum**
