@@ -302,6 +302,53 @@ analysis is NOT an open task — it exists.
 character-decorrelation statement — and nothing else.** That is the sharpest statement of the
 open problem this campaign produced, and it replaces the earlier, vaguer "uniformity" framing.
 
+## 7b. Conjecture 7.1, reduced — and the two routes into it, both closed
+
+**The reduction.** For every `h` in `P` (hence in `P_S`), *all three* character families on the
+right of Conjecture 7.1 are **identically 1**: `(-1)^{ord_p(h(m))} = 1` because `h(m)` is a perfect
+square; `(-1)^{ord_p(h(α))} = 1` because `h(α) = g²` gives even ideal orders; and
+`chi_p(h) = chi_p(g)² = 1` because `chi_p` is quadratic. (Checked over 18,596 forms across 683
+instances with `p ≡ q ≡ 3 (mod 4)`.)
+
+So the conjecture collapses to a one-line existential:
+
+> **(C7.1′)  there exists `h` in `P_S` with `chi_P(h) = −1`** — a product of smooth relations
+> giving a **non-trivial congruence of squares**.
+
+*Consequence worth more than the conjecture:* a **successful NFS run does not merely support it, it
+verifies it** for those parameters — since `chi_P(h) = −1` exactly when the two square-root signs
+disagree mod `p` and mod `q`.
+
+**Route A — density counting: insufficient.** Remark 7.2 proves *almost every* character works:
+with the paper's Theorem 5.4 plus stochastic deepening, `M ≥ L_n(1/3,(max(β,β′)+2σ)/2+o(1))` against
+`W ≤ L_n(1/3,max(β,β′)+o(1))` by PNT, so `dim P_S = M − rank Ψ ≥ M − W > W` with margin
+`L_n(1/3, 0.48+o(1))`, giving failure probability `≤ 2^{−(M−W)}`. But the conjecture is about the
+**distinguished** character, and no sharpening of `M` or `W` reaches a prescribed element.
+
+**Route B — is `chi_P` generic as `f` varies? Refuted, with a proof.** The paper's randomisation
+supplies only `O((log n)^{2/3})` nats of entropy — the seed is the integer vector
+`c_0..c_{d−1}` uniform in a box of side `L_n(2/3, κ−δ^{-1})` (Def. 4.1, p.14). But
+`Hom(P_S,{±1})` has `2^{L_n(1/3,0.48)}` elements; the ratio of logarithms already exceeds 1 at
+`n = 10^20` and reaches `2.9·10^272` at `n = 10^(4·10^6)`. **So "bad measure ≤ 2^{−dim P_S}" is not
+merely unproved, it is unattainable by any counting argument.** (Note also `f(m,1) = n` exactly, so
+`m` is determined by the `c_i` together with `fhat`, not a free parameter of `f`.)
+
+**The weak form survives and is sufficient.** Conjecture 7.1 needs **one bit**, not `dim P_S` bits.
+The entropy bound caps what any randomness argument can give at a bad measure of
+`exp(−Θ((log n)^{2/3})) = L_n(2/3, −Θ(1))` — still `o(1)`, still enough to make **Theorem 2.1
+unconditional**. So the statable target is: *prove the measure of `f` for which `chi_P` is trivial on
+`P_S` is at most `exp(−Θ((log n)^{2/3}))`.*
+
+**And the paper already names the wall.** Remark 7.3, p.39 (image verified): *"there is no single
+character which can be used to consistently define which branch of the square root has been taken
+modulo p and q."* Both routes converge on it.
+
+**Status: open, and un-attacked since 2018.** Both source papers verified real: Lee–Venkatesan,
+*J. Number Theory* **187** (2018) 92–159; Lenstra–Pomerance, *J. Amer. Math. Soc.* **5**(3) (1992)
+483–516 — the latter also settles an earlier "STOC 1988 not located" error; the paper is JAMS, and
+the STOC citation was simply wrong. A 2019+ sweep surfaced only implementation and encyclopedia
+entries, no successor rigorous analysis.
+
 ## 8. Deterministic 1/6: a theorem, not a search failure
 
 Harvey (arXiv:2010.05450) Alg. 4.3 has free parameters `r, m`; cost
