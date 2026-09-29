@@ -1,5 +1,18 @@
 # Round 47 part 10 — the method is blocked three independent ways, and the third is new
 
+> ## ⚠️ BARRIER 3 BELOW IS RETRACTED — see `Round47_Barrier1Retracted.md`
+>
+> I claimed you cannot choose the field at scale. **That is wrong**, and the error is the
+> campaign's most common one: concluding a barrier from a failed *search*. My own data
+> already contradicted it — 26, 15, 15 hits at 24/32/39 bits against a model predicting
+> 25.9, 0.13, **0.001** (14,000x the predicted rate at 39 bits). The reason is that
+> `m ≈ N^(1/3)` implies `m³ ≈ N`, so `Q ≈ -(m³-N) - P·m` is of size `N^(1/3)`, not uniform on
+> `[0,N)`. And NFS finds this `m` by **lattice reduction**, by design, not by searching it.
+>
+> So the "closed" verdict below loses one of its three supports. **Barriers 1 and 2 (the
+> descent, and the relation count) both hold; barrier 3 does not.**
+
+
 **2026-09-29. Completing the picture. Barriers 1 and 2 are known; barrier 3 — that you
 cannot even *set up the polynomial* at scale without factoring `N` — is new, and it is the
 one nobody had noticed.**
