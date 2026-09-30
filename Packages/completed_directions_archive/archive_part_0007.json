@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-30T08:59:43Z",
-  "count": 186,
+  "archived_at": "2026-09-30T20:46:58Z",
+  "count": 187,
   "directions": [
     {
       "id": "fd_3695",
@@ -7373,6 +7373,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 208
+    },
+    {
+      "id": "fd_3507",
+      "title": "FACT round-32 #4 — UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)",
+      "description": "## FACT round-32 #4 — UNIVERSAL-S3-FOURTH (paper 115)\n\nA fourth independent S3 cubic — x3-7 (disc = -1323) — confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY.\n\nFOUR-FIELDS-ONE-ANSWER: four independent S3 fields, four distinct discriminants, one universal result.\nNow 450 experiments. Assessment v226. Paper 115.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "61abe78f",
+      "timestamp": "2026-08-21T22:42:58.234681+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.6,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-29T23:41:09.776428+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 206
     }
   ]
 }

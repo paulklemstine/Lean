@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-30T08:59:58.851396+00:00",
+  "last_updated": "2026-09-30T20:47:13.211784+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -76693,6 +76693,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-30T08:59:58.472931+00:00",
       "title": "FACT round-33 #2 \u2014 D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Pythagorean",
+      "duration_seconds": 17601.6617500782,
+      "end_time": 1790801204.5864527,
+      "files_integrated": 4,
+      "job_id": "61abe78f",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.6,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.445,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.6,
+        "novelty": 0.6,
+        "proof_depth": 0.6,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1790783602.9247026,
+      "strategy_count": 0,
+      "theorem_count": 42,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 34,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-30T20:47:12.835588+00:00",
+      "title": "FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
     }
   ]
 }

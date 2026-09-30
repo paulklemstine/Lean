@@ -3497,21 +3497,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "61abe78f",
-    "description": "## FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH (paper 115)\n\nA fourth independent S3 cubic \u2014 x3-7 (disc = -1323) \u2014 confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY.\n\nFOUR-FIELDS-ONE-ANSWER: four independent S3 fields, four distinct discriminants, one universal result.\nNow 450 experiments. Assessment v226. Paper 115.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3507",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T22:42:58.234681+00:00",
-    "title": "FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
-  },
-  {
     "consumed_by_exp_id": "d7b08081",
     "description": "## FACT round-35 #6 \u2014 D5-HINT-VALUE (paper 125)\n\n**Verdict name: THE-D5-DIAL-CARRIES-A-HINT.**\n\nD5 x5+20x+32 at m*=320: HINT VALUE +0.6940 bits.\nNow 458 experiments. Assessment v235. Paper 125.\n",
     "domains": [
@@ -3527,16 +3512,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-35 #6 \u2014 D5-HINT-VALUE: completing the D5 row (paper 125)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b39a3b1a",
     "description": "## FACT round-35 #5 \u2014 HINT-VALUE-SCALING (paper 124)\n\n**Verdict name: HINTS-COMPOUND-WITH-DIMINISHING-RETURNS.**\n\nHint values compound: k=1 +0.52, k=2 +2.43, k=3 +3.19. Marginal gains positive but decreasing.\nNow 457 experiments. Assessment v234. Paper 124.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3519",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T23:39:20.829554+00:00",
     "title": "FACT round-35 #5 \u2014 HINT-VALUE-SCALING: hints compound (paper 124)"
   },
@@ -35402,6 +35388,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-30T08:59:43.383025+00:00",
     "title": "Chebotarev Frequencies of the D5 Fork"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Compute I(p mod l; T) for x^l - c in the AGL(1,l) Chebotarev model. The type sees only whether p = 1 mod l, so full pinning should hold only at l = 3.\n\nIn the Galois model of x^l - c, I(p mod l; T) = h(1/(l-1)) < log2(l-1) for all primes l >= 5.\n\nFinite entropy computation over AGL(1,5) and AGL(1,7) using the mutInfo calculus.\n\nl = 3 is the unique exponent with a noiseless residue channel.\n\nThe Galois model must carry more residue information than the root count shows.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5094",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "61abe78f",
+    "status": "available",
+    "timestamp": "2026-09-30T20:46:57.221109+00:00",
+    "title": "Kummer Channel Capacity for Prime Exponents"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Turn the exact 1:2 split/inert count of x^3 - c over F_q (q = 1 mod 3) into an exact entropy identity. Then recover the S3-model entropy as a mixture over q mod 3.\n\nFor q = 1 mod 3 and c uniform in F_q^*, H(T) = log2 3 - 2/3 exactly.\n\nApply card_split_constants and card_inert_constants inside the ent calculus.\n\nAn exact, prime-free Chebotarev identity for the pure cubic type channel.\n\nAn error in the counting theorems, which are proved; so it cannot fail.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5095",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "61abe78f",
+    "status": "available",
+    "timestamp": "2026-09-30T20:46:57.805917+00:00",
+    "title": "Constant-Aspect Type Entropy over Finite Fields"
   },
   {
     "consumed_by_exp_id": "",
