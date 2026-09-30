@@ -14,7 +14,7 @@ throughout):
 | 64 | 1,000,000 | 630 | 6.30·10⁻⁴ | 286 | 1.5·10⁷ | **faster** |
 | 72 | 100,000 | 27 | 2.70·10⁻⁴ | 667 | 4.3·10⁷ | **faster** |
 | 80 | 200,000 | 25 | 1.25·10⁻⁴ | 1,440 | 1.1·10⁸ | **faster** |
-| 96 | 300,000 | 3 | 1.00·10⁻⁵ | 1.8·10⁴ | 6.4·10⁸ | **faster** |
+| 96 | 300,000 | 3 → **8** | 1.00·10⁻⁵ → **2.67·10⁻⁵**, CI [1.15, 5.25]·10⁻⁵ | 6.7·10³ | 6.4·10⁸ | **faster** |
 | **128** | 20,000 | **0** | — | **∞** | 1.4·10¹⁰ | **DEAD** |
 
 **At 128 bits, 20,000 `f` and zero relations.** By the round's own rule that is a **one-sided
@@ -61,3 +61,26 @@ search-budget problem.
 wall at 2¹²⁸.** Six versions, every one an extrapolation. **This one has a zero in it, which
 is the first measurement in the sequence that cannot be extrapolated past** — and that is the
 only reason to trust it more than the others.
+
+
+---
+
+## Correction (the data angle's extended 96-bit sample)
+
+The 96-bit figure was **3 events over 300,000 `f`** when first recorded. The workflow's data
+angle has since **extended the same run to 8 events**, reporting
+
+> `96 bits / 300,000 valid f / 8 relations / rate 2.667e-05, exact Poisson 95% CI
+> [1.151e-05, 5.254e-05]` — and **8/8 relations gave genuine prime factors**.
+
+The 3-event value `1.00·10⁻⁵` lies **inside** that interval, so the two agree — but the
+**point estimate is 2.7× higher** than recorded, which is why the method cost drops from
+`1.8·10⁴ s` to `6.7·10³ s`. It stays faster than the GNFS either way.
+
+**This matters for the 128-bit zero.** At `2.67·10⁻⁵`, `20,000 f` would be expected to give
+**0.53** events. **So seeing zero is *less* surprising than I stated, not more** — the
+"the supply dies at 128 bits" claim is correspondingly **weaker than this file's headline
+implies**, and the workflow's adversary was tasked with exactly that. The honest reading of the
+current data is: **the rate at 128 bits is bounded above by `1.5·10⁻⁴`, which does not exclude
+it continuing at the 96-bit rate.** A tight bound there is the measurement that would settle
+it, and that is what the running `pin` task is for.
