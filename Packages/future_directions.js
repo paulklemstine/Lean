@@ -3498,21 +3498,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-33 #2 \u2014 D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
   },
   {
-    "consumed_by_exp_id": "772fbcdb",
-    "description": "# Paper 116 \u2014 PROGRAMME-MILESTONE: The Post-Resume Programme in One Document\n\n**Verdict name: CONSOLIDATION-POINT-REACHED.**\nRound-33 #1 \u00b7 exp 450 (verified) \u00b7 assessment v226 \u00b7 milestone summary.\n\n## The unified framework\n\nEvery post-resume result fits into one framework:\n\n> **The type-channel law.** For any polynomial f of degree n with Galois group G and abelianization G^ab, the complete splitting-type channel I(p mod |disc(f)|; T) equals H(T) \u2212 H(T|G^ab) \u2014 the label entropy minus the entropy of the cosets that the type cannot distinguish. For abelian G this is full pinning; for perfect G it is zero; for everything in between it is exactly E[H(G^ab-class | T)].\n\nThis law subsumes:\n- **Type channels** (papers 78\u201384): degrees 2\u20136, all tested Galois groups\n- **Universality** (papers 99, 112, 114): independent fields with same G give identical channels\n- **Character-theoretic proof** (paper 109): I = H(T|sign-complement) derived from representation theory\n- **Battery capacity** (papers 91\u201392, 94): super-additive joint channels saturating at ceiling\n- **Factor-blindness** (papers 93, 102): permutation-null verified at \u00b10.003-bit sensitivity\n\n## Post-resume papers\n\n| round | paper | finding |\n|---|---|---|\n| 24 #1 | 80 | Type-channel law for nonabelian groups (S\u2083\u00d72/S\u2084/A\u2084/D\u2084/V\u2084/C\u2084) |\n| 24 #2 | 81 | Pythagorean trees closed at three strengths |\n| 24 #3 | 82 | F\u2082\u2080 x\u2075\u22122 first C\u2084 dial; pair law at degree 5 |\n| 24 #4 | 83 | S\u2085/A\u2085 endpoints: largest entropy collapses; perfect seals |\n| 25 #1 | 84 | D\u2085 quintics verified; degree ladder 5/5 groups |\n| 25 #2 | 85 | Qubit/sample fungibility ramp |\n| 25 #3 | 86 | Ramp on real semiprimes |\n| 25 #4 | 87 | Three-axis surface; standard corner optimal |\n| 26 #1 | 88 | Empirical barrier-4 converse across witness family |\n| 26 #2 | 89 | Three-strata landscape |\n| 26 #3 | 90 | Subexp stratum unmeasured at toy scale |\n| 27 #1 | 91 | Battery synergy-and-overlap |\n| 27 #2 | 92 | Battery synergy compounds (+4.31 bits at k=4) |\n| 27 #3 | 93 | Joint wall verified as bias |\n| 28 #1 | 95 | ECM factor-locality |\n| 28 #2 | 96 | Fermat gap-local |\n| 28 #3 | 97 | Reproducibility audit (six keystones) |\n| 29 #1 | 99 | Factor-residue hint value |\n| 29 #2 | 100 | Joint anomaly reconciled |\n| 30 #1 | 101 | Hint synergy compounds |\n| 30 #2 | 102 | (s,d)-view wall verified as bias |\n| 30 #3 | 106 | C\u2086 degree-6 cyclic field |\n| 30 #4 | 108 | Trace-battery joint capacity scaling |\n| 31 #1 | 107 | Cross-programme consistency |\n| 31 #2 | 109 | Character-theoretic proof |\n| 32 #1 | 110 | D\u2085 rigorous verification |\n| 32 #2 | 111 | Universal-S\u2083 (wrong poly \u2014 still informative) |\n| 32 #3 | 112 | Universal-S\u2083 corrected |\n| 32 #4 | 115 | Universal-S\u2083 fourth field |\n\n## Open problems\n\n| target | status | difficulty |\n|---|---|---|\n| Formal barrier-4 converse | OPEN | theory (hard) |\n| Production-scale subexp | OPEN | scale (needs N \u2265 2^64) |\n| D\u2085 conductor identification | OPEN | algebraic NT |\n| Degree-6 nonabelian type channel | OPEN | computation |\n\nNow 450 experiments (verified). Assessment v226. Paper 116, issue #207.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3506",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T22:42:58.233241+00:00",
-    "title": "FACT round-33 #1 \u2014 PROGRAMME-MILESTONE: the post-resume programme in one document (paper 116)"
-  },
-  {
     "consumed_by_exp_id": "61abe78f",
     "description": "## FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH (paper 115)\n\nA fourth independent S3 cubic \u2014 x3-7 (disc = -1323) \u2014 confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY.\n\nFOUR-FIELDS-ONE-ANSWER: four independent S3 fields, four distinct discriminants, one universal result.\nNow 450 experiments. Assessment v226. Paper 115.\n",
     "domains": [
@@ -8403,6 +8388,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-29T08:44:51.581646+00:00",
     "title": "ArXiv paper: A difference formula of $p$-adic height pairings via the Bloch-Kato logarithm map"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A nearly linear bound for the Lov\u00e1sz conjecture' and formalize its key results. Abstract: The celebrated conjecture of Lov\u00e1sz from 1969 asks whether every connected vertex-transitive graph has a Hamiltonian path. Buci\u0107, Christoph, Pokrovskiy and Steiner recently proved that every such graph on $n$ vertices contains a cycle of length $n^{2/3-o(1)}$. In this paper, we improve this bound to $n^{1-o(1)}$. Our proof uses a structure theorem of Tessera and Tointon to first obtain a partition of the vertex set into sets of small diameter in the original graph. When the parts are large, we repeatedly traverse a spanning tree of maximum degree at most three in the quotient graph, and use the Lov\u00e1sz local lemma to join random short paths along this traversal and extract a long path in the original graph. When the parts are small, we apply Babai's contraction lemma to reduce the problem to finding a long path in a connected Cayley graph of a nilpotent group with boundedly many generators and bounded nilpotency class, and then show that such a Cayley graph on $m$ vertices contains a pa",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_5088",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.38135v1",
+    "status": "available",
+    "timestamp": "2026-09-30T02:30:11.035717+00:00",
+    "title": "ArXiv paper: A nearly linear bound for the Lov\u00e1sz conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Merino-Welsh inequalities for matroids with controlled lattices of cyclic flats' and formalize its key results. Abstract: Beke, Cs\u00e1ji, Csikv\u00e1ri, and Pituk showed that the Merino--Welsh quotient $\u03a6(M)=T_M(1,1)^2/(T_M(2,0)T_M(0,2))$ can be arbitrarily large, so the multiplicative Merino-Welsh inequality fails for matroids in general. We show that $\u03a6$ is uniformly bounded on the class of matroids whose cyclic-flat lattice avoids any fixed finite poset $P$ as an induced subposet. We further prove $\u03a6(M)\\leq1$ for matroids of cyclic width at most $7$, cyclic height at most $6$, and for loop- and coloop-free $4$-paving or $4$-copaving matroids.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_5088",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2609.38047v1",
+    "status": "available",
+    "timestamp": "2026-09-30T02:30:14.589611+00:00",
+    "title": "ArXiv paper: Merino-Welsh inequalities for matroids with controlled lattices of cyclic flats"
   },
   {
     "consumed_by_exp_id": "",
@@ -55184,5 +55199,63 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-23T17:20:37.214834+00:00",
     "title": "Sparsity-free estimators for the battery"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The lower bound I = H(T) \u2212 log\u2082|G'| holds with equality iff T is injective on\nevery coset of G'. For a class-function readout, this is equivalent to every coset of G' meeting\neach conjugacy class in at most one element. The only groups where the lower bound is tight for the\ncycle-type readout are the abelian ones.\n\nThe key insight is that H(T|c) \u2264 log\u2082|G'| was proved by data processing from the identity readout,\nso equality is equality in data processing, which holds exactly when there are no collisions inside\na fibre.\n\nWhy now? The chain rule (`entropy_pair_chain`) and data processing (`entropy_comp_le`) now exist in\nthe catalog. The equality case is a fibrewise version of `condEntropy_eq_zero_iff`.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5084",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "772fbcdb",
+    "status": "available",
+    "timestamp": "2026-09-30T02:29:40.076647+00:00",
+    "title": "Sandwich-equality classification"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For x^{2m} \u2212 2 with Galois group D_{2m} acting on \u2124/2m, and the faithful cycle-type\nreadout, the channel has a closed form in m. The loss is strictly positive for every m \u2265 3, and the\nunfaithful quartic readout loses a positive amount that tends to a limit.\n\nThe key insight is that the cosets of the derived subgroup C_m (m odd) or C_{m/2} (m even) are\nunions of rotation strata and reflection strata, whose cycle types are known explicitly (gcd\nstructure of rotations, fixed-point parity of reflections).\n\nWhy now? D\u2086 gives the first exact rung (4/3 + L/4). The `hexPerm` construction generalises\ndirectly to `Fin (2m)`.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5085",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "772fbcdb",
+    "status": "available",
+    "timestamp": "2026-09-30T02:29:40.733241+00:00",
+    "title": "Dihedral ladder for x^n \u2212 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For every finite Galois group and every pair of class-function dials,\nI(c;T\u2082|T\u2081) \u2264 log\u2082[G:G'] \u2212 I(c;T\u2081), with equality iff (T\u2081,T\u2082) jointly determine the coset. Deciding\nwhether the synergy I(c;T\u2082|T\u2081) \u2212 I(c;T\u2082) is positive is a question about the double-coset structure\nof the conjugacy classes.\n\nThe key insight is that the battery chain rule turns every synergy claim in papers 91\u201392 and 101\ninto a sign statement about one conditional mutual information. Saturation (`battery_saturates`)\nis the equality case.\n\nWhy now? `condMutualInfo` and its nonnegativity are formal now, and the XOR-type sharpness examples\nin the probability catalog give candidate extremisers.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_5086",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "772fbcdb",
+    "status": "available",
+    "timestamp": "2026-09-30T02:29:41.381439+00:00",
+    "title": "Conditional battery capacity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Two permutation realisations of the same abstract group G have identical type\nchannels iff their cycle-type readouts induce the same partition of G, i.e. the permutation\ncharacters separate the same conjugacy classes. In particular every faithful realisation of S\u2083 has\nthe one-bit channel and H(T) = 2/3 + L/2.\n\nThe key insight is that `typeChannel_universal_partition` reduces universality to a partition\nstatement. The regular and natural S\u2083 realisations agree because both separate all three classes.\n\nWhy now? The degree-3 and degree-6 realisations of S\u2083 are already proved to agree\n(`S3reg_entropy_eq_cubic`). The next test is S\u2084 in degree 6 (acting on 2-subsets), where\n3-cycles and 4-cycles may merge.\n\n```json future_directions.json\n[\n  {\"title\": \"Sandwich-Equality Classification for Type Channels\",\n   \"domain\": \"Cryptography\",\n   \"description\": \"Characterise when the type channel meets its lower bound H(T) - log2|G'|. The equality case of data processing should force the type readout to be injective on every coset of the derived subgroup. This would locate exactly the fields whose residue dial loses the maximal possible amount.\",\n   \"conjecture\": \"For a finite group S with derived subgroup N, coset readout c and readout T: I(c;T) = H(T) - log2|N| iff T is injective on every coset of N.\",\n   \"test\": \"Formalise the equality case of entropy_comp_le via condEntropy_eq_zero_iff applied fibrewise; check on V4, C4 (tight) and D4, D6 (not tight).\",\n   \"if_true\": \"The sandwich is sharp exactly on a combinatorially recognisable class, which completes the two-sided picture of the law.\",\n   \"if_false\": \"Some non-injective readout attains the bound, so the lower bound is not controlled by collisions alone.\",\n   \"proof_strategy\": \"Equality in H(pair c T) <= H(id) holds iff pair c T is injective on S (fibre sizes 1). Use entropy_eq_logb_card_of_uniform_fibers and a strict version of data processing.\",\n   \"catalog_references\": [\"Cryptography.TypeChannelMilestone.UnifiedLaw\", \"Cryptography.TypeChannelMilestone.InfoCalculus\", \"Cryptography.NonabelianTypeChannel.Completeness\"]},\n  {\"title\": \"Dihedral Ladder of Radical Sextic-Type Channels\",\n   \"domain\": \"NumberTheory\",\n   \"description\": \"Compute the type channel of x^(2m) - 2 with Galois group D_(2m) for all m in closed form. D6 gives the first rung, 4/3 + (1/4)log2 3. The ladder would show whether dihedral channels approach their abelianization cap and how much an unfaithful readout loses.\",\n   \"conjecture\": \"For all m >= 3 the D_(2m) channel with faithful cycle-type readout is strictly below log2[D_(2m):D_(2m)'], and the loss of the (fixed, 2-cycle) readout is positive.\",\n   \"test\": \"Generalise hexPerm to Fin (2m) and decide the m = 4, 5 cases exactly; then prove the stratum decomposition of cosets for general m.\",\n   \"if_true\": \"An infinite family of provably incomplete nonabelian channels, with an explicit loss formula.\",\n   \"if_false\": \"Some m gives a complete dihedral channel, i.e. a nonabelian",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_5087",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "772fbcdb",
+    "status": "available",
+    "timestamp": "2026-09-30T02:29:42.259290+00:00",
+    "title": "Cross-degree universality through permutation characters"
   }
 ];

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-29T15:10:10.055688+00:00",
+  "last_updated": "2026-09-30T02:29:58.728598+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -76607,6 +76607,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-09-29T15:10:09.719399+00:00",
       "title": "FACT round-34 #1 \u2014 MASTER-TABLE: every type-channel value in one document (paper 119)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 10120.663357496262,
+      "end_time": 1790735364.5646377,
+      "files_integrated": 4,
+      "job_id": "772fbcdb",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.66,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.472,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.66,
+        "novelty": 0.66,
+        "proof_depth": 0.66,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1790725243.9012802,
+      "strategy_count": 0,
+      "theorem_count": 68,
+      "theorem_novelty_disproof": 4,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 54,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-09-30T02:29:58.351069+00:00",
+      "title": "FACT round-33 #1 \u2014 PROGRAMME-MILESTONE: the post-resume programme in one document (paper 116)"
     }
   ]
 }

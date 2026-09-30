@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ea4eae2e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — positional geometry of the Fermat / quadratic-sieve polynomial\n\nDerived from this cycle's proofs (`Catalog/NumberTheory/FermatPosition{Geometry,Density,\nTerminal,Nonlocality}.lea",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 50,
-      "timestamp": "2026-08-25T14:05:54",
-      "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNIT"
-    },
-    {
       "cycle_id": "128c5007",
       "domain": "Computation",
       "key_insight": "# Future directions — binning-free geometry of window features\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What this cycle\nestablished (all machine-checked, 0 sorries):\n\n*",
@@ -2501,6 +2491,16 @@
       "theorem_count": 84,
       "timestamp": "2026-09-29T15:10:09",
       "title": "FACT round-34 #1 — MASTER-TABLE: every type-channel value in one document (paper 119)"
+    },
+    {
+      "cycle_id": "772fbcdb",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions after paper 116 (consolidation point)\n\nWhat survived this cycle, all formal and with no `sorry`\n(`Catalog/Cryptography/TypeChannelMilestone/`):\n\n* the corrected unified law I = H(T",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-09-30T02:29:57",
+      "title": "FACT round-33 #1 — PROGRAMME-MILESTONE: the post-resume programme in one document (paper 116)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-29T15:10:09",
+  "last_updated": "2026-09-30T02:29:57",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "55b01213",
-        "quality": 0.82,
-        "theorems": 47,
-        "title": "FACT round-84 #2 — SPIKE-ORIGIN (exp 589): H0-MIXED — paper 238's left-edge spik"
-      },
-      {
         "cycle_id": "220a83a3",
         "quality": 0.82,
         "theorems": 145,
@@ -3389,6 +3383,12 @@
         "quality": 0.72,
         "theorems": 25,
         "title": "FACT round-30 #2 — HINT-S-D-DECOMPOSITION: the routing structure is dial-depende"
+      },
+      {
+        "cycle_id": "772fbcdb",
+        "quality": 0.66,
+        "theorems": 68,
+        "title": "FACT round-33 #1 — PROGRAMME-MILESTONE: the post-resume programme in one documen"
       }
     ],
     "Geometry": [
