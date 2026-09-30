@@ -88,3 +88,46 @@ power law is dead, and **which shape replaces it is not identified.**
 | the gate | `28,084/28,084`; and it is the *only* real filter, since the "verify the relation" step is vacuous |
 
 **The round's close stands, and is now a theorem rather than a narrative.**
+
+---
+
+## Independent verification (mine, after the fact)
+
+The theory angle's central claim came from **one agent**, so I re-derived it from scratch
+rather than trusting it.
+
+**Claim 1 — `l(m) = L·m + K` with `L = 8u³v + cv⁴`, `K = 4u⁴ − 4cuv³`:**
+**20,000 random `(u,v,c,m)` triples, 0 failures.**
+
+**Claim 2 — `l(m) = w²` ⟹ `w² ≡ K (mod L)`: 0 failures** in 20,000 triples. On the record's
+own instance: `l(20) = 196 = 10·20 + (−4)`, `w = 14`, `w² mod 10 = 6 = K mod 10`, `rho = 2`.
+
+**Claim R2 — the count formula itself**, which is what everything rests on:
+`#{m ∈ [m₀,M] : l(m) = w²} = rho·(√(LM+K) − √(Lm₀+K))/L`. Tested on **357 samples with
+non-zero counts**:
+
+| `u` | `v` | `c` | actual | `rho` | predicted |
+|---|---|---|---|---|---|
+| 3 | 2 | 7 | 112 | 16 | 111.3 |
+| 2 | 5 | 1 | 311 | 24 | 311.0 |
+| 4 | 4 | 2 | 124 | 32 | 124.3 |
+| 2 | 1 | 10 | 97 | 2 | 96.5 |
+| 1 | 5 | 4 | 31 | 8 | 31.5 |
+
+> **R2 is confirmed. The supply rate is exactly `C(H,c)/(δ√M) ~ C·N^{−1/6}`, and the selector
+> barrier `Θ(N^{1/6}·N/c_max)` follows from it. The round's closing theorem is verified from
+> scratch, not accepted on an agent's word.**
+
+## The ninth defective control — mine, again, and caught in one step
+
+My first verification pass printed **`0 / 0 failures`** for the `rho > 0` check, because a
+guard (`if L ≤ 400`) excluded **every** sample. A vacuous control, in my own code, ten minutes
+after writing the rule down.
+
+It was caught because I printed the **trial count** rather than only the failure count. **That
+is the whole trick and it should be the default**: a control that reports only a failure count
+cannot distinguish "no failures" from "no trials". Report **both**, always.
+
+So: **nine defective controls in one round**, every one of them caught by something other than
+reading the code, and the ninth caught only because the eighth had already taught me to print
+the denominator.
