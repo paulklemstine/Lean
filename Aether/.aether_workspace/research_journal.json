@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "128c5007",
-      "domain": "Computation",
-      "key_insight": "# Future directions — binning-free geometry of window features\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What this cycle\nestablished (all machine-checked, 0 sorries):\n\n*",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-08-25T16:02:03",
-      "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE GEOMETRIC WINDOW FEA"
-    },
-    {
       "cycle_id": "4c991400",
       "domain": "Shared",
       "key_insight": "# Future Directions — Matrix-level modular action (Phase A, v19c)\n\nThis cycle established, in `Catalog/Shared/ModularCayley/MatrixModularAction.lean`:\n\n* translations `transMat t = !![1,t;0,1]` as an",
@@ -2501,6 +2491,16 @@
       "theorem_count": 68,
       "timestamp": "2026-09-30T02:29:57",
       "title": "FACT round-33 #1 — PROGRAMME-MILESTONE: the post-resume programme in one document (paper 116)"
+    },
+    {
+      "cycle_id": "23a377e0",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — D5-CONDUCTOR (after refuting THE-CONDUCTOR-IS-320)\n\n**Outcome of this round.** The quadratic subfield of the splitting field of `x⁵+20x+32` is\n`ℚ(√−5)`: `d = −20`, conductor 20.",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-09-30T08:59:57",
+      "title": "FACT round-33 #2 — D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-30T02:29:57",
+  "last_updated": "2026-09-30T08:59:57",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "b4f872e1",
-        "quality": 0.78,
-        "theorems": 72,
-        "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY — extended grid pins k*(fr@1024)=40, exactly do"
-      },
-      {
         "cycle_id": "fe7714ae",
         "quality": 0.84,
         "theorems": 61,
@@ -3761,6 +3755,12 @@
         "quality": 0.8,
         "theorems": 85,
         "title": "FACT round-31 #2 — SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (pape"
+      },
+      {
+        "cycle_id": "23a377e0",
+        "quality": 0.62,
+        "theorems": 31,
+        "title": "FACT round-33 #2 — D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
       }
     ],
     "Probability": [

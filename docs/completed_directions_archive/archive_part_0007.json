@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-30T02:29:42Z",
-  "count": 185,
+  "archived_at": "2026-09-30T08:59:43Z",
+  "count": 186,
   "directions": [
     {
       "id": "fd_3695",
@@ -7333,6 +7333,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 207
+    },
+    {
+      "id": "fd_3505",
+      "title": "FACT round-33 #2 — D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)",
+      "description": "## FACT round-33 #2 — D5-CONDUCTOR (paper 117)\n\n**Verdict name: THE-CONDUCTOR-IS-320.**\n\nConductor scan identified m* = 320 for the D5 quintic x5+20x+32: I(N mod 320; fork) = 0.9999 = 1 bit. The quadratic subfield has |d(K)| = 320.\n\nNow 450 experiments. Assessment v227. Paper 117.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "23a377e0",
+      "timestamp": "2026-08-21T22:42:58.231835+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.62,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-29T02:17:47.974905+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 208
     }
   ]
 }

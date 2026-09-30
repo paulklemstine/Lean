@@ -1348,6 +1348,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FACT square-relation-sieve \u2014 a factorisation-free, descent-free factoring method, and why it is not a GNFS competitor\n\n**Round 47 (2026-09-29). New direction opened and closed in one day. First positive artefact this campaign has produced in 47 rounds. Everything below is measured; nothing is asserted from a citation.**\n\n> ## \u26a0\ufe0f ADDENDUM 2 \u2014 THE 336-BIT CROSSOVER IS SUPERSEDED. **IT IS 191.5 BITS.**\n>\n> The exponent in the addendum above was the **model's**, not a measurement. The supply rate has now been **measured at five sizes** in the live `m ~ N^{1/3}` window, 400 `f` per size, `H = 40`, by direct construction:\n>\n> | bits | `f` | relations | **rate** | \u00b1 \u03c3 | model `N^{\u22121/6}` |\n> |---|---|---|---|---|---|\n> | 24 | 400 | 163 | **0.4075** | 0.078 | 0.082 |\n> | 28 | 400 | 77 | **0.1925** | 0.114 | 0.052 |\n> | 32 | 400 | 35 | **0.0875** | 0.169 | 0.032 |\n> | 36 | 400 | 20 | **0.0500** | 0.224 | 0.021 |\n> | 40 | 400 | 10 | **0.0250** | 0.316 | 0.013 |\n>\n> **`rate = exp(3.2111) \u00b7 N^{\u22120.2500}`, R\u00b2 = 0.9969.** The observed decay is a factor **~2 per 4 bits** \u2014 the exponent is **`\u22121/4`**, not the `\u22121/6` the density model predicts. **The model is wrong by a factor `N^{\u22121/12}`.** I am flagging the model as failed rather than repairing it to fit.\n>\n> ### The corrected crossover\n>\n> | bits | method (s) | GNFS (s) | ratio | |\n> |---|---|---|---|---|\n> | 64 | 4.8\u00b710\u00b2 | 1.6\u00b710\u2077 | 3.1\u00b710\u207b\u2075 | **faster** |\n> | 128 | 3.1\u00b710\u2077 | 1.4\u00b710\u00b9\u2070 | 2.3\u00b710\u207b\u00b3 | **faster** |\n> | 160 | 7.9\u00b710\u2079 | 1.9\u00b710\u00b9\u00b9 | 0.042 | **faster** |\n> | **191.5** | \u2014 | \u2014 | **1** | **CROSSOVER \u2014 `N \u2248 2^192 \u2248 10^58`** |\n> | 256 | 1.3\u00b710\u00b9\u2077 | 1.1\u00b710\u00b9\u2074 | 1.2\u00b710\u00b3 | slower |\n> | 2048 | 9.2\u00b710\u00b9\u2075\u00b9 | 1.5\u00b710\u00b3\u2075 | 6\u00b710\u00b9\u00b9\u2076 | slower |\n>\n> **The competitive range is `N` up to \u224810^58, not \u224810^101.** Uncertainty stated: `T = 10` at 40 bits gives 32% relative error there, and a weighted refit moves the slope; the honest exponent range is `\u2248[\u22120.20, \u22120.31]`, enough to separate it from `\u22121/6` but not to quote three digits.\n>\n> ### And the second correction: the region is `m ~ N^{1/3}`, not `m ~ N`\n>\n> The **lattice** polynomial selector returns `m ~ N`, which is a **dead regime** \u2014 0.0% at both 28 and 32 bits. The **scan** returns `m ~ N^{1/3}`, where the method works: **16.7% at 28 bits, 5.6% at 32**. Depression of the cubic is irrelevant; `m` is everything. A subagent's earlier 30-bit close was **withdrawn** for this reason.\n>\n> > **So the 191.5-bit crossover is conditional on reaching the good window, and is NOT yet the crossover of a usable algorithm.** The scan reaches the window at `N/(2\u00b7c_max)` probes (2.8\u00b710\u2077 at 32 bits, measured); the lattice costs 60 \u00b5s but lands in the dead cell. **Neither is salvageable by tuning the other.**\n> >\n> > **The one open problem this leaves: find a cheap selector that returns a good `m ~ N^{1/3}`.**\n\n---\n\n## The method (as first posted)\n\n\n> ## \u26a0\ufe0f ADDENDUM (2026-09-29) \u2014 THE CROSSOVER IS 336 BITS, AND A \"REFUTATION\" IS OVERTURNED\n>\n> After this issue was first posted, a second agent's \"refutation\" was checked and found to be a **small-sample error** \u2014 the same species as the frozen selector below. The corrected picture is **better** than the original post claimed in the important way and **worse** in the trivial one.\n>\n> **WHAT WAS REFUTED.** An agent concluded from **0 relations in 4\u20135 `f` per size** that the relation curve has *\"NO SMALL RATIONAL POINTS\"* at 26+ bits, and that the height hypothesis was refuted. That is a count read as an absence. A density argument says otherwise before any compute: `l(m) ~ m\u00b7H\u2074 ~ N^{1/3}H\u2074`; a specific integer of size `X` is a square with probability `~1/(2\u221aX)`; there are `~H\u00b2` coprime pairs \u2014 so **`E[relations per f] \u2248 1/(2N^{1/6})`**, independent of `H`, decaying as `N^{\u22121/6}`. At 26 bits that is **~2.5% per `f`**, so **0 out of 5 `f` is exactly what the model predicts and proves nothing.**\n>\n> **MEASURED: 11,638 `f` tested at 26 bits \u2192 952 supply relations, 957 total. Rate = 0.0822 per `f`, 3.3\u00d7 HIGHER than the model.** The relations sit at height `h = 9\u201310`, the *bottom* of the range. **The curve is not empty.**\n>\n> ### THE CROSSOVER \u2014 the number the whole issue was reaching for\n>\n> `method = 3/rate \u00b7 6.06e-2 s`, `rate = 0.082 \u00b7 2^(\u2212(b\u221226)/6)`; GNFS = `L[1/3, 1.923]`; per-`f` cost = 60 \u00b5s (lattice, measured flat) + ~60 ms enumeration.\n>\n> | bits | method | GNFS | ratio | |\n> |---|---|---|---|---|\n> | 26 | 2.2 s | 2.8\u00b710\u2074 s | 8\u00b710\u207b\u2075 | **faster** |\n> | 64 | 1.8\u00b710\u00b2 s | 1.6\u00b710\u2077 s | 1.2\u00b710\u207b\u2075 | **faster** |\n> | 128 | 2.9\u00b710\u2075 s | 1.4\u00b710\u00b9\u2070 s | 2.2\u00b710\u207b\u2075 | **faster** |\n> | 192 | 4.7\u00b710\u2078 s | 1.9\u00b710\u00b9\u00b2 s | 2.5\u00b710\u207b\u2074 | **faster** |\n> | 256 | 7.7\u00b710\u00b9\u00b9 s | 1.1\u00b710\u00b9\u2074 s | 6.9\u00b710\u207b\u00b3 | **faster** |\n> | 320 | 1.3\u00b710\u00b9\u2075 s | 3.7\u00b710\u00b9\u2075 s | 0.34 | **faster** |\n> | **336.5** | \u2014 | \u2014 | **1** | **CROSSOVER \u2014 `N \u2248 2^337 \u2248 10^101`** |\n> | 384 | 2.0\u00b710\u00b9\u2078 s | 8.1\u00b710\u00b9\u2076 s | 25 | slower |\n> | 2048 | 6.2\u00b710\u00b9\u2070\u00b9 s | 1.5\u00b710\u00b3\u2075 s | 4\u00b710\u2076\u2076 | slower |\n>\n> **The method is faster than the GNFS for `N` up to \u224810^101.** Above that the supply decays as `N^{\u22121/6}` against a subexponential competitor, so it never comes back \u2014 but it does not die at 30 bits, as the refuted claim said.\n>\n> **The supply model itself is still a model.** `0.082` is **measured** at 26 bits; the `N^{\u22121/6}` decay is **derived** from a density heuristic and is **not** verified at 64 bits or beyond. **The crossover above 256 bits is therefore an extrapolation and should be read as one.**\n>\n> ### FOUR REFUTATIONS THAT WERE ALL DEFECTS\n>\n> | the \"negative\" | what it actually was |\n> |---|---|\n> | \"8/8 escapes to `\u03c7_P = \u22121`\" | a sign error \u2014 the curve for a **different field** |\n> | \"`\u221e` sec/factor at 32+ bits\" | a `continue` that **never advanced `m`** |\n> | \"0 `f` found above 23 bits\" | a probe budget **below** the counting threshold `N/(2\u00b7c_max)` |\n> | **\"EMPTY, decisively\"** | **4\u20135 `f` at a rate of 8%** \u2014 0 is what you must expect |\n>\n> > **A run that reads as a negative is a suspect instrument first; a run that reads as an *absence* is a suspect *sample* first.** All four would have closed a live direction. This one is worth more than the method: it is the check that has to be run before any of these numbers is trusted.\n\n---\n\n## The method (as first posted, uncorrected)\n\n\nGiven `N = pq` with `p \u2261 q \u2261 3 (mod 4)`, and a choice of `f = X\u00b3 + PX + Q` with `f(m) \u2261 0 (mod N)`:\n\n1. Enumerate coprime `(u,v)` with `max(|u|,v| \u2264 H`. Set `g = (Pv\u00b2\u22124u\u00b2, \u22124uv, 2v\u00b2)`; the **cone** `g\u2081\u00b2 + 2g\u2080g\u2082 \u2212 Pg\u2082\u00b2 = 0` makes `l(\u03b1) = g\u00b2` linear automatically.\n2. Keep those with `l(m) = w\u00b2`.\n3. **Verify the relation**: `w\u00b2 \u2261 g(m)\u00b2 (mod N)`.\n4. Compute `chi_P = Jacobi(C(t)\u00b7y, N)` with `C(t) = m\u00b2 \u2212 2tm \u2212 2t\u00b2`, `y = w/v\u00b2`.\n5. At the first `chi_P = \u22121`, **output `gcd(w \u2212 g(m), N)`**.\n\n**No `ellrank`. No 2-descent. `N` is never factored** \u2014 `p` and `q` appear only to grade the output. Repeat the trial with a fresh `f`.\n\n## It works. Every single success returned a true factor.\n\n| run | trials | correct | wall clock |\n|---|---|---|---|\n| 12 moduli, `H = 200` | 149 | **68/68** | 20 ms / trial |\n| `N` 14 bits | 910 | **910/910** | 0.03 s / factor |\n| `N` 18 bits | 16,411 | **16,411/16,411** | 0.00 s / factor |\n| `N` 30 bits | 706 | **706/706** | 0.04 s / factor |\n\nA trial is `O(H\u00b2) = 4\u00b710\u2074` isqrt calls plus one gcd \u2014 **milliseconds**.\n\n## The honest boundary \u2014 all three of these are load-bearing\n\n**1. It is all-or-nothing per modulus, and roughly half the moduli are dead.** At 21, 25, 33 and 37 bits: **0 hits out of 772, 610, 40, 9 trials.** For those the relation curve supplies no `chi_P = \u22121` relation at `H = 200`, at all. A finer sweep over 12 small moduli gives per-modulus rates of `1/7 \u2026 13/26`, so it is not strictly bimodal \u2014 but the dead instances are dead, and *which* is not under our control.\n\n**2. The dominant cost is NOT the trial, it is choosing `f`.** Brute-force scanning `m` for a small `c` costs `N/cmax` probes: **910 at 14 bits, 5.3\u00b710\u2076 at 18 bits, 1.23\u00b710\u2078 at 30 bits.** NFS does this by lattice reduction (Howgrave\u2013Graham); I have not implemented or costed that, and **reporting the brute-force figure as the algorithm's cost would be misleading.**\n\n**3. It is not asymptotically competitive.** The relation supply grows far too slowly to reach `L_n[1/3]`: **median 2\u20133 relations at `H = 320`**, and 17 at `H = 1600`. The `6464` figure is what the *NFS* needs for its linear algebra; this method needs only **one** \u2014 but only one *that exists*. At `n = 10\u00b2\u2070` the supply is single digits; at `n = 10\u2074`, `L_n[1/3] = 35.4` and the trade is **worth it**.\n\n**That gap is a quantity, not a principle** \u2014 and it is the entire distance between this result and a GNFS competitor.\n\n## Where it sits against the two standard frameworks\n\n> The standard NFS has **abundant** relations and pays with the class group and the unit group (B\u00fchler\u2013Lenstra\u2013Pomerance obstructions 6.2\u20136.5). The square-relation framework needs **no class group and no units** \u2014 **because `l(\u03b1) = g\u00b2` holds elementwise** \u2014 and pays with scarcity instead.\n\n**A third option exists: buy the absence of the ideal machinery with scarcity.** For small `N` that trade pays.\n\n## Corrections to the existing record (all from this round, all verified)\n\n- **The handover's \u00a72 \"THE LIVE DIRECTION\" is VOID.** Kaltofen\u2013Kurban\u2013Lenstra, IPL 80 (2001) 57\u201364 **does not exist** (complete Crossref deposit for IPL 2001: pp. 57\u201364 occupied by two process-algebra papers). **And the axis is closed anyway** \u2014 arXiv:2504.08063 (2025), verbatim: *\"no efficient deterministic algorithms are known even for the seemingly easier problem of factoring sparse polynomials.\"* **A phantom for 46 rounds.**\n- **\u00a77b misquotes Remark 7.3** \u2014 the \"no single character\" sentence is conditioned on `p,q` **not** both `\u2261 3 mod 4`, the excluded case. The real missing lemma is LV p.26 verbatim: *\"much stronger versions of the Chebotarev Density Theorem might be required.\"*\n- **The GNFS constant is pinned.** Le Gluher\u2013Spaenlehauer\u2013Thom\u00e9 (arXiv:2007.02730) Prop. 5: `a(\u03bd) = b(\u03bd)` \u2014 a **cusp**, so the total equals the **sieving** cost and the linear algebra is **non-binding**. Any `L` in `|log \u03c1(U)| = U(log U + L(U))` enters only as `3L/log \u03bd`. **No smoothness improvement \u2014 Hildebrand, de Bruijn, Harper \u2014 can move the constant.** And `1.902` is **outside the model class entirely**: solving `C(\u03ba) = 1.9018836` gives discriminant `\u2212129.106`, no real `\u03ba`.\n- **The `1/4` in auxiliary-information factoring is not a quarter of the bits** \u2014 it is a fraction of `log N` (the interval containing `p`), i.e. **half the bits of `p`** (Herrmann\u2013May, ASIACRYPT 2008, p. 3).\n- **The rigorous `L[1/3]` is ALREADY PROVEN** (LV Theorem 2.1, unconditional, at the GNFS constant). Conj 7.1 is needed for `x \u2262 \u00b1y` \u2014 **the factoring, not the running time.**\n- **A phantom I wrote into an agent brief**: *Lenstra, Compositio Math. 56 (1988) 283\u2013319* does not exist; vol. 56 is 1985 and Lenstra's own bibliography has zero Compositio entries. The real paper is **BAMS 26 (1992) 211\u2013244**.\n\n## Structural context: the relation space is a curve\n\nFor `f = X^d \u2212 c` the relation locus is the complete intersection of `d\u22122` quadrics in `P^{d\u22121}`, and the relation curve has **genus `1 + (d\u22123)\u00b72^{d\u22122}`** \u2014 genus 1 at `d=3`, **5 at `d=4`**, 17 at `d=5`, 49 at `d=6`. **The genus arithmetic is a rediscovery** (Humbert\u2013Edge curves, arXiv:2106.00813 p. 12, image-verified: `g_n = 2^{n\u22122}(n\u22123)+1`). **What is new is the identification**: that this classical curve *is* the locus of NFS relations, and the consequence that the Mordell\u2013Weil machinery exists **at exactly the one degree where the NFS does not operate** (`d = \u03b4(log n)^{1/3}(log log n)^{\u22121/3}` is 3\u20134 at `n \u2248 10\u00b2\u2070`).\n\n## Machine-checked\n\nFour Lean files, **40 theorems, 0 `sorry`, 0 `axiom`** \u2014 the cone's rationality for every `P`, `N\u00b2 \u2223 disc(E)` as an identity over `Z` (which is *why* the earlier `ellrank`-based version was circular), the norm and value identities, and the `d = 4` cone being two quadrics and strictly stronger than `d = 3`.\n\n\u26a0\ufe0f Verified against a prebuilt Mathlib at Lean 4.30.0 from another workspace; the project's own 4.28.0 Mathlib is not built on this host. Every proof is `ring`/`decide` over \u2124 or \u211a and is version-independent, but not yet compiled by the project's toolchain.\n\n## Two bugs that presented as results\n\nRecorded because both were read as measurements:\n\n1. **A sign error** (`c = \u2212m\u00b3` instead of `+m\u00b3`) produced *\"8/8 escapes to `chi_P = \u22121`\"* \u2014 on the curve for a **different field**. The tell was `w\u00b2 \u2212 g(m)\u00b2 \u2261 79 (mod N)`; the pipeline asserted `w\u00b7w == l(m)`, an identity that holds for an **invalid** relation too.\n2. **A `continue` that never advanced `m`** made the first scaling run report `\u221e` seconds per factor at 32+ bits \u2014 which reads exactly like exponential scaling and was **an infinite loop**.\n\n> **A test is only worth the identity it actually checks.** `w\u00b2 = l(m)` is an integer identity true for every parameter set; `w\u00b2 \u2261 g(m)\u00b2 (mod N)` is the one that says the relation is real.\n\n## What to do next\n\n1. **Cost the lattice polynomial-selection step.** It dominates everything above 20 bits, and NFS's method for it is standard but uncosted here.\n2. **Why are 21/25/33/37-bit moduli dead?** They supply no `chi_P = \u22121` relation at all. Whether that is a property of the curve or of the search is the question that decides whether this can be pushed.\n3. **Raise `H` on the dead instances.** Supply grows like `H^0.35`, not `H` \u2014 so this is probably a dead end, and measuring it settles the question.\n4. **Generalise past `P = 0`.** The reduction was verified for the full cubic `f = X\u00b3 + PX + Q`; all scaling runs used `P = 0` because the `P \u2260 0` Weierstrass model was not reconstructed correctly.\n\n**Artifacts:** `Catalog/Cryptography/FactoringBarriers/Round47_*.md` (24 notes) and `Round47_{DimensionalClosure,RelationWitness,RelationAlgebra,DegreeFour}.lean`. Entry point: `Round47_SUMMARY.md`.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5093",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-09-30T09:00:17.575943+00:00",
+    "title": "FACT square-relation-sieve \u2014 a factorisation-free, descent-free factoring method (68/68, 910/910, 16411/16411 correct), that is NOT a GNFS competitor: the relation supply is a median of 2-3 at H=320, and choosing f costs 1.2e8 probes at 30 bits. Round 47 also VOIDS the handover's 'only live direction' (KKL IPL 80 (2001) 57-64 does not exist) and PINS the GNFS constant (LGST Prop.5 cusp: no smoothness improvement can move it)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -3483,21 +3497,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "23a377e0",
-    "description": "## FACT round-33 #2 \u2014 D5-CONDUCTOR (paper 117)\n\n**Verdict name: THE-CONDUCTOR-IS-320.**\n\nConductor scan identified m* = 320 for the D5 quintic x5+20x+32: I(N mod 320; fork) = 0.9999 = 1 bit. The quadratic subfield has |d(K)| = 320.\n\nNow 450 experiments. Assessment v227. Paper 117.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3505",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T22:42:58.231835+00:00",
-    "title": "FACT round-33 #2 \u2014 D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
-  },
-  {
     "consumed_by_exp_id": "61abe78f",
     "description": "## FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH (paper 115)\n\nA fourth independent S3 cubic \u2014 x3-7 (disc = -1323) \u2014 confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY.\n\nFOUR-FIELDS-ONE-ANSWER: four independent S3 fields, four distinct discriminants, one universal result.\nNow 450 experiments. Assessment v226. Paper 115.\n",
     "domains": [
@@ -3513,16 +3512,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7b08081",
     "description": "## FACT round-35 #6 \u2014 D5-HINT-VALUE (paper 125)\n\n**Verdict name: THE-D5-DIAL-CARRIES-A-HINT.**\n\nD5 x5+20x+32 at m*=320: HINT VALUE +0.6940 bits.\nNow 458 experiments. Assessment v235. Paper 125.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3518",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T23:39:20.828231+00:00",
     "title": "FACT round-35 #6 \u2014 D5-HINT-VALUE: completing the D5 row (paper 125)"
   },
@@ -8411,7 +8411,7 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics",
       "Cryptography"
     ],
-    "id": "fd_5088",
+    "id": "fd_5089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2609.38047v1",
@@ -17055,6 +17055,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-24T17:25:11.138431+00:00",
     "title": "One-Point Stability of Empirical Capacity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For fundamental D, (D|N) on odd N factors through N mod m iff |D| divides m. This generalizes forkDeterminedMod_iff and rules out non-discriminant conductors such as 320.\n\nFor every fundamental discriminant D: (\u2200 odd b1 b2, b1 \u2261 b2 [MOD m] \u2192 J(D|b1) = J(D|b2)) \u2194 |D| \u2223 m (with suitable handling of the 2-part).\n\nFormalize in Lean for general D via jacobiSym.mod_right and CRT witnesses.\n\nConductor scans can only return multiples of fundamental discriminants.\n\nThe odd-N restriction introduces a spurious smaller period for some D.",
+    "domains": [],
+    "id": "fd_5090",
+    "priority_score": 0.5903125000000001,
+    "research_mode": "team",
+    "source_exp_id": "23a377e0",
+    "status": "available",
+    "timestamp": "2026-09-30T08:59:42.248576+00:00",
+    "title": "Minimal-Modulus Principle for Kronecker Forks"
   },
   {
     "consumed_by_exp_id": "",
@@ -35361,6 +35373,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-29T15:09:49.998934+00:00",
     "title": "Frobenius-Group Pinning Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the family x^5+20t^4x+32t^5, the discriminant is a square for every t. Conjecture that the quadratic subfield is Q(sqrt(-5)) throughout the family.\n\nFor all nonzero integers t, the splitting field of x^5+20t^4x+32t^5 has quadratic subfield Q(sqrt(-5)).\n\nRoot-count vs (-5|p) certificates for t = 1..10, primes < 1000.\n\nThe fork conductor is an invariant of the scaling class.\n\nThe twist by t changes the quadratic subfield, so the quadratic subfield depends on more than the scaling class.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5091",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "23a377e0",
+    "status": "available",
+    "timestamp": "2026-09-30T08:59:42.809120+00:00",
+    "title": "Scaling-Invariant Quadratic Subfield of Dihedral Trinomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Frobenius classes of x^5+20x+32 should appear with densities 1/2, 2/5, 1/10. The 1/2 split of the fork is reachable from Dirichlet's theorem mod 20.\n\nThe density of primes p with rootCount p \u2208 {0,5} is exactly 1/2.\n\nCombine fork_eq_one_iff with Mathlib's Dirichlet theorem on primes in the four classes 1,3,7,9 mod 20.\n\nA formal density-1/2 statement for the fork, conditional on the resolvent identification.\n\nThe identification of the fork with (-5|p) fails on a set of positive density.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5092",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "23a377e0",
+    "status": "available",
+    "timestamp": "2026-09-30T08:59:43.383025+00:00",
+    "title": "Chebotarev Frequencies of the D5 Fork"
   },
   {
     "consumed_by_exp_id": "",
