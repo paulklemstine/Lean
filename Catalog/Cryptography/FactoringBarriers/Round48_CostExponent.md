@@ -25,9 +25,26 @@ cost ∝ N^0.534          se 0.029   chi2/dof 6.9   2se = [0.476, 0.593]
 Plus independently verified factors at 48 and 52 bits. Sub-ranges: 24–40 → 0.526,
 **24–42 → 0.534**, 30–42 → 0.652, 36–42 → 0.535, 24–44 → 0.469.
 
-**α = 0.53 < 1 over an 18-bit range — a factor 2.6×10⁵ in `N`. That is sublinear, i.e.
-polynomial-time factoring on the measured range, and it beats `L[1/3,1.923]` at every
-sufficiently large size because a polynomial eventually beats a subexponential function.**
+**⚠ CORRECTION (2026-10-01). An earlier version of this document claimed that `α < 1` makes
+this "polynomial-time factoring". That is a category error and is withdrawn.**
+
+The input length is `b = log₂N`. A cost of `N^α` is `2^{αb}` — **exponential in `b`** for every
+`α > 0`. Polynomial time means `poly(b)`, not `poly(N)`. Every cost here is exponential; a
+smaller α is just a smaller exponential.
+
+This inverts the comparison. The best **rigorous probabilistic** bound is `L_N[1/2,1]`
+(Lenstra–Pomerance 1992), `exp(√(ln N · ln ln N))`, and the best **rigorous deterministic** is
+`N^{1/5+o(1)}` (Harvey 2021, arXiv:2010.05450). **Both are faster than `N^0.534`.** Comparing
+against GNFS was also the wrong target: GNFS is the heuristic best, while `L_N[1/2,1]` is both
+faster *and* proven.
+
+α = 0.534 remains a correct measurement. What it does *not* support is any claim of
+polynomial-time factoring.
+
+Separately, **the method is prior art**: Kameswari–Prasamsa–Kantham, *"Factorization via
+Difference of Squares using Ambiguous Forms"*, IOSR J. Math. 12(5):19–29 (2016), publishes the
+same pipeline — scan from the 1/3 power, gate on an exact square. This campaign's contribution
+is a genus-1 form substituted for a genus-0 one.
 
 This is stated plainly because the previous round asserted the opposite and used the
 assertion to dismiss inconvenient data. Two of my own intermediate claims this day did the
@@ -123,11 +140,20 @@ budget schedule. I published `N^0.85` from it before noticing.
 3. **Whether a non-depressed short relation converts to a square relation.** If it does, the
    selector barrier dissolves and the whole cost model changes. Worked by an agent; **not
    audited.**
-4. **Prior art.** Nothing shown new, nothing shown old. Coppersmith 1997 (`J. Cryptology`
-   10(4):233–260, bound `N^{1/δ−ε}`, univariate) and Blömer–May 2001 (CRYPTO LNCS 2132:4–19,
-   multivariate is heuristic) were cited. **Whether "find `m` with `m³ mod N` small" is known
-   to be as hard as factoring was not settled** — and that is the citation that would determine
-   the field's reaction.
+4. **Prior art — settled, and it is not new.** Kameswari–Prasamsa–Kantham, *"Factorization via
+   Difference of Squares using Ambiguous Forms"*, IOSR J. Math. 12(5):19–29 (2016), publishes
+   the same pipeline. **Correction to an earlier version of this document:** Blömer–May is
+   **EUROCRYPT 2005, pp. 251–267, DOI 10.1007/11426639_15**, *A Tool Kit for Finding Small
+   Roots of Bivariate Polynomials over the Integers* — not "CRYPTO LNCS 2132:4–19 (2001)".
+   Coppersmith 1997 (`J. Cryptology` 10(4):233–260) is correct.
+5. **No known hardness result.** No published work establishes that finding a small
+   representative of `m^k mod N`, `k ≥ 2`, is as hard as factoring. Stated caveat: AMS,
+   ScienceDirect, ACM, Semantic Scholar, dblp and CORE were unreachable, so this is a negative
+   over the reachable indexes, not a universal one.
+6. **Coppersmith's domain is provably disjoint from this scan range.** Theorem 3 with
+   `f(x)=x³−c`, `d=3`, guarantees all roots `|m| ≤ N^{1/3−ε}` — strictly inside `m < N^{1/3}`,
+   which is exactly the vacuous region measured here (`c = m³` unreduced, `m³−c = 0`). The
+   scan begins precisely where the theorem stops guaranteeing anything.
 
 ---
 
