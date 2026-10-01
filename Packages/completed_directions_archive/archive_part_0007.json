@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-09-30T20:46:58Z",
-  "count": 187,
+  "archived_at": "2026-10-01T19:02:07Z",
+  "count": 188,
   "directions": [
     {
       "id": "fd_3695",
@@ -7413,6 +7413,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 206
+    },
+    {
+      "id": "fd_3518",
+      "title": "FACT round-35 #6 — D5-HINT-VALUE: completing the D5 row (paper 125)",
+      "description": "## FACT round-35 #6 — D5-HINT-VALUE (paper 125)\n\n**Verdict name: THE-D5-DIAL-CARRIES-A-HINT.**\n\nD5 x5+20x+32 at m*=320: HINT VALUE +0.6940 bits.\nNow 458 experiments. Assessment v235. Paper 125.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "d7b08081",
+      "timestamp": "2026-08-21T23:39:20.828231+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.66,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-09-30T09:00:37.842328+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 220
     }
   ]
 }

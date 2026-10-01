@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a32bc1e4",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — destructive verification as a state transition\n\nThis cycle formalised verification as a state transition `t : D → Bool × D`\n(\"run the test, get a verdict and a residual dish\") an",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 111,
-      "timestamp": "2026-08-25T16:56:56",
-      "title": "Destructive verification"
-    },
-    {
       "cycle_id": "6247b80f",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\nDerived from the three research cycles in this run:\n\n1. a kernel-verified `q`-expansion of `j = E₄³/Δ` (twelve coefficients) built\n   from formal power series over `ℤ`, with a con",
@@ -2501,6 +2491,16 @@
       "theorem_count": 42,
       "timestamp": "2026-09-30T20:47:12",
       "title": "FACT round-32 #4 — UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
+    },
+    {
+      "cycle_id": "d7b08081",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after D5-HINT-VALUE (paper 125)\n\nWhat this cycle established (in `Catalog/Bridges/D5HintValue.lean`, no `sorry`):\n\n* the residue dial of `x⁵ + 20x + 32` is the character `χ₂₀ = (−5",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-10-01T19:02:25",
+      "title": "FACT round-35 #6 — D5-HINT-VALUE: completing the D5 row (paper 125)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-09-30T20:47:12",
+  "last_updated": "2026-10-01T19:02:25",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "8d588bfb",
-        "quality": 0.85,
-        "theorems": 2138,
-        "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge"
-      },
-      {
         "cycle_id": "69567235",
         "quality": 0.85,
         "theorems": 92,
@@ -3203,6 +3197,12 @@
         "quality": 0.72,
         "theorems": 34,
         "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (pap"
+      },
+      {
+        "cycle_id": "d7b08081",
+        "quality": 0.66,
+        "theorems": 76,
+        "title": "FACT round-35 #6 — D5-HINT-VALUE: completing the D5 row (paper 125)"
       }
     ],
     "Combinatorics": [
