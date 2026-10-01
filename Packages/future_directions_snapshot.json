@@ -4782,7 +4782,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5621f0f8",
     "description": "## FACT round-35 #4 — COMPOSITE-DIAL (paper 125)\n\n**Verdict name: THE-WHOLE-EXCEEDS-THE-SUM.**\n\nAn EMERGENCE phenomenon: three irreducible components each carry ~zero trace information individually, but their composite label carries 1.8170 bits at the semiprime level.\nNow 455 experiments. Assessment v235. Paper 125.\n",
     "domain_bridges": [],
     "domains": [
@@ -4794,7 +4794,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T23:39:20.830855+00:00",
     "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
   },
@@ -11434,7 +11434,7 @@
       "Algebra",
       "NumberTheory"
     ],
-    "id": "fd_5096",
+    "id": "fd_5097",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",

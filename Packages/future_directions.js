@@ -3527,16 +3527,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-35 #5 \u2014 HINT-VALUE-SCALING: hints compound (paper 124)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5621f0f8",
     "description": "## FACT round-35 #4 \u2014 COMPOSITE-DIAL (paper 125)\n\n**Verdict name: THE-WHOLE-EXCEEDS-THE-SUM.**\n\nAn EMERGENCE phenomenon: three irreducible components each carry ~zero trace information individually, but their composite label carries 1.8170 bits at the semiprime level.\nNow 455 experiments. Assessment v235. Paper 125.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3520",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T23:39:20.830855+00:00",
     "title": "FACT round-35 #4 \u2014 COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
   },
@@ -8427,7 +8428,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "NumberTheory"
     ],
-    "id": "fd_5096",
+    "id": "fd_5097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2609.40282v1",
