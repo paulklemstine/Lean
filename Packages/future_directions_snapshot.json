@@ -11408,6 +11408,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Minimal Submanifolds and Waists of Locally Symmetric Spaces' and formalize its key results. Abstract: We show that compact locally symmetric manifolds $M$ with universal cover the symmetric space $X$ for $SL(n,\\mathbb{R})$ form a topological higher $d$-expander family for $d\\leq n/8$. We prove the same statement for $SL(n,\\mathbb{R})$ replaced by a split simple non-compact real Lie group $G$ and for $d$ linear in the rank of $G$. We accomplish this by showing that minimal submanifolds of low codimension in such $M$ must have volume comparable to the volume of $M$. Our proof is based on a new monotonicity formula for minimal submanifolds of $X$, together with bounds on the decay of matrix coefficients for unitary representations of higher rank Lie groups. We also give the first locally symmetric example of power-law systolic freedom. This paper partially supersedes \\cite{fl24}.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_5096",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2609.40200v1",
+    "status": "available",
+    "timestamp": "2026-10-01T06:11:10.489989+00:00",
+    "title": "ArXiv paper: Minimal Submanifolds and Waists of Locally Symmetric Spaces"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On Greenberg's conjecture for rational elliptic curves at Eisenstein primes' and formalize its key results. Abstract: Let $E/\\mathbb{Q}$ be an elliptic curve, and let $p$ be an odd prime of ordinary reduction for $E$, and assume that $E$ admits a rational $p$-isogeny. In this paper we prove Greenberg's conjecture on the vanishing of algebraic Iwasawa $μ$-invariants of the Selmer groups attached to $E$ over the cyclotomic $\\mathbb{Z}_p$-extension of the rational numbers. Via the Iwasawa Main Conjecture for elliptic curves at Eisenstein primes, we also confirm Stevens's conjecture on the behavior of analytic $μ$-invariants.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5096",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2609.40282v1",
+    "status": "available",
+    "timestamp": "2026-10-01T06:11:13.656780+00:00",
+    "title": "ArXiv paper: On Greenberg's conjecture for rational elliptic curves at Eisenstein primes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domain_bridges": [],
     "domains": [
