@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "01cb7b4b",
-      "domain": "Algebra",
-      "key_insight": "# Future directions: product constructions for snake-in-the-box codes\n\n## What this cycle established\n\nWorking with snakes (induced paths) in hypercubes indexed by an arbitrary finite\ncoordinate set —",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-09-10T04:57:04",
-      "title": "Product constructions with bounded chord repair"
-    },
-    {
       "cycle_id": "ad3686b6",
       "domain": "Bridges",
       "key_insight": "# Future directions — comonotone repair distance (Bridges thread, cycle v19c)\n\n## What this cycle settled\n\nWorking over `Catalog.UniformDial` (`Combinatorics.UniformDialDrawInvariance`,\n`Combinatorics",
@@ -499,19 +489,19 @@
       "theorem_count": 4,
       "timestamp": "2026-10-02T15:07:15",
       "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after FULL-PINNING-AT-DEGREE-8 (paper 124)\n\nWhat this cycle established (all in Lean, no `sorry`):\n`H(T) = typeEntropy((f-1)/2)` for **every** odd prime conductor `f`\n(`uEnt_real",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-10-02T19:57:32",
+      "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7b6f9981",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  What was\nproved (all `sorry`-free, in `Catalog/NumberTheory/`):\n\n* `VietaInjectiveFamilies.lean` — the six-element",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-25T18:58:46",
-      "title": "Parametric families"
-    },
     {
       "cycle_id": "7af52a9c",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 4,
       "timestamp": "2026-10-02T15:07:15",
       "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after FULL-PINNING-AT-DEGREE-8 (paper 124)\n\nWhat this cycle established (all in Lean, no `sorry`):\n`H(T) = typeEntropy((f-1)/2)` for **every** odd prime conductor `f`\n(`uEnt_real",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-10-02T19:57:32",
+      "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fbb83685",
-      "domain": "Physics",
-      "name": "card_coFiringSet",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fbb83685",
-      "domain": "Physics",
-      "name": "card_deadSet",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "587eb79b",
-      "domain": "Computation",
-      "name": "for",
-      "quality": 0.85
-    },
     {
       "cycle_id": "587eb79b",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "pinEnt_five",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "name": "card_filter_comp_of_uniform",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "name": "card_of_uniform",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "name": "uEnt_comp_of_uniform",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-02T15:07:15",
+  "last_updated": "2026-10-02T19:57:32",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "63061d5b",
-        "quality": 0.84,
-        "theorems": 88,
-        "title": "FACT round-95 #4 — KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES — c"
-      },
-      {
         "cycle_id": "3831c02e",
         "quality": 0.78,
         "theorems": 63,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 70,
         "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper"
+      },
+      {
+        "cycle_id": "9aae3e9c",
+        "quality": 0.72,
+        "theorems": 43,
+        "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder ("
       }
     ],
     "NumberTheory": [

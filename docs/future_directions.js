@@ -1264,6 +1264,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Round 48. Novel-mathematics sweep of 12 candidate directions. **Ten died with a mechanism; two\nsurvived.** This issue records the live one and the deaths, because the deaths are informative.\n\n**Reproduce:** `~/factor47/V17/novelmath.md`. Theory only; no compute was spent.\n\n## 1. THE LIVE DIRECTION \u2014 supply as a Mordell\u2013Weil rank question\n\nEverything in this campaign has treated relation **supply** as an empirical count. There is a\nclosed-form elliptic curve sitting underneath it:\n\n```\nE:  Y^2 = X^3 - 27 I X - 27 J,     I = 144 c m,     J = -1728 c (c + m^3)\n```\n\n(an elliptic curve is a Weierstrass form `Y^2 = X^3 + aX + b` with `a = -27I`, `b = -27J`;\nthis is the standard invariants-in-parameters form, giving `a = -27I`, `b = -27J`, and\ndiscriminant `16\u00b74a^3 + 27b^2` carrying the `c^2(c+m^3)^2` factor that already appears in\nthe relation curve's discriminant.)\n\n**Claim.** Supply is not a counting question but a **rank question on a one-parameter elliptic\nfamily**. If `rank E(Q) = 0` for a given `(c, m)`, the scan is **provably complete at finite\nsize** \u2014 not \"found none,\" but \"there were none to find.\"\n\nThat is a strictly stronger statement than any sampling result in the record, and it is\ndecidable: **2-descent** computes `rank E(Q) \u2264 Selmer rank` algorithmically.\n\n**First experiment.** Run 2-descent on `E` above at the instances where structured smooth values\nshow the **23.7\u00d7 excess** (measured earlier in this project). Print `rank E(Q)` and\n`Selmer rank` side by side. Success is a clean correlation: excess instances carry rank \u2265 1, bulk\ninstances rank 0.\n\n**Why this is not a restatement.** A rank computation is a *certificate*. The campaign has ~150\nissues of measured rates, none of which can say \"this search was exhaustive.\" If rank 0 certifies\ncompleteness, then for those instances the supply question is closed outright \u2014 and instances\nwhere rank \u2265 1 are precisely where new mathematics lives, because the surplus has a group\nstructure to attack.\n\n## 2. Ten dead directions, with mechanisms\n\n| direction | why it dies |\n|---|---|\n| **abc / Hall / Vojta** | wrong shape: abc bounds **one fixed triple's** radical; factoring needs a **supply rate as N varies** |\n| **S-unit equations** on the genus-1 relation curve | Evertse's `S` must contain the divisors being searched for; the bound with `S` equal to the answer is **vacuous** |\n| **Baker / Matveev** on the relation lattice | **our stated reason was WRONG** \u2014 Matveev sees `N` fine. It bounds the shortest vector from *below*; factoring needs a *search* |\n| **Group walks beyond Pollard rho** | the object is a **lattice, not a group**; rho's birthday framing is the wrong instrument, so no walk survives |\n| **Class-group walk / SQUFOF on Q(sqrt(-N))** | needs the class number, `~sqrt(N)` and unknown \u2014 landing on `N^1/4` again. #517/#V13 proved the 2-Selmer obstruction is **identically zero** here anyway |\n| **Geometry of numbers beyond LLL** | better lattices for small roots are proven **optimal for Coppersmith** (Aono\u2013Agrawal\u2013Satoh\u2013Watanabe 2017), and factoring supplies **no polynomial with a known small root** |\n| **Low-complexity arithmetic circuits for N** | a real theorem, but random semiprimes are conjectured to have **no short circuit**; it is an attack surface, not a factoring method |\n| **Coppersmith multivariate / implicit hints** | needs adversary structure we cannot assume (May\u2013Ritzenhofen 2009 require a leaked hint) |\n| **Descent / Jacobians on the higher-degree locus** | **#516/#517's own genus law kills it**: genus 1, 5, 17, 49 for d = 3,4,5,6. **Faltings** makes the genus-\u22655 point sets **finite**, so no supply survives there |\n| **Weil restriction / Faltings on the relation curve** | the curve is **genus 1**; finiteness machinery is *exactly* unavailable where the campaign actually lives |\n\n**The Matveev correction matters.** The record has asserted for rounds that \"Matveev never sees\nN\" because \"the object is the wrong one.\" The conclusion (dead) survives; **the stated reason\ndoes not**. Transcendence theory does see `N` \u2014 it bounds the shortest vector from below, which\nis the wrong direction for a search. Recorded so the argument is not repeated.\n\n## 3. The other survivor\n\n**Square-root sieve on Lehman's (a,b) grid** \u2014 Harvey Remark 3.4. Sieve the `Theta(r)` pair grid\nto `Theta(sqrt r)` while preserving coverage; the minimax gives **exactly `N^(1/6)`**, and\nnobody is working on it. See #516 for the full minimax derivation and the `kappa` alternative\nfrom Harvey\u2013Harvey.\n\n## 4. Prior art checked\n\nSilverman 1988 (Wieferich/abc) \u00b7 Boneh\u2013Durfee\u2013Howgrave-Graham 1999 \u00b7 May\u2013Ritzenhofen 2009\n(Implicit Factoring) \u00b7 Evertse 2006 (S-unit bounds) \u00b7 Harvey 2020 \u00b7 Aono\u2013Agrawal\u2013Satoh\u2013Watanabe\n2017. **The 2-descent framing of relation supply does not appear in any of them, nor in the\nproject's own record.**\n\n## 5. What would falsify it\n\nIf at the 23.7\u00d7-excess instances `2-descent` returns `rank = Selmer rank = 0`, the framing is\nwrong \u2014 the surplus is not group-theoretic and this direction dies. That is a single\ncomputation on a handful of known instances, and it is the cheapest decisive test this project\nhas produced in forty-eight rounds.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5114",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-10-02T19:57:51.350181+00:00",
+    "title": "FACT mordell-weil-supply \u2014 the relation supply is a 2-DESCENT RANK question on E: Y^2 = X^3-27IX-27J; rank 0 would make the scan provably COMPLETE at finite size"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round 48 follow-up to the smoothness-gate question. Settles a 2-vs-1 dispute between\nadversarial agents with a checkable argument, and records that the previous kill of the gate\nwas void.\n\n**Reproduce:** `~/factor47/V15/` (agents), `~/factor47/V14/hypotheses.md` (the claim).\n\n## 1. The structural result\n\nThe gate's value form, in `t = u/v`, is a **quartic**:\n\n```\nA(t) = 4t^4 + 8m t^3 \u2212 4c t + m c\n```\n\n**It is irreducible over \u211a throughout the operating regime.**\n\n| test | result |\n|---|---|\n| 300 random `(m,c)` in `[8,4000)\u00b2` | **0** splittings into \u22652 non-constant factors |\n| exhaustive `(m,c)` in `[2,45)\u00b2` | **15** splittings, all degenerate |\n\nEvery one of the 15 sits on the decoy / below-cube-root locus:\n\n| `(m,c)` | factorisation |\n|---|---|\n| (2,8) | `4(t\u00b2+2t\u22122)\u00b2`  \u2014 c = m\u00b3 |\n| (3,27) | `(2t\u00b2+6t\u22129)\u00b2` \u2014 c = m\u00b3 |\n| (4,16) | `4(t+2)(t\u00b3+\u2026)` \u2014 c = m\u00b2 |\n| (2,32) | `4(t\u22122)(t\u00b3+\u2026)` \u2014 c = m\u2075 |\n\n**So the splitting locus and the singular locus are the same locus.** The only points where\n`A` factors are the points where the construction is already known to produce worthless\nrelations (`c = m\u00b3` is the below-cube-root trap; `c = m^k` are the decoys of `CubicSquares`\nThm 7). This connects directly to #447/#515's theory work, where the trap was identified as\nthe singular locus of the relation curve.\n\n## 2. Why this decides the cost class\n\nDixon/QS and NFS amortise because the sieve runs on a **linear** form: `a \u2261 br (mod p)` is one\ncongruence, survivors arrive as a free stride, and the cost is `M\u00b7log log B` \u2014 that is where\nthe `1/2` comes from.\n\nA reducible quartic would give four linear forms and a stride. **An irreducible one does not.**\nBy Weil, `{V \u2261 0 mod p}` has \u0398(p) points rather than lying on a line, so there is no stride,\nevery one of the `M` candidate pairs must be tested against every prime below `B\u2080`, and the\nsieve costs `M\u00b7\u03c0(B\u2080)` instead of `M\u00b7log log B`.\n\n**The extra factor `\u03c0(B\u2080) \u2248 N^{1/2}` turns `L[1/2, c]` into `L[1, \u00b7]`.**\n\nThis resolves the dispute between agents: two had returned `L[1/2, 1.1547]` and one had\nreturned `L[1,\u00b7]` with total `\u03c0(B\u2080)\u00b2/\u03c1`. **The irreducibility argument supports the third.**\n\n## 3. Two corrections to the record\n\n**(a) The previous kill of the gate was VOID.** `V14/hypotheses.md` killed the 1.61\u00d7 smoothness\nsignal using a gate requiring the leftover to equal exactly 1. That gate is **wrong on 55.16%\nof genuinely B\u2080-smooth numbers** \u2014 it rejects every number whose largest prime factor lies in\n`(\u221aV, B\u2080]`. Exhaustive against ground truth (largest prime factor \u2264 B\u2080) on all 199,998 integers\nin `[2,200000)` at B\u2080 = 2000: the original gate has **0 errors**, the replacement has\n**110,312**. The stated reason (\"that leftover is a prime and if it is \u2264 B\u2080 the number IS\nsmooth\") is correct and makes the gate wrong.\n\n**(b) The \"selector bill\" never existed.** `c_max` appears **zero** times in the campaign's\nscanner or in `V14/hypotheses.md`. The scan runs `m` consecutively from `\u2308N^{1/3}\u2309+1` and uses\nwhatever `c = m\u00b3 mod N` is; `balanced_pmqr` is total. Measured usable-`m` density = **1.0000**\n(30,000 consecutive `m`, three sizes, two moduli each). The `~2c_max/N` figure is a correct\nfact about *generic*-NFS small-norm selection, which this construction does not perform.\n\n## 4. What survives, honestly bounded\n\nThe smoothness gate **is real and does beat the campaign's own square gate**, by a widening\nmargin at finite sizes:\n\n| bits | gate | square gate `N^{1/3}` | margin |\n|---|---|---|---|\n| 200 | 2^43.1 | 2^66.7 | **2^23.5 better** |\n| 300 | 2^55.1 | \u2014 | **2^44.9 better** |\n| 512 | 2^75.6 | \u2014 | **2^95.1 better** |\n\n**But \"no crossover ever\" does not survive \u00a72.** With class `L[1,\u00b7]` the gate is exponential and\neventually crosses `N^{1/3}`. The no-crossover claim reads a 512-bit window as an asymptote \u2014\nthe same error this project has now made repeatedly, and one worth naming explicitly since the\ntable above invites it.\n\nThe gate also **loses to QS at every size** (by 5.4 bits at 200) and to GNFS, so it is not an\nimprovement on anything that already exists.\n\n## 5. The one positive worth keeping\n\nEvery relation is a **known** square, `V = g(m)\u00b2 (mod N)` \u2014 0 failures across 8,703 relations\nat two sizes. A parity dependency therefore yields `x\u00b2 \u2261 y\u00b2 (mod N)` **directly, with no\nTonelli\u2013Shanks**. That is strictly better than generic Dixon and survives independently of the\ncost question.\n\nThe funnel is healthy: 9,867 independent relations per 65,432 candidates at 40 bits, rank\nsaturating the base, yield 1.2\u20131.8\u00d7 Dickman. **The method is not short of relations; it is\nshort of cheap ones.**\n\n## 6. Method note\n\nDo **not** test irreducibility with `sympy.factor(A) != A`. That compares against a content\npull-out (`4*(t^4 + \u2026)`), not a genuine factorisation, and reports spurious \"splits\" on ~75%\nof inputs. The correct test is whether `factor_list` returns any non-constant factor of degree\n< 4. This cost one wrong intermediate result before it was caught.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5115",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-10-02T19:57:51.351999+00:00",
+    "title": "FACT quartic-irreducible \u2014 the smoothness gate's value form is IRREDUCIBLE over Q except exactly at the decoy locus, so no L[1/2] amortization: the gate is real, finite-size, and asymptotic to L[1,.]"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round 48 follow-up. Re-derived Harvey 2021's `N^(1/5+o(1))` deterministic bound as an explicit\nminimax over five cost terms, and priced the two escapes exactly. This settles an open item\nfrom #447/#450 and corrects the record's belief that `1/5` is motif-intrinsic.\n\n**Reproduce:** `~/factor47/V16/deterministic.md` (agent files); long derivation in the same file.\n\n## 1. Harvey's `1/5` is forced by an interior saddle \u2014 method, not implementation\n\nMinimising `max((1\u2212\u03c1)/4, \u03c1)` over the split parameter \u03c1 gives `1/5` at `\u03c1* = 1/5`, and the\nsaddle is **interior and exact** (\u03c1* = \u03bc* = 1/5, \u03b4* = 2/5). The two binding terms are the\n**1977 Pollard\u2013Strassen screen** `(N/r)^{1/4}` and **Lehman's (a,b) grid** `\u0398(r)`. All five\ncost terms land on `1/5` because they are slaved to the same two.\n\nThe mechanism, derived here and verified numerically at \u03c1 = 0.1\u20260.5:\n\n```\nmin over \u03bc of max(T3, T4)  =  (1 \u2212 \u03c1)/4  =  T1   EXACTLY,\nsince T3 + T4 = 1/2 \u2212 \u03c1/2 is the invariant.\n```\n\nSo the whole `1/5` is one saddle, not an accumulation. **This is the first structural account\nof where the exponent comes from.**\n\n## 2. \"The motif forces 1/5\" is NOT a theorem \u2014 two templates, one coincidence\n\nThe record's claim (repeated in #447, #450) that `N^(1/5)` is a property of the\nbaby-step/giant-step motif is **too strong**, and the two current templates fail for\n*different* reasons:\n\n- **Harvey 2020** \u2014 the saddle is **screen-vs-pair-count**, with BSGS slaved to the screen.\n- **Haviv\u2013Harvey (HH2021)** \u2014 replacing the (a,b) grid with short-lattice-vector generation\n  **deletes that term entirely**. Its `1/5` is a genuine giants-vs-babies saddle, `c\u00b7P` vs\n  `4N/r`.\n\nSame exponent, unrelated mechanisms. A third template could land elsewhere.\n\n## 3. Two escapes, each priced exactly\n\n**(a) Harvey Remark 3.4 \u2014 sieve Lehman's grid.** Can the `\u0398(r)` (a,b)-pair grid be sieved\ndeterministically down to `\u0398(\u221ar)` while preserving the coverage guarantee? Price:\n\n```\nsieving T2 from r to r^(1/2)  ->  max((1\u2212\u03c1)/4, \u03c1/2),  min = 1/6 at \u03c1 = 1/3\n```\n\n**Exactly `N^(1/6)`.** And nothing else in the parameter space yields `1/6` \u2014 the minimax\n`max((1\u2212\u03c1)/4, \u03c1/2)` is minimised only there. This is Harvey's own stated open remark and it\nremains the single best-posed target in deterministic factoring.\n\n**(b) HH2021 \u2014 move the giant-count growth exponent \u03ba.** `cost*(\u03ba, \u03bc)` has\n`d/d\u03bc = (3/2)(1\u2212\u03ba)/(\u03ba + 3/2)`, vanishing **exactly at \u03ba = 1**. Hence\n\n```\n\u03ba = 3/4  ->  1/6        \u03ba = 1/2  ->  1/8\n```\n\n**Caveat that must be carried with it:** shrinking the `m\u2080`-walk by a constant factor also\nerodes the `\u03c6(m)/m` sieve constant that produced the `(lg lg N)^{3/5}`, so any gain must be\nquantified **at fixed log-loss** before it counts. Reporting `1/8` without that is exactly the\nkind of unit error this project has made before.\n\n## 4. Hard practical negative \u2014 stated because it bounds everything above\n\n**Harvey and HH never beat GNFS at any size 8\u20134000 bits. Never beat ECM above 270 bits. And\nnever beat Lenstra\u2013Pomerance `L[1/2,1]` at ANY size.**\n\nThe `lg^{16/5}` handicap is the concrete content of \"10\u2075 better than trial division at 100\nbits\": `2^16.4` at 64 bits, `2^18.3` at 100, `2^22.5` at 256. Bare `N^(1/5)` is not competitive.\n\n**Implementation status: none.** `sympy/ntheory/factor_.py` (2885 lines) contains\n`pollard_rho`, `pollard_pm1`, `factorint`, and **zero** occurrences of\n`harvey`/`hittmeir`/`lehman`/`deterministic`.\n\n## 5. No obstruction to `N^(1/5\u2212\u03b5)` is known\n\nThe minimax is a **template bound over five cost terms, all artifacts of one construction.**\nThere is **no unconditional superpolynomial lower bound**. So \"deterministic factoring cannot\nbe improved past `1/5`\" is **not** a theorem, and should not be recorded as one.\n\nThe closest barrier in the literature is **Aono\u2013Agrawal\u2013Satoh\u2013Watanabe**\n(`10.1007/s00200-017-0336-9`), optimality of lattices **for the Coppersmith technique** \u2014\nmethod-local. Since all post-2020 deterministic work stays inside existing templates, it does\nnot settle the general question.\n\n## 6. Record corrections\n\n- **Carella `1308.2891` REFUTED as a claim on the record.** Its `O(N^(1/6+\u03b5))` is stated in\n  **arithmetic operations**; the bit-operation cost is different. Closing the open item from the\n  round-44 reconnaissance sweep.\n- **Harvey Remark 2.8** (`D >= N^(1/3)` instead of `N^(2/5)`) has **zero** exponent effect:\n  `max((1\u2212\u03c1)/4, \u03c1, 1/6)` still has min `1/5`. T5 was never binding. A small negative worth\n  recording so it is not retried.\n- **Post-2020:** Gao\u2013Feng\u2013Hu\u2013Pan (`2512.19076`, 2025-12) buys `lg^{16/5} \u2192 lg^{13/5}`, **same\n  `N^(1/5)`**. St\u0103nic\u0103\u2013Mulder\u2013Hittmeir EIR (`2606.13018`, 2026-06) is a different paradigm.\n- **arXiv sweep re-run 2026-10-02** (`ti:\"integer factorization\" AND abs:\"complexity\"`,\n  date-desc, 17 papers): **nothing proposes an exponent below `1/5`.**\n\n## 7. Next experiment\n\nAttempt (a): a deterministic \u221a-sieve on the (a,b) grid that provably preserves coverage, and\nmeasure the pair-count constant at 48\u201364 bits. Success condition stated as a *count*, not a\nwall-clock: the surviving (a,b) set must be `\u0398(\u221ar)` while still hitting the same coverage\nlower bound Lehman's grid achieves. A sieve that cuts the grid but loses coverage is a\n`screening` result, not an exponent result \u2014 say which one you got.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5116",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-10-02T19:57:51.353757+00:00",
+    "title": "FACT deterministic-exponent \u2014 N^(1/5) is a MINIMAX SADDLE, not a motif barrier, and the two escapes are priced at exactly N^(1/6)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -3399,21 +3441,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "9aae3e9c",
-    "description": "## FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC (paper 124)\n\n**Verdict name: FULL-PINNING-AT-DEGREE-8.**\n\nQ(zeta_17)+ degree 8, C8, conductor 17.\nH(T) = 1.7474 bits; I(p mod 17; T) = 1.7474 = H(T) EXACTLY (full pinning).\nFour types {1:12%, 2:12%, 4:25%, 8:50%} matching C8 structure.\nSemiprime pair 1.3097; which-factor 0.0002.\nDegree ladder extends to 8: every abelian field shows full pinning.\nNow 456 experiments. Assessment v234. Paper 124.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3521",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T23:39:20.832184+00:00",
-    "title": "FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
-  },
-  {
     "consumed_by_exp_id": "f81db42e",
     "description": "## FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH (paper 123)\n\n**Verdict name: FIVE-FIELDS-ONE-LAW.**\n\nA fifth independent S3 cubic \u2014 x3-4x+1 (disc = 229 prime) \u2014 confirms the type-channel law:\nI(p mod 229; T) = 1.0078, z=+263 (massive signal at conductor).\n\nFIVE-FIELDS-ONE-LAW: five independent S3 fields, five distinct discriminants, one universal result.\nNow 455 experiments. Assessment v233. Paper 123.\n",
     "domains": [
@@ -3429,16 +3456,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "152d60cd",
     "description": "Round-37 #1 (exp 464, assessment v238). First test of the hint programme's size axis.\n\n**SIZE-STABLE-PLATEAU**: hint value I((p mod m*, q mod m*); labels) \u2212 I(N mod m*; labels) is size-stable to \u22645.3% across factor sizes k=14\u219222 (a 16,384-fold span); abelian dials \u22641.6%, with abelian residual entropy EXACTLY 0 at every size (labels are residue functions there).\n\nHint table (bits): S3@31: 0.5584/0.5425/0.5415 (k=14/18/22); C3@7: 0.9115/0.9140/0.9169; D4@8: 1.0540/1.0536/1.0507; C5@11: 0.9030/0.9190/0.9268.\n\n**POOL-FLOOR EXCEPTION**: S3@k=10 reads 0.7423 vs plateau ~0.55 \u2014 diagnosed as prime-identity leakage through the pair-residue channel (75-prime pool = 2.5 primes/class; pair residue partially identifies the prime, which determines its type). Not a size law.\n\n**Which-factor wall held at all 16 dial\u00d7size cells** (max |z| = 1.55 vs conditional orientation-permutation null). Instrument lesson: the naive unconditional wall test would have falsely cried violation at |z| up to 4.7 \u2014 the conditional instrument holding (N mod m*, unordered pair) fixed was required.\n\nDecides: hint values transfer across factor sizes wherever the pool resolves the conductor's classes (observed floor ~30 primes/class) \u2014 every extrapolation of the hint programme from toy scale is safe. Barriers 2/5/8 re-verified along a new axis.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp464_hint_size.py, seed 20260821, n=15k semiprimes/cell, runtime 11.8 s.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3528",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T01:10:29.770873+00:00",
     "title": "FACT round-37 #1 \u2014 HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
   },
@@ -35453,6 +35481,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-02T15:06:58.748570+00:00",
     "title": "Computational Emergence Barrier for Jacobi Prediction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The two-power ladder H(T_{2^m}) = 2 - 2^{1-m} has a ceiling of 2 bits. For every prime p the p-power ladder should have the analogous ceiling p/(p-1) log2 p - log2(p-1), and cyclic groups should maximise the order-type entropy among abelian p-groups.\n\ntypeEntropy (p^m) is strictly increasing in m with limit p/(p-1)*log2 p - log2(p-1). Every abelian p-group of order p^m has order-type entropy at most typeEntropy (p^m).\n\nProve a closed form from typeEntropy_formula and Nat.divisors_prime_pow, as in typeEntropy_two_pow. Cross-check against typeEntropy_val_9 and typeEntropy_val_27. Check C4 x C2 and C4 x C4 by enumeration.\n\nEvery prime-power abelian rung has a universal entropy ceiling, giving a p-adic shape to the abelian ladder.\n\nSome non-cyclic p-group has more order-type entropy than the cyclic group, which would break the guess that cyclic Galois groups are maximally informative.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5111",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9aae3e9c",
+    "status": "available",
+    "timestamp": "2026-10-02T19:57:17.994730+00:00",
+    "title": "p-Power Entropy Ceiling of Cyclic Splitting Types"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The new uniform-cover lemma shows that the real-cyclotomic type entropy depends only on the group (Z/f)^x/{\u00b11}. For composite f this group need not be cyclic. The conjecture is that non-cyclic real cyclotomic fields carry strictly less type information than cyclic fields of the same degree.\n\nFor every f >= 3, uEnt univ (realDeg f) equals the order-type entropy of (Z/f)^x/{\u00b11}. This entropy is at most typeEntropy(phi(f)/2), with equality iff the quotient group is cyclic.\n\nGeneralise realDeg_pow_of_generator to an isomorphism-invariance statement. Compute f = 15, 16, 20, 21, 24 with uEnt_eq_countSum and decide.\n\nThe abelian ladder is governed by group structure alone, and cyclicity maximises information.\n\nSome non-cyclic quotient has more type information than C_n, giving a counterexample to cyclic optimality.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5112",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9aae3e9c",
+    "status": "available",
+    "timestamp": "2026-10-02T19:57:18.623535+00:00",
+    "title": "Composite-Conductor Real Cyclotomic Ladder"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The semiprime type-pair channel at the two-power rungs takes the values 1, 5/4, 21/16, 85/64, 341/256. These match (4/3)(1 - 4^{-m}), with limit 4/3 bits. Proving this would complete the semiprime side of the two-power ladder alongside H(T) = 2 - 2^{1-m}.\n\nFor all m >= 1, Ipair (2^m) = (4/3) * (1 - 4^(-m)).\n\nCompute the joint fibre multisets of typePair on box (2^m) in closed form. The catalog checks m <= 5 (Ipair_two_pow_closed_form). Extend the check to m = 6 by enumeration.\n\nThe ratio Ipair/H(T) tends to 2/3: in the limit, an unordered semiprime type pair recovers two thirds of one factor's splitting information.\n\nThe geometric increment pattern (1/4)^k breaks at some m >= 6, so higher two-power rungs have an additional correction term.",
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_5113",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9aae3e9c",
+    "status": "available",
+    "timestamp": "2026-10-02T19:57:19.214712+00:00",
+    "title": "Four-Thirds Limit of the Two-Power Semiprime Channel"
   },
   {
     "consumed_by_exp_id": "",

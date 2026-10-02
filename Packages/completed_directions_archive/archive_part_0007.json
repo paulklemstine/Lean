@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-10-02T15:06:59Z",
-  "count": 190,
+  "archived_at": "2026-10-02T19:57:19Z",
+  "count": 191,
   "directions": [
     {
       "id": "fd_3695",
@@ -7533,6 +7533,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 218
+    },
+    {
+      "id": "fd_3521",
+      "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)",
+      "description": "## FACT round-35 #3 — THE-OCTIC-CYCLIC (paper 124)\n\n**Verdict name: FULL-PINNING-AT-DEGREE-8.**\n\nQ(zeta_17)+ degree 8, C8, conductor 17.\nH(T) = 1.7474 bits; I(p mod 17; T) = 1.7474 = H(T) EXACTLY (full pinning).\nFour types {1:12%, 2:12%, 4:25%, 8:50%} matching C8 structure.\nSemiprime pair 1.3097; which-factor 0.0002.\nDegree ladder extends to 8: every abelian field shows full pinning.\nNow 456 experiments. Assessment v234. Paper 124.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "9aae3e9c",
+      "timestamp": "2026-08-21T23:39:20.832184+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-01T19:03:03.311375+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 217
     }
   ]
 }
