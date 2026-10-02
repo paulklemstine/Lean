@@ -3399,21 +3399,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "b39a3b1a",
-    "description": "## FACT round-35 #5 \u2014 HINT-VALUE-SCALING (paper 124)\n\n**Verdict name: HINTS-COMPOUND-WITH-DIMINISHING-RETURNS.**\n\nHint values compound: k=1 +0.52, k=2 +2.43, k=3 +3.19. Marginal gains positive but decreasing.\nNow 457 experiments. Assessment v234. Paper 124.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3519",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T23:39:20.829554+00:00",
-    "title": "FACT round-35 #5 \u2014 HINT-VALUE-SCALING: hints compound (paper 124)"
-  },
-  {
     "consumed_by_exp_id": "5621f0f8",
     "description": "## FACT round-35 #4 \u2014 COMPOSITE-DIAL (paper 125)\n\n**Verdict name: THE-WHOLE-EXCEEDS-THE-SUM.**\n\nAn EMERGENCE phenomenon: three irreducible components each carry ~zero trace information individually, but their composite label carries 1.8170 bits at the semiprime level.\nNow 455 experiments. Assessment v235. Paper 125.\n",
     "domains": [
@@ -3444,16 +3429,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f81db42e",
     "description": "## FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH (paper 123)\n\n**Verdict name: FIVE-FIELDS-ONE-LAW.**\n\nA fifth independent S3 cubic \u2014 x3-4x+1 (disc = 229 prime) \u2014 confirms the type-channel law:\nI(p mod 229; T) = 1.0078, z=+263 (massive signal at conductor).\n\nFIVE-FIELDS-ONE-LAW: five independent S3 fields, five distinct discriminants, one universal result.\nNow 455 experiments. Assessment v233. Paper 123.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3522",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T23:39:20.833492+00:00",
     "title": "FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
   },
@@ -8323,6 +8309,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-01T06:11:13.656780+00:00",
     "title": "ArXiv paper: On Greenberg's conjecture for rational elliptic curves at Eisenstein primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On The Index of Polynomial Compositions over Valued Fields' and formalize its key results. Abstract: Determining whether an algebraic number field admits a power integral basis is a classical problem, but it can be difficult for fields defined by polynomial compositions and dynamical iterates. In this paper, we study the monogeneity of compositions $f(h(x))$, where $f(x)$ and $h(x)$ are monic polynomials over an arbitrary Krull valuation ring and $h(x)$ is a trinomial. We derive explicit formulas for the discriminant of the composition and use them to characterize when $f(h(x))$ generates a monogenic field. In particular, we relate the monogeneity of the composition to that of $f(x)$ and to explicit square-free conditions on the critical values of $h(x)$. We further extend the results to polynomial iteration and obtain a criterion for the monogeneity of binomial iterates, yielding new infinite families of monogenic fields. Finally, we give quantitative results and illustrate our criteria with several examples.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5105",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.02111v1",
+    "status": "available",
+    "timestamp": "2026-10-02T02:21:03.252654+00:00",
+    "title": "ArXiv paper: On The Index of Polynomial Compositions over Valued Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Linear arboricity conjecture for infinite graphs' and formalize its key results. Abstract: The linear arboricity $\\la(G)$ of a graph $G$ is the least cardinality of linear forests, that is, forests of maximum degree at most $2$, into which its edge set $E(G)$ can be decomposed. The Linear Arboricity Conjecture asserts that $\\la(G)\\leq\\lceil(\u0394(G)+1)/2\\rceil$ for every finite graph $G$, where $\u0394(G)$ denotes the maximum degree of $G$. We extend this conjecture to infinite graphs of finite maximum degree and prove that its finite and infinite versions are equivalent. We introduce topological linear arboricity $\\latop (G)$ by requiring the linear forests to contain no topological circle, and show that it differs from linear arboricity by at most one. Finally, we prove that every $2k$-regular graph of girth at least $2k$ has topological linear arboricity at most $k+1$.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_5106",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.02065v1",
+    "status": "available",
+    "timestamp": "2026-10-02T02:21:08.076219+00:00",
+    "title": "ArXiv paper: Linear arboricity conjecture for infinite graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -35337,6 +35352,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-30T20:46:57.805917+00:00",
     "title": "Constant-Aspect Type Entropy over Finite Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Bounded monotone hint curves with unimodal marginal gains can only accelerate for a bounded number of steps. The approach combines the compounding horizon with the bounded-collapse theorem. It would turn the paper-124 S-shape into a quantitative law.\n\nIf V : \u2115 \u2192 \u211d is monotone, V 0 = 0, V k \u2264 B for all k, and the marginal gains \u0394 are unimodal with peak at k*, then k* \u2264 \u2308B / \u0394 0\u2309.\n\nFormalize in Lean on top of HintValueScaling.compounding_horizon and compounding_bounded_nonpos; check numerically on random bounded sigmoids.\n\nHint curves have a provably early inflection point; 'compounding' is a finite-window phenomenon whose length is bounded by the label entropy.\n\nThere exist bounded hint curves that accelerate for arbitrarily long, so the S-curve reading needs extra structure (e.g. concavity of the ceiling).",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_5101",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b39a3b1a",
+    "status": "available",
+    "timestamp": "2026-10-02T02:20:32.640915+00:00",
+    "title": "Sigmoid Inflection Bound for Bounded Hint Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Over a product of k odd prime fields, the second marginal gain of the hint curve is at most k bits (proved). The conjecture is that k is attained, via product batteries of the mod-7 orientation witness. This would make the field count an exact invariant of the hint curve.\n\nFor every k there is a battery over \u220f_{i<k} ZMod 7 with hintValue \u2212 sumHint = k exactly.\n\nBuild the k-fold product battery and compute fibre counts exactly; prove an entropy-additivity lemma for product populations.\n\nThe observed jump of 1.91 bits certifies at least two fields in the modulus.\n\nThe ceiling of k is not sharp for k \u2265 3, and there is a sub-additive correction to the sign-group count.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5102",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b39a3b1a",
+    "status": "available",
+    "timestamp": "2026-10-02T02:20:33.182255+00:00",
+    "title": "Exact k-Field Ceiling for the Second Marginal Gain"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Third hints computed from the factor residues add exactly zero bits (proved). The conjecture is that a positive third marginal gain requires a CRT channel to a second modulus. This identifies the physical source of the +0.76 bits in paper 124.\n\nIf V 3 \u2212 V 2 > 0 for a battery, then the third hint is not measurable with respect to the residue pair (p mod m, q mod m), and it is realisable by a residue modulo a coprime m'.\n\nConstruct a two-modulus battery and compute the third marginal gain exactly; prove that it is positive.\n\nHint-value scaling beyond k=2 measures the number of independent moduli, not compounding.\n\nSome intra-residue mechanism (e.g. label encoding) generates third-hint value, contradicting the saturation reading of the data.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5103",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b39a3b1a",
+    "status": "available",
+    "timestamp": "2026-10-02T02:20:33.695596+00:00",
+    "title": "Extra-Residue Origin of Third-Hint Gains"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Experiments can only check superadditivity on a finite window. The conjecture quantifies how a ceiling limits average rates when compounding holds only for m + n \u2264 K. It is the finite-data counterpart of compounding_affine_ceiling.\n\nIf V m + V n \u2264 V(m+n) whenever m + n \u2264 K and V k \u2264 B for k \u2264 K, then V b \u2264 b\u00b7B / (b\u00b7\u230aK/b\u230b) for every 1 \u2264 b \u2264 K.\n\nFormalize by iterating superadditivity \u230aK/b\u230b times within the window; check against random bounded sequences.\n\nThe paper-124 window compounding (K = 3) yields explicit data-level bounds on any information ceiling consistent with it.\n\nWindowed compounding carries no rate information, and only the infinite-window theorem constrains the data.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_5104",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b39a3b1a",
+    "status": "available",
+    "timestamp": "2026-10-02T02:20:34.202047+00:00",
+    "title": "Windowed Fekete Bound for Partially Superadditive Curves"
   },
   {
     "consumed_by_exp_id": "",

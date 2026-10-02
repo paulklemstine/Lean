@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6247b80f",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nDerived from the three research cycles in this run:\n\n1. a kernel-verified `q`-expansion of `j = E₄³/Δ` (twelve coefficients) built\n   from formal power series over `ℤ`, with a con",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-25T17:47:01",
-      "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
-    },
-    {
       "cycle_id": "a08d5a50",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — profile form and the beyond-Dickman residual\n\nDerived from the Stage-3 analysis and the Stage-4 adversarial review of this\ncycle (`Catalog/NumberTheory/ProfileForm{PowerLaw,Resid",
@@ -2501,6 +2491,16 @@
       "theorem_count": 76,
       "timestamp": "2026-10-01T19:02:25",
       "title": "FACT round-35 #6 — D5-HINT-VALUE: completing the D5 row (paper 125)"
+    },
+    {
+      "cycle_id": "b39a3b1a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — HINT-VALUE-SCALING (paper 124)\n\nWhat this cycle established (all in `Catalog/Bridges/HintValueScalingLaw.lean`, 0 sorries):\n\n* **Compounding horizon** (`compounding_horizon`): if",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 36,
+      "timestamp": "2026-10-02T02:20:51",
+      "title": "FACT round-35 #5 — HINT-VALUE-SCALING: hints compound (paper 124)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-01T19:02:25",
+  "last_updated": "2026-10-02T02:20:51",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "69567235",
-        "quality": 0.85,
-        "theorems": 92,
-        "title": "D3. Nonlinear probe ceiling on the pooled window population"
-      },
-      {
         "cycle_id": "ad3686b6",
         "quality": 0.83,
         "theorems": 82,
@@ -3203,6 +3197,12 @@
         "quality": 0.66,
         "theorems": 76,
         "title": "FACT round-35 #6 — D5-HINT-VALUE: completing the D5 row (paper 125)"
+      },
+      {
+        "cycle_id": "b39a3b1a",
+        "quality": 0.66,
+        "theorems": 36,
+        "title": "FACT round-35 #5 — HINT-VALUE-SCALING: hints compound (paper 124)"
       }
     ],
     "Combinatorics": [
