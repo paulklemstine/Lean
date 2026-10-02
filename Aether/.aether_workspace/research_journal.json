@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4c85503d",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — Tropical / \"Constrained = penalised\" (Phase A, v19c)\n\nThis cycle formalised the duality core of Conjecture 2 over a finite outcome set:\n\n* the **duality identity** `t·(𝔼_{p_t}[r]",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-09-09T16:35:24",
-      "title": "Constrained = penalised"
-    },
-    {
       "cycle_id": "01cb7b4b",
       "domain": "Algebra",
       "key_insight": "# Future directions: product constructions for snake-in-the-box codes\n\n## What this cycle established\n\nWorking with snakes (induced paths) in hypercubes indexed by an arbitrary finite\ncoordinate set —",
@@ -499,19 +489,19 @@
       "theorem_count": 84,
       "timestamp": "2026-09-29T15:10:09",
       "title": "FACT round-34 #1 — MASTER-TABLE: every type-channel value in one document (paper 119)"
+    },
+    {
+      "cycle_id": "5621f0f8",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE_DIRECTIONS — COMPOSITE-DIAL (paper 125, verdict THE-WHOLE-EXCEEDS-THE-SUM)\n\n## What this cycle established (all proofs complete: no `sorry`, standard axioms only)\n\n- `Catalog/Tropical/Composi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-10-02T15:07:15",
+      "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a08d5a50",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — profile form and the beyond-Dickman residual\n\nDerived from the Stage-3 analysis and the Stage-4 adversarial review of this\ncycle (`Catalog/NumberTheory/ProfileForm{PowerLaw,Resid",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 119,
-      "timestamp": "2026-08-25T18:58:30",
-      "title": "FACT round-80 #1 — PROFILE-FORM (exp 579): positional layer gets a LAW — small-j hit profile = POWER"
-    },
     {
       "cycle_id": "7b6f9981",
       "domain": "NumberTheory",
@@ -2501,6 +2491,16 @@
       "theorem_count": 36,
       "timestamp": "2026-10-02T02:20:51",
       "title": "FACT round-35 #5 — HINT-VALUE-SCALING: hints compound (paper 124)"
+    },
+    {
+      "cycle_id": "5621f0f8",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE_DIRECTIONS — COMPOSITE-DIAL (paper 125, verdict THE-WHOLE-EXCEEDS-THE-SUM)\n\n## What this cycle established (all proofs complete: no `sorry`, standard axioms only)\n\n- `Catalog/Tropical/Composi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-10-02T15:07:15",
+      "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-02T02:20:51",
+  "last_updated": "2026-10-02T15:07:15",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "6f277833",
-        "quality": 0.83,
-        "theorems": 63,
-        "title": "C3. The even/odd dichotomy of the one-bit cap"
-      },
-      {
         "cycle_id": "837a61ec",
         "quality": 0.72,
         "theorems": 58,
@@ -4009,6 +4003,12 @@
         "quality": 0.83,
         "theorems": 354,
         "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
+      },
+      {
+        "cycle_id": "5621f0f8",
+        "quality": 0.72,
+        "theorems": 4,
+        "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (pape"
       }
     ]
   }

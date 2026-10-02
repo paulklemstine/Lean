@@ -3399,28 +3399,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "5621f0f8",
-    "description": "## FACT round-35 #4 \u2014 COMPOSITE-DIAL (paper 125)\n\n**Verdict name: THE-WHOLE-EXCEEDS-THE-SUM.**\n\nAn EMERGENCE phenomenon: three irreducible components each carry ~zero trace information individually, but their composite label carries 1.8170 bits at the semiprime level.\nNow 455 experiments. Assessment v235. Paper 125.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3520",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T23:39:20.830855+00:00",
-    "title": "FACT round-35 #4 \u2014 COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
-  },
-  {
     "consumed_by_exp_id": "9aae3e9c",
     "description": "## FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC (paper 124)\n\n**Verdict name: FULL-PINNING-AT-DEGREE-8.**\n\nQ(zeta_17)+ degree 8, C8, conductor 17.\nH(T) = 1.7474 bits; I(p mod 17; T) = 1.7474 = H(T) EXACTLY (full pinning).\nFour types {1:12%, 2:12%, 4:25%, 8:50%} matching C8 structure.\nSemiprime pair 1.3097; which-factor 0.0002.\nDegree ladder extends to 8: every abelian field shows full pinning.\nNow 456 experiments. Assessment v234. Paper 124.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3521",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -16327,6 +16312,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-10T04:56:51.862772+00:00",
     "title": "Fekete Limit for Snake Density"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the one-bit Jacobi emergence to m-th power residue symbols: every proper sub-family is blind and the whole carries log m nats. Tests whether emergence magnitude equals the size of the character's image.\n\nFor N = \u220f p_i with m | p_i - 1 and the m-th power residue label, info(proper subfamily; label) = 0 and info(whole; label) = log m.\n\nInstantiate info_eq_zero_of_swap and info_eq_log_card_of_determined with multiplication by an element of order m in the character image.\n\nEmergent information scales as log m, giving a tunable composite dial.\n\nHigher characters leak information into components, breaking the abelian-label paradigm.",
+    "domains": [],
+    "id": "fd_5108",
+    "priority_score": 0.5922972972972974,
+    "research_mode": "team",
+    "source_exp_id": "5621f0f8",
+    "status": "available",
+    "timestamp": "2026-10-02T15:06:57.542243+00:00",
+    "title": "Synergy Identity for Power-Residue Characters"
   },
   {
     "consumed_by_exp_id": "",
@@ -35411,6 +35408,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-02T02:20:34.202047+00:00",
     "title": "Windowed Fekete Bound for Partially Superadditive Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Characterise exactly which sub-families of components are blind to a label on a finite abelian group via the Fourier support of the label's level sets. Generalises the fibre-swap criterion proved for sum labels and the Jacobi symbol.\n\nFor uniform law on G = \u220f G_i and L : G \u2192 \u03b2, info(restrict S; L) = 0 iff for every b and every nontrivial character \u03c8 of G trivial outside S, \u03a3_{g : L g = b} \u03c8(g) = 0.\n\nFormalise using Mathlib's AddChar duality; check against proper_subfamily_blind and proper_statistic_blind as special cases.\n\nEmergence becomes a spectral property, computable from the label's Fourier transform.\n\nThere exist blind sub-families invisible to characters, so information needs a non-abelian description.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_5107",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5621f0f8",
+    "status": "available",
+    "timestamp": "2026-10-02T15:06:56.923875+00:00",
+    "title": "Fourier-Support Characterisation of Blind Sub-families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Relate emergent synergy to tropical rank of the joint table under max-plus degeneration. Blind sub-families give flat joint tables, which are tropically rank one.\n\nFor joint tables p_t = exp(t\u00b7w) with tropical weight w, lim_{t\u2192\u221e} info_t / t equals the tropical rank deficit of w relative to the product of its marginals.\n\nCompute info for exponentially tilted joint tables in Lean on small alphabets; compare with max-plus rank from Tropical.OrbitDialTropical.\n\nEmergence acquires a tropical-geometric invariant stable under degeneration.\n\nInformation and tropical rank decouple in the limit, which would bound how far tropicalisation of information theory can go.",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_5109",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5621f0f8",
+    "status": "available",
+    "timestamp": "2026-10-02T15:06:58.158340+00:00",
+    "title": "Tropical Rank Deficit as Limit of Emergent Information"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Lift the proved information-theoretic blindness of proper residue sub-families to a computational statement relative to quadratic residuosity.\n\nAny efficient predictor of the Legendre bit modulo one factor from (a, N) with non-negligible advantage yields a quadratic-residuosity distinguisher.\n\nFormalise the reduction in a finite game model; instantiate with proper_statistic_blind as the ideal-world lemma.\n\nEmergence gives a clean formal interface between the factoring barriers and residuosity.\n\nSome efficient statistic recovers component information, which would contradict standard assumptions and be a major cryptanalytic result.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5110",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5621f0f8",
+    "status": "available",
+    "timestamp": "2026-10-02T15:06:58.748570+00:00",
+    "title": "Computational Emergence Barrier for Jacobi Prediction"
   },
   {
     "consumed_by_exp_id": "",

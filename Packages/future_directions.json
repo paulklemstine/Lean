@@ -148976,7 +148976,7 @@
       "depth_estimate": 3,
       "description": "The wheel dials of modulus M give speedup M/phi(M) with zero per-target information. The conjecture pins their growth: the tropical weight of any information-free dial applicable in time T is log log T + O(1), so blind structural exclusions are worth a doubly-logarithmic amount, never a polynomial factor.\n\nlog(M/phi(M)) = log log M + gamma + o(1) along primorials M, hence sup over wheels applicable in time T of the tropical weight equals log log T + O(1).\n\nFormalise sum over p <= y of log(p/(p-1)) and compare with Mertens' third theorem; check the constant numerically against the primorial table in ComputationalEvidence.md.\n\nBarrier 4 is complemented by a doubly-logarithmic ceiling on the information-free regime, closing the classification of dial regimes.\n\nSome sparse family of structural exclusions grows faster than the wheel family, which would be a new sieving primitive.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical"
       ],
@@ -158784,7 +158784,7 @@
       "depth_estimate": 3,
       "description": "Three of the follow-ups below were partially closed while the development was being written, and\nthe directions have been narrowed accordingly:\n\n* *granularity* — the block-granularity theorem proves that a block-level oracle still retains\n  everything on an instance where every causal policy retains nothing, so the separation is about\n  causality and not eviction granularity. What remains open is the **empirical** split of the\n  measured 11.3 points into a coarsening term and a causality term (direction 5);\n* *layers* — the min-plus allocation loss and its penalty theorem prove that a per-layer policy\n  penalty `δ` accumulates to `L·δ` under optimal global budget allocation, for arbitrary (not\n  necessarily convex) loss curves. What remains open is whether trained per-layer curves are\n  convex, which is what would make greedy allocation optimal (direction 4);\n* *stationarity* — the exact and approximate stationarity theorems isolate the precise hypothesis\n  under which the heavy-hitter cache is oracle-optimal, and its `B·ε` robust version. What remains\n  open is the measurement of the defect (direction 1) and the online certificate (direction 2).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -163822,7 +163822,7 @@
       "depth_estimate": 3,
       "description": "The lower envelope of a finite family of affine cost profiles is a tropical polynomial in one variable. This run proved both directions for a triple; the conjecture is the general statement that the leader set is exactly the vertex set of the lower convex hull of the exponent-intercept point set.\n\nFor a finite family F of cost profiles, arm i leads at some real k if and only if (α_i, c_i) is a vertex of the lower convex hull of {(α_j, c_j)}.\n\nReduce an arbitrary family to the triple formed by a candidate and its two hull neighbours and apply leads_of_below_hull and never_leader_of_above_hull; validate on the five-method table of exp 490.\n\nThe operational content of any method table is a convex polygon with at most n−1 corners, and method selection is a hull computation.\n\nSome arms lead only on measure-zero sets of target sizes, so the leader relation must be replaced by a strict variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Tropical"
@@ -163906,7 +163906,7 @@
       "depth_estimate": 3,
       "description": "Batched gcd replaces a detection time T by m⌈T/m⌉. The proved dichotomy says all p-dependence is erased below the block size and the exponent survives with at most one bit of intercept drift above it. The conjecture upgrades this to a statement about the whole measured plane.\n\nBlock quantisation induces a map on measured chord slopes whose image is contained in {0} ∪ [α, α + 1/(k₂ − k₁)]: no exponent strictly between 0 and the true exponent can be produced by batching alone.\n\nFormalise the induced map on two-point chord slopes and prove the containment; simulate a rho run over a range of block sizes and confirm no intermediate slopes appear.\n\nInstrumentation artefacts become certifiable: a reported slope strictly between 0 and the true exponent cannot come from batching.\n\nBatching interacts with the detection-time distribution, so slope corruption is statistical rather than arithmetic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Tropical"
@@ -165424,7 +165424,7 @@
       "depth_estimate": 3,
       "description": "Eigenvalues of approximately idempotent finite-entry hyperreal matrices should cluster in the halos of 0 and 1 only, with an appreciable gap. The approach uses that X²−X annihilates the observed matrix exactly, together with the exact symmetric model supplied by rigidity. It would give a non-Archimedean analogue of spectral projections.\n\nIf A has finite entries and A*A ≈ A, then every eigenvalue of A is infinitesimally close to 0 or to 1, and rank (stMat A) counts those close to 1.\n\nDevelop hyperreal eigenvalue notions for symmetric matrices in Lean and combine with polyEval_eq_zero_of_approx and exists_symm_exactPVMH_approx.\n\nApproximate projections are spectrally rigid; observation acts as an exact spectral projection.\n\nThere exist approximate idempotents with eigenvalues at appreciable distance from {0,1}, bounding the reach of the functional-calculus theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Physics"
@@ -165854,7 +165854,7 @@
       "depth_estimate": 3,
       "description": "A univariate ReLU network computes a difference of two convex piecewise affine functions, i.e. a tropical rational function. Its knots are the corner loci of two tropical polynomials and layer composition corresponds to iterated Minkowski sums of Newton polytopes, so knot counting becomes vertex counting for zonotope-like bodies.\n\nThe knot count of a depth-L width-w univariate ReLU network equals the number of vertices of an iterated Minkowski sum of L polytopes with at most w+1 vertices each; in particular monotone-weight (convex) networks have at most L*w knots and cannot separate depth at all.\n\nFormalise the tropicalisation of LayerUnits, prove closure of the difference-of-convex class under relu with explicit vertex bookkeeping, and compare with knotBound by #eval on small random networks.\n\nKnot counting becomes polytope combinatorics and isolates sign alternation as the sole source of depth power.\n\nDifference-of-convex representations lose knots, so tropical degree is not a faithful complexity measure for ReLU depth.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Computation"
@@ -166491,7 +166491,7 @@
       "depth_estimate": 3,
       "description": "The defect of Maslov dequantization, t*max r - log Z(t), is bounded by the tropical ceiling and converges to it. The conjecture is that the defect is monotone increasing and its limit is exactly the ceiling, so dequantization has a canonical finite obstruction rather than a vanishing error.\n\nThe function t -> t*rewardMax r - log (partitionFn pi0 r t) is monotone nondecreasing on [0, infinity) and tends to tropicalCeiling pi0 r.\n\nProve monotonicity from convexOn_logPartition (the defect is the gap between a convex function and its asymptotic slope line), then reuse log_partitionFn_sandwich for the limit.\n\nMaslov dequantization acquires a computable 'defect invariant' equal to -log of the argmax mass, linking tropical limits to information-theoretic budgets.\n\nThe defect oscillates and the ceiling is only a supremum, weakening the geometric picture of the tropical corner.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Geometry"
@@ -166534,7 +166534,7 @@
       "depth_estimate": 3,
       "description": "Convergence to the tropical corner should be exponential at a rate given by the gap between the largest and second-largest reward values, in analogy with a spectral gap controlling mixing. The conjecture pins both the rate and the leading constants.\n\nWith delta the gap between max r and the largest strictly smaller reward value, and w = pi0(argmax r), one has L - k(t) = Theta(t e^{-delta t}) and max r - E_t[r] = Theta(e^{-delta t}) with constant ((1-w)/w)(max r - min r) up to 1 + o(1).\n\nDefine tropicalGap as a Finset.min' over the non-argmax outcomes, prove matching upper and lower bounds by splitting Z(t) into argmax and near-argmax parts, and check the constants numerically on rewards with three distinct levels.\n\nGives an a priori schedule for annealing beta in KL-regularised alignment: beta ~ 1/(delta^{-1} log(1/eps)).\n\nThe rate is governed by a more subtle multiplicity-weighted quantity than the plain second-level gap.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "Tropical"
@@ -166577,7 +166577,7 @@
       "depth_estimate": 3,
       "description": "Replacing the scalar reward by a vector reward turns the one-parameter tilted path into an exponential family over a parameter polytope. The conjecture is that the achievable reward region converges, as the KL budget grows, to the max-plus convex hull of the reward rows, with a ceiling attached to every face equal to minus the log reference mass of that face.\n\nFor r : iota -> R^m and p_theta(i) proportional to pi0(i) exp(<theta, r(i)>), the closure of the union over k of the achievable reward regions equals the tropical (max-plus) convex hull of {r(i)}, and the KL ceiling of the face F is -log pi0(F).\n\nRe-parametrise the file over theta in a finite-dimensional inner product space; reprove duality_identity and convexOn_logPartition verbatim; compute the m = 2, three-outcome case by hand and compare with the tropical hull.\n\nMulti-objective alignment duality becomes a statement in tropical convex geometry, with the face lattice of the Newton polytope indexing the reachable trade-offs.\n\nVector tilting reaches only a proper subregion and the correspondence with tropical hulls requires an extra normalisation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -168385,7 +168385,7 @@
       "depth_estimate": 3,
       "description": "For non-convex coefficient vectors the total multiplicity excess of a tropical polynomial falls short of its degree. The conjecture identifies the shortfall with the number of lower-hull lattice points that are not monomials of the minimum. This closes the gap between the general inequality and the convex equality already proved.\n\nFor every n and c, n - sum over x of (|fiber n c x| - 1) equals the number of lattice points on the lower convex hull of {(i, c i) : i <= n} that are not attained as fibre elements.\n\nFormalise the lower hull of the coefficient graph in Lean, then prove the identity by induction over hull edges using fiber_order and fiber_sumCoeff_eq_Icc.\n\nGives an exact tropical fundamental theorem valid without convexity, with the defect as an explicit hull invariant.\n\nThen the defect depends on more than the hull, and the correct invariant must involve the position of the invisible monomials.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -168429,7 +168429,7 @@
       "depth_estimate": 3,
       "description": "The one-variable family of argmin fibres is never cardinality-constant. The conjecture extends this to tropical polynomials in several variables, where fibres are subsets of the monomial support. The proof route mimics the explicit crossing-point construction.\n\nFor every tropical polynomial in d variables whose support has at least two elements, there are points p and q with |support-argmin at p| not equal to |support-argmin at q|.\n\nDefine the multivariate fibre in Lean over rational points of R^d and prove corner existence by maximising (c 0 - c i) along a generic direction.\n\nNon-constancy of tropical fibre families is a dimension-independent structural fact, and tropical hypersurfaces are never empty for nontrivial support.\n\nSome multivariate support configurations admit constant argmin cardinality, which would be a striking degeneracy worth classifying.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Tropical"
@@ -168473,7 +168473,7 @@
       "depth_estimate": 3,
       "description": "The fibre family is constant off at most n points and jumps at corners. The conjecture is that it is the stalk family of a constructible cosheaf whose Euler characteristic equals the degree. This would recast the degree bound as a topological count.\n\nThe assignment x -> fiber n c x extends to a constructible cosheaf on the tropical line whose Euler characteristic, computed as (number of strata of dimension 1) minus (sum of corner jumps), equals -n for convex c.\n\nDefine the stratification induced by cornerSet, verify constructibility using cornerSet_finite, and compute the Euler characteristic from multiplicity_sum_convex_eq.\n\nProvides a topological proof of the tropical fundamental theorem and a template for sheaf-theoretic tropical intersection theory.\n\nThe jumps fail to glue, indicating that the correct object is a quiver representation rather than a cosheaf.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Logic"
@@ -168517,7 +168517,7 @@
       "depth_estimate": 3,
       "description": "Min-plus aggregation over a divisor lattice is constant because the lattice has a least element, whereas aggregation over monomials of a tropical polynomial is never constant. The conjecture is that this dichotomy is governed purely by the existence of a global minimum of the weighted index poset.\n\nFor a family of finite index posets with a strictly monotone weight, the argmin family is cardinality-constant if and only if each poset has a least element for the weight order.\n\nFormalise weighted index posets in Lean, prove the easy direction from divisorArgmin_eq_one, and test the converse on the monomial poset of a tropical polynomial.\n\nExplains uniformly why arithmetic tropicalisations lose information while geometric ones do not.\n\nThere are constant families without least elements, so constancy also depends on the weight, not just the poset.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Combinatorics"
@@ -181052,7 +181052,7 @@
       "depth_estimate": 3,
       "description": "Relate emergent synergy to tropical rank of the joint table under max-plus degeneration. Blind sub-families give flat joint tables, which are tropically rank one.\n\nFor joint tables p_t = exp(t·w) with tropical weight w, lim_{t→∞} info_t / t equals the tropical rank deficit of w relative to the product of its marginals.\n\nCompute info for exponentially tilted joint tables in Lean on small alphabets; compare with max-plus rank from Tropical.OrbitDialTropical.\n\nEmergence acquires a tropical-geometric invariant stable under degeneration.\n\nInformation and tropical rank decouple in the limit, which would bound how far tropicalisation of information theory can go.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Tropical"
@@ -185377,7 +185377,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 4c85503d (Q=0.860), which proved 68 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every `k` in the achievable range there is a\n   unique `β > 0` with `KL(π*_β‖π_SFT) = k`, and `π*_β` maximises `𝔼_p[r]` subject\n   to `KL(p‖π_SFT) ≤ k` (the duality core of Conjecture 2).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -189377,7 +189377,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 87769612 (Q=0.850), which proved 569 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For\n   every `n ≥ 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical"
       ],
