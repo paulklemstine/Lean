@@ -206,7 +206,19 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | Jacobi-symbol graph spectral invariant | **CLOSED (restatement)** | `p+q = N+1−2·deg` is exact, but `deg = φ(N)/2` and φ is polylog-equivalent to factoring |
 | Projective point count over `Z/NZ` | **EQUIVALENT to factoring** | both directions, no slack (arXiv:1911.11004 p.3); affine twists sum to `4N`, a tautology |
 | Cross-discipline sweep (7 fields) | **MOSTLY CLOSED; field 6 is OPEN** | K-theory, Tate modules, theta, Brauer, information-theoretic all fail. ⚠️ `H_crossdiscipline.md:317` calls field 6 (Jacobi graph) **"the round's only genuinely live lead"** — marking the sweep CLOSED was **status inflation**. Also: "φ is polylog-equivalent to factoring", the load-bearing step of that row, is **asserted with no proof or citation** |
-| Partial-information factoring below ½ the bits of p | **MEASURED *and PROVED OPTIMAL*** | Our measurement: **31 unknown bits WORKS, 32 FAILS** at N=2¹²⁸ — `X = N^{1/4}` exactly. ⚠️ **Upgraded by a literature sweep: this is now also a THEOREM.** arXiv:1605.08065 (Chinburg, Hemenway Falk, Heninger, Scherr), p.1 verbatim: *"we prove that Coppersmith's bound for univariate polynomials is optimal ... eliminating the possibility of even superpolynomial-time improvements."* **Lattice reduction on this axis is provably pointless** — the program spent a round measuring it. Nothing tested beat ½ |
+| Partial-information factoring below ½ the bits of p | **MEASURED *and PROVED OPTIMAL*** | Our measurement: **31 unknown bits WORKS, 32 FAILS** at N=2¹²⁸ — `X = N^{1/4}` exactly. ⚠️ **Upgraded by a literature sweep, and VERIFIED BY ME from arXiv (2016-05-25).**
+**arXiv:1605.08065** — Chinburg, Hemenway, Heninger, Scherr, *"Cryptographic applications of capacity theory: On the optimality of Coppersmith's method for univariate polynomials."* Abstract, verbatim:
+
+> *"Using capacity theory, we prove that Coppersmith's bound for univariate polynomials is optimal in the sense that there are no auxiliary polynomials of the type he used that would allow finding roots of size `N^{1/d+eps}` for monic degree-`d` polynomials modulo `N`. Our results rule out the existence of polynomials of any degree and do not rely on lattice algorithms, thus eliminating the possibility of even superpolynomial-time improvements."*
+
+⚠️ **The scope is narrower than usually quoted, and the distinction matters:** optimality is
+(i) for **UNIVARIATE** polynomials only, (ii) **within Coppersmith's auxiliary-polynomial
+class** — "of the type he used", not among all conceivable methods — and (iii) proved via
+**capacity theory**, independent of lattices.
+
+**So the program's measured `X = N^{1/4}` boundary was a correct and careful re-derivation of a
+result settled in 2016.** Lattice reduction on the univariate axis is provably pointless; the
+program spent a round measuring a known wall. **Nothing tested beat ½.** |
 | GNFS constant via BKZ past LLL | **no gain found; "provably nothing" WITHDRAWN** | 40/40 give LLL/SVP = 1.0000000000 on the *certified* lattices. ⚠️ But the census's **mechanism sentence is not measured and the note's own control contradicts it**: `I_constant.md:26` records LLL/SVP ∈ [1.000, **1.149**] and S4b finds LLL **strictly suboptimal 1/60**. Also **Montgomery normalisation is absent — 0/40 rows m-divisible** (`I_constant.md:139-143`, "a real gap I flag rather than claim"). Honest status: **no constant improvement demonstrated on the lattices tested** |
 
 ### The constant axis, settled by an exact computation rather than a comparison
