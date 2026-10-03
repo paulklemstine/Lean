@@ -3,10 +3,23 @@
 **Date:** 2026-10-03 · **Working dir:** `factor-scratch/r48/` · **Supersedes nothing**;
 extends the round-47 census (`Round47_SUMMARY.md`).
 
-**Read this page, not the logs.** Round 48 produced **no factoring method** — the 48-round
-tally is unchanged at zero. What it produced instead is a set of closures with *stated
-reasons*, **two corrections of false premises the program had carried for years**, and one
-corrected retraction of the program's last live positive lead.
+> ## ⚠️ HEADLINE CHANGE — THE TALLY IS NO LONGER ZERO
+>
+> **Round 48 produced the program's first factoring method.** Stange's multiplicative-relations
+> construction (arXiv:2211.06821) factors **181/240 = 75%** of instances at `n ≈ 2^20`–`2^40`.
+> Its own analysis is **empirically false** — Hypothesis 3.1 is refuted to **1269σ**, including
+> inside its proved regime — and the printed success probability is **inverted relative to the
+> paper's own text**. Paper `Papers/stange_works_and_its_analysis_does_not.md`, **issue #524**.
+>
+> Scope, stated honestly: it is **not** an asymptotic improvement (`b ≈ 6×10^5` at `n = 10^20`
+> versus GNFS's `L[1/3]`), **RSA-scale behaviour is untested and unsupported**, and novelty is
+> **unestablished** — the author could not find it in the literature, which is not the same as
+> its absence.
+
+**Read this page, not the logs.** What round 48 produced is: **one working factoring method**,
+a set of closures with *stated reasons*, **two corrections of false premises the program had
+carried for years**, one corrected retraction of the program's last live lead, and one
+**positive** measurement — the exact valuation law for the NFS relation value (issue #523).
 
 ---
 
@@ -18,6 +31,8 @@ corrected retraction of the program's last live positive lead.
 |---|---|---|---|
 | 1 | `Papers/the_baseline_that_was_not.md` | **#521** | Retracts the class-group smoothness lottery, statistically **and** structurally |
 | 2 | `Papers/the_smoothness_wall_is_a_subgroup_wall.md` | **#522** | A rigorous `L[1/2]` already exists; the class group is *structurally* excluded; the smoothness wall is a **subgroup** wall |
+| 3 | `Papers/a_square_minus_a_cube_divides_twice.md` | **#523** | **POSITIVE.** `P(p^k | a²−b³) = (2p−1)/p^k` for odd `p`, `k ≥ 2` — the NFS uniformity heuristic is **pessimistic** |
+| 4 | `Papers/stange_works_and_its_analysis_does_not.md` | **#524** | **THE FIRST METHOD.** 75% factoring rate; Hypothesis 3.1 refuted to 1269σ; the paper's formula is inverted vs its text |
 
 ### Two false premises corrected
 
@@ -177,6 +192,7 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 
 | axis | status | reason |
 |---|---|---|
+| **Stange ℚ-kernel method** | **✓ WORKS — the program's first method** | **181/240 = 75%** at `n ≈ 2^20`–`2^40`; H3.1 refuted to **1269σ** *inside its own proved regime*; printed probability inverted vs the paper's text; regime gap **4.3 orders** at `n=10^20` |
 | Class-group smoothness lottery | **CLOSED ×3** | self-referential baseline; half-bit artifact; parity mismatch |
 | Class-group walk as `L[1/2]` | **CLOSED (structural)** | `Cl(O_D) mod p` trivial; walk is SQUOF at `N^{1/4}` |
 | Rigorous `L[1/2]` | **ALREADY KNOWN** | Shoup Thm 15.6, unconditional since ~2009 |
@@ -188,6 +204,19 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | Jacobi-symbol graph spectral invariant | **CLOSED (restatement)** | `p+q = N+1−2·deg` is exact, but `deg = φ(N)/2` and φ is polylog-equivalent to factoring |
 | Projective point count over `Z/NZ` | **EQUIVALENT to factoring** | both directions, no slack (arXiv:1911.11004 p.3); affine twists sum to `4N`, a tautology |
 | Cross-discipline sweep (7 fields) | **CLOSED** | K-theory, Tate modules, theta, Brauer, information-theoretic — all fail one of the three requirements |
+
+### The live thread this round opens
+
+The Stange mechanism identifies `α_t` as **4–5× over 2-divisible and up to 14× over
+3-divisible**, with a heavy tail (`h` reaches 83). That is a *defect* of the paper's analysis
+and simultaneously an **unexploited lever**: a relation search biased toward high small-prime
+valuation of `α_t` should raise the per-attempt success above the measured 0.75. Dispatched as
+`exp/stange2/` with the mandatory baseline reproduction and a held-out test set, because
+tuning results reported as results is how this program has destroyed itself before.
+
+The second live question is the **decay curve**: does 75% hold at 2^60, or is it already
+collapsing? The regime analysis predicts a collapse eventually; whether it has begun by 2^60
+is measurable and would be the honest answer to "does this work at RSA scale?"
 
 **Unchanged from round 47:** NFS relation geometry, Harvey `N^{1/5}`, Umans–Wang, Lecerf
 bivariate, auxiliary information, classical-deterministic. Nothing here disturbs them.
