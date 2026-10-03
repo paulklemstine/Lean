@@ -186,6 +186,51 @@ accounted against the savings, and in every case we examined the accounting was 
 
 ---
 
+### 3.4 The sharpest instance: the useful bit IS the factorization bit
+
+The function-field axis supplies the cleanest demonstration of the reframe we can construct,
+because it isolates the obstruction to **exactly one bit**.
+
+Tori `T_D/F_p` give an order that depends on a choice parameter `D`, and the discriminator is
+exactly the **Legendre symbol `(D/p)`**:
+
+- `(D/p) = −1 ⟹ |T_D(F_p)| = p+1 ⟹ ord_p(f) | p+1`
+- `(D/p) = +1 ⟹ |T_D(F_p)| = p−1 ⟹ ord_p(f) | p−1`
+
+**And the choice matters enormously.** At `p = 1099511627791`:
+`p+1 = 2^4 · 17 · 241 · 433 · 38737` is `2^16`-smooth, while `p−1` carries a `3.7 × 10^10`
+prime factor. At `B = 2^16` the smoothness rates are **1.000 versus 0.000.** So H2 is true in
+the weak sense: the choice parameter genuinely decides whether the mechanism works.
+
+**But the branch cannot be identified from `Z/nZ`.** What you can compute without factoring is
+`(D/n) = (D/p)(D/q)` — verified computable in `poly(log n)` on 200/200 instances — and it is a
+**product**. Measured, among `D` with Jacobi symbol `+1`: 102 with `(D/p) = +1` and 105 with
+`(D/p) = −1`. **`(D/n)` carries zero bits about `(D/p)`.**
+
+> **The one bit that would exploit the function field is the factorization bit.**
+
+Since `L[1/2]` is the entire budget, every mechanism requiring that bit is dead — not
+probabilistically, but exactly. This is §3 in one line: a construction is asking for
+information that lives *inside* the subgroup, and the only way in is to factor first.
+
+### 3.5 Towers are a loss, not a tuning knob
+
+The natural repair — raise the level of the tower to multiply the number of points and land
+on a smooth order — makes things strictly worse. Raising the level multiplies the Dickman
+parameter `u` by `k`:
+
+| level `k` | `u_k` | `ln ρ(u_k)` | cost vs `k=1` |
+|---|---|---|---|
+| 1 | 7.35 | −12.4 | 1.00× |
+| 2 | 14.70 | −39.4 | **3.18×** |
+| 3 | 22.06 | −71.1 | **5.74×** |
+| 4 | 29.41 | −105.9 | **8.54×** |
+
+A tower costs `k^3`-ish more and buys nothing. And its **degree is a function of the unknown
+`p`**, so it cannot be selected either — the same blindness, one level up.
+
+---
+
 ## 4. An order-certificate theorem
 
 We also prove, in polynomial time and with no heuristic:
