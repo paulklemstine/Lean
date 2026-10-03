@@ -204,6 +204,7 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | Jacobi-symbol graph spectral invariant | **CLOSED (restatement)** | `p+q = N+1−2·deg` is exact, but `deg = φ(N)/2` and φ is polylog-equivalent to factoring |
 | Projective point count over `Z/NZ` | **EQUIVALENT to factoring** | both directions, no slack (arXiv:1911.11004 p.3); affine twists sum to `4N`, a tautology |
 | Cross-discipline sweep (7 fields) | **CLOSED** | K-theory, Tate modules, theta, Brauer, information-theoretic — all fail one of the three requirements |
+| Partial-information factoring below ½ the bits of p | **CLOSED — measured to the bit** | **31 unknown bits WORKS, 32 FAILS** at N=2¹²⁸: `X = N^{1/4}` exactly. Nothing tested beat ½: algebraic relation makes it *worse* (`N^{1/4}→N^{1/2}`); known-`d` needs ~100% of d's bits |
 | GNFS constant via BKZ past LLL | **CLOSED — provably nothing** | **40/40 relation lattices give LLL/SVP = 1.0000000000 exactly.** The rows have near-disjoint small-prime supports, so they are nearly orthogonal *before* reduction — LLL is already optimal, so **no block size can buy anything** |
 
 ### The constant axis, settled by an exact computation rather than a comparison
@@ -311,6 +312,126 @@ bivariate, auxiliary information, classical-deterministic. Nothing here disturbs
 
 **Still open:** NFS at `L[1/3]` — where the heuristic actually lives. Nothing in round 48
 touches it.
+
+---
+
+## ■ PARTIAL INFORMATION — Coppersmith's threshold, measured to the bit
+
+The axis asked whether any leakage family beats **½ of the bits of `p`**. It does not, and the
+threshold is now *measured* rather than quoted.
+
+**The control passes and is stated first:** known-good (31 unknown bits, `X = 2³¹ < N^{1/4}`)
+recovers `p` on **3/3** seeds; known-bad (48 unknown bits) fails **3/3**; the boundary case
+(32 unknown = `N^{1/4}` exactly) fails **2/2**. A six-part self-test — exact determinant,
+det-preservation + Lovász, polynomial algebra, GF root-finding, lattice-vanishes-mod-`p^m`,
+end-to-end recovery — passes in full.
+
+**The measured break:**
+
+| unknown bits | result | of p's bits |
+|---|---|---|
+| 31 | **WORKS** | 51.6% |
+| 32 | **FAILS** | 50.0% |
+
+That is **`X = N^{1/4}` to the bit**, at `N = 2¹²⁸`.
+
+**The failure is a wall, not a resource limit.** At 32 unknown bits **no vanishing vector
+appears at all** as the lattice is enlarged from dim 40 to dim 104 (a 2.6× enlargement), on
+independent seeds. Threshold−1 works but only at dim 52.
+
+**Nothing tested beat ½:**
+- **T1** (best case) — 51.6% leaked. Below ½? No.
+- **T2** (algebraic relation between p and q) — makes it **worse**: degree-1→degree-2 moves the
+  bound `N^{1/4} → N^{1/2}`.
+- **T3** (known `d`) — needs ~100% of `d`'s bits, ≈1.98× `p`'s entire length.
+
+**On Urroz arXiv:2606.24717:** it is a **`d`-leak, not a `p`-leak**, so it cannot cross this
+wall, and its own p.8 Remark 3.2 makes the enumeration conditional. Recorded as scout-supplied,
+**not independently fetched, not used as ground truth.**
+
+**The reframe that matters more than the negative:** the scout's coverage finding —
+`all:"partial key exposure"` returns **exactly one arXiv hit in the entire database**, and it is
+unrelated — means the axis is **under-attacked, not under-broken.** The absence of a crossing
+reflects how little has been tried, not how solid the barrier is.
+
+**Two defects the control caught** (both would have produced false conclusions): a misaligned
+leak (`p >> unk` leaving `x0` full-width, inflating `X` by 64 bits) and a Howgrave-Graham
+threshold off by a factor of `dim`.
+
+**Honest limits:** LSB swept only analytically; multiplier-`u` and BDF/Coron–Maynard **not
+implemented**; a single `N` size with 3 seeds. For "no family beats ½" beyond Coppersmith's own
+theorem, what is needed is lattice-shape and leakage-pattern sweeps at 512–1024-bit `N`.
+
+---
+
+## ■ THE E-6c RE-RUN — the lottery claim is 11.5× too high, and there IS a real signal, in the wrong place
+
+A dedicated re-run, with the shared harness and matched on **order** bit-length (the correct
+axis — matching on discriminant size is precisely the E-6b failure mode).
+
+**It does not reproduce 0.720.** At the claimed cell (29-bit class numbers, `B = 1000`):
+
+| | value |
+|---|---|
+| **measured** | **0.0624**, Wilson 95% [0.0435, 0.0887], `n = 449` |
+| Dickman there | 0.0648 |
+| ratio to Dickman | **0.963**, CI [0.671, 1.369] — **on** Dickman, not 12.3× above |
+| the claim | 11.5× too high |
+
+**The "1.6× at matched scale" does not survive.** Corrected ratio **0.810, CI [0.519, 1.212]**,
+Fisher `p = 0.381`. Across **all 112 matched cells** (4 values of `B`), the class/EC ratio is
+**never** significantly above 1 — the maximum anywhere is **1.26 [0.20, 3.46]**, pure noise.
+**Zero of 112 cells** show class numbers above Dickman.
+
+**The parity confound, independently reproduced** from a separate sample: class numbers
+**100.0% odd** (`n = 9,000`) versus EC orders **66.3% even** (`n = 28,000`). Against an
+**odd-uniform** control the class arm is indistinguishable from null — **23/28 cells contain 1**
+at `B = 1000`, and **0/28 cells fall below 1 at any `B`**. A genuine null, not a box artifact.
+
+**"First positive at-scale signal for a non-EC lottery" does not survive.** It was a positive
+result from a mis-scaled comparison at `n = 25` against a Dickman *prediction* baseline.
+
+### The one genuinely new fact — and why it explains the whole confusion
+
+> **Class numbers ARE enriched in the smallest primes, and it is a real Cohen-Lenstra signal.**
+> `P(3 | h) = 0.438` vs `1/3` uniform, **z = +15.4**; `P(5 | h) = 0.246`, **z = +7.9**;
+> indistinguishable from uniform for `ℓ ≥ 13`.
+
+**But it does not produce smoothness.** The number of prime factors is **ω = 2.85 vs 3.16**
+uniform, and the **median largest prime factor is 90,599 vs 61,861** — i.e. *less* smooth than
+uniform. **The skew sits in the primes contributing the least mass.**
+
+That is precisely why the E-thread read a genuine Cohen-Lenstra signal as a lottery advantage:
+**the effect is real, it is in the wrong place, and it cannot pay.** A smoothness lottery is
+governed by the large primes; the enrichment is entirely in the small ones.
+
+*Caveat:* this closes the **lottery/distribution** axis. It is consistent with, but does not
+itself re-test, the separate structural objection (`Cl(O_D/p)` trivial ⇒ `N^{1/4}` walk cost).
+
+*Self-test caught four real bugs before measurement*, including a certifier that rejected
+**0/40 valid orders** and a "sanity band" that failed on correct input — flagged as a general
+hazard: **a sanity band that fails on correct input is worse than no band.**
+
+---
+
+## ■ The 20/27 constant, independently verified
+
+The constant that corrected issue #524 is **`P(success) = 20/27 = 0.740740…`** — the classical
+order-finding rate, not a property of the ℚ-kernel. I verified it from the mechanism rather than
+by re-running 240 slow trials.
+
+I first *derived* `2/3` from the standard argument (success fails exactly when the local orders
+agree in their 2-part; `P(v₂(ord) = k) = 2^-(k+1)`; `P(equal) = Σ4^-(k+1) = 1/3`). **That
+derivation is refuted**: measured `P(v₂ differs) = 0.73325`, which is **+8.93σ from 2/3** and
+**−1.08σ from 20/27**. The agent's constant is confirmed; my mechanism was incomplete.
+
+**Caveat on my own test:** my prime pool was `p < 4000`, and small primes truncate the geometric
+law — measured `k=0` is 0.332 where geometric predicts 0.500. **I validated in the wrong regime,
+the exact defect I flag in agents every round.** The comparison survives it (both arms shift
+together; the candidates are 7.4 points apart), so the verdict stands — but the *mechanism*
+producing 20/27 remains **unexplained**: measured and confirmed, not derived. Stated rather than
+papered over, because a measured constant with an unknown origin is still a correct number and a
+plausible derivation would not be.
 
 ---
 
