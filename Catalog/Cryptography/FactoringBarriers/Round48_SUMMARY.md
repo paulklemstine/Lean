@@ -244,12 +244,39 @@ relation-lattice dimension is **constant in `N`** (7 at 32 through 70 bits), so 
 `O(n²)` linear-algebra term does not grow with the modulus. **The constant was never where the
 time is.**
 
-**One positive from the same axis, and it overturns the obvious heuristic:** minimising
-coefficient mass is the **wrong** objective for choosing the polynomial `f`. At fixed `N` the
-*largest*-mass polynomial (11616) yielded the **most** relations (1090) and the smallest
-(6820) the fewest (292) — anti-correlated. And a bad `f` does not cost a constant, it costs
-everything: naive and narrow-search polynomials produced **zero** relations at `y = 5000`,
-box 1500; only a wide (±6%) `m`-search found usable ones.
+**⚠️ WITHDRAWN 2026-10-03 — the axis's "positive finding" was a BUG ARTIFACT.**
+
+The census previously recorded, from this axis: *"minimising coefficient mass is the wrong
+objective; the largest-mass polynomial yielded the most relations (1090) and the smallest the
+fewest (292) — anti-correlated"*, and that a bad `f` *"produces zero relations"*.
+
+**Both are withdrawn.** Root cause found and fixed
+(`factor-scratch/r49exp/polysel/`, `notes/EE_polysel.md`): the round-48 relation finder sieves
+`norm = b^d·f(a/b)` but **masks `a ≡ αb` using roots of the REVERSED polynomial** — **46 of 52
+roots are wrong** (at `p=7` it masks `a/b = 2` where the norm needs `a/b = 4`, and `2·4 ≡ 1`).
+The bug **under-counts the true smooth rate by 136×**, which is what manufactured the effect.
+
+Re-measured over **224 polynomials, 3 moduli, 37–50 bits, rate spanning 1243×**:
+
+> **Spearman(mass, rate) = −0.841** [−0.881, −0.787] — larger mass gives **FEWER** relations,
+> slope **−0.290 ± 0.013** per e-fold. **The sign of the round-48 claim was reversed.**
+
+Also: round 48's five numbers give only **+0.20** (n = 5, carried entirely by one point), and
+the *"zero relations"* claim **does not reproduce** — a 60× worse polynomial still yields
+**12,777** relations at their own `y` and box.
+
+**The real mechanism, which is the correct and much smaller finding:** the relation rate is the
+box-average of the smooth-number density at the size of `f(a,b)`. **`mean log|f|` predicts it
+with `R² = 0.958` vs mass's `0.672`**, and does so *within* the fixed-`m` family where geometry
+cannot explain it.
+
+**What is actually exploitable: ~1.1×.** Held-out over 9 moduli: median **1.11×** minimising
+mass, **1.02×** minimising meanlog, **1.27×** oracle; held-out figures **1.07× / 1.02× / 1.24×**.
+Worst cases **0.66× and 0.69×**, and on 2 of 9 moduli the oracle is **1.00×** — so the gain is
+instance-dependent, **not a guaranteed multiplier**.
+
+*Stated honestly by the agent:* it over-read an 8-modulus subset and the 9th reversed the
+conclusion; it corrected this in the note and flags the result as **8/9 at best**.
 
 ### The live thread this round opens
 
