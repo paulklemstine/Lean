@@ -30,9 +30,9 @@ carried for years**, one corrected retraction of the program's last live lead, a
 | # | Paper | Issue | What it settles |
 |---|---|---|---|
 | 1 | `Papers/the_baseline_that_was_not.md` | **#521** | Retracts the class-group smoothness lottery, statistically **and** structurally |
-| 2 | `Papers/the_smoothness_wall_is_a_subgroup_wall.md` | **#522** | A rigorous `L[1/2]` already exists; the class group is *structurally* excluded; the smoothness wall is a **subgroup** wall |
-| 3 | `Papers/a_square_minus_a_cube_divides_twice.md` | **#523** | **POSITIVE.** `P(p^k | a²−b³) = (2p−1)/p^k` for odd `p`, `k ≥ 2` — the NFS uniformity heuristic is **pessimistic** |
-| 4 | `Papers/stange_works_and_its_analysis_does_not.md` | **#524** | **THE FIRST METHOD.** 75% factoring rate; Hypothesis 3.1 refuted to 1269σ; the paper's formula is inverted vs its text |
+| 3 | `Papers/a_square_minus_a_cube_divides_twice.md` | **#523** | **POSITIVE (distributional fact only).** `P(p^k | a²−b³)/p^k = 2−1/p` for odd `p`, **2 ≤ k ≤ 5**; departs at k=6 by the zero-zero subspace. The NFS uniformity heuristic is **pessimistic**. ⚠️ its 25–38% collection-cost payoff is **WITHDRAWN by audit** — never measured end-to-end |
+| 4 | `Papers/stange_works_and_its_analysis_does_not.md` | **#524** | **THE FIRST FACTORING CONSTRUCTION.** Success probability is **exactly `20/27`** — the order-finding constant, **not** the construction's; **H3.1 refuted to 1269σ** inside its own proved regime; the paper's printed formula is inverted vs its own text; regime gap **4.3 orders** at `n=10²⁰` |
+| 4 | `Papers/stange_works_and_its_analysis_does_not.md` | **#524** | **THE FIRST FACTORING CONSTRUCTION.** Success probability is **exactly `20/27`** — the order-finding constant, **not** the construction's (the "75%" was a misattribution, corrected). **H3.1 refuted to 1269σ** inside its own proved regime; the printed formula is inverted vs its own text; regime gap **4.3 orders** at `n=10²⁰`; best cost cut **2.36×**, held out |
 
 ### Two false premises corrected
 
