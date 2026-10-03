@@ -249,6 +249,63 @@ The second live question is the **decay curve**: does 75% hold at 2^60, or is it
 collapsing? The regime analysis predicts a collapse eventually; whether it has begun by 2^60
 is measurable and would be the honest answer to "does this work at RSA scale?"
 
+---
+
+## ■ THE SUPPLY AUDIT — RESOLVED (this was the round's biggest open worry)
+
+Round 47/48 flagged `Round48_CostExponent.md:90-94` as **the most damaging unresolved
+instance**: *"every supply number in Rounds 45–47 is a box number; none is a rate for the
+algorithm."* Audited. **Resolved, in both directions, and the control is exact.**
+
+**The control.** The audit's scan sampler reproduces the original program's log
+**exactly** — `~/factor47/V4/CEIL3b.log` gives relations `1021 / 1753 / 2761 / 3566` and nulls
+`102 / 50 / 272 / 25` at 10/12/14/16 bits, and the sampler matches all of them. It also gives
+`χ_P = −1 = 23.40%` against the file's stated ~23%. Control passes at **0.92σ**. *(Verified
+independently by me against the artifact.)*
+
+**Finding 1 — the overstatement is a power law, and steeper than reported.**
+`α = +0.794 ± 0.095` (OLS, 4 points, all residuals < 0.8σ); inverse-variance gives
+`+0.991 ± 0.047`. **Positive at 2σ.** True supply exponent `−(1/6 + α) = −0.96` (OLS) /
+`−1.16 ± 0.05`, against the record's `−1/6` — **6–7× steeper.**
+
+**Finding 2 — the mechanism attribution in the record is half wrong.** Decomposed:
+
+| component | size-dependent? | magnitude |
+|---|---|---|
+| pool composition (16 hand-picked vs all of [1,31]) | **NO — constant** | 1.235 / 1.237 / 1.342 at 24/28/32 bits |
+| **`\|c\|` magnitude** (box 31 vs scan `N/3`) | **YES — the whole of it** | `rate ~ \|c\|^(-0.21…-0.45)` |
+
+The record blames the hand-picked pool. Measured, the pool is a **flat 1.24×** and contributes
+**no growth in `N`**. All the growth is `|c|`.
+
+**Finding 3 — the 47×/326× figures are single-`N` artifacts.** At 32 bits **28 of 32 semiprimes
+give ZERO relations** in 20,000 instances; the recorded scan rate exceeds the **maximum** of 20
+independent draws, and 326× rests on **five events**. Corrected values: **126× (24 bits),
+~4400× (32 bits)**.
+
+**Finding 4 — the box `χ_P = −1 ≈ 79%` claim is refuted.** Measured **0.001–0.02**. The 79% is
+`1 − (χ_P = +1)`, silently counting **undefined cases** (66% of box relations) as usable. The
+file's own counts give 14%.
+
+### The published claim is NOT affected
+
+> **`cost ∝ N^0.534` is UNAFFECTED.** It was measured by **stopping times on a real scan**
+> (324 runs, 323 real factors) — it was *already* the algorithm's population, not a box number.
+
+**The worry that this correction reaches a published claim is resolved: it does not.**
+
+### But "the supply is dead at 128 bits" SURVIVES — strengthened
+
+A steeper exponent (`−0.96` vs `−1/6`) makes the 96→128-bit drop **4.3 × 10⁹ rather than 40**,
+so the zero is unremarkable rather than surprising. **The conclusion holds; its stated support
+was weaker than claimed** — the box overstated cost by `N^0.79`, not by "47–326×".
+
+### Self-corrections the audit logged rather than hid
+
+Three defects in its own harness, each caught by a gate before measurement: a QR filter with
+`t[0]=False`; an over-restrictive 2-adic rule at `v₂ = 4`; and a `chiP` transcription slip
+(`b == p-1` for `b == q-1`) that **the mandatory control caught at 0/9101**.
+
 **Unchanged from round 47:** NFS relation geometry, Harvey `N^{1/5}`, Umans–Wang, Lecerf
 bivariate, auxiliary information, classical-deterministic. Nothing here disturbs them.
 
