@@ -176,18 +176,57 @@ is `N^{1/4}`. All columns `log₂`:
 
 | n | `N^{1/4}` | `L[1/2]` | `L[1/3]` | `N^{1/4} − L[1/2]` | `N^{1/4} − L[1/3]` |
 |---:|---:|---:|---:|---:|---:|
-| 256 | 64.00 | 21.87 | 46.66 | **42.13** | **17.34** |
-| 1024 | 256.00 | 49.24 | 86.77 | **206.76** | **169.23** |
-| 4096 | 1024.00 | 108.38 | 156.50 | **915.62** | **867.50** |
-| 16384 | 4096.00 | 234.90 | 276.52 | **3861.10** | **3819.48** |
+| 256 | 64.00 | 61.85 | 46.66 | **2.15** | **17.34** |
+| 1024 | 256.00 | 139.27 | 86.77 | **116.73** | **169.23** |
+| 4096 | 1024.00 | 306.55 | 156.50 | **717.45** | **867.50** |
+| 16384 | 4096.00 | 664.40 | 276.52 | **3431.60** | **3819.48** |
+
+The ordering is **`L[1/3] < L[1/2] < N^{1/4}`** at every size — the class-group walk is worse
+than both NFS and ECM.
+
+**⚠️ Corrected 2026-10-03 (second audit pass).** The first version of this table printed
+`L[1/2] = 21.87 / 49.24 / 108.38 / 234.90`, which is **wrong** (correctly **61.85 / 139.27 /
+306.55 / 664.40**), and consequently printed `L[1/3] > L[1/2]` at 256 and 1024 bits — an
+inequality that never holds. The `L[1/3]` column was correct throughout. The `N^{1/4} − L[1/2]`
+column is correspondingly wrong (42.13 should be 2.15, etc.). All values recomputed directly from
+`log₂ L[1/2] = √(2 ln N ln ln N)/ln 2` and `log₂ L[1/3] = 1.9229994 (ln N)^{1/3} (ln ln N)^{2/3}/ln 2`.
+
+*Also note:* a parallel sub-agent reported that these columns "reproduce exactly" and that
+there is a "crossover at 40000 bits." **Both were false, and no single `N` reproduces both
+columns.** The auditor re-checked rather than relaying.
 
 **And `k` cannot be tuned to rescue it.** Solving `(kN)^{1/4} = L[1/2]` for `k` gives
-`ln k = 4√(L ln L) − L`, which is **negative at every RSA size**: −573 at n=1024, −1217 at
-n=2048, −2539 at n=4096. Algebraically,
+`ln k = 4√(L ln L) − L`, which is **negative at every RSA size**: **−436.7** at n=1024,
+**−1013.5** at n=2048, **−2238.1** at n=4096. Algebraically,
 
 ```
 4√(L ln L) < L   ⟺   16 ln L < L   ⟺   L < 67.36   ⟺   N < 1.8 × 10²⁹.
 ```
+
+### 2.3 The stronger, unconditional argument — added 2026-10-03
+
+The cost argument above is a **cost-model comparison**, and it is therefore conditional in the
+same way every `L`-notation is. There is a strictly stronger statement that needs no cost model
+at all, and it was pointed out by the adversarial audit:
+
+> **If `h(−kN)` is `B`-smooth and `p | h(−kN)`, then `p ≤ B`.**
+> At the bound that matters, `B = L[1/2] ≈ exp(√(2 ln p · ln ln p))`, and `p ≤ exp(√(2 ln p ln ln p))`
+> is **false** for all sufficiently large `p`, since the right-hand side exceeds `p`
+> super-polynomially.
+
+**So the conjunction required by the walk — `p | h` AND `h` `B`-smooth — is INCONSISTENT at the
+relevant bound, not merely improbable.** No amount of `k` helps: increasing `k` enlarges `h`
+(and so the smoothness bound needed), while `p ≤ B` only gets harder to satisfy.
+
+Combined with the structural result of §3.4 — **`Cl(O_D) mod p` is trivial in both cases**, so
+the walk degenerates to SQUFOF regardless of smoothness — the exclusion is **unconditional**.
+The factor-of-2 boundary error in §2.2, which the first version of this paper got wrong by
+25 orders of magnitude, becomes **irrelevant to the conclusion**: this argument never uses it.
+
+*Corroboration.* The same audit re-ran the paper's own grid for `p | h(−kN)` and found **0 hits
+in 500 trials**, replicating the recorded `0/890`. It also **refuted a contrary sub-agent claim**
+that the divisibility fires often — that agent's hits were all at `N = 143`, where `h` is tiny.
+The auditor validated `qfbclassno` 20/20 against brute force before trusting either number.
 
 **Even `k = 1` is too slow past a few thousand, and increasing `k` only enlarges `D = −kN`,
 hence `h`, hence the cost.** The class group is *structurally excluded*, not merely unlikely —
