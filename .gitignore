@@ -68,3 +68,4 @@ __pycache__/
 # One-off debug output (Aether/debug_minimal.py, removed 2026-08-12)
 /output/
 .hf_cache/
+Catalog/Cryptography/FactoringBarriers/_scratch/r49/
